@@ -1,10 +1,14 @@
+import type { Actor } from "@lymi/core";
 import { Hono } from "hono";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
+import { statusOf } from "./http";
 import { cards } from "./routes/cards";
 import { decks } from "./routes/decks";
 import { review } from "./routes/review";
+import { settings } from "./routes/settings";
+import { ServiceError } from "./services/context";
 
 export type AppEnv = {
   Bindings: Bindings;
@@ -12,6 +16,8 @@ export type AppEnv = {
     db: Db;
     auth: Auth;
     user: SessionUser;
+    /** Who is making this request. Session cookies mean the learner in the app. */
+    actor: Actor;
   };
 };
 
@@ -35,6 +41,7 @@ app.use("/api/*", async (c, next) => {
   const session = await c.get("auth").api.getSession({ headers: c.req.raw.headers });
   if (!session) return c.json({ error: "Sign in required" }, 401);
   c.set("user", session.user);
+  c.set("actor", "user");
   await next();
 });
 
@@ -46,6 +53,7 @@ app.get("/api/me", (c) => {
 app.route("/api/decks", decks);
 app.route("/api/cards", cards);
 app.route("/api/review", review);
+app.route("/api/settings", settings);
 
 // Audio is generated with OpenAI text-to-speech and cached in R2. Not wired yet.
 app.get("/api/audio/:cardId", (c) => c.json({ error: "Audio is not set up yet" }, 501));
@@ -57,6 +65,9 @@ app.notFound((c) => {
 });
 
 app.onError((err, c) => {
+  if (err instanceof ServiceError) {
+    return c.json({ error: err.message, issues: err.details }, statusOf(err));
+  }
   console.error(err);
   return c.json({ error: "Something went wrong" }, 500);
 });

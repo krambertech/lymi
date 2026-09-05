@@ -66,3 +66,9 @@ export const GradeInput = z.object({
   reviewedAt: z.coerce.date().optional(),
 });
 export type GradeInput = z.infer<typeof GradeInput>;
+
+export const SettingsPatch = z.object({
+  /** The language meanings are written in. */
+  meaningLanguage: LanguageTag.optional(),
+});
+export type SettingsPatch = z.infer<typeof SettingsPatch>;

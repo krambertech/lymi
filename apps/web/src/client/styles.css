@@ -83,6 +83,13 @@
 
 @theme inline {
   --font-sans: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /*
+   * The one exception to "one family". Secrets and hostnames are strings you proofread
+   * character by character, and Onest draws 0/O and 1/l too alike to do that safely.
+   * System stack only: nothing to download.
+   */
+  --font-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
   --color-canvas: var(--canvas);
   --color-plate: var(--plate);
@@ -273,6 +280,32 @@
 @media (prefers-reduced-motion: reduce) {
   .flame,
   .lantern {
+    transition-duration: 0ms;
+  }
+}
+
+/* ---- Connection -------------------------------------------------------- */
+
+/*
+ * Two apps meeting. The rail runs from the app that asked to the lantern; while the
+ * decision is open it is a dotted track, and when the grant lands it draws across in
+ * amber and the lantern lights. This is the only choreography outside review: the
+ * connection is the one thing on these screens that actually happens.
+ */
+.rail-track {
+  background-image: repeating-linear-gradient(to right, var(--edge-2) 0 3px, transparent 3px 7px);
+}
+/* The fill only exists once the grant lands, so it draws from its starting style. */
+.rail-fill {
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease-out);
+  @starting-style {
+    transform: scaleX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail-fill {
     transition-duration: 0ms;
   }
 }

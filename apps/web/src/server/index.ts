@@ -11,6 +11,7 @@ import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate } from "./principal";
 import { cards } from "./routes/cards";
+import { connections } from "./routes/connections";
 import { decks } from "./routes/decks";
 import { keys } from "./routes/keys";
 import { review } from "./routes/review";
@@ -93,6 +94,7 @@ app.route("/api/cards", cards);
 app.route("/api/review", review);
 app.route("/api/settings", settings);
 app.route("/api/keys", keys);
+app.route("/api/connections", connections);
 
 // Audio is generated with OpenAI text-to-speech and cached in R2. Not wired yet.
 app.get("/api/audio/:cardId", describe({ hide: true }), (c) =>

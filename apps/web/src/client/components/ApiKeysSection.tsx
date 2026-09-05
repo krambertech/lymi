@@ -1,13 +1,17 @@
 import type { Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api } from "../lib/api";
 import { keysQuery } from "../lib/queries";
 import { SettingsGroup } from "../views/SettingsView";
 import { Button } from "./Button";
 import { Chip } from "./Chip";
+import { CopyField } from "./CopyField";
 import { Field, Input } from "./Field";
+import { Lantern } from "./Lantern";
 import { Segmented } from "./Segmented";
+import { Skeleton } from "./Skeleton";
 
 const SCOPES: { value: Scope; label: string; hint: string }[] = [
   { value: "read", label: "Read", hint: "Lists and searches decks and cards." },
@@ -15,12 +19,15 @@ const SCOPES: { value: Scope; label: string; hint: string }[] = [
 ];
 
 /**
- * Personal API keys for curl, scripts and Claude Code. The key is shown once, right after it
- * is made. Revoking is final, so it takes a second tap, inline, no dialog.
+ * Personal API keys for curl, scripts and Claude Code. The list is the point of the section,
+ * so the form stays folded until it is wanted; a key already made is what you come here to
+ * check on. The key itself is shown once, right after it is made, and revoking is final, so
+ * it takes a second tap, inline, no dialog.
  */
 export function ApiKeysSection() {
   const qc = useQueryClient();
   const keys = useQuery(keysQuery);
+  const [making, setMaking] = useState(false);
   const [name, setName] = useState("");
   const [scope, setScope] = useState<Scope>("read");
   const [fresh, setFresh] = useState<{ id: string; key: string; name: string } | null>(null);
@@ -31,6 +38,7 @@ export function ApiKeysSection() {
       setFresh({ id: created.id, key: created.key, name: created.name ?? name.trim() });
       setName("");
       setScope("read");
+      setMaking(false);
       qc.invalidateQueries({ queryKey: ["keys"] });
     },
   });
@@ -43,19 +51,22 @@ export function ApiKeysSection() {
   });
 
   const canCreate = name.trim().length > 0 && !create.isPending;
+  // The new key has its own panel above; listing it as well reads as two keys.
+  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id);
+  const empty = keys.isSuccess && rest.length === 0;
 
   return (
     <SettingsGroup title="API keys">
-      <p className="max-w-[60ch] text-base text-text-2">
-        For curl, scripts and Claude Code. Send the key in an <code>x-api-key</code> header; the
-        routes are in the{" "}
+      <p className="max-w-[62ch] text-base text-text-2">
+        For curl, scripts and Claude Code. Send the key in an{" "}
+        <code className="font-mono text-sm">x-api-key</code> header; the routes are in the{" "}
         <a
           href="/api/docs"
           className="underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
         >
           API reference
         </a>
-        . MCP clients such as Claude Desktop sign in with OAuth instead and do not need one.
+        . MCP clients such as Claude Desktop sign in instead, and appear under Connected apps.
       </p>
 
       {fresh && (
@@ -67,13 +78,11 @@ export function ApiKeysSection() {
         />
       )}
 
-      {keys.isSuccess && keys.data.length === 0 && !fresh && (
-        <p className="text-base text-muted">No keys yet.</p>
-      )}
+      {keys.isPending && <Skeleton className="h-14 w-full" />}
 
-      {keys.data && keys.data.length > 0 && (
+      {rest.length > 0 && (
         <ul className="grid">
-          {keys.data.map((k) => (
+          {rest.map((k) => (
             <KeyRow
               key={k.id}
               item={k}
@@ -84,38 +93,73 @@ export function ApiKeysSection() {
         </ul>
       )}
 
-      <form
-        className="grid gap-4 border-t border-edge pt-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (canCreate) create.mutate();
-        }}
-      >
-        <Field label="Name" className="max-w-sm">
-          <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            maxLength={32}
-            placeholder="Claude Code on the laptop"
-            autoComplete="off"
-          />
-        </Field>
-        <div className="grid gap-1.5">
-          <span className="text-sm font-medium text-text-2">Access</span>
-          <Segmented value={scope} onChange={setScope} options={SCOPES} label="Access" />
-          <p className="text-sm text-muted">
-            {SCOPES.find((s) => s.value === scope)?.hint} Keys never grade reviews.
-          </p>
-        </div>
-        {create.isError && (
-          <p className="text-sm text-danger" role="alert">
-            {(create.error as Error).message}
-          </p>
-        )}
-        <Button type="submit" size="sm" className="w-fit" disabled={!canCreate}>
-          Create key
+      {empty && !making && !fresh && (
+        <p className="text-base text-muted">
+          No keys yet. Make one when you want to reach Lymi from a script.
+        </p>
+      )}
+
+      {making ? (
+        <form
+          className="enter-card edge grid gap-4 rounded-md bg-plate p-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (canCreate) create.mutate();
+          }}
+        >
+          <Field label="Name" hint="So you know which key to revoke later." className="max-w-sm">
+            {/* Focus follows the button that revealed the field, so it is not a surprise. */}
+            <Input
+              autoFocus
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              maxLength={32}
+              placeholder="Claude Code on the laptop"
+              autoComplete="off"
+            />
+          </Field>
+          <div className="grid gap-1.5">
+            <span className="text-sm font-medium text-text-2">Access</span>
+            <Segmented value={scope} onChange={setScope} options={SCOPES} label="Access" />
+            <p className="text-sm text-muted">
+              {SCOPES.find((s) => s.value === scope)?.hint} Keys never grade reviews.
+            </p>
+          </div>
+          {create.isError && (
+            <p className="text-sm text-danger" role="alert">
+              {(create.error as Error).message}
+            </p>
+          )}
+          <div className="flex gap-2">
+            <Button
+              type="submit"
+              variant="primary"
+              size="sm"
+              disabled={!canCreate}
+              loading={create.isPending}
+            >
+              Create key
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              disabled={create.isPending}
+              onClick={() => {
+                setMaking(false);
+                setName("");
+                create.reset();
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      ) : (
+        <Button size="sm" className="w-fit" onClick={() => setMaking(true)}>
+          <Plus aria-hidden="true" />
+          New key
         </Button>
-      </form>
+      )}
     </SettingsGroup>
   );
 }
@@ -143,12 +187,16 @@ function KeyRow({
           <span className="truncate text-base font-medium">{item.name ?? "Untitled key"}</span>
           <Chip size="sm">{item.scope === "write" ? "Read and write" : "Read"}</Chip>
         </div>
-        <p className="text-sm text-muted tabular-nums">
-          {item.start}… · {lastUsed(item.lastRequest)} · created {shortDate(item.createdAt)}
+        <p className="text-sm text-muted">
+          {item.start && <span className="font-mono">{item.start}…</span>}
+          {item.start && " · "}
+          <span className="tabular-nums">
+            {lastUsed(item.lastRequest)} · created {shortDate(item.createdAt)}
+          </span>
         </p>
       </div>
       {confirming ? (
-        <div className="flex gap-1.5">
+        <div className="enter-fade flex gap-1.5">
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
             Keep
           </Button>
@@ -171,6 +219,10 @@ function KeyRow({
   );
 }
 
+/**
+ * The one moment in Settings where something is handed over. The lantern flares once, the
+ * way it does when a card lands, and the key is the only thing on the panel worth pressing.
+ */
 function FreshKey({
   name,
   value,
@@ -182,37 +234,21 @@ function FreshKey({
   onDone: () => void;
   onRevoke: () => void;
 }) {
-  const [copied, setCopied] = useState(false);
+  const [flare, setFlare] = useState(true);
   useEffect(() => {
-    if (!copied) return;
-    const t = setTimeout(() => setCopied(false), 2000);
+    const t = setTimeout(() => setFlare(false), 420);
     return () => clearTimeout(t);
-  }, [copied]);
+  }, []);
 
   return (
-    <div className="edge grid gap-3 rounded-md bg-plate p-4" role="status">
-      <p className="text-base">
-        <span className="font-medium">{name}</span> is ready. Copy it now; it is not shown again.
-      </p>
-      <div className="flex items-stretch gap-2">
-        <output className="edge min-w-0 flex-1 select-all break-all rounded-sm bg-plate-2 px-3 py-2 text-base leading-6 tabular-nums">
-          {value}
-        </output>
-        <Button
-          size="sm"
-          className="h-auto shrink-0"
-          onClick={async () => {
-            try {
-              await navigator.clipboard.writeText(value);
-              setCopied(true);
-            } catch {
-              // Clipboard blocked: the field is select-all, so a tap plus copy still works.
-            }
-          }}
-        >
-          {copied ? "Copied" : "Copy"}
-        </Button>
+    <div className="enter-card edge grid gap-3 rounded-md bg-plate p-4" role="status">
+      <div className="flex items-start gap-2.5">
+        <Lantern className="size-8 shrink-0" glow flare={flare} />
+        <p className="text-base text-text">
+          <span className="font-medium">{name}</span> is ready. Copy it now — it is not shown again.
+        </p>
       </div>
+      <CopyField value={value} label={`API key for ${name}`} />
       <div className="flex gap-1.5">
         <Button size="sm" variant="ghost" onClick={onDone}>
           Done

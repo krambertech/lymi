@@ -233,6 +233,37 @@ colour of the room: ink by day, white at night. Never grey. The glass is `amber-
 States: lit (flame, optional flicker), lit and glowing (something is due), lit up (session done:
 bigger flame, wider glow, stays), flare (one-shot after Good or Easy), unlit (no flame, no glow).
 
+## Letting an app in
+
+Three screens carry the connection between Lymi and an MCP client: the door (`/login`), the
+decision (`/consent`), and the ending (the same route, after the decision).
+
+Who is asking is answered by the **host of the `client_id`**, not by the name or logo the client
+sent. A client identifies itself with a Client ID Metadata Document that has to be served from
+that HTTPS host, so the host is the one claim in the request that cannot be forged. It is shown in
+mono, in a pill under the app's name, with a check when it is a host we ship a mark for. An app we
+do not recognise says so in words and shows the address to check.
+
+Marks for known clients are bundled and drawn in their own brand colour, which is what makes one
+recognisable at a glance. A vendor's colour is a quotation, not a token: it lives inside the mark
+and nowhere else, the tile around it stays a plain plate, and amber remains Lymi's only accent.
+A brand that is monochrome takes the room's ink. `logo_uri` from the client's metadata is never
+rendered: an attacker-controlled image on a
+permission screen, shown with the confidence of a verified one, is how consent phishing works. An
+unrecognised client gets a monogram, so it can never borrow a known app's appearance.
+
+Read access is stated, not offered, because a connector cannot work without it. Write is the only
+decision on the screen, so it is the only control: a switch, with a grant dot that mirrors the read
+row so what the app ends up with reads at a glance. Under both, a plain list of what it can never
+do, whatever is chosen.
+
+The ending is not optional. An MCP client's redirect is usually a custom scheme, so the browser
+hands off to the app and leaves the tab where it was; without this screen that tab sits on a
+blank form. It says what happened, what the app got, and that the tab is finished with.
+
+A grant lasts until it is taken back, so Settings has Connected apps beside API keys, with the
+same row shape: name, what it may do, the host, and an inline confirm to cut it off.
+
 ## Wordmark and lockups
 
 `lymi`, lowercase, Onest 600, tracked −0.025em, drawn as paths (`components/wordmark-paths.ts`,
@@ -252,12 +283,24 @@ the wordmark, counts and kbd. Fixed pixel scale, ratio about 1.17. Headings trac
 −0.03em, body never. Tabular figures on anything that changes. Curly quotes and the ellipsis
 character in copy. Uppercase only at 12 px, tracked +0.06em.
 
+One exception to the single family: strings that are proofread character by character rather
+than read — an API key, a client's hostname, a header name in copy — are set in the system
+mono stack (`font-mono`, nothing downloaded). Onest draws 0/O and 1/l too alike for a secret
+where a mistyped character is a silent 401. Nothing else uses it: not numbers, not code-ish
+labels, not UI text.
+
 ## Motion
 
 Motion conveys state. Press: scale 0.97, 150 ms. Hover: 150 ms, pointer devices only. A card
 arrives with a 6 px rise over 200 ms. Reveal fades the meaning in under the rule. Flare is 320 ms.
 Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme
 switch suspends transitions for one frame so the room swaps at once.
+
+The auth screens have one moving part: the connection. The app that asked and the lantern sit
+in matching tiles joined by a rail, dotted while the decision is open. When the grant lands the
+rail draws across in amber over 420 ms and the lantern lights 360 ms later, so the two read as
+one movement. A refusal leaves the rail dotted and the lantern unlit. Under reduced motion the
+rail is simply filled. Nothing else on those screens animates.
 
 The flame flickers on a 2.6 s loop because a flame does. Under `prefers-reduced-motion` it holds
 still, the card and toast crossfade with no travel, and the skeleton stops shimmering. The glow
@@ -268,7 +311,7 @@ stays, because a glow is a state, not a movement.
 `components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading),
 IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and
 SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SevenLights, Table, Menu, Dialog,
-AddCardSheet, Lantern, Wordmark, Lockup.
+AddCardSheet, CopyField, AppMark, Connection, Lantern, Wordmark, Lockup.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data.
 They lay out by their container (`@3xl` = 768 px), not the viewport.

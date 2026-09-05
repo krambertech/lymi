@@ -6,6 +6,7 @@ import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
 import { describe, statusOf } from "./http";
+import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate, requireLearner, requireScopeForWrites } from "./principal";
 import { cards } from "./routes/cards";
@@ -45,8 +46,26 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 // Better Auth owns everything under /api/auth.
 app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
 
+// OAuth discovery lives at the site root by RFC 8414 and RFC 9728. Better Auth answers these
+// from its request hooks, so they are forwarded as they are.
+app.on(
+  ["GET", "HEAD"],
+  [
+    "/.well-known/oauth-authorization-server",
+    "/.well-known/oauth-authorization-server/*",
+    "/.well-known/oauth-protected-resource",
+    "/.well-known/oauth-protected-resource/*",
+  ],
+  (c) => c.get("auth").handler(c.req.raw),
+);
+
 // The OpenAPI document and its reference UI. Public, so they sit before authentication.
 mountOpenApi(app);
+
+// The MCP server. Its own authentication: an OAuth access token this Worker issued.
+app.all("/mcp", (c) =>
+  handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
+);
 
 // Everything else under /api needs a session cookie or an API key, and writes need the write scope.
 app.use("/api/*", authenticate, requireScopeForWrites);

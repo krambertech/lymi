@@ -245,8 +245,10 @@ page background — a plate, the amber button, a dark tile, a transparent export
 overlaps the glass edges, so nothing can spill outside the frame. Unlit, the glass is `glass-unlit`
 and the flame becomes an ember in `edge-2`.
 
-Below 28 px the rods, the pivots and the foot drop away and the glass goes solid amber. That is the
-same silhouette with fewer parts, not a second mark. The full lantern starts at 28 px.
+There is no second cut for small sizes. The rods and the flame are exactly what keep the drawing
+legible when it is tiny — a simplified version that drops them collapses into a mushroom by 24 px.
+One drawing, every size. The browser tab uses the same drawing with the viewBox squared around its
+own bounds, so the mark fills the icon instead of floating in a 120 box.
 
 The geometry lives in `components/lantern-geometry.tsx` and nowhere else. `Lantern`, `Lockup` and
 `scripts/brand.mjs` all draw from it, so the mark cannot drift between the app and its assets.
@@ -316,7 +318,7 @@ not "Congratulations!". Errors say how to fix it. Anything the AI wrote is label
 
 - No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
-- No full lantern below 28 px. No amber beyond the flame and the primary action.
+- No simplified small cut. No amber beyond the flame and the primary action.
 - No two flames in one composition. If the lantern is on the screen, the wordmark is plain.
 - No translucent glass, and no room colour painted inside the mark. The lantern must survive being put on a surface it did not expect.
 - No display serif, no sparkle icon, no streak counter, no confetti.

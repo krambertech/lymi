@@ -72,7 +72,7 @@ function Consent() {
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 pt-safe pb-safe">
-      <Lantern className="size-16" glow />
+      <Lantern className="size-16" flicker />
       <div className="edge w-full max-w-sm rounded-xl bg-plate p-5">
         <h1 className="text-2xl font-medium leading-tight">Let {name} use your Lymi?</h1>
         {client.data?.client_uri && (

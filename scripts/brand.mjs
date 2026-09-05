@@ -59,13 +59,6 @@ const glowDef = (c, r = 6) => `<defs><filter id="glow" x="-50%" y="-50%" width="
 const svg = (w, h, body, viewBox = `0 0 ${w} ${h}`) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width="${w}" height="${h}">${body}\n</svg>\n`;
 
-// The glyph, for 12 to 27 px: the same silhouette with the rods, pivots and foot dropped.
-const glyph = (c) => `
-  <path d="M42 47 A18 26 0 0 1 78 47" fill="none" stroke="${c.metal}" stroke-width="8" stroke-linecap="round"/>
-  <rect x="36" y="49" width="48" height="45" rx="5" fill="${c.amber}"/>
-  <path d="M49 35 H71 L88 52 H32 Z" fill="${c.metal}" stroke="${c.metal}" stroke-width="5" stroke-linejoin="round"/>
-  <rect x="29" y="88" width="62" height="13" rx="6.5" fill="${c.metal}"/>`;
-
 // Wordmark paths come from the generated TS module.
 const ts = readFileSync(join(root, "apps/web/src/client/components/wordmark-paths.ts"), "utf8");
 const WM = new Function(
@@ -108,7 +101,6 @@ for (const [name, c] of [
     join(out, `lantern-unlit-${name}.svg`),
     svg(120, 120, lanternBody(c, { flame: false })),
   );
-  writeFileSync(join(out, `glyph-${name}.svg`), svg(120, 120, glyph(c)));
   const wm = wordmark(c);
   writeFileSync(join(out, `wordmark-${name}.svg`), svg(Math.ceil(wm.width), 100, wm.body));
   const lit = wordmark(c, { flame: true });
@@ -157,17 +149,27 @@ writeFileSync(join(out, "app-icon.svg"), tile(0.64, 0));
 writeFileSync(join(out, "app-icon-maskable.svg"), tile(0.5, 0));
 writeFileSync(join(out, "app-icon-rounded.svg"), tile(0.64, 230));
 
-// Favicon: the glyph, ink by day and ivory at night.
-writeFileSync(
-  join(root, "apps/web/public/icon.svg"),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <style>.m{fill:${light.metal};stroke:${light.metal}}@media (prefers-color-scheme: dark){.m{fill:${dark.metal};stroke:${dark.metal}}}</style>
-  <path class="m" d="M42 47 A18 26 0 0 1 78 47" fill="none" stroke-width="8" stroke-linecap="round"/>
-  <rect x="36" y="49" width="48" height="45" rx="5" fill="${light.amber}"/>
-  <path class="m" d="M49 35 H71 L88 52 H32 Z" stroke-width="5" stroke-linejoin="round"/>
-  <rect class="m" x="29" y="88" width="62" height="13" rx="6.5" stroke="none"/>
+// Favicon: the same drawing, ink by day and ivory at night. The viewBox is squared around the
+// drawing's own bounds rather than its 120 box, so the mark fills the tab icon instead of floating
+// with a quarter of it empty. The metal and the glass both follow the browser's scheme.
+const favicon = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="11 12 98 98">
+  <style>
+    .m{fill:${light.metal};stroke:${light.metal}}.g{fill:${light.glass}}
+    @media (prefers-color-scheme: dark){.m{fill:${dark.metal};stroke:${dark.metal}}.g{fill:${dark.glass}}}
+  </style>
+  <path class="m" d="M40.5 48 A19.5 30 0 0 1 79.5 48" fill="none" stroke-width="5.5" stroke-linecap="round"/>
+  <rect class="g" x="38.5" y="49" width="43" height="46" rx="3"/>
+  <path d="M60 58 C75.36 72.3 75.84 76.56 71.4 88.2 A12 12 0 0 1 48.6 88.2 C44.16 76.56 44.64 72.3 60 58 Z" fill="${light.amber}"/>
+  <path d="M60 70.2 C66.86 78.48 67.13 81.89 65.02 86.38 A5.28 5.28 0 0 1 54.98 86.38 C52.87 81.89 53.14 78.48 60 70.2 Z" fill="${light.core}"/>
+  <rect class="m" x="34" y="50" width="5" height="46" rx="2.5" stroke="none"/>
+  <rect class="m" x="81" y="50" width="5" height="46" rx="2.5" stroke="none"/>
+  <path class="m" d="M50 36 H70 L87 51 H33 Z" stroke-width="3" stroke-linejoin="round"/>
+  <rect class="m" x="37.3" y="44.8" width="6.4" height="6.4" rx="3.2" stroke="none"/>
+  <rect class="m" x="76.3" y="44.8" width="6.4" height="6.4" rx="3.2" stroke="none"/>
+  <rect class="m" x="31" y="92" width="58" height="9" rx="4.5" stroke="none"/>
+  <rect class="m" x="38" y="101" width="44" height="5" rx="2.5" stroke="none"/>
 </svg>
-`,
-);
+`;
+writeFileSync(join(root, "apps/web/public/icon.svg"), favicon());
 writeFileSync(join(root, "apps/web/public/icon-ios.svg"), tile(0.64, 0));
 console.log("brand assets written to", out);

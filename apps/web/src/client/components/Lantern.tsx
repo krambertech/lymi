@@ -1,11 +1,11 @@
 import { clsx } from "clsx";
 import type { CSSProperties } from "react";
-import { GLYPH_PARTS, LANTERN_PARTS } from "./lantern-geometry";
+import { LANTERN_PARTS } from "./lantern-geometry";
 
-type Variant = "lit" | "unlit" | "glyph";
+type Variant = "lit" | "unlit";
 
 interface Props {
-  /** "lit" has a flame. "unlit" for when nothing is due. "glyph" is the simplified mark for 12 to 27 px. */
+  /** "lit" has a flame. "unlit" for when nothing is due. One drawing at every size. */
   variant?: Variant | undefined;
   /** Gentle flame movement. Off under reduced motion automatically. */
   flicker?: boolean | undefined;
@@ -54,12 +54,11 @@ export function Lantern({
     carry && "lantern-carry",
   );
   const a11y = title ? { role: "img" as const } : { "aria-hidden": true as const };
-  const parts = variant === "glyph" ? GLYPH_PARTS : LANTERN_PARTS;
 
   return (
     <svg viewBox="0 0 120 120" className={cls} style={style} {...a11y}>
       {title && <title>{title}</title>}
-      <g className="lantern-body">{parts(lit)}</g>
+      <g className="lantern-body">{LANTERN_PARTS(lit)}</g>
     </svg>
   );
 }

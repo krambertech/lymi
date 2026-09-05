@@ -8,6 +8,10 @@ import type { ReactNode } from "react";
  * that flares wide over the glass, two rods down the sides, an opaque glass, and a fount on a foot.
  * The glass is a solid colour and every metal part overlaps its edges, so the mark carries its own
  * interior and can sit on any surface without painting a hole in it.
+ *
+ * There is no second cut for small sizes. The rods and the flame are exactly what keep the drawing
+ * legible when it is tiny; a simplified version that drops them collapses into a mushroom by 24 px.
+ * One drawing, every size.
  */
 
 export type Ink = "metal" | "glass" | "glass-unlit" | "amber" | "flame" | "flame-core" | "ember";
@@ -66,18 +70,6 @@ export const LANTERN_FRAME: Shape[] = [
   { x: 38, y: 101, w: 44, h: 5, r: 2.5, fill: "metal" },
 ];
 
-/** 12 to 27 px: the same silhouette with the rods, pivots and foot dropped. */
-export const GLYPH_BAIL: Shape = {
-  d: "M42 47 A18 26 0 0 1 78 47",
-  stroke: "metal",
-  strokeWidth: 8,
-};
-export const GLYPH_GLASS: Shape = { x: 36, y: 49, w: 48, h: 45, r: 5, fill: "amber" };
-export const GLYPH_FRAME: Shape[] = [
-  { d: "M49 35 H71 L88 52 H32 Z", fill: "metal", stroke: "metal", strokeWidth: 5, round: true },
-  { x: 29, y: 88, w: 62, h: 13, r: 6.5, fill: "metal" },
-];
-
 const PAINT: Record<Ink, string> = {
   metal: "currentColor",
   glass: "var(--glass)",
@@ -128,20 +120,6 @@ export function LANTERN_PARTS(lit: boolean): ReactNode {
       {draw({ ...LANTERN_GLASS, fill: lit ? "glass" : "glass-unlit" }, "glass")}
       {light(lit)}
       {LANTERN_FRAME.map((s, i) => draw(s, `frame-${i}`))}
-    </>
-  );
-}
-
-export function GLYPH_PARTS(lit: boolean): ReactNode {
-  return (
-    <>
-      <g className="lantern-bail" key="bail">
-        {draw(GLYPH_BAIL, "bail")}
-      </g>
-      <g className="lantern-light" key="light">
-        {draw({ ...GLYPH_GLASS, fill: lit ? "amber" : "glass-unlit" }, "glass")}
-      </g>
-      {GLYPH_FRAME.map((s, i) => draw(s, `frame-${i}`))}
     </>
   );
 }

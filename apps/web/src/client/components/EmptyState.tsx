@@ -25,7 +25,6 @@ export function EmptyState({ title, body, action, lantern = "unlit", className }
         <Lantern
           variant={lantern}
           flicker={lantern === "lit"}
-          glow={lantern === "lit"}
           className="mb-4 size-28 @3xl:size-32"
         />
       )}

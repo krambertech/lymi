@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 import { Lantern } from "./Lantern";
-import { GLYPH_PARTS, LANTERN_BOUNDS, LANTERN_PARTS } from "./lantern-geometry";
+import { LANTERN_BOUNDS, LANTERN_PARTS } from "./lantern-geometry";
 import { WORDMARK } from "./wordmark-paths";
 
 const EM = 100; // wordmark units per em
@@ -125,8 +125,7 @@ export function Lockup({
         transform={`translate(${lanternX} ${lanternY}) scale(${s})`}
         style={{ height: L }}
       >
-        {/* Below 28 px the full lantern loses its rods and pivots, so the glyph takes over. */}
-        {L * k < 28 ? GLYPH_PARTS(true) : LANTERN_PARTS(true)}
+        {LANTERN_PARTS(true)}
       </g>
       <g fill="currentColor" transform={`translate(${textX} 0)`}>
         {WORDMARK.glyphs.map((g) => (
@@ -180,7 +179,6 @@ export function AppTile({ size = 28, glow = true, className, title }: AppTilePro
     >
       {title && <span className="sr-only">{title}</span>}
       <Lantern
-        variant={box < 28 ? "glyph" : "lit"}
         glow={glow}
         style={
           {

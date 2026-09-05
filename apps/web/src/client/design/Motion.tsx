@@ -33,7 +33,7 @@ const TIMINGS: [string, string, string][] = [
   ["Theme switch", "none", "Transitions are suspended for one frame so the room swaps at once."],
 ];
 
-type State = "idle" | "flicker" | "flare" | "lit" | "unlit";
+type State = "idle" | "flicker" | "flare" | "lit" | "catch" | "carry" | "unlit";
 
 export function Motion() {
   const [state, setState] = useState<State>("flicker");
@@ -51,7 +51,7 @@ export function Motion() {
     >
       <Sub
         title="Lantern states"
-        note="Flicker is a 2.6 s loop on the flame only. Flare is a one-shot after a good answer. Lit up is the end of a session and stays. Unlit has no flame and no glow."
+        note="Flicker is a 2.6 s loop: the flame scales, the bright core beats out of phase with it, and the halo breathes with both. Flare is a one-shot after a good answer. Lit up is the end of a session and stays. Catch is the wick taking, for unlit to lit. Carried swings the body from the bail. Unlit has no flame and no glow."
       >
         <Pair>
           {() => (
@@ -59,10 +59,15 @@ export function Motion() {
               <Lantern
                 className="size-40"
                 variant={state === "unlit" ? "unlit" : "lit"}
-                flicker={state === "flicker" || state === "flare"}
+                flicker={
+                  state === "flicker" || state === "flare" || state === "carry" || state === "catch"
+                }
                 glow={state !== "unlit"}
                 flare={state === "flare"}
                 litUp={state === "lit"}
+                catchLight={state === "catch"}
+                carry={state === "carry"}
+                key={state}
               />
               <Segmented
                 size="sm"
@@ -77,6 +82,8 @@ export function Motion() {
                   { value: "flicker", label: "Flicker" },
                   { value: "flare", label: "Flare" },
                   { value: "lit", label: "Lit up" },
+                  { value: "catch", label: "Catch" },
+                  { value: "carry", label: "Carried" },
                   { value: "unlit", label: "Unlit" },
                 ]}
               />

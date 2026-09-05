@@ -11,13 +11,21 @@ export const Route = createFileRoute("/login")({
 
 function Login() {
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
   return (
     <LoginView
       busy={busy}
+      error={error}
       onGoogle={async () => {
         setBusy(true);
+        setError(undefined);
         try {
-          await signInWithGoogle();
+          // better-auth returns the failure rather than throwing, so a silent `await` here
+          // left the button spinning and then stopping with nothing said.
+          const res = await signInWithGoogle();
+          if (res.error) setError("Sign-in didn’t go through. Try again.");
+        } catch {
+          setError("Can’t reach the sign-in service. Check your connection.");
         } finally {
           setBusy(false);
         }

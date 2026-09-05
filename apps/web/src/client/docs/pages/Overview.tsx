@@ -15,8 +15,8 @@ export function Overview() {
       <div className="mb-10 flex items-center gap-4 rounded-lg bg-plate p-4 edge">
         <Lantern variant="lit" flicker glow className="size-14 shrink-0" />
         <p className="!mb-0 text-base text-text-2">
-          Collect a word once, wherever you meet it. Lymi holds it, prepares the card and brings it
-          back before you forget.
+          Collect a word once, wherever you meet it. Lymi keeps it and brings it back before you
+          forget.
         </p>
       </div>
 

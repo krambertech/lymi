@@ -317,5 +317,6 @@ not "Congratulations!". Errors say how to fix it. Anything the AI wrote is label
 - No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
 - No full lantern below 28 px. No amber beyond the flame and the primary action.
+- No two flames in one composition. If the lantern is on the screen, the wordmark is plain.
 - No translucent glass, and no room colour painted inside the mark. The lantern must survive being put on a surface it did not expect.
 - No display serif, no sparkle icon, no streak counter, no confetti.

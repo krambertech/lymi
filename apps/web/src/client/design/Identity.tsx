@@ -61,7 +61,7 @@ export function Identity() {
 
       <Sub
         title="Wordmark"
-        note="lymi, lowercase, Onest 600, tracked to −0.025em, drawn as paths so it renders before fonts load. The lit version replaces the dot of the i with a flame. Use it on the login screen and the app store; everywhere else the plain one."
+        note="lymi, lowercase, Onest 600, tracked to −0.025em, drawn as paths so it renders before fonts load. The lit version replaces the dot of the i with a flame. One flame to a composition: use it only where the wordmark stands alone and the lantern is nowhere on the screen — the app store listing, a share image. Anywhere the lantern is present, the wordmark is plain."
       >
         <Pair>
           {() => (
@@ -121,6 +121,7 @@ export function Identity() {
             "Don’t add a second illustration. The lantern is the one drawing; everything else is a standard control.",
             "Don’t outline, rotate or bevel the mark. Don’t put it in a circle unless the platform demands one.",
             "Don’t show the full lantern below 28 px. Use the glyph.",
+            "Don’t show two flames at once. If the lantern is on the screen, the wordmark is plain.",
             "Don’t let amber appear more than twice on a screen: the flame, and the one thing to press.",
           ].map((t) => (
             <li key={t} className="edge rounded-md bg-plate px-4 py-3">

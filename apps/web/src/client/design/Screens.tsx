@@ -225,7 +225,7 @@ export function Screens() {
 
       <Sub
         title="Login"
-        note="The front door. The lantern is already lit and the wordmark carries the flame: you are expected."
+        note="The front door. The lantern is already lit: you are expected. The wordmark stays plain, because one flame to a composition."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Sign in" initial="dark" path="/login" bare>

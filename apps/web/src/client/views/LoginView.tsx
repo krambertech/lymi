@@ -14,7 +14,8 @@ export function LoginView({ onGoogle, busy, children }: LoginProps) {
   return (
     <div className="flex min-h-full flex-1 flex-col items-center justify-center gap-3 px-6 text-center pt-safe pb-safe">
       <Lantern className="size-28 @3xl:size-32" flicker glow />
-      <Wordmark size={30} flame className="mt-5 text-text" title="Lymi" />
+      {/* Plain, not lit: the lantern above it already carries the flame. */}
+      <Wordmark size={30} className="mt-5 text-text" title="Lymi" />
       <p className="max-w-[28ch] text-md text-muted">Vocabulary you carry with you.</p>
       <Button
         variant="primary"

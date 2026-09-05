@@ -1,0 +1,27 @@
+{
+  "name": "lymi",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Vocabulary app with a storm lantern.",
+  "packageManager": "pnpm@10.16.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @lymi/web dev",
+    "build": "pnpm -r build",
+    "deploy": "pnpm --filter @lymi/web deploy",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "check": "biome check .",
+    "fix": "biome check --write .",
+    "db:generate": "pnpm --filter @lymi/web db:generate",
+    "db:migrate": "pnpm --filter @lymi/web db:migrate",
+    "db:migrate:prod": "pnpm --filter @lymi/web db:migrate:prod",
+    "icons": "sh scripts/icons.sh"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "typescript": "^5.9.0"
+  }
+}

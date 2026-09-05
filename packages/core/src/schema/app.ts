@@ -49,6 +49,8 @@ export const cards = sqliteTable(
       .notNull()
       .references(() => decks.id, { onDelete: "cascade" }),
     term: text("term").notNull(),
+    /** `normaliseTerm(term)`. The duplicate rule compares this, per user and language. */
+    normalizedTerm: text("normalized_term").notNull().default(""),
     meaning: text("meaning"),
     pronunciation: text("pronunciation"),
     example: text("example"),
@@ -73,6 +75,7 @@ export const cards = sqliteTable(
   (t) => [
     index("cards_deck_idx").on(t.deckId, t.archivedAt),
     index("cards_user_term_idx").on(t.userId, t.term),
+    index("cards_user_lang_norm_idx").on(t.userId, t.language, t.normalizedTerm),
   ],
 );
 

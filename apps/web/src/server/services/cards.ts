@@ -1,37 +1,97 @@
 import type { CardInput, CardPatch } from "@lymi/core";
-import { emptyState, expandDirections, newId, serializeState } from "@lymi/core";
-import { and, eq } from "@lymi/core/db";
+import { emptyState, expandDirections, newId, normaliseTerm, serializeState } from "@lymi/core";
+import { and, eq, inArray, isNull } from "@lymi/core/db";
+import type { Card } from "@lymi/core/schema";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
 
 /**
- * Create a card and its scheduling state. Both directions get a state row so the review
- * queue can serve either; production is opt-in per deck later, so only recognition is due now.
+ * What happened to one card in an add. A duplicate is skipped, never rejected, and the
+ * caller learns which card already holds the term and in which deck. See ADR 0004.
  */
-export async function createCard(ctx: ServiceContext, input: CardInput) {
+export type AddCardOutcome =
+  | { status: "added"; card: Card }
+  | { status: "skipped"; term: string; existing: Card; deckName: string };
+
+/** One card. Same rule as the batch, one outcome. */
+export async function addCard(ctx: ServiceContext, input: CardInput): Promise<AddCardOutcome> {
+  const [outcome] = await addCards(ctx, [input]);
+  if (!outcome) throw new Error("addCards returned no outcome for one input");
+  return outcome;
+}
+
+/**
+ * Add one or many cards. Each gets its scheduling state rows. Duplicates, against the
+ * learner's active cards and against earlier cards in the same batch, are skipped and
+ * reported. Order of outcomes matches order of inputs.
+ */
+export async function addCards(
+  ctx: ServiceContext,
+  inputs: CardInput[],
+): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
-  const [deck] = await db
+  if (inputs.length === 0) return [];
+
+  const deckIds = [...new Set(inputs.map((i) => i.deckId))];
+  const decks = await db
     .select({
       id: schema.decks.id,
+      name: schema.decks.name,
       defaultLanguage: schema.decks.defaultLanguage,
       directions: schema.decks.directions,
     })
     .from(schema.decks)
-    .where(and(eq(schema.decks.id, input.deckId), eq(schema.decks.userId, userId)));
-  if (!deck) throw notFound("Deck");
+    .where(and(inArray(schema.decks.id, deckIds), eq(schema.decks.userId, userId)));
+  const deckById = new Map(decks.map((d) => [d.id, d]));
 
-  const id = newId();
+  // Resolve language and key per input, then look up every key in one query.
+  const prepared = inputs.map((input) => {
+    const deck = deckById.get(input.deckId);
+    if (!deck) throw notFound("Deck");
+    const language = input.language === undefined ? deck.defaultLanguage : input.language;
+    return { input, deck, language, key: normaliseTerm(input.term) };
+  });
+
+  const existingRows = await db
+    .select({ card: schema.cards, deckName: schema.decks.name })
+    .from(schema.cards)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(
+      and(
+        eq(schema.cards.userId, userId),
+        isNull(schema.cards.archivedAt),
+        inArray(schema.cards.normalizedTerm, [...new Set(prepared.map((p) => p.key))]),
+      ),
+    );
+  const existing = new Map<string, { card: Card; deckName: string }>();
+  for (const row of existingRows) {
+    existing.set(dupKey(row.card.language, row.card.normalizedTerm), row);
+  }
+
   const now = new Date();
-  const language = input.language === undefined ? deck.defaultLanguage : input.language;
-  const directions = expandDirections(input.directions ?? deck.directions);
+  const outcomes: AddCardOutcome[] = [];
+  const statements = [];
+  const addedIds: string[] = [];
 
-  await db.batch([
-    db.insert(schema.cards).values({
+  for (const { input, deck, language, key } of prepared) {
+    const hit = existing.get(dupKey(language, key));
+    if (hit) {
+      outcomes.push({
+        status: "skipped",
+        term: input.term,
+        existing: hit.card,
+        deckName: hit.deckName,
+      });
+      continue;
+    }
+    const id = newId();
+    const card: Card = {
       id,
       userId,
       deckId: input.deckId,
       term: input.term,
+      normalizedTerm: key,
       meaning: input.meaning ?? null,
       pronunciation: input.pronunciation ?? null,
       example: input.example ?? null,
@@ -42,29 +102,62 @@ export async function createCard(ctx: ServiceContext, input: CardInput) {
       directions: input.directions ?? null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
+      audioKey: null,
       createdBy: actor,
-    }),
-    ...directions.map((direction) =>
-      db.insert(schema.cardStates).values({
+      archivedAt: null,
+      createdAt: now,
+      updatedAt: now,
+    };
+    statements.push(db.insert(schema.cards).values(card));
+    for (const direction of expandDirections(input.directions ?? deck.directions)) {
+      statements.push(
+        db.insert(schema.cardStates).values({
+          id: newId(),
+          cardId: id,
+          userId,
+          direction,
+          due: now,
+          state: 0,
+          fsrs: serializeState(emptyState(now)),
+        }),
+      );
+    }
+    statements.push(
+      db.insert(schema.auditLog).values({
         id: newId(),
-        cardId: id,
         userId,
-        direction,
-        due: now,
-        state: 0,
-        fsrs: serializeState(emptyState(now)),
+        actor,
+        action: "create",
+        entity: "card",
+        entityId: id,
+        payload: input,
       }),
-    ),
-  ]);
-  await audit(db, {
-    userId,
-    actor,
-    action: "create",
-    entity: "card",
-    entityId: id,
-    payload: input,
-  });
-  return getCard(ctx, id);
+    );
+    // Later inputs in this batch with the same key are duplicates of this one.
+    existing.set(dupKey(language, key), { card, deckName: deck.name });
+    addedIds.push(id);
+    outcomes.push({ status: "added", card });
+  }
+
+  const [first, ...rest] = statements;
+  if (first) await db.batch([first, ...rest]);
+
+  // Swap the in-memory cards for the stored rows so callers see database defaults.
+  if (addedIds.length > 0) {
+    const rows = await db.select().from(schema.cards).where(inArray(schema.cards.id, addedIds));
+    const byId = new Map(rows.map((r) => [r.id, r]));
+    for (const outcome of outcomes) {
+      if (outcome.status !== "added") continue;
+      const stored = byId.get(outcome.card.id);
+      if (stored) outcome.card = stored;
+    }
+  }
+  return outcomes;
+}
+
+/** A card with no language only matches other cards with no language. */
+function dupKey(language: string | null, normalizedTerm: string): string {
+  return `${language ?? ""} ${normalizedTerm}`;
 }
 
 export async function getCard({ db, userId }: ServiceContext, id: string) {
@@ -78,10 +171,18 @@ export async function getCard({ db, userId }: ServiceContext, id: string) {
 
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
   const { db, userId, actor } = ctx;
-  await getCard(ctx, id);
+  const current = await getCard(ctx, id);
+  if (patch.deckId && patch.deckId !== current.deckId) {
+    const [deck] = await db
+      .select({ id: schema.decks.id })
+      .from(schema.decks)
+      .where(and(eq(schema.decks.id, patch.deckId), eq(schema.decks.userId, userId)));
+    if (!deck) throw notFound("Deck");
+  }
+  const key = patch.term === undefined ? {} : { normalizedTerm: normaliseTerm(patch.term) };
   await db
     .update(schema.cards)
-    .set({ ...patch, updatedAt: new Date() })
+    .set({ ...patch, ...key, updatedAt: new Date() })
     .where(eq(schema.cards.id, id));
   await audit(db, {
     userId,

@@ -44,6 +44,10 @@ export type QueueItem = {
   next: Record<Rating, string>;
 };
 export type Queue = { total: number; items: QueueItem[] };
+/** Mirrors AddCardOutcome on the server. A duplicate is skipped and names the card that exists. */
+export type AddCardOutcome =
+  | { status: "added"; card: Card }
+  | { status: "skipped"; term: string; existing: Card; deckName: string };
 
 export const api = {
   me: () => request<Me>("/api/me"),
@@ -52,8 +56,8 @@ export const api = {
     request<Deck>("/api/decks", { method: "POST", body: JSON.stringify(body) }),
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
-  createCard: (body: CardInput) =>
-    request<Card>("/api/cards", { method: "POST", body: JSON.stringify(body) }),
+  addCard: (body: CardInput) =>
+    request<AddCardOutcome>("/api/cards", { method: "POST", body: JSON.stringify(body) }),
   archiveCard: (id: string) =>
     request<{ ok: true }>(`/api/cards/${id}/archive`, { method: "POST" }),
   restoreCard: (id: string) =>

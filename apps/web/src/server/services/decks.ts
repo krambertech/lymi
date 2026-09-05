@@ -76,3 +76,54 @@ export async function listDeckCards({ db, userId }: ServiceContext, deckId: stri
     )
     .orderBy(sql`${schema.cards.createdAt} desc`);
 }
+
+export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
+
+export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPatch) {
+  const { db, userId, actor } = ctx;
+  const result = await db
+    .update(schema.decks)
+    .set({ ...patch, updatedAt: new Date() })
+    .where(and(eq(schema.decks.id, id), eq(schema.decks.userId, userId)))
+    .returning({ id: schema.decks.id });
+  if (result.length === 0) throw notFound("Deck");
+  await audit(db, {
+    userId,
+    actor,
+    action: "update",
+    entity: "deck",
+    entityId: id,
+    payload: patch,
+  });
+  return getDeck(ctx, id);
+}
+
+/** Archive, never delete. The cards stay put; the deck leaves every list until restored. */
+export async function archiveDeck(ctx: ServiceContext, id: string) {
+  return setDeckArchived(ctx, id, new Date());
+}
+export async function restoreDeck(ctx: ServiceContext, id: string) {
+  return setDeckArchived(ctx, id, null);
+}
+
+async function setDeckArchived(
+  { db, userId, actor }: ServiceContext,
+  id: string,
+  archivedAt: Date | null,
+) {
+  const result = await db
+    .update(schema.decks)
+    .set({ archivedAt, updatedAt: new Date() })
+    .where(and(eq(schema.decks.id, id), eq(schema.decks.userId, userId)))
+    .returning({ id: schema.decks.id });
+  if (result.length === 0) throw notFound("Deck");
+  await audit(db, {
+    userId,
+    actor,
+    action: archivedAt ? "archive" : "restore",
+    entity: "deck",
+    entityId: id,
+    payload: {},
+  });
+  return { ok: true as const };
+}

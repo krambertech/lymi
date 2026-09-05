@@ -1,6 +1,6 @@
 import type { GradeInput } from "@lymi/core";
 import { deserializeState, newId, preview, schedule, serializeState } from "@lymi/core";
-import { and, asc, eq, isNull, lte, sql } from "@lymi/core/db";
+import { and, asc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
@@ -128,4 +128,36 @@ export async function gradeCard({ db, userId, actor }: ServiceContext, input: Gr
     due: result.card.due.toISOString(),
     state: result.card.state,
   };
+}
+
+/**
+ * Reviews per day for the last `days` days in the learner's timezone, oldest first. Feeds
+ * the seven lights. `tzOffset` is minutes, as Date.getTimezoneOffset reports it.
+ */
+export async function reviewHistory(
+  { db, userId }: ServiceContext,
+  opts: { days?: number | undefined; tzOffset?: number | undefined } = {},
+) {
+  const days = Math.min(Math.max(opts.days ?? 7, 1), 90);
+  const tz = opts.tzOffset ?? 0;
+  const now = new Date();
+  const localNow = new Date(now.getTime() - tz * 60_000);
+  const startLocal = Date.UTC(
+    localNow.getUTCFullYear(),
+    localNow.getUTCMonth(),
+    localNow.getUTCDate() - (days - 1),
+  );
+  const start = new Date(startLocal + tz * 60_000);
+
+  const rows = await db
+    .select({ reviewedAt: schema.reviews.reviewedAt })
+    .from(schema.reviews)
+    .where(and(eq(schema.reviews.userId, userId), gte(schema.reviews.reviewedAt, start)));
+
+  const counts = new Array<number>(days).fill(0);
+  for (const r of rows) {
+    const i = Math.floor((r.reviewedAt.getTime() - tz * 60_000 - startLocal) / 86_400_000);
+    if (i >= 0 && i < days) counts[i] = (counts[i] ?? 0) + 1;
+  }
+  return { days: counts };
 }

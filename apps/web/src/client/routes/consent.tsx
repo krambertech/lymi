@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { Button } from "../components/Button";
+import { Checkbox } from "../components/Checkbox";
 import { Lantern } from "../components/Lantern";
 import { authClient } from "../lib/auth";
 import { meQuery } from "../lib/queries";
@@ -71,52 +72,49 @@ function Consent() {
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 pt-safe pb-safe">
-      <Lantern className="size-16 text-ink" />
-      <div className="w-full max-w-sm rounded-xl border border-border bg-surface p-5">
-        <h1 className="text-[22px] font-semibold leading-tight">Let {name} use your Lymi?</h1>
+      <Lantern className="size-16" glow />
+      <div className="edge w-full max-w-sm rounded-xl bg-plate p-5">
+        <h1 className="text-2xl font-medium leading-tight">Let {name} use your Lymi?</h1>
         {client.data?.client_uri && (
-          <p className="mt-1 truncate text-[13px] text-muted">{client.data.client_uri}</p>
+          <p className="mt-1 truncate text-sm text-muted">{client.data.client_uri}</p>
         )}
         {me.data && (
-          <p className="mt-3 text-[14.5px] text-ink-2">
-            Signed in as <span className="font-medium text-ink">{me.data.email}</span>
+          <p className="mt-3 text-base text-text-2">
+            Signed in as <span className="font-medium text-text">{me.data.email}</span>
           </p>
         )}
 
         <ul className="mt-5 grid gap-3">
-          <li className="flex gap-3 text-[14.5px]">
+          <li className="flex gap-3 text-base">
             <Check />
             <div>
               <p className="font-medium">See your decks and cards</p>
-              <p className="text-[13px] text-muted">List, search and read. Always included.</p>
+              <p className="text-sm text-muted">List, search and read. Always included.</p>
             </div>
           </li>
           {requested.has("write") && (
             <li>
-              <label className="flex cursor-pointer gap-3 text-[14.5px]">
-                <input
-                  type="checkbox"
-                  checked={allowWrite}
-                  onChange={(e) => setAllowWrite(e.target.checked)}
-                  className="mt-0.5 size-5 shrink-0 accent-amber"
-                />
-                <div>
-                  <p className="font-medium">Add, edit and archive cards and decks</p>
-                  <p className="text-[13px] text-muted">
-                    Cards it adds land at once and show up in Activity, where you can inspect, edit
-                    or archive them.
-                  </p>
-                </div>
-              </label>
+              <Checkbox
+                checked={allowWrite}
+                onChange={setAllowWrite}
+                className="items-start"
+                label={
+                  <span className="grid gap-0.5">
+                    <span className="font-medium">Add, edit and archive cards and decks</span>
+                    <span className="text-sm text-muted">
+                      Cards it adds land at once and show up in Activity, where you can inspect,
+                      edit or archive them.
+                    </span>
+                  </span>
+                }
+              />
             </li>
           )}
         </ul>
-        <p className="mt-4 text-[13px] text-muted">
-          It can never grade your reviews or make API keys.
-        </p>
+        <p className="mt-4 text-sm text-muted">It can never grade your reviews or make API keys.</p>
 
         {error && (
-          <p className="mt-3 text-[13px] text-amber-text" role="alert">
+          <p className="mt-3 text-sm text-danger" role="alert">
             {error}
           </p>
         )}

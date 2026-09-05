@@ -1,76 +1,114 @@
 ---
 name: Lymi
-description: A vocabulary app with a storm lantern. Warm, calm, quick.
+description: A vocabulary app with a storm lantern. Two rooms, one flame. Warm, calm, quick.
 colors:
-  bg: "#ffffff"
-  surface: "#f8f6f4"
-  raised: "#f1eeea"
-  hover: "#eae5e1"
-  border: "#e1ddda"
-  border-strong: "#c7c3bf"
-  ink: "#1f1915"
-  ink-2: "#4d4641"
-  muted: "#706760"
-  amber: "#f8ac3d"
-  amber-hover: "#ef9d32"
-  amber-ink: "#331b06"
-  amber-text: "#9f4500"
-  amber-soft: "#f8ac3d2e"
-  glass: "#f8ac3d38"
-  flame-core: "#fff0b4"
-  good: "#007d50"
-  good-soft: "#007d501f"
-  dark-bg: "#140e0a"
-  dark-surface: "#1d1713"
-  dark-raised: "#28211c"
-  dark-hover: "#312924"
-  dark-border: "#39312c"
-  dark-border-strong: "#4e4640"
-  dark-ink: "#f2eee9"
-  dark-ink-2: "#c8c3bd"
-  dark-muted: "#9f978f"
-  dark-amber-text: "#f9b64f"
-  dark-good: "#74c692"
+  canvas: "#f8f7f5"
+  plate: "#ffffff"
+  plate-2: "#f1efec"
+  hover: "#edebe7"
+  edge: "#2a221c1a"
+  edge-2: "#2a221c33"
+  text: "#2d2622"
+  text-2: "#5a524c"
+  muted: "#7a716a"
+  faint: "#a89f97"
+  amber: "#f5ad48"
+  amber-hover: "#eb9f3a"
+  amber-ink: "#3a2a12"
+  amber-text: "#9c4d0a"
+  amber-soft: "#f5ad4829"
+  flame-core: "#fff4c2"
+  metal: "#2f2823"
+  glow: "#f5ad4873"
+  good: "#186f4b"
+  good-soft: "#1f7d551f"
+  danger: "#b3331f"
+  danger-soft: "#b3331f1a"
+  dark-canvas: "#151210"
+  dark-plate: "#201b18"
+  dark-plate-2: "#2a241f"
+  dark-hover: "#2f2924"
+  dark-edge: "#ffffff14"
+  dark-edge-2: "#ffffff26"
+  dark-text: "#ebe6df"
+  dark-text-2: "#c4bcb3"
+  dark-muted: "#9b928a"
+  dark-faint: "#6b625b"
+  dark-amber: "#f6b34d"
+  dark-amber-text: "#f4bd63"
+  dark-metal: "#f3f0eb"
+  dark-good: "#78c496"
+  dark-danger: "#e3745d"
 typography:
-  display:
-    fontFamily: "Outfit, system-ui, sans-serif"
-    fontSize: "36px"
-    fontWeight: 600
-    lineHeight: 1.1
+  word:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "46px"
+    fontWeight: 500
+    lineHeight: 1.0
     letterSpacing: "-0.03em"
-  headline:
-    fontFamily: "Outfit, system-ui, sans-serif"
-    fontSize: "22px"
-    fontWeight: 600
-    lineHeight: 1.2
+  word-phone:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "38px"
+    fontWeight: 500
+    lineHeight: 1.05
+    letterSpacing: "-0.03em"
+  hero:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "30px"
+    fontWeight: 500
+    lineHeight: 1.15
     letterSpacing: "-0.02em"
   title:
-    fontFamily: "Outfit, system-ui, sans-serif"
-    fontSize: "18px"
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "24px"
     fontWeight: 500
-    lineHeight: 1.4
+    lineHeight: 1.2
+    letterSpacing: "-0.02em"
+  meaning:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "20px"
+    fontWeight: 400
+    lineHeight: 1.35
+  lede:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "15.5px"
+    fontWeight: 400
+    lineHeight: 1.5
   body:
-    fontFamily: "Outfit, system-ui, sans-serif"
-    fontSize: "15px"
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "14.5px"
     fontWeight: 400
     lineHeight: 1.5
   label:
-    fontFamily: "Outfit, system-ui, sans-serif"
-    fontSize: "12.5px"
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "13px"
+    fontWeight: 500
+    lineHeight: 1.45
+  caption:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "12px"
     fontWeight: 500
     lineHeight: 1.4
+  kbd:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "11px"
+    fontWeight: 600
+    lineHeight: 1.3
 rounded:
+  xs: "6px"
   sm: "10px"
   md: "14px"
   lg: "18px"
-  xl: "24px"
+  xl: "22px"
+  2xl: "30px"
   pill: "999px"
 spacing:
   xs: "4px"
   sm: "8px"
   md: "16px"
   lg: "24px"
-  xl: "40px"
+  xl: "32px"
+  2xl: "48px"
 components:
   button-primary:
     backgroundColor: "{colors.amber}"
@@ -81,8 +119,9 @@ components:
   button-primary-hover:
     backgroundColor: "{colors.amber-hover}"
   button-secondary:
-    backgroundColor: "{colors.bg}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.plate}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.edge}"
     rounded: "{rounded.md}"
     height: "40px"
     padding: "0 16px"
@@ -90,29 +129,38 @@ components:
     backgroundColor: "{colors.hover}"
   button-ghost:
     backgroundColor: "transparent"
-    textColor: "{colors.ink-2}"
+    textColor: "{colors.text-2}"
     rounded: "{rounded.md}"
     height: "40px"
     padding: "0 16px"
-  button-grade:
-    backgroundColor: "{colors.bg}"
-    textColor: "{colors.ink}"
+  button-danger:
+    backgroundColor: "{colors.danger-soft}"
+    textColor: "{colors.danger}"
     rounded: "{rounded.md}"
-    height: "56px"
+    height: "40px"
+  button-grade:
+    backgroundColor: "{colors.plate}"
+    textColor: "{colors.text-2}"
+    borderColor: "{colors.edge}"
+    rounded: "{rounded.lg}"
+    height: "60px"
   button-grade-good:
     backgroundColor: "{colors.amber}"
     textColor: "{colors.amber-ink}"
-    rounded: "{rounded.md}"
-    height: "56px"
+    rounded: "{rounded.lg}"
+    height: "60px"
   input:
-    backgroundColor: "{colors.bg}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.plate}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.edge}"
     rounded: "{rounded.md}"
     height: "40px"
     padding: "0 14px"
+  input-focus:
+    borderColor: "{colors.amber}"
   chip:
-    backgroundColor: "{colors.bg}"
-    textColor: "{colors.ink-2}"
+    backgroundColor: "{colors.plate-2}"
+    textColor: "{colors.text-2}"
     rounded: "{rounded.pill}"
     height: "26px"
     padding: "0 10px"
@@ -121,196 +169,125 @@ components:
     textColor: "{colors.amber-text}"
     rounded: "{rounded.pill}"
     height: "26px"
-    padding: "0 10px"
   chip-known:
     backgroundColor: "{colors.good-soft}"
     textColor: "{colors.good}"
     rounded: "{rounded.pill}"
     height: "26px"
-    padding: "0 10px"
   card:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.plate}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.edge}"
     rounded: "{rounded.xl}"
-    padding: "24px 20px 20px"
+  deck-row:
+    backgroundColor: "{colors.plate}"
+    borderColor: "{colors.edge}"
+    rounded: "{rounded.lg}"
   toast:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.bg}"
+    backgroundColor: "{colors.text}"
+    textColor: "{colors.canvas}"
     rounded: "{rounded.md}"
-    padding: "10px 10px 10px 14px"
 ---
 
-# Design System: Lymi
+# Lymi design system
 
-The reference rendering of everything below is [design/identity.html](design/identity.html). Open it in a browser. It has a light and dark toggle, the mark at every size, the controls, and three phone screens plus the desktop deck view. When this file and that page disagree, fix the page first and then this file.
+The live version of this document is the `/design` route in local development. It renders every
+token, component and screen below with the real code. This file is the same system for tools that
+read files.
 
-Canonical colour values are OKLCH. The hex values in the frontmatter are sRGB conversions for tools that need them.
+## The idea
 
-## 1. Overview
+Lymi is cut from *lyhty*, the Finnish word for lantern. The symbol is a storm lantern, the kind you
+carry. It is lit while you review, brighter when you finish, and dark when nothing is due. The
+interface is two rooms: a dark one lit by that lantern, and a light one at noon. The app follows the
+OS theme unless the user picks one in Settings.
 
-**Creative North Star: "The Storm Lantern"**
+Three words: warm, calm, quick.
 
-A hurricane lamp you carry with you. Lymi is the light you bring to a nightly habit: on while you review, flickering when a card lands, brighter when you are done. The interface around the lantern is plain on purpose. Rounded, quick, standard controls, one warm accent, and a typeface whose o's are true circles so the wordmark and the glass belong together.
+## Surfaces are flat
 
-The system is light by default. Dark is a warm room lit from inside, with tinted near-black greys, never pure black. Both themes share the same amber and the same shapes, so the app feels like one object at noon and at midnight.
+Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of three
+tones: `canvas` (the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). Hover
+strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Nothing
+lifts, and amber never marks state.
 
-It rejects the editorial dark-mode look (display serifs, neon accents), the dashboard look (hero numbers, rings, charts), the mascot look (a character who talks to you), and generic AI styling (sparkles, purple gradients). See PRODUCT.md for the full anti-reference list.
+The only glow in the interface belongs to the lantern. In CSS it is the `glow` utility
+(`filter: drop-shadow(0 0 14px var(--glow))`) and nothing else may use it.
 
-**Key Characteristics:**
-- One typeface, four weights, fixed rem scale at ratio 1.2
-- Pure white ground, warm-tinted greys, one amber accent, one status green
-- 14 px default corner radius, 40 px controls, 56 px grade buttons
-- The lantern is the only illustration and the only thing that animates
-- Motion is 150 to 320 ms, ease-out, and always tied to a user action
+## Colour
 
-## 2. Colors: The Lantern Palette
+Warm neutrals, nearly grey. Amber is the only saturated colour and appears at most twice on a screen:
+the flame, and the one thing to press. A due count in `amber-text` is the third allowed use.
 
-Warm-tinted neutrals on a pure white ground, with amber for the flame and for anything that asks to be pressed.
+Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
 
-### Primary
-- **Amber** (`#f8ac3d`, `oklch(0.80 0.15 72)`): the flame, the primary button, the Good grade, the "due" count, the progress bar. Also the highlight behind the target word in an example sentence at 18% alpha.
-- **Amber Hover** (`#ef9d32`, `oklch(0.76 0.15 68)`): primary button hover.
-- **Amber Ink** (`#331b06`, `oklch(0.25 0.05 60)`): text on amber. Never white on amber.
-- **Amber Text** (`#9f4500` light, `#f9b64f` dark): amber as text or icon on the page ground. Meets 4.5:1 in both themes. The full-strength amber does not, so never set text in it.
-- **Glass** (amber at 22% alpha, 26% in dark): the fill of the lantern's glass.
-- **Flame Core** (`#fff0b4`, `oklch(0.96 0.08 88)`): the inner flame only.
+Text on canvas meets 4.5:1 in both rooms, including `muted`. `faint` is decorative and never
+carries words. Dark is not inverted light: the plate is lighter than the canvas in both rooms.
 
-### Secondary
-- **Known** (`#007d50` light, `#74c692` dark): status green for cards that have graduated. Used in the Known chip and nowhere else.
+## The lantern
 
-### Neutral
-- **Bg** (`#ffffff` / `#140e0a`): page ground. Light is exactly white. Dark is `oklch(0.17 0.012 55)`, a warm near-black.
-- **Surface** (`#f8f6f4` / `#1d1713`): cards, sidebar, panels.
-- **Raised** (`#f1eeea` / `#28211c`): progress tracks, wells, the unlit lantern's glass.
-- **Hover** (`#eae5e1` / `#312924`): hover fill for secondary buttons and list rows.
-- **Border** (`#e1ddda` / `#39312c`): hairlines.
-- **Border Strong** (`#c7c3bf` / `#4e4640`): input and secondary-button borders, toggle track when off.
-- **Ink** (`#1f1915` / `#f2eee9`): text, and the metal of the lantern.
-- **Ink 2** (`#4d4641` / `#c8c3bd`): secondary text, ghost button text.
-- **Muted** (`#706760` / `#9f978f`): labels, counts, placeholders. Meets 4.5:1 on Bg in both themes.
+Handle, cap, glass, flame, base, all at one stroke weight. The metal is `metal`, which is the text
+colour of the room: ink by day, white at night. Never grey. The glass is `amber-soft`. Below 24 px the drawing simplifies to a glyph
+(handle, cap, solid amber glass, base). The full lantern starts at 28 px.
 
-### Named Rules
-**The One Flame Rule.** Amber appears on a screen for at most three reasons: the flame, the one primary action, and the due count. If a fourth amber thing appears, one of them is wrong.
+States: lit (flame, optional flicker), lit and glowing (something is due), lit up (session done:
+bigger flame, wider glow, stays), flare (one-shot after Good or Easy), unlit (no flame, no glow).
 
-**The Warm Room Rule.** Dark theme greys carry chroma 0.012 to 0.015 at hue 55. Pure black and pure grey are not in the palette.
+## Wordmark and lockups
 
-**The Metal Takes Ink Rule.** The lantern's handle, cap and base are `currentColor`, so the mark recolours itself with the theme and needs no separate dark asset.
+`lymi`, lowercase, Onest 600, tracked −0.025em, drawn as paths (`components/wordmark-paths.ts`,
+generated with fontTools). The lit wordmark replaces the dot of the i with a flame; use it on the
+login screen and the app store, the plain one everywhere else. Row lockup: the lantern is 1.38em tall, its
+base on the baseline, 0.17em before the word. There is no stacked lockup. Clear space: half a lantern
+on every side.
 
-## 3. Typography
+The app icon is always the dark room: ivory lantern, lit and glowing, on the dark canvas. Assets
+are in `apps/web/public/brand/` and regenerate with `node scripts/brand.mjs && sh scripts/icons.sh`.
 
-**Display Font:** Outfit (with system-ui, sans-serif)
-**Body Font:** Outfit (with system-ui, sans-serif)
-**Label Font:** Outfit
+## Type
 
-**Character:** One geometric sans throughout. Outfit's o is a circle, which ties the wordmark to the lantern's glass and the 14 px radius. It is friendly at 600 and quiet at 400, so it carries the word on the card and the label under it without a second family.
+One family, Onest (variable 300–800, Latin extended and Cyrillic). The word on the card is the
+largest thing on any screen and is set at 500, not bold. Everything else is 400 or 500; 600 is for
+the wordmark, counts and kbd. Fixed pixel scale, ratio about 1.17. Headings track −0.02em, the word
+−0.03em, body never. Tabular figures on anything that changes. Curly quotes and the ellipsis
+character in copy. Uppercase only at 12 px, tracked +0.06em.
 
-### Hierarchy
-- **Display** (600, 36px, 1.1, -0.03em): the word or phrase on a review card. On desktop the same role at 52px is the wordmark lockup.
-- **Headline** (600, 22px, 1.2, -0.02em): screen and deck titles.
-- **Title** (500, 18px, 1.4): the meaning line on a card.
-- **Body** (400, 15px, 1.5): example sentences, settings copy, table cells. Max 65ch for prose. The target word inside an example is 600 with an amber-soft highlight.
-- **Label** (500, 12.5px, 1.4): counts, timestamps, chip text, column headers. Muted colour. Never uppercase.
-- **Pronunciation** (400, 14px, muted): IPA sits under the word in the same family; no monospace.
+## Motion
 
-### Named Rules
-**The No Serif Rule.** There is no display serif anywhere in Lymi. If a screen needs more hierarchy, use weight and size within Outfit.
+Motion conveys state. Press: scale 0.97, 150 ms. Hover: 150 ms, pointer devices only. A card
+arrives with a 6 px rise over 200 ms. Reveal fades the meaning in under the rule. Flare is 320 ms.
+Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme
+switch suspends transitions for one frame so the room swaps at once.
 
-**The Fixed Scale Rule.** Type sizes are fixed rem values, not clamp(). Users view the app at a consistent size, and a word that shrinks in a sidebar looks worse, not better.
+The flame flickers on a 2.6 s loop because a flame does. Under `prefers-reduced-motion` it holds
+still, the card and toast crossfade with no travel, and the skeleton stops shimmering. The glow
+stays, because a glow is a state, not a movement.
 
-**The 16 px Input Rule.** Every text input is at least 16px so iOS does not zoom on focus.
+## Components
 
-## 4. Elevation
+`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading),
+IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and
+SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SevenLights, Table, Menu, Dialog,
+AddCardSheet, Lantern, Wordmark, Lockup.
 
-Mostly tonal. Surfaces sit on the ground by colour (Surface on Bg, Raised on Surface) and by 1 px borders. Shadows appear in three places only: the phone-sized card container, the primary button, and the Undo toast.
+`views/`: the screens as prop-driven components, so the design page renders them with sample data.
+They lay out by their container (`@3xl` = 768 px), not the viewport.
 
-### Shadow Vocabulary
-- **Ambient** (`0 1px 2px oklch(0 0 0 / 0.05), 0 14px 30px -18px oklch(0.3 0.05 60 / 0.35)`): card containers and the app icon tile in light theme. In dark theme it becomes `0 1px 0 oklch(1 0 0 / 0.05) inset, 0 20px 40px -22px oklch(0 0 0 / 0.9)`.
-- **Amber Lift** (`0 6px 14px -8px oklch(0.70 0.15 68 / 0.7)`): under the primary button and the Good grade. It reads as the flame's glow, not as a drop shadow.
-- **Glow** (`drop-shadow(0 0 18px oklch(0.80 0.15 72 / 0.55))`): the lantern at the end of a session only.
+Deck actions live behind one menu: Rename is inline on the title, Export writes a CSV, Archive
+leaves the deck list with an Undo toast. Cards archive the same way, from the row.
 
-### Named Rules
-**The Lift On Hover Rule.** Buttons and grade buttons move up 1 px on hover and back on press. That is the only positional change a control makes.
+Rules: one primary per view. Every control has default, hover, focus, active, disabled and, where it
+applies, loading. Hit areas are 44 px on the phone, 40 on desktop. Inputs are 16 px on the phone.
+Modals are a last resort; Undo replaces confirmation.
 
-## 5. Components
+## Voice
 
-Controls are standard shapes at 40 px, 14 px corners, with a 1 px hover lift. Every interactive component has default, hover, focus, active, disabled and, where it loads, a loading state.
+Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "That's the lot",
+not "Congratulations!". Errors say how to fix it. Anything the AI wrote is labelled where it appears.
 
-### Buttons
-- **Shape:** rounded (14px), 40px tall, 16px horizontal padding, 500 weight at 14.5px.
-- **Primary:** Amber on Amber Ink text, Amber Lift shadow. One per screen.
-- **Secondary:** Bg fill, Border Strong border, Ink text. Hover fills with Hover.
-- **Ghost:** transparent, Ink 2 text. Hover fills with Raised.
-- **Small:** 32px tall, 12px padding, 10px corners. For toolbars and table rows.
-- **Keyboard hint:** a `kbd` inside the button, 11px, 500, in a 5px-rounded tint. On primary it is black at 14% alpha; on secondary and ghost it is Raised with a Border.
-- **Focus:** 2px Amber outline, 2px offset. Never removed.
+## Don't
 
-### Grade buttons
-- Four in a row, 56px tall, 14px corners, equal width, 8px gap.
-- Label at 14px 500, interval underneath at 11.5px Muted with tabular numbers.
-- Again, Hard and Easy are Secondary. Good is Amber with Amber Lift. Good is the default focus target on reveal.
-- Grading Good or Easy flares the small lantern for 320 ms. Again and Hard do nothing to it.
-
-### Inputs
-- 40px tall (44px in the capture sheet), 14px corners, Border Strong border, 16px text.
-- Focus: Amber border and a 3px Amber Soft ring. Placeholder is Muted.
-- Search fields are 34px in toolbars.
-
-### Chips
-- 26px tall, pill, 12.5px 500. Default is Bg fill with Border and Ink 2 text.
-- **New:** Amber Soft fill, Amber Text, leading 6px dot.
-- **Learning:** default chip, no dot.
-- **Known:** Good Soft fill, Good text, leading dot.
-- **AI example:** default chip. Marks content the AI wrote. Always present when true.
-
-### Segmented control
-- Surface track with Border, 3px padding, 14px corners. Selected segment is Bg with a 1px shadow and Ink text; others are Muted.
-
-### Toggle
-- 42 by 26px, pill. On is Amber with a white knob; off is Border Strong.
-
-### Review card
-- Surface fill, Border, 24px corners, 24px top padding, 20px sides.
-- Order top to bottom: direction and status chip, word (Display), pronunciation with a 28px round audio button, hairline, meaning (Title), example (Body, target word highlighted), then source chips pinned to the bottom.
-- Progress bar above the card: 5px, Raised track, Amber fill. A small lantern sits at the left of the top row.
-
-### Lists and tables
-- Rows are 14px text, 10px cell padding, hairline separators, Surface fill on hover.
-- Word column 600. Meaning column Ink 2 and allowed to wrap. Next-review column Muted, right-aligned, tabular numbers.
-- Sidebar nav items are 8px by 10px padding, 10px corners. The selected item is Bg with a 1px shadow. Due counts are Amber Text 600.
-
-### Sheet (quick capture)
-- Bottom sheet on the phone, Surface fill, 24px corners, 16px padding, a 36 by 4px grab handle.
-- One 44px input, a deck segmented control, an AI assist row with a toggle and the line "You'll see it before it's saved", then Cancel (ghost) and a full-width primary "Add to [deck]".
-
-### Toast
-- Ink fill, Bg text, 14px corners, 10px padding. The action is Amber Text at 600 with no button chrome. Six seconds, then gone. Used for Undo only.
-
-### The lantern
-- One SVG symbol, four parts: handle (6px stroke, round caps), cap, glass (10px radius, Glass fill, 6px Ink stroke), base. No feet.
-- Flame is two paths: Amber outer, Flame Core inner. It flickers on a 2.6s loop under `prefers-reduced-motion: no-preference`.
-- **Small glyph** for 16 to 20px: handle, solid amber glass, base. No flame.
-- **Unlit** for empty states: Raised glass, Border Strong wick, no flame.
-- **Lit** for the end of a session: the flame scales to 1.3 by 1.45, the halo grows to 1.22 and full opacity, and the Glow filter turns on. Under reduced motion this is a crossfade.
-- Where it appears: the top bar and sidebar at 18 to 30px, the empty state and completion screen at 132px, the app icon. Nowhere else.
-
-## 6. Do's and Don'ts
-
-**Do**
-- Put the word on the card first and everything else second.
-- Use amber for the flame, one primary action and the due count. Then stop.
-- Set text on amber in Amber Ink, and amber text on the page in Amber Text.
-- Keep every control at 40px or taller and every input at 16px or larger.
-- Label AI-generated content with the AI chip every time.
-- Give every action that changes a card or a schedule an Undo toast.
-- Ship both themes together. A component is not done until it works on Bg and on Dark Bg.
-- Provide a reduced-motion version of every animation.
-
-**Don't**
-- Don't use a serif anywhere.
-- Don't use pure black or pure grey in dark theme.
-- Don't animate anything that is not the lantern, a hover lift, a card flip or a crossfade.
-- Don't add a second illustration, a mascot, or an icon set with a personality.
-- Don't put a number in a hero, a ring with a percentage, or a streak counter on the home screen.
-- Don't use a sparkle or a gradient to mean "AI".
-- Don't confirm with a modal what a toast can undo.
-- Don't colour status alone. Chips carry a label, and New and Known carry a dot.
+- No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
+- No grey metal. No second illustration. No outline, rotation or bevel on the mark.
+- No full lantern below 28 px. No amber beyond the flame and the primary action.
+- No display serif, no sparkle icon, no streak counter, no confetti.

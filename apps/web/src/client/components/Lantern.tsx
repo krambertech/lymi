@@ -1,111 +1,109 @@
 import { clsx } from "clsx";
+import type { CSSProperties } from "react";
 
 type Variant = "lit" | "unlit" | "glyph";
 
 interface Props {
-  /** "lit" is the default with a flame. "unlit" for empty states. "glyph" is the 16 px simplified mark. */
-  variant?: Variant;
+  /** "lit" has a flame. "unlit" for when nothing is due. "glyph" is the simplified mark for 12 to 24 px. */
+  variant?: Variant | undefined;
   /** Gentle flame movement. Off under reduced motion automatically. */
-  flicker?: boolean;
-  /** Glowing halo behind the lantern. For the end of a session. */
-  halo?: boolean;
+  flicker?: boolean | undefined;
+  /** The lantern's own glow. The only glow in the interface. */
+  glow?: boolean | undefined;
   /** Momentary flare, e.g. after grading Good. */
-  flare?: boolean;
-  /** Fully lit up: bigger flame, wide halo, glow. */
-  litUp?: boolean;
-  className?: string;
-  title?: string;
+  flare?: boolean | undefined;
+  /** Fully lit: bigger flame, wider glow. End of a session. */
+  litUp?: boolean | undefined;
+  className?: string | undefined;
+  style?: CSSProperties | undefined;
+  title?: string | undefined;
 }
 
-/** The one illustration in Lymi. Metal takes currentColor, so it recolours with the theme. */
+/**
+ * The one illustration in Lymi: a storm lantern you carry. The metal is --metal (ink in the
+ * light room, ivory in the dark one), the glass is tinted amber, the flame is the only pure accent.
+ */
 export function Lantern({
   variant = "lit",
   flicker = false,
-  halo = false,
+  glow = false,
   flare = false,
   litUp = false,
   className,
+  style,
   title,
 }: Props) {
   const cls = clsx(
+    "lantern shrink-0 select-none text-metal",
+    !title && "pointer-events-none",
     className,
     flicker && "lantern-flicker",
-    halo && "lantern-pulse",
+    (glow || litUp) && variant !== "unlit" && "glow",
     flare && "lantern-flare",
     litUp && "lantern-lit",
   );
+  const a11y = title ? { role: "img" as const } : { "aria-hidden": true as const };
 
   if (variant === "glyph") {
     return (
-      <svg
-        viewBox="0 0 100 100"
-        className={cls}
-        aria-hidden={title ? undefined : true}
-        role={title ? "img" : undefined}
-      >
+      <svg viewBox="0 0 100 100" className={cls} style={style} {...a11y}>
         {title && <title>{title}</title>}
         <path
-          d="M36 16 A14 14 0 0 1 64 16"
+          d="M34 20 A16 16 0 0 1 66 20"
           fill="none"
           stroke="currentColor"
           strokeWidth="10"
           strokeLinecap="round"
         />
-        <rect x="26" y="14" width="48" height="12" rx="5" fill="currentColor" />
-        <rect x="31" y="26" width="38" height="42" rx="11" fill="var(--amber)" />
-        <rect x="24" y="68" width="52" height="14" rx="6" fill="currentColor" />
+        <rect x="29" y="24" width="42" height="50" rx="9" fill="var(--amber)" />
+        <rect x="24" y="16" width="52" height="12" rx="5" fill="currentColor" />
+        <rect x="22" y="70" width="56" height="12" rx="5" fill="currentColor" />
       </svg>
     );
   }
 
   const unlit = variant === "unlit";
   return (
-    <svg
-      viewBox="0 0 120 120"
-      className={cls}
-      aria-hidden={title ? undefined : true}
-      role={title ? "img" : undefined}
-    >
+    <svg viewBox="0 0 120 120" className={cls} style={style} {...a11y}>
       {title && <title>{title}</title>}
-      {halo && <circle className="halo" cx="60" cy="62" r="52" fill="var(--amber-soft)" />}
-      <g transform="translate(10 10)">
+      <path
+        d="M43 22 A17 17 0 0 1 77 22"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="6.5"
+        strokeLinecap="round"
+      />
+      {/* Frame, then the window over it. The cap and base are the top and bottom edges, so no edge doubles. */}
+      <rect x="35.75" y="22" width="48.5" height="59" rx="6" fill="currentColor" />
+      <rect x="35" y="19.25" width="50" height="6.5" rx="3.25" fill="currentColor" />
+      <rect x="33" y="77.25" width="54" height="6.5" rx="3.25" fill="currentColor" />
+      {/* The window: an opaque base in the room's colour, then the amber tint over it. */}
+      <rect x="42.25" y="25.75" width="35.5" height="51.5" rx="5" fill="var(--canvas)" />
+      <rect
+        x="42.25"
+        y="25.75"
+        width="35.5"
+        height="51.5"
+        rx="5"
+        fill={unlit ? "var(--plate-2)" : "var(--amber-soft)"}
+      />
+      {unlit ? (
         <path
-          d="M35 21 A15 15 0 0 1 65 21"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="6"
-          strokeLinecap="round"
+          d="M60 48 C65 54 66.5 57.5 65 62 A5.5 5.5 0 0 1 55 62 C53.5 57.5 55 54 60 48 Z"
+          fill="var(--edge-2)"
         />
-        <rect x="29" y="20" width="42" height="9" rx="4" fill="currentColor" />
-        <rect
-          x="33"
-          y="29"
-          width="34"
-          height="41"
-          rx="10"
-          fill={unlit ? "var(--raised)" : "var(--glass)"}
-          stroke="currentColor"
-          strokeWidth="6"
-        />
-        {unlit ? (
+      ) : (
+        <g className="flame">
           <path
-            d="M50 44 C55 50 56.5 53.5 55 58 A5.5 5.5 0 0 1 45 58 C43.5 53.5 45 50 50 44 Z"
-            fill="var(--border-strong)"
+            d="M60 41 C67.5 49.5 70 55 68 61.5 A8 8 0 0 1 52 61.5 C50 55 52.5 49.5 60 41 Z"
+            fill="var(--amber)"
           />
-        ) : (
-          <g className="flame">
-            <path
-              d="M50 39 C57 47 59.5 52 57.5 58 A7.5 7.5 0 0 1 42.5 58 C40.5 52 43 47 50 39 Z"
-              fill="var(--amber)"
-            />
-            <path
-              d="M50 49 C53.5 53 54.5 55.5 53.5 58.5 A3.5 3.5 0 0 1 46.5 58.5 C45.5 55.5 46.5 53 50 49 Z"
-              fill="var(--flame-core)"
-            />
-          </g>
-        )}
-        <rect x="27" y="70" width="46" height="10" rx="4.5" fill="currentColor" />
-      </g>
+          <path
+            d="M60 52 C63.5 56 64.5 58.5 63.5 61.5 A3.5 3.5 0 0 1 56.5 61.5 C55.5 58.5 56.5 56 60 52 Z"
+            fill="var(--flame-core)"
+          />
+        </g>
+      )}
     </svg>
   );
 }

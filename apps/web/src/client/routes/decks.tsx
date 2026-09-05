@@ -1,11 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
-import { useState } from "react";
-import { Button } from "../components/Button";
+import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
+import { Toast } from "../components/Toast";
 import { api } from "../lib/api";
 import { decksQuery } from "../lib/queries";
+import { DecksView } from "../views/DecksView";
 
 export const Route = createFileRoute("/decks")({
+  // After archiving a deck we land here with its id, so the Undo toast can restore it.
+  validateSearch: (s: Record<string, unknown>): { archived?: string; name?: string } => ({
+    ...(typeof s.archived === "string" ? { archived: s.archived } : {}),
+    ...(typeof s.name === "string" ? { name: s.name } : {}),
+  }),
   component: Decks,
 });
 
@@ -18,70 +23,38 @@ function Decks() {
 
 function DeckList() {
   const qc = useQueryClient();
+  const navigate = useNavigate();
+  const { archived, name } = Route.useSearch();
   const decks = useQuery(decksQuery);
-  const [name, setName] = useState("");
   const create = useMutation({
-    mutationFn: () => api.createDeck({ name: name.trim() }),
+    mutationFn: (name: string) => api.createDeck({ name }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["decks"] }),
+  });
+  const clear = () => navigate({ to: "/decks", search: {}, replace: true });
+  const restore = useMutation({
+    mutationFn: (id: string) => api.restoreDeck(id),
     onSuccess: () => {
-      setName("");
       qc.invalidateQueries({ queryKey: ["decks"] });
+      qc.invalidateQueries({ queryKey: ["queue"] });
+      clear();
     },
   });
-
   return (
-    <div className="mx-auto w-full max-w-md px-5 pb-24 md:max-w-2xl md:px-8 md:pb-8">
-      <header className="flex items-center justify-between pt-4 pb-4 md:pt-8">
-        <h1 className="text-[22px] font-semibold">Decks</h1>
-      </header>
-
-      <form
-        className="mb-5 flex gap-2"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (name.trim()) create.mutate();
-        }}
-      >
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="New deck, e.g. Lesson 14"
-          className="h-10 flex-1 rounded-md border border-border-strong bg-bg px-3.5 text-[16px] placeholder:text-muted focus:border-amber focus:outline-none focus:ring-[3px] focus:ring-amber-soft"
-        />
-        <Button variant="primary" type="submit" disabled={!name.trim() || create.isPending}>
-          Create
-        </Button>
-      </form>
-
-      {decks.isSuccess && decks.data.length === 0 && (
-        <p className="text-[14.5px] text-muted">
-          No decks yet. One per lesson works well, or one per topic. You can move cards later.
-        </p>
+    <>
+      <DecksView
+        decks={decks.data}
+        creating={create.isPending}
+        onCreate={(name) => create.mutateAsync(name)}
+      />
+      {archived && (
+        <Toast
+          key={archived}
+          onDismiss={clear}
+          action={{ label: "Undo", onClick: () => restore.mutate(archived) }}
+        >
+          Archived “{name ?? "deck"}”
+        </Toast>
       )}
-
-      <ul className="grid gap-1.5">
-        {decks.data?.map((d) => (
-          <li key={d.id}>
-            <Link
-              to="/decks/$deckId"
-              params={{ deckId: d.id }}
-              className="flex items-center justify-between rounded-md border border-border bg-surface px-4 py-3 hover:bg-hover"
-            >
-              <span>
-                <span className="font-medium">{d.name}</span>
-                {d.defaultLanguage && (
-                  <span className="ml-2 text-[12.5px] text-muted uppercase">
-                    {d.defaultLanguage}
-                  </span>
-                )}
-              </span>
-              <span className="text-[13px] text-muted tabular-nums">
-                {d.due > 0 && <b className="mr-2 font-semibold text-amber-text">{d.due} due</b>}
-                {d.total}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </>
   );
 }

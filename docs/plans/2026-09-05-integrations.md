@@ -1,6 +1,6 @@
 # Integrations pass: API, keys, OAuth, MCP, enrichment, Activity
 
-**Status:** Decided 5 September 2026, not started. Decisions are in [stack.md](../stack.md) and [docs/adr](../adr/README.md). Vocabulary is in [CONTEXT.md](../../CONTEXT.md). This page is the order of work for the session that builds it.
+**Status:** Decided 5 September 2026. Steps 1 to 5 built the same day on `claude/api-ai-layer-integration-4c44b1`, paused before step 6 for the Claude Desktop test. Decisions are in [stack.md](../stack.md) and [docs/adr](../adr/README.md). Vocabulary is in [CONTEXT.md](../../CONTEXT.md). This page is the order of work for the session that builds it.
 
 ## What exists
 
@@ -33,6 +33,17 @@ Each step leaves the app deployable. Stop and check at the end of each.
 - Claude Desktop and claude.ai require OAuth with S256 PKCE for custom connectors. Static headers are org-admin only. Claude Code accepts a bearer header. Codex and ChatGPT connectors accept OAuth or no auth, never a header.
 - Cloudflare deprecated `McpAgent`. `createMcpHandler` from the Agents SDK is stateless and needs no Durable Object.
 - Claude Desktop does not support MCP elicitation. Claude Code does.
+
+## What changed while building steps 1 to 5
+
+- **API keys do not use `enableSessionForAPIKeys`.** The plugin marks it unsafe for production and it would verify the key twice per request. `principal.ts` calls `verifyApiKey` and loads the user itself.
+- **Consent can narrow the grant.** The MCP challenge asks for `read write offline_access`; the consent page lets the learner untick write, so a token's scope claim is the source of truth for the MCP principal.
+- **Sessions are also stored in D1.** The OAuth provider needs to find a session by id, which KV cannot do. KV stays the fast path.
+- **`auth-cli.ts` exports options, not an instance.** Constructing `betterAuth()` runs the provider's resource seeding against a database the CLI does not have.
+- **One cast.** `mcp()` is cast to `BetterAuthPlugin` in `auth.ts` and `auth-cli.ts` because its endpoint metadata types clash with `exactOptionalPropertyTypes`.
+- **Pinned `@better-auth/utils` to 0.4.2** in `apps/web` so every `@better-auth/*` package shares one `@better-auth/core`; two copies made the plugin types fail.
+- **The MCP handler is `createMcpHandler` from `agents/mcp/server`** with `@modelcontextprotocol/server` 2.0, the v2 SDK. The v1 `@modelcontextprotocol/sdk` is installed only because `agents` peers it.
+- **Docs UI.** Scalar at `/api/docs` is generic. Theme it with `customCss` against the Lymi tokens, or render `/api/openapi.json` in the app, once the docs have readers beyond the learner.
 
 ## Not in this pass
 

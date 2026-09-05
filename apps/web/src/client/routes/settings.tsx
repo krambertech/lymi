@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { ApiKeysSection } from "../components/ApiKeysSection";
 import { Button } from "../components/Button";
 import { signOut } from "../lib/auth";
 import { meQuery } from "../lib/queries";
@@ -70,6 +71,8 @@ function Settings() {
           Sign out
         </Button>
       </section>
+
+      <ApiKeysSection />
 
       <p className="mt-6 text-[12.5px] text-muted">
         Keyboard: N adds a word, R starts review, Space reveals, 1 to 4 grade.

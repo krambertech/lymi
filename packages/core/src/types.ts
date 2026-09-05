@@ -16,6 +16,13 @@ export type FieldSource = z.infer<typeof FieldSource>;
 export const Actor = z.enum(["user", "api", "mcp", "ai", "system"]);
 export type Actor = z.infer<typeof Actor>;
 
+/**
+ * What a key or OAuth grant may do. `read` lists and searches. `write` also adds, edits and
+ * archives decks and cards. Reviews are never writable by an integration, whatever the scope.
+ */
+export const Scope = z.enum(["read", "write"]);
+export type Scope = z.infer<typeof Scope>;
+
 /** BCP 47 language tag, loosely validated. "it", "pt-BR", "uk". */
 export const LanguageTag = z
   .string()
@@ -78,3 +85,9 @@ export const SettingsPatch = z.object({
   meaningLanguage: LanguageTag.optional(),
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
+
+export const ApiKeyInput = z.object({
+  name: z.string().trim().min(1).max(32),
+  scope: Scope,
+});
+export type ApiKeyInput = z.infer<typeof ApiKeyInput>;

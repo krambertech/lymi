@@ -3,6 +3,7 @@
  * schema in packages/core/src/schema/auth.ts. Keep the options that affect tables in
  * sync with createAuth() in ./auth.ts. Never imported by the Worker.
  */
+import { apiKey } from "@better-auth/api-key";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
@@ -11,4 +12,5 @@ export const auth = betterAuth({
   database: drizzleAdapter({} as any, { provider: "sqlite" }),
   emailAndPassword: { enabled: true },
   socialProviders: { google: { clientId: "cli", clientSecret: "cli" } },
+  plugins: [apiKey()],
 });

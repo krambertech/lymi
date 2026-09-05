@@ -1,3 +1,4 @@
+import { apiKey } from "@better-auth/api-key";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
@@ -24,8 +25,20 @@ export function createAuth(env: Bindings, db: Db) {
         session: schema.session,
         account: schema.account,
         verification: schema.verification,
+        apikey: schema.apikey,
       },
     }),
+    plugins: [
+      // Personal keys for curl, scripts and Claude Code. Header x-api-key. One scope each,
+      // stored as permissions { lymi: ["read"] } or { lymi: ["read", "write"] }.
+      apiKey({
+        defaultPrefix: "lymi_",
+        requireName: true,
+        // The plugin's default is 10 requests a day, meant for third-party keys. These are the learner's own.
+        rateLimit: { enabled: true, timeWindow: 60_000, maxRequests: 600 },
+        permissions: { defaultPermissions: { lymi: ["read"] } },
+      }),
+    ],
     // Sessions are looked up from KV first, so most requests never touch D1.
     secondaryStorage: {
       get: (key) => env.SESSIONS.get(key),

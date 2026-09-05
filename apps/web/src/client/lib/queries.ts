@@ -22,3 +22,4 @@ export const queueQuery = (deckId?: string) =>
     queryFn: () => api.queue(deckId),
     staleTime: 0,
   });
+export const keysQuery = queryOptions({ queryKey: ["keys"], queryFn: api.keys, staleTime: 0 });

@@ -1,4 +1,12 @@
-import type { ApiKeyInput, CardInput, Direction, GradeInput, Rating, Scope } from "@lymi/core";
+import type {
+  ApiKeyInput,
+  CardInput,
+  DeckInput,
+  Direction,
+  GradeInput,
+  Rating,
+  Scope,
+} from "@lymi/core";
 import type { Card, CardState, Deck } from "@lymi/core/schema";
 
 export class ApiError extends Error {
@@ -65,6 +73,12 @@ export const api = {
   decks: () => request<DeckSummary[]>("/api/decks"),
   createDeck: (body: { name: string; defaultLanguage?: string | null }) =>
     request<Deck>("/api/decks", { method: "POST", body: JSON.stringify(body) }),
+  updateDeck: (id: string, body: { [K in keyof DeckInput]?: DeckInput[K] | undefined }) =>
+    request<Deck>(`/api/decks/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+  archiveDeck: (id: string) =>
+    request<{ ok: true }>(`/api/decks/${id}/archive`, { method: "POST" }),
+  restoreDeck: (id: string) =>
+    request<{ ok: true }>(`/api/decks/${id}/restore`, { method: "POST" }),
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>
@@ -78,6 +92,10 @@ export const api = {
     request<ApiKeyCreated>("/api/keys", { method: "POST", body: JSON.stringify(body) }),
   revokeKey: (id: string) => request<{ ok: true }>(`/api/keys/${id}`, { method: "DELETE" }),
   queue: (deckId?: string) => request<Queue>(`/api/review/queue${deckId ? `?deck=${deckId}` : ""}`),
+  history: (days = 7) =>
+    request<{ days: number[] }>(
+      `/api/review/history?days=${days}&tz=${new Date().getTimezoneOffset()}`,
+    ),
   grade: (body: GradeInput) =>
     request<{ ok: true; due: string }>("/api/review/grade", {
       method: "POST",

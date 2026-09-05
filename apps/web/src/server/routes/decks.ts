@@ -1,9 +1,17 @@
-import { CardWithStateOut, DeckInput, DeckOut, DeckSummaryOut } from "@lymi/core";
+import { CardWithStateOut, DeckInput, DeckOut, DeckSummaryOut, OkOut } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
-import { createDeck, getDeck, listDeckCards, listDecks } from "../services";
+import {
+  archiveDeck,
+  createDeck,
+  getDeck,
+  listDeckCards,
+  listDecks,
+  restoreDeck,
+  updateDeck,
+} from "../services";
 
 export const decks = new Hono<AppEnv>();
 
@@ -40,6 +48,43 @@ decks.get(
     errors: [404],
   }),
   async (c) => c.json(await getDeck(ctxOf(c), c.req.param("id"))),
+);
+
+decks.patch(
+  "/:id",
+  describe({
+    tags: ["Decks"],
+    summary: "Update a deck",
+    description: "Rename it, or change its language or directions. Needs the write scope.",
+    ok: { schema: DeckOut, description: "The updated deck" },
+    errors: [400, 404],
+  }),
+  body(DeckInput.partial(), "deck"),
+  async (c) => c.json(await updateDeck(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+);
+
+decks.post(
+  "/:id/archive",
+  describe({
+    tags: ["Decks"],
+    summary: "Archive a deck",
+    description:
+      "The deck leaves every list; its cards stay. Undo with restore. Needs the write scope.",
+    ok: { schema: OkOut, description: "Archived" },
+    errors: [404],
+  }),
+  async (c) => c.json(await archiveDeck(ctxOf(c), c.req.param("id"))),
+);
+
+decks.post(
+  "/:id/restore",
+  describe({
+    tags: ["Decks"],
+    summary: "Restore an archived deck",
+    ok: { schema: OkOut, description: "Restored" },
+    errors: [404],
+  }),
+  async (c) => c.json(await restoreDeck(ctxOf(c), c.req.param("id"))),
 );
 
 decks.get(

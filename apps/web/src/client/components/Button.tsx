@@ -1,63 +1,120 @@
 import { clsx } from "clsx";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { Loader2 } from "lucide-react";
+import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from "react";
+import { Kbd } from "./Kbd";
 
-type Variant = "primary" | "secondary" | "ghost";
-type Size = "md" | "sm" | "lg";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+export type ButtonSize = "sm" | "md" | "lg";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: Variant;
-  size?: Size;
+  variant?: ButtonVariant | undefined;
+  size?: ButtonSize | undefined;
   /** Keyboard hint shown inside the button on desktop, e.g. "R". */
-  kbd?: string;
-  loading?: boolean;
+  kbd?: string | undefined;
+  loading?: boolean | undefined;
   children: ReactNode;
 }
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-medium rounded-md border border-transparent cursor-pointer select-none " +
-  "transition-[background-color,border-color,transform,box-shadow] duration-150 ease-out-quart " +
-  "hover:-translate-y-px active:translate-y-0 active:scale-[0.98] " +
-  "disabled:opacity-50 disabled:pointer-events-none";
+  "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tabular-nums " +
+  "transition-[background-color,color,box-shadow,scale] duration-150 ease-out " +
+  "active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 aria-busy:pointer-events-none";
 
-const variants: Record<Variant, string> = {
-  primary: "bg-amber text-amber-ink shadow-amber hover:bg-amber-hover",
-  secondary: "bg-bg text-ink border-border-strong hover:bg-hover",
-  ghost: "bg-transparent text-ink-2 hover:bg-raised hover:text-ink",
+/** Buttons with an icon on one side trim 2 px on that side so the label reads centred. */
+const iconSide =
+  "[&:has(>span>svg:first-child)]:pl-[calc(var(--btn-px)-2px)] [&:has(>span>svg:last-child)]:pr-[calc(var(--btn-px)-2px)]";
+
+const variants: Record<ButtonVariant, string> = {
+  primary: "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
+  secondary: "edge bg-plate text-text hoverable:hover:bg-hover",
+  ghost: "bg-transparent text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
+  danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
 };
 
-const sizes: Record<Size, string> = {
-  sm: "h-8 px-3 text-[13.5px] rounded-sm",
-  md: "h-10 px-4 text-[14.5px]",
-  lg: "h-11 px-5 text-[15px]",
+const sizes: Record<ButtonSize, string> = {
+  sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4",
+  md: "h-10 px-(--btn-px) [--btn-px:16px] text-base [&_svg]:size-[18px]",
+  lg: "h-12 px-(--btn-px) [--btn-px:20px] text-md [&_svg]:size-5",
 };
 
-export function Button({
-  variant = "secondary",
-  size = "md",
-  kbd,
-  loading,
-  className,
-  children,
-  ...rest
-}: Props) {
+/** The button's classes on their own, for a Link that should look and behave like one. */
+export function buttonClass(
+  variant: ButtonVariant = "secondary",
+  size: ButtonSize = "md",
+  className?: string,
+) {
+  return clsx(base, iconSide, variants[variant], sizes[size], className);
+}
+
+export const Button = forwardRef<HTMLButtonElement, Props>(function Button(
+  { variant = "secondary", size = "md", kbd, loading, className, children, ...rest },
+  ref,
+) {
   return (
     <button
+      ref={ref}
       type="button"
-      className={clsx(base, variants[variant], sizes[size], className)}
-      aria-busy={loading}
+      className={clsx(base, iconSide, variants[variant], sizes[size], className)}
+      aria-busy={loading || undefined}
       {...rest}
     >
-      {children}
-      {kbd && (
-        <kbd
-          className={clsx(
-            "hidden sm:inline-block font-sans text-[11px] font-medium leading-none px-1.5 py-[3px] rounded-[5px]",
-            variant === "primary" ? "bg-black/15" : "bg-raised border border-border text-muted",
-          )}
-        >
-          {kbd}
-        </kbd>
+      <span
+        className={clsx(
+          "inline-flex items-center gap-2 transition-[opacity,filter] duration-150",
+          loading && "opacity-0 blur-[2px]",
+        )}
+      >
+        {children}
+        {kbd && (
+          <span className="hidden @2xl:contents">
+            <Kbd tone={variant === "primary" ? "on-primary" : "default"}>{kbd}</Kbd>
+          </span>
+        )}
+      </span>
+      {loading && (
+        <span className="spinner-enter absolute inset-0 grid place-items-center">
+          <Loader2 className="animate-spin" aria-hidden="true" />
+        </span>
       )}
     </button>
   );
+});
+
+interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Required. Describes the action, not the icon. */
+  label: string;
+  size?: ButtonSize | undefined;
+  variant?: "ghost" | "secondary" | undefined;
+  /** A circle instead of the 10 px square. For the pronunciation button. */
+  round?: boolean | undefined;
+  children: ReactNode;
 }
+
+/** A square button holding one icon. The hit area is at least 40 px even when the box is smaller. */
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
+  { label, size = "md", variant = "ghost", round, className, children, ...rest },
+  ref,
+) {
+  return (
+    <button
+      ref={ref}
+      type="button"
+      aria-label={label}
+      title={label}
+      className={clsx(
+        "relative inline-flex shrink-0 items-center justify-center text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45",
+        round ? "rounded-full" : "rounded-sm",
+        "before:absolute before:-inset-1.5 before:content-['']",
+        variant === "ghost" && "hoverable:hover:bg-plate-2 hoverable:hover:text-text",
+        variant === "secondary" && "edge bg-plate hoverable:hover:bg-hover",
+        size === "sm" && "size-8 [&_svg]:size-4",
+        size === "md" && "size-10 [&_svg]:size-[18px]",
+        size === "lg" && "size-12 [&_svg]:size-5",
+        className,
+      )}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+});

@@ -3,9 +3,19 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
-import { gradeCard, reviewQueue } from "../services";
+import { gradeCard, reviewHistory, reviewQueue } from "../services";
 
 export const review = new Hono<AppEnv>();
+
+const HistoryQuery = z.object({
+  days: z.coerce.number().int().min(1).max(90).optional().meta({ description: "Default 7" }),
+  tz: z.coerce
+    .number()
+    .int()
+    .optional()
+    .meta({ description: "Minutes, as Date.getTimezoneOffset reports it" }),
+});
+const HistoryOut = z.object({ days: z.array(z.number().int()) }).meta({ id: "ReviewHistory" });
 
 const QueueQuery = z.object({
   deck: z.string().optional().meta({ description: "Limit to one deck" }),
@@ -26,6 +36,23 @@ review.get(
   async (c) => {
     const { deck, limit } = c.req.valid("query");
     return c.json(await reviewQueue(ctxOf(c), { deckId: deck, limit }));
+  },
+);
+
+review.get(
+  "/history",
+  describe({
+    tags: ["Review"],
+    summary: "Reviews per day",
+    description:
+      "Counts for the last N days in the learner's timezone, oldest first. Feeds the seven lights on Today.",
+    ok: { schema: HistoryOut, description: "One count per day" },
+    errors: [400],
+  }),
+  query(HistoryQuery, "query"),
+  async (c) => {
+    const { days, tz } = c.req.valid("query");
+    return c.json(await reviewHistory(ctxOf(c), { days, tzOffset: tz }));
   },
 );
 

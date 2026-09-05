@@ -1,10 +1,9 @@
-import { ConnectionOut, OkOut } from "@lymi/core";
-import { and, eq, inArray, isNull } from "@lymi/core/db";
+import { ConnectedAppOut, OkOut } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
-import { schema } from "../db";
-import { describe } from "../http";
+import { ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
+import { clientNames, revokeClientTokens } from "../services/connected-apps";
 
 /**
  * The MCP clients the learner has let in. A grant made on the consent screen lives on until
@@ -13,7 +12,7 @@ import type { AppEnv } from "../index";
  *
  * Learner-only, like API keys: a connector can never see or cut another connector's access.
  */
-export const connections = new Hono<AppEnv>();
+export const connectedApps = new Hono<AppEnv>();
 
 const LEARNER_ONLY = "Session only. Any API key or token gets 403.";
 
@@ -35,14 +34,14 @@ function consentApi(auth: { api: unknown }): ConsentApi {
   return auth.api as ConsentApi;
 }
 
-connections.get(
+connectedApps.get(
   "/",
   describe({
     tags: ["Connected apps"],
     summary: "List connected apps",
     learnerOnly: true,
     description: `${LEARNER_ONLY} One entry per app the learner granted access to.`,
-    ok: { schema: z.array(ConnectionOut), description: "Connections, newest first" },
+    ok: { schema: z.array(ConnectedAppOut), description: "Connected apps, newest first" },
   }),
   async (c) => {
     const consents = await consentApi(c.get("auth")).getOAuthConsents({
@@ -50,16 +49,8 @@ connections.get(
     });
     if (consents.length === 0) return c.json([]);
 
-    // A consent row carries only the client id. Names come from the client record, read
-    // straight from the table: `getOAuthClients` only answers for clients the learner
-    // registered, and a CIMD client belongs to nobody.
-    const ids = [...new Set(consents.map((consent) => consent.clientId))];
-    const clients = await c
-      .get("db")
-      .select({ clientId: schema.oauthClient.clientId, name: schema.oauthClient.name })
-      .from(schema.oauthClient)
-      .where(inArray(schema.oauthClient.clientId, ids));
-    const nameOf = new Map(clients.map((client) => [client.clientId, client.name]));
+    // A consent row carries only the client id; the name lives on the client record.
+    const names = await clientNames(ctxOf(c), [...new Set(consents.map((row) => row.clientId))]);
 
     return c.json(
       [...consents]
@@ -67,7 +58,7 @@ connections.get(
         .map((consent) => ({
           id: consent.id,
           clientId: consent.clientId,
-          name: nameOf.get(consent.clientId) ?? null,
+          name: names.get(consent.clientId) ?? null,
           // Mirrors API keys: anything without "write" can only read.
           scope: consent.scopes.includes("write") ? ("write" as const) : ("read" as const),
           createdAt: consent.createdAt,
@@ -77,20 +68,7 @@ connections.get(
   },
 );
 
-/**
- * Disconnecting has to do two things, because deleting the consent alone does almost nothing.
- *
- * The consent row is read only when the client next runs an authorize request, to decide
- * whether to prompt. Access tokens are JWTs this Worker verifies against its own JWKS with no
- * database hit, so an issued one cannot be recalled and stays good until it expires, an hour
- * at the plugin's default. The refresh token is the part that can be stopped: the refresh
- * grant checks its `revoked` column. Revoke it and the client is locked out when its current
- * access token runs out.
- *
- * The access token rows are marked revoked as well. That does not gate the MCP endpoint, but
- * it keeps `/oauth2/introspect` honest about what is still live.
- */
-connections.delete(
+connectedApps.delete(
   "/:id",
   describe({
     tags: ["Connected apps"],
@@ -105,25 +83,12 @@ connections.delete(
     const auth = consentApi(c.get("auth"));
     const headers = c.req.raw.headers;
 
-    // Read the client before the row goes, and let the plugin own the 404 and the check
-    // that this consent belongs to the caller.
+    // Read the client before the row goes, and let the plugin own the 404 and the check that
+    // this consent belongs to the caller.
     const consents = await auth.getOAuthConsents({ headers });
     const consent = consents.find((row) => row.id === id);
     await auth.deleteOAuthConsent({ body: { id }, headers });
-    if (!consent) return c.json({ ok: true as const });
-
-    const db = c.get("db");
-    const userId = c.get("user").id;
-    const revoked = new Date();
-    const mine = (table: typeof schema.oauthRefreshToken | typeof schema.oauthAccessToken) =>
-      and(eq(table.clientId, consent.clientId), eq(table.userId, userId), isNull(table.revoked));
-    // D1 has no interactive transactions, so these run one after another. The refresh token
-    // goes first: it is the one that decides whether the client can come back.
-    await db
-      .update(schema.oauthRefreshToken)
-      .set({ revoked })
-      .where(mine(schema.oauthRefreshToken));
-    await db.update(schema.oauthAccessToken).set({ revoked }).where(mine(schema.oauthAccessToken));
+    if (consent) await revokeClientTokens(ctxOf(c), consent.clientId);
 
     return c.json({ ok: true as const });
   },

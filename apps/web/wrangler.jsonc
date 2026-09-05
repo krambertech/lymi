@@ -11,12 +11,11 @@
   "assets": {
     "not_found_handling": "single-page-application",
     // Only these paths run the Worker. Everything else is a static asset and costs nothing.
-    "run_worker_first": ["/api/*", "/mcp", "/mcp/*", "/.well-known/*"]
+    "run_worker_first": ["/", "/api/*", "/mcp", "/mcp/*", "/.well-known/*"]
   },
   // Production values. Local dev overrides these from .dev.vars.
-  // APP_URL becomes https://lymi.app once the domain is on this account.
   "vars": {
-    "APP_URL": "https://lymi.k-porshnieva.workers.dev",
+    "APP_URL": "https://lymi.app",
     // Comma-separated. Only these Google accounts can sign in while the app is private.
     "ALLOWED_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com"
   },
@@ -34,7 +33,6 @@
       "binding": "SESSIONS",
       "id": "9d47517e26c44e23967a77a0f46d049f"
     }
-  ]
-  // Uncomment once lymi.app is registered and on this Cloudflare account:
-  // "routes": [{ "pattern": "lymi.app", "custom_domain": true }]
+  ],
+  "routes": [{ "pattern": "lymi.app", "custom_domain": true }]
 }

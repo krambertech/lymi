@@ -285,11 +285,11 @@ the wordmark, counts and kbd. Fixed pixel scale, ratio about 1.17. Headings trac
 −0.03em, body never. Tabular figures on anything that changes. Curly quotes and the ellipsis
 character in copy. Uppercase only at 12 px, tracked +0.06em.
 
-One exception to the single family: strings that are proofread character by character rather
-than read — an API key, a client's hostname, a header name in copy — are set in the system
-mono stack (`font-mono`, nothing downloaded). Onest draws 0/O and 1/l too alike for a secret
-where a mistyped character is a silent 401. Nothing else uses it: not numbers, not code-ish
-labels, not UI text.
+One exception to the single family. `font-mono` is a system monospace stack, nothing
+downloaded, and it has two jobs: code on the docs site, and the strings in the app that are
+proofread character by character rather than read — an API key, a client's hostname, a header
+name in copy. Onest draws 0/O and 1/l too alike for a secret where a mistyped character is a
+silent 401. Nothing else uses it: not numbers, not code-ish labels, not UI text.
 
 ## Motion
 
@@ -329,6 +329,24 @@ Modals are a last resort; Undo replaces confirmation.
 
 Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "That's the lot",
 not "Congratulations!". Errors say how to fix it. Anything the AI wrote is labelled where it appears.
+
+## Documentation
+
+The docs site at `/docs` is the same two rooms. Code is set in `font-mono`, the one exception
+to Onest described under Type.
+
+Code is set in ink and weight, never in colour, so amber stays on the flame and the one
+primary action. Three tones carry the syntax: a JSON key is `text` at 500 because it is what
+you scan for, a value is `text-2`, and comments and punctuation are `muted`. Nothing in a
+snippet is `faint`; every character there carries meaning.
+
+The two colours the reference does use are the ones that already mean something. A response
+code is `good` when it is a 2xx and `danger` otherwise. An HTTP method is a neutral chip,
+except DELETE, which is `danger`.
+
+Prose is `text-2` at 15.5 px on a 44 rem column; headings and bold are `text`. The API
+reference gets 52 rem, because it carries field tables. Pages are plain on the canvas, not
+in cards: a card in the docs means a code block, a callout, or one operation.
 
 ## Don't
 

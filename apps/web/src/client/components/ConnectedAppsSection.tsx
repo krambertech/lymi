@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import type { Connection } from "../lib/api";
+import type { ConnectedApp } from "../lib/api";
 import { api } from "../lib/api";
-import { connectionsQuery } from "../lib/queries";
+import { connectedAppsQuery } from "../lib/queries";
 import { SettingsGroup } from "../views/SettingsView";
 import { AppMark, identifyApp } from "./AppMark";
 import { Button } from "./Button";
@@ -15,10 +15,10 @@ import { Skeleton } from "./Skeleton";
  */
 export function ConnectedAppsSection() {
   const qc = useQueryClient();
-  const connections = useQuery(connectionsQuery);
+  const apps = useQuery(connectedAppsQuery);
   const disconnect = useMutation({
     mutationFn: (id: string) => api.disconnect(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["connections"] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["connected-apps"] }),
   });
 
   return (
@@ -28,16 +28,16 @@ export function ConnectedAppsSection() {
         renewing its access, so it is locked out within the hour and has to ask again.
       </p>
 
-      {connections.isPending && <Skeleton className="h-14 w-full" />}
+      {apps.isPending && <Skeleton className="h-14 w-full" />}
 
-      {connections.isSuccess && connections.data.length === 0 && (
+      {apps.isSuccess && apps.data.length === 0 && (
         <p className="text-base text-muted">Nothing connected.</p>
       )}
 
-      {connections.data && connections.data.length > 0 && (
+      {apps.data && apps.data.length > 0 && (
         <ul className="grid">
-          {connections.data.map((item) => (
-            <ConnectionRow
+          {apps.data.map((item) => (
+            <AppRow
               key={item.id}
               item={item}
               disconnecting={disconnect.isPending && disconnect.variables === item.id}
@@ -56,12 +56,12 @@ export function ConnectedAppsSection() {
   );
 }
 
-function ConnectionRow({
+function AppRow({
   item,
   disconnecting,
   onDisconnect,
 }: {
-  item: Connection;
+  item: ConnectedApp;
   disconnecting: boolean;
   onDisconnect: () => void;
 }) {

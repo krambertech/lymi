@@ -160,7 +160,7 @@ export const ApiKeyCreatedOut = ApiKeyOut.extend({
   key: z.string().meta({ description: "The plain key. Shown once; the server stores a hash." }),
 }).meta({ id: "ApiKeyCreated" });
 
-export const ConnectionOut = z
+export const ConnectedAppOut = z
   .object({
     id: z.string(),
     clientId: z.string().meta({ description: "The client's Client ID Metadata Document URL" }),
@@ -169,7 +169,7 @@ export const ConnectionOut = z
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })
-  .meta({ id: "Connection" });
+  .meta({ id: "ConnectedApp" });
 
 export const MeOut = z
   .object({

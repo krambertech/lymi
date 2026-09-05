@@ -28,8 +28,8 @@ export const historyQuery = queryOptions({
   staleTime: 60_000,
 });
 export const keysQuery = queryOptions({ queryKey: ["keys"], queryFn: api.keys, staleTime: 0 });
-export const connectionsQuery = queryOptions({
-  queryKey: ["connections"],
-  queryFn: api.connections,
+export const connectedAppsQuery = queryOptions({
+  queryKey: ["connected-apps"],
+  queryFn: api.connectedApps,
   staleTime: 0,
 });

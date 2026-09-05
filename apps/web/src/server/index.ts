@@ -11,7 +11,7 @@ import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate } from "./principal";
 import { cards } from "./routes/cards";
-import { connections } from "./routes/connections";
+import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
 import { keys } from "./routes/keys";
 import { review } from "./routes/review";
@@ -32,6 +32,16 @@ export type AppEnv = {
 };
 
 const app = new Hono<AppEnv>();
+
+// Preserve old bookmarks while keeping authentication on the canonical origin.
+app.use("*", async (c, next) => {
+  const url = new URL(c.req.url);
+  if (url.hostname === "lymi.k-porshnieva.workers.dev" && c.env.APP_URL === "https://lymi.app") {
+    url.hostname = "lymi.app";
+    return c.redirect(url.toString(), 308);
+  }
+  await next();
+});
 
 // Per-request services. Bindings are only available inside the request on Workers.
 app.use("*", async (c, next) => {
@@ -94,7 +104,7 @@ app.route("/api/cards", cards);
 app.route("/api/review", review);
 app.route("/api/settings", settings);
 app.route("/api/keys", keys);
-app.route("/api/connections", connections);
+app.route("/api/connected-apps", connectedApps);
 
 // Audio is generated with OpenAI text-to-speech and cached in R2. Not wired yet.
 app.get("/api/audio/:cardId", describe({ hide: true }), (c) =>

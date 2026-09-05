@@ -1,5 +1,5 @@
 import { deserializeState, GradeInput, newId, preview, schedule, serializeState } from "@lymi/core";
-import { and, asc, eq, isNull, lte, sql } from "@lymi/core/db";
+import { and, asc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { Hono } from "hono";
 import { audit } from "../audit";
 import { schema } from "../db";
@@ -64,6 +64,37 @@ review.get("/queue", async (c) => {
   });
 
   return c.json({ total, items });
+});
+
+/**
+ * Reviews per day for the last N days in the client's timezone. Feeds the seven lights.
+ * Query: ?days=7&tz=-120 (minutes, as Date.getTimezoneOffset returns them).
+ */
+review.get("/history", async (c) => {
+  const db = c.get("db");
+  const userId = c.get("user").id;
+  const days = Math.min(Math.max(Number(c.req.query("days") ?? 7), 1), 90);
+  const tz = Number(c.req.query("tz") ?? 0);
+  const now = new Date();
+  const localNow = new Date(now.getTime() - tz * 60_000);
+  const startLocal = Date.UTC(
+    localNow.getUTCFullYear(),
+    localNow.getUTCMonth(),
+    localNow.getUTCDate() - (days - 1),
+  );
+  const start = new Date(startLocal + tz * 60_000);
+
+  const rows = await db
+    .select({ reviewedAt: schema.reviews.reviewedAt })
+    .from(schema.reviews)
+    .where(and(eq(schema.reviews.userId, userId), gte(schema.reviews.reviewedAt, start)));
+
+  const counts = new Array<number>(days).fill(0);
+  for (const r of rows) {
+    const i = Math.floor((r.reviewedAt.getTime() - tz * 60_000 - startLocal) / 86_400_000);
+    if (i >= 0 && i < days) counts[i] = (counts[i] ?? 0) + 1;
+  }
+  return c.json({ days: counts });
 });
 
 /** Apply one grade. Idempotent enough for offline replay: a duplicate review of the same state is a no-op. */

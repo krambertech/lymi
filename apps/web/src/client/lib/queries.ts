@@ -22,3 +22,8 @@ export const queueQuery = (deckId?: string) =>
     queryFn: () => api.queue(deckId),
     staleTime: 0,
   });
+export const historyQuery = queryOptions({
+  queryKey: ["history", 7],
+  queryFn: () => api.history(7),
+  staleTime: 60_000,
+});

@@ -1,8 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "../components/Button";
-import { Lantern } from "../components/Lantern";
+import { Input } from "../components/Field";
 import { authClient, signInWithGoogle } from "../lib/auth";
+import { LoginView } from "../views/LoginView";
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -11,31 +12,19 @@ export const Route = createFileRoute("/login")({
 function Login() {
   const [busy, setBusy] = useState(false);
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center gap-3 px-6 text-center pt-safe pb-safe">
-      <Lantern className="size-28 text-ink" flicker halo />
-      <h1 className="mt-4 text-[28px] font-semibold tracking-[-0.03em]">lymi</h1>
-      <p className="max-w-[28ch] text-[15px] text-muted">Vocabulary you carry with you.</p>
-      <Button
-        variant="primary"
-        size="lg"
-        className="mt-6 min-w-56"
-        loading={busy}
-        onClick={async () => {
-          setBusy(true);
-          try {
-            await signInWithGoogle();
-          } finally {
-            setBusy(false);
-          }
-        }}
-      >
-        Continue with Google
-      </Button>
-      <p className="mt-2 text-[12.5px] text-muted">
-        Private for now. Only invited accounts can sign in.
-      </p>
+    <LoginView
+      busy={busy}
+      onGoogle={async () => {
+        setBusy(true);
+        try {
+          await signInWithGoogle();
+        } finally {
+          setBusy(false);
+        }
+      }}
+    >
       {import.meta.env.DEV && <DevSignIn />}
-    </div>
+    </LoginView>
   );
 }
 
@@ -64,28 +53,28 @@ function DevSignIn() {
 
   return (
     <form
-      className="mt-10 grid w-full max-w-72 gap-2 rounded-xl border border-dashed border-border-strong p-4 text-left"
+      className="mt-10 grid w-full max-w-72 gap-2 rounded-lg border border-dashed border-edge-2 p-4 text-left"
       onSubmit={(e) => {
         e.preventDefault();
         void go("in");
       }}
     >
-      <p className="text-[12px] font-semibold text-muted">Dev sign-in (localhost only)</p>
-      <input
+      <p className="text-xs font-medium text-muted">Dev sign-in (localhost only)</p>
+      <Input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         type="email"
         autoComplete="username"
-        className="h-10 rounded-md border border-border-strong bg-bg px-3 text-[16px]"
+        aria-label="Email"
       />
-      <input
+      <Input
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         type="password"
         autoComplete="current-password"
-        className="h-10 rounded-md border border-border-strong bg-bg px-3 text-[16px]"
+        aria-label="Password"
       />
-      {error && <p className="text-[13px] text-amber-text">{error}</p>}
+      {error && <p className="text-sm text-danger">{error}</p>}
       <div className="flex gap-2">
         <Button size="sm" type="submit" disabled={busy}>
           Sign in

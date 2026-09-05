@@ -4,8 +4,8 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
 - [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts
+- `/design` on the local dev server: the design system rendered with the real components (local only)
 - [docs/stack.md](docs/stack.md): the technical decisions and why
-- [design/identity.html](design/identity.html): the interactive identity board
 
 ## Run it
 
@@ -24,11 +24,11 @@ pnpm dev                                            # http://localhost:5173
 
 ```
 apps/web          The app: Vite React PWA client + Hono Worker in one deployable
-  src/client      Routes, components, styles
+  src/client      Routes, views, components, styles, and the /design page
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared with a future React Native app.
-scripts           Icon generation
+scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```
 
 ## Common commands

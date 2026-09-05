@@ -16,7 +16,15 @@ function resolve(choice: ThemeChoice): "light" | "dark" {
 }
 
 export function applyTheme(choice: ThemeChoice) {
-  document.documentElement.dataset.theme = resolve(choice);
+  const root = document.documentElement;
+  const next = resolve(choice);
+  if (root.dataset.theme === next) return;
+  // Swap in one frame. Per-component transitions would otherwise cascade at different speeds.
+  root.classList.add("theme-switching");
+  root.dataset.theme = next;
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => root.classList.remove("theme-switching")),
+  );
 }
 
 export function setTheme(choice: ThemeChoice) {

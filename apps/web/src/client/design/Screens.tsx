@@ -225,11 +225,14 @@ export function Screens() {
 
       <Sub
         title="Login"
-        note="The front door. The lantern is already lit: you are expected. The wordmark stays plain, because one flame to a composition."
+        note="The front door. The lantern is lit but not glowing, because a glow means something is due. Two blocks: who this is, and the one thing to do. The button sets the width of the fine print under it."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Sign in" initial="dark" path="/login" bare>
             <LoginView onGoogle={noop} />
+          </PhoneShot>
+          <PhoneShot caption="Sign-in failed" initial="light" path="/login" bare>
+            <LoginView onGoogle={noop} error="Sign-in didn’t go through. Try again." />
           </PhoneShot>
         </div>
       </Sub>

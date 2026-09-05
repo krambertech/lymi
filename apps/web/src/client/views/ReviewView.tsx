@@ -227,6 +227,7 @@ export function SessionDone({ done, history, action }: SessionDoneProps) {
         className="mb-4 size-32 @3xl:size-36"
         flicker
         glow
+        catchLight
         litUp={lit}
         variant={lit ? "lit" : "unlit"}
       />

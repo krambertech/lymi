@@ -11,7 +11,7 @@ export function Identity() {
     >
       <Sub
         title="The lantern"
-        note="Handle, cap, glass, flame, base, all drawn at one weight. The metal is the text colour of the room it is in: ink by day, white at night. The glass is tinted amber. The flame is the only pure accent. Its glow is the only glow in the interface."
+        note="Bail, hood, rods, glass, flame, fount, foot. The metal is the text colour of the room it is in: ink by day, white at night. The glass is one opaque colour, so the mark can sit on any surface without painting a hole in it. The flame is the only pure accent, and its glow is the only glow in the interface — it wraps the flame, never the metal."
       >
         <Pair>
           {() => (
@@ -37,12 +37,12 @@ export function Identity() {
 
       <Sub
         title="Sizes"
-        note="Below 24 px the drawing simplifies to a glyph: handle, cap, solid amber glass, base. No flame, no glow. The full lantern starts at 28 px."
+        note="Below 28 px the rods, the bail\u2019s pivots and the foot drop away and the glass goes solid amber. Same silhouette, fewer parts — not a different mark. The full lantern starts at 28 px."
       >
         <Pair>
           {() => (
             <div className="flex flex-wrap items-end gap-6 py-2">
-              {[12, 16, 20].map((s) => (
+              {[12, 16, 20, 24].map((s) => (
                 <figure key={s} className="grid justify-items-center gap-2">
                   <Lantern variant="glyph" style={{ width: s, height: s }} />
                   <figcaption className="text-2xs text-muted tabular-nums">{s}</figcaption>

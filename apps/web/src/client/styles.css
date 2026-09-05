@@ -31,6 +31,10 @@
   --amber-text: oklch(0.5 0.14 50);
   --amber-soft: oklch(0.8 0.15 72 / 0.16);
   --flame-core: oklch(0.97 0.08 92);
+  /* The lantern's glass. Opaque, so the mark carries its own interior onto any
+     surface instead of painting a hole in the room behind it. */
+  --glass: oklch(0.932 0.044 76);
+  --glass-unlit: oklch(0.947 0.006 80);
   --metal: var(--text);
   --glow: oklch(0.8 0.15 72 / 0.45);
 
@@ -67,6 +71,8 @@
   --amber-text: oklch(0.84 0.13 78);
   --amber-soft: oklch(0.82 0.15 74 / 0.14);
   --flame-core: oklch(0.97 0.08 92);
+  --glass: oklch(0.315 0.048 62);
+  --glass-unlit: oklch(0.245 0.016 55);
   --metal: var(--text);
   --glow: oklch(0.8 0.15 74 / 0.5);
 
@@ -100,6 +106,8 @@
   --color-amber-text: var(--amber-text);
   --color-amber-soft: var(--amber-soft);
   --color-flame-core: var(--flame-core);
+  --color-glass: var(--glass);
+  --color-glass-unlit: var(--glass-unlit);
   --color-metal: var(--metal);
   --color-good: var(--good);
   --color-good-soft: var(--good-soft);
@@ -220,9 +228,19 @@
 @utility edge-inset {
   box-shadow: inset 0 0 0 1px var(--edge);
 }
-/* The lantern's glow. Only the lantern wears it. */
+/* The lantern's glow. Only the lantern wears it, and inside the lantern only
+   the light does: metal does not glow, and a filter on the whole drawing halos
+   the frame and traces the glass. --glow-r is registered below so it can be
+   animated, which is how the halo breathes with the flame. */
 @utility glow {
-  filter: drop-shadow(0 0 var(--glow-r, 14px) var(--glow));
+  & .lantern-light {
+    filter: drop-shadow(0 0 var(--glow-r, 14px) var(--glow));
+  }
+}
+@property --glow-r {
+  syntax: "<length>";
+  initial-value: 14px;
+  inherits: true;
 }
 @custom-variant hoverable (@media (hover: hover) and (pointer: fine));
 
@@ -236,12 +254,42 @@
   animation: var(--flame-anim, none);
   transition: transform 320ms var(--ease-out);
 }
-.lantern {
+/* The bright centre beats slightly out of phase with the flame around it. A
+   flame whose every part moves together reads as a picture of a flame. */
+.flame-core {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: var(--core-anim, none);
+}
+.lantern-light {
   transition: filter 500ms var(--ease-out);
 }
 @media (prefers-reduced-motion: no-preference) {
   .lantern-flicker .flame {
     --flame-anim: flicker 2.6s ease-in-out infinite;
+  }
+  .lantern-flicker .flame-core {
+    --core-anim: flame-core 2.6s ease-in-out infinite;
+  }
+  /* The halo breathes on the same loop. A flame that changes size under a halo
+     that holds still is the thing that reads as fake. */
+  .lantern-flicker.glow {
+    animation: halo 2.6s ease-in-out infinite;
+  }
+  /* The wick catching, for unlit to lit. */
+  .lantern-catch .lantern-light {
+    animation: catch 620ms var(--ease-out) both;
+  }
+  /* Carried: the body swings from the bail's pivot and the bail counters it. */
+  .lantern-carry .lantern-body {
+    transform-box: fill-box;
+    transform-origin: 50% 18%;
+    animation: carry 2.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+  .lantern-carry .lantern-bail {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: carry-bail 2.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
   }
 }
 @keyframes flicker {
@@ -250,29 +298,84 @@
     transform: scaleY(1) scaleX(1);
   }
   30% {
-    transform: scaleY(1.06) scaleX(0.97) translateX(0.4px);
+    transform: scaleY(1.07) scaleX(0.97) translateX(0.4px);
   }
   55% {
-    transform: scaleY(0.97) scaleX(1.03);
+    transform: scaleY(0.965) scaleX(1.03);
   }
   80% {
-    transform: scaleY(1.04) scaleX(0.98) translateX(-0.4px);
+    transform: scaleY(1.05) scaleX(0.98) translateX(-0.4px);
+  }
+}
+@keyframes flame-core {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  35% {
+    transform: scaleY(1.12) scaleX(0.93);
+  }
+  70% {
+    transform: scaleY(0.94) scaleX(1.06);
+  }
+}
+@keyframes halo {
+  0%,
+  100% {
+    --glow-r: 14px;
+  }
+  30% {
+    --glow-r: 20px;
+  }
+  62% {
+    --glow-r: 11px;
+  }
+}
+@keyframes catch {
+  from {
+    opacity: 0;
+    transform: scale(0.3, 0.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+@keyframes carry {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+@keyframes carry-bail {
+  0%,
+  100% {
+    transform: rotate(3.5deg);
+  }
+  50% {
+    transform: rotate(-3.5deg);
   }
 }
 .lantern-flare .flame {
   --flame-anim: none;
-  --flame-t: scale(1.2, 1.35);
+  --flame-t: scale(1.24, 1.4);
+}
+.lantern-flare {
+  --glow-r: 30px;
 }
 .lantern-lit .flame {
   --flame-anim: none;
-  --flame-t: scale(1.15, 1.28);
+  --flame-t: scale(1.14, 1.3);
 }
 .lantern-lit {
-  --glow-r: 26px;
+  --glow-r: 28px;
 }
 @media (prefers-reduced-motion: reduce) {
   .flame,
-  .lantern {
+  .lantern-light {
     transition-duration: 0ms;
   }
 }

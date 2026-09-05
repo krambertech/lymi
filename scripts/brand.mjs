@@ -13,32 +13,43 @@ const light = {
   metal: "#2f2823",
   amber: "#f5ad48",
   core: "#fff4c2",
-  glass: "rgba(245,173,72,0.16)",
+  // Opaque, like --glass in the app: the mark carries its own interior instead of
+  // punching a canvas-coloured hole in whatever it is placed on.
+  glass: "#f7e4c8",
+  glassUnlit: "#f1efec",
+  ember: "rgba(42,34,28,0.2)",
   canvas: "#f8f7f5",
 };
 const dark = {
   metal: "#f3f0eb",
   amber: "#f6b34d",
   core: "#fff4c2",
-  glass: "rgba(246,179,77,0.14)",
+  glass: "#46351d",
+  glassUnlit: "#2a241f",
+  ember: "rgba(255,255,255,0.15)",
   canvas: "#151210",
 };
 
+// Kept in step with apps/web/src/client/components/lantern-geometry.tsx. The bail is drawn first so
+// the hood covers its feet, and every metal part overlaps the glass so nothing can spill.
 const lanternBody = (c, { flame = true, glow = false } = {}) => `
+  <path d="M40.5 48 A19.5 30 0 0 1 79.5 48" fill="none" stroke="${c.metal}" stroke-width="5.5" stroke-linecap="round"/>
+  <rect x="38.5" y="49" width="43" height="46" rx="3" fill="${flame ? c.glass : c.glassUnlit}"/>
   ${glow ? `<g filter="url(#glow)">` : ""}
-  <path d="M43 22 A17 17 0 0 1 77 22" fill="none" stroke="${c.metal}" stroke-width="6.5" stroke-linecap="round"/>
-  <rect x="35.75" y="22" width="48.5" height="59" rx="6" fill="${c.metal}"/>
-  <rect x="35" y="19.25" width="50" height="6.5" rx="3.25" fill="${c.metal}"/>
-  <rect x="33" y="77.25" width="54" height="6.5" rx="3.25" fill="${c.metal}"/>
-  <rect x="42.25" y="25.75" width="35.5" height="51.5" rx="5" fill="${c.canvas}"/>
-  <rect x="42.25" y="25.75" width="35.5" height="51.5" rx="5" fill="${c.glass}"/>
   ${
     flame
-      ? `<path d="M60 41 C67.5 49.5 70 55 68 61.5 A8 8 0 0 1 52 61.5 C50 55 52.5 49.5 60 41 Z" fill="${c.amber}"/>
-  <path d="M60 52 C63.5 56 64.5 58.5 63.5 61.5 A3.5 3.5 0 0 1 56.5 61.5 C55.5 58.5 56.5 56 60 52 Z" fill="${c.core}"/>`
-      : ""
+      ? `<path d="M60 58 C75.36 72.3 75.84 76.56 71.4 88.2 A12 12 0 0 1 48.6 88.2 C44.16 76.56 44.64 72.3 60 58 Z" fill="${c.amber}"/>
+  <path d="M60 70.2 C66.86 78.48 67.13 81.89 65.02 86.38 A5.28 5.28 0 0 1 54.98 86.38 C52.87 81.89 53.14 78.48 60 70.2 Z" fill="${c.core}"/>`
+      : `<path d="M60 72 C65.6 78.5 67 82 65.4 86 A5.7 5.7 0 0 1 54.6 86 C53 82 54.4 78.5 60 72 Z" fill="${c.ember}"/>`
   }
-  ${glow ? `</g>` : ""}`;
+  ${glow ? `</g>` : ""}
+  <rect x="34" y="50" width="5" height="46" rx="2.5" fill="${c.metal}"/>
+  <rect x="81" y="50" width="5" height="46" rx="2.5" fill="${c.metal}"/>
+  <path d="M50 36 H70 L87 51 H33 Z" fill="${c.metal}" stroke="${c.metal}" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="40.5" cy="48" r="3.2" fill="${c.metal}"/>
+  <circle cx="79.5" cy="48" r="3.2" fill="${c.metal}"/>
+  <rect x="31" y="92" width="58" height="9" rx="4.5" fill="${c.metal}"/>
+  <rect x="38" y="101" width="44" height="5" rx="2.5" fill="${c.metal}"/>`;
 
 const glowDef = (c, r = 6) => `<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
   <feGaussianBlur in="SourceAlpha" stdDeviation="${r}" result="b"/>
@@ -48,11 +59,12 @@ const glowDef = (c, r = 6) => `<defs><filter id="glow" x="-50%" y="-50%" width="
 const svg = (w, h, body, viewBox = `0 0 ${w} ${h}`) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width="${w}" height="${h}">${body}\n</svg>\n`;
 
+// The glyph, for 12 to 27 px: the same silhouette with the rods, pivots and foot dropped.
 const glyph = (c) => `
-  <path d="M34 20 A16 16 0 0 1 66 20" fill="none" stroke="${c.metal}" stroke-width="10" stroke-linecap="round"/>
-  <rect x="29" y="24" width="42" height="50" rx="9" fill="${c.amber}"/>
-  <rect x="24" y="16" width="52" height="12" rx="5" fill="${c.metal}"/>
-  <rect x="22" y="70" width="56" height="12" rx="5" fill="${c.metal}"/>`;
+  <path d="M42 47 A18 26 0 0 1 78 47" fill="none" stroke="${c.metal}" stroke-width="8" stroke-linecap="round"/>
+  <rect x="36" y="49" width="48" height="45" rx="5" fill="${c.amber}"/>
+  <path d="M49 35 H71 L88 52 H32 Z" fill="${c.metal}" stroke="${c.metal}" stroke-width="5" stroke-linejoin="round"/>
+  <rect x="29" y="88" width="62" height="13" rx="6.5" fill="${c.metal}"/>`;
 
 // Wordmark paths come from the generated TS module.
 const ts = readFileSync(join(root, "apps/web/src/client/components/wordmark-paths.ts"), "utf8");
@@ -96,18 +108,19 @@ for (const [name, c] of [
     join(out, `lantern-unlit-${name}.svg`),
     svg(120, 120, lanternBody(c, { flame: false })),
   );
-  writeFileSync(join(out, `glyph-${name}.svg`), svg(100, 100, glyph(c)));
+  writeFileSync(join(out, `glyph-${name}.svg`), svg(120, 120, glyph(c)));
   const wm = wordmark(c);
   writeFileSync(join(out, `wordmark-${name}.svg`), svg(Math.ceil(wm.width), 100, wm.body));
   const lit = wordmark(c, { flame: true });
   writeFileSync(join(out, `wordmark-lit-${name}.svg`), svg(Math.ceil(lit.width), 100, lit.body));
   // Row lockup, same geometry as LOCKUP in components/Logo.tsx: foot on the baseline, 0.17em gap.
-  const L = 138;
+  // Bounds of the drawing inside its 120 box: x 31.5 to 88.5, y 15.25 to 106.
+  const L = 130;
   const ls = L / 120;
-  const lanternX = -33 * ls;
-  const lanternY = -83.75 * ls;
-  const textX = (87 - 33) * ls + 17;
-  const top = Math.min(WM.top, 5 * ls - 83.75 * ls) - 2;
+  const lanternX = -31.5 * ls;
+  const lanternY = -106 * ls;
+  const textX = (88.5 - 31.5) * ls + 17;
+  const top = Math.min(WM.top, 15.25 * ls - 106 * ls) - 2;
   const lh = WM.bottom - top;
   const lw = textX + WM.width;
   const scaleTo = 100 / lh;
@@ -124,12 +137,13 @@ for (const [name, c] of [
   );
 }
 
-// App icon: the dark room, always. The lantern fills 78% of the tile; a warm centre sits behind the flame.
-// The drawing spans x 33..87 and y 5..85 of its 120 box; centre it on (60, 45) and size it by its visual height.
+// App icon: the dark room, always. A warm centre sits behind the flame.
+// The drawing spans x 31.5..88.5 and y 15.25..106 of its 120 box; centre it on (60, 60.6) and size
+// it by its visual height, so `visualHeight` is the fraction of the tile the lantern stands.
 const tile = (visualHeight, radius) => {
-  const k = (1024 * visualHeight) / 78.75;
+  const k = (1024 * visualHeight) / 90.75;
   const tx = 512 - 60 * k;
-  const ty = 512 - 44.4 * k;
+  const ty = 512 - 60.625 * k;
   return svg(
     1024,
     1024,
@@ -146,12 +160,12 @@ writeFileSync(join(out, "app-icon-rounded.svg"), tile(0.64, 230));
 // Favicon: the glyph, ink by day and ivory at night.
 writeFileSync(
   join(root, "apps/web/public/icon.svg"),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <style>.m{fill:${light.metal}}.s{stroke:${light.metal}}@media (prefers-color-scheme: dark){.m{fill:${dark.metal}}.s{stroke:${dark.metal}}}</style>
-  <path class="s" d="M34 20 A16 16 0 0 1 66 20" fill="none" stroke-width="10" stroke-linecap="round"/>
-  <rect x="29" y="24" width="42" height="50" rx="9" fill="${light.amber}"/>
-  <rect class="m" x="24" y="16" width="52" height="12" rx="5"/>
-  <rect class="m" x="22" y="70" width="56" height="12" rx="5"/>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <style>.m{fill:${light.metal};stroke:${light.metal}}@media (prefers-color-scheme: dark){.m{fill:${dark.metal};stroke:${dark.metal}}}</style>
+  <path class="m" d="M42 47 A18 26 0 0 1 78 47" fill="none" stroke-width="8" stroke-linecap="round"/>
+  <rect x="36" y="49" width="48" height="45" rx="5" fill="${light.amber}"/>
+  <path class="m" d="M49 35 H71 L88 52 H32 Z" stroke-width="5" stroke-linejoin="round"/>
+  <rect class="m" x="29" y="88" width="62" height="13" rx="6.5" stroke="none"/>
 </svg>
 `,
 );

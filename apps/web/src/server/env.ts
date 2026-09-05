@@ -5,7 +5,8 @@
  */
 export interface Bindings {
   DB: D1Database;
-  AUDIO: R2Bucket;
+  /** Absent until R2 is enabled on the account and the binding is uncommented in wrangler.jsonc. */
+  AUDIO?: R2Bucket;
   SESSIONS: KVNamespace;
   ASSETS: Fetcher;
   APP_URL: string;

@@ -50,7 +50,7 @@ export function ApiKeysSection() {
         For curl, scripts and Claude Code. Send the key in an <code>x-api-key</code> header; the
         routes are in the{" "}
         <a
-          href="/api/docs"
+          href="/docs/api"
           className="underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
         >
           API reference

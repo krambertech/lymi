@@ -83,6 +83,10 @@
 
 @theme inline {
   --font-sans: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Code only, on the docs site. No web font: the reader's own mono is faster and familiar. */
+  --font-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Mono", "Roboto Mono", Consolas,
+    monospace;
 
   --color-canvas: var(--canvas);
   --color-plate: var(--plate);
@@ -370,4 +374,157 @@
 }
 .pb-safe-tab {
   padding-bottom: calc(env(safe-area-inset-bottom) + 72px);
+}
+
+/* ---- Docs -------------------------------------------------------------- */
+
+/*
+ * The documentation site at /docs. The same two rooms and the same tokens, with one
+ * addition: a monospace stack for code. Code is set in ink and weight, never in colour,
+ * so amber stays on the flame and the one primary action. The only colours in the docs
+ * are the ones that already mean something: good for a 2xx, danger for a 4xx.
+ */
+
+.doc-prose {
+  font-size: var(--text-md);
+  line-height: 1.65;
+  color: var(--text-2);
+  text-wrap: pretty;
+}
+.doc-prose > :first-child {
+  margin-top: 0;
+}
+.doc-prose > :last-child {
+  margin-bottom: 0;
+}
+.doc-prose p,
+.doc-prose ul,
+.doc-prose ol {
+  margin-block: 0 1rem;
+}
+.doc-prose h2 {
+  margin-block: 3rem 0.75rem;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.doc-prose h3 {
+  margin-block: 2rem 0.5rem;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.doc-prose h4 {
+  margin-block: 1.5rem 0.25rem;
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--text);
+}
+/* Room for the sticky header when a heading is jumped to. */
+.doc-prose :is(h2, h3, h4) {
+  scroll-margin-top: 5.5rem;
+}
+.doc-prose ul,
+.doc-prose ol {
+  padding-left: 1.35em;
+}
+.doc-prose ul {
+  list-style: disc;
+}
+.doc-prose ol {
+  list-style: decimal;
+}
+.doc-prose li {
+  margin-block: 0.35rem;
+}
+.doc-prose li::marker {
+  color: var(--faint);
+}
+.doc-prose strong {
+  font-weight: 500;
+  color: var(--text);
+}
+.doc-prose a:not(.doc-plain) {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--edge-2);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 150ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .doc-prose a:not(.doc-plain):hover {
+    text-decoration-color: currentColor;
+  }
+}
+.doc-prose hr {
+  margin-block: 2.5rem;
+  border: 0;
+  border-top: 1px solid var(--edge);
+}
+
+/* Inline code. A well in the plate, never a border. */
+.doc-prose :not(pre) > code,
+.doc-code-inline {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--text);
+  background: var(--plate-2);
+  border-radius: var(--radius-xs);
+  padding: 0.1em 0.35em;
+  word-break: break-word;
+}
+
+/* Code blocks. Ink and weight carry the syntax; nothing here is amber. */
+.doc-code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  tab-size: 2;
+  color: var(--text-2);
+}
+/*
+ * Three tones and one weight step, no hue. A JSON key is the thing you scan for, so it is
+ * the darkest; the value sits a step back; punctuation and comments sit further back again.
+ * Nothing here is `faint`, because every character in a snippet carries meaning.
+ */
+.doc-code .t-key {
+  color: var(--text);
+  font-weight: 500;
+}
+.doc-code .t-str {
+  color: var(--text-2);
+}
+.doc-code .t-cmd {
+  color: var(--text);
+  font-weight: 600;
+}
+.doc-code .t-comment,
+.doc-code .t-punct {
+  color: var(--muted);
+}
+.doc-code .t-num {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The scroll shadow on a wide code block or table, so a cut-off line reads as scrollable. */
+.doc-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--edge-2) transparent;
+}
+
+/* A heading's own link. Appears on hover, and always for keyboard users. */
+.doc-anchor {
+  opacity: 0;
+  transition: opacity 150ms var(--ease-out);
+}
+:is(h2, h3):hover > .doc-anchor,
+.doc-anchor:focus-visible {
+  opacity: 1;
 }

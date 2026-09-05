@@ -1,6 +1,6 @@
 # Lymi website and app
 
-This document describes the deployed domain setup and the accompanying landing-page work. This PR records the domain configuration and old-host redirect; the landing page, session redirect, app aliases, and public metadata are being prepared in a separate change.
+This document describes the deployed domain setup and the accompanying landing-page work. The domain configuration and old-host redirect are in place, and the documentation site at `/docs` is built; the landing page, session redirect, app aliases, and public metadata are being prepared in a separate change.
 
 Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudflare Worker. A custom domain lets Cloudflare manage the DNS record and HTTPS certificate: https://developers.cloudflare.com/workers/configuration/routing/custom-domains/.
 
@@ -12,7 +12,7 @@ Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudfla
 | `/app` | Convenient entry point that redirects to `/today`. |
 | `/today`, `/decks`, `/review`, `/settings` | Existing app screens; private data requires authentication. |
 | `/login`, `/consent` | Sign-in and integration authorization. |
-| `/docs` | Temporarily redirects to the existing API reference at `/api/docs`. |
+| `/docs` | Public documentation: guides, MCP setup, and the API reference. Reads signed out. |
 | `/api/*` | App and integration API, with its existing authentication and scope checks. |
 | `/mcp`, `/.well-known/*` | MCP endpoint and OAuth discovery. |
 
@@ -30,17 +30,25 @@ The existing first page provides:
 4. API and planned AI workflows, distinguishing available features from planned ones.
 5. A closing invitation, API documentation, sign-in, and the email-use notice.
 
-## Proposed documentation structure
+## Documentation structure
 
-When guides are ready, replace the temporary `/docs` redirect with a public documentation home:
+The documentation is built. It lives in the app's own router at `/docs`, outside the app shell, so it reads signed out and stays readable while signed in. Pages are declared once in `apps/web/src/client/docs/nav.ts`, which is what the sidebar, the next-page links and search all read.
 
-- `/docs/getting-started`: access, first deck, first cards, first review.
-- `/docs/review`: review directions and spaced repetition.
-- `/docs/integrations`: personal API keys and supported MCP clients.
-- `/docs/api`: a stable public entry to the generated API reference.
-- `/docs/privacy`: data handling, exports, and deletion once those policies and capabilities are defined.
+| Path | Purpose |
+| --- | --- |
+| `/docs` | What the API is, and which of the two ways in to pick. |
+| `/docs/quickstart` | Make a key, add a card, see it in the app. |
+| `/docs/authentication` | Keys, scopes, rate limit, every error code. |
+| `/docs/cards` | The shape of a card, the duplicate rule, directions, FSRS. |
+| `/docs/recipes` | Import a word list, re-run a script safely, back a deck up. |
+| `/docs/api` | The reference, rendered in the browser from `/api/openapi.json`. |
+| `/docs/mcp`, `/docs/mcp/claude`, `/docs/mcp/chatgpt` | Connecting an assistant. |
 
-These are proposed pages, not published documentation. Public docs should remain accessible while signed in. Moving every app screen under `/app/*` can be considered later; it is unnecessary for sharing a domain and would require coordinated router, OAuth, installed PWA, and bookmark redirects.
+`/api/docs`, which served the generated Scalar page, now redirects to `/docs/api`, so links already sent still land.
+
+Still to write: `/docs/privacy`, covering data handling, exports and deletion, once those policies and capabilities are defined.
+
+Moving every app screen under `/app/*` can be considered later; it is unnecessary for sharing a domain and would require coordinated router, OAuth, installed PWA, and bookmark redirects.
 
 ## Deployment configuration
 

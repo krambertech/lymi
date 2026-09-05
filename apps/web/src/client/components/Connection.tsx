@@ -21,7 +21,9 @@ export function Connection({
   className?: string | undefined;
 }) {
   const connected = state === "connected";
-  const lit = useLagged(connected, 360);
+  // Long enough that the rail is nearly across when the wick catches, short enough that the
+  // two still read as one movement.
+  const lit = useLagged(connected, 300);
 
   return (
     <div className={clsx("flex items-center justify-center", className)} aria-hidden="true">
@@ -37,11 +39,14 @@ export function Connection({
         {connected && <span className="rail-fill absolute inset-0 rounded-full bg-amber" />}
       </span>
       <span className="edge grid size-16 shrink-0 place-items-center rounded-lg bg-plate">
+        {/* The key replays the wick catching when the rail arrives, rather than swapping. */}
         <Lantern
+          key={lit ? "lit" : "waiting"}
           variant={state === "refused" ? "unlit" : "lit"}
           flicker={state === "asking"}
           glow={connected}
           litUp={lit}
+          catchLight={lit}
           className="size-10"
         />
       </span>

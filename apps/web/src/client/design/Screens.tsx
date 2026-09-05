@@ -246,7 +246,7 @@ export function Screens() {
 
       <Sub
         title="Login"
-        note="The front door. The lantern is already lit and the wordmark carries the flame: you are expected. When an MCP client sent the learner here, the door says who is waiting."
+        note="The front door. The lantern is lit but not glowing, because a glow means something is due. Two blocks: who this is, and the one thing to do. When an MCP client sent the learner here, the first block says who is waiting instead of what Lymi is."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Sign in" initial="dark" path="/login" bare>
@@ -254,6 +254,9 @@ export function Screens() {
           </PhoneShot>
           <PhoneShot caption="Sent here by an app" initial="light" path="/login" bare>
             <LoginView onGoogle={noop} app={CLAUDE} />
+          </PhoneShot>
+          <PhoneShot caption="Sign-in failed" initial="light" path="/login" bare>
+            <LoginView onGoogle={noop} error="Sign-in didn’t go through. Try again." />
           </PhoneShot>
           <PhoneShot caption="Not on the invite list" initial="dark" path="/login" bare>
             <LoginView

@@ -81,19 +81,18 @@ function Login() {
     <LoginView
       app={app}
       busy={busy}
+      // `failed` is this attempt; `error` on the URL is a callback that came back refused.
       error={failed ?? reasonFor(error)}
       onGoogle={async () => {
         setBusy(true);
         setFailed(null);
         try {
-          // signIn.social resolves with { data, error } rather than throwing, so a provider
-          // that is not configured would otherwise leave the button silently at rest.
+          // better-auth returns the failure rather than throwing, so a silent `await` here
+          // left the button spinning and then stopping with nothing said.
           const res = await signInWithGoogle();
-          if (res.error) {
-            setFailed(res.error.message ?? "Google sign-in is not available right now.");
-          }
+          if (res.error) setFailed("Sign-in didn’t go through. Try again.");
         } catch {
-          setFailed("Could not reach Google. Check your connection and try again.");
+          setFailed("Can’t reach the sign-in service. Check your connection.");
         } finally {
           setBusy(false);
         }

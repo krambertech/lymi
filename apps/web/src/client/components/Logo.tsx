@@ -1,41 +1,10 @@
 import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 import { Lantern } from "./Lantern";
+import { LANTERN_BOUNDS, LANTERN_PARTS } from "./lantern-geometry";
 import { WORDMARK } from "./wordmark-paths";
 
 const EM = 100; // wordmark units per em
-
-/** Lantern drawing, in its own 120-unit box, as raw SVG children. Shared by Lockup and the brand script. */
-function lanternPaths(flame: boolean) {
-  return (
-    <>
-      <path
-        d="M43 22 A17 17 0 0 1 77 22"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="6.5"
-        strokeLinecap="round"
-      />
-      <rect x="35.75" y="22" width="48.5" height="59" rx="6" fill="currentColor" />
-      <rect x="35" y="19.25" width="50" height="6.5" rx="3.25" fill="currentColor" />
-      <rect x="33" y="77.25" width="54" height="6.5" rx="3.25" fill="currentColor" />
-      <rect x="42.25" y="25.75" width="35.5" height="51.5" rx="5" fill="var(--canvas)" />
-      <rect x="42.25" y="25.75" width="35.5" height="51.5" rx="5" fill="var(--amber-soft)" />
-      {flame && (
-        <g className="flame">
-          <path
-            d="M60 41 C67.5 49.5 70 55 68 61.5 A8 8 0 0 1 52 61.5 C50 55 52.5 49.5 60 41 Z"
-            fill="var(--amber)"
-          />
-          <path
-            d="M60 52 C63.5 56 64.5 58.5 63.5 61.5 A3.5 3.5 0 0 1 56.5 61.5 C55.5 58.5 56.5 56 60 52 Z"
-            fill="var(--flame-core)"
-          />
-        </g>
-      )}
-    </>
-  );
-}
 
 interface WordmarkProps {
   /** Font size in px. The box is 1.275× this, like a line of type. */
@@ -90,21 +59,24 @@ export function Wordmark({ size = 24, flame = false, className, title }: Wordmar
 
 /** Geometry of the row lockup, in wordmark units (100 per em). Shared with scripts/brand.mjs. */
 export const LOCKUP = (() => {
-  const L = 138; // lantern box height: 1.38em, so the metal stands a little taller than the l
+  const { left, right, top: drawTop, bottom: foot } = LANTERN_BOUNDS;
+  // Size the lantern so its bail clears the l's ascender (-97) by a few units, the way the metal
+  // should stand a little taller than the letter beside it.
+  const L = 130; // lantern box height in wordmark units
   const s = L / 120;
-  const visualLeft = 33 * s;
-  const visualRight = 87 * s;
-  const footBottom = 83.75 * s;
+  const visualLeft = left * s;
+  const visualRight = right * s;
+  const footBottom = foot * s;
   const gap = 17; // 0.17em between metal and the l
   const textX = visualRight - visualLeft + gap;
   return {
     L,
     s,
     lanternX: -visualLeft,
-    lanternY: -footBottom, // base sits on the baseline
+    lanternY: -footBottom, // foot sits on the baseline
     textX,
     width: textX + WORDMARK.width,
-    top: Math.min(WORDMARK.top, 5 * s - footBottom) - 2,
+    top: Math.min(WORDMARK.top, drawTop * s - footBottom) - 2,
     bottom: WORDMARK.bottom,
   };
 })();
@@ -149,11 +121,11 @@ export function Lockup({
       aria-label={title}
     >
       <g
-        className={clsx("text-metal", glow && "glow")}
+        className={clsx("lantern-body text-metal", glow && "glow")}
         transform={`translate(${lanternX} ${lanternY}) scale(${s})`}
         style={{ height: L }}
       >
-        {lanternPaths(true)}
+        {LANTERN_PARTS(true)}
       </g>
       <g fill="currentColor" transform={`translate(${textX} 0)`}>
         {WORDMARK.glyphs.map((g) => (
@@ -186,9 +158,9 @@ interface AppTileProps {
  */
 export function AppTile({ size = 28, glow = true, className, title }: AppTileProps) {
   const a11y = title ? { role: "img" as const } : { "aria-hidden": true as const };
-  // The drawing spans y 5 to 83.75 of its 120 box. The handle is thin, so centre on the body plus
-  // half the handle (about y 49) rather than the full box: shift down 11/120.
-  const box = size * 0.96;
+  // The drawing spans y 15.25 to 106 of its 120 box, which is centred closely enough that the
+  // tile needs no nudge: the margins come out at about 14 % top and bottom.
+  const box = size * 0.94;
   return (
     <span
       data-theme="dark"
@@ -212,7 +184,6 @@ export function AppTile({ size = 28, glow = true, className, title }: AppTilePro
           {
             width: box,
             height: box,
-            transform: `translateY(${((box * 11) / 120).toFixed(2)}px)`,
             "--glow-r": `${Math.max(4, size / 9)}px`,
           } as CSSProperties
         }

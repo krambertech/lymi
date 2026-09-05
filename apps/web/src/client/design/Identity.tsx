@@ -11,7 +11,7 @@ export function Identity() {
     >
       <Sub
         title="The lantern"
-        note="Handle, cap, glass, flame, base, all drawn at one weight. The metal is the text colour of the room it is in: ink by day, white at night. The glass is tinted amber. The flame is the only pure accent. Its glow is the only glow in the interface."
+        note="Bail, hood, rods, glass, flame, fount, foot. The metal is the text colour of the room it is in: ink by day, white at night. The glass is one opaque colour, so the mark can sit on any surface without painting a hole in it. The flame is the only pure accent, and its glow is the only glow in the interface — it wraps the flame, never the metal."
       >
         <Pair>
           {() => (
@@ -37,18 +37,12 @@ export function Identity() {
 
       <Sub
         title="Sizes"
-        note="Below 24 px the drawing simplifies to a glyph: handle, cap, solid amber glass, base. No flame, no glow. The full lantern starts at 28 px."
+        note="One drawing at every size. There is no simplified small cut, because the rods and the flame are exactly what keep the mark legible when it is tiny — drop them and it collapses into a mushroom by 24 px. The browser tab uses the same drawing, cropped to its own bounds so it fills the icon."
       >
         <Pair>
           {() => (
             <div className="flex flex-wrap items-end gap-6 py-2">
-              {[12, 16, 20].map((s) => (
-                <figure key={s} className="grid justify-items-center gap-2">
-                  <Lantern variant="glyph" style={{ width: s, height: s }} />
-                  <figcaption className="text-2xs text-muted tabular-nums">{s}</figcaption>
-                </figure>
-              ))}
-              {[28, 40, 56, 80].map((s) => (
+              {[16, 20, 24, 28, 40, 56, 80].map((s) => (
                 <figure key={s} className="grid justify-items-center gap-2">
                   <Lantern style={{ width: s, height: s }} glow={s >= 40} />
                   <figcaption className="text-2xs text-muted tabular-nums">{s}</figcaption>
@@ -61,7 +55,7 @@ export function Identity() {
 
       <Sub
         title="Wordmark"
-        note="lymi, lowercase, Onest 600, tracked to −0.025em, drawn as paths so it renders before fonts load. The lit version replaces the dot of the i with a flame. Use it on the login screen and the app store; everywhere else the plain one."
+        note="lymi, lowercase, Onest 600, tracked to −0.025em, drawn as paths so it renders before fonts load. The lit version replaces the dot of the i with a flame. One flame to a composition: use it only where the wordmark stands alone and the lantern is nowhere on the screen — the app store listing, a share image. Anywhere the lantern is present, the wordmark is plain."
       >
         <Pair>
           {() => (
@@ -90,7 +84,7 @@ export function Identity() {
 
       <Sub
         title="App icon and favicon"
-        note="The tile is always the dark room: ivory lantern, lit, on the dark canvas with a warm centre behind the flame. That warmth is the one gradient in Lymi, because an icon is a picture of the lantern, not a surface. The same tile sits at the top of the sidebar. The favicon is the glyph in the current theme’s ink."
+        note="The tile is always the dark room: ivory lantern, lit, on the dark canvas with a warm centre behind the flame. That warmth is the one gradient in Lymi, because an icon is a picture of the lantern, not a surface. The same tile sits at the top of the sidebar. The favicon is the same drawing, cropped to its own bounds and following the browser’s theme."
       >
         <Specimen className="justify-around py-8">
           {[
@@ -99,7 +93,7 @@ export function Identity() {
             [<AppTile key="c" size={28} />, "Sidebar, 28 px"],
             [
               <div key="d" className="flex items-center gap-2 rounded-sm bg-plate-2 px-3 py-2">
-                <Lantern variant="glyph" className="size-4" />
+                <Lantern className="size-4" />
                 <span className="text-sm">Lymi · Lesson 14</span>
               </div>,
               "Browser tab",
@@ -120,7 +114,7 @@ export function Identity() {
             "Don’t colour the metal grey. It is ink in the light room and ivory in the dark one.",
             "Don’t add a second illustration. The lantern is the one drawing; everything else is a standard control.",
             "Don’t outline, rotate or bevel the mark. Don’t put it in a circle unless the platform demands one.",
-            "Don’t show the full lantern below 28 px. Use the glyph.",
+            "Don’t show two flames at once. If the lantern is on the screen, the wordmark is plain.",
             "Don’t let amber appear more than twice on a screen: the flame, and the one thing to press.",
           ].map((t) => (
             <li key={t} className="edge rounded-md bg-plate px-4 py-3">

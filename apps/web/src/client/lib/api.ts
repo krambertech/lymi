@@ -68,6 +68,16 @@ export type ApiKeySummary = {
 /** Only the create response carries the plain key. */
 export type ApiKeyCreated = ApiKeySummary & { key: string };
 
+/** An MCP client the learner let in on the consent screen. */
+export type ConnectedApp = {
+  id: string;
+  clientId: string;
+  name: string | null;
+  scope: Scope;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export const api = {
   me: () => request<Me>("/api/me"),
   decks: () => request<DeckSummary[]>("/api/decks"),
@@ -91,6 +101,9 @@ export const api = {
   createKey: (body: ApiKeyInput) =>
     request<ApiKeyCreated>("/api/keys", { method: "POST", body: JSON.stringify(body) }),
   revokeKey: (id: string) => request<{ ok: true }>(`/api/keys/${id}`, { method: "DELETE" }),
+  connectedApps: () => request<ConnectedApp[]>("/api/connected-apps"),
+  disconnect: (id: string) =>
+    request<{ ok: true }>(`/api/connected-apps/${id}`, { method: "DELETE" }),
   queue: (deckId?: string) => request<Queue>(`/api/review/queue${deckId ? `?deck=${deckId}` : ""}`),
   history: (days = 7) =>
     request<{ days: number[] }>(

@@ -89,7 +89,12 @@
 
 @theme inline {
   --font-sans: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  /* Code only, on the docs site. No web font: the reader's own mono is faster and familiar. */
+  /*
+   * The one exception to "one family", for two jobs: code on the docs site, and the strings
+   * in the app that are proofread character by character rather than read, such as an API key
+   * or a client's hostname. Onest draws 0/O and 1/l too alike for those. No web font: the
+   * reader's own mono is faster and familiar.
+   */
   --font-mono:
     ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Mono", "Roboto Mono", Consolas,
     monospace;
@@ -380,6 +385,32 @@
 @media (prefers-reduced-motion: reduce) {
   .flame,
   .lantern-light {
+    transition-duration: 0ms;
+  }
+}
+
+/* ---- Connection -------------------------------------------------------- */
+
+/*
+ * Two apps meeting. The rail runs from the app that asked to the lantern; while the
+ * decision is open it is a dotted track, and when the grant lands it draws across in
+ * amber and the lantern lights. This is the only choreography outside review: the
+ * connection is the one thing on these screens that actually happens.
+ */
+.rail-track {
+  background-image: repeating-linear-gradient(to right, var(--edge-2) 0 3px, transparent 3px 7px);
+}
+/* The fill only exists once the grant lands, so it draws from its starting style. */
+.rail-fill {
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease-out);
+  @starting-style {
+    transform: scaleX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail-fill {
     transition-duration: 0ms;
   }
 }

@@ -6,7 +6,7 @@ Each step depends on the one before it. Step 1 is the one people skip and the on
 
 Before writing anything, list every way the learner moves through the app. Read the route files under `apps/web/src/client/routes/`, then grep for every `<Link`, `useNavigate`, and `router.navigate` in the client.
 
-Lymi's routes today: `/` (home), `/decks`, `/decks/$deckId`, `/review`, `/settings`, `/login`, `/consent`. Produce a table like this and show it to the user before touching code:
+Lymi's routes today: `/` (home), `/decks`, `/decks/$deckId`, `/review`, `/settings`, `/login`, `/consent`, `/design`. The design system page is a reference surface, not a screen the learner navigates — leave it out of the map. Produce a table like this and show it to the user before touching code:
 
 ```
 | From          | To               | Relationship | Transition          |
@@ -26,7 +26,7 @@ Take the complete recipe set from [`css-recipes.md`](css-recipes.md) into `apps/
 
 ## Step 3 — type the router
 
-Replace `defaultViewTransition: true` in [`main.tsx`](../../../../apps/web/src/client/main.tsx) with the types function from `SKILL.md`. Depth comparison covers the common case; where the map from Step 1 disagrees with depth — two screens at the same depth where one is clearly deeper in the model — special-case that pair by pathname inside the function rather than by adding a prop to every link.
+Add `defaultViewTransition` to `createRouter` in [`main.tsx`](../../../../apps/web/src/client/main.tsx), using the types function from `SKILL.md`. Start there rather than with `true` — a bare `true` cross-fades every navigation identically, including revalidations, and it is harder to unpick later than to get right now. Depth comparison covers the common case; where the map from Step 1 disagrees with depth — two screens at the same depth where one is clearly deeper in the model — special-case that pair by pathname inside the function rather than by adding a prop to every link.
 
 Verify each row of the table in the browser after this step, before adding a single shared element. Directional slides are most of the perceived quality, and they are the part that breaks quietly.
 

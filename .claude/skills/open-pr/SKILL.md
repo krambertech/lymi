@@ -50,7 +50,7 @@ A light pass over your own diff, not an adversarial review (that is `/code-revie
 - `apps/web/src/server/**` → `api`, or `mcp` for `server/mcp/**`
 - `packages/core/**` → `core`
 - `apps/web/migrations/**`, schema changes → `db`
-- `DESIGN.md`, `design/**`, tokens → `design`
+- `DESIGN.md`, `apps/web/src/client/design/**`, the `/design` route, tokens → `design`
 - `docs/**`, `README.md`, `PRODUCT.md`, `CONTEXT.md` → `docs`
 - Genuinely cross-cutting → drop the scope.
 

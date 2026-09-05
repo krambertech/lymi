@@ -6,7 +6,7 @@ description: |
 
 # View transitions in Lymi
 
-The browser snapshots the old screen, runs your callback, snapshots the new one, and animates between them. TanStack Router already calls it: `createRouter({ defaultViewTransition: true })` in [`main.tsx`](../../../apps/web/src/client/main.tsx) wraps every navigation, which is why the app cross-fades today. This skill is about upgrading that cross-fade into motion that means something.
+The browser snapshots the old screen, runs your callback, snapshots the new one, and animates between them. TanStack Router does the calling: set `defaultViewTransition` on `createRouter` in [`main.tsx`](../../../apps/web/src/client/main.tsx) and every navigation goes through `document.startViewTransition`. Nothing is set today, so nothing animates yet.
 
 React's `<ViewTransition>` component is **not** part of this. It lives in the React canary channel; Lymi is on React 19 stable and stays there. Everything here is the native API plus router config plus CSS.
 

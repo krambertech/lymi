@@ -22,11 +22,13 @@ function Shell() {
   const me = useQuery(meQuery);
   const decks = useQuery({ ...decksQuery, enabled: me.isSuccess });
   const [addOpen, setAddOpen] = useState(false);
-  // Consent is a stop inside another app's sign-in; the design page is its own document.
+  // Consent is a stop inside another app's sign-in; the design page and the docs are their
+  // own documents. The docs read signed out, so they must never redirect to /login.
   const bare =
     location.pathname === "/login" ||
     location.pathname === "/consent" ||
-    location.pathname.startsWith("/design");
+    location.pathname.startsWith("/design") ||
+    location.pathname.startsWith("/docs");
   const onReview = location.pathname.startsWith("/review");
 
   useEffect(() => {

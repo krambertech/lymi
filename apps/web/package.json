@@ -43,7 +43,6 @@
     "@lymi/core": "workspace:*",
     "@modelcontextprotocol/sdk": "1.30.0",
     "@modelcontextprotocol/server": "2.0.0",
-    "@scalar/hono-api-reference": "0.12.0",
     "@tanstack/query-sync-storage-persister": "^5.102.8",
     "@tanstack/react-query": "^5.102.8",
     "@tanstack/react-query-persist-client": "^5.102.8",

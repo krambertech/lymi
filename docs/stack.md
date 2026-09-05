@@ -14,7 +14,7 @@ flowchart LR
   end
   subgraph Worker["apps/worker (one Cloudflare Worker)"]
     Assets[Static assets\nSPA fallback]
-    API[Hono /api\nOpenAPI at /api/docs]
+    API[Hono /api\nOpenAPI at /api/openapi.json]
     Services[Service layer\ndb, userId, actor]
     Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
     MCP[MCP server /mcp\ncreateMcpHandler, stateless]
@@ -135,7 +135,7 @@ Adds take one card or many. A lesson produces 20 to 40 terms, and one tool call 
 
 ### API: a service layer and generated docs
 
-Route logic lives in service functions that take `db`, `userId` and `actor`. Hono routes and MCP tools are thin callers. The OpenAPI document is generated from the Zod schemas in `packages/core` and served with a reference UI at `/api/docs`.
+Route logic lives in service functions that take `db`, `userId` and `actor`. Hono routes and MCP tools are thin callers. The OpenAPI document is generated from the Zod schemas in `packages/core` and served at `/api/openapi.json`. The documentation site at `/docs` renders it, alongside hand-written guides; `/api/docs` redirects there.
 
 ### Audio: R2
 

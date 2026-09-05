@@ -9,6 +9,7 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
 - [docs/plans](docs/plans): order of work for passes that are decided but not built
 - [CONTEXT.md](CONTEXT.md): the vocabulary, one name per thing
+- `/docs` in the running app: the API documentation, guides and MCP setup, in `apps/web/src/client/docs`
 
 ## Run it
 

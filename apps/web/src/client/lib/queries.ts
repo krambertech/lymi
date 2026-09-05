@@ -1,0 +1,24 @@
+import { queryOptions } from "@tanstack/react-query";
+import { api } from "./api";
+
+export const meQuery = queryOptions({
+  queryKey: ["me"],
+  queryFn: api.me,
+  retry: false,
+  staleTime: 5 * 60_000,
+});
+// Counts change with every review, so the persisted copy is only a placeholder until the refetch lands.
+export const decksQuery = queryOptions({
+  queryKey: ["decks"],
+  queryFn: api.decks,
+  staleTime: 0,
+  refetchOnWindowFocus: true,
+});
+export const deckCardsQuery = (deckId: string) =>
+  queryOptions({ queryKey: ["decks", deckId, "cards"], queryFn: () => api.deckCards(deckId) });
+export const queueQuery = (deckId?: string) =>
+  queryOptions({
+    queryKey: ["queue", deckId ?? "all"],
+    queryFn: () => api.queue(deckId),
+    staleTime: 0,
+  });

@@ -32,6 +32,16 @@ export type AppEnv = {
 
 const app = new Hono<AppEnv>();
 
+// Preserve old bookmarks while keeping authentication on the canonical origin.
+app.use("*", async (c, next) => {
+  const url = new URL(c.req.url);
+  if (url.hostname === "lymi.k-porshnieva.workers.dev" && c.env.APP_URL === "https://lymi.app") {
+    url.hostname = "lymi.app";
+    return c.redirect(url.toString(), 308);
+  }
+  await next();
+});
+
 // Per-request services. Bindings are only available inside the request on Workers.
 app.use("*", async (c, next) => {
   const db = createDb(c.env.DB);

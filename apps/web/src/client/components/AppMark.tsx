@@ -37,8 +37,14 @@ const MARKS: { hosts: string[]; name: string; path: string; brand?: string }[] =
 ];
 
 export interface AppIdentity {
-  /** What to call it. The recognised name when we know the host, else the client's own. */
+  /**
+   * What to call it. The recognised name for a host we ship a mark for, else the host
+   * itself. Never the client's own `client_name`: that is text the client chose, and the
+   * headline of a permission screen is the last place to put an unverified claim.
+   */
   name: string;
+  /** The name the client gave for itself, when it is unverified and adds anything. */
+  claimed: string | null;
   /** The host of the client_id URL. Null when the client_id is not a URL. */
   host: string | null;
   /** True when the host is one we ship a mark for. Never means "safe", only "recognised". */
@@ -57,9 +63,12 @@ export function identifyApp(
   const known = host
     ? MARKS.find((m) => m.hosts.some((h) => h === host || host.endsWith(`.${h}`)))
     : undefined;
-  const claimed = claimedName?.trim();
+  const claimed = claimedName?.trim() || null;
   return {
-    name: known?.name ?? (claimed || host || "An app"),
+    name: known?.name ?? host ?? "An app",
+    // A recognised host names itself; anywhere else the claim is shown as a claim, or not
+    // at all when it only repeats the address.
+    claimed: known || !claimed || claimed === host ? null : claimed,
     host,
     recognised: Boolean(known),
     path: known?.path ?? null,

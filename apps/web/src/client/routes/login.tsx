@@ -24,16 +24,38 @@ export const Route = createFileRoute("/login")({
   component: Login,
 });
 
-/** Sign-in failures the learner can act on. Anything else gets the general sentence. */
+/**
+ * Turn a callback error into a sentence the learner can act on.
+ *
+ * Better Auth's OAuth callback redirects to `errorCallbackURL` with `?error=<code>`, where the
+ * code is one of a fixed set or the message of an APIError with its spaces turned into
+ * underscores (better-auth/dist/api/routes/callback.mjs). The allowlist in server/auth.ts
+ * throws such an APIError, so its message arrives here underscored.
+ */
+const BLOCKED = new Set([
+  // What the allowlist message becomes on the way here. Keep the two in step.
+  "This_is_a_private_app._Your_account_is_not_on_the_list.",
+  "signup_disabled",
+  "unable_to_create_user",
+]);
+const RETRYABLE = new Set([
+  "state_not_found",
+  "invalid_callback_request",
+  "no_code",
+  "invalid_code",
+  "unable_to_create_session",
+  "unable_to_get_user_info",
+]);
+
 function reasonFor(code: string | undefined): string | null {
   if (!code) return null;
-  if (/forbidden|not.on.the.list|signup|unable_to_create_user/i.test(code)) {
+  if (BLOCKED.has(code) || /not.on.the.list/i.test(code)) {
     return "That account is not on the invite list. Lymi is private for now — sign in with the invited account.";
   }
-  if (/state|expired|invalid_request/i.test(code)) {
-    return "That sign-in link expired. Try again.";
-  }
-  return "Sign in did not finish. Try again.";
+  if (RETRYABLE.has(code)) return "That sign-in did not finish. Try again.";
+  // An unknown code is more often a blocked account than a blip, so do not promise a retry
+  // will work.
+  return "Sign in did not finish. If it keeps failing, the account may not be on the invite list.";
 }
 
 function Login() {
@@ -64,7 +86,12 @@ function Login() {
         setBusy(true);
         setFailed(null);
         try {
-          await signInWithGoogle();
+          // signIn.social resolves with { data, error } rather than throwing, so a provider
+          // that is not configured would otherwise leave the button silently at rest.
+          const res = await signInWithGoogle();
+          if (res.error) {
+            setFailed(res.error.message ?? "Google sign-in is not available right now.");
+          }
         } catch {
           setFailed("Could not reach Google. Check your connection and try again.");
         } finally {

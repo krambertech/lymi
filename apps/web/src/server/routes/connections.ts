@@ -1,5 +1,5 @@
 import { ConnectionOut, OkOut } from "@lymi/core";
-import { inArray } from "@lymi/core/db";
+import { and, eq, inArray, isNull } from "@lymi/core/db";
 import { Hono } from "hono";
 import { z } from "zod";
 import { schema } from "../db";
@@ -77,21 +77,54 @@ connections.get(
   },
 );
 
+/**
+ * Disconnecting has to do two things, because deleting the consent alone does almost nothing.
+ *
+ * The consent row is read only when the client next runs an authorize request, to decide
+ * whether to prompt. Access tokens are JWTs this Worker verifies against its own JWKS with no
+ * database hit, so an issued one cannot be recalled and stays good until it expires, an hour
+ * at the plugin's default. The refresh token is the part that can be stopped: the refresh
+ * grant checks its `revoked` column. Revoke it and the client is locked out when its current
+ * access token runs out.
+ *
+ * The access token rows are marked revoked as well. That does not gate the MCP endpoint, but
+ * it keeps `/oauth2/introspect` honest about what is still live.
+ */
 connections.delete(
   "/:id",
   describe({
     tags: ["Connected apps"],
     summary: "Disconnect an app",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} The app's tokens stop working; it can ask again from its own sign-in.`,
+    description: `${LEARNER_ONLY} Revokes the app's refresh token, so it is locked out once its current access token expires (one hour at most) and has to ask again.`,
     ok: { schema: OkOut, description: "Disconnected" },
     errors: [404],
   }),
   async (c) => {
-    await consentApi(c.get("auth")).deleteOAuthConsent({
-      body: { id: c.req.param("id") },
-      headers: c.req.raw.headers,
-    });
+    const id = c.req.param("id");
+    const auth = consentApi(c.get("auth"));
+    const headers = c.req.raw.headers;
+
+    // Read the client before the row goes, and let the plugin own the 404 and the check
+    // that this consent belongs to the caller.
+    const consents = await auth.getOAuthConsents({ headers });
+    const consent = consents.find((row) => row.id === id);
+    await auth.deleteOAuthConsent({ body: { id }, headers });
+    if (!consent) return c.json({ ok: true as const });
+
+    const db = c.get("db");
+    const userId = c.get("user").id;
+    const revoked = new Date();
+    const mine = (table: typeof schema.oauthRefreshToken | typeof schema.oauthAccessToken) =>
+      and(eq(table.clientId, consent.clientId), eq(table.userId, userId), isNull(table.revoked));
+    // D1 has no interactive transactions, so these run one after another. The refresh token
+    // goes first: it is the one that decides whether the client can come back.
+    await db
+      .update(schema.oauthRefreshToken)
+      .set({ revoked })
+      .where(mine(schema.oauthRefreshToken));
+    await db.update(schema.oauthAccessToken).set({ revoked }).where(mine(schema.oauthAccessToken));
+
     return c.json({ ok: true as const });
   },
 );

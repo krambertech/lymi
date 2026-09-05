@@ -112,6 +112,7 @@ function Consent() {
       allowWrite={allowWrite}
       onAllowWrite={setAllowWrite}
       busy={busy}
+      unusable={!clientId}
       error={
         error ??
         (clientId ? null : "This link is missing the app that asked. Start again from the app.")

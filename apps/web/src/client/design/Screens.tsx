@@ -266,13 +266,13 @@ export function Screens() {
 
       <Sub
         title="Consent"
-        note="The stop between an app's sign-in and its first request. Read is stated, because a connector cannot work without it; write is the only decision, so it is the only control. The address under the name is the part that is checked."
+        note="The stop between an app's sign-in and its first request. Read is stated, because a connector cannot work without it; write is the only decision, so it is the only control. A recognised host is named; anything else is titled by its address, and its own name is shown as a claim."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="A recognised app" initial="light" path="/consent" bare>
             <ConsentDemo app={CLAUDE} />
           </PhoneShot>
-          <PhoneShot caption="An app Lymi ships no mark for" initial="dark" path="/consent" bare>
+          <PhoneShot caption="An app Lymi does not recognise" initial="dark" path="/consent" bare>
             <ConsentDemo app={UNKNOWN} />
           </PhoneShot>
         </div>

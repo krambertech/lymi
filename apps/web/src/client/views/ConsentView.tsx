@@ -19,6 +19,8 @@ export interface ConsentProps {
   onAllowWrite: (v: boolean) => void;
   busy?: "allow" | "deny" | null | undefined;
   error?: ReactNode | undefined;
+  /** The request cannot be acted on at all, e.g. the link carries no client_id. */
+  unusable?: boolean | undefined;
   onDecide: (accept: boolean) => void;
 }
 
@@ -37,6 +39,7 @@ export function ConsentView({
   onAllowWrite,
   busy,
   error,
+  unusable,
   onDecide,
 }: ConsentProps) {
   const deciding = busy != null;
@@ -53,8 +56,15 @@ export function ConsentView({
           <div className="grid justify-items-center gap-2">
             <AppIdentityLine app={app} />
             {!app.recognised && (
-              <p className="max-w-[30ch] text-center text-sm text-muted">
-                Lymi does not recognise this app. Check the address is one you meant to use.
+              <p className="max-w-[32ch] text-center text-sm text-muted">
+                {app.claimed ? (
+                  <>
+                    It calls itself “{app.claimed}”. Lymi cannot check that. The address above is
+                    the part that is checked.
+                  </>
+                ) : (
+                  <>Lymi does not recognise this app. Check the address is one you meant to use.</>
+                )}
               </p>
             )}
           </div>
@@ -120,7 +130,7 @@ export function ConsentView({
           <Button
             variant="secondary"
             className="flex-1"
-            disabled={deciding}
+            disabled={deciding || unusable}
             loading={busy === "deny"}
             onClick={() => onDecide(false)}
           >
@@ -129,7 +139,7 @@ export function ConsentView({
           <Button
             variant="primary"
             className="flex-1"
-            disabled={deciding || loading}
+            disabled={deciding || loading || unusable}
             loading={busy === "allow"}
             onClick={() => onDecide(true)}
           >

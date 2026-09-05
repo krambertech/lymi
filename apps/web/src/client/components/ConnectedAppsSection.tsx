@@ -24,8 +24,8 @@ export function ConnectedAppsSection() {
   return (
     <SettingsGroup title="Connected apps">
       <p className="max-w-[62ch] text-base text-text-2">
-        MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops the app at
-        once; it can ask again from its own sign-in.
+        MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app
+        renewing its access, so it is locked out within the hour and has to ask again.
       </p>
 
       {connections.isPending && <Skeleton className="h-14 w-full" />}
@@ -87,6 +87,13 @@ function ConnectionRow({
           {app.name !== app.host && app.host && (
             <>
               <span className="truncate font-mono">{app.host}</span>
+              <span aria-hidden="true">·</span>
+            </>
+          )}
+          {/* An unrecognised app is titled by its address, so its own name is a claim. */}
+          {app.claimed && (
+            <>
+              <span className="truncate">calls itself “{app.claimed}”</span>
               <span aria-hidden="true">·</span>
             </>
           )}

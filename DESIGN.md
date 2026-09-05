@@ -238,8 +238,10 @@ bigger flame, wider glow, stays), flare (one-shot after Good or Easy), unlit (no
 Three screens carry the connection between Lymi and an MCP client: the door (`/login`), the
 decision (`/consent`), and the ending (the same route, after the decision).
 
-Who is asking is answered by the **host of the `client_id`**, not by the name or logo the client
-sent. A client identifies itself with a Client ID Metadata Document that has to be served from
+Who is asking is answered by the **host of the `client_id`**, and by nothing else the client sent.
+A recognised host is named ("Claude"); every other app is titled by its address, and its own
+`client_name` appears only as a claim, in the form "it calls itself X". Putting an unverified name
+in the headline of a permission screen is the same mistake as rendering an unverified logo. A client identifies itself with a Client ID Metadata Document that has to be served from
 that HTTPS host, so the host is the one claim in the request that cannot be forged. It is shown in
 mono, in a pill under the app's name, with a check when it is a host we ship a mark for. An app we
 do not recognise says so in words and shows the address to check.

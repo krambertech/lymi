@@ -28,8 +28,7 @@
       "migrations_dir": "migrations"
     }
   ],
-  // Enable R2 in the Cloudflare dashboard, run `wrangler r2 bucket create lymi-audio`, then uncomment:
-  // "r2_buckets": [{ "binding": "AUDIO", "bucket_name": "lymi-audio" }],
+  "r2_buckets": [{ "binding": "AUDIO", "bucket_name": "lymi-audio" }],
   "kv_namespaces": [
     {
       "binding": "SESSIONS",

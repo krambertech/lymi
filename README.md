@@ -5,6 +5,9 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
 - [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts
 - [docs/stack.md](docs/stack.md): the technical decisions and why
+- [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
+- [docs/plans](docs/plans): order of work for passes that are decided but not built
+- [CONTEXT.md](CONTEXT.md): the vocabulary, one name per thing
 - [design/identity.html](design/identity.html): the interactive identity board
 
 ## Run it

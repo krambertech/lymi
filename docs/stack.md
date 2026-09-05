@@ -1,6 +1,6 @@
 # Technical stack
 
-**Status:** Agreed 5 September 2026. Edit in place as decisions change.
+**Status:** Agreed 5 September 2026, integrations layer decided the same day. Edit in place as decisions change. Vocabulary is in [CONTEXT.md](../CONTEXT.md).
 
 Everything runs on Cloudflare. One Worker serves the app, the API, auth and the MCP server. The client is a React PWA that behaves like a native app on the phone and like a keyboard-driven web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
 
@@ -14,10 +14,11 @@ flowchart LR
   end
   subgraph Worker["apps/worker (one Cloudflare Worker)"]
     Assets[Static assets\nSPA fallback]
-    API[Hono /api]
-    Auth[Better Auth /api/auth]
-    MCP[MCP server /mcp\nAgents SDK + OAuth]
-    AI[Card preparation + TTS\nOpenAI via AI Gateway]
+    API[Hono /api\nOpenAPI at /api/docs]
+    Services[Service layer\ndb, userId, actor]
+    Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
+    MCP[MCP server /mcp\ncreateMcpHandler, stateless]
+    AI[Enrichment + TTS\nOpenAI via AI Gateway]
   end
   subgraph Core["packages/core"]
     Schema[Drizzle schema + Zod types]
@@ -29,14 +30,18 @@ flowchart LR
   KV[(KV, sessions cache)]
 
   UI --> Assets
-  UI -->|fetch| API
+  UI -->|fetch, session cookie| API
   SW -->|replay queued reviews| API
-  API --> D1
-  API --> R2
+  API -->|calls| Services
+  MCP -->|calls| Services
+  Services -->|reads, writes, audits| D1
+  Services -->|enrich after add| AI
+  AI -->|fills empty fields| Services
+  API -->|serves audio| R2
+  API -->|session or API key| Auth
+  MCP -->|OAuth token| Auth
   Auth --> D1
   Auth --> KV
-  MCP --> API
-  AI --> API
   Client -.shared.-> UI
   Client -.shared.-> MCP
   Schema -.shared.-> API
@@ -92,19 +97,45 @@ Known issue to watch: a reported bug where sessions expire after five minutes wi
 
 Cloudflare Access was considered as an interim and rejected. Better Auth is built first so the API and MCP tokens have one auth system from day one.
 
+Three ways in, one system:
+
+| Caller | Credential | Better Auth piece |
+| --- | --- | --- |
+| The web app | Session cookie | core |
+| curl, scripts, Claude Code | Personal API key, made and revoked in Settings | `apiKey` plugin |
+| Claude Desktop, Codex, other MCP clients | OAuth 2.1 access token | `@better-auth/mcp` plugin, which makes this Worker the authorization server |
+
+Claude Desktop and Codex both require OAuth for remote MCP servers, which is why a bearer key alone was not enough. `@better-auth/mcp` (Better Auth 1.7) serves the `.well-known` metadata, the consent page and JWT access tokens. The Worker checks tokens against its own JWKS with no database hit. Cloudflare's `workers-oauth-provider` was the earlier plan and is no longer needed.
+
+Every key and every OAuth grant carries one scope, `read` or `write`. Write allows creating, editing and archiving decks and cards. Nothing an integration holds can grade a review.
+
 ### Spaced repetition: ts-fsrs
 
 FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline) and the server (to validate and persist). Grades and intervals are the algorithm's, not invented.
 
-### AI: OpenAI through Cloudflare AI Gateway
+### AI: enrichment only, OpenAI through Cloudflare AI Gateway
 
-Card preparation (extract vocabulary from a lesson, propose meaning, example, grammar note) and pronunciation audio both use the OpenAI API, called through Cloudflare AI Gateway for logging, caching and rate limits. OpenAI is the pick for two reasons: its text-to-speech voices are better for language audio, and the prices are lower for this workload.
+**The server does not extract vocabulary from lessons. The MCP client does.** Claude Desktop or Codex already holds the transcript and a model, so it reads the lesson and calls `add_cards`. That keeps the Worker's AI to one job, enrichment: fill the empty fields on a card (meaning, example, pronunciation, language) and leave every field that already has text alone.
 
-Text goes through a small `Provider` interface in `packages/core` with one implementation. Swapping models or vendors later is one file. Every generated field is stored with `source: "ai"` so the UI can label it. Workers AI is a fallback for cheap tasks like language detection.
+Enrichment runs in the background after any add that leaves fields empty, whether the card came from the web quick-capture sheet or from an integration. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
 
-### MCP: Cloudflare Agents SDK
+OpenAI is the vendor for both text and speech, through AI Gateway for logging, caching and rate limits. Claude for text was considered and set aside to keep one key. Text goes through a small `Provider` interface in `packages/core` with one implementation, so swapping is one file. Workers AI is a fallback for cheap tasks like language detection.
 
-`McpAgent` from the Agents SDK with `workers-oauth-provider` for authorization. Tools are thin wrappers over the same API handlers the UI uses, so MCP cannot bypass product rules. Destructive tools require confirmation and everything is written to the same audit log the UI shows.
+### MCP: stateless handler in the same Worker
+
+`createMcpHandler` from the Agents SDK at `/mcp`, Streamable HTTP, no Durable Object. `McpAgent` was the earlier plan and is deprecated. Authorization is the Better Auth OAuth server above.
+
+Tools call the same service layer the REST routes call, so MCP cannot bypass product rules and every write lands in the audit log with actor `mcp`. The tool set: list decks, get deck, search cards, add cards, update card, archive card, restore card, due counts, enrich. There is no delete tool because the app has no delete. Claude Desktop does not support elicitation, so the server cannot ask "are you sure". Archive being reversible is the safety.
+
+### Integrations: cards land as cards
+
+A card added through the API or MCP is an ordinary card from the moment it lands. There is no proposals table and no approval step. In its place, an **Activity** view in Settings lists every write made by an integration or the AI, and you can inspect, edit or archive from there. Cards carry a `created_by` actor so Activity can filter without parsing the audit log.
+
+Adds take one card or many. A lesson produces 20 to 40 terms, and one tool call per term is 40 model turns. A **duplicate** is a card whose normalised term and language match an active card anywhere in your decks. A duplicate is skipped, never rejected, and the response names the existing card, so re-running the same call is safe. A card with no language only matches other cards with no language.
+
+### API: a service layer and generated docs
+
+Route logic lives in service functions that take `db`, `userId` and `actor`. Hono routes and MCP tools are thin callers. The OpenAPI document is generated from the Zod schemas in `packages/core` and served with a reference UI at `/api/docs`.
 
 ### Audio: R2
 
@@ -139,6 +170,13 @@ Local development accepts email and password sign-in so the app is usable before
 - Domain: lymi.app, Worker on the apex. Register before the first deploy.
 - Auth: Better Auth from the start, no Cloudflare Access interim.
 - AI: OpenAI for text and speech, through AI Gateway.
+- Integrations (5 September 2026): MCP clients are Claude Desktop and Codex first, so OAuth from day one via `@better-auth/mcp`. Personal API keys via the `apiKey` plugin. Two scopes, `read` and `write`.
+- Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
+- Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.
+- The server enriches, the MCP client extracts. Enrichment is automatic, background, fills only empty fields.
+- Meaning language is a per-user setting, English by default.
+- Integrations never grade reviews.
+- Not in the integrations pass: text-to-speech stays a stub, no scopes finer than read and write.
 
 ## Sources
 

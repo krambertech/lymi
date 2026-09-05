@@ -110,7 +110,7 @@ Decks can mix languages or hold non-vocabulary cards. `cards.language` is nullab
 
 ## API
 
-The API is documented by the running app: [`/api/docs`](https://lymi.k-porshnieva.workers.dev/api/docs) is a reference UI, [`/api/openapi.json`](https://lymi.k-porshnieva.workers.dev/api/openapi.json) is the OpenAPI 3.1 document. Both are generated from the route descriptions in `apps/web/src/server/routes` and the Zod schemas in `packages/core/src/types.ts` (request bodies) and `packages/core/src/responses.ts` (responses), so they cannot drift from the code. This page keeps only what the document does not say.
+The API is documented by the running app: [`/docs`](https://lymi.k-porshnieva.workers.dev/docs) is the documentation site, [`/docs/api`](https://lymi.k-porshnieva.workers.dev/docs/api) its reference, and [`/api/openapi.json`](https://lymi.k-porshnieva.workers.dev/api/openapi.json) the OpenAPI 3.1 document the reference renders. Both are generated from the route descriptions in `apps/web/src/server/routes` and the Zod schemas in `packages/core/src/types.ts` (request bodies) and `packages/core/src/responses.ts` (responses), so they cannot drift from the code. This page keeps only what the document does not say.
 
 Three ways in, one shape on the server. A session cookie is the learner in the app, actor `user`, scope `write`. An `x-api-key` header is a personal key, actor `api`, with the key's scope. An OAuth bearer token is an MCP client, actor `mcp`. `apps/web/src/server/principal.ts` resolves all three into `{ user, actor, scope }`.
 

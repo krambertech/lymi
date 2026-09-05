@@ -1,4 +1,3 @@
-import { Scalar } from "@scalar/hono-api-reference";
 import type { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
 import { errorResponse } from "./http";
@@ -6,8 +5,12 @@ import type { AppEnv } from "./index";
 
 /**
  * The OpenAPI document is generated from the route descriptions and the Zod schemas in
- * packages/core. Served at /api/openapi.json, with a reference UI at /api/docs. Both are
- * public: the document describes the API, it does not expose data.
+ * packages/core, and served at /api/openapi.json. It is public: the document describes the
+ * API, it does not expose data.
+ *
+ * The reference people read is /docs/api, in the app, which renders this document with the
+ * Lymi design system. /api/docs was the generated Scalar page and now redirects there, so
+ * links already sent still land.
  */
 export function mountOpenApi(app: Hono<AppEnv>) {
   app.get(
@@ -26,8 +29,8 @@ export function mountOpenApi(app: Hono<AppEnv>) {
           title: "Lymi API",
           version: "1",
           description: [
-            "The same API the Lymi app uses. Cards from here are ordinary cards: they land in a deck at once, ",
-            'carry `createdBy: "api"`, and show up in Activity in the app so nothing lands unseen.',
+            "The same API the Lymi app uses. Cards added here are ordinary cards: they land in a deck at ",
+            'once and carry `createdBy: "api"`, so the app can always tell them apart from typed ones.',
             "",
             "**Authentication.** Send a personal API key in the `x-api-key` header. Make one in Settings. ",
             "A key has one scope: `read` lists and searches, `write` also adds, edits and archives. ",
@@ -37,6 +40,8 @@ export function mountOpenApi(app: Hono<AppEnv>) {
             "is skipped and reported, never rejected. Re-running a call is safe.",
             "",
             "**Removal.** Nothing is deleted. Cards are archived and can be restored.",
+            "",
+            "The guides are at /docs.",
           ].join("\n"),
         },
         components: {
@@ -57,24 +62,27 @@ export function mountOpenApi(app: Hono<AppEnv>) {
         },
         security: [{ apiKey: [] }, { session: [] }],
         tags: [
-          { name: "Decks" },
-          { name: "Cards" },
-          { name: "Review" },
-          { name: "Settings" },
-          { name: "API keys", description: "Session only." },
-          { name: "Account" },
+          { name: "Decks", description: "A deck holds cards and sets their defaults." },
+          {
+            name: "Cards",
+            description:
+              "One term and what the learner knows about it. Adding a term that already exists is skipped, never rejected.",
+          },
+          {
+            name: "Review",
+            description:
+              "What is due, and what it would be scheduled to. Grading is the learner's alone.",
+          },
+          { name: "Settings", description: "The learner's own preferences." },
+          {
+            name: "API keys",
+            description: "Session only: no key can list, mint or revoke another key.",
+          },
+          { name: "Account", description: "Who the credential belongs to." },
         ],
       },
     }),
   );
 
-  app.get(
-    "/api/docs",
-    Scalar({
-      url: "/api/openapi.json",
-      pageTitle: "Lymi API",
-      theme: "default",
-      hideClientButton: true,
-    }),
-  );
+  app.get("/api/docs", (c) => c.redirect("/docs/api", 301));
 }

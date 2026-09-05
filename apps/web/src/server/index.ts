@@ -1,10 +1,12 @@
 import type { Actor, Scope } from "@lymi/core";
+import { MeOut } from "@lymi/core";
 import { APIError } from "better-auth/api";
 import { Hono } from "hono";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
-import { statusOf } from "./http";
+import { describe, statusOf } from "./http";
+import { mountOpenApi } from "./openapi";
 import { authenticate, requireLearner, requireScopeForWrites } from "./principal";
 import { cards } from "./routes/cards";
 import { decks } from "./routes/decks";
@@ -36,10 +38,15 @@ app.use("*", async (c, next) => {
   await next();
 });
 
-app.get("/api/health", (c) => c.json({ ok: true, name: "lymi", time: new Date().toISOString() }));
+app.get("/api/health", describe({ hide: true }), (c) =>
+  c.json({ ok: true, name: "lymi", time: new Date().toISOString() }),
+);
 
 // Better Auth owns everything under /api/auth.
 app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
+
+// The OpenAPI document and its reference UI. Public, so they sit before authentication.
+mountOpenApi(app);
 
 // Everything else under /api needs a session cookie or an API key, and writes need the write scope.
 app.use("/api/*", authenticate, requireScopeForWrites);
@@ -48,10 +55,19 @@ app.use("/api/review/grade", requireLearner);
 app.use("/api/keys/*", requireLearner);
 app.use("/api/keys", requireLearner);
 
-app.get("/api/me", (c) => {
-  const { id, name, email, image } = c.get("user");
-  return c.json({ id, name, email, image });
-});
+app.get(
+  "/api/me",
+  describe({
+    tags: ["Account"],
+    summary: "Who am I",
+    description: "The learner the key or session belongs to.",
+    ok: { schema: MeOut, description: "The learner" },
+  }),
+  (c) => {
+    const { id, name, email, image } = c.get("user");
+    return c.json({ id, name, email, image });
+  },
+);
 
 app.route("/api/decks", decks);
 app.route("/api/cards", cards);
@@ -60,7 +76,9 @@ app.route("/api/settings", settings);
 app.route("/api/keys", keys);
 
 // Audio is generated with OpenAI text-to-speech and cached in R2. Not wired yet.
-app.get("/api/audio/:cardId", (c) => c.json({ error: "Audio is not set up yet" }, 501));
+app.get("/api/audio/:cardId", describe({ hide: true }), (c) =>
+  c.json({ error: "Audio is not set up yet" }, 501),
+);
 
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);

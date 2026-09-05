@@ -1,30 +1,104 @@
-import { CardInput, CardPatch, CardsInput } from "@lymi/core";
+import {
+  AddCardOutcomeOut,
+  AddCardsOut,
+  CardInput,
+  CardOut,
+  CardPatch,
+  CardsInput,
+  OkOut,
+} from "@lymi/core";
 import { Hono } from "hono";
-import { ctxOf, parseBody } from "../http";
+import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { addCard, addCards, archiveCard, getCard, restoreCard, updateCard } from "../services";
 
 export const cards = new Hono<AppEnv>();
 
-/** Add one card. 201 when added, 200 when it was a duplicate and got skipped. */
-cards.post("/", async (c) => {
-  const outcome = await addCard(ctxOf(c), await parseBody(c, CardInput, "card"));
-  return c.json(outcome, outcome.status === "added" ? 201 : 200);
-});
-/** Add many. Always 200; each entry says whether it was added or skipped. */
-cards.post("/batch", async (c) => {
-  const { cards: inputs } = await parseBody(c, CardsInput, "cards");
-  return c.json({ results: await addCards(ctxOf(c), inputs) });
-});
-cards.get("/:id", async (c) => c.json(await getCard(ctxOf(c), c.req.param("id"))));
-cards.patch("/:id", async (c) =>
-  c.json(await updateCard(ctxOf(c), c.req.param("id"), await parseBody(c, CardPatch, "patch"))),
+const DUPLICATE_RULE =
+  "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks. " +
+  "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
+  "Re-running the same call is safe.";
+
+cards.post(
+  "/",
+  describe({
+    tags: ["Cards"],
+    summary: "Add a card",
+    description: `Needs the write scope. 201 when added, 200 when skipped as a duplicate. ${DUPLICATE_RULE}`,
+    ok: { status: 201, schema: AddCardOutcomeOut, description: "Added" },
+    errors: [400, 403, 404],
+  }),
+  body(CardInput, "card"),
+  async (c) => {
+    const outcome = await addCard(ctxOf(c), c.req.valid("json"));
+    return c.json(outcome, outcome.status === "added" ? 201 : 200);
+  },
 );
-cards.post("/:id/archive", async (c) => {
-  await archiveCard(ctxOf(c), c.req.param("id"));
-  return c.json({ ok: true });
-});
-cards.post("/:id/restore", async (c) => {
-  await restoreCard(ctxOf(c), c.req.param("id"));
-  return c.json({ ok: true });
-});
+
+cards.post(
+  "/batch",
+  describe({
+    tags: ["Cards"],
+    summary: "Add many cards",
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE}`,
+    ok: { schema: AddCardsOut, description: "One outcome per card sent" },
+    errors: [400, 403, 404],
+  }),
+  body(CardsInput, "cards"),
+  async (c) => c.json({ results: await addCards(ctxOf(c), c.req.valid("json").cards) }),
+);
+
+cards.get(
+  "/:id",
+  describe({
+    tags: ["Cards"],
+    summary: "Get a card",
+    ok: { schema: CardOut, description: "The card" },
+    errors: [404],
+  }),
+  async (c) => c.json(await getCard(ctxOf(c), c.req.param("id"))),
+);
+
+cards.patch(
+  "/:id",
+  describe({
+    tags: ["Cards"],
+    summary: "Edit a card",
+    description:
+      "Needs the write scope. Send only the fields to change. Setting `deckId` moves the card.",
+    ok: { schema: CardOut, description: "The card after the edit" },
+    errors: [400, 403, 404],
+  }),
+  body(CardPatch, "patch"),
+  async (c) => c.json(await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+);
+
+cards.post(
+  "/:id/archive",
+  describe({
+    tags: ["Cards"],
+    summary: "Archive a card",
+    description: "Needs the write scope. Hides the card without destroying it. Undo with restore.",
+    ok: { schema: OkOut, description: "Archived" },
+    errors: [403, 404],
+  }),
+  async (c) => {
+    await archiveCard(ctxOf(c), c.req.param("id"));
+    return c.json({ ok: true as const });
+  },
+);
+
+cards.post(
+  "/:id/restore",
+  describe({
+    tags: ["Cards"],
+    summary: "Restore a card",
+    description: "Needs the write scope. Brings an archived card back with its schedule intact.",
+    ok: { schema: OkOut, description: "Restored" },
+    errors: [403, 404],
+  }),
+  async (c) => {
+    await restoreCard(ctxOf(c), c.req.param("id"));
+    return c.json({ ok: true as const });
+  },
+);

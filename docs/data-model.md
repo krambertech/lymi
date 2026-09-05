@@ -1,6 +1,6 @@
 # Data model and API
 
-Reference for what is in D1 and what the API returns. Source of truth is `packages/core/src/schema` for tables and `packages/core/src/types.ts` for request bodies. This page describes; it does not decide.
+Reference for what is in D1 and what the API returns. Source of truth is `packages/core/src/schema` for tables, `packages/core/src/types.ts` for request bodies and `packages/core/src/responses.ts` for responses. This page describes; it does not decide.
 
 ## Entities
 
@@ -14,6 +14,8 @@ erDiagram
   cards ||--o{ card_states : "one per direction"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ audit_log : "every write"
+  user ||--|| user_settings : has
+  user ||--o{ apikey : "personal keys"
 
   decks {
     text id PK
@@ -30,6 +32,7 @@ erDiagram
     text user_id FK
     text deck_id FK
     text term "the word or phrase"
+    text normalized_term "normaliseTerm(term), duplicate key"
     text meaning "nullable"
     text pronunciation "nullable, IPA or hint"
     text example "nullable"
@@ -41,7 +44,12 @@ erDiagram
     text meaning_source "lesson | ai | manual"
     text example_source "lesson | ai | manual"
     text audio_key "nullable R2 key"
+    text created_by "user | api | mcp | ai | system"
     int archived_at "nullable"
+  }
+  user_settings {
+    text user_id PK
+    text meaning_language "default en"
   }
   card_states {
     text id PK
@@ -82,7 +90,7 @@ erDiagram
 
 All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 19-character strings, time-prefixed so they sort by creation. Rows are never deleted by the app: decks and cards archive, reviews and audit rows are permanent.
 
-The `user`, `session`, `account` and `verification` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
+The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
 
 ### Why the scheduling state is JSON
 
@@ -102,56 +110,23 @@ Decks can mix languages or hold non-vocabulary cards. `cards.language` is nullab
 
 ## API
 
-All routes are under `/api`, JSON in and out, session cookie for auth. Everything except `/api/health` and `/api/auth/*` returns `401 {"error":"Sign in required"}` without a session. Validation failures return `400 {"error", "issues"}` with the Zod issues.
+The API is documented by the running app: [`/api/docs`](https://lymi.k-porshnieva.workers.dev/api/docs) is a reference UI, [`/api/openapi.json`](https://lymi.k-porshnieva.workers.dev/api/openapi.json) is the OpenAPI 3.1 document. Both are generated from the route descriptions in `apps/web/src/server/routes` and the Zod schemas in `packages/core/src/types.ts` (request bodies) and `packages/core/src/responses.ts` (responses), so they cannot drift from the code. This page keeps only what the document does not say.
 
-| Method | Path | Body | Returns |
-| --- | --- | --- | --- |
-| GET | `/api/health` | | `{ ok, name, time }` |
-| ANY | `/api/auth/*` | | Better Auth (sign-in, session, sign-out) |
-| GET | `/api/me` | | `{ id, name, email, image }` |
-| GET | `/api/decks` | | `DeckSummary[]` |
-| POST | `/api/decks` | `DeckInput` | `Deck` (201) |
-| GET | `/api/decks/:id` | | `Deck` |
-| GET | `/api/decks/:id/cards` | | `{ card: Card, state: CardState \| null }[]` newest first |
-| POST | `/api/cards` | `CardInput` | `Card` (201). Also creates one `card_state` per direction, due now. |
-| PATCH | `/api/cards/:id` | `CardPatch` | `Card` |
-| POST | `/api/cards/:id/archive` | | `{ ok }` |
-| POST | `/api/cards/:id/restore` | | `{ ok }` |
-| GET | `/api/review/queue?deck=&limit=` | | `{ total, items: QueueItem[] }` |
-| POST | `/api/review/grade` | `GradeInput` | `{ ok, due, state }` or `{ ok, duplicate: true }` |
-| GET | `/api/audio/:cardId` | | 501 until text-to-speech is wired |
-
-### Shapes
-
-```ts
-// Request bodies (packages/core/src/types.ts)
-DeckInput  { name: string; description?: string; defaultLanguage?: string | null;
-             directions?: "recognition"|"production"|"both" }
-CardInput  { deckId: string; term: string; meaning?: string; pronunciation?: string;
-             example?: string; notes?: string; language?: string | null; tags?: string[];
-             source?: string; directions?: "recognition"|"production"|"both" | null;
-             meaningSource?: "lesson"|"ai"|"manual";
-             exampleSource?: "lesson"|"ai"|"manual" }
-CardPatch  Partial<CardInput>
-GradeInput { cardId: string; direction: "recognition"|"production"; rating: 1|2|3|4;
-             reviewedAt?: string }   // client time, so offline grades keep their real timestamp
-
-// Responses
-DeckSummary { id, name, description, defaultLanguage, position, total: number, due: number }
-QueueItem   { card: Card; direction; stateId: string; fsrsState: 0|1|2|3;
-              next: { 1: ISODate; 2: ISODate; 3: ISODate; 4: ISODate } }  // what each grade would schedule
-```
+Three ways in, one shape on the server. A session cookie is the learner in the app, actor `user`, scope `write`. An `x-api-key` header is a personal key, actor `api`, with the key's scope. An OAuth bearer token is an MCP client, actor `mcp`. `apps/web/src/server/principal.ts` resolves all three into `{ user, actor, scope }`.
 
 ### Rules the API enforces
 
+- Reads need any credential. Writes need the `write` scope, or 403.
+- Grading and key management are the learner's alone. Any key or token gets 403, whatever its scope.
+- A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
 - A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.
-- Every write appends to `audit_log` with an actor. The web UI writes `user`; the API and MCP will write their own actor so their changes are visible in the product.
+- Every write appends to `audit_log` with its actor, and every card carries `created_by`, so Activity can show what integrations and the AI wrote.
 - Archive instead of delete, always.
 - `language` on a new card defaults to the deck's `default_language` when not given.
+- Validation failures return `400 { error, issues }` with the Zod issues. Missing or bad credentials return `401 { error }`.
 
 ## Not decided yet
 
 - One `meaning` string per card, or multiple senses as rows. Decide before the first deploy with real data.
 - Holding back the second direction of a card until the next day, so seeing the term is not a giveaway for producing it later in the same session. Queue logic, not schema.
-- ~~API keys and scopes for integrations.~~ Decided 5 September 2026, see [stack.md](stack.md): `apiKey` plugin for keys, `@better-auth/mcp` for OAuth, scopes `read` and `write`. Tables are generated by Better Auth. Cards gain `created_by`, and a settings row holds the meaning language.
 - Tags as a JSON column (current) or a table, once search needs them.

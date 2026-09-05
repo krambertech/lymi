@@ -47,8 +47,12 @@ export function ApiKeysSection() {
       <div className="grid gap-1">
         <h2 className="text-[13px] font-semibold text-muted">API keys</h2>
         <p className="max-w-[60ch] text-[14.5px] text-ink-2">
-          For curl, scripts and Claude Code. Send the key in an <code>x-api-key</code> header. MCP
-          clients such as Claude Desktop sign in with OAuth instead and do not need one.
+          For curl, scripts and Claude Code. Send the key in an <code>x-api-key</code> header; the
+          routes are in the{" "}
+          <a href="/api/docs" className="underline decoration-border-strong underline-offset-2">
+            API reference
+          </a>
+          . MCP clients such as Claude Desktop sign in with OAuth instead and do not need one.
         </p>
       </div>
 

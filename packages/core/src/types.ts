@@ -16,6 +16,13 @@ export type FieldSource = z.infer<typeof FieldSource>;
 export const Actor = z.enum(["user", "api", "mcp", "ai", "system"]);
 export type Actor = z.infer<typeof Actor>;
 
+/**
+ * What a key or OAuth grant may do. `read` lists and searches. `write` also adds, edits and
+ * archives decks and cards. Reviews are never writable by an integration, whatever the scope.
+ */
+export const Scope = z.enum(["read", "write"]);
+export type Scope = z.infer<typeof Scope>;
+
 /** BCP 47 language tag, loosely validated. "it", "pt-BR", "uk". */
 export const LanguageTag = z
   .string()
@@ -51,6 +58,12 @@ export const CardInput = z.object({
 });
 export type CardInput = z.infer<typeof CardInput>;
 
+/** A batch add. A lesson is 20 to 40 terms; one call, not one per term. */
+export const CardsInput = z.object({
+  cards: z.array(CardInput).min(1).max(200),
+});
+export type CardsInput = z.infer<typeof CardsInput>;
+
 export const CardPatch = CardInput.partial()
   .omit({ deckId: true })
   .extend({
@@ -66,3 +79,15 @@ export const GradeInput = z.object({
   reviewedAt: z.coerce.date().optional(),
 });
 export type GradeInput = z.infer<typeof GradeInput>;
+
+export const SettingsPatch = z.object({
+  /** The language meanings are written in. */
+  meaningLanguage: LanguageTag.optional(),
+});
+export type SettingsPatch = z.infer<typeof SettingsPatch>;
+
+export const ApiKeyInput = z.object({
+  name: z.string().trim().min(1).max(32),
+  scope: Scope,
+});
+export type ApiKeyInput = z.infer<typeof ApiKeyInput>;

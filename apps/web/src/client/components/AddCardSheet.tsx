@@ -19,6 +19,7 @@ export function AddCardSheet({ open, onOpenChange, deckId }: Props) {
   const [term, setTerm] = useState("");
   const [meaning, setMeaning] = useState("");
   const [deck, setDeck] = useState(deckId ?? "");
+  const [notice, setNotice] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -27,13 +28,19 @@ export function AddCardSheet({ open, onOpenChange, deckId }: Props) {
 
   const create = useMutation({
     mutationFn: () =>
-      api.createCard({
+      api.addCard({
         deckId: deck,
         term: term.trim(),
         meaning: meaning.trim() || undefined,
         meaningSource: meaning ? "manual" : undefined,
       }),
-    onSuccess: () => {
+    onSuccess: (outcome) => {
+      if (outcome.status === "skipped") {
+        setNotice(`${outcome.existing.term} is already in ${outcome.deckName}`);
+        inputRef.current?.select();
+        return;
+      }
+      setNotice(null);
       qc.invalidateQueries({ queryKey: ["decks"] });
       qc.invalidateQueries({ queryKey: ["queue"] });
       setTerm("");
@@ -69,7 +76,10 @@ export function AddCardSheet({ open, onOpenChange, deckId }: Props) {
                 // biome-ignore lint/a11y/noAutofocus: the sheet exists to type into this field
                 autoFocus
                 value={term}
-                onChange={(e) => setTerm(e.target.value)}
+                onChange={(e) => {
+                  setTerm(e.target.value);
+                  setNotice(null);
+                }}
                 className="h-11 w-full rounded-md border border-border-strong bg-bg px-3.5 text-[17px] placeholder:text-muted focus:border-amber focus:outline-none focus:ring-[3px] focus:ring-amber-soft"
                 placeholder="sbrigarsi"
                 autoComplete="off"
@@ -101,6 +111,11 @@ export function AddCardSheet({ open, onOpenChange, deckId }: Props) {
                 ))}
               </select>
             </label>
+            {notice && (
+              <p className="text-[13px] text-muted" role="status">
+                {notice}
+              </p>
+            )}
             {create.isError && (
               <p className="text-[13px] text-amber-text">{(create.error as Error).message}</p>
             )}

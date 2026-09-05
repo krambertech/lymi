@@ -5,6 +5,9 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
 - [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts
 - [docs/stack.md](docs/stack.md): the technical decisions and why
+- [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
+- [docs/plans](docs/plans): order of work for passes that are decided but not built
+- [CONTEXT.md](CONTEXT.md): the vocabulary, one name per thing
 - [design/identity.html](design/identity.html): the interactive identity board
 
 ## Run it
@@ -40,7 +43,7 @@ pnpm typecheck    # tsc across the workspace
 pnpm test         # Vitest
 pnpm db:generate  # new migration from schema changes
 pnpm build        # production build
-pnpm deploy       # wrangler deploy
+pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy command)
 ```
 
 ## First deploy checklist
@@ -51,4 +54,4 @@ pnpm deploy       # wrangler deploy
 4. `wrangler kv namespace create SESSIONS` and paste the id
 5. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
 6. `pnpm db:migrate:prod`
-7. `pnpm deploy`
+7. `pnpm run deploy`

@@ -53,6 +53,14 @@ Who made a write: the learner in the app, the API, an MCP client, the AI, or the
 **Scope**:
 What a key or OAuth grant may do: read, or read and write. Reviews are never writable by an integration.
 
+**Connected app**:
+An MCP client the learner let in on the consent screen, listed in Settings. The grant behind it is an OAuth consent; "connected app" is what the learner is shown, because the client is the thing they recognise.
+_Avoid_: Integration (that is the actor), authorized client, OAuth client (in the interface)
+
+**Disconnect**:
+Taking a connected app's access back. Revokes its refresh token, so it is locked out once its current access token expires and has to ask again.
+_Avoid_: Revoke (that is for API keys), remove, delete
+
 **Activity**:
 The list of writes made by integrations and the AI, shown in the app so nothing lands unseen. Cards can be inspected, edited or archived from there.
 _Avoid_: Review queue, inbox, approvals, history (for this screen)

@@ -2,13 +2,14 @@ import type { Actor, Scope } from "@lymi/core";
 import { MeOut } from "@lymi/core";
 import { APIError } from "better-auth/api";
 import { Hono } from "hono";
+import { HTTPException } from "hono/http-exception";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
 import { describe, statusOf } from "./http";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
-import { authenticate, requireLearner, requireScopeForWrites } from "./principal";
+import { authenticate } from "./principal";
 import { cards } from "./routes/cards";
 import { decks } from "./routes/decks";
 import { keys } from "./routes/keys";
@@ -67,12 +68,11 @@ app.all("/mcp", (c) =>
   handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
 );
 
-// Everything else under /api needs a session cookie or an API key, and writes need the write scope.
-app.use("/api/*", authenticate, requireScopeForWrites);
-// Grading and key management are the learner's alone, whatever a key's scope.
-app.use("/api/review/grade", requireLearner);
-app.use("/api/keys/*", requireLearner);
-app.use("/api/keys", requireLearner);
+// Everything else under /api needs a session cookie or an API key. What the caller may then
+// do is declared on each route with describe(): writes need the write scope, learner-only
+// routes need the learner. A route without describe() has no such check, so every route
+// under /api gets one.
+app.use("/api/*", authenticate);
 
 app.get(
   "/api/me",
@@ -111,6 +111,10 @@ app.onError((err, c) => {
   }
   if (err instanceof APIError) {
     return c.json({ error: err.body?.message ?? err.message }, err.statusCode as 400);
+  }
+  // Hono's own errors, such as the 400 its validator throws on a body that is not JSON.
+  if (err instanceof HTTPException) {
+    return c.json({ error: err.message }, err.status);
   }
   console.error(err);
   return c.json({ error: "Something went wrong" }, 500);

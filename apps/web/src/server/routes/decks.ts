@@ -25,7 +25,7 @@ decks.post(
     summary: "Create a deck",
     description: "Needs the write scope. `defaultLanguage` prefills the language on new cards.",
     ok: { status: 201, schema: DeckOut, description: "The new deck" },
-    errors: [400, 403],
+    errors: [400],
   }),
   body(DeckInput, "deck"),
   async (c) => c.json(await createDeck(ctxOf(c), c.req.valid("json")), 201),

@@ -24,7 +24,7 @@ settings.patch(
     summary: "Change settings",
     description: "Needs the write scope.",
     ok: { schema: SettingsOut, description: "Settings after the change" },
-    errors: [400, 403],
+    errors: [400],
   }),
   body(SettingsPatch, "settings"),
   async (c) => c.json(await updateSettings(ctxOf(c), c.req.valid("json"))),

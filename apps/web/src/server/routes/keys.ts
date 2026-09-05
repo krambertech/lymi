@@ -1,16 +1,13 @@
 import { ApiKeyCreatedOut, ApiKeyInput, ApiKeyOut, OkOut } from "@lymi/core";
-import { desc, eq } from "@lymi/core/db";
 import { Hono } from "hono";
 import { z } from "zod";
-import { schema } from "../db";
 import { body, describe } from "../http";
 import type { AppEnv } from "../index";
 import { permissionsFor, scopeOf } from "../principal";
-import { ServiceError } from "../services/context";
 
 /**
- * Personal API keys. Learner-only: `requireLearner` runs before these routes, so an API
- * key can never mint or revoke another key.
+ * Personal API keys. Every route is learner-only, so an API key can never list, mint or
+ * revoke another key.
  */
 export const keys = new Hono<AppEnv>();
 
@@ -21,28 +18,23 @@ keys.get(
   describe({
     tags: ["API keys"],
     summary: "List API keys",
+    learnerOnly: true,
     description: `${LEARNER_ONLY} Never includes the key itself.`,
     ok: { schema: z.array(ApiKeyOut), description: "Keys, newest first" },
-    errors: [403],
   }),
   async (c) => {
-    const rows = await c
-      .get("db")
-      .select({
-        id: schema.apikey.id,
-        name: schema.apikey.name,
-        start: schema.apikey.start,
-        permissions: schema.apikey.permissions,
-        lastRequest: schema.apikey.lastRequest,
-        createdAt: schema.apikey.createdAt,
-      })
-      .from(schema.apikey)
-      .where(eq(schema.apikey.referenceId, c.get("user").id))
-      .orderBy(desc(schema.apikey.createdAt));
+    const { apiKeys } = await c.get("auth").api.listApiKeys({
+      headers: c.req.raw.headers,
+      query: { sortBy: "createdAt", sortDirection: "desc" },
+    });
     return c.json(
-      rows.map(({ permissions, ...row }) => ({
-        ...row,
-        scope: scopeOf(parsePermissions(permissions)),
+      apiKeys.map((k) => ({
+        id: k.id,
+        name: k.name,
+        start: k.start,
+        scope: scopeOf(k.permissions),
+        lastRequest: k.lastRequest,
+        createdAt: k.createdAt,
       })),
     );
   },
@@ -53,9 +45,10 @@ keys.post(
   describe({
     tags: ["API keys"],
     summary: "Create an API key",
+    learnerOnly: true,
     description: `${LEARNER_ONLY} The plain key is in this response and nowhere else; the database holds a hash.`,
     ok: { status: 201, schema: ApiKeyCreatedOut, description: "The new key, once" },
-    errors: [400, 403],
+    errors: [400],
   }),
   body(ApiKeyInput, "key"),
   async (c) => {
@@ -87,34 +80,18 @@ keys.delete(
   describe({
     tags: ["API keys"],
     summary: "Revoke an API key",
+    learnerOnly: true,
     description: `${LEARNER_ONLY} Final: requests with the key fail from the next call.`,
     ok: { schema: OkOut, description: "Revoked" },
-    errors: [403, 404],
+    errors: [404],
   }),
   async (c) => {
-    const id = c.req.param("id");
-    const [row] = await c
-      .get("db")
-      .select({ id: schema.apikey.id })
-      .from(schema.apikey)
-      .where(eq(schema.apikey.id, id));
-    if (!row) throw new ServiceError("not_found", "Key not found");
-    await c.get("auth").api.deleteApiKey({ body: { keyId: id }, headers: c.req.raw.headers });
+    // The plugin checks the key exists and belongs to this learner, and throws a 404 APIError
+    // otherwise, which onError maps.
+    await c.get("auth").api.deleteApiKey({
+      body: { keyId: c.req.param("id") },
+      headers: c.req.raw.headers,
+    });
     return c.json({ ok: true as const });
   },
 );
-
-function parsePermissions(raw: string | null): Record<string, string[]> | null {
-  if (!raw) return null;
-  try {
-    const parsed: unknown = JSON.parse(raw);
-    if (typeof parsed !== "object" || parsed === null) return null;
-    const out: Record<string, string[]> = {};
-    for (const [k, v] of Object.entries(parsed)) {
-      if (Array.isArray(v) && v.every((x) => typeof x === "string")) out[k] = v;
-    }
-    return out;
-  } catch {
-    return null;
-  }
-}

@@ -34,15 +34,17 @@ export async function addCards(
   if (inputs.length === 0) return [];
 
   const deckIds = [...new Set(inputs.map((i) => i.deckId))];
-  const decks = await db
-    .select({
-      id: schema.decks.id,
-      name: schema.decks.name,
-      defaultLanguage: schema.decks.defaultLanguage,
-      directions: schema.decks.directions,
-    })
-    .from(schema.decks)
-    .where(and(inArray(schema.decks.id, deckIds), eq(schema.decks.userId, userId)));
+  const decks = await selectIn(deckIds, (ids) =>
+    db
+      .select({
+        id: schema.decks.id,
+        name: schema.decks.name,
+        defaultLanguage: schema.decks.defaultLanguage,
+        directions: schema.decks.directions,
+      })
+      .from(schema.decks)
+      .where(and(inArray(schema.decks.id, ids), eq(schema.decks.userId, userId))),
+  );
   const deckById = new Map(decks.map((d) => [d.id, d]));
 
   // Resolve language and key per input, then look up every key in one query.
@@ -53,17 +55,19 @@ export async function addCards(
     return { input, deck, language, key: normaliseTerm(input.term) };
   });
 
-  const existingRows = await db
-    .select({ card: schema.cards, deckName: schema.decks.name })
-    .from(schema.cards)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(
-      and(
-        eq(schema.cards.userId, userId),
-        isNull(schema.cards.archivedAt),
-        inArray(schema.cards.normalizedTerm, [...new Set(prepared.map((p) => p.key))]),
+  const existingRows = await selectIn([...new Set(prepared.map((p) => p.key))], (keys) =>
+    db
+      .select({ card: schema.cards, deckName: schema.decks.name })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(
+        and(
+          eq(schema.cards.userId, userId),
+          isNull(schema.cards.archivedAt),
+          inArray(schema.cards.normalizedTerm, keys),
+        ),
       ),
-    );
+  );
   const existing = new Map<string, { card: Card; deckName: string }>();
   for (const row of existingRows) {
     existing.set(dupKey(row.card.language, row.card.normalizedTerm), row);
@@ -72,7 +76,6 @@ export async function addCards(
   const now = new Date();
   const outcomes: AddCardOutcome[] = [];
   const statements = [];
-  const addedIds: string[] = [];
 
   for (const { input, deck, language, key } of prepared) {
     const hit = existing.get(dupKey(language, key));
@@ -135,24 +138,26 @@ export async function addCards(
     );
     // Later inputs in this batch with the same key are duplicates of this one.
     existing.set(dupKey(language, key), { card, deckName: deck.name });
-    addedIds.push(id);
     outcomes.push({ status: "added", card });
   }
 
   const [first, ...rest] = statements;
   if (first) await db.batch([first, ...rest]);
 
-  // Swap the in-memory cards for the stored rows so callers see database defaults.
-  if (addedIds.length > 0) {
-    const rows = await db.select().from(schema.cards).where(inArray(schema.cards.id, addedIds));
-    const byId = new Map(rows.map((r) => [r.id, r]));
-    for (const outcome of outcomes) {
-      if (outcome.status !== "added") continue;
-      const stored = byId.get(outcome.card.id);
-      if (stored) outcome.card = stored;
-    }
-  }
   return outcomes;
+}
+
+/**
+ * D1 allows 100 bound parameters per query and a lesson can be 200 terms, so `IN (...)`
+ * lists are queried in slices. Returns every row across the slices.
+ */
+async function selectIn<T, R>(values: T[], select: (slice: T[]) => Promise<R[]>): Promise<R[]> {
+  const size = 90;
+  const rows: R[] = [];
+  for (let i = 0; i < values.length; i += size) {
+    rows.push(...(await select(values.slice(i, i + size))));
+  }
+  return rows;
 }
 
 /** A card with no language only matches other cards with no language. */
@@ -179,10 +184,12 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       .where(and(eq(schema.decks.id, patch.deckId), eq(schema.decks.userId, userId)));
     if (!deck) throw notFound("Deck");
   }
-  const key = patch.term === undefined ? {} : { normalizedTerm: normaliseTerm(patch.term) };
+  // Always recompute the duplicate key, so a card whose stored key predates normaliseTerm()
+  // (the 0002 backfill used SQLite's ASCII-only lower()) is repaired by any edit.
+  const normalizedTerm = normaliseTerm(patch.term ?? current.term);
   await db
     .update(schema.cards)
-    .set({ ...patch, ...key, updatedAt: new Date() })
+    .set({ ...patch, normalizedTerm, updatedAt: new Date() })
     .where(eq(schema.cards.id, id));
   await audit(db, {
     userId,

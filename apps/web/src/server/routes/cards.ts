@@ -25,8 +25,15 @@ cards.post(
     tags: ["Cards"],
     summary: "Add a card",
     description: `Needs the write scope. 201 when added, 200 when skipped as a duplicate. ${DUPLICATE_RULE}`,
-    ok: { status: 201, schema: AddCardOutcomeOut, description: "Added" },
-    errors: [400, 403, 404],
+    ok: [
+      { status: 201, schema: AddCardOutcomeOut, description: "Added" },
+      {
+        status: 200,
+        schema: AddCardOutcomeOut,
+        description: "Skipped: a duplicate already exists",
+      },
+    ],
+    errors: [400, 404],
   }),
   body(CardInput, "card"),
   async (c) => {
@@ -42,7 +49,7 @@ cards.post(
     summary: "Add many cards",
     description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE}`,
     ok: { schema: AddCardsOut, description: "One outcome per card sent" },
-    errors: [400, 403, 404],
+    errors: [400, 404],
   }),
   body(CardsInput, "cards"),
   async (c) => c.json({ results: await addCards(ctxOf(c), c.req.valid("json").cards) }),
@@ -67,7 +74,7 @@ cards.patch(
     description:
       "Needs the write scope. Send only the fields to change. Setting `deckId` moves the card.",
     ok: { schema: CardOut, description: "The card after the edit" },
-    errors: [400, 403, 404],
+    errors: [400, 404],
   }),
   body(CardPatch, "patch"),
   async (c) => c.json(await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
@@ -80,7 +87,7 @@ cards.post(
     summary: "Archive a card",
     description: "Needs the write scope. Hides the card without destroying it. Undo with restore.",
     ok: { schema: OkOut, description: "Archived" },
-    errors: [403, 404],
+    errors: [404],
   }),
   async (c) => {
     await archiveCard(ctxOf(c), c.req.param("id"));
@@ -95,7 +102,7 @@ cards.post(
     summary: "Restore a card",
     description: "Needs the write scope. Brings an archived card back with its schedule intact.",
     ok: { schema: OkOut, description: "Restored" },
-    errors: [403, 404],
+    errors: [404],
   }),
   async (c) => {
     await restoreCard(ctxOf(c), c.req.param("id"));

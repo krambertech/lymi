@@ -1,6 +1,7 @@
 import { Scalar } from "@scalar/hono-api-reference";
 import type { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
+import { errorResponse } from "./http";
 import type { AppEnv } from "./index";
 
 /**
@@ -13,6 +14,13 @@ export function mountOpenApi(app: Hono<AppEnv>) {
     "/api/openapi.json",
     openAPIRouteHandler(app, {
       exclude: [/^\/api\/auth/, /^\/api\/audio/],
+      // Every write needs the write scope, so every non-read method can answer 403.
+      defaultOptions: {
+        POST: { responses: { 403: errorResponse(403) } },
+        PATCH: { responses: { 403: errorResponse(403) } },
+        PUT: { responses: { 403: errorResponse(403) } },
+        DELETE: { responses: { 403: errorResponse(403) } },
+      },
       documentation: {
         info: {
           title: "Lymi API",

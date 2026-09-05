@@ -34,10 +34,11 @@ review.post(
   describe({
     tags: ["Review"],
     summary: "Grade a card",
+    learnerOnly: true,
     description:
       "Learner only: API keys and MCP tokens get 403 whatever their scope. A grade older than the state's last review is ignored and reported as `duplicate`, which makes offline replay safe.",
     ok: { schema: GradeOut, description: "The new schedule" },
-    errors: [400, 403, 404],
+    errors: [400, 404],
   }),
   body(GradeInput, "grade"),
   async (c) => c.json(await gradeCard(ctxOf(c), c.req.valid("json"))),

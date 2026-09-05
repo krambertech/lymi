@@ -41,12 +41,17 @@ function Consent() {
   });
 
   async function decide(accept: boolean) {
-    setBusy(accept ? "allow" : "deny");
     setError(null);
     const granted = [...requested].filter((s) => s !== "write" || allowWrite);
+    // Nothing left that touches cards is a refusal, not a grant of nothing.
+    const grantsAccess = granted.some((s) => s === "read" || s === "write");
+    const accepting = accept && grantsAccess;
+    setBusy(accepting ? "allow" : "deny");
+    // The endpoint reads `scope` as "narrow the request to these"; omit it when unchanged.
+    const narrowed = accepting && granted.length < requested.size;
     const res = await authClient.oauth2.consent({
-      accept,
-      ...(accept ? { scope: granted.join(" ") } : {}),
+      accept: accepting,
+      ...(narrowed ? { scope: granted.join(" ") } : {}),
     });
     if (res.error) {
       setBusy(null);

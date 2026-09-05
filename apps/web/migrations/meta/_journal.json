@@ -8,6 +8,34 @@
       "when": 1788631374409,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788636346320,
+      "tag": "0001_created_by_user_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788636653507,
+      "tag": "0002_normalized_term",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1788637055396,
+      "tag": "0003_api_keys",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1788638811144,
+      "tag": "0004_oauth_server",
+      "breakpoints": true
     }
   ]
 }

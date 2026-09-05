@@ -1,156 +1,100 @@
-import { DeckInput, newId } from "@lymi/core";
-import { and, asc, eq, isNull, sql } from "@lymi/core/db";
+import { CardWithStateOut, DeckInput, DeckOut, DeckSummaryOut, OkOut } from "@lymi/core";
 import { Hono } from "hono";
-import { audit } from "../audit";
-import type { Db } from "../db";
-import { schema } from "../db";
+import { z } from "zod";
+import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
+import {
+  archiveDeck,
+  createDeck,
+  getDeck,
+  listDeckCards,
+  listDecks,
+  restoreDeck,
+  updateDeck,
+} from "../services";
 
 export const decks = new Hono<AppEnv>();
 
-/** All active decks with counts of due and total cards. */
-decks.get("/", async (c) => {
-  const db = c.get("db");
-  const userId = c.get("user").id;
-  const now = Date.now();
+decks.get(
+  "/",
+  describe({
+    tags: ["Decks"],
+    summary: "List decks",
+    description: "Active decks in the learner's order, each with its total and due counts.",
+    ok: { schema: z.array(DeckSummaryOut), description: "Decks" },
+  }),
+  async (c) => c.json(await listDecks(ctxOf(c))),
+);
 
-  const rows = await db
-    .select({
-      id: schema.decks.id,
-      name: schema.decks.name,
-      description: schema.decks.description,
-      defaultLanguage: schema.decks.defaultLanguage,
-      directions: schema.decks.directions,
-      position: schema.decks.position,
-      total: sql<number>`(select count(*) from cards c where c.deck_id = decks.id and c.archived_at is null)`,
-      due: sql<number>`(select count(*) from card_states s join cards c on c.id = s.card_id where c.deck_id = decks.id and c.archived_at is null and s.due <= ${now})`,
-    })
-    .from(schema.decks)
-    .where(and(eq(schema.decks.userId, userId), isNull(schema.decks.archivedAt)))
-    .orderBy(asc(schema.decks.position), asc(schema.decks.createdAt));
+decks.post(
+  "/",
+  describe({
+    tags: ["Decks"],
+    summary: "Create a deck",
+    description: "Needs the write scope. `defaultLanguage` prefills the language on new cards.",
+    ok: { status: 201, schema: DeckOut, description: "The new deck" },
+    errors: [400],
+  }),
+  body(DeckInput, "deck"),
+  async (c) => c.json(await createDeck(ctxOf(c), c.req.valid("json")), 201),
+);
 
-  return c.json(rows);
-});
+decks.get(
+  "/:id",
+  describe({
+    tags: ["Decks"],
+    summary: "Get a deck",
+    ok: { schema: DeckOut, description: "The deck" },
+    errors: [404],
+  }),
+  async (c) => c.json(await getDeck(ctxOf(c), c.req.param("id"))),
+);
 
-decks.post("/", async (c) => {
-  const db = c.get("db");
-  const userId = c.get("user").id;
-  const parsed = DeckInput.safeParse(await c.req.json());
-  if (!parsed.success) return c.json({ error: "Invalid deck", issues: parsed.error.issues }, 400);
+decks.patch(
+  "/:id",
+  describe({
+    tags: ["Decks"],
+    summary: "Update a deck",
+    description: "Rename it, or change its language or directions. Needs the write scope.",
+    ok: { schema: DeckOut, description: "The updated deck" },
+    errors: [400, 404],
+  }),
+  body(DeckInput.partial(), "deck"),
+  async (c) => c.json(await updateDeck(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+);
 
-  const id = newId();
-  await db.insert(schema.decks).values({
-    id,
-    userId,
-    name: parsed.data.name,
-    description: parsed.data.description ?? null,
-    defaultLanguage: parsed.data.defaultLanguage ?? null,
-    directions: parsed.data.directions ?? "recognition",
-  });
-  await audit(db, {
-    userId,
-    actor: "user",
-    action: "create",
-    entity: "deck",
-    entityId: id,
-    payload: parsed.data,
-  });
+decks.post(
+  "/:id/archive",
+  describe({
+    tags: ["Decks"],
+    summary: "Archive a deck",
+    description:
+      "The deck leaves every list; its cards stay. Undo with restore. Needs the write scope.",
+    ok: { schema: OkOut, description: "Archived" },
+    errors: [404],
+  }),
+  async (c) => c.json(await archiveDeck(ctxOf(c), c.req.param("id"))),
+);
 
-  const [deck] = await db.select().from(schema.decks).where(eq(schema.decks.id, id));
-  return c.json(deck, 201);
-});
+decks.post(
+  "/:id/restore",
+  describe({
+    tags: ["Decks"],
+    summary: "Restore an archived deck",
+    ok: { schema: OkOut, description: "Restored" },
+    errors: [404],
+  }),
+  async (c) => c.json(await restoreDeck(ctxOf(c), c.req.param("id"))),
+);
 
-decks.get("/:id", async (c) => {
-  const db = c.get("db");
-  const userId = c.get("user").id;
-  const [deck] = await db
-    .select()
-    .from(schema.decks)
-    .where(and(eq(schema.decks.id, c.req.param("id")), eq(schema.decks.userId, userId)));
-  if (!deck) return c.json({ error: "Not found" }, 404);
-  return c.json(deck);
-});
-
-decks.patch("/:id", async (c) => {
-  const db = c.get("db");
-  const userId = c.get("user").id;
-  const id = c.req.param("id");
-  const parsed = DeckInput.partial().safeParse(await c.req.json());
-  if (!parsed.success) return c.json({ error: "Invalid deck", issues: parsed.error.issues }, 400);
-
-  const result = await db
-    .update(schema.decks)
-    .set({ ...parsed.data, updatedAt: new Date() })
-    .where(and(eq(schema.decks.id, id), eq(schema.decks.userId, userId)))
-    .returning({ id: schema.decks.id });
-  if (result.length === 0) return c.json({ error: "Not found" }, 404);
-  await audit(db, {
-    userId,
-    actor: "user",
-    action: "update",
-    entity: "deck",
-    entityId: id,
-    payload: parsed.data,
-  });
-  const [deck] = await db.select().from(schema.decks).where(eq(schema.decks.id, id));
-  return c.json(deck);
-});
-
-/** Archive, never delete. The cards stay where they are; the deck leaves every list until restored. */
-decks.post("/:id/archive", async (c) => {
-  const ok = await setArchived(c.get("db"), c.get("user").id, c.req.param("id"), new Date());
-  return ok ? c.json({ ok: true }) : c.json({ error: "Not found" }, 404);
-});
-decks.post("/:id/restore", async (c) => {
-  const ok = await setArchived(c.get("db"), c.get("user").id, c.req.param("id"), null);
-  return ok ? c.json({ ok: true }) : c.json({ error: "Not found" }, 404);
-});
-
-async function setArchived(db: Db, userId: string, id: string, archivedAt: Date | null) {
-  const result = await db
-    .update(schema.decks)
-    .set({ archivedAt, updatedAt: new Date() })
-    .where(and(eq(schema.decks.id, id), eq(schema.decks.userId, userId)))
-    .returning({ id: schema.decks.id });
-  if (result.length === 0) return false;
-  await audit(db, {
-    userId,
-    actor: "user",
-    action: archivedAt ? "archive" : "restore",
-    entity: "deck",
-    entityId: id,
-    payload: {},
-  });
-  return true;
-}
-
-/** Cards in a deck with their recognition-direction state, newest first. */
-decks.get("/:id/cards", async (c) => {
-  const db = c.get("db");
-  const userId = c.get("user").id;
-  const deckId = c.req.param("id");
-
-  const rows = await db
-    .select({
-      card: schema.cards,
-      state: schema.cardStates,
-    })
-    .from(schema.cards)
-    .leftJoin(
-      schema.cardStates,
-      and(
-        eq(schema.cardStates.cardId, schema.cards.id),
-        eq(schema.cardStates.direction, "recognition"),
-      ),
-    )
-    .where(
-      and(
-        eq(schema.cards.deckId, deckId),
-        eq(schema.cards.userId, userId),
-        isNull(schema.cards.archivedAt),
-      ),
-    )
-    .orderBy(sql`${schema.cards.createdAt} desc`);
-
-  return c.json(rows);
-});
+decks.get(
+  "/:id/cards",
+  describe({
+    tags: ["Decks"],
+    summary: "List a deck's cards",
+    description:
+      "Active cards, newest first, each with its recognition-direction scheduling state.",
+    ok: { schema: z.array(CardWithStateOut), description: "Cards" },
+  }),
+  async (c) => c.json(await listDeckCards(ctxOf(c), c.req.param("id"))),
+);

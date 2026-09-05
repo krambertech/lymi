@@ -191,7 +191,13 @@ export function Screens() {
           <PhoneShot caption="Add a word" initial="dark" path="/decks" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
               <div className="edge-2 rounded-t-xl bg-plate">
-                <AddCardForm decks={m.decks} deckId="d1" onCancel={noop} onSubmit={noop} static />
+                <AddCardForm
+                  decks={m.decks}
+                  deckId="d1"
+                  onCancel={noop}
+                  onSubmit={() => undefined}
+                  static
+                />
               </div>
             </div>
           </PhoneShot>

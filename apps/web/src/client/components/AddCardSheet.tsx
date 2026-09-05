@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { Drawer } from "vaul";
-import { api, type DeckSummary } from "../lib/api";
+import { type AddCardOutcome, api, type DeckSummary } from "../lib/api";
 import { decksQuery } from "../lib/queries";
 import { Button } from "./Button";
 import { Field, Input, Select } from "./Field";
@@ -13,13 +13,16 @@ interface Props {
   deckId?: string | undefined;
 }
 
+type CardInput = Parameters<typeof api.addCard>[0];
+
 /** Quick capture. One field that matters, a deck, add. AI enrichment comes later and is opt-in. */
 export function AddCardSheet({ open, onOpenChange, deckId }: Props) {
   const qc = useQueryClient();
   const decks = useQuery(decksQuery);
   const create = useMutation({
-    mutationFn: (input: Parameters<typeof api.createCard>[0]) => api.createCard(input),
-    onSuccess: () => {
+    mutationFn: (input: CardInput) => api.addCard(input),
+    onSuccess: (outcome) => {
+      if (outcome.status === "skipped") return;
       qc.invalidateQueries({ queryKey: ["decks"] });
       qc.invalidateQueries({ queryKey: ["queue"] });
     },
@@ -39,7 +42,7 @@ export function AddCardSheet({ open, onOpenChange, deckId }: Props) {
             pending={create.isPending}
             error={create.isError ? (create.error as Error).message : undefined}
             onCancel={() => onOpenChange(false)}
-            onSubmit={(input) => create.mutateAsync(input).then(() => undefined)}
+            onSubmit={(input) => create.mutateAsync(input)}
           />
         </Drawer.Content>
       </Drawer.Portal>
@@ -53,7 +56,8 @@ export interface AddCardFormProps {
   pending?: boolean | undefined;
   error?: string | undefined;
   onCancel: () => void;
-  onSubmit: (input: Parameters<typeof api.createCard>[0]) => Promise<void> | void;
+  /** Resolves with the outcome. A duplicate is skipped and names the card that already exists. */
+  onSubmit: (input: CardInput) => Promise<AddCardOutcome | undefined> | AddCardOutcome | undefined;
   /** No autofocus and no grabber. For the design page. */
   static?: boolean | undefined;
 }
@@ -71,7 +75,7 @@ export function AddCardForm({
   const [term, setTerm] = useState("");
   const [meaning, setMeaning] = useState("");
   const [deck, setDeck] = useState(deckId ?? "");
-  const [added, setAdded] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -88,13 +92,18 @@ export function AddCardForm({
         e.preventDefault();
         if (!canAdd) return;
         const t = term.trim();
-        await onSubmit({
+        const outcome = await onSubmit({
           deckId: deck,
           term: t,
           meaning: meaning.trim() || undefined,
           meaningSource: meaning.trim() ? "manual" : undefined,
         });
-        setAdded(t);
+        if (outcome?.status === "skipped") {
+          setNotice(`${outcome.existing.term} is already in ${outcome.deckName}`);
+          inputRef.current?.select();
+          return;
+        }
+        setNotice(`Added “${t}”`);
         setTerm("");
         setMeaning("");
         inputRef.current?.focus();
@@ -111,7 +120,10 @@ export function AddCardForm({
           ref={inputRef}
           autoFocus={!st}
           value={term}
-          onChange={(e) => setTerm(e.target.value)}
+          onChange={(e) => {
+            setTerm(e.target.value);
+            setNotice(null);
+          }}
           placeholder="sbrigarsi"
           autoComplete="off"
           autoCapitalize="none"
@@ -139,7 +151,7 @@ export function AddCardForm({
       </Field>
       <div className="flex items-center gap-2 pt-1">
         <p className="flex-1 text-sm text-muted" role="status">
-          {error ? <span className="text-danger">{error}</span> : added ? `Added “${added}”` : null}
+          {error ? <span className="text-danger">{error}</span> : notice}
         </p>
         <Button variant="ghost" onClick={onCancel}>
           Cancel

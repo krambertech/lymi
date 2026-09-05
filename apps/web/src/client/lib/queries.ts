@@ -27,3 +27,4 @@ export const historyQuery = queryOptions({
   queryFn: () => api.history(7),
   staleTime: 60_000,
 });
+export const keysQuery = queryOptions({ queryKey: ["keys"], queryFn: api.keys, staleTime: 0 });

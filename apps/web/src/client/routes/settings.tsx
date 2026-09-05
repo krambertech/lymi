@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { ApiKeysSection } from "../components/ApiKeysSection";
 import { signOut } from "../lib/auth";
 import { meQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
@@ -33,6 +34,8 @@ function Settings() {
         }
         navigate({ to: "/login" });
       }}
-    />
+    >
+      <ApiKeysSection />
+    </SettingsView>
   );
 }

@@ -13,6 +13,8 @@ export interface SettingsProps {
   onTheme: (t: ThemeChoice) => void;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
+  /** Extra groups after Account, e.g. API keys. */
+  children?: ReactNode | undefined;
 }
 
 const THEMES: { value: ThemeChoice; label: string }[] = [
@@ -29,7 +31,7 @@ export const SHORTCUTS: [string, string][] = [
   ["Esc", "Leave review or close a sheet"],
 ];
 
-function Group({ title, children }: { title: string; children: ReactNode }) {
+export function SettingsGroup({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="grid gap-3 py-5 [&+&]:border-t [&+&]:border-edge">
       <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">{title}</h2>
@@ -38,11 +40,18 @@ function Group({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-export function SettingsView({ me, theme, onTheme, onSignOut, signingOut }: SettingsProps) {
+export function SettingsView({
+  me,
+  theme,
+  onTheme,
+  onSignOut,
+  signingOut,
+  children,
+}: SettingsProps) {
   return (
     <Page>
       <PageHeader title="Settings" />
-      <Group title="Appearance">
+      <SettingsGroup title="Appearance">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="grid gap-0.5">
             <span className="text-base font-medium">Theme</span>
@@ -52,8 +61,8 @@ export function SettingsView({ me, theme, onTheme, onSignOut, signingOut }: Sett
           </span>
           <Segmented value={theme} onChange={onTheme} options={THEMES} label="Theme" />
         </div>
-      </Group>
-      <Group title="Keyboard">
+      </SettingsGroup>
+      <SettingsGroup title="Keyboard">
         <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-base">
           {SHORTCUTS.map(([k, what]) => (
             <div key={k} className="contents">
@@ -64,8 +73,8 @@ export function SettingsView({ me, theme, onTheme, onSignOut, signingOut }: Sett
             </div>
           ))}
         </dl>
-      </Group>
-      <Group title="Account">
+      </SettingsGroup>
+      <SettingsGroup title="Account">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {me ? (
             <span className="flex items-center gap-3">
@@ -85,7 +94,8 @@ export function SettingsView({ me, theme, onTheme, onSignOut, signingOut }: Sett
             Sign out
           </Button>
         </div>
-      </Group>
+      </SettingsGroup>
+      {children}
     </Page>
   );
 }

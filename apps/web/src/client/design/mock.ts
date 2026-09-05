@@ -43,6 +43,7 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
   return {
     userId: "u1",
     deckId: "d1",
+    normalizedTerm: p.term.toLowerCase(),
     meaning: null,
     pronunciation: null,
     example: null,
@@ -54,6 +55,7 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     meaningSource: "lesson",
     exampleSource: null,
     audioKey: null,
+    createdBy: "user",
     archivedAt: null,
     createdAt: new Date(now - 3 * day),
     updatedAt: new Date(now - day),

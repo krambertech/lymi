@@ -43,7 +43,7 @@ pnpm typecheck    # tsc across the workspace
 pnpm test         # Vitest
 pnpm db:generate  # new migration from schema changes
 pnpm build        # production build
-pnpm deploy       # wrangler deploy
+pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy command)
 ```
 
 ## First deploy checklist
@@ -54,4 +54,4 @@ pnpm deploy       # wrangler deploy
 4. `wrangler kv namespace create SESSIONS` and paste the id
 5. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
 6. `pnpm db:migrate:prod`
-7. `pnpm deploy`
+7. `pnpm run deploy`

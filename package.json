@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "pnpm --filter @lymi/web dev",
     "build": "pnpm -r build",
-    "deploy": "pnpm --filter @lymi/web deploy",
+    "deploy": "pnpm --filter @lymi/web run deploy",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "check": "biome check .",

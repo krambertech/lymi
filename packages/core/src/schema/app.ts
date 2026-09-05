@@ -49,6 +49,8 @@ export const cards = sqliteTable(
       .notNull()
       .references(() => decks.id, { onDelete: "cascade" }),
     term: text("term").notNull(),
+    /** `normaliseTerm(term)`. The duplicate rule compares this, per user and language. */
+    normalizedTerm: text("normalized_term").notNull().default(""),
     meaning: text("meaning"),
     pronunciation: text("pronunciation"),
     example: text("example"),
@@ -63,14 +65,29 @@ export const cards = sqliteTable(
     exampleSource: text("example_source", { enum: ["lesson", "ai", "manual"] }),
     /** R2 key of generated pronunciation audio, if any. */
     audioKey: text("audio_key"),
+    /** Who added the card. Activity filters on this without parsing the audit log. */
+    createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
+      .notNull()
+      .default("user"),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
   },
   (t) => [
     index("cards_deck_idx").on(t.deckId, t.archivedAt),
     index("cards_user_term_idx").on(t.userId, t.term),
+    index("cards_user_lang_norm_idx").on(t.userId, t.language, t.normalizedTerm),
   ],
 );
+
+/** Per-learner settings. One row per user, created on first read. */
+export const userSettings = sqliteTable("user_settings", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  /** The language meanings are written in. Independent of any card's language. */
+  meaningLanguage: text("meaning_language").notNull().default("en"),
+  ...timestamps,
+});
 
 /**
  * FSRS state per card per direction. The full ts-fsrs Card lives in `fsrs` as JSON so the
@@ -155,3 +172,5 @@ export type Deck = typeof decks.$inferSelect;
 export type Card = typeof cards.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
+export type UserSettings = typeof userSettings.$inferSelect;
+export type AuditEntry = typeof auditLog.$inferSelect;

@@ -30,6 +30,8 @@ function Shell() {
   const decks = useQuery({ ...decksQuery, enabled: me.isSuccess });
   const [addOpen, setAddOpen] = useState(false);
   const onLogin = location.pathname === "/login";
+  // Consent is a stop inside another app's sign-in, so it gets the same bare page as login.
+  const onConsent = location.pathname === "/consent";
   const onReview = location.pathname.startsWith("/review");
 
   useEffect(() => {
@@ -65,7 +67,7 @@ function Shell() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate, onReview]);
 
-  if (onLogin) return <Outlet />;
+  if (onLogin || onConsent) return <Outlet />;
 
   const totalDue = decks.data?.reduce((n, d) => n + d.due, 0) ?? 0;
 

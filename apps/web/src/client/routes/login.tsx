@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "../components/Button";
 import { Lantern } from "../components/Lantern";
-import { authClient, signInWithGoogle } from "../lib/auth";
+import { authClient, followOAuthRedirect, signInWithGoogle } from "../lib/auth";
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -59,6 +59,7 @@ function DevSignIn() {
       setError(res.error.message ?? "Sign in failed");
       return;
     }
+    if (followOAuthRedirect(res.data)) return;
     navigate({ to: "/" });
   }
 

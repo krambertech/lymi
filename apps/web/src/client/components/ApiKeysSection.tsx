@@ -1,11 +1,13 @@
 import type { Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { clsx } from "clsx";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api } from "../lib/api";
 import { keysQuery } from "../lib/queries";
+import { SettingsGroup } from "../views/SettingsView";
 import { Button } from "./Button";
 import { Chip } from "./Chip";
+import { Field, Input } from "./Field";
+import { Segmented } from "./Segmented";
 
 const SCOPES: { value: Scope; label: string; hint: string }[] = [
   { value: "read", label: "Read", hint: "Lists and searches decks and cards." },
@@ -43,18 +45,18 @@ export function ApiKeysSection() {
   const canCreate = name.trim().length > 0 && !create.isPending;
 
   return (
-    <section className="mt-3 grid gap-4 rounded-xl border border-border bg-surface p-4">
-      <div className="grid gap-1">
-        <h2 className="text-[13px] font-semibold text-muted">API keys</h2>
-        <p className="max-w-[60ch] text-[14.5px] text-ink-2">
-          For curl, scripts and Claude Code. Send the key in an <code>x-api-key</code> header; the
-          routes are in the{" "}
-          <a href="/api/docs" className="underline decoration-border-strong underline-offset-2">
-            API reference
-          </a>
-          . MCP clients such as Claude Desktop sign in with OAuth instead and do not need one.
-        </p>
-      </div>
+    <SettingsGroup title="API keys">
+      <p className="max-w-[60ch] text-base text-text-2">
+        For curl, scripts and Claude Code. Send the key in an <code>x-api-key</code> header; the
+        routes are in the{" "}
+        <a
+          href="/api/docs"
+          className="underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
+        >
+          API reference
+        </a>
+        . MCP clients such as Claude Desktop sign in with OAuth instead and do not need one.
+      </p>
 
       {fresh && (
         <FreshKey
@@ -66,11 +68,11 @@ export function ApiKeysSection() {
       )}
 
       {keys.isSuccess && keys.data.length === 0 && !fresh && (
-        <p className="text-[14.5px] text-muted">No keys yet.</p>
+        <p className="text-base text-muted">No keys yet.</p>
       )}
 
       {keys.data && keys.data.length > 0 && (
-        <ul className="-mx-1 grid">
+        <ul className="grid">
           {keys.data.map((k) => (
             <KeyRow
               key={k.id}
@@ -83,49 +85,30 @@ export function ApiKeysSection() {
       )}
 
       <form
-        className="grid gap-3 border-t border-border pt-4"
+        className="grid gap-4 border-t border-edge pt-4"
         onSubmit={(e) => {
           e.preventDefault();
           if (canCreate) create.mutate();
         }}
       >
-        <label className="grid gap-1.5">
-          <span className="text-[12.5px] font-medium text-muted">Name</span>
-          <input
+        <Field label="Name" className="max-w-sm">
+          <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
             maxLength={32}
             placeholder="Claude Code on the laptop"
             autoComplete="off"
-            className="h-10 w-full max-w-sm rounded-md border border-border-strong bg-bg px-3.5 text-[16px] placeholder:text-muted focus:border-amber focus:outline-none focus:ring-[3px] focus:ring-amber-soft"
           />
-        </label>
-        <fieldset className="grid gap-1.5">
-          <legend className="mb-1.5 text-[12.5px] font-medium text-muted">Access</legend>
-          <div className="inline-flex w-fit gap-0.5 rounded-md border border-border bg-bg p-[3px]">
-            {SCOPES.map((s) => (
-              <button
-                key={s.value}
-                type="button"
-                aria-pressed={scope === s.value}
-                onClick={() => setScope(s.value)}
-                className={clsx(
-                  "h-7 rounded-[10px] px-3 text-[13px] font-medium transition-[background-color,box-shadow] duration-150",
-                  scope === s.value
-                    ? "bg-surface text-ink shadow-[0_1px_2px_oklch(0_0_0/0.12)]"
-                    : "text-muted hover:text-ink-2",
-                )}
-              >
-                {s.label}
-              </button>
-            ))}
-          </div>
-          <p className="text-[12.5px] text-muted">
+        </Field>
+        <div className="grid gap-1.5">
+          <span className="text-sm font-medium text-text-2">Access</span>
+          <Segmented value={scope} onChange={setScope} options={SCOPES} label="Access" />
+          <p className="text-sm text-muted">
             {SCOPES.find((s) => s.value === scope)?.hint} Keys never grade reviews.
           </p>
-        </fieldset>
+        </div>
         {create.isError && (
-          <p className="text-[13px] text-amber-text" role="alert">
+          <p className="text-sm text-danger" role="alert">
             {(create.error as Error).message}
           </p>
         )}
@@ -133,7 +116,7 @@ export function ApiKeysSection() {
           Create key
         </Button>
       </form>
-    </section>
+    </SettingsGroup>
   );
 }
 
@@ -154,13 +137,13 @@ function KeyRow({
   }, [confirming]);
 
   return (
-    <li className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md px-1 py-2.5">
+    <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge py-3 last:border-b-0">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-[14.5px] font-medium">{item.name ?? "Untitled key"}</span>
-          <Chip>{item.scope === "write" ? "Read and write" : "Read"}</Chip>
+          <span className="truncate text-base font-medium">{item.name ?? "Untitled key"}</span>
+          <Chip size="sm">{item.scope === "write" ? "Read and write" : "Read"}</Chip>
         </div>
-        <p className="text-[12.5px] text-muted tabular-nums">
+        <p className="text-sm text-muted tabular-nums">
           {item.start}… · {lastUsed(item.lastRequest)} · created {shortDate(item.createdAt)}
         </p>
       </div>
@@ -169,7 +152,13 @@ function KeyRow({
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
             Keep
           </Button>
-          <Button size="sm" loading={revoking} disabled={revoking} onClick={onRevoke}>
+          <Button
+            size="sm"
+            variant="danger"
+            loading={revoking}
+            disabled={revoking}
+            onClick={onRevoke}
+          >
             Revoke key
           </Button>
         </div>
@@ -201,12 +190,12 @@ function FreshKey({
   }, [copied]);
 
   return (
-    <div className="grid gap-2.5 rounded-md border border-amber-soft bg-raised p-3.5" role="status">
-      <p className="text-[14.5px]">
+    <div className="edge grid gap-3 rounded-md bg-plate p-4" role="status">
+      <p className="text-base">
         <span className="font-medium">{name}</span> is ready. Copy it now; it is not shown again.
       </p>
       <div className="flex items-stretch gap-2">
-        <output className="min-w-0 flex-1 select-all break-all rounded-sm border border-border bg-bg px-3 py-2 text-[14px] leading-6 tabular-nums">
+        <output className="edge min-w-0 flex-1 select-all break-all rounded-sm bg-plate-2 px-3 py-2 text-base leading-6 tabular-nums">
           {value}
         </output>
         <Button

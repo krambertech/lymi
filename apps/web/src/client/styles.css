@@ -1,83 +1,156 @@
 @import "tailwindcss";
 
 /*
- * Lymi tokens. Canonical values are in DESIGN.md (OKLCH). Light is the default;
- * dark is a warm room. The raw variables live here, Tailwind reads them through @theme.
+ * Lymi tokens. Two rooms: a dark one lit by the lantern, a light one at noon.
+ * The theme follows the OS unless the user picks one in Settings. Tokens sit on
+ * :root and on any [data-theme] element so a frame on the design page can be
+ * one theme inside a page of the other.
+ *
+ * Surfaces are flat. Depth comes from one hairline edge, never from gradients or
+ * drop shadows. The only glow in the interface belongs to the lantern.
  */
-:root {
-  --bg: oklch(1 0 0);
-  --surface: oklch(0.975 0.004 70);
-  --raised: oklch(0.95 0.006 70);
-  --hover: oklch(0.925 0.008 70);
-  --border: oklch(0.9 0.006 70);
-  --border-strong: oklch(0.82 0.008 70);
-  --ink: oklch(0.22 0.012 60);
-  --ink-2: oklch(0.4 0.012 60);
-  --muted: oklch(0.52 0.015 60);
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --canvas: oklch(0.975 0.004 80);
+  --plate: oklch(1 0 0);
+  --plate-2: oklch(0.955 0.006 80);
+  --hover: oklch(0.94 0.007 80);
+  --edge: oklch(0.2 0.03 60 / 0.1);
+  --edge-2: oklch(0.2 0.03 60 / 0.2);
+
+  --text: oklch(0.2 0.016 55);
+  --text-2: oklch(0.38 0.016 55);
+  --muted: oklch(0.52 0.018 55);
+  --faint: oklch(0.7 0.014 60);
+
   --amber: oklch(0.8 0.15 72);
   --amber-hover: oklch(0.76 0.15 68);
   --amber-ink: oklch(0.25 0.05 60);
   --amber-text: oklch(0.5 0.14 50);
-  --amber-soft: oklch(0.8 0.15 72 / 0.18);
-  --glass: oklch(0.8 0.15 72 / 0.22);
-  --flame-core: oklch(0.96 0.08 88);
-  --good: oklch(0.52 0.12 160);
-  --good-soft: oklch(0.52 0.12 160 / 0.12);
-  --shadow-ambient: 0 1px 2px oklch(0 0 0 / 0.05), 0 14px 30px -18px oklch(0.3 0.05 60 / 0.35);
-  --shadow-amber: 0 6px 14px -8px oklch(0.7 0.15 68 / 0.7);
-  color-scheme: light;
+  --amber-soft: oklch(0.8 0.15 72 / 0.16);
+  --flame-core: oklch(0.97 0.08 92);
+  --metal: var(--text);
+  --glow: oklch(0.8 0.15 72 / 0.45);
+
+  --good: oklch(0.47 0.12 160);
+  --good-soft: oklch(0.47 0.12 160 / 0.12);
+  --danger: oklch(0.52 0.19 28);
+  --danger-soft: oklch(0.52 0.19 28 / 0.1);
+
+  --ring: oklch(0.2 0.03 60 / 0.6);
+  --scrim: oklch(0.2 0.02 50 / 0.35);
+  --shimmer: oklch(1 0 0 / 0.4);
+  /* The toast is the text colour, so its action needs a colour that reads on that. */
+  --toast-action: oklch(0.82 0.15 74);
 }
 
-:root[data-theme="dark"] {
-  --bg: oklch(0.17 0.012 55);
-  --surface: oklch(0.21 0.013 55);
-  --raised: oklch(0.255 0.014 55);
-  --hover: oklch(0.29 0.015 55);
-  --border: oklch(0.32 0.015 55);
-  --border-strong: oklch(0.4 0.015 55);
-  --ink: oklch(0.95 0.008 70);
-  --ink-2: oklch(0.82 0.01 70);
-  --muted: oklch(0.68 0.015 65);
-  --amber-text: oklch(0.82 0.14 75);
-  --amber-soft: oklch(0.8 0.15 72 / 0.16);
-  --glass: oklch(0.8 0.15 72 / 0.26);
-  --good: oklch(0.76 0.11 155);
-  --good-soft: oklch(0.76 0.11 155 / 0.14);
-  --shadow-ambient: 0 1px 0 oklch(1 0 0 / 0.05) inset, 0 20px 40px -22px oklch(0 0 0 / 0.9);
+[data-theme="dark"] {
   color-scheme: dark;
+
+  --canvas: oklch(0.165 0.014 48);
+  --plate: oklch(0.215 0.016 52);
+  --plate-2: oklch(0.255 0.017 55);
+  --hover: oklch(0.28 0.018 55);
+  --edge: oklch(1 0 0 / 0.08);
+  --edge-2: oklch(1 0 0 / 0.15);
+
+  --text: oklch(0.95 0.01 85);
+  --text-2: oklch(0.8 0.018 75);
+  --muted: oklch(0.65 0.022 70);
+  --faint: oklch(0.48 0.02 65);
+
+  --amber: oklch(0.82 0.15 74);
+  --amber-hover: oklch(0.86 0.15 76);
+  --amber-ink: oklch(0.22 0.05 60);
+  --amber-text: oklch(0.84 0.13 78);
+  --amber-soft: oklch(0.82 0.15 74 / 0.14);
+  --flame-core: oklch(0.97 0.08 92);
+  --metal: var(--text);
+  --glow: oklch(0.8 0.15 74 / 0.5);
+
+  --good: oklch(0.76 0.1 155);
+  --good-soft: oklch(0.76 0.1 155 / 0.14);
+  --danger: oklch(0.74 0.15 28);
+  --danger-soft: oklch(0.74 0.15 28 / 0.14);
+
+  --ring: oklch(0.95 0.01 85 / 0.7);
+  --scrim: oklch(0 0 0 / 0.55);
+  --shimmer: oklch(1 0 0 / 0.06);
+  --toast-action: oklch(0.5 0.14 50);
 }
 
 @theme inline {
-  --font-sans: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-raised: var(--raised);
+  --color-canvas: var(--canvas);
+  --color-plate: var(--plate);
+  --color-plate-2: var(--plate-2);
   --color-hover: var(--hover);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
+  --color-edge: var(--edge);
+  --color-edge-2: var(--edge-2);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
   --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-amber: var(--amber);
   --color-amber-hover: var(--amber-hover);
   --color-amber-ink: var(--amber-ink);
   --color-amber-text: var(--amber-text);
   --color-amber-soft: var(--amber-soft);
-  --color-glass: var(--glass);
   --color-flame-core: var(--flame-core);
+  --color-metal: var(--metal);
   --color-good: var(--good);
   --color-good-soft: var(--good-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ring: var(--ring);
+  --color-scrim: var(--scrim);
+  --color-toast-action: var(--toast-action);
 
+  /* Type scale. Fixed, ratio about 1.17. */
+  --text-2xs: 11px;
+  --text-2xs--line-height: 1.3;
+  --text-xs: 12px;
+  --text-xs--line-height: 1.4;
+  --text-sm: 13px;
+  --text-sm--line-height: 1.45;
+  --text-base: 14.5px;
+  --text-base--line-height: 1.5;
+  --text-md: 15.5px;
+  --text-md--line-height: 1.5;
+  --text-lg: 17px;
+  --text-lg--line-height: 1.4;
+  --text-xl: 20px;
+  --text-xl--line-height: 1.3;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 1.2;
+  --text-3xl: 30px;
+  --text-3xl--line-height: 1.15;
+  --text-4xl: 38px;
+  --text-4xl--line-height: 1.05;
+  --text-5xl: 46px;
+  --text-5xl--line-height: 1;
+
+  --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 18px;
-  --radius-xl: 24px;
+  --radius-xl: 22px;
+  --radius-2xl: 30px;
 
-  --shadow-ambient: var(--shadow-ambient);
-  --shadow-amber: var(--shadow-amber);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Stacking. Nothing outside this list. */
+  --z-dropdown: 100;
+  --z-sticky: 150;
+  --z-backdrop: 200;
+  --z-sheet: 210;
+  --z-toast: 300;
+  --z-tooltip: 400;
 }
 
 @layer base {
@@ -88,16 +161,19 @@
   }
   body {
     min-height: 100dvh;
-    background: var(--bg);
-    color: var(--ink);
+    background: var(--canvas);
+    color: var(--text);
     font-family: var(--font-sans);
-    font-size: 15px;
+    font-size: var(--text-base);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
-    transition:
-      background-color 250ms var(--ease-out-quart),
-      color 250ms var(--ease-out-quart);
+  }
+  /* Theme switch: swap in one frame, no ragged cascade. */
+  html.theme-switching * {
+    /* biome-ignore lint/complexity/noImportantStyles: the swap has to beat every component transition */
+    transition: none !important;
   }
   #root {
     min-height: 100dvh;
@@ -110,6 +186,9 @@
     text-wrap: balance;
     letter-spacing: -0.02em;
   }
+  p {
+    text-wrap: pretty;
+  }
   button,
   [role="button"] {
     touch-action: manipulation;
@@ -120,37 +199,49 @@
     font-size: 16px;
   }
   :focus-visible {
-    outline: 2px solid var(--amber);
+    outline: 2px solid var(--ring);
     outline-offset: 2px;
-    border-radius: 4px;
   }
   ::selection {
     background: var(--amber-soft);
   }
+  kbd {
+    font-family: var(--font-sans);
+  }
 }
 
-/* Lantern flame. Custom properties so they inherit into <use> clones. */
+/* One hairline edge. Used instead of border so it never changes layout. */
+@utility edge {
+  box-shadow: 0 0 0 1px var(--edge);
+}
+@utility edge-2 {
+  box-shadow: 0 0 0 1px var(--edge-2);
+}
+@utility edge-inset {
+  box-shadow: inset 0 0 0 1px var(--edge);
+}
+/* The lantern's glow. Only the lantern wears it. */
+@utility glow {
+  filter: drop-shadow(0 0 var(--glow-r, 14px) var(--glow));
+}
+@custom-variant hoverable (@media (hover: hover) and (pointer: fine));
+
+/* ---- Lantern ----------------------------------------------------------- */
+
 .flame {
-  transform-origin: 50% 60%;
+  /* Scale from the base of the flame itself, not the centre of the drawing. */
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
   transform: var(--flame-t, none);
   animation: var(--flame-anim, none);
-  transition: transform 320ms var(--ease-out-quart);
+  transition: transform 320ms var(--ease-out);
 }
-.halo {
-  transform-origin: center;
-  transform: var(--halo-t, none);
-  opacity: var(--halo-o, 1);
-  animation: var(--halo-anim, none);
-  transition:
-    transform 600ms var(--ease-out-quart),
-    opacity 600ms;
+.lantern {
+  transition: filter 500ms var(--ease-out);
 }
 @media (prefers-reduced-motion: no-preference) {
-  .lantern-flicker {
+  .lantern-flicker .flame {
     --flame-anim: flicker 2.6s ease-in-out infinite;
-  }
-  .lantern-pulse {
-    --halo-anim: halo 3s ease-in-out infinite;
   }
 }
 @keyframes flicker {
@@ -168,29 +259,106 @@
     transform: scaleY(1.04) scaleX(0.98) translateX(-0.4px);
   }
 }
-@keyframes halo {
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: scale(0.96);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.04);
-  }
-}
-.lantern-flare {
+.lantern-flare .flame {
   --flame-anim: none;
-  --flame-t: scale(1.35, 1.5);
+  --flame-t: scale(1.2, 1.35);
+}
+.lantern-lit .flame {
+  --flame-anim: none;
+  --flame-t: scale(1.15, 1.28);
 }
 .lantern-lit {
-  --flame-anim: none;
-  --halo-anim: none;
-  --flame-t: scale(1.3, 1.45);
-  --halo-t: scale(1.22);
-  --halo-o: 1;
-  filter: drop-shadow(0 0 18px oklch(0.8 0.15 72 / 0.55));
-  transition: filter 600ms var(--ease-out-quart);
+  --glow-r: 26px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .flame,
+  .lantern {
+    transition-duration: 0ms;
+  }
+}
+
+/* ---- Entrances --------------------------------------------------------- */
+
+/* A card arriving. Give it a React key so each new card starts here. */
+.enter-card {
+  animation: enter-card 200ms var(--ease-out) both;
+}
+@keyframes enter-card {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+}
+.enter-fade {
+  animation: enter-fade 160ms var(--ease-out) both;
+}
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+}
+/* Toast rises from the bottom edge and leaves faster than it came. */
+.toast-enter {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 240ms var(--ease-out),
+    transform 240ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.toast-exit {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 140ms var(--ease-out),
+    transform 140ms var(--ease-out);
+}
+/* A spinner taking over from a label. */
+.spinner-enter {
+  animation: spinner-enter 150ms var(--ease-out) both;
+}
+@keyframes spinner-enter {
+  from {
+    opacity: 0;
+    scale: 0.25;
+    filter: blur(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .enter-card,
+  .enter-fade {
+    animation: enter-fade 150ms both;
+  }
+  .toast-enter,
+  .toast-exit {
+    transform: none;
+  }
+}
+
+/* Skeleton: holds the shape, shimmers only if motion is welcome. */
+.skeleton {
+  background: var(--plate-2);
+  border-radius: var(--radius-xs);
+  position: relative;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--shimmer), transparent);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
 }
 
 /* Safe areas for the standalone PWA. */
@@ -199,4 +367,7 @@
 }
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
+}
+.pb-safe-tab {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 72px);
 }

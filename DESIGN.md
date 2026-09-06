@@ -147,12 +147,7 @@ components:
     textColor: "{colors.text-2}"
     borderColor: "{colors.edge}"
     rounded: "{rounded.lg}"
-    height: "60px"
-  button-grade-good:
-    backgroundColor: "{colors.amber}"
-    textColor: "{colors.amber-ink}"
-    rounded: "{rounded.lg}"
-    height: "60px"
+    height: "72px"
   input:
     backgroundColor: "{colors.plate}"
     textColor: "{colors.text}"
@@ -322,7 +317,8 @@ silent 401. Nothing else uses it: not numbers, not code-ish labels, not UI text.
 ## Motion
 
 Motion conveys state. Press: scale 0.97, 150 ms. Hover: 150 ms, pointer devices only. A card
-arrives with a 6 px rise over 200 ms. Reveal fades the meaning in under the rule. Flare is 320 ms.
+arrives with a 6 px rise over 200 ms. Reveal fades the meaning in under the rule, followed by the
+four equal grade controls. Flare is 320 ms.
 Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme
 switch suspends transitions for one frame so the room swaps at once.
 
@@ -338,7 +334,7 @@ A flame that changes size under a halo that holds still is the thing that reads 
 catches over 620 ms when the lantern goes from unlit to lit, rather than swapping. Carried, the body
 rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
 
-Under `prefers-reduced-motion` the flame holds still, the card and toast crossfade with no travel,
+Under `prefers-reduced-motion` the flame holds still, reveal, completion, card and toast crossfade with no travel,
 and the skeleton stops shimmering. The glow stays, because a glow is a state, not a movement.
 
 ## Layout

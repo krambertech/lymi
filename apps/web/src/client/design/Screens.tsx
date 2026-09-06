@@ -100,21 +100,23 @@ function ReviewPhone({
   const [revealed, setRevealed] = useState(init);
   const item = produce ? m.queueItemProduce : m.queueItem;
   return (
-    <div className="flex flex-1 flex-col px-4 pb-3">
+    <div className="flex min-h-0 flex-1 flex-col px-4 pb-3">
       <ReviewHeader done={4} total={11} deckName="Lesson 14" />
       <ReviewCard
         item={item}
         revealed={revealed}
         onReveal={() => setRevealed(true)}
         onPlayAudio={noop}
-        className="mt-5"
+        className="mt-4"
       />
-      <GradeBar
-        item={item}
-        enabled={revealed}
-        onGrade={() => setRevealed(false)}
-        className="mt-3"
-      />
+      {revealed && (
+        <GradeBar
+          id={!produce ? "review-grade-preview" : undefined}
+          enabled
+          onGrade={() => setRevealed(false)}
+          className="grade-enter mt-3"
+        />
+      )}
     </div>
   );
 }
@@ -157,8 +159,9 @@ export function Screens() {
       </Sub>
 
       <Sub
+        id="review-preview"
         title="Review"
-        note="The word alone, then the meaning under a rule. Good is the only amber. Tap the card in the frame to reveal; grading resets it."
+        note="The card itself reveals the answer. Four equally weighted choices use icons and labels without exposing the scheduling algorithm; grading moves to the next card."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Question" initial="dark" path="/review" bare>
@@ -174,6 +177,7 @@ export function Screens() {
       </Sub>
 
       <Sub
+        id="session-done-preview"
         title="End of session"
         note="The lantern lights up and stays. Cards counted, not points. The week’s lights show what the day added."
       >
@@ -206,7 +210,7 @@ export function Screens() {
                       onPlayAudio={noop}
                       className="mt-5 min-h-[400px] flex-none"
                     />
-                    <GradeBar item={m.queueItem} enabled onGrade={noop} className="mt-3" />
+                    <GradeBar enabled onGrade={noop} className="mt-3" />
                   </div>
                 </main>
               </Desktop>

@@ -10,8 +10,17 @@
   "preview_urls": false,
   "assets": {
     "not_found_handling": "single-page-application",
-    // Only these paths run the Worker. Everything else is a static asset and costs nothing.
-    "run_worker_first": ["/", "/api/*", "/mcp", "/mcp/*", "/.well-known/*"]
+    // Only these paths run the Worker. Everything else is a static asset and costs nothing,
+    // the landing page at "/" included: it is the same shell for every visitor, so it is
+    // cheaper and faster served from the edge than through a Worker that only forwards it.
+    "run_worker_first": [
+      "/api/*",
+      "/mcp",
+      "/mcp/*",
+      "/.well-known/*",
+      "/robots.txt",
+      "/sitemap.xml"
+    ]
   },
   // Production values. Local dev overrides these from .dev.vars.
   "vars": {

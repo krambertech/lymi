@@ -10,6 +10,7 @@ import { describe, statusOf } from "./http";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate } from "./principal";
+import { beta } from "./routes/beta";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
@@ -33,7 +34,9 @@ export type AppEnv = {
 
 const app = new Hono<AppEnv>();
 
-// Preserve old bookmarks while keeping authentication on the canonical origin.
+// Preserve old bookmarks while keeping authentication on the canonical origin. The site
+// root is a static asset and never reaches this, so an old bookmark to the page still opens;
+// the first API call it makes is what moves the visitor to the origin sign-in works on.
 app.use("*", async (c, next) => {
   const url = new URL(c.req.url);
   if (url.hostname === "lymi.k-porshnieva.workers.dev" && c.env.APP_URL === "https://lymi.app") {
@@ -79,6 +82,62 @@ app.all("/mcp", (c) =>
   handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
 );
 
+// The waiting list behind the landing page. A stranger has no session and no key, so this
+// sits with the other public routes, above authentication.
+app.route("/api/beta", beta);
+
+// What crawlers may read. The public pages are the landing page and the docs; everything
+// else is one learner's data behind a session, so it is disallowed rather than merely
+// unlinked. `noindex` on the app routes is set in the client as well, for anything that
+// arrives at a URL directly.
+app.get("/robots.txt", describe({ hide: true }), (c) => {
+  const origin = c.env.APP_URL ?? new URL(c.req.url).origin;
+  return c.text(
+    [
+      "User-agent: *",
+      "Disallow: /api/",
+      "Disallow: /decks",
+      "Disallow: /review",
+      "Disallow: /settings",
+      "Disallow: /login",
+      "Disallow: /consent",
+      "Disallow: /design",
+      "",
+      `Sitemap: ${origin}/sitemap.xml`,
+      "",
+    ].join("\n"),
+    200,
+    { "cache-control": "public, max-age=3600" },
+  );
+});
+
+app.get("/sitemap.xml", describe({ hide: true }), (c) => {
+  const origin = c.env.APP_URL ?? new URL(c.req.url).origin;
+  const paths = [
+    "/",
+    "/docs",
+    "/docs/quickstart",
+    "/docs/cards",
+    "/docs/mcp",
+    "/docs/mcp/claude",
+    "/docs/mcp/chatgpt",
+    "/docs/authentication",
+    "/docs/api",
+    "/docs/recipes",
+  ];
+  const body = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...paths.map((p) => `  <url><loc>${origin}${p}</loc></url>`),
+    "</urlset>",
+    "",
+  ].join("\n");
+  return c.body(body, 200, {
+    "content-type": "application/xml; charset=utf-8",
+    "cache-control": "public, max-age=3600",
+  });
+});
+
 // Everything else under /api needs a session cookie or an API key. What the caller may then
 // do is declared on each route with describe(): writes need the write scope, learner-only
 // routes need the learner. A route without describe() has no such check, so every route
@@ -113,7 +172,9 @@ app.get("/api/audio/:cardId", describe({ hide: true }), (c) =>
 
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
-  // Anything else is the SPA. In production the assets binding serves it before we get here.
+  // Anything else is the SPA. In production the assets binding serves it before we get here,
+  // and `vite dev` serves it from Vite, so this only runs for a path the Worker claimed.
+  if (!c.env.ASSETS) return c.text("Not found", 404);
   return c.env.ASSETS.fetch(c.req.raw);
 });
 

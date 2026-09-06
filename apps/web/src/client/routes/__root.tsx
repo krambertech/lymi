@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { AddCardSheet } from "../components/AddCardSheet";
 import { ApiError, flushOutbox } from "../lib/api";
 import { decksQuery, meQuery } from "../lib/queries";
+import { rememberSignedIn } from "../lib/session-hint";
 import { Sidebar, TabBar } from "../views/Shell";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
@@ -24,11 +25,15 @@ function Shell() {
   const [addOpen, setAddOpen] = useState(false);
   // Consent is a stop inside another app's sign-in; the design page and the docs are their
   // own documents. The docs read signed out, so they must never redirect to /login.
+  // The site root is the landing page until we know there is a session, so it wears no app
+  // chrome and never bounces a stranger to a sign-in form they cannot use.
+  const atRoot = location.pathname === "/";
   const bare =
     location.pathname === "/login" ||
     location.pathname === "/consent" ||
     location.pathname.startsWith("/design") ||
-    location.pathname.startsWith("/docs");
+    location.pathname.startsWith("/docs") ||
+    (atRoot && !me.isSuccess);
   const onReview = location.pathname.startsWith("/review");
 
   useEffect(() => {
@@ -36,6 +41,31 @@ function Shell() {
       navigate({ to: "/login" });
     }
   }, [me.isError, me.error, bare, navigate]);
+
+  // One learner's cards are nobody else's business, so every screen but the landing page and
+  // the docs asks not to be indexed. The hint for what to paint first at the root is kept here
+  // too, where both answers to /api/me pass through.
+  useEffect(() => {
+    const publicPage = atRoot ? me.isError : location.pathname.startsWith("/docs");
+    let tag = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (publicPage) {
+      tag?.remove();
+      return;
+    }
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.name = "robots";
+      document.head.appendChild(tag);
+    }
+    tag.content = "noindex, nofollow";
+  }, [location.pathname, atRoot, me.isError]);
+
+  useEffect(() => {
+    if (me.isSuccess) rememberSignedIn(true);
+    if (me.isError && me.error instanceof ApiError && me.error.status === 401) {
+      rememberSignedIn(false);
+    }
+  }, [me.isSuccess, me.isError, me.error]);
 
   useEffect(() => {
     if (me.isSuccess) void flushOutbox();

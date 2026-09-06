@@ -91,3 +91,20 @@ export const ApiKeyInput = z.object({
   scope: Scope,
 });
 export type ApiKeyInput = z.infer<typeof ApiKeyInput>;
+
+/**
+ * Asking to be told when Lymi opens up. Not a sign-up: it stores an address and
+ * nothing else, and it grants no access to the app.
+ */
+export const BetaSignupInput = z.object({
+  email: z.string().trim().toLowerCase().email().max(254),
+  /** Where on the site the address came from. Free text so a second page can say its own name. */
+  source: z.string().trim().min(1).max(32).optional(),
+});
+export type BetaSignupInput = z.infer<typeof BetaSignupInput>;
+
+export const BetaSignupOut = z.object({
+  /** True when this address was already on the list. The caller is told, never rejected. */
+  alreadyOn: z.boolean(),
+});
+export type BetaSignupOut = z.infer<typeof BetaSignupOut>;

@@ -67,6 +67,9 @@ type Ok = { status?: number; schema: ZodType; description: string };
  * Access: a GET or HEAD needs any credential; anything else needs the write scope;
  * `learnerOnly` routes need the learner's own session, whatever a key's scope. The learner
  * check runs first so a read key on a learner-only route is not told a write key would help.
+ * `open` routes are for callers with no credential at all, such as the waiting list behind
+ * the landing page. They are mounted above `authenticate`, so they carry no scope to check
+ * and must say so here rather than silently failing the write guard.
  *
  * Responses: `ok` is one or several success bodies. 401 and 429 come from authentication and
  * are added to every route; 403 is added for writes (via `defaultOptions` in openapi.ts)
@@ -77,9 +80,11 @@ export function describe(
     ok?: Ok | Ok[] | undefined;
     errors?: (400 | 404 | 409)[] | undefined;
     learnerOnly?: boolean | undefined;
+    /** Callable with no session, key or token. Mount these above `authenticate`. */
+    open?: boolean | undefined;
   },
 ) {
-  const { ok, errors = [], learnerOnly = false, ...rest } = spec;
+  const { ok, errors = [], learnerOnly = false, open = false, ...rest } = spec;
   const responses: Responses = {};
   const successes = ok === undefined ? [] : Array.isArray(ok) ? ok : [ok];
   for (const success of successes) {
@@ -88,7 +93,7 @@ export function describe(
       content: { "application/json": { schema: resolver(success.schema) } },
     };
   }
-  for (const status of [401 as const, 429 as const, ...errors]) {
+  for (const status of open ? errors : [401 as const, 429 as const, ...errors]) {
     responses[String(status)] = errorResponse(status);
   }
   if (learnerOnly) responses["403"] = errorResponse(403);
@@ -96,11 +101,14 @@ export function describe(
   const documented = describeRoute({
     ...rest,
     ...(learnerOnly ? { security: [{ session: [] }] } : {}),
+    ...(open ? { security: [] } : {}),
     responses,
   });
   // A fresh function per route: the spec is attached to it, so sharing one would share specs.
-  const guarded: MiddlewareHandler<AppEnv> = (c, next) =>
-    learnerOnly ? requireLearner(c, next) : requireScopeForWrites(c, next);
+  const guarded: MiddlewareHandler<AppEnv> = (c, next) => {
+    if (open) return next();
+    return learnerOnly ? requireLearner(c, next) : requireScopeForWrites(c, next);
+  };
   return Object.assign(guarded, { [uniqueSymbol]: specOf(documented) });
 }
 

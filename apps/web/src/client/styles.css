@@ -662,3 +662,62 @@
 .doc-anchor:focus-visible {
   opacity: 1;
 }
+
+/* ---- Landing ----------------------------------------------------------- */
+
+/*
+ * The landing page is one dark room with the lantern in it. Everything here is the
+ * lamp: the pool of light on the page and the way a card brightens as it crosses that
+ * pool. This is the only place in Lymi with a gradient, and it is a light source rather
+ * than decoration, which is the same exception the lantern's own glow already has.
+ *
+ * --lit is 0 for a card in the dark and 1 for one in the middle of the beam. Scripts set
+ * it per frame; it is registered so a card that moves in steps can ease between values.
+ */
+@property --lit {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: true;
+}
+
+.lamp-pool {
+  position: absolute;
+  left: var(--lamp-x, 50%);
+  top: var(--lamp-y, 50%);
+  width: 780px;
+  height: 780px;
+  translate: -50% -50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle closest-side,
+    var(--glow) 0%,
+    var(--amber-soft) 34%,
+    transparent 72%
+  );
+}
+
+/* A card lit by the pool. Colour, lift and halo all read from --lit together. */
+.lit-card {
+  background: color-mix(in oklab, var(--plate), var(--amber-soft) calc(var(--lit) * 70%));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--edge), var(--amber) calc(var(--lit) * 55%)),
+    0 14px 36px -14px color-mix(in srgb, transparent, var(--glow) calc(var(--lit) * 100%));
+  translate: 0 calc(var(--lit) * -5px);
+  opacity: calc(0.4 + 0.6 * var(--lit));
+}
+.lit-card .lit-label {
+  color: color-mix(in srgb, var(--faint), var(--amber-text) calc(var(--lit) * 100%));
+}
+.lit-card .lit-term {
+  color: color-mix(in srgb, var(--muted), var(--text) calc(var(--lit) * 100%));
+}
+.lit-card .lit-meaning {
+  color: var(--text-2);
+  opacity: clamp(0, calc((var(--lit) - 0.42) * 2.6), 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lit-card {
+    transition: none;
+  }
+}

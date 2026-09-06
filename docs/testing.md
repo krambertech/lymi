@@ -1,6 +1,6 @@
 # Testing
 
-Lymi uses one canonical Playwright journey to prove that the browser, Worker, authentication, D1 persistence, and FSRS review path work together. The suite runs entirely against local Cloudflare bindings. It never uses production data or AI credentials.
+Lymi uses a small set of Playwright journeys to prove that the browser, Worker, authentication, D1 persistence, deck and card creation, and FSRS review path work together. The suite runs entirely against local Cloudflare bindings. It never uses production data or AI credentials.
 
 ## Commands
 
@@ -18,7 +18,7 @@ Install the configured browsers once on a new machine:
 pnpm exec playwright install chromium webkit
 ```
 
-`scripts/e2e-server.mjs` clears only `apps/web/.wrangler/e2e`, applies every D1 migration there, and starts Vite with local-only credentials. It does not touch the normal `.wrangler/state`, a developer's `.dev.vars`, or any remote Cloudflare binding.
+`scripts/e2e-server.mjs` clears only `apps/web/.wrangler/e2e`, applies every D1 migration there, and starts Vite with a short-lived `.dev.vars.lymi-e2e` file containing local-only credentials. It never overwrites a pre-existing file, removes the file it created on exit, and does not touch the normal `.wrangler/state`, a developer's `.dev.vars`, or any remote Cloudflare binding.
 
 ## CI policy
 
@@ -39,3 +39,5 @@ Failed browser runs retain screenshots, video from the retry, a Playwright trace
 5. Reload and confirm the persisted result.
 
 Keep this path real. Use accessible roles and labels, do not mock Lymi's own APIs, do not use fixed sleeps, and do not add test-only application routes. Prefer public APIs for setup that is not the behavior under test. Add focused journeys only when they protect another critical user outcome that the canonical path cannot express clearly.
+
+`e2e/deck-creation.spec.ts` owns deck and card creation: validation, routing and persistence, deck targeting, duplicate handling, optional meanings, archived-deck protection, and responsive controls from 320 px phone layouts through wide desktop. Each scenario, browser project, and retry has its own allowlisted learner account so one test cannot inherit another test's data.

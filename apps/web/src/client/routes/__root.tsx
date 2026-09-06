@@ -33,6 +33,7 @@ function Shell() {
   const me = useQuery(meQuery);
   const decks = useQuery({ ...decksQuery, enabled: me.isSuccess });
   const add = useAddCard();
+  const activeDeckId = location.pathname.match(/^\/library\/([^/]+)/)?.[1];
   // Consent is a stop inside another app's sign-in; the design page and the docs are their
   // own documents. The docs read signed out, so they must never redirect to /login.
   // The site root is always the public, server-rendered landing page, so it wears no app chrome.
@@ -88,7 +89,7 @@ function Shell() {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === "n" || e.key === "N") {
         e.preventDefault();
-        add.openCard();
+        add.openCard(activeDeckId);
       }
       if ((e.key === "r" || e.key === "R") && !onReview) {
         e.preventDefault();
@@ -97,7 +98,7 @@ function Shell() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, onReview, bare, add]);
+  }, [navigate, onReview, bare, add, activeDeckId]);
 
   if (bare) return <Outlet />;
 
@@ -119,13 +120,13 @@ function Shell() {
       </AppShell>
       <AddCardSheet
         open={add.open === "card"}
-        onOpenChange={(v) => (v ? add.openCard() : add.close())}
+        onOpenChange={(v) => (v ? add.openCard() : add.close("card"))}
         deckId={add.deckId}
         onCreateDeck={add.openDeck}
       />
       <NewDeckSheet
         open={add.open === "deck"}
-        onOpenChange={(v) => (v ? add.openDeck() : add.close())}
+        onOpenChange={(v) => (v ? add.openDeck() : add.close("deck"))}
       />
     </>
   );

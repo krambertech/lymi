@@ -43,7 +43,13 @@ export async function addCards(
         directions: schema.decks.directions,
       })
       .from(schema.decks)
-      .where(and(inArray(schema.decks.id, ids), eq(schema.decks.userId, userId))),
+      .where(
+        and(
+          inArray(schema.decks.id, ids),
+          eq(schema.decks.userId, userId),
+          isNull(schema.decks.archivedAt),
+        ),
+      ),
   );
   const deckById = new Map(decks.map((d) => [d.id, d]));
 

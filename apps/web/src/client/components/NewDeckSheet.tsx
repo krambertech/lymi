@@ -34,6 +34,7 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange} title="New deck">
       <NewDeckForm
+        key={open ? "open" : "closed"}
         pending={create.isPending}
         error={create.isError ? (create.error as Error).message : undefined}
         onCancel={() => onOpenChange(false)}

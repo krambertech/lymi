@@ -15,7 +15,11 @@ export const decksQuery = queryOptions({
   refetchOnWindowFocus: true,
 });
 export const deckCardsQuery = (deckId: string) =>
-  queryOptions({ queryKey: ["decks", deckId, "cards"], queryFn: () => api.deckCards(deckId) });
+  queryOptions({
+    queryKey: ["decks", deckId, "cards"],
+    queryFn: () => api.deckCards(deckId),
+    staleTime: 0,
+  });
 export const queueQuery = (deckId?: string) =>
   queryOptions({
     queryKey: ["queue", deckId ?? "all"],

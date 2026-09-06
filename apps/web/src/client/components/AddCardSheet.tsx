@@ -24,15 +24,18 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
   const decks = useQuery(decksQuery);
   const create = useMutation({
     mutationFn: (input: CardInput) => api.addCard(input),
-    onSuccess: (outcome) => {
+    onSuccess: async (outcome) => {
       if (outcome.status === "skipped") return;
-      qc.invalidateQueries({ queryKey: ["decks"] });
-      qc.invalidateQueries({ queryKey: ["queue"] });
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["decks"] }),
+        qc.invalidateQueries({ queryKey: ["queue"] }),
+      ]);
     },
   });
   return (
     <Sheet open={open} onOpenChange={onOpenChange} title="Add a word or phrase" titleHidden>
       <AddCardForm
+        key={open ? `open:${deckId ?? "default"}` : "closed"}
         decks={decks.data}
         deckId={deckId}
         pending={create.isPending}

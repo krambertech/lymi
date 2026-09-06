@@ -21,7 +21,7 @@ export function handleMcpRequest(
   request: Request,
   deps: { auth: Auth; db: Db; env: Bindings },
 ): Promise<Response> {
-  const resource = `${deps.env.APP_URL}/mcp`;
+  const resource = `${deps.env.PRODUCT_URL}/mcp`;
   const protectedHandler = requireMcpAuth(
     deps.auth,
     async (req, claims) => {
@@ -34,7 +34,7 @@ export function handleMcpRequest(
       };
       const handler = createMcpHandler(() => buildMcpServer(principal), {
         route: "/mcp",
-        allowedHostnames: [new URL(deps.env.APP_URL).hostname],
+        allowedHostnames: [new URL(deps.env.PRODUCT_URL).hostname],
       });
       return handler.fetch(req, {
         authInfo: {

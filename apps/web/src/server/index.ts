@@ -6,9 +6,16 @@ import { HTTPException } from "hono/http-exception";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
+import { fetchConfiguredAsset } from "./html";
 import { describe, statusOf } from "./http";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
+import {
+  canonicalOrigins,
+  decideOriginRoute,
+  responseForOriginDecision,
+  surfaceFor,
+} from "./origin-routing";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
 import { audio } from "./routes/audio";
@@ -37,21 +44,16 @@ export type AppEnv = {
 
 const app = new Hono<AppEnv>();
 
-// Preserve old bookmarks while keeping authentication on the canonical origin. This runs
-// before both the server-rendered landing page and the authenticated application routes.
-app.use("*", async (c, next) => {
-  const url = new URL(c.req.url);
-  if (url.hostname === "lymi.k-porshnieva.workers.dev" && c.env.APP_URL === "https://lymi.app") {
-    url.hostname = "lymi.app";
-    return c.redirect(url.toString(), 308);
-  }
-  await next();
-});
-
-// Unlike the private product, the public front door is rendered into the response. React
-// hydrates it in the browser, so its form and motion keep working without making the copy,
-// metadata, or page structure depend on JavaScript.
+// The public root is server-rendered. The product root is an auth-aware door: a current
+// session goes to Today, while a signed-out learner gets the sign-in screen.
 app.get("/", async (c) => {
+  if (surfaceFor(c.req.url, c.env) === "product") {
+    const db = createDb(c.env.DB);
+    const auth = createAuth(c.env, db);
+    const session = await auth.api.getSession({ headers: c.req.raw.headers });
+    const destination = new URL(session ? "/today" : "/login", c.env.PRODUCT_URL);
+    return c.redirect(destination.toString(), 302);
+  }
   const { renderLandingPage } = await import("./landing");
   return renderLandingPage(c.req.raw, c.env);
 });
@@ -110,7 +112,12 @@ app.route("/api/beta", beta);
 // unlinked. `noindex` on the app routes is set in the client as well, for anything that
 // arrives at a URL directly.
 app.get("/robots.txt", describe({ hide: true }), (c) => {
-  const origin = c.env.APP_URL ?? new URL(c.req.url).origin;
+  if (surfaceFor(c.req.url, c.env) === "product") {
+    return c.text("User-agent: *\nDisallow: /\n", 200, {
+      "cache-control": "public, max-age=3600",
+    });
+  }
+  const origin = c.env.PUBLIC_SITE_URL;
   return c.text(
     [
       "User-agent: *",
@@ -136,7 +143,7 @@ app.get("/robots.txt", describe({ hide: true }), (c) => {
 });
 
 app.get("/sitemap.xml", describe({ hide: true }), (c) => {
-  const origin = c.env.APP_URL ?? new URL(c.req.url).origin;
+  const origin = c.env.PUBLIC_SITE_URL;
   const paths = [
     "/",
     "/docs",
@@ -193,10 +200,8 @@ app.route("/api/audio", audio);
 
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
-  // Anything else is the SPA. In production the assets binding serves it before we get here,
-  // and `vite dev` serves it from Vite, so this only runs for a path the Worker claimed.
   if (!c.env.ASSETS) return c.text("Not found", 404);
-  return c.env.ASSETS.fetch(c.req.raw);
+  return fetchConfiguredAsset(c.req.raw, c.env, surfaceFor(c.req.url, c.env));
 });
 
 app.onError((err, c) => {
@@ -216,6 +221,10 @@ app.onError((err, c) => {
 
 export default {
   fetch(request: Request, env: Bindings, executionCtx: ExecutionContext) {
+    const originResponse = responseForOriginDecision(
+      decideOriginRoute(request.url, canonicalOrigins(env)),
+    );
+    if (originResponse) return originResponse;
     return app.fetch(request, env, executionCtx);
   },
   scheduled(controller: ScheduledController, env: Bindings, executionCtx: ExecutionContext) {

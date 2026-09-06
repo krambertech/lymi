@@ -1,6 +1,7 @@
 import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import { buttonClass } from "../components/Button";
 import { Lockup } from "../components/Logo";
+import { productUrl } from "../lib/origins";
 import { AssistantChat } from "./AssistantChat";
 import { CardBelt, CardColumn } from "./CardStream";
 import { EnrichDemo } from "./EnrichDemo";
@@ -33,7 +34,8 @@ const LOOP = [
  * an atmospheric hero, a compact three-step loop, alternating product moments, a wide evidence
  * figure, and one quiet invitation.
  */
-export function LandingView() {
+export function LandingView({ productOrigin }: { productOrigin?: string | undefined } = {}) {
+  const openAppUrl = new URL("/", productOrigin ?? productUrl()).toString();
   const hero = useRef<HTMLElement>(null);
   const [lamp, setLamp] = useState<{ x: number; y: number } | null>(null);
   const [nudge, setNudge] = useState({ x: 0, y: 0 });
@@ -142,8 +144,8 @@ export function LandingView() {
                 Docs
               </a>
             </span>
-            <a href="/login" className={buttonClass("ghost", "sm")}>
-              Sign in
+            <a href={openAppUrl} className={buttonClass("ghost", "sm")}>
+              Open app
             </a>
             <a href="#join" className={buttonClass("secondary", "sm")}>
               Join the beta
@@ -388,8 +390,8 @@ export function LandingView() {
             <a href="/docs/mcp" className="rounded-xs hoverable:hover:text-text">
               MCP
             </a>
-            <a href="/login" className="rounded-xs hoverable:hover:text-text">
-              Sign in
+            <a href={openAppUrl} className="rounded-xs hoverable:hover:text-text">
+              Open app
             </a>
           </div>
         </div>

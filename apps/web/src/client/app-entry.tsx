@@ -6,11 +6,12 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./lib/pwa-install";
+import { isProductSurface } from "./lib/origins";
 import { routeTree } from "./routeTree.gen";
 
 // The private product owns offline behavior. Public landing visitors should not download the
 // complete application cache merely to read the marketing page.
-registerSW({ immediate: true });
+if (isProductSurface()) registerSW({ immediate: true });
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
+import { safeProductReturnPath } from "../../shared/origins";
 import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
 import { Input } from "../components/Field";
@@ -17,6 +18,7 @@ const Search = z.object({
   client_id: z.string().optional(),
   scope: z.string().optional(),
   error: z.string().optional(),
+  returnTo: z.string().optional(),
   /** Keeps the local email/password helper out of the real sign-in experience. */
   dev: z.coerce.string().pipe(z.literal("1")).optional(),
 });
@@ -76,7 +78,8 @@ function issueFor(code: string | undefined): SignInIssue | null {
 }
 
 function Login() {
-  const { client_id: clientId, error, dev } = Route.useSearch();
+  const { client_id: clientId, error, dev, returnTo: rawReturnTo } = Route.useSearch();
+  const returnTo = safeProductReturnPath(rawReturnTo);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState<string | null>(null);
   const issue = issueFor(error);
@@ -108,7 +111,7 @@ function Login() {
         try {
           // better-auth returns the failure rather than throwing, so a silent `await` here
           // left the button spinning and then stopping with nothing said.
-          const res = await signInWithGoogle();
+          const res = await signInWithGoogle(returnTo);
           if (res.error) setFailed("Sign-in didn’t go through. Try again.");
         } catch {
           setFailed("Can’t reach the sign-in service. Check your connection.");
@@ -117,14 +120,13 @@ function Login() {
         }
       }}
     >
-      {import.meta.env.DEV && dev === "1" && <DevSignIn />}
+      {import.meta.env.DEV && dev === "1" && <DevSignIn returnTo={returnTo} />}
     </LoginView>
   );
 }
 
 /** Local development only. Email + password against the local D1, no Google needed. */
-function DevSignIn() {
-  const navigate = useNavigate();
+function DevSignIn({ returnTo }: { returnTo: string }) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("dev@lymi.local");
@@ -146,7 +148,7 @@ function DevSignIn() {
     }
     if (followOAuthRedirect(res.data)) return;
     await queryClient.invalidateQueries({ queryKey: ["me"] });
-    navigate({ to: "/today" });
+    window.location.assign(returnTo);
   }
 
   if (!open) {

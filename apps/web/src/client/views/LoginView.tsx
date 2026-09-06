@@ -3,6 +3,7 @@ import { type AppIdentity, AppMark } from "../components/AppMark";
 import { AuthFrame } from "../components/AuthFrame";
 import { AuthNotice } from "../components/AuthNotice";
 import { Button } from "../components/Button";
+import { publicSiteUrl } from "../lib/origins";
 
 export interface LoginProps {
   onGoogle?: (() => void | Promise<void>) | undefined;
@@ -22,7 +23,7 @@ export interface LoginProps {
 /** The front door. Authentication stays focused; requesting an invitation has its own route. */
 export function LoginView({ onGoogle, busy, app, error, blocked = false, children }: LoginProps) {
   return (
-    <AuthFrame footer={children}>
+    <AuthFrame footer={children} homeHref={publicSiteUrl()}>
       <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">
         {app ? (
           <div className="flex flex-col items-center text-center">
@@ -65,7 +66,7 @@ export function LoginView({ onGoogle, busy, app, error, blocked = false, childre
         <p className="mt-6 text-center text-sm text-muted">
           {blocked ? "Still need an invitation?" : "Need an invitation?"}{" "}
           <a
-            href="/join"
+            href={publicSiteUrl("/join")}
             className="rounded-sm font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
           >
             Request an invitation

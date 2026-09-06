@@ -1,5 +1,6 @@
 import { oauthProviderClient } from "@better-auth/oauth-provider/client";
 import { createAuthClient } from "better-auth/react";
+import { safeProductReturnPath } from "../../shared/origins";
 
 /**
  * The oauthProviderClient plugin does two things for the OAuth server: it adds the current
@@ -31,11 +32,13 @@ export function followOAuthRedirect(data: unknown): boolean {
  * account inside Google's callback, and without somewhere to send that the learner lands on
  * a raw error from the auth handler. With it they come back to the door with a sentence.
  */
-export function signInWithGoogle() {
+export function signInWithGoogle(returnTo?: string | null) {
+  const destination = safeProductReturnPath(returnTo);
+  const errorCallbackURL = `/login?${new URLSearchParams({ returnTo: destination })}`;
   return authClient.signIn.social({
     provider: "google",
-    callbackURL: "/",
-    errorCallbackURL: "/login",
+    callbackURL: destination,
+    errorCallbackURL,
   });
 }
 

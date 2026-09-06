@@ -22,16 +22,10 @@ async function waitForLibrary(page: Page) {
 async function openNewDeck(page: Page) {
   await page.goto("/library");
   await waitForLibrary(page);
-
-  const emptyStateButton = page
-    .locator("main")
-    .getByRole("button", { name: "New deck", exact: true });
-  if (await emptyStateButton.isVisible()) {
-    await emptyStateButton.click();
-  } else {
-    await page.locator("header").getByRole("button", { name: "Add", exact: true }).click();
-    await page.getByRole("menuitem", { name: "New deck", exact: true }).click();
-  }
+  // The empty state may briefly be cached while a just-created deck is refetched. The header
+  // action exists in both states, so it is the stable way to start another deck.
+  await page.locator("header").getByRole("button", { name: "Add", exact: true }).click();
+  await page.getByRole("menuitem", { name: "New deck", exact: true }).click();
 
   const dialog = sheet(page, "New deck");
   await expect(dialog).toBeVisible();

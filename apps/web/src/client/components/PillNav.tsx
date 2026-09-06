@@ -3,7 +3,7 @@ import { NavLink, type StaticNav } from "./NavLink";
 
 /** Every destination in the phone pill. Review is a button on the screen, never a tab. */
 export const PILL_NAV = [
-  { to: "/", label: "Today", icon: Sun, exact: true },
+  { to: "/today", label: "Today", icon: Sun, exact: true },
   { to: "/library", label: "Library", icon: BookMarked, exact: false },
 ] as const;
 

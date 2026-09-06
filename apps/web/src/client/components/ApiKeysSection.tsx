@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
+import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
 import { Button } from "./Button";
 import { Chip } from "./Chip";
@@ -62,7 +63,7 @@ export function ApiKeysSection() {
         For curl, scripts and Claude Code. Send the key in an{" "}
         <code className="font-mono text-sm">x-api-key</code> header; the routes are in the{" "}
         <a
-          href="/docs/api"
+          href={publicSiteUrl("/docs/api")}
           className="underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
         >
           API reference

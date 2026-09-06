@@ -20,7 +20,7 @@ import {
   typeLabel,
   variantsOf,
 } from "../openapi";
-import { ORIGIN } from "../origin";
+import { OPENAPI_URL, ORIGIN } from "../origin";
 import { H2, Lead, Note, slug } from "../Prose";
 
 /* -- Small pieces ------------------------------------------------------------ */
@@ -292,7 +292,7 @@ export function ApiReference() {
   const { data, isPending, isError } = useQuery<Doc>({
     queryKey: ["openapi"],
     queryFn: async () => {
-      const res = await fetch("/api/openapi.json");
+      const res = await fetch(OPENAPI_URL, { credentials: "omit", mode: "cors" });
       if (!res.ok) throw new Error(`The document answered ${res.status}`);
       return res.json();
     },
@@ -308,7 +308,7 @@ export function ApiReference() {
     <div className="doc-prose">
       <Lead>
         Every route the Lymi API serves, read from the running server. This page renders{" "}
-        <a href="/api/openapi.json">/api/openapi.json</a>, so it is never out of date with the code.
+        <a href={OPENAPI_URL}>{OPENAPI_URL}</a>, so it is never out of date with the code.
       </Lead>
 
       <p>
@@ -323,8 +323,8 @@ export function ApiReference() {
       {isError && (
         <Note tone="careful" title="The reference could not load">
           <p>
-            Fetching <a href="/api/openapi.json">/api/openapi.json</a> failed. Reload the page, or
-            open the document directly to read it as JSON.
+            Fetching <a href={OPENAPI_URL}>{OPENAPI_URL}</a> failed. Reload the page, or open the
+            document directly to read it as JSON.
           </p>
         </Note>
       )}

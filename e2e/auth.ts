@@ -4,10 +4,15 @@ import { type E2EAccount, e2eEmail } from "./settings.mjs";
 const password = "lymi-e2e-password";
 
 /** Sign in to this scenario's disposable account, creating it on the first attempt. */
-export async function signInAsTestLearner(page: Page, testInfo: TestInfo, account: E2EAccount) {
+export async function signInAsTestLearner(
+  page: Page,
+  testInfo: TestInfo,
+  account: E2EAccount,
+  returnTo = "/today",
+) {
   const email = e2eEmail(account, testInfo.project.name, testInfo.retry);
 
-  await page.goto("/login?dev=1");
+  await page.goto(`/login?${new URLSearchParams({ dev: "1", returnTo })}`);
   await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
   await page.getByRole("textbox", { name: "Email", exact: true }).fill(email);
   await page.getByRole("textbox", { name: "Password", exact: true }).fill(password);
@@ -26,6 +31,10 @@ export async function signInAsTestLearner(page: Page, testInfo: TestInfo, accoun
     expect(signIn.ok(), `Sign in failed with HTTP ${signIn.status()}`).toBe(true);
   }
 
-  await expect(page).toHaveURL(/\/today$/);
-  await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
+  await expect
+    .poll(() => `${new URL(page.url()).pathname}${new URL(page.url()).search}`)
+    .toBe(returnTo);
+  if (returnTo === "/today") {
+    await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
+  }
 }

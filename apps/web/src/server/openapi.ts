@@ -1,5 +1,6 @@
 import type { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
+import { DEFAULT_PUBLIC_SITE_ORIGIN } from "../shared/origins";
 import { errorResponse } from "./http";
 import type { AppEnv } from "./index";
 
@@ -13,6 +14,15 @@ import type { AppEnv } from "./index";
  * links already sent still land.
  */
 export function mountOpenApi(app: Hono<AppEnv>) {
+  app.use("/api/openapi.json", async (c, next) => {
+    await next();
+    const allowedOrigin = openApiCorsOrigin(c.req.header("origin"), c.env.PUBLIC_SITE_URL);
+    if (allowedOrigin) {
+      c.header("access-control-allow-origin", allowedOrigin);
+      c.header("vary", "Origin", { append: true });
+    }
+  });
+
   app.get(
     "/api/openapi.json",
     openAPIRouteHandler(app, {
@@ -41,7 +51,7 @@ export function mountOpenApi(app: Hono<AppEnv>) {
             "",
             "**Removal.** Nothing is deleted. Cards are archived and can be restored.",
             "",
-            "The guides are at /docs.",
+            `The guides are at ${new URL("/docs", DEFAULT_PUBLIC_SITE_ORIGIN).toString()}.`,
           ].join("\n"),
         },
         components: {
@@ -84,5 +94,16 @@ export function mountOpenApi(app: Hono<AppEnv>) {
     }),
   );
 
-  app.get("/api/docs", (c) => c.redirect("/docs/api", 301));
+  app.get("/api/docs", (c) =>
+    c.redirect(new URL("/docs/api", c.env.PUBLIC_SITE_URL).toString(), 301),
+  );
+}
+
+/** The docs may read the public schema; no other cross-origin browser caller is trusted. */
+export function openApiCorsOrigin(
+  requestOrigin: string | undefined,
+  publicSiteUrl: string,
+): string | null {
+  const publicOrigin = new URL(publicSiteUrl).origin;
+  return requestOrigin === publicOrigin ? publicOrigin : null;
 }

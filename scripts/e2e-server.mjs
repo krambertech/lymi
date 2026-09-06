@@ -22,7 +22,8 @@ rmSync(state, { recursive: true, force: true });
 // Cloudflare gives .dev.vars.<environment> precedence over .dev.vars. Use a unique,
 // short-lived environment so ignored developer secrets and allowlists cannot affect E2E.
 const testVars = [
-  "APP_URL=http://localhost:4173",
+  "PUBLIC_SITE_URL=http://localhost:4173",
+  "PRODUCT_URL=http://localhost:4173",
   `ALLOWED_EMAILS=${e2eAllowedEmails.join(",")}`,
   "BETTER_AUTH_SECRET=lymi-e2e-secret-at-least-thirty-two-characters",
   "GOOGLE_CLIENT_ID=e2e-client-id",

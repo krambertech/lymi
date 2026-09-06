@@ -30,8 +30,6 @@ function Root() {
 function Shell() {
   const location = useLocation();
   const navigate = useNavigate();
-  const me = useQuery(meQuery);
-  const decks = useQuery({ ...decksQuery, enabled: me.isSuccess });
   const add = useAddCard();
   const activeDeckId = location.pathname.match(/^\/library\/([^/]+)/)?.[1];
   // Consent is a stop inside another app's sign-in; the design page and the docs are their
@@ -46,17 +44,21 @@ function Shell() {
     location.pathname.startsWith("/docs") ||
     atRoot;
   const onReview = location.pathname.startsWith("/review");
+  const me = useQuery({ ...meQuery, enabled: !bare });
+  const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
 
   useEffect(() => {
     if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare) {
-      navigate({ to: "/login" });
+      const returnTo = `${window.location.pathname}${window.location.search}`;
+      navigate({ to: "/login", search: { returnTo } });
     }
   }, [me.isError, me.error, bare, navigate]);
 
   // One learner's cards are nobody else's business, so every screen but the landing page and
   // the docs asks not to be indexed.
   useEffect(() => {
-    const publicPage = atRoot || location.pathname.startsWith("/docs");
+    const publicPage =
+      atRoot || location.pathname === "/join" || location.pathname.startsWith("/docs");
     let tag = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (publicPage) {
       tag?.remove();

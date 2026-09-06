@@ -3,6 +3,7 @@ name: Lymi
 description: A vocabulary app with a storm lantern. Two rooms, one flame. Warm, calm, quick.
 colors:
   canvas: "#f8f7f5"
+  rail: "#f1efec"
   plate: "#ffffff"
   plate-2: "#f1efec"
   hover: "#edebe7"
@@ -27,6 +28,7 @@ colors:
   danger: "#b3331f"
   danger-soft: "#b3331f1a"
   dark-canvas: "#151210"
+  dark-rail: "#1b1613"
   dark-plate: "#201b18"
   dark-plate-2: "#2a241f"
   dark-hover: "#2f2924"
@@ -200,13 +202,13 @@ Three words: warm, calm, quick.
 
 ## Surfaces are flat
 
-Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of three tones: `canvas` (the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Nothing lifts, and amber never marks state.
+Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of four tones: `canvas` (the room), `rail` (the navigation, one step off the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it. Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Nothing lifts, and amber never marks state.
 
 The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it.
 
 ## Colour
 
-Warm neutrals, nearly grey. Amber is the only saturated colour and appears at most twice on a screen: the flame, and the one thing to press. A due count in `amber-text` is the third allowed use.
+Warm neutrals, nearly grey. Amber is the only saturated colour: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use.
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
 
@@ -223,6 +225,8 @@ The metal is `metal`, which is the text colour of the room: ink by day, white at
 The glass is one **opaque** colour, `glass`, not a tint over a hole. A translucent glass needs a backer in the room's colour, and then the mark drags a pale slab onto any surface that is not the page background — a plate, the amber button, a dark tile, a transparent export. Every metal part overlaps the glass edges, so nothing can spill outside the frame. Unlit, the glass is `glass-unlit` and the flame becomes an ember in `edge-2`.
 
 There is no second cut for small sizes. The rods and the flame are exactly what keep the drawing legible when it is tiny — a simplified version that drops them collapses into a mushroom by 24 px. One drawing, every size. The browser tab uses the same drawing with the viewBox squared around its own bounds, so the mark fills the icon instead of floating in a 120 box.
+
+The streak's `Flame` crops to the flame's exact bounds, so its tip sits on the top edge of its box and the flicker grows past it. That drawing overflows its box rather than being cropped: a clipped tip is the one thing that makes the mark look broken.
 
 The geometry lives in `components/lantern-geometry.tsx` and nowhere else. `Lantern`, `Lockup` and `scripts/brand.mjs` all draw from it, so the mark cannot drift between the app and its assets.
 
@@ -244,7 +248,7 @@ A grant lasts until it is taken back, so Settings has Connected apps beside API 
 
 ## Wordmark and lockups
 
-`lymi`, lowercase, Onest 600, tracked −0.025em, drawn as paths (`components/wordmark-paths.ts`, generated with fontTools). The lit wordmark replaces the dot of the i with a flame; use it on the login screen and the app store, the plain one everywhere else. Row lockup: the lantern is 1.30em tall, its foot on the baseline and its bail just above the l, 0.17em before the word. There is no stacked lockup. Clear space: half a lantern on every side.
+`lymi`, lowercase, Onest 600, tracked −0.025em, drawn as paths (`components/wordmark-paths.ts`, generated with fontTools). The lit wordmark replaces the dot of the i with a flame; use it on the login screen and the app store, the plain one everywhere else. In the rail the mark is the app tile at 28 px with the plain wordmark beside it, not the row lockup: the tile gives the mark its own surface, which is what stops it floating on the rail, and it is the same picture the learner taps on their home screen. Row lockup: the lantern is 1.30em tall, its foot on the baseline and its bail just above the l, 0.17em before the word. There is no stacked lockup. Clear space: half a lantern on every side.
 
 The app icon is always the dark room: ivory lantern, lit and glowing, on the dark canvas. Assets are in `apps/web/public/brand/` and regenerate with `node scripts/brand.mjs && sh scripts/icons.sh`.
 
@@ -256,7 +260,7 @@ One exception to the single family. `font-mono` is a system monospace stack, not
 
 ## Motion
 
-Motion conveys state. Press: scale 0.97, 150 ms. Hover: 150 ms, pointer devices only. A card arrives with a 6 px rise over 200 ms. Reveal fades the meaning in under the rule, followed by the four equal grade controls. Flare is 320 ms. Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme switch suspends transitions for one frame so the room swaps at once.
+Motion conveys state. Press: scale 0.97, 150 ms. Hover: 150 ms, pointer devices only. A card arrives with a 6 px rise over 200 ms. A menu grows out of the corner nearest the button that opened it — scale 0.94 to 1 over 140 ms — because a menu belongs to its trigger, and a list that slides in from somewhere else reads as a panel that happened to land there. Reveal fades the meaning in under the rule, followed by the four equal grade controls. Flare is 320 ms. Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme switch suspends transitions for one frame so the room swaps at once.
 
 A sheet arrives the way its shape does: the drawer on vaul's curve from the bottom edge, the desktop modal with the card's 6 px rise over 200 ms. Both leave in 140 ms, faster than they came.
 
@@ -270,15 +274,19 @@ Under `prefers-reduced-motion` the flame holds still, reveal, completion, card a
 
 Two destinations, Today and Library. Review is the primary button on both, never a place you navigate to. Settings, Activity and Archived sit behind **You**, one profile screen reached from the avatar on the phone and the sidebar's profile row on desktop. Insights holds its slot before it has content. See [ADR 0005](docs/adr/0005-review-is-a-button-not-a-destination.md).
 
-On the phone the navigation is a floating pill, two items wide, frosted over the content and clear of the home indicator. On desktop it is the 240 px sidebar: wordmark and add menu, search, the four destinations, the decks, and the learner at the bottom.
+On the phone the navigation is a floating pill, two items wide, opaque over the content and clear of the home indicator. It is a `plate-2` track with a `plate` item selected inside it, the same shape as the segmented control, because a frosted pill is a material the rest of the app does not use.
 
-The desktop shell is capped at `--shell` (1120 px) and centred. It never stretches: a vocabulary app is one column of content, and a wider one is a worse read. Reading screens narrow further to 672.
+On desktop it is the 240 px rail, and the rail is a surface: it runs the full height of the window flush to the left edge, in `rail` with a hairline down its inner side. In it, top to bottom: the app tile beside the wordmark, search and the capture button on that same line, the four destinations, the decks, and the learner at the bottom under a rule — a 34 px avatar, the name, and what the screen behind it holds.
 
-Capture is one plus for both things a learner adds, a word or a deck. It sits next to the wordmark on desktop and in every page header on the phone, and `N` opens it from anywhere.
+The rail's first line and the page title beside it sit on the same line, 32 px down. That shared line is what makes the two columns read as one app rather than a menu next to a document.
+
+The column of content is capped at `--column` (880 px) and centres in whatever the rail leaves. It never stretches: a vocabulary app is one column, and a wider one is a worse read. On a 2560 px screen the rail fills the left edge and the column sits in the middle of the rest, so a big window gets the same read as a laptop instead of a stripe of content in a field of empty room. Reading screens narrow further to 672.
+
+Capture is one plus for both things a learner adds, a word or a deck. It is round and amber, because it is the app's standing action and the only control on every screen; the menu under it names the two things with an icon each. It sits in the rail beside the mark on desktop and in every page header on the phone, and `N` opens it from anywhere.
 
 ## The streak
 
-The flame, on its own, counts days in a row. It is drawn twice, because the two screens have different room for the same fact. On the phone it is a pill in the Today header: flame and a number. On desktop it is a plate beside the hero: the count, the best run, the seven lights and one line saying how many of the last seven days had a review.
+The flame, on its own, counts days in a row. It is drawn twice, because the two screens have different room for the same fact. On the phone it is a pill in the Today header: flame and a number, 40 px tall like the capture button and the avatar next to it, because a row of controls at three different heights is what makes a header look unfinished. On desktop it is a plate beside the hero: the count, the best run, the seven lights and one line saying how many of the last seven days had a review.
 
 Today is still open until it ends, so an unreviewed morning shows yesterday's streak rather than zero. `streakLength` in `packages/core/src/streak.ts` is the rule.
 

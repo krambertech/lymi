@@ -14,17 +14,30 @@ function deckLink(page: Page, name: string): Locator {
     .filter({ has: page.getByText(name, { exact: true }) });
 }
 
+/**
+ * Capture is one control, but it changes address with the layout: the rail holds it on a
+ * desktop and the page header on a phone. The test asks for the one that is on screen, which
+ * is what the learner reaches for, rather than pinning it to either container.
+ */
+function addMenu(page: Page) {
+  return page.getByRole("button", { name: "Add", exact: true }).filter({ visible: true });
+}
+
 async function waitForLibrary(page: Page) {
   await expect(page.getByRole("heading", { name: "Library", exact: true })).toBeVisible();
   await expect(page.getByText(/^\d+ decks? · \d+ cards?$/)).toBeVisible();
 }
 
+/**
+ * The empty state can be on screen from cache while a just-created deck is refetched, and
+ * Library's summary line reads the same shape warm or stale, so a helper that branched on the
+ * empty state raced the first render. Capture is on every Library screen, empty or not, so the
+ * helper takes that one road; the empty state has its own check below.
+ */
 async function openNewDeck(page: Page) {
   await page.goto("/library");
   await waitForLibrary(page);
-  // The empty state may briefly be cached while a just-created deck is refetched. The header
-  // action exists in both states, so it is the stable way to start another deck.
-  await page.locator("header").getByRole("button", { name: "Add", exact: true }).click();
+  await addMenu(page).click();
   await page.getByRole("menuitem", { name: "New deck", exact: true }).click();
 
   const dialog = sheet(page, "New deck");
@@ -49,6 +62,12 @@ test.describe("deck and card creation", () => {
     await signInAsTestLearner(page, testInfo, "deck-validation");
     await page.goto("/library");
     await waitForLibrary(page);
+
+    // Nothing here yet, so the empty state is the way in.
+    await page.locator("main").getByRole("button", { name: "New deck", exact: true }).click();
+    await expect(sheet(page, "New deck")).toBeVisible();
+    await sheet(page, "New deck").getByRole("button", { name: "Cancel", exact: true }).click();
+    await expect(sheet(page, "New deck")).toBeHidden();
 
     await page.keyboard.press("n");
     const addCard = sheet(page, "Add a word or phrase");
@@ -211,8 +230,7 @@ test.describe("deck and card creation", () => {
         .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
         .toBe(true);
 
-      const addMenu = page.locator("header").getByRole("button", { name: "Add", exact: true });
-      await addMenu.click();
+      await addMenu(page).click();
       await page.getByRole("menuitem", { name: "New deck", exact: true }).click();
       const newDeck = sheet(page, "New deck");
       await expect(newDeck).toBeVisible();

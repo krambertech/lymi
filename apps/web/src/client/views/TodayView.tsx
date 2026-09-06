@@ -81,17 +81,23 @@ export function TodayView({
         title="Today"
         sub={today()}
         actions={
-          <div className="flex items-center gap-1.5 @3xl:hidden">
-            <StreakPill days={history} />
-            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-            <To
-              to="/you"
-              className="relative ml-0.5 inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
-            >
-              <Avatar name={name} size={34} />
-              <span className="sr-only">You</span>
-            </To>
-          </div>
+          <>
+            {/* The pill until the plate beside the hero takes the streak over. */}
+            <span className="@3xl:hidden">
+              <StreakPill days={history} />
+            </span>
+            {/* Capture and the learner, until the rail carries both. */}
+            <span className="flex items-center gap-1.5 @3xl/shell:hidden">
+              <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+              <To
+                to="/you"
+                className="relative inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
+              >
+                <Avatar name={name} size={40} />
+                <span className="sr-only">You</span>
+              </To>
+            </span>
+          </>
         }
       />
 

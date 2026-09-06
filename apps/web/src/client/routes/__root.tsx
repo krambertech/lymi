@@ -114,7 +114,7 @@ function Shell() {
             name={me.data?.name}
             onAdd={() => add.openCard()}
             onCreateDeck={add.openDeck}
-            className="hidden @3xl:flex"
+            className="hidden @3xl/shell:flex"
           />
         }
         nav={onReview ? undefined : <PillNav />}

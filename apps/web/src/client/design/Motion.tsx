@@ -17,6 +17,11 @@ const TIMINGS: [string, string, string][] = [
     "6 px rise + fade, 200 ms ease-out",
     "Each new card in review. Keyed, so grading restarts it.",
   ],
+  [
+    "Menu opens",
+    "scale 0.94 to 1 + fade, 140 ms ease-out",
+    "From the corner nearest the button that opened it. Never a slide.",
+  ],
   ["Reveal", "fade + 4 px, 200 ms ease-out", "The meaning unfolding under the rule."],
   [
     "Flare",

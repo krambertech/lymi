@@ -133,7 +133,7 @@ export function MenuList({
       role="menu"
       onKeyDown={onKey}
       className={clsx(
-        "enter-card edge-2 absolute top-[calc(100%+6px)] z-(--z-dropdown) min-w-48 rounded-md bg-plate p-1",
+        "enter-menu edge-2 absolute top-[calc(100%+6px)] z-(--z-dropdown) min-w-48 rounded-md bg-plate p-1",
         align === "end" ? "right-0 origin-top-right" : "left-0 origin-top-left",
         className,
       )}

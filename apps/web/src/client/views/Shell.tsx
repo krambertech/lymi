@@ -3,6 +3,7 @@ import {
   Activity,
   BookMarked,
   ChartNoAxesColumn,
+  ChevronRight,
   type LucideIcon,
   Search,
   Sun,
@@ -10,8 +11,8 @@ import {
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
 import { Avatar } from "../components/Avatar";
-import { Kbd } from "../components/Kbd";
-import { Wordmark } from "../components/Logo";
+import { IconButton } from "../components/Button";
+import { AppTile, Wordmark } from "../components/Logo";
 import { NavLink, type StaticNav } from "../components/NavLink";
 
 export type { StaticNav } from "../components/NavLink";
@@ -53,8 +54,9 @@ interface SidebarProps {
 }
 
 /**
- * Desktop navigation. Sits on the canvas; only the active item gets a plate. The wordmark
- * and the add menu share the top row, and the learner sits at the bottom where Settings lives.
+ * Desktop navigation. It sits on the rail, one surface off the room, so chrome and content
+ * never read as one wash. The lockup tops it on the same line as the page title beside it,
+ * capture and search share that line, and the learner closes it under a rule.
  */
 export function Sidebar({
   decks,
@@ -67,23 +69,26 @@ export function Sidebar({
   className,
 }: SidebarProps) {
   const item =
-    "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-plate-2 hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
+    "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
   return (
-    <aside className={clsx("flex w-60 shrink-0 flex-col gap-0.5 px-3 pb-4 pt-safe", className)}>
-      <div className="mb-3 flex h-14 items-center justify-between gap-2 px-2">
-        <Wordmark size={17} className="text-text" title="Lymi" />
-        <AddMenu onAddCard={onAdd} onCreateDeck={onCreateDeck} size="sm" align="start" />
+    <aside
+      className={clsx(
+        "flex w-60 shrink-0 flex-col gap-0.5 border-r border-edge bg-rail px-3 pb-4 pt-safe",
+        className,
+      )}
+    >
+      <div className="mb-6 mt-8 flex h-10 items-center gap-1 px-2.5">
+        <span className="mr-auto flex items-center gap-2.5">
+          <AppTile size={28} title="Lymi" />
+          <Wordmark size={18} className="text-text" />
+        </span>
+        {onSearch && (
+          <IconButton label="Search" size="sm" onClick={onSearch}>
+            <Search />
+          </IconButton>
+        )}
+        <AddMenu onAddCard={onAdd} onCreateDeck={onCreateDeck} size="sm" align="end" />
       </div>
-
-      <button
-        type="button"
-        onClick={onSearch}
-        className="edge mb-3 flex h-9 items-center gap-2 rounded-md bg-plate px-3 text-base text-muted transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2"
-      >
-        <Search className="size-4" aria-hidden="true" />
-        <span className="flex-1 text-left">Search</span>
-        <Kbd>/</Kbd>
-      </button>
 
       {NAV.map((n) => (
         <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
@@ -98,7 +103,9 @@ export function Sidebar({
 
       {decks && decks.length > 0 && (
         <>
-          <div className="mx-2.5 mb-1 mt-5 text-xs font-medium text-muted">Decks</div>
+          <div className="mx-2.5 mb-1.5 mt-7 text-xs font-medium uppercase tracking-[0.06em] text-muted">
+            Decks
+          </div>
           {decks.map((d) => (
             <NavLink
               key={d.id}
@@ -116,12 +123,24 @@ export function Sidebar({
         </>
       )}
 
-      <div className="flex-1" />
+      <div className="min-h-6 flex-1" />
 
-      <NavLink to="/you" className={clsx(item, "h-12 px-2")} st={st}>
-        <Avatar name={name} size={28} />
-        <span className="flex-1 truncate text-text">{name ?? "You"}</span>
-      </NavLink>
+      {/* The rule is its own line across the rail, not a border on the row: a top border on a
+          rounded row curves at the corners and reads as a broken card rather than a divider. */}
+      <div className="-mx-3 mt-2 border-t border-edge px-3 pt-2">
+        <NavLink
+          to="/you"
+          className="group flex h-14 items-center gap-3 rounded-md px-2 transition-[background-color,box-shadow] duration-150 hoverable:hover:bg-hover [&.active]:bg-plate [&.active]:edge"
+          st={st}
+        >
+          <Avatar name={name} size={34} />
+          <span className="grid min-w-0 flex-1 gap-0.5 text-left">
+            <span className="truncate text-base text-text">{name ?? "You"}</span>
+            <span className="truncate text-xs text-muted">Settings and account</span>
+          </span>
+          <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
+        </NavLink>
+      </div>
     </aside>
   );
 }
@@ -141,13 +160,11 @@ export function AppShell({
   children: ReactNode;
 }) {
   return (
-    <div className="@container flex min-h-dvh w-full justify-center">
-      <div className="flex w-full max-w-(--shell) flex-1">
-        {sidebar}
-        <main className="@container flex min-w-0 flex-1 flex-col pt-safe">{children}</main>
-      </div>
+    <div className="@container/shell flex min-h-dvh w-full bg-canvas">
+      {sidebar}
+      <main className="@container flex min-w-0 flex-1 flex-col pt-safe">{children}</main>
       {nav && (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-(--z-sticky) flex justify-center pb-safe @3xl:hidden">
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-(--z-sticky) flex justify-center pb-safe @3xl/shell:hidden">
           <div className="mb-6">{nav}</div>
         </div>
       )}
@@ -169,8 +186,8 @@ export function Page({
   return (
     <div
       className={clsx(
-        "mx-auto flex w-full flex-1 flex-col px-5 pb-safe-nav @3xl:px-8 @3xl:pb-10",
-        width === "md" && "max-w-2xl",
+        "mx-auto flex w-full flex-1 flex-col px-5 pt-5 pb-safe-nav @3xl:px-8 @3xl:pb-12 @3xl:pt-8",
+        width === "md" ? "max-w-2xl" : "max-w-(--column)",
         className,
       )}
     >
@@ -192,20 +209,19 @@ export function PageHeader({
   eyebrow?: ReactNode | undefined;
   /** One line under the title: the date, a count. */
   sub?: ReactNode | undefined;
+  /** The screen's own controls. Phone-only on screens the rail already serves. */
   actions?: ReactNode | undefined;
   children?: ReactNode | undefined;
   className?: string | undefined;
 }) {
   return (
-    <header className={clsx("grid gap-1 pb-4 pt-2 @3xl:pt-0", className)}>
+    <header className={clsx("pb-5 @3xl:pb-7", className)}>
       {eyebrow}
-      <div className="flex min-h-14 flex-wrap items-center justify-between gap-3">
-        <div className="grid gap-0.5">
-          <h1 className="text-2xl font-medium leading-none text-text">{title}</h1>
-          {sub && <p className="text-sm text-muted tabular-nums">{sub}</p>}
-        </div>
+      <div className="flex min-h-10 flex-wrap items-center justify-between gap-x-3 gap-y-2">
+        <h1 className="min-w-0 text-2xl font-medium leading-[1.2] text-text">{title}</h1>
         {actions && <div className="flex items-center gap-1.5">{actions}</div>}
       </div>
+      {sub && <p className="mt-1.5 text-sm text-muted tabular-nums">{sub}</p>}
       {children}
     </header>
   );

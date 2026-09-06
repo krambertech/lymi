@@ -1,13 +1,13 @@
 import type { Bindings } from "./env";
-import { canonicalOrigins, type Surface } from "./origin-routing";
+import { canonicalOrigins } from "./origin-routing";
 
-/** Attach the runtime origin contract to the shared HTML shell. */
-export function configureHtml(response: Response, env: Bindings, surface: Surface): Response {
+/** Attach the product origin contract and indexing boundary to the application shell. */
+export function configureHtml(response: Response, env: Bindings): Response {
   const origins = canonicalOrigins(env);
-  let rewriter = new HTMLRewriter()
+  const rewriter = new HTMLRewriter()
     .on("html", {
       element(element) {
-        element.setAttribute("data-lymi-surface", surface);
+        element.setAttribute("data-lymi-surface", "product");
       },
     })
     .on("head", {
@@ -15,37 +15,16 @@ export function configureHtml(response: Response, env: Bindings, surface: Surfac
         element.append(
           `<meta name="lymi-public-site-origin" content="${origins.publicSite}">` +
             `<meta name="lymi-product-origin" content="${origins.product}">` +
-            (surface === "product" ? '<meta name="robots" content="noindex, nofollow">' : ""),
+            '<meta name="robots" content="noindex, nofollow">',
           { html: true },
         );
       },
     });
-
-  if (surface === "public") {
-    for (const selector of [
-      'link[rel="manifest"]',
-      'meta[name="apple-mobile-web-app-capable"]',
-      'meta[name="apple-mobile-web-app-status-bar-style"]',
-      'meta[name="apple-mobile-web-app-title"]',
-      'meta[name="mobile-web-app-capable"]',
-    ]) {
-      rewriter = rewriter.on(selector, {
-        element(element) {
-          element.remove();
-        },
-      });
-    }
-  }
-
   return rewriter.transform(response);
 }
 
-export async function fetchConfiguredAsset(
-  request: Request,
-  env: Bindings,
-  surface: Surface,
-): Promise<Response> {
+export async function fetchConfiguredAsset(request: Request, env: Bindings): Promise<Response> {
   const response = await env.ASSETS.fetch(request);
   if (!response.headers.get("content-type")?.startsWith("text/html")) return response;
-  return configureHtml(response, env, surface);
+  return configureHtml(response, env);
 }

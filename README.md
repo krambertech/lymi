@@ -11,7 +11,7 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 - [docs/plans](docs/plans): order of work for passes that are decided but not built
 - [docs/proposals](docs/proposals/README.md): future product directions under consideration, not committed plans
 - [CONTEXT.md](CONTEXT.md): the vocabulary, one name per thing
-- `/docs` in the running app: the API documentation, guides and MCP setup, in `apps/web/src/client/docs`
+- `/docs` on the public development server: the API documentation, guides and MCP setup, in `apps/site/src/components/docs`
 
 ## Run it
 
@@ -22,15 +22,18 @@ pnpm install
 cp apps/web/.dev.vars.example apps/web/.dev.vars   # then fill in the Google OAuth values
 # Add a VAPID key pair to enable review reminders; see apps/web/.dev.vars.example.
 pnpm db:migrate                                     # applies migrations to the local D1
-pnpm dev                                            # http://localhost:5173
+pnpm dev                                            # site http://localhost:4321, product http://localhost:5173
 ```
 
-`pnpm dev` runs the Vite client and the Cloudflare Worker together through the Cloudflare Vite plugin, so `/api/*` hits the real Worker code locally. Production uses `https://lymi.app` for the public website and docs, and `https://my.lymi.app` for the product, auth, API, MCP and PWA; local development serves both surfaces from one loopback origin.
+`pnpm dev` runs both deployables: Astro serves the public website, while the Cloudflare Vite plugin runs the React product and its Hono Worker so product `/api/*` requests hit real Worker code locally. Production uses `https://lymi.app` for the public website and docs, and `https://my.lymi.app` for the product, auth, API, MCP and PWA.
 
 ## Layout
 
 ```
-apps/web          The app: Vite React PWA client + Hono Worker in one deployable
+apps/site         Public deployable: Astro pages + beta/health Worker
+  src/pages       Landing, Join, documentation routes, sitemap and robots
+  src/worker.ts   Website beta signup, health and static assets
+apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/client      Routes, views, components, styles, and the /design page
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
@@ -50,10 +53,15 @@ pnpm test         # Vitest
 pnpm test:e2e     # Playwright against isolated local Cloudflare bindings
 pnpm test:e2e:chromium # faster Chromium-only browser gate
 pnpm test:e2e:ui  # Playwright's interactive runner
-pnpm deploy:check # production build plus a local Wrangler deployment dry run
-pnpm deploy:health # identify the active production version and check its health
+pnpm deploy:check # build and validate both deployment packages
+pnpm deploy:check:site # build and validate only the website package
+pnpm deploy:check:product # build and validate only the product package
+pnpm deploy:health # identify and check both active production versions
+pnpm deploy:health:site # check only the public Worker
+pnpm deploy:health:product # check only the product Worker
 pnpm db:generate  # new migration from schema changes
-pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy command)
+pnpm run deploy:site # deploy the public Worker; user-owned production action
+pnpm run deploy:product # deploy the product Worker; user-owned production action
 ```
 
 ## First deploy checklist
@@ -65,9 +73,9 @@ pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy com
 5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
 6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
 7. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
-8. Confirm the `lymi.app` and `my.lymi.app` custom domains are ready in Cloudflare
+8. Configure separate Workers Builds projects for `apps/site` and `apps/web`, and confirm the `lymi.app` and `my.lymi.app` custom domains are ready in Cloudflare
 9. `pnpm db:migrate:prod`
-10. `pnpm run deploy`
+10. `pnpm run deploy:product` and `pnpm run deploy:site`
 11. `pnpm deploy:health`, then verify the reported tag is the intended commit
 
 See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.

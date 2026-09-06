@@ -1,38 +1,39 @@
-# Lymi website and app
+# Lymi website and product
 
-This document describes the permanent origin boundary implemented by the application and the remaining production activation work. The repository is configured for both origins, but the boundary is not production-verified until the OAuth configuration and both Cloudflare custom domains are active and the deployed version passes the smoke checks below.
-
-One `lymi` Cloudflare Worker serves two allowlisted origins. `https://lymi.app` owns the public website and documentation. `https://my.lymi.app` owns the product, authentication, API, MCP server, OAuth discovery, PWA and review reminders. Cloudflare custom domains manage the DNS records and HTTPS certificates: https://developers.cloudflare.com/workers/configuration/routing/custom-domains/.
+Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-site` serves the public website and documentation at `https://lymi.app`. The existing `lymi` Worker serves the product, authentication and backend at `https://my.lymi.app`. The repository configuration is ready for this split, but production remains unverified until OAuth, both Workers Builds pipelines, the custom-domain handoff and signed-in smoke checks are confirmed.
 
 ## Origin contract
 
-| Origin and path | Purpose |
-| --- | --- |
-| `lymi.app/` | Public landing page, server-rendered by the Worker and hydrated by React. It remains visible whether or not a product session exists. |
-| `lymi.app/join` | Public private-beta information. |
-| `lymi.app/docs/*` | Public documentation, MCP setup and API reference. |
-| `lymi.app/api/beta` | Website-owned beta signup action. |
-| `my.lymi.app/` | Session-aware product entry. A valid session opens Today; otherwise it opens sign-in. |
-| `my.lymi.app/app`, `/today`, `/library`, `/review`, `/you`, `/activity`, `/archived`, `/insights` | Product screens. Private data requires authentication. |
-| `my.lymi.app/login`, `/consent` | Sign-in and integration authorization. |
-| `my.lymi.app/api/*` | Product and integration API, including Better Auth and OpenAPI. |
-| `my.lymi.app/mcp`, `/.well-known/*` | MCP endpoint and OAuth discovery. |
+| Origin and path | Owner | Purpose |
+| --- | --- | --- |
+| `lymi.app/` | `apps/site` | Prerendered public landing page with interactive React islands. It remains visible whether or not a product session exists. |
+| `lymi.app/join` | `apps/site` | Public private-beta information and invitation request. |
+| `lymi.app/docs/*` | `apps/site` | Public documentation, MCP setup and API reference. |
+| `lymi.app/api/beta` | `apps/site` Worker | Website-owned beta signup action. |
+| `lymi.app/api/health` | `apps/site` Worker | Public deployment identity and active version. |
+| `my.lymi.app/` | `apps/web` | Session-aware product entry. A valid session opens Today; otherwise it opens sign-in. |
+| `my.lymi.app/app`, `/today`, `/library`, `/review`, `/you`, `/activity`, `/archived`, `/insights` | `apps/web` | Product screens. Private data requires authentication. |
+| `my.lymi.app/login`, `/consent` | `apps/web` | Sign-in and integration authorization. |
+| `my.lymi.app/api/*` | `apps/web` Worker | Product and integration API, Better Auth, OpenAPI and product health. |
+| `my.lymi.app/mcp`, `/.well-known/*` | `apps/web` Worker | MCP endpoint and OAuth discovery. |
 
-Browser product paths requested on `lymi.app` permanently redirect to the matching path and query on `my.lymi.app`. Documentation and Join requested on `my.lymi.app` permanently redirect to `lymi.app`. Product protocol routes on the public origin return 404 instead of forming a compatibility API. Requests for an unconfigured hostname return 421 before Hono or the static asset fallback runs.
+The product Worker permanently redirects `/docs`, `/docs/*` and `/join` to the public origin while preserving path and query. Every other unknown browser path returns the product 404 or authenticated SPA behavior; it cannot fall through to a public landing page. The public Worker serves its prerendered routes and returns 404 for product API paths. There is no `api.lymi.app`.
 
-Having an account is different from being signed in. An existing learner with an expired product session reaches sign-in and returns to the original safe product path after authenticating. Return paths must be internal product routes; protocol-relative, external, malformed, hashed and authentication routes fall back to Today. Joining the beta list does not create an account, and access remains limited to the configured email allowlist.
+Having an account is different from being signed in. An existing learner with an expired product session reaches sign-in and returns to the original safe product path after authenticating. Return paths must be internal product routes; protocol-relative, external, malformed, hashed and authentication routes fall back to Today. Joining the beta list does not create an account, and access remains limited to the product's configured email allowlist.
 
-The landing page has one stable meaning whether or not someone is signed in. Its Open app link always goes to the product root and lets that origin resolve session state. The product's You screen provides the route back to the public website.
+The public landing page's Open app link always goes to the product root and lets that origin resolve session state. The product's You screen links back to the public website. Authentication cookies remain host-only on `my.lymi.app` and are never sent to the website.
 
-## PWA boundary
+## Deployment and PWA boundary
 
-Only product HTML advertises the PWA. The manifest, service worker, install flow, offline shell, notification icons and reminder destinations belong to `my.lymi.app`. Public HTML strips PWA metadata and does not register a service worker.
+`apps/site` uses Astro static output and a small Worker in front of the asset binding. It has no SPA fallback, service worker, PWA manifest, authentication, product API, MCP, R2, KV or cron. Its only data binding is D1 for the existing `beta_signups` table. Static pages own canonical metadata, sitemap and public indexing.
 
-The public `/sw.js` is a temporary retirement worker. It activates immediately, clears old same-origin caches, unregisters itself and refreshes controlled windows. The public client also unregisters and clears old public-origin state as a second cleanup path. Other public PWA files return 404.
+`apps/web` remains the Vite React PWA and Hono Worker. It owns the product SPA fallback, Workbox service worker, manifest, offline cache, review outbox, notification icons and reminder destinations. Product HTML always sends `noindex, nofollow`, and product `robots.txt` disallows all crawling.
+
+CI's artifact boundary check fails if the public build contains service-worker or manifest markers, or if the product build contains known landing, documentation or public-signup markers. That structural check complements browser coverage of the route and indexing contracts.
 
 ## Documentation structure
 
-The documentation lives at `lymi.app/docs` outside the product shell, so it reads signed out and stays readable while signed in. Pages are declared once in `apps/web/src/client/docs/nav.ts`, which the sidebar, next-page links and search all use.
+Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search.
 
 | Path | Purpose |
 | --- | --- |
@@ -46,24 +47,34 @@ The documentation lives at `lymi.app/docs` outside the product shell, so it read
 
 The product OpenAPI route permits CORS only for the exact public website origin and does not permit credentials. `my.lymi.app/api/docs` redirects to the public API reference. Still to write: `/docs/privacy`, once the policies and capabilities are defined.
 
-## Configuration
+## Commands and configuration
 
-- `apps/web/wrangler.jsonc`: both custom domains, `PUBLIC_SITE_URL=https://lymi.app`, `PRODUCT_URL=https://my.lymi.app` and Worker-first hostname dispatch.
-- `apps/web/src/server/origin-routing.ts`: the allowlisted hostname and path matrix, redirects and old service-worker retirement response.
-- `apps/web/src/server/landing.tsx`: request-time landing markup, canonical public URL and social metadata.
-- `apps/web/src/server/auth.ts`: Better Auth canonical product URL and product-only trusted origin.
-- `apps/web/vite.config.ts`: product PWA start URL and navigation fallback boundary.
+- `pnpm dev` runs the public Astro server and product Vite/Worker server together at separate loopback origins.
+- `pnpm deploy:check:site` builds and validates only the public deployment package.
+- `pnpm deploy:check:product` builds and validates only the product deployment package.
+- `pnpm deploy:health:site` checks `lymi.app` for the `lymi-site` health identity.
+- `pnpm deploy:health:product` checks `my.lymi.app` for the `lymi-product` health identity.
+- `apps/site/wrangler.jsonc` owns the `lymi-site` Worker, apex custom domain, static assets, beta D1 binding and preview URLs.
+- `apps/web/wrangler.jsonc` owns the existing `lymi` Worker, product custom domain, backend bindings, secrets, cron and disabled preview URLs.
+- `apps/web/src/server/origin-routing.ts` enforces product-only paths and public-route redirects before the product SPA fallback.
 
-Local development deliberately uses one loopback origin for both surfaces. Public paths render as public pages and all other paths render the product, so the production hostname matrix is covered by pure Worker tests while the full interface remains convenient at `http://localhost:5173`.
+Browser E2E uses `http://localhost:4174` for the website, `http://localhost:4173` for interactive product journeys and `http://localhost:4175` for the production-built product package. It builds both apps, starts each Worker with isolated local state, and exercises the route boundary, product journeys, installed service worker and offline shell in one test run.
 
-## Production activation
+## Reversible production cutover
 
-1. In Google Cloud, add `https://my.lymi.app` as an authorized JavaScript origin and `https://my.lymi.app/api/auth/callback/google` as an authorized redirect URI before routing learners to the product origin.
-2. Confirm both `lymi.app` and `my.lymi.app` are active custom domains for the `lymi` Worker. The repository route configuration creates the records on deployment, but production activation must confirm certificate and route status in Cloudflare.
-3. Run `pnpm verify`, `pnpm deploy:check` and the full `pnpm test:e2e` gate.
-4. Apply any pending production migrations, then run the user-owned `pnpm run deploy` command.
-5. Run `pnpm deploy:health` and compare its reported Worker tag with the intended commit. A green Workers Build alone does not prove that version is active.
-6. Smoke-check the public landing page and docs, the product root signed in and signed out, a protected deep link through Google sign-in, OpenAPI loading in the public docs, MCP discovery and connection, PWA installation, offline navigation and one review-reminder delivery.
-7. Confirm the apex retirement worker has removed the previous service worker and caches from an existing browser profile. Existing sessions, push subscriptions and MCP connections may need to be established again on the product origin.
+1. In Google Cloud, confirm `https://my.lymi.app` as an authorized JavaScript origin and `https://my.lymi.app/api/auth/callback/google` as an authorized redirect URI.
+2. Run `pnpm verify`, `pnpm deploy:check` and `pnpm test:e2e` on the intended commit.
+3. Configure a product Workers Builds project rooted at the repository, watching `apps/web/**`, `packages/core/**` and root workspace files. Build with `pnpm verify`; deploy with `pnpm --filter @lymi/web exec wrangler deploy -c dist/lymi/wrangler.json --tag "$WORKERS_CI_COMMIT_SHA"`.
+4. Configure a public-site Workers Builds project with the same root, watching `apps/site/**`, `packages/core/**` and root workspace files. Build with `pnpm verify`; deploy with `pnpm --filter @lymi/site exec wrangler deploy --tag "$WORKERS_CI_COMMIT_SHA"`.
+5. Upload a public-site preview version and verify landing, Join, beta signup, docs, metadata, sitemap, 404 behavior and absence of any service-worker registration before changing the apex domain.
+6. Deploy and verify the product Worker on `my.lymi.app`, including signed-in and signed-out roots, a safe deep link through Google sign-in, API keys, MCP OAuth, PWA installation, offline startup and one reminder delivery.
+7. Move only the `lymi.app` custom domain from the product Worker to `lymi-site`, then run both health commands and compare each reported tag with the intended commit.
+8. If the apex checks fail, restore `lymi.app` to the existing product Worker. Do not remove the old route ownership until the public Worker is verified.
 
-Moving every product screen under `/app/*` or extracting the public website into another deployable can be considered later. Neither changes the permanent public URLs established here.
+The deploy and production migration commands remain user-owned. A green build or preview is not proof that the corresponding custom domain is serving that version.
+
+## One-time browser recovery
+
+If an existing `my.lymi.app` tab or installed app still renders the old public shell, clear the stored site data for `my.lymi.app`, including its service worker and caches, then close and reopen the tab or app. Unregistering a worker does not stop it from controlling its current open document, so reopening is required. Sign in again and re-enable reminders if the browser discarded the push subscription.
+
+This sequence is explicitly covered by browser tests. There is no permanent recovery endpoint because Lymi currently has one learner and the stale state is a one-time deployment migration.

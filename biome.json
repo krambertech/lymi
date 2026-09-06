@@ -9,6 +9,8 @@
     "includes": [
       "**",
       "!**/dist",
+      "!**/.astro",
+      "!**/*.astro",
       "!**/node_modules",
       "!**/.wrangler",
       "!**/routeTree.gen.ts",

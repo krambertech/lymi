@@ -9,9 +9,8 @@ import type { AppEnv } from "./index";
  * packages/core, and served at /api/openapi.json. It is public: the document describes the
  * API, it does not expose data.
  *
- * The reference people read is /docs/api, in the app, which renders this document with the
- * Lymi design system. /api/docs was the generated Scalar page and now redirects there, so
- * links already sent still land.
+ * The reference people read is https://lymi.app/docs/api, rendered by the public-site app.
+ * /api/docs redirects there so links already sent still land.
  */
 export function mountOpenApi(app: Hono<AppEnv>) {
   app.use("/api/openapi.json", async (c, next) => {

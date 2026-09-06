@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { LandingView } from "../landing/LandingView";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: LandingView,
+  beforeLoad: () => {
+    throw redirect({ to: "/today" });
+  },
 });

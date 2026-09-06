@@ -10,8 +10,8 @@ pnpm test             # unit tests and the CI impact rules
 pnpm test:e2e         # Chromium desktop and an iPhone-sized WebKit browser
 pnpm test:e2e:chromium # Chromium desktop only
 pnpm test:e2e:ui      # Playwright's interactive UI
-pnpm deploy:check     # production build and local deployment-package dry run
-pnpm deploy:health    # check production health and print its deployed version
+pnpm deploy:check     # production builds and both deployment-package dry runs
+pnpm deploy:health    # check both production origins and print their deployed versions
 pnpm exec playwright show-report
 ```
 
@@ -21,7 +21,7 @@ Install the configured browsers once on a new machine:
 pnpm exec playwright install chromium webkit
 ```
 
-`scripts/e2e-server.mjs` clears only `apps/web/.wrangler/e2e`, applies every D1 migration there, and starts Vite with a short-lived `.dev.vars.lymi-e2e` file containing local-only credentials. It never overwrites a pre-existing file, removes the file it created on exit, and does not touch the normal `.wrangler/state`, a developer's `.dev.vars`, or any remote Cloudflare binding.
+`scripts/e2e-server.mjs` clears only its three isolated Wrangler state directories, applies every D1 migration, builds both applications, starts the site Worker on port 4174, starts the production-built product package on port 4175 for PWA installation and offline-shell coverage, and starts the product through Vite on port 4173 for the interactive journeys. Its short-lived variable files contain local-only credentials. It never overwrites a pre-existing developer file, removes the files it creates on exit, and does not touch normal Wrangler state, a developer's `.dev.vars`, or any remote Cloudflare binding.
 
 ## CI policy
 
@@ -42,13 +42,13 @@ Failed browser runs retain screenshots, video from the retry, a Playwright trace
 
 ## Delivery checks
 
-`pnpm deploy:check` builds the production application and asks Wrangler to compile and validate the generated deployment package without authenticating or uploading anything. CI runs the already-built package check for production-affecting pull requests, every push to `main`, and manual runs.
+`pnpm deploy:check` builds both production applications, verifies the artifact boundary and asks Wrangler to compile and validate each generated deployment package without authenticating or uploading anything. CI runs both already-built package checks for production-affecting pull requests, every push to `main`, and manual runs.
 
-Cloudflare Workers Builds remains the deployment owner. Keep its production branch on `main`, disable non-production branch builds while preview URLs cannot support Lymi's canonical-origin authentication, and configure build watch paths so documentation-only commits do not consume Cloudflare build minutes. The production trigger should include `apps/web/*`, `packages/core/*`, `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `.nvmrc`, and `tsconfig.base.json`.
+Separate Cloudflare Workers Builds projects own delivery for `apps/site` and `apps/web`. Keep both production branches on `main`; public-site preview versions are allowed, while non-production product branch builds stay disabled because preview URLs cannot support Lymi's canonical-origin authentication. Scope each project's watch paths to its app, `packages/core/*` and root workspace files so a site-only change does not deploy the product and a product-only change does not deploy the site.
 
-Use `pnpm verify` as the Workers Builds build command. Use `pnpm --filter @lymi/web exec wrangler deploy -c dist/lymi/wrangler.json --tag "$WORKERS_CI_COMMIT_SHA"` as its deploy command. This duplicates the roughly one-minute base gate on production deployments, but makes the independent Cloudflare pipeline fail closed instead of deploying while GitHub CI is red. Path filtering avoids paying that cost for non-production changes.
+Use `pnpm verify` as each Workers Builds build command. The product deploy command is `pnpm --filter @lymi/web exec wrangler deploy -c dist/lymi/wrangler.json --tag "$WORKERS_CI_COMMIT_SHA"`; the site deploy command is `pnpm --filter @lymi/site exec wrangler deploy --tag "$WORKERS_CI_COMMIT_SHA"`. This duplicates the base gate on production deployments, but makes each independent Cloudflare pipeline fail closed instead of deploying while GitHub CI is red.
 
-The Worker exposes its Cloudflare version ID, deployment timestamp, and optional commit tag from `/api/health`. After Workers Builds activates a version, `pnpm deploy:health` provides a single read-only check that the canonical domain is healthy and identifies the version serving traffic. A successful build page without this active-version check is not deployment evidence.
+Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. A successful build page without these active-version checks is not deployment evidence.
 
 ## Canonical coverage
 
@@ -63,3 +63,5 @@ The Worker exposes its Cloudflare version ID, deployment timestamp, and optional
 Keep this path real. Use accessible roles and labels, do not mock Lymi's own APIs, do not use fixed sleeps, and do not add test-only application routes. Prefer public APIs for setup that is not the behavior under test. Add focused journeys only when they protect another critical user outcome that the canonical path cannot express clearly.
 
 `e2e/deck-creation.spec.ts` owns deck and card creation: validation, routing and persistence, deck targeting, duplicate handling, optional meanings, archived-deck protection, and responsive controls from 320 px phone layouts through wide desktop. Each scenario, browser project, and retry has its own allowlisted learner account so one test cannot inherit another test's data.
+
+`e2e/origin-boundary.spec.ts` proves that each local Worker exposes only its own routes, metadata and beta boundary, and documents the one-time stale-site-data recovery. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.

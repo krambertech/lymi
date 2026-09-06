@@ -5,7 +5,7 @@ import { validateHealth } from "./check-deployment.mjs";
 test("accepts a healthy, identifiable deployment", () => {
   const payload = {
     ok: true,
-    name: "lymi",
+    name: "lymi-product",
     time: "2026-09-06T12:00:00.000Z",
     version: {
       id: "0199f00d-0000-7000-8000-000000000000",
@@ -19,11 +19,20 @@ test("accepts a healthy, identifiable deployment", () => {
 
 test("rejects an old or unrelated health response", () => {
   assert.throws(
-    () => validateHealth({ ok: true, name: "lymi" }),
+    () => validateHealth({ ok: true, name: "lymi-product" }),
     /did not report deployment version metadata/,
   );
   assert.throws(
     () => validateHealth({ ok: true, name: "another-app" }),
     /did not identify a healthy Lymi deployment/,
   );
+});
+
+test("accepts the independently identifiable public-site deployment", () => {
+  const payload = {
+    ok: true,
+    name: "lymi-site",
+    version: { id: "site-version", deployedAt: "2026-09-06T11:59:00.000Z" },
+  };
+  assert.equal(validateHealth(payload, "lymi-site"), payload);
 });

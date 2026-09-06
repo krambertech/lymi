@@ -10,7 +10,6 @@ import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
 import { DeckSettingsView } from "../views/DeckSettingsView";
-import { JoinView } from "../views/JoinView";
 import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
 import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/ReviewView";
@@ -400,17 +399,6 @@ export function Screens() {
               blocked
               error="This Google account has not been invited. Request an invitation, or try another account."
             />
-          </PhoneShot>
-        </div>
-      </Sub>
-
-      <Sub
-        title="Invitation"
-        note="Requesting an invitation is a separate sign-up-like page, not another state inside login. The email field gets the full width of the form and the copy makes clear that no account exists yet."
-      >
-        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
-          <PhoneShot caption="Request an invitation" initial="light" path="/join" bare>
-            <JoinView />
           </PhoneShot>
         </div>
       </Sub>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="11 12 98 98">
+  <style>
+    .m{fill:#2f2823;stroke:#2f2823}.g{fill:#f7e4c8}
+    @media (prefers-color-scheme: dark){.m{fill:#f3f0eb;stroke:#f3f0eb}.g{fill:#46351d}}
+  </style>
+  <path class="m" d="M40.5 48 A19.5 30 0 0 1 79.5 48" fill="none" stroke-width="5.5" stroke-linecap="round"/>
+  <rect class="g" x="38.5" y="49" width="43" height="46" rx="3"/>
+  <path d="M60 58 C75.36 72.3 75.84 76.56 71.4 88.2 A12 12 0 0 1 48.6 88.2 C44.16 76.56 44.64 72.3 60 58 Z" fill="#f5ad48"/>
+  <path d="M60 70.2 C66.86 78.48 67.13 81.89 65.02 86.38 A5.28 5.28 0 0 1 54.98 86.38 C52.87 81.89 53.14 78.48 60 70.2 Z" fill="#fff4c2"/>
+  <rect class="m" x="34" y="50" width="5" height="46" rx="2.5" stroke="none"/>
+  <rect class="m" x="81" y="50" width="5" height="46" rx="2.5" stroke="none"/>
+  <path class="m" d="M50 36 H70 L87 51 H33 Z" stroke-width="3" stroke-linejoin="round"/>
+  <rect class="m" x="37.3" y="44.8" width="6.4" height="6.4" rx="3.2" stroke="none"/>
+  <rect class="m" x="76.3" y="44.8" width="6.4" height="6.4" rx="3.2" stroke="none"/>
+  <rect class="m" x="31" y="92" width="58" height="9" rx="4.5" stroke="none"/>
+  <rect class="m" x="38" y="101" width="44" height="5" rx="2.5" stroke="none"/>
+</svg>

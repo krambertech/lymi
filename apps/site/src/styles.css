@@ -1,0 +1,848 @@
+@import "tailwindcss";
+
+/*
+ * Lymi tokens. Two rooms: a dark one lit by the lantern, a light one at noon.
+ * The theme follows the OS unless the user picks one in Settings. Tokens sit on
+ * :root and on any [data-theme] element so a frame on the design page can be
+ * one theme inside a page of the other.
+ *
+ * Surfaces are flat. Depth comes from one hairline edge, never from gradients or
+ * drop shadows. The only glow in the interface belongs to the lantern.
+ */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --canvas: oklch(0.975 0.004 80);
+  /* The rail the navigation sits on. One step off the room, so chrome and content are
+     two surfaces rather than one wash: recessive by day, a step up at night. */
+  --rail: oklch(0.955 0.006 80);
+  --plate: oklch(1 0 0);
+  --plate-2: oklch(0.955 0.006 80);
+  --hover: oklch(0.94 0.007 80);
+  --edge: oklch(0.2 0.03 60 / 0.1);
+  --edge-2: oklch(0.2 0.03 60 / 0.2);
+
+  --text: oklch(0.2 0.016 55);
+  --text-2: oklch(0.38 0.016 55);
+  --muted: oklch(0.52 0.018 55);
+  --faint: oklch(0.7 0.014 60);
+
+  --amber: oklch(0.8 0.15 72);
+  --amber-hover: oklch(0.76 0.15 68);
+  --amber-ink: oklch(0.25 0.05 60);
+  --amber-text: oklch(0.5 0.14 50);
+  --amber-soft: oklch(0.8 0.15 72 / 0.16);
+  --flame-core: oklch(0.97 0.08 92);
+  /* The lantern's glass. Opaque, so the mark carries its own interior onto any
+     surface instead of painting a hole in the room behind it. */
+  --glass: oklch(0.932 0.044 76);
+  --glass-unlit: oklch(0.947 0.006 80);
+  --metal: var(--text);
+  --glow: oklch(0.8 0.15 72 / 0.45);
+
+  --good: oklch(0.47 0.12 160);
+  --good-soft: oklch(0.47 0.12 160 / 0.12);
+  --danger: oklch(0.52 0.19 28);
+  --danger-soft: oklch(0.52 0.19 28 / 0.1);
+
+  --ring: oklch(0.2 0.03 60 / 0.6);
+  --scrim: oklch(0.2 0.02 50 / 0.35);
+  --shimmer: oklch(1 0 0 / 0.4);
+  /* The toast is the text colour, so its action needs a colour that reads on that. */
+  --toast-action: oklch(0.82 0.15 74);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: oklch(0.165 0.014 48);
+  --rail: oklch(0.192 0.015 50);
+  --plate: oklch(0.215 0.016 52);
+  --plate-2: oklch(0.255 0.017 55);
+  --hover: oklch(0.28 0.018 55);
+  --edge: oklch(1 0 0 / 0.08);
+  --edge-2: oklch(1 0 0 / 0.15);
+
+  --text: oklch(0.95 0.01 85);
+  --text-2: oklch(0.8 0.018 75);
+  --muted: oklch(0.65 0.022 70);
+  --faint: oklch(0.48 0.02 65);
+
+  --amber: oklch(0.82 0.15 74);
+  --amber-hover: oklch(0.86 0.15 76);
+  --amber-ink: oklch(0.22 0.05 60);
+  --amber-text: oklch(0.84 0.13 78);
+  --amber-soft: oklch(0.82 0.15 74 / 0.14);
+  --flame-core: oklch(0.97 0.08 92);
+  --glass: oklch(0.315 0.048 62);
+  --glass-unlit: oklch(0.245 0.016 55);
+  --metal: var(--text);
+  --glow: oklch(0.8 0.15 74 / 0.5);
+
+  --good: oklch(0.76 0.1 155);
+  --good-soft: oklch(0.76 0.1 155 / 0.14);
+  --danger: oklch(0.74 0.15 28);
+  --danger-soft: oklch(0.74 0.15 28 / 0.14);
+
+  --ring: oklch(0.95 0.01 85 / 0.7);
+  --scrim: oklch(0 0 0 / 0.55);
+  --shimmer: oklch(1 0 0 / 0.06);
+  --toast-action: oklch(0.5 0.14 50);
+}
+
+@theme inline {
+  --font-sans: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /*
+   * The one exception to "one family", for two jobs: code on the docs site, and the strings
+   * in the app that are proofread character by character rather than read, such as an API key
+   * or a client's hostname. Onest draws 0/O and 1/l too alike for those. No web font: the
+   * reader's own mono is faster and familiar.
+   */
+  --font-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Mono", "Roboto Mono", Consolas,
+    monospace;
+
+  --color-canvas: var(--canvas);
+  --color-rail: var(--rail);
+  --color-plate: var(--plate);
+  --color-plate-2: var(--plate-2);
+  --color-hover: var(--hover);
+  --color-edge: var(--edge);
+  --color-edge-2: var(--edge-2);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-amber: var(--amber);
+  --color-amber-hover: var(--amber-hover);
+  --color-amber-ink: var(--amber-ink);
+  --color-amber-text: var(--amber-text);
+  --color-amber-soft: var(--amber-soft);
+  --color-flame-core: var(--flame-core);
+  --color-glass: var(--glass);
+  --color-glass-unlit: var(--glass-unlit);
+  --color-metal: var(--metal);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-grade-forgot: var(--danger);
+  --color-grade-hard: var(--muted);
+  --color-grade-good: var(--good);
+  --color-grade-easy: var(--amber-text);
+  --color-ring: var(--ring);
+  --color-scrim: var(--scrim);
+  --color-toast-action: var(--toast-action);
+
+  /* Type scale. Fixed, ratio about 1.17. */
+  --text-2xs: 11px;
+  --text-2xs--line-height: 1.3;
+  --text-xs: 12px;
+  --text-xs--line-height: 1.4;
+  --text-sm: 13px;
+  --text-sm--line-height: 1.45;
+  --text-base: 14.5px;
+  --text-base--line-height: 1.5;
+  --text-md: 15.5px;
+  --text-md--line-height: 1.5;
+  --text-lg: 17px;
+  --text-lg--line-height: 1.4;
+  --text-xl: 20px;
+  --text-xl--line-height: 1.3;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 1.2;
+  --text-3xl: 30px;
+  --text-3xl--line-height: 1.15;
+  --text-4xl: 38px;
+  --text-4xl--line-height: 1.05;
+  --text-5xl: 46px;
+  --text-5xl--line-height: 1;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 30px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* The rail runs the full height of the window on the left. The column of content beside it
+     never grows past this and centres in whatever is left, so a 2560 px screen gets the same
+     read as a 1440 px one instead of a stripe of content and a field of empty room. */
+  --column: 880px;
+
+  /* Stacking. Nothing outside this list. */
+  --z-dropdown: 100;
+  --z-sticky: 150;
+  --z-backdrop: 200;
+  --z-sheet: 210;
+  --z-toast: 300;
+  --z-tooltip: 400;
+}
+
+@layer base {
+  html {
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    min-height: 100dvh;
+    background: var(--canvas);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+  }
+  /* Theme switch: swap in one frame, no ragged cascade. */
+  html.theme-switching * {
+    /* biome-ignore lint/complexity/noImportantStyles: the swap has to beat every component transition */
+    transition: none !important;
+  }
+  #root {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--amber-soft);
+  }
+  kbd {
+    font-family: var(--font-sans);
+  }
+}
+
+/* One hairline edge. Used instead of border so it never changes layout. */
+@utility edge {
+  box-shadow: 0 0 0 1px var(--edge);
+}
+@utility edge-2 {
+  box-shadow: 0 0 0 1px var(--edge-2);
+}
+@utility edge-inset {
+  box-shadow: inset 0 0 0 1px var(--edge);
+}
+/* The lantern's glow. Only the lantern wears it, and inside the lantern only
+   the light does: metal does not glow, and a filter on the whole drawing halos
+   the frame and traces the glass. --glow-r is registered below so it can be
+   animated, which is how the halo breathes with the flame. */
+@utility glow {
+  & .lantern-light {
+    filter: drop-shadow(0 0 var(--glow-r, 14px) var(--glow));
+  }
+}
+@property --glow-r {
+  syntax: "<length>";
+  initial-value: 14px;
+  inherits: true;
+}
+@custom-variant hoverable (@media (hover: hover) and (pointer: fine));
+
+/* ---- Lantern ----------------------------------------------------------- */
+
+.flame {
+  /* Scale from the base of the flame itself, not the centre of the drawing. */
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: var(--flame-t, none);
+  animation: var(--flame-anim, none);
+  transition: transform 320ms var(--ease-out);
+}
+/* The bright centre beats slightly out of phase with the flame around it. A
+   flame whose every part moves together reads as a picture of a flame. */
+.flame-core {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: var(--core-anim, none);
+}
+.lantern-light {
+  transition: filter 500ms var(--ease-out);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lantern-flicker .flame {
+    --flame-anim: flicker 2.6s ease-in-out infinite;
+  }
+  .lantern-flicker .flame-core {
+    --core-anim: flame-core 2.6s ease-in-out infinite;
+  }
+  /* The halo breathes on the same loop. A flame that changes size under a halo
+     that holds still is the thing that reads as fake. */
+  .lantern-flicker.glow {
+    animation: halo 2.6s ease-in-out infinite;
+  }
+  /* The wick catching, for unlit to lit. */
+  .lantern-catch .lantern-light {
+    animation: catch 620ms var(--ease-out) both;
+  }
+  /* Carried: the body swings from the bail's pivot and the bail counters it. */
+  .lantern-carry .lantern-body {
+    transform-box: fill-box;
+    transform-origin: 50% 18%;
+    animation: carry 2.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+  .lantern-carry .lantern-bail {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: carry-bail 2.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+}
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  30% {
+    transform: scaleY(1.07) scaleX(0.97) translateX(0.4px);
+  }
+  55% {
+    transform: scaleY(0.965) scaleX(1.03);
+  }
+  80% {
+    transform: scaleY(1.05) scaleX(0.98) translateX(-0.4px);
+  }
+}
+@keyframes flame-core {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  35% {
+    transform: scaleY(1.12) scaleX(0.93);
+  }
+  70% {
+    transform: scaleY(0.94) scaleX(1.06);
+  }
+}
+@keyframes halo {
+  0%,
+  100% {
+    --glow-r: 14px;
+  }
+  30% {
+    --glow-r: 20px;
+  }
+  62% {
+    --glow-r: 11px;
+  }
+}
+@keyframes catch {
+  from {
+    opacity: 0;
+    transform: scale(0.3, 0.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+@keyframes carry {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+@keyframes carry-bail {
+  0%,
+  100% {
+    transform: rotate(3.5deg);
+  }
+  50% {
+    transform: rotate(-3.5deg);
+  }
+}
+.lantern-flare .flame {
+  --flame-anim: none;
+  --flame-t: scale(1.24, 1.4);
+}
+.lantern-flare {
+  --glow-r: 30px;
+}
+.lantern-lit .flame {
+  --flame-anim: none;
+  --flame-t: scale(1.14, 1.3);
+}
+.lantern-lit {
+  --glow-r: 28px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .flame,
+  .lantern-light {
+    transition-duration: 0ms;
+  }
+}
+
+/* ---- Connection -------------------------------------------------------- */
+
+/*
+ * Two apps meeting. The rail runs from the app that asked to the lantern; while the
+ * decision is open it is a dotted track, and when the grant lands it draws across in
+ * amber and the lantern lights. This is the only choreography outside review: the
+ * connection is the one thing on these screens that actually happens.
+ */
+.rail-track {
+  background-image: repeating-linear-gradient(to right, var(--edge-2) 0 3px, transparent 3px 7px);
+}
+/* The fill only exists once the grant lands, so it draws from its starting style. */
+.rail-fill {
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease-out);
+  @starting-style {
+    transform: scaleX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail-fill {
+    transition-duration: 0ms;
+  }
+}
+
+/* ---- Entrances --------------------------------------------------------- */
+
+/* A card arriving. Give it a React key so each new card starts here. */
+.enter-card {
+  animation: enter-card 200ms var(--ease-out) both;
+}
+@keyframes enter-card {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+}
+/* A menu belongs to the button that opened it, so it grows out of that corner instead of
+   arriving from somewhere else. The corner is the transform origin the alignment already
+   sets: top-left when the list hangs right of the trigger, top-right when it hangs left. */
+.enter-menu {
+  animation: enter-menu 140ms var(--ease-out) both;
+}
+@keyframes enter-menu {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+.enter-fade {
+  animation: enter-fade 160ms var(--ease-out) both;
+}
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+}
+/* Reveal is a quiet acknowledgement. The controls follow just behind it so the
+   two changes read as one response to the tap. */
+.answer-enter {
+  animation: answer-enter 150ms var(--ease-out) both;
+}
+@keyframes answer-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+.grade-enter {
+  animation: grade-enter 120ms var(--ease-out) both;
+}
+@keyframes grade-enter {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+.complete-lantern {
+  animation: complete-lantern 420ms var(--ease-out) both;
+}
+@keyframes complete-lantern {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+.complete-copy {
+  animation: complete-copy 260ms var(--ease-out) 100ms both;
+}
+@keyframes complete-copy {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+/*
+ * The desktop sheet, and the dialog. A native `<dialog>` is in the top layer, so it can only
+ * be animated out by keeping it there while it goes: `overlay` and `display` transition
+ * discretely, which is what stops the browser removing it on the first frame. The rise is the
+ * card's, 6 px over 200 ms, and it leaves faster than it came, like the toast.
+ */
+.sheet-modal {
+  opacity: 0;
+  transform: translateY(6px) scale(0.99);
+  transition:
+    opacity 140ms var(--ease-out),
+    transform 140ms var(--ease-out),
+    overlay 140ms allow-discrete,
+    display 140ms allow-discrete;
+}
+.sheet-modal[open] {
+  opacity: 1;
+  transform: none;
+  transition-duration: 200ms;
+}
+@starting-style {
+  .sheet-modal[open] {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+}
+.sheet-modal::backdrop {
+  background: transparent;
+  transition:
+    background 140ms var(--ease-out),
+    overlay 140ms allow-discrete,
+    display 140ms allow-discrete;
+}
+.sheet-modal[open]::backdrop {
+  background: var(--scrim);
+  transition-duration: 200ms;
+}
+@starting-style {
+  .sheet-modal[open]::backdrop {
+    background: transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-modal,
+  .sheet-modal[open] {
+    transform: none;
+  }
+}
+
+/* Toast rises from the bottom edge and leaves faster than it came. */
+.toast-enter {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 240ms var(--ease-out),
+    transform 240ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.toast-exit {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 140ms var(--ease-out),
+    transform 140ms var(--ease-out);
+}
+/* A spinner taking over from a label. */
+.spinner-enter {
+  animation: spinner-enter 150ms var(--ease-out) both;
+}
+@keyframes spinner-enter {
+  from {
+    opacity: 0;
+    scale: 0.25;
+    filter: blur(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .enter-card,
+  .enter-menu,
+  .enter-fade,
+  .answer-enter,
+  .grade-enter,
+  .complete-lantern,
+  .complete-copy {
+    animation: enter-fade 150ms both;
+  }
+  .toast-enter,
+  .toast-exit {
+    transform: none;
+  }
+}
+
+/* Skeleton: holds the shape, shimmers only if motion is welcome. */
+.skeleton {
+  background: var(--plate-2);
+  border-radius: var(--radius-xs);
+  position: relative;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--shimmer), transparent);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Safe areas for the standalone PWA. */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+/* Clears the floating pill: its 56 px height, the 24 px it floats, and a gap. */
+.pb-safe-nav {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
+}
+
+/* ---- Docs -------------------------------------------------------------- */
+
+/*
+ * The documentation site at /docs. The same two rooms and the same tokens, with one
+ * addition: a monospace stack for code. Code is set in ink and weight, never in colour,
+ * so amber stays on the flame and the one primary action. The only colours in the docs
+ * are the ones that already mean something: good for a 2xx, danger for a 4xx.
+ */
+
+.doc-prose {
+  font-size: var(--text-md);
+  line-height: 1.65;
+  color: var(--text-2);
+  text-wrap: pretty;
+}
+.doc-prose > :first-child {
+  margin-top: 0;
+}
+.doc-prose > :last-child {
+  margin-bottom: 0;
+}
+.doc-prose p,
+.doc-prose ul,
+.doc-prose ol {
+  margin-block: 0 1rem;
+}
+.doc-prose h2 {
+  margin-block: 3rem 0.75rem;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.doc-prose h3 {
+  margin-block: 2rem 0.5rem;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.doc-prose h4 {
+  margin-block: 1.5rem 0.25rem;
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--text);
+}
+/* Room for the sticky header when a heading is jumped to. */
+.doc-prose :is(h2, h3, h4) {
+  scroll-margin-top: 5.5rem;
+}
+.doc-prose ul,
+.doc-prose ol {
+  padding-left: 1.35em;
+}
+.doc-prose ul {
+  list-style: disc;
+}
+.doc-prose ol {
+  list-style: decimal;
+}
+.doc-prose li {
+  margin-block: 0.35rem;
+}
+.doc-prose li::marker {
+  color: var(--faint);
+}
+.doc-prose strong {
+  font-weight: 500;
+  color: var(--text);
+}
+.doc-prose a:not(.doc-plain) {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--edge-2);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 150ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .doc-prose a:not(.doc-plain):hover {
+    text-decoration-color: currentColor;
+  }
+}
+.doc-prose hr {
+  margin-block: 2.5rem;
+  border: 0;
+  border-top: 1px solid var(--edge);
+}
+
+/* Inline code. A well in the plate, never a border. */
+.doc-prose :not(pre) > code,
+.doc-code-inline {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--text);
+  background: var(--plate-2);
+  border-radius: var(--radius-xs);
+  padding: 0.1em 0.35em;
+  word-break: break-word;
+}
+
+/* Code blocks. Ink and weight carry the syntax; nothing here is amber. */
+.doc-code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  tab-size: 2;
+  color: var(--text-2);
+}
+/*
+ * Three tones and one weight step, no hue. A JSON key is the thing you scan for, so it is
+ * the darkest; the value sits a step back; punctuation and comments sit further back again.
+ * Nothing here is `faint`, because every character in a snippet carries meaning.
+ */
+.doc-code .t-key {
+  color: var(--text);
+  font-weight: 500;
+}
+.doc-code .t-str {
+  color: var(--text-2);
+}
+.doc-code .t-cmd {
+  color: var(--text);
+  font-weight: 600;
+}
+.doc-code .t-comment,
+.doc-code .t-punct {
+  color: var(--muted);
+}
+.doc-code .t-num {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The scroll shadow on a wide code block or table, so a cut-off line reads as scrollable. */
+.doc-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--edge-2) transparent;
+}
+
+/* A heading's own link. Appears on hover, and always for keyboard users. */
+.doc-anchor {
+  opacity: 0;
+  transition: opacity 150ms var(--ease-out);
+}
+:is(h2, h3):hover > .doc-anchor,
+.doc-anchor:focus-visible {
+  opacity: 1;
+}
+
+/* ---- Landing ----------------------------------------------------------- */
+
+/*
+ * The landing page is one dark room with the lantern in it. Everything here is the
+ * lamp: the pool of light on the page and the way a card brightens as it crosses that
+ * pool. This is the only place in Lymi with a gradient, and it is a light source rather
+ * than decoration, which is the same exception the lantern's own glow already has.
+ *
+ * --lit is 0 for a card in the dark and 1 for one in the middle of the beam. Scripts set
+ * it per frame; it is registered so a card that moves in steps can ease between values.
+ */
+@property --lit {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: true;
+}
+
+.lamp-pool {
+  position: absolute;
+  left: var(--lamp-x, 50%);
+  top: var(--lamp-y, 50%);
+  width: 780px;
+  height: 780px;
+  translate: calc(-50% + var(--lamp-nudge-x, 0px)) calc(-50% + var(--lamp-nudge-y, 0px));
+  transition: translate 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+  background: radial-gradient(
+    circle closest-side,
+    var(--glow) 0%,
+    var(--amber-soft) 34%,
+    transparent 72%
+  );
+}
+
+/* A card lit by the pool. Colour, lift and halo all read from --lit together. */
+.lit-card {
+  background: color-mix(in oklab, var(--plate), var(--amber-soft) calc(var(--lit) * 70%));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--edge), var(--amber) calc(var(--lit) * 55%)),
+    0 14px 36px -14px color-mix(in srgb, transparent, var(--glow) calc(var(--lit) * 100%));
+  translate: 0 calc(var(--lit) * -5px);
+  opacity: calc(0.4 + 0.6 * var(--lit));
+  transition:
+    --lit 480ms cubic-bezier(0.19, 1, 0.22, 1),
+    translate 480ms cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 480ms ease;
+}
+.lit-card .lit-label {
+  color: color-mix(in srgb, var(--faint), var(--amber-text) calc(var(--lit) * 100%));
+}
+.lit-card .lit-term {
+  color: color-mix(in srgb, var(--muted), var(--text) calc(var(--lit) * 100%));
+}
+.lit-card .lit-meaning {
+  color: var(--text-2);
+  opacity: clamp(0, calc((var(--lit) - 0.42) * 2.6), 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lamp-pool,
+  .lit-card {
+    transition: none;
+  }
+}

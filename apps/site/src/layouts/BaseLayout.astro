@@ -1,0 +1,58 @@
+---
+import "../styles.css";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  dark?: boolean;
+}
+
+const { title, description, canonicalPath, dark = false } = Astro.props;
+const canonical = new URL(canonicalPath, Astro.site ?? "https://lymi.app").toString();
+---
+
+<!doctype html>
+<html lang="en" data-lymi-surface="public" data-theme={dark ? "dark" : undefined}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#f8f7f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#151210" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Onest:wght@400..600&display=swap"
+    />
+    {!dark && (
+      <script is:inline>
+        try {
+          var t = localStorage.getItem("lymi-theme");
+          var dark =
+            t === "dark" ||
+            ((!t || t === "system") && matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+        } catch (e) {}
+      </script>
+    )}
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

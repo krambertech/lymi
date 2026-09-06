@@ -187,20 +187,6 @@ export async function flushOutbox() {
   return items.length - remaining.length;
 }
 
-/**
- * The public waiting list behind the landing and invitation pages. It is outside `api`, so it
- * works with no session and is never swept up by the sign-in redirect a 401 triggers.
- */
-export async function joinBeta(
-  email: string,
-  source: "landing" | "join" = "landing",
-): Promise<{ alreadyOn: boolean }> {
-  return request<{ alreadyOn: boolean }>("/api/beta", {
-    method: "POST",
-    body: JSON.stringify({ email, source }),
-  });
-}
-
 if (typeof window !== "undefined") {
   window.addEventListener("online", () => {
     void flushOutbox();

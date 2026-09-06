@@ -15,7 +15,7 @@ function decision(url: string) {
   return decideOriginRoute(url, origins);
 }
 
-describe("production origin routing", () => {
+describe("product origin routing", () => {
   it("falls back from malformed or non-HTTP origin configuration", () => {
     expect(
       canonicalOrigins({
@@ -23,22 +23,6 @@ describe("production origin routing", () => {
         PRODUCT_URL: "javascript:alert(1)",
       }),
     ).toEqual(origins);
-  });
-
-  it.each([
-    "/",
-    "/docs",
-    "/docs/api?operation=cards",
-    "/join",
-    "/api/beta",
-    "/robots.txt",
-    "/sitemap.xml",
-    "/assets/app.js",
-  ])("keeps the public contract on lymi.app: %s", (path) => {
-    expect(decision(`https://lymi.app${path}`)).toEqual({
-      kind: "continue",
-      surface: "public",
-    });
   });
 
   it.each([
@@ -61,21 +45,8 @@ describe("production origin routing", () => {
     });
   });
 
-  it.each([
-    "/today?deck=italian",
-    "/library/deck_1/settings?from=today",
-    "/login?returnTo=%2Freview%3Fdeck%3Ddeck_1",
-    "/consent?client_id=https%3A%2F%2Fclient.example",
-  ])("permanently redirects old public product links with their query: %s", (path) => {
-    expect(decision(`https://lymi.app${path}`)).toEqual({
-      kind: "redirect",
-      location: `https://my.lymi.app${path}`,
-      status: 308,
-    });
-  });
-
   it.each(["/docs", "/docs/api?operation=cards", "/join?source=login"])(
-    "redirects website routes away from the product origin: %s",
+    "redirects public routes to the site Worker: %s",
     (path) => {
       expect(decision(`https://my.lymi.app${path}`)).toEqual({
         kind: "redirect",
@@ -85,49 +56,64 @@ describe("production origin routing", () => {
     },
   );
 
-  it.each([
-    "/api/openapi.json",
-    "/api/decks",
-    "/mcp",
-    "/.well-known/oauth-authorization-server",
-    "/manifest.webmanifest",
-    "/push-sw.js",
-    "/unknown",
-  ])("does not expose a legacy product contract on lymi.app: %s", (path) => {
-    expect(decision(`https://lymi.app${path}`)).toEqual({ kind: "not-found", status: 404 });
-  });
+  it.each(["/public-landing", "/sitemap.xml", "/apiish", "/unknown"])(
+    "does not turn unknown public-looking paths into the product shell: %s",
+    (path) => {
+      expect(decision(`https://my.lymi.app${path}`)).toEqual({ kind: "not-found", status: 404 });
+    },
+  );
 
-  it("rejects hosts outside the explicit allowlist", () => {
+  it("rejects every hostname outside the explicit product allowlist", () => {
+    expect(decision("https://lymi.app/")).toEqual({ kind: "misdirected", status: 421 });
     expect(decision("https://attacker.example/api/health")).toEqual({
       kind: "misdirected",
       status: 421,
     });
   });
 
-  it("serves a no-store self-retiring worker at the former public scope", async () => {
-    const route = decision("https://lymi.app/sw.js");
-    expect(route).toEqual({ kind: "retire-service-worker", surface: "public" });
-    const response = responseForOriginDecision(route);
-    expect(response?.headers.get("cache-control")).toBe("no-store");
-    expect(response?.headers.get("service-worker-allowed")).toBe("/");
-    await expect(response?.text()).resolves.toContain("registration.unregister");
+  it("preserves the path and query when redirecting public routes", () => {
+    const response = responseForOriginDecision(
+      decision("https://my.lymi.app/docs/api?operation=cards"),
+    );
+    expect(response?.status).toBe(308);
+    expect(response?.headers.get("location")).toBe("https://lymi.app/docs/api?operation=cards");
   });
 });
 
-describe("local origin routing", () => {
+describe("local product routing", () => {
   const local = {
-    publicSite: "http://localhost:4173",
+    publicSite: "http://localhost:4174",
     product: "http://localhost:4173",
   } satisfies CanonicalOrigins;
 
-  it("keeps website and product paths usable on one loopback origin", () => {
-    expect(decideOriginRoute("http://127.0.0.1:4173/docs", local)).toEqual({
-      kind: "continue",
-      surface: "public",
-    });
+  it("accepts another loopback spelling for the configured product port", () => {
     expect(decideOriginRoute("http://127.0.0.1:4173/review", local)).toEqual({
       kind: "continue",
       surface: "product",
+    });
+  });
+
+  it.each([
+    "/@vite/client",
+    "/@vite-plugin-pwa/virtual:pwa-register",
+    "/@react-refresh",
+    "/src/client/main.tsx",
+  ])("allows Vite development assets only on the configured loopback port: %s", (path) => {
+    expect(decideOriginRoute(`http://127.0.0.1:4173${path}`, local)).toEqual({
+      kind: "continue",
+      surface: "product",
+    });
+    expect(decideOriginRoute(`https://my.lymi.app${path}`, origins)).toEqual({
+      kind: "not-found",
+      status: 404,
+    });
+  });
+
+  it("redirects local documentation to the independently running public site", () => {
+    expect(decideOriginRoute("http://127.0.0.1:4173/docs", local)).toEqual({
+      kind: "redirect",
+      location: "http://localhost:4174/docs",
+      status: 308,
     });
   });
 });

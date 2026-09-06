@@ -66,6 +66,10 @@ jobs:
         id: build
         run: pnpm build
 
+      - name: Check deployment boundaries
+        id: boundaries
+        run: pnpm check:boundaries
+
       - name: Check TypeScript
         id: typecheck
         run: pnpm typecheck
@@ -74,10 +78,15 @@ jobs:
         id: test
         run: pnpm test
 
-      - name: Check deployment package
-        id: deploy
+      - name: Check product deployment package
+        id: deploy_product
         if: steps.plan.outputs.run_deploy_check == 'true'
         run: pnpm --filter @lymi/web run deploy:check
+
+      - name: Check public-site deployment package
+        id: deploy_site
+        if: steps.plan.outputs.run_deploy_check == 'true'
+        run: pnpm --filter @lymi/site run deploy:check
 
       - name: Install Playwright browsers (${{ steps.plan.outputs.coverage }})
         id: browsers
@@ -98,9 +107,11 @@ jobs:
           DEPENDENCIES_OUTCOME: ${{ steps.dependencies.outcome }}
           CHECK_OUTCOME: ${{ steps.check.outcome }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
+          BOUNDARIES_OUTCOME: ${{ steps.boundaries.outcome }}
           TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}
           TEST_OUTCOME: ${{ steps.test.outcome }}
-          DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
+          DEPLOY_PRODUCT_OUTCOME: ${{ steps.deploy_product.outcome }}
+          DEPLOY_SITE_OUTCOME: ${{ steps.deploy_site.outcome }}
           BROWSERS_OUTCOME: ${{ steps.browsers.outcome }}
           E2E_OUTCOME: ${{ steps.e2e.outcome }}
         run: node scripts/ci-summary.mjs

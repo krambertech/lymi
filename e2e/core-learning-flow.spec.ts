@@ -28,13 +28,14 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
 
   await test.step("add a complete card", async () => {
     await page.getByRole("button", { name: "Add word" }).first().click();
-    const dialog = page.getByRole("dialog", { name: "Add a word or phrase" });
-    await dialog.getByRole("textbox", { name: "Word or phrase" }).fill("sbrigarsi");
-    await dialog.getByRole("textbox", { name: "Meaning" }).fill("to hurry up");
-    await dialog.getByRole("button", { name: "Add to Italian lesson" }).click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await page.getByRole("textbox", { name: "Word or phrase", exact: true }).fill("sbrigarsi");
+    await page.getByRole("textbox", { name: "Meaning", exact: true }).fill("to hurry up");
+    await page.getByRole("button", { name: "Add to Italian lesson", exact: true }).click();
 
-    await expect(dialog.getByRole("status")).toContainText("Added “sbrigarsi”");
-    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await expect(page.getByRole("status")).toContainText("Added “sbrigarsi”");
+    await page.getByRole("button", { name: "Cancel", exact: true }).click();
     await expect(page.getByRole("cell", { name: "sbrigarsi", exact: true })).toBeVisible();
     await expect(page.getByRole("cell", { name: "to hurry up", exact: true })).toBeVisible();
   });

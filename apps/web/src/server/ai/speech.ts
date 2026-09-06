@@ -4,6 +4,73 @@ import type { SpeechProvider } from "./types";
 
 type SpeechBindings = GoogleChirpBindings & OpenAiSpeechBindings;
 
+// https://developers.openai.com/api/docs/guides/text-to-speech#supported-languages
+// OpenAI's published TTS language list, represented as common BCP 47 roots.
+// Aliases cover the tags people are likely to store for Chinese, Norwegian, and Tagalog.
+const OPENAI_TTS_LANGUAGES = new Set([
+  "af",
+  "ar",
+  "hy",
+  "az",
+  "be",
+  "bs",
+  "bg",
+  "ca",
+  "zh",
+  "cmn",
+  "hr",
+  "cs",
+  "da",
+  "nl",
+  "en",
+  "et",
+  "fi",
+  "fr",
+  "gl",
+  "de",
+  "el",
+  "he",
+  "hi",
+  "hu",
+  "is",
+  "id",
+  "it",
+  "ja",
+  "kn",
+  "kk",
+  "ko",
+  "lv",
+  "lt",
+  "mk",
+  "ms",
+  "mr",
+  "mi",
+  "ne",
+  "no",
+  "nb",
+  "nn",
+  "fa",
+  "pl",
+  "pt",
+  "ro",
+  "ru",
+  "sr",
+  "sk",
+  "sl",
+  "es",
+  "sw",
+  "sv",
+  "tl",
+  "fil",
+  "ta",
+  "th",
+  "tr",
+  "uk",
+  "ur",
+  "vi",
+  "cy",
+]);
+
 const CHIRP_LOCALES = new Map<string, string>([
   ["ar", "ar-XA"],
   ["bn", "bn-IN"],
@@ -77,13 +144,22 @@ export function chirpLocale(language: string): string | null {
   return root ? (CHIRP_LOCALES.get(root) ?? null) : null;
 }
 
-/** Chirp first where its published locale list applies, then OpenAI as fallback. */
+/** Whether a BCP 47 tag is on OpenAI's published TTS language list. */
+export function openAiSupportsLanguage(language: string): boolean {
+  const root = language.trim().replace(/_/g, "-").split("-")[0]?.toLowerCase();
+  return root ? OPENAI_TTS_LANGUAGES.has(root) : false;
+}
+
+/** Prefer OpenAI; use Chirp only when OpenAI is unsupported or unavailable. */
 export function createSpeechProviders(env: SpeechBindings, language: string): SpeechProvider[] {
-  const providers: SpeechProvider[] = [];
+  if (openAiSupportsLanguage(language) && env.OPENAI_API_KEY?.trim()) {
+    return [createOpenAiSpeechProvider(env, language)];
+  }
+
   const locale = chirpLocale(language);
   if (locale && env.GOOGLE_CLOUD_TTS_CREDENTIALS?.trim()) {
-    providers.push(createGoogleChirpProvider(env, { locale }));
+    return [createGoogleChirpProvider(env, { locale })];
   }
-  if (env.OPENAI_API_KEY?.trim()) providers.push(createOpenAiSpeechProvider(env, language));
-  return providers;
+
+  return [];
 }

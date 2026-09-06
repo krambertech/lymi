@@ -15,7 +15,7 @@ export class OpenAiSpeechError extends Error {
   }
 }
 
-/** OpenAI speech fallback for languages without Chirp 3 HD or when Chirp is unavailable. */
+/** Default speech provider for languages on OpenAI's published TTS support list. */
 export function createOpenAiSpeechProvider(
   env: OpenAiSpeechBindings,
   language: string,

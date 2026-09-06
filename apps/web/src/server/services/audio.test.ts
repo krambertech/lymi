@@ -107,7 +107,7 @@ describe("pronunciation audio", () => {
     expect(providers).toHaveBeenCalledWith("et");
   });
 
-  it("falls back to OpenAI if Chirp fails", async () => {
+  it("tries a later provider when an earlier provider fails", async () => {
     let stored: R2ObjectBody | null = null;
     const bucket = new Proxy(Object.create(null) as R2Bucket, {
       get: (_target, property) =>

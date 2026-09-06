@@ -13,7 +13,7 @@ VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=
 VAPID_SUBJECT=mailto:you@example.com
 OPENAI_API_KEY=
-# Optional speech overrides. OpenAI is the fallback when Chirp 3 HD does not support a language.
+# Optional speech overrides. OpenAI is preferred for every language it supports.
 OPENAI_BASE_URL=
 OPENAI_SPEECH_MODEL=gpt-4o-mini-tts
 OPENAI_SPEECH_VOICE=marin

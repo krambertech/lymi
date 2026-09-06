@@ -15,7 +15,8 @@ audio.get("/:cardId", describe({ hide: true, errors: [400, 404, 503] }), async (
   object.writeHttpMetadata(headers);
   headers.set("Content-Type", headers.get("Content-Type") || "audio/mpeg");
   headers.set("Content-Length", String(object.size));
-  headers.set("Cache-Control", "private, max-age=31536000, immutable");
+  // The durable cache is R2. Do not let authenticated card audio survive in a shared browser cache.
+  headers.set("Cache-Control", "private, no-store");
   headers.set("ETag", object.httpEtag);
   headers.set("X-Content-Type-Options", "nosniff");
   return new Response(object.body, { headers });

@@ -87,7 +87,7 @@ jobs:
       - name: Run browser E2E (${{ steps.plan.outputs.coverage }})
         id: e2e
         if: steps.plan.outputs.run_e2e == 'true'
-        run: pnpm test:e2e -- ${{ steps.plan.outputs.playwright_args }}
+        run: pnpm test:e2e ${{ steps.plan.outputs.playwright_args }}
 
       - name: Summarize CI evidence
         if: always()

@@ -1,3 +1,5 @@
+<!-- Title: type(scope): imperative summary. CI enforces the format; see docs/git-workflow.md. -->
+
 ## ✨ What
 
 <!-- One or two sentences. Lead with what the learner can now do. Fold the reason in when it fits in one clause. Write each paragraph as one line; GitHub shows every newline as a line break. -->

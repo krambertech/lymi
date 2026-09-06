@@ -10,6 +10,8 @@ One deployable: `apps/web` is the Vite React client and the Hono Worker together
 
 ## Before you push
 
+For branch creation, syncing with `main`, commit messages, pull request titles, and merging, follow [`docs/git-workflow.md`](docs/git-workflow.md).
+
 ```bash
 pnpm check && pnpm typecheck && pnpm test
 ```

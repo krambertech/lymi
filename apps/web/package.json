@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "vite build && wrangler deploy -c dist/lymi/wrangler.json",
+    "deploy:check": "wrangler deploy --dry-run -c dist/lymi/wrangler.json",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",
     "cf-typegen": "wrangler types",

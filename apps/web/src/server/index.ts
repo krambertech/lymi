@@ -65,7 +65,16 @@ app.use("*", async (c, next) => {
 });
 
 app.get("/api/health", describe({ hide: true }), (c) =>
-  c.json({ ok: true, name: "lymi", time: new Date().toISOString() }),
+  c.json({
+    ok: true,
+    name: "lymi",
+    time: new Date().toISOString(),
+    version: {
+      id: c.env.CF_VERSION_METADATA.id,
+      tag: c.env.CF_VERSION_METADATA.tag || null,
+      deployedAt: c.env.CF_VERSION_METADATA.timestamp,
+    },
+  }),
 );
 
 // Better Auth owns everything under /api/auth.

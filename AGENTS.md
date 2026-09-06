@@ -18,6 +18,10 @@ pnpm verify
 
 `pnpm verify` runs formatting and lint checks, the production build, typechecking, and unit tests in that order. The build generates the git-ignored `routeTree.gen.ts` that typechecking needs in a fresh clone. `pnpm fix` writes the Biome fixes. CI runs the same base gate on every pull request ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)), so a failure here is a failure there.
 
+For a production-affecting change, also run `pnpm deploy:check` and the proportional browser gate: `pnpm test:e2e:chromium` normally, or `pnpm test:e2e` when WebKit, mobile, PWA, navigation, caching, focus, touch, sheet, or dialog behavior is at risk. Report each result separately. A passing Chromium run is not full cross-browser evidence.
+
+Cloudflare Workers Builds owns deployment after merge. A green build is not proof that its version is active: run `pnpm deploy:health` and compare the reported tag with the intended commit before calling production verified.
+
 ## Conventions
 
 **Documentation.** Write each prose paragraph and each list item as a single source line. Let the editor wrap text visually. Preserve source line boundaries where Markdown structure requires them, such as headings, tables, code blocks, and separate list items.

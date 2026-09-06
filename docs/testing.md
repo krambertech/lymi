@@ -8,7 +8,10 @@ Lymi uses a small set of Playwright journeys to prove that the browser, Worker, 
 pnpm verify           # canonical base gate: check, build, typecheck, test
 pnpm test             # unit tests and the CI impact rules
 pnpm test:e2e         # Chromium desktop and an iPhone-sized WebKit browser
+pnpm test:e2e:chromium # Chromium desktop only
 pnpm test:e2e:ui      # Playwright's interactive UI
+pnpm deploy:check     # production build and local deployment-package dry run
+pnpm deploy:health    # check production health and print its deployed version
 pnpm exec playwright show-report
 ```
 
@@ -22,11 +25,30 @@ pnpm exec playwright install chromium webkit
 
 ## CI policy
 
-`pnpm verify` is the base gate on every pull request: formatting and lint checks, the production build, typechecking, and unit tests. The Playwright steps then run when `scripts/e2e-impact.mjs` sees production-affecting files. Pushes to `main` always include E2E. A manual run includes it by default and can explicitly skip it.
+`pnpm verify` is the canonical local base gate. CI runs the same commands in the same fail-fast order but gives formatting and lint, build, TypeScript, and unit tests their own named steps. A failure therefore identifies the broken gate without requiring an agent or developer to search a combined log.
+
+`scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
+
+- Pull requests without production-affecting paths run the base gate only.
+- Production-affecting pull requests add a deployment-package dry run and Chromium E2E.
+- Every push to `main` and `/e2e` command runs Chromium and WebKit plus the deployment-package dry run.
+- A manually dispatched workflow runs the full policy by default and can explicitly skip browser E2E.
+
+Every run writes a summary with its selected browser coverage and the outcome of each gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository. A newer commit cancels an obsolete in-progress run.
 
 Failed browser runs retain screenshots, video from the retry, a Playwright trace, and the HTML report as a GitHub Actions artifact for seven days. Successful runs retain no browser artifacts.
+
+## Delivery checks
+
+`pnpm deploy:check` builds the production application and asks Wrangler to compile and validate the generated deployment package without authenticating or uploading anything. CI runs the already-built package check for production-affecting pull requests, every push to `main`, and manual runs.
+
+Cloudflare Workers Builds remains the deployment owner. Keep its production branch on `main`, disable non-production branch builds while preview URLs cannot support Lymi's canonical-origin authentication, and configure build watch paths so documentation-only commits do not consume Cloudflare build minutes. The production trigger should include `apps/web/*`, `packages/core/*`, `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `.nvmrc`, and `tsconfig.base.json`.
+
+Use `pnpm verify` as the Workers Builds build command. Use `pnpm --filter @lymi/web exec wrangler deploy -c dist/lymi/wrangler.json --tag "$WORKERS_CI_COMMIT_SHA"` as its deploy command. This duplicates the roughly one-minute base gate on production deployments, but makes the independent Cloudflare pipeline fail closed instead of deploying while GitHub CI is red. Path filtering avoids paying that cost for non-production changes.
+
+The Worker exposes its Cloudflare version ID, deployment timestamp, and optional commit tag from `/api/health`. After Workers Builds activates a version, `pnpm deploy:health` provides a single read-only check that the canonical domain is healthy and identifies the version serving traffic. A successful build page without this active-version check is not deployment evidence.
 
 ## Canonical coverage
 

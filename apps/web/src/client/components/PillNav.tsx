@@ -14,7 +14,7 @@ export const PILL_NAV = [
  */
 export function PillNav({ static: st }: { static?: StaticNav }) {
   const item =
-    "inline-flex h-11 items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[background-color,color,box-shadow] duration-150 [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-5";
+    "inline-flex h-11 items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[background-color,color,box-shadow,scale] duration-150 active:scale-[0.97] [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-5";
   return (
     <nav
       aria-label="Main"

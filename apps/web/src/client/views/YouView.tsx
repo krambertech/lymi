@@ -89,7 +89,7 @@ export function YouView({
       </>
     );
     const cls =
-      "flex h-13 items-center gap-3 px-4 text-text transition-colors duration-150 hoverable:hover:bg-hover";
+      "flex h-13 items-center gap-3 px-4 text-text transition-[background-color,scale] duration-150 active:scale-[0.99] hoverable:hover:bg-hover";
     return st ? (
       <a href={to} onClick={(e) => e.preventDefault()} className={cls}>
         {inner}

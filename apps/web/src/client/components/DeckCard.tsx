@@ -25,7 +25,7 @@ export function DeckCard({ id, name, language, due, total, fresh, next, st }: De
       to="/library/$deckId"
       params={{ deckId: id }}
       st={st}
-      className="edge group flex items-center gap-3.5 rounded-lg bg-plate px-4 py-4 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+      className="edge group flex items-center gap-3.5 rounded-lg bg-plate px-4 py-4 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.97] hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
       <span className="flex min-w-0 flex-1 flex-col gap-2">
         <span className="flex items-baseline gap-2">

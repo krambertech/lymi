@@ -45,6 +45,12 @@ export const FLAME: Shape[] = [
   },
 ];
 
+/**
+ * The flame's own box inside the 120 unit one. The streak's Flame crops to this, so the mark and
+ * the streak are one drawing rather than two that drift.
+ */
+export const FLAME_BOUNDS = { left: 44, right: 76, top: 58, bottom: 96.5 } as const;
+
 export const EMBER: Shape = {
   d: "M60 72 C65.6 78.5 67 82 65.4 86 A5.7 5.7 0 0 1 54.6 86 C53 82 54.4 78.5 60 72 Z",
   fill: "ember",
@@ -95,18 +101,21 @@ function draw(s: Shape, key: string, className?: string) {
   );
 }
 
+/** The flame alone. The lantern wears it, and the streak borrows the same drawing. */
+export function FLAME_PARTS(): ReactNode {
+  return (
+    <g className="flame">
+      {draw(FLAME[0] as Shape, "flame")}
+      {draw(FLAME[1] as Shape, "core", "flame-core")}
+    </g>
+  );
+}
+
 /** The flame, or the ember that replaces it when nothing is due. Wears the glow. */
 function light(lit: boolean) {
   return (
     <g className="lantern-light" key="light">
-      {lit ? (
-        <g className="flame">
-          {draw(FLAME[0] as Shape, "flame")}
-          {draw(FLAME[1] as Shape, "core", "flame-core")}
-        </g>
-      ) : (
-        draw(EMBER, "ember")
-      )}
+      {lit ? FLAME_PARTS() : draw(EMBER, "ember")}
     </g>
   );
 }

@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { type AppIdentity, AppMark } from "../components/AppMark";
+import { AuthFrame } from "../components/AuthFrame";
+import { AuthNotice } from "../components/AuthNotice";
 import { Button } from "../components/Button";
-import { Lantern } from "../components/Lantern";
-import { Wordmark } from "../components/Logo";
 
 export interface LoginProps {
   onGoogle?: (() => void | Promise<void>) | undefined;
@@ -14,48 +14,64 @@ export interface LoginProps {
   app?: AppIdentity | undefined;
   /** Shown in place of the fine print when sign-in fails. */
   error?: ReactNode | undefined;
+  /** A valid Google account that simply has no invitation. This is a path, not a failure. */
+  blocked?: boolean | undefined;
   children?: ReactNode | undefined;
 }
 
-/**
- * The front door. Two blocks: who this is, and the one thing to do. The lantern is lit but not
- * glowing — a glow means something is due, and on this screen nothing is.
- */
-export function LoginView({ onGoogle, busy, app, error, children }: LoginProps) {
+/** The front door. Authentication stays focused; requesting an invitation has its own route. */
+export function LoginView({ onGoogle, busy, app, error, blocked = false, children }: LoginProps) {
   return (
-    <div className="flex min-h-full flex-1 flex-col items-center justify-center px-6 py-14 text-center pt-safe pb-safe">
-      <Lantern className="size-28 @3xl:size-32" flicker />
-      {/* Plain wordmark: the lantern above it already carries the flame. */}
-      <h1 className="mt-6">
-        <Wordmark size={30} className="block text-text" title="Lymi" />
-      </h1>
-      {app ? (
-        <p className="mt-2.5 flex max-w-[32ch] items-center gap-2 text-md text-text-2">
-          <AppMark app={app} className="size-7 rounded-sm" />
-          <span>
-            <span className="font-medium text-text">{app.name}</span> is waiting to connect
-          </span>
-        </p>
-      ) : (
-        <p className="mt-2.5 max-w-[28ch] text-md text-muted">Vocabulary you carry with you.</p>
-      )}
-
-      {/* The button sets the width of everything under it, so the smallest text is never the widest. */}
-      <div className="mt-11 grid w-full max-w-60 gap-4">
-        <Button variant="primary" size="lg" loading={busy} onClick={onGoogle}>
-          Continue with Google
-        </Button>
-        {error ? (
-          <p role="alert" className="text-sm text-danger">
-            {error}
-          </p>
+    <AuthFrame footer={children}>
+      <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">
+        {app ? (
+          <div className="flex flex-col items-center text-center">
+            <AppMark app={app} className="size-12" />
+            <h1 className="mt-4 text-2xl font-medium tracking-[-0.02em] text-text">
+              Continue to {app.name}
+            </h1>
+            <p className="mt-2 max-w-[36ch] text-md text-text-2">
+              Sign in before choosing what it may do.
+            </p>
+          </div>
         ) : (
-          <p className="text-sm text-muted">
-            {app ? "Then choose what it may do." : "Invite only for now."}
-          </p>
+          <div className="text-center">
+            <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">Sign in to Lymi</h1>
+            <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
+              Use the Google account that received your invitation.
+            </p>
+          </div>
         )}
-      </div>
-      {children}
-    </div>
+
+        {error && (
+          <AuthNotice
+            role={blocked ? "status" : "alert"}
+            tone={blocked ? "neutral" : "danger"}
+            className="mt-6"
+          >
+            {error}
+          </AuthNotice>
+        )}
+
+        <Button
+          variant="primary"
+          size="lg"
+          loading={busy}
+          onClick={onGoogle}
+          className="mt-7 w-full"
+        >
+          {blocked ? "Try another Google account" : "Continue with Google"}
+        </Button>
+        <p className="mt-6 text-center text-sm text-muted">
+          {blocked ? "Still need an invitation?" : "Need an invitation?"}{" "}
+          <a
+            href="/join"
+            className="rounded-sm font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
+          >
+            Request an invitation
+          </a>
+        </p>
+      </section>
+    </AuthFrame>
   );
 }

@@ -17,6 +17,8 @@ const Search = z.object({
   client_id: z.string().optional(),
   scope: z.string().optional(),
   error: z.string().optional(),
+  /** Keeps the local email/password helper out of the real sign-in experience. */
+  dev: z.coerce.string().pipe(z.literal("1")).optional(),
 });
 
 export const Route = createFileRoute("/login")({
@@ -47,21 +49,37 @@ const RETRYABLE = new Set([
   "unable_to_get_user_info",
 ]);
 
-function reasonFor(code: string | undefined): string | null {
+interface SignInIssue {
+  message: string;
+  blocked: boolean;
+}
+
+function issueFor(code: string | undefined): SignInIssue | null {
   if (!code) return null;
   if (BLOCKED.has(code) || /not.on.the.list/i.test(code)) {
-    return "That account is not on the invite list. Lymi is private for now — sign in with the invited account.";
+    return {
+      message:
+        "This Google account has not been invited. Request an invitation, or try another account.",
+      blocked: true,
+    };
   }
-  if (RETRYABLE.has(code)) return "That sign-in did not finish. Try again.";
+  if (RETRYABLE.has(code)) {
+    return { message: "That sign-in did not finish. Try again.", blocked: false };
+  }
   // An unknown code is more often a blocked account than a blip, so do not promise a retry
   // will work.
-  return "Sign in did not finish. If it keeps failing, the account may not be on the invite list.";
+  return {
+    message:
+      "Sign in did not finish. Try again. If you have not been invited, request an invitation.",
+    blocked: false,
+  };
 }
 
 function Login() {
-  const { client_id: clientId, error } = Route.useSearch();
+  const { client_id: clientId, error, dev } = Route.useSearch();
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState<string | null>(null);
+  const issue = issueFor(error);
 
   // The client's own name, for an app we ship no mark for. Best-effort: the door still works
   // from the client_id host alone, so a failure here is not shown.
@@ -82,7 +100,8 @@ function Login() {
       app={app}
       busy={busy}
       // `failed` is this attempt; `error` on the URL is a callback that came back refused.
-      error={failed ?? reasonFor(error)}
+      error={failed ?? issue?.message}
+      blocked={!failed && issue?.blocked}
       onGoogle={async () => {
         setBusy(true);
         setFailed(null);
@@ -98,7 +117,7 @@ function Login() {
         }
       }}
     >
-      {import.meta.env.DEV && <DevSignIn />}
+      {import.meta.env.DEV && dev === "1" && <DevSignIn />}
     </LoginView>
   );
 }

@@ -10,6 +10,7 @@ import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
 import { DeckSettingsView } from "../views/DeckSettingsView";
+import { JoinView } from "../views/JoinView";
 import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
 import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/ReviewView";
@@ -363,7 +364,7 @@ export function Screens() {
 
       <Sub
         title="Login"
-        note="The front door. The lantern is lit but not glowing, because a glow means something is due. Two blocks: who this is, and the one thing to do. When an MCP client sent the learner here, the first block says who is waiting instead of what Lymi is."
+        note="The front door has one job: sign in. The lantern and plain wordmark sit above one centered task. When an MCP client sent the learner here, its verified identity appears inside that same focused panel."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Sign in" initial="dark" path="/login" bare>
@@ -378,8 +379,20 @@ export function Screens() {
           <PhoneShot caption="Not on the invite list" initial="dark" path="/login" bare>
             <LoginView
               onGoogle={noop}
-              error="That account is not on the invite list. Lymi is private for now — sign in with the invited account."
+              blocked
+              error="This Google account has not been invited. Request an invitation, or try another account."
             />
+          </PhoneShot>
+        </div>
+      </Sub>
+
+      <Sub
+        title="Invitation"
+        note="Requesting an invitation is a separate sign-up-like page, not another state inside login. The email field gets the full width of the form and the copy makes clear that no account exists yet."
+      >
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="Request an invitation" initial="light" path="/join" bare>
+            <JoinView />
           </PhoneShot>
         </div>
       </Sub>

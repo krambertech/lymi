@@ -17,7 +17,7 @@ beta.post(
     tags: ["Account"],
     summary: "Join the private beta",
     open: true,
-    errors: [400],
+    errors: [400, 503],
     description:
       "Adds an address to the waiting list. This is not a sign-up: it creates no account " +
       "and grants no access. An address already on the list is reported, never rejected.",

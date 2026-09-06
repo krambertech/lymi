@@ -188,13 +188,16 @@ export async function flushOutbox() {
 }
 
 /**
- * The waiting list behind the landing page. Public, so it is outside `api`: it works with
- * no session and it must never be swept up by the sign-in redirect a 401 triggers.
+ * The public waiting list behind the landing and invitation pages. It is outside `api`, so it
+ * works with no session and is never swept up by the sign-in redirect a 401 triggers.
  */
-export async function joinBeta(email: string): Promise<{ alreadyOn: boolean }> {
+export async function joinBeta(
+  email: string,
+  source: "landing" | "join" = "landing",
+): Promise<{ alreadyOn: boolean }> {
   return request<{ alreadyOn: boolean }>("/api/beta", {
     method: "POST",
-    body: JSON.stringify({ email, source: "landing" }),
+    body: JSON.stringify({ email, source }),
   });
 }
 

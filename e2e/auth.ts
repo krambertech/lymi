@@ -7,7 +7,7 @@ const password = "lymi-e2e-password";
 export async function signInAsTestLearner(page: Page, testInfo: TestInfo, account: E2EAccount) {
   const email = e2eEmail(account, testInfo.project.name, testInfo.retry);
 
-  await page.goto("/login");
+  await page.goto("/login?dev=1");
   await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
   await page.getByRole("textbox", { name: "Email", exact: true }).fill(email);
   await page.getByRole("textbox", { name: "Password", exact: true }).fill(password);

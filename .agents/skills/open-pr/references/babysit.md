@@ -6,7 +6,7 @@ Start this as soon as the PR is open. The watch is a default part of open-pr, no
 
 Poll the PR and surface anything that needs the author's attention:
 
-1. **CI status.** [`.github/workflows/ci.yml`](../../../../.github/workflows/ci.yml) runs `pnpm check`, `pnpm typecheck`, and `pnpm test` on every pull request.
+1. **CI status.** [`.github/workflows/ci.yml`](../../../../.github/workflows/ci.yml) runs `pnpm verify` on every pull request.
    ```bash
    gh pr checks <number>
    gh pr view <number> --json statusCheckRollup
@@ -26,7 +26,7 @@ Poll the PR and surface anything that needs the author's attention:
    ```
    On a conflict, use the `sync-with-main` skill.
 
-CI catches the same three commands Step 2 of the skill already ran, so a red check on a PR you opened means something changed after you ran them — a merge with `main`, or a push you did not verify. Re-run them locally before pushing a fix, and say the result in the same message as the push.
+CI catches the same base gate Step 2 of the skill already ran, so a red check on a PR you opened means something changed after you ran it — a rebase onto `main`, or a push you did not verify. Re-run `pnpm verify` locally before pushing a fix, and say the result in the same message as the push.
 
 ## Cadence
 

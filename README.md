@@ -41,14 +41,15 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ## Common commands
 
 ```bash
+pnpm verify       # canonical base gate: check, build, typecheck, test
 pnpm check        # Biome lint + format check
+pnpm build        # production build
 pnpm fix          # Biome, writing fixes
 pnpm typecheck    # tsc across the workspace
 pnpm test         # Vitest
 pnpm test:e2e     # Playwright against isolated local Cloudflare bindings
 pnpm test:e2e:ui  # Playwright's interactive runner
 pnpm db:generate  # new migration from schema changes
-pnpm build        # production build
 pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy command)
 ```
 

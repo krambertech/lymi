@@ -13,10 +13,10 @@ One deployable: `apps/web` is the Vite React client and the Hono Worker together
 For branch creation, syncing with `main`, commit messages, pull request titles, and merging, follow [`docs/git-workflow.md`](docs/git-workflow.md).
 
 ```bash
-pnpm check && pnpm typecheck && pnpm test
+pnpm verify
 ```
 
-In a fresh clone, run `pnpm build` first — `routeTree.gen.ts` is generated and git-ignored, so `typecheck` has nothing to read until something has built. `pnpm fix` writes the Biome fixes. CI runs the same three on every pull request ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)), so a failure here is a failure there.
+`pnpm verify` runs formatting and lint checks, the production build, typechecking, and unit tests in that order. The build generates the git-ignored `routeTree.gen.ts` that typechecking needs in a fresh clone. `pnpm fix` writes the Biome fixes. CI runs the same base gate on every pull request ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)), so a failure here is a failure there.
 
 ## Conventions
 

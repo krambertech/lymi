@@ -136,7 +136,9 @@ export async function dispatchReviewReminders(
          WHERE s.user_id = ps.user_id
            AND s.due <= ?
            AND c.archived_at IS NULL
-           AND d.archived_at IS NULL) AS due_count
+           AND d.archived_at IS NULL
+           AND (coalesce(c.directions, d.directions) = 'both'
+                OR s.direction = coalesce(c.directions, d.directions))) AS due_count
        FROM push_subscriptions ps`,
   )
     .bind(now.getTime())

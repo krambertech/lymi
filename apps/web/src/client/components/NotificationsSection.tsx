@@ -3,10 +3,10 @@ import { Bell, Download } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ApiError, api } from "../lib/api";
 import { promptToInstall, useInstallState } from "../lib/pwa-install";
-import { SettingsGroup } from "../views/YouView";
 import { Button } from "./Button";
 import { Dialog } from "./Dialog";
 import { Field, Input } from "./Field";
+import { SettingsGroup } from "./SettingsGroup";
 import { Switch } from "./Switch";
 
 const DEFAULT_TIME: ReminderTime = "19:00";
@@ -259,7 +259,7 @@ export function NotificationsSection() {
                 </Field>
                 <Button
                   size="sm"
-                  disabled={busy || time === savedTime || !validTime}
+                  aria-disabled={busy || time === savedTime || !validTime}
                   onClick={() => void saveTime()}
                 >
                   Save reminder

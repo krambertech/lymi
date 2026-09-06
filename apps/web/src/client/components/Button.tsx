@@ -18,7 +18,9 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 const base =
   "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tabular-nums " +
   "transition-[background-color,color,box-shadow,scale] duration-150 ease-out " +
-  "active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 aria-busy:pointer-events-none";
+  "active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 " +
+  // Busy and unavailable dim the same way, but stay focusable: see the note on `Button`.
+  "aria-disabled:opacity-45 aria-disabled:active:scale-100";
 
 /** Buttons with an icon on one side trim 2 px on that side so the label reads centred. */
 const iconSide =
@@ -46,16 +48,33 @@ export function buttonClass(
   return clsx(base, iconSide, variants[variant], sizes[size], className);
 }
 
+/**
+ * A button is never taken away for being unable to run yet. `disabled` drops it out of the
+ * tab order and tells a screen reader nothing about why, so a form that greys out its submit
+ * leaves the learner with no way to ask what is missing. Instead the button stays pressable,
+ * the form validates on submit and says what is wrong. `aria-disabled` is for the cases where
+ * pressing genuinely cannot do anything yet — mid-request, or a handler that does not exist —
+ * and it keeps the button focusable and announced while swallowing the press.
+ */
 export const Button = forwardRef<HTMLButtonElement, Props>(function Button(
-  { variant = "secondary", size = "md", kbd, loading, className, children, ...rest },
+  { variant = "secondary", size = "md", kbd, loading, className, children, onClick, ...rest },
   ref,
 ) {
+  const inert = loading || rest["aria-disabled"] === true || rest["aria-disabled"] === "true";
   return (
     <button
       ref={ref}
       type="button"
       className={clsx(base, iconSide, variants[variant], sizes[size], className)}
       aria-busy={loading || undefined}
+      aria-disabled={inert || undefined}
+      onClick={(e) => {
+        if (inert) {
+          e.preventDefault();
+          return;
+        }
+        onClick?.(e);
+      }}
       {...rest}
     >
       <span

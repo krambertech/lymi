@@ -1,9 +1,18 @@
 import type { Card, CardState } from "@lymi/core/schema";
 import { Link } from "@tanstack/react-router";
-import { Archive, ChevronLeft, Download, MoreHorizontal, Pencil, Search } from "lucide-react";
+import {
+  Archive,
+  ChevronLeft,
+  Download,
+  MoreHorizontal,
+  Pencil,
+  Search,
+  Settings2,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
 import { SourceChip, StateChip } from "../components/Chip";
+import { directionLabel } from "../components/DeckFields";
 import { EmptyState } from "../components/EmptyState";
 import { Input } from "../components/Field";
 import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
@@ -20,6 +29,8 @@ export interface DeckDetailProps {
   onReview?: (() => void) | undefined;
   /** Rename the deck. Absent on the design page, where the menu is for show. */
   onRename?: ((name: string) => Promise<unknown> | undefined) | undefined;
+  /** Open the deck's settings screen. */
+  onSettings?: (() => void) | undefined;
   onArchiveDeck?: (() => void) | undefined;
   static?: StaticNav;
 }
@@ -77,6 +88,7 @@ export function DeckDetailView({
   onArchive,
   onReview,
   onRename,
+  onSettings,
   onArchiveDeck,
   static: st,
 }: DeckDetailProps) {
@@ -175,6 +187,9 @@ export function DeckDetailView({
                 )}
               </MenuTrigger>
               <MenuList>
+                <MenuItem icon={<Settings2 />} onSelect={onSettings} disabled={!onSettings}>
+                  Deck settings
+                </MenuItem>
                 <MenuItem icon={<Pencil />} onSelect={startRename} disabled={!deck || !onRename}>
                   Rename
                 </MenuItem>
@@ -205,6 +220,10 @@ export function DeckDetailView({
               <b className="mr-3 font-semibold text-amber-text">{deck.due} due today</b>
             )}
             {deck.total} {deck.total === 1 ? "card" : "cards"}
+            {/* The default needs no saying; a deck asked another way does. */}
+            {deck.directions !== "recognition" && (
+              <span className="ml-3">{directionLabel(deck.directions)}</span>
+            )}
           </p>
         )}
       </PageHeader>

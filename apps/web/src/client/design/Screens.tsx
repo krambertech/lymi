@@ -3,10 +3,13 @@ import { useState } from "react";
 import { AddCardForm } from "../components/AddCardSheet";
 import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
+import { NewDeckForm } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
+import { SheetPanel } from "../components/Sheet";
 import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
+import { DeckSettingsView } from "../views/DeckSettingsView";
 import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
 import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/ReviewView";
@@ -236,13 +239,15 @@ export function Screens() {
           <PhoneShot caption="Add a word" initial="dark" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
               <div className="edge-2 rounded-t-xl bg-plate">
-                <AddCardForm
-                  decks={m.decks}
-                  deckId="d1"
-                  onCancel={noop}
-                  onSubmit={() => undefined}
-                  static
-                />
+                <SheetPanel variant="drawer" title="Add a word or phrase" titleHidden>
+                  <AddCardForm
+                    decks={m.decks}
+                    deckId="d1"
+                    onCancel={noop}
+                    onSubmit={() => undefined}
+                    static
+                  />
+                </SheetPanel>
               </div>
             </div>
           </PhoneShot>
@@ -274,6 +279,81 @@ export function Screens() {
                   onAdd={noop}
                   onArchive={noop}
                   static={{ path: "/library/d1" }}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+      </Sub>
+
+      <Sub
+        title="Making a deck, and settling it"
+        note="A deck is a name and two settings, so creating one is a sheet rather than a wizard: the name is the field that matters and the rest already has an answer. The sheet takes the shape of the machine it is on: a drawer under the thumb on the phone, a centred modal on a desktop, same panel inside both. Everything chosen there can be changed afterwards on the deck's own settings screen, which is a screen and not a sheet because the back gesture should work and the direction choice needs room to say what it does. Nothing there has a Save button."
+      >
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="New deck" initial="light" path="/library" bare>
+            <div className="flex flex-1 flex-col justify-end bg-scrim">
+              <div className="edge-2 rounded-t-xl bg-plate">
+                <SheetPanel variant="drawer" title="New deck">
+                  <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
+                </SheetPanel>
+              </div>
+            </div>
+          </PhoneShot>
+          <PhoneShot caption="Deck settings" initial="dark" path="/library">
+            <DeckSettingsView
+              deck={m.decks[2]}
+              example={{
+                term: "затишок",
+                meaning: "a cosy, sheltered spot",
+              }}
+              onSave={noop}
+              saved
+              static={{ path: "/library" }}
+            />
+          </PhoneShot>
+        </div>
+        <Shot caption="Desktop, the same sheet as a modal" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={560}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                onAdd={noop}
+                static={{ path: "/library" }}
+              />
+              <main className="@container relative flex min-w-0 flex-1 flex-col">
+                <LibraryView decks={m.decks} archivedCount={9} static={{ path: "/library" }} />
+                <div className="absolute inset-0 grid place-items-center bg-scrim">
+                  <div className="edge-2 w-[min(92%,440px)] rounded-xl bg-plate">
+                    <SheetPanel variant="modal" title="New deck">
+                      <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
+                    </SheetPanel>
+                  </div>
+                </div>
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+        <Shot caption="Desktop, deck settings" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={720}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                onAdd={noop}
+                static={{ path: "/library/d3" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <DeckSettingsView
+                  deck={m.decks[2]}
+                  example={{
+                    term: "затишок",
+                    meaning: "a cosy, sheltered spot",
+                  }}
+                  onSave={noop}
+                  onArchive={noop}
+                  static={{ path: "/library/d3" }}
                 />
               </main>
             </Desktop>

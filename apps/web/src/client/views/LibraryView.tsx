@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
-import { buttonClass } from "../components/Button";
+import { Button, buttonClass } from "../components/Button";
 import { DeckCard } from "../components/DeckCard";
 import { EmptyState } from "../components/EmptyState";
 import { Lantern } from "../components/Lantern";
@@ -102,6 +103,12 @@ export function LibraryView({
           lantern="none"
           title="No decks yet"
           body="One per lesson works well, or one per topic. You can move cards later."
+          action={
+            <Button variant="primary" onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
+              <Plus aria-hidden="true" />
+              New deck
+            </Button>
+          }
           className="py-6"
         />
       )}

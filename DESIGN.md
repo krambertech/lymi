@@ -322,6 +322,9 @@ four equal grade controls. Flare is 320 ms.
 Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme
 switch suspends transitions for one frame so the room swaps at once.
 
+A sheet arrives the way its shape does: the drawer on vaul's curve from the bottom edge, the
+desktop modal with the card's 6 px rise over 200 ms. Both leave in 140 ms, faster than they came.
+
 The auth screens have one moving part: the connection. The app that asked and the lantern sit
 in matching tiles joined by a rail, dotted while the decision is open. When the grant lands the
 rail draws across in amber over 420 ms and the wick catches 300 ms in, so the two read as one
@@ -370,23 +373,79 @@ The seven lights sit with it. They say which days, where the streak says how man
 
 `components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading),
 IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and
-SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SevenLights, Table, Menu, Dialog,
-AddCardSheet, AddMenu, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame,
-StreakPill, StreakPlate, AppMark, Connection, Lantern, Wordmark, Lockup.
+SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu,
+Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField,
+DirectionField, DirectionCompact,
+Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, StreakPill, StreakPlate,
+AppMark, Connection, Lantern, Wordmark, Lockup.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data.
 They lay out by their container (`@3xl` = 768 px), not the viewport.
 
-Deck actions live behind one menu: Rename is inline on the title, Export writes a CSV, Archive
-leaves the deck list with an Undo toast. Cards archive the same way, from the row.
+Deck actions live behind one menu: Deck settings opens a screen, Rename is inline on the title,
+Export writes a CSV, Archive leaves the deck list with an Undo toast. Cards archive the same way,
+from the row.
+
+A deck is a name and two settings, so making one is a sheet and not a wizard. The name is the one
+field that matters and takes the large input; language and direction already have an answer, so
+they sit under it as a select and three segments. Creating it lands the learner in the empty deck,
+which is where the words go next. Everything chosen there is changeable afterwards.
+
+Changing it is a screen, `/library/$deckId/settings`, because on the phone it should push in and the
+back gesture should work, and because the direction choice needs room to say what it does: three
+rows, each spelling out what will be shown, using a real card from the deck. Selection is carried by
+the edge and a filled dot — amber stays on the flame and the one primary action. Nothing on the
+screen has a Save button. A choice is made when it is made, a name commits on blur and on the way
+out, and one quiet "Saved" in the header says so. What changing the direction does to the cards
+already in the deck is [ADR 0007](docs/adr/0007-a-decks-direction-is-a-filter-not-a-migration.md).
 
 A deck in Library is a card, not a row: it carries four numbers, and one line makes them a run of
 digits nobody reads. The name is on the first line, the counts on the second. A row of new cards
 names its actor, because a card an integration wrote must never look like one the learner typed.
 
+A sheet takes the shape of the machine it is on. On the phone it is a drawer that rises from the
+bottom edge and can be swiped away, because that is where the thumb is. On a desktop a panel pinned
+to the bottom of a 1400 px window is a phone pattern nobody finished, so the same sheet becomes a
+centred modal. One `Sheet` decides, one `SheetPanel` is the inside of both, and the forms know
+nothing about either. The rule is `(min-width: 768px) and (hover: hover) and (pointer: fine)`: the
+pointer counts as well as the width, so a tablet held in two hands still gets the drawer at 900 px.
+The shape is frozen while the sheet is open, because crossing the breakpoint mid-edit would
+otherwise remount the form and take the half-typed word with it.
+
+The desktop shape is the platform's own `<dialog>`, opened with `showModal()`, so focus trapping,
+Escape and the top layer are the browser's job rather than ours. It enters with the card's 6 px rise
+over 200 ms and leaves in 140, which needs `overlay` and `display` to transition `allow-discrete` —
+without those the browser takes it out of the top layer on the first frame and there is no exit at
+all. The `.sheet-modal` class carries all of it, and `Dialog` uses the same one.
+
+Every control in a form is the same box: 44 px tall on the phone, 40 on the desktop, 16 px text so
+iOS does not zoom on focus. Input, Select, Combobox and the segmented control all take it from
+`controlSize`, so a form reads as one row repeated rather than a pile of different objects. There is
+no larger cut for "the one field that matters" — a form with three type sizes in it looks unfinished,
+and the field that matters is already first. Controls size by the **viewport**, not the container:
+a phone is a phone whatever it is nested in, and a sheet renders in a portal where a container query
+has nothing to measure and would silently never fire.
+
+A list of forty is a list you search. `Combobox` is the control for that: closed it is the same box
+as every other, and open, the box becomes the search field and the list unrolls under it in the
+normal flow. In the flow rather than floating, because a floating layer has to escape the sheet's
+scroll and inside the phone's drawer it cannot — vaul translates the drawer to drag it, which makes
+it the containing block for anything fixed. Each row carries the value beside the name, because
+`pt-BR` is what tells Brazilian Portuguese from Portuguese and it is what gets stored. A value the
+list has never heard of is typed into the search and becomes the last row.
+
+**A button is never taken away for being unable to run yet.** `disabled` drops it out of the tab
+order and tells a screen reader nothing about what is missing, so a greyed-out submit leaves the
+learner with no way to ask. Forms stay pressable and validate on submit: the same Zod schema the
+route parses with, the message under the field with its icon, and the caret moved to the first thing
+that is wrong. The messages live on the schema in `packages/core`, so what the API says on a 400 is
+what the field says under the control. `aria-disabled` is for the cases where pressing genuinely
+cannot do anything — mid-request, or a handler that does not exist — and it keeps the button
+focusable and announced while swallowing the press.
+
 Rules: one primary per view. Every control has default, hover, focus, active, disabled and, where it
-applies, loading. Hit areas are 44 px on the phone, 40 on desktop. Inputs are 16 px on the phone.
-Modals are a last resort; Undo replaces confirmation.
+applies, loading. A modal that asks a question is a last resort; Undo replaces confirmation. A sheet
+is not that modal: it is a form the learner asked for.
 
 ## Voice
 

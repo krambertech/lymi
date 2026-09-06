@@ -4,6 +4,7 @@ import { and, asc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
+import { asked } from "./decks";
 
 /**
  * Cards due now, oldest due first. The scheduler preview stays available to API
@@ -15,10 +16,13 @@ export async function reviewQueue(
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
   const now = new Date();
+  // An archived deck leaves every list, review included; its cards keep their progress.
   const where = and(
     eq(schema.cardStates.userId, userId),
     lte(schema.cardStates.due, now),
     isNull(schema.cards.archivedAt),
+    isNull(schema.decks.archivedAt),
+    asked,
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
   );
 
@@ -26,6 +30,7 @@ export async function reviewQueue(
     .select({ card: schema.cards, state: schema.cardStates })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .where(where)
     .orderBy(asc(schema.cardStates.due))
     .limit(limit * 2);
@@ -34,6 +39,7 @@ export async function reviewQueue(
     .select({ total: sql<number>`count(distinct ${schema.cardStates.cardId})` })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .where(where);
 
   const uniqueRows = oneDirectionPerCard(rows).slice(0, limit);

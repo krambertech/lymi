@@ -5,6 +5,7 @@ import { Avatar } from "../components/Avatar";
 import { Button } from "../components/Button";
 import { Kbd } from "../components/Kbd";
 import { Segmented } from "../components/Segmented";
+import { SettingsGroup } from "../components/SettingsGroup";
 import { Skeleton } from "../components/Skeleton";
 import type { Me } from "../lib/api";
 import type { ThemeChoice } from "../lib/theme";
@@ -40,16 +41,6 @@ export const SHORTCUTS: [string, string][] = [
   ["1 – 4", "Forgot, Hard, Good, Easy"],
   ["Esc", "Leave review or close a sheet"],
 ];
-
-/** A titled group of settings. One per concern, separated by a rule. */
-export function SettingsGroup({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="grid gap-3 py-5 [&+&]:border-t [&+&]:border-edge">
-      <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">{title}</h2>
-      {children}
-    </section>
-  );
-}
 
 /**
  * The learner, and everything they open rarely: what integrations wrote, what is archived,
@@ -171,7 +162,7 @@ export function YouView({
 
       <SettingsGroup title="Account">
         <div>
-          <Button size="sm" onClick={onSignOut} loading={signingOut} disabled={!onSignOut}>
+          <Button size="sm" onClick={onSignOut} loading={signingOut} aria-disabled={!onSignOut}>
             <LogOut aria-hidden="true" />
             Sign out
           </Button>

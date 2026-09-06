@@ -42,7 +42,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 export type Me = { id: string; name: string; email: string; image: string | null };
 export type DeckSummary = Pick<
   Deck,
-  "id" | "name" | "description" | "defaultLanguage" | "position"
+  "id" | "name" | "description" | "defaultLanguage" | "directions" | "position"
 > & {
   total: number;
   due: number;
@@ -90,7 +90,7 @@ export type PushSubscriptionStatus = {
 export const api = {
   me: () => request<Me>("/api/me"),
   decks: () => request<DeckSummary[]>("/api/decks"),
-  createDeck: (body: { name: string; defaultLanguage?: string | null }) =>
+  createDeck: (body: DeckInput) =>
     request<Deck>("/api/decks", { method: "POST", body: JSON.stringify(body) }),
   updateDeck: (id: string, body: { [K in keyof DeckInput]?: DeckInput[K] | undefined }) =>
     request<Deck>(`/api/decks/${id}`, { method: "PATCH", body: JSON.stringify(body) }),

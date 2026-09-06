@@ -165,10 +165,10 @@ function DevSignIn() {
       />
       {error && <p className="text-sm text-danger">{error}</p>}
       <div className="flex gap-2">
-        <Button size="sm" type="submit" disabled={busy}>
+        <Button size="sm" type="submit" aria-disabled={busy}>
           Sign in
         </Button>
-        <Button size="sm" variant="ghost" disabled={busy} onClick={() => void go("up")}>
+        <Button size="sm" variant="ghost" aria-disabled={busy} onClick={() => void go("up")}>
           Create account
         </Button>
       </div>

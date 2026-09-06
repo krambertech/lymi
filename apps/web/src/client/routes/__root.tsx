@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { AddCardSheet } from "../components/AddCardSheet";
+import { NewDeckSheet } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, flushOutbox } from "../lib/api";
@@ -120,6 +121,11 @@ function Shell() {
         open={add.open === "card"}
         onOpenChange={(v) => (v ? add.openCard() : add.close())}
         deckId={add.deckId}
+        onCreateDeck={add.openDeck}
+      />
+      <NewDeckSheet
+        open={add.open === "deck"}
+        onOpenChange={(v) => (v ? add.openDeck() : add.close())}
       />
     </>
   );

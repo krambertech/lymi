@@ -23,29 +23,47 @@ export type Actor = z.infer<typeof Actor>;
 export const Scope = z.enum(["read", "write"]);
 export type Scope = z.infer<typeof Scope>;
 
-/** BCP 47 language tag, loosely validated. "it", "pt-BR", "uk". */
+/**
+ * BCP 47 language tag, loosely validated. "it", "pt-BR", "uk". The messages are written for
+ * a person because they are shown to one: the interface parses with these same schemas, so
+ * whatever the API says on a 400 is what the field says under the control.
+ */
 export const LanguageTag = z
   .string()
-  .min(2)
-  .max(12)
-  .regex(/^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/);
+  .min(2, "A language tag is at least two letters, like it or uk.")
+  .max(12, "That is too long for a language tag.")
+  .regex(/^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/, "Use a language tag like ca, pt-BR or zh-Hant.");
 
 /** Which way a deck (or a single card) is asked. */
 export const Directions = z.enum(["recognition", "production", "both"]);
 export type Directions = z.infer<typeof Directions>;
 
 export const DeckInput = z.object({
-  name: z.string().trim().min(1).max(80),
-  description: z.string().trim().max(500).optional(),
+  name: z
+    .string()
+    .trim()
+    .min(1, "Give the deck a name.")
+    .max(80, "Keep the name under 80 characters."),
+  /** Null clears it, so a description can be taken back off a deck. */
+  description: z
+    .string()
+    .trim()
+    .max(500, "Keep the description under 500 characters.")
+    .nullable()
+    .optional(),
   defaultLanguage: LanguageTag.nullable().optional(),
   directions: Directions.optional(),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
 export const CardInput = z.object({
-  deckId: z.string().min(1),
-  term: z.string().trim().min(1).max(500),
-  meaning: z.string().trim().max(1000).optional(),
+  deckId: z.string().min(1, "Choose a deck for it to go in."),
+  term: z
+    .string()
+    .trim()
+    .min(1, "Type the word or phrase.")
+    .max(500, "That is longer than a card holds."),
+  meaning: z.string().trim().max(1000, "Keep the meaning under 1000 characters.").optional(),
   pronunciation: z.string().trim().max(200).optional(),
   example: z.string().trim().max(1000).optional(),
   notes: z.string().trim().max(2000).optional(),
@@ -130,7 +148,11 @@ export const PushEndpointInput = z.object({ endpoint: PushEndpoint });
 export type PushEndpointInput = z.infer<typeof PushEndpointInput>;
 
 export const ApiKeyInput = z.object({
-  name: z.string().trim().min(1).max(32),
+  name: z
+    .string()
+    .trim()
+    .min(1, "Name the key, so you know which one to revoke later.")
+    .max(32, "Keep the name under 32 characters."),
   scope: Scope,
 });
 export type ApiKeyInput = z.infer<typeof ApiKeyInput>;

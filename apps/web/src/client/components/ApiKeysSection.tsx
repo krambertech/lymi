@@ -1,16 +1,17 @@
-import type { Scope } from "@lymi/core";
+import { ApiKeyInput, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api } from "../lib/api";
+import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { keysQuery } from "../lib/queries";
-import { SettingsGroup } from "../views/YouView";
 import { Button } from "./Button";
 import { Chip } from "./Chip";
 import { CopyField } from "./CopyField";
 import { Field, Input } from "./Field";
 import { Lantern } from "./Lantern";
 import { Segmented } from "./Segmented";
+import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
 
 const SCOPES: { value: Scope; label: string; hint: string }[] = [
@@ -31,6 +32,7 @@ export function ApiKeysSection() {
   const [name, setName] = useState("");
   const [scope, setScope] = useState<Scope>("read");
   const [fresh, setFresh] = useState<{ id: string; key: string; name: string } | null>(null);
+  const [invalid, setInvalid] = useState<FieldErrors>({});
 
   const create = useMutation({
     mutationFn: () => api.createKey({ name: name.trim(), scope }),
@@ -50,7 +52,6 @@ export function ApiKeysSection() {
     },
   });
 
-  const canCreate = name.trim().length > 0 && !create.isPending;
   // The new key has its own panel above; listing it as well reads as two keys.
   const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id);
   const empty = keys.isSuccess && rest.length === 0;
@@ -104,15 +105,31 @@ export function ApiKeysSection() {
           className="enter-card edge grid gap-4 rounded-md bg-plate p-4"
           onSubmit={(e) => {
             e.preventDefault();
-            if (canCreate) create.mutate();
+            if (create.isPending) return;
+            const parsed = ApiKeyInput.safeParse({ name, scope });
+            if (!parsed.success) {
+              setInvalid(fieldErrors(parsed.error));
+              focusFirstInvalid(e.currentTarget);
+              return;
+            }
+            setInvalid({});
+            create.mutate();
           }}
         >
-          <Field label="Name" hint="So you know which key to revoke later." className="max-w-sm">
+          <Field
+            label="Name"
+            hint="So you know which key to revoke later."
+            error={invalid.name}
+            className="max-w-sm"
+          >
             {/* Focus follows the button that revealed the field, so it is not a surprise. */}
             <Input
               autoFocus
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                setInvalid(({ name: _, ...rest }) => rest);
+              }}
               maxLength={32}
               placeholder="Claude Code on the laptop"
               autoComplete="off"
@@ -131,19 +148,13 @@ export function ApiKeysSection() {
             </p>
           )}
           <div className="flex gap-2">
-            <Button
-              type="submit"
-              variant="primary"
-              size="sm"
-              disabled={!canCreate}
-              loading={create.isPending}
-            >
+            <Button type="submit" variant="primary" size="sm" loading={create.isPending}>
               Create key
             </Button>
             <Button
               size="sm"
               variant="ghost"
-              disabled={create.isPending}
+              aria-disabled={create.isPending}
               onClick={() => {
                 setMaking(false);
                 setName("");
@@ -204,7 +215,7 @@ function KeyRow({
             size="sm"
             variant="danger"
             loading={revoking}
-            disabled={revoking}
+            aria-disabled={revoking}
             onClick={onRevoke}
           >
             Revoke key

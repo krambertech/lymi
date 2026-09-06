@@ -34,8 +34,8 @@ export function Dialog({ open, onClose, title, children, actions, className }: P
         if (e.target === ref.current) onClose();
       }}
       className={clsx(
-        "edge-2 m-auto w-[min(92vw,420px)] rounded-lg bg-plate p-0 text-text backdrop:bg-scrim",
-        "open:enter-card",
+        // `sheet-modal` carries the enter and the exit, shared with the desktop shape of Sheet.
+        "sheet-modal edge-2 m-auto w-[min(92vw,420px)] rounded-lg bg-plate p-0 text-text",
         className,
       )}
     >

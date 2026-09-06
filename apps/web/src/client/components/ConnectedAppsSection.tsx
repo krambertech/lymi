@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import type { ConnectedApp } from "../lib/api";
 import { api } from "../lib/api";
 import { connectedAppsQuery } from "../lib/queries";
-import { SettingsGroup } from "../views/YouView";
 import { AppMark, identifyApp } from "./AppMark";
 import { Button } from "./Button";
 import { Chip } from "./Chip";
+import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
 
 /**
@@ -109,7 +109,7 @@ function AppRow({
             size="sm"
             variant="danger"
             loading={disconnecting}
-            disabled={disconnecting}
+            aria-disabled={disconnecting}
             onClick={onDisconnect}
           >
             Disconnect

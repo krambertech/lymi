@@ -4,6 +4,7 @@ import { Section, Sub } from "./Frame";
 
 const TOKENS: { name: string; role: string; text?: string; decorative?: boolean }[] = [
   { name: "canvas", role: "The room. Page background." },
+  { name: "rail", role: "The navigation rail: one surface off the room, so chrome reads apart." },
   { name: "plate", role: "A thing in the room: cards, rows, inputs, the active nav item." },
   { name: "plate-2", role: "A well inside a plate: segmented tracks, chips, kbd." },
   { name: "hover", role: "Plate on hover." },

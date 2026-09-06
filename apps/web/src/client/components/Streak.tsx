@@ -22,12 +22,14 @@ function plural(n: number, one: string, many: string) {
  * do not follow it, because the header has no room and the hero owns the screen.
  */
 export function StreakPill({ days, className }: StreakProps) {
-  if (!days) return <Skeleton className={clsx("h-[34px] w-16 rounded-full", className)} />;
+  if (!days) return <Skeleton className={clsx("h-10 w-[70px] rounded-full", className)} />;
   const run = streakLength(days);
   return (
     <span
       className={clsx(
-        "edge inline-flex h-[34px] shrink-0 items-center gap-1.5 rounded-full bg-plate pl-2 pr-3 text-base font-semibold tabular-nums text-text",
+        // One height with the buttons beside it in the header: a row of controls at three
+        // different sizes is what makes a header look unfinished.
+        "edge inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-plate pl-2.5 pr-3.5 text-base font-semibold tabular-nums text-text",
         className,
       )}
       role="img"

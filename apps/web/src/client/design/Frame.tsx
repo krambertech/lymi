@@ -90,7 +90,7 @@ export function Desktop({
     >
       <div
         data-theme={theme}
-        className="@container edge-2 absolute left-0 top-0 flex origin-top-left overflow-hidden rounded-xl bg-canvas text-text"
+        className="@container/shell edge-2 absolute left-0 top-0 flex origin-top-left overflow-hidden rounded-xl bg-canvas text-text"
         style={{ width: W, height, transform: `scale(${scale})` }}
       >
         {children}

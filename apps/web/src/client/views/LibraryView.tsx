@@ -73,7 +73,9 @@ export function LibraryView({
             : `${plural(decks.length, "deck", "decks")} · ${plural(total, "card", "cards")}`
         }
         actions={
-          <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+          <div className="@3xl/shell:hidden">
+            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+          </div>
         }
       />
 
@@ -114,7 +116,7 @@ export function LibraryView({
       )}
 
       {decks && decks.length > 0 && (
-        <ul className="grid gap-2">
+        <ul className="grid gap-2 @3xl:grid-cols-2 @3xl:gap-3">
           {decks.map((d) => (
             <li key={d.id} className="min-w-0">
               <DeckCard

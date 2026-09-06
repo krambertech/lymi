@@ -160,6 +160,23 @@ export function Screens() {
             <TodayView decks={[]} history={m.noHistory} name={m.me.name} static={{ path: "/" }} />
           </PhoneShot>
         </div>
+        <Shot caption="Desktop, Today" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={560}>
+              <Sidebar decks={m.decks} name={m.me.name} onAdd={noop} static={{ path: "/" }} />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <TodayView
+                  decks={m.decks}
+                  history={m.streakDays}
+                  arrivals={m.arrivals}
+                  forecast="31 tomorrow, 9 on Monday"
+                  name={m.me.name}
+                  static={{ path: "/" }}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
       </Sub>
 
       <Sub

@@ -18,6 +18,10 @@ _Avoid_: Word, front
 A named group of cards. It may carry a default language, but language lives on the card.
 _Avoid_: Collection, list, folder
 
+**Library**:
+The screen holding every deck. The decks are decks; Library is where they are.
+_Avoid_: Decks (as a screen name), collections, my decks
+
 **Field source**:
 Where one field's text came from: the lesson, the AI, or the learner by hand. Shown so AI text is never mistaken for the lesson.
 
@@ -45,6 +49,12 @@ _Avoid_: Score, answer, rating (in prose)
 **Direction**:
 Which way a card is asked. Recognition shows the term. Production shows the meaning.
 
+**Streak**:
+Days in a row with at least one review, drawn as the flame. Today counts once it has a review and is
+otherwise skipped, so an unreviewed morning still shows yesterday's streak. Distinct from the seven
+lights, which say which days rather than how many.
+_Avoid_: Chain, run, days active
+
 ### Integrations and oversight
 
 **Actor**:
@@ -64,6 +74,11 @@ _Avoid_: Revoke (that is for API keys), remove, delete
 **Activity**:
 The list of writes made by integrations and the AI, shown in the app so nothing lands unseen. Cards can be inspected, edited or archived from there.
 _Avoid_: Review queue, inbox, approvals, history (for this screen)
+
+**You**:
+The screen holding the learner: their profile, Activity, Archived, and every setting. One screen, so
+none of those needs a place in the navigation.
+_Avoid_: Profile, account, me, settings (as the screen name)
 
 **Inspect**:
 Looking over a card an integration added, and optionally editing or archiving it.

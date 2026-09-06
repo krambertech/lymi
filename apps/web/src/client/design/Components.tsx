@@ -1,23 +1,26 @@
 import { Archive, Download, MoreHorizontal, Pencil, Search, Volume2, X } from "lucide-react";
 import { useState } from "react";
+import { Avatar } from "../components/Avatar";
 import { Button, IconButton } from "../components/Button";
 import { Checkbox } from "../components/Checkbox";
 import { Chip, SourceChip, StateChip } from "../components/Chip";
+import { DeckCard } from "../components/DeckCard";
 import { Dialog } from "../components/Dialog";
 import { EmptyState } from "../components/EmptyState";
 import { Field, Input, Select, Textarea } from "../components/Field";
 import { Kbd } from "../components/Kbd";
 import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
+import { NewCardsRow } from "../components/NewCardsRow";
 import { Progress } from "../components/Progress";
 import { Segmented } from "../components/Segmented";
 import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
+import { StreakPill, StreakPlate } from "../components/Streak";
 import { Switch } from "../components/Switch";
 import { Table, Td, Th } from "../components/Table";
 import { Toast } from "../components/Toast";
-import { DeckRow } from "../views/Shell";
 import { Pair, Section, Specimen, Sub } from "./Frame";
-import { deckCards, history } from "./mock";
+import { deckCards, history, streakDays } from "./mock";
 
 export function Components() {
   const [seg, setSeg] = useState("recognise");
@@ -212,6 +215,11 @@ export function Components() {
                 <Skeleton className="h-11" />
               </div>
               <SevenLights days={history} />
+              <div className="flex items-center gap-3">
+                <StreakPill days={streakDays} />
+                <Avatar name="Kateryna" size={34} />
+              </div>
+              <StreakPlate days={streakDays} />
             </div>
           )}
         </Pair>
@@ -278,25 +286,35 @@ export function Components() {
 
       <Sub
         title="Lists and tables"
-        note="A deck row: name, due in amber, total. A table: dense, hairline rows, right-aligned tabular numbers. The archive control shows on hover where there is a pointer and always on touch."
+        note="A deck card carries four numbers, so it takes two lines. A row of new cards names the actor, because an integration’s card must never look like one you typed. A table: dense, hairline rows, right-aligned tabular numbers."
       >
         <Pair stack>
           {(t) => (
             <div className="grid gap-4">
-              <DeckRow
+              <DeckCard
+                id="d1"
                 name="Lesson 14"
                 language="it"
                 due={8}
                 total={24}
-                href="/decks/d1"
+                fresh={12}
                 st={{ path: "" }}
               />
-              <DeckRow
+              <DeckCard
+                id="d2"
                 name="Portuguese"
                 language="pt-BR"
                 due={0}
                 total={41}
-                href="/decks/d2"
+                next="Monday"
+                st={{ path: "" }}
+              />
+              <NewCardsRow
+                deckId="d1"
+                deckName="Lesson 14"
+                count={12}
+                actor="Claude"
+                when="Tuesday"
                 st={{ path: "" }}
               />
               <Table>

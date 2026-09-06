@@ -111,20 +111,20 @@ export function DeckDetailView({
   const back = (
     <>
       <ChevronLeft className="size-4" aria-hidden="true" />
-      Decks
+      Library
     </>
   );
 
   return (
-    <Page width="lg">
+    <Page>
       <PageHeader
         eyebrow={
           st ? (
-            <a href="/decks" onClick={(e) => e.preventDefault()} className={backCls}>
+            <a href="/library" onClick={(e) => e.preventDefault()} className={backCls}>
               {back}
             </a>
           ) : (
-            <Link to="/decks" className={backCls}>
+            <Link to="/library" className={backCls}>
               {back}
             </Link>
           )

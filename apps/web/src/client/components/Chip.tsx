@@ -30,7 +30,7 @@ export function Chip({
   return (
     <span
       className={clsx(
-        "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full font-medium",
+        "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full font-medium tabular-nums",
         size === "md" ? "h-[26px] px-2.5 text-xs" : "h-[22px] px-2 text-2xs",
         tones[tone],
         className,

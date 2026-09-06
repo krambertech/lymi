@@ -67,7 +67,7 @@ export function Space() {
 
       <Sub
         title="Layout"
-        note="Sidebar 240. Page column 672 for reading screens, 896 for the deck table. The review column is 448 on the phone and 576 on desktop, and the card never grows past 440 tall on desktop."
+        note="The shell caps at 1120 and centres; it never stretches. Sidebar 240, the rest is the page. Reading screens narrow to 672. The review column is 448 on the phone and 576 on desktop, and the card never grows past 440 tall on desktop."
       >
         <Specimen layout="block">
           <div className="grid gap-2 text-2xs text-muted">
@@ -77,7 +77,7 @@ export function Space() {
               </div>
               <div className="edge flex h-28 flex-1 items-end justify-center rounded-sm p-2">
                 <div className="edge flex h-20 w-[62%] items-end justify-center rounded-sm bg-plate-2 p-2">
-                  page 672 / 896
+                  page, 672 when reading
                 </div>
               </div>
             </div>

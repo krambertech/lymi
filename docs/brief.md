@@ -72,7 +72,7 @@ The user chooses Lymi for regular review. Adding vocabulary after a lesson takes
 
 ## Out of scope for now
 
-Public launch, payments, social features, shared or public decks, a marketplace, classroom features, a built-in course, native mobile apps.
+Public launch, payments, social features, shared or public decks, a marketplace, classroom features, a built-in course, native mobile apps. [Shared decks](proposals/shared-decks.md) are documented as a future exploration; this does not change the initial scope.
 
 ## Open questions
 

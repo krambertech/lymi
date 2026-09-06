@@ -2,7 +2,7 @@ import type { Rating } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { buttonClass } from "../components/Button";
+import { Button, buttonClass } from "../components/Button";
 import { api, gradeWithOutbox, type QueueItem } from "../lib/api";
 import { decksQuery, historyQuery, queueQuery } from "../lib/queries";
 import {
@@ -47,6 +47,17 @@ function Review() {
   const sessionTotal = items.length;
   const finished = queue.isSuccess && !current;
   const deckName = deck ? decks.data?.find((d) => d.id === deck)?.name : undefined;
+  // A session is one batch. What did not fit is offered as the next one rather than appended,
+  // because fifty cards at a sitting is already more than an evening wants.
+  const moreDue = Math.max(total - items.length, 0);
+
+  /** Start the next batch: refetch what is due now and begin its count from zero. */
+  const nextBatch = useCallback(() => {
+    setIndex(0);
+    setDone(0);
+    setRevealed(false);
+    void qc.invalidateQueries({ queryKey: ["queue"] });
+  }, [qc]);
 
   const stopAudio = useCallback(() => {
     playingAudio.current?.pause();
@@ -151,7 +162,6 @@ function Review() {
       <ReviewHeader
         done={done}
         total={sessionTotal}
-        deckName={deckName}
         flare={flare}
         onClose={() => navigate({ to: "/today" })}
       />
@@ -172,12 +182,24 @@ function Review() {
       {finished && (
         <SessionDone
           done={done}
-          moreDue={Math.max(total - items.length, 0)}
+          moreDue={moreDue}
+          deckName={deckName}
           history={history.data?.days}
           action={
-            <Link to="/today" className={buttonClass("primary", "lg")}>
-              Done
-            </Link>
+            moreDue > 0 ? (
+              <>
+                <Button variant="primary" size="lg" loading={queue.isFetching} onClick={nextBatch}>
+                  Keep going
+                </Button>
+                <Link to="/today" className={buttonClass("ghost", "lg")}>
+                  Done
+                </Link>
+              </>
+            ) : (
+              <Link to="/today" className={buttonClass("primary", "lg")}>
+                Done
+              </Link>
+            )
           }
         />
       )}
@@ -202,16 +224,15 @@ function Review() {
               {audioError}
             </p>
           )}
-          {revealed && (
-            <GradeBar
-              enabled
-              pending={grade.isPending}
-              pendingRating={pendingRating}
-              error={gradeError}
-              onGrade={(rating) => onGrade(rating, "pointer")}
-              className={`${animateReveal ? "grade-enter" : ""} mt-3 pb-3 @3xl:pb-0`}
-            />
-          )}
+          <GradeBar
+            revealed={revealed}
+            next={current.next}
+            pending={grade.isPending}
+            pendingRating={pendingRating}
+            error={gradeError}
+            onGrade={(rating) => onGrade(rating, "pointer")}
+            className={`${revealed && animateReveal ? "grade-enter" : ""} mt-3 pb-3 @3xl:pb-0`}
+          />
         </>
       )}
     </div>

@@ -84,14 +84,19 @@ function Shell() {
   return (
     <>
       <AppShell
+        // A session closes the app around it. The phone already hid its pill during review; the
+        // rail stayed up with search, capture, every deck and the profile, which made focus a
+        // phone-only idea. Both go now, and both come back when the session ends.
         sidebar={
-          <Sidebar
-            decks={decks.data}
-            name={me.data?.name}
-            onAdd={() => add.openCard()}
-            onCreateDeck={add.openDeck}
-            className="hidden @3xl/shell:flex"
-          />
+          onReview ? undefined : (
+            <Sidebar
+              decks={decks.data}
+              name={me.data?.name}
+              onAdd={() => add.openCard()}
+              onCreateDeck={add.openDeck}
+              className="hidden @3xl/shell:flex"
+            />
+          )
         }
         nav={onReview ? undefined : <PillNav />}
       >

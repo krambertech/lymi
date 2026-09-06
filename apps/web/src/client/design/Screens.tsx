@@ -105,7 +105,7 @@ function ReviewPhone({
   const item = produce ? m.queueItemProduce : m.queueItem;
   return (
     <div className="flex min-h-0 flex-1 flex-col px-4 pb-3">
-      <ReviewHeader done={4} total={11} deckName="Lesson 14" />
+      <ReviewHeader done={4} total={11} />
       <ReviewCard
         item={item}
         revealed={revealed}
@@ -113,14 +113,13 @@ function ReviewPhone({
         onPlayAudio={noop}
         className="mt-4"
       />
-      {revealed && (
-        <GradeBar
-          id={!produce ? "review-grade-preview" : undefined}
-          enabled
-          onGrade={() => setRevealed(false)}
-          className="grade-enter mt-3"
-        />
-      )}
+      <GradeBar
+        id={!produce ? "review-grade-preview" : undefined}
+        revealed={revealed}
+        next={item.next}
+        onGrade={() => setRevealed(false)}
+        className={revealed ? "grade-enter mt-3" : "mt-3"}
+      />
     </div>
   );
 }
@@ -234,9 +233,10 @@ export function Screens() {
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="That’s the lot" initial="dark" path="/review" bare>
             <div className="flex flex-1 flex-col px-4">
-              <ReviewHeader done={11} total={11} deckName="Lesson 14" />
+              <ReviewHeader done={11} total={11} />
               <SessionDone
                 done={11}
+                deckName="Lesson 14"
                 history={m.history}
                 action={
                   <Button variant="primary" size="lg">
@@ -252,7 +252,7 @@ export function Screens() {
                 <Sidebar decks={m.decks} name={m.me.name} onAdd={noop} static={{ path: "/" }} />
                 <main className="@container flex min-w-0 flex-1 flex-col">
                   <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-8 pt-4">
-                    <ReviewHeader done={4} total={11} deckName="Lesson 14" />
+                    <ReviewHeader done={4} total={11} />
                     <ReviewCard
                       item={m.queueItem}
                       revealed
@@ -260,7 +260,7 @@ export function Screens() {
                       onPlayAudio={noop}
                       className="mt-5 min-h-[400px] flex-none"
                     />
-                    <GradeBar enabled onGrade={noop} className="mt-3" />
+                    <GradeBar revealed next={m.queueItem.next} onGrade={noop} className="mt-3" />
                   </div>
                 </main>
               </Desktop>

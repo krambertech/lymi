@@ -25,7 +25,7 @@ pnpm exec playwright install chromium webkit
 
 ## CI policy
 
-`pnpm verify` is the canonical local base gate. CI runs the same commands in the same fail-fast order but gives formatting and lint, build, TypeScript, and unit tests their own named steps. A failure therefore identifies the broken gate without requiring an agent or developer to search a combined log.
+`pnpm verify` is the canonical local base gate. CI runs the same commands in the same fail-fast order but gives formatting and lint, migration safety, build, TypeScript, and unit tests their own named steps. A failure therefore identifies the broken gate without requiring an agent or developer to search a combined log.
 
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 
@@ -46,7 +46,9 @@ Failed browser runs retain screenshots, video from the retry, a Playwright trace
 
 Separate Cloudflare Workers Builds projects own delivery for `apps/site` and `apps/web`. Keep both production branches on `main`; public-site preview versions are allowed, while non-production product branch builds stay disabled because preview URLs cannot support Lymi's canonical-origin authentication. Scope each project's watch paths to its app, `packages/core/*` and root workspace files so a site-only change does not deploy the product and a product-only change does not deploy the site.
 
-Use `pnpm verify` as each Workers Builds build command. The product deploy command is `pnpm --filter @lymi/web exec wrangler deploy -c dist/lymi/wrangler.json --tag "$WORKERS_CI_COMMIT_SHA"`; the site deploy command is `pnpm --filter @lymi/site exec wrangler deploy --tag "$WORKERS_CI_COMMIT_SHA"`. This duplicates the base gate on production deployments, but makes each independent Cloudflare pipeline fail closed instead of deploying while GitHub CI is red.
+Use `pnpm verify` as each Workers Builds build command. Use each package's `deploy:ci` script as its deploy command, backed by a custom Workers Builds API token with D1 edit access. Both scripts apply pending remote migrations before activating a Worker version; this keeps either independently deployed Worker from reaching production against an older schema. The migration step is safe to retry when both builds start for the same shared-schema commit. This duplicates the base gate on production deployments, but makes each independent Cloudflare pipeline fail closed instead of deploying while GitHub CI is red.
+
+Committed migrations are immutable production history. `pnpm db:generate` creates the SQL and Drizzle snapshots and updates `scripts/migration-manifest.json`; do not edit those generated files by hand. `pnpm check:migrations` runs Drizzle's migration consistency check, verifies the immutable filenames and checksums, and generates into a temporary directory to catch a schema change whose migration was forgotten. Generate a new migration after syncing with `origin/main`; never reuse a number from another branch.
 
 Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. A successful build page without these active-version checks is not deployment evidence.
 

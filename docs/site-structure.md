@@ -64,8 +64,8 @@ Browser E2E uses `http://localhost:4174` for the website, `http://localhost:4173
 
 1. In Google Cloud, confirm `https://my.lymi.app` as an authorized JavaScript origin and `https://my.lymi.app/api/auth/callback/google` as an authorized redirect URI.
 2. Run `pnpm verify`, `pnpm deploy:check` and `pnpm test:e2e` on the intended commit.
-3. Configure a product Workers Builds project rooted at the repository, watching `apps/web/**`, `packages/core/**` and root workspace files. Build with `pnpm verify`; deploy with `pnpm --filter @lymi/web exec wrangler deploy -c dist/lymi/wrangler.json --tag "$WORKERS_CI_COMMIT_SHA"`.
-4. Configure a public-site Workers Builds project with the same root, watching `apps/site/**`, `packages/core/**` and root workspace files. Build with `pnpm verify`; deploy with `pnpm --filter @lymi/site exec wrangler deploy --tag "$WORKERS_CI_COMMIT_SHA"`.
+3. Configure a product Workers Builds project rooted at the repository, watching `apps/web/**`, `packages/core/**`, `scripts/apply-migrations-ci.mjs` and root workspace files. Build with `pnpm verify`; deploy with `pnpm --filter @lymi/web run deploy:ci` using a custom build token with D1 edit access.
+4. Configure a public-site Workers Builds project with the same root, watching `apps/site/**`, `apps/web/migrations/**`, `packages/core/**`, `scripts/apply-migrations-ci.mjs` and root workspace files. Build with `pnpm verify`; deploy with `pnpm --filter @lymi/site run deploy:ci` using a custom build token with D1 edit access.
 5. Upload a public-site preview version and verify landing, Join, beta signup, docs, metadata, sitemap, 404 behavior and absence of any service-worker registration before changing the apex domain.
 6. Deploy and verify the product Worker on `my.lymi.app`, including signed-in and signed-out roots, a safe deep link through Google sign-in, API keys, MCP OAuth, PWA installation, offline startup and one reminder delivery.
 7. Move only the `lymi.app` custom domain from the product Worker to `lymi-site`, then run both health commands and compare each reported tag with the intended commit.

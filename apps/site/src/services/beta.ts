@@ -29,11 +29,12 @@ export async function joinBeta(db: Db, input: BetaSignupInput): Promise<{ alread
       .onConflictDoNothing({ target: betaSignups.email });
     return { alreadyOn: false };
   } catch (error) {
-    // The database error diagnoses configuration without putting a visitor's address in logs.
+    // Drizzle includes bound parameters in query error messages, including the submitted address.
+    // Keep the error class for grouping while leaving contact details out of Worker logs.
     console.error(
       JSON.stringify({
         event: "beta_signup_failed",
-        error: error instanceof Error ? error.message : String(error),
+        errorType: error instanceof Error ? error.name : "UnknownError",
       }),
     );
     throw new BetaSignupUnavailable("The beta list is temporarily unavailable. Try again soon.");

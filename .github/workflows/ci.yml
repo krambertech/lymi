@@ -62,6 +62,12 @@ jobs:
         id: check
         run: pnpm check
 
+      - name: Check migration safety
+        id: migrations
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: pnpm check:migrations
+
       - name: Build production application
         id: build
         run: pnpm build
@@ -106,6 +112,7 @@ jobs:
           TITLE_OUTCOME: ${{ steps.title.outcome }}
           DEPENDENCIES_OUTCOME: ${{ steps.dependencies.outcome }}
           CHECK_OUTCOME: ${{ steps.check.outcome }}
+          MIGRATIONS_OUTCOME: ${{ steps.migrations.outcome }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
           BOUNDARIES_OUTCOME: ${{ steps.boundaries.outcome }}
           TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}

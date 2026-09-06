@@ -59,7 +59,7 @@ pnpm deploy:check:product # build and validate only the product package
 pnpm deploy:health # identify and check both active production versions
 pnpm deploy:health:site # check only the public Worker
 pnpm deploy:health:product # check only the product Worker
-pnpm db:generate  # new migration from schema changes
+pnpm db:generate  # generate SQL, Drizzle snapshots, and the checksum manifest
 pnpm run deploy:site # deploy the public Worker; user-owned production action
 pnpm run deploy:product # deploy the product Worker; user-owned production action
 ```
@@ -77,5 +77,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 9. `pnpm db:migrate:prod`
 10. `pnpm run deploy:product` and `pnpm run deploy:site`
 11. `pnpm deploy:health`, then verify the reported tag is the intended commit
+
+After initial setup, each Cloudflare Workers Builds project runs its package's `deploy:ci` script with a D1-enabled build token so pending migrations succeed before a new Worker version becomes active. Both scripts safely retry if the other build is applying the same shared migration. Migration files already merged to `main` are immutable; create a new migration after syncing rather than renaming or replacing an existing one.
 
 See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.

@@ -5,7 +5,11 @@ import { resolve } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { validateMigrationHistory } from "./check-migrations.mjs";
+import {
+  createMigrationManifest,
+  updateMigrationManifest,
+  validateMigrationHistory,
+} from "./check-migrations.mjs";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const migrationsDir = resolve(root, "apps/web/migrations");
@@ -68,5 +72,48 @@ test("merged migration checksums cannot be replaced", () => {
   );
   assert.doesNotThrow(() =>
     validateMigrationHistory({ files: new Map([["0000_example.sql", original]]), manifest }),
+  );
+});
+
+test("migration generation appends checksums without editing the manifest by hand", () => {
+  const first = Buffer.from("CREATE TABLE first (id text);");
+  const second = Buffer.from("CREATE TABLE second (id text);");
+  const manifest = createMigrationManifest(new Map([["0000_first.sql", first]]));
+
+  const updated = updateMigrationManifest({
+    files: new Map([
+      ["0000_first.sql", first],
+      ["0001_second.sql", second],
+    ]),
+    baseline: manifest,
+  });
+
+  assert.deepEqual(
+    updated,
+    createMigrationManifest(
+      new Map([
+        ["0000_first.sql", first],
+        ["0001_second.sql", second],
+      ]),
+    ),
+  );
+});
+
+test("automatic manifest updates freeze merged migrations but may refresh branch-only entries", () => {
+  const original = Buffer.from("CREATE TABLE example (id text);");
+  const manifest = createMigrationManifest(new Map([["0000_example.sql", original]]));
+
+  assert.throws(
+    () =>
+      updateMigrationManifest({
+        files: new Map([["0000_example.sql", Buffer.from("DROP TABLE example;")]]),
+        baseline: manifest,
+      }),
+    /immutable/,
+  );
+  assert.doesNotThrow(() =>
+    updateMigrationManifest({
+      files: new Map([["0000_example.sql", Buffer.from("DROP TABLE example;")]]),
+    }),
   );
 });

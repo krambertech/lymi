@@ -36,7 +36,7 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 ## Generated files
 
-`routeTree.gen.ts`, both `worker-configuration.d.ts` files, `packages/core/src/schema/auth.ts`, and everything under `migrations/` are generated. Edit the source and re-run the generator: `pnpm db:generate` after a schema change, `pnpm --filter @lymi/web auth:schema` after a Better Auth config change, and the appropriate workspace's `cf-typegen` after a Wrangler binding change.
+`routeTree.gen.ts`, both `worker-configuration.d.ts` files, `packages/core/src/schema/auth.ts`, `scripts/migration-manifest.json`, and everything under `migrations/` are generated. Edit the source and re-run the generator: `pnpm db:generate` after a schema change, `pnpm --filter @lymi/web auth:schema` after a Better Auth config change, and the appropriate workspace's `cf-typegen` after a Wrangler binding change.
 
 ## Leave alone
 

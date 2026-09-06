@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "wrangler dev",
     "deploy": "astro build && wrangler deploy",
+    "deploy:ci": "node ../../scripts/apply-migrations-ci.mjs && wrangler deploy --tag \"$WORKERS_CI_COMMIT_SHA\"",
     "deploy:check": "wrangler deploy --dry-run",
     "typecheck": "astro check && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",

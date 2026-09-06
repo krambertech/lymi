@@ -6,22 +6,32 @@ import {
   useLocation,
   useNavigate,
 } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AddCardSheet } from "../components/AddCardSheet";
+import { PillNav } from "../components/PillNav";
+import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, flushOutbox } from "../lib/api";
 import { decksQuery, meQuery } from "../lib/queries";
-import { Sidebar, TabBar } from "../views/Shell";
+import { AppShell, Sidebar } from "../views/Shell";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  component: Shell,
+  component: Root,
 });
+
+function Root() {
+  return (
+    <AddCardProvider>
+      <Shell />
+    </AddCardProvider>
+  );
+}
 
 function Shell() {
   const location = useLocation();
   const navigate = useNavigate();
   const me = useQuery(meQuery);
   const decks = useQuery({ ...decksQuery, enabled: me.isSuccess });
-  const [addOpen, setAddOpen] = useState(false);
+  const add = useAddCard();
   // Consent is a stop inside another app's sign-in; the design page and the docs are their
   // own documents. The docs read signed out, so they must never redirect to /login.
   const bare =
@@ -57,7 +67,7 @@ function Shell() {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === "n" || e.key === "N") {
         e.preventDefault();
-        setAddOpen(true);
+        add.openCard();
       }
       if ((e.key === "r" || e.key === "R") && !onReview) {
         e.preventDefault();
@@ -66,31 +76,31 @@ function Shell() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, onReview, bare]);
+  }, [navigate, onReview, bare, add]);
 
   if (bare) return <Outlet />;
 
-  const totalDue = decks.data?.reduce((n, d) => n + d.due, 0) ?? 0;
-
   return (
-    <div className="@container flex min-h-dvh w-full">
-      <Sidebar
-        decks={decks.data}
-        totalDue={totalDue}
-        onAdd={() => setAddOpen(true)}
-        className="hidden @3xl:flex"
-      />
-      <main className="@container flex min-w-0 flex-1 flex-col pt-safe">
+    <>
+      <AppShell
+        sidebar={
+          <Sidebar
+            decks={decks.data}
+            name={me.data?.name}
+            onAdd={() => add.openCard()}
+            onCreateDeck={add.openDeck}
+            className="hidden @3xl:flex"
+          />
+        }
+        nav={onReview ? undefined : <PillNav />}
+      >
         <Outlet />
-      </main>
-      {!onReview && (
-        <TabBar
-          totalDue={totalDue}
-          onAdd={() => setAddOpen(true)}
-          className="fixed inset-x-0 bottom-0 z-(--z-sticky) @3xl:hidden"
-        />
-      )}
-      <AddCardSheet open={addOpen} onOpenChange={setAddOpen} />
-    </div>
+      </AppShell>
+      <AddCardSheet
+        open={add.open === "card"}
+        onOpenChange={(v) => (v ? add.openCard() : add.close())}
+        deckId={add.deckId}
+      />
+    </>
   );
 }

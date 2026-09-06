@@ -28,16 +28,16 @@ The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm 
 
 Voice is plain and friendly. It says "That's the lot" at the end of a session, not "Congratulations!" It counts cards, not points. It never nags. Undo is everywhere, because cheap mistakes are most of what "delightful" means in a review app.
 
-Playfulness is allowed in five places, each tied to something the user did: the flame flaring on a good answer, the lantern brightening at the end of a session, the lantern unlit when nothing is due, seven small lights for the last seven days, and the Undo toast. Everywhere else the interface is quiet. The lantern is the only thing that glows; every other surface is flat with one hairline edge.
+Playfulness is allowed in six places, each tied to something the user did: the flame flaring on a good answer, the lantern brightening at the end of a session, the lantern unlit when nothing is due, seven small lights for the last seven days, the flame counting days in a row, and the Undo toast. Everywhere else the interface is quiet. The lantern is the only thing that glows; every other surface is flat with one hairline edge.
 
 ## Anti-references
 
-- **Duolingo.** No mascot with a personality, no streak pressure, no confetti, no push notifications that guilt.
+- **Duolingo.** No mascot with a personality, no confetti, no push notifications that guilt.
 - **Anki.** No walls of settings, no default-widget grey, no feeling that the tool is fighting you.
 - **Generic AI apps.** No sparkle icon on every AI feature, no purple-to-blue gradient, no "magic".
 - **Editorial dark mode.** No display serifs, no near-black with a lone neon accent, no landing-page typography inside an app.
 - **Skeuomorphic flashcards.** No paper textures, ruled lines, or drop shadows pretending to be a desk.
-- **The dashboard.** No hero metrics, no charts on the home screen, no gamified progress rings shouting numbers.
+- **The dashboard.** No hero metrics, no charts on the home screen, no gamified progress rings shouting numbers. Charts belong in Insights, on their own screen, where looking at them is a choice.
 
 ## Design Principles
 

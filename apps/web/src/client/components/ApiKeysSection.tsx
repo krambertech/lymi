@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api } from "../lib/api";
 import { keysQuery } from "../lib/queries";
-import { SettingsGroup } from "../views/SettingsView";
+import { SettingsGroup } from "../views/YouView";
 import { Button } from "./Button";
 import { Chip } from "./Chip";
 import { CopyField } from "./CopyField";

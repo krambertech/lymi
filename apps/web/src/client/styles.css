@@ -161,6 +161,9 @@
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
+  /* The desktop shell never grows past this. Sidebar plus one column, centred. */
+  --shell: 1120px;
+
   /* Stacking. Nothing outside this list. */
   --z-dropdown: 100;
   --z-sticky: 150;
@@ -506,8 +509,9 @@
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
 }
-.pb-safe-tab {
-  padding-bottom: calc(env(safe-area-inset-bottom) + 72px);
+/* Clears the floating pill: its 56 px height, the 24 px it floats, and a gap. */
+.pb-safe-nav {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
 }
 
 /* ---- Docs -------------------------------------------------------------- */

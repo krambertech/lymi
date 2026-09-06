@@ -93,8 +93,8 @@ const SCALE: {
     cls: "text-2xs",
     size: "11 / 1.3",
     weight: "500–600",
-    use: "Kbd, intervals under grades, day letters.",
-    sample: "4 d",
+    use: "Kbd, compact counts, day letters.",
+    sample: "3 · F",
   },
 ];
 

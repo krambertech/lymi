@@ -28,6 +28,26 @@ export default function DesignPage() {
   const [active, setActive] = useState<string>("identity");
 
   useEffect(() => {
+    let frame = 0;
+    const scrollToHash = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (id) document.getElementById(id)?.scrollIntoView();
+    };
+    const scheduleScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        frame = requestAnimationFrame(scrollToHash);
+      });
+    };
+    scheduleScroll();
+    window.addEventListener("hashchange", scheduleScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("hashchange", scheduleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     const els = SECTIONS.map(([id]) => document.getElementById(id)).filter(
       Boolean,
     ) as HTMLElement[];

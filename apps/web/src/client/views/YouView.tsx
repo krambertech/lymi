@@ -37,7 +37,7 @@ export const SHORTCUTS: [string, string][] = [
   ["R", "Start review"],
   ["/", "Search"],
   ["Space", "Show the meaning, then Good"],
-  ["1 – 4", "Again, Hard, Good, Easy"],
+  ["1 – 4", "Forgot, Hard, Good, Easy"],
   ["Esc", "Leave review or close a sheet"],
 ];
 

@@ -43,7 +43,7 @@ The spaced-repetition act: see a card, grade recall. Never used for looking over
 _Avoid_: Study, practice, session (for the act itself)
 
 **Grade**:
-The learner's rating of one recall, 1 Again to 4 Easy.
+The learner's rating of one recall, 1 Forgot to 4 Easy.
 _Avoid_: Score, answer, rating (in prose)
 
 **Direction**:

@@ -6,8 +6,8 @@ import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
 
 /**
- * Cards due now, oldest due first, with the four possible next intervals so the
- * grade buttons can show "Good · 6 d" without a round trip.
+ * Cards due now, oldest due first. The scheduler preview stays available to API
+ * clients even though the first-party review UI deliberately keeps it out of sight.
  */
 export async function reviewQueue(
   { db, userId }: ServiceContext,
@@ -28,15 +28,16 @@ export async function reviewQueue(
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .where(where)
     .orderBy(asc(schema.cardStates.due))
-    .limit(limit);
+    .limit(limit * 2);
 
   const [{ total } = { total: 0 }] = await db
-    .select({ total: sql<number>`count(*)` })
+    .select({ total: sql<number>`count(distinct ${schema.cardStates.cardId})` })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .where(where);
 
-  const items = rows.map(({ card, state }) => {
+  const uniqueRows = oneDirectionPerCard(rows).slice(0, limit);
+  const items = uniqueRows.map(({ card, state }) => {
     const next = preview(deserializeState(state.fsrs), now);
     return {
       card,
@@ -53,6 +54,16 @@ export async function reviewQueue(
   });
 
   return { total, items };
+}
+
+/** Keep sibling directions out of a session so seeing one cannot reveal the other. */
+export function oneDirectionPerCard<T extends { card: { id: string } }>(rows: T[]): T[] {
+  const seen = new Set<string>();
+  return rows.filter(({ card }) => {
+    if (seen.has(card.id)) return false;
+    seen.add(card.id);
+    return true;
+  });
 }
 
 /**

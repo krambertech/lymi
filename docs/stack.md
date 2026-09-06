@@ -18,7 +18,7 @@ flowchart LR
     Services[Service layer\ndb, userId, actor]
     Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
     MCP[MCP server /mcp\ncreateMcpHandler, stateless]
-    AI[Enrichment + TTS\nOpenAI via AI Gateway]
+    AI[Enrichment + TTS\nOpenAI default + Google coverage]
   end
   subgraph Core["packages/core"]
     Schema[Drizzle schema + Zod types]
@@ -115,13 +115,13 @@ Every key and every OAuth grant carries one scope, `read` or `write`. Write allo
 
 FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline) and the server (to validate and persist). Grades and intervals are the algorithm's, not invented.
 
-### AI: enrichment only, OpenAI through Cloudflare AI Gateway
+### AI: enrichment plus lazy multilingual speech
 
 **The server does not extract vocabulary from lessons. The MCP client does.** Claude Desktop or Codex already holds the transcript and a model, so it reads the lesson and calls `add_cards`. That keeps the Worker's AI to one job, enrichment: fill the empty fields on a card (meaning, example, pronunciation, language) and leave every field that already has text alone.
 
 Enrichment runs in the background after any add that leaves fields empty, whether the card came from the web quick-capture sheet or from an integration. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
 
-OpenAI is the vendor for both text and speech, through AI Gateway for logging, caching and rate limits. Claude for text was considered and set aside to keep one key. Text goes through a small `Provider` interface in `packages/core` with one implementation, so swapping is one file. Workers AI is a fallback for cheap tasks like language detection.
+OpenAI remains the text-enrichment vendor and is also the default speech provider for every language on its published TTS support list. Google Cloud Text-to-Speech Chirp 3 HD covers languages outside that list, or supported locales when OpenAI is not configured. The routing layer is provider-neutral, so an R2 hit does not parse credentials or call either vendor.
 
 ### MCP: stateless handler in the same Worker
 
@@ -139,9 +139,9 @@ Adds take one card or many. A lesson produces 20 to 40 terms, and one tool call 
 
 Route logic lives in service functions that take `db`, `userId` and `actor`. Hono routes and MCP tools are thin callers. The OpenAPI document is generated from the Zod schemas in `packages/core` and served at `/api/openapi.json`. The documentation site at `/docs` renders it, alongside hand-written guides; `/api/docs` redirects there.
 
-### Audio: R2
+### Audio: first play, then R2
 
-Pronunciation audio is generated once with OpenAI text-to-speech, stored in R2, and served through the Worker with caching.
+Pronunciation audio is generated only when the learner first presses play. Cards without a language never show the control and never call a speech provider. The Worker uses OpenAI for its published languages and Chirp 3 HD only for coverage gaps or when OpenAI is not configured, stores the MP3 in R2, and remembers the object on the card. The cache identity includes the term, locale, provider, model and voice, and changing the term or language detaches stale audio.
 
 ### Repo: pnpm workspace
 
@@ -171,14 +171,14 @@ Local development accepts email and password sign-in so the app is usable before
 - Sign-in: Google only at launch. Apple can be added when React Native arrives.
 - Domain: lymi.app, Worker on the apex. Register before the first deploy.
 - Auth: Better Auth from the start, no Cloudflare Access interim.
-- AI: OpenAI for text and speech, through AI Gateway.
+- AI: OpenAI for text enrichment and default speech. Google Chirp 3 HD covers languages outside OpenAI's published list.
 - Integrations (5 September 2026): MCP clients are Claude Desktop and Codex first, so OAuth from day one via `@better-auth/mcp`. Personal API keys via the `apiKey` plugin. Two scopes, `read` and `write`.
 - Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
 - Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.
 - The server enriches, the MCP client extracts. Enrichment is automatic, background, fills only empty fields.
 - Meaning language is a per-user setting, English by default.
 - Integrations never grade reviews.
-- Not in the integrations pass: text-to-speech stays a stub, no scopes finer than read and write.
+- No scopes finer than read and write.
 
 ## Sources
 

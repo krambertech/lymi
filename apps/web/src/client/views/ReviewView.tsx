@@ -70,6 +70,7 @@ export interface ReviewCardProps {
   animateReveal?: boolean | undefined;
   onReveal: () => void;
   onPlayAudio?: (() => void) | undefined;
+  audioState?: "idle" | "loading" | "playing" | undefined;
   className?: string | undefined;
 }
 
@@ -83,6 +84,7 @@ export function ReviewCard({
   animateReveal = true,
   onReveal,
   onPlayAudio,
+  audioState = "idle",
   className,
 }: ReviewCardProps) {
   const { card, direction } = item;
@@ -123,21 +125,26 @@ export function ReviewCard({
         >
           {front}
         </p>
-        {recog && card.pronunciation && (
+        {recog && (card.pronunciation || onPlayAudio) && (
           <p className="flex items-center gap-2.5 text-md text-muted">
-            <span>{card.pronunciation}</span>
+            {card.pronunciation && <span>{card.pronunciation}</span>}
             {onPlayAudio && (
               <IconButton
-                label="Play pronunciation"
+                label={audioState === "playing" ? "Replay pronunciation" : "Play pronunciation"}
                 size="sm"
                 variant="secondary"
                 round
+                disabled={audioState === "loading"}
                 onClick={(e) => {
                   e.stopPropagation();
                   onPlayAudio();
                 }}
               >
-                <Volume2 />
+                {audioState === "loading" ? (
+                  <Loader2 className="animate-spin" aria-hidden="true" />
+                ) : (
+                  <Volume2 aria-hidden="true" />
+                )}
               </IconButton>
             )}
           </p>
@@ -160,6 +167,30 @@ export function ReviewCard({
           >
             {back}
           </p>
+          {!recog && (card.pronunciation || onPlayAudio) && (
+            <p className="flex items-center gap-2.5 text-md text-muted">
+              {card.pronunciation && <span>{card.pronunciation}</span>}
+              {onPlayAudio && (
+                <IconButton
+                  label={audioState === "playing" ? "Replay pronunciation" : "Play pronunciation"}
+                  size="sm"
+                  variant="secondary"
+                  round
+                  disabled={audioState === "loading"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onPlayAudio();
+                  }}
+                >
+                  {audioState === "loading" ? (
+                    <Loader2 className="animate-spin" aria-hidden="true" />
+                  ) : (
+                    <Volume2 aria-hidden="true" />
+                  )}
+                </IconButton>
+              )}
+            </p>
+          )}
           {card.example && (
             <p className="text-md leading-relaxed text-text-2" lang={card.language ?? undefined}>
               {card.example}

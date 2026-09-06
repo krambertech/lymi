@@ -187,9 +187,17 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
   // Always recompute the duplicate key, so a card whose stored key predates normaliseTerm()
   // (the 0002 backfill used SQLite's ASCII-only lower()) is repaired by any edit.
   const normalizedTerm = normaliseTerm(patch.term ?? current.term);
+  const pronunciationChanged =
+    (patch.term !== undefined && patch.term !== current.term) ||
+    (patch.language !== undefined && patch.language !== current.language);
   await db
     .update(schema.cards)
-    .set({ ...patch, normalizedTerm, updatedAt: new Date() })
+    .set({
+      ...patch,
+      normalizedTerm,
+      ...(pronunciationChanged ? { audioKey: null } : {}),
+      updatedAt: new Date(),
+    })
     .where(eq(schema.cards.id, id));
   await audit(db, {
     userId,

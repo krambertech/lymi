@@ -128,7 +128,10 @@ export function LibraryView({
       {archivedCount ? (
         <div className="mt-7 flex items-baseline justify-between gap-3 px-1">
           <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">Archived</h2>
-          <To to="/archived" className="text-sm font-medium text-amber-text">
+          <To
+            to="/archived"
+            className="relative text-sm font-medium text-amber-text before:absolute before:-inset-x-2 before:-inset-y-3.5 before:content-['']"
+          >
             Show {archivedCount}
           </To>
         </div>

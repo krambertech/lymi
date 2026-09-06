@@ -84,7 +84,10 @@ export function TodayView({
           <div className="flex items-center gap-1.5 @3xl:hidden">
             <StreakPill days={history} />
             <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-            <To to="/you" className="ml-0.5 inline-flex rounded-full">
+            <To
+              to="/you"
+              className="relative ml-0.5 inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
+            >
               <Avatar name={name} size={34} />
               <span className="sr-only">You</span>
             </To>
@@ -100,6 +103,7 @@ export function TodayView({
               <div className="grid w-full gap-2 @3xl:max-w-xs">
                 <Skeleton className="h-8 w-44" />
                 <Skeleton className="h-4 w-56" />
+                <Skeleton className="mt-3 h-12 w-full @3xl:w-32" />
               </div>
             </>
           ) : (
@@ -163,7 +167,10 @@ export function TodayView({
             <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
               New since your last review
             </h2>
-            <To to="/activity" className="text-sm font-medium text-amber-text">
+            <To
+              to="/activity"
+              className="relative text-sm font-medium text-amber-text before:absolute before:-inset-x-2 before:-inset-y-3.5 before:content-['']"
+            >
               Activity
             </To>
           </div>

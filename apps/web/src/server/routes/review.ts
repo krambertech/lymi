@@ -28,7 +28,7 @@ review.get(
     tags: ["Review"],
     summary: "Cards due now",
     description:
-      "Oldest due first, with the four dates each grade would schedule so a client can show them without a round trip.",
+      "Oldest due first, with at most one direction per card. Includes the four dates each grade would schedule for clients that need a preview.",
     ok: { schema: QueueOut, description: "The queue" },
     errors: [400],
   }),

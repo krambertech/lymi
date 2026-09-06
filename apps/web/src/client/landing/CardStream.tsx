@@ -176,10 +176,27 @@ export function CardColumn({ onLampMove, className }: Props) {
  * The same idea sideways, for a screen too narrow to put a column beside the headline.
  * Cards drift right to left through a beam fixed at the centre.
  */
-export function CardBelt({ className }: { className?: string | undefined }) {
+export function CardBelt({ onLampMove, className }: Props) {
   const belt = useRef<HTMLDivElement>(null);
   const wrap = useRef<HTMLDivElement>(null);
   const still = useReducedMotion();
+
+  useEffect(() => {
+    if (!onLampMove) return;
+    const send = () => {
+      const el = wrap.current;
+      if (!el || el.offsetParent === null) return;
+      const r = el.getBoundingClientRect();
+      onLampMove({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+    };
+    send();
+    window.addEventListener("resize", send);
+    window.addEventListener("scroll", send, { passive: true });
+    return () => {
+      window.removeEventListener("resize", send);
+      window.removeEventListener("scroll", send);
+    };
+  }, [onLampMove]);
 
   useEffect(() => {
     const track = belt.current;
@@ -250,6 +267,9 @@ export function CardBelt({ className }: { className?: string | undefined }) {
             // biome-ignore lint/suspicious/noArrayIndexKey: the list is doubled, so index is the identity
             key={i}
             className="lit-card w-[158px] shrink-0 rounded-sm px-3.5 py-3"
+            // Readable before the frame loop has run a single pass, so the belt is not a row
+            // of blank plates in a background tab, a link preview or a crawler's render.
+            style={{ ["--lit" as string]: 0.5 }}
           >
             <span className="lit-label block text-2xs tracking-[0.06em] uppercase">
               {card.label}
@@ -257,7 +277,7 @@ export function CardBelt({ className }: { className?: string | undefined }) {
             <p className="lit-term mt-1.5 truncate text-lg font-medium tracking-[-0.026em]">
               {card.term}
             </p>
-            <p className="lit-meaning mt-1.5 line-clamp-2 text-xs">{card.meaning}</p>
+            <p className="mt-1.5 line-clamp-2 text-xs text-text-2">{card.meaning}</p>
           </div>
         ))}
       </div>

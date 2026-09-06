@@ -7,7 +7,12 @@ import { useEffect, useState } from "react";
  * class is not enough: it still mounts, still runs its own animation loop, and still reports
  * a position for the lamp, which is how the light ended up in the corner of the page.
  */
-const WIDE = "(min-width: 768px)";
+/**
+ * 640px, not a tablet breakpoint. The column shrinks with the viewport, so it fits beside the
+ * headline far earlier than a fixed 292px one would, and the cards belong next to the copy
+ * rather than trailing underneath it wherever there is any room at all.
+ */
+const WIDE = "(min-width: 640px)";
 
 export function useWide(): boolean {
   const [wide, setWide] = useState(

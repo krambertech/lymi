@@ -14,9 +14,9 @@ import { AssistantChat } from "./AssistantChat";
 import { CardBelt, CardColumn } from "./CardStream";
 import { EnrichDemo } from "./EnrichDemo";
 import { JoinBeta } from "./JoinBeta";
-import { MemoryGraph } from "./MemoryGraph";
 import { ReviewDemo } from "./ReviewDemo";
 import { useWide } from "./useWide";
+import { WhyItWorks } from "./WhyItWorks";
 
 const TITLE = "Lymi · Keep what you learn";
 const BLURB =
@@ -140,10 +140,11 @@ export function LandingView() {
     };
   }, []);
 
-  // With the belt the light belongs in the middle, where the belt passes through it.
+  // Both hero shapes report where their lit card actually is, so the light never has to be
+  // guessed at a percentage of the header.
   const lampStyle = {
-    "--lamp-x": wide && lamp ? `${lamp.x + nudge.x}px` : "50%",
-    "--lamp-y": wide && lamp ? `${lamp.y + nudge.y}px` : "78%",
+    "--lamp-x": lamp ? `${lamp.x + nudge.x}px` : "50%",
+    "--lamp-y": lamp ? `${lamp.y + nudge.y}px` : "58%",
   } as CSSProperties;
 
   return (
@@ -166,9 +167,12 @@ export function LandingView() {
 
         <div
           className={clsx(
-            "mx-auto grid max-w-[1040px] items-center gap-10 px-5 py-16 @2xl:px-10",
-            wide && "grid-cols-[minmax(0,1fr)_292px] py-24",
+            "mx-auto grid max-w-[1040px] items-center gap-8 px-5 py-16 @2xl:px-10",
+            wide && "py-24",
           )}
+          // The column shrinks with the viewport instead of holding 292px and forcing itself
+          // under the copy, which is what put a loose strip of cards at the foot of the hero.
+          style={wide ? { gridTemplateColumns: "minmax(0,1fr) clamp(200px, 24vw, 292px)" } : {}}
         >
           <div>
             <h1 className="max-w-[11ch] text-4xl font-medium tracking-[-0.036em] text-text @2xl:text-5xl">
@@ -177,7 +181,12 @@ export function LandingView() {
             <p className="mt-4 max-w-[34ch] text-md text-text-2">
               Words, terms, ideas. Lymi asks for them again before you forget them.
             </p>
-            <a href="#join" className={buttonClass("primary", "lg", "mt-7")}>
+
+            {/* Too narrow for a column beside the copy: the cards cross the hero instead, and
+                stay inside it rather than trailing along the bottom edge. */}
+            {!wide && <CardBelt onLampMove={onLampMove} className="-mx-5 mt-8" />}
+
+            <a href="#join" className={buttonClass("primary", "lg", "mt-8")}>
               Join the private beta
             </a>
             <p className="mt-4 text-2xs tracking-[0.07em] text-faint uppercase">
@@ -185,11 +194,8 @@ export function LandingView() {
             </p>
           </div>
 
-          {/* The column needs room beside the headline; a narrow screen gets the belt instead. */}
           {wide && <CardColumn onLampMove={onLampMove} />}
         </div>
-
-        {!wide && <CardBelt className="pb-14" />}
       </header>
 
       {/* ---- 2. How reviewing works ---- */}
@@ -262,33 +268,10 @@ export function LandingView() {
       {/* ---- 6. Why this works ---- */}
       <Section
         eyebrow="Why this works"
-        title="What happens to a thing you learned once"
-        lede="Lymi schedules with FSRS, a modern spaced-repetition algorithm. The idea underneath it is older and well studied."
+        title="Two findings, and where they show up"
+        lede="The same card over a month, with and without the evenings. Each note below points at the moment on the curve that makes its case."
       >
-        <MemoryGraph />
-        <div className="mt-10 grid gap-8 @2xl:grid-cols-2">
-          <div>
-            <h3 className="text-lg font-medium text-text">Recalling beats re-reading</h3>
-            <p className="mt-2 text-base text-text-2">
-              Pulling something out of memory does more for remembering it than looking at it again.
-              Roediger and Karpicke showed this in 2006, and Dunlosky and colleagues rated practice
-              testing among the most useful techniques across subjects in 2013. That is why a review
-              asks you first and shows you second.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-medium text-text">Spread out, not crammed</h3>
-            <p className="mt-2 text-base text-text-2">
-              The same reviews spread over weeks hold better than the same reviews in one evening.
-              Distributed practice earned the other top rating in that review. FSRS works out where
-              your next gap should be from how the last recall went.
-            </p>
-          </div>
-        </div>
-        <p className="mt-8 text-xs text-faint">
-          The curves above are illustrative. The evidence is for the methods Lymi uses, not a
-          measurement of what Lymi produces.
-        </p>
+        <WhyItWorks />
       </Section>
 
       {/* ---- 7. Join the beta ---- */}

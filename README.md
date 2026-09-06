@@ -8,6 +8,7 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
 - [docs/plans](docs/plans): order of work for passes that are decided but not built
+- [docs/proposals](docs/proposals/README.md): future product directions under consideration, not committed plans
 - [CONTEXT.md](CONTEXT.md): the vocabulary, one name per thing
 - `/docs` in the running app: the API documentation, guides and MCP setup, in `apps/web/src/client/docs`
 
@@ -18,6 +19,7 @@ Requires Node 22 and pnpm 10.
 ```bash
 pnpm install
 cp apps/web/.dev.vars.example apps/web/.dev.vars   # then fill in the Google OAuth values
+# Add a VAPID key pair to enable review reminders; see apps/web/.dev.vars.example.
 pnpm db:migrate                                     # applies migrations to the local D1
 pnpm dev                                            # http://localhost:5173
 ```
@@ -54,5 +56,6 @@ pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy com
 3. `wrangler r2 bucket create lymi-audio`
 4. `wrangler kv namespace create SESSIONS` and paste the id
 5. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
-6. `pnpm db:migrate:prod`
-7. `pnpm run deploy`
+6. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
+7. `pnpm db:migrate:prod`
+8. `pnpm run deploy`

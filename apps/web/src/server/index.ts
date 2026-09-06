@@ -11,11 +11,13 @@ import { renderLandingPage } from "./landing";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate } from "./principal";
+import { dispatchReviewReminders } from "./push-delivery";
 import { beta } from "./routes/beta";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
 import { keys } from "./routes/keys";
+import { push } from "./routes/push";
 import { review } from "./routes/review";
 import { settings } from "./routes/settings";
 import { ServiceError } from "./services/context";
@@ -103,9 +105,12 @@ app.get("/robots.txt", describe({ hide: true }), (c) => {
       "Disallow: /api/",
       "Disallow: /today",
       "Disallow: /app",
-      "Disallow: /decks",
+      "Disallow: /library",
       "Disallow: /review",
-      "Disallow: /settings",
+      "Disallow: /you",
+      "Disallow: /activity",
+      "Disallow: /insights",
+      "Disallow: /archived",
       "Disallow: /login",
       "Disallow: /consent",
       "Disallow: /design",
@@ -171,6 +176,7 @@ app.route("/api/review", review);
 app.route("/api/settings", settings);
 app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);
+app.route("/api/push", push);
 
 // Audio is generated with OpenAI text-to-speech and cached in R2. Not wired yet.
 app.get("/api/audio/:cardId", describe({ hide: true }), (c) =>
@@ -200,4 +206,15 @@ app.onError((err, c) => {
   return c.json({ error: "Something went wrong" }, 500);
 });
 
-export default app;
+export default {
+  fetch(request: Request, env: Bindings, executionCtx: ExecutionContext) {
+    return app.fetch(request, env, executionCtx);
+  },
+  scheduled(controller: ScheduledController, env: Bindings, executionCtx: ExecutionContext) {
+    executionCtx.waitUntil(
+      dispatchReviewReminders(env, new Date(controller.scheduledTime)).then((result) => {
+        if (result.failed > 0) throw new Error(`${result.failed} review reminder sends failed`);
+      }),
+    );
+  },
+} satisfies ExportedHandler<Bindings>;

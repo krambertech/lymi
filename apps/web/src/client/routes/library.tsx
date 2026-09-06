@@ -1,22 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { Toast } from "../components/Toast";
+import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
 import { decksQuery } from "../lib/queries";
-import { DecksView } from "../views/DecksView";
+import { LibraryView } from "../views/LibraryView";
 
-export const Route = createFileRoute("/decks")({
-  // After archiving a deck we land here with its id, so the Undo toast can restore it.
+export const Route = createFileRoute("/library")({
+  // Archiving a deck lands here with its id, so the Undo toast can restore it.
   validateSearch: (s: Record<string, unknown>): { archived?: string; name?: string } => ({
     ...(typeof s.archived === "string" ? { archived: s.archived } : {}),
     ...(typeof s.name === "string" ? { name: s.name } : {}),
   }),
-  component: Decks,
+  component: Library,
 });
 
-function Decks() {
+function Library() {
   const matches = useMatches();
-  const hasChild = matches.some((m) => m.routeId === "/decks/$deckId");
+  const hasChild = matches.some((m) => m.routeId === "/library/$deckId");
   if (hasChild) return <Outlet />;
   return <DeckList />;
 }
@@ -26,11 +27,8 @@ function DeckList() {
   const navigate = useNavigate();
   const { archived, name } = Route.useSearch();
   const decks = useQuery(decksQuery);
-  const create = useMutation({
-    mutationFn: (name: string) => api.createDeck({ name }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["decks"] }),
-  });
-  const clear = () => navigate({ to: "/decks", search: {}, replace: true });
+  const add = useAddCard();
+  const clear = () => navigate({ to: "/library", search: {}, replace: true });
   const restore = useMutation({
     mutationFn: (id: string) => api.restoreDeck(id),
     onSuccess: () => {
@@ -41,11 +39,7 @@ function DeckList() {
   });
   return (
     <>
-      <DecksView
-        decks={decks.data}
-        creating={create.isPending}
-        onCreate={(name) => create.mutateAsync(name)}
-      />
+      <LibraryView decks={decks.data} onAdd={add.openCard} onCreateDeck={add.openDeck} />
       {archived && (
         <Toast
           key={archived}

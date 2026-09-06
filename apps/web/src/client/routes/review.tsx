@@ -2,13 +2,14 @@ import type { Rating } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
-import { Button } from "../components/Button";
+import { buttonClass } from "../components/Button";
 import { gradeWithOutbox, type QueueItem } from "../lib/api";
 import { decksQuery, historyQuery, queueQuery } from "../lib/queries";
 import {
   GRADES,
   GradeBar,
   ReviewCard,
+  ReviewError,
   ReviewHeader,
   ReviewSkeleton,
   SessionDone,
@@ -31,62 +32,86 @@ function Review() {
   const [revealed, setRevealed] = useState(false);
   const [flare, setFlare] = useState(false);
   const [done, setDone] = useState(0);
+  const [pendingRating, setPendingRating] = useState<Rating | null>(null);
+  const [gradeError, setGradeError] = useState<string | null>(null);
+  const [animateNextCard, setAnimateNextCard] = useState(true);
+  const [animateReveal, setAnimateReveal] = useState(true);
 
   const items = queue.data?.items ?? [];
   const current: QueueItem | undefined = items[index];
   const total = queue.data?.total ?? 0;
+  const sessionTotal = items.length;
   const finished = queue.isSuccess && !current;
   const deckName = deck ? decks.data?.find((d) => d.id === deck)?.name : undefined;
 
+  const invalidateReviewData = useCallback(() => {
+    qc.invalidateQueries({ queryKey: ["decks"] });
+    qc.invalidateQueries({ queryKey: ["history"] });
+  }, [qc]);
+
   const grade = useMutation({
-    mutationFn: (rating: Rating) => {
-      if (!current) throw new Error("No card");
-      return gradeWithOutbox({ cardId: current.card.id, direction: current.direction, rating });
-    },
-    onSuccess: (_res, rating) => {
+    mutationFn: ({ item, rating }: { item: QueueItem; rating: Rating }) =>
+      gradeWithOutbox({ cardId: item.card.id, direction: item.direction, rating }),
+    onSuccess: (_res, { rating }) => {
+      setGradeError(null);
+      setPendingRating(null);
       if (rating >= 3) {
         setFlare(true);
-        setTimeout(() => setFlare(false), 380);
+        window.setTimeout(() => setFlare(false), 380);
       }
       setDone((n) => n + 1);
       setRevealed(false);
       setIndex((i) => i + 1);
     },
-    onSettled: () => {
-      qc.invalidateQueries({ queryKey: ["decks"] });
-      qc.invalidateQueries({ queryKey: ["history"] });
+    onError: () => {
+      setPendingRating(null);
+      setGradeError("That grade didn’t save. Try once more.");
     },
+    onSettled: invalidateReviewData,
   });
 
   const onGrade = useCallback(
-    (r: Rating) => {
-      if (!revealed || grade.isPending) return;
-      grade.mutate(r);
+    (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
+      if (!revealed || grade.isPending || !current) return;
+      setGradeError(null);
+      setPendingRating(rating);
+      setAnimateNextCard(input !== "keyboard");
+      grade.mutate({ item: current, rating });
     },
-    [revealed, grade],
+    [revealed, grade, current],
   );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
-        if (!revealed) setRevealed(true);
-        else onGrade(3);
+      if (e.key === "Escape") {
+        navigate({ to: "/today" });
+        return;
       }
-      if (e.key === "Escape") navigate({ to: "/today" });
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("button, a, input, textarea, select, [contenteditable='true']")) return;
+      if (e.key === " ") {
+        e.preventDefault();
+        if (!revealed) {
+          setAnimateReveal(false);
+          setRevealed(true);
+        } else onGrade(3, "keyboard");
+      }
       const g = GRADES.find((x) => x.key === e.key);
-      if (g) onGrade(g.rating);
+      if (g) {
+        e.preventDefault();
+        onGrade(g.rating, "keyboard");
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, onGrade, navigate]);
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 pb-safe @3xl:max-w-xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
+    <div className="mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col px-4 pb-safe @3xl:max-w-xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
       <ReviewHeader
         done={done}
-        total={total}
+        total={sessionTotal}
         deckName={deckName}
         flare={flare}
         onClose={() => navigate({ to: "/today" })}
@@ -94,15 +119,25 @@ function Review() {
 
       {queue.isPending && <ReviewSkeleton />}
 
+      {queue.isError && (
+        <ReviewError
+          retry={() => queue.refetch()}
+          action={
+            <Link to="/today" className={buttonClass("ghost")}>
+              Back
+            </Link>
+          }
+        />
+      )}
+
       {finished && (
         <SessionDone
           done={done}
+          moreDue={Math.max(total - items.length, 0)}
           history={history.data?.days}
           action={
-            <Link to="/today">
-              <Button variant="primary" size="lg" tabIndex={-1}>
-                Done
-              </Button>
+            <Link to="/today" className={buttonClass("primary", "lg")}>
+              Done
             </Link>
           }
         />
@@ -114,16 +149,23 @@ function Review() {
             key={`${current.card.id}-${current.direction}`}
             item={current}
             revealed={revealed}
-            onReveal={() => setRevealed(true)}
-            className="enter-card mt-5 @3xl:min-h-[440px] @3xl:flex-none"
+            animateReveal={animateReveal}
+            onReveal={() => {
+              setAnimateReveal(true);
+              setRevealed(true);
+            }}
+            className={`${animateNextCard ? "enter-card" : ""} mt-4 @3xl:min-h-[420px] @3xl:flex-none`}
           />
-          <GradeBar
-            item={current}
-            enabled={revealed}
-            pending={grade.isPending}
-            onGrade={onGrade}
-            className="mt-3 pb-3 @3xl:pb-0"
-          />
+          {revealed && (
+            <GradeBar
+              enabled
+              pending={grade.isPending}
+              pendingRating={pendingRating}
+              error={gradeError}
+              onGrade={(rating) => onGrade(rating, "pointer")}
+              className={`${animateReveal ? "grade-enter" : ""} mt-3 pb-3 @3xl:pb-0`}
+            />
+          )}
         </>
       )}
     </div>

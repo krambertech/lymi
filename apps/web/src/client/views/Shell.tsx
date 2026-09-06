@@ -1,9 +1,20 @@
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { Layers, type LucideIcon, Plus, Settings2, Sun } from "lucide-react";
+import {
+  Activity,
+  BookMarked,
+  ChartNoAxesColumn,
+  type LucideIcon,
+  Search,
+  Sun,
+} from "lucide-react";
 import type { ReactNode } from "react";
+import { AddMenu } from "../components/AddMenu";
+import { Avatar } from "../components/Avatar";
 import { Kbd } from "../components/Kbd";
-import { AppTile, Wordmark } from "../components/Logo";
+import { Wordmark } from "../components/Logo";
+import { NavLink, type StaticNav } from "../components/NavLink";
+
+export type { StaticNav } from "../components/NavLink";
 
 export interface NavDeck {
   id: string;
@@ -12,168 +23,154 @@ export interface NavDeck {
   due: number;
 }
 
-export const NAV: { to: "/today" | "/decks" | "/settings"; label: string; icon: LucideIcon }[] = [
-  { to: "/today", label: "Today", icon: Sun },
-  { to: "/decks", label: "Decks", icon: Layers },
-  { to: "/settings", label: "Settings", icon: Settings2 },
-];
-
-/** Design page: plain anchors with a forced active path instead of router links. */
-export type StaticNav = { path: string } | undefined;
-
-function NavLink({
-  to,
-  params,
-  exact,
-  className,
-  st,
-  children,
-}: {
+/**
+ * Desktop navigation, in reading order. Insights ships later; it holds its slot so the list
+ * does not reorder when it lands.
+ */
+export const NAV: {
   to: string;
-  params?: Record<string, string> | undefined;
-  exact?: boolean | undefined;
-  className: string;
-  st: StaticNav;
-  children: ReactNode;
-}) {
-  if (st) {
-    const href = params ? to.replace("$deckId", params.deckId ?? "") : to;
-    return (
-      <a
-        href={href}
-        className={clsx(className, st.path === href && "active")}
-        onClick={(e) => e.preventDefault()}
-      >
-        {children}
-      </a>
-    );
-  }
-  return (
-    <Link to={to} params={params ?? {}} activeOptions={{ exact: !!exact }} className={className}>
-      {children}
-    </Link>
-  );
-}
+  label: string;
+  icon: LucideIcon;
+  exact?: boolean;
+  later?: boolean;
+}[] = [
+  { to: "/today", label: "Today", icon: Sun, exact: true },
+  { to: "/library", label: "Library", icon: BookMarked },
+  { to: "/insights", label: "Insights", icon: ChartNoAxesColumn, later: true },
+  { to: "/activity", label: "Activity", icon: Activity },
+];
 
 interface SidebarProps {
   decks: NavDeck[] | undefined;
-  totalDue: number;
+  name: string | undefined;
   onAdd: () => void;
+  onCreateDeck?: (() => void) | undefined;
+  onSearch?: (() => void) | undefined;
+  /** Something an integration wrote is unseen. A dot, never a count. */
+  unseen?: boolean | undefined;
   static?: StaticNav;
   className?: string | undefined;
 }
 
-/** Desktop navigation. Sits on the canvas; only the active item gets a plate. */
-export function Sidebar({ decks, totalDue, onAdd, static: st, className }: SidebarProps) {
+/**
+ * Desktop navigation. Sits on the canvas; only the active item gets a plate. The wordmark
+ * and the add menu share the top row, and the learner sits at the bottom where Settings lives.
+ */
+export function Sidebar({
+  decks,
+  name,
+  onAdd,
+  onCreateDeck,
+  onSearch,
+  unseen,
+  static: st,
+  className,
+}: SidebarProps) {
   const item =
     "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-plate-2 hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
   return (
-    <aside className={clsx("flex w-60 shrink-0 flex-col gap-0.5 px-3 pb-3 pt-safe", className)}>
-      <div className="mb-4 flex h-14 items-center gap-2.5 px-2">
-        <AppTile size={28} glow={totalDue > 0} title="Lymi" />
-        <Wordmark size={17} className="text-text" />
+    <aside className={clsx("flex w-60 shrink-0 flex-col gap-0.5 px-3 pb-4 pt-safe", className)}>
+      <div className="mb-3 flex h-14 items-center justify-between gap-2 px-2">
+        <Wordmark size={17} className="text-text" title="Lymi" />
+        <AddMenu onAddCard={onAdd} onCreateDeck={onCreateDeck} size="sm" align="start" />
       </div>
+
+      <button
+        type="button"
+        onClick={onSearch}
+        className="edge mb-3 flex h-9 items-center gap-2 rounded-md bg-plate px-3 text-base text-muted transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2"
+      >
+        <Search className="size-4" aria-hidden="true" />
+        <span className="flex-1 text-left">Search</span>
+        <Kbd>/</Kbd>
+      </button>
+
       {NAV.map((n) => (
-        <NavLink key={n.to} to={n.to} exact={n.to === "/today"} className={item} st={st}>
+        <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
           <n.icon aria-hidden="true" />
           <span className="flex-1">{n.label}</span>
-          {n.to === "/today" && totalDue > 0 && (
-            <span className="rounded-full bg-amber-soft px-1.5 text-xs font-semibold text-amber-text tabular-nums">
-              {totalDue}
-            </span>
+          {n.later && <span className="text-xs text-faint">later</span>}
+          {n.to === "/activity" && unseen && (
+            <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />
           )}
         </NavLink>
       ))}
+
       {decks && decks.length > 0 && (
         <>
           <div className="mx-2.5 mb-1 mt-5 text-xs font-medium text-muted">Decks</div>
           {decks.map((d) => (
             <NavLink
               key={d.id}
-              to="/decks/$deckId"
+              to="/library/$deckId"
               params={{ deckId: d.id }}
               className={item}
               st={st}
             >
               <span className="flex-1 truncate">{d.name}</span>
-              <span className="text-xs text-muted tabular-nums">
+              <span className="text-xs tabular-nums text-muted">
                 {d.due > 0 ? <b className="font-semibold text-amber-text">{d.due}</b> : d.total}
               </span>
             </NavLink>
           ))}
         </>
       )}
+
       <div className="flex-1" />
-      <button
-        type="button"
-        onClick={onAdd}
-        className="flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,scale] duration-150 hoverable:hover:bg-plate-2 hoverable:hover:text-text active:scale-[0.97] [&_svg]:size-[18px] [&_svg]:text-muted"
-      >
-        <Plus aria-hidden="true" />
-        <span className="flex-1 text-left">Add word</span>
-        <Kbd>N</Kbd>
-      </button>
+
+      <NavLink to="/you" className={clsx(item, "h-12 px-2")} st={st}>
+        <Avatar name={name} size={28} />
+        <span className="flex-1 truncate text-text">{name ?? "You"}</span>
+      </NavLink>
     </aside>
   );
 }
 
-interface TabBarProps {
-  totalDue: number;
-  onAdd: () => void;
-  static?: StaticNav;
-  className?: string | undefined;
-}
-
-/** Phone navigation. Three tabs and an amber Add. Hidden during review so the grades own the bottom. */
-export function TabBar({ totalDue, onAdd, static: st, className }: TabBarProps) {
-  const cls =
-    "flex h-14 flex-1 flex-col items-center justify-center gap-1 text-2xs font-medium text-muted transition-colors [&.active]:text-text [&_svg]:size-[22px]";
+/**
+ * The app frame. The shell is capped and centred rather than stretched: a vocabulary app has
+ * one column of content, and a 2560 px sidebar-plus-column is a worse read, not a better one.
+ */
+export function AppShell({
+  sidebar,
+  nav,
+  children,
+}: {
+  sidebar?: ReactNode | undefined;
+  /** The phone pill. Floats over the content, centred above the home indicator. */
+  nav?: ReactNode | undefined;
+  children: ReactNode;
+}) {
   return (
-    <nav
-      className={clsx(
-        "flex items-stretch border-t border-edge bg-canvas/95 px-2 backdrop-blur-md pb-safe",
-        className,
+    <div className="@container flex min-h-dvh w-full justify-center">
+      <div className="flex w-full max-w-(--shell) flex-1">
+        {sidebar}
+        <main className="@container flex min-w-0 flex-1 flex-col pt-safe">{children}</main>
+      </div>
+      {nav && (
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-(--z-sticky) flex justify-center pb-safe @3xl:hidden">
+          <div className="mb-6">{nav}</div>
+        </div>
       )}
-      aria-label="Main"
-    >
-      {NAV.map((n, i) => [
-        <NavLink key={n.to} to={n.to} exact={n.to === "/today"} className={cls} st={st}>
-          <span className="relative">
-            <n.icon aria-hidden="true" />
-            {n.to === "/today" && totalDue > 0 && (
-              <span className="absolute -top-2 left-full -ml-1 min-w-[18px] rounded-full bg-amber-soft px-1 text-center text-2xs font-semibold leading-[18px] text-amber-text tabular-nums">
-                {totalDue}
-              </span>
-            )}
-          </span>
-          <span>{n.label}</span>
-        </NavLink>,
-        i === 1 ? (
-          <button key="add" type="button" onClick={onAdd} className={cls}>
-            <Plus aria-hidden="true" />
-            <span>Add</span>
-          </button>
-        ) : null,
-      ])}
-    </nav>
+    </div>
   );
 }
 
 /** Page column. Same on every screen so the eye lands in the same place. */
 export function Page({
   children,
-  width = "md",
+  width = "full",
   className,
 }: {
   children: ReactNode;
-  width?: "md" | "lg" | undefined;
+  /** "md" for reading screens, "full" for Today, Library and a deck. */
+  width?: "md" | "full" | undefined;
   className?: string | undefined;
 }) {
   return (
     <div
       className={clsx(
-        "mx-auto flex w-full flex-1 flex-col px-5 pb-safe-tab @3xl:px-10 @3xl:pb-10",
-        width === "md" ? "max-w-2xl" : "max-w-4xl",
+        "mx-auto flex w-full flex-1 flex-col px-5 pb-safe-nav @3xl:px-8 @3xl:pb-10",
+        width === "md" && "max-w-2xl",
         className,
       )}
     >
@@ -185,6 +182,7 @@ export function Page({
 export function PageHeader({
   title,
   eyebrow,
+  sub,
   actions,
   children,
   className,
@@ -192,6 +190,8 @@ export function PageHeader({
   title: ReactNode;
   /** Small line above the title, e.g. a back link on the phone. */
   eyebrow?: ReactNode | undefined;
+  /** One line under the title: the date, a count. */
+  sub?: ReactNode | undefined;
   actions?: ReactNode | undefined;
   children?: ReactNode | undefined;
   className?: string | undefined;
@@ -200,55 +200,13 @@ export function PageHeader({
     <header className={clsx("grid gap-1 pb-4 pt-2 @3xl:pt-0", className)}>
       {eyebrow}
       <div className="flex min-h-14 flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-medium leading-none text-text">{title}</h1>
-        {actions && <div className="flex items-center gap-2">{actions}</div>}
+        <div className="grid gap-0.5">
+          <h1 className="text-2xl font-medium leading-none text-text">{title}</h1>
+          {sub && <p className="text-sm text-muted tabular-nums">{sub}</p>}
+        </div>
+        {actions && <div className="flex items-center gap-1.5">{actions}</div>}
       </div>
       {children}
     </header>
-  );
-}
-
-/** A deck row. Name, due count in amber, total, chevron. */
-export function DeckRow({
-  name,
-  language,
-  due,
-  total,
-  href,
-  st,
-}: {
-  name: string;
-  language?: string | null | undefined;
-  due: number;
-  total: number;
-  href: string;
-  st?: StaticNav;
-}) {
-  const cls =
-    "group edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3.5 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover";
-  const inner = (
-    <>
-      <span className="flex min-w-0 flex-1 items-baseline gap-2">
-        <span className="truncate text-md font-medium">{name}</span>
-        {language && (
-          <span className="text-xs uppercase tracking-[0.06em] text-muted">{language}</span>
-        )}
-      </span>
-      <span className="flex items-baseline gap-2 text-sm text-muted tabular-nums">
-        {due > 0 && <b className="font-semibold text-amber-text">{due} due</b>}
-        <span>{total}</span>
-      </span>
-    </>
-  );
-  if (st)
-    return (
-      <a href={href} onClick={(e) => e.preventDefault()} className={cls}>
-        {inner}
-      </a>
-    );
-  return (
-    <Link to="/decks/$deckId" params={{ deckId: href.split("/").pop() ?? "" }} className={cls}>
-      {inner}
-    </Link>
   );
 }

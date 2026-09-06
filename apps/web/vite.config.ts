@@ -20,6 +20,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["icon.svg", "icons/apple-touch-icon.png"],
       manifest: {
+        id: "/",
         name: "Lymi",
         short_name: "Lymi",
         description: "Vocabulary you carry with you.",
@@ -43,6 +44,7 @@ export default defineConfig({
         // The shell is precached. API responses are never cached by the service worker;
         // TanStack Query owns data caching so offline reviews go through one path.
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
+        importScripts: ["/push-sw.js"],
         navigateFallback: "/index.html",
         navigateFallbackDenylist: [/^\/$/, /^\/api\//, /^\/mcp/],
         runtimeCaching: [

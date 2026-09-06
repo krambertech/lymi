@@ -1,17 +1,28 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { AddMenu } from "../components/AddMenu";
+import { Avatar } from "../components/Avatar";
 import { buttonClass } from "../components/Button";
-import { Kbd } from "../components/Kbd";
 import { Lantern } from "../components/Lantern";
-import { SevenLights } from "../components/SevenLights";
+import type { NewCards } from "../components/NewCardsRow";
+import { NewCardsRow } from "../components/NewCardsRow";
 import { Skeleton } from "../components/Skeleton";
+import { StreakPill, StreakPlate } from "../components/Streak";
 import type { DeckSummary } from "../lib/api";
-import { DeckRow, Page, PageHeader, type StaticNav } from "./Shell";
+import { Page, PageHeader, type StaticNav } from "./Shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
-  /** Seven counts, oldest first. Undefined while loading. */
+  /** One review count per day, oldest first, today last. Ninety days feed the streak. */
   history: number[] | undefined;
+  /** Cards that landed since the last review, by deck. Empty until the endpoint exists. */
+  arrivals?: NewCards[] | undefined;
+  /** Worded forecast, e.g. "31 tomorrow, 9 on Monday". */
+  forecast?: string | undefined;
+  /** The learner, for the avatar that opens You on the phone. */
+  name?: string | undefined;
+  onAdd?: (() => void) | undefined;
+  onCreateDeck?: (() => void) | undefined;
   static?: StaticNav;
 }
 
@@ -19,11 +30,24 @@ function plural(n: number, one: string, many: string) {
   return `${n} ${n === 1 ? one : many}`;
 }
 
+const today = () =>
+  new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
+
 /**
- * Home. One question: is anything due? The lantern is lit and glowing when there is, dark
- * when there is not. Decks follow as a quiet list.
+ * Home. One question first: is anything due? The lantern answers it, the button acts on it,
+ * and the streak sits beside it on desktop and in the header on the phone. What an integration
+ * added since the last review follows, so nothing lands unseen.
  */
-export function TodayView({ decks, history, static: st }: TodayProps) {
+export function TodayView({
+  decks,
+  history,
+  arrivals,
+  forecast,
+  name,
+  onAdd,
+  onCreateDeck,
+  static: st,
+}: TodayProps) {
   const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
   const dueDecks = decks?.filter((d) => d.due > 0).length ?? 0;
@@ -37,7 +61,7 @@ export function TodayView({ decks, history, static: st }: TodayProps) {
     className,
     children,
   }: {
-    to: "/review" | "/decks";
+    to: "/review" | "/library" | "/activity" | "/you";
     className?: string | undefined;
     children: ReactNode;
   }) =>
@@ -53,84 +77,111 @@ export function TodayView({ decks, history, static: st }: TodayProps) {
 
   return (
     <Page>
-      <PageHeader title="Today" />
-      <section className="flex min-h-[440px] flex-col items-center justify-center gap-2 py-8 text-center @3xl:py-12">
-        {loading ? (
-          <>
-            <Skeleton className="mb-4 size-32 rounded-full" />
-            <Skeleton className="h-8 w-44" />
-            <Skeleton className="h-4 w-60" />
-          </>
-        ) : lit ? (
-          <>
-            <Lantern className="mb-4 size-32 @3xl:size-36" flicker glow />
-            <h2 className="text-3xl font-medium tabular-nums">
-              {plural(due, "card", "cards")} due
-            </h2>
-            <p className="max-w-[30ch] text-md text-muted">
-              Across {plural(dueDecks, "deck", "decks")}. Ten minutes, maybe less.
-            </p>
-            <div className="mt-6 w-full @3xl:w-auto">
-              <To
-                to="/review"
-                className={buttonClass(
-                  "primary",
-                  "lg",
-                  "h-14 w-full text-lg @3xl:h-12 @3xl:w-auto @3xl:text-md",
-                )}
-              >
-                <span className="inline-flex items-center gap-2">
-                  Review {due} due
-                  <span className="hidden @2xl:contents">
-                    <Kbd tone="on-primary">R</Kbd>
-                  </span>
-                </span>
-              </To>
-            </div>
-          </>
-        ) : nothingYet ? (
-          <>
-            <Lantern className="mb-4 size-32 @3xl:size-36" variant="unlit" />
-            <h2 className="text-3xl font-medium">Nothing here yet</h2>
-            <p className="max-w-[30ch] text-md text-muted">
-              Make a deck, add a word from your last lesson, and the lantern comes on.
-            </p>
-            <div className="mt-6">
-              <To to="/decks" className={buttonClass("primary", "lg")}>
-                <span>Make a deck</span>
-              </To>
-            </div>
-          </>
-        ) : (
-          <>
-            <Lantern className="mb-4 size-32 @3xl:size-36" variant="unlit" />
-            <h2 className="text-3xl font-medium">Nothing due right now</h2>
-            <p className="max-w-[30ch] text-md text-muted">
-              {plural(total, "card", "cards")} in your decks. Add something from today’s lesson
-              while it’s fresh?
-            </p>
-          </>
-        )}
-        {!nothingYet && (
-          <div className="mt-7">
-            {history ? <SevenLights days={history} /> : <Skeleton className="h-9 w-40" />}
+      <PageHeader
+        title="Today"
+        sub={today()}
+        actions={
+          <div className="flex items-center gap-1.5 @3xl:hidden">
+            <StreakPill days={history} />
+            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+            <To
+              to="/you"
+              className="relative ml-0.5 inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
+            >
+              <Avatar name={name} size={34} />
+              <span className="sr-only">You</span>
+            </To>
           </div>
-        )}
-      </section>
+        }
+      />
 
-      {decks && decks.length > 0 && (
-        <section className="mt-2 grid gap-2" aria-label="Decks">
-          {decks.map((d) => (
-            <DeckRow
-              key={d.id}
-              name={d.name}
-              due={d.due}
-              total={d.total}
-              href={`/decks/${d.id}`}
-              st={st}
-            />
+      <div className="grid gap-4 @3xl:grid-cols-3">
+        <section className="edge flex flex-col items-center gap-1.5 rounded-xl bg-plate px-5 py-7 text-center @3xl:col-span-2 @3xl:flex-row @3xl:items-center @3xl:gap-7 @3xl:px-7 @3xl:text-left">
+          {loading ? (
+            <>
+              <Skeleton className="size-24 rounded-full" />
+              <div className="grid w-full gap-2 @3xl:max-w-xs">
+                <Skeleton className="h-8 w-44" />
+                <Skeleton className="h-4 w-56" />
+                <Skeleton className="mt-3 h-12 w-full @3xl:w-32" />
+              </div>
+            </>
+          ) : (
+            <>
+              <Lantern
+                className="size-24 @3xl:size-26"
+                variant={lit ? "lit" : "unlit"}
+                flicker={lit}
+                glow={lit}
+              />
+              <div className="grid gap-1 @3xl:flex-1">
+                <h2 className="text-3xl font-medium tabular-nums">
+                  {nothingYet
+                    ? "Nothing here yet"
+                    : lit
+                      ? `${plural(due, "card", "cards")} due`
+                      : "Nothing due right now"}
+                </h2>
+                <p className="text-md text-muted">
+                  {nothingYet
+                    ? "Add a word from your last lesson and the lantern comes on."
+                    : lit
+                      ? `Across ${plural(dueDecks, "deck", "decks")}. Ten minutes, maybe less.`
+                      : `${plural(total, "card", "cards")} in your decks, all ahead of you.`}
+                </p>
+                {lit && (
+                  <To
+                    to="/review"
+                    className={buttonClass(
+                      "primary",
+                      "lg",
+                      "mt-5 w-full @3xl:mt-4 @3xl:w-auto @3xl:justify-self-start",
+                    )}
+                  >
+                    <span className="inline-flex items-center gap-2">Review</span>
+                  </To>
+                )}
+                {nothingYet && (
+                  <To
+                    to="/library"
+                    className={buttonClass(
+                      "primary",
+                      "lg",
+                      "mt-5 w-full @3xl:mt-4 @3xl:w-auto @3xl:justify-self-start",
+                    )}
+                  >
+                    <span>Make a deck</span>
+                  </To>
+                )}
+              </div>
+            </>
+          )}
+        </section>
+
+        <StreakPlate days={history} className="hidden @3xl:flex" />
+      </div>
+
+      {arrivals && arrivals.length > 0 && (
+        <section className="mt-7 grid gap-2" aria-label="New since your last review">
+          <div className="flex items-baseline justify-between gap-3 px-1">
+            <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+              New since your last review
+            </h2>
+            <To
+              to="/activity"
+              className="relative text-sm font-medium text-amber-text before:absolute before:-inset-x-2 before:-inset-y-3.5 before:content-['']"
+            >
+              Activity
+            </To>
+          </div>
+          {arrivals.map((a) => (
+            <NewCardsRow key={a.deckId} {...a} st={st} />
           ))}
         </section>
+      )}
+
+      {forecast && !nothingYet && (
+        <p className="mt-6 px-1 text-sm text-muted tabular-nums">Coming up: {forecast}</p>
       )}
     </Page>
   );

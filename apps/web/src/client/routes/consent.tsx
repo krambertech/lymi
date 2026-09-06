@@ -92,7 +92,7 @@ function Consent() {
         scopes={"granted" in outcome ? outcome.granted : undefined}
         action={
           "granted" in outcome ? (
-            <Link to="/settings" className={buttonClass("secondary", "sm")}>
+            <Link to="/you" className={buttonClass("secondary", "sm")}>
               Manage connected apps
             </Link>
           ) : undefined

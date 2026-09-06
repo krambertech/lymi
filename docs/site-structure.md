@@ -12,7 +12,7 @@ Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudfla
 | --- | --- |
 | `/` | Public landing page, server-rendered by the Worker and hydrated by React. |
 | `/app` | Convenient entry point that redirects to `/today`. |
-| `/today`, `/decks`, `/review`, `/settings` | Existing app screens; private data requires authentication. |
+| `/today`, `/library`, `/review`, `/you`, `/activity`, `/archived`, `/insights` | Existing app screens; private data requires authentication. Today and Library are the two navigable destinations; the rest are reached from a button or from You. |
 | `/login`, `/consent` | Sign-in and integration authorization. |
 | `/docs` | Public documentation: guides, MCP setup, and the API reference. Reads signed out. |
 | `/api/*` | App and integration API, with its existing authentication and scope checks. |

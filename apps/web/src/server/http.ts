@@ -78,7 +78,7 @@ type Ok = { status?: number; schema: ZodType; description: string };
 export function describe(
   spec: Omit<DescribeRouteOptions, "responses" | "security"> & {
     ok?: Ok | Ok[] | undefined;
-    errors?: (400 | 404 | 409)[] | undefined;
+    errors?: (400 | 404 | 409 | 503)[] | undefined;
     learnerOnly?: boolean | undefined;
     /** Callable with no session, key or token. Mount these above `authenticate`. */
     open?: boolean | undefined;
@@ -126,9 +126,10 @@ const ERRORS = {
   404: "Not found, or not yours.",
   409: "The change would collide with another card.",
   429: "The key is over its rate limit.",
+  503: "This capability is not configured or temporarily unavailable.",
 } as const;
 
-export function statusOf(err: ServiceError): 400 | 403 | 404 | 409 {
+export function statusOf(err: ServiceError): 400 | 403 | 404 | 409 | 503 {
   switch (err.code) {
     case "invalid":
       return 400;
@@ -138,6 +139,8 @@ export function statusOf(err: ServiceError): 400 | 403 | 404 | 409 {
       return 404;
     case "conflict":
       return 409;
+    case "unavailable":
+      return 503;
     default: {
       const _exhaustive: never = err.code;
       return _exhaustive;

@@ -89,6 +89,31 @@ export const userSettings = sqliteTable("user_settings", {
   ...timestamps,
 });
 
+/** One row per browser installation that explicitly opted into a daily review reminder. */
+export const pushSubscriptions = sqliteTable(
+  "push_subscriptions",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** Capability URL supplied by the browser. Treat as a secret and never return it. */
+    endpoint: text("endpoint").notNull(),
+    p256dh: text("p256dh").notNull(),
+    auth: text("auth").notNull(),
+    expirationTime: integer("expiration_time", { mode: "timestamp_ms" }),
+    reminderTime: text("reminder_time").notNull().default("19:00"),
+    timezone: text("timezone").notNull(),
+    /** Local YYYY-MM-DD in `timezone`; this is the cron idempotency claim. */
+    lastSentLocalDate: text("last_sent_local_date"),
+    ...timestamps,
+  },
+  (t) => [
+    uniqueIndex("push_subscriptions_endpoint_idx").on(t.endpoint),
+    index("push_subscriptions_user_idx").on(t.userId),
+  ],
+);
+
 /**
  * FSRS state per card per direction. The full ts-fsrs Card lives in `fsrs` as JSON so the
  * library can evolve without a migration; `due` and `state` are copied out for queries.
@@ -173,6 +198,7 @@ export type Card = typeof cards.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;
+export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type AuditEntry = typeof auditLog.$inferSelect;
 
 /**

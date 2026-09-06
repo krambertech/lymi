@@ -3,15 +3,16 @@ import { useState } from "react";
 import { AddCardForm } from "../components/AddCardSheet";
 import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
+import { PillNav } from "../components/PillNav";
 import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
-import { DecksView } from "../views/DecksView";
+import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
 import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/ReviewView";
-import { SettingsView } from "../views/SettingsView";
-import { Sidebar, TabBar } from "../views/Shell";
+import { Sidebar } from "../views/Shell";
 import { TodayView } from "../views/TodayView";
+import { YouView } from "../views/YouView";
 import { Desktop, type FrameTheme, Phone, Section, Sub, useFrameTheme } from "./Frame";
 import * as m from "./mock";
 
@@ -42,14 +43,12 @@ function PhoneShot({
   caption,
   initial,
   path,
-  due = 11,
   children,
   bare,
 }: {
   caption: ReactNode;
   initial: FrameTheme;
   path: string;
-  due?: number | undefined;
   children: ReactNode;
   bare?: boolean | undefined;
 }) {
@@ -58,7 +57,13 @@ function PhoneShot({
       {(t) => (
         <Phone
           theme={t}
-          bottom={bare ? undefined : <TabBar totalDue={due} onAdd={noop} static={{ path }} />}
+          bottom={
+            bare ? undefined : (
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center pb-6">
+                <PillNav static={{ path }} />
+              </div>
+            )
+          }
         >
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
         </Phone>
@@ -95,21 +100,23 @@ function ReviewPhone({
   const [revealed, setRevealed] = useState(init);
   const item = produce ? m.queueItemProduce : m.queueItem;
   return (
-    <div className="flex flex-1 flex-col px-4 pb-3">
+    <div className="flex min-h-0 flex-1 flex-col px-4 pb-3">
       <ReviewHeader done={4} total={11} deckName="Lesson 14" />
       <ReviewCard
         item={item}
         revealed={revealed}
         onReveal={() => setRevealed(true)}
         onPlayAudio={noop}
-        className="mt-5"
+        className="mt-4"
       />
-      <GradeBar
-        item={item}
-        enabled={revealed}
-        onGrade={() => setRevealed(false)}
-        className="mt-3"
-      />
+      {revealed && (
+        <GradeBar
+          id={!produce ? "review-grade-preview" : undefined}
+          enabled
+          onGrade={() => setRevealed(false)}
+          className="grade-enter mt-3"
+        />
+      )}
     </div>
   );
 }
@@ -123,28 +130,38 @@ export function Screens() {
     >
       <Sub
         title="Today"
-        note="The lantern is lit and glowing when cards are due, dark when they are not. Seven lights for the week. Decks follow as rows."
+        note="The lantern is lit and glowing when cards are due, dark when they are not. The streak is a flame pill in the header here and its own plate on desktop. What an integration added since the last review follows, then one line of forecast."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Cards due" initial="dark" path="/">
-            <TodayView decks={m.decks} history={m.history} static={{ path: "/" }} />
-          </PhoneShot>
-          <PhoneShot caption="Nothing due" initial="light" path="/" due={0}>
             <TodayView
-              decks={m.quietDecks}
-              history={m.historyNothingToday}
+              decks={m.decks}
+              history={m.streakDays}
+              arrivals={m.arrivals}
+              forecast="31 tomorrow, 9 on Monday"
+              name={m.me.name}
               static={{ path: "/" }}
             />
           </PhoneShot>
-          <PhoneShot caption="First run" initial="light" path="/" due={0}>
-            <TodayView decks={[]} history={[0, 0, 0, 0, 0, 0, 0]} static={{ path: "/" }} />
+          <PhoneShot caption="Nothing due" initial="light" path="/">
+            <TodayView
+              decks={m.quietDecks}
+              history={m.streakDaysOpen}
+              forecast="31 tomorrow, 9 on Monday"
+              name={m.me.name}
+              static={{ path: "/" }}
+            />
+          </PhoneShot>
+          <PhoneShot caption="First run" initial="light" path="/">
+            <TodayView decks={[]} history={m.noHistory} name={m.me.name} static={{ path: "/" }} />
           </PhoneShot>
         </div>
       </Sub>
 
       <Sub
+        id="review-preview"
         title="Review"
-        note="The word alone, then the meaning under a rule. Good is the only amber. Tap the card in the frame to reveal; grading resets it."
+        note="The card itself reveals the answer. Four equally weighted choices use icons and labels without exposing the scheduling algorithm; grading moves to the next card."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Question" initial="dark" path="/review" bare>
@@ -160,6 +177,7 @@ export function Screens() {
       </Sub>
 
       <Sub
+        id="session-done-preview"
         title="End of session"
         note="The lantern lights up and stays. Cards counted, not points. The week’s lights show what the day added."
       >
@@ -181,7 +199,7 @@ export function Screens() {
           <Shot caption="Desktop, review" initial="light">
             {(t) => (
               <Desktop theme={t} height={620}>
-                <Sidebar decks={m.decks} totalDue={11} onAdd={noop} static={{ path: "/" }} />
+                <Sidebar decks={m.decks} name={m.me.name} onAdd={noop} static={{ path: "/" }} />
                 <main className="@container flex min-w-0 flex-1 flex-col">
                   <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-8 pt-4">
                     <ReviewHeader done={4} total={11} deckName="Lesson 14" />
@@ -192,7 +210,7 @@ export function Screens() {
                       onPlayAudio={noop}
                       className="mt-5 min-h-[400px] flex-none"
                     />
-                    <GradeBar item={m.queueItem} enabled onGrade={noop} className="mt-3" />
+                    <GradeBar enabled onGrade={noop} className="mt-3" />
                   </div>
                 </main>
               </Desktop>
@@ -202,14 +220,20 @@ export function Screens() {
       </Sub>
 
       <Sub
-        title="Decks and capture"
-        note="Decks are rows. A deck is a table with search. Capture is a sheet with one field that matters."
+        title="Library, capture and You"
+        note="Decks are cards, two lines each, under a review bar. Capture is a sheet with one field that matters. You holds the profile, what integrations wrote, and every setting, so none of them needs a slot in the navigation."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
-          <PhoneShot caption="Decks" initial="light" path="/decks">
-            <DecksView decks={m.decks} static={{ path: "/decks" }} />
+          <PhoneShot caption="Library" initial="light" path="/library">
+            <LibraryView
+              decks={m.decks}
+              fresh={{ d1: 12 }}
+              next={{ d3: "Monday" }}
+              archivedCount={9}
+              static={{ path: "/library" }}
+            />
           </PhoneShot>
-          <PhoneShot caption="Add a word" initial="dark" path="/decks" bare>
+          <PhoneShot caption="Add a word" initial="dark" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
               <div className="edge-2 rounded-t-xl bg-plate">
                 <AddCardForm
@@ -222,21 +246,34 @@ export function Screens() {
               </div>
             </div>
           </PhoneShot>
-          <PhoneShot caption="Settings" initial="dark" path="/settings" due={0}>
-            <SettingsView me={m.me} theme="system" onTheme={noop} />
+          <PhoneShot caption="You" initial="dark" path="/you">
+            <YouView
+              me={m.me}
+              total={77}
+              unseen={12}
+              archivedCount={9}
+              theme="system"
+              onTheme={noop}
+              static={{ path: "/you" }}
+            />
           </PhoneShot>
         </div>
         <Shot caption="Desktop, a deck" initial="dark">
           {(t) => (
             <Desktop theme={t} height={640}>
-              <Sidebar decks={m.decks} totalDue={11} onAdd={noop} static={{ path: "/decks/d1" }} />
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                onAdd={noop}
+                static={{ path: "/library/d1" }}
+              />
               <main className="@container flex min-w-0 flex-1 flex-col">
                 <DeckDetailView
                   deck={m.decks[0]}
                   cards={m.deckCards}
                   onAdd={noop}
                   onArchive={noop}
-                  static={{ path: "/decks/d1" }}
+                  static={{ path: "/library/d1" }}
                 />
               </main>
             </Desktop>

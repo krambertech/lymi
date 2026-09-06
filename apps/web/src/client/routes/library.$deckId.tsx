@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { AddCardSheet } from "../components/AddCardSheet";
 import { Toast } from "../components/Toast";
+import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
 import { deckCardsQuery, decksQuery } from "../lib/queries";
 import { DeckDetailView } from "../views/DeckDetailView";
 
-export const Route = createFileRoute("/decks/$deckId")({
+export const Route = createFileRoute("/library/$deckId")({
   component: DeckPage,
 });
 
@@ -18,7 +18,7 @@ function DeckPage() {
   const decks = useQuery(decksQuery);
   const cards = useQuery(deckCardsQuery(deckId));
   const deck = decks.data?.find((d) => d.id === deckId);
-  const [addOpen, setAddOpen] = useState(false);
+  const add = useAddCard();
   const [undo, setUndo] = useState<{ id: string; term: string } | null>(null);
 
   const invalidate = () => {
@@ -48,7 +48,7 @@ function DeckPage() {
     mutationFn: () => api.archiveDeck(deckId),
     onSuccess: () => {
       invalidate();
-      navigate({ to: "/decks", search: { archived: deckId, name: deck?.name ?? "Deck" } });
+      navigate({ to: "/library", search: { archived: deckId, name: deck?.name ?? "Deck" } });
     },
   });
 
@@ -57,7 +57,7 @@ function DeckPage() {
       <DeckDetailView
         deck={deck}
         cards={cards.data}
-        onAdd={() => setAddOpen(true)}
+        onAdd={() => add.openCard(deckId)}
         onArchive={(id) => archive.mutate(id)}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onRename={(name) => rename.mutateAsync(name)}
@@ -72,7 +72,6 @@ function DeckPage() {
           Archived “{undo.term}”
         </Toast>
       )}
-      <AddCardSheet open={addOpen} onOpenChange={setAddOpen} deckId={deckId} />
     </>
   );
 }

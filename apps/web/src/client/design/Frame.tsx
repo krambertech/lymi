@@ -124,16 +124,18 @@ export function Section({
 }
 
 export function Sub({
+  id,
   title,
   note,
   children,
 }: {
+  id?: string | undefined;
   title: string;
   note?: ReactNode | undefined;
   children: ReactNode;
 }) {
   return (
-    <div className="grid gap-4">
+    <div id={id} className="grid scroll-mt-6 gap-4">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h3 className="text-md font-medium">{title}</h3>
         {note && <p className="max-w-[56ch] text-sm text-muted">{note}</p>}

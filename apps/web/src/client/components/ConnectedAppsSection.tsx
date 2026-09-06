@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import type { ConnectedApp } from "../lib/api";
 import { api } from "../lib/api";
 import { connectedAppsQuery } from "../lib/queries";
-import { SettingsGroup } from "../views/SettingsView";
+import { SettingsGroup } from "../views/YouView";
 import { AppMark, identifyApp } from "./AppMark";
 import { Button } from "./Button";
 import { Chip } from "./Chip";

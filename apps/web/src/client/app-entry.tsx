@@ -5,6 +5,7 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "./lib/pwa-install";
 import { routeTree } from "./routeTree.gen";
 
 // The private product owns offline behavior. Public landing visitors should not download the

@@ -3,23 +3,27 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ApiKeysSection } from "../components/ApiKeysSection";
 import { ConnectedAppsSection } from "../components/ConnectedAppsSection";
+import { NotificationsSection } from "../components/NotificationsSection";
 import { signOut } from "../lib/auth";
-import { meQuery } from "../lib/queries";
+import { decksQuery, meQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
-import { SettingsView } from "../views/SettingsView";
+import { YouView } from "../views/YouView";
 
-export const Route = createFileRoute("/settings")({
-  component: Settings,
+export const Route = createFileRoute("/you")({
+  component: You,
 });
 
-function Settings() {
+function You() {
   const me = useQuery(meQuery);
+  const decks = useQuery(decksQuery);
   const navigate = useNavigate();
   const [theme, setThemeState] = useState<ThemeChoice>(getTheme());
   const [busy, setBusy] = useState(false);
+  const total = decks.data?.reduce((n, d) => n + d.total, 0);
   return (
-    <SettingsView
+    <YouView
       me={me.data}
+      total={total}
       theme={theme}
       onTheme={(t) => {
         setTheme(t);
@@ -36,8 +40,9 @@ function Settings() {
         navigate({ to: "/login" });
       }}
     >
+      <NotificationsSection />
       <ConnectedAppsSection />
       <ApiKeysSection />
-    </SettingsView>
+    </YouView>
   );
 }

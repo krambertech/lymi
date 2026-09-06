@@ -19,87 +19,88 @@ const DECK = [SAMPLE_CARDS[0], SAMPLE_CARDS[3], SAMPLE_CARDS[1], SAMPLE_CARDS[6]
   (c): c is NonNullable<typeof c> => !!c,
 );
 
-/** The demo plays itself: ask, reveal, answer, next. Touching it takes it off autoplay. */
-const BEATS = { reveal: 1800, answer: 1500, next: 1400 } as const;
-
-const SPRING = { type: "spring", duration: 0.5, bounce: 0.2 } as const;
+const SPRING = { type: "spring", duration: 0.68, bounce: 0.14 } as const;
 
 /**
- * One review, played out. It runs on its own so the mechanic is visible without asking for
- * a click, and every control still works, which hands it over to anyone who wants to answer
- * for themselves. The first click stops the autoplay for good, so the demo never fights the
- * reader for the card.
+ * One working review. It demonstrates recall, reveal, and grading once it enters the viewport,
+ * then leaves the controls available so the reader can continue from the final card.
  */
 export function ReviewDemo() {
   const box = useRef<HTMLDivElement>(null);
+  const advanceTimer = useRef<number | null>(null);
+  const sequenceTimers = useRef<number[]>([]);
   const still = useReducedMotion();
-  // Nothing plays until it is on screen, so the reader never arrives mid-sentence.
-  const seen = useInView(box, { amount: 0.5 });
-
+  const inView = useInView(box, { once: true, amount: 0.4 });
   const [index, setIndex] = useState(0);
-  // Opens revealed: the grades and the meaning are the point, and the loop rewinds to the
-  // question on its next pass. A reader who never gets the animation still sees how it works.
-  const [revealed, setRevealed] = useState(true);
+  const [revealedFor, setRevealedFor] = useState(-1);
   const [answered, setAnswered] = useState<number | null>(null);
-  const [auto, setAuto] = useState(true);
 
   const card = DECK[index % DECK.length];
   const chosen = answered === null ? null : GRADES[answered];
+  const revealed = revealedFor === index;
 
-  const answer = useCallback((n: number) => {
-    setAuto(false);
-    setRevealed(true);
-    setAnswered(n);
+  const stopSequence = useCallback(() => {
+    sequenceTimers.current.forEach(window.clearTimeout);
+    sequenceTimers.current = [];
   }, []);
 
-  // One timer walking the loop, reset whenever the state it is waiting on changes.
-  useEffect(() => {
-    if (!auto || !seen || still) return;
-    let t: number;
-    if (!revealed) {
-      t = window.setTimeout(() => setRevealed(true), BEATS.reveal);
-    } else if (answered === null) {
-      // Vary the answer, so it does not look like a recording of the same click.
-      t = window.setTimeout(() => setAnswered(1 + ((index * 7) % 3)), BEATS.answer);
-    } else {
-      t = window.setTimeout(() => {
-        setIndex((i) => i + 1);
-        setRevealed(false);
-        setAnswered(null);
-      }, BEATS.next);
-    }
-    return () => window.clearTimeout(t);
-  }, [auto, seen, still, revealed, answered, index]);
+  const answer = useCallback(
+    (n: number) => {
+      if (!revealed || answered !== null) return;
+      stopSequence();
+      setAnswered(n);
+      advanceTimer.current = window.setTimeout(
+        () => {
+          setIndex((i) => i + 1);
+          setAnswered(null);
+        },
+        still ? 0 : 1250,
+      );
+    },
+    [answered, revealed, still, stopSequence],
+  );
 
-  // The app grades with 1 to 4 and reveals with Space. The demo answers to the same keys
-  // while it has focus, so the shortcut is learned here rather than described later.
   useEffect(() => {
-    const el = box.current;
-    if (!el) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === " " && !revealed) {
-        e.preventDefault();
-        setAuto(false);
-        setRevealed(true);
-        return;
-      }
-      const n = Number.parseInt(e.key, 10);
-      if (revealed && n >= 1 && n <= 4) {
-        e.preventDefault();
-        answer(n - 1);
-      }
+    if (!inView) return;
+    if (still) {
+      setRevealedFor(0);
+      return;
+    }
+
+    const later = (delay: number, action: () => void) => {
+      sequenceTimers.current.push(window.setTimeout(action, delay));
     };
-    el.addEventListener("keydown", onKey);
-    return () => el.removeEventListener("keydown", onKey);
-  }, [revealed, answer]);
+    later(900, () => setRevealedFor(0));
+    later(2600, () => setAnswered(2));
+    later(3800, () => {
+      setIndex(1);
+      setRevealedFor(-1);
+      setAnswered(null);
+    });
+    later(5000, () => setRevealedFor(1));
+    later(6800, () => setAnswered(3));
+    later(8000, () => {
+      setIndex(2);
+      setRevealedFor(-1);
+      setAnswered(null);
+    });
+    later(9200, () => setRevealedFor(2));
+
+    return stopSequence;
+  }, [inView, still, stopSequence]);
+
+  useEffect(() => {
+    return () => {
+      stopSequence();
+      if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current);
+    };
+  }, [stopSequence]);
 
   if (!card) return null;
 
   return (
-    // biome-ignore lint/a11y/noNoninteractiveTabindex: the panel takes focus so 1-4 and Space work
-    <div ref={box} tabIndex={0} className="rounded-md outline-offset-4">
-      <div className="mx-auto flex max-w-[380px] items-center justify-between text-2xs tracking-[0.06em] text-faint uppercase">
+    <div ref={box} className="rounded-md outline-offset-4">
+      <div className="mx-auto flex max-w-[380px] items-center justify-between text-2xs tracking-[0.06em] text-muted uppercase">
         <span>Tonight</span>
         <span className="tabular-nums">{DECK.length - (index % DECK.length)} due</span>
       </div>
@@ -132,7 +133,7 @@ export function ReviewDemo() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    transition={still ? { duration: 0 } : { duration: 0.28 }}
+                    transition={still ? { duration: 0 } : { duration: 0.44 }}
                     className="mt-3 border-t border-edge pt-3"
                   >
                     <p className="text-lg text-text-2">{card.meaning}</p>
@@ -149,8 +150,8 @@ export function ReviewDemo() {
                     exit={{ opacity: 0 }}
                     transition={still ? { duration: 0 } : { duration: 0.2 }}
                     onClick={() => {
-                      setAuto(false);
-                      setRevealed(true);
+                      stopSequence();
+                      setRevealedFor(index);
                     }}
                     className="mt-5 w-full rounded-sm border border-edge-2 border-dashed py-2.5 text-sm text-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-text-2"
                   >
@@ -166,10 +167,11 @@ export function ReviewDemo() {
                   key={g.name}
                   type="button"
                   onClick={() => answer(n)}
+                  disabled={!revealed || answered !== null}
                   animate={{ opacity: revealed ? 1 : 0.3, scale: answered === n ? 1.05 : 1 }}
                   transition={still ? { duration: 0 } : { duration: 0.22 }}
                   className={clsx(
-                    "flex flex-1 flex-col items-center gap-0.5 py-2 edge",
+                    "flex flex-1 flex-col items-center gap-0.5 py-2 edge disabled:cursor-default",
                     answered === n ? "bg-amber-soft" : "bg-plate-2 hoverable:hover:bg-hover",
                   )}
                   style={{ borderRadius: 10 }}
@@ -190,27 +192,17 @@ export function ReviewDemo() {
         </AnimatePresence>
       </div>
 
-      <div className="mx-auto mt-4 flex h-5 max-w-[380px] items-center justify-center">
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={chosen ? `${index}-${chosen.name}` : `${index}-rest`}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={still ? { duration: 0 } : { duration: 0.24 }}
-            className="text-center text-xs text-muted"
-            aria-live="polite"
-          >
-            {chosen ? (
-              <>
-                <span className="text-amber-text">{chosen.name}</span>. Back in {chosen.said}.
-              </>
-            ) : (
-              "Watch it, or answer it yourself."
-            )}
-          </motion.p>
-        </AnimatePresence>
-      </div>
+      <p className="sr-only" role="status" aria-live="polite">
+        {chosen ? (
+          <>
+            <span className="text-amber-text">{chosen.name}</span>. Back in {chosen.said}.
+          </>
+        ) : revealed ? (
+          "Choose a grade to move to the next card."
+        ) : (
+          "Reveal the meaning, then grade the recall."
+        )}
+      </p>
     </div>
   );
 }

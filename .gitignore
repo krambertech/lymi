@@ -10,4 +10,5 @@ dist
 coverage
 .turbo
 .impeccable/live
+.tanstack
 apps/web/src/client/routeTree.gen.ts

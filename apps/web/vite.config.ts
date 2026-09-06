@@ -23,7 +23,7 @@ export default defineConfig({
         name: "Lymi",
         short_name: "Lymi",
         description: "Vocabulary you carry with you.",
-        start_url: "/",
+        start_url: "/today",
         display: "standalone",
         orientation: "portrait",
         background_color: "#151210",
@@ -44,7 +44,7 @@ export default defineConfig({
         // TanStack Query owns data caching so offline reviews go through one path.
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         navigateFallback: "/index.html",
-        navigateFallbackDenylist: [/^\/api\//, /^\/mcp/],
+        navigateFallbackDenylist: [/^\/$/, /^\/api\//, /^\/mcp/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,

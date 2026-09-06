@@ -74,7 +74,7 @@ function Review() {
         if (!revealed) setRevealed(true);
         else onGrade(3);
       }
-      if (e.key === "Escape") navigate({ to: "/" });
+      if (e.key === "Escape") navigate({ to: "/today" });
       const g = GRADES.find((x) => x.key === e.key);
       if (g) onGrade(g.rating);
     };
@@ -89,7 +89,7 @@ function Review() {
         total={total}
         deckName={deckName}
         flare={flare}
-        onClose={() => navigate({ to: "/" })}
+        onClose={() => navigate({ to: "/today" })}
       />
 
       {queue.isPending && <ReviewSkeleton />}
@@ -99,7 +99,7 @@ function Review() {
           done={done}
           history={history.data?.days}
           action={
-            <Link to="/">
+            <Link to="/today">
               <Button variant="primary" size="lg" tabIndex={-1}>
                 Done
               </Button>

@@ -7,6 +7,7 @@ import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
 import { describe, statusOf } from "./http";
+import { renderLandingPage } from "./landing";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate } from "./principal";
@@ -34,9 +35,8 @@ export type AppEnv = {
 
 const app = new Hono<AppEnv>();
 
-// Preserve old bookmarks while keeping authentication on the canonical origin. The site
-// root is a static asset and never reaches this, so an old bookmark to the page still opens;
-// the first API call it makes is what moves the visitor to the origin sign-in works on.
+// Preserve old bookmarks while keeping authentication on the canonical origin. This runs
+// before both the server-rendered landing page and the authenticated application routes.
 app.use("*", async (c, next) => {
   const url = new URL(c.req.url);
   if (url.hostname === "lymi.k-porshnieva.workers.dev" && c.env.APP_URL === "https://lymi.app") {
@@ -45,6 +45,11 @@ app.use("*", async (c, next) => {
   }
   await next();
 });
+
+// Unlike the private product, the public front door is rendered into the response. React
+// hydrates it in the browser, so its form and motion keep working without making the copy,
+// metadata, or page structure depend on JavaScript.
+app.get("/", (c) => renderLandingPage(c.req.raw, c.env));
 
 // Per-request services. Bindings are only available inside the request on Workers.
 app.use("*", async (c, next) => {
@@ -96,6 +101,8 @@ app.get("/robots.txt", describe({ hide: true }), (c) => {
     [
       "User-agent: *",
       "Disallow: /api/",
+      "Disallow: /today",
+      "Disallow: /app",
       "Disallow: /decks",
       "Disallow: /review",
       "Disallow: /settings",

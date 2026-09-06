@@ -12,7 +12,7 @@ const FIELDS = [
   { key: "Say it", value: CARD?.say ?? "" },
 ];
 
-const STEP = 620;
+const STEP = 1100;
 
 interface RowProps {
   label: string;
@@ -25,7 +25,7 @@ function Row({ label, source, filled, children }: RowProps) {
   const still = useReducedMotion();
   return (
     <div className="flex min-h-[46px] items-start justify-between gap-3 border-b border-edge py-2.5 last:border-b-0">
-      <span className="w-[68px] shrink-0 pt-1 text-2xs tracking-[0.06em] text-faint uppercase">
+      <span className="w-[68px] shrink-0 pt-1 text-2xs tracking-[0.06em] text-muted uppercase">
         {label}
       </span>
       <div className="flex-1 text-sm text-text-2">
@@ -33,9 +33,9 @@ function Row({ label, source, filled, children }: RowProps) {
           {filled ? (
             <motion.div
               key="value"
-              initial={{ opacity: 0, y: 6 }}
+              initial={still ? { opacity: 0 } : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={still ? { duration: 0 } : { duration: 0.34 }}
+              transition={still ? { duration: 0.18 } : { duration: 0.34 }}
             >
               {children}
             </motion.div>
@@ -44,7 +44,7 @@ function Row({ label, source, filled, children }: RowProps) {
               key="empty"
               exit={{ opacity: 0 }}
               transition={still ? { duration: 0 } : { duration: 0.18 }}
-              className="text-faint italic"
+              className="text-muted italic"
             >
               empty
             </motion.span>
@@ -72,20 +72,22 @@ function Row({ label, source, filled, children }: RowProps) {
  */
 export function EnrichDemo() {
   const box = useRef<HTMLDivElement>(null);
+  const timers = useRef<number[]>([]);
   const still = useReducedMotion();
-  const seen = useInView(box, { amount: 0.6, once: true });
+  const inView = useInView(box, { once: true, amount: 0.42 });
+  const [started, setStarted] = useState(false);
   const [done, setDone] = useState(0);
 
-  // Fills in as it comes into view. There is nothing to press, and nothing to miss.
   useEffect(() => {
-    if (!seen) return;
+    if (!inView) return;
+    setStarted(true);
     if (still) {
       setDone(FIELDS.length);
       return;
     }
-    const timers = FIELDS.map((_, i) => window.setTimeout(() => setDone(i + 1), 420 + STEP * i));
-    return () => timers.forEach(window.clearTimeout);
-  }, [seen, still]);
+    timers.current = FIELDS.map((_, i) => window.setTimeout(() => setDone(i + 1), 650 + STEP * i));
+    return () => timers.current.forEach(window.clearTimeout);
+  }, [inView, still]);
 
   if (!CARD) return null;
 
@@ -102,22 +104,13 @@ export function EnrichDemo() {
         ))}
       </div>
 
-      <div className="mt-4 flex h-5 items-center justify-center">
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={done >= FIELDS.length ? "done" : "working"}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={still ? { duration: 0 } : { duration: 0.24 }}
-            className="text-xs text-muted"
-          >
-            {done >= FIELDS.length
-              ? "Three fields, each labelled with where it came from."
-              : "Filling in the rest…"}
-          </motion.p>
-        </AnimatePresence>
-      </div>
+      <p className="sr-only" role="status" aria-live="polite">
+        {!started
+          ? "Waiting to enrich the missing fields."
+          : done >= FIELDS.length
+            ? "Every field keeps its source."
+            : `Enriching field ${Math.min(done + 1, FIELDS.length)} of ${FIELDS.length}…`}
+      </p>
     </div>
   );
 }

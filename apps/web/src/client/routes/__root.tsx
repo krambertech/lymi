@@ -25,15 +25,14 @@ function Shell() {
   const [addOpen, setAddOpen] = useState(false);
   // Consent is a stop inside another app's sign-in; the design page and the docs are their
   // own documents. The docs read signed out, so they must never redirect to /login.
-  // The site root is the landing page until we know there is a session, so it wears no app
-  // chrome and never bounces a stranger to a sign-in form they cannot use.
+  // The site root is always the public, server-rendered landing page, so it wears no app chrome.
   const atRoot = location.pathname === "/";
   const bare =
     location.pathname === "/login" ||
     location.pathname === "/consent" ||
     location.pathname.startsWith("/design") ||
     location.pathname.startsWith("/docs") ||
-    (atRoot && !me.isSuccess);
+    atRoot;
   const onReview = location.pathname.startsWith("/review");
 
   useEffect(() => {

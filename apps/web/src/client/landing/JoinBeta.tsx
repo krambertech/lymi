@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { ArrowRight, Check } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { type FormEvent, useId, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { ApiError, joinBeta } from "../lib/api";
 
 const SPRING = { type: "spring", duration: 0.5, bounce: 0.2 } as const;
@@ -15,7 +15,7 @@ const SPRING = { type: "spring", duration: 0.5, bounce: 0.2 } as const;
  * of different heights, which is what makes a signup box look considered instead of assembled.
  */
 export function JoinBeta() {
-  const emailId = useId();
+  const emailId = "beta-email";
   const still = useReducedMotion();
   const [email, setEmail] = useState("");
   const join = useMutation({ mutationFn: (address: string) => joinBeta(address) });
@@ -27,7 +27,7 @@ export function JoinBeta() {
   };
 
   return (
-    <div className="mx-auto max-w-[440px]">
+    <div className="w-full max-w-[480px]">
       <AnimatePresence mode="wait" initial={false}>
         {join.isSuccess ? (
           <motion.div
@@ -47,7 +47,7 @@ export function JoinBeta() {
               <Check aria-hidden="true" className="size-5" />
             </motion.span>
             <p className="mt-4 text-xl font-medium text-text">
-              {join.data.alreadyOn ? "You were already on the list." : "You are on the list."}
+              {join.data.alreadyOn ? "You were already on the list." : "You’re on the list."}
             </p>
             <p className="mt-2 text-base text-text-2">
               We will write to {email.trim()} when there is room. Nothing to do until then.
@@ -61,11 +61,11 @@ export function JoinBeta() {
             exit={{ opacity: 0, y: -10 }}
             transition={still ? { duration: 0 } : { duration: 0.2 }}
           >
-            <label htmlFor={emailId} className="sr-only">
-              Your email address
+            <label htmlFor={emailId} className="text-sm font-medium text-text">
+              Email address
             </label>
             <div
-              className="flex items-center gap-2 bg-plate p-2 edge focus-within:shadow-[0_0_0_1px_var(--amber)]"
+              className="mt-2 flex flex-col gap-2 bg-plate p-2 edge focus-within:shadow-[0_0_0_1px_var(--amber)] @xl:flex-row @xl:items-center"
               style={{ borderRadius: 14 }}
             >
               <input
@@ -76,12 +76,12 @@ export function JoinBeta() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-11 min-w-0 flex-1 bg-transparent px-3 text-text outline-none placeholder:text-faint"
+                className="h-11 min-w-0 flex-1 bg-transparent px-3 text-text outline-none placeholder:text-muted"
               />
               <button
                 type="submit"
                 disabled={join.isPending}
-                className="flex h-11 shrink-0 items-center gap-1.5 bg-amber px-4 font-medium text-amber-ink transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-amber-hover active:scale-[0.97] disabled:opacity-60"
+                className="flex h-11 shrink-0 items-center justify-center gap-1.5 bg-amber px-4 font-medium text-amber-ink transition-[background-color,scale] duration-150 ease-out hoverable:hover:bg-amber-hover active:scale-[0.96] disabled:opacity-60"
                 style={{ borderRadius: 10 }}
               >
                 {join.isPending ? "Joining…" : "Join the beta"}
@@ -92,14 +92,14 @@ export function JoinBeta() {
             {join.isError && (
               <p className="mt-3 text-sm text-danger" role="alert">
                 {join.error instanceof ApiError && join.error.status === 400
-                  ? "That does not look like an email address. Check it and try again."
-                  : "That did not go through. Try again in a moment."}
+                  ? "Enter an email address like you@example.com."
+                  : "Unable to join the list. Check your connection and try again."}
               </p>
             )}
 
             <p className="mt-4 text-sm text-muted">
-              Joining the list saves your address and nothing else. It does not create an account,
-              and access to the app stays invitation only.
+              We save your email only to send an invitation. Joining the list does not create an
+              account.
             </p>
           </motion.form>
         )}

@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { SAMPLE_CARDS, type SampleCard } from "./cards";
 
@@ -13,9 +13,16 @@ const OPEN_H = 104;
 const GAP = 10;
 /** How many compact cards trail below the lit one before the column ends. */
 const TRAIL = 2;
-const EVERY = 3000;
+const SPRING = { type: "spring", duration: 0.78, bounce: 0.06 } as const;
+const INTRO_EASE = [0.19, 1, 0.22, 1] as const;
 
-const SPRING = { type: "spring", duration: 0.62, bounce: 0.18 } as const;
+const STREAM = [
+  SAMPLE_CARDS[3],
+  SAMPLE_CARDS[1],
+  SAMPLE_CARDS[0],
+  SAMPLE_CARDS[6],
+  SAMPLE_CARDS[2],
+].filter((card): card is SampleCard => Boolean(card));
 
 interface CardProps {
   card: SampleCard;
@@ -32,12 +39,13 @@ function StreamCard({ card, open, lit }: CardProps) {
     <motion.div
       className="lit-card flex flex-col justify-center overflow-hidden px-3.5"
       style={{ borderRadius: 10, ["--lit" as string]: lit }}
+      initial={false}
       animate={{ height: open ? OPEN_H : COMPACT_H }}
       transition={spring}
     >
       <span className="lit-label flex items-baseline gap-2 text-2xs tracking-[0.06em] uppercase">
         {card.label}
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {open && (
             <motion.span
               key="new"
@@ -56,6 +64,7 @@ function StreamCard({ card, open, lit }: CardProps) {
       {/* The term stretches as the card opens: the same word, given more room. */}
       <motion.p
         className="lit-term mt-1 origin-left truncate text-lg font-medium tracking-[-0.026em]"
+        initial={false}
         animate={{ scale: open ? 1.1 : 1 }}
         transition={spring}
       >
@@ -66,7 +75,7 @@ function StreamCard({ card, open, lit }: CardProps) {
         {open && (
           <motion.p
             key="meaning"
-            className="line-clamp-2 text-xs text-text-2"
+            className="lit-meaning line-clamp-2 text-xs text-text-2"
             initial={{ opacity: 0, y: -4, marginTop: 0 }}
             animate={{ opacity: 1, y: 0, marginTop: 10 }}
             exit={{ opacity: 0, y: -4, marginTop: 0 }}
@@ -107,23 +116,23 @@ const LAMP_Y = offsetOf(1) + OPEN_H / 2;
  */
 export function CardColumn({ onLampMove, className }: Props) {
   const box = useRef<HTMLDivElement>(null);
-  const [feed, setFeed] = useState(1);
-  const [held, setHeld] = useState(false);
   const still = useReducedMotion();
-
-  // A fixed window: one card waiting above the light, one in it, the rest walking away.
-  const shown = Array.from({ length: TRAIL + 3 }, (_, i) => {
-    const slot = i - 1;
-    const n = feed - slot;
-    const at = ((n % SAMPLE_CARDS.length) + SAMPLE_CARDS.length) % SAMPLE_CARDS.length;
-    return { key: n, slot, card: SAMPLE_CARDS[at] as SampleCard };
-  }).filter((c) => c.key >= 0);
+  const inView = useInView(box, { amount: 0.25 });
+  const [step, setStep] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const shown = [0, 1, 2].map((slot) => {
+    const index = (step + slot + STREAM.length) % STREAM.length;
+    return STREAM[index] as SampleCard;
+  });
 
   useEffect(() => {
-    if (held || still) return;
-    const t = window.setInterval(() => setFeed((n) => n + 1), EVERY);
-    return () => window.clearInterval(t);
-  }, [held, still]);
+    if (!inView || still || paused || STREAM.length < 4) return;
+    const timer = window.setInterval(
+      () => setStep((current) => (current - 1 + STREAM.length) % STREAM.length),
+      2900,
+    );
+    return () => window.clearInterval(timer);
+  }, [inView, paused, still]);
 
   useEffect(() => {
     if (!onLampMove) return;
@@ -149,25 +158,39 @@ export function CardColumn({ onLampMove, className }: Props) {
       ref={box}
       className={clsx("relative", className)}
       style={{ height: COLUMN_H }}
-      onPointerEnter={() => setHeld(true)}
-      onPointerLeave={() => setHeld(false)}
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+      aria-hidden="true"
     >
-      {shown.map(({ key, slot, card }) => {
-        // Above the light and past the last visible slot, a card is simply not there.
-        const gone = slot < 0 || slot > TRAIL;
-        const lit = slot === 1 ? 1 : slot === 0 ? 0.28 : Math.max(0, 0.22 - (slot - 2) * 0.12);
-        return (
-          <motion.div
-            key={key}
-            className="absolute inset-x-0 top-0"
-            initial={false}
-            animate={{ y: offsetOf(slot), opacity: gone ? 0 : 1 }}
-            transition={still ? { duration: 0 } : SPRING}
-          >
-            <StreamCard card={card} open={slot === 1} lit={lit} />
-          </motion.div>
-        );
-      })}
+      <AnimatePresence initial={!still}>
+        {shown.map((card, slot) => {
+          const lit = slot === 1 ? 1 : slot === 0 ? 0.28 : Math.max(0, 0.22 - (slot - 2) * 0.12);
+          return (
+            <motion.div
+              key={card.term}
+              className="absolute inset-x-0 top-0"
+              initial={{
+                opacity: 0,
+                transform: `translate3d(0, ${slot === 0 ? -18 : offsetOf(slot - 1)}px, 0)`,
+              }}
+              animate={{
+                opacity: 1,
+                transform: `translate3d(0, ${offsetOf(slot)}px, 0)`,
+              }}
+              exit={{
+                opacity: 0,
+                transform: `translate3d(0, ${offsetOf(TRAIL + 2)}px, 0)`,
+              }}
+              transition={{
+                transform: still ? { duration: 0 } : SPRING,
+                opacity: { duration: still ? 0.18 : 0.3 },
+              }}
+            >
+              <StreamCard card={card} open={slot === 1} lit={lit} />
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
     </div>
   );
 }
@@ -177,9 +200,23 @@ export function CardColumn({ onLampMove, className }: Props) {
  * Cards drift right to left through a beam fixed at the centre.
  */
 export function CardBelt({ onLampMove, className }: Props) {
-  const belt = useRef<HTMLDivElement>(null);
   const wrap = useRef<HTMLDivElement>(null);
   const still = useReducedMotion();
+  const inView = useInView(wrap, { amount: 0.25 });
+  const [step, setStep] = useState(0);
+  const shown = [0, 1, 2].map((slot) => {
+    const index = (step + slot + STREAM.length) % STREAM.length;
+    return STREAM[index] as SampleCard;
+  });
+
+  useEffect(() => {
+    if (!inView || still || STREAM.length < 4) return;
+    const timer = window.setInterval(
+      () => setStep((current) => (current - 1 + STREAM.length) % STREAM.length),
+      2900,
+    );
+    return () => window.clearInterval(timer);
+  }, [inView, still]);
 
   useEffect(() => {
     if (!onLampMove) return;
@@ -198,88 +235,42 @@ export function CardBelt({ onLampMove, className }: Props) {
     };
   }, [onLampMove]);
 
-  useEffect(() => {
-    const track = belt.current;
-    const box = wrap.current;
-    if (!track || !box) return;
-
-    const cards = Array.from(track.children) as HTMLElement[];
-    let width = 0;
-    let offset = 0;
-    let raf = 0;
-    let last = 0;
-
-    const measure = () => {
-      width = 0;
-      for (let i = 0; i < cards.length / 2; i++) width += (cards[i]?.offsetWidth ?? 0) + 10;
-    };
-
-    // Nothing snaps the belt, so a card can sit up to half a pitch off centre. The beam has
-    // to reach further than that gap or the card nearest the middle never gets bright enough
-    // to give up its meaning, which is the whole point of the thing moving.
-    const REACH = 250;
-
-    const paint = () => {
-      const r = box.getBoundingClientRect();
-      const beam = r.left + r.width / 2;
-      for (const card of cards) {
-        const c = card.getBoundingClientRect();
-        const raw = Math.max(0, 1 - Math.abs(c.left + c.width / 2 - beam) / REACH);
-        card.style.setProperty("--lit", (raw * raw * (3 - 2 * raw)).toFixed(3));
-      }
-    };
-
-    const frame = (now: number) => {
-      const dt = Math.min((now - (last || now)) / 1000, 0.05);
-      last = now;
-      if (!document.hidden) {
-        offset -= 24 * dt;
-        if (width && offset <= -width) offset += width;
-        track.style.transform = `translate3d(${offset.toFixed(2)}px,0,0)`;
-        paint();
-      }
-      raf = window.requestAnimationFrame(frame);
-    };
-
-    measure();
-    window.addEventListener("resize", measure);
-    if (still) paint();
-    else raf = window.requestAnimationFrame(frame);
-    return () => {
-      window.cancelAnimationFrame(raf);
-      window.removeEventListener("resize", measure);
-    };
-  }, [still]);
-
   return (
     <div
       ref={wrap}
-      className={clsx("overflow-hidden", className)}
+      className={clsx("overflow-hidden pt-8 pb-4", className)}
       style={{
         maskImage: "linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)",
         WebkitMaskImage: "linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)",
       }}
       aria-hidden="true"
     >
-      <div ref={belt} className="flex gap-2.5 will-change-transform">
-        {[...SAMPLE_CARDS, ...SAMPLE_CARDS].map((card, i) => (
-          <div
-            // biome-ignore lint/suspicious/noArrayIndexKey: the list is doubled, so index is the identity
-            key={i}
-            className="lit-card w-[158px] shrink-0 rounded-sm px-3.5 py-3"
-            // Readable before the frame loop has run a single pass, so the belt is not a row
-            // of blank plates in a background tab, a link preview or a crawler's render.
-            style={{ ["--lit" as string]: 0.5 }}
-          >
-            <span className="lit-label block text-2xs tracking-[0.06em] uppercase">
-              {card.label}
-            </span>
-            <p className="lit-term mt-1.5 truncate text-lg font-medium tracking-[-0.026em]">
-              {card.term}
-            </p>
-            <p className="mt-1.5 line-clamp-2 text-xs text-text-2">{card.meaning}</p>
-          </div>
-        ))}
+      <div className="flex justify-center gap-2.5 px-5">
+        <AnimatePresence initial={!still} mode="popLayout">
+          {shown.map((card, i) => (
+            <motion.div
+              layout={!still}
+              key={card.term}
+              className="lit-card w-[158px] shrink-0 rounded-sm px-3.5 py-3"
+              style={{ ["--lit" as string]: i === 1 ? 1 : 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                layout: still ? { duration: 0 } : SPRING,
+                opacity: { duration: still ? 0.18 : 0.32, ease: INTRO_EASE },
+              }}
+            >
+              <span className="lit-label block text-2xs tracking-[0.06em] uppercase">
+                {card.label}
+              </span>
+              <p className="lit-term mt-1.5 truncate text-lg font-medium tracking-[-0.026em]">
+                {card.term}
+              </p>
+              <p className="mt-1.5 line-clamp-2 text-xs text-text-2">{card.meaning}</p>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -2,18 +2,22 @@
 
 **Status:** Agreed 5 September 2026, integrations layer decided the same day. Edit in place as decisions change. Vocabulary is in [CONTEXT.md](../CONTEXT.md).
 
-Everything runs on Cloudflare. One Worker serves the app, the API, auth and the MCP server. The client is a React PWA that behaves like a native app on the phone and like a keyboard-driven web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
+Everything runs on Cloudflare. One Worker server-renders the public landing page and serves the app,
+API, auth, and MCP server. React hydrates the landing page in the browser, while the private product
+remains a client-rendered PWA that behaves like a native app on the phone and like a keyboard-driven
+web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
 
 ## Shape
 
 ```mermaid
 flowchart LR
-  subgraph Client["apps/web (Vite, React PWA)"]
+  subgraph Client["apps/web (Vite + React)"]
     UI[TanStack Router + Query]
     SW[Service worker\nshell cache + outbox]
   end
   subgraph Worker["apps/worker (one Cloudflare Worker)"]
-    Assets[Static assets\nSPA fallback]
+    Landing[React SSR for /]
+    Assets[Static assets\nprivate SPA fallback]
     API[Hono /api\nOpenAPI at /api/openapi.json]
     Services[Service layer\ndb, userId, actor]
     Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
@@ -29,6 +33,7 @@ flowchart LR
   R2[(R2, audio)]
   KV[(KV, sessions cache)]
 
+  Landing --> UI
   UI --> Assets
   UI -->|fetch, session cookie| API
   SW -->|replay queued reviews| API
@@ -51,13 +56,24 @@ flowchart LR
 
 ## Decisions
 
-### Client: Vite + React + TanStack Router and Query, as a PWA
+### Client: server-rendered React landing page plus a client-rendered PWA
 
-A single-page app, not a server-rendered site. The app sits behind a login, so there is nothing for SSR to gain, and a static shell is what makes a PWA open instantly and work offline. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train.
+The public root is request-time server-rendered React. The Worker injects the landing component and
+request-aware metadata into Vite's HTML shell, and the browser hydrates that same component so forms
+and motion stay interactive. The initial response therefore contains the page's useful content even
+when JavaScript has not run.
+
+The signed-in product is still a client-rendered single-page PWA. It sits behind a login, so a static
+shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper
+mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the
+review screen usable on a train. `/today` is the product home and `/app` redirects there.
 
 `vite-plugin-pwa` handles the manifest, install prompt and Workbox service worker. The shell is precached. Data goes through Query's cache plus a small outbox in IndexedDB (Dexie) for reviews graded offline, replayed when the connection returns.
 
-Alternative considered: TanStack Start or React Router 7 with SSR on Workers. Fine products, but SSR adds a rendering path and a hydration step for no user-visible benefit here. Revisit if a public marketing site needs to share the codebase.
+TanStack Start remains an option if several public page types later need loaders, streaming, or
+selective SSR. It is not required for the current boundary: one Hono handler renders `/`, and the
+existing router continues to own the product and documentation routes. The future public-page
+questions are recorded in [Public rendering beyond the landing page](proposals/hybrid-public-rendering.md).
 
 ### Feels native on the phone
 
@@ -77,7 +93,8 @@ Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what
 
 ### Server: one Cloudflare Worker with Hono
 
-Hono routes `/api/*`, `/api/auth/*` and `/mcp`. Everything else is a static asset with SPA fallback, so page loads do not touch the Worker. The Cloudflare Vite plugin runs the same Worker locally.
+Hono server-renders `/` and routes `/api/*`, `/api/auth/*`, and `/mcp`. Other navigations use the
+static asset binding with SPA fallback. The Cloudflare Vite plugin runs the same Worker locally.
 
 Alternative considered: Pages plus separate Functions. Workers with static assets is the current path and deploys as one unit.
 
@@ -147,7 +164,7 @@ Pronunciation audio is generated once with OpenAI text-to-speech, stored in R2, 
 lymi/
   apps/web          One deployable: Vite React PWA client + Hono Worker
     src/client      Routes, components, styles (Tailwind v4 tokens from DESIGN.md)
-    src/server      Hono app, Better Auth, API routes, static-asset fallback
+    src/server      Hono app, landing SSR, Better Auth, API routes, static-asset fallback
     migrations      Drizzle-generated SQL for D1
   packages/core     Drizzle schema, Zod types, ts-fsrs scheduling, ids
   design/           The identity board

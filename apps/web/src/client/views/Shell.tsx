@@ -12,8 +12,8 @@ export interface NavDeck {
   due: number;
 }
 
-export const NAV: { to: "/" | "/decks" | "/settings"; label: string; icon: LucideIcon }[] = [
-  { to: "/", label: "Today", icon: Sun },
+export const NAV: { to: "/today" | "/decks" | "/settings"; label: string; icon: LucideIcon }[] = [
+  { to: "/today", label: "Today", icon: Sun },
   { to: "/decks", label: "Decks", icon: Layers },
   { to: "/settings", label: "Settings", icon: Settings2 },
 ];
@@ -74,10 +74,10 @@ export function Sidebar({ decks, totalDue, onAdd, static: st, className }: Sideb
         <Wordmark size={17} className="text-text" />
       </div>
       {NAV.map((n) => (
-        <NavLink key={n.to} to={n.to} exact={n.to === "/"} className={item} st={st}>
+        <NavLink key={n.to} to={n.to} exact={n.to === "/today"} className={item} st={st}>
           <n.icon aria-hidden="true" />
           <span className="flex-1">{n.label}</span>
-          {n.to === "/" && totalDue > 0 && (
+          {n.to === "/today" && totalDue > 0 && (
             <span className="rounded-full bg-amber-soft px-1.5 text-xs font-semibold text-amber-text tabular-nums">
               {totalDue}
             </span>
@@ -137,10 +137,10 @@ export function TabBar({ totalDue, onAdd, static: st, className }: TabBarProps) 
       aria-label="Main"
     >
       {NAV.map((n, i) => [
-        <NavLink key={n.to} to={n.to} exact={n.to === "/"} className={cls} st={st}>
+        <NavLink key={n.to} to={n.to} exact={n.to === "/today"} className={cls} st={st}>
           <span className="relative">
             <n.icon aria-hidden="true" />
-            {n.to === "/" && totalDue > 0 && (
+            {n.to === "/today" && totalDue > 0 && (
               <span className="absolute -top-2 left-full -ml-1 min-w-[18px] rounded-full bg-amber-soft px-1 text-center text-2xs font-semibold leading-[18px] text-amber-text tabular-nums">
                 {totalDue}
               </span>

@@ -12,7 +12,7 @@ test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
   await page.goto("/you");
   await expect(page.getByRole("link", { name: "Lymi website" })).toHaveAttribute(
     "href",
-    "http://localhost:4173/",
+    "http://localhost:4174/",
   );
 });
 

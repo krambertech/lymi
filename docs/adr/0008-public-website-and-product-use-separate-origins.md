@@ -7,6 +7,8 @@ date: 2026-09-06
 
 Lymi will establish two permanent public origins before more learners, installed PWAs and integrations make a migration expensive. `https://lymi.app` is the public website and documentation. `https://my.lymi.app` is the product, authentication, product API, MCP server and OAuth discovery. Both origins initially remain on the existing Cloudflare Worker; separating the website into another application and deployment is a later decision.
 
+[ADR 0009](0009-public-website-and-product-deploy-separately.md) supersedes only the initial one-Worker deployment choice. The origin, authentication and backend decisions in this record remain current.
+
 The public website is always reachable, whether or not the learner has a product session. It does not inspect authentication or automatically redirect a signed-in learner. Its stable Open app link goes to `my.lymi.app`, where a valid session opens Today and a missing session opens sign-in. Product deep links survive sign-in, and the product provides an explicit way back to the public website.
 
 The product backend stays on the product origin: REST routes use `my.lymi.app/api/*`, MCP uses `my.lymi.app/mcp`, and OAuth discovery uses `my.lymi.app/.well-known/*`. There is no `api.lymi.app`. Session cookies remain host-only to `my.lymi.app`; the website neither receives nor shares them.
@@ -28,7 +30,7 @@ The old service worker on `lymi.app` must be retired so it cannot intercept the 
 
 ## Consequences
 
-- The Worker must route by an allowlisted request hostname before applying path fallbacks, and both custom domains must invoke the same Worker.
+- Superseded by ADR 0009: the initial Worker routed by an allowlisted request hostname before path fallbacks and both custom domains invoked it; each domain now has its own deployment.
 - Better Auth has one canonical production base URL, `https://my.lymi.app`, and does not enable cross-subdomain cookies.
 - Google OAuth must allow `https://my.lymi.app` and its Better Auth callback before production activation.
 - Unauthenticated product navigation must preserve a safe internal return path through sign-in instead of always returning to a fixed page.

@@ -14,4 +14,5 @@ coverage
 .turbo
 .impeccable/live
 .tanstack
+.astro
 apps/web/src/client/routeTree.gen.ts

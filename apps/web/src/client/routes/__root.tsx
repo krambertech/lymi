@@ -32,17 +32,11 @@ function Shell() {
   const navigate = useNavigate();
   const add = useAddCard();
   const activeDeckId = location.pathname.match(/^\/library\/([^/]+)/)?.[1];
-  // Consent is a stop inside another app's sign-in; the design page and the docs are their
-  // own documents. The docs read signed out, so they must never redirect to /login.
-  // The site root is always the public, server-rendered landing page, so it wears no app chrome.
-  const atRoot = location.pathname === "/";
+  // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare =
     location.pathname === "/login" ||
-    location.pathname === "/join" ||
     location.pathname === "/consent" ||
-    location.pathname.startsWith("/design") ||
-    location.pathname.startsWith("/docs") ||
-    atRoot;
+    location.pathname.startsWith("/design");
   const onReview = location.pathname.startsWith("/review");
   const me = useQuery({ ...meQuery, enabled: !bare });
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
@@ -53,24 +47,6 @@ function Shell() {
       navigate({ to: "/login", search: { returnTo } });
     }
   }, [me.isError, me.error, bare, navigate]);
-
-  // One learner's cards are nobody else's business, so every screen but the landing page and
-  // the docs asks not to be indexed.
-  useEffect(() => {
-    const publicPage =
-      atRoot || location.pathname === "/join" || location.pathname.startsWith("/docs");
-    let tag = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
-    if (publicPage) {
-      tag?.remove();
-      return;
-    }
-    if (!tag) {
-      tag = document.createElement("meta");
-      tag.name = "robots";
-      document.head.appendChild(tag);
-    }
-    tag.content = "noindex, nofollow";
-  }, [location.pathname, atRoot]);
 
   useEffect(() => {
     if (me.isSuccess) void flushOutbox();

@@ -10,9 +10,11 @@ test("the summary makes browser coverage and failed gates explicit", () => {
     DEPENDENCIES_OUTCOME: "success",
     CHECK_OUTCOME: "success",
     BUILD_OUTCOME: "success",
+    BOUNDARIES_OUTCOME: "success",
     TYPECHECK_OUTCOME: "failure",
     TEST_OUTCOME: "skipped",
-    DEPLOY_OUTCOME: "skipped",
+    DEPLOY_PRODUCT_OUTCOME: "skipped",
+    DEPLOY_SITE_OUTCOME: "skipped",
     BROWSERS_OUTCOME: "skipped",
     E2E_OUTCOME: "skipped",
   });

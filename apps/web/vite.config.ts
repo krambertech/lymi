@@ -25,7 +25,7 @@ export default defineConfig({
             inspectorPort: false,
             config: {
               vars: {
-                PUBLIC_SITE_URL: "http://localhost:4173",
+                PUBLIC_SITE_URL: "http://localhost:4174",
                 PRODUCT_URL: "http://localhost:4173",
                 ALLOWED_EMAILS: e2eAllowedEmails.join(","),
                 BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",

@@ -6,12 +6,9 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./lib/pwa-install";
-import { isProductSurface } from "./lib/origins";
 import { routeTree } from "./routeTree.gen";
 
-// The private product owns offline behavior. Public landing visitors should not download the
-// complete application cache merely to read the marketing page.
-if (isProductSurface()) registerSW({ immediate: true });
+registerSW({ immediate: true });
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,7 +40,7 @@ declare module "@tanstack/react-router" {
   }
 }
 
-/** Mount the authenticated product and public documentation as the existing client-side app. */
+/** Mount the private product. Public pages are built and deployed from apps/site. */
 export function mountApp(root: HTMLElement) {
   createRoot(root).render(
     <StrictMode>

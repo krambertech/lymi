@@ -23,9 +23,3 @@ export function publicSiteUrl(path = "/"): string {
 export function productUrl(path = "/"): string {
   return new URL(path, PRODUCT_ORIGIN).toString();
 }
-
-export function isProductSurface(): boolean {
-  return (
-    typeof document !== "undefined" && document.documentElement.dataset.lymiSurface === "product"
-  );
-}

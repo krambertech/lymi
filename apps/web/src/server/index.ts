@@ -10,16 +10,10 @@ import { fetchConfiguredAsset } from "./html";
 import { describe, statusOf } from "./http";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
-import {
-  canonicalOrigins,
-  decideOriginRoute,
-  responseForOriginDecision,
-  surfaceFor,
-} from "./origin-routing";
+import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
 import { audio } from "./routes/audio";
-import { beta } from "./routes/beta";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
@@ -44,18 +38,14 @@ export type AppEnv = {
 
 const app = new Hono<AppEnv>();
 
-// The public root is server-rendered. The product root is an auth-aware door: a current
-// session goes to Today, while a signed-out learner gets the sign-in screen.
+// The product root is an auth-aware door: a current session goes to Today, while a signed-out
+// learner gets the sign-in screen. The public root is owned by the separate site Worker.
 app.get("/", async (c) => {
-  if (surfaceFor(c.req.url, c.env) === "product") {
-    const db = createDb(c.env.DB);
-    const auth = createAuth(c.env, db);
-    const session = await auth.api.getSession({ headers: c.req.raw.headers });
-    const destination = new URL(session ? "/today" : "/login", c.env.PRODUCT_URL);
-    return c.redirect(destination.toString(), 302);
-  }
-  const { renderLandingPage } = await import("./landing");
-  return renderLandingPage(c.req.raw, c.env);
+  const db = createDb(c.env.DB);
+  const auth = createAuth(c.env, db);
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  const destination = new URL(session ? "/today" : "/login", c.env.PRODUCT_URL);
+  return c.redirect(destination.toString(), 302);
 });
 
 // Per-request services. Bindings are only available inside the request on Workers.
@@ -69,7 +59,7 @@ app.use("*", async (c, next) => {
 app.get("/api/health", describe({ hide: true }), (c) =>
   c.json({
     ok: true,
-    name: "lymi",
+    name: "lymi-product",
     time: new Date().toISOString(),
     version: {
       id: c.env.CF_VERSION_METADATA.id,
@@ -103,68 +93,9 @@ app.all("/mcp", (c) =>
   handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
 );
 
-// The waiting list behind the landing page. A stranger has no session and no key, so this
-// sits with the other public routes, above authentication.
-app.route("/api/beta", beta);
-
-// What crawlers may read. The public pages are the landing page and the docs; everything
-// else is one learner's data behind a session, so it is disallowed rather than merely
-// unlinked. `noindex` on the app routes is set in the client as well, for anything that
-// arrives at a URL directly.
+// Everything on this origin is one learner's product or protocol surface.
 app.get("/robots.txt", describe({ hide: true }), (c) => {
-  if (surfaceFor(c.req.url, c.env) === "product") {
-    return c.text("User-agent: *\nDisallow: /\n", 200, {
-      "cache-control": "public, max-age=3600",
-    });
-  }
-  const origin = c.env.PUBLIC_SITE_URL;
-  return c.text(
-    [
-      "User-agent: *",
-      "Disallow: /api/",
-      "Disallow: /today",
-      "Disallow: /app",
-      "Disallow: /library",
-      "Disallow: /review",
-      "Disallow: /you",
-      "Disallow: /activity",
-      "Disallow: /insights",
-      "Disallow: /archived",
-      "Disallow: /login",
-      "Disallow: /consent",
-      "Disallow: /design",
-      "",
-      `Sitemap: ${origin}/sitemap.xml`,
-      "",
-    ].join("\n"),
-    200,
-    { "cache-control": "public, max-age=3600" },
-  );
-});
-
-app.get("/sitemap.xml", describe({ hide: true }), (c) => {
-  const origin = c.env.PUBLIC_SITE_URL;
-  const paths = [
-    "/",
-    "/docs",
-    "/docs/quickstart",
-    "/docs/cards",
-    "/docs/mcp",
-    "/docs/mcp/claude",
-    "/docs/mcp/chatgpt",
-    "/docs/authentication",
-    "/docs/api",
-    "/docs/recipes",
-  ];
-  const body = [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    ...paths.map((p) => `  <url><loc>${origin}${p}</loc></url>`),
-    "</urlset>",
-    "",
-  ].join("\n");
-  return c.body(body, 200, {
-    "content-type": "application/xml; charset=utf-8",
+  return c.text("User-agent: *\nDisallow: /\n", 200, {
     "cache-control": "public, max-age=3600",
   });
 });
@@ -201,7 +132,7 @@ app.route("/api/audio", audio);
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
   if (!c.env.ASSETS) return c.text("Not found", 404);
-  return fetchConfiguredAsset(c.req.raw, c.env, surfaceFor(c.req.url, c.env));
+  return fetchConfiguredAsset(c.req.raw, c.env);
 });
 
 app.onError((err, c) => {

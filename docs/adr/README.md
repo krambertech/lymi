@@ -12,3 +12,4 @@ One file per decision that is hard to reverse, surprising without context, and t
 | [0006](0006-web-push-reminders-are-per-device.md) | Review reminders use direct Web Push and are enabled per device |
 | [0007](0007-a-decks-direction-is-a-filter-not-a-migration.md) | A deck's direction filters card states rather than migrating them |
 | [0008](0008-public-website-and-product-use-separate-origins.md) | The public website and product use separate origins |
+| [0009](0009-public-website-and-product-deploy-separately.md) | The public website and product deploy separately |

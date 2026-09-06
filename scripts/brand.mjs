@@ -1,11 +1,12 @@
 // Renders the brand assets from the same geometry the app uses.
 // Run: node scripts/brand.mjs   (then sh scripts/icons.sh for the PNGs)
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "apps/web/public/brand");
+const siteOut = join(root, "apps/site/public/brand");
 mkdirSync(out, { recursive: true });
 
 // Tokens, resolved to sRGB hex for files that live outside the app's CSS.
@@ -172,4 +173,10 @@ const favicon = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="11 12 98
 `;
 writeFileSync(join(root, "apps/web/public/icon.svg"), favicon());
 writeFileSync(join(root, "apps/web/public/icon-ios.svg"), tile(0.64, 0));
-console.log("brand assets written to", out);
+cpSync(out, siteOut, { recursive: true });
+for (const filename of readdirSync(siteOut)) {
+  const path = join(siteOut, filename);
+  writeFileSync(path, readFileSync(path, "utf8").replace(/[ \t]+$/gm, ""));
+}
+writeFileSync(join(root, "apps/site/public/icon.svg"), favicon());
+console.log("brand assets written to", out, "and", siteOut);

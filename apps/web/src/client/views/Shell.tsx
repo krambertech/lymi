@@ -34,7 +34,7 @@ export const NAV: {
   exact?: boolean;
   later?: boolean;
 }[] = [
-  { to: "/", label: "Today", icon: Sun, exact: true },
+  { to: "/today", label: "Today", icon: Sun, exact: true },
   { to: "/library", label: "Library", icon: BookMarked },
   { to: "/insights", label: "Insights", icon: ChartNoAxesColumn, later: true },
   { to: "/activity", label: "Activity", icon: Activity },

@@ -24,7 +24,7 @@ export default defineConfig({
         name: "Lymi",
         short_name: "Lymi",
         description: "Vocabulary you carry with you.",
-        start_url: "/",
+        start_url: "/today",
         display: "standalone",
         orientation: "portrait",
         background_color: "#151210",
@@ -46,7 +46,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         importScripts: ["/push-sw.js"],
         navigateFallback: "/index.html",
-        navigateFallbackDenylist: [/^\/api\//, /^\/mcp/],
+        navigateFallbackDenylist: [/^\/$/, /^\/api\//, /^\/mcp/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,
@@ -69,6 +69,10 @@ export default defineConfig({
       devOptions: { enabled: false },
     }),
   ],
-  resolve: { tsconfigPaths: true },
+  // motion/react has to be pre-bundled against the same React the app renders with. Left to
+  // the optimiser it picks up its own copy, and the client only finds out as "Invalid hook
+  // call" the first time a motion component renders.
+  resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
+  optimizeDeps: { include: ["motion/react", "react", "react-dom", "react-dom/client"] },
   server: { port: 5173 },
 });

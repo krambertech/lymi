@@ -236,7 +236,7 @@ function audioContent(payload: unknown): string | null {
     : null;
 }
 
-function pemBytes(pem: string): Uint8Array {
+function pemBytes(pem: string): Uint8Array<ArrayBuffer> {
   return decodeBase64(pem.replace(/-----[^-]+-----/g, "").replace(/\s/g, ""));
 }
 
@@ -250,9 +250,13 @@ function base64Url(bytes: Uint8Array): string {
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-function decodeBase64(value: string): Uint8Array {
+function decodeBase64(value: string): Uint8Array<ArrayBuffer> {
   const binary = atob(value);
-  return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+  return bytes;
 }
 
 function pause(ms: number): Promise<void> {

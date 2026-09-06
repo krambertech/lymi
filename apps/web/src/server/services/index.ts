@@ -6,3 +6,4 @@ export * from "./decks";
 export * from "./push";
 export * from "./review";
 export * from "./settings";
+export * from "./stats";

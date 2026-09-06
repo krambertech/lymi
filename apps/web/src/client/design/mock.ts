@@ -1,3 +1,4 @@
+import type { InsightsOut } from "@lymi/core";
 import type { Card, CardState } from "@lymi/core/schema";
 import type { DeckSummary, QueueItem } from "../lib/api";
 
@@ -183,3 +184,133 @@ export const arrivals = [
 ];
 
 export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com", image: null };
+
+/** Insights, at the point where there is enough history for every block to say something. */
+const insightDays = (() => {
+  const off = new Set([
+    3, 12, 19, 27, 33, 40, 41, 42, 43, 44, 45, 55, 62, 70, 76, 96, 97, 98, 108, 112, 118,
+  ]);
+  const start = now - 125 * day;
+  return Array.from({ length: 126 }, (_, i) => ({
+    date: new Date(start + i * day).toISOString().slice(0, 10),
+    lit: !off.has(i),
+  }));
+})();
+
+export const insights: InsightsOut = {
+  period: 30,
+  recall: {
+    passed: 910,
+    failed: 89,
+    rate: 910 / 999,
+    series: [
+      { at: "2026-07-06", passed: 74, failed: 12, rate: 74 / 86 },
+      { at: "2026-07-13", passed: 81, failed: 9, rate: 81 / 90 },
+      { at: "2026-07-20", passed: 68, failed: 11, rate: 68 / 79 },
+      { at: "2026-07-27", passed: 92, failed: 7, rate: 92 / 99 },
+      { at: "2026-08-03", passed: 77, failed: 10, rate: 77 / 87 },
+      { at: "2026-08-10", passed: 88, failed: 6, rate: 88 / 94 },
+      { at: "2026-08-17", passed: 71, failed: 9, rate: 71 / 80 },
+      { at: "2026-08-24", passed: 95, failed: 5, rate: 95 / 100 },
+      { at: "2026-08-31", passed: 84, failed: 6, rate: 84 / 90 },
+    ],
+  },
+  consistency: {
+    days: insightDays.slice(-30),
+    lit: insightDays.slice(-30).filter((d) => d.lit).length,
+    longestRun: 19,
+    litAllTime: insightDays.filter((d) => d.lit).length,
+    daysAllTime: insightDays.length,
+  },
+  months: [
+    { month: "2026-05", lit: 24, days: 28 },
+    { month: "2026-06", lit: 22, days: 30 },
+    { month: "2026-07", lit: 28, days: 31 },
+    { month: "2026-08", lit: 25, days: 31 },
+    { month: "2026-09", lit: 6, days: 6 },
+  ],
+  cards: { total: 340, new: 62, learning: 41, known: 237 },
+  forecast: Array.from({ length: 7 }, (_, i) => ({
+    date: new Date(now + i * day).toISOString().slice(0, 10),
+    count: [42, 88, 51, 34, 19, 63, 25][i] ?? 0,
+  })),
+  leeches: {
+    lapses: 4,
+    reviews: 6,
+    cards: [
+      {
+        id: "c1",
+        deckId: "d1",
+        term: "sitkeä",
+        meaning: "persistent, tough",
+        language: "fi",
+        lapses: 7,
+        reviews: 12,
+      },
+      {
+        id: "c2",
+        deckId: "d1",
+        term: "vaikuttaa",
+        meaning: "to affect; to seem",
+        language: "fi",
+        lapses: 6,
+        reviews: 11,
+      },
+      {
+        id: "c3",
+        deckId: "d2",
+        term: "kuitenkin",
+        meaning: "however, nevertheless",
+        language: "fi",
+        lapses: 5,
+        reviews: 9,
+      },
+      {
+        id: "c4",
+        deckId: "d1",
+        term: "edellyttää",
+        meaning: "to require, presuppose",
+        language: "fi",
+        lapses: 5,
+        reviews: 14,
+      },
+      {
+        id: "c5",
+        deckId: "d2",
+        term: "toisaalta",
+        meaning: "on the other hand",
+        language: "fi",
+        lapses: 4,
+        reviews: 8,
+      },
+    ],
+  },
+};
+
+/** The first week. Every block has to say something true with almost nothing behind it. */
+export const thinInsights: InsightsOut = {
+  period: 30,
+  recall: {
+    passed: 6,
+    failed: 1,
+    rate: 6 / 7,
+    series: [{ at: "2026-08-31", passed: 6, failed: 1, rate: 6 / 7 }],
+  },
+  consistency: {
+    days: Array.from({ length: 5 }, (_, i) => ({
+      date: new Date(now - (4 - i) * day).toISOString().slice(0, 10),
+      lit: i !== 1,
+    })),
+    lit: 4,
+    longestRun: 3,
+    litAllTime: 4,
+    daysAllTime: 5,
+  },
+  months: [{ month: "2026-09", lit: 4, days: 5 }],
+  cards: { total: 18, new: 11, learning: 7, known: 0 },
+  forecast: Array.from({ length: 7 }, (_, i) => ({
+    date: new Date(now + i * day).toISOString().slice(0, 10),
+    count: [5, 3, 7, 2, 0, 4, 1][i] ?? 0,
+  })),
+  leeches: { lapses: 4, reviews: 6, cards: [] },
+};

@@ -25,7 +25,7 @@ export interface NavDeck {
 }
 
 /**
- * Desktop navigation, in reading order. Insights ships later; it holds its slot so the list
+ * Desktop navigation, in reading order. The list
  * does not reorder when it lands.
  */
 export const NAV: {
@@ -33,11 +33,10 @@ export const NAV: {
   label: string;
   icon: LucideIcon;
   exact?: boolean;
-  later?: boolean;
 }[] = [
   { to: "/today", label: "Today", icon: Sun, exact: true },
   { to: "/library", label: "Library", icon: BookMarked },
-  { to: "/insights", label: "Insights", icon: ChartNoAxesColumn, later: true },
+  { to: "/insights", label: "Insights", icon: ChartNoAxesColumn },
   { to: "/activity", label: "Activity", icon: Activity },
 ];
 
@@ -94,7 +93,6 @@ export function Sidebar({
         <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
           <n.icon aria-hidden="true" />
           <span className="flex-1">{n.label}</span>
-          {n.later && <span className="text-xs text-faint">later</span>}
           {n.to === "/activity" && unseen && (
             <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />
           )}

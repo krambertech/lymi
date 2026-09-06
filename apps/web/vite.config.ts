@@ -8,7 +8,14 @@ import { e2eAllowedEmails } from "../../e2e/settings.mjs";
 
 const isE2E = process.env.LYMI_E2E === "1";
 
+/**
+ * Stamped into the persisted query cache. Any rebuild discards a cache written by an older
+ * build, so a payload that gained a field can never hydrate into code that reads it.
+ */
+const buildId = Date.now().toString(36);
+
 export default defineConfig({
+  define: { __QUERY_CACHE_BUSTER__: JSON.stringify(buildId) },
   plugins: [
     tanstackRouter({
       target: "react",

@@ -31,6 +31,13 @@ export const historyQuery = queryOptions({
   queryFn: () => api.history(7),
   staleTime: 60_000,
 });
+// Reviews change the numbers, so a cached copy is a placeholder until the refetch lands.
+export const insightsQuery = (period: 30 | 90 | 0) =>
+  queryOptions({
+    queryKey: ["insights", period],
+    queryFn: () => api.insights(period),
+    staleTime: 60_000,
+  });
 export const keysQuery = queryOptions({ queryKey: ["keys"], queryFn: api.keys, staleTime: 0 });
 export const connectedAppsQuery = queryOptions({
   queryKey: ["connected-apps"],

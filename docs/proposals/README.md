@@ -10,5 +10,6 @@ technical decision in [an ADR](../adr/README.md) and put executable delivery wor
 
 | Proposal | Status |
 | --- | --- |
+| [Public website and product app architecture](public-website-and-product-app.md) | Preferred direction |
 | [Shared decks](shared-decks.md) | Exploration |
 | [Payments and a low-cost paid plan](premium-subscription-and-payments.md) | Exploration |

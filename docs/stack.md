@@ -72,10 +72,11 @@ review screen usable on a train. `/today` is the product home and `/app` redirec
 
 Review reminders use standards-based Web Push with VAPID, sent directly by the same Worker. Subscriptions and local reminder times are per device in D1. One UTC Cron Trigger runs every 15 minutes, evaluates each device in its stored IANA timezone, sends only when active cards are due, and atomically records the local date before delivery so retries do not duplicate a reminder. See ADR 0006.
 
-TanStack Start remains an option if several public page types later need loaders, streaming, or
-selective SSR. It is not required for the current boundary: one Hono handler renders `/`, and the
-existing router continues to own the product and documentation routes. The future public-page
-questions are recorded in [Public rendering beyond the landing page](proposals/hybrid-public-rendering.md).
+The current boundary does not require a framework migration: one Hono handler renders `/`, and the
+existing router continues to own the product and documentation routes. If the public surface grows,
+the preferred direction to evaluate is a separate Astro website while retaining this React PWA. The
+trade-offs and unanswered migration questions are recorded in
+[Public website and product app architecture](proposals/public-website-and-product-app.md).
 
 ### Feels native on the phone
 

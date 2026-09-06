@@ -1,0 +1,32 @@
+{
+  "migrations": [
+    {
+      "name": "0000_init.sql",
+      "sha256": "613bb5e98e6cb1588ffe8520aaa0941bf93a6f9628ccb200c060c71751bd552c"
+    },
+    {
+      "name": "0001_created_by_user_settings.sql",
+      "sha256": "5b3f5da252287f80261f3d36342f4e80a6dfa218ed84950dc91155e5fffed556"
+    },
+    {
+      "name": "0002_normalized_term.sql",
+      "sha256": "8f11f70c224157241d16521ce24c4341823d31a89abb36eb061827e64fa994e9"
+    },
+    {
+      "name": "0003_api_keys.sql",
+      "sha256": "36986ca6ea25b24c5176f4f31e5aa87a44a91c8cee56b384c9252bc1cd8f0e72"
+    },
+    {
+      "name": "0004_oauth_server.sql",
+      "sha256": "18fca79812ee1185754a5fe0521809f71201aa009fa2e5731915aebfe39a46c2"
+    },
+    {
+      "name": "0005_awesome_donald_blake.sql",
+      "sha256": "4285b2e8df700dfab78f6df923de16730cae1a638a1b69284489c30effaf29b1"
+    },
+    {
+      "name": "0006_clumsy_shotgun.sql",
+      "sha256": "f82bb6fb6c279bf3505d9e752e82f6e835c50a27efa0def840362665abf4eb8f"
+    }
+  ]
+}

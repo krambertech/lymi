@@ -10,6 +10,7 @@ test("requires E2E for production behavior and harness changes", () => {
   assert.equal(requiresE2E(["playwright.config.ts"]), true);
   assert.equal(requiresE2E(["scripts/ci-plan.mjs"]), true);
   assert.equal(requiresE2E(["scripts/check-deployment.mjs"]), true);
+  assert.equal(requiresE2E(["scripts/check-migrations.mjs"]), true);
 });
 
 test("skips E2E for documentation, previews, and unit-test-only changes", () => {

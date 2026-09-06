@@ -78,4 +78,6 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 10. `pnpm run deploy:product` and `pnpm run deploy:site`
 11. `pnpm deploy:health`, then verify the reported tag is the intended commit
 
+After initial setup, Cloudflare Workers Builds runs `pnpm --filter @lymi/web run deploy:ci` with a D1-enabled build token so pending migrations succeed before a new Worker version becomes active. Migration files already merged to `main` are immutable; create a new migration after syncing rather than renaming or replacing an existing one.
+
 See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.

@@ -32,6 +32,7 @@ export function renderCiSummary(env) {
     `| Pull request title | ${outcome(env.TITLE_OUTCOME)} |`,
     `| Dependencies | ${outcome(env.DEPENDENCIES_OUTCOME)} |`,
     `| Formatting and lint | ${outcome(env.CHECK_OUTCOME)} |`,
+    `| Migration history | ${outcome(env.MIGRATIONS_OUTCOME)} |`,
     `| Production build | ${outcome(env.BUILD_OUTCOME)} |`,
     `| Deployment boundaries | ${outcome(env.BOUNDARIES_OUTCOME)} |`,
     `| TypeScript | ${outcome(env.TYPECHECK_OUTCOME)} |`,

@@ -28,6 +28,8 @@ const productionFiles = new Set([
   "pnpm-lock.yaml",
   "pnpm-workspace.yaml",
   "scripts/check-deployment.mjs",
+  "scripts/check-migrations.mjs",
+  "scripts/migration-manifest.json",
   "scripts/ci-plan.mjs",
   "scripts/ci-summary.mjs",
   "scripts/e2e-impact.mjs",

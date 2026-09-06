@@ -45,8 +45,12 @@ describe("joinBeta", () => {
     expect(fake.onConflictDoNothing).toHaveBeenCalledOnce();
   });
 
-  it("reports database failures without logging the address", async () => {
-    const fake = dbDouble({ insertError: new Error("no such table: beta_signups") });
+  it("turns database failures into a recoverable service error without logging the address", async () => {
+    const fake = dbDouble({
+      insertError: new Error(
+        "Failed query: insert into beta_signups (...) values (...)\nparams: private-person@example.com",
+      ),
+    });
     const logged = vi.spyOn(console, "error").mockImplementation(() => undefined);
 
     const result = joinBeta(fake.db, {
@@ -54,8 +58,12 @@ describe("joinBeta", () => {
       source: "landing",
     });
 
-    await expect(result).rejects.toThrow("The beta list is temporarily unavailable");
-    expect(logged).toHaveBeenCalledWith(expect.stringContaining("no such table: beta_signups"));
+    await expect(result).rejects.toThrow(
+      "The beta list is temporarily unavailable. Try again soon.",
+    );
+    expect(logged).toHaveBeenCalledWith(
+      JSON.stringify({ event: "beta_signup_failed", errorType: "Error" }),
+    );
     expect(logged).not.toHaveBeenCalledWith(expect.stringContaining("private-person@example.com"));
   });
 });

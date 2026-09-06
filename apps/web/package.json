@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "vite build && wrangler deploy -c dist/lymi/wrangler.json",
+    "deploy:ci": "wrangler d1 migrations apply lymi --remote && wrangler deploy -c dist/lymi/wrangler.json --tag \"$WORKERS_CI_COMMIT_SHA\"",
     "deploy:check": "wrangler deploy --dry-run -c dist/lymi/wrangler.json",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",

@@ -9,6 +9,7 @@ test("the summary makes browser coverage and failed gates explicit", () => {
     TITLE_OUTCOME: "success",
     DEPENDENCIES_OUTCOME: "success",
     CHECK_OUTCOME: "success",
+    MIGRATIONS_OUTCOME: "success",
     BUILD_OUTCOME: "success",
     BOUNDARIES_OUTCOME: "success",
     TYPECHECK_OUTCOME: "failure",
@@ -21,6 +22,7 @@ test("the summary makes browser coverage and failed gates explicit", () => {
 
   assert.match(summary, /\*\*Browser coverage:\*\* Chromium/);
   assert.match(summary, /\| TypeScript \| Failed \|/);
+  assert.match(summary, /\| Migration history \| Passed \|/);
   assert.match(summary, /green Chromium pull-request run is not full cross-browser evidence/);
 });
 

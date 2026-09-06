@@ -17,6 +17,8 @@ colors:
   amber-ink: "#3a2a12"
   amber-text: "#9c4d0a"
   amber-soft: "#f5ad4829"
+  glass: "#f7e4c8"
+  glass-unlit: "#f1efec"
   flame-core: "#fff4c2"
   metal: "#2f2823"
   glow: "#f5ad4873"
@@ -35,6 +37,8 @@ colors:
   dark-muted: "#9b928a"
   dark-faint: "#6b625b"
   dark-amber: "#f6b34d"
+  dark-glass: "#46351d"
+  dark-glass-unlit: "#2a241f"
   dark-amber-text: "#f4bd63"
   dark-metal: "#f3f0eb"
   dark-good: "#78c496"
@@ -211,8 +215,10 @@ tones: `canvas` (the room), `plate` (a thing in the room), `plate-2` (a well ins
 strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Nothing
 lifts, and amber never marks state.
 
-The only glow in the interface belongs to the lantern. In CSS it is the `glow` utility
-(`filter: drop-shadow(0 0 14px var(--glow))`) and nothing else may use it.
+The only glow in the interface belongs to the lantern, and inside the lantern only the light wears
+it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather
+than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces
+the glass. Nothing else may use it.
 
 ## Colour
 
@@ -230,19 +236,70 @@ carries words. Dark is not inverted light: the plate is lighter than the canvas 
 
 ## The lantern
 
-Handle, cap, glass, flame, base, all at one stroke weight. The metal is `metal`, which is the text
-colour of the room: ink by day, white at night. Never grey. The glass is `amber-soft`. Below 24 px the drawing simplifies to a glyph
-(handle, cap, solid amber glass, base). The full lantern starts at 28 px.
+A storm lantern, the kind you carry, drawn in a 120 unit box. Top to bottom: a bail tall enough to
+read as a handle rather than a keyring, turning on two visible pivots; a hood that flares wide over
+the glass; two rods down the sides; the glass itself; a fount on a foot. The flare, the rods and the pivots
+are what make it a lantern — without them the silhouette is a battery.
+
+The metal is `metal`, which is the text colour of the room: ink by day, white at night. Never grey.
+
+The glass is one **opaque** colour, `glass`, not a tint over a hole. A translucent glass needs a
+backer in the room's colour, and then the mark drags a pale slab onto any surface that is not the
+page background — a plate, the amber button, a dark tile, a transparent export. Every metal part
+overlaps the glass edges, so nothing can spill outside the frame. Unlit, the glass is `glass-unlit`
+and the flame becomes an ember in `edge-2`.
+
+There is no second cut for small sizes. The rods and the flame are exactly what keep the drawing
+legible when it is tiny — a simplified version that drops them collapses into a mushroom by 24 px.
+One drawing, every size. The browser tab uses the same drawing with the viewBox squared around its
+own bounds, so the mark fills the icon instead of floating in a 120 box.
+
+The geometry lives in `components/lantern-geometry.tsx` and nowhere else. `Lantern`, `Lockup` and
+`scripts/brand.mjs` all draw from it, so the mark cannot drift between the app and its assets.
 
 States: lit (flame, optional flicker), lit and glowing (something is due), lit up (session done:
-bigger flame, wider glow, stays), flare (one-shot after Good or Easy), unlit (no flame, no glow).
+bigger flame, wider glow, stays), flare (one-shot after Good or Easy), catch (the wick taking, for
+unlit to lit), carried (the body swings from the bail), unlit (no flame, no glow).
+
+## Letting an app in
+
+Three screens carry the connection between Lymi and an MCP client: the door (`/login`), the
+decision (`/consent`), and the ending (the same route, after the decision).
+
+Who is asking is answered by the **host of the `client_id`**, and by nothing else the client sent.
+A recognised host is named ("Claude"); every other app is titled by its address, and its own
+`client_name` appears only as a claim, in the form "it calls itself X". Putting an unverified name
+in the headline of a permission screen is the same mistake as rendering an unverified logo. A client identifies itself with a Client ID Metadata Document that has to be served from
+that HTTPS host, so the host is the one claim in the request that cannot be forged. It is shown in
+mono, in a pill under the app's name, with a check when it is a host we ship a mark for. An app we
+do not recognise says so in words and shows the address to check.
+
+Marks for known clients are bundled and drawn in their own brand colour, which is what makes one
+recognisable at a glance. A vendor's colour is a quotation, not a token: it lives inside the mark
+and nowhere else, the tile around it stays a plain plate, and amber remains Lymi's only accent.
+A brand that is monochrome takes the room's ink. `logo_uri` from the client's metadata is never
+rendered: an attacker-controlled image on a
+permission screen, shown with the confidence of a verified one, is how consent phishing works. An
+unrecognised client gets a monogram, so it can never borrow a known app's appearance.
+
+Read access is stated, not offered, because a connector cannot work without it. Write is the only
+decision on the screen, so it is the only control: a switch, with a grant dot that mirrors the read
+row so what the app ends up with reads at a glance. Under both, a plain list of what it can never
+do, whatever is chosen.
+
+The ending is not optional. An MCP client's redirect is usually a custom scheme, so the browser
+hands off to the app and leaves the tab where it was; without this screen that tab sits on a
+blank form. It says what happened, what the app got, and that the tab is finished with.
+
+A grant lasts until it is taken back, so Settings has Connected apps beside API keys, with the
+same row shape: name, what it may do, the host, and an inline confirm to cut it off.
 
 ## Wordmark and lockups
 
 `lymi`, lowercase, Onest 600, tracked −0.025em, drawn as paths (`components/wordmark-paths.ts`,
 generated with fontTools). The lit wordmark replaces the dot of the i with a flame; use it on the
-login screen and the app store, the plain one everywhere else. Row lockup: the lantern is 1.38em tall, its
-base on the baseline, 0.17em before the word. There is no stacked lockup. Clear space: half a lantern
+login screen and the app store, the plain one everywhere else. Row lockup: the lantern is 1.30em tall, its
+foot on the baseline and its bail just above the l, 0.17em before the word. There is no stacked lockup. Clear space: half a lantern
 on every side.
 
 The app icon is always the dark room: ivory lantern, lit and glowing, on the dark canvas. Assets
@@ -256,6 +313,12 @@ the wordmark, counts and kbd. Fixed pixel scale, ratio about 1.17. Headings trac
 −0.03em, body never. Tabular figures on anything that changes. Curly quotes and the ellipsis
 character in copy. Uppercase only at 12 px, tracked +0.06em.
 
+One exception to the single family. `font-mono` is a system monospace stack, nothing
+downloaded, and it has two jobs: code on the docs site, and the strings in the app that are
+proofread character by character rather than read — an API key, a client's hostname, a header
+name in copy. Onest draws 0/O and 1/l too alike for a secret where a mistyped character is a
+silent 401. Nothing else uses it: not numbers, not code-ish labels, not UI text.
+
 ## Motion
 
 Motion conveys state. Press: scale 0.97, 150 ms. Hover: 150 ms, pointer devices only. A card
@@ -263,9 +326,20 @@ arrives with a 6 px rise over 200 ms. Reveal fades the meaning in under the rule
 Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme
 switch suspends transitions for one frame so the room swaps at once.
 
-The flame flickers on a 2.6 s loop because a flame does. Under `prefers-reduced-motion` it holds
-still, the card and toast crossfade with no travel, and the skeleton stops shimmering. The glow
-stays, because a glow is a state, not a movement.
+The auth screens have one moving part: the connection. The app that asked and the lantern sit
+in matching tiles joined by a rail, dotted while the decision is open. When the grant lands the
+rail draws across in amber over 420 ms and the wick catches 300 ms in, so the two read as one
+movement rather than two. A refusal leaves the rail dotted and the lantern unlit. Under reduced motion the
+rail is simply filled. Nothing else on those screens animates.
+
+The flame flickers on a 2.6 s loop because a flame does, and three things move on that one loop: the
+flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both.
+A flame that changes size under a halo that holds still is the thing that reads as fake. The wick
+catches over 620 ms when the lantern goes from unlit to lit, rather than swapping. Carried, the body
+rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
+
+Under `prefers-reduced-motion` the flame holds still, the card and toast crossfade with no travel,
+and the skeleton stops shimmering. The glow stays, because a glow is a state, not a movement.
 
 ## Layout
 
@@ -301,8 +375,8 @@ The seven lights sit with it. They say which days, where the streak says how man
 `components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading),
 IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and
 SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SevenLights, Table, Menu, Dialog,
-AddCardSheet, AddMenu, Avatar, DeckCard, NewCardsRow, NavLink, PillNav, Flame, StreakPill,
-StreakPlate, Lantern, Wordmark, Lockup.
+AddCardSheet, AddMenu, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame,
+StreakPill, StreakPlate, AppMark, Connection, Lantern, Wordmark, Lockup.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data.
 They lay out by their container (`@3xl` = 768 px), not the viewport.
@@ -325,9 +399,8 @@ not "Congratulations!". Errors say how to fix it. Anything the AI wrote is label
 
 ## Documentation
 
-The docs site at `/docs` is the same two rooms with one addition: `--font-mono`, a system
-monospace stack, for code only. No web font, because the reader's own mono is faster and
-already familiar.
+The docs site at `/docs` is the same two rooms. Code is set in `font-mono`, the one exception
+to Onest described under Type.
 
 Code is set in ink and weight, never in colour, so amber stays on the flame and the one
 primary action. Three tones carry the syntax: a JSON key is `text` at 500 because it is what
@@ -347,5 +420,7 @@ in cards: a card in the docs means a code block, a callout, or one operation.
 - No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
 - No amber outside the flame, the primary action and a due count. The streak's flame is that same flame, so it counts as one.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
-- No full lantern below 28 px. No amber beyond the flame and the primary action.
+- No simplified small cut. No amber beyond the flame and the primary action.
+- No two flames in one mark. If the lantern is on the screen, the wordmark is plain. The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
+- No translucent glass, and no room colour painted inside the mark. The lantern must survive being put on a surface it did not expect.
 - No display serif, no sparkle icon, no confetti.

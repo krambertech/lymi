@@ -1,8 +1,11 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { AddCardForm } from "../components/AddCardSheet";
+import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
 import { PillNav } from "../components/PillNav";
+import { ConnectedView } from "../views/ConnectedView";
+import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
 import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
@@ -66,6 +69,24 @@ function PhoneShot({
         </Phone>
       )}
     </Shot>
+  );
+}
+
+const CLAUDE = identifyApp("https://claude.ai/oauth/client", "Claude");
+const UNKNOWN = identifyApp("https://notes.example.com/mcp/client", "Notebook");
+
+/** The consent screen with its switch live, so the grant dots can be tried on the design page. */
+function ConsentDemo({ app }: { app: typeof CLAUDE }) {
+  const [write, setWrite] = useState(true);
+  return (
+    <ConsentView
+      app={app}
+      email="kateryna@example.com"
+      writeRequested
+      allowWrite={write}
+      onAllowWrite={setWrite}
+      onDecide={noop}
+    />
   );
 }
 
@@ -258,11 +279,51 @@ export function Screens() {
 
       <Sub
         title="Login"
-        note="The front door. The lantern is already lit and the wordmark carries the flame: you are expected."
+        note="The front door. The lantern is lit but not glowing, because a glow means something is due. Two blocks: who this is, and the one thing to do. When an MCP client sent the learner here, the first block says who is waiting instead of what Lymi is."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Sign in" initial="dark" path="/login" bare>
             <LoginView onGoogle={noop} />
+          </PhoneShot>
+          <PhoneShot caption="Sent here by an app" initial="light" path="/login" bare>
+            <LoginView onGoogle={noop} app={CLAUDE} />
+          </PhoneShot>
+          <PhoneShot caption="Sign-in failed" initial="light" path="/login" bare>
+            <LoginView onGoogle={noop} error="Sign-in didn’t go through. Try again." />
+          </PhoneShot>
+          <PhoneShot caption="Not on the invite list" initial="dark" path="/login" bare>
+            <LoginView
+              onGoogle={noop}
+              error="That account is not on the invite list. Lymi is private for now — sign in with the invited account."
+            />
+          </PhoneShot>
+        </div>
+      </Sub>
+
+      <Sub
+        title="Consent"
+        note="The stop between an app's sign-in and its first request. Read is stated, because a connector cannot work without it; write is the only decision, so it is the only control. A recognised host is named; anything else is titled by its address, and its own name is shown as a claim."
+      >
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="A recognised app" initial="light" path="/consent" bare>
+            <ConsentDemo app={CLAUDE} />
+          </PhoneShot>
+          <PhoneShot caption="An app Lymi does not recognise" initial="dark" path="/consent" bare>
+            <ConsentDemo app={UNKNOWN} />
+          </PhoneShot>
+        </div>
+      </Sub>
+
+      <Sub
+        title="Connected"
+        note="The ending. An MCP client's redirect is usually a custom scheme, so the browser hands off and leaves the tab here; the rail draws across and the lantern lights. This is the only choreography outside review."
+      >
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="Connected, read and write" initial="dark" path="/consent" bare>
+            <ConnectedView app={CLAUDE} scopes={{ read: true, write: true }} />
+          </PhoneShot>
+          <PhoneShot caption="Denied" initial="light" path="/consent" bare>
+            <ConnectedView app={CLAUDE} refused />
           </PhoneShot>
         </div>
       </Sub>

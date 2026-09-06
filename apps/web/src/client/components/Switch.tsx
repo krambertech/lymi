@@ -7,6 +7,7 @@ export function Switch({
   onChange,
   label,
   description,
+  leading,
   disabled,
   className,
 }: {
@@ -14,6 +15,8 @@ export function Switch({
   onChange: (v: boolean) => void;
   label: ReactNode;
   description?: ReactNode | undefined;
+  /** Marker before the label, e.g. the grant dot on the consent screen. */
+  leading?: ReactNode | undefined;
   disabled?: boolean | undefined;
   className?: string | undefined;
 }) {
@@ -25,7 +28,8 @@ export function Switch({
         className,
       )}
     >
-      <span className="grid gap-0.5">
+      {leading}
+      <span className="grid flex-1 gap-0.5">
         <span className="text-base font-medium text-text">{label}</span>
         {description && <span className="text-sm text-muted">{description}</span>}
       </span>

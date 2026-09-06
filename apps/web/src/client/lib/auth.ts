@@ -26,8 +26,17 @@ export function followOAuthRedirect(data: unknown): boolean {
   return false;
 }
 
+/**
+ * `errorCallbackURL` matters more than it looks: the invite allowlist rejects an unknown
+ * account inside Google's callback, and without somewhere to send that the learner lands on
+ * a raw error from the auth handler. With it they come back to the door with a sentence.
+ */
 export function signInWithGoogle() {
-  return authClient.signIn.social({ provider: "google", callbackURL: "/" });
+  return authClient.signIn.social({
+    provider: "google",
+    callbackURL: "/",
+    errorCallbackURL: "/login",
+  });
 }
 
 export function signOut() {

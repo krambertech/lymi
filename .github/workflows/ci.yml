@@ -4,16 +4,26 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      e2e:
+        description: Run the browser E2E suite
+        required: true
+        default: true
+        type: boolean
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Validate pull request title
         if: github.event_name == 'pull_request'
@@ -28,6 +38,22 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: pnpm
+
+      - name: Decide whether E2E is needed
+        id: e2e
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          MANUAL_E2E: ${{ inputs.e2e }}
+        run: |
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | node scripts/e2e-impact.mjs
+          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "run_e2e=${MANUAL_E2E:-true}" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_e2e=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - run: pnpm install --frozen-lockfile
 
@@ -44,3 +70,26 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+      - name: Install Playwright browsers
+        if: steps.e2e.outputs.run_e2e == 'true'
+        run: pnpm exec playwright install --with-deps chromium webkit
+
+      - name: End-to-end test
+        if: steps.e2e.outputs.run_e2e == 'true'
+        run: pnpm test:e2e
+
+      - name: Explain skipped E2E
+        if: steps.e2e.outputs.run_e2e != 'true'
+        run: echo "E2E skipped because this pull request changes no production-affecting paths. Comment /e2e to force it." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload E2E diagnostics
+        if: failure() && steps.e2e.outputs.run_e2e == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-diagnostics
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 7

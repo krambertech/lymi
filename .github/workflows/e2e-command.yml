@@ -1,0 +1,33 @@
+name: E2E command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  dispatch:
+    if: >-
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/e2e' &&
+      github.event.comment.author_association == 'OWNER'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Run E2E on the PR branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          head_repo=$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER" --jq .head.repo.full_name)
+          head_ref=$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER" --jq .head.ref)
+          if [[ "$head_repo" != "$REPOSITORY" ]]; then
+            echo "The /e2e command only supports branches in $REPOSITORY."
+            exit 1
+          fi
+          gh workflow run ci.yml --repo "$REPOSITORY" --ref "$head_ref" -f e2e=true

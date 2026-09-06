@@ -12,7 +12,9 @@
     "build": "pnpm -r build",
     "deploy": "pnpm --filter @lymi/web run deploy",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test",
+    "test": "pnpm -r test && node --test scripts/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "check": "biome check .",
     "fix": "biome check --write .",
     "db:generate": "pnpm --filter @lymi/web db:generate",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
+    "@playwright/test": "1.63.0",
     "typescript": "^5.9.0"
   }
 }

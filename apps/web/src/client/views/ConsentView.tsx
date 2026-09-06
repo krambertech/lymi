@@ -130,7 +130,7 @@ export function ConsentView({
           <Button
             variant="secondary"
             className="flex-1"
-            disabled={deciding || unusable}
+            aria-disabled={deciding || unusable}
             loading={busy === "deny"}
             onClick={() => onDecide(false)}
           >
@@ -139,7 +139,7 @@ export function ConsentView({
           <Button
             variant="primary"
             className="flex-1"
-            disabled={deciding || loading || unusable}
+            aria-disabled={deciding || loading || unusable}
             loading={busy === "allow"}
             onClick={() => onDecide(true)}
           >

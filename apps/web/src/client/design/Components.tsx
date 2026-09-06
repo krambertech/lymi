@@ -84,13 +84,13 @@ export function Components() {
 
       <Sub
         title="Fields"
-        note="Label above, hint or error below, wired with aria. 16 px text on the phone so iOS does not zoom. The one field that matters on a screen gets fieldSize=lg. Errors carry an icon, never colour alone."
+        note="Label above, hint or error below, wired with aria. Every control is the same box: 44 px on the phone, 40 on the desktop, 16 px text so iOS does not zoom. A form is one row repeated, not a pile of different objects. Errors carry an icon, never colour alone, and arrive on submit rather than by taking the button away."
       >
         <Pair>
           {() => (
             <div className="grid gap-4 @xl:grid-cols-2">
               <Field label="Word or phrase">
-                <Input placeholder="sbrigarsi" fieldSize="lg" defaultValue="la ringhiera" />
+                <Input placeholder="sbrigarsi" defaultValue="la ringhiera" />
               </Field>
               <Field
                 label="Meaning"
@@ -237,7 +237,7 @@ export function Components() {
 
       <Sub
         title="Overlays"
-        note="A menu for a few actions behind one button. A dialog only when there is no way back; Lymi prefers Undo. The sheet (vaul) is on the Screens section."
+        note="A menu for a few actions behind one button. A dialog only when there is no way back; Lymi prefers Undo. A sheet is not that dialog, and it takes the shape of the machine: a drawer on the phone, a centred modal on a desktop. Both are on the Screens section."
       >
         <Specimen className="gap-4">
           <Menu>

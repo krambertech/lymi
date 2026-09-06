@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Toast } from "../components/Toast";
 import { useAddCard } from "../lib/add-card";
@@ -8,8 +8,15 @@ import { deckCardsQuery, decksQuery } from "../lib/queries";
 import { DeckDetailView } from "../views/DeckDetailView";
 
 export const Route = createFileRoute("/library/$deckId")({
-  component: DeckPage,
+  component: Deck,
 });
+
+/** Settings is a child route, so it replaces the deck rather than sitting under it. */
+function Deck() {
+  const matches = useMatches();
+  if (matches.some((m) => m.routeId === "/library/$deckId/settings")) return <Outlet />;
+  return <DeckPage />;
+}
 
 function DeckPage() {
   const { deckId } = Route.useParams();
@@ -61,6 +68,7 @@ function DeckPage() {
         onArchive={(id) => archive.mutate(id)}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onRename={(name) => rename.mutateAsync(name)}
+        onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
         onArchiveDeck={() => archiveDeck.mutate()}
       />
       {undo && (

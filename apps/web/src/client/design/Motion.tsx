@@ -29,7 +29,11 @@ const TIMINGS: [string, string, string][] = [
     "in 240 ms, out 140 ms, both ease-out",
     "Exit is faster than entry. One toast at a time.",
   ],
-  ["Sheet", "vaul default, drawer curve", "Swipe to dismiss on the phone."],
+  [
+    "Sheet",
+    "drawer: vaul curve. Modal: in 200 ms, out 140 ms",
+    "A drawer on the phone, a centred modal on a desktop.",
+  ],
   ["Theme switch", "none", "Transitions are suspended for one frame so the room swaps at once."],
 ];
 

@@ -62,46 +62,32 @@ export function Field({ label, hint, error, aside, children, className }: FieldP
   );
 }
 
-const control =
+export const controlBase =
   "w-full rounded-md bg-plate text-text edge transition-[box-shadow,background-color] duration-150 " +
   "placeholder:text-muted hoverable:hover:edge-2 focus-visible:edge-2 " +
   "disabled:cursor-not-allowed disabled:bg-plate-2 disabled:text-muted " +
   "aria-invalid:shadow-[0_0_0_1px_var(--danger)]";
 
-function useControlProps(props: {
-  id?: string | undefined;
-  "aria-describedby"?: string | undefined;
-  "aria-invalid"?: AriaInvalid;
-}) {
-  const ctx = useContext(Ctx);
-  const described = [props["aria-describedby"], ctx?.errorId ?? ctx?.hintId]
-    .filter(Boolean)
-    .join(" ");
-  return {
-    id: props.id ?? ctx?.id,
-    "aria-describedby": described || undefined,
-    "aria-invalid": props["aria-invalid"] ?? (ctx?.invalid ? true : undefined),
-  };
-}
+/**
+ * Every control is the same box, so a form reads as one row repeated rather than a pile of
+ * different objects: 44 px on the phone, 40 on the desktop, 16 px text so iOS does not zoom
+ * on focus. Sized by the viewport rather than the container, because a phone is a phone
+ * whatever it sits in — and because a sheet renders in a portal, where a container query has
+ * nothing to measure and would silently never fire.
+ */
+export const controlSize = "h-11 text-[16px] md:h-10 md:text-base";
 
-type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> & {
-  /** Larger box and type, for the one field that matters on a screen. */
-  fieldSize?: "md" | "lg" | undefined;
-};
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size">;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  { className, fieldSize = "md", ...props },
+  { className, ...props },
   ref,
 ) {
   const a11y = useControlProps(props);
   return (
     <input
       ref={ref}
-      className={clsx(
-        control,
-        fieldSize === "md" ? "h-10 px-3.5 text-[16px] @3xl:text-base" : "h-12 px-4 text-lg",
-        className,
-      )}
+      className={clsx(controlBase, controlSize, "px-3.5", className)}
       {...props}
       {...a11y}
     />
@@ -117,8 +103,8 @@ export const Textarea = forwardRef<
     <textarea
       ref={ref}
       className={clsx(
-        control,
-        "min-h-24 resize-y px-3.5 py-2.5 text-[16px] leading-relaxed @3xl:text-base",
+        controlBase,
+        "min-h-24 resize-y px-3.5 py-2.5 text-[16px] leading-relaxed md:text-base",
         className,
       )}
       {...props}
@@ -134,11 +120,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSel
       <span className="relative block">
         <select
           ref={ref}
-          className={clsx(
-            control,
-            "h-10 appearance-none pl-3.5 pr-9 text-[16px] @3xl:text-base",
-            className,
-          )}
+          className={clsx(controlBase, controlSize, "appearance-none pl-3.5 pr-9", className)}
           {...props}
           {...a11y}
         >
@@ -152,3 +134,20 @@ export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSel
     );
   },
 );
+
+/** Wires a control to its Field's id, hint, error and invalid state. Exported for Combobox. */
+export function useControlProps(props: {
+  id?: string | undefined;
+  "aria-describedby"?: string | undefined;
+  "aria-invalid"?: AriaInvalid;
+}) {
+  const ctx = useContext(Ctx);
+  const described = [props["aria-describedby"], ctx?.errorId ?? ctx?.hintId]
+    .filter(Boolean)
+    .join(" ");
+  return {
+    id: props.id ?? ctx?.id,
+    "aria-describedby": described || undefined,
+    "aria-invalid": props["aria-invalid"] ?? (ctx?.invalid ? true : undefined),
+  };
+}

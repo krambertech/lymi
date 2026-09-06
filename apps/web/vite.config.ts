@@ -25,7 +25,8 @@ export default defineConfig({
             config: {
               vars: {
                 APP_URL: "http://localhost:4173",
-                ALLOWED_EMAILS: "e2e-chromium@lymi.local,e2e-webkit@lymi.local",
+                ALLOWED_EMAILS:
+                  "e2e-chromium-0@lymi.local,e2e-chromium-1@lymi.local,e2e-webkit-0@lymi.local,e2e-webkit-1@lymi.local",
                 BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
                 GOOGLE_CLIENT_ID: "e2e-client-id",
                 GOOGLE_CLIENT_SECRET: "e2e-client-secret",

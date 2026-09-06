@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("a learner can capture and review a new word", async ({ page }, testInfo) => {
-  const email = `e2e-${testInfo.project.name}@lymi.local`;
+  const email = `e2e-${testInfo.project.name}-${testInfo.retry}@lymi.local`;
 
   await test.step("create a local account", async () => {
     await page.goto("/login");

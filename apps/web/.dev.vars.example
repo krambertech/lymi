@@ -6,8 +6,15 @@ ALLOWED_EMAILS=kateryna@buffer.com,dev@lymi.local
 BETTER_AUTH_SECRET=change-me-to-32-random-chars
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+# Full service-account JSON for the dedicated Google Cloud Text-to-Speech project.
+GOOGLE_CLOUD_TTS_CREDENTIALS=
 # Generate once with `pnpm --filter @lymi/web exec web-push generate-vapid-keys`.
 VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=
 VAPID_SUBJECT=mailto:you@example.com
 OPENAI_API_KEY=
+# Optional speech overrides. OpenAI is preferred for every language it supports.
+OPENAI_BASE_URL=
+OPENAI_SPEECH_MODEL=gpt-4o-mini-tts
+OPENAI_SPEECH_VOICE=marin
+AI_GATEWAY_TOKEN=

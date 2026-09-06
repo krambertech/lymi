@@ -102,6 +102,7 @@ export const api = {
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>
     request<AddCardOutcome>("/api/cards", { method: "POST", body: JSON.stringify(body) }),
+  audioUrl: (cardId: string) => `/api/audio/${encodeURIComponent(cardId)}`,
   archiveCard: (id: string) =>
     request<{ ok: true }>(`/api/cards/${id}/archive`, { method: "POST" }),
   restoreCard: (id: string) =>

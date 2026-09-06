@@ -8,7 +8,13 @@ export interface Bindings extends Env {
   BETTER_AUTH_SECRET: string;
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
+  /** Full service-account JSON, stored as one encrypted Worker secret. */
+  GOOGLE_CLOUD_TTS_CREDENTIALS?: string;
   OPENAI_API_KEY?: string;
+  OPENAI_BASE_URL?: string;
+  OPENAI_SPEECH_MODEL?: string;
+  OPENAI_SPEECH_VOICE?: string;
+  AI_GATEWAY_TOKEN?: string;
   /** Web Push is unavailable until all three VAPID values are configured as secrets. */
   VAPID_PUBLIC_KEY?: string;
   VAPID_PRIVATE_KEY?: string;

@@ -37,6 +37,17 @@ export const decks: DeckSummary[] = [
 export const quietDecks: DeckSummary[] = decks.map((d) => ({ ...d, due: 0 }));
 
 export const history = [4, 12, 0, 9, 15, 7, 11];
+
+/**
+ * Ninety days, oldest first, as Today asks for them. Twelve days running up to today, a gap
+ * before that, so the streak and the best run differ.
+ */
+export const streakDays: number[] = Array.from({ length: 90 }, (_, i) => {
+  const fromEnd = 89 - i;
+  if (fromEnd < 12) return 6 + ((i * 5) % 11);
+  if (fromEnd === 12 || fromEnd === 13) return 0;
+  return (i * 7) % 5 === 0 ? 0 : 4 + ((i * 3) % 9);
+});
 export const historyNothingToday = [4, 12, 0, 9, 15, 7, 0];
 
 function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
@@ -155,5 +166,17 @@ export const queueItemProduce: QueueItem = {
   direction: "production",
   fsrsState: 2,
 };
+
+/** Ninety quiet days: nothing reviewed, for the first-run screen. */
+export const noHistory: number[] = Array(90).fill(0);
+
+/** Today still open, yesterday reviewed: the streak holds. */
+export const streakDaysOpen: number[] = [...streakDays.slice(0, -1), 0];
+
+/** What Claude added since the last review, as Today groups it. */
+export const arrivals = [
+  { deckId: "d1", deckName: "Lesson 14", count: 12, actor: "Claude", when: "Tuesday" },
+  { deckId: "d2", deckName: "Portuguese", count: 3, actor: "You", when: "today" },
+];
 
 export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com", image: null };

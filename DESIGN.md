@@ -221,6 +221,10 @@ the flame, and the one thing to press. A due count in `amber-text` is the third 
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
 
+The twice-per-screen count is about chrome and actions. A status chip in a list repeats once per
+row, as `StateChip` already does down a deck table and as the due and new counts do down Library.
+That is one decision shown many times, not many uses of amber.
+
 Text on canvas meets 4.5:1 in both rooms, including `muted`. `faint` is decorative and never
 carries words. Dark is not inverted light: the plate is lighter than the canvas in both rooms.
 
@@ -263,18 +267,52 @@ The flame flickers on a 2.6 s loop because a flame does. Under `prefers-reduced-
 still, the card and toast crossfade with no travel, and the skeleton stops shimmering. The glow
 stays, because a glow is a state, not a movement.
 
+## Layout
+
+Two destinations, Today and Library. Review is the primary button on both, never a place you
+navigate to. Settings, Activity and Archived sit behind **You**, one profile screen reached from
+the avatar on the phone and the sidebar's profile row on desktop. Insights holds its slot before it
+has content. See [ADR 0005](docs/adr/0005-review-is-a-button-not-a-destination.md).
+
+On the phone the navigation is a floating pill, two items wide, frosted over the content and clear
+of the home indicator. On desktop it is the 240 px sidebar: wordmark and add menu, search, the four
+destinations, the decks, and the learner at the bottom.
+
+The desktop shell is capped at `--shell` (1120 px) and centred. It never stretches: a vocabulary app
+is one column of content, and a wider one is a worse read. Reading screens narrow further to 672.
+
+Capture is one plus for both things a learner adds, a word or a deck. It sits next to the wordmark
+on desktop and in every page header on the phone, and `N` opens it from anywhere.
+
+## The streak
+
+The flame, on its own, counts days in a row. It is drawn twice, because the two screens have
+different room for the same fact. On the phone it is a pill in the Today header: flame and a
+number. On desktop it is a plate beside the hero: the count, the best run, the seven lights and one
+line saying how many of the last seven days had a review.
+
+Today is still open until it ends, so an unreviewed morning shows yesterday's streak rather than
+zero. `streakLength` in `packages/core/src/streak.ts` is the rule.
+
+The seven lights sit with it. They say which days, where the streak says how many.
+
 ## Components
 
 `components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading),
 IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and
 SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SevenLights, Table, Menu, Dialog,
-AddCardSheet, Lantern, Wordmark, Lockup.
+AddCardSheet, AddMenu, Avatar, DeckCard, NewCardsRow, NavLink, PillNav, Flame, StreakPill,
+StreakPlate, Lantern, Wordmark, Lockup.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data.
 They lay out by their container (`@3xl` = 768 px), not the viewport.
 
 Deck actions live behind one menu: Rename is inline on the title, Export writes a CSV, Archive
 leaves the deck list with an Undo toast. Cards archive the same way, from the row.
+
+A deck in Library is a card, not a row: it carries four numbers, and one line makes them a run of
+digits nobody reads. The name is on the first line, the counts on the second. A row of new cards
+names its actor, because a card an integration wrote must never look like one the learner typed.
 
 Rules: one primary per view. Every control has default, hover, focus, active, disabled and, where it
 applies, loading. Hit areas are 44 px on the phone, 40 on desktop. Inputs are 16 px on the phone.
@@ -307,6 +345,7 @@ in cards: a card in the docs means a code block, a callout, or one operation.
 ## Don't
 
 - No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
+- No amber outside the flame, the primary action and a due count. The streak's flame is that same flame, so it counts as one.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
 - No full lantern below 28 px. No amber beyond the flame and the primary action.
-- No display serif, no sparkle icon, no streak counter, no confetti.
+- No display serif, no sparkle icon, no confetti.

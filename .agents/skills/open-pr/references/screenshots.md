@@ -71,7 +71,7 @@ Parse the response before touching the PR: `jq -er .url` must print a non-empty 
 
 Don't block the PR:
 
-1. `SendUserFile` the images to the user.
+1. Hand the image files to the user through the runtime's file-sharing mechanism, or provide clickable local file paths.
 2. Leave the `## 📸 Screenshots` heading in the body with a drag-drop placeholder, and tell the user plainly to open the PR on github.com and drag the files into the description box. Say the images are handed over, never that they are attached.
 
 ### Verify (rung 1)

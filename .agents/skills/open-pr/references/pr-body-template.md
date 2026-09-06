@@ -29,4 +29,4 @@ Write each paragraph and each bullet as one long line. GitHub renders every newl
 
 ## Voice
 
-Plain and direct, written for a tired reviewer at 5pm. No hype ("massively improves", "huge win"), no apology. Cut any sentence that restates the diff or repeats another section. The `writing-rules` and `technical-writing` skills apply to the body like any other prose.
+Plain and direct, written for a tired reviewer at 5pm. No hype ("massively improves", "huge win"), no apology. Cut any sentence that restates the diff or repeats another section. Follow the writing guidance in [`AGENTS.md`](../../../../AGENTS.md).

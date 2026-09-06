@@ -40,6 +40,7 @@ function Shell() {
   const atRoot = location.pathname === "/";
   const bare =
     location.pathname === "/login" ||
+    location.pathname === "/join" ||
     location.pathname === "/consent" ||
     location.pathname.startsWith("/design") ||
     location.pathname.startsWith("/docs") ||

@@ -67,6 +67,10 @@ export default defineConfig({
       devOptions: { enabled: false },
     }),
   ],
-  resolve: { tsconfigPaths: true },
+  // motion/react has to be pre-bundled against the same React the app renders with. Left to
+  // the optimiser it picks up its own copy, and the client only finds out as "Invalid hook
+  // call" the first time a motion component renders.
+  resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
+  optimizeDeps: { include: ["motion/react", "react", "react-dom", "react-dom/client"] },
   server: { port: 5173 },
 });

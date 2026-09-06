@@ -1,12 +1,12 @@
+import { clsx } from "clsx";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "../components/Button";
 import { SAMPLE_CARDS } from "./cards";
-import { prefersReducedMotion } from "./motion";
 
 /**
- * The four answers, with what each one costs. The intervals are the shape FSRS produces
- * for a card seen a few times; they are here to make the mechanic legible, not to promise
- * a schedule, so the page says nothing about them beyond what the buttons show.
+ * The four answers, with what each one costs. These intervals are the shape FSRS produces
+ * for a card seen a few times. They are here to make the mechanic legible rather than to
+ * promise a schedule, so the page claims nothing about them beyond what the buttons show.
  */
 const GRADES = [
   { name: "Again", when: "10 min", said: "10 minutes" },
@@ -15,37 +15,61 @@ const GRADES = [
   { name: "Easy", when: "9 days", said: "9 days" },
 ] as const;
 
-const DECK = [SAMPLE_CARDS[0], SAMPLE_CARDS[3], SAMPLE_CARDS[1]].filter(
+const DECK = [SAMPLE_CARDS[0], SAMPLE_CARDS[3], SAMPLE_CARDS[1], SAMPLE_CARDS[6]].filter(
   (c): c is NonNullable<typeof c> => !!c,
 );
 
-const REST = "Pick one. The card tells you when it comes back.";
+/** The demo plays itself: ask, reveal, answer, next. Touching it takes it off autoplay. */
+const BEATS = { reveal: 1800, answer: 1500, next: 1400 } as const;
+
+const SPRING = { type: "spring", duration: 0.5, bounce: 0.2 } as const;
 
 /**
- * One real review, done by the reader. Reveal the meaning, say how hard it was, and see
- * what that answer costs. This is the whole of spaced repetition in one control, which
- * beats the paragraph explaining it that nobody reads.
+ * One review, played out. It runs on its own so the mechanic is visible without asking for
+ * a click, and every control still works, which hands it over to anyone who wants to answer
+ * for themselves. The first click stops the autoplay for good, so the demo never fights the
+ * reader for the card.
  */
 export function ReviewDemo() {
-  const [index, setIndex] = useState(0);
-  // Open revealed, so the first frame shows the mechanic instead of a card face and a button.
-  const [revealed, setRevealed] = useState(true);
-  const [result, setResult] = useState(REST);
   const box = useRef<HTMLDivElement>(null);
-  const card = DECK[index % DECK.length];
+  const still = useReducedMotion();
+  // Nothing plays until it is on screen, so the reader never arrives mid-sentence.
+  const seen = useInView(box, { amount: 0.5 });
 
-  const grade = useCallback((n: number) => {
-    const g = GRADES[n];
-    if (!g) return;
-    setResult(`You said ${g.name}. This card comes back in ${g.said}.`);
-    window.setTimeout(
-      () => {
+  const [index, setIndex] = useState(0);
+  // Opens revealed: the grades and the meaning are the point, and the loop rewinds to the
+  // question on its next pass. A reader who never gets the animation still sees how it works.
+  const [revealed, setRevealed] = useState(true);
+  const [answered, setAnswered] = useState<number | null>(null);
+  const [auto, setAuto] = useState(true);
+
+  const card = DECK[index % DECK.length];
+  const chosen = answered === null ? null : GRADES[answered];
+
+  const answer = useCallback((n: number) => {
+    setAuto(false);
+    setRevealed(true);
+    setAnswered(n);
+  }, []);
+
+  // One timer walking the loop, reset whenever the state it is waiting on changes.
+  useEffect(() => {
+    if (!auto || !seen || still) return;
+    let t: number;
+    if (!revealed) {
+      t = window.setTimeout(() => setRevealed(true), BEATS.reveal);
+    } else if (answered === null) {
+      // Vary the answer, so it does not look like a recording of the same click.
+      t = window.setTimeout(() => setAnswered(1 + ((index * 7) % 3)), BEATS.answer);
+    } else {
+      t = window.setTimeout(() => {
         setIndex((i) => i + 1);
         setRevealed(false);
-      },
-      prefersReducedMotion() ? 0 : 480,
-    );
-  }, []);
+        setAnswered(null);
+      }, BEATS.next);
+    }
+    return () => window.clearTimeout(t);
+  }, [auto, seen, still, revealed, answered, index]);
 
   // The app grades with 1 to 4 and reveals with Space. The demo answers to the same keys
   // while it has focus, so the shortcut is learned here rather than described later.
@@ -56,79 +80,137 @@ export function ReviewDemo() {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === " " && !revealed) {
         e.preventDefault();
+        setAuto(false);
         setRevealed(true);
         return;
       }
       const n = Number.parseInt(e.key, 10);
       if (revealed && n >= 1 && n <= 4) {
         e.preventDefault();
-        grade(n - 1);
+        answer(n - 1);
       }
     };
     el.addEventListener("keydown", onKey);
     return () => el.removeEventListener("keydown", onKey);
-  }, [revealed, grade]);
+  }, [revealed, answer]);
 
   if (!card) return null;
 
   return (
     // biome-ignore lint/a11y/noNoninteractiveTabindex: the panel takes focus so 1-4 and Space work
     <div ref={box} tabIndex={0} className="rounded-md outline-offset-4">
-      <div className="mx-auto flex max-w-[360px] items-center justify-between text-2xs tracking-[0.06em] text-faint uppercase">
+      <div className="mx-auto flex max-w-[380px] items-center justify-between text-2xs tracking-[0.06em] text-faint uppercase">
         <span>Tonight</span>
-        <span>{DECK.length - (index % DECK.length)} due</span>
+        <span className="tabular-nums">{DECK.length - (index % DECK.length)} due</span>
       </div>
 
-      <div className="mx-auto mt-3 max-w-[360px] rounded-md bg-plate p-6 text-center edge">
-        <p className="text-2xs tracking-[0.07em] text-amber-text uppercase">{card.label}</p>
-        <p className="mt-2 text-3xl font-medium tracking-[-0.03em] text-text">{card.term}</p>
-
-        {revealed ? (
-          <div className="mt-3 border-t border-edge pt-3">
-            <p className="text-lg text-text-2">{card.meaning}</p>
-            {card.example && <p className="mt-2 text-xs text-muted italic">{card.example}</p>}
-          </div>
-        ) : (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="mt-4 w-full border border-edge-2 border-dashed"
-            onClick={() => setRevealed(true)}
+      <div className="relative mx-auto mt-3 h-[272px] max-w-[380px]">
+        <AnimatePresence initial={false} mode="popLayout">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 26, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -22, scale: 0.96 }}
+            transition={still ? { duration: 0 } : SPRING}
+            className="absolute inset-0 flex flex-col bg-plate p-6 text-center edge"
+            style={{ borderRadius: 14 }}
           >
-            Show the meaning
-          </Button>
-        )}
-
-        <div className="mt-4 flex gap-1.5 transition-opacity duration-200">
-          {GRADES.map((g, n) => (
-            <button
-              key={g.name}
-              type="button"
-              disabled={!revealed}
-              onClick={() => grade(n)}
-              className="flex flex-1 flex-col items-center gap-0.5 rounded-sm bg-plate-2 py-2 transition-[background-color,scale] duration-150 ease-out edge hoverable:hover:bg-hover active:scale-[0.97] disabled:pointer-events-none disabled:opacity-30"
+            <p className="text-2xs tracking-[0.07em] text-amber-text uppercase">{card.label}</p>
+            <motion.p
+              className="mt-2 text-3xl font-medium tracking-[-0.03em] text-text"
+              animate={{ scale: revealed ? 1 : 1.06 }}
+              transition={still ? { duration: 0 } : SPRING}
             >
-              <span className="text-sm font-medium text-text">{g.name}</span>
-              <span className="text-2xs tabular-nums text-muted">{g.when}</span>
-            </button>
-          ))}
-        </div>
+              {card.term}
+            </motion.p>
+
+            <div className="flex-1">
+              <AnimatePresence initial={false} mode="wait">
+                {revealed ? (
+                  <motion.div
+                    key="answer"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={still ? { duration: 0 } : { duration: 0.28 }}
+                    className="mt-3 border-t border-edge pt-3"
+                  >
+                    <p className="text-lg text-text-2">{card.meaning}</p>
+                    {card.example && (
+                      <p className="mt-2 text-xs text-muted italic">{card.example}</p>
+                    )}
+                  </motion.div>
+                ) : (
+                  <motion.button
+                    key="reveal"
+                    type="button"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={still ? { duration: 0 } : { duration: 0.2 }}
+                    onClick={() => {
+                      setAuto(false);
+                      setRevealed(true);
+                    }}
+                    className="mt-5 w-full rounded-sm border border-edge-2 border-dashed py-2.5 text-sm text-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-text-2"
+                  >
+                    Show the meaning
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <div className="mt-4 flex gap-1.5">
+              {GRADES.map((g, n) => (
+                <motion.button
+                  key={g.name}
+                  type="button"
+                  onClick={() => answer(n)}
+                  animate={{ opacity: revealed ? 1 : 0.3, scale: answered === n ? 1.05 : 1 }}
+                  transition={still ? { duration: 0 } : { duration: 0.22 }}
+                  className={clsx(
+                    "flex flex-1 flex-col items-center gap-0.5 py-2 edge",
+                    answered === n ? "bg-amber-soft" : "bg-plate-2 hoverable:hover:bg-hover",
+                  )}
+                  style={{ borderRadius: 10 }}
+                >
+                  <span
+                    className={clsx(
+                      "text-sm font-medium",
+                      answered === n ? "text-amber-text" : "text-text",
+                    )}
+                  >
+                    {g.name}
+                  </span>
+                  <span className="text-2xs tabular-nums text-muted">{g.when}</span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      <p className="mx-auto mt-3 max-w-[360px] text-center text-xs text-muted" aria-live="polite">
-        {result}
-      </p>
-      <button
-        type="button"
-        onClick={() => {
-          setIndex(0);
-          setRevealed(true);
-          setResult(REST);
-        }}
-        className="mx-auto mt-2 block text-2xs tracking-[0.06em] text-faint uppercase transition-colors hoverable:hover:text-muted"
-      >
-        Start over
-      </button>
+      <div className="mx-auto mt-4 flex h-5 max-w-[380px] items-center justify-center">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={chosen ? `${index}-${chosen.name}` : `${index}-rest`}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={still ? { duration: 0 } : { duration: 0.24 }}
+            className="text-center text-xs text-muted"
+            aria-live="polite"
+          >
+            {chosen ? (
+              <>
+                <span className="text-amber-text">{chosen.name}</span>. Back in {chosen.said}.
+              </>
+            ) : (
+              "Watch it, or answer it yourself."
+            )}
+          </motion.p>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

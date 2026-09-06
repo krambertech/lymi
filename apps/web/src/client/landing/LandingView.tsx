@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Check } from "lucide-react";
+import { clsx } from "clsx";
 import {
   type CSSProperties,
   type ReactNode,
@@ -10,12 +10,13 @@ import {
 } from "react";
 import { buttonClass } from "../components/Button";
 import { Wordmark } from "../components/Logo";
+import { AssistantChat } from "./AssistantChat";
 import { CardBelt, CardColumn } from "./CardStream";
 import { EnrichDemo } from "./EnrichDemo";
 import { JoinBeta } from "./JoinBeta";
 import { MemoryGraph } from "./MemoryGraph";
-import { prefersReducedMotion } from "./motion";
 import { ReviewDemo } from "./ReviewDemo";
+import { useWide } from "./useWide";
 
 const TITLE = "Lymi · Keep what you learn";
 const BLURB =
@@ -59,6 +60,9 @@ export function LandingView() {
   /** Where the pool of light sits inside the hero, in px. Null until the column reports it. */
   const [lamp, setLamp] = useState<{ x: number; y: number } | null>(null);
   const [nudge, setNudge] = useState({ x: 0, y: 0 });
+  // Only one hero shape is ever mounted. Hiding the other with a class left it running and
+  // still reporting where the lamp should go, which put the light in the corner of the page.
+  const wide = useWide();
 
   // The page's own title, description and canonical, so a shared link says what it points at
   // and a crawler is not left with the app shell's defaults.
@@ -119,7 +123,7 @@ export function LandingView() {
 
   useEffect(() => {
     const el = hero.current;
-    if (!el || prefersReducedMotion()) return;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       setNudge({
@@ -136,9 +140,10 @@ export function LandingView() {
     };
   }, []);
 
+  // With the belt the light belongs in the middle, where the belt passes through it.
   const lampStyle = {
-    "--lamp-x": lamp ? `${lamp.x + nudge.x}px` : "50%",
-    "--lamp-y": lamp ? `${lamp.y + nudge.y}px` : "62%",
+    "--lamp-x": wide && lamp ? `${lamp.x + nudge.x}px` : "50%",
+    "--lamp-y": wide && lamp ? `${lamp.y + nudge.y}px` : "78%",
   } as CSSProperties;
 
   return (
@@ -159,7 +164,12 @@ export function LandingView() {
           </div>
         </nav>
 
-        <div className="mx-auto grid max-w-[1040px] items-center gap-10 px-5 py-16 @3xl:grid-cols-[minmax(0,1fr)_292px] @2xl:px-10 @3xl:py-24">
+        <div
+          className={clsx(
+            "mx-auto grid max-w-[1040px] items-center gap-10 px-5 py-16 @2xl:px-10",
+            wide && "grid-cols-[minmax(0,1fr)_292px] py-24",
+          )}
+        >
           <div>
             <h1 className="max-w-[11ch] text-4xl font-medium tracking-[-0.036em] text-text @2xl:text-5xl">
               Keep what you learn.
@@ -176,10 +186,10 @@ export function LandingView() {
           </div>
 
           {/* The column needs room beside the headline; a narrow screen gets the belt instead. */}
-          <CardColumn onLampMove={onLampMove} className="hidden @3xl:block" />
+          {wide && <CardColumn onLampMove={onLampMove} />}
         </div>
 
-        <CardBelt className="pb-14 @3xl:hidden" />
+        {!wide && <CardBelt className="pb-14" />}
       </header>
 
       {/* ---- 2. How reviewing works ---- */}
@@ -206,30 +216,7 @@ export function LandingView() {
         title="Ask your assistant to add it"
         lede="If you already learn with Claude or ChatGPT, Lymi connects to them. A card gets added in the middle of the conversation you were having anyway, and it is an ordinary card from the moment it lands."
       >
-        <div className="mx-auto flex max-w-[460px] flex-col gap-3">
-          <p className="max-w-[82%] self-end rounded-md bg-plate-2 px-3.5 py-2.5 text-sm text-text edge">
-            That chess term you just used, add it to my deck.
-          </p>
-          <div className="max-w-[88%] self-start rounded-md bg-plate px-3.5 py-2.5 text-sm text-text-2 edge">
-            <p className="flex items-start gap-1.5">
-              <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-good" />
-              <span>Added to Chess, with the meaning and an example.</span>
-            </p>
-            <div className="mt-2.5 rounded-sm bg-amber-soft px-3 py-2">
-              <p className="text-2xs tracking-[0.06em] text-amber-text uppercase">Chess · new</p>
-              <p className="mt-1 text-md font-medium tracking-[-0.024em] text-text">zugzwang</p>
-              <p className="mt-0.5 text-xs text-text-2">
-                Any move you make makes your position worse
-              </p>
-            </div>
-          </div>
-          <p className="max-w-[82%] self-end rounded-md bg-plate-2 px-3.5 py-2.5 text-sm text-text edge">
-            And what am I due to review tonight?
-          </p>
-          <div className="max-w-[88%] self-start rounded-md bg-plate px-3.5 py-2.5 text-sm text-text-2 edge">
-            Seven cards. Four Finnish, two chess terms, one from that signal-processing paper.
-          </div>
-        </div>
+        <AssistantChat />
         <p className="mx-auto mt-6 max-w-[460px] text-sm text-muted">
           Works with any assistant that speaks MCP.{" "}
           <Link to="/docs/mcp" className="text-amber-text underline underline-offset-2">

@@ -11,7 +11,7 @@ import { WhyItWorks } from "./WhyItWorks";
 
 export const LANDING_TITLE = "Lymi · Keep what you learn";
 export const LANDING_BLURB =
-  "Save a term while it is fresh. Lymi enriches the missing details and brings the card " +
+  "Save a term, phrase, or concept while it is fresh. Lymi enriches the missing details and brings the card " +
   "back when recalling it will help most. Free during the private beta.";
 
 const LOOP = [
@@ -26,6 +26,29 @@ const LOOP = [
   {
     title: "Remember it",
     body: "Recall first, reveal second. Lymi schedules what comes next.",
+  },
+] as const;
+
+const USE_CASES = [
+  {
+    id: "languages",
+    title: "A new language",
+    body: "Words and phrases from lessons, conversations, and reading.",
+  },
+  {
+    id: "courses",
+    title: "A course or lesson",
+    body: "Ideas from classes, workshops, and exam preparation.",
+  },
+  {
+    id: "professional-terms",
+    title: "A professional field",
+    body: "Terms and concepts from a new role, project, or technical domain.",
+  },
+  {
+    id: "personal-interests",
+    title: "A personal interest",
+    body: "Things worth keeping from books, hobbies, and everyday curiosity.",
   },
 ] as const;
 
@@ -159,8 +182,8 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               Keep what you learn.
             </h1>
             <p className="mt-6 max-w-[46ch] text-lg text-text-2 @2xl:text-xl">
-              Save a term while it is fresh. Lymi enriches the missing details and brings the card
-              back when recalling it will help most.
+              Save a term, phrase, or concept while it is fresh. Lymi enriches the missing details
+              and brings the card back when recalling it will help most.
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -214,6 +237,35 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               </li>
             ))}
           </ol>
+        </section>
+
+        <section
+          aria-labelledby="use-cases-title"
+          className="border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28"
+        >
+          <div className="mx-auto max-w-[1040px]">
+            <h2
+              id="use-cases-title"
+              className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:whitespace-nowrap @2xl:text-5xl"
+            >
+              For whatever you’re learning.
+            </h2>
+
+            <ul className="mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+              {USE_CASES.map((useCase) => (
+                <li
+                  id={`use-case-${useCase.id}`}
+                  key={useCase.id}
+                  className="edge min-h-[180px] min-w-[250px] flex-1 snap-start rounded-lg bg-canvas px-6 py-7 @4xl:min-w-0"
+                >
+                  <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
+                    {useCase.title}
+                  </h3>
+                  <p className="mt-3 max-w-[28ch] text-sm text-muted">{useCase.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         <section

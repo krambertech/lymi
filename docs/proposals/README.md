@@ -11,3 +11,4 @@ technical decision in [an ADR](../adr/README.md) and put executable delivery wor
 | Proposal | Status |
 | --- | --- |
 | [Shared decks](shared-decks.md) | Exploration |
+| [Payments and a low-cost paid plan](premium-subscription-and-payments.md) | Exploration |

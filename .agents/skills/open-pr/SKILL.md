@@ -2,14 +2,6 @@
 name: open-pr
 description: |
   Use when the user asks to open / create / raise a PR, "push this up for review", or finishes a change and wants it reviewed.
-allowed-tools:
-  - AskUserQuestion
-  - Bash
-  - Read
-  - Glob
-  - Grep
-  - Skill
-  - SendUserFile
 ---
 
 # open-pr
@@ -26,7 +18,7 @@ git status --short                  # uncommitted work?
 git log --oneline main..HEAD        # commits ahead of main
 ```
 
-- On `main`: stop and offer to create a branch first (`claude/<short-slug>`).
+- On `main`: stop and offer to create a branch first (`kateryna/<short-slug>`), following [`docs/git-workflow.md`](../../../docs/git-workflow.md).
 - Uncommitted changes: surface them and ask whether to commit them now (small reviewable commits) or leave them out. Changes left out get set aside before the checks and screenshots, so both reflect only the PR content; restore them after opening. In a worktree, use a temporary WIP commit rather than `git stash` — the stash stack is shared with every other worktree.
 - Zero commits ahead of `main`: nothing to PR. Say so and stop.
 
@@ -40,7 +32,7 @@ CI runs the same three on the pull request, so anything red here is red there te
 
 ## Step 3 — self-review and classify scope
 
-A light pass over your own diff, not an adversarial review (that is `/code-review`'s job). Follow [`references/self-review.md`](references/self-review.md): check for scope creep, leftovers, and violations of the conventions in [`AGENTS.md`](../../../AGENTS.md); decide whether the change needs a Mermaid diagram. Show the user the short self-review summary before opening.
+A light pass over your own diff, not an adversarial code review. Follow [`references/self-review.md`](references/self-review.md): check for scope creep, leftovers, and violations of the conventions in [`AGENTS.md`](../../../AGENTS.md); decide whether the change needs a Mermaid diagram. Show the user the short self-review summary before opening.
 
 ## Step 4 — derive the title
 
@@ -81,4 +73,4 @@ Upload the captured PNGs to GitHub's own storage via the user-attachments endpoi
 
 ## Step 8 — babysit
 
-Start watching as soon as the PR is open. Tell the user in one line that you are watching it; asking permission is a step backwards, the watch is included. Follow [`references/babysit.md`](references/babysit.md). Stop when the PR merges or closes, or when the user says stop.
+Start watching as soon as the PR is open. Tell the user in one line that you are watching it; the watch is included in opening the PR. Follow [`references/babysit.md`](references/babysit.md) using the runtime's supported wait or monitoring mechanism. Stop when the PR merges or closes, or when the user says stop.

@@ -24,17 +24,17 @@ Poll the PR and surface anything that needs the author's attention:
    ```bash
    gh pr view <number> --json mergeable,mergeStateStatus
    ```
-   On a conflict, run `/sync-with-main`.
+   On a conflict, use the `sync-with-main` skill.
 
 CI catches the same three commands Step 2 of the skill already ran, so a red check on a PR you opened means something changed after you ran them — a merge with `main`, or a push you did not verify. Re-run them locally before pushing a fix, and say the result in the same message as the push.
 
 ## Cadence
 
-Use the `/loop` skill for the polling interval. This is a solo repo, so review comments arrive in bursts rather than continuously: every few minutes right after opening, then back off to a slow heartbeat. Let the user set the pace if they state one.
+Use the runtime's supported wait or monitoring mechanism. While the task is active, `gh pr checks <number> --watch --interval 30` can cover CI; check reviews and mergeability separately after CI changes. This is a solo repo, so comments arrive in bursts rather than continuously: check frequently just after opening, then back off. Let the user set the pace if they state one.
 
 ## Responding to comments
 
-- Post as "Kateryna's Claude". Never post as the human.
+- Identify replies as coming from Kateryna's coding agent. Never post as Kateryna.
 - Factual notes post directly: "Fixed in `<sha>`", "Intentional because X, see line Y".
 - Substantive replies (arguments, design pushback, commitments) get drafted in chat and posted only after the user approves.
 - Decline nitpicks that contradict the conventions in `AGENTS.md` — a bot asking for `type` where the repo uses `interface Props`, for instance. Say so politely, signed as the agent.

@@ -6,7 +6,7 @@ Proposals are not commitments. When a direction is chosen, record any hard-to-re
 
 | Proposal | Status |
 | --- | --- |
-| [Public website and product app architecture](public-website-and-product-app.md) | Preferred direction |
+| [Public website and product app architecture](public-website-and-product-app.md) | Partially accepted by ADR 0008 |
 | [Market differentiation and go-to-market](market-differentiation-and-go-to-market.md) | Exploration |
 | [Open-source strategy](open-source-strategy.md) | Exploration |
 | [End-to-end testing CI policy](end-to-end-testing-ci-policy.md) | Exploration |

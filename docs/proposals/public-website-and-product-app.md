@@ -1,7 +1,6 @@
 # Public website and product app architecture
 
-**Status:** Preferred direction for future work, not yet an implementation decision, 6 September
-2026.
+**Status:** Partially accepted 6 September 2026. [ADR 0008](../adr/0008-public-website-and-product-use-separate-origins.md) accepts `lymi.app` for the public website and `my.lymi.app` for the product and backend, initially on the existing Worker. A separate Astro website and deployment remain a future option, not an implementation decision.
 
 ## Why this exists
 

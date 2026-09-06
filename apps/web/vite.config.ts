@@ -4,6 +4,7 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { e2eAllowedEmails } from "../../e2e/settings.mjs";
 
 const isE2E = process.env.LYMI_E2E === "1";
 
@@ -25,8 +26,7 @@ export default defineConfig({
             config: {
               vars: {
                 APP_URL: "http://localhost:4173",
-                ALLOWED_EMAILS:
-                  "e2e-chromium-0@lymi.local,e2e-chromium-1@lymi.local,e2e-webkit-0@lymi.local,e2e-webkit-1@lymi.local",
+                ALLOWED_EMAILS: e2eAllowedEmails.join(","),
                 BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
                 GOOGLE_CLIENT_ID: "e2e-client-id",
                 GOOGLE_CLIENT_SECRET: "e2e-client-secret",

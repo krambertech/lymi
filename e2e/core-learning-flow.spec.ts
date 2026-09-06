@@ -1,17 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { signInAsTestLearner } from "./auth";
 
 test("a learner can capture and review a new word", async ({ page }, testInfo) => {
-  const email = `e2e-${testInfo.project.name}-${testInfo.retry}@lymi.local`;
-
-  await test.step("create a local account", async () => {
-    await page.goto("/login");
-    await page.getByRole("button", { name: "Dev sign-in" }).click();
-    await page.getByLabel("Email").fill(email);
-    await page.getByLabel("Password").fill("lymi-e2e-password");
-    await page.getByRole("button", { name: "Create account" }).click();
-
-    await expect(page).toHaveURL(/\/today$/);
-    await expect(page.getByRole("heading", { name: "Today" })).toBeVisible();
+  await test.step("sign in to a disposable account", async () => {
+    await signInAsTestLearner(page, testInfo, "core-learning");
   });
 
   let deckId = "";

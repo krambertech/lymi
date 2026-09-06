@@ -5,7 +5,7 @@ interface AddCard {
   openCard: (deckId?: string) => void;
   /** Open the new-deck field. */
   openDeck: () => void;
-  close: () => void;
+  close: (expected?: "card" | "deck") => void;
   /** What is open: nothing, the capture sheet, or the new-deck field. */
   open: "card" | "deck" | null;
   deckId: string | undefined;
@@ -20,6 +20,7 @@ const Ctx = createContext<AddCard | null>(null);
 export function AddCardProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState<"card" | "deck" | null>(null);
   const [deckId, setDeckId] = useState<string | undefined>(undefined);
+
   const value = useMemo<AddCard>(
     () => ({
       open,
@@ -32,7 +33,8 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
         setDeckId(undefined);
         setOpen("deck");
       },
-      close: () => setOpen(null),
+      close: (expected) =>
+        setOpen((current) => (expected && current !== expected ? current : null)),
     }),
     [open, deckId],
   );

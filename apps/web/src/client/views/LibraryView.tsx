@@ -116,7 +116,7 @@ export function LibraryView({
       {decks && decks.length > 0 && (
         <ul className="grid gap-2">
           {decks.map((d) => (
-            <li key={d.id}>
+            <li key={d.id} className="min-w-0">
               <DeckCard
                 id={d.id}
                 name={d.name}

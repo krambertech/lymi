@@ -1,25 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useAddCard } from "../lib/add-card";
-import { decksQuery, historyQuery, meQuery } from "../lib/queries";
-import { TodayView } from "../views/TodayView";
+import { LandingView } from "../landing/LandingView";
 
 export const Route = createFileRoute("/")({
-  component: Today,
+  component: LandingView,
 });
-
-function Today() {
-  const decks = useQuery(decksQuery);
-  const history = useQuery(historyQuery);
-  const me = useQuery(meQuery);
-  const add = useAddCard();
-  return (
-    <TodayView
-      decks={decks.data}
-      history={history.data?.days}
-      name={me.data?.name}
-      onAdd={add.openCard}
-      onCreateDeck={add.openDeck}
-    />
-  );
-}

@@ -16,9 +16,22 @@
   "preview_urls": false,
   "assets": {
     "binding": "ASSETS",
+    // Keep /index.html as an exact private-app shell. Cloudflare's default HTML handling would
+    // redirect it to /, which is intentionally the server-rendered public landing page.
+    "html_handling": "none",
     "not_found_handling": "single-page-application",
-    // Only these paths run the Worker. Everything else is a static asset and costs nothing.
-    "run_worker_first": ["/", "/api/*", "/mcp", "/mcp/*", "/.well-known/*"]
+    // The public root runs through the Worker so React can render useful HTML and metadata.
+    // Private navigations remain static-asset SPA fallbacks; APIs and protocol routes also run
+    // through the Worker.
+    "run_worker_first": [
+      "/",
+      "/api/*",
+      "/mcp",
+      "/mcp/*",
+      "/.well-known/*",
+      "/robots.txt",
+      "/sitemap.xml"
+    ]
   },
   // Production values. Local dev overrides these from .dev.vars.
   "vars": {

@@ -125,7 +125,7 @@ function DevSignIn() {
       return;
     }
     if (followOAuthRedirect(res.data)) return;
-    navigate({ to: "/" });
+    navigate({ to: "/today" });
   }
 
   if (!open) {

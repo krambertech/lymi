@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lymi",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@lymi/web", "dev", "--port", "5241"],
+      "port": 5241,
+      "autoPort": false
+    }
+  ]
+}

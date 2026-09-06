@@ -123,7 +123,7 @@ function Review() {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === "Escape") {
-        navigate({ to: "/" });
+        navigate({ to: "/today" });
         return;
       }
       const target = e.target as HTMLElement | null;
@@ -152,7 +152,7 @@ function Review() {
         total={sessionTotal}
         deckName={deckName}
         flare={flare}
-        onClose={() => navigate({ to: "/" })}
+        onClose={() => navigate({ to: "/today" })}
       />
 
       {queue.isPending && <ReviewSkeleton />}
@@ -161,7 +161,7 @@ function Review() {
         <ReviewError
           retry={() => queue.refetch()}
           action={
-            <Link to="/" className={buttonClass("ghost")}>
+            <Link to="/today" className={buttonClass("ghost")}>
               Back
             </Link>
           }
@@ -174,7 +174,7 @@ function Review() {
           moreDue={Math.max(total - items.length, 0)}
           history={history.data?.days}
           action={
-            <Link to="/" className={buttonClass("primary", "lg")}>
+            <Link to="/today" className={buttonClass("primary", "lg")}>
               Done
             </Link>
           }

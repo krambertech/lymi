@@ -1,6 +1,8 @@
 # Lymi website and app
 
-This document describes the deployed domain setup and the accompanying landing-page work. The domain configuration and old-host redirect are in place, and the documentation site at `/docs` is built; the landing page, session redirect, app aliases, and public metadata are being prepared in a separate change.
+This document describes the deployed domain boundary and the accompanying landing-page work. The
+domain configuration and old-host redirect are in place, the documentation site lives at `/docs`,
+and the landing page is implemented as server-rendered React in the current branch.
 
 Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudflare Worker. A custom domain lets Cloudflare manage the DNS record and HTTPS certificate: https://developers.cloudflare.com/workers/configuration/routing/custom-domains/.
 
@@ -8,7 +10,7 @@ Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudfla
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Public landing page. A verified session redirects to `/today`; visitors without a session stay here. |
+| `/` | Public landing page, server-rendered by the Worker and hydrated by React. |
 | `/app` | Convenient entry point that redirects to `/today`. |
 | `/today`, `/library`, `/review`, `/you`, `/activity`, `/archived`, `/insights` | Existing app screens; private data requires authentication. Today and Library are the two navigable destinations; the rest are reached from a button or from You. |
 | `/login`, `/consent` | Sign-in and integration authorization. |
@@ -18,7 +20,11 @@ Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudfla
 
 Having an account is different from being signed in: an existing user with an expired session sees the landing page and can use its sign-in link. Joining the beta list does not create an account. Access remains limited to the configured email allowlist.
 
-The landing page stays cacheable. Its small script checks the session without caching the result and redirects signed-in visitors. It remains usable if the check fails or the browser is offline. The service worker's app navigation fallback excludes the landing page and docs.
+The landing page has one stable meaning whether or not someone is signed in. Its first response
+contains the copy, structure, canonical URL, and social metadata; React hydration adds the beta form
+and animation. The service worker's app navigation fallback excludes `/`, while `/today` is the
+installed PWA's start URL. `/index.html` remains the exact offline app shell instead of redirecting
+to `/`. Public HTML uses revalidation rather than the private app-shell cache.
 
 ## Landing page structure
 
@@ -53,7 +59,8 @@ Moving every app screen under `/app/*` can be considered later; it is unnecessar
 ## Deployment configuration
 
 - `apps/web/wrangler.jsonc`: custom domain and `APP_URL=https://lymi.app`.
-- `apps/web/vite.config.ts`: public canonical origin, social metadata, sitemap and robots. `VITE_SITE_URL` can override the build origin.
+- `apps/web/src/server/landing.tsx`: request-time landing markup, canonical URL, and social metadata.
+- `apps/web/vite.config.ts`: PWA start URL and navigation-fallback boundary.
 - Google OAuth production origin: `https://lymi.app`.
 - Google OAuth production callback: `https://lymi.app/api/auth/callback/google`.
 - Localhost remains registered for development. The old Workers URL redirects application requests to the custom domain. Static assets may still be served directly from the old host.

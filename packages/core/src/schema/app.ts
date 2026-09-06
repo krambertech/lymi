@@ -200,3 +200,25 @@ export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type AuditEntry = typeof auditLog.$inferSelect;
+
+/**
+ * Someone who asked to be told when Lymi opens up. Deliberately unconnected to `user`:
+ * joining the list is an expression of interest, not an account, and it grants no access.
+ * Nothing here is a learner's data, so these writes are not in the audit log.
+ */
+export const betaSignups = sqliteTable(
+  "beta_signups",
+  {
+    id: text("id").primaryKey(),
+    /** Lower-cased and trimmed, so one person cannot fill the list by varying the case. */
+    email: text("email").notNull(),
+    /** Which part of the site the address came from, for reading the list later. */
+    source: text("source").notNull().default("landing"),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (t) => [uniqueIndex("beta_signups_email_idx").on(t.email)],
+);
+
+export type BetaSignup = typeof betaSignups.$inferSelect;

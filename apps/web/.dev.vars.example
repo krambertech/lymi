@@ -6,4 +6,8 @@ ALLOWED_EMAILS=kateryna@buffer.com,dev@lymi.local
 BETTER_AUTH_SECRET=change-me-to-32-random-chars
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+# Generate once with `pnpm --filter @lymi/web exec web-push generate-vapid-keys`.
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+VAPID_SUBJECT=mailto:you@example.com
 OPENAI_API_KEY=

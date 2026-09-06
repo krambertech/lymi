@@ -15,7 +15,7 @@ export interface ServiceContext {
 /** A failure the caller turns into an HTTP status or a tool error. */
 export class ServiceError extends Error {
   constructor(
-    public readonly code: "not_found" | "invalid" | "forbidden" | "conflict",
+    public readonly code: "not_found" | "invalid" | "forbidden" | "conflict" | "unavailable",
     message: string,
     public readonly details?: unknown,
   ) {

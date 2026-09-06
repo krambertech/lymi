@@ -48,7 +48,10 @@ pnpm fix          # Biome, writing fixes
 pnpm typecheck    # tsc across the workspace
 pnpm test         # Vitest
 pnpm test:e2e     # Playwright against isolated local Cloudflare bindings
+pnpm test:e2e:chromium # faster Chromium-only browser gate
 pnpm test:e2e:ui  # Playwright's interactive runner
+pnpm deploy:check # production build plus a local Wrangler deployment dry run
+pnpm deploy:health # identify the active production version and check its health
 pnpm db:generate  # new migration from schema changes
 pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy command)
 ```

@@ -8,9 +8,13 @@ decision: none
 
 This document preserves a preferred direction for making Lymi's end-to-end test feedback faster and less expensive while keeping cross-browser coverage. It is not an accepted CI decision or an implementation plan.
 
+## First implementation checkpoint
+
+The first reversible iteration described here is now implemented: production-affecting pull requests run Chromium, pushes to `main` and `/e2e` run Chromium plus WebKit, base gates have distinct names, and the run summary states exactly which coverage ran. CI also performs a local Wrangler deployment-package dry run before browser testing. This proposal remains exploratory guidance for measuring and adjusting the policy, not a commitment to its deferred ideas.
+
 ## Current position
 
-Lymi currently runs formatting and lint checks, a production build, typechecking, unit tests, and the complete Playwright suite in one GitHub Actions job. Product-affecting pull requests run twelve tests serially across Chromium desktop and an iPhone-sized WebKit project. Pushes to `main` and manually dispatched runs use the same full suite.
+Before the first iteration, Lymi ran formatting and lint checks, a production build, typechecking, unit tests, and the complete Playwright suite in one GitHub Actions job. Product-affecting pull requests ran twelve tests serially across Chromium desktop and an iPhone-sized WebKit project. Pushes to `main` and manually dispatched runs used the same full suite.
 
 This arrangement is simple and shares one checkout and dependency installation. It was appropriate when the E2E suite contained one small journey. The suite now covers the complete learning flow plus deck and card creation, and browser execution has become the largest part of the CI job.
 

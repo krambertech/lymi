@@ -26,6 +26,7 @@ jobs:
           fetch-depth: 0
 
       - name: Validate pull request title
+        id: title
         if: github.event_name == 'pull_request'
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -39,8 +40,8 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
 
-      - name: Decide whether E2E is needed
-        id: e2e
+      - name: Select CI coverage
+        id: plan
         env:
           EVENT_NAME: ${{ github.event_name }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -48,32 +49,64 @@ jobs:
           MANUAL_E2E: ${{ inputs.e2e }}
         run: |
           if [[ "$EVENT_NAME" == "pull_request" ]]; then
-            git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | node scripts/e2e-impact.mjs
-          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            echo "run_e2e=${MANUAL_E2E:-true}" >> "$GITHUB_OUTPUT"
+            git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | node scripts/ci-plan.mjs
           else
-            echo "run_e2e=true" >> "$GITHUB_OUTPUT"
+            node scripts/ci-plan.mjs < /dev/null
           fi
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        id: dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Verify
-        run: pnpm verify
+      - name: Check formatting and lint
+        id: check
+        run: pnpm check
 
-      - name: Install Playwright browsers
-        if: steps.e2e.outputs.run_e2e == 'true'
-        run: pnpm exec playwright install --with-deps chromium webkit
+      - name: Build production application
+        id: build
+        run: pnpm build
 
-      - name: End-to-end test
-        if: steps.e2e.outputs.run_e2e == 'true'
-        run: pnpm test:e2e
+      - name: Check TypeScript
+        id: typecheck
+        run: pnpm typecheck
 
-      - name: Explain skipped E2E
-        if: steps.e2e.outputs.run_e2e != 'true'
-        run: echo "E2E skipped because this pull request changes no production-affecting paths. Comment /e2e to force it." >> "$GITHUB_STEP_SUMMARY"
+      - name: Run unit tests
+        id: test
+        run: pnpm test
+
+      - name: Check deployment package
+        id: deploy
+        if: steps.plan.outputs.run_deploy_check == 'true'
+        run: pnpm --filter @lymi/web run deploy:check
+
+      - name: Install Playwright browsers (${{ steps.plan.outputs.coverage }})
+        id: browsers
+        if: steps.plan.outputs.run_e2e == 'true'
+        run: pnpm exec playwright install --with-deps --only-shell ${{ steps.plan.outputs.browsers }}
+
+      - name: Run browser E2E (${{ steps.plan.outputs.coverage }})
+        id: e2e
+        if: steps.plan.outputs.run_e2e == 'true'
+        run: pnpm test:e2e ${{ steps.plan.outputs.playwright_args }}
+
+      - name: Summarize CI evidence
+        if: always()
+        env:
+          COVERAGE: ${{ steps.plan.outputs.coverage }}
+          PLAN_REASON: ${{ steps.plan.outputs.reason }}
+          TITLE_OUTCOME: ${{ steps.title.outcome }}
+          DEPENDENCIES_OUTCOME: ${{ steps.dependencies.outcome }}
+          CHECK_OUTCOME: ${{ steps.check.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}
+          TEST_OUTCOME: ${{ steps.test.outcome }}
+          DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
+          BROWSERS_OUTCOME: ${{ steps.browsers.outcome }}
+          E2E_OUTCOME: ${{ steps.e2e.outcome }}
+        run: node scripts/ci-summary.mjs
 
       - name: Upload E2E diagnostics
-        if: failure() && steps.e2e.outputs.run_e2e == 'true'
+        if: ${{ !cancelled() && steps.e2e.outcome == 'failure' }}
         uses: actions/upload-artifact@v6
         with:
           name: e2e-diagnostics

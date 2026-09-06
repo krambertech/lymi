@@ -7,7 +7,6 @@ import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
 import { describe, statusOf } from "./http";
-import { renderLandingPage } from "./landing";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate } from "./principal";
@@ -52,7 +51,10 @@ app.use("*", async (c, next) => {
 // Unlike the private product, the public front door is rendered into the response. React
 // hydrates it in the browser, so its form and motion keep working without making the copy,
 // metadata, or page structure depend on JavaScript.
-app.get("/", (c) => renderLandingPage(c.req.raw, c.env));
+app.get("/", async (c) => {
+  const { renderLandingPage } = await import("./landing");
+  return renderLandingPage(c.req.raw, c.env);
+});
 
 // Per-request services. Bindings are only available inside the request on Workers.
 app.use("*", async (c, next) => {

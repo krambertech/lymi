@@ -105,17 +105,25 @@ export function YouView({
     <Page width="md">
       <PageHeader
         title={
-          me ? (
-            <span className="flex items-center gap-3">
+          <span className="flex items-center gap-3">
+            {me ? (
               <Avatar name={me.name} size={44} />
-              {me.name}
+            ) : (
+              <Skeleton className="size-11 rounded-full" />
+            )}
+            <span className="grid gap-1">
+              {me ? (
+                <>
+                  <span>{me.name}</span>
+                  <span className="text-sm font-normal tabular-nums text-muted">
+                    {[me.email, total ? `${total} cards` : null].filter(Boolean).join(" · ")}
+                  </span>
+                </>
+              ) : (
+                <Skeleton className="h-6 w-40" />
+              )}
             </span>
-          ) : (
-            <Skeleton className="h-11 w-48" />
-          )
-        }
-        sub={
-          me ? [me.email, total ? `${total} cards` : null].filter(Boolean).join(" · ") : undefined
+          </span>
         }
       />
 

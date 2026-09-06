@@ -175,10 +175,9 @@ export function InsightsView({ data, period, onPeriod }: InsightsProps) {
                 <i className="block rounded-full bg-amber" style={{ flexGrow: cards.new }} />
               )}
               {cards.learning > 0 && (
-                <i
-                  className="edge-inset block rounded-full bg-plate-2"
-                  style={{ flexGrow: cards.learning }}
-                />
+                // Ink rather than `plate-2`: a well-coloured segment between two saturated
+                // ones reads as a gap in the bar instead of a third state.
+                <i className="block rounded-full bg-text/30" style={{ flexGrow: cards.learning }} />
               )}
               {cards.known > 0 && (
                 <i className="block rounded-full bg-good" style={{ flexGrow: cards.known }} />
@@ -205,9 +204,8 @@ export function InsightsView({ data, period, onPeriod }: InsightsProps) {
           value={peak.count}
           unit={peak.count > 0 ? `peak, ${WEEKDAY.format(parseLocal(peak.date))}` : "due this week"}
           figure={
-            // Each day is a full-height track with the count filling it from the bottom.
-            // Bare bars leave the plate looking half empty whenever one overdue day dwarfs
-            // the rest, which is most weeks; the track gives the figure a shape either way.
+            // Bars on a baseline, using the whole figure box. A track behind each one reads
+            // as a second object stacked on the bar rather than as the space it could fill.
             <div
               className="flex h-full w-full items-stretch gap-1.5"
               role="img"
@@ -215,13 +213,13 @@ export function InsightsView({ data, period, onPeriod }: InsightsProps) {
             >
               {forecast.map((d) => (
                 <div key={d.date} className="flex flex-1 flex-col gap-1.5">
-                  <div className="relative flex-1 overflow-hidden rounded-[4px] bg-plate-2">
+                  <div className="flex flex-1 items-end border-b border-edge">
                     <i
                       className={clsx(
-                        "absolute inset-x-0 bottom-0 block rounded-[4px]",
-                        d.count === peak.count && peak.count > 0 ? "bg-amber" : "bg-text/40",
+                        "block w-full rounded-t-[4px]",
+                        d.count === peak.count && peak.count > 0 ? "bg-amber" : "bg-text/35",
                       )}
-                      style={{ height: d.count > 0 ? `max(4px, ${(d.count / maxDue) * 100}%)` : 0 }}
+                      style={{ height: d.count > 0 ? `max(3px, ${(d.count / maxDue) * 100}%)` : 0 }}
                     />
                   </div>
                   <span className="text-center text-2xs text-muted tabular-nums">

@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { useId } from "react";
 
 export interface TrendPoint {
   /** Sorted key, used for the React key and the accessible description. */
@@ -70,6 +71,7 @@ export function TrendLine({
   className?: string | undefined;
   label: string;
 }) {
+  const fadeId = useId();
   const values = points.map((p) => p.value);
   const lo = Math.min(...values, target ?? 1) - 0.05;
   const hi = Math.max(...values, target ?? 0) + 0.05;
@@ -113,7 +115,19 @@ export function TrendLine({
             vectorEffect="non-scaling-stroke"
           />
         )}
-        {points.length > 1 && <path d={area} fill="var(--text)" fillOpacity="0.07" stroke="none" />}
+        {points.length > 1 && (
+          <>
+            <defs>
+              {/* The fill fades out rather than ending on a straight edge, which reads as a
+                  grey slab sitting in the middle of the plate. */}
+              <linearGradient id={fadeId} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="var(--text)" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="var(--text)" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d={area} fill={`url(#${fadeId})`} stroke="none" />
+          </>
+        )}
         <path
           d={line}
           fill="none"
@@ -132,11 +146,13 @@ export function TrendLine({
           aria-hidden="true"
         />
       )}
-      {/* Positioned in HTML rather than drawn as SVG text, so it stays 11 px at every width.
-          `muted`, not `faint`: this is a value the reader has to be able to read. */}
+      {/* At the start of its rule, where there is no data yet: at the right it lands on the
+          newest point, which is the one thing on the chart that must stay readable.
+          Positioned in HTML so it stays 11 px at every width, and `muted` rather than
+          `faint` because it is a value the reader has to be able to read. */}
       {targetShown && targetLabel && (
         <span
-          className="pointer-events-none absolute right-0 -translate-y-1/2 bg-plate pl-1 text-2xs text-muted tabular-nums"
+          className="pointer-events-none absolute left-0 -translate-y-1/2 bg-plate pr-1.5 text-2xs text-muted tabular-nums"
           style={{ top: `${(y(target) / H) * 100}%` }}
           aria-hidden="true"
         >

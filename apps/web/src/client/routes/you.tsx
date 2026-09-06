@@ -3,6 +3,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ApiKeysSection } from "../components/ApiKeysSection";
 import { ConnectedAppsSection } from "../components/ConnectedAppsSection";
+import { NotificationsSection } from "../components/NotificationsSection";
 import { signOut } from "../lib/auth";
 import { decksQuery, meQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
@@ -39,6 +40,7 @@ function You() {
         navigate({ to: "/login" });
       }}
     >
+      <NotificationsSection />
       <ConnectedAppsSection />
       <ApiKeysSection />
     </YouView>

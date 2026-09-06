@@ -5,6 +5,7 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "./lib/pwa-install";
 import { initTheme } from "./lib/theme";
 import { routeTree } from "./routeTree.gen";
 import "./styles.css";

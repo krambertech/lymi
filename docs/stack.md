@@ -55,7 +55,9 @@ flowchart LR
 
 A single-page app, not a server-rendered site. The app sits behind a login, so there is nothing for SSR to gain, and a static shell is what makes a PWA open instantly and work offline. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train.
 
-`vite-plugin-pwa` handles the manifest, install prompt and Workbox service worker. The shell is precached. Data goes through Query's cache plus a small outbox in IndexedDB (Dexie) for reviews graded offline, replayed when the connection returns.
+`vite-plugin-pwa` handles the manifest and Workbox service worker. The app captures Chromium's install event for its in-app button and shows manual instructions on browsers that do not expose one. The shell is precached. Data goes through Query's cache plus a small outbox in IndexedDB (Dexie) for reviews graded offline, replayed when the connection returns.
+
+Review reminders use standards-based Web Push with VAPID, sent directly by the same Worker. Subscriptions and local reminder times are per device in D1. One UTC Cron Trigger runs every 15 minutes, evaluates each device in its stored IANA timezone, sends only when active cards are due, and atomically records the local date before delivery so retries do not duplicate a reminder. See ADR 0006.
 
 Alternative considered: TanStack Start or React Router 7 with SSR on Workers. Fine products, but SSR adds a rendering path and a hydration step for no user-visible benefit here. Revisit if a public marketing site needs to share the codebase.
 

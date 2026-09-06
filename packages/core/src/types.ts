@@ -86,6 +86,49 @@ export const SettingsPatch = z.object({
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
 
+/** Daily reminders run on quarter-hour boundaries so one shared cron can deliver them. */
+export const ReminderTime = z
+  .string()
+  .regex(/^([01]\d|2[0-3]):(00|15|30|45)$/, "Choose a time on a 15-minute boundary");
+export type ReminderTime = z.infer<typeof ReminderTime>;
+
+const PushEndpoint = z
+  .url()
+  .max(4096)
+  .refine((value) => value.startsWith("https://"), "Push endpoint must use HTTPS");
+
+const PushKey = z
+  .string()
+  .min(1)
+  .max(512)
+  .regex(/^[A-Za-z0-9_-]+$/);
+
+const TimeZone = z
+  .string()
+  .min(1)
+  .max(64)
+  .refine((value) => {
+    try {
+      new Intl.DateTimeFormat("en", { timeZone: value }).format();
+      return true;
+    } catch {
+      return false;
+    }
+  }, "Use an IANA timezone such as Europe/Tallinn");
+
+/** One browser installation. Push endpoints are capabilities and never appear in responses. */
+export const PushSubscriptionInput = z.object({
+  endpoint: PushEndpoint,
+  expirationTime: z.number().int().nonnegative().max(8_640_000_000_000_000).nullable(),
+  keys: z.object({ p256dh: PushKey, auth: PushKey }),
+  reminderTime: ReminderTime,
+  timezone: TimeZone,
+});
+export type PushSubscriptionInput = z.infer<typeof PushSubscriptionInput>;
+
+export const PushEndpointInput = z.object({ endpoint: PushEndpoint });
+export type PushEndpointInput = z.infer<typeof PushEndpointInput>;
+
 export const ApiKeyInput = z.object({
   name: z.string().trim().min(1).max(32),
   scope: Scope,

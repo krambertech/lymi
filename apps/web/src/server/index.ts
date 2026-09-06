@@ -11,6 +11,7 @@ import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
+import { audio } from "./routes/audio";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
@@ -108,11 +109,7 @@ app.route("/api/settings", settings);
 app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);
 app.route("/api/push", push);
-
-// Audio is generated with OpenAI text-to-speech and cached in R2. Not wired yet.
-app.get("/api/audio/:cardId", describe({ hide: true }), (c) =>
-  c.json({ error: "Audio is not set up yet" }, 501),
-);
+app.route("/api/audio", audio);
 
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);

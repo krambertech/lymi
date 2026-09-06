@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Actor, Direction, Directions, FieldSource, Scope } from "./types";
+import { Actor, Direction, Directions, FieldSource, ReminderTime, Scope } from "./types";
 
 /**
  * Response shapes, as the API sends them. The Drizzle row types are the source of truth for
@@ -141,6 +141,18 @@ export const SettingsOut = z
     updatedAt: Timestamp,
   })
   .meta({ id: "Settings" });
+
+export const PushConfigOut = z
+  .object({ publicKey: z.string().min(1).meta({ description: "Public VAPID key" }) })
+  .meta({ id: "PushConfig" });
+
+export const PushSubscriptionStatusOut = z
+  .object({
+    enabled: z.boolean(),
+    reminderTime: ReminderTime.nullable(),
+    timezone: z.string().nullable(),
+  })
+  .meta({ id: "PushSubscriptionStatus" });
 
 export const ApiKeyOut = z
   .object({

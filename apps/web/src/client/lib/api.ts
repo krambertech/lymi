@@ -4,7 +4,10 @@ import type {
   DeckInput,
   Direction,
   GradeInput,
+  PushEndpointInput,
+  PushSubscriptionInput,
   Rating,
+  ReminderTime,
   Scope,
 } from "@lymi/core";
 import type { Card, CardState, Deck } from "@lymi/core/schema";
@@ -78,6 +81,12 @@ export type ConnectedApp = {
   updatedAt: string;
 };
 
+export type PushSubscriptionStatus = {
+  enabled: boolean;
+  reminderTime: ReminderTime | null;
+  timezone: string | null;
+};
+
 export const api = {
   me: () => request<Me>("/api/me"),
   decks: () => request<DeckSummary[]>("/api/decks"),
@@ -104,6 +113,22 @@ export const api = {
   connectedApps: () => request<ConnectedApp[]>("/api/connected-apps"),
   disconnect: (id: string) =>
     request<{ ok: true }>(`/api/connected-apps/${id}`, { method: "DELETE" }),
+  pushConfig: () => request<{ publicKey: string }>("/api/push/config"),
+  pushStatus: (body: PushEndpointInput) =>
+    request<PushSubscriptionStatus>("/api/push/status", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  savePushSubscription: (body: PushSubscriptionInput) =>
+    request<PushSubscriptionStatus>("/api/push/subscription", {
+      method: "PUT",
+      body: JSON.stringify(body),
+    }),
+  removePushSubscription: (body: PushEndpointInput) =>
+    request<{ ok: true }>("/api/push/subscription", {
+      method: "DELETE",
+      body: JSON.stringify(body),
+    }),
   queue: (deckId?: string) => request<Queue>(`/api/review/queue${deckId ? `?deck=${deckId}` : ""}`),
   history: (days = 7) =>
     request<{ days: number[] }>(

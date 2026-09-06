@@ -16,6 +16,7 @@ erDiagram
   user ||--o{ audit_log : "every write"
   user ||--|| user_settings : has
   user ||--o{ apikey : "personal keys"
+  user ||--o{ push_subscriptions : "one per subscribed device"
 
   decks {
     text id PK
@@ -86,9 +87,20 @@ erDiagram
     json payload
     int created_at
   }
+  push_subscriptions {
+    text id PK
+    text user_id FK
+    text endpoint "globally unique browser capability"
+    text p256dh "browser public key"
+    text auth "browser auth secret"
+    int expiration_time "nullable"
+    text reminder_time "local HH:MM, quarter-hour"
+    text timezone "IANA time zone"
+    text last_sent_local_date "nullable YYYY-MM-DD"
+  }
 ```
 
-All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 19-character strings, time-prefixed so they sort by creation. Rows are never deleted by the app: decks and cards archive, reviews and audit rows are permanent.
+All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 19-character strings, time-prefixed so they sort by creation. Learning content is never deleted by the app: decks and cards archive, while reviews and audit rows are permanent. Push subscriptions are device capabilities, not learning content, and are deleted when the learner turns reminders off or the push service reports that the subscription has expired.
 
 The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
 
@@ -121,7 +133,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
 - A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.
 - Every write appends to `audit_log` with its actor, and every card carries `created_by`, so Activity can show what integrations and the AI wrote.
-- Archive instead of delete, always.
+- Archive learning content instead of deleting it. Device push subscriptions are removed when disabled or expired.
 - `language` on a new card defaults to the deck's `default_language` when not given.
 - Validation failures return `400 { error, issues }` with the Zod issues. Missing or bad credentials return `401 { error }`.
 

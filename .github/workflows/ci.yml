@@ -57,19 +57,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Lint and format
-        run: pnpm check
-
-      # routeTree.gen.ts is git-ignored and written by the TanStack Router plugin,
-      # so a fresh checkout cannot typecheck until something has built.
-      - name: Build
-        run: pnpm build
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Test
-        run: pnpm test
+      - name: Verify
+        run: pnpm verify
 
       - name: Install Playwright browsers
         if: steps.e2e.outputs.run_e2e == 'true'

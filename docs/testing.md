@@ -5,6 +5,7 @@ Lymi uses one canonical Playwright journey to prove that the browser, Worker, au
 ## Commands
 
 ```bash
+pnpm verify           # canonical base gate: check, build, typecheck, test
 pnpm test             # unit tests and the CI impact rules
 pnpm test:e2e         # Chromium desktop and an iPhone-sized WebKit browser
 pnpm test:e2e:ui      # Playwright's interactive UI
@@ -21,7 +22,7 @@ pnpm exec playwright install chromium webkit
 
 ## CI policy
 
-Formatting, typechecking, unit tests, and the production build run on every pull request. The Playwright steps run when `scripts/e2e-impact.mjs` sees production-affecting files. Pushes to `main` always include E2E. A manual run includes it by default and can explicitly skip it.
+`pnpm verify` is the base gate on every pull request: formatting and lint checks, the production build, typechecking, and unit tests. The Playwright steps then run when `scripts/e2e-impact.mjs` sees production-affecting files. Pushes to `main` always include E2E. A manual run includes it by default and can explicitly skip it.
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository. A newer commit cancels an obsolete in-progress run.
 

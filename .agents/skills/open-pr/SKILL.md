@@ -25,10 +25,10 @@ git log --oneline main..HEAD        # commits ahead of main
 ## Step 2 — go green before opening
 
 ```bash
-pnpm check && pnpm typecheck && pnpm test
+pnpm verify
 ```
 
-CI runs the same three on the pull request, so anything red here is red there ten minutes later. Run all three and fix a failure before opening, and show the error verbatim. A reviewer who has to discover a type error you could have seen is a reviewer whose attention you wasted.
+CI runs the same base gate on the pull request, so anything red here is red there ten minutes later. Run it and fix a failure before opening, and show the error verbatim. A reviewer who has to discover a type error you could have seen is a reviewer whose attention you wasted.
 
 ## Step 3 — self-review and classify scope
 

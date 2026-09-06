@@ -16,6 +16,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "check": "biome check .",
+    "verify": "pnpm check && pnpm build && pnpm typecheck && pnpm test",
     "fix": "biome check --write .",
     "db:generate": "pnpm --filter @lymi/web db:generate",
     "db:migrate": "pnpm --filter @lymi/web db:migrate",

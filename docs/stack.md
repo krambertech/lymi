@@ -2,7 +2,7 @@
 
 **Status:** Agreed 5 September 2026, integrations layer decided the same day. Edit in place as decisions change. Vocabulary is in [CONTEXT.md](../CONTEXT.md).
 
-Everything runs on Cloudflare. One Worker server-renders the public landing page and serves the app, API, auth, and MCP server. React hydrates the landing page in the browser, while the private product remains a client-rendered PWA that behaves like a native app on the phone and like a keyboard-driven web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
+Everything runs on Cloudflare. One Worker serves the public website and docs on `lymi.app`, and the product, API, auth and MCP server on `my.lymi.app`. React hydrates the server-rendered landing page in the browser, while the private product remains a client-rendered PWA that behaves like a native app on the phone and like a keyboard-driven web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
 
 ## Shape
 
@@ -13,8 +13,8 @@ flowchart LR
     SW[Service worker\nshell cache + outbox]
   end
   subgraph Worker["apps/worker (one Cloudflare Worker)"]
-    Landing[React SSR for /]
-    Assets[Static assets\nprivate SPA fallback]
+    Landing[React SSR for lymi.app]
+    Assets[Static assets\nproduct SPA fallback]
     API[Hono /api\nOpenAPI at /api/openapi.json]
     Services[Service layer\ndb, userId, actor]
     Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
@@ -55,15 +55,15 @@ flowchart LR
 
 ### Client: server-rendered React landing page plus a client-rendered PWA
 
-The public root is request-time server-rendered React. The Worker injects the landing component and request-aware metadata into Vite's HTML shell, and the browser hydrates that same component so forms and motion stay interactive. The initial response therefore contains the page's useful content even when JavaScript has not run.
+The public root at `lymi.app` is request-time server-rendered React. The Worker injects the landing component and request-aware metadata into Vite's HTML shell, and the browser hydrates that same component so forms and motion stay interactive. The initial response therefore contains the page's useful content even when JavaScript has not run.
 
-The signed-in product is still a client-rendered single-page PWA. It sits behind a login, so a static shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train. `/today` is the product home and `/app` redirects there.
+The signed-in product at `my.lymi.app` is still a client-rendered single-page PWA. It sits behind a login, so a static shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train. `/today` is the product home and `/app` redirects there. The product root sends a valid session to Today and a signed-out visitor to sign-in, preserving safe product deep links through authentication.
 
-`vite-plugin-pwa` handles the manifest and Workbox service worker. The app captures Chromium's install event for its in-app button and shows manual instructions on browsers that do not expose one. The shell is precached. Data goes through Query's cache plus a small outbox in IndexedDB (Dexie) for reviews graded offline, replayed when the connection returns.
+`vite-plugin-pwa` handles the manifest and Workbox service worker on the product origin only. The app captures Chromium's install event for its in-app button and shows manual instructions on browsers that do not expose one. The shell is precached. Data goes through Query's cache plus a small outbox in IndexedDB (Dexie) for reviews graded offline, replayed when the connection returns. Public HTML strips the PWA contract, and an apex retirement worker clears and unregisters the earlier service worker.
 
 Review reminders use standards-based Web Push with VAPID, sent directly by the same Worker. Subscriptions and local reminder times are per device in D1. One UTC Cron Trigger runs every 15 minutes, evaluates each device in its stored IANA timezone, sends only when active cards are due, and atomically records the local date before delivery so retries do not duplicate a reminder. See ADR 0006.
 
-The current boundary does not require a framework migration: one Hono handler renders `/`, and the existing router continues to own the product and documentation routes. If the public surface grows, the preferred direction to evaluate is a separate Astro website while retaining this React PWA. The trade-offs and unanswered migration questions are recorded in [Public website and product app architecture](proposals/public-website-and-product-app.md).
+The current boundary does not require a framework migration: the Worker routes by an allowlisted hostname before Hono and the asset fallback, and the existing router continues to own both interfaces. If the public surface grows, the preferred direction to evaluate is a separate Astro website while retaining this React PWA. The trade-offs and unanswered migration questions are recorded in [Public website and product app architecture](proposals/public-website-and-product-app.md), and the accepted origin contract is in [ADR 0008](adr/0008-public-website-and-product-use-separate-origins.md).
 
 ### Feels native on the phone
 
@@ -83,7 +83,7 @@ Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what
 
 ### Server: one Cloudflare Worker with Hono
 
-Hono server-renders `/` and routes `/api/*`, `/api/auth/*`, and `/mcp`. Other navigations use the static asset binding with SPA fallback. The Cloudflare Vite plugin runs the same Worker locally.
+Hono server-renders the public root and routes `/api/*`, `/api/auth/*`, and `/mcp` on the product origin. The Worker runs before static assets so it can enforce the hostname boundary; allowed product navigations then use the static asset binding with SPA fallback. The Cloudflare Vite plugin runs both surfaces on one loopback origin locally.
 
 Alternative considered: Pages plus separate Functions. Workers with static assets is the current path and deploys as one unit.
 
@@ -141,7 +141,7 @@ Adds take one card or many. A lesson produces 20 to 40 terms, and one tool call 
 
 ### API: a service layer and generated docs
 
-Route logic lives in service functions that take `db`, `userId` and `actor`. Hono routes and MCP tools are thin callers. The OpenAPI document is generated from the Zod schemas in `packages/core` and served at `/api/openapi.json`. The documentation site at `/docs` renders it, alongside hand-written guides; `/api/docs` redirects there.
+Route logic lives in service functions that take `db`, `userId` and `actor`. Hono routes and MCP tools are thin callers. The OpenAPI document is generated from the Zod schemas in `packages/core` and served at `https://my.lymi.app/api/openapi.json`. The documentation site at `https://lymi.app/docs` renders it without credentials through narrowly scoped CORS; `/api/docs` redirects to the public reference.
 
 ### Audio: first play, then R2
 
@@ -168,12 +168,12 @@ Two workspace details worth knowing. `drizzle-orm` is a dependency of `packages/
 
 TypeScript strict. Biome for lint and format. Vitest covers packages and Worker behavior. Playwright runs the canonical learning journey in desktop Chromium and iPhone-sized WebKit against isolated local Cloudflare bindings. GitHub Actions gives each base gate a distinct fail-fast step, adds Chromium and a Wrangler deployment dry run for production-affecting pull requests, and runs Chromium plus WebKit on every push to `main` or explicit `/e2e` request. Cloudflare Workers Builds owns production deployment; the health endpoint identifies the active Worker version, and Cloudflare Workers Logs (observability is on in wrangler.jsonc) covers deployed errors.
 
-Local development accepts email and password sign-in so the app is usable before Google is configured. It is enabled only when `APP_URL` starts with `http://localhost`.
+Local development accepts email and password sign-in so the app is usable before Google is configured. It is enabled only when `PRODUCT_URL` is a loopback URL.
 
 ## Decided
 
 - Sign-in: Google only at launch. Apple can be added when React Native arrives.
-- Domain: lymi.app, Worker on the apex. Register before the first deploy.
+- Origins: `lymi.app` for the public website and docs; `my.lymi.app` for the product, auth, API, MCP and PWA. Both initially use the same Worker.
 - Auth: Better Auth from the start, no Cloudflare Access interim.
 - AI: OpenAI for text enrichment and default speech. Google Chirp 3 HD covers languages outside OpenAI's published list.
 - Integrations (5 September 2026): MCP clients are Claude Desktop and Codex first, so OAuth from day one via `@better-auth/mcp`. Personal API keys via the `apiKey` plugin. Two scopes, `read` and `write`.

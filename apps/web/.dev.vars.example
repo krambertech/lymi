@@ -1,6 +1,7 @@
 # Copy to .dev.vars (gitignored). Wrangler loads these as secrets in local dev,
 # and they override the production `vars` in wrangler.jsonc.
-APP_URL=http://localhost:5173
+PUBLIC_SITE_URL=http://localhost:5173
+PRODUCT_URL=http://localhost:5173
 # Local dev accepts email + password sign-in. Add the address you will use here.
 ALLOWED_EMAILS=kateryna@buffer.com,dev@lymi.local
 BETTER_AUTH_SECRET=change-me-to-32-random-chars

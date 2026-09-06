@@ -12,7 +12,7 @@
   },
   "triggers": { "crons": ["*/15 * * * *"] },
   "version_metadata": { "binding": "CF_VERSION_METADATA" },
-  // One origin only: Better Auth trusts APP_URL, so preview URLs would fail sign-in.
+  // Authentication is canonical on PRODUCT_URL, so preview URLs do not become auth origins.
   "workers_dev": true,
   "preview_urls": false,
   "assets": {
@@ -21,22 +21,13 @@
     // redirect it to /, which is intentionally the server-rendered public landing page.
     "html_handling": "none",
     "not_found_handling": "single-page-application",
-    // The public root runs through the Worker so React can render useful HTML and metadata.
-    // Private navigations remain static-asset SPA fallbacks; APIs and protocol routes also run
-    // through the Worker.
-    "run_worker_first": [
-      "/",
-      "/api/*",
-      "/mcp",
-      "/mcp/*",
-      "/.well-known/*",
-      "/robots.txt",
-      "/sitemap.xml"
-    ]
+    // Hostname dispatch must happen before any exact asset or SPA fallback is served.
+    "run_worker_first": true
   },
   // Production values. Local dev overrides these from .dev.vars.
   "vars": {
-    "APP_URL": "https://lymi.app",
+    "PUBLIC_SITE_URL": "https://lymi.app",
+    "PRODUCT_URL": "https://my.lymi.app",
     // Comma-separated. Only these Google accounts can sign in while the app is private.
     "ALLOWED_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com"
   },
@@ -55,5 +46,8 @@
       "id": "9d47517e26c44e23967a77a0f46d049f"
     }
   ],
-  "routes": [{ "pattern": "lymi.app", "custom_domain": true }]
+  "routes": [
+    { "pattern": "lymi.app", "custom_domain": true },
+    { "pattern": "my.lymi.app", "custom_domain": true }
+  ]
 }

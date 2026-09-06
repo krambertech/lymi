@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderToString } from "react-dom/server.edge";
 import { LANDING_BLURB, LANDING_TITLE, LandingView } from "../client/landing/LandingView";
 import type { Bindings } from "./env";
+import { configureHtml } from "./html";
 
 function metadata(origin: string): string {
   const canonical = new URL("/", origin).toString();
@@ -44,14 +45,14 @@ export async function renderLandingPage(request: Request, env: Bindings): Promis
   try {
     markup = renderToString(
       <QueryClientProvider client={queryClient}>
-        <LandingView />
+        <LandingView productOrigin={env.PRODUCT_URL} />
       </QueryClientProvider>,
     );
   } finally {
     queryClient.clear();
   }
 
-  const origin = env.APP_URL ?? new URL(request.url).origin;
+  const origin = env.PUBLIC_SITE_URL;
   const response = new HTMLRewriter()
     .on("title", {
       element(element) {
@@ -78,5 +79,9 @@ export async function renderLandingPage(request: Request, env: Bindings): Promis
 
   const headers = new Headers(response.headers);
   headers.set("cache-control", "public, max-age=0, must-revalidate");
-  return new Response(response.body, { status: response.status, headers });
+  return configureHtml(
+    new Response(response.body, { status: response.status, headers }),
+    env,
+    "public",
+  );
 }

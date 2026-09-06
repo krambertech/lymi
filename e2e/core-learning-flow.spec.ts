@@ -1,6 +1,21 @@
 import { expect, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
 
+test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
+  await page.goto("/library?from=reminder&deck=italian");
+  await expect(page).toHaveURL(/\/login\?returnTo=%2Flibrary%3Ffrom%3Dreminder%26deck%3Ditalian$/);
+
+  await signInAsTestLearner(page, testInfo, "deep-link", "/library?from=reminder&deck=italian");
+  await expect(page).toHaveURL(/\/library\?from=reminder&deck=italian$/);
+  await expect(page.getByRole("heading", { name: "Library", exact: true })).toBeVisible();
+
+  await page.goto("/you");
+  await expect(page.getByRole("link", { name: "Lymi website" })).toHaveAttribute(
+    "href",
+    "http://localhost:4173/",
+  );
+});
+
 test("a learner can capture and review a new word", async ({ page }, testInfo) => {
   await test.step("sign in to a disposable account", async () => {
     await signInAsTestLearner(page, testInfo, "core-learning");

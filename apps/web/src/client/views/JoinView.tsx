@@ -1,5 +1,6 @@
 import { AuthFrame } from "../components/AuthFrame";
 import { BetaSignup } from "../components/BetaSignup";
+import { productUrl } from "../lib/origins";
 
 /** The invitation request is its own small sign-up flow, separate from authentication. */
 export function JoinView() {
@@ -23,7 +24,7 @@ export function JoinView() {
         <p className="mt-6 text-center text-sm text-muted">
           Already invited?{" "}
           <a
-            href="/login"
+            href={productUrl("/login")}
             className="rounded-sm font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
           >
             Sign in

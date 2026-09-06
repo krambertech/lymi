@@ -8,5 +8,5 @@
       "@/*": ["src/client/*"]
     }
   },
-  "include": ["src/client", "vite.config.ts", "drizzle.config.ts"]
+  "include": ["src/client", "src/shared", "vite.config.ts", "drizzle.config.ts"]
 }

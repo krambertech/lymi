@@ -25,7 +25,8 @@ export default defineConfig({
             inspectorPort: false,
             config: {
               vars: {
-                APP_URL: "http://localhost:4173",
+                PUBLIC_SITE_URL: "http://localhost:4173",
+                PRODUCT_URL: "http://localhost:4173",
                 ALLOWED_EMAILS: e2eAllowedEmails.join(","),
                 BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
                 GOOGLE_CLIENT_ID: "e2e-client-id",
@@ -71,7 +72,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         importScripts: ["/push-sw.js"],
         navigateFallback: "/index.html",
-        navigateFallbackDenylist: [/^\/$/, /^\/api\//, /^\/mcp/],
+        navigateFallbackDenylist: [/^\/$/, /^\/api\//, /^\/mcp/, /^\/docs(?:\/|$)/, /^\/join$/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,

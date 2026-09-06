@@ -5,6 +5,7 @@ import { ApiKeysSection } from "../components/ApiKeysSection";
 import { ConnectedAppsSection } from "../components/ConnectedAppsSection";
 import { NotificationsSection } from "../components/NotificationsSection";
 import { signOut } from "../lib/auth";
+import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
 import { YouView } from "../views/YouView";
@@ -25,6 +26,7 @@ function You() {
       me={me.data}
       total={total}
       theme={theme}
+      websiteUrl={publicSiteUrl()}
       onTheme={(t) => {
         setTheme(t);
         setThemeState(t);

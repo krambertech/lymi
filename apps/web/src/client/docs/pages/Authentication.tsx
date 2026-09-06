@@ -1,4 +1,5 @@
 import { Table, Td, Th } from "../../components/Table";
+import { productUrl } from "../../lib/origins";
 import { Code } from "../Code";
 import { H2, H3, Lead, NextLinks, Note } from "../Prose";
 
@@ -154,9 +155,9 @@ content-type: application/json`}
 
       <H2>Revoking a key</H2>
       <p>
-        Open <a href="/settings">Settings</a>, find the key by its first characters, and revoke it.
-        That is final and takes effect on the next request. Nothing the key added is removed; the
-        cards stay where they are.
+        Open <a href={productUrl("/you")}>You</a>, find the key by its first characters, and revoke
+        it. That is final and takes effect on the next request. Nothing the key added is removed;
+        the cards stay where they are.
       </p>
 
       <NextLinks

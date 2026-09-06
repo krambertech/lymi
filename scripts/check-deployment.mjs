@@ -19,7 +19,7 @@ export async function checkDeployment(url) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const url = process.argv[2] ?? "https://lymi.app/api/health";
+  const url = process.argv[2] ?? "https://my.lymi.app/api/health";
   try {
     const health = await checkDeployment(url);
     const tag = health.version.tag ? `, tag ${health.version.tag}` : "";

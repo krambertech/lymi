@@ -31,7 +31,7 @@ function fakeEnv(row = candidate, claimChanges = 1) {
   });
   const env = Object.assign(Object.create(null), {
     DB: Object.assign(Object.create(null), { prepare }) as D1Database,
-    APP_URL: "https://lymi.example",
+    PRODUCT_URL: "https://my.lymi.example",
   }) as Bindings;
   return { env, statements };
 }

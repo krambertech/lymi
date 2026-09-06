@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronRight, LogOut } from "lucide-react";
+import { ChevronRight, ExternalLink, LogOut } from "lucide-react";
 import type { ReactNode } from "react";
 import { Avatar } from "../components/Avatar";
-import { Button } from "../components/Button";
+import { Button, buttonClass } from "../components/Button";
 import { Kbd } from "../components/Kbd";
 import { Segmented } from "../components/Segmented";
 import { SettingsGroup } from "../components/SettingsGroup";
@@ -21,6 +21,7 @@ export interface YouProps {
   theme: ThemeChoice;
   onTheme: (t: ThemeChoice) => void;
   onSignOut?: (() => void | Promise<void>) | undefined;
+  websiteUrl?: string | undefined;
   signingOut?: boolean | undefined;
   /** Extra groups after Keyboard, e.g. API keys. */
   children?: ReactNode | undefined;
@@ -56,6 +57,7 @@ export function YouView({
   theme,
   onTheme,
   onSignOut,
+  websiteUrl,
   signingOut,
   children,
   static: st,
@@ -161,7 +163,13 @@ export function YouView({
       {children}
 
       <SettingsGroup title="Account">
-        <div>
+        <div className="flex flex-wrap gap-2">
+          {websiteUrl && (
+            <a href={websiteUrl} className={buttonClass("secondary", "sm")}>
+              <ExternalLink aria-hidden="true" />
+              Lymi website
+            </a>
+          )}
           <Button size="sm" onClick={onSignOut} loading={signingOut} aria-disabled={!onSignOut}>
             <LogOut aria-hidden="true" />
             Sign out

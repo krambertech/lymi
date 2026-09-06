@@ -18,10 +18,10 @@ export function createAuth(env: Bindings, db: Db) {
   const allowed = allowedEmails(env);
 
   return betterAuth({
-    baseURL: env.APP_URL,
+    baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
-    trustedOrigins: [env.APP_URL],
+    trustedOrigins: [env.PRODUCT_URL],
     database: drizzleAdapter(db, {
       provider: "sqlite",
       // D1 has no interactive transactions. Operations run one after another instead.
@@ -61,7 +61,7 @@ export function createAuth(env: Bindings, db: Db) {
         mcp({
           loginPage: "/login",
           consentPage: "/consent",
-          resource: `${env.APP_URL}/mcp`,
+          resource: `${env.PRODUCT_URL}/mcp`,
           scopes: ["read", "write", "offline_access"],
         }),
       ),
@@ -93,7 +93,7 @@ export function createAuth(env: Bindings, db: Db) {
       },
     },
     // Local development only: email + password so the app is usable before Google is set up.
-    emailAndPassword: { enabled: env.APP_URL.startsWith("http://localhost") },
+    emailAndPassword: { enabled: isLoopbackUrl(env.PRODUCT_URL) },
     socialProviders: {
       google: {
         clientId: env.GOOGLE_CLIENT_ID,
@@ -128,6 +128,15 @@ export function createAuth(env: Bindings, db: Db) {
       cookiePrefix: "lymi",
     },
   });
+}
+
+function isLoopbackUrl(value: string): boolean {
+  try {
+    const hostname = new URL(value).hostname;
+    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]";
+  } catch {
+    return false;
+  }
 }
 
 export type Auth = ReturnType<typeof createAuth>;

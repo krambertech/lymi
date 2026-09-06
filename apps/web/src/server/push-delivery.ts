@@ -83,8 +83,8 @@ async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindi
     throw new Error("VAPID secrets are not configured");
   }
   const copy = reminderCopy(due);
-  const navigate = new URL("/review", env.APP_URL).toString();
-  const icon = new URL("/icons/icon-192.png", env.APP_URL).toString();
+  const navigate = new URL("/review", env.PRODUCT_URL).toString();
+  const icon = new URL("/icons/icon-192.png", env.PRODUCT_URL).toString();
   const payload = JSON.stringify({
     // Declarative Web Push is a fallback on supporting WebKit versions; the service worker
     // handles the same payload everywhere else.

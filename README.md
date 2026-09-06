@@ -25,7 +25,7 @@ pnpm db:migrate                                     # applies migrations to the 
 pnpm dev                                            # http://localhost:5173
 ```
 
-`pnpm dev` runs the Vite client and the Cloudflare Worker together through the Cloudflare Vite plugin, so `/api/*` hits the real Worker code locally.
+`pnpm dev` runs the Vite client and the Cloudflare Worker together through the Cloudflare Vite plugin, so `/api/*` hits the real Worker code locally. Production uses `https://lymi.app` for the public website and docs, and `https://my.lymi.app` for the product, auth, API, MCP and PWA; local development serves both surfaces from one loopback origin.
 
 ## Layout
 
@@ -62,7 +62,12 @@ pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy com
 2. `wrangler d1 create lymi` and paste the `database_id` into `apps/web/wrangler.jsonc`
 3. `wrangler r2 bucket create lymi-audio`
 4. `wrangler kv namespace create SESSIONS` and paste the id
-5. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
-6. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
-7. `pnpm db:migrate:prod`
-8. `pnpm run deploy`
+5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
+6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
+7. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
+8. Confirm the `lymi.app` and `my.lymi.app` custom domains are ready in Cloudflare
+9. `pnpm db:migrate:prod`
+10. `pnpm run deploy`
+11. `pnpm deploy:health`, then verify the reported tag is the intended commit
+
+See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.

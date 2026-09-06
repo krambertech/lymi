@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Menu, Moon, Search, Sun, X } from "lucide-react"
 import { type ReactNode, useEffect, useState } from "react";
 import { Kbd } from "../components/Kbd";
 import { Wordmark } from "../components/Logo";
+import { productUrl, publicSiteUrl } from "../lib/origins";
 import { setTheme } from "../lib/theme";
 import { neighbours, pageAt, SECTIONS } from "./nav";
 import { SearchDialog } from "./Search";
@@ -65,7 +66,10 @@ function SiteNav({ onNavigate }: { onNavigate?: () => void }) {
       ))}
       {/* The header's own link is hidden on a phone, so the drawer carries the way back. */}
       {onNavigate && (
-        <a href="/" className={clsx(navItem, "border-t border-edge !h-10 !rounded-none pt-2")}>
+        <a
+          href={productUrl()}
+          className={clsx(navItem, "border-t border-edge !h-10 !rounded-none pt-2")}
+        >
           Open Lymi
         </a>
       )}
@@ -84,12 +88,20 @@ export function DocsShell({ children }: { children: ReactNode }) {
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
 
-  // The title and description are the page's own, so a shared link says what it points at.
+  // The title, description and public canonical are the page's own, so a shared link says what
+  // it points at even though the product is served by the same Worker.
   useEffect(() => {
     document.title = page ? `${page.title} · Lymi docs` : "Lymi docs";
     const meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (meta && page) meta.content = page.blurb;
-  }, [page]);
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = publicSiteUrl(pathname);
+  }, [page, pathname]);
 
   // Cmd-K opens search. / does too, the way every docs site does.
   useEffect(() => {
@@ -179,7 +191,7 @@ export function DocsShell({ children }: { children: ReactNode }) {
         <ThemeToggle />
 
         <a
-          href="/"
+          href={productUrl()}
           className="hidden h-9 items-center rounded-sm px-3 text-base text-text-2 transition-colors duration-150 sm:inline-flex hoverable:hover:bg-plate-2 hoverable:hover:text-text"
         >
           Open Lymi

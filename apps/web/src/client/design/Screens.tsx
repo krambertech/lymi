@@ -260,6 +260,7 @@ export function Screens() {
               archivedCount={9}
               theme="system"
               onTheme={noop}
+              websiteUrl="https://lymi.app/"
               static={{ path: "/you" }}
             />
           </PhoneShot>

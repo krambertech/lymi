@@ -1,6 +1,6 @@
 import { Lantern } from "../../components/Lantern";
 import { Code } from "../Code";
-import { ORIGIN } from "../origin";
+import { OPENAPI_URL, ORIGIN } from "../origin";
 import { Defs, H2, Lead, NextLinks, Note } from "../Prose";
 
 export function Overview() {
@@ -49,16 +49,16 @@ export function Overview() {
         ]}
       />
 
-      <H2>The base URL is this site</H2>
+      <H2>The API has its own origin</H2>
       <p>
-        Every route in these docs hangs off the origin you are reading them on. There is no separate
-        API host and no version in the path.
+        The guides live on the public website, while the API and MCP server stay with the product.
+        There is no version in the path.
       </p>
       <Code lang="text" code={ORIGIN} label="Base URL" />
       <p>
         The machine-readable description of every route lives at{" "}
-        <a href="/api/openapi.json">/api/openapi.json</a>. The <a href="/docs/api">API reference</a>{" "}
-        is that document, rendered.
+        <a href={OPENAPI_URL}>{OPENAPI_URL}</a>. The <a href="/docs/api">API reference</a> is that
+        document, rendered.
       </p>
 
       <H2>What an integration may do</H2>

@@ -1,4 +1,5 @@
 export const e2eAccounts = [
+  "deep-link",
   "core-learning",
   "deck-validation",
   "card-selection",

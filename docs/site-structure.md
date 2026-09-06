@@ -1,8 +1,6 @@
 # Lymi website and app
 
-This document describes the deployed domain boundary and the accompanying landing-page work. The
-domain configuration and old-host redirect are in place, the documentation site lives at `/docs`,
-and the landing page is implemented as server-rendered React in the current branch.
+This document describes the deployed domain boundary and the accompanying landing-page work. The domain configuration and old-host redirect are in place, the documentation site lives at `/docs`, and the landing page is implemented as server-rendered React in the current branch.
 
 Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudflare Worker. A custom domain lets Cloudflare manage the DNS record and HTTPS certificate: https://developers.cloudflare.com/workers/configuration/routing/custom-domains/.
 
@@ -20,11 +18,7 @@ Lymi uses one origin, `https://lymi.app`, served by the existing `lymi` Cloudfla
 
 Having an account is different from being signed in: an existing user with an expired session sees the landing page and can use its sign-in link. Joining the beta list does not create an account. Access remains limited to the configured email allowlist.
 
-The landing page has one stable meaning whether or not someone is signed in. Its first response
-contains the copy, structure, canonical URL, and social metadata; React hydration adds the beta form
-and animation. The service worker's app navigation fallback excludes `/`, while `/today` is the
-installed PWA's start URL. `/index.html` remains the exact offline app shell instead of redirecting
-to `/`. Public HTML uses revalidation rather than the private app-shell cache.
+The landing page has one stable meaning whether or not someone is signed in. Its first response contains the copy, structure, canonical URL, and social metadata; React hydration adds the beta form and animation. The service worker's app navigation fallback excludes `/`, while `/today` is the installed PWA's start URL. `/index.html` remains the exact offline app shell instead of redirecting to `/`. Public HTML uses revalidation rather than the private app-shell cache.
 
 ## Landing page structure
 

@@ -2,10 +2,7 @@
 
 **Status:** Agreed 5 September 2026, integrations layer decided the same day. Edit in place as decisions change. Vocabulary is in [CONTEXT.md](../CONTEXT.md).
 
-Everything runs on Cloudflare. One Worker server-renders the public landing page and serves the app,
-API, auth, and MCP server. React hydrates the landing page in the browser, while the private product
-remains a client-rendered PWA that behaves like a native app on the phone and like a keyboard-driven
-web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
+Everything runs on Cloudflare. One Worker server-renders the public landing page and serves the app, API, auth, and MCP server. React hydrates the landing page in the browser, while the private product remains a client-rendered PWA that behaves like a native app on the phone and like a keyboard-driven web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
 
 ## Shape
 
@@ -58,25 +55,15 @@ flowchart LR
 
 ### Client: server-rendered React landing page plus a client-rendered PWA
 
-The public root is request-time server-rendered React. The Worker injects the landing component and
-request-aware metadata into Vite's HTML shell, and the browser hydrates that same component so forms
-and motion stay interactive. The initial response therefore contains the page's useful content even
-when JavaScript has not run.
+The public root is request-time server-rendered React. The Worker injects the landing component and request-aware metadata into Vite's HTML shell, and the browser hydrates that same component so forms and motion stay interactive. The initial response therefore contains the page's useful content even when JavaScript has not run.
 
-The signed-in product is still a client-rendered single-page PWA. It sits behind a login, so a static
-shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper
-mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the
-review screen usable on a train. `/today` is the product home and `/app` redirects there.
+The signed-in product is still a client-rendered single-page PWA. It sits behind a login, so a static shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train. `/today` is the product home and `/app` redirects there.
 
 `vite-plugin-pwa` handles the manifest and Workbox service worker. The app captures Chromium's install event for its in-app button and shows manual instructions on browsers that do not expose one. The shell is precached. Data goes through Query's cache plus a small outbox in IndexedDB (Dexie) for reviews graded offline, replayed when the connection returns.
 
 Review reminders use standards-based Web Push with VAPID, sent directly by the same Worker. Subscriptions and local reminder times are per device in D1. One UTC Cron Trigger runs every 15 minutes, evaluates each device in its stored IANA timezone, sends only when active cards are due, and atomically records the local date before delivery so retries do not duplicate a reminder. See ADR 0006.
 
-The current boundary does not require a framework migration: one Hono handler renders `/`, and the
-existing router continues to own the product and documentation routes. If the public surface grows,
-the preferred direction to evaluate is a separate Astro website while retaining this React PWA. The
-trade-offs and unanswered migration questions are recorded in
-[Public website and product app architecture](proposals/public-website-and-product-app.md).
+The current boundary does not require a framework migration: one Hono handler renders `/`, and the existing router continues to own the product and documentation routes. If the public surface grows, the preferred direction to evaluate is a separate Astro website while retaining this React PWA. The trade-offs and unanswered migration questions are recorded in [Public website and product app architecture](proposals/public-website-and-product-app.md).
 
 ### Feels native on the phone
 
@@ -96,8 +83,7 @@ Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what
 
 ### Server: one Cloudflare Worker with Hono
 
-Hono server-renders `/` and routes `/api/*`, `/api/auth/*`, and `/mcp`. Other navigations use the
-static asset binding with SPA fallback. The Cloudflare Vite plugin runs the same Worker locally.
+Hono server-renders `/` and routes `/api/*`, `/api/auth/*`, and `/mcp`. Other navigations use the static asset binding with SPA fallback. The Cloudflare Vite plugin runs the same Worker locally.
 
 Alternative considered: Pages plus separate Functions. Workers with static assets is the current path and deploys as one unit.
 

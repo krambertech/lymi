@@ -20,6 +20,8 @@ In a fresh clone, run `pnpm build` first — `routeTree.gen.ts` is generated and
 
 ## Conventions
 
+**Documentation.** Write each prose paragraph and each list item as a single source line. Let the editor wrap text visually. Preserve source line boundaries where Markdown structure requires them, such as headings, tables, code blocks, and separate list items.
+
 **Types.** `interface Props` for React component props, `type` for unions and small shapes. Zod schemas in `packages/core/src/types.ts` are the source of truth for every API payload — the route parses with one, and the TypeScript type is inferred from it, never hand-written alongside.
 
 **Styling.** Tailwind v4 utilities over the Lymi tokens: `bg-amber`, `text-ink-2`, `border-border-strong`. The token values are canonical in `DESIGN.md` and mirrored as OKLCH variables in `apps/web/src/client/styles.css`. A raw hex or a stock Tailwind color (`bg-slate-100`) in a component is a bug — it breaks dark mode, which is a separate warm palette rather than an inversion.

@@ -1,8 +1,6 @@
 # Lymi: high-level product brief
 
-**Status:** Early draft, direction only. Everything here is changeable.
-**Initial release:** Private, single-user web app
-**Potential future:** Product for other language learners
+**Status:** Early draft, direction only. Everything here is changeable. **Initial release:** Private, single-user web app **Potential future:** Product for other language learners
 
 This is the original brief, lightly edited. PRODUCT.md and DESIGN.md at the repo root carry the decisions made since.
 

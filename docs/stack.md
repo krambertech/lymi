@@ -179,7 +179,7 @@ Two workspace details worth knowing. `drizzle-orm` is a dependency of `packages/
 
 ### Tooling
 
-TypeScript strict. Biome for lint and format. Vitest for `packages/core` now, `@cloudflare/vitest-pool-workers` for Worker tests when the API grows. Playwright with an iPhone viewport for the review flow, not yet added. Wrangler for deploys, GitHub Actions or Workers Builds for CI. Cloudflare Workers Logs (observability is on in wrangler.jsonc) for errors.
+TypeScript strict. Biome for lint and format. Vitest covers packages and Worker behavior. Playwright runs the canonical learning journey in desktop Chromium and iPhone-sized WebKit against isolated local Cloudflare bindings. GitHub Actions runs the normal checks on every pull request and adds Playwright when production-affecting paths change, on every push to `main`, or when explicitly requested. Cloudflare Workers Logs (observability is on in wrangler.jsonc) covers deployed errors.
 
 Local development accepts email and password sign-in so the app is usable before Google is configured. It is enabled only when `APP_URL` starts with `http://localhost`.
 

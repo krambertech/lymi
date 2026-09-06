@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
@@ -106,6 +106,7 @@ function Login() {
 /** Local development only. Email + password against the local D1, no Google needed. */
 function DevSignIn() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("dev@lymi.local");
   const [password, setPassword] = useState("lymi-dev-password");
@@ -125,6 +126,7 @@ function DevSignIn() {
       return;
     }
     if (followOAuthRedirect(res.data)) return;
+    await queryClient.invalidateQueries({ queryKey: ["me"] });
     navigate({ to: "/today" });
   }
 

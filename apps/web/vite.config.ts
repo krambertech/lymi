@@ -5,6 +5,8 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+const isE2E = process.env.LYMI_E2E === "1";
+
 export default defineConfig({
   plugins: [
     tanstackRouter({
@@ -15,7 +17,30 @@ export default defineConfig({
     }),
     react(),
     tailwindcss(),
-    cloudflare(),
+    cloudflare(
+      isE2E
+        ? {
+            persistState: { path: ".wrangler/e2e" },
+            inspectorPort: false,
+            config: {
+              vars: {
+                APP_URL: "http://localhost:4173",
+                ALLOWED_EMAILS:
+                  "e2e-chromium-0@lymi.local,e2e-chromium-1@lymi.local,e2e-webkit-0@lymi.local,e2e-webkit-1@lymi.local",
+                BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
+                GOOGLE_CLIENT_ID: "e2e-client-id",
+                GOOGLE_CLIENT_SECRET: "e2e-client-secret",
+                OPENAI_API_KEY: "",
+                OPENAI_MODEL: "gpt-5-mini",
+                OPENAI_TTS_MODEL: "gpt-4o-mini-tts",
+                OPENAI_TTS_VOICE: "coral",
+                GOOGLE_TTS_MODEL: "chirp-3-hd",
+                GOOGLE_TTS_VOICE: "Kore",
+              },
+            },
+          }
+        : undefined,
+    ),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["icon.svg", "icons/apple-touch-icon.png"],

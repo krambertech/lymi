@@ -6,6 +6,7 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 - [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts
 - `/design` on the local dev server: the design system rendered with the real components (local only)
 - [docs/stack.md](docs/stack.md): the technical decisions and why
+- [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
 - [docs/plans](docs/plans): order of work for passes that are decided but not built
 - [docs/proposals](docs/proposals/README.md): future product directions under consideration, not committed plans
@@ -44,6 +45,8 @@ pnpm check        # Biome lint + format check
 pnpm fix          # Biome, writing fixes
 pnpm typecheck    # tsc across the workspace
 pnpm test         # Vitest
+pnpm test:e2e     # Playwright against isolated local Cloudflare bindings
+pnpm test:e2e:ui  # Playwright's interactive runner
 pnpm db:generate  # new migration from schema changes
 pnpm build        # production build
 pnpm run deploy   # wrangler deploy (run, because pnpm has a built-in deploy command)

@@ -54,6 +54,8 @@ const PERIODS: { value: Period; label: string }[] = [
  * means "data" rather than "act".
  */
 export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: InsightsProps) {
+  // On the Recall plate's label row rather than in the page header: in the header the same
+  // control reads as a filter for the whole screen, and it moves this one figure only.
   const switcher = (
     <Segmented
       size="sm"
@@ -108,7 +110,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         <EmptyState
           lantern="unlit"
           title="Nothing to say yet"
-          body="Reviews per day, how much is sticking, and the words that keep coming back. This fills in once there is some history behind you."
+          body="Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
           className="flex-1"
         />
       </Page>
@@ -145,7 +147,6 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
             ? `${plural(consistency.daysAllTime, "day", "days")} since your first review`
             : undefined
         }
-        actions={switcher}
       />
 
       <div
@@ -156,6 +157,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
       >
         <StatPlate
           label="Recall"
+          control={switcher}
           value={recall.rate === null ? "—" : `${Math.round(recall.rate * 100)}%`}
           figure={
             trend.length > 0 ? (
@@ -299,8 +301,10 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
                   </span>
                   {c.meaning && <span className="ml-2 text-sm text-muted">{c.meaning}</span>}
                 </span>
-                <span className="shrink-0 text-sm text-muted tabular-nums">
-                  {c.lapses} of {c.reviews}
+                {/* Both numbers carry their unit: "7 of 12" alone leaves the reader to
+                    guess which is which, even under the heading. */}
+                <span className="shrink-0 text-right text-sm text-muted tabular-nums">
+                  {c.lapses} forgotten <span className="text-muted/60">·</span> {c.reviews} reviews
                 </span>
               </li>
             ))}

@@ -46,8 +46,10 @@ export function Segmented<T extends string>({
             onClick={() => onChange(o.value)}
             className={clsx(
               "relative rounded-[11px] px-3 font-medium transition-[background-color,color,box-shadow,scale] duration-150 active:scale-[0.97]",
+              // The pseudo-element carries the touch target past the visible pill: 28 px of
+              // button plus 8 px either side clears the 44 px floor without changing layout.
               "before:absolute before:inset-x-0 before:content-['']",
-              size === "md" ? "h-full text-[16px] md:text-base" : "h-7 text-xs before:-inset-y-1.5",
+              size === "md" ? "h-full text-[16px] md:text-base" : "h-7 text-xs before:-inset-y-2",
               on ? "edge bg-plate text-text" : "text-muted hoverable:hover:text-text",
             )}
           >

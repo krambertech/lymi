@@ -11,6 +11,7 @@ export function StatPlate({
   value,
   unit,
   figure,
+  control,
   note,
   className,
 }: {
@@ -20,12 +21,23 @@ export function StatPlate({
   unit?: ReactNode | undefined;
   /** The picture under the number. Optional, because not every number has one. */
   figure?: ReactNode | undefined;
+  /**
+   * A control that changes this plate's figure, on the label row. Scoped to the plate on
+   * purpose: in the page header the same control reads as a filter for the whole screen.
+   * The row keeps its height whether or not a plate has one, so the grid stays aligned.
+   */
+  control?: ReactNode | undefined;
   note: ReactNode;
   className?: string | undefined;
 }) {
   return (
     <section className={clsx("edge flex flex-col gap-3 rounded-xl bg-plate p-5", className)}>
-      <h3 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h3>
+      {/* 34 px is the segmented control at `sm` plus its track padding. Fixed so a plate
+          with a control and one without still line up across the grid. */}
+      <div className="flex min-h-[34px] items-center justify-between gap-3">
+        <h3 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h3>
+        {control}
+      </div>
       <p className="text-3xl font-medium leading-[1.1] tracking-[-0.02em] text-text tabular-nums">
         {value}
         {unit && <span className="ml-1 text-lg font-normal text-muted">{unit}</span>}

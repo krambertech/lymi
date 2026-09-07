@@ -138,7 +138,9 @@ export const api = {
     ),
   insights: (period: 30 | 90 | 0 = 30) =>
     request<InsightsOut>(
-      `/api/stats/insights?period=${period}&tz=${new Date().getTimezoneOffset()}`,
+      `/api/stats/insights?period=${period}&tz=${encodeURIComponent(
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+      )}`,
     ),
   grade: (body: GradeInput) =>
     request<{ ok: true; due: string }>("/api/review/grade", {

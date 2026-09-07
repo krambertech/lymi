@@ -206,7 +206,7 @@ export const insights: InsightsOut = {
     series: [
       { at: "2026-07-06", passed: 74, failed: 12, rate: 74 / 86 },
       { at: "2026-07-13", passed: 81, failed: 9, rate: 81 / 90 },
-      { at: "2026-07-20", passed: 68, failed: 11, rate: 68 / 79 },
+      // Two weeks away. The line spaces this by date, so the gap reads as elapsed time.
       { at: "2026-07-27", passed: 92, failed: 7, rate: 92 / 99 },
       { at: "2026-08-03", passed: 77, failed: 10, rate: 77 / 87 },
       { at: "2026-08-10", passed: 88, failed: 6, rate: 88 / 94 },

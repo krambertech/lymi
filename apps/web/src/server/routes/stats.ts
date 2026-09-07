@@ -14,11 +14,11 @@ const InsightsQuery = z.object({
     .refine((n): n is 30 | 90 | 0 => n === 30 || n === 90 || n === 0, "Use 30, 90 or 0")
     .optional()
     .meta({ description: "Days the recall figure covers. 0 is everything. Default 30." }),
-  tz: z.coerce
-    .number()
-    .int()
+  tz: z
+    .string()
+    .max(64)
     .optional()
-    .meta({ description: "Minutes, as Date.getTimezoneOffset reports it" }),
+    .meta({ description: "IANA timezone, e.g. Europe/Tallinn. Days bucket in this zone." }),
 });
 
 stats.get(
@@ -27,13 +27,13 @@ stats.get(
     tags: ["Review"],
     summary: "Everything the Insights screen shows",
     description:
-      "Recall, consistency, the collection, what is due in the next seven days, and the cards that keep coming back. `period` scopes the recall figure only; consistency and the month totals are always the whole history.",
+      "Recall, consistency, the collection, what is due in the next seven days, and the cards that keep coming back. `period` scopes the recall figure only; consistency and the month totals are always the whole history. Days bucket in `tz`, resolved per timestamp so history that crosses a daylight-saving change lands on the right day.",
     ok: { schema: InsightsOut, description: "One screen's worth of numbers" },
     errors: [400],
   }),
   query(InsightsQuery, "query"),
   async (c) => {
     const { period, tz } = c.req.valid("query");
-    return c.json(await insights(ctxOf(c), { period, tzOffset: tz }));
+    return c.json(await insights(ctxOf(c), { period, zone: tz }));
   },
 );

@@ -53,3 +53,29 @@ describe("byMonth", () => {
     expect(byMonth([])).toEqual([]);
   });
 });
+
+describe("date bucketing", () => {
+  const helsinki = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Helsinki",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  it("resolves each timestamp in its own offset, not today's", () => {
+    // Helsinki is UTC+2 in January and UTC+3 in July. A single offset taken in summer
+    // would push this winter review onto the following day.
+    expect(helsinki.format(new Date("2026-01-15T21:30:00Z"))).toBe("2026-01-15");
+    expect(helsinki.format(new Date("2026-07-15T21:30:00Z"))).toBe("2026-07-16");
+  });
+
+  it("counts the days a month spans without a timezone shifting them", () => {
+    const days: DayLight[] = [];
+    for (let d = 1; d <= 31; d++) {
+      days.push(day(`2026-03-${String(d).padStart(2, "0")}`, d % 2 === 0));
+    }
+
+    // March is when Europe changes its clocks; the month still has 31 days.
+    expect(byMonth(days)).toEqual([{ month: "2026-03", lit: 15, days: 31 }]);
+  });
+});

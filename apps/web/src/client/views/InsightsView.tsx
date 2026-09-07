@@ -1,5 +1,6 @@
 import type { InsightsOut } from "@lymi/core";
 import { clsx } from "clsx";
+import { Button } from "../components/Button";
 import { Chip } from "../components/Chip";
 import { EmptyState } from "../components/EmptyState";
 import { MonthBars } from "../components/MonthBars";
@@ -16,6 +17,11 @@ export interface InsightsProps {
   data: InsightsOut | undefined;
   period: Period;
   onPeriod: (p: Period) => void;
+  /** The request failed and there is nothing cached to fall back on. */
+  failed?: boolean | undefined;
+  /** A refetch is in flight. The previous period stays on screen while it lands. */
+  busy?: boolean | undefined;
+  onRetry?: (() => void) | undefined;
 }
 
 function plural(n: number, one: string, many: string) {
@@ -47,7 +53,7 @@ const PERIODS: { value: Period; label: string }[] = [
  * streak's lights. A chart series in amber would make this the one screen where the accent
  * means "data" rather than "act".
  */
-export function InsightsView({ data, period, onPeriod }: InsightsProps) {
+export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: InsightsProps) {
   const switcher = (
     <Segmented
       size="sm"
@@ -57,6 +63,25 @@ export function InsightsView({ data, period, onPeriod }: InsightsProps) {
       options={PERIODS}
     />
   );
+
+  if (failed) {
+    return (
+      <Page>
+        <PageHeader title="Insights" />
+        <EmptyState
+          lantern="unlit"
+          title="Could not load your numbers"
+          body="The request did not come back. Nothing is lost; try again."
+          action={
+            <Button variant="secondary" onClick={onRetry} loading={busy}>
+              Try again
+            </Button>
+          }
+          className="flex-1"
+        />
+      </Page>
+    );
+  }
 
   if (!data) {
     return (
@@ -92,13 +117,15 @@ export function InsightsView({ data, period, onPeriod }: InsightsProps) {
 
   const graded = recall.passed + recall.failed;
   const monthly = period === "0";
-  const trend = recall.series.map((p) => ({
-    at: p.at,
-    value: p.rate,
-    label: monthly
-      ? MONTH.format(parseLocal(`${p.at}-01`))
-      : `week of ${SHORT.format(parseLocal(p.at))}`,
-  }));
+  const trend = recall.series.map((p) => {
+    const start = parseLocal(monthly ? `${p.at}-01` : p.at);
+    return {
+      at: p.at,
+      t: start.getTime(),
+      value: p.rate,
+      label: monthly ? MONTH.format(start) : `week of ${SHORT.format(start)}`,
+    };
+  });
   const peak = forecast.reduce(
     (a, b) => (b.count > a.count ? b : a),
     forecast[0] ?? {
@@ -121,7 +148,12 @@ export function InsightsView({ data, period, onPeriod }: InsightsProps) {
         actions={switcher}
       />
 
-      <div className="grid gap-3 @3xl:grid-cols-2">
+      <div
+        className={clsx(
+          "grid gap-3 transition-opacity duration-150 @3xl:grid-cols-2",
+          busy && "opacity-60",
+        )}
+      >
         <StatPlate
           label="Recall"
           value={recall.rate === null ? "—" : `${Math.round(recall.rate * 100)}%`}
@@ -161,7 +193,7 @@ export function InsightsView({ data, period, onPeriod }: InsightsProps) {
         <StatPlate
           label="Collection"
           value={cards.total}
-          unit="cards"
+          unit={cards.total === 1 ? "card" : "cards"}
           figure={
             // The one figure here that carries colour, and it borrows rather than invents:
             // amber for New, green for Known, a plain edge for Learning, which is exactly how

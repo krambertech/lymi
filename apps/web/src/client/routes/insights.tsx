@@ -10,6 +10,17 @@ export const Route = createFileRoute("/insights")({
 
 function Insights() {
   const [period, setPeriod] = useState<Period>("30");
-  const { data } = useQuery(insightsQuery(Number(period) as 30 | 90 | 0));
-  return <InsightsView data={data} period={period} onPeriod={setPeriod} />;
+  const { data, isError, isFetching, refetch } = useQuery(
+    insightsQuery(Number(period) as 30 | 90 | 0),
+  );
+  return (
+    <InsightsView
+      data={data}
+      period={period}
+      onPeriod={setPeriod}
+      failed={isError && data === undefined}
+      busy={isFetching}
+      onRetry={() => void refetch()}
+    />
+  );
 }

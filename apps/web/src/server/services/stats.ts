@@ -7,8 +7,10 @@ import { asked } from "./decks";
  * Everything the Insights screen reads. One call, because the screen shows all of it at
  * once and four round trips to answer one question is four chances to look half-loaded.
  *
- * Days are bucketed in the learner's timezone, which the client sends as `tzOffset` in
- * minutes the way `Date.getTimezoneOffset` reports it. Everything stored is UTC.
+ * Days are bucketed in the learner's IANA timezone, which the client sends as `tz`.
+ * Everything stored is UTC. A fixed minute offset would be wrong for any history that
+ * crosses a daylight-saving change: applying today's +03:00 to a review taken at 21:30 UTC
+ * last January files it on the wrong local day, which fabricates and breaks runs.
  */
 
 /** A day the learner reviewed, or did not. Lit is the only thing said about it. */
@@ -31,20 +33,41 @@ export type Period = 30 | 90 | 0;
 
 const DAY_MS = 86_400_000;
 
-/** Local midnight for `date` shifted into the learner's day, as a UTC instant. */
-function localDayStart(at: number, tzOffset: number): number {
-  const local = new Date(at - tzOffset * 60_000);
-  return Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate());
+/** Resolves an instant to its local calendar date. Falls back to UTC for an unknown zone. */
+function dateFormatter(zone: string): Intl.DateTimeFormat {
+  try {
+    // en-CA formats as YYYY-MM-DD, which is the shape every caller here wants.
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: zone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  } catch {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: "UTC",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  }
 }
 
-function localKey(dayStart: number): string {
-  return new Date(dayStart).toISOString().slice(0, 10);
+/** Calendar arithmetic on a YYYY-MM-DD, which no timezone can shift. */
+function addDays(date: string, n: number): string {
+  const [y, m, d] = date.split("-").map(Number);
+  return new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, (d ?? 1) + n)).toISOString().slice(0, 10);
 }
 
-/** The Monday on or before `dayStart`, so weeks line up with how a week is read. */
-function weekStart(dayStart: number): number {
-  const dow = (new Date(dayStart).getUTCDay() + 6) % 7;
-  return dayStart - dow * DAY_MS;
+/** Whole days from `from` to `to`, both local dates. */
+function daysBetween(from: string, to: string): number {
+  return Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / DAY_MS);
+}
+
+/** The Monday on or before a local date, so weeks line up with how a week is read. */
+function weekOf(date: string): string {
+  const dow = (new Date(`${date}T00:00:00Z`).getUTCDay() + 6) % 7;
+  return addDays(date, -dow);
 }
 
 /** One point on the recall line: a week, or a month when the period is everything. */
@@ -65,7 +88,7 @@ export interface RecallPoint {
 async function retention(
   { db, userId }: ServiceContext,
   since: Date | null,
-  tzOffset: number,
+  fmt: Intl.DateTimeFormat,
   bucket: "week" | "month",
 ): Promise<{ passed: number; failed: number; series: RecallPoint[] }> {
   const rows = await db
@@ -91,13 +114,12 @@ async function retention(
   let passed = 0;
   let failed = 0;
   for (const r of rows) {
-    const dayStart = localDayStart(r.reviewedAt.getTime(), tzOffset);
-    const day = localKey(dayStart);
+    const day = fmt.format(r.reviewedAt);
     const key = `${r.cardId}:${r.direction}:${day}`;
     if (seen.has(key)) continue;
     seen.add(key);
 
-    const at = bucket === "month" ? day.slice(0, 7) : localKey(weekStart(dayStart));
+    const at = bucket === "month" ? day.slice(0, 7) : weekOf(day);
     const b = buckets.get(at) ?? { passed: 0, failed: 0 };
     if (r.rating === 1) {
       failed++;
@@ -127,32 +149,38 @@ async function retention(
  * One entry per local day from the first review to today. Feeds both the thirty-day strip
  * and the month bars, so the two can never disagree about what a day was.
  */
-async function lights({ db, userId }: ServiceContext, tzOffset: number): Promise<DayLight[]> {
-  const [first] = await db
-    .select({ at: schema.reviews.reviewedAt })
-    .from(schema.reviews)
-    .where(eq(schema.reviews.userId, userId))
-    .orderBy(schema.reviews.reviewedAt)
-    .limit(1);
-  if (!first) return [];
-
-  // Grouped in SQL rather than pulled row by row: this is the only query here whose cost
-  // grows with every review ever made, and all it needs is the distinct days.
+async function lights(
+  { db, userId }: ServiceContext,
+  fmt: Intl.DateTimeFormat,
+): Promise<DayLight[]> {
+  // Grouped by UTC day, keeping the first and last review of each. Reviews inside one UTC
+  // day span 24 hours, so they can touch at most two local days, and those two are the
+  // local dates of the earliest and latest review. That keeps the query bounded by days
+  // rather than by reviews while still resolving each timestamp in the learner's zone.
   const rows = await db
     .select({
-      day: sql<string>`date((${schema.reviews.reviewedAt} - ${tzOffset * 60_000}) / 1000, 'unixepoch')`,
+      first: sql<number>`min(${schema.reviews.reviewedAt})`,
+      last: sql<number>`max(${schema.reviews.reviewedAt})`,
     })
     .from(schema.reviews)
     .where(eq(schema.reviews.userId, userId))
-    .groupBy(sql`1`);
+    .groupBy(sql`date(${schema.reviews.reviewedAt} / 1000, 'unixepoch')`);
 
-  const litDays = new Set(rows.map((r) => r.day));
+  if (rows.length === 0) return [];
 
-  const start = localDayStart(first.at.getTime(), tzOffset);
-  const today = localDayStart(Date.now(), tzOffset);
+  const litDays = new Set<string>();
+  for (const r of rows) {
+    litDays.add(fmt.format(new Date(r.first)));
+    litDays.add(fmt.format(new Date(r.last)));
+  }
+
+  const start = [...litDays].sort()[0];
+  const today = fmt.format(new Date());
+  if (!start) return [];
+
   const out: DayLight[] = [];
-  for (let d = start; d <= today; d += DAY_MS) {
-    const date = localKey(d);
+  for (let i = 0, n = daysBetween(start, today); i <= n; i++) {
+    const date = addDays(start, i);
     out.push({ date, lit: litDays.has(date) });
   }
   return out;
@@ -230,9 +258,10 @@ async function collection({ db, userId }: ServiceContext) {
  * Cards due on each of the next seven local days, today first. Anything already overdue is
  * counted into today, because that is when the learner will meet it.
  */
-async function forecast({ db, userId }: ServiceContext, tzOffset: number) {
-  const today = localDayStart(Date.now(), tzOffset);
-  const horizon = new Date(today + 7 * DAY_MS + tzOffset * 60_000);
+async function forecast({ db, userId }: ServiceContext, fmt: Intl.DateTimeFormat) {
+  const today = fmt.format(new Date());
+  // One extra day of slack so a due time late on day seven is not cut off by the zone.
+  const horizon = new Date(Date.parse(`${addDays(today, 8)}T00:00:00Z`) + DAY_MS);
 
   const rows = await db
     .select({ due: schema.cardStates.due })
@@ -251,11 +280,11 @@ async function forecast({ db, userId }: ServiceContext, tzOffset: number) {
 
   const buckets = new Array<number>(7).fill(0);
   for (const r of rows) {
-    const day = localDayStart(r.due.getTime(), tzOffset);
-    const i = Math.max(0, Math.round((day - today) / DAY_MS));
+    // Anything already overdue counts into today, because that is when it will be met.
+    const i = Math.max(0, daysBetween(today, fmt.format(r.due)));
     if (i < 7) buckets[i] = (buckets[i] ?? 0) + 1;
   }
-  return buckets.map((count, i) => ({ date: localKey(today + i * DAY_MS), count }));
+  return buckets.map((count, i) => ({ date: addDays(today, i), count }));
 }
 
 /** Four lapses is the threshold; six reviews is the guard so a young card cannot qualify. */
@@ -303,17 +332,17 @@ async function leeches({ db, userId }: ServiceContext, limit: number) {
  */
 export async function insights(
   ctx: ServiceContext,
-  opts: { period?: Period | undefined; tzOffset?: number | undefined } = {},
+  opts: { period?: Period | undefined; zone?: string | undefined } = {},
 ) {
-  const tzOffset = opts.tzOffset ?? 0;
+  const fmt = dateFormatter(opts.zone ?? "UTC");
   const period = opts.period ?? 30;
   const since = period === 0 ? null : new Date(Date.now() - period * DAY_MS);
 
   const [recall, days, cards, due, keepsComingBack] = await Promise.all([
-    retention(ctx, since, tzOffset, period === 0 ? "month" : "week"),
-    lights(ctx, tzOffset),
+    retention(ctx, since, fmt, period === 0 ? "month" : "week"),
+    lights(ctx, fmt),
     collection(ctx),
-    forecast(ctx, tzOffset),
+    forecast(ctx, fmt),
     leeches(ctx, 10),
   ]);
 

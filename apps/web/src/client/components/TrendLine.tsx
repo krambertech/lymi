@@ -4,6 +4,12 @@ import { useId } from "react";
 export interface TrendPoint {
   /** Sorted key, used for the React key and the accessible description. */
   at: string;
+  /**
+   * When this bucket starts, as a sortable number. Positions come from this rather than
+   * from the array index: the API leaves empty buckets out so a week away reads as a gap,
+   * and spacing by index would draw July next to September as if they were consecutive.
+   */
+  t: number;
   /** 0 to 1. */
   value: number;
   /** How it reads in the description: "week of 3 August", "August". */
@@ -78,11 +84,13 @@ export function TrendLine({
   const span = Math.max(0.14, hi - lo);
   const floor = Math.max(0, Math.min(lo, 1 - span));
 
-  const x = (i: number) =>
-    points.length === 1 ? W / 2 : PAD_X + (i / (points.length - 1)) * (W - PAD_X * 2);
+  const t0 = points[0]?.t ?? 0;
+  const tn = points.at(-1)?.t ?? 0;
+  const elapsed = tn - t0;
+  const x = (t: number) => (elapsed === 0 ? W / 2 : PAD_X + ((t - t0) / elapsed) * (W - PAD_X * 2));
   const y = (v: number) => H - PAD_Y - ((v - floor) / span) * (H - PAD_Y * 2);
 
-  const xy = points.map((p, i) => ({ x: x(i), y: y(p.value) }));
+  const xy = points.map((p) => ({ x: x(p.t), y: y(p.value) }));
   const line = curve(xy);
   const area = `${line} L ${(W - PAD_X).toFixed(1)} ${H} L ${PAD_X} ${H} Z`;
   const last = xy.at(-1);

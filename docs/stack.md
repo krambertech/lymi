@@ -170,6 +170,12 @@ Each app owns one build artifact and Worker configuration so its custom domain a
 
 Two workspace details worth knowing. `drizzle-orm` is a dependency of `packages/core` only and is re-exported as `@lymi/core/db`, because better-auth pulls in kysely and pnpm would otherwise build two copies of drizzle with incompatible types. And the Better Auth tables are generated, not hand-written: `pnpm --filter @lymi/web auth:schema` reads `src/server/auth-cli.ts` and writes `packages/core/src/schema/auth.ts`.
 
+### Localization: Lingui catalogs, one app language
+
+The English text in a component is the message. Lingui macros mark it, `lingui extract` writes one `.po` catalog per locale in each app, and `@lingui/vite-plugin` compiles them at build time. The learner's app language is a stored setting that also sets the meaning language; the Worker reads it for push reminders and treats an unset value as English. The public site serves `/uk/` and `/ru/` through Astro's i18n routing with `hreflang` on landing and Join, and the docs stay English. Decisions in [ADR 0012](adr/0012-interface-text-is-english-source-translated-by-lingui.md) and [ADR 0012](adr/0013-app-language-is-one-setting-that-meaning-language-follows.md); order of work in [the localization plan](plans/2026-09-12-localization.md).
+
+Alternatives considered: keyed catalogs (i18next, Paraglide), which make every string change a two-file edit; a hosted translation editor, which is a third service for two locales the maintainer reads herself.
+
 ### Tooling
 
 TypeScript strict. Biome for lint and format. Vitest covers packages and Worker behavior. A build-artifact check enforces that the website has no PWA and the product has no public pages. Playwright runs the canonical learning journey and two-origin contract in desktop Chromium and iPhone-sized WebKit against isolated local Cloudflare bindings. GitHub Actions gives each base gate a distinct fail-fast step, adds Chromium and both Wrangler deployment dry runs for production-affecting pull requests, and runs Chromium plus WebKit on every push to `main` or explicit `/e2e` request. Separate Cloudflare Workers Builds projects own the production deployments; each health endpoint identifies its active Worker version, and both configurations enable Workers Logs.
@@ -186,7 +192,8 @@ Local development accepts email and password sign-in so the app is usable before
 - Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
 - Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.
 - The server enriches, the MCP client extracts. Enrichment is automatic, background, fills only empty fields.
-- Meaning language is a per-user setting, English by default.
+- App language (12 September 2026): one per-user setting, seeded from the browser, drives the interface, push copy and the meaning language. Ukrainian and Russian first. ADR 0013.
+- Interface text is English source in the code, translated through Lingui `.po` catalogs, extracted in `pnpm verify`, drafted by the agent on the PR. ADR 0012.
 - Integrations never grade reviews.
 - No scopes finer than read and write.
 - API and MCP (12 September 2026): both expose the whole product surface, less review grading. A service that one has, the other gets in the same pass, so a learner never has to open the app for something an assistant could have done.

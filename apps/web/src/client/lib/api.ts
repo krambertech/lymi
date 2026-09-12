@@ -64,7 +64,7 @@ export type CardEvent = {
   at: string;
   payload: unknown;
 };
-export type CardHistory = { reviews: Review[]; events: CardEvent[] };
+export type CardHistory = { states: CardState[]; reviews: Review[]; events: CardEvent[] };
 /** Mirrors AddCardOutcome on the server. A duplicate is skipped and names the card that exists. */
 export type AddCardOutcome =
   | { status: "added"; card: Card }

@@ -1,3 +1,4 @@
+import type { Card } from "@lymi/core/schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
@@ -38,13 +39,25 @@ function DeckPage() {
 
   const events = useMemo(() => history.data?.events.map(describeEvent), [history.data]);
 
+  // Opening pushes one entry so Back closes the word; walking and closing replace it, so the
+  // history never fills with words and Back after a close does not reopen one.
   const setOpen = (id: string | null) =>
     navigate({
       to: "/library/$deckId",
       params: { deckId },
       search: id ? { card: id } : {},
-      replace: !!openCardId && !!id,
+      replace: !!openCardId,
     });
+  const [saveError, setSaveError] = useState<{
+    id: string;
+    patch: Parameters<typeof api.updateCard>[1];
+    term: string;
+  } | null>(null);
+  const [audioError, setAudioError] = useState(false);
+  const playAudio = (card: Card) => {
+    setAudioError(false);
+    new Audio(api.audioUrl(card.id)).play().catch(() => setAudioError(true));
+  };
 
   const invalidate = () => {
     qc.invalidateQueries({ queryKey: ["decks"] });
@@ -69,8 +82,14 @@ function DeckPage() {
     mutationFn: ({ id, patch }: { id: string; patch: Parameters<typeof api.updateCard>[1] }) =>
       api.updateCard(id, patch),
     onSuccess: (_card, { id }) => {
+      setSaveError(null);
       invalidate();
       qc.invalidateQueries({ queryKey: ["cards", id, "history"] });
+    },
+    // The editor has already closed, so the draft lives here until it lands or is given up.
+    onError: (_e, { id, patch }) => {
+      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? "the word";
+      setSaveError({ id, patch, term });
     },
   });
   const rename = useMutation({
@@ -98,8 +117,10 @@ function DeckPage() {
         onArchiveDeck={() => archiveDeck.mutate()}
         openCardId={openCardId ?? null}
         onOpen={setOpen}
+        states={history.data?.states}
         reviews={history.data?.reviews}
         events={events}
+        onPlayAudio={playAudio}
         onSaveCard={(id, patch) => save.mutate({ id, patch })}
         decks={decks.data}
         onMove={(id, toDeck) => {
@@ -107,6 +128,23 @@ function DeckPage() {
           save.mutate({ id, patch: { deckId: toDeck } });
         }}
       />
+      {saveError && (
+        <Toast
+          key={`save-${saveError.id}`}
+          onDismiss={() => setSaveError(null)}
+          action={{
+            label: "Retry",
+            onClick: () => save.mutate({ id: saveError.id, patch: saveError.patch }),
+          }}
+        >
+          Couldn’t save “{saveError.term}”. Check the connection.
+        </Toast>
+      )}
+      {audioError && (
+        <Toast key="audio" onDismiss={() => setAudioError(false)}>
+          Pronunciation audio is unavailable. Try again in a moment.
+        </Toast>
+      )}
       {undo && (
         <Toast
           key={undo.id}

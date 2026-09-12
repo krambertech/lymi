@@ -24,13 +24,19 @@ import type { CardEvent } from "../lib/api";
 
 /** A line in the word's history that is not a review: when it arrived, what the AI added. */
 export interface WordEvent {
+  /** The audit row's id, for a key that survives two writes in the same millisecond. */
+  id?: string | undefined;
   at: Date;
   label: string;
   detail: string;
 }
 
 /** The fields the page edits. An emptied field is sent as "", which is what the API accepts. */
-export type WordPatch = Pick<CardPatch, "meaning" | "example" | "notes">;
+export type WordPatch = Pick<
+  CardPatch,
+  "meaning" | "example" | "notes" | "meaningSource" | "exampleSource"
+>;
+type EditableField = "meaning" | "example" | "notes";
 
 const actorName: Record<CardEvent["actor"], string> = {
   user: "you",
@@ -81,7 +87,9 @@ export function describeEvent(e: CardEvent): WordEvent {
 
 export interface WordProps {
   card: Card;
+  /** The list's leading state. `states` carries every direction when the route has it. */
   state: CardState | null;
+  states?: CardState[] | undefined;
   deckName: string;
   /** Every review, newest first. Absent until the route fetches it. */
   reviews?: Review[] | undefined;
@@ -186,7 +194,7 @@ function ReadField({
         aria-disabled={!onEdit}
         aria-label={`Edit ${label.toLowerCase()}`}
         className={clsx(
-          "-mx-2 rounded-sm px-2 py-1 text-left text-md leading-relaxed transition-colors",
+          "-mx-2 flex min-h-11 items-center rounded-sm px-2 py-1 text-left text-md leading-relaxed transition-colors",
           onEdit && "hoverable:hover:bg-plate-2",
           value ? "text-text" : "text-faint",
         )}
@@ -206,6 +214,7 @@ function ReadField({
 export function WordView({
   card,
   state,
+  states,
   deckName,
   reviews,
   events,
@@ -222,19 +231,42 @@ export function WordView({
   onPlayAudio,
   variant,
 }: WordProps) {
-  const fsrs = readFsrs(state);
-  const recall = fsrs ? retrievability(fsrs) : 0;
-  const stateLabel = stateName[state?.state ?? 0] ?? "New";
+  const schedules = (states?.length ? states : state ? [state] : []).map((st) => ({
+    st,
+    fsrs: readFsrs(st),
+  }));
+  const asked = schedules.length > 1;
   const readOnly = !onSave;
+  // Reviews and writes in one order, newest first, so a fresh edit sits above older reviews.
+  const timeline = [
+    ...(reviews ?? []).map((r) => ({
+      kind: "review" as const,
+      key: `r-${r.id}`,
+      at: new Date(r.reviewedAt),
+      rating: r.rating,
+      label: "",
+      detail: `${asked ? `${r.direction} · ` : ""}${
+        r.elapsedDays === 0 && r.state === 0 ? "first time" : `after ${spanLabel(r.elapsedDays)}`
+      }${r.scheduledDays > 0 ? `, next in ${spanLabel(r.scheduledDays)}` : ", back within the day"}`,
+    })),
+    ...(events ?? []).map((e, i) => ({
+      kind: "event" as const,
+      key: `e-${e.id ?? i}`,
+      at: e.at,
+      rating: 0,
+      label: e.label,
+      detail: e.detail,
+    })),
+  ].sort((a, b) => b.at.getTime() - a.at.getTime());
   const elsewhere = (decks ?? []).filter((d) => d.id !== card.deckId);
   // At rest the word reads as a page. Editing is asked for, one field or all of them.
   const [editing, setEditing] = useState(false);
   const [moving, setMoving] = useState(false);
-  const focusRef = useRef<keyof WordPatch | null>(null);
+  const focusRef = useRef<EditableField | null>(null);
   const meaningRef = useRef<HTMLInputElement>(null);
   const exampleRef = useRef<HTMLTextAreaElement>(null);
   const notesRef = useRef<HTMLTextAreaElement>(null);
-  const startEditing = (field: keyof WordPatch = "meaning") => {
+  const startEditing = (field: EditableField = "meaning") => {
     if (readOnly) return;
     focusRef.current = field;
     setEditing(true);
@@ -250,9 +282,14 @@ export function WordView({
     }
     focusRef.current = null;
   }, [editing]);
-  const commit = (key: keyof WordPatch, before: string | null) => (v: string) => {
+  // A field the learner changes is theirs from then on, whatever wrote it before.
+  const commit = (key: EditableField, before: string | null) => (v: string) => {
     const next = v.trim();
-    if (next !== (before ?? "")) onSave?.({ [key]: next });
+    if (next === (before ?? "")) return;
+    const patch: WordPatch = { [key]: next };
+    if (key === "meaning") patch.meaningSource = "manual";
+    if (key === "example") patch.exampleSource = "manual";
+    onSave?.(patch);
   };
 
   const source = (s: Card["meaningSource"]) =>
@@ -337,23 +374,25 @@ export function WordView({
           <span className="min-w-0 break-words" lang={card.language ?? undefined}>
             {card.term}
           </span>
-          <IconButton
-            label={`Say ${card.term}`}
-            variant="secondary"
-            round
-            size="sm"
-            onClick={onPlayAudio}
-            aria-disabled={!onPlayAudio}
-          >
-            <Volume2 />
-          </IconButton>
+          {onPlayAudio && card.language && (
+            <IconButton
+              label={`Say ${card.term}`}
+              variant="secondary"
+              round
+              size="sm"
+              onClick={onPlayAudio}
+            >
+              <Volume2 />
+            </IconButton>
+          )}
         </h1>
         {card.pronunciation && <p className="text-md text-muted">{card.pronunciation}</p>}
         <p className="text-sm text-muted">
           {[card.language ? languageName(card.language) : null, card.source ?? deckName]
             .filter(Boolean)
             .join(" · ")}
-          {state && ` · asked by ${state.direction}`}
+          {schedules.length > 0 &&
+            ` · asked by ${schedules.map((x) => x.st.direction).join(" and ")}`}
         </p>
       </header>
 
@@ -445,56 +484,69 @@ export function WordView({
         </ul>
       </Sheet>
 
-      <section className="grid gap-3 border-t border-edge pt-5">
-        <div className="flex items-baseline justify-between gap-3">
-          <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">Right now</h2>
-        </div>
-        {fsrs && state ? (
-          <>
-            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 @sm:grid-cols-4">
-              <div className="grid gap-0.5">
-                <dd className="text-lg font-medium tracking-[-0.01em]">{stateLabel}</dd>
-                <dt className="text-xs text-muted">
-                  {fsrs.reps} {fsrs.reps === 1 ? "review" : "reviews"}
-                  {fsrs.lapses > 0 && `, ${fsrs.lapses} ${fsrs.lapses === 1 ? "lapse" : "lapses"}`}
-                </dt>
-              </div>
-              <div className="grid gap-0.5">
-                <dd className="text-lg font-medium tracking-[-0.01em]">
-                  {dueLabel(new Date(state.due))}
-                </dd>
-                <dt className="text-xs text-muted">
-                  {fsrs.scheduled_days > 0
-                    ? `scheduled after ${spanLabel(fsrs.scheduled_days)}`
-                    : "still in its first steps"}
-                </dt>
-              </div>
-              <div className="grid gap-0.5">
-                <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
-                  {Math.round(recall * 100)}%
-                </dd>
-                <dt className="text-xs text-muted">would come back right now</dt>
-              </div>
-              <div className="grid gap-0.5">
-                <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
-                  {spanLabel(Math.round(fsrs.stability))}
-                </dd>
-                <dt className="text-xs text-muted">
-                  stability · difficulty {fsrs.difficulty.toFixed(1)}
-                </dt>
-              </div>
-            </dl>
-            <p className="text-sm text-text-2">
-              {state.state === 2
-                ? "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
-                : state.state === 0
-                  ? "New means it has not been asked yet. It joins the next review."
-                  : "Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart."}
-            </p>
-          </>
-        ) : (
+      <section className="grid gap-4 border-t border-edge pt-5">
+        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">Right now</h2>
+        {schedules.length === 0 && (
           <p className="text-sm text-text-2">Not asked yet. It joins the next review.</p>
         )}
+        {schedules.map(({ st, fsrs }) => {
+          const recall = fsrs ? retrievability(fsrs) : 0;
+          const label = stateName[st.state] ?? "New";
+          return (
+            <div key={st.id} className="grid gap-3">
+              {asked && (
+                <h3 className="text-sm font-medium capitalize text-text-2">{st.direction}</h3>
+              )}
+              {fsrs ? (
+                <>
+                  <dl className="grid grid-cols-2 gap-x-4 gap-y-3 @sm:grid-cols-4">
+                    <div className="grid gap-0.5">
+                      <dd className="text-lg font-medium tracking-[-0.01em]">{label}</dd>
+                      <dt className="text-xs text-muted">
+                        {fsrs.reps} {fsrs.reps === 1 ? "review" : "reviews"}
+                        {fsrs.lapses > 0 &&
+                          `, ${fsrs.lapses} ${fsrs.lapses === 1 ? "lapse" : "lapses"}`}
+                      </dt>
+                    </div>
+                    <div className="grid gap-0.5">
+                      <dd className="text-lg font-medium tracking-[-0.01em]">
+                        {dueLabel(new Date(st.due))}
+                      </dd>
+                      <dt className="text-xs text-muted">
+                        {fsrs.scheduled_days > 0
+                          ? `scheduled after ${spanLabel(fsrs.scheduled_days)}`
+                          : "still in its first steps"}
+                      </dt>
+                    </div>
+                    <div className="grid gap-0.5">
+                      <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
+                        {Math.round(recall * 100)}%
+                      </dd>
+                      <dt className="text-xs text-muted">would come back right now</dt>
+                    </div>
+                    <div className="grid gap-0.5">
+                      <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
+                        {spanLabel(Math.round(fsrs.stability))}
+                      </dd>
+                      <dt className="text-xs text-muted">
+                        stability · difficulty {fsrs.difficulty.toFixed(1)}
+                      </dt>
+                    </div>
+                  </dl>
+                  <p className="text-sm text-text-2">
+                    {st.state === 2
+                      ? "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
+                      : st.state === 0
+                        ? "New means it has not been asked yet. It joins the next review."
+                        : "Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart."}
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-text-2">Not asked yet. It joins the next review.</p>
+              )}
+            </div>
+          );
+        })}
       </section>
 
       {(reviews || events) && (
@@ -504,7 +556,9 @@ export function WordView({
             {reviews && reviews.length > 0 && (
               <span className="flex items-center gap-1" aria-hidden="true">
                 {[...reviews]
-                  .reverse()
+                  .sort(
+                    (a, b) => new Date(a.reviewedAt).getTime() - new Date(b.reviewedAt).getTime(),
+                  )
                   .slice(-12)
                   .map((r) => (
                     <GradeMark key={r.id} rating={r.rating} />
@@ -513,49 +567,32 @@ export function WordView({
             )}
           </div>
           <ol className="grid">
-            {reviews?.map((r) => (
+            {timeline.map((item) => (
               <li
-                key={r.id}
+                key={item.key}
                 className="grid grid-cols-[5.5rem_minmax(0,1fr)] items-baseline gap-3 py-2 text-sm"
               >
-                <span className="text-text-2 tabular-nums">{day(new Date(r.reviewedAt))}</span>
+                <span className="text-text-2 tabular-nums">{day(item.at)}</span>
                 <span className="min-w-0">
-                  <span className="mr-2 inline-flex items-center gap-2 font-medium">
-                    <GradeMark rating={r.rating} />
-                    {gradeName[r.rating] ?? r.rating}
-                  </span>
-                  <span className="text-muted">
-                    {r.elapsedDays === 0 && r.state === 0
-                      ? "first time"
-                      : `after ${spanLabel(r.elapsedDays)}`}
-                    {r.scheduledDays > 0
-                      ? `, next in ${spanLabel(r.scheduledDays)}`
-                      : ", back within the day"}
-                  </span>
+                  {item.kind === "review" ? (
+                    <span className="mr-2 inline-flex items-center gap-2 font-medium">
+                      <GradeMark rating={item.rating} />
+                      {gradeName[item.rating] ?? item.rating}
+                    </span>
+                  ) : (
+                    <span className="mr-2 inline-flex items-center gap-2 text-text-2">
+                      <i
+                        aria-hidden="true"
+                        className="inline-block size-2.5 shrink-0 rounded-full border-[1.5px] border-edge-2 bg-plate-2"
+                      />
+                      {item.label}
+                    </span>
+                  )}
+                  <span className="text-muted">{item.detail}</span>
                 </span>
               </li>
             ))}
-            {events?.map((e) => (
-              <li
-                key={`${e.label}-${e.at.getTime()}`}
-                className="grid grid-cols-[5.5rem_minmax(0,1fr)] items-baseline gap-3 py-2 text-sm"
-              >
-                <span className="text-text-2 tabular-nums">{day(e.at)}</span>
-                <span className="min-w-0">
-                  <span className="mr-2 inline-flex items-center gap-2 text-text-2">
-                    <i
-                      aria-hidden="true"
-                      className="inline-block size-2.5 shrink-0 rounded-full border-[1.5px] border-edge-2 bg-plate-2"
-                    />
-                    {e.label}
-                  </span>
-                  <span className="text-muted">{e.detail}</span>
-                </span>
-              </li>
-            ))}
-            {reviews && reviews.length === 0 && !events?.length && (
-              <li className="py-2 text-sm text-muted">Nothing yet.</li>
-            )}
+            {timeline.length === 0 && <li className="py-2 text-sm text-muted">Nothing yet.</li>}
           </ol>
         </section>
       )}

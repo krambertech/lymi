@@ -40,9 +40,12 @@ export interface DeckDetailProps {
   /** The word that is open, if one is. The view owns it when the route does not. */
   openCardId?: string | null | undefined;
   onOpen?: ((id: string | null) => void) | undefined;
-  /** The open word's history, when the route has fetched it. */
+  /** The open word's history and every direction's state, when the route has fetched them. */
+  states?: CardState[] | undefined;
   reviews?: Review[] | undefined;
   events?: WordEvent[] | undefined;
+  /** Play the word's pronunciation. Absent, the Say button is not drawn. */
+  onPlayAudio?: ((card: Card) => void) | undefined;
   onSaveCard?: ((id: string, patch: WordPatch) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
@@ -139,8 +142,10 @@ export function DeckDetailView({
   onArchiveDeck,
   openCardId,
   onOpen,
+  states,
   reviews,
   events,
+  onPlayAudio,
   onSaveCard,
   decks,
   onMove,
@@ -260,8 +265,10 @@ export function DeckDetailView({
       card={open.card}
       state={open.state}
       deckName={deck.name}
+      states={states}
       reviews={reviews}
       events={events}
+      onPlayAudio={onPlayAudio ? () => onPlayAudio(open.card) : undefined}
       hasPrev={openIndex > 0}
       hasNext={!!shown && openIndex < shown.length - 1}
       onPrev={() => {
@@ -302,8 +309,10 @@ export function DeckDetailView({
             card={open.card}
             state={open.state}
             deckName={deck.name}
+            states={states}
             reviews={reviews}
             events={events}
+            onPlayAudio={onPlayAudio ? () => onPlayAudio(open.card) : undefined}
             hasPrev={openIndex > 0}
             hasNext={!!shown && openIndex < shown.length - 1}
             onPrev={() => {

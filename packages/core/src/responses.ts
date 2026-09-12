@@ -126,7 +126,11 @@ export type CardEventOut = z.infer<typeof CardEventOut>;
 
 /** Everything that ever happened to a card: its reviews and its writes, newest first. */
 export const CardHistoryOut = z
-  .object({ reviews: z.array(ReviewOut), events: z.array(CardEventOut) })
+  .object({
+    states: z.array(CardStateOut).meta({ description: "One per direction the card is asked" }),
+    reviews: z.array(ReviewOut),
+    events: z.array(CardEventOut),
+  })
   .meta({ id: "CardHistory" });
 export type CardHistoryOut = z.infer<typeof CardHistoryOut>;
 

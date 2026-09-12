@@ -1,6 +1,6 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
 import { emptyState, expandDirections, newId, normaliseTerm, serializeState } from "@lymi/core";
-import { and, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
+import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { audit } from "../audit";
 import { schema } from "../db";
@@ -246,7 +246,12 @@ export async function getCard({ db, userId }: ServiceContext, id: string) {
 export async function cardHistory(ctx: ServiceContext, id: string) {
   const { db, userId } = ctx;
   await getCard(ctx, id);
-  const [reviews, writes] = await Promise.all([
+  const [states, reviews, writes] = await Promise.all([
+    db
+      .select()
+      .from(schema.cardStates)
+      .where(and(eq(schema.cardStates.cardId, id), eq(schema.cardStates.userId, userId)))
+      .orderBy(asc(schema.cardStates.direction)),
     db
       .select()
       .from(schema.reviews)
@@ -265,6 +270,7 @@ export async function cardHistory(ctx: ServiceContext, id: string) {
       .orderBy(desc(schema.auditLog.createdAt)),
   ]);
   return {
+    states,
     reviews,
     events: writes.map((w) => ({
       id: w.id,

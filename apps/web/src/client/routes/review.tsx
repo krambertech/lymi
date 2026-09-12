@@ -39,6 +39,7 @@ function Review() {
   const [gradeError, setGradeError] = useState<string | null>(null);
   const [animateNextCard, setAnimateNextCard] = useState(true);
   const [animateReveal, setAnimateReveal] = useState(true);
+  const [startingNext, setStartingNext] = useState(false);
 
   const items = queue.data?.items ?? [];
   const current: QueueItem | undefined = items[index];
@@ -51,12 +52,24 @@ function Review() {
   // because fifty cards at a sitting is already more than an evening wants.
   const moreDue = Math.max(total - items.length, 0);
 
-  /** Start the next batch: refetch what is due now and begin its count from zero. */
-  const nextBatch = useCallback(() => {
-    setIndex(0);
-    setDone(0);
-    setRevealed(false);
-    void qc.invalidateQueries({ queryKey: ["queue"] });
+  /**
+   * Start the next batch.
+   *
+   * The fetch has to land before the index moves. React Query keeps serving the batch just
+   * finished until the new one replaces it, so resetting the index first reopens the card that
+   * was graded fiftieth, ready to be revealed and graded a second time. Wait, then reset, and
+   * hold the button in its loading state in between.
+   */
+  const nextBatch = useCallback(async () => {
+    setStartingNext(true);
+    try {
+      await qc.refetchQueries({ queryKey: ["queue"], type: "active" });
+      setIndex(0);
+      setDone(0);
+      setRevealed(false);
+    } finally {
+      setStartingNext(false);
+    }
   }, [qc]);
 
   const stopAudio = useCallback(() => {
@@ -188,7 +201,12 @@ function Review() {
           action={
             moreDue > 0 ? (
               <>
-                <Button variant="primary" size="lg" loading={queue.isFetching} onClick={nextBatch}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  loading={startingNext}
+                  onClick={() => void nextBatch()}
+                >
                   Keep going
                 </Button>
                 <Link to="/today" className={buttonClass("ghost", "lg")}>

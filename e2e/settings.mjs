@@ -6,6 +6,7 @@ export const e2eAccounts = [
   "optional-meaning",
   "archived-deck",
   "responsive-creation",
+  "review-batching",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

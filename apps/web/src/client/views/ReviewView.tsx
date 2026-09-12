@@ -243,7 +243,9 @@ export interface GradeBarProps {
  * moment the answer lands.
  *
  * What each grade schedules is printed only where a pointer can ask for it. On a phone there is no
- * hover and four dates under four labels is clutter, so the labels stand alone.
+ * hover and four dates under four labels is clutter, so the labels stand alone — but the date is
+ * in every button's accessible name at every size, because hiding it behind hover would leave a
+ * screen reader with three unexplained synonyms for "correct".
  */
 export function GradeBar({
   id,
@@ -259,7 +261,14 @@ export function GradeBar({
   if (!revealed) {
     return (
       <div className={clsx("grid h-[72px] shrink-0 place-items-center", className)}>
-        <p className="text-sm font-medium text-muted">Tap the card when you have it</p>
+        {/* Touch wording on a phone, the shortcut where there is a keyboard to press it with. */}
+        <p className="flex items-center gap-2 text-sm font-medium text-muted">
+          <span className="@2xl:hidden">Tap the card when you have it</span>
+          <span className="hidden @2xl:inline">Reveal the card when you have it</span>
+          <span className="hidden @2xl:inline-flex">
+            <Kbd>Space</Kbd>
+          </span>
+        </p>
       </div>
     );
   }
@@ -275,12 +284,15 @@ export function GradeBar({
         {GRADES.map((g) => {
           const saving = pending && pendingRating === g.rating;
           const GradeIcon = g.icon;
+          const schedules = next ? formatInterval(now, new Date(next[g.rating])) : undefined;
           return (
             <button
               key={g.rating}
               type="button"
               disabled={pending}
               aria-busy={saving || undefined}
+              // The visible date is a hover affordance; the name is how everyone else gets it.
+              aria-label={schedules ? `${g.label}, next in ${schedules}` : undefined}
               onClick={() => onGrade(g.rating)}
               className={clsx(
                 "edge group relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
@@ -300,16 +312,16 @@ export function GradeBar({
               <span className={clsx("transition-opacity duration-150", saving && "opacity-0")}>
                 {g.label}
               </span>
-              {next && (
+              {schedules && (
                 <span
                   aria-hidden="true"
                   className={clsx(
-                    "hidden h-4 text-2xs tabular-nums leading-4 text-faint opacity-0 transition-opacity duration-150",
+                    "hidden h-4 text-xs tabular-nums leading-4 text-muted opacity-0 transition-opacity duration-150",
                     "hoverable:block group-hover:opacity-100 group-focus-visible:opacity-100",
                     saving && "!opacity-0",
                   )}
                 >
-                  {formatInterval(now, new Date(next[g.rating]))}
+                  {schedules}
                 </span>
               )}
               <span className="hidden @3xl:contents">

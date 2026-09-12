@@ -4,7 +4,8 @@ export type E2EAccount =
   | "card-selection"
   | "optional-meaning"
   | "archived-deck"
-  | "responsive-creation";
+  | "responsive-creation"
+  | "review-batching";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];

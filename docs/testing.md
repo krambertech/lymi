@@ -52,6 +52,29 @@ Committed migrations are immutable production history. `pnpm db:generate` create
 
 Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. A successful build page without these active-version checks is not deployment evidence.
 
+## MCP sign-in on the local server
+
+The OAuth flow cannot be driven by a real MCP client against `localhost`: clients identify themselves with a Client ID Metadata Document, and `cimd-fetch.ts` only accepts one on a public HTTPS host. A pre-registered native client in the local D1 stands in for it. The rows live only in `.wrangler/state`, so nothing in the repo changes.
+
+```bash
+pnpm --filter @lymi/web exec wrangler d1 execute lymi --local --command "
+insert into oauth_client (id, client_id, disabled, skip_consent, scopes, redirect_uris, token_endpoint_auth_method, application_type, grant_types, response_types, require_pkce, name, created_at, updated_at)
+values ('lymi-local-test', 'lymi-local-test', 0, 0, '[\"read\",\"write\",\"offline_access\"]', '[\"http://127.0.0.1:8765/callback\"]', 'none', 'native', '[\"authorization_code\",\"refresh_token\"]', '[\"code\"]', 1, 'Local MCP test client', unixepoch()*1000, unixepoch()*1000);
+insert into oauth_client_resource (id, client_id, resource_id, created_at)
+values ('lymi-local-test-link', 'lymi-local-test', 'http://localhost:5241/mcp', unixepoch()*1000);"
+```
+
+The resource identifier is `PRODUCT_URL` plus `/mcp`; the `oauth_resource` row for it is seeded when the Worker first constructs Better Auth. Without the link row the authorize endpoint answers `invalid_target`.
+
+Then, with a listener on `127.0.0.1:8765` and a PKCE verifier in hand:
+
+1. Sign in at `/login?dev=1` first. The authorize request signs its query, so adding `dev=1` to the URL it redirects to breaks the signature and the sign-in fails.
+2. Open `/api/auth/oauth2/authorize` with `client_id=lymi-local-test`, the redirect URI above, `scope=read write offline_access`, the S256 challenge and `resource=http://localhost:5241/mcp`. The consent screen appears; approve it.
+3. Exchange the code at `/api/auth/oauth2/token` with `grant_type=authorization_code`, the verifier and the same `resource`.
+4. Call `/mcp` with `Authorization: Bearer` and the `accept: application/json, text/event-stream` header. Responses arrive as one SSE `data:` line.
+
+The consent is remembered per client and learner, so a second authorize goes straight to the code. Disconnect the client from the You screen to see the consent screen again.
+
 ## Canonical coverage
 
 `e2e/core-learning-flow.spec.ts` owns the smallest complete learner journey:

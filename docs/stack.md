@@ -189,6 +189,8 @@ Local development accepts email and password sign-in so the app is usable before
 - Meaning language is a per-user setting, English by default.
 - Integrations never grade reviews.
 - No scopes finer than read and write.
+- API and MCP (12 September 2026): both expose the whole product surface, less review grading. A service that one has, the other gets in the same pass, so a learner never has to open the app for something an assistant could have done.
+- A meaning or example an assistant sends without naming its source is stored as `ai` (12 September 2026). The assistant is a model; the label exists so its text is never shown as the lesson's.
 
 ## Sources
 

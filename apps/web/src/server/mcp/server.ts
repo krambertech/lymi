@@ -198,15 +198,15 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Edit a card",
       description:
-        "Change fields on one card. Send only what changes; a field left out keeps its text. Setting deckId moves the card. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardPatch.shape),
+        'Change fields on one card. Send only what changes; a field left out keeps its text. A meaning or example you change is labelled "ai" unless you say it came from the lesson. Setting deckId moves the card. Needs write.',
+      inputSchema: z.object({ cardId: z.string().min(1) }).extend(McpCardPatch.shape),
       outputSchema: CardOut,
       annotations: { ...write, idempotentHint: true },
     },
     ({ cardId, ...patch }) =>
       run(async () => {
         denyReads(principal);
-        return result(cardOut(await updateCard(ctx, cardId, patch)));
+        return result(cardOut(await updateCard(ctx, cardId, withAiSourceDefaults(patch))));
       }),
   );
 
@@ -387,11 +387,22 @@ function denyReads(principal: McpPrincipal): void {
   }
 }
 
+/** What a field's text can come from over MCP. "manual" is the learner's own hand, never a model's. */
+const McpFieldSource = z.enum(["lesson", "ai"]);
+
+type SourcedFields = {
+  meaning?: string | undefined;
+  meaningSource?: FieldSource | undefined;
+  example?: string | undefined;
+  exampleSource?: FieldSource | undefined;
+};
+
 /**
  * Over MCP the caller is an assistant, so a meaning or example it sends without saying
  * where it came from is its own text. Labelled "ai" so the app never shows it as the lesson's.
+ * Applies to an add and to an edit alike: changing the text changes where it came from.
  */
-export function withAiSourceDefaults(input: McpCardInput): CardInput {
+export function withAiSourceDefaults<T extends SourcedFields>(input: T): T {
   return {
     ...input,
     ...(input.meaning !== undefined && input.meaningSource === undefined
@@ -429,15 +440,17 @@ function failure(message: string, details?: unknown): CallToolResult {
 
 const Timestamp = z.iso.datetime();
 
-const McpCardInput = CardInput.extend({
-  meaningSource: FieldSource.optional().describe(
+const sourceFields = {
+  meaningSource: McpFieldSource.optional().describe(
     '"lesson" when the meaning is in the material, "ai" when you wrote it. Defaults to "ai".',
   ),
-  exampleSource: FieldSource.optional().describe(
+  exampleSource: McpFieldSource.optional().describe(
     '"lesson" when the example is in the material, "ai" when you wrote it. Defaults to "ai".',
   ),
-});
-type McpCardInput = z.infer<typeof McpCardInput>;
+};
+
+const McpCardInput = CardInput.extend(sourceFields);
+const McpCardPatch = CardPatch.extend(sourceFields);
 
 const CardOut = z.object({
   id: z.string(),

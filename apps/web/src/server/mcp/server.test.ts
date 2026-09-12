@@ -1,3 +1,4 @@
+import type { CardInput } from "@lymi/core";
 import type { Card, Deck } from "@lymi/core/schema";
 import { Client } from "@modelcontextprotocol/client";
 import { InMemoryTransport } from "@modelcontextprotocol/server";
@@ -265,6 +266,41 @@ describe("Lymi MCP server", () => {
     expect(res.structuredContent).toMatchObject({ period: 90, recall: { rate: null } });
   });
 
+  it("labels an edited meaning or example as ai, and refuses manual from an assistant", async () => {
+    services.updateCard.mockResolvedValue({ ...card, meaning: "to rush" });
+    const client = await connect("write");
+
+    const edit = await client.callTool({
+      name: "update_card",
+      arguments: {
+        cardId: "card-1",
+        meaning: "to rush",
+        example: "Sbrigati!",
+        exampleSource: "lesson",
+      },
+    });
+    expect(edit.isError).toBeFalsy();
+    expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", {
+      meaning: "to rush",
+      meaningSource: "ai",
+      example: "Sbrigati!",
+      exampleSource: "lesson",
+    });
+
+    for (const [name, args] of [
+      ["update_card", { cardId: "card-1", meaning: "x", meaningSource: "manual" }],
+      [
+        "add_cards",
+        { cards: [{ deckId: "deck-1", term: "t", example: "e", exampleSource: "manual" }] },
+      ],
+    ] as const) {
+      const res = await client.callTool({ name, arguments: args });
+      expect(res.isError, name).toBe(true);
+    }
+    expect(services.updateCard).toHaveBeenCalledTimes(1);
+    expect(services.addCards).not.toHaveBeenCalled();
+  });
+
   it("turns a service error into a tool error instead of a crash", async () => {
     services.getDeck.mockRejectedValue(new ServiceError("not_found", "Deck not found"));
     services.listDeckCards.mockResolvedValue([]);
@@ -341,7 +377,9 @@ describe("Lymi MCP server", () => {
 
 describe("withAiSourceDefaults", () => {
   it("labels text the assistant wrote as ai, and leaves a stated source alone", () => {
-    expect(withAiSourceDefaults({ deckId: "d", term: "t", meaning: "m", example: "e" })).toEqual({
+    expect(
+      withAiSourceDefaults<CardInput>({ deckId: "d", term: "t", meaning: "m", example: "e" }),
+    ).toEqual({
       deckId: "d",
       term: "t",
       meaning: "m",
@@ -350,11 +388,19 @@ describe("withAiSourceDefaults", () => {
       exampleSource: "ai",
     });
     expect(
-      withAiSourceDefaults({ deckId: "d", term: "t", meaning: "m", meaningSource: "lesson" }),
+      withAiSourceDefaults<CardInput>({
+        deckId: "d",
+        term: "t",
+        meaning: "m",
+        meaningSource: "lesson",
+      }),
     ).toEqual({ deckId: "d", term: "t", meaning: "m", meaningSource: "lesson" });
   });
 
   it("does not invent a source for a field that is not there", () => {
-    expect(withAiSourceDefaults({ deckId: "d", term: "t" })).toEqual({ deckId: "d", term: "t" });
+    expect(withAiSourceDefaults<CardInput>({ deckId: "d", term: "t" })).toEqual({
+      deckId: "d",
+      term: "t",
+    });
   });
 });

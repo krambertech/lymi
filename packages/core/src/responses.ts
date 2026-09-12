@@ -5,6 +5,7 @@ import {
   Direction,
   Directions,
   FieldSource,
+  MemberRole,
   ReminderTime,
   Scope,
 } from "./types";
@@ -15,6 +16,12 @@ import {
  * Timestamps are ISO 8601 strings in JSON.
  */
 const Timestamp = z.iso.datetime().meta({ description: "ISO 8601 timestamp" });
+
+/** Whose deck it is and what the caller may do in it. */
+const Membership = {
+  role: MemberRole.meta({ description: "The caller's role in the deck" }),
+  owner: z.object({ id: z.string(), name: z.string() }).meta({ description: "Who owns the deck" }),
+};
 
 export const DeckOut = z
   .object({
@@ -28,6 +35,7 @@ export const DeckOut = z
     archivedAt: Timestamp.nullable(),
     createdAt: Timestamp,
     updatedAt: Timestamp,
+    ...Membership,
   })
   .meta({ id: "Deck" });
 export type DeckOut = z.infer<typeof DeckOut>;
@@ -41,7 +49,8 @@ export const DeckSummaryOut = z
     directions: Directions,
     position: z.number().int(),
     total: z.number().int().meta({ description: "Active cards in the deck" }),
-    due: z.number().int().meta({ description: "Card states due now" }),
+    due: z.number().int().meta({ description: "The caller's card states due now" }),
+    ...Membership,
   })
   .meta({ id: "DeckSummary" });
 export type DeckSummaryOut = z.infer<typeof DeckSummaryOut>;

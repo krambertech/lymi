@@ -2,6 +2,7 @@ import { and, desc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { asked } from "./decks";
+import { memberOf } from "./members";
 
 /**
  * Everything the Insights screen reads. One call, because the screen shows all of it at
@@ -237,8 +238,9 @@ async function collection({ db, userId }: ServiceContext) {
       join decks on decks.id = cards.deck_id
       left join card_states
         on card_states.card_id = cards.id
+        and card_states.user_id = ${userId}
         and ${asked}
-      where cards.user_id = ${userId}
+      where ${memberOf(userId)}
         and cards.archived_at is null
         and decks.archived_at is null
       group by cards.id
@@ -271,6 +273,7 @@ async function forecast({ db, userId }: ServiceContext, fmt: Intl.DateTimeFormat
     .where(
       and(
         eq(schema.cardStates.userId, userId),
+        memberOf(userId),
         isNull(schema.cards.archivedAt),
         isNull(schema.decks.archivedAt),
         asked,
@@ -313,6 +316,7 @@ async function leeches({ db, userId }: ServiceContext, limit: number) {
     .where(
       and(
         eq(schema.reviews.userId, userId),
+        memberOf(userId),
         isNull(schema.cards.archivedAt),
         isNull(schema.decks.archivedAt),
       ),

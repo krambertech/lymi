@@ -38,6 +38,10 @@ export const LanguageTag = z
 export const Directions = z.enum(["recognition", "production", "both"]);
 export type Directions = z.infer<typeof Directions>;
 
+/** What a learner may do in a deck. Only `owner` and `learner` are granted today. ADR 0011. */
+export const MemberRole = z.enum(["owner", "editor", "contributor", "learner"]);
+export type MemberRole = z.infer<typeof MemberRole>;
+
 export const DeckInput = z.object({
   name: z
     .string()

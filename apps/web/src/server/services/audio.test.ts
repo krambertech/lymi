@@ -39,8 +39,10 @@ function context(row: Card): ServiceContext {
   const update = vi.fn(() => ({ set }));
   const values = vi.fn(async () => undefined);
   const insert = vi.fn(() => ({ values }));
-  const whereSelect = vi.fn(async () => [row]);
-  const from = vi.fn(() => ({ where: whereSelect }));
+  // `getCard` joins decks for membership and selects `{ card }`. See ADR 0011.
+  const whereSelect = vi.fn(async () => [{ card: row }]);
+  const innerJoin = vi.fn(() => ({ where: whereSelect }));
+  const from = vi.fn(() => ({ innerJoin }));
   const select = vi.fn(() => ({ from }));
   const db = new Proxy(Object.create(null) as Db, {
     get: (_target, property) => ({ select, update, insert })[property as "select"],

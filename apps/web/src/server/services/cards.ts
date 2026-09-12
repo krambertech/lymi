@@ -1,10 +1,11 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
 import { emptyState, expandDirections, newId, normaliseTerm, serializeState } from "@lymi/core";
-import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
+import { and, asc, desc, eq, inArray, isNotNull, isNull, or, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { audit } from "../audit";
 import { schema } from "../db";
-import { notFound, type ServiceContext } from "./context";
+import { notFound, type ServiceContext, ServiceError } from "./context";
+import { fillStates, learnersOf, memberOf } from "./members";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -22,9 +23,10 @@ export async function addCard(ctx: ServiceContext, input: CardInput): Promise<Ad
 }
 
 /**
- * Add one or many cards. Each gets its scheduling state rows. Duplicates, against the
- * learner's active cards and against earlier cards in the same batch, are skipped and
- * reported. Order of outcomes matches order of inputs.
+ * Add one or many cards. Each gets its scheduling state rows, one per learner of the deck.
+ * Duplicates, against the learner's active cards and against earlier cards in the same
+ * batch, are skipped and reported. Order of outcomes matches order of inputs. Only the
+ * deck's owner adds; a member gets forbidden, a stranger not found.
  */
 export async function addCards(
   ctx: ServiceContext,
@@ -38,25 +40,25 @@ export async function addCards(
     db
       .select({
         id: schema.decks.id,
+        userId: schema.decks.userId,
         name: schema.decks.name,
         defaultLanguage: schema.decks.defaultLanguage,
         directions: schema.decks.directions,
       })
       .from(schema.decks)
-      .where(
-        and(
-          inArray(schema.decks.id, ids),
-          eq(schema.decks.userId, userId),
-          isNull(schema.decks.archivedAt),
-        ),
-      ),
+      .where(and(inArray(schema.decks.id, ids), memberOf(userId), isNull(schema.decks.archivedAt))),
   );
   const deckById = new Map(decks.map((d) => [d.id, d]));
+  const learnersByDeck = new Map<string, string[]>();
+  for (const deck of decks) learnersByDeck.set(deck.id, await learnersOf({ db }, deck.id));
 
   // Resolve language and key per input, then look up every key in one query.
   const prepared = inputs.map((input) => {
     const deck = deckById.get(input.deckId);
     if (!deck) throw notFound("Deck");
+    if (deck.userId !== userId) {
+      throw new ServiceError("forbidden", "Only the deck's owner can add cards to it");
+    }
     const language = input.language === undefined ? deck.defaultLanguage : input.language;
     return { input, deck, language, key: normaliseTerm(input.term) };
   });
@@ -118,18 +120,20 @@ export async function addCards(
       updatedAt: now,
     };
     statements.push(db.insert(schema.cards).values(card));
-    for (const direction of expandDirections(input.directions ?? deck.directions)) {
-      statements.push(
-        db.insert(schema.cardStates).values({
-          id: newId(),
-          cardId: id,
-          userId,
-          direction,
-          due: now,
-          state: 0,
-          fsrs: serializeState(emptyState(now)),
-        }),
-      );
+    for (const learner of learnersByDeck.get(deck.id) ?? [userId]) {
+      for (const direction of expandDirections(input.directions ?? deck.directions)) {
+        statements.push(
+          db.insert(schema.cardStates).values({
+            id: newId(),
+            cardId: id,
+            userId: learner,
+            direction,
+            due: now,
+            state: 0,
+            fsrs: serializeState(emptyState(now)),
+          }),
+        );
+      }
     }
     statements.push(
       db.insert(schema.auditLog).values({
@@ -147,8 +151,11 @@ export async function addCards(
     outcomes.push({ status: "added", card });
   }
 
-  const [first, ...rest] = statements;
-  if (first) await db.batch([first, ...rest]);
+  // D1 caps a batch; a lesson of 200 terms in a shared deck is thousands of statements.
+  for (let i = 0; i < statements.length; i += 50) {
+    const [first, ...rest] = statements.slice(i, i + 50);
+    if (first) await db.batch([first, ...rest]);
+  }
 
   return outcomes;
 }
@@ -196,7 +203,7 @@ export async function searchCards({ db, userId }: ServiceContext, search: CardSe
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .where(
       and(
-        eq(schema.cards.userId, userId),
+        memberOf(userId),
         search.archived
           ? or(isNotNull(schema.cards.archivedAt), isNotNull(schema.decks.archivedAt))
           : and(isNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt)),
@@ -230,12 +237,23 @@ export function matchesSearch(
   return false;
 }
 
+/** A card in any deck the learner can see. */
 export async function getCard({ db, userId }: ServiceContext, id: string) {
-  const [card] = await db
-    .select()
+  const [row] = await db
+    .select({ card: schema.cards })
     .from(schema.cards)
-    .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
-  if (!card) throw notFound("Card");
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(and(eq(schema.cards.id, id), memberOf(userId)));
+  if (!row) throw notFound("Card");
+  return row.card;
+}
+
+/** The card, or forbidden when the learner can see it but does not own it. */
+async function ownedCard(ctx: ServiceContext, id: string) {
+  const card = await getCard(ctx, id);
+  if (card.userId !== ctx.userId) {
+    throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
+  }
   return card;
 }
 
@@ -284,7 +302,7 @@ export async function cardHistory(ctx: ServiceContext, id: string) {
 
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
   const { db, userId, actor } = ctx;
-  const current = await getCard(ctx, id);
+  const current = await ownedCard(ctx, id);
   if (patch.deckId && patch.deckId !== current.deckId) {
     const [deck] = await db
       .select({ id: schema.decks.id })
@@ -307,6 +325,10 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       updatedAt: new Date(),
     })
     .where(eq(schema.cards.id, id));
+  const askedChanged =
+    (patch.directions !== undefined && patch.directions !== current.directions) ||
+    (patch.deckId !== undefined && patch.deckId !== current.deckId);
+  if (askedChanged) await openCardDirections(ctx, id);
   await audit(db, {
     userId,
     actor,
@@ -318,6 +340,29 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
   return getCard(ctx, id);
 }
 
+/**
+ * A card whose own directions or deck changed may now be asked a way it has no state for,
+ * for the owner or for any member. Fill the gap, due now, for every learner of its deck.
+ */
+async function openCardDirections({ db }: ServiceContext, cardId: string) {
+  const [row] = await db
+    .select({
+      deckId: schema.cards.deckId,
+      directions: sql<
+        "recognition" | "production" | "both"
+      >`coalesce(cards.directions, decks.directions)`,
+    })
+    .from(schema.cards)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(eq(schema.cards.id, cardId));
+  if (!row) return;
+  await fillStates(
+    { db },
+    [{ cardId, directions: expandDirections(row.directions) }],
+    await learnersOf({ db }, row.deckId),
+  );
+}
+
 /** Archive, never delete. Undo is `restoreCard`. */
 export function archiveCard(ctx: ServiceContext, id: string) {
   return setArchived(ctx, id, new Date());
@@ -327,15 +372,13 @@ export function restoreCard(ctx: ServiceContext, id: string) {
   return setArchived(ctx, id, null);
 }
 
-async function setArchived(
-  { db, userId, actor }: ServiceContext,
-  id: string,
-  archivedAt: Date | null,
-) {
+async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
+  const { db, userId, actor } = ctx;
+  await ownedCard(ctx, id);
   const result = await db
     .update(schema.cards)
     .set({ archivedAt, updatedAt: new Date() })
-    .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)))
+    .where(eq(schema.cards.id, id))
     .returning({ id: schema.cards.id });
   if (result.length === 0) throw notFound("Card");
   await audit(db, {

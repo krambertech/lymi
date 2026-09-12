@@ -8,6 +8,7 @@ import type {
   Direction,
   GradeInput,
   InsightsOut,
+  MemberRole,
   PushEndpointInput,
   PushSubscriptionInput,
   Rating,
@@ -58,6 +59,9 @@ export type DeckSummary = Pick<
 > & {
   total: number;
   due: number;
+  /** The learner's role in the deck and who owns it. Only the owner writes. ADR 0011. */
+  role: MemberRole;
+  owner: { id: string; name: string };
 };
 export type QueueItem = {
   card: Card;

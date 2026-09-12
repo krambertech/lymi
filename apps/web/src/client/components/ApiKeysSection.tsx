@@ -3,48 +3,40 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ApiKeyInput, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus } from "lucide-react";
+import { KeyRound, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
-import { Button } from "./Button";
+import { Button, buttonClass } from "./Button";
 import { Chip } from "./Chip";
+import { DocLink } from "./ConnectedAppsSection";
 import { CopyField } from "./CopyField";
+import { EmptySection } from "./EmptyState";
 import { Field, Input } from "./Field";
 import { Lantern } from "./Lantern";
 import { Segmented } from "./Segmented";
 import { SettingsGroup } from "./SettingsGroup";
+import { Sheet } from "./Sheet";
 import { Skeleton } from "./Skeleton";
 
 /**
- * Personal API keys for curl, scripts and Claude Code. The list is the point of the section,
- * so the form stays folded until it is wanted; a key already made is what you come here to
- * check on. The key itself is shown once, right after it is made, and revoking is final, so
- * it takes a second tap, inline, no dialog.
+ * Personal API keys for curl and scripts. The list is the point of the section; making a key
+ * is a sheet, like every other short form in the app. The key itself is shown once, right
+ * after it is made, and revoking is final, so it takes a second tap, inline, no dialog.
  */
 export function ApiKeysSection() {
   const { t } = useLingui();
   const qc = useQueryClient();
   const keys = useQuery(keysQuery);
   const [making, setMaking] = useState(false);
-  const [name, setName] = useState("");
-  const [scope, setScope] = useState<Scope>("read");
   const [fresh, setFresh] = useState<{ id: string; key: string; name: string } | null>(null);
-  const [invalid, setInvalid] = useState<FieldErrors>({});
-
-  const scopes: { value: Scope; label: string; hint: string }[] = [
-    { value: "read", label: t`Read`, hint: t`Lists and searches decks and cards.` },
-    { value: "write", label: t`Read and write`, hint: t`Also adds, edits and archives them.` },
-  ];
 
   const create = useMutation({
-    mutationFn: () => api.createKey({ name: name.trim(), scope }),
-    onSuccess: (created) => {
-      setFresh({ id: created.id, key: created.key, name: created.name ?? name.trim() });
-      setName("");
-      setScope("read");
+    mutationFn: (input: ApiKeyInput) => api.createKey(input),
+    onSuccess: (created, input) => {
+      setFresh({ id: created.id, key: created.key, name: created.name ?? input.name });
       setMaking(false);
       qc.invalidateQueries({ queryKey: ["keys"] });
     },
@@ -62,21 +54,10 @@ export function ApiKeysSection() {
   const empty = keys.isSuccess && rest.length === 0;
 
   return (
-    <SettingsGroup title={t`API keys`}>
-      <p className="max-w-[62ch] text-base text-text-2">
-        <Trans>
-          For curl, scripts and Claude Code. Send the key in an{" "}
-          <code className="font-mono text-sm">x-api-key</code> header; the routes are in the{" "}
-          <a
-            href={publicSiteUrl("/docs/api")}
-            className="underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
-          >
-            API reference
-          </a>
-          . MCP clients such as Claude Desktop sign in instead, and appear under Connected apps.
-        </Trans>
-      </p>
-
+    <SettingsGroup
+      title={t`API keys`}
+      description={t`For scripts and curl. An assistant signs in instead, under Connected apps.`}
+    >
       {fresh && (
         <FreshKey
           name={fresh.name}
@@ -101,93 +82,135 @@ export function ApiKeysSection() {
         </ul>
       )}
 
-      {empty && !making && !fresh && (
-        <p className="text-base text-muted">
-          <Trans>No keys yet. Make one when you want to reach Lymi from a script.</Trans>
+      {empty && !fresh && (
+        <EmptySection
+          icon={<KeyRound />}
+          title={t`No keys yet`}
+          body={t`A key lets a script or curl read your decks, or add to them.`}
+          action={
+            <>
+              <Button variant="primary" onClick={() => setMaking(true)}>
+                <Plus aria-hidden="true" />
+                <Trans>New key</Trans>
+              </Button>
+              <a href={publicSiteUrl("/docs/quickstart")} className={buttonClass("secondary")}>
+                <Trans>Read the quickstart</Trans>
+              </a>
+            </>
+          }
+        />
+      )}
+
+      {rest.length > 0 && (
+        <p className="max-w-[60ch] text-sm text-muted">
+          <Trans>
+            Read lists decks and cards. Read and write also adds, edits and archives them. A key
+            never grades reviews. <DocLink href={publicSiteUrl("/docs/api")}>API reference</DocLink>
+          </Trans>
         </p>
       )}
 
-      {making ? (
-        <form
-          className="enter-card edge grid gap-4 rounded-md bg-plate p-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (create.isPending) return;
-            const parsed = ApiKeyInput.safeParse({ name, scope });
-            if (!parsed.success) {
-              // Mirrors the schema: an empty name fails the minimum, a typed one the maximum.
-              setInvalid(
-                fieldErrors(parsed.error, {
-                  name: name.trim()
-                    ? t`Keep the name under 32 characters.`
-                    : t`Name the key, so you know which one to revoke later.`,
-                }),
-              );
-              focusFirstInvalid(e.currentTarget);
-              return;
-            }
-            setInvalid({});
-            create.mutate();
-          }}
-        >
-          <Field
-            label={t`Name`}
-            hint={t`So you know which key to revoke later.`}
-            error={invalid.name}
-            className="max-w-sm"
-          >
-            {/* Focus follows the button that revealed the field, so it is not a surprise. */}
-            <Input
-              autoFocus
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setInvalid(({ name: _, ...rest }) => rest);
-              }}
-              maxLength={32}
-              placeholder={t`Claude Code on the laptop`}
-              autoComplete="off"
-            />
-          </Field>
-          <div className="grid gap-1.5">
-            <span className="text-sm font-medium text-text-2">
-              <Trans>Access</Trans>
-            </span>
-            <Segmented value={scope} onChange={setScope} options={scopes} label={t`Access`} />
-            <p className="text-sm text-muted">
-              {scopes.find((s) => s.value === scope)?.hint} <Trans>Keys never grade reviews.</Trans>
-            </p>
-          </div>
-          {create.isError && (
-            <p className="text-sm text-danger" role="alert">
-              {(create.error as Error).message}
-            </p>
-          )}
-          <div className="flex gap-2">
-            <Button type="submit" variant="primary" size="sm" loading={create.isPending}>
-              <Trans>Create key</Trans>
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              aria-disabled={create.isPending}
-              onClick={() => {
-                setMaking(false);
-                setName("");
-                create.reset();
-              }}
-            >
-              <Trans>Cancel</Trans>
-            </Button>
-          </div>
-        </form>
-      ) : (
-        <Button size="sm" className="w-fit" onClick={() => setMaking(true)}>
+      {!(empty && !fresh) && (
+        <Button className="w-fit" onClick={() => setMaking(true)}>
           <Plus aria-hidden="true" />
           <Trans>New key</Trans>
         </Button>
       )}
+
+      <Sheet open={making} onOpenChange={setMaking} title={t`New key`}>
+        <NewKeyForm
+          key={making ? "open" : "closed"}
+          pending={create.isPending}
+          error={create.isError ? (create.error as Error).message : undefined}
+          onCancel={() => {
+            setMaking(false);
+            create.reset();
+          }}
+          onSubmit={(input) => create.mutate(input)}
+        />
+      </Sheet>
     </SettingsGroup>
+  );
+}
+
+function NewKeyForm({
+  pending,
+  error,
+  onCancel,
+  onSubmit,
+}: {
+  pending: boolean;
+  error?: string | undefined;
+  onCancel: () => void;
+  onSubmit: (input: ApiKeyInput) => void;
+}) {
+  const { t } = useLingui();
+  const [name, setName] = useState("");
+  const [scope, setScope] = useState<Scope>("read");
+  const [invalid, setInvalid] = useState<FieldErrors>({});
+  const scopes: { value: Scope; label: string; hint: string }[] = [
+    { value: "read", label: t`Read`, hint: t`Lists and searches decks and cards.` },
+    { value: "write", label: t`Read and write`, hint: t`Also adds, edits and archives them.` },
+  ];
+
+  return (
+    <form
+      className="grid gap-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (pending) return;
+        const parsed = ApiKeyInput.safeParse({ name: name.trim(), scope });
+        if (!parsed.success) {
+          // Mirrors the schema: an empty name fails the minimum, a typed one the maximum.
+          setInvalid(
+            fieldErrors(parsed.error, {
+              name: name.trim()
+                ? t`Keep the name under 32 characters.`
+                : t`Name the key, so you know which one to revoke later.`,
+            }),
+          );
+          focusFirstInvalid(e.currentTarget);
+          return;
+        }
+        setInvalid({});
+        onSubmit(parsed.data);
+      }}
+    >
+      <Field label={t`Name`} hint={t`So you know which key to revoke later.`} error={invalid.name}>
+        <Input
+          autoFocus
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+            setInvalid(({ name: _, ...rest }) => rest);
+          }}
+          maxLength={32}
+          placeholder={t`Backup script on the laptop`}
+          autoComplete="off"
+          enterKeyHint="done"
+        />
+      </Field>
+      <div className="grid gap-1.5">
+        <span className="text-sm font-medium text-text-2">
+          <Trans>Access</Trans>
+        </span>
+        <Segmented value={scope} onChange={setScope} options={scopes} label={t`Access`} />
+        <p className="text-sm text-muted">
+          {scopes.find((s) => s.value === scope)?.hint} <Trans>A key never grades reviews.</Trans>
+        </p>
+      </div>
+      <div className="flex items-center gap-2 pt-1">
+        <p className="flex-1 text-sm text-danger" role="status">
+          {error}
+        </p>
+        <Button variant="ghost" onClick={onCancel} aria-disabled={pending}>
+          <Trans>Cancel</Trans>
+        </Button>
+        <Button variant="primary" type="submit" loading={pending}>
+          <Trans>Create key</Trans>
+        </Button>
+      </div>
+    </form>
   );
 }
 
@@ -277,7 +300,7 @@ function FreshKey({
         <Lantern className="size-8 shrink-0" glow flare={flare} />
         <p className="text-base text-text">
           <Trans>
-            <span className="font-medium">{name}</span> is ready. Copy it now — it is not shown
+            <span className="font-medium">{name}</span> is ready. Copy it now. It is not shown
             again.
           </Trans>
         </p>

@@ -6,15 +6,14 @@ import {
   Activity,
   BookMarked,
   ChartNoAxesColumn,
-  ChevronRight,
   type LucideIcon,
   Search,
   Sun,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
-import { Avatar } from "../components/Avatar";
 import { IconButton } from "../components/Button";
+import { LearnerMenu } from "../components/LearnerMenu";
 import { AppTile, Wordmark } from "../components/Logo";
 import { NavLink, type StaticNav } from "../components/NavLink";
 
@@ -46,9 +45,13 @@ export const NAV: {
 interface SidebarProps {
   decks: NavDeck[] | undefined;
   name: string | undefined;
+  email?: string | undefined;
   onAdd: () => void;
   onCreateDeck?: (() => void) | undefined;
   onSearch?: (() => void) | undefined;
+  onSignOut?: (() => void | Promise<void>) | undefined;
+  signingOut?: boolean | undefined;
+  docsUrl: string;
   /** Something an integration wrote is unseen. A dot, never a count. */
   unseen?: boolean | undefined;
   static?: StaticNav;
@@ -65,9 +68,13 @@ interface SidebarProps {
 export function Sidebar({
   decks,
   name,
+  email,
   onAdd,
   onCreateDeck,
   onSearch,
+  onSignOut,
+  signingOut,
+  docsUrl,
   unseen,
   static: st,
   className,
@@ -132,20 +139,15 @@ export function Sidebar({
       {/* The rule is its own line across the rail, not a border on the row: a top border on a
           rounded row curves at the corners and reads as a broken card rather than a divider. */}
       <div className="-mx-3 mt-2 border-t border-edge px-3 pt-2">
-        <NavLink
-          to="/you"
-          className="group flex h-14 items-center gap-3 rounded-md px-2 transition-[background-color,box-shadow] duration-150 hoverable:hover:bg-hover [&.active]:bg-plate [&.active]:edge"
-          st={st}
-        >
-          <Avatar name={name} size={34} />
-          <span className="grid min-w-0 flex-1 gap-0.5 text-left">
-            <span className="truncate text-base text-text">{name ?? t`You`}</span>
-            <span className="truncate text-xs text-muted">
-              <Trans>Settings and account</Trans>
-            </span>
-          </span>
-          <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
-        </NavLink>
+        <LearnerMenu
+          variant="rail"
+          name={name}
+          email={email}
+          docsUrl={docsUrl}
+          onSignOut={onSignOut}
+          signingOut={signingOut}
+          static={st}
+        />
       </div>
     </aside>
   );
@@ -229,7 +231,7 @@ export function PageHeader({
         <h1 className="min-w-0 text-2xl font-medium leading-[1.2] text-text">{title}</h1>
         {actions && <div className="flex items-center gap-1.5">{actions}</div>}
       </div>
-      {sub && <p className="mt-1.5 text-sm text-muted tabular-nums">{sub}</p>}
+      {sub && <div className="mt-1.5 text-sm text-muted tabular-nums">{sub}</div>}
       {children}
     </header>
   );

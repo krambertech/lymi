@@ -12,10 +12,11 @@ test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
   await expect(page).toHaveURL(/\/library\?from=reminder&deck=italian$/);
   await expect(page.getByRole("heading", { name: "Library", exact: true })).toBeVisible();
 
-  await page.goto("/you");
-  await expect(page.getByRole("link", { name: "Lymi website" })).toHaveAttribute(
+  // The docs link is the one place the product points at the public site's configured origin.
+  await page.getByRole("button", { name: "Dev", exact: true }).click();
+  await expect(page.getByRole("menuitem", { name: "Docs" })).toHaveAttribute(
     "href",
-    "http://localhost:4174/",
+    "http://localhost:4174/docs",
   );
 });
 

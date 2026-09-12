@@ -4,10 +4,10 @@ import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
-import { Avatar } from "../components/Avatar";
 import { Button, buttonClass } from "../components/Button";
 import { Flame } from "../components/Flame";
 import { Lantern } from "../components/Lantern";
+import { LearnerMenu } from "../components/LearnerMenu";
 import { NavLink } from "../components/NavLink";
 import type { NewCards } from "../components/NewCardsRow";
 import { NewCardsRow } from "../components/NewCardsRow";
@@ -26,10 +26,16 @@ export interface TodayProps {
   arrivals?: NewCards[] | undefined;
   /** Worded forecast, e.g. "31 tomorrow, 9 on Monday". */
   forecast?: string | undefined;
-  /** The learner, for the avatar that opens You on the phone. */
+  /** The learner, for the avatar that opens their menu on the phone. */
   name?: string | undefined;
+  email?: string | undefined;
+  /** Something an integration wrote is unseen. Marks Activity in the phone's menu. */
+  unseen?: boolean | undefined;
+  docsUrl?: string | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
+  onSignOut?: (() => void | Promise<void>) | undefined;
+  signingOut?: boolean | undefined;
   static?: StaticNav;
 }
 
@@ -45,8 +51,13 @@ export function TodayView({
   arrivals,
   forecast,
   name,
+  email,
+  unseen,
+  docsUrl,
   onAdd,
   onCreateDeck,
+  onSignOut,
+  signingOut,
   static: st,
 }: TodayProps) {
   const { t } = useLingui();
@@ -70,7 +81,7 @@ export function TodayView({
     className,
     children,
   }: {
-    to: "/review" | "/library" | "/activity" | "/you";
+    to: "/review" | "/library" | "/activity";
     className?: string | undefined;
     children: ReactNode;
   }) =>
@@ -90,15 +101,16 @@ export function TodayView({
       <header className="flex min-h-10 items-center gap-1.5 @3xl/shell:hidden">
         <span className="ms-auto flex items-center gap-1.5">
           <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-          <To
-            to="/you"
-            className="relative inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
-          >
-            <Avatar name={name} size={40} />
-            <span className="sr-only">
-              <Trans>You</Trans>
-            </span>
-          </To>
+          <LearnerMenu
+            variant="phone"
+            name={name}
+            email={email}
+            unseen={unseen}
+            docsUrl={docsUrl ?? "/"}
+            onSignOut={onSignOut}
+            signingOut={signingOut}
+            static={st}
+          />
         </span>
       </header>
 

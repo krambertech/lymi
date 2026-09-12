@@ -12,7 +12,7 @@ import type { ClientMetadataResourceFetch } from "@better-auth/oauth-provider";
  * unfollowed so the plugin can reject them.
  */
 export const fetchClientMetadataResource: ClientMetadataResourceFetch = async (input, init) => {
-  const request = new Request(input, init);
+  const request = new Request(input, { ...init, redirect: "manual" });
   const url = new URL(request.url);
   if (url.protocol !== "https:") {
     throw new TypeError("Client metadata documents must be served over HTTPS");
@@ -23,5 +23,5 @@ export const fetchClientMetadataResource: ClientMetadataResourceFetch = async (i
   if (!isPublicRoutableHost(url.hostname)) {
     throw new TypeError("Client metadata documents must live on a public host");
   }
-  return fetch(request, { redirect: "manual" });
+  return fetch(request);
 };

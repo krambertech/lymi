@@ -216,17 +216,16 @@ export function Components() {
                 <Skeleton className="h-11" />
               </div>
               <SevenLights days={history} />
-              {/* The streak, as Today composes it: the lights, then one line. No panel. */}
-              <div className="grid justify-items-center gap-3">
-                <SevenLights days={streakDays.slice(-7)} />
-                <p className="text-sm text-muted tabular-nums">
-                  {streakLength(streakDays)} days in a row · 31 tomorrow, 9 on Monday
+              {/* The streak, as Today composes it: the flame counts the run, the week says
+                  which days and how full each was. No panel. */}
+              <div className="grid justify-items-center gap-3.5">
+                <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
+                  <Flame className="size-6" flicker />
+                  {streakLength(streakDays)} days in a row
                 </p>
+                <SevenLights days={streakDays.slice(-7)} size="lg" />
               </div>
-              <div className="flex items-center gap-3">
-                <Flame className="size-7" flicker />
-                <Avatar name="Kateryna" size={34} />
-              </div>
+              <Avatar name="Kateryna" size={34} />
             </div>
           )}
         </Pair>

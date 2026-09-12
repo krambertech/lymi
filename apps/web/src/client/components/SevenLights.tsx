@@ -3,16 +3,53 @@ import { clsx } from "clsx";
 interface Props {
   /** Seven counts, oldest first. Today last. */
   days: number[];
+  /**
+   * "sm" is the inline cut, for the end of a session. "lg" is the week on Today, where the
+   * streak is the only thing under the button and has the room to be looked at.
+   */
+  size?: "sm" | "lg" | undefined;
   className?: string | undefined;
 }
 
 const DAY = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 /**
- * The last seven days as seven small lights. Lit when you reviewed that day. No number,
- * no streak count, no pressure: an unlit day is just an unlit day.
+ * A day's light carries three steps of amber, by how much that day held. The reference is the
+ * week's own busiest day with a floor under it, so a quiet week is not flattered into looking
+ * heavy and one big Tuesday does not wash the rest of the week out.
+ *
+ * Seven days grade; the thirty-day strip in Insights deliberately does not. Over a month,
+ * shading by volume makes a habit picture into a scoreboard and rewards one heavy day over a
+ * steady stretch. Over a week it is the difference between "I turned up" and "I turned up and
+ * did the lot", which is a thing the learner already knows and likes seeing.
  */
-export function SevenLights({ days, className }: Props) {
+function level(n: number, reference: number): 0 | 1 | 2 | 3 {
+  if (n <= 0) return 0;
+  const share = n / reference;
+  if (share >= 0.67) return 3;
+  if (share >= 0.34) return 2;
+  return 1;
+}
+
+/**
+ * The steps run from the lantern's glass to its flame, which is what a light does as it comes
+ * up. Mixing toward `--glass` rather than toward transparency or the plate keeps the chroma:
+ * a translucent amber lands on whatever is behind it, and in the dark room that is the same
+ * lightness as an unlit day, so "a little" and "nothing" become one picture. Mixing toward the
+ * neutral plate separates them but turns the low step to mud.
+ */
+const FILL: Record<1 | 2 | 3, string> = {
+  1: "bg-[color-mix(in_oklab,var(--amber)_45%,var(--glass))]",
+  2: "bg-[color-mix(in_oklab,var(--amber)_75%,var(--glass))]",
+  3: "bg-amber",
+};
+
+/**
+ * The last seven days as seven lights: the lantern's glass, seen small. Lit when you reviewed
+ * that day, brighter for a fuller day. No streak count, no pressure — an unlit day is just an
+ * unlit day, and the flame beside it is what counts the run.
+ */
+export function SevenLights({ days, size = "sm", className }: Props) {
   const today = new Date();
   const labels = days.map((_, i) => {
     const d = new Date(today);
@@ -20,29 +57,41 @@ export function SevenLights({ days, className }: Props) {
     return DAY[(d.getDay() + 6) % 7] ?? "";
   });
   const lit = days.filter((n) => n > 0).length;
+  // A floor under the reference, so a week of two-card days does not read as a full week.
+  const reference = Math.max(...days, 10);
+  const large = size === "lg";
   return (
     <div
-      className={clsx("inline-flex items-end gap-2", className)}
+      className={clsx("inline-flex items-end", large ? "gap-2.5" : "gap-2", className)}
       role="img"
       aria-label={`Reviewed on ${lit} of the last ${days.length} days`}
     >
       {days.map((n, i) => {
-        const on = n > 0;
+        const l = level(n, reference);
         const isToday = i === days.length - 1;
         return (
           <span
             key={labels[i]}
-            className="grid justify-items-center gap-1.5"
+            className={clsx("grid justify-items-center", large ? "gap-2" : "gap-1.5")}
             title={`${labels[i]}: ${n} reviewed`}
           >
             <i
               className={clsx(
-                "block h-[18px] w-[13px] rounded-[4px_4px_5px_5px] transition-[background-color,box-shadow] duration-300",
-                on ? "bg-amber" : "edge bg-plate-2",
-                isToday && !on && "edge-2",
+                "block transition-[background-color,box-shadow] duration-300",
+                large
+                  ? "h-11 w-8 rounded-[6px_6px_8px_8px]"
+                  : "h-[18px] w-[13px] rounded-[4px_4px_5px_5px]",
+                l === 0 ? "edge-inset bg-plate-2" : FILL[l],
+                isToday && l === 0 && "edge-2",
               )}
             />
-            <span className={clsx("text-2xs tabular-nums", isToday ? "text-text-2" : "text-faint")}>
+            <span
+              className={clsx(
+                "tabular-nums",
+                large ? "text-xs" : "text-2xs",
+                isToday ? "font-medium text-text-2" : "text-faint",
+              )}
+            >
               {labels[i]?.[0]}
             </span>
           </span>

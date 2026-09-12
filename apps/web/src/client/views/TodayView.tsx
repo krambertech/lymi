@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
 import { Avatar } from "../components/Avatar";
 import { Button, buttonClass } from "../components/Button";
+import { Flame } from "../components/Flame";
 import { Lantern } from "../components/Lantern";
 import { NavLink } from "../components/NavLink";
 import type { NewCards } from "../components/NewCardsRow";
@@ -164,19 +165,24 @@ export function TodayView({
             decks, and the hero is centred, so it has to hold its room in both states or the
             whole screen jolts upward when the lights land. */}
         {loading || history === undefined ? (
-          <div className="mt-7 grid justify-items-center gap-3" aria-hidden="true">
-            <Skeleton className="h-[38px] w-[139px]" />
-            <Skeleton className="h-[19px] w-28" />
+          <div className="mt-8 grid justify-items-center gap-3.5" aria-hidden="true">
+            <Skeleton className="h-6 w-36" />
+            <Skeleton className="h-[68px] w-[269px]" />
           </div>
         ) : (
           everReviewed && (
-            <>
-              <SevenLights days={history.slice(-7)} className="mt-7" />
-              <p className="mt-3 text-sm text-muted tabular-nums">
+            <div className="mt-8 grid justify-items-center gap-3.5">
+              {/* The flame counts the run; the lights say which days and how full each was.
+                  One statement each, which is the whole of the streak. */}
+              <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
+                <Flame className="size-7" flicker={run > 0} />
                 {plural(run, "day", "days")} in a row
-                {lit && forecast ? ` · ${forecast}` : ""}
               </p>
-            </>
+              <SevenLights days={history.slice(-7)} size="lg" />
+              {lit && forecast && (
+                <p className="mt-1 text-sm text-muted tabular-nums">{forecast}</p>
+              )}
+            </div>
           )
         )}
       </section>

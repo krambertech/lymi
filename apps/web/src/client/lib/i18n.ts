@@ -1,5 +1,5 @@
-import { i18n } from "@lingui/core";
-import { AppLanguage } from "@lymi/core";
+import { type I18n, i18n } from "@lingui/core";
+import { AppLanguage, interval } from "@lymi/core";
 import { messages as en } from "../../locales/en.po";
 import { messages as ru } from "../../locales/ru.po";
 import { messages as uk } from "../../locales/uk.po";
@@ -61,4 +61,10 @@ export function bootstrapLanguage(pathname: string) {
 
 export function isBareShell(pathname: string): boolean {
   return pathname === "/login" || pathname === "/consent" || pathname.startsWith("/design");
+}
+
+/** "2 d" in English, "2 дн." in Ukrainian: the browser's own narrow unit for the active locale. */
+export function intervalLabel(i18n: I18n, from: Date, to: Date): string {
+  const { value, unit } = interval(from, to);
+  return i18n.number(value, { style: "unit", unit, unitDisplay: "narrow" });
 }

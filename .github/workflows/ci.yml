@@ -62,6 +62,10 @@ jobs:
         id: check
         run: pnpm check
 
+      - name: Check interface strings are extracted
+        id: i18n
+        run: pnpm i18n:check
+
       - name: Check migration safety
         id: migrations
         env:

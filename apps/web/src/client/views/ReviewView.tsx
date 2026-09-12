@@ -1,7 +1,7 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { interval, type Rating } from "@lymi/core";
+import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Brain,
@@ -23,6 +23,7 @@ import { Progress } from "../components/Progress";
 import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
 import type { QueueItem } from "../lib/api";
+import { intervalLabel } from "../lib/i18n";
 
 export const GRADES: {
   rating: Rating;
@@ -301,7 +302,7 @@ export function GradeBar({
           const saving = pending && pendingRating === g.rating;
           const GradeIcon = g.icon;
           const label = i18n._(g.label);
-          const schedules = next ? scheduleLabel(i18n, now, new Date(next[g.rating])) : undefined;
+          const schedules = next ? intervalLabel(i18n, now, new Date(next[g.rating])) : undefined;
           return (
             <button
               key={g.rating}
@@ -464,10 +465,4 @@ export function ReviewSkeleton() {
       <Skeleton className="mx-auto h-4 w-32 rounded-sm" />
     </div>
   );
-}
-
-/** "2 d" in English, "2 дн." in Ukrainian: the browser's own narrow unit for the active locale. */
-function scheduleLabel(i18n: I18n, from: Date, to: Date): string {
-  const { value, unit } = interval(from, to);
-  return i18n.number(value, { style: "unit", unit, unitDisplay: "narrow" });
 }

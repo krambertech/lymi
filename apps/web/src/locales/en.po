@@ -13,15 +13,21 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#. placeholder {0}: deck.total
-#: src/client/views/DeckDetailView.tsx
-msgid "{0, plural, one {# card} other {# cards}}"
-msgstr "{0, plural, one {# card} other {# cards}}"
-
 #. placeholder {0}: decks.length
 #: src/client/views/LibraryView.tsx
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
+
+#. placeholder {0}: fsrs.reps
+#: src/client/views/WordView.tsx
+msgid "{0, plural, one {# review} other {# reviews}}"
+msgstr "{0, plural, one {# review} other {# reviews}}"
+
+#. placeholder {0}: fsrs.reps
+#. placeholder {1}: fsrs.lapses
+#: src/client/views/WordView.tsx
+msgid "{0, plural, one {# review} other {# reviews}}, {1, plural, one {# lapse} other {# lapses}}"
+msgstr "{0, plural, one {# review} other {# reviews}}, {1, plural, one {# lapse} other {# lapses}}"
 
 #. placeholder {0}: cards.total
 #: src/client/views/InsightsView.tsx
@@ -38,11 +44,6 @@ msgstr "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {
 #: src/client/components/ApiKeysSection.tsx
 msgid "{0} · created {1}"
 msgstr "{0} · created {1}"
-
-#. placeholder {0}: deck.due
-#: src/client/views/DeckDetailView.tsx
-msgid "{0} due today"
-msgstr "{0} due today"
 
 #. placeholder {0}: c.lapses
 #. placeholder {1}: c.reviews
@@ -92,6 +93,10 @@ msgstr "{appName} is connected"
 msgid "{appName} was not connected"
 msgstr "{appName} was not connected"
 
+#: src/client/views/LibraryView.tsx
+msgid "{archivedCount, plural, one {# deck put away} other {# decks put away}}"
+msgstr "{archivedCount, plural, one {# deck put away} other {# decks put away}}"
+
 #: src/client/components/NewCardsRow.tsx
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# new} other {# new}}"
@@ -104,9 +109,13 @@ msgstr "{day} none"
 msgid "{day}: {n} reviewed"
 msgstr "{day}: {n} reviewed"
 
-#: src/client/views/DeckDetailView.tsx
-msgid "{days} d"
-msgstr "{days} d"
+#: src/client/views/WordView.tsx
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr "{days, plural, one {# day} other {# days}}"
+
+#: src/client/views/WordView.tsx
+msgid "{days, plural, one {Due in # day} other {Due in # days}}"
+msgstr "{days, plural, one {Due in # day} other {Due in # days}}"
 
 #: src/client/views/InsightsView.tsx
 msgid "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
@@ -115,6 +124,10 @@ msgstr "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of
 #: src/client/views/InsightsView.tsx
 msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 msgstr "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
+
+#: src/client/views/WordView.tsx
+msgid "{direction} · {when}, {then}"
+msgstr "{direction} · {when}, {then}"
 
 #: src/client/views/ReviewView.tsx
 msgid "{done} of {total}"
@@ -129,9 +142,8 @@ msgid "{done} reviewed. The rest can wait a while."
 msgstr "{done} reviewed. The rest can wait a while."
 
 #: src/client/components/DeckCard.tsx
-#: src/client/views/LibraryView.tsx
-msgid "{due, plural, one {# due} other {# due}}"
-msgstr "{due, plural, one {# due} other {# due}}"
+msgid "{due, plural, one {# due today} other {# due today}}"
+msgstr "{due, plural, one {# due today} other {# due today}}"
 
 #: src/server/push-delivery.ts
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
@@ -141,10 +153,6 @@ msgstr "{due, plural, one {One card is waiting when you have a moment.} other {#
 msgid "{due} due"
 msgstr "{due} due"
 
-#: src/client/views/LibraryView.tsx
-msgid "{dueDecks, plural, one {across # deck} other {across # decks}}"
-msgstr "{dueDecks, plural, one {across # deck} other {across # decks}}"
-
 #: src/client/views/InsightsView.tsx
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
@@ -153,13 +161,13 @@ msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards 
 msgid "{first} and {second}"
 msgstr "{first} and {second}"
 
-#: src/client/components/DeckCard.tsx
-msgid "{fresh, plural, one {# new} other {# new}}"
-msgstr "{fresh, plural, one {# new} other {# new}}"
-
 #: src/client/views/InsightsView.tsx
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
+
+#: src/client/components/StateStripe.tsx
+msgid "{known} known, {learning} learning, {fresh} new"
+msgstr "{known} known, {learning} learning, {fresh} new"
 
 #: src/client/views/ReviewView.tsx
 msgid "{label}, next in {schedules}"
@@ -173,9 +181,17 @@ msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 
-#: src/client/views/DeckDetailView.tsx
-msgid "{months} mo"
-msgstr "{months} mo"
+#: src/client/views/WordView.tsx
+msgid "{list}, by {who}"
+msgstr "{list}, by {who}"
+
+#: src/client/views/WordView.tsx
+msgid "{months, plural, one {# month} other {# months}}"
+msgstr "{months, plural, one {# month} other {# months}}"
+
+#: src/client/views/WordView.tsx
+msgid "{months, plural, one {Due in # month} other {Due in # months}}"
+msgstr "{months, plural, one {Due in # month} other {Due in # months}}"
 
 #: src/client/views/TodayView.tsx
 msgid "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
@@ -189,6 +205,10 @@ msgstr "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready 
 msgid "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
 msgstr "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
 
+#: src/client/views/DeckDetailView.tsx
+msgid "{n, plural, one {# review} other {# reviews}}"
+msgstr "{n, plural, one {# review} other {# reviews}}"
+
 #: src/client/views/TodayView.tsx
 msgid "{run, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{run, plural, one {# day in a row} other {# days in a row}}"
@@ -198,6 +218,7 @@ msgid "{total, plural, one {# card in your decks, all ahead of you.} other {# ca
 msgstr "{total, plural, one {# card in your decks, all ahead of you.} other {# cards in your decks, all ahead of you.}}"
 
 #: src/client/components/DeckCard.tsx
+#: src/client/views/DeckDetailView.tsx
 #: src/client/views/YouView.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
@@ -206,10 +227,26 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 msgid "{unseen, plural, one {# new} other {# new}}"
 msgstr "{unseen, plural, one {# new} other {# new}}"
 
+#: src/client/views/WordView.tsx
+msgid "{when}, {then}"
+msgstr "{when}, {then}"
+
 #. placeholder {0}: consistency.days.length
 #: src/client/views/InsightsView.tsx
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
+
+#: src/client/components/StateStripe.tsx
+msgid "<0>{fresh}</0> new"
+msgstr "<0>{fresh}</0> new"
+
+#: src/client/components/StateStripe.tsx
+msgid "<0>{known}</0> known"
+msgstr "<0>{known}</0> known"
+
+#: src/client/components/StateStripe.tsx
+msgid "<0>{learning}</0> learning"
+msgstr "<0>{learning}</0> learning"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "<0>{name}</0> is ready. Copy it now — it is not shown again."
@@ -223,9 +260,21 @@ msgstr "30 days"
 msgid "90 days"
 msgstr "90 days"
 
+#: src/client/views/WordView.tsx
+msgid "a connected app"
+msgstr "a connected app"
+
+#: src/client/views/WordView.tsx
+msgid "a day"
+msgstr "a day"
+
 #: src/server/push-delivery.ts
 msgid "A few words are ready"
 msgstr "A few words are ready"
+
+#: src/client/views/WordView.tsx
+msgid "a field"
+msgstr "a field"
 
 #: src/client/views/ReviewView.tsx
 msgid "A good pause"
@@ -235,9 +284,18 @@ msgstr "A good pause"
 msgid "A note to yourself about what is in here."
 msgstr "A note to yourself about what is in here."
 
+#: src/client/views/WordView.tsx
+msgid "A sentence it lives in"
+msgstr "A sentence it lives in"
+
 #: src/client/components/AddCardSheet.tsx
 msgid "A word lands in a deck. Make the first one and this word goes in it."
 msgstr "A word lands in a deck. Make the first one and this word goes in it."
+
+#. placeholder {0}: i18n.number(recall, { style: "percent", maximumFractionDigits: 0 })
+#: src/client/components/StateStripe.tsx
+msgid "about {0} would come back today"
+msgstr "about {0} would come back today"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Access"
@@ -258,6 +316,14 @@ msgstr "Activity"
 #: src/client/components/AddMenu.tsx
 msgid "Add"
 msgstr "Add"
+
+#: src/client/views/WordView.tsx
+msgid "Add a meaning"
+msgstr "Add a meaning"
+
+#: src/client/views/WordView.tsx
+msgid "Add a sentence it lives in"
+msgstr "Add a sentence it lives in"
 
 #: src/client/views/TodayView.tsx
 #: src/client/views/YouView.tsx
@@ -292,6 +358,10 @@ msgstr "Add word"
 msgid "Add, edit and archive cards"
 msgstr "Add, edit and archive cards"
 
+#: src/client/views/WordView.tsx
+msgid "Added"
+msgstr "Added"
+
 #: src/client/components/AddCardSheet.tsx
 msgid "Added “{added}”"
 msgstr "Added “{added}”"
@@ -299,6 +369,11 @@ msgstr "Added “{added}”"
 #: src/client/components/DeckFields.tsx
 msgid "Adding a way asks every card in the deck that way, starting now. Taking one away keeps its progress; it just stops being asked."
 msgstr "Adding a way asks every card in the deck that way, starting now. Taking one away keeps its progress; it just stops being asked."
+
+#. placeholder {0}: spanLabel(i18n, r.elapsedDays)
+#: src/client/views/WordView.tsx
+msgid "after {0}"
+msgstr "after {0}"
 
 #: src/client/views/InsightsView.tsx
 msgid "Ahead"
@@ -316,6 +391,7 @@ msgstr "AI meaning"
 msgid "AI wrote this"
 msgstr "AI wrote this"
 
+#: src/client/views/DeckDetailView.tsx
 #: src/client/views/InsightsView.tsx
 msgid "All"
 msgstr "All"
@@ -344,6 +420,10 @@ msgstr "an app with no address"
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
 
+#: src/client/views/WordView.tsx
+msgid "Anything to remember it by"
+msgstr "Anything to remember it by"
+
 #: src/client/components/ApiKeysSection.tsx
 msgid "API key for {name}"
 msgstr "API key for {name}"
@@ -361,13 +441,9 @@ msgid "Appearance"
 msgstr "Appearance"
 
 #: src/client/views/DeckSettingsView.tsx
+#: src/client/views/WordView.tsx
 msgid "Archive"
 msgstr "Archive"
-
-#. placeholder {0}: card.term
-#: src/client/views/DeckDetailView.tsx
-msgid "Archive {0}"
-msgstr "Archive {0}"
 
 #: src/client/views/DeckDetailView.tsx
 #: src/client/views/DeckSettingsView.tsx
@@ -376,18 +452,31 @@ msgstr "Archive deck"
 
 #: src/client/routes/archived.tsx
 #: src/client/views/LibraryView.tsx
+#: src/client/views/WordView.tsx
 #: src/client/views/YouView.tsx
 msgid "Archived"
 msgstr "Archived"
 
 #: src/client/routes/library.$deckId.tsx
+msgid "Archived “{archivedTerm}”"
+msgstr "Archived “{archivedTerm}”"
+
 #: src/client/routes/library.tsx
-msgid "Archived “{archivedName}”"
-msgstr "Archived “{archivedName}”"
+msgid "Archived “{deckName}”"
+msgstr "Archived “{deckName}”"
+
+#. placeholder {0}: listOf( schedules.map((x) => directionLabel(x.st.direction).toLocaleLowerCase(i18n.locale), ), i18n.locale, )
+#: src/client/views/WordView.tsx
+msgid "asked by {0}"
+msgstr "asked by {0}"
 
 #: src/client/routes/review.tsx
 msgid "Back"
 msgstr "Back"
+
+#: src/client/views/WordView.tsx
+msgid "back within the day"
+msgstr "back within the day"
 
 #: src/client/components/DeckFields.tsx
 msgid "Both"
@@ -400,6 +489,14 @@ msgstr "Both of the above, one card at a time."
 #: src/client/components/DeckFields.tsx
 msgid "Both ways"
 msgstr "Both ways"
+
+#: src/client/views/WordView.tsx
+msgid "by {who}"
+msgstr "by {who}"
+
+#: src/client/views/WordView.tsx
+msgid "by {who} · meaning from the lesson"
+msgstr "by {who} · meaning from the lesson"
 
 #. placeholder {0}: app.claimed
 #: src/client/components/ConnectedAppsSection.tsx
@@ -448,7 +545,12 @@ msgstr "Choose one"
 msgid "Claude Code on the laptop"
 msgstr "Claude Code on the laptop"
 
+#: src/client/views/DeckDetailView.tsx
+msgid "Clear"
+msgstr "Clear"
+
 #: src/client/components/NotificationsSection.tsx
+#: src/client/views/WordView.tsx
 msgid "Close"
 msgstr "Close"
 
@@ -495,6 +597,10 @@ msgstr "Copy"
 #: src/client/views/InsightsView.tsx
 msgid "Could not load your numbers"
 msgstr "Could not load your numbers"
+
+#: src/client/routes/library.$deckId.tsx
+msgid "Couldn’t save “{failedTerm}”. Check the connection."
+msgstr "Couldn’t save “{failedTerm}”. Check the connection."
 
 #: src/client/components/NewDeckSheet.tsx
 msgid "Create deck"
@@ -562,6 +668,7 @@ msgstr "Disconnect"
 
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/routes/review.tsx
+#: src/client/views/WordView.tsx
 msgid "Done"
 msgstr "Done"
 
@@ -569,25 +676,59 @@ msgstr "Done"
 msgid "due this week"
 msgstr "due this week"
 
+#: src/client/views/WordView.tsx
+msgid "Due today"
+msgstr "Due today"
+
+#: src/client/views/WordView.tsx
+msgid "Due tomorrow"
+msgstr "Due tomorrow"
+
 #: src/client/views/InsightsView.tsx
 msgid "Each block is a day. They join up when you keep going."
 msgstr "Each block is a day. They join up when you keep going."
 
 #: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
 msgid "Easy"
 msgstr "Easy"
+
+#: src/client/views/WordView.tsx
+msgid "Edit"
+msgstr "Edit"
+
+#. placeholder {0}: label.toLocaleLowerCase(i18n.locale)
+#: src/client/views/WordView.tsx
+msgid "Edit {0}"
+msgstr "Edit {0}"
+
+#: src/client/views/WordView.tsx
+msgid "Edited"
+msgstr "Edited"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Empty deck"
 msgstr "Empty deck"
 
+#: src/client/views/WordView.tsx
+msgid "Enriched"
+msgstr "Enriched"
+
 #: src/client/components/DeckFields.tsx
 msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
 
+#: src/client/views/DeckDetailView.tsx
+msgid "Every word in this deck is somewhere else in the schedule."
+msgstr "Every word in this deck is somewhere else in the schedule."
+
 #: src/client/routes/activity.tsx
 msgid "Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here."
 msgstr "Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here."
+
+#: src/client/views/WordView.tsx
+msgid "Example"
+msgstr "Example"
 
 #: src/client/components/Chip.tsx
 msgid "Example by you"
@@ -601,11 +742,16 @@ msgstr "Example from lesson"
 msgid "Export as CSV"
 msgstr "Export as CSV"
 
+#: src/client/views/WordView.tsx
+msgid "first time"
+msgstr "first time"
+
 #: src/client/components/ApiKeysSection.tsx
 msgid "For curl, scripts and Claude Code. Send the key in an <0>x-api-key</0> header; the routes are in the <1>API reference</1>. MCP clients such as Claude Desktop sign in instead, and appear under Connected apps."
 msgstr "For curl, scripts and Claude Code. Send the key in an <0>x-api-key</0> header; the routes are in the <1>API reference</1>. MCP clients such as Claude Desktop sign in instead, and appear under Connected apps."
 
 #: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
 msgid "Forgot"
 msgstr "Forgot"
 
@@ -619,6 +765,7 @@ msgid "Forgotten {0}+ times"
 msgstr "Forgotten {0}+ times"
 
 #: src/client/components/Chip.tsx
+#: src/client/views/WordView.tsx
 msgid "From the lesson"
 msgstr "From the lesson"
 
@@ -627,6 +774,7 @@ msgid "Give the deck a name."
 msgstr "Give the deck a name."
 
 #: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
 msgid "Good"
 msgstr "Good"
 
@@ -639,12 +787,17 @@ msgid "Granting as <0>{email}</0>"
 msgstr "Granting as <0>{email}</0>"
 
 #: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
 msgid "Hard"
 msgstr "Hard"
 
 #: src/client/views/ConnectedView.tsx
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
+
+#: src/client/views/WordView.tsx
+msgid "History"
+msgstr "History"
 
 #: src/client/components/DeckFields.tsx
 msgid "How cards are asked"
@@ -653,6 +806,10 @@ msgstr "How cards are asked"
 #: src/client/views/InsightsView.tsx
 msgid "How far back the recall figure looks"
 msgstr "How far back the recall figure looks"
+
+#: src/client/views/WordView.tsx
+msgid "how it is asked"
+msgstr "how it is asked"
 
 #: src/client/components/DeckFields.tsx
 #: src/client/views/DeckSettingsView.tsx
@@ -727,16 +884,28 @@ msgid "Keys never grade reviews."
 msgstr "Keys never grade reviews."
 
 #: src/client/components/Chip.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/WordView.tsx
 msgid "Known"
 msgstr "Known"
+
+#: src/client/views/WordView.tsx
+msgid "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
+msgstr "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
 
 #: src/client/components/DeckFields.tsx
 msgid "Language"
 msgstr "Language"
 
 #: src/client/components/Chip.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/WordView.tsx
 msgid "Learning"
 msgstr "Learning"
+
+#: src/client/views/WordView.tsx
+msgid "Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart."
+msgstr "Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart."
 
 #: src/client/components/AddCardSheet.tsx
 msgid "Leave it empty and AI can suggest one later."
@@ -777,6 +946,10 @@ msgstr "List, search and read them. Any connector needs this."
 msgid "Lists and searches decks and cards."
 msgstr "Lists and searches decks and cards."
 
+#: src/client/views/WordView.tsx
+msgid "Lymi"
+msgstr "Lymi"
+
 #: src/client/views/ConsentView.tsx
 msgid "Lymi does not recognise this app. Check the address is one you meant to use."
 msgstr "Lymi does not recognise this app. Check the address is one you meant to use."
@@ -810,7 +983,7 @@ msgid "MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting
 msgstr "MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app renewing its access, so it is locked out within the hour and has to ask again."
 
 #: src/client/components/AddCardSheet.tsx
-#: src/client/views/DeckDetailView.tsx
+#: src/client/views/WordView.tsx
 msgid "Meaning"
 msgstr "Meaning"
 
@@ -825,6 +998,19 @@ msgstr "Meaning from lesson"
 #: src/client/views/InsightsView.tsx
 msgid "Month by month"
 msgstr "Month by month"
+
+#. placeholder {0}: card.term
+#: src/client/views/WordView.tsx
+msgid "Move “{0}” to"
+msgstr "Move “{0}” to"
+
+#: src/client/views/WordView.tsx
+msgid "Move to…"
+msgstr "Move to…"
+
+#: src/client/views/WordView.tsx
+msgid "Moved"
+msgstr "Moved"
 
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/components/NewDeckSheet.tsx
@@ -848,7 +1034,13 @@ msgstr "never used"
 msgid "Never, whatever you choose"
 msgstr "Never, whatever you choose"
 
+#: src/client/views/DeckDetailView.tsx
+msgid "new"
+msgstr "new"
+
 #: src/client/components/Chip.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/WordView.tsx
 msgid "New"
 msgstr "New"
 
@@ -863,6 +1055,10 @@ msgstr "New deck"
 msgid "New key"
 msgstr "New key"
 
+#: src/client/views/WordView.tsx
+msgid "New means it has not been asked yet. It joins the next review."
+msgstr "New means it has not been asked yet. It joins the next review."
+
 #: src/client/views/TodayView.tsx
 msgid "New since your last review"
 msgstr "New since your last review"
@@ -871,13 +1067,18 @@ msgstr "New since your last review"
 msgid "New word"
 msgstr "New word"
 
-#: src/client/views/DeckDetailView.tsx
-msgid "Next"
-msgstr "Next"
-
 #: src/client/components/DeckCard.tsx
 msgid "Next {next}"
 msgstr "Next {next}"
+
+#. placeholder {0}: spanLabel(i18n, r.scheduledDays)
+#: src/client/views/WordView.tsx
+msgid "next in {0}"
+msgstr "next in {0}"
+
+#: src/client/views/WordView.tsx
+msgid "Next word"
+msgstr "Next word"
 
 #: src/client/views/LibraryView.tsx
 msgid "No decks yet"
@@ -895,6 +1096,11 @@ msgstr "No language"
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "No language by that name. Type its tag to use it anyway."
 
+#: src/client/views/DeckDetailView.tsx
+msgid "No lesson"
+msgstr "No lesson"
+
+#: src/client/views/DeckDetailView.tsx
 #: src/client/views/ReviewView.tsx
 msgid "No meaning yet"
 msgstr "No meaning yet"
@@ -907,9 +1113,17 @@ msgstr "No reviews yet. Each block here will be a day."
 msgid "No streak yet"
 msgstr "No streak yet"
 
+#: src/client/views/WordView.tsx
+msgid "Not asked yet. It joins the next review."
+msgstr "Not asked yet. It joins the next review."
+
 #: src/client/views/ComingSoonView.tsx
 msgid "Not yet"
 msgstr "Not yet"
+
+#: src/client/views/WordView.tsx
+msgid "Notes"
+msgstr "Notes"
 
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Nothing connected."
@@ -924,17 +1138,25 @@ msgstr "Nothing due"
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
 msgstr "Nothing has come back for a second look yet, so there is nothing honest to report."
 
+#: src/client/views/DeckDetailView.tsx
+msgid "Nothing here"
+msgstr "Nothing here"
+
 #: src/client/views/TodayView.tsx
 msgid "Nothing here yet"
 msgstr "Nothing here yet"
+
+#: src/client/components/DeckCard.tsx
+msgid "Nothing in it yet"
+msgstr "Nothing in it yet"
 
 #: src/client/components/Combobox.tsx
 msgid "Nothing matches"
 msgstr "Nothing matches"
 
 #: src/client/views/DeckDetailView.tsx
-msgid "Nothing matches “{q}”."
-msgstr "Nothing matches “{q}”."
+msgid "Nothing matches “{q}”"
+msgstr "Nothing matches “{q}”"
 
 #: src/client/views/InsightsView.tsx
 msgid "Nothing to say yet"
@@ -943,6 +1165,10 @@ msgstr "Nothing to say yet"
 #: src/client/views/ConnectedView.tsx
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Nothing was shared. You can start again from {appName} whenever you like."
+
+#: src/client/views/WordView.tsx
+msgid "Nothing yet."
+msgstr "Nothing yet."
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Notifications are blocked in your browser or device settings."
@@ -957,8 +1183,8 @@ msgid "Notifications weren't enabled. You can try again when you're ready."
 msgstr "Notifications weren't enabled. You can try again when you're ready."
 
 #: src/client/views/LibraryView.tsx
-msgid "One per lesson works well, or one per topic. You can move cards later."
-msgstr "One per lesson works well, or one per topic. You can move cards later."
+msgid "One per course works well, or one per topic. Words remember which lesson they came from."
+msgstr "One per course works well, or one per topic. Words remember which lesson they came from."
 
 #: src/server/push-delivery.ts
 msgid "One word is ready"
@@ -1002,6 +1228,10 @@ msgstr "peak, {0}"
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
+#: src/client/views/WordView.tsx
+msgid "Previous word"
+msgstr "Previous word"
+
 #: src/client/views/ReviewView.tsx
 msgid "Produce"
 msgstr "Produce"
@@ -1014,6 +1244,7 @@ msgstr "Production"
 msgid "Production card for {front}"
 msgstr "Production card for {front}"
 
+#: src/client/routes/library.$deckId.tsx
 #: src/client/routes/review.tsx
 msgid "Pronunciation audio is unavailable. Try again in a moment."
 msgstr "Pronunciation audio is unavailable. Try again in a moment."
@@ -1057,6 +1288,7 @@ msgid "Recognition card for {front}"
 msgstr "Recognition card for {front}"
 
 #: src/client/components/Chip.tsx
+#: src/client/views/WordView.tsx
 msgid "Relearning"
 msgstr "Relearning"
 
@@ -1088,11 +1320,18 @@ msgstr "Replay pronunciation"
 msgid "Request an invitation"
 msgstr "Request an invitation"
 
+#: src/client/views/WordView.tsx
+msgid "Restored"
+msgstr "Restored"
+
+#: src/client/routes/library.$deckId.tsx
+msgid "Retry"
+msgstr "Retry"
+
 #: src/client/views/ReviewView.tsx
 msgid "Reveal the card when you have it"
 msgstr "Reveal the card when you have it"
 
-#: src/client/views/LibraryView.tsx
 #: src/client/views/TodayView.tsx
 msgid "Review"
 msgstr "Review"
@@ -1130,6 +1369,10 @@ msgstr "Revoke instead"
 msgid "Revoke key"
 msgstr "Revoke key"
 
+#: src/client/views/WordView.tsx
+msgid "Right now"
+msgstr "Right now"
+
 #: src/client/components/NotificationsSection.tsx
 msgid "Save reminder"
 msgstr "Save reminder"
@@ -1142,9 +1385,19 @@ msgstr "Saved"
 msgid "Saving…"
 msgstr "Saving…"
 
+#. placeholder {0}: card.term
+#: src/client/views/WordView.tsx
+msgid "Say {0}"
+msgstr "Say {0}"
+
 #: src/client/components/AddCardSheet.tsx
 msgid "sbrigarsi"
 msgstr "sbrigarsi"
+
+#. placeholder {0}: spanLabel(i18n, fsrs.scheduled_days)
+#: src/client/views/WordView.tsx
+msgid "scheduled after {0}"
+msgstr "scheduled after {0}"
 
 #: src/client/components/Combobox.tsx
 #: src/client/views/Shell.tsx
@@ -1155,6 +1408,10 @@ msgstr "Search"
 #: src/client/components/DeckFields.tsx
 msgid "Search languages"
 msgstr "Search languages"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Search looks at the word and its meaning."
+msgstr "Search looks at the word and its meaning."
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Search this deck"
@@ -1200,9 +1457,10 @@ msgstr "Session progress"
 msgid "Settings and account"
 msgstr "Settings and account"
 
+#: src/client/views/DeckDetailView.tsx
 #: src/client/views/LibraryView.tsx
-msgid "Show {archivedCount}"
-msgstr "Show {archivedCount}"
+msgid "Show"
+msgstr "Show"
 
 #: src/client/views/YouView.tsx
 msgid "Show the meaning, then Good"
@@ -1249,13 +1507,18 @@ msgstr "Something went wrong ({0})"
 msgid "Something went wrong. Try again from the app."
 msgstr "Something went wrong. Try again from the app."
 
+#. placeholder {0}: i18n.number(fsrs.difficulty, { minimumFractionDigits: 1, maximumFractionDigits: 1, })
+#: src/client/views/WordView.tsx
+msgid "stability · difficulty {0}"
+msgstr "stability · difficulty {0}"
+
 #: src/client/views/YouView.tsx
 msgid "Start review"
 msgstr "Start review"
 
-#: src/client/views/DeckDetailView.tsx
-msgid "Status"
-msgstr "Status"
+#: src/client/views/WordView.tsx
+msgid "still in its first steps"
+msgstr "still in its first steps"
 
 #: src/client/views/LoginView.tsx
 msgid "Still need an invitation?"
@@ -1297,6 +1560,22 @@ msgstr "That sign-in did not finish. Try again."
 msgid "That’s the lot"
 msgstr "That’s the lot"
 
+#: src/client/views/WordView.tsx
+msgid "the AI"
+msgstr "the AI"
+
+#: src/client/views/WordView.tsx
+msgid "the AI wrote {what}"
+msgstr "the AI wrote {what}"
+
+#: src/client/views/WordView.tsx
+msgid "The AI wrote this"
+msgstr "The AI wrote this"
+
+#: src/client/views/WordView.tsx
+msgid "the API"
+msgstr "the API"
+
 #: src/client/routes/consent.tsx
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "The app did not say where to go next. Try again from the app."
@@ -1304,6 +1583,14 @@ msgstr "The app did not say where to go next. Try again from the app."
 #: src/client/views/DeckSettingsView.tsx
 msgid "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
 msgstr "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
+
+#: src/client/views/WordView.tsx
+msgid "the example"
+msgstr "the example"
+
+#: src/client/views/WordView.tsx
+msgid "the language"
+msgstr "the language"
 
 #: src/client/components/DeckFields.tsx
 msgid "The language the words are in. It fills in on every new card."
@@ -1313,9 +1600,30 @@ msgstr "The language the words are in. It fills in on every new card."
 msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You."
 msgstr "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You."
 
+#: src/client/views/WordView.tsx
+msgid "the meaning"
+msgstr "the meaning"
+
+#: src/client/views/WordView.tsx
+msgid "the notes"
+msgstr "the notes"
+
+#: src/client/views/WordView.tsx
+msgid "the pronunciation"
+msgstr "the pronunciation"
+
 #: src/client/views/InsightsView.tsx
 msgid "The request did not come back. Nothing is lost; try again."
 msgstr "The request did not come back. Nothing is lost; try again."
+
+#: src/client/views/WordView.tsx
+msgid "the tags"
+msgstr "the tags"
+
+#: src/client/routes/library.$deckId.tsx
+#: src/client/views/WordView.tsx
+msgid "the word"
+msgstr "the word"
 
 #: src/client/views/YouView.tsx
 msgid "Theme"
@@ -1332,6 +1640,10 @@ msgstr "This Google account has not been invited. Request an invitation, or try 
 #: src/client/routes/consent.tsx
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
+
+#: src/client/views/WordView.tsx
+msgid "to another deck, by {who}"
+msgstr "to another deck, by {who}"
 
 #: src/client/components/AddCardSheet.tsx
 msgid "to hurry up"
@@ -1425,9 +1737,17 @@ msgstr "week of {0}"
 msgid "What it adds lands at once, labelled, and you can undo any of it."
 msgstr "What it adds lands at once, labelled, and you can undo any of it."
 
-#: src/client/views/DeckDetailView.tsx
-msgid "Word"
-msgstr "Word"
+#: src/client/views/WordView.tsx
+msgid "What it means"
+msgstr "What it means"
+
+#: src/client/views/WordView.tsx
+msgid "within the day"
+msgstr "within the day"
+
+#: src/client/views/WordView.tsx
+msgid "Word options"
+msgstr "Word options"
 
 #: src/client/components/AddCardSheet.tsx
 msgid "Word or phrase"
@@ -1436,6 +1756,14 @@ msgstr "Word or phrase"
 #: src/client/views/DeckSettingsView.tsx
 msgid "Words from Marco’s Tuesday lessons."
 msgstr "Words from Marco’s Tuesday lessons."
+
+#: src/client/views/WordView.tsx
+msgid "would come back right now"
+msgstr "would come back right now"
+
+#: src/client/views/WordView.tsx
+msgid "you"
+msgstr "you"
 
 #: src/client/views/Shell.tsx
 #: src/client/views/TodayView.tsx
@@ -1451,5 +1779,6 @@ msgid "You can close this tab."
 msgstr "You can close this tab."
 
 #: src/client/components/Chip.tsx
+#: src/client/views/WordView.tsx
 msgid "You wrote this"
 msgstr "You wrote this"

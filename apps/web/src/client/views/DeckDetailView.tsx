@@ -1,3 +1,5 @@
+import { plural } from "@lingui/core/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { deserializeState, retrievability } from "@lymi/core";
 import type { Card, CardState, Review } from "@lymi/core/schema";
 import { Link } from "@tanstack/react-router";
@@ -22,6 +24,7 @@ import { Segmented } from "../components/Segmented";
 import { Skeleton } from "../components/Skeleton";
 import { StateStripe } from "../components/StateStripe";
 import type { DeckSummary } from "../lib/api";
+import { intervalLabel } from "../lib/i18n";
 import { Page, PageHeader, type StaticNav } from "./Shell";
 import { type WordEvent, type WordPatch, WordView } from "./WordView";
 
@@ -91,12 +94,10 @@ export function exportCsv(deckName: string, rows: Row[]) {
   URL.revokeObjectURL(url);
 }
 
-export function nextLabel(due: Date, now = Date.now()): string {
-  if (due.getTime() <= now) return "today";
-  const days = Math.round((due.getTime() - now) / 86_400_000);
-  if (days < 1) return "today";
-  if (days < 30) return `${days} d`;
-  return `${Math.round(days / 30)} mo`;
+/** Whole days until the card is due; 0 when it is due now or later today. */
+function daysUntil(due: Date, now = Date.now()): number {
+  if (due.getTime() <= now) return 0;
+  return Math.max(0, Math.round((due.getTime() - now) / 86_400_000));
 }
 
 /** FSRS state as a filter bucket: 0 new, 1 and 3 learning, 2 known. */
@@ -151,6 +152,7 @@ export function DeckDetailView({
   onMove,
   static: st,
 }: DeckDetailProps) {
+  const { t, i18n } = useLingui();
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [localOpen, setLocalOpen] = useState<string | null>(null);
@@ -336,18 +338,18 @@ export function DeckDetailView({
         </div>
       ) : null}
 
-      <Page className={clsx(open && "hidden @3xl:flex", open && "@3xl:mr-0 @3xl:max-w-none")}>
+      <Page className={clsx(open && "hidden @3xl:flex", open && "@3xl:me-0 @3xl:max-w-none")}>
         <PageHeader
           eyebrow={
             st ? (
               <a href="/library" onClick={(e) => e.preventDefault()} className={backCls}>
                 <ChevronLeft className="size-4" aria-hidden="true" />
-                Library
+                <Trans>Library</Trans>
               </a>
             ) : (
               <Link to="/library" className={backCls}>
                 <ChevronLeft className="size-4" aria-hidden="true" />
-                Library
+                <Trans>Library</Trans>
               </Link>
             )
           }
@@ -362,7 +364,7 @@ export function DeckDetailView({
                   if (e.key === "Enter") commitRename();
                   if (e.key === "Escape") setRenaming(false);
                 }}
-                aria-label="Deck name"
+                aria-label={t`Deck name`}
                 className="h-10 w-72 max-w-full text-2xl font-medium"
               />
             ) : deck ? (
@@ -375,7 +377,7 @@ export function DeckDetailView({
             deck
               ? [
                   deck.defaultLanguage ? languageName(deck.defaultLanguage) : null,
-                  `${total} ${total === 1 ? "card" : "cards"}`,
+                  t`${plural(total, { one: "# card", other: "# cards" })}`,
                   deck.directions !== "recognition" ? directionLabel(deck.directions) : null,
                 ]
                   .filter(Boolean)
@@ -386,24 +388,24 @@ export function DeckDetailView({
             <Menu>
               <MenuTrigger>
                 {(p) => (
-                  <IconButton label="Deck options" {...p}>
+                  <IconButton label={t`Deck options`} {...p}>
                     <MoreHorizontal />
                   </IconButton>
                 )}
               </MenuTrigger>
               <MenuList>
                 <MenuItem icon={<Settings2 />} onSelect={onSettings} disabled={!onSettings}>
-                  Deck settings
+                  <Trans>Deck settings</Trans>
                 </MenuItem>
                 <MenuItem icon={<Pencil />} onSelect={startRename} disabled={!deck || !onRename}>
-                  Rename
+                  <Trans>Rename</Trans>
                 </MenuItem>
                 <MenuItem
                   icon={<Download />}
                   onSelect={() => deck && cards && exportCsv(deck.name, cards)}
                   disabled={!deck || !cards?.length}
                 >
-                  Export as CSV
+                  <Trans>Export as CSV</Trans>
                 </MenuItem>
                 <MenuSeparator />
                 <MenuItem
@@ -412,7 +414,7 @@ export function DeckDetailView({
                   onSelect={onArchiveDeck}
                   disabled={!onArchiveDeck}
                 >
-                  Archive deck
+                  <Trans>Archive deck</Trans>
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -432,12 +434,12 @@ export function DeckDetailView({
           <div className="mt-5 flex gap-2">
             {deck && deck.due > 0 && (
               <Button variant="primary" onClick={onReview} aria-disabled={!onReview}>
-                Review {deck.due} due
+                <Trans>Review {deck.due} due</Trans>
               </Button>
             )}
             <Button onClick={onAdd} kbd="N">
               <Plus aria-hidden="true" />
-              Add word
+              <Trans>Add word</Trans>
             </Button>
           </div>
         </PageHeader>
@@ -446,29 +448,29 @@ export function DeckDetailView({
           <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-2">
             <Segmented
               size="sm"
-              label="Show"
+              label={t`Show`}
               value={filter}
               onChange={setFilter}
               options={[
-                { value: "all", label: filterLabel("All", cards.length) },
-                { value: "0", label: filterLabel("New", counts[0]) },
-                { value: "1", label: filterLabel("Learning", counts[1]) },
-                { value: "2", label: filterLabel("Known", counts[2]) },
+                { value: "all", label: filterLabel(t`All`, cards.length) },
+                { value: "0", label: filterLabel(t`New`, counts[0]) },
+                { value: "1", label: filterLabel(t`Learning`, counts[1]) },
+                { value: "2", label: filterLabel(t`Known`, counts[2]) },
               ]}
             />
-            <div className="relative min-w-0 basis-full @md:ml-auto @md:basis-44">
+            <div className="relative min-w-0 basis-full @md:ms-auto @md:basis-44">
               <Search
-                className="pointer-events-none absolute left-0 top-1/2 size-4 -translate-y-1/2 text-muted"
+                className="pointer-events-none absolute start-0 top-1/2 size-4 -translate-y-1/2 text-muted"
                 aria-hidden="true"
               />
               <input
                 ref={searchRef}
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="Search this deck"
-                aria-label="Search this deck"
+                placeholder={t`Search this deck`}
+                aria-label={t`Search this deck`}
                 autoComplete="off"
-                className="h-9 w-full bg-transparent pl-6 text-[16px] text-text outline-none placeholder:text-muted md:text-sm"
+                className="h-9 w-full bg-transparent ps-6 text-[16px] text-text outline-none placeholder:text-muted md:text-sm"
               />
             </div>
           </div>
@@ -485,11 +487,11 @@ export function DeckDetailView({
         {cards && cards.length === 0 && (
           <EmptyState
             lantern="none"
-            title="Empty deck"
-            body="Add the first word from your lesson. The lantern lights when a card is due."
+            title={t`Empty deck`}
+            body={t`Add the first word from your lesson. The lantern lights when a card is due.`}
             action={
               <Button variant="primary" onClick={onAdd}>
-                Add word
+                <Trans>Add word</Trans>
               </Button>
             }
             className="py-6"
@@ -502,13 +504,14 @@ export function DeckDetailView({
               <section key={g.key} className="grid">
                 {grouped && (
                   <h2 className="px-1 pb-1.5 pt-5 text-xs font-medium uppercase tracking-[0.06em] text-muted first:pt-2">
-                    {g.key || "No lesson"}
+                    {g.key || t`No lesson`}
                   </h2>
                 )}
                 <ul className="grid gap-px">
                   {g.rows.map(({ card, state }) => {
                     const isOpen = card.id === openId;
-                    const due = state ? nextLabel(new Date(state.due)) : null;
+                    const days = state ? daysUntil(new Date(state.due)) : null;
+                    const dueNow = days !== null && days < 1;
                     const n = reps(state);
                     return (
                       <li key={card.id}>
@@ -529,18 +532,26 @@ export function DeckDetailView({
                           <span
                             className={clsx(
                               "row-span-2 self-start text-right text-sm tabular-nums",
-                              due === "today" ? "font-semibold text-amber-text" : "text-muted",
+                              dueNow ? "font-semibold text-amber-text" : "text-muted",
                             )}
                           >
-                            {due ?? "new"}
+                            {days === null
+                              ? t`new`
+                              : dueNow
+                                ? t`today`
+                                : intervalLabel(i18n, new Date(0), new Date(days * 86_400_000))}
                             {n > 0 && (
                               <span className="block text-2xs font-normal text-muted">
-                                {n} {n === 1 ? "review" : "reviews"}
+                                <Plural value={n} one="# review" other="# reviews" />
                               </span>
                             )}
                           </span>
                           <span className="min-w-0 truncate text-base text-text-2">
-                            {card.meaning ?? <span className="text-faint">No meaning yet</span>}
+                            {card.meaning ?? (
+                              <span className="text-faint">
+                                <Trans>No meaning yet</Trans>
+                              </span>
+                            )}
                           </span>
                         </button>
                       </li>
@@ -555,11 +566,11 @@ export function DeckDetailView({
         {shown && shown.length === 0 && cards && cards.length > 0 && (
           <EmptyState
             lantern="none"
-            title={q ? `Nothing matches “${q}”` : "Nothing here"}
+            title={q ? t`Nothing matches “${q}”` : t`Nothing here`}
             body={
               q
-                ? "Search looks at the word and its meaning."
-                : "Every word in this deck is somewhere else in the schedule."
+                ? t`Search looks at the word and its meaning.`
+                : t`Every word in this deck is somewhere else in the schedule.`
             }
             action={
               <Button
@@ -568,7 +579,7 @@ export function DeckDetailView({
                   setFilter("all");
                 }}
               >
-                Clear
+                <Trans>Clear</Trans>
               </Button>
             }
             className="py-6"

@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
@@ -24,6 +25,7 @@ function Library() {
 }
 
 function DeckList() {
+  const { t } = useLingui();
   const qc = useQueryClient();
   const navigate = useNavigate();
   const { archived, name } = Route.useSearch();
@@ -52,6 +54,7 @@ function DeckList() {
     return { known, learning };
   }, [cardQueries, decks.data]);
 
+  const deckName = name ?? t`deck`;
   const clear = () => navigate({ to: "/library", search: {}, replace: true });
   const restore = useMutation({
     mutationFn: (id: string) => api.restoreDeck(id),
@@ -74,9 +77,9 @@ function DeckList() {
         <Toast
           key={archived}
           onDismiss={clear}
-          action={{ label: "Undo", onClick: () => restore.mutate(archived) }}
+          action={{ label: t`Undo`, onClick: () => restore.mutate(archived) }}
         >
-          Archived “{name ?? "deck"}”
+          <Trans>Archived “{deckName}”</Trans>
         </Toast>
       )}
     </>

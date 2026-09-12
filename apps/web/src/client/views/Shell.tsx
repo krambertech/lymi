@@ -58,7 +58,9 @@ interface SidebarProps {
 /**
  * Desktop navigation. It sits on the rail, one surface off the room, so chrome and content
  * never read as one wash. The lockup tops it on the same line as the page title beside it,
- * capture and search share that line, and the learner closes it under a rule.
+ * capture and search share that line, and the learner closes it under a rule. It fills the
+ * height it is given and scrolls its own overflow, so the frame that holds it decides how
+ * tall it is: the viewport in the app, the window in the design gallery.
  */
 export function Sidebar({
   decks,
@@ -76,7 +78,7 @@ export function Sidebar({
   return (
     <aside
       className={clsx(
-        "flex w-60 shrink-0 flex-col gap-0.5 border-r border-edge bg-rail px-3 pb-4 pt-safe",
+        "flex h-full w-60 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-edge bg-rail px-3 pb-4 pt-safe",
         className,
       )}
     >
@@ -165,7 +167,9 @@ export function AppShell({
 }) {
   return (
     <div className="@container/shell flex min-h-dvh w-full bg-canvas">
-      {sidebar}
+      {/* The rail is pinned to the viewport rather than stretched down the document: as a plain
+          flex child it grew with a long page and scrolled away with it. */}
+      {sidebar && <div className="sticky top-0 h-dvh shrink-0 self-start">{sidebar}</div>}
       <main className="@container flex min-w-0 flex-1 flex-col pt-safe">{children}</main>
       {nav && (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-(--z-sticky) flex justify-center pb-safe @3xl/shell:hidden">

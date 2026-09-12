@@ -7,6 +7,13 @@
       "runtimeArgs": ["--filter", "@lymi/web", "dev", "--port", "5241"],
       "port": 5241,
       "autoPort": false
+    },
+    {
+      "name": "lymi-site",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@lymi/site", "dev", "--port", "4321"],
+      "port": 4321,
+      "autoPort": false
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Integrations pass: API, keys, OAuth, MCP, enrichment, Activity
 
-**Status:** Decided 5 September 2026. Steps 1 to 5 built the same day on `claude/api-ai-layer-integration-4c44b1`, paused before step 6 for the Claude Desktop test. Decisions are in [stack.md](../stack.md) and [docs/adr](../adr/README.md). Vocabulary is in [CONTEXT.md](../../CONTEXT.md). This page is the order of work for the session that builds it.
+**Status:** Decided 5 September 2026. Steps 1 to 5 built the same day on `claude/api-ai-layer-integration-4c44b1`, paused before step 6 for the Claude Desktop test. Step 6 built 12 September 2026 without `enrich`, which waits for step 7, and with `create_deck` added so a lesson in a new language does not send the learner to the app mid-conversation. Decisions are in [stack.md](../stack.md) and [docs/adr](../adr/README.md). Vocabulary is in [CONTEXT.md](../../CONTEXT.md). This page is the order of work for the session that builds it.
 
 ## What exists
 

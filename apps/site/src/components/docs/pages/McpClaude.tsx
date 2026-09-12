@@ -1,6 +1,6 @@
 import { Code } from "../Code";
 import { ORIGIN } from "../origin";
-import { H2, Lead, NextLinks, Note, Steps, StepTitle } from "../Prose";
+import { H2, Lead, NextLinks, Steps, StepTitle } from "../Prose";
 
 export function McpClaude() {
   return (
@@ -12,11 +12,10 @@ export function McpClaude() {
 
       <Code lang="text" label="MCP server URL" code={`${ORIGIN}/mcp`} />
 
-      <Note tone="careful" title="Nothing to call yet">
-        Lymi’s MCP server has no tools yet, so a connected Claude can sign in but cannot do anything
-        with your decks. The tools are the next pass. Read{" "}
-        <a href="/docs/mcp">Connect an assistant</a> for what is and is not built.
-      </Note>
+      <p>
+        Once connected, ask Claude to add the words from a lesson, list what is due, or find a card.
+        What it can and cannot do is on <a href="/docs/mcp">Connect an assistant</a>.
+      </p>
 
       <H2>Claude Desktop and claude.ai</H2>
       <p>Custom connectors live in the same place in the app and on the web.</p>
@@ -88,8 +87,8 @@ claude mcp logout lymi    # forget the tokens`}
           to identify itself here.
         </li>
         <li>
-          <strong>Writes come back 403.</strong> The token was granted read only. Reconnect and
-          leave write ticked at the consent screen.
+          <strong>Claude says it can only read.</strong> The token was granted read only. Reconnect
+          and leave write ticked at the consent screen.
         </li>
       </ul>
 

@@ -1,16 +1,27 @@
 import {
   AddCardOutcomeOut,
   AddCardsOut,
+  CardHitOut,
   CardInput,
   CardOut,
   CardPatch,
+  CardSearchQuery,
   CardsInput,
   OkOut,
 } from "@lymi/core";
 import { Hono } from "hono";
-import { body, ctxOf, describe } from "../http";
+import { z } from "zod";
+import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
-import { addCard, addCards, archiveCard, getCard, restoreCard, updateCard } from "../services";
+import {
+  addCard,
+  addCards,
+  archiveCard,
+  getCard,
+  restoreCard,
+  searchCards,
+  updateCard,
+} from "../services";
 
 export const cards = new Hono<AppEnv>();
 
@@ -18,6 +29,24 @@ const DUPLICATE_RULE =
   "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks. " +
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
   "Re-running the same call is safe.";
+
+cards.get(
+  "/",
+  describe({
+    tags: ["Cards"],
+    summary: "Search cards",
+    description:
+      "Cards matching text in the term, meaning, example or notes, newest first, each with its deck's name. " +
+      "Leave `query` out to list the newest cards. `archived=true` looks through archived cards instead.",
+    ok: { schema: z.array(CardHitOut), description: "Matching cards" },
+    errors: [400],
+  }),
+  query(CardSearchQuery, "search"),
+  async (c) => {
+    const rows = await searchCards(ctxOf(c), c.req.valid("query"));
+    return c.json(rows.map((row) => ({ ...row.card, deckName: row.deckName })));
+  },
+);
 
 cards.post(
   "/",

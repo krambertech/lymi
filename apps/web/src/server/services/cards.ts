@@ -1,6 +1,17 @@
-import type { CardInput, CardPatch } from "@lymi/core";
+import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
 import { emptyState, expandDirections, newId, normaliseTerm, serializeState } from "@lymi/core";
-import { and, eq, inArray, isNull } from "@lymi/core/db";
+import {
+  and,
+  desc,
+  eq,
+  inArray,
+  isNotNull,
+  isNull,
+  or,
+  type SQL,
+  type SQLWrapper,
+  sql,
+} from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { audit } from "../audit";
 import { schema } from "../db";
@@ -169,6 +180,51 @@ async function selectIn<T, R>(values: T[], select: (slice: T[]) => Promise<R[]>)
 /** A card with no language only matches other cards with no language. */
 function dupKey(language: string | null, normalizedTerm: string): string {
   return `${language ?? ""} ${normalizedTerm}`;
+}
+
+export const SEARCH_LIMIT = 200;
+
+/**
+ * Cards matching a search, newest first, each with the name of the deck it is in. The term
+ * is compared through the same key the duplicate rule uses, so accents and case fold the
+ * way they do on add; the other fields use SQLite's ASCII-only `lower()`.
+ */
+export async function searchCards({ db, userId }: ServiceContext, search: CardSearchInput) {
+  const limit = Math.min(Math.max(search.limit ?? 50, 1), SEARCH_LIMIT);
+  const query = search.query?.trim();
+  const pattern = query ? `%${escapeLike(normaliseTerm(query))}%` : null;
+  return db
+    .select({ card: schema.cards, deckName: schema.decks.name })
+    .from(schema.cards)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(
+      and(
+        eq(schema.cards.userId, userId),
+        search.archived ? isNotNull(schema.cards.archivedAt) : isNull(schema.cards.archivedAt),
+        search.deckId ? eq(schema.cards.deckId, search.deckId) : undefined,
+        search.language ? eq(schema.cards.language, search.language) : undefined,
+        pattern
+          ? or(
+              contains(schema.cards.normalizedTerm, pattern),
+              contains(sql`lower(${schema.cards.meaning})`, pattern),
+              contains(sql`lower(${schema.cards.example})`, pattern),
+              contains(sql`lower(${schema.cards.notes})`, pattern),
+            )
+          : undefined,
+      ),
+    )
+    .orderBy(desc(schema.cards.createdAt))
+    .limit(limit);
+}
+
+/** SQLite's LIKE has no escape character unless the query names one. */
+function contains(column: SQLWrapper, pattern: string): SQL {
+  return sql`${column} like ${pattern} escape '\\'`;
+}
+
+/** `%` and `_` are wildcards in LIKE. A learner searching for "100%" means the sign. */
+export function escapeLike(value: string): string {
+  return value.replace(/[\\%_]/g, (c) => `\\${c}`);
 }
 
 export async function getCard({ db, userId }: ServiceContext, id: string) {

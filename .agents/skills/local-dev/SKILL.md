@@ -17,7 +17,7 @@ If the server logs a migration error, or `pnpm db:migrate` reports a table that 
 
 Navigate the tab to `http://localhost:5241/api/dev/sign-in?as=<persona>`. The response sets the session cookie and redirects to Today. Never type a password, and never hand a password to the user to type; the persona accounts need none.
 
-Personas: `fresh` (nothing), `learner` (three decks, a few due, a streak, cards from an assistant), `streak` (fourteen days, nothing due), `backlog` (everything due), `polyglot` (Ukrainian meanings, a deck with no language). `pnpm local personas` prints them.
+Personas: `fresh` (nothing), `learner` (three decks, a few due, a streak, cards from an assistant), `streak` (fourteen days, nothing due), `backlog` (everything due), `polyglot` (Ukrainian interface and meanings, a deck with no language). `pnpm local personas` prints them.
 
 Add `returnTo=/library` to land on another screen. Add `reset=1` to reseed.
 
@@ -32,7 +32,7 @@ pnpm local seed backlog --as learner --reset
 pnpm local reset --as fresh
 ```
 
-From the browser, press the backtick key or the round button in the bottom-right corner to open the developer panel. It is five rows: persona, due count, data, meaning language, theme. The first four are the app's Combobox: click the row's box, type to filter, press Enter (the key named `Enter`, not `Return`). Theme is three segments. The closed box shows the current value, so `find "Persona"` or a screenshot answers "which persona am I".
+From the browser, press the backtick key or the round button in the bottom-right corner to open the developer panel. It is five rows: persona, due count, data, language, theme. The first three are the app's Combobox: click the row's box, type to filter, press Enter (the key named `Enter`, not `Return`). Language and theme are segmented controls. The closed box shows the current value, so `find "Persona"` or a screenshot answers "which persona am I".
 
 ## Verify
 

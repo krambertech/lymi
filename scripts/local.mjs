@@ -155,7 +155,7 @@ export async function run(argv, { stdout = process.stdout, env = process.env } =
       const { data } = await call(base, "/api/dev/state", { cookie });
       const who = data.persona ? `${data.persona.id} (${data.user.email})` : data.user.email;
       stdout.write(
-        `${who}\n${describe(data.counts)}\nmeaning language ${data.settings.meaningLanguage}\n`,
+        `${who}\n${describe(data.counts)}\nlanguage ${data.settings.appLanguage ?? "not chosen"}, meanings ${data.settings.meaningLanguage}\n`,
       );
       return;
     }

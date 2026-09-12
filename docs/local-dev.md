@@ -31,7 +31,7 @@ No password is typed anywhere. The server creates the account on first use, seed
 | `learner` | Kateryna | Three weeks in: three decks, 43 cards, 9 due, a 4-day streak, three cards an assistant added today, one archived deck and one archived card. |
 | `streak` | Sanna | Fourteen days running and nothing due. The lantern is unlit. |
 | `backlog` | Marco | A month away: four decks, 60 cards, all due. |
-| `polyglot` | Оксана | Meanings in Ukrainian. Italian, Finnish, and a deck with no language. |
+| `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |
 
 The accounts are `<id>@lymi.local`. They pass the invitation allowlist only on a loopback origin, so `.dev.vars` needs no entry for them. `pnpm local personas` prints the same table from the running server.
 
@@ -39,12 +39,12 @@ A real account signed in locally through Google works with every tool below too;
 
 ## Change the state from the panel
 
-The round button in the bottom-right corner of every product screen opens the developer panel above it. The backtick key toggles it too. It is five rows showing the current value; the first four are searchable lists, the theme is a segmented control:
+The round button in the bottom-right corner of every product screen opens the developer panel above it. The backtick key toggles it too. It is five rows showing the current value; the first three are searchable lists, the last two are segmented controls:
 
 - **Persona**: who you are. Choosing another signs you in as that account and reloads the screen you were on.
 - **Due**: how many cards are due now. Choose a number, or every card.
 - **Data**: what the account holds. Reseed it, empty it, or load another persona's data into it.
-- **Meanings**: the meaning language.
+- **Language**: the interface language, which the meaning language follows.
 - **Theme**: system, light or dark.
 
 Each change refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The last thing that happened is written at the bottom. The panel is compiled into the Vite dev server only; a production build has no trace of it.

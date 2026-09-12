@@ -28,7 +28,7 @@ const summary = (p: Persona) => ({
   name: p.name,
   email: personaEmail(p.id),
   description: p.description,
-  meaningLanguage: p.meaningLanguage,
+  appLanguage: p.appLanguage,
   decks: p.decks.filter((d) => !d.archived).length,
   cards: p.decks.filter((d) => !d.archived).flatMap((d) => d.cards.filter((c) => !c.archived))
     .length,
@@ -124,7 +124,7 @@ dev.get("/state", describe({ hide: true, open: true }), async (c) => {
     user: { id: user.id, name: user.name, email: user.email },
     persona: persona ? summary(persona) : null,
     counts,
-    settings: { meaningLanguage: settings.meaningLanguage },
+    settings: { appLanguage: settings.appLanguage, meaningLanguage: settings.meaningLanguage },
   });
 });
 

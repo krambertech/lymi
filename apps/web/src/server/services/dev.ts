@@ -62,7 +62,7 @@ export async function resetAccount({ db, userId }: ServiceContext): Promise<void
 export async function seedPersona(ctx: ServiceContext, persona: Persona): Promise<DevCounts> {
   const { db, userId } = ctx;
   await resetAccount(ctx);
-  await updateSettings(ctx, { meaningLanguage: persona.meaningLanguage });
+  await updateSettings(ctx, { appLanguage: persona.appLanguage });
 
   const now = new Date();
   const introducedAt = new Map<string, Date>();

@@ -1,9 +1,9 @@
+import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Wrench, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Combobox, type ComboboxOption } from "../components/Combobox";
-import { LANGUAGE_OPTIONS, LANGUAGE_TAG_RE, languageName } from "../components/DeckFields";
 import { Field } from "../components/Field";
 import { Kbd } from "../components/Kbd";
 import { Segmented } from "../components/Segmented";
@@ -22,6 +22,11 @@ import { type DevCounts, devApi } from "./dev-api";
  */
 
 const OPEN_KEY = "lymi-dev-panel";
+const LANGUAGES: { value: AppLanguage; label: string }[] = [
+  { value: "en", label: "English" },
+  { value: "uk", label: "Українська" },
+  { value: "ru", label: "Русский" },
+];
 const THEMES: { value: ThemeChoice; label: string }[] = [
   { value: "system", label: "System" },
   { value: "light", label: "Light" },
@@ -172,9 +177,9 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
     onError: failed,
   });
   const language = useMutation({
-    mutationFn: (meaningLanguage: string) => api.updateSettings({ meaningLanguage }),
+    mutationFn: (appLanguage: AppLanguage) => api.updateSettings({ appLanguage }),
     onSuccess: async (s) => {
-      setNote({ text: `Meanings in ${languageName(s.meaningLanguage)}.`, tone: "muted" });
+      setNote({ text: `Interface and meanings in ${s.appLanguage}.`, tone: "muted" });
       await queryClient.invalidateQueries({ queryKey: ["settings"] });
       await state.refetch();
     },
@@ -202,12 +207,6 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
     ...list.map((p) => ({ value: p.id, label: p.name, hint: p.id })),
   ];
   const personaValue = current?.id ?? (state.data ? "real" : signedOut ? "out" : null);
-
-  const meaning = state.data?.settings.meaningLanguage ?? null;
-  const languageOptions =
-    meaning && !LANGUAGE_OPTIONS.some((o) => o.value === meaning)
-      ? [...LANGUAGE_OPTIONS, { value: meaning, label: languageName(meaning), hint: meaning }]
-      : LANGUAGE_OPTIONS;
 
   const dataOptions: ComboboxOption[] = state.data
     ? [
@@ -278,16 +277,14 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
               />
             </Row>
 
-            <Row label="Meanings">
-              <Combobox
-                value={meaning}
-                options={languageOptions}
-                searchLabel="Search languages"
-                accept={(query) => (LANGUAGE_TAG_RE.test(query) ? query : null)}
-                acceptLabel={(tag) => `Use “${tag}” as the tag`}
-                onChange={(v) => {
-                  if (v) language.mutate(v);
-                }}
+            <Row label="Language">
+              <Segmented
+                size="sm"
+                value={(state.data.settings.appLanguage ?? "en") as AppLanguage}
+                options={LANGUAGES}
+                label="Interface language"
+                className="mt-1"
+                onChange={(v) => language.mutate(v)}
               />
             </Row>
           </>

@@ -5,7 +5,7 @@ export type PersonaSummary = {
   name: string;
   email: string;
   description: string;
-  meaningLanguage: string;
+  appLanguage: string;
   decks: number;
   cards: number;
   dueNow: number | "all";
@@ -17,7 +17,7 @@ export type DevState = {
   user: { id: string; name: string; email: string };
   persona: PersonaSummary | null;
   counts: DevCounts;
-  settings: { meaningLanguage: string };
+  settings: { appLanguage: string | null; meaningLanguage: string };
 };
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {

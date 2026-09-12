@@ -1,4 +1,4 @@
-import type { Actor, Directions, FieldSource } from "@lymi/core";
+import type { Actor, AppLanguage, Directions, FieldSource } from "@lymi/core";
 
 /**
  * The learners a local developer can become. Each is one account in the local D1, named
@@ -15,7 +15,8 @@ export interface Persona {
   name: string;
   /** One line for the panel and the CLI. Names the state, not the data. */
   description: string;
-  meaningLanguage: string;
+  /** The interface language. Meanings follow it, as they do for a real learner. */
+  appLanguage: AppLanguage;
   /**
    * Days ago on which the learner reviewed, any order. Every card due on that day is graded.
    * Zero is today. Empty means the account has never reviewed.
@@ -254,7 +255,7 @@ export const personas: Persona[] = [
     id: "fresh",
     name: "Fresh",
     description: "Just signed up. No decks, nothing due, the first-run screens.",
-    meaningLanguage: "en",
+    appLanguage: "en",
     reviewDays: [],
     dueNow: 0,
     decks: [],
@@ -263,7 +264,7 @@ export const personas: Persona[] = [
     id: "learner",
     name: "Kateryna",
     description: "Three weeks in. Three decks, a few due, cards from an assistant to inspect.",
-    meaningLanguage: "en",
+    appLanguage: "en",
     // Gaps at 18, 13 and 5 days ago, so the streak and the best run differ.
     reviewDays: [21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 8, 7, 6, 4, 3, 2, 1],
     dueNow: 9,
@@ -301,7 +302,7 @@ export const personas: Persona[] = [
     id: "streak",
     name: "Sanna",
     description: "Fourteen days running and nothing left to do today. The lantern is unlit.",
-    meaningLanguage: "en",
+    appLanguage: "en",
     reviewDays: everyDay(13, 0),
     dueNow: 0,
     decks: [
@@ -324,7 +325,7 @@ export const personas: Persona[] = [
     id: "backlog",
     name: "Marco",
     description: "Back after a month away. Everything is due at once.",
-    meaningLanguage: "en",
+    appLanguage: "en",
     reviewDays: everyDay(60, 34),
     dueNow: "all",
     decks: [
@@ -358,8 +359,8 @@ export const personas: Persona[] = [
   {
     id: "polyglot",
     name: "Оксана",
-    description: "Meanings in Ukrainian. Italian, Finnish, and a deck with no language.",
-    meaningLanguage: "uk",
+    description: "Ukrainian interface and meanings. Italian, Finnish, and a deck with no language.",
+    appLanguage: "uk",
     reviewDays: [6, 5, 3, 2, 1],
     dueNow: 4,
     decks: [

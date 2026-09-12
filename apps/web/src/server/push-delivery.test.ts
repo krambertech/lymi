@@ -69,19 +69,31 @@ describe("review reminder delivery", () => {
     expect(reminderIsDue(new Date("2026-09-07T00:15:00.000Z"), "UTC", "23:45")).toBeNull();
   });
 
-  it("keeps lock-screen copy generic", async () => {
-    expect(await reminderCopy(1)).toEqual({
-      title: "One word is ready",
-      body: "One card is waiting when you have a moment.",
-    });
-    expect((await reminderCopy(7)).body).toBe("7 cards are waiting when you have a moment.");
-  });
-
-  it("uses the Ukrainian plural categories one, few and many", async () => {
-    expect((await reminderCopy(1, "uk")).body).toBe("1 картка чекає, коли матимеш хвилинку.");
-    expect((await reminderCopy(2, "uk")).body).toBe("2 картки чекають, коли матимеш хвилинку.");
-    expect((await reminderCopy(5, "uk")).body).toBe("5 карток чекають, коли матимеш хвилинку.");
-    expect((await reminderCopy(21, "uk")).body).toBe("21 картка чекає, коли матимеш хвилинку.");
+  it("uses the right reminder plurals in every app language", async () => {
+    const bodies = {
+      en: [
+        "One card is waiting when you have a moment.",
+        "2 cards are waiting when you have a moment.",
+        "5 cards are waiting when you have a moment.",
+        "21 cards are waiting when you have a moment.",
+      ],
+      uk: [
+        "1 картка чекає, коли матимеш хвилинку.",
+        "2 картки чекають, коли матимеш хвилинку.",
+        "5 карток чекають, коли матимеш хвилинку.",
+        "21 картка чекає, коли матимеш хвилинку.",
+      ],
+      ru: [
+        "1 карточка ждёт, когда у тебя будет минутка.",
+        "2 карточки ждут, когда у тебя будет минутка.",
+        "5 карточек ждут, когда у тебя будет минутка.",
+        "21 карточка ждёт, когда у тебя будет минутка.",
+      ],
+    } as const;
+    for (const [locale, expected] of Object.entries(bodies)) {
+      const actual = await Promise.all([1, 2, 5, 21].map((due) => reminderCopy(due, locale)));
+      expect(actual.map((copy) => copy.body)).toEqual(expected);
+    }
     expect((await reminderCopy(3, "xx")).title).toBe("A few words are ready");
   });
 

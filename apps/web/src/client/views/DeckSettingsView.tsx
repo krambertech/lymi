@@ -175,7 +175,7 @@ export function DeckSettingsView({
             <LanguageField
               value={deck.defaultLanguage}
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}
-              hint={t`The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You.`}
+              hint={t`The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings use your app language, which lives under You.`}
             />
           </SettingsGroup>
 

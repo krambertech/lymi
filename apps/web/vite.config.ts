@@ -26,7 +26,7 @@ export default defineConfig({
       generatedRouteTree: "src/client/routeTree.gen.ts",
     }),
     react(),
-    lingui(),
+    lingui({ failOnCompileError: true, failOnMissing: true }),
     // Only Lymi source carries Lingui macros; keep Babel off dependencies and the test runner.
     // The query suffix matters: TanStack's split route modules end in `?tsr-split=component`.
     babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),

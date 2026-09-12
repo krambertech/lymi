@@ -1,18 +1,18 @@
 import type { QueryClient } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   Outlet,
   useLocation,
   useNavigate,
 } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AddCardSheet } from "../components/AddCardSheet";
 import { NewDeckSheet } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
-import { ApiError, flushOutbox } from "../lib/api";
-import { activate, isAppLanguage, isBareShell } from "../lib/i18n";
+import { ApiError, api, flushOutbox } from "../lib/api";
+import { activate, bootstrapLanguage, isAppLanguage, isBareShell, pickLocale } from "../lib/i18n";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { AppShell, Sidebar } from "../views/Shell";
 
@@ -31,7 +31,9 @@ function Root() {
 function Shell() {
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const add = useAddCard();
+  const seededLanguage = useRef(false);
   const activeDeckId = location.pathname.match(/^\/library\/([^/]+)/)?.[1];
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare = isBareShell(location.pathname);
@@ -40,12 +42,29 @@ function Shell() {
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
 
-  // A stored choice wins over the browser pick. Null means not chosen yet, which the
-  // browser pick already covers; writing it back waits for the language picker.
   const appLanguage = settings.data?.appLanguage;
   useEffect(() => {
-    if (isAppLanguage(appLanguage)) activate(appLanguage);
-  }, [appLanguage]);
+    if (bare) {
+      bootstrapLanguage(location.pathname);
+      return;
+    }
+    if (!settings.isSuccess) return;
+    if (isAppLanguage(appLanguage)) {
+      activate(appLanguage);
+      return;
+    }
+    if (appLanguage !== null || seededLanguage.current) return;
+
+    const locale = pickLocale();
+    seededLanguage.current = true;
+    activate(locale);
+    void api
+      .updateSettings({ appLanguage: locale })
+      .then((value) => queryClient.setQueryData(settingsQuery.queryKey, value))
+      .catch(() => {
+        seededLanguage.current = false;
+      });
+  }, [appLanguage, bare, location.pathname, queryClient, settings.isSuccess]);
 
   useEffect(() => {
     if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare) {

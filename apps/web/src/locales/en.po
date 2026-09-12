@@ -437,6 +437,10 @@ msgid "App"
 msgstr "App"
 
 #: src/client/views/YouView.tsx
+msgid "App language"
+msgstr "App language"
+
+#: src/client/views/YouView.tsx
 msgid "Appearance"
 msgstr "Appearance"
 
@@ -601,6 +605,10 @@ msgstr "Could not load your numbers"
 #: src/client/routes/library.$deckId.tsx
 msgid "Couldn’t save “{failedTerm}”. Check the connection."
 msgstr "Couldn’t save “{failedTerm}”. Check the connection."
+
+#: src/client/views/YouView.tsx
+msgid "Couldn’t save the language. Check your connection and try again."
+msgstr "Couldn’t save the language. Check your connection and try again."
 
 #: src/client/components/NewDeckSheet.tsx
 msgid "Create deck"
@@ -894,6 +902,7 @@ msgid "Known means the gaps between reviews are weeks or months now. A Forgot br
 msgstr "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
 
 #: src/client/components/DeckFields.tsx
+#: src/client/views/YouView.tsx
 msgid "Language"
 msgstr "Language"
 
@@ -994,6 +1003,10 @@ msgstr "Meaning by you"
 #: src/client/components/Chip.tsx
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
+
+#: src/client/views/YouView.tsx
+msgid "Meanings and reminders use it too."
+msgstr "Meanings and reminders use it too."
 
 #: src/client/views/InsightsView.tsx
 msgid "Month by month"
@@ -1597,8 +1610,8 @@ msgid "The language the words are in. It fills in on every new card."
 msgstr "The language the words are in. It fills in on every new card."
 
 #: src/client/views/DeckSettingsView.tsx
-msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You."
-msgstr "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You."
+msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings use your app language, which lives under You."
+msgstr "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings use your app language, which lives under You."
 
 #: src/client/views/WordView.tsx
 msgid "the meaning"

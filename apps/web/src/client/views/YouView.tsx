@@ -1,11 +1,13 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { AppLanguage } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, ExternalLink, LogOut } from "lucide-react";
 import type { ReactNode } from "react";
 import { Avatar } from "../components/Avatar";
 import { Button, buttonClass } from "../components/Button";
+import { Select } from "../components/Field";
 import { Kbd } from "../components/Kbd";
 import { Segmented } from "../components/Segmented";
 import { SettingsGroup } from "../components/SettingsGroup";
@@ -23,6 +25,10 @@ export interface YouProps {
   archivedCount?: number | undefined;
   theme: ThemeChoice;
   onTheme: (t: ThemeChoice) => void;
+  appLanguage: AppLanguage;
+  onAppLanguage?: ((language: AppLanguage) => void) | undefined;
+  languageBusy?: boolean | undefined;
+  languageError?: boolean | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   websiteUrl?: string | undefined;
   signingOut?: boolean | undefined;
@@ -59,6 +65,10 @@ export function YouView({
   archivedCount,
   theme,
   onTheme,
+  appLanguage,
+  onAppLanguage,
+  languageBusy,
+  languageError,
   onSignOut,
   websiteUrl,
   signingOut,
@@ -164,6 +174,35 @@ export function YouView({
             label={t`Theme`}
           />
         </div>
+      </SettingsGroup>
+
+      <SettingsGroup title={t`Language`}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="grid max-w-[42ch] gap-0.5">
+            <span className="text-base font-medium">
+              <Trans>App language</Trans>
+            </span>
+            <span className="text-sm text-muted">
+              <Trans>Meanings and reminders use it too.</Trans>
+            </span>
+          </span>
+          <Select
+            aria-label={t`App language`}
+            value={appLanguage}
+            disabled={languageBusy || !onAppLanguage}
+            onChange={(event) => onAppLanguage?.(event.target.value as AppLanguage)}
+            className="w-40"
+          >
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+            <option value="ru">Русский</option>
+          </Select>
+        </div>
+        {languageError && (
+          <p className="text-sm text-danger" role="alert">
+            <Trans>Couldn’t save the language. Check your connection and try again.</Trans>
+          </p>
+        )}
       </SettingsGroup>
 
       <SettingsGroup title={t`Keyboard`}>

@@ -68,12 +68,20 @@ describe("review reminder delivery", () => {
     expect(reminderIsDue(new Date("2026-09-07T00:15:00.000Z"), "UTC", "23:45")).toBeNull();
   });
 
-  it("keeps lock-screen copy generic", () => {
-    expect(reminderCopy(1)).toEqual({
+  it("keeps lock-screen copy generic", async () => {
+    expect(await reminderCopy(1)).toEqual({
       title: "One word is ready",
       body: "One card is waiting when you have a moment.",
     });
-    expect(reminderCopy(7).body).toBe("7 cards are waiting when you have a moment.");
+    expect((await reminderCopy(7)).body).toBe("7 cards are waiting when you have a moment.");
+  });
+
+  it("uses the Ukrainian plural categories one, few and many", async () => {
+    expect((await reminderCopy(1, "uk")).body).toBe("1 картка чекає, коли матимеш хвилинку.");
+    expect((await reminderCopy(2, "uk")).body).toBe("2 картки чекають, коли матимеш хвилинку.");
+    expect((await reminderCopy(5, "uk")).body).toBe("5 карток чекають, коли матимеш хвилинку.");
+    expect((await reminderCopy(21, "uk")).body).toBe("21 картка чекає, коли матимеш хвилинку.");
+    expect((await reminderCopy(3, "xx")).title).toBe("A few words are ready");
   });
 
   it("claims the local date and sends one reminder", async () => {

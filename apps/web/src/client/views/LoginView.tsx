@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { type AppIdentity, AppMark } from "../components/AppMark";
 import { AuthFrame } from "../components/AuthFrame";
@@ -37,7 +38,9 @@ export function LoginView({ onGoogle, busy, app, error, blocked = false, childre
           </div>
         ) : (
           <div className="text-center">
-            <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">Sign in to Lymi</h1>
+            <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">
+              <Trans>Sign in to Lymi</Trans>
+            </h1>
             <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
               Use the Google account that received your invitation.
             </p>

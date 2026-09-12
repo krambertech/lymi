@@ -1,7 +1,7 @@
 ---
-import LandingPage from "../components/islands/LandingPage";
-import { LANDING_BLURB, LANDING_TITLE } from "../components/landing/LandingView";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import LandingPage from "../../components/islands/LandingPage";
+import { LANDING_BLURB, LANDING_TITLE } from "../../components/landing/LandingView";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -15,7 +15,7 @@ const structuredData = {
 };
 ---
 
-<BaseLayout title={LANDING_TITLE} description={LANDING_BLURB} canonicalPath="/" dark>
+<BaseLayout title={LANDING_TITLE} description={LANDING_BLURB} canonicalPath="/uk/" dark>
   <script
     slot="head"
     is:inline

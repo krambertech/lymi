@@ -1,4 +1,6 @@
 import { registerSW } from "virtual:pwa-register";
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
@@ -6,7 +8,11 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./lib/pwa-install";
+import { messages as en } from "../locales/en.po";
 import { routeTree } from "./routeTree.gen";
+
+i18n.load("en", en);
+i18n.activate("en");
 
 registerSW({ immediate: true });
 
@@ -57,7 +63,9 @@ export function mountApp(root: HTMLElement) {
           buster: __QUERY_CACHE_BUSTER__,
         }}
       >
-        <RouterProvider router={router} />
+        <I18nProvider i18n={i18n}>
+          <RouterProvider router={router} />
+        </I18nProvider>
       </PersistQueryClientProvider>
     </StrictMode>,
   );

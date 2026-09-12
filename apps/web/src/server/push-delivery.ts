@@ -1,4 +1,6 @@
+import { msg, plural } from "@lingui/core/macro";
 import type { Bindings } from "./env";
+import { serverI18n } from "./i18n";
 
 interface ReminderCandidate {
   id: string;
@@ -68,13 +70,16 @@ export function reminderIsDue(
   return moment;
 }
 
-export function reminderCopy(due: number) {
+export async function reminderCopy(due: number, locale = "en") {
+  const i18n = await serverI18n(locale);
   return {
-    title: due === 1 ? "One word is ready" : "A few words are ready",
-    body:
-      due === 1
-        ? "One card is waiting when you have a moment."
-        : `${due} cards are waiting when you have a moment.`,
+    title: due === 1 ? i18n._(msg`One word is ready`) : i18n._(msg`A few words are ready`),
+    body: i18n._(
+      msg`${plural(due, {
+        one: "One card is waiting when you have a moment.",
+        other: "# cards are waiting when you have a moment.",
+      })}`,
+    ),
   };
 }
 
@@ -82,7 +87,7 @@ async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindi
   if (!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.VAPID_SUBJECT) {
     throw new Error("VAPID secrets are not configured");
   }
-  const copy = reminderCopy(due);
+  const copy = await reminderCopy(due);
   const navigate = new URL("/review", env.PRODUCT_URL).toString();
   const icon = new URL("/icons/icon-192.png", env.PRODUCT_URL).toString();
   const payload = JSON.stringify({

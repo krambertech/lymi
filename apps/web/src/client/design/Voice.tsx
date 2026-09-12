@@ -2,13 +2,17 @@ import { Section, Sub } from "./Frame";
 
 const PAIRS: [string, string, string][] = [
   ["End of session", "That’s the lot", "Congratulations! You did it! 🎉"],
-  ["Nothing due", "Nothing due right now", "You’re all caught up!"],
+  ["Nothing due", "Nothing due  ·  Coming up: 31 tomorrow", "You’re all caught up!"],
   ["Empty deck", "Empty deck. Add the first word from your lesson.", "No cards found."],
   ["Archive", "Archived “sbrigarsi”  ·  Undo", "Are you sure you want to delete this card?"],
   ["Primary action", "Review 11 due", "Start learning"],
   ["Error", "Keep it under 200 characters.", "Invalid input"],
   ["AI label", "AI meaning", "✨ Magic suggestion"],
-  ["Count", "11 cards due · Across 2 decks", "You have 11 cards to review today! 🔥 Day 14 streak"],
+  [
+    "Count",
+    "11 due · Lesson 14 and Portuguese",
+    "You have 11 cards to review today! 🔥 Day 14 streak",
+  ],
 ];
 
 export function Voice() {

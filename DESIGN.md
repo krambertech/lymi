@@ -296,7 +296,11 @@ Consistency and the months answer different questions and neither replaces the o
 
 ## The streak
 
-The flame, on its own, counts days in a row. It is drawn twice, because the two screens have different room for the same fact. On the phone it is a pill in the Today header: flame and a number, 40 px tall like the capture button and the avatar next to it, because a row of controls at three different heights is what makes a header look unfinished. On desktop it is a plate beside the hero: the count, the best run, the seven lights and one line saying how many of the last seven days had a review.
+The flame counts days in a row and the seven lights say which days. On Today they sit together under the review button: the flame and the run on one line, the week under it at the size worth looking at. It is never a panel of its own — a plate beside the hero turns a warm cue into a stat block, and a home screen of statistics is the thing [`PRODUCT.md`](PRODUCT.md) names as an anti-reference.
+
+A day's light carries three steps of amber, from the lantern's glass to its flame, by how full that day was. The reference is the week's own busiest day with a floor under it, so a quiet week is not flattered and one heavy Tuesday does not wash the rest out. The steps mix toward `--glass` rather than fading to transparency: a translucent amber lands on whatever is behind it, and in the dark room that is the same lightness as an unlit day, which would make "a little" and "nothing" one picture.
+
+Seven days grade; the thirty-day `RunStrip` on Insights deliberately does not. Over a month, shading by volume makes a habit picture into a scoreboard and rewards one heavy day over a steady stretch. Over a week it is the difference between turning up and doing the lot, which the learner already knows and likes seeing. The long views — thirty days as runs, twelve months as bars — live on Insights, where looking at them is a choice.
 
 Today is still open until it ends, so an unreviewed morning shows yesterday's streak rather than zero. `streakLength` in `packages/core/src/streak.ts` is the rule.
 
@@ -304,7 +308,7 @@ The seven lights sit with it. They say which days, where the streak says how man
 
 ## Components
 
-`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, StreakPill, StreakPlate, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
+`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport.
 

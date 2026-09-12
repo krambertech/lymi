@@ -15,7 +15,15 @@ const HistoryQuery = z.object({
     .optional()
     .meta({ description: "Minutes, as Date.getTimezoneOffset reports it" }),
 });
-const HistoryOut = z.object({ days: z.array(z.number().int()) }).meta({ id: "ReviewHistory" });
+const HistoryOut = z
+  .object({
+    days: z.array(z.number().int()),
+    streak: z.number().int().meta({
+      description:
+        "Days in a row, exact and unbounded by `days`. Today counts once it has a review.",
+    }),
+  })
+  .meta({ id: "ReviewHistory" });
 
 const QueueQuery = z.object({
   deck: z.string().optional().meta({ description: "Limit to one deck" }),

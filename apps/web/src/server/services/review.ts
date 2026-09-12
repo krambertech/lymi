@@ -176,5 +176,30 @@ export async function reviewHistory(
     const i = Math.floor((r.reviewedAt.getTime() - tz * 60_000 - startLocal) / 86_400_000);
     if (i >= 0 && i < days) counts[i] = (counts[i] ?? 0) + 1;
   }
-  return { days: counts };
+
+  // The current run, exact, with no window: a streak counted from `counts` alone can never be
+  // longer than `days`. Grouped by UTC day and resolved to the learner's zone the way
+  // `stats.ts` does, so the query is bounded by days rather than by reviews. Reviews inside
+  // one UTC day touch at most two local days, the local dates of its first and last review.
+  const grouped = await db
+    .select({
+      first: sql<number>`min(${schema.reviews.reviewedAt})`,
+      last: sql<number>`max(${schema.reviews.reviewedAt})`,
+    })
+    .from(schema.reviews)
+    .where(eq(schema.reviews.userId, userId))
+    .groupBy(sql`date(${schema.reviews.reviewedAt} / 1000, 'unixepoch')`);
+  const localDay = (ms: number) => Math.floor((ms - tz * 60_000) / 86_400_000);
+  const lit = new Set<number>();
+  for (const g of grouped) {
+    lit.add(localDay(g.first));
+    lit.add(localDay(g.last));
+  }
+  const today = localDay(now.getTime());
+  // Today is still open until it ends, so an unreviewed morning keeps yesterday's run.
+  let day = lit.has(today) ? today : today - 1;
+  let streak = 0;
+  for (; lit.has(day); day -= 1) streak += 1;
+
+  return { days: counts, streak };
 }

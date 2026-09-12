@@ -385,7 +385,7 @@ export function SessionDone({ done, moreDue = 0, deckName, history, action }: Se
             ? `${done} reviewed${from}. The rest can wait a while.`
             : "Come back later, or add something new."}
       </p>
-      {history && <SevenLights days={history} className="complete-copy mt-6" />}
+      {history && <SevenLights days={history.slice(-7)} className="complete-copy mt-6" />}
       <div className="complete-copy mt-6 flex flex-wrap items-center justify-center gap-2">
         {action}
       </div>

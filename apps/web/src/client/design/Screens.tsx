@@ -133,7 +133,7 @@ export function Screens() {
     >
       <Sub
         title="Today"
-        note="The lantern is lit and glowing when cards are due, dark when they are not. The streak is a flame pill in the header here and its own plate on desktop. What an integration added since the last review follows, then one line of forecast."
+        note="One question and one action. The lantern is lit and glowing when cards are due, dark when they are not, and the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The streak is the seven lights and one line, on both screens. What an integration added since the last review follows."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Cards due" initial="dark" path="/">

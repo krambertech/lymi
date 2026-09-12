@@ -133,7 +133,7 @@ export const api = {
     }),
   queue: (deckId?: string) => request<Queue>(`/api/review/queue${deckId ? `?deck=${deckId}` : ""}`),
   history: (days = 7) =>
-    request<{ days: number[] }>(
+    request<{ days: number[]; streak: number }>(
       `/api/review/history?days=${days}&tz=${new Date().getTimezoneOffset()}`,
     ),
   insights: (period: 30 | 90 | 0 = 30) =>

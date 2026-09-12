@@ -17,6 +17,7 @@ function Today() {
     <TodayView
       decks={decks.data}
       history={history.data?.days}
+      streak={history.data?.streak}
       name={me.data?.name}
       onAdd={add.openCard}
       onCreateDeck={add.openDeck}

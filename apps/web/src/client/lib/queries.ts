@@ -26,6 +26,10 @@ export const queueQuery = (deckId?: string) =>
     queryFn: () => api.queue(deckId),
     staleTime: 0,
   });
+/**
+ * Seven days for the lights. The run itself comes back as `streak`, counted on the server with
+ * no window, so it is never capped by how much history the lights happen to show.
+ */
 export const historyQuery = queryOptions({
   queryKey: ["history", 7],
   queryFn: () => api.history(7),

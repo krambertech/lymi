@@ -10,7 +10,7 @@ One person for now: Kateryna, who takes language lessons and wants to keep the w
 
 The job to be done is "remember what I learned in this week's lesson without spending my evening making flashcards." Capture has to be fast enough to do while the lesson is still fresh. Review has to be pleasant enough to do every day without being asked.
 
-The first version is private and single-user. The data model and auth should not assume it stays that way, but nothing in the product should be built for an imagined audience.
+The first version was private and single-user. Shared decks ([ADR 0011](docs/adr/0011-a-shared-deck-is-one-deck-with-many-learners.md)) add a second kind of learner: a member who studies a deck someone else writes, starting with Kateryna's Estonian class. Nothing else in the product is built for an imagined audience.
 
 ## Product Purpose
 

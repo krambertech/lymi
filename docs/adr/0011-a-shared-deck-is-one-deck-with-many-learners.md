@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 date: 2026-09-12
 ---
 
@@ -27,9 +27,9 @@ Sign-in is Google only. The `user.create.before` hook in `apps/web/src/server/au
 
 A deck has one join link. The owner can turn it off. A deck can also have named invitations, one per Google email. Lymi sends no email; the owner passes the link on.
 
-Turning the link off removes nobody. Removing a member takes the deck out of their Library. Their states and reviews stay, so re-adding them resumes where they were.
+Turning the link off removes nobody. Removing a member takes the deck out of their Library and blocks them: the join link no longer admits them, and only a named invitation from the owner lets them back. Leaving is different. A member who leaves can rejoin through the link. In both cases their states and reviews stay, so a return resumes where they were.
 
-The join page is `my.lymi.app/join/<token>`. The product Worker renders it on the server with Open Graph tags. It shows the deck's name, card count, and owner, with one button. A link that was turned off gets a page that says so.
+The join page is `my.lymi.app/join/<token>`. The product Worker renders it on the server with Open Graph tags. It shows the deck's name, card count, and owner, with one button. It shows no cards. A link that was turned off gets a page that says so. The exact path `/join` on the product origin keeps redirecting to the public site's beta page.
 
 ## Roles are stored now and used later
 
@@ -49,10 +49,11 @@ A learner reads the deck and grades their own states. Every write to the deck's 
 
 ## Consequences
 
-- Reads go through membership instead of `decks.user_id` or `cards.user_id`: `listDecks`, `getDeck`, `listDeckCards`, `reviewQueue`, the due counts, and the reminder query in `push-delivery.ts`. Writes keep the owner filter.
-- Joining creates states for every active card and asked direction, due now, as [ADR 0007](0007-a-decks-direction-is-a-filter-not-a-migration.md) does when a direction turns on. Adding a card creates states for every member.
+- Reads go through membership instead of `decks.user_id` or `cards.user_id`: `listDecks`, `getDeck`, `listDeckCards`, `getCard`, `searchCards`, `reviewQueue`, `reviewHistory`, the stats queries, and the reminder query in `push-delivery.ts`. Writes keep the owner filter.
+- Joining creates states for every active card and asked direction, due now, as [ADR 0007](0007-a-decks-direction-is-a-filter-not-a-migration.md) does when a direction turns on. Adding a card, turning on a deck direction, and changing a card's direction each create the missing states for the owner and every member.
+- Pronunciation audio is a cache on the owner's card, not content. Any member may trigger it. The key is written once and the audit row lands in the owner's Activity.
 - The duplicate rule stays per learner over their own cards. A member who has "tere" in their own deck and joins a shared deck with "tere" sees both.
 - Members cannot pause, annotate, or change the direction of a shared card.
 - A join appends to the owner's audit log and shows in their Activity.
-- API deck responses carry a role, so clients and MCP tools know whether they may write.
+- Deck responses carry the caller's role and the owner's name, so Library and MCP tools know whose deck it is and whether they may write.
 - Ending the beta means removing `ALLOWED_EMAILS`. Invitations remain the way in.

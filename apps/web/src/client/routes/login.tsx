@@ -10,6 +10,7 @@ import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
 import { Input } from "../components/Field";
 import { authClient, followOAuthRedirect, signInWithGoogle } from "../lib/auth";
+import { clearPersistedLearnerState } from "../lib/persisted";
 import { LoginView } from "../views/LoginView";
 
 /**
@@ -110,6 +111,8 @@ function Login() {
       onGoogle={async () => {
         setBusy(true);
         setFailed(null);
+        // The account coming back may not be the one whose cache is on this device.
+        clearPersistedLearnerState();
         try {
           // better-auth returns the failure rather than throwing, so a silent `await` here
           // left the button spinning and then stopping with nothing said.
@@ -148,8 +151,9 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
       setError(res.error.message ?? "Sign in failed");
       return;
     }
+    queryClient.clear();
+    clearPersistedLearnerState();
     if (followOAuthRedirect(res.data)) return;
-    await queryClient.invalidateQueries({ queryKey: ["me"] });
     window.location.assign(returnTo);
   }
 

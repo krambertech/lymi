@@ -34,7 +34,9 @@ const services = vi.mocked(await import("../services"));
 
 const now = new Date("2026-09-12T10:00:00.000Z");
 
-const deck: Deck = {
+const owned = { role: "owner" as const, owner: { id: "user-1", name: "Kateryna" } };
+
+const deck: Deck & typeof owned = {
   id: "deck-1",
   userId: "user-1",
   name: "Italian",
@@ -45,6 +47,7 @@ const deck: Deck = {
   archivedAt: null,
   createdAt: now,
   updatedAt: now,
+  ...owned,
 };
 
 const card: Card = {
@@ -128,6 +131,7 @@ describe("Lymi MCP server", () => {
         position: 0,
         total: 12,
         due: 3,
+        ...owned,
       },
     ]);
     services.getSettings.mockResolvedValue({

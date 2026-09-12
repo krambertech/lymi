@@ -21,6 +21,28 @@ export interface Bindings extends Env {
   VAPID_SUBJECT?: string;
 }
 
+/** True for localhost, 127.0.0.1 and [::1]. Decides every local-only capability. */
+export function isLoopbackUrl(value: string): boolean {
+  try {
+    const hostname = new URL(value).hostname;
+    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]";
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * The developer tools exist only while the product is served from a loopback origin:
+ * email sign-in, the `/api/dev` routes and the persona accounts. Production's PRODUCT_URL
+ * is `https://my.lymi.app`, so none of it is reachable there.
+ */
+export function devToolsEnabled(env: { PRODUCT_URL: string }): boolean {
+  return isLoopbackUrl(env.PRODUCT_URL);
+}
+
+/** Persona accounts end in this domain. They exist only in a local D1. */
+export const DEV_EMAIL_DOMAIN = "@lymi.local";
+
 export function allowedEmails(env: Bindings): Set<string> {
   return new Set(
     (env.ALLOWED_EMAILS ?? "")

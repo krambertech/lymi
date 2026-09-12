@@ -117,8 +117,41 @@ export const pushSubscriptions = sqliteTable(
 );
 
 /**
- * FSRS state per card per direction. The full ts-fsrs Card lives in `fsrs` as JSON so the
- * library can evolve without a migration; `due` and `state` are copied out for queries.
+ * Who may study a deck besides its owner, and what they may do in it. The owner is
+ * `decks.user_id` and has no row here. Leaving or being removed keeps the row and sets
+ * `removed_at`; `removed_by = 'owner'` blocks the join link until a named invitation.
+ * Roles beyond `learner` are stored for later and not yet granted anywhere. ADR 0011.
+ */
+export const deckMembers = sqliteTable(
+  "deck_members",
+  {
+    id: text("id").primaryKey(),
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    role: text("role", { enum: ["owner", "editor", "contributor", "learner"] })
+      .notNull()
+      .default("learner"),
+    /** The invitation that let them in, once invitations exist. */
+    invitationId: text("invitation_id"),
+    joinedAt: integer("joined_at", { mode: "timestamp_ms" }).notNull(),
+    removedAt: integer("removed_at", { mode: "timestamp_ms" }),
+    removedBy: text("removed_by", { enum: ["owner", "self"] }),
+    ...timestamps,
+  },
+  (t) => [
+    uniqueIndex("deck_members_deck_user_idx").on(t.deckId, t.userId),
+    index("deck_members_user_idx").on(t.userId, t.removedAt),
+  ],
+);
+
+/**
+ * FSRS state per learner per card per direction. The full ts-fsrs Card lives in `fsrs` as
+ * JSON so the library can evolve without a migration; `due` and `state` are copied out for
+ * queries. A shared deck's card has one row per member, so progress is never shared.
  */
 export const cardStates = sqliteTable(
   "card_states",
@@ -139,7 +172,7 @@ export const cardStates = sqliteTable(
     ...timestamps,
   },
   (t) => [
-    uniqueIndex("card_states_card_dir_idx").on(t.cardId, t.direction),
+    uniqueIndex("card_states_card_user_dir_idx").on(t.cardId, t.userId, t.direction),
     index("card_states_due_idx").on(t.userId, t.due),
   ],
 );
@@ -197,6 +230,7 @@ export const auditLog = sqliteTable(
 
 export type Deck = typeof decks.$inferSelect;
 export type Card = typeof cards.$inferSelect;
+export type DeckMember = typeof deckMembers.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;

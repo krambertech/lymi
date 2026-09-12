@@ -9,6 +9,7 @@ import { api, type Settings } from "../lib/api";
 import { signOut } from "../lib/auth";
 import { activate, pickLocale } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
+import { clearPersistedLearnerState } from "../lib/persisted";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
 import { YouView } from "../views/YouView";
@@ -72,6 +73,9 @@ function You() {
         } finally {
           setBusy(false);
         }
+        // Whoever signs in next must not inherit this learner's cache or queued grades.
+        queryClient.clear();
+        clearPersistedLearnerState();
         navigate({ to: "/login" });
       }}
     >

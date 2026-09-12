@@ -8,7 +8,7 @@ import { jwt } from "better-auth/plugins/jwt";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
-import { allowedEmails, type Bindings } from "./env";
+import { allowedEmails, type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
 
 /**
  * Better Auth must be created per request on Workers because D1 and KV bindings are
@@ -16,6 +16,7 @@ import { allowedEmails, type Bindings } from "./env";
  */
 export function createAuth(env: Bindings, db: Db) {
   const allowed = allowedEmails(env);
+  const dev = devToolsEnabled(env);
 
   return betterAuth({
     baseURL: env.PRODUCT_URL,
@@ -93,15 +94,20 @@ export function createAuth(env: Bindings, db: Db) {
       },
     },
     // Local development only: email + password so the app is usable before Google is set up.
-    emailAndPassword: { enabled: isLoopbackUrl(env.PRODUCT_URL) },
-    socialProviders: {
-      google: {
-        clientId: env.GOOGLE_CLIENT_ID,
-        clientSecret: env.GOOGLE_CLIENT_SECRET,
-        // A private app: never ask Google to remember consent beyond the first sign-in.
-        prompt: "select_account",
-      },
-    },
+    emailAndPassword: { enabled: dev },
+    // Registered only when configured: an empty pair makes Better Auth warn on every request,
+    // which buries anything else in a local server's log.
+    socialProviders:
+      env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
+        ? {
+            google: {
+              clientId: env.GOOGLE_CLIENT_ID,
+              clientSecret: env.GOOGLE_CLIENT_SECRET,
+              // A private app: never ask Google to remember consent beyond the first sign-in.
+              prompt: "select_account",
+            },
+          }
+        : {},
     session: {
       expiresIn: 60 * 60 * 24 * 30,
       updateAge: 60 * 60 * 24,
@@ -114,7 +120,10 @@ export function createAuth(env: Bindings, db: Db) {
         create: {
           // The allowlist. While the app is private, only these accounts can create a user.
           before: async (user) => {
-            if (!allowed.has(user.email.toLowerCase())) {
+            const email = user.email.toLowerCase();
+            // Persona accounts need no entry in .dev.vars; they cannot exist outside a local D1.
+            const persona = dev && email.endsWith(DEV_EMAIL_DOMAIN);
+            if (!allowed.has(email) && !persona) {
               throw new APIError("FORBIDDEN", {
                 message: "This is a private app. Your account is not on the list.",
               });
@@ -128,15 +137,6 @@ export function createAuth(env: Bindings, db: Db) {
       cookiePrefix: "lymi",
     },
   });
-}
-
-function isLoopbackUrl(value: string): boolean {
-  try {
-    const hostname = new URL(value).hostname;
-    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]";
-  } catch {
-    return false;
-  }
 }
 
 export type Auth = ReturnType<typeof createAuth>;

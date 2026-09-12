@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { AddCardSheet } from "../components/AddCardSheet";
 import { NewDeckSheet } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
@@ -16,6 +16,9 @@ import { activate, bootstrapLanguage, isAppLanguage, isBareShell, pickLocale } f
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { AppShell, Sidebar } from "../views/Shell";
 
+// Local development only. Vite drops the import from a production build with the branch.
+const DevPanel = import.meta.env.DEV ? lazy(() => import("../dev/DevPanel")) : null;
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   component: Root,
 });
@@ -24,6 +27,11 @@ function Root() {
   return (
     <AddCardProvider>
       <Shell />
+      {DevPanel && (
+        <Suspense fallback={null}>
+          <DevPanel />
+        </Suspense>
+      )}
     </AddCardProvider>
   );
 }

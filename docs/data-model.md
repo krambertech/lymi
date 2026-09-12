@@ -11,7 +11,9 @@ erDiagram
   user ||--o{ decks : owns
   user ||--o{ cards : owns
   decks ||--o{ cards : contains
-  cards ||--o{ card_states : "one per direction"
+  decks ||--o{ deck_members : "shared with"
+  user ||--o{ deck_members : "studies"
+  cards ||--o{ card_states : "one per learner per direction"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ audit_log : "every write"
   user ||--|| user_settings : has
@@ -52,6 +54,16 @@ erDiagram
     text user_id PK
     text app_language "nullable en | uk | ru"
     text meaning_language "default en"
+  }
+  deck_members {
+    text id PK
+    text deck_id FK
+    text user_id FK
+    text role "owner | editor | contributor | learner"
+    text invitation_id "nullable"
+    int joined_at
+    int removed_at "nullable, never deleted"
+    text removed_by "nullable: owner | self"
   }
   card_states {
     text id PK
@@ -105,6 +117,10 @@ All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 
 
 The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
 
+### Shared decks
+
+A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_members` row. Leaving or being removed sets `removed_at` and keeps the row; `removed_by = 'owner'` blocks the join link until a named invitation. `card_states` is unique per `(card_id, user_id, direction)`, so each learner of a shared card has their own schedule. Every read goes through `memberOf` in `services/members.ts`; every write to a deck's content requires the owner. [ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md).
+
 ### Why the scheduling state is JSON
 
 `card_states.fsrs` holds the full ts-fsrs Card object (stability, difficulty, reps, lapses, learning step, due, last review). `due` and `state` are copied out into real columns so the queue can be queried without parsing JSON. If ts-fsrs adds a field, nothing needs a migration.
@@ -131,6 +147,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 
 - Reads need any credential. Writes need the `write` scope, or 403.
 - Grading and key management are the learner's alone. Any key or token gets 403, whatever its scope.
+- A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
 - A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.
 - Every write appends to `audit_log` with its actor, and every card carries `created_by`, so Activity can show what integrations and the AI wrote.

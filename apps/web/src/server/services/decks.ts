@@ -1,9 +1,10 @@
 import type { DeckInput } from "@lymi/core";
-import { emptyState, expandDirections, newId, serializeState } from "@lymi/core";
+import { expandDirections, newId } from "@lymi/core";
 import { and, asc, eq, isNull, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
+import { deckAccess, fillStates, learnersOf, memberOf, ownedDeck } from "./members";
 
 /**
  * A card is asked the way its own `directions` says, or the deck's when it has none. A state
@@ -16,10 +17,10 @@ export const asked = sql`(
   or card_states.direction = coalesce(cards.directions, decks.directions)
 )`;
 
-/** All active decks with counts of due and total cards, in the learner's order. */
+/** All active decks the learner can see, with their own due count, in the learner's order. */
 export async function listDecks({ db, userId }: ServiceContext) {
   const now = Date.now();
-  return db
+  const rows = await db
     .select({
       id: schema.decks.id,
       name: schema.decks.name,
@@ -32,12 +33,30 @@ export async function listDecks({ db, userId }: ServiceContext) {
         select count(*) from card_states
         join cards on cards.id = card_states.card_id
         where cards.deck_id = decks.id and cards.archived_at is null
+          and card_states.user_id = ${userId}
           and card_states.due <= ${now} and ${asked}
       )`,
+      ownerId: schema.decks.userId,
+      ownerName: schema.user.name,
+      memberRole: schema.deckMembers.role,
     })
     .from(schema.decks)
-    .where(and(eq(schema.decks.userId, userId), isNull(schema.decks.archivedAt)))
+    .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
+    .leftJoin(
+      schema.deckMembers,
+      and(
+        eq(schema.deckMembers.deckId, schema.decks.id),
+        eq(schema.deckMembers.userId, userId),
+        isNull(schema.deckMembers.removedAt),
+      ),
+    )
+    .where(and(memberOf(userId), isNull(schema.decks.archivedAt)))
     .orderBy(asc(schema.decks.position), asc(schema.decks.createdAt));
+  return rows.map(({ ownerId, ownerName, memberRole, ...deck }) => ({
+    ...deck,
+    role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
+    owner: { id: ownerId, name: ownerName },
+  }));
 }
 
 export async function createDeck(ctx: ServiceContext, input: DeckInput) {
@@ -62,20 +81,19 @@ export async function createDeck(ctx: ServiceContext, input: DeckInput) {
   return getDeck(ctx, id);
 }
 
-export async function getDeck({ db, userId }: ServiceContext, id: string) {
-  const [deck] = await db
-    .select()
-    .from(schema.decks)
-    .where(and(eq(schema.decks.id, id), eq(schema.decks.userId, userId)));
-  if (!deck) throw notFound("Deck");
-  return deck;
+/** A deck the learner can see, with their role in it and who owns it. */
+export async function getDeck(ctx: ServiceContext, id: string) {
+  return deckAccess(ctx, id);
 }
 
 /**
- * Cards in a deck, newest first, each with the state for the direction the deck leads with.
- * A production-only deck shows its production state rather than an empty Status column.
+ * Cards in a deck, newest first, each with the caller's state for the direction the deck
+ * leads with. A production-only deck shows its production state rather than an empty
+ * Status column.
  */
-export async function listDeckCards({ db, userId }: ServiceContext, deckId: string) {
+export async function listDeckCards(ctx: ServiceContext, deckId: string) {
+  const { db, userId } = ctx;
+  await deckAccess(ctx, deckId);
   return db
     .select({ card: schema.cards, state: schema.cardStates })
     .from(schema.cards)
@@ -84,18 +102,13 @@ export async function listDeckCards({ db, userId }: ServiceContext, deckId: stri
       schema.cardStates,
       and(
         eq(schema.cardStates.cardId, schema.cards.id),
+        eq(schema.cardStates.userId, userId),
         sql`card_states.direction = case
           when coalesce(cards.directions, decks.directions) = 'production' then 'production'
           else 'recognition' end`,
       ),
     )
-    .where(
-      and(
-        eq(schema.cards.deckId, deckId),
-        eq(schema.cards.userId, userId),
-        isNull(schema.cards.archivedAt),
-      ),
-    )
+    .where(and(eq(schema.cards.deckId, deckId), isNull(schema.cards.archivedAt)))
     .orderBy(sql`${schema.cards.createdAt} desc`);
 }
 
@@ -103,10 +116,11 @@ export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 
 export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPatch) {
   const { db, userId, actor } = ctx;
+  await ownedDeck(ctx, id);
   const result = await db
     .update(schema.decks)
     .set({ ...patch, updatedAt: new Date() })
-    .where(and(eq(schema.decks.id, id), eq(schema.decks.userId, userId)))
+    .where(eq(schema.decks.id, id))
     .returning({ id: schema.decks.id });
   if (result.length === 0) throw notFound("Deck");
   if (patch.directions) await openDirections(ctx, id, patch.directions);
@@ -123,59 +137,31 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
 
 /**
  * A direction the deck did not ask before has no state rows on the cards already in it, so
- * they would never come up. Give each card that follows the deck a new state, due now, for
- * every direction the deck asks. Nothing is removed: `asked` handles the other direction.
+ * they would never come up. Give every learner of the deck a new state, due now, for each
+ * card that follows the deck and each direction it now asks. Nothing is removed: `asked`
+ * handles the other direction.
  */
 async function openDirections(
-  { db, userId }: ServiceContext,
+  { db }: ServiceContext,
   deckId: string,
   directions: NonNullable<DeckPatch["directions"]>,
 ) {
   const wanted = expandDirections(directions);
-  const rows = await db
-    .select({ cardId: schema.cards.id, direction: schema.cardStates.direction })
+  const cards = await db
+    .select({ id: schema.cards.id })
     .from(schema.cards)
-    .leftJoin(schema.cardStates, eq(schema.cardStates.cardId, schema.cards.id))
     .where(
       and(
         eq(schema.cards.deckId, deckId),
-        eq(schema.cards.userId, userId),
         isNull(schema.cards.archivedAt),
         isNull(schema.cards.directions),
       ),
     );
-
-  const have = new Map<string, Set<string>>();
-  for (const row of rows) {
-    const set = have.get(row.cardId) ?? new Set<string>();
-    if (row.direction) set.add(row.direction);
-    have.set(row.cardId, set);
-  }
-
-  const now = new Date();
-  const fsrs = serializeState(emptyState(now));
-  const inserts = [];
-  for (const [cardId, directionsHeld] of have) {
-    for (const direction of wanted) {
-      if (directionsHeld.has(direction)) continue;
-      inserts.push(
-        db.insert(schema.cardStates).values({
-          id: newId(),
-          cardId,
-          userId,
-          direction,
-          due: now,
-          state: 0,
-          fsrs,
-        }),
-      );
-    }
-  }
-  // D1 caps a batch, and a deck can hold hundreds of cards.
-  for (let i = 0; i < inserts.length; i += 50) {
-    const [first, ...rest] = inserts.slice(i, i + 50);
-    if (first) await db.batch([first, ...rest]);
-  }
+  await fillStates(
+    { db },
+    cards.map((card) => ({ cardId: card.id, directions: wanted })),
+    await learnersOf({ db }, deckId),
+  );
 }
 
 /** Archive, never delete. The cards stay put; the deck leaves every list until restored. */
@@ -186,15 +172,13 @@ export async function restoreDeck(ctx: ServiceContext, id: string) {
   return setDeckArchived(ctx, id, null);
 }
 
-async function setDeckArchived(
-  { db, userId, actor }: ServiceContext,
-  id: string,
-  archivedAt: Date | null,
-) {
+async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
+  const { db, userId, actor } = ctx;
+  await ownedDeck(ctx, id);
   const result = await db
     .update(schema.decks)
     .set({ archivedAt, updatedAt: new Date() })
-    .where(and(eq(schema.decks.id, id), eq(schema.decks.userId, userId)))
+    .where(eq(schema.decks.id, id))
     .returning({ id: schema.decks.id });
   if (result.length === 0) throw notFound("Deck");
   await audit(db, {

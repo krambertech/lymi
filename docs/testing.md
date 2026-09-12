@@ -23,6 +23,10 @@ pnpm exec playwright install chromium webkit
 
 `scripts/e2e-server.mjs` clears only its three isolated Wrangler state directories, applies every D1 migration, builds both applications, starts the site Worker on port 4174, starts the production-built product package on port 4175 for PWA installation and offline-shell coverage, and starts the product through Vite on port 4173 for the interactive journeys. Its short-lived variable files contain local-only credentials. It never overwrites a pre-existing developer file, removes the files it creates on exit, and does not touch normal Wrangler state, a developer's `.dev.vars`, or any remote Cloudflare binding.
 
+## Service tests on a real D1
+
+`apps/web/src/server/services/test-db.ts` boots wrangler's local runtime in memory, applies every migration, and returns the same `Db` the Worker uses. Service tests that need rows, such as `members.test.ts`, take one database per file and give each test its own deck. The pure-function tests next to them need no database and stay that way.
+
 ## CI policy
 
 `pnpm verify` is the canonical local base gate. CI runs the same commands in the same fail-fast order but gives formatting and lint, migration safety, build, TypeScript, and unit tests their own named steps. A failure therefore identifies the broken gate without requiring an agent or developer to search a combined log.
@@ -68,7 +72,7 @@ The resource identifier is `PRODUCT_URL` plus `/mcp`; the `oauth_resource` row f
 
 Then, with a listener on `127.0.0.1:8765` and a PKCE verifier in hand:
 
-1. Sign in at `/login?dev=1` first. The authorize request signs its query, so adding `dev=1` to the URL it redirects to breaks the signature and the sign-in fails.
+1. Sign in first, by opening `/api/dev/sign-in?as=learner` or through `/login?dev=1`. The authorize request signs its query, so adding `dev=1` to the URL it redirects to breaks the signature and the sign-in fails.
 2. Open `/api/auth/oauth2/authorize` with `client_id=lymi-local-test`, the redirect URI above, `scope=read write offline_access`, the S256 challenge and `resource=http://localhost:5241/mcp`. The consent screen appears; approve it.
 3. Exchange the code at `/api/auth/oauth2/token` with `grant_type=authorization_code`, the verifier and the same `resource`.
 4. Call `/mcp` with `Authorization: Bearer` and the `accept: application/json, text/event-stream` header. Responses arrive as one SSE `data:` line.

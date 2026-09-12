@@ -6,6 +6,8 @@ import type { WordEvent } from "../views/WordView";
 const now = Date.now();
 const day = 86_400_000;
 
+const mine = { role: "owner" as const, owner: { id: "u1", name: "Kateryna" } };
+
 export const decks: DeckSummary[] = [
   {
     id: "d1",
@@ -16,6 +18,7 @@ export const decks: DeckSummary[] = [
     position: 0,
     total: 64,
     due: 8,
+    ...mine,
   },
   {
     id: "d2",
@@ -26,6 +29,7 @@ export const decks: DeckSummary[] = [
     position: 1,
     total: 41,
     due: 3,
+    ...mine,
   },
   {
     id: "d3",
@@ -36,6 +40,7 @@ export const decks: DeckSummary[] = [
     position: 2,
     total: 12,
     due: 0,
+    ...mine,
   },
 ];
 

@@ -6,6 +6,7 @@ A vocabulary app with a storm lantern. Collect words from language lessons, let 
 - [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts
 - `/design` on the local dev server: the design system rendered with the real components (local only)
 - [docs/stack.md](docs/stack.md): the technical decisions and why
+- [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
 - [docs/plans](docs/plans): order of work for passes that are decided but not built
@@ -25,7 +26,7 @@ pnpm db:migrate                                     # applies migrations to the 
 pnpm dev                                            # site http://localhost:4321, product http://localhost:5173
 ```
 
-`pnpm dev` runs both deployables: Astro serves the public website, while the Cloudflare Vite plugin runs the React product and its Hono Worker so product `/api/*` requests hit real Worker code locally. Production uses `https://lymi.app` for the public website and docs, and `https://my.lymi.app` for the product, auth, API, MCP and PWA.
+`pnpm dev` runs both deployables: Astro serves the public website, while the Cloudflare Vite plugin runs the React product and its Hono Worker so product `/api/*` requests hit real Worker code locally. To sign in without Google, open `http://localhost:5173/api/dev/sign-in?as=learner`: it creates a seeded local account and lands on Today. [docs/local-dev.md](docs/local-dev.md) has the other personas, the developer panel, and `pnpm local`. Production uses `https://lymi.app` for the public website and docs, and `https://my.lymi.app` for the product, auth, API, MCP and PWA.
 
 ## Layout
 
@@ -62,6 +63,7 @@ pnpm deploy:health # identify and check both active production versions
 pnpm deploy:health:site # check only the public Worker
 pnpm deploy:health:product # check only the product Worker
 pnpm db:generate  # generate SQL, Drizzle snapshots, and the checksum manifest
+pnpm local        # drive the local server: personas, seed, reset, due; see docs/local-dev.md
 pnpm run deploy:site # deploy the public Worker; user-owned production action
 pnpm run deploy:product # deploy the product Worker; user-owned production action
 ```

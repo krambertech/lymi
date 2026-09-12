@@ -4,7 +4,7 @@ import { schema } from "../db";
 import type { Persona, PersonaCard } from "../dev/personas";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
-import { archiveDeck, createDeck, listDecks } from "./decks";
+import { archiveDeck, asked, createDeck, listDecks } from "./decks";
 import { updateSettings } from "./settings";
 
 const DAY = 86_400_000;
@@ -250,11 +250,14 @@ export async function setDue(
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    // Only states the card is asked in: a direction turned off on the deck keeps its rows,
+    // and those must not use up the count or the queue would come up short.
     .where(
       and(
         eq(schema.cardStates.userId, userId),
         isNull(schema.cards.archivedAt),
         isNull(schema.decks.archivedAt),
+        asked,
       ),
     )
     .orderBy(desc(schema.cardStates.lastReview), asc(schema.cardStates.due));
@@ -273,12 +276,13 @@ export async function setDue(
   }
 
   const statements: unknown[] = [];
-  if (dueIds.length > 0) {
+  // D1 binds at most 100 parameters per statement, so the ids go in slices.
+  for (let i = 0; i < dueIds.length; i += 90) {
     statements.push(
       db
         .update(schema.cardStates)
         .set({ due: new Date(now.getTime() - 60_000), updatedAt: now })
-        .where(inArray(schema.cardStates.id, dueIds)),
+        .where(inArray(schema.cardStates.id, dueIds.slice(i, i + 90))),
     );
   }
   laterIds.forEach((id, i) => {

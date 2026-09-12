@@ -85,8 +85,8 @@ Seeding goes through the same services as the app and the API, so decks and card
 
 ## How the gate works
 
-`devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides three things: whether email and password sign-in is on, whether `/api/dev` exists, and whether a `@lymi.local` address may create an account. Production's `PRODUCT_URL` is `https://my.lymi.app`.
+Two gates, one at build time and one at run time. The Worker imports the `/api/dev` routes only inside an `import.meta.env.DEV` branch, so a production build contains none of the routes, the persona fixtures, the fixed password, or the seed and reset services. At run time, `devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides whether email and password sign-in is on, whether the routes answer, and whether a `@lymi.local` address may create an account. Production's `PRODUCT_URL` is `https://my.lymi.app`, so even a build that carried the routes would answer 404.
 
-The client side is gated separately by `import.meta.env.DEV`. The panel and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind that flag, so the production bundle never includes them.
+The client side is gated the same way. The panel and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind `import.meta.env.DEV`, so the production bundle never includes them. Sign-out and every sign-in path clear the same persisted state through `clearPersistedLearnerState`, so a real account signed in after a persona never inherits its cache or queued grades.
 
 The Playwright suite runs the product through Vite with a loopback `PRODUCT_URL`, so the routes exist there too. The tests do not use them: `docs/testing.md` keeps the canonical journey on the public flows.

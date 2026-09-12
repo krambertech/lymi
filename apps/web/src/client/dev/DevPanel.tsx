@@ -8,9 +8,9 @@ import { Field } from "../components/Field";
 import { Kbd } from "../components/Kbd";
 import { Segmented } from "../components/Segmented";
 import { ApiError, api } from "../lib/api";
+import { clearPersistedLearnerState } from "../lib/persisted";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
 import { type DevCounts, devApi } from "./dev-api";
-import { forgetPersistedCache } from "./session-guard";
 
 /**
  * Local development only. One small form: who you are, how many cards are due, what the
@@ -53,6 +53,7 @@ function readOpen(): boolean {
 export default function DevPanel() {
   const [open, setOpen] = useState(readOpen);
   const panelRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     try {
@@ -61,6 +62,12 @@ export default function DevPanel() {
   }, [open]);
 
   useEffect(() => {
+    // A keyboard dismissal puts focus back on the button, so the next Tab starts from it
+    // rather than from the top of the page.
+    const dismiss = () => {
+      setOpen(false);
+      requestAnimationFrame(() => triggerRef.current?.focus());
+    };
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       const typing =
@@ -71,10 +78,11 @@ export default function DevPanel() {
           target.isContentEditable);
       if (e.key === "`" && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
-        setOpen((v) => !v);
+        if (open) dismiss();
+        else setOpen(true);
       }
       if (e.key === "Escape" && open && panelRef.current?.contains(document.activeElement)) {
-        setOpen(false);
+        dismiss();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -85,6 +93,7 @@ export default function DevPanel() {
     <>
       {open && <Panel ref={panelRef} />}
       <button
+        ref={triggerRef}
         type="button"
         aria-label={open ? "Close developer tools" : "Developer tools"}
         aria-expanded={open}
@@ -173,7 +182,7 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
   });
 
   function become(id: string) {
-    forgetPersistedCache();
+    clearPersistedLearnerState();
     queryClient.clear();
     const { pathname, search } = window.location;
     const returnTo = pathname === "/login" ? "/today" : `${pathname}${search}`;

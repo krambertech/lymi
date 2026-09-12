@@ -1,0 +1,15 @@
+/**
+ * What the client keeps in localStorage for one learner: the query cache that survives
+ * reloads and offline starts, the outbox of grades made offline, and the local-only marker
+ * of which persona the developer last became. All of it belongs to whoever was signed in,
+ * so it is cleared when the learner changes: on sign-out, and before any sign-in starts.
+ * A grade still waiting in the outbox at sign-out is dropped with it; it could only ever
+ * have belonged to the learner who left.
+ */
+const KEYS = ["lymi-query-cache", "lymi-outbox", "lymi-dev-persona"];
+
+export function clearPersistedLearnerState(): void {
+  try {
+    for (const key of KEYS) localStorage.removeItem(key);
+  } catch {}
+}

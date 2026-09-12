@@ -18,7 +18,7 @@ export function Checkbox({
   return (
     <label
       className={clsx(
-        "inline-flex min-h-10 cursor-pointer items-center gap-2.5 py-1 text-base text-text",
+        "inline-flex min-h-11 cursor-pointer items-center gap-2.5 py-1 text-base text-text md:min-h-10",
         disabled && "cursor-not-allowed opacity-45",
         className,
       )}

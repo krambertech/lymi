@@ -330,12 +330,18 @@ function Picker({
         />
       </button>
 
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: the handler only keeps focus where it is; the panel's interactive parts carry their own roles */}
       <div
         ref={panelRef}
         popover="manual"
         data-flipped={flipped || undefined}
         className="picker-panel edge-2 flex flex-col overflow-hidden rounded-md bg-plate"
         style={placement}
+        // A press anywhere on the panel, its scrollbar included, keeps focus where it is; the
+        // search field is the one place a press should still put the caret.
+        onMouseDown={(e) => {
+          if (e.target !== searchRef.current) e.preventDefault();
+        }}
       >
         {shown && mode === "search" && (
           <div className="flex shrink-0 items-center gap-2.5 border-b border-edge ps-3.5 pe-3.5">
@@ -391,7 +397,6 @@ function Picker({
                   // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: an option is a list item
                   role="option"
                   aria-selected={on}
-                  onMouseDown={(e) => e.preventDefault()}
                   onClick={() => pick(row)}
                   className={clsx(
                     "relative flex h-11 cursor-pointer items-center gap-2 rounded-sm px-2.5 text-[16px] md:h-10 md:text-base",

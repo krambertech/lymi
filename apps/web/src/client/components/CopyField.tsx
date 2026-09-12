@@ -51,7 +51,11 @@ export function CopyField({
       >
         {value}
       </output>
-      <Button variant={copied ? "secondary" : "primary"} className="shrink-0" onClick={copy}>
+      <Button
+        variant={copied ? "secondary" : "primary"}
+        className="min-w-[6.5rem] shrink-0"
+        onClick={copy}
+      >
         {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
         {copied ? t`Copied` : t`Copy`}
       </Button>

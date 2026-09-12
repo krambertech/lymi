@@ -133,6 +133,10 @@ export function MenuList({
         e.preventDefault();
         items[(i - 1 + items.length) % items.length]?.focus();
       }
+      if (e.key === "Home" || e.key === "End") {
+        e.preventDefault();
+        items.at(e.key === "Home" ? 0 : -1)?.focus();
+      }
     },
     [hide],
   );

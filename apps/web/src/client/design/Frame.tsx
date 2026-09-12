@@ -185,7 +185,11 @@ export function Pair({
   return (
     <div className={clsx("grid gap-3", !stack && "@3xl:grid-cols-2")}>
       {(["light", "dark"] as const).map((t) => (
-        <div key={t} data-theme={t} className="@container edge rounded-lg bg-canvas p-5 text-text">
+        <div
+          key={t}
+          data-theme={t}
+          className="@container edge min-w-0 rounded-lg bg-canvas p-5 text-text"
+        >
           {children(t)}
         </div>
       ))}

@@ -15,7 +15,7 @@ import { ApiError, api, flushOutbox } from "../lib/api";
 import { activate, bootstrapLanguage, isAppLanguage, isBareShell, pickLocale } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
-import { useSignOut } from "../lib/use-sign-out";
+import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/Shell";
 
 // Local development only. Vite drops the import from a production build with the branch.
@@ -28,12 +28,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function Root() {
   return (
     <AddCardProvider>
-      <Shell />
-      {DevPanel && (
-        <Suspense fallback={null}>
-          <DevPanel />
-        </Suspense>
-      )}
+      <SignOutProvider>
+        <Shell />
+        {DevPanel && (
+          <Suspense fallback={null}>
+            <DevPanel />
+          </Suspense>
+        )}
+      </SignOutProvider>
     </AddCardProvider>
   );
 }

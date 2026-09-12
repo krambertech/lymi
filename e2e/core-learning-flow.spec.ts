@@ -13,6 +13,8 @@ test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
   await expect(page.getByRole("heading", { name: "Library", exact: true })).toBeVisible();
 
   // The docs link is the one place the product points at the public site's configured origin.
+  // Today carries the learner menu on both machines: the rail on desktop, the avatar on the phone.
+  await page.goto("/today");
   await page.getByRole("button", { name: "Dev", exact: true }).click();
   await expect(page.getByRole("menuitem", { name: "Docs" })).toHaveAttribute(
     "href",

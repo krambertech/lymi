@@ -6,20 +6,19 @@ test("a learner can switch the app language and keep it after reload", async ({
 }, testInfo) => {
   await signInAsTestLearner(page, testInfo, "language");
 
-  // Settings has one picker, the language, so its accessible name can change under it.
-  const picker = () => page.getByRole("combobox").first();
+  const picker = (name: string) => page.getByRole("combobox", { name, exact: true });
   // The interface switches before the server answers; the reload below must not outrun the save.
   const saved = () =>
     page.waitForResponse(
       (r) => r.request().method() === "PATCH" && r.url().endsWith("/api/settings"),
     );
   await page.goto("/settings");
-  await picker().click();
+  await picker("Language").click();
   const savedUk = saved();
   await page.getByRole("option", { name: "Українська" }).click();
   await savedUk;
   await expect(page.locator("html")).toHaveAttribute("lang", "uk");
-  await expect(picker()).toHaveText("Українська");
+  await expect(picker("Мова")).toHaveText("Українська");
 
   await page.goto("/today");
   await expect(page.getByRole("heading", { name: "Тут поки нічого" })).toBeVisible();
@@ -28,12 +27,12 @@ test("a learner can switch the app language and keep it after reload", async ({
   await expect(page.locator("html")).toHaveAttribute("lang", "uk");
   await expect(page.getByRole("heading", { name: "Тут поки нічого" })).toBeVisible();
   await page.goto("/settings");
-  await picker().click();
+  await picker("Мова").click();
   const savedEn = saved();
   await page.getByRole("option", { name: "English" }).click();
   await savedEn;
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(picker()).toHaveText("English");
+  await expect(picker("Language")).toHaveText("English");
 });
 
 test("sign-in follows the browser language", async ({ browser }) => {

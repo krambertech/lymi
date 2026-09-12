@@ -198,6 +198,11 @@ function writeOutbox(items: Outbox) {
   localStorage.setItem(OUTBOX_KEY, JSON.stringify(items));
 }
 
+/** Grades still waiting to reach the server. */
+export function outboxSize(): number {
+  return readOutbox().length;
+}
+
 export async function gradeWithOutbox(input: GradeInput) {
   const entry = { ...input, reviewedAt: input.reviewedAt ?? new Date() };
   try {

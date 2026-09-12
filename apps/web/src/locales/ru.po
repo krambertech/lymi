@@ -209,6 +209,10 @@ msgstr "{moreDue, plural, one {{done} повторено. Ещё # готова,
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
+#: src/client/lib/use-sign-out.tsx
+msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgstr "{queued, plural, one {# оценка из офлайн-повторения ещё не дошла до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить её.} few {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} many {# оценок из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} other {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.}}"
+
 #: src/client/views/TodayView.tsx
 msgid "{run, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{run, plural, one {# день подряд} few {# дня подряд} many {# дней подряд} other {# дня подряд}}"
@@ -1502,6 +1506,10 @@ msgstr "Войти в Lymi"
 msgid "Sign out"
 msgstr "Выйти"
 
+#: src/client/lib/use-sign-out.tsx
+msgid "Sign out and lose them"
+msgstr "Выйти и потерять их"
+
 #: src/client/routes/login.tsx
 msgid "Sign-in didn’t go through. Try again."
 msgstr "Не удалось войти. Попробуй снова."
@@ -1509,6 +1517,10 @@ msgstr "Не удалось войти. Попробуй снова."
 #: src/client/components/ApiKeysSection.tsx
 msgid "So you know which key to revoke later."
 msgstr "Чтобы потом знать, какой ключ отозвать."
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Some grades haven’t synced"
+msgstr "Некоторые оценки ещё не синхронизированы"
 
 #. placeholder {0}: res.status
 #: src/client/lib/api.ts
@@ -1527,6 +1539,10 @@ msgstr "стабильность · сложность {0}"
 #: src/client/components/ShortcutsDialog.tsx
 msgid "Start review"
 msgstr "Начать повторение"
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Stay signed in"
+msgstr "Остаться в приложении"
 
 #: src/client/views/WordView.tsx
 msgid "still in its first steps"

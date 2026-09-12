@@ -209,6 +209,10 @@ msgstr "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} o
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
+#: src/client/lib/use-sign-out.tsx
+msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+
 #: src/client/views/TodayView.tsx
 msgid "{run, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{run, plural, one {# day in a row} other {# days in a row}}"
@@ -1502,6 +1506,10 @@ msgstr "Sign in to Lymi"
 msgid "Sign out"
 msgstr "Sign out"
 
+#: src/client/lib/use-sign-out.tsx
+msgid "Sign out and lose them"
+msgstr "Sign out and lose them"
+
 #: src/client/routes/login.tsx
 msgid "Sign-in didn’t go through. Try again."
 msgstr "Sign-in didn’t go through. Try again."
@@ -1509,6 +1517,10 @@ msgstr "Sign-in didn’t go through. Try again."
 #: src/client/components/ApiKeysSection.tsx
 msgid "So you know which key to revoke later."
 msgstr "So you know which key to revoke later."
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Some grades haven’t synced"
+msgstr "Some grades haven’t synced"
 
 #. placeholder {0}: res.status
 #: src/client/lib/api.ts
@@ -1527,6 +1539,10 @@ msgstr "stability · difficulty {0}"
 #: src/client/components/ShortcutsDialog.tsx
 msgid "Start review"
 msgstr "Start review"
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Stay signed in"
+msgstr "Stay signed in"
 
 #: src/client/views/WordView.tsx
 msgid "still in its first steps"

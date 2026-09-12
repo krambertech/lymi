@@ -4,6 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import type { ReactNode } from "react";
 import { Select } from "../components/Combobox";
+import { Field } from "../components/Field";
 import { Segmented } from "../components/Segmented";
 import { SettingsGroup } from "../components/SettingsGroup";
 import { Skeleton } from "../components/Skeleton";
@@ -62,16 +63,17 @@ export function SettingsView({
         description={t`For the interface, and for the meanings the AI writes.`}
       >
         {language ? (
-          <div className="w-56">
+          // The group's title already says Language; the field's label names the picker for
+          // assistive technology without printing it twice.
+          <Field label={t`Language`} className="w-56 [&_label]:sr-only">
             <Select
-              label={t`Language`}
               value={language}
               onChange={(v) => {
                 if (v && v !== language) onLanguage(v as AppLanguage);
               }}
               options={LANGUAGES}
             />
-          </div>
+          </Field>
         ) : (
           <Skeleton className="h-10 w-56 rounded-md" />
         )}

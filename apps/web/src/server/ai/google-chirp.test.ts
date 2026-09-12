@@ -45,4 +45,17 @@ describe("Google Chirp provider", () => {
     );
     expect(request).not.toHaveBeenCalled();
   });
+
+  it("exposes only the upstream status needed for safe diagnostics", async () => {
+    const request = vi.fn(async () => new Response("private upstream details", { status: 403 }));
+    const provider = createGoogleChirpProvider(
+      { GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
+      { locale: "et-EE", request, accessToken: async () => "token" },
+    );
+
+    await expect(provider.speech({ text: "tere", language: "et" })).rejects.toMatchObject({
+      name: "GoogleChirpError",
+      status: 403,
+    });
+  });
 });

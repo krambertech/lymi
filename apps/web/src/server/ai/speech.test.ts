@@ -26,10 +26,19 @@ describe("speech provider routing", () => {
     expect(openAiSupportsLanguage("gu-IN")).toBe(false);
   });
 
-  it("prefers OpenAI for a language supported by both providers", () => {
+  it("prefers OpenAI and keeps Chirp as its runtime fallback", () => {
     expect(createSpeechProviders(env, "et").map((provider) => provider.provider)).toEqual([
       "openai",
+      "google-chirp",
     ]);
+  });
+
+  it("uses only OpenAI when Chirp is not configured", () => {
+    expect(
+      createSpeechProviders({ ...env, GOOGLE_CLOUD_TTS_CREDENTIALS: "" }, "et").map(
+        (provider) => provider.provider,
+      ),
+    ).toEqual(["openai"]);
   });
 
   it("uses Chirp for a language outside OpenAI's published list", () => {

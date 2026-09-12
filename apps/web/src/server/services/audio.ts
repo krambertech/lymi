@@ -48,37 +48,42 @@ export async function pronunciationAudio(
       return cached;
     }
 
+    let generated: Response;
     try {
-      const generated = await provider.speech({ text: card.term, language: language.data });
+      generated = await provider.speech({ text: card.term, language: language.data });
       if (!generated.body) throw new Error("Speech provider returned no audio");
-      await deps.bucket.put(key, generated.body, {
-        httpMetadata: {
-          contentType: provider.contentType,
-          cacheControl: "private, max-age=31536000",
-        },
-        customMetadata: {
-          language: language.data,
-          locale: provider.locale,
-          provider: provider.provider,
-          model: provider.model,
-          voice: provider.voice,
-        },
-      });
-      const stored = await deps.bucket.get(key);
-      if (!stored) throw new Error("Generated audio was not stored");
-      await rememberAudioKey(ctx, card, key, true, provider.provider);
-      return stored;
     } catch (error) {
       lastFailure = error;
+      const status = providerStatus(error);
       console.warn(
         JSON.stringify({
           event: "pronunciation_provider_failed",
           provider: provider.provider,
           language: language.data,
-          cardId: card.id,
+          error: error instanceof Error ? error.name : "UnknownError",
+          ...(status === null ? {} : { status }),
         }),
       );
+      continue;
     }
+
+    await deps.bucket.put(key, generated.body, {
+      httpMetadata: {
+        contentType: provider.contentType,
+        cacheControl: "private, max-age=31536000",
+      },
+      customMetadata: {
+        language: language.data,
+        locale: provider.locale,
+        provider: provider.provider,
+        model: provider.model,
+        voice: provider.voice,
+      },
+    });
+    const stored = await deps.bucket.get(key);
+    if (!stored) throw new Error("Generated audio was not stored");
+    await rememberAudioKey(ctx, card, key, true, provider.provider);
+    return stored;
   }
 
   throw new ServiceError(
@@ -86,6 +91,11 @@ export async function pronunciationAudio(
     "Pronunciation audio is temporarily unavailable",
     lastFailure instanceof Error ? { cause: lastFailure.name } : undefined,
   );
+}
+
+function providerStatus(error: unknown): number | null {
+  if (!error || typeof error !== "object" || !("status" in error)) return null;
+  return typeof error.status === "number" ? error.status : null;
 }
 
 async function rememberAudioKey(

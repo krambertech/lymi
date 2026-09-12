@@ -35,4 +35,14 @@ describe("OpenAI speech provider", () => {
     );
     expect(request).not.toHaveBeenCalled();
   });
+
+  it("exposes only the upstream status needed for safe diagnostics", async () => {
+    const request = vi.fn(async () => new Response("private upstream details", { status: 401 }));
+    const provider = createOpenAiSpeechProvider({ OPENAI_API_KEY: "key" }, "et", request);
+
+    await expect(provider.speech({ text: "tere", language: "et" })).rejects.toMatchObject({
+      name: "OpenAiSpeechError",
+      status: 401,
+    });
+  });
 });

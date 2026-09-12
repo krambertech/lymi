@@ -1,9 +1,11 @@
 import type { Card } from "@lymi/core/schema";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider } from "../ai";
 import type { Db } from "../db";
 import { pronunciationAudio } from "./audio";
 import type { ServiceContext } from "./context";
+
+afterEach(() => vi.restoreAllMocks());
 
 function card(patch: Partial<Card> = {}): Card {
   const now = new Date();
@@ -120,18 +122,57 @@ describe("pronunciation audio", () => {
           }),
         })[property as "get"],
     });
-    const chirp = vi.fn(async () => {
-      throw new Error("temporary");
+    const openai = vi.fn(async () => {
+      throw Object.assign(new Error("private upstream details"), {
+        name: "OpenAiSpeechError",
+        status: 401,
+      });
     });
-    const openai = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const chirp = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
 
     await pronunciationAudio(context(card()), "card-1", {
       bucket,
-      providers: () => [provider("google-chirp", chirp), provider("openai", openai)],
+      providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
     });
 
-    expect(chirp).toHaveBeenCalledOnce();
     expect(openai).toHaveBeenCalledOnce();
+    expect(chirp).toHaveBeenCalledOnce();
+    expect(warn).toHaveBeenCalledWith(
+      JSON.stringify({
+        event: "pronunciation_provider_failed",
+        provider: "openai",
+        language: "et",
+        error: "OpenAiSpeechError",
+        status: 401,
+      }),
+    );
+    expect(warn.mock.calls.flat().join(" ")).not.toContain("private upstream details");
+    expect(warn.mock.calls.flat().join(" ")).not.toContain("card-1");
+  });
+
+  it("does not try another provider when audio storage fails", async () => {
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({
+          get: vi.fn(async () => null),
+          put: vi.fn(async () => {
+            throw new Error("R2 unavailable");
+          }),
+        })[property as "get"],
+    });
+    const openai = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const chirp = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
+
+    await expect(
+      pronunciationAudio(context(card()), "card-1", {
+        bucket,
+        providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
+      }),
+    ).rejects.toThrow("R2 unavailable");
+
+    expect(openai).toHaveBeenCalledOnce();
+    expect(chirp).not.toHaveBeenCalled();
   });
 
   it("never reaches R2 or a provider for a card without a language", async () => {

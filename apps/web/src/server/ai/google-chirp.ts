@@ -22,9 +22,12 @@ type Token = { value: string; expiresAt: number; clientEmail: string; privateKey
 let cachedToken: Token | null = null;
 
 export class GoogleChirpError extends Error {
-  constructor(message: string, options?: ErrorOptions) {
+  readonly status: number | undefined;
+
+  constructor(message: string, options?: ErrorOptions & { status?: number | undefined }) {
     super(message, options);
     this.name = "GoogleChirpError";
+    this.status = options?.status;
   }
 }
 
@@ -206,11 +209,15 @@ async function fetchWithRetry(request: Fetch, url: string, init: RequestInit): P
     const retryable = response.status === 408 || response.status === 429 || response.status >= 500;
     await response.body?.cancel();
     if (!retryable || attempt === 1) {
-      throw new GoogleChirpError(`Google Chirp request failed (${response.status})`);
+      throw new GoogleChirpError(`Google Chirp request failed (${response.status})`, {
+        status: response.status,
+      });
     }
     await pause(200 * (attempt + 1));
   }
-  throw new GoogleChirpError(`Google Chirp request failed (${lastStatus})`);
+  throw new GoogleChirpError(`Google Chirp request failed (${lastStatus})`, {
+    status: lastStatus,
+  });
 }
 
 async function boundedJson(response: Response): Promise<unknown> {

@@ -14,3 +14,4 @@ One file per decision that is hard to reverse, surprising without context, and t
 | [0008](0008-public-website-and-product-use-separate-origins.md) | The public website and product use separate origins |
 | [0009](0009-public-website-and-product-deploy-separately.md) | The public website and product deploy separately |
 | [0010](0010-the-review-queue-is-ordered-by-retrievability.md) | The review queue is ordered by retrievability, not by due date |
+| [0011](0011-a-shared-deck-is-one-deck-with-many-learners.md) | A shared deck is one deck with many learners, and its invitation is the front door |

@@ -49,3 +49,19 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 **Inspect**: Looking over a card an integration added, and optionally editing or archiving it. _Avoid_: Review, approve
 
 **Archive**: Hiding a card or deck without destroying it. The only kind of removal the app has. Restore undoes it. _Avoid_: Delete, remove, trash
+
+### Sharing
+
+**Shared deck**: A deck with members. One deck, one owner, many learners: every member sees the same cards, and each keeps their own schedule and history. _Avoid_: Shared copy, class, group, collection
+
+**Owner**: The learner whose deck it is. The only one who writes to it, for now. _Avoid_: Admin, creator, author
+
+**Member**: A learner who joined a shared deck. Studies it, cannot change it. _Avoid_: Subscriber, follower, student, collaborator
+
+**Role**: What a member may do in a shared deck: owner, editor, contributor, or learner. Only owner and learner exist in the interface yet.
+
+**Join link**: A deck's one shareable link. Anyone who opens it can join. The owner can turn it off. _Avoid_: Share link, invite link, public link
+
+**Invitation**: A deck's welcome to one Google email. Accepting it, or joining through the join link, creates the account if there is none. _Avoid_: Invite (as a noun), request, seat
+
+**Join**: Becoming a member of a shared deck. **Leave** is the member's way out and **Remove** is the owner's; neither deletes the member's reviews. _Avoid_: Subscribe, enroll, follow, kick

@@ -121,12 +121,14 @@ test.describe("deck and card creation", () => {
     const secondName = `Second ${testInfo.project.name}`;
     const term = "affrettarsi";
     const firstId = await createDeck(page, firstName);
-    const secondId = await createDeck(page, secondName);
+    await createDeck(page, secondName);
 
     const addWord = page.locator("header").getByRole("button", { name: /^Add word/ });
     await addWord.click();
     let dialog = sheet(page, "Add a word or phrase");
-    await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveValue(secondId);
+    await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(
+      secondName,
+    );
 
     await dialog.getByRole("button", { name: `Add to ${secondName}`, exact: true }).click();
     await expect(dialog.getByRole("alert")).toHaveText("Type the word or phrase.");
@@ -152,7 +154,7 @@ test.describe("deck and card creation", () => {
 
     await page.keyboard.press("n");
     dialog = sheet(page, "Add a word or phrase");
-    await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveValue(firstId);
+    await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(firstName);
     await expect(dialog.getByRole("textbox", { name: "Word or phrase", exact: true })).toHaveValue(
       "",
     );
@@ -164,7 +166,7 @@ test.describe("deck and card creation", () => {
       .getByRole("button", { name: /^Add word/ })
       .click();
     dialog = sheet(page, "Add a word or phrase");
-    await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveValue(firstId);
+    await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(firstName);
     await dialog.getByRole("textbox", { name: "Word or phrase", exact: true }).fill(term);
     await dialog.getByRole("button", { name: `Add to ${firstName}`, exact: true }).click();
     await expect(dialog.getByRole("status")).toHaveText(`${term} is already in ${secondName}`);

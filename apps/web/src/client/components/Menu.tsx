@@ -11,6 +11,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { useFluidHover } from "../lib/fluid-hover";
+import { FluidHighlight } from "./FluidHighlight";
 
 interface Ctx {
   open: boolean;
@@ -107,24 +109,33 @@ export function MenuList({
   const ctx = useContext(MenuCtx);
   if (!ctx) throw new Error("MenuList outside Menu");
   const ref = useRef<HTMLDivElement>(null);
+  const hover = useFluidHover(ref, { items: '[role="menuitem"]', dividers: "hr" });
+  const { hide } = hover;
   useEffect(() => {
     if (ctx.open) ref.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus();
-  }, [ctx.open]);
-  const onKey = useCallback((e: KeyboardEvent) => {
-    const items = Array.from(
-      ref.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])') ??
-        [],
-    );
-    const i = items.indexOf(document.activeElement as HTMLElement);
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      items[(i + 1) % items.length]?.focus();
-    }
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      items[(i - 1 + items.length) % items.length]?.focus();
-    }
-  }, []);
+    else hide();
+  }, [ctx.open, hide]);
+  const onKey = useCallback(
+    (e: KeyboardEvent) => {
+      // Keyboard moves focus, and focus carries its own fill; two fills would be two cursors.
+      hide();
+      const items = Array.from(
+        ref.current?.querySelectorAll<HTMLElement>(
+          '[role="menuitem"]:not([aria-disabled="true"])',
+        ) ?? [],
+      );
+      const i = items.indexOf(document.activeElement as HTMLElement);
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        items[(i + 1) % items.length]?.focus();
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        items[(i - 1 + items.length) % items.length]?.focus();
+      }
+    },
+    [hide],
+  );
   if (!ctx.open) return null;
   return (
     <div
@@ -132,12 +143,14 @@ export function MenuList({
       id={ctx.id}
       role="menu"
       onKeyDown={onKey}
+      {...hover.handlers}
       className={clsx(
         "enter-menu edge-2 absolute top-[calc(100%+6px)] z-(--z-dropdown) min-w-48 rounded-md bg-plate p-1",
         align === "end" ? "end-0 origin-top-right" : "start-0 origin-top-left",
         className,
       )}
     >
+      <FluidHighlight hover={hover} />
       {children}
     </div>
   );
@@ -171,8 +184,8 @@ export function MenuItem({
         ctx?.close();
       }}
       className={clsx(
-        "flex h-10 w-full items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-left text-base outline-none transition-colors",
-        "focus-visible:bg-hover hoverable:hover:bg-hover",
+        "relative flex h-10 w-full items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-left text-base outline-none transition-colors",
+        "focus-visible:bg-hover",
         tone === "danger" ? "text-danger [&_svg]:text-danger" : "text-text [&_svg]:text-muted",
         disabled && "opacity-45",
         "[&_svg]:size-4",

@@ -10,7 +10,7 @@ const TIMINGS: [string, string, string][] = [
   [
     "Hover",
     "background and edge, 150 ms",
-    "Pointer devices only. Never a lift, never a colour flip.",
+    "Pointer devices only. Never a lift, never a colour flip. In a menu or a list of options it is one fill that slides to the nearest row, so it never blinks off in the gaps. Keyboard takes it away.",
   ],
   [
     "Card arrives",

@@ -7,7 +7,8 @@ import { type AddCardOutcome, api, type DeckSummary } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { decksQuery } from "../lib/queries";
 import { Button } from "./Button";
-import { Field, Input, Select } from "./Field";
+import { Select } from "./Combobox";
+import { Field, Input } from "./Field";
 import { Sheet } from "./Sheet";
 
 interface Props {
@@ -187,18 +188,13 @@ export function AddCardForm({
       ) : (
         <Field label={t`Deck`} error={invalid.deckId}>
           <Select
-            value={deck}
-            onChange={(e) => {
-              setDeck(e.target.value);
+            value={deck || null}
+            onChange={(v) => {
+              setDeck(v ?? "");
               setInvalid(({ deckId: _, ...rest }) => rest);
             }}
-          >
-            {decks?.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.name}
-              </option>
-            ))}
-          </Select>
+            options={(decks ?? []).map((d) => ({ value: d.id, label: d.name }))}
+          />
         </Field>
       )}
       <div className="flex items-center gap-2 pt-1">

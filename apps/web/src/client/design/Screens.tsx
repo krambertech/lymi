@@ -270,19 +270,94 @@ export function Screens() {
       </Sub>
 
       <Sub
-        title="Library, capture and You"
-        note="Decks are cards, two lines each, under a review bar. Capture is a sheet with one field that matters. You holds the profile, what integrations wrote, and every setting, so none of them needs a slot in the navigation."
+        title="Library, a deck and a word"
+        note="Library is every deck as a card with a face: its name and language, how its words split between known, learning and new, and what it asks of you today. A deck is its words in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Library" initial="light" path="/library">
             <LibraryView
               decks={m.decks}
-              fresh={{ d1: 12 }}
+              known={m.known}
+              learning={m.learning}
               next={{ d3: "Monday" }}
-              archivedCount={9}
+              archivedCount={2}
               static={{ path: "/library" }}
             />
           </PhoneShot>
+          <PhoneShot caption="A deck" initial="dark" path="/library">
+            <DeckDetailView
+              deck={m.decks[0]}
+              cards={m.deckCards}
+              onAdd={noop}
+              onArchive={noop}
+              openCardId={null}
+              static={{ path: "/library/d1" }}
+            />
+          </PhoneShot>
+          <PhoneShot caption="A word" initial="light" path="/library">
+            <DeckDetailView
+              deck={m.decks[0]}
+              cards={m.deckCards}
+              onAdd={noop}
+              onArchive={noop}
+              openCardId="c6"
+              reviews={m.wordReviews}
+              events={m.wordEvents}
+              onSaveCard={noop}
+              decks={m.decks}
+              static={{ path: "/library/d1" }}
+            />
+          </PhoneShot>
+        </div>
+        <Shot caption="Desktop, Library" initial="dark">
+          {(t) => (
+            <Desktop theme={t} height={620}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                onAdd={noop}
+                static={{ path: "/library" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <LibraryView
+                  decks={m.decks}
+                  known={m.known}
+                  learning={m.learning}
+                  next={{ d3: "Monday" }}
+                  archivedCount={2}
+                  static={{ path: "/library" }}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+        <Shot caption="Desktop, a deck with a word open beside it" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={760}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                onAdd={noop}
+                static={{ path: "/library/d1" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <DeckDetailView
+                  deck={m.decks[0]}
+                  cards={m.deckCards}
+                  onAdd={noop}
+                  onArchive={noop}
+                  openCardId="c6"
+                  reviews={m.wordReviews}
+                  events={m.wordEvents}
+                  onSaveCard={noop}
+                  decks={m.decks}
+                  static={{ path: "/library/d1" }}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Add a word" initial="dark" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
               <div className="edge-2 rounded-t-xl bg-plate">
@@ -311,27 +386,6 @@ export function Screens() {
             />
           </PhoneShot>
         </div>
-        <Shot caption="Desktop, a deck" initial="dark">
-          {(t) => (
-            <Desktop theme={t} height={640}>
-              <Sidebar
-                decks={m.decks}
-                name={m.me.name}
-                onAdd={noop}
-                static={{ path: "/library/d1" }}
-              />
-              <main className="@container flex min-w-0 flex-1 flex-col">
-                <DeckDetailView
-                  deck={m.decks[0]}
-                  cards={m.deckCards}
-                  onAdd={noop}
-                  onArchive={noop}
-                  static={{ path: "/library/d1" }}
-                />
-              </main>
-            </Desktop>
-          )}
-        </Shot>
       </Sub>
 
       <Sub

@@ -94,6 +94,46 @@ export const CardWithStateOut = z
   .meta({ id: "CardWithState" });
 
 /** One outcome per card sent. A duplicate is skipped, never rejected. See ADR 0004. */
+/** One review of one card, as the word's history shows it. */
+export const ReviewOut = z
+  .object({
+    id: z.string(),
+    cardId: z.string(),
+    direction: Direction,
+    rating: z.number().int().min(1).max(4),
+    state: z.number().int().meta({ description: "FSRS state before this review" }),
+    elapsedDays: z.number().int(),
+    scheduledDays: z.number().int(),
+    stabilityAfter: z.number(),
+    difficultyAfter: z.number(),
+    reviewedAt: Timestamp,
+    source: z.enum(["web", "api", "mcp"]),
+  })
+  .meta({ id: "Review" });
+export type ReviewOut = z.infer<typeof ReviewOut>;
+
+/** A write to one card, from the audit log: who did what, and when. */
+export const CardEventOut = z
+  .object({
+    id: z.string(),
+    actor: Actor,
+    action: z.string().meta({ description: "create, update, archive or restore" }),
+    at: Timestamp,
+    payload: z.unknown().nullable().meta({ description: "What the write sent, if anything" }),
+  })
+  .meta({ id: "CardEvent" });
+export type CardEventOut = z.infer<typeof CardEventOut>;
+
+/** Everything that ever happened to a card: its reviews and its writes, newest first. */
+export const CardHistoryOut = z
+  .object({
+    states: z.array(CardStateOut).meta({ description: "One per direction the card is asked" }),
+    reviews: z.array(ReviewOut),
+    events: z.array(CardEventOut),
+  })
+  .meta({ id: "CardHistory" });
+export type CardHistoryOut = z.infer<typeof CardHistoryOut>;
+
 export const AddCardOutcomeOut = z
   .discriminatedUnion("status", [
     z.object({ status: z.literal("added"), card: CardOut }),

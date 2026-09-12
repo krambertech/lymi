@@ -1,6 +1,7 @@
 import type {
   ApiKeyInput,
   CardInput,
+  CardPatch,
   DeckInput,
   Direction,
   GradeInput,
@@ -11,7 +12,7 @@ import type {
   ReminderTime,
   Scope,
 } from "@lymi/core";
-import type { Card, CardState, Deck } from "@lymi/core/schema";
+import type { Card, CardState, Deck, Review } from "@lymi/core/schema";
 
 export class ApiError extends Error {
   constructor(
@@ -56,6 +57,14 @@ export type QueueItem = {
   next: Record<Rating, string>;
 };
 export type Queue = { total: number; items: QueueItem[] };
+export type CardEvent = {
+  id: string;
+  actor: Card["createdBy"];
+  action: string;
+  at: string;
+  payload: unknown;
+};
+export type CardHistory = { states: CardState[]; reviews: Review[]; events: CardEvent[] };
 /** Mirrors AddCardOutcome on the server. A duplicate is skipped and names the card that exists. */
 export type AddCardOutcome =
   | { status: "added"; card: Card }
@@ -103,6 +112,11 @@ export const api = {
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>
     request<AddCardOutcome>("/api/cards", { method: "POST", body: JSON.stringify(body) }),
+  /** Send only the fields that changed. `deckId` moves the card to another deck. */
+  updateCard: (id: string, body: CardPatch) =>
+    request<Card>(`/api/cards/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+  /** Every review and every write, newest first. */
+  cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   audioUrl: (cardId: string) => `/api/audio/${encodeURIComponent(cardId)}`,
   archiveCard: (id: string) =>
     request<{ ok: true }>(`/api/cards/${id}/archive`, { method: "POST" }),

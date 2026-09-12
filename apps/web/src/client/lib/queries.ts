@@ -20,6 +20,12 @@ export const deckCardsQuery = (deckId: string) =>
     queryFn: () => api.deckCards(deckId),
     staleTime: 0,
   });
+export const cardHistoryQuery = (cardId: string) =>
+  queryOptions({
+    queryKey: ["cards", cardId, "history"],
+    queryFn: () => api.cardHistory(cardId),
+    staleTime: 0,
+  });
 export const queueQuery = (deckId?: string) =>
   queryOptions({
     queryKey: ["queue", deckId ?? "all"],

@@ -1,6 +1,6 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
 import { emptyState, expandDirections, newId, normaliseTerm, serializeState } from "@lymi/core";
-import { and, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
+import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { audit } from "../audit";
 import { schema } from "../db";
@@ -237,6 +237,49 @@ export async function getCard({ db, userId }: ServiceContext, id: string) {
     .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
   if (!card) throw notFound("Card");
   return card;
+}
+
+/**
+ * A card's whole life: every review, and every write from the audit log, newest first.
+ * Nothing about a word is hidden from the person learning it.
+ */
+export async function cardHistory(ctx: ServiceContext, id: string) {
+  const { db, userId } = ctx;
+  await getCard(ctx, id);
+  const [states, reviews, writes] = await Promise.all([
+    db
+      .select()
+      .from(schema.cardStates)
+      .where(and(eq(schema.cardStates.cardId, id), eq(schema.cardStates.userId, userId)))
+      .orderBy(asc(schema.cardStates.direction)),
+    db
+      .select()
+      .from(schema.reviews)
+      .where(and(eq(schema.reviews.cardId, id), eq(schema.reviews.userId, userId)))
+      .orderBy(desc(schema.reviews.reviewedAt)),
+    db
+      .select()
+      .from(schema.auditLog)
+      .where(
+        and(
+          eq(schema.auditLog.userId, userId),
+          eq(schema.auditLog.entity, "card"),
+          eq(schema.auditLog.entityId, id),
+        ),
+      )
+      .orderBy(desc(schema.auditLog.createdAt)),
+  ]);
+  return {
+    states,
+    reviews,
+    events: writes.map((w) => ({
+      id: w.id,
+      actor: w.actor,
+      action: w.action,
+      at: w.createdAt,
+      payload: w.payload ?? null,
+    })),
+  };
 }
 
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {

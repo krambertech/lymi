@@ -1,6 +1,7 @@
 import type { InsightsOut } from "@lymi/core";
-import type { Card, CardState } from "@lymi/core/schema";
+import type { Card, CardState, Review } from "@lymi/core/schema";
 import type { DeckSummary, QueueItem } from "../lib/api";
+import type { WordEvent } from "../views/WordView";
 
 const now = Date.now();
 const day = 86_400_000;
@@ -8,12 +9,12 @@ const day = 86_400_000;
 export const decks: DeckSummary[] = [
   {
     id: "d1",
-    name: "Lesson 14",
+    name: "Italian with Giulia",
     description: null,
     defaultLanguage: "it",
     directions: "recognition",
     position: 0,
-    total: 24,
+    total: 64,
     due: 8,
   },
   {
@@ -102,6 +103,7 @@ export const cards: Card[] = [
     meaning: "maybe; if only",
     example: "Magari potessi venire anch’io!",
     exampleSource: "lesson",
+    source: "Lesson 13",
   }),
   card({ id: "c4", term: "il cassetto", meaning: "the drawer", meaningSource: "ai" }),
   card({
@@ -110,14 +112,26 @@ export const cards: Card[] = [
     meaning: "to postpone",
     example: "Non rimandare a domani quello che puoi fare oggi.",
     exampleSource: "lesson",
+    source: "Lesson 13",
   }),
   card({
     id: "c6",
     term: "prendersela",
     meaning: "to take it personally",
-    meaningSource: "manual",
+    pronunciation: "/prenˈdersela/",
+    example: "Non prendertela, non era rivolto a te.",
+    exampleSource: "ai",
+    meaningSource: "lesson",
+    createdBy: "mcp",
+    createdAt: new Date(now - 9 * day),
   }),
-  card({ id: "c7", term: "la sveglia", meaning: "the alarm clock", meaningSource: "manual" }),
+  card({
+    id: "c7",
+    term: "la sveglia",
+    meaning: "the alarm clock",
+    meaningSource: "manual",
+    source: "Lesson 13",
+  }),
 ];
 
 const byId = (id: string): Card => {
@@ -126,7 +140,8 @@ const byId = (id: string): Card => {
   return c;
 };
 
-function state(cardId: string, s: number, dueIn: number): CardState {
+function state(cardId: string, s: number, dueIn: number, reps = 0, lapses = 0): CardState {
+  const stability = s === 2 ? Math.max(2, dueIn / day) : s === 0 ? 0 : 4;
   return {
     id: `s-${cardId}`,
     cardId,
@@ -134,7 +149,17 @@ function state(cardId: string, s: number, dueIn: number): CardState {
     direction: "recognition",
     due: new Date(now + dueIn),
     state: s,
-    fsrs: "{}",
+    fsrs: JSON.stringify({
+      due: new Date(now + dueIn).toISOString(),
+      stability,
+      difficulty: s === 0 ? 0 : 6.1,
+      elapsed_days: s === 0 ? 0 : 2,
+      scheduled_days: Math.max(0, Math.round(dueIn / day)),
+      reps,
+      lapses,
+      state: s,
+      ...(s === 0 ? {} : { last_review: new Date(now - 2 * day).toISOString() }),
+    }),
     lastReview: s === 0 ? null : new Date(now - day),
     createdAt: new Date(now - 3 * day),
     updatedAt: new Date(now - day),
@@ -142,13 +167,62 @@ function state(cardId: string, s: number, dueIn: number): CardState {
 }
 
 export const deckCards: { card: Card; state: CardState | null }[] = [
-  { card: byId("c1"), state: state("c1", 1, 0) },
+  { card: byId("c1"), state: state("c1", 1, 0, 2) },
   { card: byId("c2"), state: state("c2", 0, 0) },
-  { card: byId("c3"), state: state("c3", 2, 6 * day) },
+  { card: byId("c6"), state: state("c6", 3, 0, 4, 1) },
   { card: byId("c4"), state: state("c4", 0, 0) },
-  { card: byId("c5"), state: state("c5", 2, 21 * day) },
-  { card: byId("c6"), state: state("c6", 3, 0) },
-  { card: byId("c7"), state: state("c7", 2, 64 * day) },
+  { card: byId("c3"), state: state("c3", 2, 6 * day, 5) },
+  { card: byId("c5"), state: state("c5", 2, 21 * day, 6) },
+  { card: byId("c7"), state: state("c7", 2, 64 * day, 8) },
+];
+
+/** How the sample decks split, for the stripe on each card. */
+export const known: Record<string, number> = { d1: 31, d2: 26, d3: 4 };
+export const learning: Record<string, number> = { d1: 14, d2: 9, d3: 2 };
+
+function review(
+  id: string,
+  daysAgo: number,
+  rating: number,
+  state: number,
+  elapsedDays: number,
+  scheduledDays: number,
+): Review {
+  return {
+    id,
+    userId: "u1",
+    cardId: "c6",
+    cardStateId: "s-c6",
+    direction: "recognition",
+    rating,
+    state,
+    elapsedDays,
+    scheduledDays,
+    stabilityAfter: 4,
+    difficultyAfter: 6.1,
+    reviewedAt: new Date(now - daysAgo * day),
+    source: "web",
+  };
+}
+
+/** One word's life: four reviews, newest first, and how it arrived. */
+export const wordReviews: Review[] = [
+  review("r4", 0, 3, 3, 2, 4),
+  review("r3", 2, 2, 1, 1, 2),
+  review("r2", 3, 1, 2, 3, 0),
+  review("r1", 6, 3, 0, 0, 3),
+];
+export const wordEvents: WordEvent[] = [
+  {
+    at: new Date(now - 9 * day),
+    label: "Enriched",
+    detail: "the AI wrote the example and the pronunciation",
+  },
+  {
+    at: new Date(now - 9 * day),
+    label: "Added",
+    detail: "by Claude, from your lesson notes · meaning from the lesson",
+  },
 ];
 
 export const queueItem: QueueItem = {
@@ -179,7 +253,7 @@ export const streakDaysOpen: number[] = [...streakDays.slice(0, -1), 0];
 
 /** What Claude added since the last review, as Today groups it. */
 export const arrivals = [
-  { deckId: "d1", deckName: "Lesson 14", count: 12, actor: "Claude", when: "Tuesday" },
+  { deckId: "d1", deckName: "Italian with Giulia", count: 12, actor: "Claude", when: "Tuesday" },
   { deckId: "d2", deckName: "Portuguese", count: 3, actor: "You", when: "today" },
 ];
 

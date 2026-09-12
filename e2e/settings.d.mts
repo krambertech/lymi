@@ -5,7 +5,8 @@ export type E2EAccount =
   | "optional-meaning"
   | "archived-deck"
   | "responsive-creation"
-  | "review-batching";
+  | "review-batching"
+  | "word-detail";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];

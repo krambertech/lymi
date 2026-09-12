@@ -1,19 +1,19 @@
 import { Link } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
-import { Button, buttonClass } from "../components/Button";
+import { Button } from "../components/Button";
 import { DeckCard } from "../components/DeckCard";
 import { EmptyState } from "../components/EmptyState";
-import { Lantern } from "../components/Lantern";
 import { Skeleton } from "../components/Skeleton";
 import type { DeckSummary } from "../lib/api";
 import { Page, PageHeader, type StaticNav } from "./Shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
-  /** Cards added since the last review, keyed by deck id. */
-  fresh?: Record<string, number> | undefined;
+  /** How many cards in each deck FSRS calls known, and how many are on the way, by deck id. */
+  known?: Record<string, number> | undefined;
+  learning?: Record<string, number> | undefined;
   /** When each deck's next card comes back, keyed by deck id. E.g. "Monday". */
   next?: Record<string, string> | undefined;
   archivedCount?: number | undefined;
@@ -27,21 +27,21 @@ function plural(n: number, one: string, many: string) {
 }
 
 /**
- * Every deck, as cards. The review bar sits above them so the daily action is reachable from
- * here too, without Review needing a place in the navigation.
+ * Every deck, as a card with a face: its name and language, how its words are split, and
+ * what it asks of you today. Nothing here reviews or searches: Today owns the daily review,
+ * and a deck owns its own. Archived decks are a category of their own under the live ones.
  */
 export function LibraryView({
   decks,
-  fresh,
+  known,
+  learning,
   next,
   archivedCount,
   onAdd,
   onCreateDeck,
   static: st,
 }: LibraryProps) {
-  const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
-  const dueDecks = decks?.filter((d) => d.due > 0).length ?? 0;
   const loading = decks === undefined;
 
   const To = ({
@@ -49,7 +49,7 @@ export function LibraryView({
     className,
     children,
   }: {
-    to: "/review" | "/archived";
+    to: "/archived";
     className?: string | undefined;
     children: ReactNode;
   }) =>
@@ -79,24 +79,11 @@ export function LibraryView({
         }
       />
 
-      {due > 0 && (
-        <section className="edge mb-5 flex items-center gap-3.5 rounded-lg bg-plate py-3 pl-4 pr-3">
-          <Lantern className="size-10" flicker glow />
-          <span className="grid min-w-0 flex-1">
-            <span className="text-md font-medium tabular-nums">{due} due</span>
-            <span className="text-sm text-muted">across {plural(dueDecks, "deck", "decks")}</span>
-          </span>
-          <To to="/review" className={buttonClass("primary", "md", "px-5")}>
-            <span>Review</span>
-          </To>
-        </section>
-      )}
-
       {loading && (
-        <div className="grid gap-2">
-          <Skeleton className="h-[86px] rounded-lg" />
-          <Skeleton className="h-[86px] rounded-lg" />
-          <Skeleton className="h-[86px] rounded-lg" />
+        <div className="grid gap-3 @3xl:grid-cols-2">
+          <Skeleton className="h-[118px] rounded-lg" />
+          <Skeleton className="h-[118px] rounded-lg" />
+          <Skeleton className="h-[118px] rounded-lg" />
         </div>
       )}
 
@@ -104,7 +91,7 @@ export function LibraryView({
         <EmptyState
           lantern="none"
           title="No decks yet"
-          body="One per lesson works well, or one per topic. You can move cards later."
+          body="One per course works well, or one per topic. Words remember which lesson they came from."
           action={
             <Button variant="primary" onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
               <Plus aria-hidden="true" />
@@ -116,34 +103,54 @@ export function LibraryView({
       )}
 
       {decks && decks.length > 0 && (
-        <ul className="grid gap-2 @3xl:grid-cols-2 @3xl:gap-3">
+        <ul className="grid gap-3 @3xl:grid-cols-2">
           {decks.map((d) => (
-            <li key={d.id} className="min-w-0">
+            <li key={d.id} className="flex min-w-0">
               <DeckCard
                 id={d.id}
                 name={d.name}
                 language={d.defaultLanguage}
                 due={d.due}
                 total={d.total}
-                fresh={fresh?.[d.id]}
+                known={known?.[d.id]}
+                learning={learning?.[d.id]}
                 next={next?.[d.id]}
                 st={st}
               />
             </li>
           ))}
+          <li className="flex min-w-0">
+            {/* Dashed rather than amber: capture is the standing action, and a second amber
+                thing on the page would make the due counts read as buttons. */}
+            <button
+              type="button"
+              onClick={onCreateDeck}
+              aria-disabled={!onCreateDeck}
+              className="flex min-h-[72px] w-full items-center justify-center gap-2 rounded-lg border border-dashed border-edge-2 text-base font-medium text-text-2 transition-[background-color,color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-plate hoverable:hover:text-text"
+            >
+              <Plus className="size-[18px]" aria-hidden="true" />
+              New deck
+            </button>
+          </li>
         </ul>
       )}
 
       {archivedCount ? (
-        <div className="mt-7 flex items-baseline justify-between gap-3 px-1">
-          <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">Archived</h2>
+        <section className="mt-8">
+          <h2 className="mb-2 px-1 text-xs font-medium uppercase tracking-[0.06em] text-muted">
+            Archived
+          </h2>
           <To
             to="/archived"
-            className="relative text-sm font-medium text-amber-text before:absolute before:-inset-x-2 before:-inset-y-3.5 before:content-['']"
+            className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
           >
-            Show {archivedCount}
+            <span className="font-medium">{plural(archivedCount, "deck", "decks")} put away</span>
+            <span className="flex items-center gap-1 text-sm text-muted">
+              Show
+              <ChevronRight className="size-4 text-faint" aria-hidden="true" />
+            </span>
           </To>
-        </div>
+        </section>
       ) : null}
     </Page>
   );

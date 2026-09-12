@@ -1,9 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { Toast } from "../components/Toast";
 import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
-import { decksQuery } from "../lib/queries";
+import { deckCardsQuery, decksQuery } from "../lib/queries";
 import { LibraryView } from "../views/LibraryView";
 
 export const Route = createFileRoute("/library")({
@@ -28,6 +29,29 @@ function DeckList() {
   const { archived, name } = Route.useSearch();
   const decks = useQuery(decksQuery);
   const add = useAddCard();
+
+  // The stripe on each card needs the split of its states. One learner has a handful of
+  // decks, so the cards go through Query per deck; a summary endpoint can replace this later.
+  const cardQueries = useQueries({
+    queries: (decks.data ?? []).map((d) => ({ ...deckCardsQuery(d.id), staleTime: 30_000 })),
+  });
+  const progress = useMemo(() => {
+    const known: Record<string, number> = {};
+    const learning: Record<string, number> = {};
+    cardQueries.forEach((r, i) => {
+      const id = decks.data?.[i]?.id;
+      if (!id || !r.data) return;
+      known[id] = 0;
+      learning[id] = 0;
+      for (const { state } of r.data) {
+        const s = state?.state;
+        if (s === 2) known[id]++;
+        else if (s === 1 || s === 3) learning[id]++;
+      }
+    });
+    return { known, learning };
+  }, [cardQueries, decks.data]);
+
   const clear = () => navigate({ to: "/library", search: {}, replace: true });
   const restore = useMutation({
     mutationFn: (id: string) => api.restoreDeck(id),
@@ -39,7 +63,13 @@ function DeckList() {
   });
   return (
     <>
-      <LibraryView decks={decks.data} onAdd={add.openCard} onCreateDeck={add.openDeck} />
+      <LibraryView
+        decks={decks.data}
+        known={progress.known}
+        learning={progress.learning}
+        onAdd={add.openCard}
+        onCreateDeck={add.openDeck}
+      />
       {archived && (
         <Toast
           key={archived}

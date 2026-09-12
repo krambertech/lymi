@@ -1,6 +1,6 @@
-import { ChevronRight } from "lucide-react";
-import { Chip } from "./Chip";
+import { languageName } from "./DeckFields";
 import { NavLink, type StaticNav } from "./NavLink";
+import { StateStripe } from "./StateStripe";
 
 export interface DeckCardProps {
   id: string;
@@ -8,45 +8,58 @@ export interface DeckCardProps {
   language?: string | null | undefined;
   due: number;
   total: number;
-  /** Cards added since the last review. Omitted until the endpoint exists. */
-  fresh?: number | undefined;
+  /** How many of the deck's cards FSRS calls known, and how many are on the way there. */
+  known?: number | undefined;
+  learning?: number | undefined;
   /** When the next card comes back, for a deck with nothing due. E.g. "Monday". */
   next?: string | null | undefined;
   st?: StaticNav;
 }
 
 /**
- * A deck in Library: the name on one line, its counts on the next. Two lines because a deck
- * carries four numbers and one line makes them a row of digits nobody reads.
+ * A deck in Library. A card rather than a row because it holds three kinds of line: the
+ * name with its language, the stripe that says how the deck is split, and the one thing it
+ * asks of you today. Due is the only amber, and it is text, so a page of decks stays quiet.
  */
-export function DeckCard({ id, name, language, due, total, fresh, next, st }: DeckCardProps) {
+export function DeckCard({
+  id,
+  name,
+  language,
+  due,
+  total,
+  known,
+  learning,
+  next,
+  st,
+}: DeckCardProps) {
   return (
     <NavLink
       to="/library/$deckId"
       params={{ deckId: id }}
       st={st}
-      className="edge group flex min-w-0 items-center gap-3.5 overflow-hidden rounded-lg bg-plate px-4 py-4 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.97] hoverable:hover:edge-2 hoverable:hover:bg-hover"
+      className="edge group grid w-full min-w-0 content-start gap-3 rounded-lg bg-plate px-4 pb-4 pt-3.5 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
-      <span className="flex min-w-0 flex-1 flex-col gap-2">
-        <span className="flex min-w-0 items-baseline gap-2">
-          <span className="min-w-0 flex-1 truncate text-lg font-medium tracking-[-0.01em]">
-            {name}
-          </span>
-          {language && (
-            <span className="shrink-0 text-xs font-medium uppercase tracking-[0.06em] text-muted">
-              {language}
-            </span>
-          )}
-        </span>
-        <span className="flex flex-wrap items-center gap-2">
-          {due > 0 ? <Chip tone="new">{due} due</Chip> : next && <Chip>Next {next}</Chip>}
-          {fresh ? <Chip tone="new">{fresh} new</Chip> : null}
-          <span className="text-sm tabular-nums text-muted">
+      <span className="flex min-w-0 items-baseline justify-between gap-3">
+        <span className="min-w-0 truncate text-lg font-medium tracking-[-0.01em]">{name}</span>
+        {language && <span className="shrink-0 text-sm text-muted">{languageName(language)}</span>}
+      </span>
+      {known !== undefined && total > 0 && (
+        <StateStripe known={known} learning={learning ?? 0} total={total} />
+      )}
+      <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-muted tabular-nums">
+        {due > 0 ? (
+          <b className="font-semibold text-amber-text">{due} due today</b>
+        ) : next ? (
+          <span>Next {next}</span>
+        ) : total === 0 ? (
+          <span>Nothing in it yet</span>
+        ) : null}
+        {total > 0 && (
+          <span>
             {total} {total === 1 ? "card" : "cards"}
           </span>
-        </span>
+        )}
       </span>
-      <ChevronRight className="size-[18px] shrink-0 text-faint" aria-hidden="true" />
     </NavLink>
   );
 }

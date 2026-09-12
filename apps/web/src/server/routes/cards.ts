@@ -1,6 +1,7 @@
 import {
   AddCardOutcomeOut,
   AddCardsOut,
+  CardHistoryOut,
   CardHitOut,
   CardInput,
   CardOut,
@@ -17,6 +18,7 @@ import {
   addCard,
   addCards,
   archiveCard,
+  cardHistory,
   getCard,
   restoreCard,
   searchCards,
@@ -93,6 +95,19 @@ cards.get(
     errors: [404],
   }),
   async (c) => c.json(await getCard(ctxOf(c), c.req.param("id"))),
+);
+
+cards.get(
+  "/:id/history",
+  describe({
+    tags: ["Cards"],
+    summary: "A card's history",
+    description:
+      "Every review of the card and every write to it, newest first. Writes come from the audit log, so what an integration or the AI changed is visible here.",
+    ok: { schema: CardHistoryOut, description: "Reviews and writes" },
+    errors: [404],
+  }),
+  async (c) => c.json(await cardHistory(ctxOf(c), c.req.param("id"))),
 );
 
 cards.patch(

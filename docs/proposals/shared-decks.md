@@ -1,12 +1,12 @@
 ---
-status: exploration
+status: accepted
 date: 2026-09-06
-decision: none
+decision: ADR 0011
 ---
 
 # Shared decks
 
-This document preserves a promising future product direction. It is not an accepted decision, an implementation plan, or a commitment to build classroom features. Lymi's current focus remains the private, single-user experience and its missing fundamentals.
+[ADR 0011](../adr/0011-a-shared-deck-is-one-deck-with-many-learners.md) decided this direction on 12 September 2026 and [the plan](../plans/2026-09-12-shared-decks.md) orders the work. The rest of this page is the exploration as it stood, kept for the options that lost and the questions still open.
 
 ## Opportunity
 
@@ -122,6 +122,10 @@ If this becomes active work, the smallest coherent scope to evaluate is:
 - visible attribution and reversible content changes.
 
 This boundary deliberately excludes a public marketplace, discovery feed, assignments, grades, class chat, competitive leaderboards, real-time cursor-based editing, and a full teacher dashboard.
+
+## A later direction: try the deck before joining
+
+The join page could let a visitor review the deck without an account, then offer to sign up and keep the progress. It would need a public read of the deck's cards gated by the join link token and rate-limited, a review session whose states live only in the browser with grades queued rather than written, a cap of about twenty cards, and no enrichment, audio, or audit rows for a visitor. Sign-up replays the queued grades through the normal grade endpoint; the server already ignores a grade older than the state's last review, so the replay is the merge. Not part of the first slices.
 
 ## Questions to answer before deciding
 

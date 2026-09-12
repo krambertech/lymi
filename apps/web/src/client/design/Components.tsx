@@ -292,18 +292,19 @@ export function Components() {
 
       <Sub
         title="Lists and tables"
-        note="A deck card carries four numbers, so it takes two lines. A row of new cards names the actor, because an integration’s card must never look like one you typed. A table: dense, hairline rows, right-aligned tabular numbers."
+        note="A deck card has a face: its name and language, the stripe that says how its words split, and the one thing it asks today. A row of new cards names the actor, because an integration’s card must never look like one you typed. A table: dense, hairline rows, right-aligned tabular numbers."
       >
         <Pair stack>
           {(t) => (
             <div className="grid gap-4">
               <DeckCard
                 id="d1"
-                name="Lesson 14"
+                name="Italian with Giulia"
                 language="it"
                 due={8}
-                total={24}
-                fresh={12}
+                total={64}
+                known={31}
+                learning={14}
                 st={{ path: "" }}
               />
               <DeckCard
@@ -312,6 +313,8 @@ export function Components() {
                 language="pt-BR"
                 due={0}
                 total={41}
+                known={26}
+                learning={9}
                 next="Monday"
                 st={{ path: "" }}
               />

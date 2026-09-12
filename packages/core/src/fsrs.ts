@@ -91,6 +91,15 @@ export function formatInterval(from: Date, to: Date): string {
   return `${Math.round(days / 365)} y`;
 }
 
+/**
+ * How likely the card is to come back if asked right now, 0 to 1. A card that has never been
+ * reviewed has nothing to come back from, so it is 0 rather than the model's optimism.
+ */
+export function retrievability(state: FsrsCard, now: Date = new Date()): number {
+  if (state.state === State.New || !state.last_review) return 0;
+  return scheduler.get_retrievability(state, now, false);
+}
+
 /** Serialise for storage. Dates become ISO strings. */
 export function serializeState(card: FsrsCard): string {
   return JSON.stringify(card);

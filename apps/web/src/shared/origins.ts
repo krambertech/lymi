@@ -13,6 +13,8 @@ const PRODUCT_PATHS = [
   "/insights",
   "/login",
   "/consent",
+  // The live design system. Its route redirects home outside local development.
+  "/design",
 ] as const;
 
 /** Browser routes owned by the product rather than the public website. */

@@ -43,8 +43,8 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
 
     await expect(page.getByRole("status")).toContainText("Added “sbrigarsi”");
     await page.getByRole("button", { name: "Cancel", exact: true }).click();
-    await expect(page.getByRole("cell", { name: "sbrigarsi", exact: true })).toBeVisible();
-    await expect(page.getByRole("cell", { name: "to hurry up", exact: true })).toBeVisible();
+    await expect(page.getByText("sbrigarsi", { exact: true })).toBeVisible();
+    await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
   });
 
   await test.step("review and persist the result", async () => {

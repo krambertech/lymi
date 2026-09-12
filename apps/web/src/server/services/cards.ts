@@ -239,6 +239,43 @@ export async function getCard({ db, userId }: ServiceContext, id: string) {
   return card;
 }
 
+/**
+ * A card's whole life: every review, and every write from the audit log, newest first.
+ * Nothing about a word is hidden from the person learning it.
+ */
+export async function cardHistory(ctx: ServiceContext, id: string) {
+  const { db, userId } = ctx;
+  await getCard(ctx, id);
+  const [reviews, writes] = await Promise.all([
+    db
+      .select()
+      .from(schema.reviews)
+      .where(and(eq(schema.reviews.cardId, id), eq(schema.reviews.userId, userId)))
+      .orderBy(desc(schema.reviews.reviewedAt)),
+    db
+      .select()
+      .from(schema.auditLog)
+      .where(
+        and(
+          eq(schema.auditLog.userId, userId),
+          eq(schema.auditLog.entity, "card"),
+          eq(schema.auditLog.entityId, id),
+        ),
+      )
+      .orderBy(desc(schema.auditLog.createdAt)),
+  ]);
+  return {
+    reviews,
+    events: writes.map((w) => ({
+      id: w.id,
+      actor: w.actor,
+      action: w.action,
+      at: w.createdAt,
+      payload: w.payload ?? null,
+    })),
+  };
+}
+
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
   const { db, userId, actor } = ctx;
   const current = await getCard(ctx, id);

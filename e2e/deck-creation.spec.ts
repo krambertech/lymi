@@ -140,10 +140,10 @@ test.describe("deck and card creation", () => {
     await expect(dialog.getByRole("status")).toHaveText(`Added “${term}”`);
     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
 
-    await expect(page.getByRole("cell", { name: term, exact: true })).toBeVisible();
-    await expect(page.getByRole("cell", { name: "to hurry up", exact: true })).toBeVisible();
+    await expect(page.getByText(term, { exact: true })).toBeVisible();
+    await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
     await page.reload();
-    await expect(page.getByRole("cell", { name: term, exact: true })).toBeVisible();
+    await expect(page.getByText(term, { exact: true })).toBeVisible();
 
     await page.goto("/library");
     await waitForLibrary(page);
@@ -187,11 +187,11 @@ test.describe("deck and card creation", () => {
     await expect(dialog.getByRole("status")).toHaveText("Added “pazienza”");
     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
 
-    const cardRow = page.getByRole("row").filter({
-      has: page.getByRole("cell", { name: "pazienza", exact: true }),
+    const cardRow = page.getByRole("button").filter({
+      has: page.getByText("pazienza", { exact: true }),
     });
     await expect(cardRow).toBeVisible();
-    await expect(cardRow.getByRole("cell").nth(1)).toHaveText("—");
+    await expect(cardRow).toContainText("No meaning yet");
   });
 
   test("rejects card creation into an archived deck", async ({ page }, testInfo) => {

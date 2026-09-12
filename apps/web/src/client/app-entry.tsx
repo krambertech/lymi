@@ -7,12 +7,13 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { bootstrapLanguage } from "./lib/i18n";
 import "./lib/pwa-install";
-import { messages as en } from "../locales/en.po";
 import { routeTree } from "./routeTree.gen";
 
-i18n.load("en", en);
-i18n.activate("en");
+// Before the first render so no screen paints in the wrong language. The settings query
+// corrects the choice once the learner's stored language lands.
+bootstrapLanguage(window.location.pathname);
 
 registerSW({ immediate: true });
 

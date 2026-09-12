@@ -1,3 +1,4 @@
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { streakLength } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
@@ -32,10 +33,6 @@ export interface TodayProps {
   static?: StaticNav;
 }
 
-function plural(n: number, one: string, many: string) {
-  return `${n} ${n === 1 ? one : many}`;
-}
-
 /**
  * Home. One question and one action: the count is the heading, the lantern is the only object
  * on the screen, and nothing here is a plate except the decks that arrived while you were away.
@@ -52,6 +49,7 @@ export function TodayView({
   onCreateDeck,
   static: st,
 }: TodayProps) {
+  const { t } = useLingui();
   const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
   const dueDecks = decks?.filter((d) => d.due > 0) ?? [];
@@ -90,14 +88,16 @@ export function TodayView({
     <Page width="md">
       {/* The rail carries capture and the learner on desktop, so this row is the phone's. */}
       <header className="flex min-h-10 items-center gap-1.5 @3xl/shell:hidden">
-        <span className="ml-auto flex items-center gap-1.5">
+        <span className="ms-auto flex items-center gap-1.5">
           <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
           <To
             to="/you"
             className="relative inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
           >
             <Avatar name={name} size={40} />
-            <span className="sr-only">You</span>
+            <span className="sr-only">
+              <Trans>You</Trans>
+            </span>
           </To>
         </span>
       </header>
@@ -126,7 +126,13 @@ export function TodayView({
               glow={lit}
             />
             <h1 className="mt-3.5 text-4xl font-medium tabular-nums">
-              {nothingYet ? "Nothing here yet" : lit ? `${due} due` : "Nothing due"}
+              {nothingYet ? (
+                <Trans>Nothing here yet</Trans>
+              ) : lit ? (
+                <Trans>{due} due</Trans>
+              ) : (
+                <Trans>Nothing due</Trans>
+              )}
             </h1>
             <DeckLine
               decks={dueDecks}
@@ -141,7 +147,7 @@ export function TodayView({
                 to="/review"
                 className={buttonClass("primary", "lg", "mt-5.5 w-full @3xl:w-auto @3xl:px-10")}
               >
-                Review
+                <Trans>Review</Trans>
               </To>
             )}
             {/* Nothing due is not nothing to do: capture is the standing action, and the one
@@ -155,7 +161,7 @@ export function TodayView({
                 aria-disabled={!onAdd}
                 kbd="N"
               >
-                Add a word
+                <Trans>Add a word</Trans>
               </Button>
             )}
             {nothingYet && (
@@ -163,7 +169,7 @@ export function TodayView({
                 to="/library"
                 className={buttonClass("primary", "lg", "mt-5.5 w-full @3xl:w-auto @3xl:px-10")}
               >
-                Make a deck
+                <Trans>Make a deck</Trans>
               </To>
             )}
           </>
@@ -175,7 +181,11 @@ export function TodayView({
                   One statement each, which is the whole of the streak. */}
             <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
               <Flame className="size-7" flicker={run > 0} />
-              {run === 0 ? "No streak yet" : `${plural(run, "day", "days")} in a row`}
+              {run === 0 ? (
+                <Trans>No streak yet</Trans>
+              ) : (
+                <Plural value={run} one="# day in a row" other="# days in a row" />
+              )}
             </p>
             <SevenLights days={history.slice(-7)} size="lg" />
             {lit && forecast && <p className="mt-1 text-sm text-muted tabular-nums">{forecast}</p>}
@@ -184,16 +194,16 @@ export function TodayView({
       </section>
 
       {arrivals && arrivals.length > 0 && (
-        <section className="mt-10 grid gap-2" aria-label="New since your last review">
+        <section className="mt-10 grid gap-2" aria-label={t`New since your last review`}>
           <div className="flex items-baseline justify-between gap-3 px-1">
             <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
-              New since your last review
+              <Trans>New since your last review</Trans>
             </h2>
             <To
               to="/activity"
               className="relative text-sm font-medium text-amber-text before:absolute before:-inset-x-2 before:-inset-y-3.5 before:content-['']"
             >
-              Activity
+              <Trans>Activity</Trans>
             </To>
           </div>
           {arrivals.map((a) => (
@@ -226,35 +236,59 @@ function DeckLine({
   const line = "mt-2 text-md text-text-2";
 
   if (nothingYet)
-    return <p className={line}>Add a word from your last lesson and the lantern comes on.</p>;
-
-  if (decks.length === 0)
     return (
       <p className={line}>
-        {forecast
-          ? `Coming up: ${forecast}.`
-          : `${plural(total, "card", "cards")} in your decks, all ahead of you.`}
+        <Trans>Add a word from your last lesson and the lantern comes on.</Trans>
       </p>
     );
 
-  const shown = decks.slice(0, 2);
-  const rest = decks.length - shown.length;
+  const link = (d: DeckSummary) => (
+    <NavLink
+      to="/library/$deckId"
+      params={{ deckId: d.id }}
+      st={st}
+      className="relative rounded-xs underline decoration-edge-2 underline-offset-4 transition-[color,text-decoration-color] duration-150 before:absolute before:-inset-y-3 before:content-[''] hoverable:hover:text-text hoverable:hover:decoration-current"
+    >
+      {d.name}
+    </NavLink>
+  );
+  const [first, second, ...others] = decks.map(link);
+  const more = others.length;
+
+  if (!first)
+    return (
+      <p className={line}>
+        {forecast ? (
+          <Trans>Coming up: {forecast}.</Trans>
+        ) : (
+          <Plural
+            value={total}
+            one="# card in your decks, all ahead of you."
+            other="# cards in your decks, all ahead of you."
+          />
+        )}
+      </p>
+    );
+
+  if (!second) return <p className={line}>{first}</p>;
+
+  /* The first two are named; the rest are counted, so the line stays one line. */
+  if (more === 0)
+    return (
+      <p className={line}>
+        <Trans>
+          {first} and {second}
+        </Trans>
+      </p>
+    );
+
   return (
     <p className={line}>
-      {shown.map((d, i) => (
-        <span key={d.id}>
-          {i > 0 && (rest > 0 ? ", " : " and ")}
-          <NavLink
-            to="/library/$deckId"
-            params={{ deckId: d.id }}
-            st={st}
-            className="relative rounded-xs underline decoration-edge-2 underline-offset-4 transition-[color,text-decoration-color] duration-150 before:absolute before:-inset-y-3 before:content-[''] hoverable:hover:text-text hoverable:hover:decoration-current"
-          >
-            {d.name}
-          </NavLink>
-        </span>
-      ))}
-      {rest > 0 && ` and ${plural(rest, "more deck", "more decks")}`}
+      <Plural
+        value={more}
+        one={`${first}, ${second} and # more deck`}
+        other={`${first}, ${second} and # more decks`}
+      />
     </p>
   );
 }

@@ -1,3 +1,5 @@
+import { plural } from "@lingui/core/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { InsightsOut } from "@lymi/core";
 import { clsx } from "clsx";
 import { Button } from "../components/Button";
@@ -24,25 +26,11 @@ export interface InsightsProps {
   onRetry?: (() => void) | undefined;
 }
 
-function plural(n: number, one: string, many: string) {
-  return `${n} ${n === 1 ? one : many}`;
-}
-
-const WEEKDAY = new Intl.DateTimeFormat(undefined, { weekday: "short" });
-const MONTH = new Intl.DateTimeFormat(undefined, { month: "long" });
-const SHORT = new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short" });
-
 /** Parses a local YYYY-MM-DD without letting the timezone shift it a day. */
 function parseLocal(date: string): Date {
   const [y, m, d] = date.split("-").map(Number);
   return new Date(y ?? 1970, (m ?? 1) - 1, d ?? 1);
 }
-
-const PERIODS: { value: Period; label: string }[] = [
-  { value: "30", label: "30 days" },
-  { value: "90", label: "90 days" },
-  { value: "0", label: "All" },
-];
 
 /**
  * The one screen where charts belong, and the only one where looking at them is a choice.
@@ -54,29 +42,37 @@ const PERIODS: { value: Period; label: string }[] = [
  * means "data" rather than "act".
  */
 export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: InsightsProps) {
+  const { t, i18n } = useLingui();
+  /* Formatters follow the interface language, which can change while this screen is open. */
+  const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
+
   // On the Recall plate's label row rather than in the page header: in the header the same
   // control reads as a filter for the whole screen, and it moves this one figure only.
   const switcher = (
     <Segmented
       size="sm"
-      label="How far back the recall figure looks"
+      label={t`How far back the recall figure looks`}
       value={period}
       onChange={onPeriod}
-      options={PERIODS}
+      options={[
+        { value: "30", label: t`30 days` },
+        { value: "90", label: t`90 days` },
+        { value: "0", label: t`All` },
+      ]}
     />
   );
 
   if (failed) {
     return (
       <Page>
-        <PageHeader title="Insights" />
+        <PageHeader title={t`Insights`} />
         <EmptyState
           lantern="unlit"
-          title="Could not load your numbers"
-          body="The request did not come back. Nothing is lost; try again."
+          title={t`Could not load your numbers`}
+          body={t`The request did not come back. Nothing is lost; try again.`}
           action={
             <Button variant="secondary" onClick={onRetry} loading={busy}>
-              Try again
+              <Trans>Try again</Trans>
             </Button>
           }
           className="flex-1"
@@ -88,7 +84,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
   if (!data) {
     return (
       <Page>
-        <PageHeader title="Insights" actions={switcher} />
+        <PageHeader title={t`Insights`} actions={switcher} />
         {/* Same heights the plates settle at, so the screen does not jump when they land. */}
         <div className="grid gap-3 @3xl:grid-cols-2">
           {[0, 1, 2, 3].map((i) => (
@@ -101,16 +97,17 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
   }
 
   const { recall, consistency, months, cards, forecast, leeches } = data;
-  const nothingYet = consistency.daysAllTime === 0 && cards.total === 0;
+  const { litAllTime, daysAllTime } = consistency;
+  const nothingYet = daysAllTime === 0 && cards.total === 0;
 
   if (nothingYet) {
     return (
       <Page>
-        <PageHeader title="Insights" />
+        <PageHeader title={t`Insights`} />
         <EmptyState
           lantern="unlit"
-          title="Nothing to say yet"
-          body="Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
+          title={t`Nothing to say yet`}
+          body={t`Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you.`}
           className="flex-1"
         />
       </Page>
@@ -125,9 +122,12 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
       at: p.at,
       t: start.getTime(),
       value: p.rate,
-      label: monthly ? MONTH.format(start) : `week of ${SHORT.format(start)}`,
+      label: monthly
+        ? i18n.date(start, { month: "long" })
+        : t`week of ${i18n.date(start, { day: "numeric", month: "short" })}`,
     };
   });
+  const series = trend.map((p) => `${p.label} ${Math.round(p.value * 100)}%`).join(", ");
   const peak = forecast.reduce(
     (a, b) => (b.count > a.count ? b : a),
     forecast[0] ?? {
@@ -141,10 +141,13 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
   return (
     <Page>
       <PageHeader
-        title="Insights"
+        title={t`Insights`}
         sub={
-          consistency.daysAllTime > 0
-            ? `${plural(consistency.daysAllTime, "day", "days")} since your first review`
+          daysAllTime > 0
+            ? t`${plural(daysAllTime, {
+                one: "# day since your first review",
+                other: "# days since your first review",
+              })}`
             : undefined
         }
       />
@@ -156,7 +159,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         )}
       >
         <StatPlate
-          label="Recall"
+          label={t`Recall`}
           control={switcher}
           value={recall.rate === null ? "—" : `${Math.round(recall.rate * 100)}%`}
           figure={
@@ -165,37 +168,42 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
                 points={trend}
                 target={0.9}
                 targetLabel="90%"
-                label={`Recall by ${monthly ? "month" : "week"}: ${trend
-                  .map((p) => `${p.label} ${Math.round(p.value * 100)}%`)
-                  .join(", ")}. The schedule aims for 90%.`}
+                label={
+                  monthly
+                    ? t`Recall by month: ${series}. The schedule aims for 90%.`
+                    : t`Recall by week: ${series}. The schedule aims for 90%.`
+                }
               />
             ) : undefined
           }
           note={
             recall.rate === null
-              ? "Nothing has come back for a second look yet, so there is nothing honest to report."
-              : `${recall.passed} remembered, ${recall.failed} forgotten.`
+              ? t`Nothing has come back for a second look yet, so there is nothing honest to report.`
+              : t`${recall.passed} remembered, ${recall.failed} forgotten.`
           }
         />
 
         <StatPlate
-          label="Consistency"
+          label={t`Consistency`}
           value={consistency.lit}
-          unit={`/ ${consistency.days.length} days`}
+          unit={t`/ ${plural(consistency.days.length, { one: "# day", other: "# days" })}`}
           figure={<RunStrip days={consistency.days} />}
           note={
             consistency.days.length === 0
-              ? "No reviews yet. Each block here will be a day."
+              ? t`No reviews yet. Each block here will be a day.`
               : consistency.longestRun > 1
-                ? `Longest run ${plural(consistency.longestRun, "day", "days")}. Unbroken stretches join up.`
-                : "Each block is a day. They join up when you keep going."
+                ? t`${plural(consistency.longestRun, {
+                    one: "Longest run # day. Unbroken stretches join up.",
+                    other: "Longest run # days. Unbroken stretches join up.",
+                  })}`
+                : t`Each block is a day. They join up when you keep going.`
           }
         />
 
         <StatPlate
-          label="Collection"
+          label={t`Collection`}
           value={cards.total}
-          unit={cards.total === 1 ? "card" : "cards"}
+          unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
           figure={
             // The one figure here that carries colour, and it borrows rather than invents:
             // amber for New, green for Known, a plain edge for Learning, which is exactly how
@@ -203,7 +211,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
             <div
               className="flex h-3 w-full gap-1"
               role="img"
-              aria-label={`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
+              aria-label={t`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
             >
               {cards.new > 0 && (
                 <i className="block rounded-full bg-amber" style={{ flexGrow: cards.new }} />
@@ -221,29 +229,29 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
           note={
             <span className="flex flex-wrap gap-1.5">
               <Chip size="sm" dot tone="new">
-                {cards.new} new
+                <Trans>{cards.new} new</Trans>
               </Chip>
               <Chip size="sm" dot tone="learning">
-                {cards.learning} learning
+                <Trans>{cards.learning} learning</Trans>
               </Chip>
               <Chip size="sm" dot tone="known">
-                {cards.known} known
+                <Trans>{cards.known} known</Trans>
               </Chip>
             </span>
           }
         />
 
         <StatPlate
-          label="Ahead"
+          label={t`Ahead`}
           value={peak.count}
-          unit={peak.count > 0 ? `peak, ${WEEKDAY.format(parseLocal(peak.date))}` : "due this week"}
+          unit={peak.count > 0 ? t`peak, ${weekday(peak.date)}` : t`due this week`}
           figure={
             // Bars on a baseline, using the whole figure box. A track behind each one reads
             // as a second object stacked on the bar rather than as the space it could fill.
             <div
               className="flex h-full w-full items-stretch gap-1.5"
               role="img"
-              aria-label={forecastLabel(forecast)}
+              aria-label={forecast.map((d) => `${weekday(d.date)} ${d.count}`).join(", ")}
             >
               {forecast.map((d) => (
                 <div key={d.date} className="flex flex-1 flex-col gap-1.5">
@@ -257,13 +265,16 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
                     />
                   </div>
                   <span className="text-center text-2xs text-muted tabular-nums">
-                    {WEEKDAY.format(parseLocal(d.date)).slice(0, 2)}
+                    {weekday(d.date).slice(0, 2)}
                   </span>
                 </div>
               ))}
             </div>
           }
-          note={`${plural(dueSoon, "card", "cards")} over the next seven days.`}
+          note={t`${plural(dueSoon, {
+            one: "# card over the next seven days.",
+            other: "# cards over the next seven days.",
+          })}`}
         />
       </div>
 
@@ -271,10 +282,14 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         <section className="edge mt-3 flex flex-col gap-4 rounded-xl bg-plate p-5">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
-              Month by month
+              <Trans>Month by month</Trans>
             </h2>
             <span className="text-xs text-muted tabular-nums">
-              {consistency.litAllTime} of {consistency.daysAllTime} days
+              <Plural
+                value={daysAllTime}
+                one={`${litAllTime} of # day`}
+                other={`${litAllTime} of # days`}
+              />
             </span>
           </div>
           <MonthBars months={months} />
@@ -285,9 +300,11 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         <section className="edge mt-3 overflow-hidden rounded-xl bg-plate">
           <div className="flex items-baseline justify-between gap-3 px-5 pt-5 pb-3">
             <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
-              Keeps coming back
+              <Trans>Keeps coming back</Trans>
             </h2>
-            <span className="text-xs text-muted">Forgotten {leeches.lapses}+ times</span>
+            <span className="text-xs text-muted">
+              <Trans>Forgotten {leeches.lapses}+ times</Trans>
+            </span>
           </div>
           <ul>
             {leeches.cards.map((c) => (
@@ -299,12 +316,15 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
                   <span className="font-medium text-text" lang={c.language ?? undefined}>
                     {c.term}
                   </span>
-                  {c.meaning && <span className="ml-2 text-sm text-muted">{c.meaning}</span>}
+                  {c.meaning && <span className="ms-2 text-sm text-muted">{c.meaning}</span>}
                 </span>
                 {/* Both numbers carry their unit: "7 of 12" alone leaves the reader to
                     guess which is which, even under the heading. */}
                 <span className="shrink-0 text-right text-sm text-muted tabular-nums">
-                  {c.lapses} forgotten <span className="text-muted/60">·</span> {c.reviews} reviews
+                  <Trans>
+                    {c.lapses} forgotten <span className="text-muted/60">·</span>{" "}
+                    <Plural value={c.reviews} one="# review" other="# reviews" />
+                  </Trans>
                 </span>
               </li>
             ))}
@@ -314,14 +334,13 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
 
       {graded > 0 && graded < 30 && (
         <p className="mt-5 px-1 text-sm text-muted">
-          Recall is drawn from {plural(graded, "review", "reviews")}, which is few enough that one
-          bad evening moves it. It settles down after a few weeks.
+          <Plural
+            value={graded}
+            one="Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks."
+            other="Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks."
+          />
         </p>
       )}
     </Page>
   );
-}
-
-function forecastLabel(forecast: InsightsOut["forecast"]): string {
-  return forecast.map((d) => `${WEEKDAY.format(parseLocal(d.date))} ${d.count}`).join(", ");
 }

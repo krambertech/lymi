@@ -1,3 +1,5 @@
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 
 export interface Day {
@@ -25,8 +27,10 @@ export function RunStrip({
   /** Overrides the generated description. */
   label?: string | undefined;
 }) {
+  const { t } = useLingui();
   const lit = days.filter((d) => d.lit).length;
-  if (days.length === 0) return null;
+  const total = days.length;
+  if (total === 0) return null;
   const runs: { from: number; to: number; lit: boolean }[] = [];
   days.forEach((d, i) => {
     const last = runs.at(-1);
@@ -38,7 +42,10 @@ export function RunStrip({
     <div
       className={clsx("flex h-10 w-full items-stretch", className)}
       role="img"
-      aria-label={label ?? `Reviewed on ${lit} of the last ${days.length} days`}
+      aria-label={
+        label ??
+        t`Reviewed on ${lit} of the last ${plural(total, { one: "# day", other: "# days" })}`
+      }
     >
       {runs.map((r) => {
         const span = r.to - r.from + 1;

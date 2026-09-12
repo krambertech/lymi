@@ -1,3 +1,6 @@
+import { i18n } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { PushSubscriptionInput, ReminderTime } from "@lymi/core";
 import { Bell, Download } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -47,12 +50,14 @@ function subscriptionInput(
   };
 }
 
+/** Resolved when the error happens, so the sentence is in the language active at the time. */
 function messageFor(error: unknown) {
   if (error instanceof ApiError) return error.message;
-  return "Unable to save the reminder. Check your connection and try again.";
+  return i18n._(msg`Unable to save the reminder. Check your connection and try again.`);
 }
 
 export function NotificationsSection() {
+  const { t } = useLingui();
   const install = useInstallState();
   const [installHelp, setInstallHelp] = useState(false);
   const [ready, setReady] = useState(false);
@@ -104,7 +109,7 @@ export function NotificationsSection() {
       return;
     }
     if (!vapidPublicKey) {
-      setError("Reminders are not configured yet.");
+      setError(t`Reminders are not configured yet.`);
       return;
     }
     setBusy(true);
@@ -113,8 +118,8 @@ export function NotificationsSection() {
       if (permission !== "granted") {
         setError(
           permission === "denied"
-            ? "Notifications are blocked. Allow them in your browser or device settings, then try again."
-            : "Notifications weren't enabled. You can try again when you're ready.",
+            ? t`Notifications are blocked. Allow them in your browser or device settings, then try again.`
+            : t`Notifications weren't enabled. You can try again when you're ready.`,
         );
         return;
       }
@@ -128,7 +133,7 @@ export function NotificationsSection() {
       await api.savePushSubscription(subscriptionInput(subscription, time));
       setEnabled(true);
       setSavedTime(time);
-      setNotice("Daily reminder on for this device.");
+      setNotice(t`Daily reminder on for this device.`);
     } catch (cause) {
       setError(messageFor(cause));
     } finally {
@@ -148,7 +153,7 @@ export function NotificationsSection() {
         await subscription.unsubscribe();
       }
       setEnabled(false);
-      setNotice("Daily reminder off for this device.");
+      setNotice(t`Daily reminder off for this device.`);
     } catch (cause) {
       setError(messageFor(cause));
     } finally {
@@ -166,7 +171,7 @@ export function NotificationsSection() {
       if (!subscription) throw new Error("Push subscription is missing");
       await api.savePushSubscription(subscriptionInput(subscription, time));
       setSavedTime(time);
-      setNotice(`Reminder set for ${time}.`);
+      setNotice(t`Reminder set for ${time}.`);
     } catch (cause) {
       setError(messageFor(cause));
     } finally {
@@ -179,20 +184,23 @@ export function NotificationsSection() {
   const permissionBlocked = pushSupported && Notification.permission === "denied";
   const validTime = /^([01]\d|2[0-3]):(00|15|30|45)$/.test(time);
   const reminderAvailable = pushSupported || needsInstall;
+  const zone = timezone().replaceAll("_", " ");
 
   return (
     <>
-      <SettingsGroup title="App">
+      <SettingsGroup title={t`App`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="grid max-w-[42ch] gap-0.5">
             <span className="flex items-center gap-2 text-base font-medium">
               <Download className="size-4 text-muted" aria-hidden="true" />
-              Install Lymi
+              <Trans>Install Lymi</Trans>
             </span>
             <span className="text-sm text-muted">
-              {install.installed
-                ? "Installed on this device."
-                : "Open Lymi like an app and allow review reminders."}
+              {install.installed ? (
+                <Trans>Installed on this device.</Trans>
+              ) : (
+                <Trans>Open Lymi like an app and allow review reminders.</Trans>
+              )}
             </span>
           </span>
           {!install.installed && (
@@ -203,16 +211,18 @@ export function NotificationsSection() {
                 else setInstallHelp(true);
               }}
             >
-              {install.canPrompt ? "Install Lymi" : "View install steps"}
+              {install.canPrompt ? t`Install Lymi` : t`View install steps`}
             </Button>
           )}
         </div>
       </SettingsGroup>
 
-      <SettingsGroup title="Reminders">
+      <SettingsGroup title={t`Reminders`}>
         {!reminderAvailable ? (
           <p className="text-sm text-muted">
-            This browser does not support review reminders. You can still install and use Lymi.
+            <Trans>
+              This browser does not support review reminders. You can still install and use Lymi.
+            </Trans>
           </p>
         ) : (
           <>
@@ -228,25 +238,25 @@ export function NotificationsSection() {
               label={
                 <span className="flex items-center gap-2">
                   <Bell className="size-4 text-muted" aria-hidden="true" />
-                  Send a daily review reminder
+                  <Trans>Send a daily review reminder</Trans>
                 </span>
               }
               description={
                 permissionBlocked
-                  ? "Notifications are blocked in your browser or device settings."
+                  ? t`Notifications are blocked in your browser or device settings.`
                   : needsInstall
-                    ? "Install Lymi first. iPhone and iPad only allow web-app reminders after installation."
+                    ? t`Install Lymi first. iPhone and iPad only allow web-app reminders after installation.`
                     : !vapidPublicKey
-                      ? "Reminders are not configured yet."
-                      : "Only when cards are due. This setting applies to this device."
+                      ? t`Reminders are not configured yet.`
+                      : t`Only when cards are due. This setting applies to this device.`
               }
             />
             {enabled && (
               <div className="mt-3 flex flex-wrap items-end gap-3">
                 <Field
-                  label="Reminder time"
-                  hint={`Uses ${timezone().replaceAll("_", " ")}.`}
-                  error={validTime ? undefined : "Choose 00, 15, 30, or 45 minutes."}
+                  label={t`Reminder time`}
+                  hint={t`Uses ${zone}.`}
+                  error={validTime ? undefined : t`Choose 00, 15, 30, or 45 minutes.`}
                   className="w-44"
                 >
                   <Input
@@ -262,7 +272,7 @@ export function NotificationsSection() {
                   aria-disabled={busy || time === savedTime || !validTime}
                   onClick={() => void saveTime()}
                 >
-                  Save reminder
+                  <Trans>Save reminder</Trans>
                 </Button>
               </div>
             )}
@@ -282,19 +292,31 @@ export function NotificationsSection() {
       <Dialog
         open={installHelp}
         onClose={() => setInstallHelp(false)}
-        title={install.isIOS ? "Add Lymi to your Home Screen" : "Install Lymi"}
-        actions={<Button onClick={() => setInstallHelp(false)}>Close</Button>}
+        title={install.isIOS ? t`Add Lymi to your Home Screen` : t`Install Lymi`}
+        actions={
+          <Button onClick={() => setInstallHelp(false)}>
+            <Trans>Close</Trans>
+          </Button>
+        }
       >
         {install.isIOS ? (
-          <ol className="grid list-decimal gap-2 pl-5">
-            <li>Open Lymi in Safari and select Share.</li>
-            <li>Select Add to Home Screen and keep Open as Web App on.</li>
-            <li>Open Lymi from its new icon, then turn on the daily reminder.</li>
+          <ol className="grid list-decimal gap-2 ps-5">
+            <li>
+              <Trans>Open Lymi in Safari and select Share.</Trans>
+            </li>
+            <li>
+              <Trans>Select Add to Home Screen and keep Open as Web App on.</Trans>
+            </li>
+            <li>
+              <Trans>Open Lymi from its new icon, then turn on the daily reminder.</Trans>
+            </li>
           </ol>
         ) : (
           <p>
-            Open your browser menu and select Install Lymi or Add to Dock. Installation is not
-            offered by every desktop browser.
+            <Trans>
+              Open your browser menu and select Install Lymi or Add to Dock. Installation is not
+              offered by every desktop browser.
+            </Trans>
           </p>
         )}
       </Dialog>

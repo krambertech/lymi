@@ -28,7 +28,8 @@ export default defineConfig({
     react(),
     lingui(),
     // Only Lymi source carries Lingui macros; keep Babel off dependencies and the test runner.
-    babel({ include: [/\/src\/.*\.tsx?$/], presets: [linguiTransformerBabelPreset()] }),
+    // The query suffix matters: TanStack's split route modules end in `?tsr-split=component`.
+    babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
     tailwindcss(),
     cloudflare(
       isE2E

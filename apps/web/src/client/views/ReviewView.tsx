@@ -1,4 +1,7 @@
-import { formatInterval, type Rating } from "@lymi/core";
+import type { I18n, MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { interval, type Rating } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Brain,
@@ -23,15 +26,15 @@ import type { QueueItem } from "../lib/api";
 
 export const GRADES: {
   rating: Rating;
-  label: string;
+  label: MessageDescriptor;
   key: string;
   icon: LucideIcon;
   iconClass: string;
 }[] = [
-  { rating: 1, label: "Forgot", key: "1", icon: RotateCcw, iconClass: "text-grade-forgot" },
-  { rating: 2, label: "Hard", key: "2", icon: Brain, iconClass: "text-grade-hard" },
-  { rating: 3, label: "Good", key: "3", icon: Check, iconClass: "text-grade-good" },
-  { rating: 4, label: "Easy", key: "4", icon: Zap, iconClass: "text-grade-easy" },
+  { rating: 1, label: msg`Forgot`, key: "1", icon: RotateCcw, iconClass: "text-grade-forgot" },
+  { rating: 2, label: msg`Hard`, key: "2", icon: Brain, iconClass: "text-grade-hard" },
+  { rating: 3, label: msg`Good`, key: "3", icon: Check, iconClass: "text-grade-good" },
+  { rating: 4, label: msg`Easy`, key: "4", icon: Zap, iconClass: "text-grade-easy" },
 ];
 
 export interface ReviewHeaderProps {
@@ -53,19 +56,22 @@ export interface ReviewHeaderProps {
  * lines up with the word and the track lines up with the plate.
  */
 export function ReviewHeader({ done, total, flare, onClose }: ReviewHeaderProps) {
+  const { t } = useLingui();
   return (
     <header className="grid shrink-0 gap-2.5 pt-2 @3xl:pt-4">
-      <div className="flex min-h-10 items-center gap-2.5 pl-5 text-sm text-text-2 @3xl:pl-6">
+      <div className="flex min-h-10 items-center gap-2.5 ps-5 text-sm text-text-2 @3xl:ps-6">
         <Lantern className="size-5" flicker glow flare={flare} />
         <span className="tabular-nums">
-          {done} of {total}
+          <Trans>
+            {done} of {total}
+          </Trans>
         </span>
         <span className="flex-1" />
-        <IconButton label="Leave review" size="sm" onClick={onClose} className="-mr-2">
+        <IconButton label={t`Leave review`} size="sm" onClick={onClose} className="-me-2">
           <X />
         </IconButton>
       </div>
-      <Progress value={total ? done / total : 0} label="Session progress" />
+      <Progress value={total ? done / total : 0} label={t`Session progress`} />
     </header>
   );
 }
@@ -93,17 +99,18 @@ export function ReviewCard({
   audioState = "idle",
   className,
 }: ReviewCardProps) {
+  const { t } = useLingui();
   const { card, direction } = item;
   const recog = direction === "recognition";
   const front = recog ? card.term : (card.meaning ?? card.term);
-  const back = recog ? (card.meaning ?? "No meaning yet") : card.term;
+  const back = recog ? (card.meaning ?? t`No meaning yet`) : card.term;
   return (
     // The whole plate reveals the answer, so the control is a button covering the plate rather than
     // a caption at its foot: pressing the card is what a card affords, and the most-pressed control
     // on the screen should not look like a footnote. It sits above the text and below the
     // pronunciation button, which is the one thing inside the card you can press for another reason.
     <section
-      aria-label={`${recog ? "Recognition" : "Production"} card for ${front}`}
+      aria-label={recog ? t`Recognition card for ${front}` : t`Production card for ${front}`}
       className={clsx(
         "edge relative flex min-h-0 flex-1 flex-col overflow-y-auto rounded-xl bg-plate p-5 @3xl:p-6",
         !revealed && "cursor-pointer hoverable:hover:edge-2",
@@ -114,13 +121,13 @@ export function ReviewCard({
         <button
           type="button"
           onClick={onReveal}
-          aria-label="Tap card to reveal"
+          aria-label={t`Tap card to reveal`}
           className="absolute inset-0 z-10 rounded-xl"
         />
       )}
       <div className="flex items-center justify-between text-xs text-muted">
         <span>
-          {recog ? "Recognise" : "Produce"}
+          {recog ? <Trans>Recognise</Trans> : <Trans>Produce</Trans>}
           {card.language && <span> · {card.language.toUpperCase()}</span>}
         </span>
         <StateChip state={item.fsrsState} size="sm" />
@@ -139,7 +146,7 @@ export function ReviewCard({
               {card.pronunciation && <span>{card.pronunciation}</span>}
               {onPlayAudio && (
                 <IconButton
-                  label={audioState === "playing" ? "Replay pronunciation" : "Play pronunciation"}
+                  label={audioState === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
                   size="sm"
                   variant="secondary"
                   round
@@ -182,7 +189,9 @@ export function ReviewCard({
                 {card.pronunciation && <span>{card.pronunciation}</span>}
                 {onPlayAudio && (
                   <IconButton
-                    label={audioState === "playing" ? "Replay pronunciation" : "Play pronunciation"}
+                    label={
+                      audioState === "playing" ? t`Replay pronunciation` : t`Play pronunciation`
+                    }
                     size="sm"
                     variant="secondary"
                     round
@@ -218,7 +227,7 @@ export function ReviewCard({
         )}
       </div>
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {revealed ? `Answer: ${back}` : ""}
+        {revealed ? t`Answer: ${back}` : ""}
       </p>
     </section>
   );
@@ -257,14 +266,19 @@ export function GradeBar({
   onGrade,
   className,
 }: GradeBarProps) {
+  const { t, i18n } = useLingui();
   const now = new Date();
   if (!revealed) {
     return (
       <div className={clsx("grid h-[72px] shrink-0 place-items-center", className)}>
         {/* Touch wording on a phone, the shortcut where there is a keyboard to press it with. */}
         <p className="flex items-center gap-2 text-sm font-medium text-muted">
-          <span className="@2xl:hidden">Tap the card when you have it</span>
-          <span className="hidden @2xl:inline">Reveal the card when you have it</span>
+          <span className="@2xl:hidden">
+            <Trans>Tap the card when you have it</Trans>
+          </span>
+          <span className="hidden @2xl:inline">
+            <Trans>Reveal the card when you have it</Trans>
+          </span>
           <span className="hidden @2xl:inline-flex">
             <Kbd>Space</Kbd>
           </span>
@@ -274,7 +288,9 @@ export function GradeBar({
   }
   return (
     <fieldset id={id} className={clsx("scroll-mt-24 shrink-0", className)}>
-      <legend className="sr-only">Choose a recall grade</legend>
+      <legend className="sr-only">
+        <Trans>Choose a recall grade</Trans>
+      </legend>
       {error && (
         <p className="mb-2 text-center text-sm text-danger" role="alert">
           {error}
@@ -284,7 +300,8 @@ export function GradeBar({
         {GRADES.map((g) => {
           const saving = pending && pendingRating === g.rating;
           const GradeIcon = g.icon;
-          const schedules = next ? formatInterval(now, new Date(next[g.rating])) : undefined;
+          const label = i18n._(g.label);
+          const schedules = next ? scheduleLabel(i18n, now, new Date(next[g.rating])) : undefined;
           return (
             <button
               key={g.rating}
@@ -292,7 +309,7 @@ export function GradeBar({
               disabled={pending}
               aria-busy={saving || undefined}
               // The visible date is a hover affordance; the name is how everyone else gets it.
-              aria-label={schedules ? `${g.label}, next in ${schedules}` : undefined}
+              aria-label={schedules ? t`${label}, next in ${schedules}` : undefined}
               onClick={() => onGrade(g.rating)}
               className={clsx(
                 "edge group relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
@@ -310,7 +327,7 @@ export function GradeBar({
                 <GradeIcon className="size-[18px]" aria-hidden="true" strokeWidth={1.75} />
               </span>
               <span className={clsx("transition-opacity duration-150", saving && "opacity-0")}>
-                {g.label}
+                {label}
               </span>
               {schedules && (
                 <span
@@ -327,7 +344,7 @@ export function GradeBar({
               <span className="hidden @3xl:contents">
                 <Kbd
                   tone="default"
-                  className="absolute right-1.5 top-1.5 h-4 min-w-4 rounded-full px-1.5 text-2xs"
+                  className="absolute end-1.5 top-1.5 h-4 min-w-4 rounded-full px-1.5 text-2xs"
                 >
                   {g.key}
                 </Kbd>
@@ -364,7 +381,6 @@ export interface SessionDoneProps {
 export function SessionDone({ done, moreDue = 0, deckName, history, action }: SessionDoneProps) {
   const lit = done > 0;
   const paused = lit && moreDue > 0;
-  const from = deckName ? ` from ${deckName}` : "";
   return (
     <section className="flex flex-1 flex-col items-center justify-center gap-2 py-10 text-center">
       <Lantern
@@ -376,14 +392,40 @@ export function SessionDone({ done, moreDue = 0, deckName, history, action }: Se
         variant={lit ? "lit" : "unlit"}
       />
       <h2 className="complete-copy text-3xl font-medium">
-        {paused ? "A good pause" : lit ? "That’s the lot" : "Nothing due"}
+        {paused ? (
+          <Trans>A good pause</Trans>
+        ) : lit ? (
+          <Trans>That’s the lot</Trans>
+        ) : (
+          <Trans>Nothing due</Trans>
+        )}
       </h2>
       <p className="complete-copy max-w-[30ch] text-md text-muted">
-        {paused
-          ? `${done} reviewed${from}. ${moreDue} more ${moreDue === 1 ? "is" : "are"} ready when you are.`
-          : lit
-            ? `${done} reviewed${from}. The rest can wait a while.`
-            : "Come back later, or add something new."}
+        {paused ? (
+          deckName ? (
+            <Plural
+              value={moreDue}
+              one={`${done} reviewed from ${deckName}. # more is ready when you are.`}
+              other={`${done} reviewed from ${deckName}. # more are ready when you are.`}
+            />
+          ) : (
+            <Plural
+              value={moreDue}
+              one={`${done} reviewed. # more is ready when you are.`}
+              other={`${done} reviewed. # more are ready when you are.`}
+            />
+          )
+        ) : lit ? (
+          deckName ? (
+            <Trans>
+              {done} reviewed from {deckName}. The rest can wait a while.
+            </Trans>
+          ) : (
+            <Trans>{done} reviewed. The rest can wait a while.</Trans>
+          )
+        ) : (
+          <Trans>Come back later, or add something new.</Trans>
+        )}
       </p>
       {history && <SevenLights days={history.slice(-7)} className="complete-copy mt-6" />}
       <div className="complete-copy mt-6 flex flex-wrap items-center justify-center gap-2">
@@ -399,11 +441,15 @@ export function ReviewError({ retry, action }: { retry: () => void; action?: Rea
       <span className="mb-5 grid size-12 place-items-center rounded-full bg-danger-soft text-danger">
         <CircleAlert className="size-5" aria-hidden="true" />
       </span>
-      <h2 className="text-2xl font-medium">Review couldn’t load</h2>
-      <p className="mt-2 max-w-[30ch] text-md text-muted">Check your connection, then try again.</p>
+      <h2 className="text-2xl font-medium">
+        <Trans>Review couldn’t load</Trans>
+      </h2>
+      <p className="mt-2 max-w-[30ch] text-md text-muted">
+        <Trans>Check your connection, then try again.</Trans>
+      </p>
       <div className="mt-6 flex items-center gap-2">
         <Button variant="primary" onClick={retry}>
-          Try again
+          <Trans>Try again</Trans>
         </Button>
         {action}
       </div>
@@ -418,4 +464,10 @@ export function ReviewSkeleton() {
       <Skeleton className="mx-auto h-4 w-32 rounded-sm" />
     </div>
   );
+}
+
+/** "2 d" in English, "2 дн." in Ukrainian: the browser's own narrow unit for the active locale. */
+function scheduleLabel(i18n: I18n, from: Date, to: Date): string {
+  const { value, unit } = interval(from, to);
+  return i18n.number(value, { style: "unit", unit, unitDisplay: "narrow" });
 }

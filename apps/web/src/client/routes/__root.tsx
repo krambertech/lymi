@@ -12,7 +12,8 @@ import { NewDeckSheet } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, flushOutbox } from "../lib/api";
-import { decksQuery, meQuery } from "../lib/queries";
+import { activate, isAppLanguage, isBareShell } from "../lib/i18n";
+import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { AppShell, Sidebar } from "../views/Shell";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
@@ -33,13 +34,18 @@ function Shell() {
   const add = useAddCard();
   const activeDeckId = location.pathname.match(/^\/library\/([^/]+)/)?.[1];
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
-  const bare =
-    location.pathname === "/login" ||
-    location.pathname === "/consent" ||
-    location.pathname.startsWith("/design");
+  const bare = isBareShell(location.pathname);
   const onReview = location.pathname.startsWith("/review");
   const me = useQuery({ ...meQuery, enabled: !bare });
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
+  const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
+
+  // A stored choice wins over the browser pick. Null means not chosen yet, which the
+  // browser pick already covers; writing it back waits for the language picker.
+  const appLanguage = settings.data?.appLanguage;
+  useEffect(() => {
+    if (isAppLanguage(appLanguage)) activate(appLanguage);
+  }, [appLanguage]);
 
   useEffect(() => {
     if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare) {

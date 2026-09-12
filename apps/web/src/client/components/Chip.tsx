@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { FieldSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { BookOpen, PencilLine, Sparkle } from "lucide-react";
@@ -53,27 +54,29 @@ export function StateChip({
   if (state === 2)
     return (
       <Chip tone="known" dot size={size}>
-        Known
+        <Trans>Known</Trans>
       </Chip>
     );
   if (state === 0 || state == null)
     return (
       <Chip tone="new" dot size={size}>
-        New
+        <Trans>New</Trans>
       </Chip>
     );
   return (
     <Chip tone="learning" dot size={size}>
-      {state === 3 ? "Relearning" : "Learning"}
+      {state === 3 ? <Trans>Relearning</Trans> : <Trans>Learning</Trans>}
     </Chip>
   );
 }
 
-const sourceMeta: Record<FieldSource, { label: string; icon: typeof Sparkle; tone: ChipTone }> = {
-  lesson: { label: "From the lesson", icon: BookOpen, tone: "default" },
-  ai: { label: "AI wrote this", icon: Sparkle, tone: "ai" },
-  manual: { label: "You wrote this", icon: PencilLine, tone: "default" },
+const sourceMeta: Record<FieldSource, { icon: typeof Sparkle; tone: ChipTone }> = {
+  lesson: { icon: BookOpen, tone: "default" },
+  ai: { icon: Sparkle, tone: "ai" },
+  manual: { icon: PencilLine, tone: "default" },
 };
+
+type SourceField = "meaning" | "example";
 
 /**
  * Where a field's content came from. AI text is always labelled so it is never mistaken for
@@ -85,20 +88,31 @@ export function SourceChip({
   size = "sm",
 }: {
   source: FieldSource;
-  /** Which field, e.g. "meaning". Shown as "AI meaning". */
-  field?: string | undefined;
+  /** Which field. Shown as "AI meaning". */
+  field?: SourceField | undefined;
   size?: "sm" | "md" | undefined;
 }) {
+  const { t } = useLingui();
   const m = sourceMeta[source];
   const Icon = m.icon;
-  const cap = field ? `${field[0]?.toUpperCase()}${field.slice(1)}` : "";
+  // Whole sentences per field, so each language can inflect the field word on its own.
   const text = !field
-    ? m.label
-    : source === "ai"
-      ? `AI ${field}`
+    ? source === "ai"
+      ? t`AI wrote this`
       : source === "lesson"
-        ? `${cap} from lesson`
-        : `${cap} by you`;
+        ? t`From the lesson`
+        : t`You wrote this`
+    : source === "ai"
+      ? field === "meaning"
+        ? t`AI meaning`
+        : t`AI example`
+      : source === "lesson"
+        ? field === "meaning"
+          ? t`Meaning from lesson`
+          : t`Example from lesson`
+        : field === "meaning"
+          ? t`Meaning by you`
+          : t`Example by you`;
   return (
     <Chip tone={m.tone} size={size}>
       <Icon className="size-3" aria-hidden="true" />

@@ -15,6 +15,7 @@ const candidate = {
   reminder_time: "19:00",
   timezone: "Europe/Tallinn",
   last_sent_local_date: null,
+  app_language: null,
   due_count: 7,
 };
 

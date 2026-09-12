@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
@@ -31,6 +32,7 @@ type Outcome = { granted: { read: boolean; write: boolean } } | { refused: true 
  * the form it just submitted.
  */
 function Consent() {
+  const { t } = useLingui();
   const { client_id: clientId, scope } = Route.useSearch();
   const me = useQuery(meQuery);
   const requested = new Set((scope ?? "").split(" ").filter(Boolean));
@@ -67,13 +69,13 @@ function Consent() {
     });
     if (res.error) {
       setBusy(null);
-      setError(res.error.message ?? "Something went wrong. Try again from the app.");
+      setError(res.error.message ?? t`Something went wrong. Try again from the app.`);
       return;
     }
     const target = redirectTargetOf(res.data);
     if (!target) {
       setBusy(null);
-      setError("The app did not say where to go next. Try again from the app.");
+      setError(t`The app did not say where to go next. Try again from the app.`);
       return;
     }
     // Show the ending first, then hand off. An http(s) redirect leaves this page at once; a
@@ -93,7 +95,7 @@ function Consent() {
         action={
           "granted" in outcome ? (
             <Link to="/you" className={buttonClass("secondary", "sm")}>
-              Manage connected apps
+              <Trans>Manage connected apps</Trans>
             </Link>
           ) : undefined
         }
@@ -115,7 +117,7 @@ function Consent() {
       unusable={!clientId}
       error={
         error ??
-        (clientId ? null : "This link is missing the app that asked. Start again from the app.")
+        (clientId ? null : t`This link is missing the app that asked. Start again from the app.`)
       }
       onDecide={(accept) => void decide(accept)}
     />

@@ -24,7 +24,7 @@ const base =
 
 /** Buttons with an icon on one side trim 2 px on that side so the label reads centred. */
 const iconSide =
-  "[&:has(>span>svg:first-child)]:pl-[calc(var(--btn-px)-2px)] [&:has(>span>svg:last-child)]:pr-[calc(var(--btn-px)-2px)]";
+  "[&:has(>span>svg:first-child)]:ps-[calc(var(--btn-px)-2px)] [&:has(>span>svg:last-child)]:pe-[calc(var(--btn-px)-2px)]";
 
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",

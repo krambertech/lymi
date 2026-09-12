@@ -6,12 +6,17 @@ import type { z } from "zod";
  */
 export type FieldErrors = Record<string, string>;
 
-export function fieldErrors(error: z.ZodError): FieldErrors {
+/**
+ * `messages` carries the sentence to show per field, written in the component so it is in
+ * the learner's language. The schema still decides what is valid; a field without a message
+ * falls back to the schema's English.
+ */
+export function fieldErrors(error: z.ZodError, messages: FieldErrors = {}): FieldErrors {
   const out: FieldErrors = {};
   for (const issue of error.issues) {
     const key = String(issue.path[0] ?? "");
     // The first issue on a field is the one to fix; the rest usually follow from it.
-    if (key && !(key in out)) out[key] = issue.message;
+    if (key && !(key in out)) out[key] = messages[key] ?? issue.message;
   }
   return out;
 }

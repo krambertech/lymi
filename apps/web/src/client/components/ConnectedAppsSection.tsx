@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import type { ConnectedApp } from "../lib/api";
@@ -14,6 +15,7 @@ import { Skeleton } from "./Skeleton";
  * this is where it is taken back: the app, what it may do, and the host that identifies it.
  */
 export function ConnectedAppsSection() {
+  const { t } = useLingui();
   const qc = useQueryClient();
   const apps = useQuery(connectedAppsQuery);
   const disconnect = useMutation({
@@ -22,16 +24,20 @@ export function ConnectedAppsSection() {
   });
 
   return (
-    <SettingsGroup title="Connected apps">
+    <SettingsGroup title={t`Connected apps`}>
       <p className="max-w-[62ch] text-base text-text-2">
-        MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app
-        renewing its access, so it is locked out within the hour and has to ask again.
+        <Trans>
+          MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app
+          renewing its access, so it is locked out within the hour and has to ask again.
+        </Trans>
       </p>
 
       {apps.isPending && <Skeleton className="h-14 w-full" />}
 
       {apps.isSuccess && apps.data.length === 0 && (
-        <p className="text-base text-muted">Nothing connected.</p>
+        <p className="text-base text-muted">
+          <Trans>Nothing connected.</Trans>
+        </p>
       )}
 
       {apps.data && apps.data.length > 0 && (
@@ -65,6 +71,7 @@ function AppRow({
   disconnecting: boolean;
   onDisconnect: () => void;
 }) {
+  const { t, i18n } = useLingui();
   const app = identifyApp(item.clientId, item.name);
   const [confirming, setConfirming] = useState(false);
   useEffect(() => {
@@ -72,6 +79,7 @@ function AppRow({
     const t = setTimeout(() => setConfirming(false), 6000);
     return () => clearTimeout(t);
   }, [confirming]);
+  const connected = i18n.date(item.createdAt, { day: "numeric", month: "short" });
 
   return (
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge py-3 last:border-b-0">
@@ -79,7 +87,7 @@ function AppRow({
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
           <span className="truncate text-base font-medium">{app.name}</span>
-          <Chip size="sm">{item.scope === "write" ? "Read and write" : "Read"}</Chip>
+          <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </div>
         {/* A long host truncates; the date never does, so the row always says when. */}
         <p className="flex min-w-0 items-baseline gap-1 text-sm text-muted">
@@ -93,17 +101,21 @@ function AppRow({
           {/* An unrecognised app is titled by its address, so its own name is a claim. */}
           {app.claimed && (
             <>
-              <span className="truncate">calls itself “{app.claimed}”</span>
+              <span className="truncate">
+                <Trans>calls itself “{app.claimed}”</Trans>
+              </span>
               <span aria-hidden="true">·</span>
             </>
           )}
-          <span className="shrink-0 tabular-nums">connected {shortDate(item.createdAt)}</span>
+          <span className="shrink-0 tabular-nums">
+            <Trans>connected {connected}</Trans>
+          </span>
         </p>
       </div>
       {confirming ? (
         <div className="enter-fade flex gap-1.5">
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
-            Keep
+            <Trans>Keep</Trans>
           </Button>
           <Button
             size="sm"
@@ -112,18 +124,14 @@ function AppRow({
             aria-disabled={disconnecting}
             onClick={onDisconnect}
           >
-            Disconnect
+            <Trans>Disconnect</Trans>
           </Button>
         </div>
       ) : (
         <Button size="sm" variant="ghost" onClick={() => setConfirming(true)}>
-          Disconnect
+          <Trans>Disconnect</Trans>
         </Button>
       )}
     </li>
   );
-}
-
-function shortDate(iso: string): string {
-  return new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short" });
 }

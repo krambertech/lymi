@@ -1,3 +1,4 @@
+import { Plural } from "@lingui/react/macro";
 import { ChevronRight } from "lucide-react";
 import { Chip } from "./Chip";
 import { NavLink, type StaticNav } from "./NavLink";
@@ -31,7 +32,9 @@ export function NewCardsRow({
       st={st}
       className="edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.97] hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
-      <Chip tone="new">{count} new</Chip>
+      <Chip tone="new">
+        <Plural value={count} one="# new" other="# new" />
+      </Chip>
       <span className="flex min-w-0 flex-1 flex-col gap-0.5 @xl:flex-row @xl:items-baseline @xl:justify-between @xl:gap-3">
         <span className="truncate text-md font-medium">{deckName}</span>
         <span className="truncate text-sm text-muted">

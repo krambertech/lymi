@@ -52,7 +52,7 @@ export function Toast({ children, action, onDismiss, duration, className, inline
     <div
       role="status"
       className={clsx(
-        "flex w-fit max-w-[calc(100vw-32px)] items-center gap-3 rounded-md bg-text py-2.5 pl-4 pr-2 text-base text-canvas",
+        "flex w-fit max-w-[calc(100vw-32px)] items-center gap-3 rounded-md bg-text py-2.5 ps-4 pe-2 text-base text-canvas",
         !inline &&
           "fixed bottom-[calc(env(safe-area-inset-bottom)+80px)] left-1/2 z-(--z-toast) -translate-x-1/2 @3xl:bottom-6",
         !inline && (leaving ? "toast-exit" : "toast-enter"),

@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { CardInput } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
@@ -20,6 +21,7 @@ interface Props {
 
 /** Quick capture. One field that matters, a deck, add. AI enrichment comes later and is opt-in. */
 export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props) {
+  const { t } = useLingui();
   const qc = useQueryClient();
   const decks = useQuery(decksQuery);
   const create = useMutation({
@@ -33,7 +35,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
     },
   });
   return (
-    <Sheet open={open} onOpenChange={onOpenChange} title="Add a word or phrase" titleHidden>
+    <Sheet open={open} onOpenChange={onOpenChange} title={t`Add a word or phrase`} titleHidden>
       <AddCardForm
         key={open ? `open:${deckId ?? "default"}` : "closed"}
         decks={decks.data}
@@ -79,6 +81,7 @@ export function AddCardForm({
   onSubmit,
   static: st,
 }: AddCardFormProps) {
+  const { t } = useLingui();
   const [term, setTerm] = useState("");
   const [meaning, setMeaning] = useState("");
   const [deck, setDeck] = useState(deckId ?? "");
@@ -110,26 +113,35 @@ export function AddCardForm({
           meaningSource: meaning.trim() ? "manual" : undefined,
         });
         if (!parsed.success) {
-          setInvalid(fieldErrors(parsed.error));
+          // The sentences mirror the schema's: an empty term fails the minimum, a typed one the maximum.
+          setInvalid(
+            fieldErrors(parsed.error, {
+              deckId: t`Choose a deck for it to go in.`,
+              term: term.trim()
+                ? t`That is longer than a card holds.`
+                : t`Type the word or phrase.`,
+              meaning: t`Keep the meaning under 1000 characters.`,
+            }),
+          );
           setNotice(null);
           focusFirstInvalid(formRef.current);
           return;
         }
         setInvalid({});
-        const t = parsed.data.term;
+        const added = parsed.data.term;
         const outcome = await onSubmit(parsed.data);
         if (outcome?.status === "skipped") {
-          setNotice(`${outcome.existing.term} is already in ${outcome.deckName}`);
+          setNotice(t`${outcome.existing.term} is already in ${outcome.deckName}`);
           inputRef.current?.select();
           return;
         }
-        setNotice(`Added “${t}”`);
+        setNotice(t`Added “${added}”`);
         setTerm("");
         setMeaning("");
         inputRef.current?.focus();
       }}
     >
-      <Field label="Word or phrase" error={invalid.term}>
+      <Field label={t`Word or phrase`} error={invalid.term}>
         <Input
           ref={inputRef}
           autoFocus={!st}
@@ -139,7 +151,7 @@ export function AddCardForm({
             setNotice(null);
             setInvalid(({ term: _, ...rest }) => rest);
           }}
-          placeholder="sbrigarsi"
+          placeholder={t`sbrigarsi`}
           autoComplete="off"
           autoCapitalize="none"
           spellCheck={false}
@@ -147,9 +159,9 @@ export function AddCardForm({
         />
       </Field>
       <Field
-        label="Meaning"
-        aside="Optional"
-        hint="Leave it empty and AI can suggest one later."
+        label={t`Meaning`}
+        aside={t`Optional`}
+        hint={t`Leave it empty and AI can suggest one later.`}
         error={invalid.meaning}
       >
         <Input
@@ -158,22 +170,22 @@ export function AddCardForm({
             setMeaning(e.target.value);
             setInvalid(({ meaning: _, ...rest }) => rest);
           }}
-          placeholder="to hurry up"
+          placeholder={t`to hurry up`}
           autoComplete="off"
         />
       </Field>
       {noDecks ? (
         <Field
-          label="Deck"
-          hint="A word lands in a deck. Make the first one and this word goes in it."
+          label={t`Deck`}
+          hint={t`A word lands in a deck. Make the first one and this word goes in it.`}
         >
           <Button onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
             <Plus aria-hidden="true" />
-            New deck
+            <Trans>New deck</Trans>
           </Button>
         </Field>
       ) : (
-        <Field label="Deck" error={invalid.deckId}>
+        <Field label={t`Deck`} error={invalid.deckId}>
           <Select
             value={deck}
             onChange={(e) => {
@@ -194,10 +206,10 @@ export function AddCardForm({
           {error ? <span className="text-danger">{error}</span> : notice}
         </p>
         <Button variant="ghost" onClick={onCancel}>
-          Cancel
+          <Trans>Cancel</Trans>
         </Button>
         <Button variant="primary" type="submit" loading={pending}>
-          {deckName ? `Add to ${deckName}` : "Add"}
+          {deckName ? t`Add to ${deckName}` : t`Add`}
         </Button>
       </div>
     </form>

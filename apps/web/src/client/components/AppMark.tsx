@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import { clsx } from "clsx";
 
 /**
@@ -65,7 +66,7 @@ export function identifyApp(
     : undefined;
   const claimed = claimedName?.trim() || null;
   return {
-    name: known?.name ?? host ?? "An app",
+    name: known?.name ?? host ?? t`An app`,
     // A recognised host names itself; anywhere else the claim is shown as a claim, or not
     // at all when it only repeats the address.
     claimed: known || !claimed || claimed === host ? null : claimed,

@@ -50,6 +50,13 @@
       "when": 1788722508914,
       "tag": "0006_clumsy_shotgun",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1789203968353,
+      "tag": "0007_lucky_blue_blade",
+      "breakpoints": true
     }
   ]
 }

@@ -120,14 +120,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSel
       <span className="relative block">
         <select
           ref={ref}
-          className={clsx(controlBase, controlSize, "appearance-none pl-3.5 pr-9", className)}
+          className={clsx(controlBase, controlSize, "appearance-none ps-3.5 pe-9", className)}
           {...props}
           {...a11y}
         >
           {children}
         </select>
         <ChevronDown
-          className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+          className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-muted"
           aria-hidden="true"
         />
       </span>

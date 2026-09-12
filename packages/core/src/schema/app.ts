@@ -84,7 +84,9 @@ export const userSettings = sqliteTable("user_settings", {
   userId: text("user_id")
     .primaryKey()
     .references(() => user.id, { onDelete: "cascade" }),
-  /** The language meanings are written in. Independent of any card's language. */
+  /** The language of the interface and reminders. Null until the learner has chosen. */
+  appLanguage: text("app_language"),
+  /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
   ...timestamps,
 });

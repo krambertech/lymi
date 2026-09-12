@@ -128,9 +128,13 @@ export const GradeInput = z.object({
 });
 export type GradeInput = z.infer<typeof GradeInput>;
 
+/** The languages the interface exists in. Closed so a stored value always has a catalog. */
+export const AppLanguage = z.enum(["en", "uk", "ru"]);
+export type AppLanguage = z.infer<typeof AppLanguage>;
+
 export const SettingsPatch = z.object({
-  /** The language meanings are written in. */
-  meaningLanguage: LanguageTag.optional(),
+  /** The language of the interface and reminders. Meanings follow it. */
+  appLanguage: AppLanguage.optional(),
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
 

@@ -1,3 +1,5 @@
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 
 interface Props {
@@ -10,8 +12,6 @@ interface Props {
   size?: "sm" | "lg" | undefined;
   className?: string | undefined;
 }
-
-const DAY = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 /**
  * A day's light carries three steps of amber, by how much that day held. The reference is the
@@ -57,19 +57,26 @@ const HEIGHT: Record<1 | 2 | 3, string> = { 1: "h-1/3", 2: "h-2/3", 3: "h-full" 
  * counts go into its label rather than into titles nobody can reach from a keyboard.
  */
 export function SevenLights({ days, size = "sm", className }: Props) {
+  const { t, i18n } = useLingui();
   const today = new Date();
+  const weekday = new Intl.DateTimeFormat(i18n.locale, { weekday: "short" });
   const labels = days.map((_, i) => {
     const d = new Date(today);
     d.setDate(today.getDate() - (days.length - 1 - i));
-    return DAY[(d.getDay() + 6) % 7] ?? "";
+    return weekday.format(d);
   });
   const lit = days.filter((n) => n > 0).length;
+  const total = days.length;
   // A floor under the reference, so a week of two-card days does not read as a full week.
   const reference = Math.max(...days, 10);
   const large = size === "lg";
-  const description = `Reviewed on ${lit} of the last ${days.length} days: ${days
-    .map((n, i) => `${labels[i]} ${n === 0 ? "none" : n}`)
-    .join(", ")}.`;
+  const perDay = days
+    .map((n, i) => {
+      const day = labels[i];
+      return n === 0 ? t`${day} none` : `${day} ${n}`;
+    })
+    .join(", ");
+  const description = t`Reviewed on ${lit} of the last ${plural(total, { one: "# day", other: "# days" })}: ${perDay}.`;
   return (
     <div
       className={clsx("inline-flex items-end", large ? "gap-2.5" : "gap-2", className)}
@@ -79,11 +86,12 @@ export function SevenLights({ days, size = "sm", className }: Props) {
       {days.map((n, i) => {
         const l = level(n, reference);
         const isToday = i === days.length - 1;
+        const day = labels[i];
         return (
           <span
-            key={labels[i]}
+            key={day}
             className={clsx("grid justify-items-center", large ? "gap-2" : "gap-1.5")}
-            title={`${labels[i]}: ${n} reviewed`}
+            title={t`${day}: ${n} reviewed`}
           >
             {/* The glass is always drawn; the light inside it rises with the day. */}
             <i
@@ -112,7 +120,7 @@ export function SevenLights({ days, size = "sm", className }: Props) {
                 isToday ? "font-medium text-text-2" : "text-faint",
               )}
             >
-              {labels[i]?.[0]}
+              {day?.[0]}
             </span>
           </span>
         );

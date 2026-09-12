@@ -12,7 +12,8 @@
     "deploy:check": "wrangler deploy --dry-run",
     "typecheck": "astro check && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "i18n:extract": "lingui extract --clean"
   },
   "dependencies": {
     "@lingui/core": "6.7.0",

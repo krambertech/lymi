@@ -1,3 +1,4 @@
+import type { SettingsPatch } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
@@ -18,14 +19,17 @@ export async function getSettings({ db, userId }: ServiceContext) {
   return created;
 }
 
-export async function updateSettings(
-  ctx: ServiceContext,
-  patch: { meaningLanguage?: string | undefined },
-) {
+/** The app language also sets the meaning language; nothing else writes it. ADR 0013. */
+export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) {
   await getSettings(ctx);
+  if (patch.appLanguage === undefined) return getSettings(ctx);
   await ctx.db
     .update(schema.userSettings)
-    .set({ ...patch, updatedAt: new Date() })
+    .set({
+      appLanguage: patch.appLanguage,
+      meaningLanguage: patch.appLanguage,
+      updatedAt: new Date(),
+    })
     .where(eq(schema.userSettings.userId, ctx.userId));
   return getSettings(ctx);
 }

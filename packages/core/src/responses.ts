@@ -1,5 +1,13 @@
 import { z } from "zod";
-import { Actor, Direction, Directions, FieldSource, ReminderTime, Scope } from "./types";
+import {
+  Actor,
+  AppLanguage,
+  Direction,
+  Directions,
+  FieldSource,
+  ReminderTime,
+  Scope,
+} from "./types";
 
 /**
  * Response shapes, as the API sends them. The Drizzle row types are the source of truth for
@@ -181,7 +189,13 @@ export const GradeOut = z
 export const SettingsOut = z
   .object({
     userId: z.string(),
-    meaningLanguage: z.string().meta({ description: "The language meanings are written in" }),
+    appLanguage: AppLanguage.nullable().meta({
+      description:
+        "The language of the interface and reminders. Null until the learner has chosen.",
+    }),
+    meaningLanguage: z
+      .string()
+      .meta({ description: "The language meanings are written in. Follows the app language." }),
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })

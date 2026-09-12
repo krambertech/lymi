@@ -10,6 +10,7 @@ interface ReminderCandidate {
   reminder_time: string;
   timezone: string;
   last_sent_local_date: string | null;
+  app_language: string | null;
   due_count: number;
 }
 
@@ -87,7 +88,7 @@ async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindi
   if (!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.VAPID_SUBJECT) {
     throw new Error("VAPID secrets are not configured");
   }
-  const copy = await reminderCopy(due);
+  const copy = await reminderCopy(due, candidate.app_language ?? "en");
   const navigate = new URL("/review", env.PRODUCT_URL).toString();
   const icon = new URL("/icons/icon-192.png", env.PRODUCT_URL).toString();
   const payload = JSON.stringify({
@@ -134,6 +135,7 @@ export async function dispatchReviewReminders(
   const { results } = await env.DB.prepare(
     `SELECT ps.id, ps.endpoint, ps.p256dh, ps.auth, ps.reminder_time, ps.timezone,
        ps.last_sent_local_date,
+       us.app_language,
        (SELECT count(DISTINCT c.id)
           FROM card_states s
           JOIN cards c ON c.id = s.card_id
@@ -144,7 +146,8 @@ export async function dispatchReviewReminders(
            AND d.archived_at IS NULL
            AND (coalesce(c.directions, d.directions) = 'both'
                 OR s.direction = coalesce(c.directions, d.directions))) AS due_count
-       FROM push_subscriptions ps`,
+       FROM push_subscriptions ps
+       LEFT JOIN user_settings us ON us.user_id = ps.user_id`,
   )
     .bind(now.getTime())
     .all<ReminderCandidate>();

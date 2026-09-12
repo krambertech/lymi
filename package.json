@@ -5,7 +5,7 @@
   "description": "Vocabulary app with a storm lantern.",
   "packageManager": "pnpm@10.16.1",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.19"
   },
   "scripts": {
     "dev": "pnpm --parallel --stream --filter @lymi/site --filter @lymi/web dev",
@@ -26,13 +26,15 @@
     "test:e2e:ui": "playwright test --ui",
     "check": "biome check .",
     "check:migrations": "pnpm --filter @lymi/web db:check && node scripts/check-migrations.mjs && node scripts/check-schema-drift.mjs",
-    "verify": "pnpm check && pnpm check:migrations && pnpm build && pnpm check:boundaries && pnpm typecheck && pnpm test",
+    "verify": "pnpm check && pnpm i18n:check && pnpm check:migrations && pnpm build && pnpm check:boundaries && pnpm typecheck && pnpm test",
     "check:boundaries": "node scripts/check-deployment-boundaries.mjs",
     "fix": "biome check --write .",
     "db:generate": "pnpm --filter @lymi/web db:generate",
     "db:migrate": "pnpm --filter @lymi/web db:migrate",
     "db:migrate:prod": "pnpm --filter @lymi/web db:migrate:prod",
-    "icons": "sh scripts/icons.sh"
+    "icons": "sh scripts/icons.sh",
+    "i18n:extract": "pnpm -r --filter @lymi/web --filter @lymi/site i18n:extract",
+    "i18n:check": "pnpm i18n:extract && git diff --exit-code --stat -- 'apps/*/src/locales/*.po'"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",

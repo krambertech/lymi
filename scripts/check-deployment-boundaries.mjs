@@ -43,6 +43,18 @@ for (const path of filesBelow(productDist)) {
   }
 }
 
+// A Lingui macro that Babel did not compile away ships its runtime stub, which throws on the
+// first render. It happened once with TanStack's `?tsr-split` route modules.
+const macroRuntime = "outside the context of compilation";
+for (const dist of [productDist, siteDist]) {
+  for (const path of filesBelow(dist)) {
+    if (!/\.js$/.test(path) || statSync(path).size > 10_000_000) continue;
+    if (readFileSync(path, "utf8").includes(macroRuntime)) {
+      throw new Error(`An uncompiled Lingui macro reached the build: ${relativeTo(dist, path)}`);
+    }
+  }
+}
+
 process.stdout.write(
-  "Deployment boundary check passed: site has no PWA assets; product has no public pages.\n",
+  "Deployment boundary check passed: site has no PWA assets; product has no public pages; no uncompiled Lingui macro.\n",
 );

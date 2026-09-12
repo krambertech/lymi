@@ -1,7 +1,10 @@
+import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions } from "@lymi/core";
 import { clsx } from "clsx";
 import { useId } from "react";
-import { Combobox } from "./Combobox";
+import { Combobox, type ComboboxOption } from "./Combobox";
 import { Field } from "./Field";
 import { Segmented } from "./Segmented";
 
@@ -52,26 +55,36 @@ const TAGS = [
   "zh",
 ];
 
-let names: Intl.DisplayNames | null | undefined;
+/** One display-name lookup per interface language; the locale can change while the app runs. */
+const names = new Map<string, Intl.DisplayNames | null>();
 /** "it" reads as Italian. Falls back to the tag where the browser has no name for it. */
-export function languageName(tag: string): string {
-  if (names === undefined) {
+export function languageName(tag: string, locale: string = globalI18n.locale): string {
+  if (!names.has(locale)) {
     try {
-      names = new Intl.DisplayNames(["en"], { type: "language" });
+      names.set(locale, new Intl.DisplayNames([locale], { type: "language" }));
     } catch {
-      names = null;
+      names.set(locale, null);
     }
   }
   try {
-    return names?.of(tag) ?? tag;
+    return names.get(locale)?.of(tag) ?? tag;
   } catch {
     return tag;
   }
 }
 
-const OPTIONS = TAGS.map((tag) => ({ value: tag, label: languageName(tag), hint: tag })).sort(
-  (a, b) => a.label.localeCompare(b.label),
-);
+const optionLists = new Map<string, ComboboxOption[]>();
+/** The list in the interface language, sorted the way that language sorts. */
+function optionsFor(locale: string): ComboboxOption[] {
+  let list = optionLists.get(locale);
+  if (!list) {
+    list = TAGS.map((tag) => ({ value: tag, label: languageName(tag, locale), hint: tag })).sort(
+      (a, b) => a.label.localeCompare(b.label, locale),
+    );
+    optionLists.set(locale, list);
+  }
+  return list;
+}
 
 /** Loose BCP 47, the same shape the API accepts. */
 const TAG_RE = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/;
@@ -90,29 +103,29 @@ interface LanguageProps {
  * is what tells Portuguese from Brazilian Portuguese and it is what the API stores. A tag
  * the list has never heard of is still reachable — type it and it becomes the last row.
  */
-export function LanguageField({
-  value,
-  onChange,
-  label = "Language",
-  hint = "The language the words are in. It fills in on every new card.",
-  error,
-}: LanguageProps) {
+export function LanguageField({ value, onChange, label, hint, error }: LanguageProps) {
+  const { t, i18n } = useLingui();
+  const base = optionsFor(i18n.locale);
   // A tag chosen by hand belongs in the list too, so it reads by name and shows as selected.
   const options =
     value && !TAGS.includes(value)
-      ? [...OPTIONS, { value, label: languageName(value), hint: value }]
-      : OPTIONS;
+      ? [...base, { value, label: languageName(value, i18n.locale), hint: value }]
+      : base;
   return (
-    <Field label={label} hint={hint} error={error}>
+    <Field
+      label={label ?? t`Language`}
+      hint={hint ?? t`The language the words are in. It fills in on every new card.`}
+      error={error}
+    >
       <Combobox
         value={value}
         onChange={onChange}
         options={options}
-        clearLabel="No language"
-        searchLabel="Search languages"
+        clearLabel={t`No language`}
+        searchLabel={t`Search languages`}
         accept={(query) => (TAG_RE.test(query) ? query : null)}
-        acceptLabel={(tag) => `Use “${tag}” as the tag`}
-        emptyLabel="No language by that name. Type its tag to use it anyway."
+        acceptLabel={(tag) => t`Use “${tag}” as the tag`}
+        emptyLabel={t`No language by that name. Type its tag to use it anyway.`}
       />
     </Field>
   );
@@ -120,42 +133,41 @@ export function LanguageField({
 
 interface DirectionOption {
   value: Directions;
-  label: string;
-  short: string;
-  blurb: string;
+  label: MessageDescriptor;
+  short: MessageDescriptor;
+  blurb: MessageDescriptor;
 }
 
 export const DIRECTIONS: DirectionOption[] = [
   {
     value: "recognition",
-    label: "Recognition",
-    short: "Recognition",
-    blurb: "See the word, recall what it means.",
+    label: msg`Recognition`,
+    short: msg`Recognition`,
+    blurb: msg`See the word, recall what it means.`,
   },
   {
     value: "production",
-    label: "Production",
-    short: "Production",
-    blurb: "See the meaning, recall the word.",
+    label: msg`Production`,
+    short: msg`Production`,
+    blurb: msg`See the meaning, recall the word.`,
   },
-  { value: "both", label: "Both ways", short: "Both", blurb: "Every card is asked twice." },
+  {
+    value: "both",
+    label: msg`Both ways`,
+    short: msg`Both`,
+    blurb: msg`Every card is asked twice.`,
+  },
 ];
 
 export function directionLabel(d: Directions): string {
-  return DIRECTIONS.find((o) => o.value === d)?.label ?? d;
+  const option = DIRECTIONS.find((o) => o.value === d);
+  return option ? globalI18n._(option.label) : d;
 }
 
 /** The example that makes each choice concrete. A real card from the deck beats a made-up one. */
 export interface DirectionExample {
   term: string;
   meaning: string | null;
-}
-
-function shown(o: DirectionOption, example: DirectionExample | undefined): string {
-  if (!example?.meaning) return o.blurb;
-  if (o.value === "recognition") return `See ${example.term} → recall “${example.meaning}”`;
-  if (o.value === "production") return `See “${example.meaning}” → recall ${example.term}`;
-  return "Both of the above, one card at a time.";
 }
 
 interface DirectionProps {
@@ -173,10 +185,19 @@ interface DirectionProps {
  * carried by the edge and the dot: amber stays on the flame and the one primary action.
  */
 export function DirectionField({ value, onChange, example, total, disabled }: DirectionProps) {
+  const { t, i18n } = useLingui();
   const name = useId();
+  const shown = (o: DirectionOption): string => {
+    if (!example?.meaning) return i18n._(o.blurb);
+    if (o.value === "recognition") return t`See ${example.term} → recall “${example.meaning}”`;
+    if (o.value === "production") return t`See “${example.meaning}” → recall ${example.term}`;
+    return t`Both of the above, one card at a time.`;
+  };
   return (
     <fieldset className="grid gap-2" disabled={disabled}>
-      <legend className="sr-only">How cards are asked</legend>
+      <legend className="sr-only">
+        <Trans>How cards are asked</Trans>
+      </legend>
       {DIRECTIONS.map((o) => {
         const on = o.value === value;
         return (
@@ -213,16 +234,21 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
               />
             </span>
             <span className="grid gap-0.5">
-              <span className="text-base font-medium text-text">{o.label}</span>
-              <span className="text-sm text-text-2">{shown(o, example)}</span>
+              <span className="text-base font-medium text-text">{i18n._(o.label)}</span>
+              <span className="text-sm text-text-2">{shown(o)}</span>
             </span>
           </label>
         );
       })}
       <p className="pt-1 text-sm text-muted">
-        {total
-          ? "Adding a way asks every card in the deck that way, starting now. Taking one away keeps its progress; it just stops being asked."
-          : "You can change this later. It applies to every card in the deck."}
+        {total ? (
+          <Trans>
+            Adding a way asks every card in the deck that way, starting now. Taking one away keeps
+            its progress; it just stops being asked.
+          </Trans>
+        ) : (
+          <Trans>You can change this later. It applies to every card in the deck.</Trans>
+        )}
       </p>
     </fieldset>
   );
@@ -239,17 +265,20 @@ export function DirectionCompact({
   value: Directions;
   onChange: (value: Directions) => void;
 }) {
+  const { t, i18n } = useLingui();
   const current = DIRECTIONS.find((o) => o.value === value);
   return (
     <div className="grid gap-1.5">
-      <span className="text-sm font-medium text-text-2">How you are asked</span>
+      <span className="text-sm font-medium text-text-2">
+        <Trans>How you are asked</Trans>
+      </span>
       <Segmented
         value={value}
         onChange={onChange}
-        label="How you are asked"
-        options={DIRECTIONS.map((o) => ({ value: o.value, label: o.short }))}
+        label={t`How you are asked`}
+        options={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.short) }))}
       />
-      <p className="text-sm text-muted">{current?.blurb}</p>
+      <p className="text-sm text-muted">{current && i18n._(current.blurb)}</p>
     </div>
   );
 }

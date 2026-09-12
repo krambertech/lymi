@@ -12,7 +12,7 @@ export default defineConfig({
     plugins: [
       tailwindcss(),
       lingui(),
-      babel({ include: [/\/src\/.*\.tsx?$/], presets: [linguiTransformerBabelPreset()] }),
+      babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
     ],
   },
 });

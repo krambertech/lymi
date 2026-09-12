@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { DeckInput, type Directions } from "@lymi/core";
 import type { Deck } from "@lymi/core/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -21,6 +22,7 @@ interface Props {
  * empty deck, which is where the words go next.
  */
 export function NewDeckSheet({ open, onOpenChange }: Props) {
+  const { t } = useLingui();
   const qc = useQueryClient();
   const navigate = useNavigate();
   const create = useMutation({
@@ -32,7 +34,7 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
     },
   });
   return (
-    <Sheet open={open} onOpenChange={onOpenChange} title="New deck">
+    <Sheet open={open} onOpenChange={onOpenChange} title={t`New deck`}>
       <NewDeckForm
         key={open ? "open" : "closed"}
         pending={create.isPending}
@@ -55,6 +57,7 @@ export interface NewDeckFormProps {
 
 /** The sheet's body, on its own so it can be shown without the sheet around it. */
 export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: NewDeckFormProps) {
+  const { t } = useLingui();
   const [name, setName] = useState("");
   const [language, setLanguage] = useState<string | null>(null);
   const [directions, setDirections] = useState<Directions>("recognition");
@@ -72,7 +75,17 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
         // The same schema the route parses with, so the field cannot disagree with the API.
         const parsed = DeckInput.safeParse({ name, defaultLanguage: language, directions });
         if (!parsed.success) {
-          setInvalid(fieldErrors(parsed.error));
+          // The sentences mirror the schema's: an empty name fails the minimum, a typed one the
+          // maximum; a tag the picker accepted can only be too long.
+          setInvalid(
+            fieldErrors(parsed.error, {
+              name: name.trim() ? t`Keep the name under 80 characters.` : t`Give the deck a name.`,
+              defaultLanguage:
+                language && language.length > 12
+                  ? t`That is too long for a language tag.`
+                  : t`Use a language tag like ca, pt-BR or zh-Hant.`,
+            }),
+          );
           focusFirstInvalid(formRef.current);
           return;
         }
@@ -80,7 +93,7 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
         void onSubmit(parsed.data);
       }}
     >
-      <Field label="Name" error={invalid.name}>
+      <Field label={t`Name`} error={invalid.name}>
         <Input
           autoFocus={!st}
           value={name}
@@ -88,7 +101,7 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
             setName(e.target.value);
             setInvalid(({ name: _, ...rest }) => rest);
           }}
-          placeholder="Lesson 15"
+          placeholder={t`Lesson 15`}
           autoComplete="off"
           enterKeyHint="done"
           maxLength={80}
@@ -108,10 +121,10 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
           {error}
         </p>
         <Button variant="ghost" onClick={onCancel}>
-          Cancel
+          <Trans>Cancel</Trans>
         </Button>
         <Button variant="primary" type="submit" loading={pending}>
-          Create deck
+          <Trans>Create deck</Trans>
         </Button>
       </div>
     </form>

@@ -1,6 +1,6 @@
 # Lymi speaks Ukrainian and Russian in the app and on the site
 
-**Status:** Decided 12 September 2026, not started. Scope is the product app, push reminders, and the site's landing and Join pages; docs stay English. The decisions are [ADR 0012](../adr/0012-interface-text-is-english-source-translated-by-lingui.md) and [ADR 0013](../adr/0013-app-language-is-one-setting-that-meaning-language-follows.md); the product case is the localization section of [Market differentiation and go-to-market](../proposals/market-differentiation-and-go-to-market.md#localization-as-a-differentiation-and-distribution-wedge).
+**Status:** Decided 12 September 2026. Phase 1 built the same day on `kateryna/localization-plumbing`; phases 2 and 3 not started. Scope is the product app, push reminders, and the site's landing and Join pages; docs stay English. The decisions are [ADR 0012](../adr/0012-interface-text-is-english-source-translated-by-lingui.md) and [ADR 0013](../adr/0013-app-language-is-one-setting-that-meaning-language-follows.md); the product case is the localization section of [Market differentiation and go-to-market](../proposals/market-differentiation-and-go-to-market.md#localization-as-a-differentiation-and-distribution-wedge).
 
 ## Done when
 

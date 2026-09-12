@@ -1,5 +1,6 @@
 import type { Scope } from "@lymi/core";
 import {
+  AppLanguage,
   CardInput,
   CardPatch,
   CardSearchInput,
@@ -332,7 +333,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Change settings",
       description:
-        "Change the language meanings are written in. Cards already written are not translated. Needs write.",
+        "Change the app language, which also sets the language meanings are written in. Cards already written are not translated. Needs write.",
       inputSchema: SettingsPatch,
       outputSchema: SettingsOut,
       annotations: { ...write, idempotentHint: true },
@@ -519,11 +520,16 @@ function deckOut(deck: Deck): DeckOut {
 }
 
 const SettingsOut = z.object({
-  meaningLanguage: z.string().describe("The language meanings are written in"),
+  appLanguage: AppLanguage.nullable().describe(
+    "The language of the interface and reminders. Null until the learner has chosen.",
+  ),
+  meaningLanguage: z
+    .string()
+    .describe("The language meanings are written in. Follows the app language."),
 });
 
 function settingsOut(settings: Awaited<ReturnType<typeof getSettings>>) {
-  return { meaningLanguage: settings.meaningLanguage };
+  return { appLanguage: settings.appLanguage, meaningLanguage: settings.meaningLanguage };
 }
 
 const DeckSummaryOut = z.object({

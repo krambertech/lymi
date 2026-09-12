@@ -132,6 +132,7 @@ describe("Lymi MCP server", () => {
     ]);
     services.getSettings.mockResolvedValue({
       userId: "user-1",
+      appLanguage: "uk",
       meaningLanguage: "uk",
       createdAt: now,
       updatedAt: now,
@@ -205,7 +206,7 @@ describe("Lymi MCP server", () => {
       ["update_deck", { deckId: "deck-1", name: "Italiano" }],
       ["archive_deck", { deckId: "deck-1" }],
       ["restore_deck", { deckId: "deck-1" }],
-      ["update_settings", { meaningLanguage: "uk" }],
+      ["update_settings", { appLanguage: "uk" }],
     ] as const) {
       const res = await client.callTool({ name, arguments: args });
       expect(res.isError, name).toBe(true);

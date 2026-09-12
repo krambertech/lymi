@@ -1,4 +1,6 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
+import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
+import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
@@ -24,6 +26,10 @@ export default defineConfig({
       generatedRouteTree: "src/client/routeTree.gen.ts",
     }),
     react(),
+    lingui(),
+    // Only Lymi source carries Lingui macros; keep Babel off dependencies and the test runner.
+    // The query suffix matters: TanStack's split route modules end in `?tsr-split=component`.
+    babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
     tailwindcss(),
     cloudflare(
       isE2E

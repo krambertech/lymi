@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -18,6 +19,7 @@ export function CopyField({
   label: string;
   className?: string | undefined;
 }) {
+  const { t } = useLingui();
   const [copied, setCopied] = useState(false);
   const field = useRef<HTMLOutputElement>(null);
 
@@ -51,7 +53,7 @@ export function CopyField({
       </output>
       <Button variant={copied ? "secondary" : "primary"} className="shrink-0" onClick={copy}>
         {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
-        {copied ? "Copied" : "Copy"}
+        {copied ? t`Copied` : t`Copy`}
       </Button>
     </div>
   );

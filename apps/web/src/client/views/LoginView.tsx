@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { type AppIdentity, AppMark } from "../components/AppMark";
 import { AuthFrame } from "../components/AuthFrame";
@@ -22,6 +23,7 @@ export interface LoginProps {
 
 /** The front door. Authentication stays focused; requesting an invitation has its own route. */
 export function LoginView({ onGoogle, busy, app, error, blocked = false, children }: LoginProps) {
+  const appName = app?.name;
   return (
     <AuthFrame footer={children} homeHref={publicSiteUrl()}>
       <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">
@@ -29,17 +31,19 @@ export function LoginView({ onGoogle, busy, app, error, blocked = false, childre
           <div className="flex flex-col items-center text-center">
             <AppMark app={app} className="size-12" />
             <h1 className="mt-4 text-2xl font-medium tracking-[-0.02em] text-text">
-              Continue to {app.name}
+              <Trans>Continue to {appName}</Trans>
             </h1>
             <p className="mt-2 max-w-[36ch] text-md text-text-2">
-              Sign in before choosing what it may do.
+              <Trans>Sign in before choosing what it may do.</Trans>
             </p>
           </div>
         ) : (
           <div className="text-center">
-            <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">Sign in to Lymi</h1>
+            <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">
+              <Trans>Sign in to Lymi</Trans>
+            </h1>
             <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
-              Use the Google account that received your invitation.
+              <Trans>Use the Google account that received your invitation.</Trans>
             </p>
           </div>
         )}
@@ -61,15 +65,19 @@ export function LoginView({ onGoogle, busy, app, error, blocked = false, childre
           onClick={onGoogle}
           className="mt-7 w-full"
         >
-          {blocked ? "Try another Google account" : "Continue with Google"}
+          {blocked ? (
+            <Trans>Try another Google account</Trans>
+          ) : (
+            <Trans>Continue with Google</Trans>
+          )}
         </Button>
         <p className="mt-6 text-center text-sm text-muted">
-          {blocked ? "Still need an invitation?" : "Need an invitation?"}{" "}
+          {blocked ? <Trans>Still need an invitation?</Trans> : <Trans>Need an invitation?</Trans>}{" "}
           <a
             href={publicSiteUrl("/join")}
             className="rounded-sm font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
           >
-            Request an invitation
+            <Trans>Request an invitation</Trans>
           </a>
         </p>
       </section>

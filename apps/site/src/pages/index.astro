@@ -23,5 +23,5 @@ const structuredData = {
     data-landing-structured-data="true"
     set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
   />
-  <LandingPage client:load />
+  <LandingPage client:load locale={Astro.currentLocale} />
 </BaseLayout>

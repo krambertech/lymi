@@ -7,6 +7,11 @@ export const meQuery = queryOptions({
   retry: false,
   staleTime: 5 * 60_000,
 });
+export const settingsQuery = queryOptions({
+  queryKey: ["settings"],
+  queryFn: api.settings,
+  staleTime: 5 * 60_000,
+});
 // Counts change with every review, so the persisted copy is only a placeholder until the refetch lands.
 export const decksQuery = queryOptions({
   queryKey: ["decks"],

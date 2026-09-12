@@ -54,7 +54,7 @@ export function Switch({
         <span
           aria-hidden="true"
           className={clsx(
-            "absolute left-[3px] top-[3px] size-5 rounded-full transition-transform duration-200 ease-out motion-reduce:transition-none",
+            "absolute start-[3px] top-[3px] size-5 rounded-full transition-transform duration-200 ease-out motion-reduce:transition-none",
             checked ? "translate-x-[18px] bg-amber-ink" : "edge bg-plate",
           )}
         />

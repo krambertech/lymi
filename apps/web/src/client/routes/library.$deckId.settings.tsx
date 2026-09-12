@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/library/$deckId/settings")({
 });
 
 function DeckSettings() {
+  const { t } = useLingui();
   const { deckId } = Route.useParams();
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ function DeckSettings() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["decks"] });
       qc.invalidateQueries({ queryKey: ["queue"] });
-      navigate({ to: "/library", search: { archived: deckId, name: deck?.name ?? "Deck" } });
+      navigate({ to: "/library", search: { archived: deckId, name: deck?.name ?? t`Deck` } });
     },
   });
 

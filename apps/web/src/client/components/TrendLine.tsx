@@ -160,7 +160,7 @@ export function TrendLine({
           `faint` because it is a value the reader has to be able to read. */}
       {targetShown && targetLabel && (
         <span
-          className="pointer-events-none absolute left-0 -translate-y-1/2 bg-plate pr-1.5 text-2xs text-muted tabular-nums"
+          className="pointer-events-none absolute start-0 -translate-y-1/2 bg-plate pe-1.5 text-2xs text-muted tabular-nums"
           style={{ top: `${(y(target) / H) * 100}%` }}
           aria-hidden="true"
         >

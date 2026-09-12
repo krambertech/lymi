@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { AlertCircle, Check } from "lucide-react";
 import type { ReactNode } from "react";
@@ -42,13 +43,25 @@ export function ConsentView({
   unusable,
   onDecide,
 }: ConsentProps) {
+  const { t } = useLingui();
   const deciding = busy != null;
+  const appName = app.name;
+  const claimed = app.claimed;
+  const never = [
+    t`Grade your reviews or change your progress`,
+    t`Make or read API keys`,
+    t`Sign in as you anywhere else`,
+  ];
   return (
     <div className="flex min-h-full flex-1 flex-col items-center justify-center gap-5 px-6 py-8 pt-safe pb-safe">
       <div className="grid w-full max-w-sm justify-items-center gap-4">
         <Connection app={app} state="asking" />
         <h1 className="max-w-[20ch] text-center text-2xl font-medium leading-tight">
-          {loading ? <Skeleton className="h-7 w-56" /> : <>Let {app.name} use your Lymi?</>}
+          {loading ? (
+            <Skeleton className="h-7 w-56" />
+          ) : (
+            <Trans>Let {appName} use your Lymi?</Trans>
+          )}
         </h1>
         {loading ? (
           <Skeleton className="h-6 w-40" />
@@ -57,13 +70,15 @@ export function ConsentView({
             <AppIdentityLine app={app} />
             {!app.recognised && (
               <p className="max-w-[32ch] text-center text-sm text-muted">
-                {app.claimed ? (
-                  <>
-                    It calls itself “{app.claimed}”. Lymi cannot check that. The address above is
-                    the part that is checked.
-                  </>
+                {claimed ? (
+                  <Trans>
+                    It calls itself “{claimed}”. Lymi cannot check that. The address above is the
+                    part that is checked.
+                  </Trans>
                 ) : (
-                  <>Lymi does not recognise this app. Check the address is one you meant to use.</>
+                  <Trans>
+                    Lymi does not recognise this app. Check the address is one you meant to use.
+                  </Trans>
                 )}
               </p>
             )}
@@ -76,12 +91,16 @@ export function ConsentView({
           <li className="flex items-start gap-3 py-1">
             <GrantDot on />
             <span className="grid flex-1 gap-0.5">
-              <span className="text-base font-medium text-text">See your decks and cards</span>
+              <span className="text-base font-medium text-text">
+                <Trans>See your decks and cards</Trans>
+              </span>
               <span className="text-sm text-muted">
-                List, search and read them. Any connector needs this.
+                <Trans>List, search and read them. Any connector needs this.</Trans>
               </span>
             </span>
-            <span className="mt-1 shrink-0 text-sm text-muted">Always</span>
+            <span className="mt-1 shrink-0 text-sm text-muted">
+              <Trans>Always</Trans>
+            </span>
           </li>
 
           {writeRequested && (
@@ -91,8 +110,8 @@ export function ConsentView({
                 onChange={onAllowWrite}
                 disabled={deciding}
                 leading={<GrantDot on={allowWrite} />}
-                label="Add, edit and archive cards"
-                description="What it adds lands at once, labelled, and you can undo any of it."
+                label={t`Add, edit and archive cards`}
+                description={t`What it adds lands at once, labelled, and you can undo any of it.`}
                 className="gap-3"
               />
             </li>
@@ -100,13 +119,11 @@ export function ConsentView({
         </ul>
 
         <div className="mt-4 border-t border-edge pt-4">
-          <p className="text-sm font-medium text-text-2">Never, whatever you choose</p>
+          <p className="text-sm font-medium text-text-2">
+            <Trans>Never, whatever you choose</Trans>
+          </p>
           <ul className="mt-1.5 grid gap-1">
-            {[
-              "Grade your reviews or change your progress",
-              "Make or read API keys",
-              "Sign in as you anywhere else",
-            ].map((what) => (
+            {never.map((what) => (
               <li key={what} className="flex items-start gap-2 text-sm text-muted">
                 <span
                   aria-hidden="true"
@@ -134,7 +151,7 @@ export function ConsentView({
             loading={busy === "deny"}
             onClick={() => onDecide(false)}
           >
-            Deny
+            <Trans>Deny</Trans>
           </Button>
           <Button
             variant="primary"
@@ -143,12 +160,14 @@ export function ConsentView({
             loading={busy === "allow"}
             onClick={() => onDecide(true)}
           >
-            Allow
+            <Trans>Allow</Trans>
           </Button>
         </div>
         {email && (
           <p className="text-center text-sm text-muted">
-            Granting as <span className="text-text-2">{email}</span>
+            <Trans>
+              Granting as <span className="text-text-2">{email}</span>
+            </Trans>
           </p>
         )}
       </div>

@@ -1,6 +1,7 @@
 import { oauthProviderClient } from "@better-auth/oauth-provider/client";
 import { createAuthClient } from "better-auth/react";
 import { safeProductReturnPath } from "../../shared/origins";
+import { clearStoredLanguage } from "./i18n";
 
 /**
  * The oauthProviderClient plugin does two things for the OAuth server: it adds the current
@@ -43,5 +44,6 @@ export function signInWithGoogle(returnTo?: string | null) {
 }
 
 export function signOut() {
+  clearStoredLanguage();
   return authClient.signOut();
 }

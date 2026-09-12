@@ -1,0 +1,1784 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-09-12 11:15+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#. placeholder {0}: decks.length
+#: src/client/views/LibraryView.tsx
+msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
+msgstr "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
+
+#. placeholder {0}: fsrs.reps
+#: src/client/views/WordView.tsx
+msgid "{0, plural, one {# review} other {# reviews}}"
+msgstr "{0, plural, one {# review} other {# reviews}}"
+
+#. placeholder {0}: fsrs.reps
+#. placeholder {1}: fsrs.lapses
+#: src/client/views/WordView.tsx
+msgid "{0, plural, one {# review} other {# reviews}}, {1, plural, one {# lapse} other {# lapses}}"
+msgstr "{0, plural, one {# review} other {# reviews}}, {1, plural, one {# lapse} other {# lapses}}"
+
+#. placeholder {0}: cards.total
+#: src/client/views/InsightsView.tsx
+msgid "{0, plural, one {card} other {cards}}"
+msgstr "{0, plural, one {card} other {cards}}"
+
+#. placeholder {0}: consistency.longestRun
+#: src/client/views/InsightsView.tsx
+msgid "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {Longest run # days. Unbroken stretches join up.}}"
+msgstr "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {Longest run # days. Unbroken stretches join up.}}"
+
+#. placeholder {0}: lastUsed(i18n, item.lastRequest)
+#. placeholder {1}: shortDate(i18n, item.createdAt)
+#: src/client/components/ApiKeysSection.tsx
+msgid "{0} · created {1}"
+msgstr "{0} · created {1}"
+
+#. placeholder {0}: c.lapses
+#. placeholder {1}: c.reviews
+#: src/client/views/InsightsView.tsx
+msgid "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
+msgstr "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
+
+#. placeholder {0}: outcome.existing.term
+#. placeholder {1}: outcome.deckName
+#: src/client/components/AddCardSheet.tsx
+msgid "{0} is already in {1}"
+msgstr "{0} is already in {1}"
+
+#. placeholder {0}: cards.known
+#: src/client/views/InsightsView.tsx
+msgid "{0} known"
+msgstr "{0} known"
+
+#. placeholder {0}: cards.learning
+#: src/client/views/InsightsView.tsx
+msgid "{0} learning"
+msgstr "{0} learning"
+
+#. placeholder {0}: cards.new
+#: src/client/views/InsightsView.tsx
+msgid "{0} new"
+msgstr "{0} new"
+
+#. placeholder {0}: cards.new
+#. placeholder {1}: cards.learning
+#. placeholder {2}: cards.known
+#: src/client/views/InsightsView.tsx
+msgid "{0} new, {1} learning, {2} known"
+msgstr "{0} new, {1} learning, {2} known"
+
+#. placeholder {0}: recall.passed
+#. placeholder {1}: recall.failed
+#: src/client/views/InsightsView.tsx
+msgid "{0} remembered, {1} forgotten."
+msgstr "{0} remembered, {1} forgotten."
+
+#: src/client/views/ConnectedView.tsx
+msgid "{appName} is connected"
+msgstr "{appName} is connected"
+
+#: src/client/views/ConnectedView.tsx
+msgid "{appName} was not connected"
+msgstr "{appName} was not connected"
+
+#: src/client/views/LibraryView.tsx
+msgid "{archivedCount, plural, one {# deck put away} other {# decks put away}}"
+msgstr "{archivedCount, plural, one {# deck put away} other {# decks put away}}"
+
+#: src/client/components/NewCardsRow.tsx
+msgid "{count, plural, one {# new} other {# new}}"
+msgstr "{count, plural, one {# new} other {# new}}"
+
+#: src/client/components/SevenLights.tsx
+msgid "{day} none"
+msgstr "{day} none"
+
+#: src/client/components/SevenLights.tsx
+msgid "{day}: {n} reviewed"
+msgstr "{day}: {n} reviewed"
+
+#: src/client/views/WordView.tsx
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr "{days, plural, one {# day} other {# days}}"
+
+#: src/client/views/WordView.tsx
+msgid "{days, plural, one {Due in # day} other {Due in # days}}"
+msgstr "{days, plural, one {Due in # day} other {Due in # days}}"
+
+#: src/client/views/InsightsView.tsx
+msgid "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
+msgstr "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
+
+#: src/client/views/InsightsView.tsx
+msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
+msgstr "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
+
+#: src/client/views/WordView.tsx
+msgid "{direction} · {when}, {then}"
+msgstr "{direction} · {when}, {then}"
+
+#: src/client/views/ReviewView.tsx
+msgid "{done} of {total}"
+msgstr "{done} of {total}"
+
+#: src/client/views/ReviewView.tsx
+msgid "{done} reviewed from {deckName}. The rest can wait a while."
+msgstr "{done} reviewed from {deckName}. The rest can wait a while."
+
+#: src/client/views/ReviewView.tsx
+msgid "{done} reviewed. The rest can wait a while."
+msgstr "{done} reviewed. The rest can wait a while."
+
+#: src/client/components/DeckCard.tsx
+msgid "{due, plural, one {# due today} other {# due today}}"
+msgstr "{due, plural, one {# due today} other {# due today}}"
+
+#: src/server/push-delivery.ts
+msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
+msgstr "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
+
+#: src/client/views/TodayView.tsx
+msgid "{due} due"
+msgstr "{due} due"
+
+#: src/client/views/InsightsView.tsx
+msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
+msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
+
+#: src/client/views/TodayView.tsx
+msgid "{first} and {second}"
+msgstr "{first} and {second}"
+
+#: src/client/views/InsightsView.tsx
+msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
+msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
+
+#: src/client/components/StateStripe.tsx
+msgid "{known} known, {learning} learning, {fresh} new"
+msgstr "{known} known, {learning} learning, {fresh} new"
+
+#: src/client/views/ReviewView.tsx
+msgid "{label}, next in {schedules}"
+msgstr "{label}, next in {schedules}"
+
+#: src/client/components/MonthBars.tsx
+msgid "{label}: {lit} of {days, plural, one {# day} other {# days}}"
+msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
+
+#: src/client/components/MonthBars.tsx
+msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
+msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
+
+#: src/client/views/WordView.tsx
+msgid "{list}, by {who}"
+msgstr "{list}, by {who}"
+
+#: src/client/views/WordView.tsx
+msgid "{months, plural, one {# month} other {# months}}"
+msgstr "{months, plural, one {# month} other {# months}}"
+
+#: src/client/views/WordView.tsx
+msgid "{months, plural, one {Due in # month} other {Due in # months}}"
+msgstr "{months, plural, one {Due in # month} other {Due in # months}}"
+
+#: src/client/views/TodayView.tsx
+msgid "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
+msgstr "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
+
+#: src/client/views/ReviewView.tsx
+msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
+msgstr "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
+
+#: src/client/views/ReviewView.tsx
+msgid "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
+msgstr "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "{n, plural, one {# review} other {# reviews}}"
+msgstr "{n, plural, one {# review} other {# reviews}}"
+
+#: src/client/views/TodayView.tsx
+msgid "{run, plural, one {# day in a row} other {# days in a row}}"
+msgstr "{run, plural, one {# day in a row} other {# days in a row}}"
+
+#: src/client/views/TodayView.tsx
+msgid "{total, plural, one {# card in your decks, all ahead of you.} other {# cards in your decks, all ahead of you.}}"
+msgstr "{total, plural, one {# card in your decks, all ahead of you.} other {# cards in your decks, all ahead of you.}}"
+
+#: src/client/components/DeckCard.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/YouView.tsx
+msgid "{total, plural, one {# card} other {# cards}}"
+msgstr "{total, plural, one {# card} other {# cards}}"
+
+#: src/client/views/YouView.tsx
+msgid "{unseen, plural, one {# new} other {# new}}"
+msgstr "{unseen, plural, one {# new} other {# new}}"
+
+#: src/client/views/WordView.tsx
+msgid "{when}, {then}"
+msgstr "{when}, {then}"
+
+#. placeholder {0}: consistency.days.length
+#: src/client/views/InsightsView.tsx
+msgid "/ {0, plural, one {# day} other {# days}}"
+msgstr "/ {0, plural, one {# day} other {# days}}"
+
+#: src/client/components/StateStripe.tsx
+msgid "<0>{fresh}</0> new"
+msgstr "<0>{fresh}</0> new"
+
+#: src/client/components/StateStripe.tsx
+msgid "<0>{known}</0> known"
+msgstr "<0>{known}</0> known"
+
+#: src/client/components/StateStripe.tsx
+msgid "<0>{learning}</0> learning"
+msgstr "<0>{learning}</0> learning"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "<0>{name}</0> is ready. Copy it now — it is not shown again."
+msgstr "<0>{name}</0> is ready. Copy it now — it is not shown again."
+
+#: src/client/views/InsightsView.tsx
+msgid "30 days"
+msgstr "30 days"
+
+#: src/client/views/InsightsView.tsx
+msgid "90 days"
+msgstr "90 days"
+
+#: src/client/views/WordView.tsx
+msgid "a connected app"
+msgstr "a connected app"
+
+#: src/client/views/WordView.tsx
+msgid "a day"
+msgstr "a day"
+
+#: src/server/push-delivery.ts
+msgid "A few words are ready"
+msgstr "A few words are ready"
+
+#: src/client/views/WordView.tsx
+msgid "a field"
+msgstr "a field"
+
+#: src/client/views/ReviewView.tsx
+msgid "A good pause"
+msgstr "A good pause"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "A note to yourself about what is in here."
+msgstr "A note to yourself about what is in here."
+
+#: src/client/views/WordView.tsx
+msgid "A sentence it lives in"
+msgstr "A sentence it lives in"
+
+#: src/client/components/AddCardSheet.tsx
+msgid "A word lands in a deck. Make the first one and this word goes in it."
+msgstr "A word lands in a deck. Make the first one and this word goes in it."
+
+#. placeholder {0}: i18n.number(recall, { style: "percent", maximumFractionDigits: 0 })
+#: src/client/components/StateStripe.tsx
+msgid "about {0} would come back today"
+msgstr "about {0} would come back today"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Access"
+msgstr "Access"
+
+#: src/client/views/YouView.tsx
+msgid "Account"
+msgstr "Account"
+
+#: src/client/routes/activity.tsx
+#: src/client/views/Shell.tsx
+#: src/client/views/TodayView.tsx
+#: src/client/views/YouView.tsx
+msgid "Activity"
+msgstr "Activity"
+
+#: src/client/components/AddCardSheet.tsx
+#: src/client/components/AddMenu.tsx
+msgid "Add"
+msgstr "Add"
+
+#: src/client/views/WordView.tsx
+msgid "Add a meaning"
+msgstr "Add a meaning"
+
+#: src/client/views/WordView.tsx
+msgid "Add a sentence it lives in"
+msgstr "Add a sentence it lives in"
+
+#: src/client/views/TodayView.tsx
+#: src/client/views/YouView.tsx
+msgid "Add a word"
+msgstr "Add a word"
+
+#: src/client/views/TodayView.tsx
+msgid "Add a word from your last lesson and the lantern comes on."
+msgstr "Add a word from your last lesson and the lantern comes on."
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Add a word or phrase"
+msgstr "Add a word or phrase"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Add Lymi to your Home Screen"
+msgstr "Add Lymi to your Home Screen"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Add the first word from your lesson. The lantern lights when a card is due."
+msgstr "Add the first word from your lesson. The lantern lights when a card is due."
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Add to {deckName}"
+msgstr "Add to {deckName}"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Add word"
+msgstr "Add word"
+
+#: src/client/views/ConsentView.tsx
+msgid "Add, edit and archive cards"
+msgstr "Add, edit and archive cards"
+
+#: src/client/views/WordView.tsx
+msgid "Added"
+msgstr "Added"
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Added “{added}”"
+msgstr "Added “{added}”"
+
+#: src/client/components/DeckFields.tsx
+msgid "Adding a way asks every card in the deck that way, starting now. Taking one away keeps its progress; it just stops being asked."
+msgstr "Adding a way asks every card in the deck that way, starting now. Taking one away keeps its progress; it just stops being asked."
+
+#. placeholder {0}: spanLabel(i18n, r.elapsedDays)
+#: src/client/views/WordView.tsx
+msgid "after {0}"
+msgstr "after {0}"
+
+#: src/client/views/InsightsView.tsx
+msgid "Ahead"
+msgstr "Ahead"
+
+#: src/client/components/Chip.tsx
+msgid "AI example"
+msgstr "AI example"
+
+#: src/client/components/Chip.tsx
+msgid "AI meaning"
+msgstr "AI meaning"
+
+#: src/client/components/Chip.tsx
+msgid "AI wrote this"
+msgstr "AI wrote this"
+
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/InsightsView.tsx
+msgid "All"
+msgstr "All"
+
+#: src/client/views/ConsentView.tsx
+msgid "Allow"
+msgstr "Allow"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Also adds, edits and archives them."
+msgstr "Also adds, edits and archives them."
+
+#: src/client/views/ConsentView.tsx
+msgid "Always"
+msgstr "Always"
+
+#: src/client/components/AppMark.tsx
+msgid "An app"
+msgstr "An app"
+
+#: src/client/components/Connection.tsx
+msgid "an app with no address"
+msgstr "an app with no address"
+
+#: src/client/views/ReviewView.tsx
+msgid "Answer: {back}"
+msgstr "Answer: {back}"
+
+#: src/client/views/WordView.tsx
+msgid "Anything to remember it by"
+msgstr "Anything to remember it by"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "API key for {name}"
+msgstr "API key for {name}"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "API keys"
+msgstr "API keys"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "App"
+msgstr "App"
+
+#: src/client/views/YouView.tsx
+msgid "Appearance"
+msgstr "Appearance"
+
+#: src/client/views/DeckSettingsView.tsx
+#: src/client/views/WordView.tsx
+msgid "Archive"
+msgstr "Archive"
+
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/DeckSettingsView.tsx
+msgid "Archive deck"
+msgstr "Archive deck"
+
+#: src/client/routes/archived.tsx
+#: src/client/views/LibraryView.tsx
+#: src/client/views/WordView.tsx
+#: src/client/views/YouView.tsx
+msgid "Archived"
+msgstr "Archived"
+
+#: src/client/routes/library.$deckId.tsx
+msgid "Archived “{archivedTerm}”"
+msgstr "Archived “{archivedTerm}”"
+
+#: src/client/routes/library.tsx
+msgid "Archived “{deckName}”"
+msgstr "Archived “{deckName}”"
+
+#. placeholder {0}: listOf( schedules.map((x) => directionLabel(x.st.direction).toLocaleLowerCase(i18n.locale), ), i18n.locale, )
+#: src/client/views/WordView.tsx
+msgid "asked by {0}"
+msgstr "asked by {0}"
+
+#: src/client/routes/review.tsx
+msgid "Back"
+msgstr "Back"
+
+#: src/client/views/WordView.tsx
+msgid "back within the day"
+msgstr "back within the day"
+
+#: src/client/components/DeckFields.tsx
+msgid "Both"
+msgstr "Both"
+
+#: src/client/components/DeckFields.tsx
+msgid "Both of the above, one card at a time."
+msgstr "Both of the above, one card at a time."
+
+#: src/client/components/DeckFields.tsx
+msgid "Both ways"
+msgstr "Both ways"
+
+#: src/client/views/WordView.tsx
+msgid "by {who}"
+msgstr "by {who}"
+
+#: src/client/views/WordView.tsx
+msgid "by {who} · meaning from the lesson"
+msgstr "by {who} · meaning from the lesson"
+
+#. placeholder {0}: app.claimed
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "calls itself “{0}”"
+msgstr "calls itself “{0}”"
+
+#: src/client/routes/login.tsx
+msgid "Can’t reach the sign-in service. Check your connection."
+msgstr "Can’t reach the sign-in service. Check your connection."
+
+#: src/client/components/AddCardSheet.tsx
+#: src/client/components/ApiKeysSection.tsx
+#: src/client/components/NewDeckSheet.tsx
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/client/routes/library.$deckId.tsx
+msgid "Card"
+msgstr "Card"
+
+#: src/client/routes/archived.tsx
+msgid "Cards and decks you put away. Restore undoes it. Nothing here is deleted."
+msgstr "Cards and decks you put away. Restore undoes it. Nothing here is deleted."
+
+#: src/client/views/ReviewView.tsx
+msgid "Check your connection, then try again."
+msgstr "Check your connection, then try again."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Choose 00, 15, 30, or 45 minutes."
+msgstr "Choose 00, 15, 30, or 45 minutes."
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Choose a deck for it to go in."
+msgstr "Choose a deck for it to go in."
+
+#: src/client/views/ReviewView.tsx
+msgid "Choose a recall grade"
+msgstr "Choose a recall grade"
+
+#: src/client/components/Combobox.tsx
+msgid "Choose one"
+msgstr "Choose one"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Claude Code on the laptop"
+msgstr "Claude Code on the laptop"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Clear"
+msgstr "Clear"
+
+#: src/client/components/NotificationsSection.tsx
+#: src/client/views/WordView.tsx
+msgid "Close"
+msgstr "Close"
+
+#: src/client/views/InsightsView.tsx
+msgid "Collection"
+msgstr "Collection"
+
+#: src/client/views/ReviewView.tsx
+msgid "Come back later, or add something new."
+msgstr "Come back later, or add something new."
+
+#: src/client/views/TodayView.tsx
+msgid "Coming up: {forecast}."
+msgstr "Coming up: {forecast}."
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "connected {connected}"
+msgstr "connected {connected}"
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Connected apps"
+msgstr "Connected apps"
+
+#: src/client/views/InsightsView.tsx
+msgid "Consistency"
+msgstr "Consistency"
+
+#: src/client/views/LoginView.tsx
+msgid "Continue to {appName}"
+msgstr "Continue to {appName}"
+
+#: src/client/views/LoginView.tsx
+msgid "Continue with Google"
+msgstr "Continue with Google"
+
+#: src/client/components/CopyField.tsx
+msgid "Copied"
+msgstr "Copied"
+
+#: src/client/components/CopyField.tsx
+msgid "Copy"
+msgstr "Copy"
+
+#: src/client/views/InsightsView.tsx
+msgid "Could not load your numbers"
+msgstr "Could not load your numbers"
+
+#: src/client/routes/library.$deckId.tsx
+msgid "Couldn’t save “{failedTerm}”. Check the connection."
+msgstr "Couldn’t save “{failedTerm}”. Check the connection."
+
+#: src/client/components/NewDeckSheet.tsx
+msgid "Create deck"
+msgstr "Create deck"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Create key"
+msgstr "Create key"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Daily reminder off for this device."
+msgstr "Daily reminder off for this device."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Daily reminder on for this device."
+msgstr "Daily reminder on for this device."
+
+#: src/client/views/YouView.tsx
+msgid "Dark"
+msgstr "Dark"
+
+#: src/client/components/MonthBars.tsx
+msgid "Days reviewed each month"
+msgstr "Days reviewed each month"
+
+#: src/client/routes/library.tsx
+msgid "deck"
+msgstr "deck"
+
+#: src/client/components/AddCardSheet.tsx
+#: src/client/routes/library.$deckId.settings.tsx
+#: src/client/routes/library.$deckId.tsx
+#: src/client/views/DeckSettingsView.tsx
+msgid "Deck"
+msgstr "Deck"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Deck name"
+msgstr "Deck name"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Deck options"
+msgstr "Deck options"
+
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/DeckSettingsView.tsx
+msgid "Deck settings"
+msgstr "Deck settings"
+
+#: src/client/views/Shell.tsx
+msgid "Decks"
+msgstr "Decks"
+
+#: src/client/views/ConsentView.tsx
+msgid "Deny"
+msgstr "Deny"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Description"
+msgstr "Description"
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Disconnect"
+msgstr "Disconnect"
+
+#: src/client/components/ApiKeysSection.tsx
+#: src/client/routes/review.tsx
+#: src/client/views/WordView.tsx
+msgid "Done"
+msgstr "Done"
+
+#: src/client/views/InsightsView.tsx
+msgid "due this week"
+msgstr "due this week"
+
+#: src/client/views/WordView.tsx
+msgid "Due today"
+msgstr "Due today"
+
+#: src/client/views/WordView.tsx
+msgid "Due tomorrow"
+msgstr "Due tomorrow"
+
+#: src/client/views/InsightsView.tsx
+msgid "Each block is a day. They join up when you keep going."
+msgstr "Each block is a day. They join up when you keep going."
+
+#: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
+msgid "Easy"
+msgstr "Easy"
+
+#: src/client/views/WordView.tsx
+msgid "Edit"
+msgstr "Edit"
+
+#. placeholder {0}: label.toLocaleLowerCase(i18n.locale)
+#: src/client/views/WordView.tsx
+msgid "Edit {0}"
+msgstr "Edit {0}"
+
+#: src/client/views/WordView.tsx
+msgid "Edited"
+msgstr "Edited"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Empty deck"
+msgstr "Empty deck"
+
+#: src/client/views/WordView.tsx
+msgid "Enriched"
+msgstr "Enriched"
+
+#: src/client/components/DeckFields.tsx
+msgid "Every card is asked twice."
+msgstr "Every card is asked twice."
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Every word in this deck is somewhere else in the schedule."
+msgstr "Every word in this deck is somewhere else in the schedule."
+
+#: src/client/routes/activity.tsx
+msgid "Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here."
+msgstr "Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here."
+
+#: src/client/views/WordView.tsx
+msgid "Example"
+msgstr "Example"
+
+#: src/client/components/Chip.tsx
+msgid "Example by you"
+msgstr "Example by you"
+
+#: src/client/components/Chip.tsx
+msgid "Example from lesson"
+msgstr "Example from lesson"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Export as CSV"
+msgstr "Export as CSV"
+
+#: src/client/views/WordView.tsx
+msgid "first time"
+msgstr "first time"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "For curl, scripts and Claude Code. Send the key in an <0>x-api-key</0> header; the routes are in the <1>API reference</1>. MCP clients such as Claude Desktop sign in instead, and appear under Connected apps."
+msgstr "For curl, scripts and Claude Code. Send the key in an <0>x-api-key</0> header; the routes are in the <1>API reference</1>. MCP clients such as Claude Desktop sign in instead, and appear under Connected apps."
+
+#: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
+msgid "Forgot"
+msgstr "Forgot"
+
+#: src/client/views/YouView.tsx
+msgid "Forgot, Hard, Good, Easy"
+msgstr "Forgot, Hard, Good, Easy"
+
+#. placeholder {0}: leeches.lapses
+#: src/client/views/InsightsView.tsx
+msgid "Forgotten {0}+ times"
+msgstr "Forgotten {0}+ times"
+
+#: src/client/components/Chip.tsx
+#: src/client/views/WordView.tsx
+msgid "From the lesson"
+msgstr "From the lesson"
+
+#: src/client/components/NewDeckSheet.tsx
+msgid "Give the deck a name."
+msgstr "Give the deck a name."
+
+#: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
+msgid "Good"
+msgstr "Good"
+
+#: src/client/views/ConsentView.tsx
+msgid "Grade your reviews or change your progress"
+msgstr "Grade your reviews or change your progress"
+
+#: src/client/views/ConsentView.tsx
+msgid "Granting as <0>{email}</0>"
+msgstr "Granting as <0>{email}</0>"
+
+#: src/client/views/ReviewView.tsx
+#: src/client/views/WordView.tsx
+msgid "Hard"
+msgstr "Hard"
+
+#: src/client/views/ConnectedView.tsx
+msgid "Head back to the app. You can close this tab."
+msgstr "Head back to the app. You can close this tab."
+
+#: src/client/views/WordView.tsx
+msgid "History"
+msgstr "History"
+
+#: src/client/components/DeckFields.tsx
+msgid "How cards are asked"
+msgstr "How cards are asked"
+
+#: src/client/views/InsightsView.tsx
+msgid "How far back the recall figure looks"
+msgstr "How far back the recall figure looks"
+
+#: src/client/views/WordView.tsx
+msgid "how it is asked"
+msgstr "how it is asked"
+
+#: src/client/components/DeckFields.tsx
+#: src/client/views/DeckSettingsView.tsx
+msgid "How you are asked"
+msgstr "How you are asked"
+
+#: src/client/components/Connection.tsx
+msgid "Identified by"
+msgstr "Identified by"
+
+#: src/client/views/InsightsView.tsx
+#: src/client/views/Shell.tsx
+#: src/client/views/YouView.tsx
+msgid "Insights"
+msgstr "Insights"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Install Lymi"
+msgstr "Install Lymi"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Install Lymi first. iPhone and iPad only allow web-app reminders after installation."
+msgstr "Install Lymi first. iPhone and iPad only allow web-app reminders after installation."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Installed on this device."
+msgstr "Installed on this device."
+
+#: src/client/views/ConsentView.tsx
+msgid "It calls itself “{claimed}”. Lymi cannot check that. The address above is the part that is checked."
+msgstr "It calls itself “{claimed}”. Lymi cannot check that. The address above is the part that is checked."
+
+#: src/client/views/ConnectedView.tsx
+msgid "It can read your cards, and add, edit and archive them."
+msgstr "It can read your cards, and add, edit and archive them."
+
+#: src/client/views/ConnectedView.tsx
+msgid "It can read your decks and cards. It cannot change anything."
+msgstr "It can read your decks and cards. It cannot change anything."
+
+#: src/client/components/ApiKeysSection.tsx
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Keep"
+msgstr "Keep"
+
+#: src/client/routes/review.tsx
+msgid "Keep going"
+msgstr "Keep going"
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Keep the meaning under 1000 characters."
+msgstr "Keep the meaning under 1000 characters."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Keep the name under 32 characters."
+msgstr "Keep the name under 32 characters."
+
+#: src/client/components/NewDeckSheet.tsx
+msgid "Keep the name under 80 characters."
+msgstr "Keep the name under 80 characters."
+
+#: src/client/views/InsightsView.tsx
+msgid "Keeps coming back"
+msgstr "Keeps coming back"
+
+#: src/client/views/YouView.tsx
+msgid "Keyboard"
+msgstr "Keyboard"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Keys never grade reviews."
+msgstr "Keys never grade reviews."
+
+#: src/client/components/Chip.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/WordView.tsx
+msgid "Known"
+msgstr "Known"
+
+#: src/client/views/WordView.tsx
+msgid "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
+msgstr "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
+
+#: src/client/components/DeckFields.tsx
+msgid "Language"
+msgstr "Language"
+
+#: src/client/components/Chip.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/WordView.tsx
+msgid "Learning"
+msgstr "Learning"
+
+#: src/client/views/WordView.tsx
+msgid "Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart."
+msgstr "Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart."
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Leave it empty and AI can suggest one later."
+msgstr "Leave it empty and AI can suggest one later."
+
+#: src/client/views/ReviewView.tsx
+msgid "Leave review"
+msgstr "Leave review"
+
+#: src/client/views/YouView.tsx
+msgid "Leave review or close a sheet"
+msgstr "Leave review or close a sheet"
+
+#: src/client/components/NewDeckSheet.tsx
+msgid "Lesson 15"
+msgstr "Lesson 15"
+
+#: src/client/views/ConsentView.tsx
+msgid "Let {appName} use your Lymi?"
+msgstr "Let {appName} use your Lymi?"
+
+#: src/client/components/PillNav.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/LibraryView.tsx
+#: src/client/views/Shell.tsx
+msgid "Library"
+msgstr "Library"
+
+#: src/client/views/YouView.tsx
+msgid "Light"
+msgstr "Light"
+
+#: src/client/views/ConsentView.tsx
+msgid "List, search and read them. Any connector needs this."
+msgstr "List, search and read them. Any connector needs this."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Lists and searches decks and cards."
+msgstr "Lists and searches decks and cards."
+
+#: src/client/views/WordView.tsx
+msgid "Lymi"
+msgstr "Lymi"
+
+#: src/client/views/ConsentView.tsx
+msgid "Lymi does not recognise this app. Check the address is one you meant to use."
+msgstr "Lymi does not recognise this app. Check the address is one you meant to use."
+
+#: src/client/components/AuthFrame.tsx
+msgid "Lymi home"
+msgstr "Lymi home"
+
+#: src/client/views/YouView.tsx
+msgid "Lymi website"
+msgstr "Lymi website"
+
+#: src/client/components/PillNav.tsx
+msgid "Main"
+msgstr "Main"
+
+#: src/client/views/TodayView.tsx
+msgid "Make a deck"
+msgstr "Make a deck"
+
+#: src/client/views/ConsentView.tsx
+msgid "Make or read API keys"
+msgstr "Make or read API keys"
+
+#: src/client/routes/consent.tsx
+msgid "Manage connected apps"
+msgstr "Manage connected apps"
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app renewing its access, so it is locked out within the hour and has to ask again."
+msgstr "MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app renewing its access, so it is locked out within the hour and has to ask again."
+
+#: src/client/components/AddCardSheet.tsx
+#: src/client/views/WordView.tsx
+msgid "Meaning"
+msgstr "Meaning"
+
+#: src/client/components/Chip.tsx
+msgid "Meaning by you"
+msgstr "Meaning by you"
+
+#: src/client/components/Chip.tsx
+msgid "Meaning from lesson"
+msgstr "Meaning from lesson"
+
+#: src/client/views/InsightsView.tsx
+msgid "Month by month"
+msgstr "Month by month"
+
+#. placeholder {0}: card.term
+#: src/client/views/WordView.tsx
+msgid "Move “{0}” to"
+msgstr "Move “{0}” to"
+
+#: src/client/views/WordView.tsx
+msgid "Move to…"
+msgstr "Move to…"
+
+#: src/client/views/WordView.tsx
+msgid "Moved"
+msgstr "Moved"
+
+#: src/client/components/ApiKeysSection.tsx
+#: src/client/components/NewDeckSheet.tsx
+#: src/client/views/DeckSettingsView.tsx
+msgid "Name"
+msgstr "Name"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Name the key, so you know which one to revoke later."
+msgstr "Name the key, so you know which one to revoke later."
+
+#: src/client/views/LoginView.tsx
+msgid "Need an invitation?"
+msgstr "Need an invitation?"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "never used"
+msgstr "never used"
+
+#: src/client/views/ConsentView.tsx
+msgid "Never, whatever you choose"
+msgstr "Never, whatever you choose"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "new"
+msgstr "new"
+
+#: src/client/components/Chip.tsx
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/WordView.tsx
+msgid "New"
+msgstr "New"
+
+#: src/client/components/AddCardSheet.tsx
+#: src/client/components/AddMenu.tsx
+#: src/client/components/NewDeckSheet.tsx
+#: src/client/views/LibraryView.tsx
+msgid "New deck"
+msgstr "New deck"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "New key"
+msgstr "New key"
+
+#: src/client/views/WordView.tsx
+msgid "New means it has not been asked yet. It joins the next review."
+msgstr "New means it has not been asked yet. It joins the next review."
+
+#: src/client/views/TodayView.tsx
+msgid "New since your last review"
+msgstr "New since your last review"
+
+#: src/client/components/AddMenu.tsx
+msgid "New word"
+msgstr "New word"
+
+#: src/client/components/DeckCard.tsx
+msgid "Next {next}"
+msgstr "Next {next}"
+
+#. placeholder {0}: spanLabel(i18n, r.scheduledDays)
+#: src/client/views/WordView.tsx
+msgid "next in {0}"
+msgstr "next in {0}"
+
+#: src/client/views/WordView.tsx
+msgid "Next word"
+msgstr "Next word"
+
+#: src/client/views/LibraryView.tsx
+msgid "No decks yet"
+msgstr "No decks yet"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "No keys yet. Make one when you want to reach Lymi from a script."
+msgstr "No keys yet. Make one when you want to reach Lymi from a script."
+
+#: src/client/components/DeckFields.tsx
+msgid "No language"
+msgstr "No language"
+
+#: src/client/components/DeckFields.tsx
+msgid "No language by that name. Type its tag to use it anyway."
+msgstr "No language by that name. Type its tag to use it anyway."
+
+#: src/client/views/DeckDetailView.tsx
+msgid "No lesson"
+msgstr "No lesson"
+
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/ReviewView.tsx
+msgid "No meaning yet"
+msgstr "No meaning yet"
+
+#: src/client/views/InsightsView.tsx
+msgid "No reviews yet. Each block here will be a day."
+msgstr "No reviews yet. Each block here will be a day."
+
+#: src/client/views/TodayView.tsx
+msgid "No streak yet"
+msgstr "No streak yet"
+
+#: src/client/views/WordView.tsx
+msgid "Not asked yet. It joins the next review."
+msgstr "Not asked yet. It joins the next review."
+
+#: src/client/views/ComingSoonView.tsx
+msgid "Not yet"
+msgstr "Not yet"
+
+#: src/client/views/WordView.tsx
+msgid "Notes"
+msgstr "Notes"
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Nothing connected."
+msgstr "Nothing connected."
+
+#: src/client/views/ReviewView.tsx
+#: src/client/views/TodayView.tsx
+msgid "Nothing due"
+msgstr "Nothing due"
+
+#: src/client/views/InsightsView.tsx
+msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
+msgstr "Nothing has come back for a second look yet, so there is nothing honest to report."
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Nothing here"
+msgstr "Nothing here"
+
+#: src/client/views/TodayView.tsx
+msgid "Nothing here yet"
+msgstr "Nothing here yet"
+
+#: src/client/components/DeckCard.tsx
+msgid "Nothing in it yet"
+msgstr "Nothing in it yet"
+
+#: src/client/components/Combobox.tsx
+msgid "Nothing matches"
+msgstr "Nothing matches"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Nothing matches “{q}”"
+msgstr "Nothing matches “{q}”"
+
+#: src/client/views/InsightsView.tsx
+msgid "Nothing to say yet"
+msgstr "Nothing to say yet"
+
+#: src/client/views/ConnectedView.tsx
+msgid "Nothing was shared. You can start again from {appName} whenever you like."
+msgstr "Nothing was shared. You can start again from {appName} whenever you like."
+
+#: src/client/views/WordView.tsx
+msgid "Nothing yet."
+msgstr "Nothing yet."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Notifications are blocked in your browser or device settings."
+msgstr "Notifications are blocked in your browser or device settings."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
+msgstr "Notifications are blocked. Allow them in your browser or device settings, then try again."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Notifications weren't enabled. You can try again when you're ready."
+msgstr "Notifications weren't enabled. You can try again when you're ready."
+
+#: src/client/views/LibraryView.tsx
+msgid "One per course works well, or one per topic. Words remember which lesson they came from."
+msgstr "One per course works well, or one per topic. Words remember which lesson they came from."
+
+#: src/server/push-delivery.ts
+msgid "One word is ready"
+msgstr "One word is ready"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Only when cards are due. This setting applies to this device."
+msgstr "Only when cards are due. This setting applies to this device."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Open Lymi from its new icon, then turn on the daily reminder."
+msgstr "Open Lymi from its new icon, then turn on the daily reminder."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Open Lymi in Safari and select Share."
+msgstr "Open Lymi in Safari and select Share."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Open Lymi like an app and allow review reminders."
+msgstr "Open Lymi like an app and allow review reminders."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Open your browser menu and select Install Lymi or Add to Dock. Installation is not offered by every desktop browser."
+msgstr "Open your browser menu and select Install Lymi or Add to Dock. Installation is not offered by every desktop browser."
+
+#: src/client/components/AddCardSheet.tsx
+#: src/client/views/DeckSettingsView.tsx
+msgid "Optional"
+msgstr "Optional"
+
+#: src/client/views/YouView.tsx
+msgid "Oversight"
+msgstr "Oversight"
+
+#. placeholder {0}: weekday(peak.date)
+#: src/client/views/InsightsView.tsx
+msgid "peak, {0}"
+msgstr "peak, {0}"
+
+#: src/client/views/ReviewView.tsx
+msgid "Play pronunciation"
+msgstr "Play pronunciation"
+
+#: src/client/views/WordView.tsx
+msgid "Previous word"
+msgstr "Previous word"
+
+#: src/client/views/ReviewView.tsx
+msgid "Produce"
+msgstr "Produce"
+
+#: src/client/components/DeckFields.tsx
+msgid "Production"
+msgstr "Production"
+
+#: src/client/views/ReviewView.tsx
+msgid "Production card for {front}"
+msgstr "Production card for {front}"
+
+#: src/client/routes/library.$deckId.tsx
+#: src/client/routes/review.tsx
+msgid "Pronunciation audio is unavailable. Try again in a moment."
+msgstr "Pronunciation audio is unavailable. Try again in a moment."
+
+#: src/client/components/ApiKeysSection.tsx
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Read"
+msgstr "Read"
+
+#: src/client/components/ApiKeysSection.tsx
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Read and write"
+msgstr "Read and write"
+
+#: src/client/views/InsightsView.tsx
+msgid "Recall"
+msgstr "Recall"
+
+#: src/client/views/InsightsView.tsx
+msgid "Recall by month: {series}. The schedule aims for 90%."
+msgstr "Recall by month: {series}. The schedule aims for 90%."
+
+#: src/client/views/InsightsView.tsx
+msgid "Recall by week: {series}. The schedule aims for 90%."
+msgstr "Recall by week: {series}. The schedule aims for 90%."
+
+#: src/client/views/ReviewView.tsx
+msgid "Recognise"
+msgstr "Recognise"
+
+#: src/client/components/Connection.tsx
+msgid "Recognised app at"
+msgstr "Recognised app at"
+
+#: src/client/components/DeckFields.tsx
+msgid "Recognition"
+msgstr "Recognition"
+
+#: src/client/views/ReviewView.tsx
+msgid "Recognition card for {front}"
+msgstr "Recognition card for {front}"
+
+#: src/client/components/Chip.tsx
+#: src/client/views/WordView.tsx
+msgid "Relearning"
+msgstr "Relearning"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Reminder set for {time}."
+msgstr "Reminder set for {time}."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Reminder time"
+msgstr "Reminder time"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Reminders"
+msgstr "Reminders"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Reminders are not configured yet."
+msgstr "Reminders are not configured yet."
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Rename"
+msgstr "Rename"
+
+#: src/client/views/ReviewView.tsx
+msgid "Replay pronunciation"
+msgstr "Replay pronunciation"
+
+#: src/client/views/LoginView.tsx
+msgid "Request an invitation"
+msgstr "Request an invitation"
+
+#: src/client/views/WordView.tsx
+msgid "Restored"
+msgstr "Restored"
+
+#: src/client/routes/library.$deckId.tsx
+msgid "Retry"
+msgstr "Retry"
+
+#: src/client/views/ReviewView.tsx
+msgid "Reveal the card when you have it"
+msgstr "Reveal the card when you have it"
+
+#: src/client/views/TodayView.tsx
+msgid "Review"
+msgstr "Review"
+
+#. placeholder {0}: deck.due
+#: src/client/views/DeckDetailView.tsx
+msgid "Review {0} due"
+msgstr "Review {0} due"
+
+#: src/client/views/ReviewView.tsx
+msgid "Review couldn’t load"
+msgstr "Review couldn’t load"
+
+#: src/client/components/RunStrip.tsx
+msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
+msgstr "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
+
+#: src/client/components/SevenLights.tsx
+msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}: {perDay}."
+msgstr "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}: {perDay}."
+
+#: src/client/views/InsightsView.tsx
+msgid "Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
+msgstr "Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Revoke"
+msgstr "Revoke"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Revoke instead"
+msgstr "Revoke instead"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Revoke key"
+msgstr "Revoke key"
+
+#: src/client/views/WordView.tsx
+msgid "Right now"
+msgstr "Right now"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Save reminder"
+msgstr "Save reminder"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Saved"
+msgstr "Saved"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Saving…"
+msgstr "Saving…"
+
+#. placeholder {0}: card.term
+#: src/client/views/WordView.tsx
+msgid "Say {0}"
+msgstr "Say {0}"
+
+#: src/client/components/AddCardSheet.tsx
+msgid "sbrigarsi"
+msgstr "sbrigarsi"
+
+#. placeholder {0}: spanLabel(i18n, fsrs.scheduled_days)
+#: src/client/views/WordView.tsx
+msgid "scheduled after {0}"
+msgstr "scheduled after {0}"
+
+#: src/client/components/Combobox.tsx
+#: src/client/views/Shell.tsx
+#: src/client/views/YouView.tsx
+msgid "Search"
+msgstr "Search"
+
+#: src/client/components/DeckFields.tsx
+msgid "Search languages"
+msgstr "Search languages"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Search looks at the word and its meaning."
+msgstr "Search looks at the word and its meaning."
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Search this deck"
+msgstr "Search this deck"
+
+#. placeholder {0}: example.meaning
+#. placeholder {1}: example.term
+#: src/client/components/DeckFields.tsx
+msgid "See “{0}” → recall {1}"
+msgstr "See “{0}” → recall {1}"
+
+#. placeholder {0}: example.term
+#. placeholder {1}: example.meaning
+#: src/client/components/DeckFields.tsx
+msgid "See {0} → recall “{1}”"
+msgstr "See {0} → recall “{1}”"
+
+#: src/client/components/DeckFields.tsx
+msgid "See the meaning, recall the word."
+msgstr "See the meaning, recall the word."
+
+#: src/client/components/DeckFields.tsx
+msgid "See the word, recall what it means."
+msgstr "See the word, recall what it means."
+
+#: src/client/views/ConsentView.tsx
+msgid "See your decks and cards"
+msgstr "See your decks and cards"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Select Add to Home Screen and keep Open as Web App on."
+msgstr "Select Add to Home Screen and keep Open as Web App on."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Send a daily review reminder"
+msgstr "Send a daily review reminder"
+
+#: src/client/views/ReviewView.tsx
+msgid "Session progress"
+msgstr "Session progress"
+
+#: src/client/views/Shell.tsx
+msgid "Settings and account"
+msgstr "Settings and account"
+
+#: src/client/views/DeckDetailView.tsx
+#: src/client/views/LibraryView.tsx
+msgid "Show"
+msgstr "Show"
+
+#: src/client/views/YouView.tsx
+msgid "Show the meaning, then Good"
+msgstr "Show the meaning, then Good"
+
+#: src/client/views/ConsentView.tsx
+msgid "Sign in as you anywhere else"
+msgstr "Sign in as you anywhere else"
+
+#: src/client/views/LoginView.tsx
+msgid "Sign in before choosing what it may do."
+msgstr "Sign in before choosing what it may do."
+
+#: src/client/routes/login.tsx
+msgid "Sign in did not finish. Try again. If you have not been invited, request an invitation."
+msgstr "Sign in did not finish. Try again. If you have not been invited, request an invitation."
+
+#: src/client/lib/api.ts
+msgid "Sign in required"
+msgstr "Sign in required"
+
+#: src/client/views/LoginView.tsx
+msgid "Sign in to Lymi"
+msgstr "Sign in to Lymi"
+
+#: src/client/views/YouView.tsx
+msgid "Sign out"
+msgstr "Sign out"
+
+#: src/client/routes/login.tsx
+msgid "Sign-in didn’t go through. Try again."
+msgstr "Sign-in didn’t go through. Try again."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "So you know which key to revoke later."
+msgstr "So you know which key to revoke later."
+
+#. placeholder {0}: res.status
+#: src/client/lib/api.ts
+msgid "Something went wrong ({0})"
+msgstr "Something went wrong ({0})"
+
+#: src/client/routes/consent.tsx
+msgid "Something went wrong. Try again from the app."
+msgstr "Something went wrong. Try again from the app."
+
+#. placeholder {0}: i18n.number(fsrs.difficulty, { minimumFractionDigits: 1, maximumFractionDigits: 1, })
+#: src/client/views/WordView.tsx
+msgid "stability · difficulty {0}"
+msgstr "stability · difficulty {0}"
+
+#: src/client/views/YouView.tsx
+msgid "Start review"
+msgstr "Start review"
+
+#: src/client/views/WordView.tsx
+msgid "still in its first steps"
+msgstr "still in its first steps"
+
+#: src/client/views/LoginView.tsx
+msgid "Still need an invitation?"
+msgstr "Still need an invitation?"
+
+#: src/client/views/YouView.tsx
+msgid "System"
+msgstr "System"
+
+#: src/client/views/YouView.tsx
+msgid "System follows your device. Dark is a warm room."
+msgstr "System follows your device. Dark is a warm room."
+
+#: src/client/views/ReviewView.tsx
+msgid "Tap card to reveal"
+msgstr "Tap card to reveal"
+
+#: src/client/views/ReviewView.tsx
+msgid "Tap the card when you have it"
+msgstr "Tap the card when you have it"
+
+#: src/client/routes/review.tsx
+msgid "That grade didn’t save. Try once more."
+msgstr "That grade didn’t save. Try once more."
+
+#: src/client/components/AddCardSheet.tsx
+msgid "That is longer than a card holds."
+msgstr "That is longer than a card holds."
+
+#: src/client/components/NewDeckSheet.tsx
+msgid "That is too long for a language tag."
+msgstr "That is too long for a language tag."
+
+#: src/client/routes/login.tsx
+msgid "That sign-in did not finish. Try again."
+msgstr "That sign-in did not finish. Try again."
+
+#: src/client/views/ReviewView.tsx
+msgid "That’s the lot"
+msgstr "That’s the lot"
+
+#: src/client/views/WordView.tsx
+msgid "the AI"
+msgstr "the AI"
+
+#: src/client/views/WordView.tsx
+msgid "the AI wrote {what}"
+msgstr "the AI wrote {what}"
+
+#: src/client/views/WordView.tsx
+msgid "The AI wrote this"
+msgstr "The AI wrote this"
+
+#: src/client/views/WordView.tsx
+msgid "the API"
+msgstr "the API"
+
+#: src/client/routes/consent.tsx
+msgid "The app did not say where to go next. Try again from the app."
+msgstr "The app did not say where to go next. Try again from the app."
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
+msgstr "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
+
+#: src/client/views/WordView.tsx
+msgid "the example"
+msgstr "the example"
+
+#: src/client/views/WordView.tsx
+msgid "the language"
+msgstr "the language"
+
+#: src/client/components/DeckFields.tsx
+msgid "The language the words are in. It fills in on every new card."
+msgstr "The language the words are in. It fills in on every new card."
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You."
+msgstr "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You."
+
+#: src/client/views/WordView.tsx
+msgid "the meaning"
+msgstr "the meaning"
+
+#: src/client/views/WordView.tsx
+msgid "the notes"
+msgstr "the notes"
+
+#: src/client/views/WordView.tsx
+msgid "the pronunciation"
+msgstr "the pronunciation"
+
+#: src/client/views/InsightsView.tsx
+msgid "The request did not come back. Nothing is lost; try again."
+msgstr "The request did not come back. Nothing is lost; try again."
+
+#: src/client/views/WordView.tsx
+msgid "the tags"
+msgstr "the tags"
+
+#: src/client/routes/library.$deckId.tsx
+#: src/client/views/WordView.tsx
+msgid "the word"
+msgstr "the word"
+
+#: src/client/views/YouView.tsx
+msgid "Theme"
+msgstr "Theme"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "This browser does not support review reminders. You can still install and use Lymi."
+msgstr "This browser does not support review reminders. You can still install and use Lymi."
+
+#: src/client/routes/login.tsx
+msgid "This Google account has not been invited. Request an invitation, or try another account."
+msgstr "This Google account has not been invited. Request an invitation, or try another account."
+
+#: src/client/routes/consent.tsx
+msgid "This link is missing the app that asked. Start again from the app."
+msgstr "This link is missing the app that asked. Start again from the app."
+
+#: src/client/views/WordView.tsx
+msgid "to another deck, by {who}"
+msgstr "to another deck, by {who}"
+
+#: src/client/components/AddCardSheet.tsx
+msgid "to hurry up"
+msgstr "to hurry up"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "today"
+msgstr "today"
+
+#: src/client/components/PillNav.tsx
+#: src/client/views/Shell.tsx
+msgid "Today"
+msgstr "Today"
+
+#: src/client/views/InsightsView.tsx
+#: src/client/views/ReviewView.tsx
+msgid "Try again"
+msgstr "Try again"
+
+#: src/client/views/LoginView.tsx
+msgid "Try another Google account"
+msgstr "Try another Google account"
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Type the word or phrase."
+msgstr "Type the word or phrase."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Unable to save the reminder. Check your connection and try again."
+msgstr "Unable to save the reminder. Check your connection and try again."
+
+#: src/client/routes/library.$deckId.tsx
+#: src/client/routes/library.tsx
+msgid "Undo"
+msgstr "Undo"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Untitled key"
+msgstr "Untitled key"
+
+#: src/client/components/DeckFields.tsx
+msgid "Use “{tag}” as the tag"
+msgstr "Use “{tag}” as the tag"
+
+#: src/client/components/Combobox.tsx
+msgid "Use “{v}”"
+msgstr "Use “{v}”"
+
+#: src/client/components/NewDeckSheet.tsx
+msgid "Use a language tag like ca, pt-BR or zh-Hant."
+msgstr "Use a language tag like ca, pt-BR or zh-Hant."
+
+#: src/client/views/LoginView.tsx
+msgid "Use the Google account that received your invitation."
+msgstr "Use the Google account that received your invitation."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "used {d} d ago"
+msgstr "used {d} d ago"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "used {date}"
+msgstr "used {date}"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "used {h} h ago"
+msgstr "used {h} h ago"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "used {m} min ago"
+msgstr "used {m} min ago"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "used just now"
+msgstr "used just now"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Uses {zone}."
+msgstr "Uses {zone}."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "View install steps"
+msgstr "View install steps"
+
+#. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
+#: src/client/views/InsightsView.tsx
+msgid "week of {0}"
+msgstr "week of {0}"
+
+#: src/client/views/ConsentView.tsx
+msgid "What it adds lands at once, labelled, and you can undo any of it."
+msgstr "What it adds lands at once, labelled, and you can undo any of it."
+
+#: src/client/views/WordView.tsx
+msgid "What it means"
+msgstr "What it means"
+
+#: src/client/views/WordView.tsx
+msgid "within the day"
+msgstr "within the day"
+
+#: src/client/views/WordView.tsx
+msgid "Word options"
+msgstr "Word options"
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Word or phrase"
+msgstr "Word or phrase"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Words from Marco’s Tuesday lessons."
+msgstr "Words from Marco’s Tuesday lessons."
+
+#: src/client/views/WordView.tsx
+msgid "would come back right now"
+msgstr "would come back right now"
+
+#: src/client/views/WordView.tsx
+msgid "you"
+msgstr "you"
+
+#: src/client/views/Shell.tsx
+#: src/client/views/TodayView.tsx
+msgid "You"
+msgstr "You"
+
+#: src/client/components/DeckFields.tsx
+msgid "You can change this later. It applies to every card in the deck."
+msgstr "You can change this later. It applies to every card in the deck."
+
+#: src/client/views/ConnectedView.tsx
+msgid "You can close this tab."
+msgstr "You can close this tab."
+
+#: src/client/components/Chip.tsx
+#: src/client/views/WordView.tsx
+msgid "You wrote this"
+msgstr "You wrote this"

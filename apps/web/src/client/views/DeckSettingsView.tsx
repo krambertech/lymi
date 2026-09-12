@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { Archive, Check, ChevronLeft } from "lucide-react";
@@ -47,6 +48,7 @@ export function DeckSettingsView({
   onArchive,
   static: st,
 }: DeckSettingsProps) {
+  const { t } = useLingui();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -99,7 +101,7 @@ export function DeckSettingsView({
   const back = (
     <>
       <ChevronLeft className="size-4" aria-hidden="true" />
-      {deck?.name ?? "Deck"}
+      {deck?.name ?? t`Deck`}
     </>
   );
 
@@ -115,17 +117,17 @@ export function DeckSettingsView({
             </Link>
           )
         }
-        title="Deck settings"
+        title={t`Deck settings`}
         actions={
           <p className="min-h-5 text-sm text-muted" role="status">
             {error ? (
               <span className="text-danger">{error}</span>
             ) : saving ? (
-              "Saving…"
+              t`Saving…`
             ) : saved ? (
               <span className="enter-fade inline-flex items-center gap-1.5">
                 <Check className="size-4" aria-hidden="true" />
-                Saved
+                <Trans>Saved</Trans>
               </span>
             ) : null}
           </p>
@@ -142,8 +144,8 @@ export function DeckSettingsView({
 
       {deck && (
         <>
-          <SettingsGroup title="Deck">
-            <Field label="Name">
+          <SettingsGroup title={t`Deck`}>
+            <Field label={t`Name`}>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -157,27 +159,27 @@ export function DeckSettingsView({
               />
             </Field>
             <Field
-              label="Description"
-              aside="Optional"
-              hint="A note to yourself about what is in here."
+              label={t`Description`}
+              aside={t`Optional`}
+              hint={t`A note to yourself about what is in here.`}
             >
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 onBlur={commitDescription}
                 maxLength={500}
-                placeholder="Words from Marco’s Tuesday lessons."
+                placeholder={t`Words from Marco’s Tuesday lessons.`}
                 className="min-h-20"
               />
             </Field>
             <LanguageField
               value={deck.defaultLanguage}
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}
-              hint="The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You."
+              hint={t`The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which lives on You.`}
             />
           </SettingsGroup>
 
-          <SettingsGroup title="How you are asked">
+          <SettingsGroup title={t`How you are asked`}>
             <DirectionField
               value={deck.directions}
               onChange={(directions) => onSave({ directions })}
@@ -186,15 +188,17 @@ export function DeckSettingsView({
             />
           </SettingsGroup>
 
-          <SettingsGroup title="Archive">
+          <SettingsGroup title={t`Archive`}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="max-w-sm text-sm text-muted">
-                The deck leaves Library and its cards stop coming up. Nothing is deleted, and
-                Restore puts it back.
+                <Trans>
+                  The deck leaves Library and its cards stop coming up. Nothing is deleted, and
+                  Restore puts it back.
+                </Trans>
               </p>
               <Button variant="danger" onClick={onArchive} aria-disabled={!onArchive}>
                 <Archive aria-hidden="true" />
-                Archive deck
+                <Trans>Archive deck</Trans>
               </Button>
             </div>
           </SettingsGroup>

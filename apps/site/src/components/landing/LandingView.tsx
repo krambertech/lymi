@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import { productUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
@@ -179,7 +180,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         <div className="mx-auto grid min-h-[650px] max-w-[1120px] items-center gap-10 px-5 py-14 @2xl:grid-cols-[minmax(0,1fr)_clamp(250px,29vw,340px)] @2xl:px-10 @4xl:min-h-[720px]">
           <div className="relative z-10 min-w-0 max-w-[620px]">
             <h1 className="max-w-[10ch] text-5xl font-medium tracking-[-0.038em] text-text @4xl:text-[64px] @4xl:leading-[0.98]">
-              Keep what you learn.
+              <Trans>Keep what you learn.</Trans>
             </h1>
             <p className="mt-6 max-w-[46ch] text-lg text-text-2 @2xl:text-xl">
               Save a term, phrase, or concept while it is fresh. Lymi enriches the missing details

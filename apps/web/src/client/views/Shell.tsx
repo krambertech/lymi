@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import {
   Activity,
@@ -30,14 +33,14 @@ export interface NavDeck {
  */
 export const NAV: {
   to: string;
-  label: string;
+  label: MessageDescriptor;
   icon: LucideIcon;
   exact?: boolean;
 }[] = [
-  { to: "/today", label: "Today", icon: Sun, exact: true },
-  { to: "/library", label: "Library", icon: BookMarked },
-  { to: "/insights", label: "Insights", icon: ChartNoAxesColumn },
-  { to: "/activity", label: "Activity", icon: Activity },
+  { to: "/today", label: msg`Today`, icon: Sun, exact: true },
+  { to: "/library", label: msg`Library`, icon: BookMarked },
+  { to: "/insights", label: msg`Insights`, icon: ChartNoAxesColumn },
+  { to: "/activity", label: msg`Activity`, icon: Activity },
 ];
 
 interface SidebarProps {
@@ -67,6 +70,7 @@ export function Sidebar({
   static: st,
   className,
 }: SidebarProps) {
+  const { t, i18n } = useLingui();
   const item =
     "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
   return (
@@ -77,12 +81,12 @@ export function Sidebar({
       )}
     >
       <div className="mb-6 mt-8 flex h-10 items-center gap-1 px-2.5">
-        <span className="mr-auto flex items-center gap-2.5">
+        <span className="me-auto flex items-center gap-2.5">
           <AppTile size={28} title="Lymi" />
           <Wordmark size={18} className="text-text" />
         </span>
         {onSearch && (
-          <IconButton label="Search" size="sm" onClick={onSearch}>
+          <IconButton label={t`Search`} size="sm" onClick={onSearch}>
             <Search />
           </IconButton>
         )}
@@ -92,7 +96,7 @@ export function Sidebar({
       {NAV.map((n) => (
         <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
           <n.icon aria-hidden="true" />
-          <span className="flex-1">{n.label}</span>
+          <span className="flex-1">{i18n._(n.label)}</span>
           {n.to === "/activity" && unseen && (
             <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />
           )}
@@ -102,7 +106,7 @@ export function Sidebar({
       {decks && decks.length > 0 && (
         <>
           <div className="mx-2.5 mb-1.5 mt-7 text-xs font-medium uppercase tracking-[0.06em] text-muted">
-            Decks
+            <Trans>Decks</Trans>
           </div>
           {decks.map((d) => (
             <NavLink
@@ -133,8 +137,10 @@ export function Sidebar({
         >
           <Avatar name={name} size={34} />
           <span className="grid min-w-0 flex-1 gap-0.5 text-left">
-            <span className="truncate text-base text-text">{name ?? "You"}</span>
-            <span className="truncate text-xs text-muted">Settings and account</span>
+            <span className="truncate text-base text-text">{name ?? t`You`}</span>
+            <span className="truncate text-xs text-muted">
+              <Trans>Settings and account</Trans>
+            </span>
           </span>
           <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
         </NavLink>

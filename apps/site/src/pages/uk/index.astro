@@ -1,0 +1,27 @@
+---
+import LandingPage from "../../components/islands/LandingPage";
+import { LANDING_BLURB, LANDING_TITLE } from "../../components/landing/LandingView";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Lymi",
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  description: LANDING_BLURB,
+  url: "https://lymi.app/",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout title={LANDING_TITLE} description={LANDING_BLURB} canonicalPath="/uk/" dark>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    data-landing-structured-data="true"
+    set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
+  />
+  <LandingPage client:load locale={Astro.currentLocale} />
+</BaseLayout>

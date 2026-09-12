@@ -1,3 +1,4 @@
+import { Plural, Trans } from "@lingui/react/macro";
 import { languageName } from "./DeckFields";
 import { NavLink, type StaticNav } from "./NavLink";
 import { StateStripe } from "./StateStripe";
@@ -48,15 +49,21 @@ export function DeckCard({
       )}
       <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-muted tabular-nums">
         {due > 0 ? (
-          <b className="font-semibold text-amber-text">{due} due today</b>
+          <b className="font-semibold text-amber-text">
+            <Plural value={due} one="# due today" other="# due today" />
+          </b>
         ) : next ? (
-          <span>Next {next}</span>
+          <span>
+            <Trans>Next {next}</Trans>
+          </span>
         ) : total === 0 ? (
-          <span>Nothing in it yet</span>
+          <span>
+            <Trans>Nothing in it yet</Trans>
+          </span>
         ) : null}
         {total > 0 && (
           <span>
-            {total} {total === 1 ? "card" : "cards"}
+            <Plural value={total} one="# card" other="# cards" />
           </span>
         )}
       </span>

@@ -12,9 +12,12 @@
     "deploy:check": "wrangler deploy --dry-run",
     "typecheck": "astro check && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "i18n:extract": "lingui extract --clean"
   },
   "dependencies": {
+    "@lingui/core": "6.7.0",
+    "@lingui/react": "6.7.0",
     "@lymi/core": "workspace:*",
     "@tanstack/react-query": "^5.102.8",
     "clsx": "^2.1.1",
@@ -26,6 +29,12 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@astrojs/react": "^6.0.5",
+    "@babel/core": "7.29.7",
+    "@lingui/babel-plugin-lingui-macro": "6.7.0",
+    "@lingui/cli": "6.7.0",
+    "@lingui/format-po": "6.7.0",
+    "@lingui/vite-plugin": "6.7.0",
+    "@rolldown/plugin-babel": "0.2.3",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",

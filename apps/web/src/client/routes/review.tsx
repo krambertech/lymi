@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/review")({
 });
 
 function Review() {
+  const { t } = useLingui();
   const { deck } = Route.useSearch();
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -101,10 +103,10 @@ function Review() {
       if (playingAudio.current === audio) {
         playingAudio.current = null;
         setAudioState("idle");
-        setAudioError("Pronunciation audio is unavailable. Try again in a moment.");
+        setAudioError(t`Pronunciation audio is unavailable. Try again in a moment.`);
       }
     }
-  }, [audioState, current, stopAudio]);
+  }, [audioState, current, stopAudio, t]);
 
   const invalidateReviewData = useCallback(() => {
     qc.invalidateQueries({ queryKey: ["decks"] });
@@ -128,7 +130,7 @@ function Review() {
     },
     onError: () => {
       setPendingRating(null);
-      setGradeError("That grade didn’t save. Try once more.");
+      setGradeError(t`That grade didn’t save. Try once more.`);
     },
     onSettled: invalidateReviewData,
   });
@@ -186,7 +188,7 @@ function Review() {
           retry={() => queue.refetch()}
           action={
             <Link to="/today" className={buttonClass("ghost")}>
-              Back
+              <Trans>Back</Trans>
             </Link>
           }
         />
@@ -207,15 +209,15 @@ function Review() {
                   loading={startingNext}
                   onClick={() => void nextBatch()}
                 >
-                  Keep going
+                  <Trans>Keep going</Trans>
                 </Button>
                 <Link to="/today" className={buttonClass("ghost", "lg")}>
-                  Done
+                  <Trans>Done</Trans>
                 </Link>
               </>
             ) : (
               <Link to="/today" className={buttonClass("primary", "lg")}>
-                Done
+                <Trans>Done</Trans>
               </Link>
             )
           }

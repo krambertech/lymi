@@ -78,17 +78,35 @@ export function preview(state: FsrsCard, now: Date = new Date()): Record<Rating,
 }
 
 /** "1 min", "2 d", "6 d", "3 mo". For the small text under a grade button. */
-export function formatInterval(from: Date, to: Date): string {
+export type IntervalUnit = "minute" | "hour" | "day" | "month" | "year";
+export type Interval = { value: number; unit: IntervalUnit };
+
+/** The interval in the largest unit that reads naturally. The client formats it for its locale. */
+export function interval(from: Date, to: Date): Interval {
   const ms = Math.max(0, to.getTime() - from.getTime());
   const min = Math.round(ms / 60_000);
-  if (min < 60) return `${Math.max(1, min)} min`;
+  if (min < 60) return { value: Math.max(1, min), unit: "minute" };
   const hours = Math.round(min / 60);
-  if (hours < 24) return `${hours} h`;
+  if (hours < 24) return { value: hours, unit: "hour" };
   const days = Math.round(hours / 24);
-  if (days < 30) return `${days} d`;
+  if (days < 30) return { value: days, unit: "day" };
   const months = Math.round(days / 30);
-  if (months < 12) return `${months} mo`;
-  return `${Math.round(days / 365)} y`;
+  if (months < 12) return { value: months, unit: "month" };
+  return { value: Math.round(days / 365), unit: "year" };
+}
+
+const SHORT_UNIT: Record<IntervalUnit, string> = {
+  minute: "min",
+  hour: "h",
+  day: "d",
+  month: "mo",
+  year: "y",
+};
+
+/** English shorthand, for logs and tests. Interface code formats `interval()` for its locale. */
+export function formatInterval(from: Date, to: Date): string {
+  const { value, unit } = interval(from, to);
+  return `${value} ${SHORT_UNIT[unit]}`;
 }
 
 /**

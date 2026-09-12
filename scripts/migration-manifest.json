@@ -27,6 +27,10 @@
     {
       "name": "0006_clumsy_shotgun.sql",
       "sha256": "f82bb6fb6c279bf3505d9e752e82f6e835c50a27efa0def840362665abf4eb8f"
+    },
+    {
+      "name": "0007_lucky_blue_blade.sql",
+      "sha256": "f583fa78447e7c611061f54e5f08f0badb2f68b60ac8d9d6ff5341e46ce35a82"
     }
   ]
 }

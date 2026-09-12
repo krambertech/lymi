@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { Card } from "@lymi/core/schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
@@ -26,6 +27,7 @@ function Deck() {
 }
 
 function DeckPage() {
+  const { t, i18n } = useLingui();
   const { deckId } = Route.useParams();
   const { card: openCardId } = Route.useSearch();
   const qc = useQueryClient();
@@ -37,7 +39,10 @@ function DeckPage() {
   const add = useAddCard();
   const [undo, setUndo] = useState<{ id: string; term: string } | null>(null);
 
-  const events = useMemo(() => history.data?.events.map(describeEvent), [history.data]);
+  const events = useMemo(
+    () => history.data?.events.map((e) => describeEvent(e, i18n)),
+    [history.data, i18n],
+  );
 
   // Opening pushes one entry so Back closes the word; walking and closing replace it, so the
   // history never fills with words and Back after a close does not reopen one.
@@ -66,7 +71,7 @@ function DeckPage() {
   const archive = useMutation({
     mutationFn: (id: string) => api.archiveCard(id),
     onSuccess: (_r, id) => {
-      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? "Card";
+      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`Card`;
       setUndo({ id, term });
       invalidate();
     },
@@ -88,7 +93,7 @@ function DeckPage() {
     },
     // The editor has already closed, so the draft lives here until it lands or is given up.
     onError: (_e, { id, patch }) => {
-      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? "the word";
+      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`the word`;
       setSaveError({ id, patch, term });
     },
   });
@@ -100,9 +105,12 @@ function DeckPage() {
     mutationFn: () => api.archiveDeck(deckId),
     onSuccess: () => {
       invalidate();
-      navigate({ to: "/library", search: { archived: deckId, name: deck?.name ?? "Deck" } });
+      navigate({ to: "/library", search: { archived: deckId, name: deck?.name ?? t`Deck` } });
     },
   });
+
+  const failedTerm = saveError?.term;
+  const archivedTerm = undo?.term;
 
   return (
     <>
@@ -133,25 +141,25 @@ function DeckPage() {
           key={`save-${saveError.id}`}
           onDismiss={() => setSaveError(null)}
           action={{
-            label: "Retry",
+            label: t`Retry`,
             onClick: () => save.mutate({ id: saveError.id, patch: saveError.patch }),
           }}
         >
-          Couldn’t save “{saveError.term}”. Check the connection.
+          <Trans>Couldn’t save “{failedTerm}”. Check the connection.</Trans>
         </Toast>
       )}
       {audioError && (
         <Toast key="audio" onDismiss={() => setAudioError(false)}>
-          Pronunciation audio is unavailable. Try again in a moment.
+          <Trans>Pronunciation audio is unavailable. Try again in a moment.</Trans>
         </Toast>
       )}
       {undo && (
         <Toast
           key={undo.id}
           onDismiss={() => setUndo(null)}
-          action={{ label: "Undo", onClick: () => restore.mutate(undo.id) }}
+          action={{ label: t`Undo`, onClick: () => restore.mutate(undo.id) }}
         >
-          Archived “{undo.term}”
+          <Trans>Archived “{archivedTerm}”</Trans>
         </Toast>
       )}
     </>

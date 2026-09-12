@@ -13,7 +13,7 @@ const canonical = new URL(canonicalPath, Astro.site ?? "https://lymi.app").toStr
 ---
 
 <!doctype html>
-<html lang="en" data-lymi-surface="public" data-theme={dark ? "dark" : undefined}>
+<html lang={Astro.currentLocale ?? "en"} data-lymi-surface="public" data-theme={dark ? "dark" : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta

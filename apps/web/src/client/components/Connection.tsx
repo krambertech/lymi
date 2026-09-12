@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -78,6 +79,7 @@ function useLagged(value: boolean, ms: number): boolean {
  * request that cannot be forged. Mono, because it is read character by character.
  */
 export function AppIdentityLine({ app, className }: { app: AppIdentity; className?: string }) {
+  const { t } = useLingui();
   return (
     <span
       className={clsx(
@@ -87,8 +89,10 @@ export function AppIdentityLine({ app, className }: { app: AppIdentity; classNam
       )}
     >
       {app.recognised && <ShieldCheck className="size-3.5 shrink-0 text-good" aria-hidden="true" />}
-      <span className="sr-only">{app.recognised ? "Recognised app at " : "Identified by "}</span>
-      <span className="truncate font-mono">{app.host ?? "an app with no address"}</span>
+      <span className="sr-only">
+        {app.recognised ? <Trans>Recognised app at</Trans> : <Trans>Identified by</Trans>}{" "}
+      </span>
+      <span className="truncate font-mono">{app.host ?? t`an app with no address`}</span>
     </span>
   );
 }

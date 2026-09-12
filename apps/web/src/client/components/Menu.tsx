@@ -134,7 +134,7 @@ export function MenuList({
       onKeyDown={onKey}
       className={clsx(
         "enter-menu edge-2 absolute top-[calc(100%+6px)] z-(--z-dropdown) min-w-48 rounded-md bg-plate p-1",
-        align === "end" ? "right-0 origin-top-right" : "left-0 origin-top-left",
+        align === "end" ? "end-0 origin-top-right" : "start-0 origin-top-left",
         className,
       )}
     >
@@ -180,7 +180,7 @@ export function MenuItem({
     >
       {icon}
       <span className="flex-1">{children}</span>
-      {kbd && <span className="pl-3 text-xs text-muted">{kbd}</span>}
+      {kbd && <span className="ps-3 text-xs text-muted">{kbd}</span>}
     </button>
   );
 }

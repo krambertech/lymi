@@ -1,5 +1,7 @@
+import { t } from "@lingui/core/macro";
 import type {
   ApiKeyInput,
+  AppLanguage,
   CardInput,
   CardPatch,
   DeckInput,
@@ -29,9 +31,10 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers: { "content-type": "application/json", ...(init?.headers ?? {}) },
     credentials: "include",
   });
-  if (res.status === 401) throw new ApiError(401, "Sign in required");
+  if (res.status === 401) throw new ApiError(401, t`Sign in required`);
   if (!res.ok) {
-    let message = res.statusText;
+    // The browser's status text is English whatever the interface language, and empty over HTTP/2.
+    let message = t`Something went wrong (${res.status})`;
     try {
       const body = (await res.json()) as { error?: string };
       if (body.error) message = body.error;
@@ -42,6 +45,13 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export type Me = { id: string; name: string; email: string; image: string | null };
+export type Settings = {
+  userId: string;
+  appLanguage: AppLanguage | null;
+  meaningLanguage: string;
+  createdAt: string;
+  updatedAt: string;
+};
 export type DeckSummary = Pick<
   Deck,
   "id" | "name" | "description" | "defaultLanguage" | "directions" | "position"
@@ -99,6 +109,9 @@ export type PushSubscriptionStatus = {
 
 export const api = {
   me: () => request<Me>("/api/me"),
+  settings: () => request<Settings>("/api/settings"),
+  updateSettings: (body: { appLanguage: AppLanguage }) =>
+    request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),
   decks: () => request<DeckSummary[]>("/api/decks"),
   createDeck: (body: DeckInput) =>
     request<Deck>("/api/decks", { method: "POST", body: JSON.stringify(body) }),

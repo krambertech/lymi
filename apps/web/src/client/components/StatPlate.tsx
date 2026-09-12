@@ -40,7 +40,7 @@ export function StatPlate({
       </div>
       <p className="text-3xl font-medium leading-[1.1] tracking-[-0.02em] text-text tabular-nums">
         {value}
-        {unit && <span className="ml-1 text-lg font-normal text-muted">{unit}</span>}
+        {unit && <span className="ms-1 text-lg font-normal text-muted">{unit}</span>}
       </p>
       {/* Every plate gives its figure the same box and centres it there, so a short strip
           and a tall chart leave the notes on one line across the grid instead of one plate

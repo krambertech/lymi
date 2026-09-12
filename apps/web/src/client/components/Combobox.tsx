@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, ChevronDown, Search } from "lucide-react";
 import { type KeyboardEvent, useEffect, useId, useRef, useState } from "react";
@@ -43,12 +44,17 @@ export function Combobox({
   onChange,
   options,
   clearLabel,
-  placeholder = "Choose one",
-  searchLabel = "Search",
+  placeholder: placeholderProp,
+  searchLabel: searchLabelProp,
   accept,
-  acceptLabel = (v) => `Use “${v}”`,
-  emptyLabel = "Nothing matches",
+  acceptLabel: acceptLabelProp,
+  emptyLabel: emptyLabelProp,
 }: Props) {
+  const { t } = useLingui();
+  const placeholder = placeholderProp ?? t`Choose one`;
+  const searchLabel = searchLabelProp ?? t`Search`;
+  const acceptLabel = acceptLabelProp ?? ((v: string) => t`Use “${v}”`);
+  const emptyLabel = emptyLabelProp ?? t`Nothing matches`;
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -136,7 +142,7 @@ export function Combobox({
         className={clsx(
           controlBase,
           controlSize,
-          "flex items-center gap-2 pl-3.5 pr-3 text-left",
+          "flex items-center gap-2 ps-3.5 pe-3 text-start",
           !chosen && !value && !clearLabel && "text-muted",
         )}
         onClick={() => start("")}
@@ -160,7 +166,7 @@ export function Combobox({
     <div className="grid gap-1.5">
       <div className="relative">
         <Search
-          className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted"
+          className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted"
           aria-hidden="true"
         />
         <input
@@ -187,7 +193,7 @@ export function Combobox({
           onBlur={(e) => {
             if (!e.currentTarget.closest("div")?.contains(e.relatedTarget)) close(false);
           }}
-          className={clsx(controlBase, controlSize, "pl-10 pr-3.5")}
+          className={clsx(controlBase, controlSize, "ps-10 pe-3.5")}
         />
       </div>
       {/* The APG combobox: the input keeps focus and names the active row with

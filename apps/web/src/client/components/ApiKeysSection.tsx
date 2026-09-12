@@ -1,3 +1,6 @@
+import type { I18n } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { ApiKeyInput, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
@@ -15,11 +18,6 @@ import { Segmented } from "./Segmented";
 import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
 
-const SCOPES: { value: Scope; label: string; hint: string }[] = [
-  { value: "read", label: "Read", hint: "Lists and searches decks and cards." },
-  { value: "write", label: "Read and write", hint: "Also adds, edits and archives them." },
-];
-
 /**
  * Personal API keys for curl, scripts and Claude Code. The list is the point of the section,
  * so the form stays folded until it is wanted; a key already made is what you come here to
@@ -27,6 +25,7 @@ const SCOPES: { value: Scope; label: string; hint: string }[] = [
  * it takes a second tap, inline, no dialog.
  */
 export function ApiKeysSection() {
+  const { t } = useLingui();
   const qc = useQueryClient();
   const keys = useQuery(keysQuery);
   const [making, setMaking] = useState(false);
@@ -34,6 +33,11 @@ export function ApiKeysSection() {
   const [scope, setScope] = useState<Scope>("read");
   const [fresh, setFresh] = useState<{ id: string; key: string; name: string } | null>(null);
   const [invalid, setInvalid] = useState<FieldErrors>({});
+
+  const scopes: { value: Scope; label: string; hint: string }[] = [
+    { value: "read", label: t`Read`, hint: t`Lists and searches decks and cards.` },
+    { value: "write", label: t`Read and write`, hint: t`Also adds, edits and archives them.` },
+  ];
 
   const create = useMutation({
     mutationFn: () => api.createKey({ name: name.trim(), scope }),
@@ -58,17 +62,19 @@ export function ApiKeysSection() {
   const empty = keys.isSuccess && rest.length === 0;
 
   return (
-    <SettingsGroup title="API keys">
+    <SettingsGroup title={t`API keys`}>
       <p className="max-w-[62ch] text-base text-text-2">
-        For curl, scripts and Claude Code. Send the key in an{" "}
-        <code className="font-mono text-sm">x-api-key</code> header; the routes are in the{" "}
-        <a
-          href={publicSiteUrl("/docs/api")}
-          className="underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
-        >
-          API reference
-        </a>
-        . MCP clients such as Claude Desktop sign in instead, and appear under Connected apps.
+        <Trans>
+          For curl, scripts and Claude Code. Send the key in an{" "}
+          <code className="font-mono text-sm">x-api-key</code> header; the routes are in the{" "}
+          <a
+            href={publicSiteUrl("/docs/api")}
+            className="underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
+          >
+            API reference
+          </a>
+          . MCP clients such as Claude Desktop sign in instead, and appear under Connected apps.
+        </Trans>
       </p>
 
       {fresh && (
@@ -97,7 +103,7 @@ export function ApiKeysSection() {
 
       {empty && !making && !fresh && (
         <p className="text-base text-muted">
-          No keys yet. Make one when you want to reach Lymi from a script.
+          <Trans>No keys yet. Make one when you want to reach Lymi from a script.</Trans>
         </p>
       )}
 
@@ -109,7 +115,14 @@ export function ApiKeysSection() {
             if (create.isPending) return;
             const parsed = ApiKeyInput.safeParse({ name, scope });
             if (!parsed.success) {
-              setInvalid(fieldErrors(parsed.error));
+              // Mirrors the schema: an empty name fails the minimum, a typed one the maximum.
+              setInvalid(
+                fieldErrors(parsed.error, {
+                  name: name.trim()
+                    ? t`Keep the name under 32 characters.`
+                    : t`Name the key, so you know which one to revoke later.`,
+                }),
+              );
               focusFirstInvalid(e.currentTarget);
               return;
             }
@@ -118,8 +131,8 @@ export function ApiKeysSection() {
           }}
         >
           <Field
-            label="Name"
-            hint="So you know which key to revoke later."
+            label={t`Name`}
+            hint={t`So you know which key to revoke later.`}
             error={invalid.name}
             className="max-w-sm"
           >
@@ -132,15 +145,17 @@ export function ApiKeysSection() {
                 setInvalid(({ name: _, ...rest }) => rest);
               }}
               maxLength={32}
-              placeholder="Claude Code on the laptop"
+              placeholder={t`Claude Code on the laptop`}
               autoComplete="off"
             />
           </Field>
           <div className="grid gap-1.5">
-            <span className="text-sm font-medium text-text-2">Access</span>
-            <Segmented value={scope} onChange={setScope} options={SCOPES} label="Access" />
+            <span className="text-sm font-medium text-text-2">
+              <Trans>Access</Trans>
+            </span>
+            <Segmented value={scope} onChange={setScope} options={scopes} label={t`Access`} />
             <p className="text-sm text-muted">
-              {SCOPES.find((s) => s.value === scope)?.hint} Keys never grade reviews.
+              {scopes.find((s) => s.value === scope)?.hint} <Trans>Keys never grade reviews.</Trans>
             </p>
           </div>
           {create.isError && (
@@ -150,7 +165,7 @@ export function ApiKeysSection() {
           )}
           <div className="flex gap-2">
             <Button type="submit" variant="primary" size="sm" loading={create.isPending}>
-              Create key
+              <Trans>Create key</Trans>
             </Button>
             <Button
               size="sm"
@@ -162,14 +177,14 @@ export function ApiKeysSection() {
                 create.reset();
               }}
             >
-              Cancel
+              <Trans>Cancel</Trans>
             </Button>
           </div>
         </form>
       ) : (
         <Button size="sm" className="w-fit" onClick={() => setMaking(true)}>
           <Plus aria-hidden="true" />
-          New key
+          <Trans>New key</Trans>
         </Button>
       )}
     </SettingsGroup>
@@ -185,6 +200,7 @@ function KeyRow({
   revoking: boolean;
   onRevoke: () => void;
 }) {
+  const { t, i18n } = useLingui();
   const [confirming, setConfirming] = useState(false);
   useEffect(() => {
     if (!confirming) return;
@@ -196,21 +212,23 @@ function KeyRow({
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge py-3 last:border-b-0">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-base font-medium">{item.name ?? "Untitled key"}</span>
-          <Chip size="sm">{item.scope === "write" ? "Read and write" : "Read"}</Chip>
+          <span className="truncate text-base font-medium">{item.name ?? t`Untitled key`}</span>
+          <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </div>
         <p className="text-sm text-muted">
           {item.start && <span className="font-mono">{item.start}…</span>}
           {item.start && " · "}
           <span className="tabular-nums">
-            {lastUsed(item.lastRequest)} · created {shortDate(item.createdAt)}
+            <Trans>
+              {lastUsed(i18n, item.lastRequest)} · created {shortDate(i18n, item.createdAt)}
+            </Trans>
           </span>
         </p>
       </div>
       {confirming ? (
         <div className="enter-fade flex gap-1.5">
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
-            Keep
+            <Trans>Keep</Trans>
           </Button>
           <Button
             size="sm"
@@ -219,12 +237,12 @@ function KeyRow({
             aria-disabled={revoking}
             onClick={onRevoke}
           >
-            Revoke key
+            <Trans>Revoke key</Trans>
           </Button>
         </div>
       ) : (
         <Button size="sm" variant="ghost" onClick={() => setConfirming(true)}>
-          Revoke
+          <Trans>Revoke</Trans>
         </Button>
       )}
     </li>
@@ -246,6 +264,7 @@ function FreshKey({
   onDone: () => void;
   onRevoke: () => void;
 }) {
+  const { t } = useLingui();
   const [flare, setFlare] = useState(true);
   useEffect(() => {
     const t = setTimeout(() => setFlare(false), 420);
@@ -257,35 +276,39 @@ function FreshKey({
       <div className="flex items-start gap-2.5">
         <Lantern className="size-8 shrink-0" glow flare={flare} />
         <p className="text-base text-text">
-          <span className="font-medium">{name}</span> is ready. Copy it now — it is not shown again.
+          <Trans>
+            <span className="font-medium">{name}</span> is ready. Copy it now — it is not shown
+            again.
+          </Trans>
         </p>
       </div>
-      <CopyField value={value} label={`API key for ${name}`} />
+      <CopyField value={value} label={t`API key for ${name}`} />
       <div className="flex gap-1.5">
         <Button size="sm" variant="ghost" onClick={onDone}>
-          Done
+          <Trans>Done</Trans>
         </Button>
         <Button size="sm" variant="ghost" onClick={onRevoke}>
-          Revoke instead
+          <Trans>Revoke instead</Trans>
         </Button>
       </div>
     </div>
   );
 }
 
-function lastUsed(iso: string | null): string {
-  if (!iso) return "never used";
+function lastUsed(i18n: I18n, iso: string | null): string {
+  if (!iso) return i18n._(msg`never used`);
   const ms = Date.now() - new Date(iso).getTime();
   const m = Math.round(ms / 60_000);
-  if (m < 1) return "used just now";
-  if (m < 60) return `used ${m} min ago`;
+  if (m < 1) return i18n._(msg`used just now`);
+  if (m < 60) return i18n._(msg`used ${m} min ago`);
   const h = Math.round(m / 60);
-  if (h < 24) return `used ${h} h ago`;
+  if (h < 24) return i18n._(msg`used ${h} h ago`);
   const d = Math.round(h / 24);
-  if (d < 14) return `used ${d} d ago`;
-  return `used ${shortDate(iso)}`;
+  if (d < 14) return i18n._(msg`used ${d} d ago`);
+  const date = shortDate(i18n, iso);
+  return i18n._(msg`used ${date}`);
 }
 
-function shortDate(iso: string): string {
-  return new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short" });
+function shortDate(i18n: I18n, iso: string): string {
+  return i18n.date(iso, { day: "numeric", month: "short" });
 }

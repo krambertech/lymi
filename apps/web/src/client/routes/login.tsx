@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
@@ -52,7 +55,7 @@ const RETRYABLE = new Set([
 ]);
 
 interface SignInIssue {
-  message: string;
+  message: MessageDescriptor;
   blocked: boolean;
 }
 
@@ -60,24 +63,23 @@ function issueFor(code: string | undefined): SignInIssue | null {
   if (!code) return null;
   if (BLOCKED.has(code) || /not.on.the.list/i.test(code)) {
     return {
-      message:
-        "This Google account has not been invited. Request an invitation, or try another account.",
+      message: msg`This Google account has not been invited. Request an invitation, or try another account.`,
       blocked: true,
     };
   }
   if (RETRYABLE.has(code)) {
-    return { message: "That sign-in did not finish. Try again.", blocked: false };
+    return { message: msg`That sign-in did not finish. Try again.`, blocked: false };
   }
   // An unknown code is more often a blocked account than a blip, so do not promise a retry
   // will work.
   return {
-    message:
-      "Sign in did not finish. Try again. If you have not been invited, request an invitation.",
+    message: msg`Sign in did not finish. Try again. If you have not been invited, request an invitation.`,
     blocked: false,
   };
 }
 
 function Login() {
+  const { t, i18n } = useLingui();
   const { client_id: clientId, error, dev, returnTo: rawReturnTo } = Route.useSearch();
   const returnTo = safeProductReturnPath(rawReturnTo);
   const [busy, setBusy] = useState(false);
@@ -103,7 +105,7 @@ function Login() {
       app={app}
       busy={busy}
       // `failed` is this attempt; `error` on the URL is a callback that came back refused.
-      error={failed ?? issue?.message}
+      error={failed ?? (issue ? i18n._(issue.message) : undefined)}
       blocked={!failed && issue?.blocked}
       onGoogle={async () => {
         setBusy(true);
@@ -112,9 +114,9 @@ function Login() {
           // better-auth returns the failure rather than throwing, so a silent `await` here
           // left the button spinning and then stopping with nothing said.
           const res = await signInWithGoogle(returnTo);
-          if (res.error) setFailed("Sign-in didn’t go through. Try again.");
+          if (res.error) setFailed(t`Sign-in didn’t go through. Try again.`);
         } catch {
-          setFailed("Can’t reach the sign-in service. Check your connection.");
+          setFailed(t`Can’t reach the sign-in service. Check your connection.`);
         } finally {
           setBusy(false);
         }

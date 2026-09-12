@@ -17,11 +17,18 @@
     "db:check": "drizzle-kit check",
     "db:migrate": "wrangler d1 migrations apply lymi --local",
     "db:migrate:prod": "wrangler d1 migrations apply lymi --remote",
-    "auth:schema": "auth generate --config src/server/auth-cli.ts --output ../../packages/core/src/schema/auth.ts -y"
+    "auth:schema": "auth generate --config src/server/auth-cli.ts --output ../../packages/core/src/schema/auth.ts -y",
+    "i18n:extract": "lingui extract --clean"
   },
   "devDependencies": {
+    "@babel/core": "7.29.7",
     "@cloudflare/vite-plugin": "^1.54.4",
     "@modelcontextprotocol/client": "2.0.0",
+    "@lingui/babel-plugin-lingui-macro": "6.7.0",
+    "@lingui/cli": "6.7.0",
+    "@lingui/format-po": "6.7.0",
+    "@lingui/vite-plugin": "6.7.0",
+    "@rolldown/plugin-babel": "0.2.3",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/router-plugin": "^1.168.35",
     "@types/react": "^19.2.18",
@@ -45,6 +52,8 @@
     "@better-auth/oauth-provider": "1.7.2",
     "@better-auth/utils": "0.4.2",
     "@hono/standard-validator": "^0.2.3",
+    "@lingui/core": "6.7.0",
+    "@lingui/react": "6.7.0",
     "@lymi/core": "workspace:*",
     "@modelcontextprotocol/sdk": "1.30.0",
     "@modelcontextprotocol/server": "2.0.0",

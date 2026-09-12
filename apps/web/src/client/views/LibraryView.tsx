@@ -1,3 +1,5 @@
+import { plural } from "@lingui/core/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, Plus } from "lucide-react";
 import type { ReactNode } from "react";
@@ -22,10 +24,6 @@ export interface LibraryProps {
   static?: StaticNav;
 }
 
-function plural(n: number, one: string, many: string) {
-  return `${n} ${n === 1 ? one : many}`;
-}
-
 /**
  * Every deck, as a card with a face: its name and language, how its words are split, and
  * what it asks of you today. Nothing here reviews or searches: Today owns the daily review,
@@ -41,6 +39,7 @@ export function LibraryView({
   onCreateDeck,
   static: st,
 }: LibraryProps) {
+  const { t } = useLingui();
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
   const loading = decks === undefined;
 
@@ -66,11 +65,11 @@ export function LibraryView({
   return (
     <Page>
       <PageHeader
-        title="Library"
+        title={t`Library`}
         sub={
           loading
             ? undefined
-            : `${plural(decks.length, "deck", "decks")} · ${plural(total, "card", "cards")}`
+            : t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
         }
         actions={
           <div className="@3xl/shell:hidden">
@@ -90,12 +89,12 @@ export function LibraryView({
       {decks && decks.length === 0 && (
         <EmptyState
           lantern="none"
-          title="No decks yet"
-          body="One per course works well, or one per topic. Words remember which lesson they came from."
+          title={t`No decks yet`}
+          body={t`One per course works well, or one per topic. Words remember which lesson they came from.`}
           action={
             <Button variant="primary" onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
               <Plus aria-hidden="true" />
-              New deck
+              <Trans>New deck</Trans>
             </Button>
           }
           className="py-6"
@@ -129,7 +128,7 @@ export function LibraryView({
               className="flex min-h-[72px] w-full items-center justify-center gap-2 rounded-lg border border-dashed border-edge-2 text-base font-medium text-text-2 transition-[background-color,color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-plate hoverable:hover:text-text"
             >
               <Plus className="size-[18px]" aria-hidden="true" />
-              New deck
+              <Trans>New deck</Trans>
             </button>
           </li>
         </ul>
@@ -138,15 +137,17 @@ export function LibraryView({
       {archivedCount ? (
         <section className="mt-8">
           <h2 className="mb-2 px-1 text-xs font-medium uppercase tracking-[0.06em] text-muted">
-            Archived
+            <Trans>Archived</Trans>
           </h2>
           <To
             to="/archived"
             className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
           >
-            <span className="font-medium">{plural(archivedCount, "deck", "decks")} put away</span>
+            <span className="font-medium">
+              <Plural value={archivedCount} one="# deck put away" other="# decks put away" />
+            </span>
             <span className="flex items-center gap-1 text-sm text-muted">
-              Show
+              <Trans>Show</Trans>
               <ChevronRight className="size-4 text-faint" aria-hidden="true" />
             </span>
           </To>

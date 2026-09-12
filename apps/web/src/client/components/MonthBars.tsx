@@ -1,3 +1,5 @@
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 
 export interface Month {
@@ -8,11 +10,11 @@ export interface Month {
   days: number;
 }
 
-const MONTH = new Intl.DateTimeFormat(undefined, { month: "short" });
-
-function name(month: string): string {
+function name(locale: string, month: string): string {
   const [y, m] = month.split("-");
-  return MONTH.format(new Date(Number(y), Number(m) - 1, 1));
+  return new Intl.DateTimeFormat(locale, { month: "short" }).format(
+    new Date(Number(y), Number(m) - 1, 1),
+  );
 }
 
 /**
@@ -27,6 +29,7 @@ export function MonthBars({
   months: Month[];
   className?: string | undefined;
 }) {
+  const { t, i18n } = useLingui();
   const now = new Date();
   const current = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 
@@ -36,17 +39,24 @@ export function MonthBars({
     <div className={clsx("-mx-1 overflow-x-auto px-1", className)}>
       <ul
         className="grid grid-flow-col auto-cols-[minmax(2.75rem,1fr)] gap-3"
-        aria-label="Days reviewed each month"
+        aria-label={t`Days reviewed each month`}
       >
         {months.map((m) => {
           const share = m.days > 0 ? m.lit / m.days : 0;
           const partial = m.month === current;
+          const label = name(i18n.locale, m.month);
+          const lit = m.lit;
+          const days = m.days;
           return (
             <li key={m.month} className="grid gap-2">
               <div
                 className="h-2.5 w-full overflow-hidden rounded-full bg-plate-2"
                 role="img"
-                aria-label={`${name(m.month)}: ${m.lit} of ${m.days} days${partial ? " so far" : ""}`}
+                aria-label={
+                  partial
+                    ? t`${label}: ${lit} of ${plural(days, { one: "# day", other: "# days" })} so far`
+                    : t`${label}: ${lit} of ${plural(days, { one: "# day", other: "# days" })}`
+                }
               >
                 {/* A month with one review should still show a mark rather than nothing. */}
                 <i
@@ -56,7 +66,7 @@ export function MonthBars({
               </div>
               {/* Wraps to a second line when the column is too narrow to hold both. */}
               <div className="flex flex-wrap items-baseline justify-between gap-x-1.5">
-                <span className="text-2xs font-medium text-text-2">{name(m.month)}</span>
+                <span className="text-2xs font-medium text-text-2">{label}</span>
                 <span className="text-2xs text-muted tabular-nums">
                   {m.lit}/{m.days}
                 </span>

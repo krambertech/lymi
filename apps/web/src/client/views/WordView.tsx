@@ -1,3 +1,6 @@
+import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/core";
+import { msg, plural } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { type CardPatch, deserializeState, type FsrsCard, retrievability } from "@lymi/core";
 import type { Card, CardState, Review } from "@lymi/core/schema";
 import { clsx } from "clsx";
@@ -16,7 +19,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
-import { languageName } from "../components/DeckFields";
+import { directionLabel, languageName } from "../components/DeckFields";
 import { Field, Input, Textarea } from "../components/Field";
 import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
 import { Sheet } from "../components/Sheet";
@@ -38,51 +41,74 @@ export type WordPatch = Pick<
 >;
 type EditableField = "meaning" | "example" | "notes";
 
-const actorName: Record<CardEvent["actor"], string> = {
-  user: "you",
-  api: "the API",
-  mcp: "a connected app",
-  ai: "the AI",
-  system: "Lymi",
+const actorName: Record<CardEvent["actor"], MessageDescriptor> = {
+  user: msg`you`,
+  api: msg`the API`,
+  mcp: msg`a connected app`,
+  ai: msg`the AI`,
+  system: msg`Lymi`,
 };
 
-const fieldName: Record<string, string> = {
-  term: "the word",
-  meaning: "the meaning",
-  pronunciation: "the pronunciation",
-  example: "the example",
-  notes: "the notes",
-  language: "the language",
-  tags: "the tags",
-  directions: "how it is asked",
+const fieldName: Record<string, MessageDescriptor> = {
+  term: msg`the word`,
+  meaning: msg`the meaning`,
+  pronunciation: msg`the pronunciation`,
+  example: msg`the example`,
+  notes: msg`the notes`,
+  language: msg`the language`,
+  tags: msg`the tags`,
+  directions: msg`how it is asked`,
 };
 
-/** An audit line as the history reads it: "Added · by a connected app". */
-export function describeEvent(e: CardEvent): WordEvent {
+/** "the meaning, the example and the notes", joined the way the interface language joins. */
+function listOf(items: string[], locale: string): string {
+  try {
+    return new Intl.ListFormat(locale, { type: "conjunction" }).format(items);
+  } catch {
+    return items.join(", ");
+  }
+}
+
+/**
+ * An audit line as the history reads it: "Added · by a connected app". Runs outside React, so it
+ * reads the global i18n; the route recomputes it when the history changes.
+ */
+export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent {
   const at = new Date(e.at);
-  const who = actorName[e.actor] ?? e.actor;
+  const actor = actorName[e.actor];
+  const who = actor ? i18n._(actor) : e.actor;
   const payload =
     e.payload && typeof e.payload === "object" ? (e.payload as Record<string, unknown>) : {};
-  const fields = Object.keys(payload)
-    .filter((k) => k in fieldName)
-    .map((k) => fieldName[k]);
-  const list =
-    fields.length > 1
-      ? `${fields.slice(0, -1).join(", ")} and ${fields.at(-1)}`
-      : (fields[0] ?? "");
+  const fields = Object.keys(payload).flatMap((k) => {
+    const name = fieldName[k];
+    return name ? [i18n._(name)] : [];
+  });
+  const list = listOf(fields, i18n.locale);
   if (e.action === "create") {
-    const from = payload.meaningSource === "lesson" ? " · meaning from the lesson" : "";
-    return { at, label: "Added", detail: `by ${who}${from}` };
+    const detail =
+      payload.meaningSource === "lesson"
+        ? i18n._(msg`by ${who} · meaning from the lesson`)
+        : i18n._(msg`by ${who}`);
+    return { at, label: i18n._(msg`Added`), detail };
   }
   if (e.action === "update") {
-    if ("deckId" in payload) return { at, label: "Moved", detail: `to another deck, by ${who}` };
-    if (e.actor === "ai")
-      return { at, label: "Enriched", detail: `the AI wrote ${list || "a field"}` };
-    return { at, label: "Edited", detail: list ? `${list}, by ${who}` : `by ${who}` };
+    if ("deckId" in payload)
+      return { at, label: i18n._(msg`Moved`), detail: i18n._(msg`to another deck, by ${who}`) };
+    if (e.actor === "ai") {
+      const what = list || i18n._(msg`a field`);
+      return { at, label: i18n._(msg`Enriched`), detail: i18n._(msg`the AI wrote ${what}`) };
+    }
+    return {
+      at,
+      label: i18n._(msg`Edited`),
+      detail: list ? i18n._(msg`${list}, by ${who}`) : i18n._(msg`by ${who}`),
+    };
   }
-  if (e.action === "archive") return { at, label: "Archived", detail: `by ${who}` };
-  if (e.action === "restore") return { at, label: "Restored", detail: `by ${who}` };
-  return { at, label: e.action, detail: `by ${who}` };
+  if (e.action === "archive")
+    return { at, label: i18n._(msg`Archived`), detail: i18n._(msg`by ${who}`) };
+  if (e.action === "restore")
+    return { at, label: i18n._(msg`Restored`), detail: i18n._(msg`by ${who}`) };
+  return { at, label: e.action, detail: i18n._(msg`by ${who}`) };
 }
 
 export interface WordProps {
@@ -113,12 +139,17 @@ export interface WordProps {
   variant: "page" | "panel";
 }
 
-const gradeName: Record<number, string> = { 1: "Forgot", 2: "Hard", 3: "Good", 4: "Easy" };
-const stateName: Record<number, string> = {
-  0: "New",
-  1: "Learning",
-  2: "Known",
-  3: "Relearning",
+const gradeName: Record<number, MessageDescriptor> = {
+  1: msg`Forgot`,
+  2: msg`Hard`,
+  3: msg`Good`,
+  4: msg`Easy`,
+};
+const stateName: Record<number, MessageDescriptor> = {
+  0: msg`New`,
+  1: msg`Learning`,
+  2: msg`Known`,
+  3: msg`Relearning`,
 };
 
 /** The FSRS memory model, or null for a state that has none yet. */
@@ -132,24 +163,24 @@ function readFsrs(state: CardState | null): FsrsCard | null {
   }
 }
 
-const day = (d: Date) =>
-  d.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
-
-function dueLabel(due: Date, now = Date.now()): string {
+/** "Due in 3 days", as the interface language says it. Read the message at render time. */
+function dueLabel(i18n: I18n, due: Date, now = Date.now()): string {
   const days = Math.round((due.getTime() - now) / 86_400_000);
-  if (due.getTime() <= now || days < 1) return "Due today";
-  if (days === 1) return "Due tomorrow";
-  if (days < 30) return `Due in ${days} days`;
+  if (due.getTime() <= now || days < 1) return i18n._(msg`Due today`);
+  if (days === 1) return i18n._(msg`Due tomorrow`);
+  if (days < 30)
+    return i18n._(msg`${plural(days, { one: "Due in # day", other: "Due in # days" })}`);
   const months = Math.round(days / 30);
-  return `Due in ${months} ${months === 1 ? "month" : "months"}`;
+  return i18n._(msg`${plural(months, { one: "Due in # month", other: "Due in # months" })}`);
 }
 
-function spanLabel(days: number): string {
-  if (days < 1) return "within the day";
-  if (days === 1) return "a day";
-  if (days < 30) return `${days} days`;
+/** A stretch of days in words: "a day", "12 days", "3 months". */
+function spanLabel(i18n: I18n, days: number): string {
+  if (days < 1) return i18n._(msg`within the day`);
+  if (days === 1) return i18n._(msg`a day`);
+  if (days < 30) return i18n._(msg`${plural(days, { one: "# day", other: "# days" })}`);
   const months = Math.round(days / 30);
-  return `${months} ${months === 1 ? "month" : "months"}`;
+  return i18n._(msg`${plural(months, { one: "# month", other: "# months" })}`);
 }
 
 /** The mark beside a grade: four tones of ink, full to dashed, so Forgot is never red. */
@@ -182,6 +213,7 @@ function ReadField({
   placeholder: string;
   onEdit?: (() => void) | undefined;
 }) {
+  const { t, i18n } = useLingui();
   return (
     <div className="grid gap-1">
       <div className="flex items-baseline justify-between gap-3">
@@ -192,7 +224,7 @@ function ReadField({
         type="button"
         onClick={onEdit}
         aria-disabled={!onEdit}
-        aria-label={`Edit ${label.toLowerCase()}`}
+        aria-label={t`Edit ${label.toLocaleLowerCase(i18n.locale)}`}
         className={clsx(
           "-mx-2 flex min-h-11 items-center rounded-sm px-2 py-1 text-left text-md leading-relaxed transition-colors",
           onEdit && "hoverable:hover:bg-plate-2",
@@ -231,6 +263,7 @@ export function WordView({
   onPlayAudio,
   variant,
 }: WordProps) {
+  const { t, i18n } = useLingui();
   const schedules = (states?.length ? states : state ? [state] : []).map((st) => ({
     st,
     fsrs: readFsrs(st),
@@ -239,16 +272,25 @@ export function WordView({
   const readOnly = !onSave;
   // Reviews and writes in one order, newest first, so a fresh edit sits above older reviews.
   const timeline = [
-    ...(reviews ?? []).map((r) => ({
-      kind: "review" as const,
-      key: `r-${r.id}`,
-      at: new Date(r.reviewedAt),
-      rating: r.rating,
-      label: "",
-      detail: `${asked ? `${r.direction} · ` : ""}${
-        r.elapsedDays === 0 && r.state === 0 ? "first time" : `after ${spanLabel(r.elapsedDays)}`
-      }${r.scheduledDays > 0 ? `, next in ${spanLabel(r.scheduledDays)}` : ", back within the day"}`,
-    })),
+    ...(reviews ?? []).map((r) => {
+      const when =
+        r.elapsedDays === 0 && r.state === 0
+          ? t`first time`
+          : t`after ${spanLabel(i18n, r.elapsedDays)}`;
+      const then =
+        r.scheduledDays > 0
+          ? t`next in ${spanLabel(i18n, r.scheduledDays)}`
+          : t`back within the day`;
+      const direction = directionLabel(r.direction).toLocaleLowerCase(i18n.locale);
+      return {
+        kind: "review" as const,
+        key: `r-${r.id}`,
+        at: new Date(r.reviewedAt),
+        rating: r.rating,
+        label: "",
+        detail: asked ? t`${direction} · ${when}, ${then}` : t`${when}, ${then}`,
+      };
+    }),
     ...(events ?? []).map((e, i) => ({
       kind: "event" as const,
       key: `e-${e.id ?? i}`,
@@ -259,6 +301,10 @@ export function WordView({
     })),
   ].sort((a, b) => b.at.getTime() - a.at.getTime());
   const elsewhere = (decks ?? []).filter((d) => d.id !== card.deckId);
+  const gradeLabel = (rating: number) => {
+    const name = gradeName[rating];
+    return name ? i18n._(name) : String(rating);
+  };
   // At rest the word reads as a page. Editing is asked for, one field or all of them.
   const [editing, setEditing] = useState(false);
   const [moving, setMoving] = useState(false);
@@ -294,21 +340,21 @@ export function WordView({
 
   const source = (s: Card["meaningSource"]) =>
     s === "ai"
-      ? "The AI wrote this"
+      ? t`The AI wrote this`
       : s === "manual"
-        ? "You wrote this"
+        ? t`You wrote this`
         : s === "lesson"
-          ? "From the lesson"
+          ? t`From the lesson`
           : undefined;
 
   const ai = (s: Card["meaningSource"]) => (s === "ai" ? "border-dashed border-edge-2" : "");
 
   const walk = (
     <>
-      <IconButton label="Previous word" size="sm" onClick={onPrev} aria-disabled={!hasPrev}>
+      <IconButton label={t`Previous word`} size="sm" onClick={onPrev} aria-disabled={!hasPrev}>
         <ArrowUp />
       </IconButton>
-      <IconButton label="Next word" size="sm" onClick={onNext} aria-disabled={!hasNext}>
+      <IconButton label={t`Next word`} size="sm" onClick={onNext} aria-disabled={!hasNext}>
         <ArrowDown />
       </IconButton>
     </>
@@ -326,7 +372,7 @@ export function WordView({
           <button
             type="button"
             onClick={onBack}
-            className="-ml-1 inline-flex min-h-10 items-center gap-0.5 pr-2 text-sm text-muted hoverable:hover:text-text"
+            className="-ms-1 inline-flex min-h-10 items-center gap-0.5 pe-2 text-sm text-muted hoverable:hover:text-text"
           >
             <ChevronLeft className="size-4" aria-hidden="true" />
             {deckName}
@@ -339,30 +385,30 @@ export function WordView({
           <Menu>
             <MenuTrigger>
               {(p) => (
-                <IconButton label="Word options" size="sm" {...p}>
+                <IconButton label={t`Word options`} size="sm" {...p}>
                   <MoreHorizontal />
                 </IconButton>
               )}
             </MenuTrigger>
             <MenuList>
               <MenuItem icon={<Pencil />} onSelect={() => startEditing()} disabled={readOnly}>
-                Edit
+                <Trans>Edit</Trans>
               </MenuItem>
               <MenuItem
                 icon={<FolderInput />}
                 onSelect={() => setMoving(true)}
                 disabled={!onMove || elsewhere.length === 0}
               >
-                Move to…
+                <Trans>Move to…</Trans>
               </MenuItem>
               <MenuSeparator />
               <MenuItem icon={<Archive />} tone="danger" onSelect={onArchive} disabled={!onArchive}>
-                Archive
+                <Trans>Archive</Trans>
               </MenuItem>
             </MenuList>
           </Menu>
           {variant === "panel" && (
-            <IconButton label="Close" size="sm" onClick={onClose}>
+            <IconButton label={t`Close`} size="sm" onClick={onClose}>
               <X />
             </IconButton>
           )}
@@ -376,7 +422,7 @@ export function WordView({
           </span>
           {onPlayAudio && card.language && (
             <IconButton
-              label={`Say ${card.term}`}
+              label={t`Say ${card.term}`}
               variant="secondary"
               round
               size="sm"
@@ -388,17 +434,26 @@ export function WordView({
         </h1>
         {card.pronunciation && <p className="text-md text-muted">{card.pronunciation}</p>}
         <p className="text-sm text-muted">
-          {[card.language ? languageName(card.language) : null, card.source ?? deckName]
+          {[
+            card.language ? languageName(card.language) : null,
+            card.source ?? deckName,
+            schedules.length > 0
+              ? t`asked by ${listOf(
+                  schedules.map((x) =>
+                    directionLabel(x.st.direction).toLocaleLowerCase(i18n.locale),
+                  ),
+                  i18n.locale,
+                )}`
+              : null,
+          ]
             .filter(Boolean)
             .join(" · ")}
-          {schedules.length > 0 &&
-            ` · asked by ${schedules.map((x) => x.st.direction).join(" and ")}`}
         </p>
       </header>
 
       {editing ? (
         <div className="grid gap-4">
-          <Field label="Meaning" aside={source(card.meaningSource)}>
+          <Field label={t`Meaning`} aside={source(card.meaningSource)}>
             <Input
               ref={meaningRef}
               key={`m-${card.id}`}
@@ -408,63 +463,63 @@ export function WordView({
                 if (e.key === "Escape") setEditing(false);
               }}
               className={ai(card.meaningSource)}
-              placeholder="What it means"
+              placeholder={t`What it means`}
             />
           </Field>
-          <Field label="Example" aside={source(card.exampleSource)}>
+          <Field label={t`Example`} aside={source(card.exampleSource)}>
             <Textarea
               ref={exampleRef}
               key={`e-${card.id}`}
               defaultValue={card.example ?? ""}
               onBlur={(e) => commit("example", card.example)(e.target.value)}
               className={clsx("min-h-[68px]", ai(card.exampleSource))}
-              placeholder="A sentence it lives in"
+              placeholder={t`A sentence it lives in`}
               rows={2}
             />
           </Field>
-          <Field label="Notes">
+          <Field label={t`Notes`}>
             <Textarea
               ref={notesRef}
               key={`n-${card.id}`}
               defaultValue={card.notes ?? ""}
               onBlur={(e) => commit("notes", card.notes)(e.target.value)}
-              placeholder="Anything to remember it by"
+              placeholder={t`Anything to remember it by`}
               rows={2}
             />
           </Field>
           <div className="flex justify-end">
             <Button size="sm" onClick={() => setEditing(false)}>
               <Check aria-hidden="true" />
-              Done
+              <Trans>Done</Trans>
             </Button>
           </div>
         </div>
       ) : (
         <div className="grid gap-4">
           <ReadField
-            label="Meaning"
+            label={t`Meaning`}
             aside={source(card.meaningSource)}
             value={card.meaning}
-            placeholder="Add a meaning"
+            placeholder={t`Add a meaning`}
             onEdit={readOnly ? undefined : () => startEditing("meaning")}
           />
           <ReadField
-            label="Example"
+            label={t`Example`}
             aside={source(card.exampleSource)}
             value={card.example}
-            placeholder="Add a sentence it lives in"
+            placeholder={t`Add a sentence it lives in`}
             onEdit={readOnly ? undefined : () => startEditing("example")}
           />
           <ReadField
-            label="Notes"
+            label={t`Notes`}
             value={card.notes}
-            placeholder="Anything to remember it by"
+            placeholder={t`Anything to remember it by`}
             onEdit={readOnly ? undefined : () => startEditing("notes")}
           />
         </div>
       )}
 
-      <Sheet open={moving} onOpenChange={setMoving} title={`Move “${card.term}” to`}>
+      <Sheet open={moving} onOpenChange={setMoving} title={t`Move “${card.term}” to`}>
         <ul className="grid gap-1">
           {elsewhere.map((d) => (
             <li key={d.id}>
@@ -485,17 +540,23 @@ export function WordView({
       </Sheet>
 
       <section className="grid gap-4 border-t border-edge pt-5">
-        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">Right now</h2>
+        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+          <Trans>Right now</Trans>
+        </h2>
         {schedules.length === 0 && (
-          <p className="text-sm text-text-2">Not asked yet. It joins the next review.</p>
+          <p className="text-sm text-text-2">
+            <Trans>Not asked yet. It joins the next review.</Trans>
+          </p>
         )}
         {schedules.map(({ st, fsrs }) => {
           const recall = fsrs ? retrievability(fsrs) : 0;
-          const label = stateName[st.state] ?? "New";
+          const label = i18n._(stateName[st.state] ?? msg`New`);
           return (
             <div key={st.id} className="grid gap-3">
               {asked && (
-                <h3 className="text-sm font-medium capitalize text-text-2">{st.direction}</h3>
+                <h3 className="text-sm font-medium capitalize text-text-2">
+                  {directionLabel(st.direction)}
+                </h3>
               )}
               {fsrs ? (
                 <>
@@ -503,46 +564,59 @@ export function WordView({
                     <div className="grid gap-0.5">
                       <dd className="text-lg font-medium tracking-[-0.01em]">{label}</dd>
                       <dt className="text-xs text-muted">
-                        {fsrs.reps} {fsrs.reps === 1 ? "review" : "reviews"}
-                        {fsrs.lapses > 0 &&
-                          `, ${fsrs.lapses} ${fsrs.lapses === 1 ? "lapse" : "lapses"}`}
+                        {fsrs.lapses > 0
+                          ? t`${plural(fsrs.reps, { one: "# review", other: "# reviews" })}, ${plural(
+                              fsrs.lapses,
+                              { one: "# lapse", other: "# lapses" },
+                            )}`
+                          : t`${plural(fsrs.reps, { one: "# review", other: "# reviews" })}`}
                       </dt>
                     </div>
                     <div className="grid gap-0.5">
                       <dd className="text-lg font-medium tracking-[-0.01em]">
-                        {dueLabel(new Date(st.due))}
+                        {dueLabel(i18n, new Date(st.due))}
                       </dd>
                       <dt className="text-xs text-muted">
                         {fsrs.scheduled_days > 0
-                          ? `scheduled after ${spanLabel(fsrs.scheduled_days)}`
-                          : "still in its first steps"}
+                          ? t`scheduled after ${spanLabel(i18n, fsrs.scheduled_days)}`
+                          : t`still in its first steps`}
                       </dt>
                     </div>
                     <div className="grid gap-0.5">
                       <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
-                        {Math.round(recall * 100)}%
+                        {i18n.number(recall, { style: "percent", maximumFractionDigits: 0 })}
                       </dd>
-                      <dt className="text-xs text-muted">would come back right now</dt>
+                      <dt className="text-xs text-muted">
+                        <Trans>would come back right now</Trans>
+                      </dt>
                     </div>
                     <div className="grid gap-0.5">
                       <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
-                        {spanLabel(Math.round(fsrs.stability))}
+                        {spanLabel(i18n, Math.round(fsrs.stability))}
                       </dd>
                       <dt className="text-xs text-muted">
-                        stability · difficulty {fsrs.difficulty.toFixed(1)}
+                        <Trans>
+                          stability · difficulty{" "}
+                          {i18n.number(fsrs.difficulty, {
+                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 1,
+                          })}
+                        </Trans>
                       </dt>
                     </div>
                   </dl>
                   <p className="text-sm text-text-2">
                     {st.state === 2
-                      ? "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
+                      ? t`Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps.`
                       : st.state === 0
-                        ? "New means it has not been asked yet. It joins the next review."
-                        : "Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart."}
+                        ? t`New means it has not been asked yet. It joins the next review.`
+                        : t`Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart.`}
                   </p>
                 </>
               ) : (
-                <p className="text-sm text-text-2">Not asked yet. It joins the next review.</p>
+                <p className="text-sm text-text-2">
+                  <Trans>Not asked yet. It joins the next review.</Trans>
+                </p>
               )}
             </div>
           );
@@ -552,7 +626,9 @@ export function WordView({
       {(reviews || events) && (
         <section className="grid gap-2 border-t border-edge pt-5">
           <div className="flex items-baseline justify-between gap-3">
-            <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">History</h2>
+            <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+              <Trans>History</Trans>
+            </h2>
             {reviews && reviews.length > 0 && (
               <span className="flex items-center gap-1" aria-hidden="true">
                 {[...reviews]
@@ -572,15 +648,17 @@ export function WordView({
                 key={item.key}
                 className="grid grid-cols-[5.5rem_minmax(0,1fr)] items-baseline gap-3 py-2 text-sm"
               >
-                <span className="text-text-2 tabular-nums">{day(item.at)}</span>
+                <span className="text-text-2 tabular-nums">
+                  {i18n.date(item.at, { weekday: "short", day: "numeric", month: "short" })}
+                </span>
                 <span className="min-w-0">
                   {item.kind === "review" ? (
-                    <span className="mr-2 inline-flex items-center gap-2 font-medium">
+                    <span className="me-2 inline-flex items-center gap-2 font-medium">
                       <GradeMark rating={item.rating} />
-                      {gradeName[item.rating] ?? item.rating}
+                      {gradeLabel(item.rating)}
                     </span>
                   ) : (
-                    <span className="mr-2 inline-flex items-center gap-2 text-text-2">
+                    <span className="me-2 inline-flex items-center gap-2 text-text-2">
                       <i
                         aria-hidden="true"
                         className="inline-block size-2.5 shrink-0 rounded-full border-[1.5px] border-edge-2 bg-plate-2"
@@ -592,7 +670,11 @@ export function WordView({
                 </span>
               </li>
             ))}
-            {timeline.length === 0 && <li className="py-2 text-sm text-muted">Nothing yet.</li>}
+            {timeline.length === 0 && (
+              <li className="py-2 text-sm text-muted">
+                <Trans>Nothing yet.</Trans>
+              </li>
+            )}
           </ol>
         </section>
       )}

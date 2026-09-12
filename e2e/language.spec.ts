@@ -16,6 +16,7 @@ test("a learner can switch the app language and keep it after reload", async ({
 
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "uk");
+  await expect(page.getByRole("heading", { name: "Тут поки нічого" })).toBeVisible();
   await page.goto("/you");
   await page.getByRole("combobox", { name: "Мова застосунку" }).selectOption("en");
   await expect(page.locator("html")).toHaveAttribute("lang", "en");

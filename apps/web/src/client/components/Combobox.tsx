@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, ChevronDown, Search } from "lucide-react";
-import { type KeyboardEvent, useEffect, useId, useRef, useState } from "react";
+import { type KeyboardEvent, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { controlBase, controlSize, useControlProps } from "./Field";
 
 export interface ComboboxOption {
@@ -34,10 +34,12 @@ interface Props {
  * A list too long to read is a list you search. Closed, it is the same box as every other
  * control; open, the box becomes the search field and the list unrolls underneath it.
  *
- * The list is in the normal flow rather than floating. A floating layer would have to escape
- * the sheet's scroll, and inside the phone's drawer it cannot: vaul translates the drawer to
- * drag it, which makes it the containing block for anything fixed. In the flow there is
- * nothing to escape, on either shape, and the panel simply grows.
+ * The list floats over whatever is under it, in the browser's top layer through the Popover
+ * API. That is what lets it escape both places a floating layer usually cannot: the phone's
+ * drawer, which vaul translates to drag and so becomes the containing block for anything
+ * fixed, and the desktop sheet, a `<dialog>` that is itself in the top layer and would sit
+ * over a portal. The list is positioned from the box's own rectangle and follows it on
+ * scroll and resize, below the box when there is room and above it otherwise.
  */
 export function Combobox({
   value,
@@ -60,6 +62,7 @@ export function Combobox({
   const [active, setActive] = useState(0);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const anchorRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const listId = useId();
   const optionId = useId();
@@ -90,6 +93,37 @@ export function Combobox({
     if (!open) return;
     listRef.current?.children[active]?.scrollIntoView({ block: "nearest" });
   }, [active, open]);
+
+  // Show the list in the top layer and keep it under (or over) the search box.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the list's height follows its rows, and which side it opens on depends on that height
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    const anchor = anchorRef.current;
+    if (!open || !list || !anchor) return;
+    if (typeof list.showPopover === "function" && !list.matches(":popover-open")) {
+      list.showPopover();
+    }
+    const place = () => {
+      const box = anchor.getBoundingClientRect();
+      const gap = 6;
+      const height = list.offsetHeight;
+      const below = window.innerHeight - box.bottom - gap;
+      const fitsBelow = below >= height || below >= box.top - gap;
+      const top = fitsBelow ? box.bottom + gap : box.top - gap - height;
+      list.style.top = `${Math.max(8, top)}px`;
+      list.style.left = `${box.left}px`;
+      list.style.width = `${box.width}px`;
+      list.style.transformOrigin = fitsBelow ? "top left" : "bottom left";
+    };
+    place();
+    window.addEventListener("resize", place);
+    document.addEventListener("scroll", place, true);
+    return () => {
+      window.removeEventListener("resize", place);
+      document.removeEventListener("scroll", place, true);
+      if (list.matches(":popover-open")) list.hidePopover();
+    };
+  }, [open, rows.length]);
 
   const start = (seed: string) => {
     setQuery(seed);
@@ -163,8 +197,8 @@ export function Combobox({
   }
 
   return (
-    <div className="grid gap-1.5">
-      <div className="relative">
+    <div>
+      <div ref={anchorRef} className="relative">
         <Search
           className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-muted"
           aria-hidden="true"
@@ -204,7 +238,10 @@ export function Combobox({
         // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: a listbox is a list
         role="listbox"
         aria-label={searchLabel}
-        className="edge max-h-56 overflow-y-auto overscroll-contain rounded-md bg-plate p-1"
+        popover="manual"
+        // Fixed and unset insets: the popover's own styles centre it otherwise. The rest
+        // undoes the border, colours and margin the browser gives a popover.
+        className="enter-menu edge fixed inset-auto z-(--z-dropdown) m-0 max-h-56 overflow-y-auto overscroll-contain rounded-md border-0 bg-plate p-1 text-text"
       >
         {rows.map((row, i) => {
           const on = (row.value || null) === value;

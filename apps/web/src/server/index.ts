@@ -101,6 +101,14 @@ app.get("/robots.txt", describe({ hide: true }), (c) => {
   });
 });
 
+// Local development only: personas, seeding and due-date knobs. The import is behind a
+// build-time flag, so the production Worker never contains these modules; the routes also
+// answer 404 on any origin that is not loopback, as defence in depth.
+if (import.meta.env.DEV) {
+  const { dev } = await import("./routes/dev");
+  app.route("/api/dev", dev);
+}
+
 // Everything else under /api needs a session cookie or an API key. What the caller may then
 // do is declared on each route with describe(): writes need the write scope, learner-only
 // routes need the learner. A route without describe() has no such check, so every route

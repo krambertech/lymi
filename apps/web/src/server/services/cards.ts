@@ -1,11 +1,11 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
-import { emptyState, expandDirections, newId, normaliseTerm, serializeState } from "@lymi/core";
-import { and, asc, desc, eq, inArray, isNotNull, isNull, or, sql } from "@lymi/core/db";
+import { newId, normaliseTerm } from "@lymi/core";
+import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
-import { audit } from "../audit";
+import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { fillStates, learnersOf, memberOf } from "./members";
+import { memberOf, stateStatementsForCard } from "./members";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -49,8 +49,6 @@ export async function addCards(
       .where(and(inArray(schema.decks.id, ids), memberOf(userId), isNull(schema.decks.archivedAt))),
   );
   const deckById = new Map(decks.map((d) => [d.id, d]));
-  const learnersByDeck = new Map<string, string[]>();
-  for (const deck of decks) learnersByDeck.set(deck.id, await learnersOf({ db }, deck.id));
 
   // Resolve language and key per input, then look up every key in one query.
   const prepared = inputs.map((input) => {
@@ -83,8 +81,8 @@ export async function addCards(
 
   const now = new Date();
   const outcomes: AddCardOutcome[] = [];
-  // One group per card: the card, its states, its audit row. A group never splits across
-  // batches, so a failed batch leaves no card without states.
+  // One group per card: the card, live learner states, and its audit row. A group never
+  // splits across batches, so a failed batch leaves no partially created card.
   const groups: Statement[][] = [];
 
   for (const { input, deck, language, key } of prepared) {
@@ -121,25 +119,10 @@ export async function addCards(
       createdAt: now,
       updatedAt: now,
     };
-    const group: Statement[] = [db.insert(schema.cards).values(card)];
-    for (const learner of learnersByDeck.get(deck.id) ?? [userId]) {
-      for (const direction of expandDirections(input.directions ?? deck.directions)) {
-        group.push(
-          db.insert(schema.cardStates).values({
-            id: newId(),
-            cardId: id,
-            userId: learner,
-            direction,
-            due: now,
-            state: 0,
-            fsrs: serializeState(emptyState(now)),
-          }),
-        );
-      }
-    }
-    group.push(
-      db.insert(schema.auditLog).values({
-        id: newId(),
+    groups.push([
+      db.insert(schema.cards).values(card),
+      ...stateStatementsForCard(db, id, now),
+      auditStatement(db, {
         userId,
         actor,
         action: "create",
@@ -147,8 +130,7 @@ export async function addCards(
         entityId: id,
         payload: input,
       }),
-    );
-    groups.push(group);
+    ]);
     // Later inputs in this batch with the same key are duplicates of this one.
     existing.set(dupKey(language, key), { card, deckName: deck.name });
     outcomes.push({ status: "added", card });
@@ -161,9 +143,8 @@ export async function addCards(
 type Statement = Parameters<Db["batch"]>[0][number];
 
 /**
- * D1 caps a batch, and a lesson of 200 terms in a shared deck is thousands of statements.
- * Whole groups go into a batch, up to about fifty statements, so a card and its states
- * always land together.
+ * D1 caps a batch. Whole groups go into a batch, up to about fifty statements, so a card,
+ * its live membership fan-out, and its audit row always land together.
  */
 async function runInBatches(db: Db, groups: Statement[][]) {
   let batch: Statement[] = [];
@@ -335,7 +316,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
   const pronunciationChanged =
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
-  await db
+  const update = db
     .update(schema.cards)
     .set({
       ...patch,
@@ -344,42 +325,23 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       updatedAt: new Date(),
     })
     .where(eq(schema.cards.id, id));
-  const askedChanged =
-    (patch.directions !== undefined && patch.directions !== current.directions) ||
-    (patch.deckId !== undefined && patch.deckId !== current.deckId);
-  if (askedChanged) await openCardDirections(ctx, id);
-  await audit(db, {
-    userId,
-    actor,
-    action: "update",
-    entity: "card",
-    entityId: id,
-    payload: patch,
-  });
+  await runInBatches(db, [
+    [
+      update,
+      ...(patch.directions !== undefined || patch.deckId !== undefined
+        ? stateStatementsForCard(db, id)
+        : []),
+      auditStatement(db, {
+        userId,
+        actor,
+        action: "update",
+        entity: "card",
+        entityId: id,
+        payload: patch,
+      }),
+    ],
+  ]);
   return getCard(ctx, id);
-}
-
-/**
- * A card whose own directions or deck changed may now be asked a way it has no state for,
- * for the owner or for any member. Fill the gap, due now, for every learner of its deck.
- */
-async function openCardDirections({ db }: ServiceContext, cardId: string) {
-  const [row] = await db
-    .select({
-      deckId: schema.cards.deckId,
-      directions: sql<
-        "recognition" | "production" | "both"
-      >`coalesce(cards.directions, decks.directions)`,
-    })
-    .from(schema.cards)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(eq(schema.cards.id, cardId));
-  if (!row) return;
-  await fillStates(
-    { db },
-    [{ cardId, directions: expandDirections(row.directions) }],
-    await learnersOf({ db }, row.deckId),
-  );
 }
 
 /** Archive, never delete. Undo is `restoreCard`. */
@@ -394,17 +356,21 @@ export function restoreCard(ctx: ServiceContext, id: string) {
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
   const { db, userId, actor } = ctx;
   await ownedCard(ctx, id);
-  const result = await db
+  const update = db
     .update(schema.cards)
     .set({ archivedAt, updatedAt: new Date() })
-    .where(eq(schema.cards.id, id))
-    .returning({ id: schema.cards.id });
-  if (result.length === 0) throw notFound("Card");
-  await audit(db, {
-    userId,
-    actor,
-    action: archivedAt ? "archive" : "restore",
-    entity: "card",
-    entityId: id,
-  });
+    .where(eq(schema.cards.id, id));
+  await runInBatches(db, [
+    [
+      update,
+      ...(archivedAt === null ? stateStatementsForCard(db, id) : []),
+      auditStatement(db, {
+        userId,
+        actor,
+        action: archivedAt ? "archive" : "restore",
+        entity: "card",
+        entityId: id,
+      }),
+    ],
+  ]);
 }

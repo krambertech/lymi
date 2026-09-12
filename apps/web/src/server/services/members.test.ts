@@ -1,6 +1,7 @@
+import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import type { Db } from "../db";
-import { addCards, archiveCard, getCard, searchCards, updateCard } from "./cards";
+import { type Db, schema } from "../db";
+import { addCards, archiveCard, getCard, restoreCard, searchCards, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck, listDeckCards, listDecks, updateDeck } from "./decks";
 import { join, leave, listMembers, removeMember } from "./members";
@@ -111,6 +112,18 @@ describe("a member studies the owner's deck", () => {
 });
 
 describe("what the owner changes reaches every member", () => {
+  it("joining while the owner adds a card leaves a complete learner state", async () => {
+    const { deck } = await sharedDeck("Kool", []);
+
+    await Promise.all([
+      join(anna, deck.id),
+      addCards(kateryna, [{ deckId: deck.id, term: "õpik" }]),
+    ]);
+
+    expect(await dueFor(anna, deck.id)).toBe(1);
+    expect(await dueFor(kateryna, deck.id)).toBe(1);
+  });
+
   it("a new card is new for the member", async () => {
     const { deck } = await sharedDeck("Toit", ["leib"]);
     await join(anna, deck.id);
@@ -159,6 +172,39 @@ describe("what the owner changes reaches every member", () => {
 
     expect(await dueFor(anna, deck.id)).toBe(2);
   });
+
+  it("repeating a card direction update repairs a missing member state", async () => {
+    const { deck, cards } = await sharedDeck("Aeg", ["hommik"]);
+    const first = cards[0];
+    if (!first) throw new Error("no card");
+    await join(anna, deck.id);
+    await updateCard(kateryna, first.id, { directions: "both" });
+    await db
+      .delete(schema.cardStates)
+      .where(
+        and(
+          eq(schema.cardStates.cardId, first.id),
+          eq(schema.cardStates.userId, "anna"),
+          eq(schema.cardStates.direction, "production"),
+        ),
+      );
+
+    await updateCard(kateryna, first.id, { directions: "both" });
+
+    expect(await dueFor(anna, deck.id)).toBe(2);
+  });
+
+  it("restoring a card reaches a member who joined while it was archived", async () => {
+    const { deck, cards } = await sharedDeck("Meri", ["laev"]);
+    const first = cards[0];
+    if (!first) throw new Error("no card");
+    await archiveCard(kateryna, first.id);
+    await join(anna, deck.id);
+
+    await restoreCard(kateryna, first.id);
+
+    expect(await dueFor(anna, deck.id)).toBe(1);
+  });
 });
 
 describe("leaving and being removed", () => {
@@ -188,12 +234,28 @@ describe("leaving and being removed", () => {
     expect(await listMembers(kateryna, deck.id)).toEqual([]);
   });
 
-  it("joining twice is one membership, and the owner joining is a no-op", async () => {
-    const { deck } = await sharedDeck("Pere", ["ema"]);
+  it("joining twice repairs states without duplicating membership or audit", async () => {
+    const { deck, cards } = await sharedDeck("Pere", ["ema"]);
+    const first = cards[0];
+    if (!first) throw new Error("no card");
     await join(anna, deck.id);
+    await db
+      .delete(schema.cardStates)
+      .where(and(eq(schema.cardStates.cardId, first.id), eq(schema.cardStates.userId, "anna")));
     await join(anna, deck.id);
     expect(await join(kateryna, deck.id)).toEqual({ ok: true, role: "owner" });
     expect(await listMembers(kateryna, deck.id)).toHaveLength(1);
     expect(await dueFor(anna, deck.id)).toBe(1);
+    const audits = await db
+      .select({ id: schema.auditLog.id })
+      .from(schema.auditLog)
+      .where(
+        and(
+          eq(schema.auditLog.action, "join"),
+          eq(schema.auditLog.entityId, deck.id),
+          eq(schema.auditLog.userId, "kateryna"),
+        ),
+      );
+    expect(audits).toHaveLength(1);
   });
 });

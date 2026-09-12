@@ -1,8 +1,8 @@
 import type { Direction, MemberRole } from "@lymi/core";
-import { emptyState, expandDirections, newId, serializeState } from "@lymi/core";
+import { emptyState, newId, serializeState } from "@lymi/core";
 import { and, eq, inArray, isNull, sql } from "@lymi/core/db";
-import { audit } from "../audit";
-import { schema } from "../db";
+import { audit, auditStatement } from "../audit";
+import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 
 /**
@@ -83,9 +83,8 @@ export async function learnersOf(
 }
 
 /**
- * Give each learner a state, due now, for every card and direction they are missing. This
- * is the one way states come into being after a card exists: a new member, a direction
- * turned on, a card moved or overridden. Nothing is removed; `asked` handles the rest.
+ * Backfill a known set of learners and cards, due now, without replacing existing state.
+ * Deck-wide changes use this path; card and membership writes use transactional selects.
  */
 export async function fillStates(
   { db }: Pick<ServiceContext, "db">,
@@ -143,27 +142,76 @@ export async function fillStates(
   }
 }
 
-/** The cards in a deck that follow the deck's directions, with what they are asked. */
-async function askedInDeck({ db }: Pick<ServiceContext, "db">, deckId: string) {
-  const [deck] = await db
-    .select({ directions: schema.decks.directions })
-    .from(schema.decks)
-    .where(eq(schema.decks.id, deckId));
-  if (!deck) throw notFound("Deck");
-  const cards = await db
-    .select({ id: schema.cards.id, directions: schema.cards.directions })
-    .from(schema.cards)
-    .where(and(eq(schema.cards.deckId, deckId), isNull(schema.cards.archivedAt)));
-  return cards.map((card) => ({
-    cardId: card.id,
-    directions: expandDirections(card.directions ?? deck.directions),
-  }));
+type Statement = Parameters<Db["batch"]>[0][number];
+const directions = ["recognition", "production"] as const;
+
+function stateInsert(db: Db, select: ReturnType<typeof sql>) {
+  return db
+    .insert(schema.cardStates)
+    .select(select)
+    .onConflictDoNothing({
+      target: [schema.cardStates.cardId, schema.cardStates.userId, schema.cardStates.direction],
+    });
+}
+
+/** Prepare one card's state rows from membership seen inside the surrounding transaction. */
+export function stateStatementsForCard(db: Db, cardId: string, now = new Date()): Statement[] {
+  const due = now.getTime();
+  const fsrs = serializeState(emptyState(now));
+  return directions.map((direction) =>
+    stateInsert(
+      db,
+      sql`with target as (
+        select cards.id as card_id, decks.id as deck_id, decks.user_id as owner_id,
+          coalesce(cards.directions, decks.directions) as directions
+        from cards join decks on decks.id = cards.deck_id
+        where cards.id = ${cardId}
+      ), learners(user_id) as (
+        select owner_id from target
+        union all
+        select deck_members.user_id from deck_members
+          join target on target.deck_id = deck_members.deck_id
+        where deck_members.removed_at is null
+      )
+      select lower(hex(randomblob(10))), target.card_id, learners.user_id, ${direction},
+        ${due}, 0, ${fsrs}, null, ${due}, ${due}
+      from target cross join learners
+      where target.directions = 'both' or target.directions = ${direction}`,
+    ),
+  );
+}
+
+/** Prepare every card state, including archived ones, for one learner joining a deck. */
+function stateStatementsForLearner(
+  db: Db,
+  deckId: string,
+  userId: string,
+  now = new Date(),
+): Statement[] {
+  const due = now.getTime();
+  const fsrs = serializeState(emptyState(now));
+  return directions.map((direction) =>
+    stateInsert(
+      db,
+      sql`select lower(hex(randomblob(10))), cards.id, ${userId}, ${direction},
+        ${due}, 0, ${fsrs}, null, ${due}, ${due}
+      from cards join decks on decks.id = cards.deck_id
+      where cards.deck_id = ${deckId}
+        and (coalesce(cards.directions, decks.directions) = 'both'
+          or coalesce(cards.directions, decks.directions) = ${direction})`,
+    ),
+  );
+}
+
+async function runBatch(db: Db, statements: Statement[]) {
+  const [first, ...rest] = statements;
+  if (first) await db.batch([first, ...rest]);
 }
 
 /**
- * Become a member of a deck. Idempotent: joining a deck already joined changes nothing. A
- * member the owner removed is refused until a named invitation clears the block. The join
- * lands in the owner's Activity, because a new reader of their deck is worth seeing.
+ * Become a member of a deck. A repeat join repairs missing states without duplicating the
+ * membership or audit. A member the owner removed is refused until a named invitation
+ * clears the block. The join lands in the owner's Activity.
  */
 export async function join(
   { db, userId, actor }: ServiceContext,
@@ -181,42 +229,46 @@ export async function join(
     .select()
     .from(schema.deckMembers)
     .where(and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, userId)));
-  if (existing && !existing.removedAt) return { ok: true as const, role: existing.role };
+  const now = new Date();
+  if (existing && !existing.removedAt) {
+    await runBatch(db, stateStatementsForLearner(db, deckId, userId, now));
+    return { ok: true as const, role: existing.role };
+  }
   if (existing?.removedBy === "owner") {
     throw new ServiceError("forbidden", "The owner removed you from this deck");
   }
 
-  const now = new Date();
-  if (existing) {
-    await db
-      .update(schema.deckMembers)
-      .set({
-        removedAt: null,
-        removedBy: null,
+  const membership = existing
+    ? db
+        .update(schema.deckMembers)
+        .set({
+          removedAt: null,
+          removedBy: null,
+          joinedAt: now,
+          invitationId: opts.invitationId ?? existing.invitationId,
+          updatedAt: now,
+        })
+        .where(eq(schema.deckMembers.id, existing.id))
+    : db.insert(schema.deckMembers).values({
+        id: newId(),
+        deckId,
+        userId,
+        role: "learner",
+        invitationId: opts.invitationId ?? null,
         joinedAt: now,
-        invitationId: opts.invitationId ?? existing.invitationId,
-        updatedAt: now,
-      })
-      .where(eq(schema.deckMembers.id, existing.id));
-  } else {
-    await db.insert(schema.deckMembers).values({
-      id: newId(),
-      deckId,
-      userId,
-      role: "learner",
-      invitationId: opts.invitationId ?? null,
-      joinedAt: now,
-    });
-  }
-  await fillStates({ db }, await askedInDeck({ db }, deckId), [userId]);
-  await audit(db, {
-    userId: deck.userId,
-    actor,
-    action: "join",
-    entity: "deck",
-    entityId: deckId,
-    payload: { memberId: userId },
-  });
+      });
+  await runBatch(db, [
+    membership,
+    ...stateStatementsForLearner(db, deckId, userId, now),
+    auditStatement(db, {
+      userId: deck.userId,
+      actor,
+      action: "join",
+      entity: "deck",
+      entityId: deckId,
+      payload: { memberId: userId },
+    }),
+  ]);
   return { ok: true as const, role: "learner" as const };
 }
 

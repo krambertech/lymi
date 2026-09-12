@@ -23,6 +23,10 @@ pnpm exec playwright install chromium webkit
 
 `scripts/e2e-server.mjs` clears only its three isolated Wrangler state directories, applies every D1 migration, builds both applications, starts the site Worker on port 4174, starts the production-built product package on port 4175 for PWA installation and offline-shell coverage, and starts the product through Vite on port 4173 for the interactive journeys. Its short-lived variable files contain local-only credentials. It never overwrites a pre-existing developer file, removes the files it creates on exit, and does not touch normal Wrangler state, a developer's `.dev.vars`, or any remote Cloudflare binding.
 
+## Service tests on a real D1
+
+`apps/web/src/server/services/test-db.ts` boots wrangler's local runtime in memory, applies every migration, and returns the same `Db` the Worker uses. Service tests that need rows, such as `members.test.ts`, take one database per file and give each test its own deck. The pure-function tests next to them need no database and stay that way.
+
 ## CI policy
 
 `pnpm verify` is the canonical local base gate. CI runs the same commands in the same fail-fast order but gives formatting and lint, migration safety, build, TypeScript, and unit tests their own named steps. A failure therefore identifies the broken gate without requiring an agent or developer to search a combined log.

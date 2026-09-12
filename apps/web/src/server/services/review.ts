@@ -5,6 +5,7 @@ import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
 import { asked } from "./decks";
+import { memberOf } from "./members";
 
 /**
  * Cards due now, oldest due first. The scheduler preview stays available to API
@@ -16,9 +17,11 @@ export async function reviewQueue(
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
   const now = new Date();
-  // An archived deck leaves every list, review included; its cards keep their progress.
+  // An archived deck leaves every list, review included; its cards keep their progress. A
+  // deck the learner left keeps their states too, and `memberOf` keeps them out of the queue.
   const where = and(
     eq(schema.cardStates.userId, userId),
+    memberOf(userId),
     lte(schema.cardStates.due, now),
     isNull(schema.cards.archivedAt),
     isNull(schema.decks.archivedAt),
@@ -80,17 +83,21 @@ export async function gradeCard({ db, userId, actor }: ServiceContext, input: Gr
   const { cardId, direction, rating } = input;
   const reviewedAt = input.reviewedAt ?? new Date();
 
-  const [state] = await db
-    .select()
+  const [row] = await db
+    .select({ state: schema.cardStates })
     .from(schema.cardStates)
+    .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .where(
       and(
         eq(schema.cardStates.cardId, cardId),
         eq(schema.cardStates.userId, userId),
         eq(schema.cardStates.direction, direction),
+        memberOf(userId),
       ),
     );
-  if (!state) throw notFound("Card");
+  if (!row) throw notFound("Card");
+  const state = row.state;
 
   if (state.lastReview && state.lastReview.getTime() >= reviewedAt.getTime()) {
     return {

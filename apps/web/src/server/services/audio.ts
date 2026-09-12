@@ -101,15 +101,16 @@ async function rememberAudioKey(
     .where(
       and(
         eq(schema.cards.id, card.id),
-        eq(schema.cards.userId, ctx.userId),
+        eq(schema.cards.userId, card.userId),
         eq(schema.cards.term, card.term),
         eq(schema.cards.language, card.language as string),
       ),
     )
     .returning({ id: schema.cards.id });
   if (!generated || !updated) return;
+  // The key is a cache on the owner's card, whoever asked for the audio. ADR 0011.
   await audit(ctx.db, {
-    userId: ctx.userId,
+    userId: card.userId,
     actor: "ai",
     action: "generate_audio",
     entity: "card",

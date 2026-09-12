@@ -31,6 +31,10 @@
     {
       "name": "0007_lucky_blue_blade.sql",
       "sha256": "f583fa78447e7c611061f54e5f08f0badb2f68b60ac8d9d6ff5341e46ce35a82"
+    },
+    {
+      "name": "0008_black_champions.sql",
+      "sha256": "515557f964196081b5d073304b99f663aa9cf532db3a113538b2517fcb2a8b52"
     }
   ]
 }

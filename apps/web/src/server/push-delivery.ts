@@ -141,6 +141,10 @@ export async function dispatchReviewReminders(
           JOIN cards c ON c.id = s.card_id
           JOIN decks d ON d.id = c.deck_id
          WHERE s.user_id = ps.user_id
+           AND (d.user_id = ps.user_id
+                OR EXISTS (SELECT 1 FROM deck_members m
+                            WHERE m.deck_id = d.id AND m.user_id = ps.user_id
+                              AND m.removed_at IS NULL))
            AND s.due <= ?
            AND c.archived_at IS NULL
            AND d.archived_at IS NULL

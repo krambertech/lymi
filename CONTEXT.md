@@ -16,7 +16,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Field source**: Where one field's text came from: the lesson, the AI, or the learner by hand. Shown so AI text is never mistaken for the lesson.
 
-**Meaning language**: The language meanings are written in. A per-learner setting, English by default. Independent of any card's language. _Avoid_: Native language, mother tongue, L1, base language
+**App language**: The language the interface and reminders are written in. A per-learner setting, taken from the browser on first sign-in and changeable under You. Meanings follow it. _Avoid_: Locale, UI language, interface language (in copy)
+
+**Meaning language**: The language meanings are written in. Follows the app language and is not shown as its own setting. Independent of any card's language. _Avoid_: Native language, mother tongue, L1, base language
 
 **Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Adding one is skipped, never rejected, and the caller is told which card already exists.
 

@@ -28,3 +28,5 @@ Aim for 300–700 words. Exceed that only when compression would hide a material
 | [0009](0009-public-website-and-product-deploy-separately.md) | The public website and product deploy separately |
 | [0010](0010-the-review-queue-is-ordered-by-retrievability.md) | The review queue is ordered by retrievability, not by due date |
 | [0011](0011-a-shared-deck-is-one-deck-with-many-learners.md) | A shared deck is one deck with many learners, and its invitation is the front door |
+| [0012](0012-interface-text-is-english-source-translated-by-lingui.md) | Interface text is English source in the code, translated through Lingui catalogs |
+| [0013](0013-app-language-is-one-setting-that-meaning-language-follows.md) | App language is one stored setting, and meaning language follows it |

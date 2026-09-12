@@ -1,6 +1,6 @@
 import { Code } from "../Code";
 import { ORIGIN } from "../origin";
-import { H2, Lead, NextLinks, Note, Steps, StepTitle } from "../Prose";
+import { H2, Lead, NextLinks, Steps, StepTitle } from "../Prose";
 
 export function McpChatgpt() {
   return (
@@ -12,11 +12,10 @@ export function McpChatgpt() {
 
       <Code lang="text" label="MCP server URL" code={`${ORIGIN}/mcp`} />
 
-      <Note tone="careful" title="Nothing to call yet">
-        Lymi’s MCP server has no tools yet, so a connected ChatGPT can sign in but cannot do
-        anything with your decks. ChatGPT also scans a connector’s tools when you add it, so an
-        empty server may be rejected at that step. The tools are the next pass.
-      </Note>
+      <p>
+        Once connected, ask it to add the words from a lesson, list what is due, or find a card.
+        What it can and cannot do is on <a href="/docs/mcp">Connect an assistant</a>.
+      </p>
 
       <H2>ChatGPT</H2>
       <p>
@@ -83,10 +82,6 @@ url = "${ORIGIN}/mcp"`}
         <li>
           <strong>Sign-in is refused.</strong> Lymi is private. Only the accounts on its allowlist
           can sign in, whatever the OpenAI account is.
-        </li>
-        <li>
-          <strong>The connector is rejected while scanning tools.</strong> Expected until the tools
-          ship: there is nothing to scan.
         </li>
         <li>
           <strong>Registration fails.</strong> Lymi has no dynamic client registration, by design. A

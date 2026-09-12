@@ -1,6 +1,6 @@
-import type { CardInput, CardPatch } from "@lymi/core";
+import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
 import { emptyState, expandDirections, newId, normaliseTerm, serializeState } from "@lymi/core";
-import { and, eq, inArray, isNull } from "@lymi/core/db";
+import { and, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { audit } from "../audit";
 import { schema } from "../db";
@@ -169,6 +169,65 @@ async function selectIn<T, R>(values: T[], select: (slice: T[]) => Promise<R[]>)
 /** A card with no language only matches other cards with no language. */
 function dupKey(language: string | null, normalizedTerm: string): string {
   return `${language ?? ""} ${normalizedTerm}`;
+}
+
+export const SEARCH_LIMIT = 200;
+
+/**
+ * Cards matching a search, newest first, each with the name of the deck it is in.
+ *
+ * The filters run in SQL; the text match runs here. SQLite's `lower()` folds ASCII only, so
+ * a LIKE on the stored text would miss "Привіт" for "привіт" and "École" for "école". The
+ * candidate rows are folded with the same rule the duplicate key uses and matched in
+ * memory. One learner's collection is a few thousand rows at most, and the scan is capped
+ * at SEARCH_SCAN_LIMIT so a query can never read without bound. A persisted folded column
+ * is the upgrade if the collection outgrows that.
+ *
+ * Active means the card and its deck are both unarchived: archiving a deck hides its cards
+ * without touching them, so a card-only check would surface cards the learner cannot see.
+ * `archived` returns the cards hidden either way.
+ */
+export async function searchCards({ db, userId }: ServiceContext, search: CardSearchInput) {
+  const limit = Math.min(Math.max(search.limit ?? 50, 1), SEARCH_LIMIT);
+  const needle = foldForSearch(search.query ?? "");
+  const rows = await db
+    .select({ card: schema.cards, deckName: schema.decks.name })
+    .from(schema.cards)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(
+      and(
+        eq(schema.cards.userId, userId),
+        search.archived
+          ? or(isNotNull(schema.cards.archivedAt), isNotNull(schema.decks.archivedAt))
+          : and(isNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt)),
+        search.deckId ? eq(schema.cards.deckId, search.deckId) : undefined,
+        search.language ? eq(schema.cards.language, search.language) : undefined,
+      ),
+    )
+    .orderBy(desc(schema.cards.createdAt))
+    .limit(needle ? SEARCH_SCAN_LIMIT : limit);
+  if (!needle) return rows;
+  return rows.filter((row) => matchesSearch(row.card, needle)).slice(0, limit);
+}
+
+/** The most rows one text search reads before matching. */
+export const SEARCH_SCAN_LIMIT = 5000;
+
+/** Case and Unicode folding for search, the same rule as the duplicate key. */
+export function foldForSearch(text: string): string {
+  return normaliseTerm(text);
+}
+
+/** True when the folded needle occurs in the term, meaning, example or notes. */
+export function matchesSearch(
+  card: Pick<Card, "normalizedTerm" | "meaning" | "example" | "notes">,
+  needle: string,
+): boolean {
+  if (card.normalizedTerm.includes(needle)) return true;
+  for (const field of [card.meaning, card.example, card.notes]) {
+    if (field && foldForSearch(field).includes(needle)) return true;
+  }
+  return false;
 }
 
 export async function getCard({ db, userId }: ServiceContext, id: string) {

@@ -82,6 +82,36 @@ export const CardsInput = z.object({
 });
 export type CardsInput = z.infer<typeof CardsInput>;
 
+/** What a card search filters on. Every field is optional; none narrows past the learner. */
+export const CardSearchInput = z.object({
+  query: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .meta({ description: "Matched against the term, meaning, example and notes" }),
+  deckId: z.string().min(1).optional(),
+  language: LanguageTag.optional(),
+  archived: z
+    .boolean()
+    .optional()
+    .meta({ description: "Archived cards instead of active ones. Off by default." }),
+  limit: z
+    .number()
+    .int()
+    .min(1)
+    .max(200)
+    .optional()
+    .meta({ description: "At most this many, newest first. 50 by default." }),
+});
+export type CardSearchInput = z.infer<typeof CardSearchInput>;
+
+/** The same search as a query string, where booleans and numbers arrive as text. */
+export const CardSearchQuery = CardSearchInput.extend({
+  archived: z.stringbool().optional(),
+  limit: z.coerce.number().int().min(1).max(200).optional(),
+});
+
 export const CardPatch = CardInput.partial()
   .omit({ deckId: true })
   .extend({

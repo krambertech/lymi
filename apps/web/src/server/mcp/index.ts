@@ -21,34 +21,51 @@ export function handleMcpRequest(
   request: Request,
   deps: { auth: Auth; db: Db; env: Bindings },
 ): Promise<Response> {
-  const resource = `${deps.env.PRODUCT_URL}/mcp`;
   const protectedHandler = requireMcpAuth(
     deps.auth,
-    async (req, claims) => {
-      const userId = typeof claims.sub === "string" ? claims.sub : null;
-      if (!userId) return jsonRpcError(401, "The access token has no subject");
-      const scopes = scopesOf(claims.scope);
-      const principal: McpPrincipal = {
-        ctx: { db: deps.db, userId, actor: "mcp" },
-        scope: scopes.has("write") ? "write" : "read",
-      };
-      const handler = createMcpHandler(() => buildMcpServer(principal), {
-        route: "/mcp",
-        allowedHostnames: [new URL(deps.env.PRODUCT_URL).hostname],
-      });
-      return handler.fetch(req, {
-        authInfo: {
-          token: bearerOf(req) ?? "",
-          clientId: typeof claims.client_id === "string" ? claims.client_id : "",
-          scopes: [...scopes],
-          ...(typeof claims.exp === "number" ? { expiresAt: claims.exp } : {}),
-          resource: new URL(resource),
-        },
-      });
-    },
-    { resource, challengeScopes: MCP_CHALLENGE_SCOPES },
+    (req, claims) => handleVerifiedMcpRequest(req, claims, deps),
+    { resource: mcpResource(deps.env), challengeScopes: MCP_CHALLENGE_SCOPES },
   );
   return protectedHandler(request);
+}
+
+/** `wrangler types` narrows PRODUCT_URL to the production literal; tests and local dev use others. */
+type ProductOrigin = { PRODUCT_URL: string };
+
+/** The protected resource identifier every access token is bound to. */
+export function mcpResource(env: ProductOrigin): string {
+  return `${env.PRODUCT_URL}/mcp`;
+}
+
+/**
+ * Serve one request whose token has already been verified. Split from the guard so the
+ * transport and the tool wiring can be exercised with synthetic claims.
+ */
+export function handleVerifiedMcpRequest(
+  req: Request,
+  claims: Record<string, unknown>,
+  deps: { db: Db; env: ProductOrigin },
+): Promise<Response> {
+  const userId = typeof claims.sub === "string" ? claims.sub : null;
+  if (!userId) return Promise.resolve(jsonRpcError(401, "The access token has no subject"));
+  const scopes = scopesOf(claims.scope);
+  const principal: McpPrincipal = {
+    ctx: { db: deps.db, userId, actor: "mcp" },
+    scope: scopes.has("write") ? "write" : "read",
+  };
+  const handler = createMcpHandler(() => buildMcpServer(principal), {
+    route: "/mcp",
+    allowedHostnames: [new URL(deps.env.PRODUCT_URL).hostname],
+  });
+  return handler.fetch(req, {
+    authInfo: {
+      token: bearerOf(req) ?? "",
+      clientId: typeof claims.client_id === "string" ? claims.client_id : "",
+      scopes: [...scopes],
+      ...(typeof claims.exp === "number" ? { expiresAt: claims.exp } : {}),
+      resource: new URL(mcpResource(deps.env)),
+    },
+  });
 }
 
 /** The `scope` claim is a space-separated string by RFC 9068; some issuers send an array. */

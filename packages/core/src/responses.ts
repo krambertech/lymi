@@ -64,6 +64,11 @@ export const CardOut = z
   .meta({ id: "Card" });
 export type CardOut = z.infer<typeof CardOut>;
 
+/** A card found by search, with the name of the deck it is in. */
+export const CardHitOut = CardOut.extend({
+  deckName: z.string().meta({ description: "The deck the card is in" }),
+}).meta({ id: "CardHit" });
+
 export const CardStateOut = z
   .object({
     id: z.string(),

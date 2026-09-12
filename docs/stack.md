@@ -134,7 +134,7 @@ OpenAI remains the text-enrichment vendor and is also the default speech provide
 
 `createMcpHandler` from the Agents SDK at `/mcp`, Streamable HTTP, no Durable Object. `McpAgent` was the earlier plan and is deprecated. Authorization is the Better Auth OAuth server above.
 
-Tools call the same service layer the REST routes call, so MCP cannot bypass product rules and every write lands in the audit log with actor `mcp`. The tool set: list decks, get deck, search cards, add cards, update card, archive card, restore card, due counts, enrich. There is no delete tool because the app has no delete. Claude Desktop does not support elicitation, so the server cannot ask "are you sure". Archive being reversible is the safety.
+Tools call the same service layer the REST routes call, so MCP cannot bypass product rules and every write lands in the audit log with actor `mcp`. The tool set mirrors the REST API less review grading: list, get, create, update, archive and restore decks; search, get, add, update, archive and restore cards; due counts; settings; insights. An `enrich` tool follows once the enrichment service exists. There is no delete tool because the app has no delete. Claude Desktop does not support elicitation, so the server cannot ask "are you sure". Archive being reversible is the safety. A meaning or example an assistant sends without naming its source is stored as `ai`, so the app never shows an assistant's text as the lesson's.
 
 ### Integrations: cards land as cards
 
@@ -189,6 +189,8 @@ Local development accepts email and password sign-in so the app is usable before
 - Meaning language is a per-user setting, English by default.
 - Integrations never grade reviews.
 - No scopes finer than read and write.
+- API and MCP (12 September 2026): both expose the whole product surface, less review grading. A service that one has, the other gets in the same pass, so a learner never has to open the app for something an assistant could have done.
+- A meaning or example an assistant sends without naming its source is stored as `ai` (12 September 2026). The assistant is a model; the label exists so its text is never shown as the lesson's.
 
 ## Sources
 

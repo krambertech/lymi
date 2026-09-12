@@ -160,6 +160,9 @@ importers:
       '@cloudflare/vite-plugin':
         specifier: ^1.54.4
         version: 1.54.4(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))(wrangler@4.129.0)
+      '@modelcontextprotocol/client':
+        specifier: 2.0.0
+        version: 2.0.0
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))

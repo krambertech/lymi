@@ -1,6 +1,6 @@
 import { Code } from "../Code";
 import { ORIGIN } from "../origin";
-import { Defs, H2, Lead, NextLinks, Note, Steps, StepTitle } from "../Prose";
+import { Defs, H2, Lead, NextLinks, Steps, StepTitle } from "../Prose";
 
 export function McpOverview() {
   return (
@@ -9,12 +9,6 @@ export function McpOverview() {
         Lymi speaks the Model Context Protocol, so an assistant can work with your decks inside a
         conversation. It signs in as you, over OAuth, and never sees an API key.
       </Lead>
-
-      <Note tone="careful" title="The tools are not there yet">
-        The endpoint, the sign-in and the consent screen all work today. The tools an assistant
-        would call — list decks, search cards, add cards — land in the next pass. Connect now if you
-        want the sign-in ready; there is nothing for an assistant to do until then.
-      </Note>
 
       <H2>One endpoint</H2>
       <Code lang="text" label="MCP server URL" code={`${ORIGIN}/mcp`} />
@@ -75,7 +69,83 @@ export function McpOverview() {
       />
       <p>
         The scope on the token is what counts, not what the assistant asked for. Removing write at
-        the consent screen means every write it attempts comes back <code>403</code>.
+        the consent screen means every write it attempts is refused, with a message telling it to
+        ask you to reconnect.
+      </p>
+
+      <H2>What a connected assistant can do</H2>
+      <p>
+        Sixteen tools, the same surface as the API less review grading. The assistant reads their
+        descriptions, so you rarely name one yourself: ask it to add the words from a lesson, and it
+        finds the deck and calls <code>add_cards</code>.
+      </p>
+      <Defs
+        items={[
+          {
+            term: <code>list_decks</code>,
+            def: "Every active deck with its card and due counts, plus the language your meanings are written in.",
+          },
+          { term: <code>get_deck</code>, def: "One deck and its cards, newest first, up to 200." },
+          {
+            term: <code>create_deck</code>,
+            def: "A new deck, with a default language for the cards added to it.",
+          },
+          {
+            term: <code>update_deck</code>,
+            def: "Rename a deck, or change its description, language or directions.",
+          },
+          {
+            term: (
+              <>
+                <code>archive_deck</code>, <code>restore_deck</code>
+              </>
+            ),
+            def: "Hide a deck and its cards, and bring them back.",
+          },
+          {
+            term: <code>search_cards</code>,
+            def: "Cards matching text in the term, meaning, example or notes. Can look through archived cards.",
+          },
+          { term: <code>get_card</code>, def: "One card, every field." },
+          {
+            term: <code>add_cards</code>,
+            def: "One or many cards in a call. A duplicate is skipped, never rejected, and the result names the existing card.",
+          },
+          {
+            term: <code>update_card</code>,
+            def: "Change fields on a card, or move it to another deck.",
+          },
+          {
+            term: (
+              <>
+                <code>archive_card</code>, <code>restore_card</code>
+              </>
+            ),
+            def: "Hide a card and bring it back, schedule intact.",
+          },
+          {
+            term: <code>due_counts</code>,
+            def: "How many cards are waiting, in total and per deck.",
+          },
+          {
+            term: (
+              <>
+                <code>get_settings</code>, <code>update_settings</code>
+              </>
+            ),
+            def: "The language your meanings are written in.",
+          },
+          {
+            term: <code>get_insights</code>,
+            def: "Recall rate, days reviewed, cards by stage, the week ahead, and the cards that keep coming back.",
+          },
+        ]}
+      />
+      <p>
+        The assistant does the extraction. It reads the lesson you share, decides which terms are
+        worth a card and sends them in one batch. A meaning or example it wrote itself is labelled{" "}
+        <code>ai</code> on the card, so you can always tell its text from the lesson’s. Lymi does
+        not fill in missing fields yet; that enrichment is a separate pass.
       </p>
 
       <H2>What a connected assistant can never do</H2>

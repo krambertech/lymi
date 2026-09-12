@@ -85,6 +85,7 @@ function Review() {
   const invalidateReviewData = useCallback(() => {
     qc.invalidateQueries({ queryKey: ["decks"] });
     qc.invalidateQueries({ queryKey: ["history"] });
+    qc.invalidateQueries({ queryKey: ["insights"] });
   }, [qc]);
 
   const grade = useMutation({

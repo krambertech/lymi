@@ -192,6 +192,85 @@ export const MeOut = z
   })
   .meta({ id: "Me" });
 
+const LocalDate = z.string().meta({ description: "Local YYYY-MM-DD in the learner's timezone" });
+
+export const InsightsOut = z
+  .object({
+    period: z
+      .union([z.literal(30), z.literal(90), z.literal(0)])
+      .meta({ description: "Days the recall figure covers. 0 is everything." }),
+    recall: z.object({
+      passed: z.number().int(),
+      failed: z.number().int(),
+      rate: z
+        .number()
+        .nullable()
+        .meta({ description: "Passed over graded, 0 to 1. Null when nothing has come back." }),
+      series: z
+        .array(
+          z.object({
+            at: z
+              .string()
+              .meta({ description: "Local YYYY-MM-DD for the week's Monday, or YYYY-MM" }),
+            passed: z.number().int(),
+            failed: z.number().int(),
+            rate: z.number(),
+          }),
+        )
+        .meta({
+          description:
+            "Retention per week, or per month when the period is everything. Only buckets that graded something, so a week away is a gap rather than a zero.",
+        }),
+    }),
+    consistency: z.object({
+      days: z
+        .array(z.object({ date: LocalDate, lit: z.boolean() }))
+        .meta({ description: "The last thirty days, oldest first" }),
+      lit: z.number().int().meta({ description: "Days reviewed of those thirty" }),
+      longestRun: z.number().int().meta({ description: "Longest unbroken run, all time" }),
+      litAllTime: z.number().int(),
+      daysAllTime: z.number().int().meta({ description: "Days since the first review" }),
+    }),
+    months: z
+      .array(
+        z.object({
+          month: z.string().meta({ description: "Local YYYY-MM" }),
+          lit: z.number().int(),
+          days: z
+            .number()
+            .int()
+            .meta({ description: "Days elapsed; the current month counts to today" }),
+        }),
+      )
+      .meta({ description: "Up to twelve months, oldest first" }),
+    cards: z.object({
+      total: z.number().int(),
+      new: z.number().int(),
+      learning: z.number().int().meta({ description: "Learning and relearning together" }),
+      known: z.number().int(),
+    }),
+    forecast: z
+      .array(z.object({ date: LocalDate, count: z.number().int() }))
+      .meta({ description: "Seven days from today. Overdue cards count into today." }),
+    leeches: z.object({
+      lapses: z.number().int().meta({ description: "Forgotten at least this many times" }),
+      reviews: z.number().int().meta({ description: "And reviewed at least this many times" }),
+      cards: z.array(
+        z.object({
+          id: z.string(),
+          deckId: z.string(),
+          term: z.string(),
+          meaning: z.string().nullable(),
+          language: z.string().nullable(),
+          lapses: z.number().int(),
+          reviews: z.number().int(),
+        }),
+      ),
+    }),
+  })
+  .meta({ id: "Insights" });
+export type InsightsOut = z.infer<typeof InsightsOut>;
+
 export const OkOut = z.object({ ok: z.literal(true) }).meta({ id: "Ok" });
 
 export const ErrorOut = z

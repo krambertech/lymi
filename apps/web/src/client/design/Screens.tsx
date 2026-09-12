@@ -10,6 +10,7 @@ import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
 import { DeckSettingsView } from "../views/DeckSettingsView";
+import { InsightsView } from "../views/InsightsView";
 import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
 import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/ReviewView";
@@ -176,6 +177,35 @@ export function Screens() {
             </Desktop>
           )}
         </Shot>
+      </Sub>
+
+      <Sub
+        title="Insights"
+        note="The one screen where charts belong, and the only one where looking at them is a choice. Four numbers, each with the line that makes it mean something. Every figure draws in ink; the lights and the peak stay amber, because those are the streak and the thing to notice. The last frame is the first week, when almost nothing has happened yet."
+      >
+        <Shot caption="Desktop, Insights" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={720}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                onAdd={noop}
+                static={{ path: "/insights" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <InsightsView data={m.insights} period="30" onPeriod={noop} />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="On the phone" initial="dark" path="/insights">
+            <InsightsView data={m.insights} period="30" onPeriod={noop} />
+          </PhoneShot>
+          <PhoneShot caption="The first week" initial="light" path="/insights">
+            <InsightsView data={m.thinInsights} period="30" onPeriod={noop} />
+          </PhoneShot>
+        </div>
       </Sub>
 
       <Sub

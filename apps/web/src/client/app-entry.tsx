@@ -21,7 +21,12 @@ const queryClient = new QueryClient({
   },
 });
 
+/** Stamped by Vite at build time. See `define` in vite.config.ts. */
+declare const __QUERY_CACHE_BUSTER__: string;
+
 // Query cache survives reloads and offline starts. Mutations queue separately (see lib/api.ts).
+// The buster is the build id: a deploy that changes a response shape throws the old cache
+// away rather than hydrating it into code that expects the new one.
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
   key: "lymi-query-cache",
@@ -46,7 +51,11 @@ export function mountApp(root: HTMLElement) {
     <StrictMode>
       <PersistQueryClientProvider
         client={queryClient}
-        persistOptions={{ persister, maxAge: 1000 * 60 * 60 * 24 * 7 }}
+        persistOptions={{
+          persister,
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          buster: __QUERY_CACHE_BUSTER__,
+        }}
       >
         <RouterProvider router={router} />
       </PersistQueryClientProvider>

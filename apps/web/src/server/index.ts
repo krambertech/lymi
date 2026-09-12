@@ -21,6 +21,7 @@ import { keys } from "./routes/keys";
 import { push } from "./routes/push";
 import { review } from "./routes/review";
 import { settings } from "./routes/settings";
+import { stats } from "./routes/stats";
 import { ServiceError } from "./services/context";
 
 export type AppEnv = {
@@ -124,6 +125,7 @@ app.route("/api/decks", decks);
 app.route("/api/cards", cards);
 app.route("/api/review", review);
 app.route("/api/settings", settings);
+app.route("/api/stats", stats);
 app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);
 app.route("/api/push", push);

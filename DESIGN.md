@@ -208,7 +208,7 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 ## Colour
 
-Warm neutrals, nearly grey. Amber is the only saturated colour: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use.
+Warm neutrals, nearly grey. Amber is the only saturated colour: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the thirty-day strip and the month bars — the same lit glass at three sizes, which makes it the flame rather than a sixth thing.
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
 
@@ -284,6 +284,16 @@ The column of content is capped at `--column` (880 px) and centres in whatever t
 
 Capture is one plus for both things a learner adds, a word or a deck. It is round and amber, because it is the app's standing action and the only control on every screen; the menu under it names the two things with an icon each. It sits in the rail beside the mark on desktop and in every page header on the phone, and `N` opens it from anywhere.
 
+## Insights
+
+The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act". The two exceptions are the lights, which are the streak, and the single bar the sentence above the chart is pointing at.
+
+Four plates in a 2x2 grid — Recall, Consistency, Collection, Ahead — each carrying a number and one line of plain words. The line is not a caption. 91% says nothing until the plate says the schedule aims for 90, and a grid of numbers without those lines is the dashboard the product does without. Under them the month bars run full width, then the cards that keep coming back.
+
+Consistency and the months answer different questions and neither replaces the other. The thirty-day strip is texture: which days, and how long the runs were. The month bars are trend: whether the habit is holding across seasons. Both draw a day as lit or unlit and never grade it by how many cards it held, because grading turns a habit picture into a scoreboard and makes a heavy Tuesday look better than a steady one.
+
+`RunStrip` joins consecutive lit days into one capsule. That is the whole idea: a row of separate marks has to be counted, where an unbroken capsule is a run whose length you can see.
+
 ## The streak
 
 The flame, on its own, counts days in a row. It is drawn twice, because the two screens have different room for the same fact. On the phone it is a pill in the Today header: flame and a number, 40 px tall like the capture button and the avatar next to it, because a row of controls at three different heights is what makes a header look unfinished. On desktop it is a plate beside the hero: the count, the best run, the seven lights and one line saying how many of the last seven days had a review.
@@ -294,7 +304,7 @@ The seven lights sit with it. They say which days, where the streak says how man
 
 ## Components
 
-`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, StreakPill, StreakPlate, AppMark, Connection, Lantern, Wordmark, Lockup.
+`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, StreakPill, StreakPlate, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport.
 

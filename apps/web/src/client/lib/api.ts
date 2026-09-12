@@ -4,6 +4,7 @@ import type {
   DeckInput,
   Direction,
   GradeInput,
+  InsightsOut,
   PushEndpointInput,
   PushSubscriptionInput,
   Rating,
@@ -134,6 +135,12 @@ export const api = {
   history: (days = 7) =>
     request<{ days: number[] }>(
       `/api/review/history?days=${days}&tz=${new Date().getTimezoneOffset()}`,
+    ),
+  insights: (period: 30 | 90 | 0 = 30) =>
+    request<InsightsOut>(
+      `/api/stats/insights?period=${period}&tz=${encodeURIComponent(
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+      )}`,
     ),
   grade: (body: GradeInput) =>
     request<{ ok: true; due: string }>("/api/review/grade", {

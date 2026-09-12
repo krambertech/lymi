@@ -68,7 +68,7 @@ export function YouView({
     value,
     dot,
   }: {
-    to: "/activity" | "/archived";
+    to: "/activity" | "/archived" | "/insights";
     label: string;
     value?: string | undefined;
     dot?: boolean | undefined;
@@ -132,6 +132,9 @@ export function YouView({
             dot={!!unseen}
           />
           <Row to="/archived" label="Archived" value={String(archivedCount ?? 0)} />
+          {/* The rail carries Insights on desktop; the pill stays two items wide, so the
+              phone reaches it here beside the other screens You holds. */}
+          <Row to="/insights" label="Insights" />
         </div>
       </section>
 

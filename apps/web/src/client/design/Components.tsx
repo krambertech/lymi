@@ -220,7 +220,7 @@ export function Components() {
                   which days and how full each was. No panel. */}
               <div className="grid justify-items-center gap-3.5">
                 <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
-                  <Flame className="size-6" flicker />
+                  <Flame className="size-7" flicker />
                   {streakLength(streakDays)} days in a row
                 </p>
                 <SevenLights days={streakDays.slice(-7)} size="lg" />

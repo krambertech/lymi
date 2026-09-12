@@ -145,6 +145,7 @@ export function TodayView({
                 size="lg"
                 className="mt-5.5 w-full @3xl:w-auto @3xl:px-10"
                 onClick={onAdd}
+                aria-disabled={!onAdd}
                 kbd="N"
               >
                 Add a word
@@ -176,7 +177,7 @@ export function TodayView({
                   One statement each, which is the whole of the streak. */}
               <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
                 <Flame className="size-7" flicker={run > 0} />
-                {plural(run, "day", "days")} in a row
+                {run === 0 ? "No streak yet" : `${plural(run, "day", "days")} in a row`}
               </p>
               <SevenLights days={history.slice(-7)} size="lg" />
               {lit && forecast && (

@@ -26,9 +26,13 @@ export const queueQuery = (deckId?: string) =>
     queryFn: () => api.queue(deckId),
     staleTime: 0,
   });
+/**
+ * Ninety days, the server's ceiling, because the streak is counted from this array and a
+ * seven-day window would cap every run at seven. The lights slice the last seven themselves.
+ */
 export const historyQuery = queryOptions({
-  queryKey: ["history", 7],
-  queryFn: () => api.history(7),
+  queryKey: ["history", 90],
+  queryFn: () => api.history(90),
   staleTime: 60_000,
 });
 // Every figure here moves with a review, and nothing else invalidates this key on the way

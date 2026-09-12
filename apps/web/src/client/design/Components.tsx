@@ -1,3 +1,4 @@
+import { streakLength } from "@lymi/core";
 import { Archive, Download, MoreHorizontal, Pencil, Search, Volume2, X } from "lucide-react";
 import { useState } from "react";
 import { Avatar } from "../components/Avatar";
@@ -8,6 +9,7 @@ import { DeckCard } from "../components/DeckCard";
 import { Dialog } from "../components/Dialog";
 import { EmptyState } from "../components/EmptyState";
 import { Field, Input, Select, Textarea } from "../components/Field";
+import { Flame } from "../components/Flame";
 import { Kbd } from "../components/Kbd";
 import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
 import { NewCardsRow } from "../components/NewCardsRow";
@@ -15,7 +17,6 @@ import { Progress } from "../components/Progress";
 import { Segmented } from "../components/Segmented";
 import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
-import { StreakPill, StreakPlate } from "../components/Streak";
 import { Switch } from "../components/Switch";
 import { Table, Td, Th } from "../components/Table";
 import { Toast } from "../components/Toast";
@@ -215,11 +216,17 @@ export function Components() {
                 <Skeleton className="h-11" />
               </div>
               <SevenLights days={history} />
+              {/* The streak, as Today composes it: the lights, then one line. No panel. */}
+              <div className="grid justify-items-center gap-3">
+                <SevenLights days={streakDays.slice(-7)} />
+                <p className="text-sm text-muted tabular-nums">
+                  {streakLength(streakDays)} days in a row · 31 tomorrow, 9 on Monday
+                </p>
+              </div>
               <div className="flex items-center gap-3">
-                <StreakPill days={streakDays} />
+                <Flame className="size-7" flicker />
                 <Avatar name="Kateryna" size={34} />
               </div>
-              <StreakPlate days={streakDays} />
             </div>
           )}
         </Pair>

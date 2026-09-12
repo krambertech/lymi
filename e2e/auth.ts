@@ -35,6 +35,11 @@ export async function signInAsTestLearner(
     .poll(() => `${new URL(page.url()).pathname}${new URL(page.url()).search}`)
     .toBe(returnTo);
   if (returnTo === "/today") {
-    await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
+    // Today names the state rather than the screen: the heading is the due count on an account
+    // with cards, and the first-run line on a fresh one. Match the hero in either state rather
+    // than pinning one wording, and keep it specific enough that another screen cannot pass.
+    await expect(
+      page.getByRole("heading", { level: 1, name: /due|Nothing here yet/ }),
+    ).toBeVisible();
   }
 }

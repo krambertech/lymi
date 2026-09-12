@@ -296,7 +296,7 @@ Consistency and the months answer different questions and neither replaces the o
 
 ## The streak
 
-The flame, on its own, counts days in a row. It is drawn twice, because the two screens have different room for the same fact. On the phone it is a pill in the Today header: flame and a number, 40 px tall like the capture button and the avatar next to it, because a row of controls at three different heights is what makes a header look unfinished. On desktop it is a plate beside the hero: the count, the best run, the seven lights and one line saying how many of the last seven days had a review.
+The flame, on its own, counts days in a row. It is drawn once, the same way on both screens: on Today the seven lights sit under the review button and one line under them says how long the run is. It is never a panel of its own. A plate beside the hero turns a warm cue into a stat block, and a home screen of statistics is the thing [`PRODUCT.md`](PRODUCT.md) names as an anti-reference.
 
 Today is still open until it ends, so an unreviewed morning shows yesterday's streak rather than zero. `streakLength` in `packages/core/src/streak.ts` is the rule.
 
@@ -304,7 +304,7 @@ The seven lights sit with it. They say which days, where the streak says how man
 
 ## Components
 
-`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, StreakPill, StreakPlate, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
+`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport.
 

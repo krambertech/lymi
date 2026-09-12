@@ -1,15 +1,18 @@
+import { streakLength } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
+import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
 import { Avatar } from "../components/Avatar";
-import { buttonClass } from "../components/Button";
+import { Button, buttonClass } from "../components/Button";
 import { Lantern } from "../components/Lantern";
+import { NavLink } from "../components/NavLink";
 import type { NewCards } from "../components/NewCardsRow";
 import { NewCardsRow } from "../components/NewCardsRow";
+import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
-import { StreakPill, StreakPlate } from "../components/Streak";
 import type { DeckSummary } from "../lib/api";
-import { Page, PageHeader, type StaticNav } from "./Shell";
+import { Page, type StaticNav } from "./Shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
@@ -30,13 +33,10 @@ function plural(n: number, one: string, many: string) {
   return `${n} ${n === 1 ? one : many}`;
 }
 
-const today = () =>
-  new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
-
 /**
- * Home. One question first: is anything due? The lantern answers it, the button acts on it,
- * and the streak sits beside it on desktop and in the header on the phone. What an integration
- * added since the last review follows, so nothing lands unseen.
+ * Home. One question and one action: the count is the heading, the lantern is the only object
+ * on the screen, and nothing here is a plate except the decks that arrived while you were away.
+ * The streak is the seven lights and one line under the button, never a panel of its own.
  */
 export function TodayView({
   decks,
@@ -50,12 +50,17 @@ export function TodayView({
 }: TodayProps) {
   const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
-  const dueDecks = decks?.filter((d) => d.due > 0).length ?? 0;
+  const dueDecks = decks?.filter((d) => d.due > 0) ?? [];
   const loading = decks === undefined;
   const nothingYet = !loading && total === 0;
   const lit = due > 0;
+  const run = history ? streakLength(history) : 0;
+  const everReviewed = !!history?.some((n) => n > 0);
+  /* With nothing under it the hero would cling to the top of an empty screen, so it takes the
+     room instead and centres in it. When something follows, it sits up and gives that the space. */
+  const hasArrivals = !!arrivals && arrivals.length > 0;
 
-  /** A link that looks and presses like the primary button. */
+  /** A link that looks and presses like a button. */
   const To = ({
     to,
     className,
@@ -76,99 +81,108 @@ export function TodayView({
     );
 
   return (
-    <Page>
-      <PageHeader
-        title="Today"
-        sub={today()}
-        actions={
+    <Page width="md">
+      {/* The rail carries capture and the learner on desktop, so this row is the phone's. */}
+      <header className="flex min-h-10 items-center gap-1.5 @3xl/shell:hidden">
+        <span className="ml-auto flex items-center gap-1.5">
+          <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+          <To
+            to="/you"
+            className="relative inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
+          >
+            <Avatar name={name} size={40} />
+            <span className="sr-only">You</span>
+          </To>
+        </span>
+      </header>
+
+      <section
+        className={clsx(
+          "grid justify-items-center gap-1 text-center",
+          hasArrivals ? "pt-6 @3xl:pt-10" : "flex-1 content-center pb-14",
+        )}
+      >
+        {loading ? (
           <>
-            {/* The pill until the plate beside the hero takes the streak over. */}
-            <span className="@3xl:hidden">
-              <StreakPill days={history} />
-            </span>
-            {/* Capture and the learner, until the rail carries both. */}
-            <span className="flex items-center gap-1.5 @3xl/shell:hidden">
-              <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-              <To
-                to="/you"
-                className="relative inline-flex rounded-full before:absolute before:-inset-1.5 before:content-['']"
-              >
-                <Avatar name={name} size={40} />
-                <span className="sr-only">You</span>
-              </To>
-            </span>
+            <Skeleton className="size-30 rounded-full @3xl:size-32" />
+            <Skeleton className="mt-3.5 h-10 w-40" />
+            <Skeleton className="mt-2 h-5 w-56" />
+            <Skeleton className="mt-5.5 h-14 w-full rounded-lg @3xl:w-44" />
           </>
-        }
-      />
+        ) : (
+          <>
+            <Lantern
+              className="size-30 @3xl:size-32"
+              variant={lit ? "lit" : "unlit"}
+              flicker={lit}
+              glow={lit}
+            />
+            <h1 className="mt-3.5 text-4xl font-medium tabular-nums">
+              {nothingYet ? "Nothing here yet" : lit ? `${due} due` : "Nothing due"}
+            </h1>
+            <DeckLine
+              decks={dueDecks}
+              nothingYet={nothingYet}
+              total={total}
+              forecast={forecast}
+              st={st}
+            />
 
-      <div className="grid gap-4 @3xl:grid-cols-3">
-        <section className="edge flex flex-col items-center gap-1.5 rounded-xl bg-plate px-5 py-7 text-center @3xl:col-span-2 @3xl:flex-row @3xl:items-center @3xl:gap-7 @3xl:px-7 @3xl:text-left">
-          {loading ? (
-            <>
-              <Skeleton className="size-24 rounded-full" />
-              <div className="grid w-full gap-2 @3xl:max-w-xs">
-                <Skeleton className="h-8 w-44" />
-                <Skeleton className="h-4 w-56" />
-                <Skeleton className="mt-3 h-12 w-full @3xl:w-32" />
-              </div>
-            </>
-          ) : (
-            <>
-              <Lantern
-                className="size-24 @3xl:size-26"
-                variant={lit ? "lit" : "unlit"}
-                flicker={lit}
-                glow={lit}
-              />
-              <div className="grid gap-1 @3xl:flex-1">
-                <h2 className="text-3xl font-medium tabular-nums">
-                  {nothingYet
-                    ? "Nothing here yet"
-                    : lit
-                      ? `${plural(due, "card", "cards")} due`
-                      : "Nothing due right now"}
-                </h2>
-                <p className="text-md text-muted">
-                  {nothingYet
-                    ? "Add a word from your last lesson and the lantern comes on."
-                    : lit
-                      ? `Across ${plural(dueDecks, "deck", "decks")}. Ten minutes, maybe less.`
-                      : `${plural(total, "card", "cards")} in your decks, all ahead of you.`}
-                </p>
-                {lit && (
-                  <To
-                    to="/review"
-                    className={buttonClass(
-                      "primary",
-                      "lg",
-                      "mt-5 w-full @3xl:mt-4 @3xl:w-auto @3xl:justify-self-start",
-                    )}
-                  >
-                    <span className="inline-flex items-center gap-2">Review</span>
-                  </To>
-                )}
-                {nothingYet && (
-                  <To
-                    to="/library"
-                    className={buttonClass(
-                      "primary",
-                      "lg",
-                      "mt-5 w-full @3xl:mt-4 @3xl:w-auto @3xl:justify-self-start",
-                    )}
-                  >
-                    <span>Make a deck</span>
-                  </To>
-                )}
-              </div>
-            </>
-          )}
-        </section>
+            {lit && (
+              <To
+                to="/review"
+                className={buttonClass("primary", "lg", "mt-5.5 w-full @3xl:w-auto @3xl:px-10")}
+              >
+                Review
+              </To>
+            )}
+            {/* Nothing due is not nothing to do: capture is the standing action, and the one
+                the evening after a session is actually for. */}
+            {!lit && !nothingYet && (
+              <Button
+                variant="primary"
+                size="lg"
+                className="mt-5.5 w-full @3xl:w-auto @3xl:px-10"
+                onClick={onAdd}
+                kbd="N"
+              >
+                Add a word
+              </Button>
+            )}
+            {nothingYet && (
+              <To
+                to="/library"
+                className={buttonClass("primary", "lg", "mt-5.5 w-full @3xl:w-auto @3xl:px-10")}
+              >
+                Make a deck
+              </To>
+            )}
+          </>
+        )}
 
-        <StreakPlate days={history} className="hidden @3xl:flex" />
-      </div>
+        {/* The streak sits outside the branch above: it arrives on its own query, after the
+            decks, and the hero is centred, so it has to hold its room in both states or the
+            whole screen jolts upward when the lights land. */}
+        {loading || history === undefined ? (
+          <div className="mt-7 grid justify-items-center gap-3" aria-hidden="true">
+            <Skeleton className="h-[38px] w-[139px]" />
+            <Skeleton className="h-[19px] w-28" />
+          </div>
+        ) : (
+          everReviewed && (
+            <>
+              <SevenLights days={history.slice(-7)} className="mt-7" />
+              <p className="mt-3 text-sm text-muted tabular-nums">
+                {plural(run, "day", "days")} in a row
+                {lit && forecast ? ` · ${forecast}` : ""}
+              </p>
+            </>
+          )
+        )}
+      </section>
 
       {arrivals && arrivals.length > 0 && (
-        <section className="mt-7 grid gap-2" aria-label="New since your last review">
+        <section className="mt-10 grid gap-2" aria-label="New since your last review">
           <div className="flex items-baseline justify-between gap-3 px-1">
             <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
               New since your last review
@@ -185,10 +199,60 @@ export function TodayView({
           ))}
         </section>
       )}
-
-      {forecast && !nothingYet && (
-        <p className="mt-6 px-1 text-sm text-muted tabular-nums">Coming up: {forecast}</p>
-      )}
     </Page>
+  );
+}
+
+/**
+ * The line under the count. When cards are due it names the decks they are in and each name
+ * starts that deck's review, so the page finally knows what the rail knows. Otherwise it says
+ * what is coming, which is the one thing that decides whether tonight needs anything extra.
+ */
+function DeckLine({
+  decks,
+  nothingYet,
+  total,
+  forecast,
+  st,
+}: {
+  decks: DeckSummary[];
+  nothingYet: boolean;
+  total: number;
+  forecast: string | undefined;
+  st: StaticNav;
+}) {
+  const line = "mt-2 text-md text-text-2";
+
+  if (nothingYet)
+    return <p className={line}>Add a word from your last lesson and the lantern comes on.</p>;
+
+  if (decks.length === 0)
+    return (
+      <p className={line}>
+        {forecast
+          ? `Coming up: ${forecast}.`
+          : `${plural(total, "card", "cards")} in your decks, all ahead of you.`}
+      </p>
+    );
+
+  const shown = decks.slice(0, 2);
+  const rest = decks.length - shown.length;
+  return (
+    <p className={line}>
+      {shown.map((d, i) => (
+        <span key={d.id}>
+          {i > 0 && (rest > 0 ? ", " : " and ")}
+          <NavLink
+            to="/library/$deckId"
+            params={{ deckId: d.id }}
+            st={st}
+            className="relative rounded-xs underline decoration-edge-2 underline-offset-4 transition-[color,text-decoration-color] duration-150 before:absolute before:-inset-y-3 before:content-[''] hoverable:hover:text-text hoverable:hover:decoration-current"
+          >
+            {d.name}
+          </NavLink>
+        </span>
+      ))}
+      {rest > 0 && ` and ${plural(rest, "more deck", "more decks")}`}
+    </p>
   );
 }

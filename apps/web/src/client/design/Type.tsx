@@ -21,7 +21,7 @@ const SCALE: {
     cls: "text-4xl font-medium tracking-[-0.03em]",
     size: "38 / 1.05",
     weight: "500",
-    use: "The word on the card, phone.",
+    use: "The word on the card, phone. The due count on Today, at every width.",
     sample: "la ringhiera",
   },
   {
@@ -29,8 +29,8 @@ const SCALE: {
     cls: "text-3xl font-medium",
     size: "30 / 1.15",
     weight: "500",
-    use: "Hero line: 11 cards due. Produce-side answer.",
-    sample: "11 cards due",
+    use: "The produce-side answer, and the end of a session.",
+    sample: "That\u2019s the lot",
   },
   {
     name: "2xl",
@@ -70,7 +70,7 @@ const SCALE: {
     size: "14.5 / 1.5",
     weight: "400–500",
     use: "Body, buttons, nav, table cells.",
-    sample: "Across 2 decks. Ten minutes, maybe less.",
+    sample: "Lesson 14 and Portuguese. Review, then add a word.",
   },
   {
     name: "sm",

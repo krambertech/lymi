@@ -13,6 +13,8 @@ const appDir = fileURLToPath(new URL("../../../", import.meta.url));
 export async function testDb(): Promise<{ db: Db; dispose: () => Promise<void> }> {
   const proxy = await getPlatformProxy<{ DB: D1Database }>({
     configPath: `${appDir}wrangler.jsonc`,
+    // No `.env` files. Wrangler still reads `.dev.vars` on its own; nothing here uses it.
+    envFiles: [],
     persist: false,
   });
   const migrations = readdirSync(`${appDir}migrations`)

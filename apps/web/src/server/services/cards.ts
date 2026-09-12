@@ -3,7 +3,7 @@ import { emptyState, expandDirections, newId, normaliseTerm, serializeState } fr
 import { and, asc, desc, eq, inArray, isNotNull, isNull, or, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { audit } from "../audit";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { fillStates, learnersOf, memberOf } from "./members";
 
@@ -83,7 +83,9 @@ export async function addCards(
 
   const now = new Date();
   const outcomes: AddCardOutcome[] = [];
-  const statements = [];
+  // One group per card: the card, its states, its audit row. A group never splits across
+  // batches, so a failed batch leaves no card without states.
+  const groups: Statement[][] = [];
 
   for (const { input, deck, language, key } of prepared) {
     const hit = existing.get(dupKey(language, key));
@@ -119,10 +121,10 @@ export async function addCards(
       createdAt: now,
       updatedAt: now,
     };
-    statements.push(db.insert(schema.cards).values(card));
+    const group: Statement[] = [db.insert(schema.cards).values(card)];
     for (const learner of learnersByDeck.get(deck.id) ?? [userId]) {
       for (const direction of expandDirections(input.directions ?? deck.directions)) {
-        statements.push(
+        group.push(
           db.insert(schema.cardStates).values({
             id: newId(),
             cardId: id,
@@ -135,7 +137,7 @@ export async function addCards(
         );
       }
     }
-    statements.push(
+    group.push(
       db.insert(schema.auditLog).values({
         id: newId(),
         userId,
@@ -146,18 +148,35 @@ export async function addCards(
         payload: input,
       }),
     );
+    groups.push(group);
     // Later inputs in this batch with the same key are duplicates of this one.
     existing.set(dupKey(language, key), { card, deckName: deck.name });
     outcomes.push({ status: "added", card });
   }
 
-  // D1 caps a batch; a lesson of 200 terms in a shared deck is thousands of statements.
-  for (let i = 0; i < statements.length; i += 50) {
-    const [first, ...rest] = statements.slice(i, i + 50);
-    if (first) await db.batch([first, ...rest]);
-  }
-
+  await runInBatches(db, groups);
   return outcomes;
+}
+
+type Statement = Parameters<Db["batch"]>[0][number];
+
+/**
+ * D1 caps a batch, and a lesson of 200 terms in a shared deck is thousands of statements.
+ * Whole groups go into a batch, up to about fifty statements, so a card and its states
+ * always land together.
+ */
+async function runInBatches(db: Db, groups: Statement[][]) {
+  let batch: Statement[] = [];
+  const flush = async () => {
+    const [first, ...rest] = batch;
+    if (first) await db.batch([first, ...rest]);
+    batch = [];
+  };
+  for (const group of groups) {
+    if (batch.length > 0 && batch.length + group.length > 50) await flush();
+    batch.push(...group);
+  }
+  await flush();
 }
 
 /**

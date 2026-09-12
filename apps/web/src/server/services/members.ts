@@ -95,21 +95,24 @@ export async function fillStates(
   if (wanted.length === 0 || learners.length === 0) return;
   const cardIds = wanted.map((w) => w.cardId);
   const have = new Set<string>();
-  for (let i = 0; i < cardIds.length; i += 90) {
-    const rows = await db
-      .select({
-        cardId: schema.cardStates.cardId,
-        userId: schema.cardStates.userId,
-        direction: schema.cardStates.direction,
-      })
-      .from(schema.cardStates)
-      .where(
-        and(
-          inArray(schema.cardStates.cardId, cardIds.slice(i, i + 90)),
-          inArray(schema.cardStates.userId, [...learners]),
-        ),
-      );
-    for (const row of rows) have.add(`${row.cardId}:${row.userId}:${row.direction}`);
+  // D1 allows 100 bound parameters per query: forty learners and fifty cards at a time.
+  for (let l = 0; l < learners.length; l += 40) {
+    for (let i = 0; i < cardIds.length; i += 50) {
+      const rows = await db
+        .select({
+          cardId: schema.cardStates.cardId,
+          userId: schema.cardStates.userId,
+          direction: schema.cardStates.direction,
+        })
+        .from(schema.cardStates)
+        .where(
+          and(
+            inArray(schema.cardStates.cardId, cardIds.slice(i, i + 50)),
+            inArray(schema.cardStates.userId, learners.slice(l, l + 40)),
+          ),
+        );
+      for (const row of rows) have.add(`${row.cardId}:${row.userId}:${row.direction}`);
+    }
   }
 
   const now = new Date();

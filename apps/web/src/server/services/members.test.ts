@@ -131,6 +131,24 @@ describe("what the owner changes reaches every member", () => {
     expect(await dueFor(kateryna, deck.id)).toBe(4);
   });
 
+  it("a whole lesson lands complete for every member, across batches", async () => {
+    const { deck } = await sharedDeck("Verbid", []);
+    await updateDeck(kateryna, deck.id, { directions: "both" });
+    await join(anna, deck.id);
+    await join(marko, deck.id);
+
+    const terms = Array.from({ length: 30 }, (_, i) => `verb ${i}`);
+    const outcomes = await addCards(
+      kateryna,
+      terms.map((term) => ({ deckId: deck.id, term })),
+    );
+
+    expect(outcomes.every((o) => o.status === "added")).toBe(true);
+    expect(await dueFor(kateryna, deck.id)).toBe(60);
+    expect(await dueFor(anna, deck.id)).toBe(60);
+    expect(await dueFor(marko, deck.id)).toBe(60);
+  });
+
   it("a card's own direction override reaches the member", async () => {
     const { deck, cards } = await sharedDeck("Ilm", ["vihm"]);
     const first = cards[0];

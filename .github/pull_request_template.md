@@ -1,17 +1,11 @@
-<!-- Title: type(scope): imperative summary. CI enforces the format; see docs/git-workflow.md. -->
+<!-- Title: type(scope): imperative summary. Target 60 characters; maximum 72. -->
 
-## ✨ What
+## Summary
 
-<!-- One or two sentences. Lead with what the learner can now do. Fold the reason in when it fits in one clause. Write each paragraph as one line; GitHub shows every newline as a line break. -->
+<!-- One short paragraph or up to three bullets. State the outcome once. -->
 
-## ✅ How to verify
+## Verification
 
-<!-- Two or three bullets: the fastest path to see it work, or the test that covers it. Show real test output as evidence. Wrap output longer than ~10 lines in a <details> block. -->
+<!-- List only checks actually run and their result. Report skipped checks directly. -->
 
-<!-- Add these sections only when they apply. Never ship an empty section or an "N/A" — an absent section reads faster.
-
-## 🤔 Why — the reason needs its own sentences: a decision in docs/stack.md, a constraint, a bug worth describing.
-## 🏗️ Architecture — the change moves a boundary: add a small Mermaid diagram (GitHub renders ```mermaid``` fences).
-## 📸 Screenshots — before/after for anything the learner sees, desktop and iPhone.
-## 📝 Notes — a trade-off, a deferred follow-up, or "PR 3 of 5".
--->
+<!-- Add Why, Screenshots, Risks, or Follow-ups only when material. Keep each optional section to one short paragraph or up to three bullets. Omit passing logs, implementation inventories, empty sections, decorative emoji, and generated-by footers. -->

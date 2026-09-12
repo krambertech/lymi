@@ -34,6 +34,20 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 **Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path.
 
+## Concise writing
+
+Write for the next decision, not as a record of the work session. State each outcome, constraint, reason, and piece of evidence once. Delete any sentence that does not change what the reader should understand or do.
+
+**Source comments.** Comment only a reason, invariant, safety boundary, or platform quirk that the code cannot express. Prefer clearer code when it removes the need for a comment. Keep comments to one sentence. Put longer rationale in the owning document or ADR and leave a one-sentence pointer beside the code. Use JSDoc only for a public contract whose behavior cannot be expressed by names and types; internal functions and types do not receive summary comments by default.
+
+**Pull request review comments.** Raise one actionable issue per inline comment. Start with the concrete defect or risk, then state the consequence and the smallest useful fix direction. Keep the comment to two or three sentences. Put cross-cutting context in one top-level review comment instead of repeating it inline.
+
+**Documentation.** Record durable behavior, decisions, constraints, and operating instructions. Leave implementation narration, review history, and test results in the pull request. Lead with the current rule or decision, keep one idea per paragraph, and use the fewest headings needed. Update the owning document rather than creating a new summary or duplicating facts already present in code or configuration.
+
+**Pull request titles.** Use `type(scope): imperative summary`. Target 60 characters and never exceed 72. Name the concrete outcome in literal language. Omit metaphors, promotion, issue numbers, and a final period. Example: `fix(auth): preserve deep links after sign-in`.
+
+**Pull request descriptions.** Use `Summary` and `Verification` by default. Keep the summary to one short paragraph or at most three bullets. List only checks that ran and their result. Add `Why`, `Screenshots`, `Risks`, or `Follow-ups` only when material, with one short paragraph or at most three bullets per section. Describe reviewer-relevant behavior and trade-offs, not the implementation journey or a file inventory. Link to an owning decision instead of repeating it. Include raw output only when it explains a failure. Omit decorative emoji, generated-by footers, empty sections, and passing logs already visible in CI.
+
 ## Generated files
 
 `routeTree.gen.ts`, both `worker-configuration.d.ts` files, `packages/core/src/schema/auth.ts`, `scripts/migration-manifest.json`, and everything under `migrations/` are generated. Edit the source and re-run the generator: `pnpm db:generate` after a schema change, `pnpm --filter @lymi/web auth:schema` after a Better Auth config change, and the appropriate workspace's `cf-typegen` after a Wrangler binding change.

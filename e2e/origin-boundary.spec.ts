@@ -56,7 +56,8 @@ test("the public Worker owns beta signup without exposing product APIs", async (
   page,
   request,
 }, testInfo) => {
-  const email = `separate-deployments-${testInfo.project.name}@example.com`;
+  const run = `${testInfo.project.name}-r${testInfo.retry}-p${testInfo.repeatEachIndex}`;
+  const email = `separate-deployments-${run}@example.com`;
   const first = await request.post(`${publicSite}/api/beta`, {
     data: { email, source: "landing" },
   });
@@ -72,10 +73,15 @@ test("the public Worker owns beta signup without exposing product APIs", async (
   const productApi = await request.get(`${publicSite}/api/decks`);
   expect(productApi.status()).toBe(404);
 
-  const uiEmail = `separate-deployments-ui-${testInfo.project.name}@example.com`;
+  const uiEmail = `separate-deployments-ui-${run}@example.com`;
   await page.goto(`${publicSite}/join/`);
   await page.getByRole("textbox", { name: "Email address" }).fill(uiEmail);
+  const signup = page.waitForResponse(
+    (response) =>
+      response.request().method() === "POST" && response.url() === `${publicSite}/api/beta`,
+  );
   await page.getByRole("button", { name: "Request invitation" }).click();
+  expect((await signup).status()).toBe(200);
   await expect(page.getByRole("status")).toContainText("You’re on the list.");
 });
 

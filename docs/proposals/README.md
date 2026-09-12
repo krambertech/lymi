@@ -4,6 +4,19 @@ One file per product direction worth preserving before it becomes a decision or 
 
 Proposals are not commitments. When a direction is chosen, record any hard-to-reverse technical decision in [an ADR](../adr/README.md) and put executable delivery work in [`docs/plans`](../plans).
 
+## Writing a proposal
+
+Use a proposal for one product or technical direction that is worth exploring but is not approved.
+
+- Use frontmatter with `status: exploration`, the current `date`, and `decision: none` until a decision is made.
+- Open with the opportunity or question and state clearly what is not decided.
+- Separate confirmed evidence, hypotheses, and the current leaning. Date and cite external facts that may change.
+- Compare at most three leading options. Include only differences that could change the decision.
+- Keep open questions to those that block or materially alter a decision, then end with the evidence or choice needed to proceed.
+- Describe only enough technical shape to test feasibility. Leave delivery steps, schemas, task lists, and estimates to a plan after the direction is chosen.
+
+Aim for fewer than 1,000 words. Link extended research instead of reproducing it. When the direction advances, update the proposal's status and create the ADR or plan without rewriting exploration as settled history.
+
 | Proposal | Status |
 | --- | --- |
 | [Public website and product app architecture](public-website-and-product-app.md) | Partially accepted by ADR 0008 |

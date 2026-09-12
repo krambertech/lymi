@@ -6,7 +6,7 @@
 
 - A learner who picks Українська or Русский under You sees every interface string, date and plural in that language, on the phone and the desktop, after a reload and offline.
 - Push reminders arrive in the learner's app language with correct plural forms.
-- `lymi.app/uk/` and `lymi.app/ru/` serve the landing and Join pages with `hreflang` links, and the docs stay at their English URLs.
+- `lymi.app/uk/` and `lymi.app/ru/` serve the landing and Join pages with localized title, description and social metadata plus `hreflang` links, and the docs stay at their English URLs.
 - `pnpm verify` fails on a string added without extraction or left untranslated.
 - `pnpm test:e2e` passes in Chromium and WebKit with a spec that switches the app language.
 
@@ -45,7 +45,7 @@ Each app has its own Lingui config and catalogs. The Worker shares the product c
 A spike on this stack passed `pnpm verify` and the Chromium e2e with one `<Trans>` per app, push copy on `msg` and `plural`, and a `/uk/` route. It settled four things the plan depends on:
 
 - Vite 8 runs on Rolldown and `@vitejs/plugin-react` 6 has no `babel` option. Macros run through `@rolldown/plugin-babel` with `linguiTransformerBabelPreset()` from `@lingui/vite-plugin`, filtered to `src/`. The same pair goes under `vite.plugins` in `astro.config.mjs`.
-- The Lingui 6 CLI needs Node 22.19 or newer. On 22.14 `lingui extract` exits 0 and writes nothing. `.nvmrc` moves to `22.22.3`.
+- The Lingui 6 CLI needs Node 22.19 or newer. On 22.14 `lingui extract` exits 0 and writes nothing. `.nvmrc` moves to `22.22.3` and the root `package.json` engine to `>=22.19`, so a supported setup cannot run a silent no-op.
 - `@lingui/core` reaches `@messageformat/parser`, which is CommonJS. The Workers test runner fails at startup if it sits in the Worker entry's static graph, so the Worker imports `@lingui/core` dynamically, the way it already imports `web-push`. Production and `pnpm dev` are unaffected.
 - The missing-translation gate is `lingui({ failOnMissing: true })` on the Vite plugin, which fails the build `verify` already runs. `lingui compile` is not used: it writes `.js` files Biome then lints.
 
@@ -55,12 +55,12 @@ Ukrainian says "ти" and Russian says "ты", the same register in both. Lymi's
 
 ## Phase 1: plumbing, every string wrapped, still English
 
-Nothing visible changes. Done when `pnpm verify` and `pnpm test:e2e:chromium` pass and each screen matches its screenshot from before.
+Nothing visible changes and no learner data changes: no picker, no write to `app_language`. Done when `pnpm verify` and `pnpm test:e2e:chromium` pass and each screen matches its screenshot from before.
 
-1. Install Lingui in `apps/web` with the Vite setup above, `lingui.config.ts` with `sourceLocale: "en"`, `locales: ["en", "uk", "ru"]`, catalogs at `src/locales/{locale}` covering `src/client` and `src/server`, PO format with `lineNumbers: false`. Bump `.nvmrc`.
-2. Add `app_language` (nullable) to `user_settings`, `appLanguage` to `SettingsPatch` and `SettingsOut`, and make `updateSettings` write `meaning_language` alongside it.
-3. Add `lib/i18n.ts` with `pickLocale(navigator.languages)` and `activate(locale)`, which loads the catalog, sets `document.documentElement.lang` and stores `lymi-language`. Activate before the first render and wrap the router in `I18nProvider`.
-4. Add `settingsQuery` and a root effect: a null `appLanguage` gets the browser pick written back, otherwise the stored value is activated. Add the **App language** select under You with each option in its own language.
+1. Install Lingui in `apps/web` with the Vite setup above, `lingui.config.ts` with `sourceLocale: "en"`, `locales: ["en", "uk", "ru"]`, catalogs at `src/locales/{locale}` covering `src/client` and `src/server`, PO format with `lineNumbers: false`. Bump `.nvmrc` and the root `engines.node`.
+2. Add `AppLanguage`, a `z.enum(["en", "uk", "ru"])` in `packages/core/src/types.ts`, and a nullable `app_language` column on `user_settings`. `appLanguage: AppLanguage` goes on `SettingsPatch` and `SettingsOut`. `meaningLanguage` leaves `SettingsPatch` and stays on `SettingsOut` as a derived field, so neither the API nor MCP's `update_settings` can set it apart from the app language. `updateSettings` writes `meaning_language` from `appLanguage`.
+3. Add `lib/i18n.ts` with `pickLocale(navigator.languages)` and `activate(locale)`, which loads the catalog, sets `document.documentElement.lang` and stores `lymi-language`. Before the first render, the signed-in shell activates the stored value if it is an `AppLanguage` and the browser pick otherwise; the bare shell (`/login`, `/consent`) always uses the browser pick and ignores the stored value, and sign-out clears it. Wrap the router in `I18nProvider`.
+4. Add `settingsQuery` and a root effect that activates a stored `appLanguage`. A null value activates the browser pick without writing it; the write and the picker wait for phase 2, so an English interface can never sit on Ukrainian enrichment.
 5. Wrap every string: `<Trans>` in JSX, `t` for attributes, `msg` for constants, `plural` for the seven ternaries. Dates through `i18n.date()`, language names through `Intl.DisplayNames([i18n.locale])`. Client validation messages move into components with `t`; the core Zod schema still decides validity.
 6. Replace physical Tailwind direction classes with logical ones and add the rule to the Styling convention in `CLAUDE.md`.
 7. Localize `reminderCopy(due, locale)` through a dynamic `@lingui/core` import; the candidate query joins `user_settings` for `app_language`, null meaning `en`.
@@ -72,17 +72,17 @@ Nothing visible changes. Done when `pnpm verify` and `pnpm test:e2e:chromium` pa
 Done when the app runs in both languages, `pnpm verify` and `pnpm test:e2e` pass in both browsers, and a pass on a real iPhone in standalone mode finds no clipped label.
 
 1. Run the `translate` skill on both catalogs. The PR description lists every message the agent was unsure about.
-2. Turn on `failOnMissing: true` in the product Vite config.
+2. Add the **App language** select under You with each option in its own language, and the root effect that writes the browser pick when `appLanguage` is null. Turn on `failOnMissing: true` in the product Vite config.
 3. Test `reminderCopy` for 1, 2, 5 and 21 cards in all three locales.
 4. Add `e2e/language.spec.ts` with a `language` account: sign in, choose Українська under You, reload, expect `html[lang="uk"]` and the Today and You headings in Ukrainian, then switch back.
 5. Confirm the sign-in page, which has no settings, follows the browser pick.
 
 ## Phase 3: the site
 
-Done when `pnpm verify`, `pnpm deploy:check:site` and `pnpm test:e2e` pass and `/uk/` and `/ru/` are live with `hreflang`.
+Done when `pnpm verify`, `pnpm deploy:check:site` and `pnpm test:e2e` pass, `/uk/` and `/ru/` are live with `hreflang`, and a build check reads localized `<title>`, `description` and `og:` tags from `dist/uk/index.html`.
 
 1. Configure `i18n: { defaultLocale: "en", locales: ["en", "uk", "ru"] }` and the Lingui Vite pair in `astro.config.mjs`; add the site's own `lingui.config.ts` and catalogs.
-2. Add `lib/i18n.ts` with `pageI18n(locale)`; `LandingPage` and `JoinPage` take `locale={Astro.currentLocale}` and wrap their view in `I18nProvider`. Astro prerenders the island, so translated text is in the HTML.
+2. Add `lib/i18n.ts` with `pageI18n(locale)`; `LandingPage` and `JoinPage` take `locale={Astro.currentLocale}` and wrap their view in `I18nProvider`. Astro prerenders the island, so translated text is in the HTML. The page wrappers resolve the title, description and Open Graph and Twitter text as `msg` descriptors through the same instance and pass them to `BaseLayout`, so `/uk/` never advertises English metadata.
 3. Add `pages/uk/` and `pages/ru/` wrappers for `index` and `join`. Docs pages are not duplicated.
 4. Set `lang` from `Astro.currentLocale` in `BaseLayout.astro`, the canonical per locale, and `hreflang` for `en`, `uk`, `ru` and `x-default` on landing and Join only. Extend `sitemap.xml.ts`.
 5. Add a footer language row built with `getRelativeLocaleUrl`. The beta form shows localized messages; `/api/beta` stays English.

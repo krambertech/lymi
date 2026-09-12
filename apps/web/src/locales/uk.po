@@ -209,6 +209,10 @@ msgstr "{moreDue, plural, one {{done} повторено. Ще # готова, �
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
+#: src/client/lib/use-sign-out.tsx
+msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgstr "{queued, plural, one {# оцінка з офлайн-повторення ще не дійшла до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти її.} few {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} many {# оцінок з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} other {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.}}"
+
 #: src/client/views/TodayView.tsx
 msgid "{run, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{run, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
@@ -219,13 +223,8 @@ msgstr "{total, plural, one {У твоїх колодах # картка, і в�
 
 #: src/client/components/DeckCard.tsx
 #: src/client/views/DeckDetailView.tsx
-#: src/client/views/YouView.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
-
-#: src/client/views/YouView.tsx
-msgid "{unseen, plural, one {# new} other {# new}}"
-msgstr "{unseen, plural, one {# нова} few {# нові} many {# нових} other {# нової}}"
 
 #: src/client/views/WordView.tsx
 msgid "{when}, {then}"
@@ -249,8 +248,8 @@ msgid "<0>{learning}</0> learning"
 msgstr "<0>{learning}</0> у вивченні"
 
 #: src/client/components/ApiKeysSection.tsx
-msgid "<0>{name}</0> is ready. Copy it now — it is not shown again."
-msgstr "<0>{name}</0> готовий. Скопіюй зараз — його більше не буде показано."
+msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
+msgstr "<0>{name}</0> готовий. Скопіюй його зараз: більше він не показується."
 
 #: src/client/views/InsightsView.tsx
 msgid "30 days"
@@ -280,9 +279,21 @@ msgstr "поле"
 msgid "A good pause"
 msgstr "Добра пауза"
 
+#: src/client/components/ApiKeysSection.tsx
+msgid "A key lets a script or curl read your decks, or add to them."
+msgstr "Ключ дає скрипту або curl читати твої колоди чи додавати в них."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "A key never grades reviews."
+msgstr "Ключ ніколи не ставить оцінок за повторення."
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "A note to yourself about what is in here."
 msgstr "Нотатка для себе про те, що тут є."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "A notification on this device when cards are due."
+msgstr "Сповіщення на цьому пристрої, коли є картки до повторення."
 
 #: src/client/views/WordView.tsx
 msgid "A sentence it lives in"
@@ -301,14 +312,10 @@ msgstr "приблизно {0} повернулися б сьогодні"
 msgid "Access"
 msgstr "Доступ"
 
-#: src/client/views/YouView.tsx
-msgid "Account"
-msgstr "Обліковий запис"
-
+#: src/client/components/LearnerMenu.tsx
 #: src/client/routes/activity.tsx
 #: src/client/views/Shell.tsx
 #: src/client/views/TodayView.tsx
-#: src/client/views/YouView.tsx
 msgid "Activity"
 msgstr "Активність"
 
@@ -325,8 +332,8 @@ msgstr "Додати значення"
 msgid "Add a sentence it lives in"
 msgstr "Додати речення, у якому він живе"
 
+#: src/client/components/ShortcutsDialog.tsx
 #: src/client/views/TodayView.tsx
-#: src/client/views/YouView.tsx
 msgid "Add a word"
 msgstr "Додати слово"
 
@@ -338,9 +345,17 @@ msgstr "Додай слово з останнього уроку, і ліхта�
 msgid "Add a word or phrase"
 msgstr "Додати слово або фразу"
 
-#: src/client/components/NotificationsSection.tsx
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
+msgstr "Додай Lymi як MCP-сервер у Claude або ChatGPT і увійди, коли він попросить."
+
+#: src/client/components/InstallDialog.tsx
 msgid "Add Lymi to your Home Screen"
 msgstr "Додати Lymi на початковий екран"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
+msgstr "Спершу додай Lymi на початковий екран. iPhone та iPad дозволяють нагадування лише звідти."
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Add the first word from your lesson. The lantern lights when a card is due."
@@ -432,18 +447,6 @@ msgstr "Ключ API для {name}"
 msgid "API keys"
 msgstr "Ключі API"
 
-#: src/client/components/NotificationsSection.tsx
-msgid "App"
-msgstr "Застосунок"
-
-#: src/client/views/YouView.tsx
-msgid "App language"
-msgstr "Мова застосунку"
-
-#: src/client/views/YouView.tsx
-msgid "Appearance"
-msgstr "Вигляд"
-
 #: src/client/views/DeckSettingsView.tsx
 #: src/client/views/WordView.tsx
 msgid "Archive"
@@ -454,10 +457,10 @@ msgstr "Архівувати"
 msgid "Archive deck"
 msgstr "Архівувати колоду"
 
+#: src/client/components/LearnerMenu.tsx
 #: src/client/routes/archived.tsx
 #: src/client/views/LibraryView.tsx
 #: src/client/views/WordView.tsx
-#: src/client/views/YouView.tsx
 msgid "Archived"
 msgstr "Архів"
 
@@ -474,6 +477,14 @@ msgstr "Заархівовано «{deckName}»"
 msgid "asked by {0}"
 msgstr "запитано як {0}"
 
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Assistants that signed in to Lymi, such as Claude or ChatGPT."
+msgstr "Асистенти, що увійшли в Lymi, як-от Claude чи ChatGPT."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "At {savedTime}, {zone} time, only on days with cards due."
+msgstr "О {savedTime} за часом {zone}, лише в дні, коли є картки до повторення."
+
 #: src/client/routes/review.tsx
 msgid "Back"
 msgstr "Назад"
@@ -481,6 +492,10 @@ msgstr "Назад"
 #: src/client/views/WordView.tsx
 msgid "back within the day"
 msgstr "повернеться протягом дня"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Backup script on the laptop"
+msgstr "Скрипт резервної копії на ноутбуці"
 
 #: src/client/components/DeckFields.tsx
 msgid "Both"
@@ -530,7 +545,7 @@ msgid "Check your connection, then try again."
 msgstr "Перевір з’єднання й повтори спробу."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Choose 00, 15, 30, or 45 minutes."
+msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Вибери 00, 15, 30 або 45 хвилин."
 
 #: src/client/components/AddCardSheet.tsx
@@ -545,15 +560,12 @@ msgstr "Вибрати оцінку повторення"
 msgid "Choose one"
 msgstr "Вибери один варіант"
 
-#: src/client/components/ApiKeysSection.tsx
-msgid "Claude Code on the laptop"
-msgstr "Claude Code на ноутбуці"
-
 #: src/client/views/DeckDetailView.tsx
 msgid "Clear"
 msgstr "Очистити"
 
-#: src/client/components/NotificationsSection.tsx
+#: src/client/components/InstallDialog.tsx
+#: src/client/components/ShortcutsDialog.tsx
 #: src/client/views/WordView.tsx
 msgid "Close"
 msgstr "Закрити"
@@ -602,11 +614,15 @@ msgstr "Копіювати"
 msgid "Could not load your numbers"
 msgstr "Не вдалося завантажити показники"
 
+#: src/client/components/NotificationsSection.tsx
+msgid "Couldn’t check this device. Reload to try again."
+msgstr "Не вдалося перевірити цей пристрій. Онови сторінку, щоб спробувати ще раз."
+
 #: src/client/routes/library.$deckId.tsx
 msgid "Couldn’t save “{failedTerm}”. Check the connection."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання."
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
 
@@ -619,14 +635,10 @@ msgid "Create key"
 msgstr "Створити ключ"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Daily reminder off for this device."
-msgstr "Щоденне нагадування вимкнено на цьому пристрої."
+msgid "Daily reminder"
+msgstr "Щоденне нагадування"
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Daily reminder on for this device."
-msgstr "Щоденне нагадування ввімкнено на цьому пристрої."
-
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Dark"
 msgstr "Темна"
 
@@ -673,6 +685,10 @@ msgstr "Опис"
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Disconnect"
 msgstr "Відключити"
+
+#: src/client/components/LearnerMenu.tsx
+msgid "Docs"
+msgstr "Документація"
 
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/routes/review.tsx
@@ -755,15 +771,19 @@ msgid "first time"
 msgstr "вперше"
 
 #: src/client/components/ApiKeysSection.tsx
-msgid "For curl, scripts and Claude Code. Send the key in an <0>x-api-key</0> header; the routes are in the <1>API reference</1>. MCP clients such as Claude Desktop sign in instead, and appear under Connected apps."
-msgstr "Для curl, скриптів і Claude Code. Передавай ключ у заголовку <0>x-api-key</0>; маршрути описано в <1>довіднику API</1>. MCP-клієнти, як-от Claude Desktop, натомість входять у систему й з’являються серед підключених застосунків."
+msgid "For scripts and curl. An assistant signs in instead, under Connected apps."
+msgstr "Для скриптів і curl. Асистент натомість входить сам, див. «Підключені застосунки»."
+
+#: src/client/views/SettingsView.tsx
+msgid "For the interface, and for the meanings the AI writes."
+msgstr "Для інтерфейсу та для значень, які пише ШІ."
 
 #: src/client/views/ReviewView.tsx
 #: src/client/views/WordView.tsx
 msgid "Forgot"
 msgstr "Не пам’ятаю"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Не пам’ятаю, Важко, Добре, Легко"
 
@@ -819,6 +839,10 @@ msgstr "За який період показано запам’ятовува�
 msgid "how it is asked"
 msgstr "як запитується"
 
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "How to connect"
+msgstr "Як підключити"
+
 #: src/client/components/DeckFields.tsx
 #: src/client/views/DeckSettingsView.tsx
 msgid "How you are asked"
@@ -828,23 +852,16 @@ msgstr "Як тебе запитувати"
 msgid "Identified by"
 msgstr "Ідентифіковано за адресою"
 
+#: src/client/components/LearnerMenu.tsx
 #: src/client/views/InsightsView.tsx
 #: src/client/views/Shell.tsx
-#: src/client/views/YouView.tsx
 msgid "Insights"
 msgstr "Огляд"
 
-#: src/client/components/NotificationsSection.tsx
+#: src/client/components/InstallDialog.tsx
+#: src/client/components/LearnerMenu.tsx
 msgid "Install Lymi"
 msgstr "Встановити Lymi"
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Install Lymi first. iPhone and iPad only allow web-app reminders after installation."
-msgstr "Спочатку встанови Lymi. iPhone та iPad дозволяють нагадування вебзастосунків лише після встановлення."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Installed on this device."
-msgstr "Встановлено на цьому пристрої."
 
 #: src/client/views/ConsentView.tsx
 msgid "It calls itself “{claimed}”. Lymi cannot check that. The address above is the part that is checked."
@@ -883,13 +900,10 @@ msgstr "Назва має бути коротшою за 80 символів."
 msgid "Keeps coming back"
 msgstr "Постійно повертаються"
 
-#: src/client/views/YouView.tsx
-msgid "Keyboard"
-msgstr "Клавіатура"
-
-#: src/client/components/ApiKeysSection.tsx
-msgid "Keys never grade reviews."
-msgstr "Ключі ніколи не оцінюють повторення."
+#: src/client/components/LearnerMenu.tsx
+#: src/client/components/ShortcutsDialog.tsx
+msgid "Keyboard shortcuts"
+msgstr "Клавіатурні скорочення"
 
 #: src/client/components/Chip.tsx
 #: src/client/views/DeckDetailView.tsx
@@ -902,7 +916,7 @@ msgid "Known means the gaps between reviews are weeks or months now. A Forgot br
 msgstr "«Засвоєна» означає, що тепер між повтореннями минають тижні або місяці. Оцінка «Не пам’ятаю» повертає картку до коротких кроків."
 
 #: src/client/components/DeckFields.tsx
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Language"
 msgstr "Мова"
 
@@ -924,7 +938,7 @@ msgstr "Залиш порожнім, і ШІ зможе запропонуват
 msgid "Leave review"
 msgstr "Вийти з повторення"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Leave review or close a sheet"
 msgstr "Вийти з повторення або закрити панель"
 
@@ -943,7 +957,7 @@ msgstr "Дозволити {appName} користуватися твоїм Lymi?
 msgid "Library"
 msgstr "Бібліотека"
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Light"
 msgstr "Світла"
 
@@ -967,10 +981,6 @@ msgstr "Lymi не розпізнає цей застосунок. Перевір
 msgid "Lymi home"
 msgstr "Головна Lymi"
 
-#: src/client/views/YouView.tsx
-msgid "Lymi website"
-msgstr "Сайт Lymi"
-
 #: src/client/components/PillNav.tsx
 msgid "Main"
 msgstr "Головна навігація"
@@ -987,10 +997,6 @@ msgstr "Створювати й переглядати ключі API"
 msgid "Manage connected apps"
 msgstr "Керувати підключеними застосунками"
 
-#: src/client/components/ConnectedAppsSection.tsx
-msgid "MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app renewing its access, so it is locked out within the hour and has to ask again."
-msgstr "MCP-клієнти, які ввійшли в Lymi, наприклад Claude Desktop. Після відключення застосунок не зможе поновити доступ, втратить його протягом години й муситиме запитати знову."
-
 #: src/client/components/AddCardSheet.tsx
 #: src/client/views/WordView.tsx
 msgid "Meaning"
@@ -1003,10 +1009,6 @@ msgstr "Твоє значення"
 #: src/client/components/Chip.tsx
 msgid "Meaning from lesson"
 msgstr "Значення з уроку"
-
-#: src/client/views/YouView.tsx
-msgid "Meanings and reminders use it too."
-msgstr "Значення й нагадування також використовують цю мову."
 
 #: src/client/views/InsightsView.tsx
 msgid "Month by month"
@@ -1093,13 +1095,17 @@ msgstr "далі через {0}"
 msgid "Next word"
 msgstr "Наступне слово"
 
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "No apps connected"
+msgstr "Немає підключених застосунків"
+
 #: src/client/views/LibraryView.tsx
 msgid "No decks yet"
 msgstr "Колода ще не створена"
 
 #: src/client/components/ApiKeysSection.tsx
-msgid "No keys yet. Make one when you want to reach Lymi from a script."
-msgstr "Ключів поки немає. Створи ключ, коли захочеш працювати з Lymi зі скрипту."
+msgid "No keys yet"
+msgstr "Ключів ще немає"
 
 #: src/client/components/DeckFields.tsx
 msgid "No language"
@@ -1130,6 +1136,10 @@ msgstr "Серії поки немає"
 msgid "Not asked yet. It joins the next review."
 msgstr "Ще не запитувалася. З’явиться в наступному повторенні."
 
+#: src/client/components/NotificationsSection.tsx
+msgid "Not available on this server yet."
+msgstr "На цьому сервері поки недоступно."
+
 #: src/client/views/ComingSoonView.tsx
 msgid "Not yet"
 msgstr "Ще ні"
@@ -1137,10 +1147,6 @@ msgstr "Ще ні"
 #: src/client/views/WordView.tsx
 msgid "Notes"
 msgstr "Нотатки"
-
-#: src/client/components/ConnectedAppsSection.tsx
-msgid "Nothing connected."
-msgstr "Нічого не підключено."
 
 #: src/client/views/ReviewView.tsx
 #: src/client/views/TodayView.tsx
@@ -1184,16 +1190,12 @@ msgid "Nothing yet."
 msgstr "Поки нічого."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Notifications are blocked in your browser or device settings."
-msgstr "Сповіщення заблоковано в налаштуваннях браузера або пристрою."
-
-#: src/client/components/NotificationsSection.tsx
 msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
 msgstr "Сповіщення заблоковано. Дозволь їх у налаштуваннях браузера або пристрою й повтори спробу."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Notifications weren't enabled. You can try again when you're ready."
-msgstr "Сповіщення не ввімкнено. Спробуй знову, коли буде зручно."
+msgid "Notifications are blocked. Allow them in your browser or device settings."
+msgstr "Сповіщення заблоковано. Дозволь їх у налаштуваннях браузера або пристрою."
 
 #: src/client/views/LibraryView.tsx
 msgid "One per course works well, or one per topic. Words remember which lesson they came from."
@@ -1204,33 +1206,25 @@ msgid "One word is ready"
 msgstr "Одне слово готове"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Only when cards are due. This setting applies to this device."
-msgstr "Лише коли є картки до повторення. Це налаштування діє на цьому пристрої."
+msgid "Only on days with cards due."
+msgstr "Лише в дні, коли є картки до повторення."
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Open Lymi from its new icon, then turn on the daily reminder."
-msgstr "Відкрий Lymi з нової іконки, а потім увімкни щоденне нагадування."
+#: src/client/components/InstallDialog.tsx
+msgid "Open Lymi from the new icon."
+msgstr "Відкрий Lymi з нової іконки."
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Open Lymi in Safari and select Share."
-msgstr "Відкрий Lymi в Safari й вибери «Поширити»."
+#: src/client/components/InstallDialog.tsx
+msgid "Open Lymi in Safari and tap Share."
+msgstr "Відкрий Lymi в Safari і торкнись «Поділитися»."
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Open Lymi like an app and allow review reminders."
-msgstr "Відкривай Lymi як застосунок і дозволь нагадування про повторення."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Open your browser menu and select Install Lymi or Add to Dock. Installation is not offered by every desktop browser."
-msgstr "Відкрий меню браузера й вибери «Встановити Lymi» або «Додати до Dock». Не кожен браузер на комп’ютері пропонує встановлення."
+#: src/client/components/InstallDialog.tsx
+msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
+msgstr "Відкрий меню браузера і вибери «Встановити Lymi». Не кожен браузер це пропонує."
 
 #: src/client/components/AddCardSheet.tsx
 #: src/client/views/DeckSettingsView.tsx
 msgid "Optional"
 msgstr "Необов’язково"
-
-#: src/client/views/YouView.tsx
-msgid "Oversight"
-msgstr "Контроль"
 
 #. placeholder {0}: weekday(peak.date)
 #: src/client/views/InsightsView.tsx
@@ -1272,6 +1266,18 @@ msgstr "Читання"
 msgid "Read and write"
 msgstr "Читання й запис"
 
+#: src/client/components/ApiKeysSection.tsx
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
+msgstr "«Читання» переглядає колоди й картки. «Читання й запис» також додає, редагує й архівує їх. Ключ ніколи не ставить оцінок за повторення. <0>Довідник API</0>"
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
+msgstr "«Читання» переглядає колоди й картки. «Читання й запис» також додає, редагує й архівує їх. Доступ вибирається, коли застосунок входить; щоб змінити його, відключи застосунок і увійди знову."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Read the quickstart"
+msgstr "Швидкий старт"
+
 #: src/client/views/InsightsView.tsx
 msgid "Recall"
 msgstr "Запам’ятовування"
@@ -1306,20 +1312,20 @@ msgid "Relearning"
 msgstr "Повторне вивчення"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminder set for {time}."
-msgstr "Нагадування встановлено на {time}."
+msgid "Reminder off for this device."
+msgstr "Нагадування для цього пристрою вимкнено."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminder time"
-msgstr "Час нагадування"
+msgid "Reminder on for this device."
+msgstr "Нагадування для цього пристрою увімкнено."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminders"
-msgstr "Нагадування"
+msgid "Reminder time saved."
+msgstr "Час нагадування збережено."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminders are not configured yet."
-msgstr "Нагадування ще не налаштовано."
+msgid "Reminders stay off until notifications are allowed."
+msgstr "Нагадування вимкнені, доки не дозволиш сповіщення."
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Rename"
@@ -1387,8 +1393,8 @@ msgid "Right now"
 msgstr "Зараз"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Save reminder"
-msgstr "Зберегти нагадування"
+msgid "Save time"
+msgstr "Зберегти час"
 
 #: src/client/views/DeckSettingsView.tsx
 msgid "Saved"
@@ -1413,8 +1419,8 @@ msgid "scheduled after {0}"
 msgstr "заплановано після {0}"
 
 #: src/client/components/Combobox.tsx
+#: src/client/components/ShortcutsDialog.tsx
 #: src/client/views/Shell.tsx
-#: src/client/views/YouView.tsx
 msgid "Search"
 msgstr "Пошук"
 
@@ -1455,27 +1461,24 @@ msgid "See your decks and cards"
 msgstr "Переглядати свої колоди й картки"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Select Add to Home Screen and keep Open as Web App on."
-msgstr "Вибери «На початковий екран» і залиш «Відкрити як вебзастосунок» увімкненим."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Send a daily review reminder"
-msgstr "Надсилати щоденне нагадування про повторення"
+msgid "Send a daily reminder"
+msgstr "Надсилати щоденне нагадування"
 
 #: src/client/views/ReviewView.tsx
 msgid "Session progress"
 msgstr "Прогрес повторення"
 
-#: src/client/views/Shell.tsx
-msgid "Settings and account"
-msgstr "Налаштування й обліковий запис"
+#: src/client/components/LearnerMenu.tsx
+#: src/client/views/SettingsView.tsx
+msgid "Settings"
+msgstr "Налаштування"
 
 #: src/client/views/DeckDetailView.tsx
 #: src/client/views/LibraryView.tsx
 msgid "Show"
 msgstr "Показати"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Show the meaning, then Good"
 msgstr "Показати значення, потім «Добре»"
 
@@ -1499,9 +1502,13 @@ msgstr "Потрібно ввійти"
 msgid "Sign in to Lymi"
 msgstr "Увійти в Lymi"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/LearnerMenu.tsx
 msgid "Sign out"
 msgstr "Вийти"
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Sign out and lose them"
+msgstr "Вийти і втратити їх"
 
 #: src/client/routes/login.tsx
 msgid "Sign-in didn’t go through. Try again."
@@ -1510,6 +1517,10 @@ msgstr "Не вдалося ввійти. Спробуй ще раз."
 #: src/client/components/ApiKeysSection.tsx
 msgid "So you know which key to revoke later."
 msgstr "Щоб потім знати, який ключ відкликати."
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Some grades haven’t synced"
+msgstr "Деякі оцінки ще не синхронізовано"
 
 #. placeholder {0}: res.status
 #: src/client/lib/api.ts
@@ -1525,9 +1536,13 @@ msgstr "Щось пішло не так. Спробуй ще раз із зас�
 msgid "stability · difficulty {0}"
 msgstr "стабільність · складність {0}"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Start review"
 msgstr "Почати повторення"
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Stay signed in"
+msgstr "Залишитися в застосунку"
 
 #: src/client/views/WordView.tsx
 msgid "still in its first steps"
@@ -1537,13 +1552,17 @@ msgstr "ще на перших кроках"
 msgid "Still need an invitation?"
 msgstr "Запрошення все ще потрібне?"
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "System"
 msgstr "Системна"
 
-#: src/client/views/YouView.tsx
-msgid "System follows your device. Dark is a warm room."
-msgstr "Системна тема відповідає пристрою. Темна — це тепла кімната."
+#: src/client/views/SettingsView.tsx
+msgid "System follows your device."
+msgstr "«Системна» повторює налаштування пристрою."
+
+#: src/client/components/InstallDialog.tsx
+msgid "Tap Add to Home Screen."
+msgstr "Торкнись «На початковий екран»."
 
 #: src/client/views/ReviewView.tsx
 msgid "Tap card to reveal"
@@ -1610,8 +1629,8 @@ msgid "The language the words are in. It fills in on every new card."
 msgstr "Мова, якою написані слова. Вона заповнюється в кожній новій картці."
 
 #: src/client/views/DeckSettingsView.tsx
-msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings use your app language, which lives under You."
-msgstr "Мова, якою написані слова. Вона задається для кожної нової картки й потрібна для вимови та ШІ. Значення використовують мову застосунку, яку можна змінити в розділі «Ти»."
+msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
+msgstr "Мова, якою записані слова. З неї починається кожна нова картка, і без неї не працюють вимова та ШІ. Значення пишуться мовою значень, яка повторює мову застосунку в Налаштуваннях."
 
 #: src/client/views/WordView.tsx
 msgid "the meaning"
@@ -1638,13 +1657,13 @@ msgstr "теги"
 msgid "the word"
 msgstr "слово"
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Theme"
 msgstr "Тема"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "This browser does not support review reminders. You can still install and use Lymi."
-msgstr "Цей браузер не підтримує нагадування про повторення. Lymi все одно можна встановити й використовувати."
+msgid "This browser can’t show reminders."
+msgstr "Цей браузер не показує нагадувань."
 
 #: src/client/routes/login.tsx
 msgid "This Google account has not been invited. Request an invitation, or try another account."
@@ -1653,6 +1672,10 @@ msgstr "Цей обліковий запис Google не запрошено. П�
 #: src/client/routes/consent.tsx
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "У цьому посиланні немає застосунку, який надіслав запит. Почни знову із застосунку."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Time"
+msgstr "Час"
 
 #: src/client/views/WordView.tsx
 msgid "to another deck, by {who}"
@@ -1733,14 +1756,6 @@ msgstr "використано {m} хв тому"
 msgid "used just now"
 msgstr "щойно використано"
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Uses {zone}."
-msgstr "Часовий пояс: {zone}."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "View install steps"
-msgstr "Переглянути кроки встановлення"
-
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
 #: src/client/views/InsightsView.tsx
 msgid "week of {0}"
@@ -1778,8 +1793,7 @@ msgstr "повернулися б зараз"
 msgid "you"
 msgstr "ти"
 
-#: src/client/views/Shell.tsx
-#: src/client/views/TodayView.tsx
+#: src/client/components/LearnerMenu.tsx
 msgid "You"
 msgstr "Ти"
 

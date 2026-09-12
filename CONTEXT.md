@@ -16,7 +16,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Field source**: Where one field's text came from: the lesson, the AI, or the learner by hand. Shown so AI text is never mistaken for the lesson.
 
-**App language**: The language the interface and reminders are written in. A per-learner setting, taken from the browser on first sign-in and changeable under You. Meanings follow it. _Avoid_: Locale, UI language, interface language (in copy)
+**App language**: The language the interface and reminders are written in. A per-learner setting, taken from the browser on first sign-in and changeable in Settings. Meanings follow it. _Avoid_: Locale, UI language, interface language (in copy)
 
 **Meaning language**: The language meanings are written in. Follows the app language and is not shown as its own setting. Independent of any card's language. _Avoid_: Native language, mother tongue, L1, base language
 
@@ -46,7 +46,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Activity**: The list of writes made by integrations and the AI, shown in the app so nothing lands unseen. Cards can be inspected, edited or archived from there. _Avoid_: Review queue, inbox, approvals, history (for this screen)
 
-**You**: The screen holding the learner: their profile, Activity, Archived, and every setting. One screen, so none of those needs a place in the navigation. _Avoid_: Profile, account, me, settings (as the screen name)
+**Settings**: The screen holding every setting: theme, the daily reminder, connected apps and API keys. Nothing else lives there. _Avoid_: You, profile, account, preferences
+
+**Learner menu**: The menu behind the learner's name in the rail and their avatar on the phone. It leads to Settings, Archived, the docs and sign-out, and on the phone to Activity and Insights as well; keyboard shortcuts appear where there is a keyboard and Install where the browser can do it. _Avoid_: Profile menu, account menu, user menu
 
 **Inspect**: Looking over a card an integration added, and optionally editing or archiving it. _Avoid_: Review, approve
 

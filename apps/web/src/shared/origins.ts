@@ -7,6 +7,7 @@ const PRODUCT_PATHS = [
   "/today",
   "/library",
   "/review",
+  "/settings",
   "/you",
   "/activity",
   "/archived",
@@ -24,7 +25,7 @@ export function isProductBrowserPath(pathname: string): boolean {
 
 /** Routes a signed-out learner may safely resume after authentication. */
 function isProtectedProductPath(pathname: string): boolean {
-  return PRODUCT_PATHS.slice(0, 8).some(
+  return PRODUCT_PATHS.slice(0, 9).some(
     (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
 }

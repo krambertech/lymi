@@ -14,9 +14,9 @@ import { InsightsView } from "../views/InsightsView";
 import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
 import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/ReviewView";
+import { SettingsView } from "../views/SettingsView";
 import { Sidebar } from "../views/Shell";
 import { TodayView } from "../views/TodayView";
-import { YouView } from "../views/YouView";
 import { Desktop, type FrameTheme, Phone, Section, Sub, useFrameTheme } from "./Frame";
 import * as m from "./mock";
 
@@ -143,6 +143,7 @@ export function Screens() {
               arrivals={m.arrivals}
               forecast="31 tomorrow, 9 on Monday"
               name={m.me.name}
+              docsUrl="https://lymi.app/docs"
               static={{ path: "/" }}
             />
           </PhoneShot>
@@ -152,17 +153,30 @@ export function Screens() {
               history={m.streakDaysOpen}
               forecast="31 tomorrow, 9 on Monday"
               name={m.me.name}
+              docsUrl="https://lymi.app/docs"
               static={{ path: "/" }}
             />
           </PhoneShot>
           <PhoneShot caption="First run" initial="light" path="/">
-            <TodayView decks={[]} history={m.noHistory} name={m.me.name} static={{ path: "/" }} />
+            <TodayView
+              decks={[]}
+              history={m.noHistory}
+              name={m.me.name}
+              docsUrl="https://lymi.app/docs"
+              static={{ path: "/" }}
+            />
           </PhoneShot>
         </div>
         <Shot caption="Desktop, Today" initial="light">
           {(t) => (
             <Desktop theme={t} height={560}>
-              <Sidebar decks={m.decks} name={m.me.name} onAdd={noop} static={{ path: "/" }} />
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                docsUrl="https://lymi.app/docs"
+                onAdd={noop}
+                static={{ path: "/" }}
+              />
               <main className="@container flex min-w-0 flex-1 flex-col">
                 <TodayView
                   decks={m.decks}
@@ -170,6 +184,7 @@ export function Screens() {
                   arrivals={m.arrivals}
                   forecast="31 tomorrow, 9 on Monday"
                   name={m.me.name}
+                  docsUrl="https://lymi.app/docs"
                   static={{ path: "/" }}
                 />
               </main>
@@ -188,6 +203,7 @@ export function Screens() {
               <Sidebar
                 decks={m.decks}
                 name={m.me.name}
+                docsUrl="https://lymi.app/docs"
                 onAdd={noop}
                 static={{ path: "/insights" }}
               />
@@ -249,7 +265,13 @@ export function Screens() {
           <Shot caption="Desktop, review" initial="light">
             {(t) => (
               <Desktop theme={t} height={620}>
-                <Sidebar decks={m.decks} name={m.me.name} onAdd={noop} static={{ path: "/" }} />
+                <Sidebar
+                  decks={m.decks}
+                  name={m.me.name}
+                  docsUrl="https://lymi.app/docs"
+                  onAdd={noop}
+                  static={{ path: "/" }}
+                />
                 <main className="@container flex min-w-0 flex-1 flex-col">
                   <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-8 pt-4">
                     <ReviewHeader done={4} total={11} />
@@ -315,6 +337,7 @@ export function Screens() {
               <Sidebar
                 decks={m.decks}
                 name={m.me.name}
+                docsUrl="https://lymi.app/docs"
                 onAdd={noop}
                 static={{ path: "/library" }}
               />
@@ -337,6 +360,7 @@ export function Screens() {
               <Sidebar
                 decks={m.decks}
                 name={m.me.name}
+                docsUrl="https://lymi.app/docs"
                 onAdd={noop}
                 static={{ path: "/library/d1" }}
               />
@@ -373,18 +397,8 @@ export function Screens() {
               </div>
             </div>
           </PhoneShot>
-          <PhoneShot caption="You" initial="dark" path="/you">
-            <YouView
-              me={m.me}
-              total={77}
-              unseen={12}
-              archivedCount={9}
-              theme="system"
-              onTheme={noop}
-              appLanguage="en"
-              websiteUrl="https://lymi.app/"
-              static={{ path: "/you" }}
-            />
+          <PhoneShot caption="Settings" initial="dark" path="/settings">
+            <SettingsView me={m.me} language="en" onLanguage={noop} theme="system" onTheme={noop} />
           </PhoneShot>
         </div>
       </Sub>
@@ -422,6 +436,7 @@ export function Screens() {
               <Sidebar
                 decks={m.decks}
                 name={m.me.name}
+                docsUrl="https://lymi.app/docs"
                 onAdd={noop}
                 static={{ path: "/library" }}
               />
@@ -444,6 +459,7 @@ export function Screens() {
               <Sidebar
                 decks={m.decks}
                 name={m.me.name}
+                docsUrl="https://lymi.app/docs"
                 onAdd={noop}
                 static={{ path: "/library/d3" }}
               />

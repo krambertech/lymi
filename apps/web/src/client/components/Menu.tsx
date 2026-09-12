@@ -100,10 +100,13 @@ export function MenuTrigger({ children }: { children: (p: TriggerProps) => React
 export function MenuList({
   children,
   align = "end",
+  side = "bottom",
   className,
 }: {
   children: ReactNode;
   align?: "start" | "end" | undefined;
+  /** "top" for a trigger at the foot of the screen, so the list opens into the room above. */
+  side?: "bottom" | "top" | undefined;
   className?: string | undefined;
 }) {
   const ctx = useContext(MenuCtx);
@@ -149,8 +152,16 @@ export function MenuList({
       onKeyDown={onKey}
       {...hover.handlers}
       className={clsx(
-        "enter-menu edge-2 absolute top-[calc(100%+6px)] z-(--z-dropdown) min-w-48 rounded-md bg-plate p-1",
-        align === "end" ? "end-0 origin-top-right" : "start-0 origin-top-left",
+        "enter-menu edge-2 absolute z-(--z-dropdown) min-w-48 rounded-md bg-plate p-1",
+        side === "bottom" ? "top-[calc(100%+6px)]" : "bottom-[calc(100%+6px)]",
+        align === "end" ? "end-0" : "start-0",
+        side === "bottom"
+          ? align === "end"
+            ? "origin-top-right"
+            : "origin-top-left"
+          : align === "end"
+            ? "origin-bottom-right"
+            : "origin-bottom-left",
         className,
       )}
     >
@@ -160,12 +171,24 @@ export function MenuList({
   );
 }
 
+function itemClass(tone: "default" | "danger", disabled?: boolean) {
+  return clsx(
+    // The hover fill is the shared FluidHighlight behind the items, so no hover of its own.
+    "relative flex h-10 w-full items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-base outline-none transition-colors",
+    "focus-visible:bg-hover",
+    tone === "danger" ? "text-danger [&_svg]:text-danger" : "text-text [&_svg]:text-muted",
+    disabled && "opacity-45",
+    "[&_svg]:size-4",
+  );
+}
+
 export function MenuItem({
   children,
   onSelect,
   tone = "default",
   icon,
   kbd,
+  trailing,
   disabled,
 }: {
   children: ReactNode;
@@ -173,6 +196,8 @@ export function MenuItem({
   tone?: "default" | "danger" | undefined;
   icon?: ReactNode | undefined;
   kbd?: string | undefined;
+  /** After the label, e.g. the unseen dot. */
+  trailing?: ReactNode | undefined;
   disabled?: boolean | undefined;
 }) {
   const ctx = useContext(MenuCtx);
@@ -187,19 +212,52 @@ export function MenuItem({
         onSelect?.();
         ctx?.close();
       }}
-      className={clsx(
-        "relative flex h-10 w-full items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-left text-base outline-none transition-colors",
-        "focus-visible:bg-hover",
-        tone === "danger" ? "text-danger [&_svg]:text-danger" : "text-text [&_svg]:text-muted",
-        disabled && "opacity-45",
-        "[&_svg]:size-4",
-      )}
+      className={itemClass(tone, disabled)}
     >
       {icon}
       <span className="flex-1">{children}</span>
+      {trailing}
       {kbd && <span className="ps-3 text-xs text-muted">{kbd}</span>}
     </button>
   );
+}
+
+/**
+ * A menu item that goes somewhere. `render` supplies the anchor, so the caller decides
+ * between a router link and the dead anchor of the design page; the menu supplies the role
+ * and closes itself once the link is taken.
+ */
+export function MenuLink({
+  children,
+  icon,
+  trailing,
+  render,
+}: {
+  children: ReactNode;
+  icon?: ReactNode | undefined;
+  trailing?: ReactNode | undefined;
+  render: (props: {
+    role: "menuitem";
+    tabIndex: -1;
+    className: string;
+    onClick: () => void;
+    children: ReactNode;
+  }) => ReactNode;
+}) {
+  const ctx = useContext(MenuCtx);
+  return render({
+    role: "menuitem",
+    tabIndex: -1,
+    className: itemClass("default"),
+    onClick: () => ctx?.setOpen(false),
+    children: (
+      <>
+        {icon}
+        <span className="flex-1">{children}</span>
+        {trailing}
+      </>
+    ),
+  });
 }
 
 export function MenuSeparator() {

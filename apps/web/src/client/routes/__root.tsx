@@ -13,7 +13,9 @@ import { PillNav } from "../components/PillNav";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api, flushOutbox } from "../lib/api";
 import { activate, bootstrapLanguage, isAppLanguage, isBareShell, pickLocale } from "../lib/i18n";
+import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
+import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/Shell";
 
 // Local development only. Vite drops the import from a production build with the branch.
@@ -26,12 +28,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function Root() {
   return (
     <AddCardProvider>
-      <Shell />
-      {DevPanel && (
-        <Suspense fallback={null}>
-          <DevPanel />
-        </Suspense>
-      )}
+      <SignOutProvider>
+        <Shell />
+        {DevPanel && (
+          <Suspense fallback={null}>
+            <DevPanel />
+          </Suspense>
+        )}
+      </SignOutProvider>
     </AddCardProvider>
   );
 }
@@ -49,6 +53,7 @@ function Shell() {
   const me = useQuery({ ...meQuery, enabled: !bare });
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
+  const leave = useSignOut();
 
   const appLanguage = settings.data?.appLanguage;
   useEffect(() => {
@@ -125,8 +130,12 @@ function Shell() {
             <Sidebar
               decks={decks.data}
               name={me.data?.name}
+              email={me.data?.email}
+              docsUrl={publicSiteUrl("/docs")}
               onAdd={() => add.openCard()}
               onCreateDeck={add.openDeck}
+              onSignOut={leave.signOut}
+              signingOut={leave.busy}
               className="hidden @3xl/shell:flex"
             />
           )

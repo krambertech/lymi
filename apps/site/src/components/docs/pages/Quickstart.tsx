@@ -15,8 +15,9 @@ export function Quickstart() {
         <div>
           <StepTitle>Make a key</StepTitle>
           <p>
-            Open <a href={productUrl("/you")}>You</a> in Lymi, find <strong>API keys</strong>, name
-            the key after the thing that will use it, and choose <strong>Read and write</strong>.
+            Open <a href={productUrl("/settings")}>Settings</a> in Lymi, find{" "}
+            <strong>API keys</strong>, name the key after the thing that will use it, and choose{" "}
+            <strong>Read and write</strong>.
           </p>
           <p>
             The key is shown once, right after you make it. Copy it now; the server keeps only a

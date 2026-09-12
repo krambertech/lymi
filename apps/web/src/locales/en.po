@@ -209,6 +209,10 @@ msgstr "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} o
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
+#: src/client/lib/use-sign-out.tsx
+msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+
 #: src/client/views/TodayView.tsx
 msgid "{run, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{run, plural, one {# day in a row} other {# days in a row}}"
@@ -219,13 +223,8 @@ msgstr "{total, plural, one {# card in your decks, all ahead of you.} other {# c
 
 #: src/client/components/DeckCard.tsx
 #: src/client/views/DeckDetailView.tsx
-#: src/client/views/YouView.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
-
-#: src/client/views/YouView.tsx
-msgid "{unseen, plural, one {# new} other {# new}}"
-msgstr "{unseen, plural, one {# new} other {# new}}"
 
 #: src/client/views/WordView.tsx
 msgid "{when}, {then}"
@@ -249,8 +248,8 @@ msgid "<0>{learning}</0> learning"
 msgstr "<0>{learning}</0> learning"
 
 #: src/client/components/ApiKeysSection.tsx
-msgid "<0>{name}</0> is ready. Copy it now — it is not shown again."
-msgstr "<0>{name}</0> is ready. Copy it now — it is not shown again."
+msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
+msgstr "<0>{name}</0> is ready. Copy it now. It is not shown again."
 
 #: src/client/views/InsightsView.tsx
 msgid "30 days"
@@ -280,9 +279,21 @@ msgstr "a field"
 msgid "A good pause"
 msgstr "A good pause"
 
+#: src/client/components/ApiKeysSection.tsx
+msgid "A key lets a script or curl read your decks, or add to them."
+msgstr "A key lets a script or curl read your decks, or add to them."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "A key never grades reviews."
+msgstr "A key never grades reviews."
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "A note to yourself about what is in here."
 msgstr "A note to yourself about what is in here."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "A notification on this device when cards are due."
+msgstr "A notification on this device when cards are due."
 
 #: src/client/views/WordView.tsx
 msgid "A sentence it lives in"
@@ -301,14 +312,10 @@ msgstr "about {0} would come back today"
 msgid "Access"
 msgstr "Access"
 
-#: src/client/views/YouView.tsx
-msgid "Account"
-msgstr "Account"
-
+#: src/client/components/LearnerMenu.tsx
 #: src/client/routes/activity.tsx
 #: src/client/views/Shell.tsx
 #: src/client/views/TodayView.tsx
-#: src/client/views/YouView.tsx
 msgid "Activity"
 msgstr "Activity"
 
@@ -325,8 +332,8 @@ msgstr "Add a meaning"
 msgid "Add a sentence it lives in"
 msgstr "Add a sentence it lives in"
 
+#: src/client/components/ShortcutsDialog.tsx
 #: src/client/views/TodayView.tsx
-#: src/client/views/YouView.tsx
 msgid "Add a word"
 msgstr "Add a word"
 
@@ -338,9 +345,17 @@ msgstr "Add a word from your last lesson and the lantern comes on."
 msgid "Add a word or phrase"
 msgstr "Add a word or phrase"
 
-#: src/client/components/NotificationsSection.tsx
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
+msgstr "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
+
+#: src/client/components/InstallDialog.tsx
 msgid "Add Lymi to your Home Screen"
 msgstr "Add Lymi to your Home Screen"
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
+msgstr "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Add the first word from your lesson. The lantern lights when a card is due."
@@ -432,18 +447,6 @@ msgstr "API key for {name}"
 msgid "API keys"
 msgstr "API keys"
 
-#: src/client/components/NotificationsSection.tsx
-msgid "App"
-msgstr "App"
-
-#: src/client/views/YouView.tsx
-msgid "App language"
-msgstr "App language"
-
-#: src/client/views/YouView.tsx
-msgid "Appearance"
-msgstr "Appearance"
-
 #: src/client/views/DeckSettingsView.tsx
 #: src/client/views/WordView.tsx
 msgid "Archive"
@@ -454,10 +457,10 @@ msgstr "Archive"
 msgid "Archive deck"
 msgstr "Archive deck"
 
+#: src/client/components/LearnerMenu.tsx
 #: src/client/routes/archived.tsx
 #: src/client/views/LibraryView.tsx
 #: src/client/views/WordView.tsx
-#: src/client/views/YouView.tsx
 msgid "Archived"
 msgstr "Archived"
 
@@ -474,6 +477,14 @@ msgstr "Archived “{deckName}”"
 msgid "asked by {0}"
 msgstr "asked by {0}"
 
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Assistants that signed in to Lymi, such as Claude or ChatGPT."
+msgstr "Assistants that signed in to Lymi, such as Claude or ChatGPT."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "At {savedTime}, {zone} time, only on days with cards due."
+msgstr "At {savedTime}, {zone} time, only on days with cards due."
+
 #: src/client/routes/review.tsx
 msgid "Back"
 msgstr "Back"
@@ -481,6 +492,10 @@ msgstr "Back"
 #: src/client/views/WordView.tsx
 msgid "back within the day"
 msgstr "back within the day"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Backup script on the laptop"
+msgstr "Backup script on the laptop"
 
 #: src/client/components/DeckFields.tsx
 msgid "Both"
@@ -530,8 +545,8 @@ msgid "Check your connection, then try again."
 msgstr "Check your connection, then try again."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Choose 00, 15, 30, or 45 minutes."
-msgstr "Choose 00, 15, 30, or 45 minutes."
+msgid "Choose 00, 15, 30 or 45 minutes."
+msgstr "Choose 00, 15, 30 or 45 minutes."
 
 #: src/client/components/AddCardSheet.tsx
 msgid "Choose a deck for it to go in."
@@ -545,15 +560,12 @@ msgstr "Choose a recall grade"
 msgid "Choose one"
 msgstr "Choose one"
 
-#: src/client/components/ApiKeysSection.tsx
-msgid "Claude Code on the laptop"
-msgstr "Claude Code on the laptop"
-
 #: src/client/views/DeckDetailView.tsx
 msgid "Clear"
 msgstr "Clear"
 
-#: src/client/components/NotificationsSection.tsx
+#: src/client/components/InstallDialog.tsx
+#: src/client/components/ShortcutsDialog.tsx
 #: src/client/views/WordView.tsx
 msgid "Close"
 msgstr "Close"
@@ -602,11 +614,15 @@ msgstr "Copy"
 msgid "Could not load your numbers"
 msgstr "Could not load your numbers"
 
+#: src/client/components/NotificationsSection.tsx
+msgid "Couldn’t check this device. Reload to try again."
+msgstr "Couldn’t check this device. Reload to try again."
+
 #: src/client/routes/library.$deckId.tsx
 msgid "Couldn’t save “{failedTerm}”. Check the connection."
 msgstr "Couldn’t save “{failedTerm}”. Check the connection."
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
 
@@ -619,14 +635,10 @@ msgid "Create key"
 msgstr "Create key"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Daily reminder off for this device."
-msgstr "Daily reminder off for this device."
+msgid "Daily reminder"
+msgstr "Daily reminder"
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Daily reminder on for this device."
-msgstr "Daily reminder on for this device."
-
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Dark"
 msgstr "Dark"
 
@@ -673,6 +685,10 @@ msgstr "Description"
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Disconnect"
 msgstr "Disconnect"
+
+#: src/client/components/LearnerMenu.tsx
+msgid "Docs"
+msgstr "Docs"
 
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/routes/review.tsx
@@ -755,15 +771,19 @@ msgid "first time"
 msgstr "first time"
 
 #: src/client/components/ApiKeysSection.tsx
-msgid "For curl, scripts and Claude Code. Send the key in an <0>x-api-key</0> header; the routes are in the <1>API reference</1>. MCP clients such as Claude Desktop sign in instead, and appear under Connected apps."
-msgstr "For curl, scripts and Claude Code. Send the key in an <0>x-api-key</0> header; the routes are in the <1>API reference</1>. MCP clients such as Claude Desktop sign in instead, and appear under Connected apps."
+msgid "For scripts and curl. An assistant signs in instead, under Connected apps."
+msgstr "For scripts and curl. An assistant signs in instead, under Connected apps."
+
+#: src/client/views/SettingsView.tsx
+msgid "For the interface, and for the meanings the AI writes."
+msgstr "For the interface, and for the meanings the AI writes."
 
 #: src/client/views/ReviewView.tsx
 #: src/client/views/WordView.tsx
 msgid "Forgot"
 msgstr "Forgot"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Forgot, Hard, Good, Easy"
 
@@ -819,6 +839,10 @@ msgstr "How far back the recall figure looks"
 msgid "how it is asked"
 msgstr "how it is asked"
 
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "How to connect"
+msgstr "How to connect"
+
 #: src/client/components/DeckFields.tsx
 #: src/client/views/DeckSettingsView.tsx
 msgid "How you are asked"
@@ -828,23 +852,16 @@ msgstr "How you are asked"
 msgid "Identified by"
 msgstr "Identified by"
 
+#: src/client/components/LearnerMenu.tsx
 #: src/client/views/InsightsView.tsx
 #: src/client/views/Shell.tsx
-#: src/client/views/YouView.tsx
 msgid "Insights"
 msgstr "Insights"
 
-#: src/client/components/NotificationsSection.tsx
+#: src/client/components/InstallDialog.tsx
+#: src/client/components/LearnerMenu.tsx
 msgid "Install Lymi"
 msgstr "Install Lymi"
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Install Lymi first. iPhone and iPad only allow web-app reminders after installation."
-msgstr "Install Lymi first. iPhone and iPad only allow web-app reminders after installation."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Installed on this device."
-msgstr "Installed on this device."
 
 #: src/client/views/ConsentView.tsx
 msgid "It calls itself “{claimed}”. Lymi cannot check that. The address above is the part that is checked."
@@ -883,13 +900,10 @@ msgstr "Keep the name under 80 characters."
 msgid "Keeps coming back"
 msgstr "Keeps coming back"
 
-#: src/client/views/YouView.tsx
-msgid "Keyboard"
-msgstr "Keyboard"
-
-#: src/client/components/ApiKeysSection.tsx
-msgid "Keys never grade reviews."
-msgstr "Keys never grade reviews."
+#: src/client/components/LearnerMenu.tsx
+#: src/client/components/ShortcutsDialog.tsx
+msgid "Keyboard shortcuts"
+msgstr "Keyboard shortcuts"
 
 #: src/client/components/Chip.tsx
 #: src/client/views/DeckDetailView.tsx
@@ -902,7 +916,7 @@ msgid "Known means the gaps between reviews are weeks or months now. A Forgot br
 msgstr "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
 
 #: src/client/components/DeckFields.tsx
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Language"
 msgstr "Language"
 
@@ -924,7 +938,7 @@ msgstr "Leave it empty and AI can suggest one later."
 msgid "Leave review"
 msgstr "Leave review"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Leave review or close a sheet"
 msgstr "Leave review or close a sheet"
 
@@ -943,7 +957,7 @@ msgstr "Let {appName} use your Lymi?"
 msgid "Library"
 msgstr "Library"
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Light"
 msgstr "Light"
 
@@ -967,10 +981,6 @@ msgstr "Lymi does not recognise this app. Check the address is one you meant to 
 msgid "Lymi home"
 msgstr "Lymi home"
 
-#: src/client/views/YouView.tsx
-msgid "Lymi website"
-msgstr "Lymi website"
-
 #: src/client/components/PillNav.tsx
 msgid "Main"
 msgstr "Main"
@@ -987,10 +997,6 @@ msgstr "Make or read API keys"
 msgid "Manage connected apps"
 msgstr "Manage connected apps"
 
-#: src/client/components/ConnectedAppsSection.tsx
-msgid "MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app renewing its access, so it is locked out within the hour and has to ask again."
-msgstr "MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app renewing its access, so it is locked out within the hour and has to ask again."
-
 #: src/client/components/AddCardSheet.tsx
 #: src/client/views/WordView.tsx
 msgid "Meaning"
@@ -1003,10 +1009,6 @@ msgstr "Meaning by you"
 #: src/client/components/Chip.tsx
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
-
-#: src/client/views/YouView.tsx
-msgid "Meanings and reminders use it too."
-msgstr "Meanings and reminders use it too."
 
 #: src/client/views/InsightsView.tsx
 msgid "Month by month"
@@ -1093,13 +1095,17 @@ msgstr "next in {0}"
 msgid "Next word"
 msgstr "Next word"
 
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "No apps connected"
+msgstr "No apps connected"
+
 #: src/client/views/LibraryView.tsx
 msgid "No decks yet"
 msgstr "No decks yet"
 
 #: src/client/components/ApiKeysSection.tsx
-msgid "No keys yet. Make one when you want to reach Lymi from a script."
-msgstr "No keys yet. Make one when you want to reach Lymi from a script."
+msgid "No keys yet"
+msgstr "No keys yet"
 
 #: src/client/components/DeckFields.tsx
 msgid "No language"
@@ -1130,6 +1136,10 @@ msgstr "No streak yet"
 msgid "Not asked yet. It joins the next review."
 msgstr "Not asked yet. It joins the next review."
 
+#: src/client/components/NotificationsSection.tsx
+msgid "Not available on this server yet."
+msgstr "Not available on this server yet."
+
 #: src/client/views/ComingSoonView.tsx
 msgid "Not yet"
 msgstr "Not yet"
@@ -1137,10 +1147,6 @@ msgstr "Not yet"
 #: src/client/views/WordView.tsx
 msgid "Notes"
 msgstr "Notes"
-
-#: src/client/components/ConnectedAppsSection.tsx
-msgid "Nothing connected."
-msgstr "Nothing connected."
 
 #: src/client/views/ReviewView.tsx
 #: src/client/views/TodayView.tsx
@@ -1184,16 +1190,12 @@ msgid "Nothing yet."
 msgstr "Nothing yet."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Notifications are blocked in your browser or device settings."
-msgstr "Notifications are blocked in your browser or device settings."
-
-#: src/client/components/NotificationsSection.tsx
 msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
 msgstr "Notifications are blocked. Allow them in your browser or device settings, then try again."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Notifications weren't enabled. You can try again when you're ready."
-msgstr "Notifications weren't enabled. You can try again when you're ready."
+msgid "Notifications are blocked. Allow them in your browser or device settings."
+msgstr "Notifications are blocked. Allow them in your browser or device settings."
 
 #: src/client/views/LibraryView.tsx
 msgid "One per course works well, or one per topic. Words remember which lesson they came from."
@@ -1204,33 +1206,25 @@ msgid "One word is ready"
 msgstr "One word is ready"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Only when cards are due. This setting applies to this device."
-msgstr "Only when cards are due. This setting applies to this device."
+msgid "Only on days with cards due."
+msgstr "Only on days with cards due."
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Open Lymi from its new icon, then turn on the daily reminder."
-msgstr "Open Lymi from its new icon, then turn on the daily reminder."
+#: src/client/components/InstallDialog.tsx
+msgid "Open Lymi from the new icon."
+msgstr "Open Lymi from the new icon."
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Open Lymi in Safari and select Share."
-msgstr "Open Lymi in Safari and select Share."
+#: src/client/components/InstallDialog.tsx
+msgid "Open Lymi in Safari and tap Share."
+msgstr "Open Lymi in Safari and tap Share."
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Open Lymi like an app and allow review reminders."
-msgstr "Open Lymi like an app and allow review reminders."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Open your browser menu and select Install Lymi or Add to Dock. Installation is not offered by every desktop browser."
-msgstr "Open your browser menu and select Install Lymi or Add to Dock. Installation is not offered by every desktop browser."
+#: src/client/components/InstallDialog.tsx
+msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
+msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
 
 #: src/client/components/AddCardSheet.tsx
 #: src/client/views/DeckSettingsView.tsx
 msgid "Optional"
 msgstr "Optional"
-
-#: src/client/views/YouView.tsx
-msgid "Oversight"
-msgstr "Oversight"
 
 #. placeholder {0}: weekday(peak.date)
 #: src/client/views/InsightsView.tsx
@@ -1272,6 +1266,18 @@ msgstr "Read"
 msgid "Read and write"
 msgstr "Read and write"
 
+#: src/client/components/ApiKeysSection.tsx
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
+msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
+msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Read the quickstart"
+msgstr "Read the quickstart"
+
 #: src/client/views/InsightsView.tsx
 msgid "Recall"
 msgstr "Recall"
@@ -1306,20 +1312,20 @@ msgid "Relearning"
 msgstr "Relearning"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminder set for {time}."
-msgstr "Reminder set for {time}."
+msgid "Reminder off for this device."
+msgstr "Reminder off for this device."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminder time"
-msgstr "Reminder time"
+msgid "Reminder on for this device."
+msgstr "Reminder on for this device."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminders"
-msgstr "Reminders"
+msgid "Reminder time saved."
+msgstr "Reminder time saved."
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Reminders are not configured yet."
-msgstr "Reminders are not configured yet."
+msgid "Reminders stay off until notifications are allowed."
+msgstr "Reminders stay off until notifications are allowed."
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Rename"
@@ -1387,8 +1393,8 @@ msgid "Right now"
 msgstr "Right now"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Save reminder"
-msgstr "Save reminder"
+msgid "Save time"
+msgstr "Save time"
 
 #: src/client/views/DeckSettingsView.tsx
 msgid "Saved"
@@ -1413,8 +1419,8 @@ msgid "scheduled after {0}"
 msgstr "scheduled after {0}"
 
 #: src/client/components/Combobox.tsx
+#: src/client/components/ShortcutsDialog.tsx
 #: src/client/views/Shell.tsx
-#: src/client/views/YouView.tsx
 msgid "Search"
 msgstr "Search"
 
@@ -1455,27 +1461,24 @@ msgid "See your decks and cards"
 msgstr "See your decks and cards"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "Select Add to Home Screen and keep Open as Web App on."
-msgstr "Select Add to Home Screen and keep Open as Web App on."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Send a daily review reminder"
-msgstr "Send a daily review reminder"
+msgid "Send a daily reminder"
+msgstr "Send a daily reminder"
 
 #: src/client/views/ReviewView.tsx
 msgid "Session progress"
 msgstr "Session progress"
 
-#: src/client/views/Shell.tsx
-msgid "Settings and account"
-msgstr "Settings and account"
+#: src/client/components/LearnerMenu.tsx
+#: src/client/views/SettingsView.tsx
+msgid "Settings"
+msgstr "Settings"
 
 #: src/client/views/DeckDetailView.tsx
 #: src/client/views/LibraryView.tsx
 msgid "Show"
 msgstr "Show"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
 
@@ -1499,9 +1502,13 @@ msgstr "Sign in required"
 msgid "Sign in to Lymi"
 msgstr "Sign in to Lymi"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/LearnerMenu.tsx
 msgid "Sign out"
 msgstr "Sign out"
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Sign out and lose them"
+msgstr "Sign out and lose them"
 
 #: src/client/routes/login.tsx
 msgid "Sign-in didn’t go through. Try again."
@@ -1510,6 +1517,10 @@ msgstr "Sign-in didn’t go through. Try again."
 #: src/client/components/ApiKeysSection.tsx
 msgid "So you know which key to revoke later."
 msgstr "So you know which key to revoke later."
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Some grades haven’t synced"
+msgstr "Some grades haven’t synced"
 
 #. placeholder {0}: res.status
 #: src/client/lib/api.ts
@@ -1525,9 +1536,13 @@ msgstr "Something went wrong. Try again from the app."
 msgid "stability · difficulty {0}"
 msgstr "stability · difficulty {0}"
 
-#: src/client/views/YouView.tsx
+#: src/client/components/ShortcutsDialog.tsx
 msgid "Start review"
 msgstr "Start review"
+
+#: src/client/lib/use-sign-out.tsx
+msgid "Stay signed in"
+msgstr "Stay signed in"
 
 #: src/client/views/WordView.tsx
 msgid "still in its first steps"
@@ -1537,13 +1552,17 @@ msgstr "still in its first steps"
 msgid "Still need an invitation?"
 msgstr "Still need an invitation?"
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "System"
 msgstr "System"
 
-#: src/client/views/YouView.tsx
-msgid "System follows your device. Dark is a warm room."
-msgstr "System follows your device. Dark is a warm room."
+#: src/client/views/SettingsView.tsx
+msgid "System follows your device."
+msgstr "System follows your device."
+
+#: src/client/components/InstallDialog.tsx
+msgid "Tap Add to Home Screen."
+msgstr "Tap Add to Home Screen."
 
 #: src/client/views/ReviewView.tsx
 msgid "Tap card to reveal"
@@ -1610,8 +1629,8 @@ msgid "The language the words are in. It fills in on every new card."
 msgstr "The language the words are in. It fills in on every new card."
 
 #: src/client/views/DeckSettingsView.tsx
-msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings use your app language, which lives under You."
-msgstr "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings use your app language, which lives under You."
+msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
+msgstr "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
 
 #: src/client/views/WordView.tsx
 msgid "the meaning"
@@ -1638,13 +1657,13 @@ msgstr "the tags"
 msgid "the word"
 msgstr "the word"
 
-#: src/client/views/YouView.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Theme"
 msgstr "Theme"
 
 #: src/client/components/NotificationsSection.tsx
-msgid "This browser does not support review reminders. You can still install and use Lymi."
-msgstr "This browser does not support review reminders. You can still install and use Lymi."
+msgid "This browser can’t show reminders."
+msgstr "This browser can’t show reminders."
 
 #: src/client/routes/login.tsx
 msgid "This Google account has not been invited. Request an invitation, or try another account."
@@ -1653,6 +1672,10 @@ msgstr "This Google account has not been invited. Request an invitation, or try 
 #: src/client/routes/consent.tsx
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Time"
+msgstr "Time"
 
 #: src/client/views/WordView.tsx
 msgid "to another deck, by {who}"
@@ -1733,14 +1756,6 @@ msgstr "used {m} min ago"
 msgid "used just now"
 msgstr "used just now"
 
-#: src/client/components/NotificationsSection.tsx
-msgid "Uses {zone}."
-msgstr "Uses {zone}."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "View install steps"
-msgstr "View install steps"
-
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
 #: src/client/views/InsightsView.tsx
 msgid "week of {0}"
@@ -1778,8 +1793,7 @@ msgstr "would come back right now"
 msgid "you"
 msgstr "you"
 
-#: src/client/views/Shell.tsx
-#: src/client/views/TodayView.tsx
+#: src/client/components/LearnerMenu.tsx
 msgid "You"
 msgstr "You"
 

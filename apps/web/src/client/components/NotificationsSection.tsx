@@ -2,13 +2,13 @@ import { i18n } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { PushSubscriptionInput, ReminderTime } from "@lymi/core";
-import { Bell, Download } from "lucide-react";
+import { Bell } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ApiError, api } from "../lib/api";
-import { promptToInstall, useInstallState } from "../lib/pwa-install";
+import { useInstallState } from "../lib/pwa-install";
 import { Button } from "./Button";
-import { Dialog } from "./Dialog";
 import { Field, Input } from "./Field";
+import { InstallDialog } from "./InstallDialog";
 import { SettingsGroup } from "./SettingsGroup";
 import { Switch } from "./Switch";
 
@@ -63,6 +63,8 @@ export function NotificationsSection() {
   const [ready, setReady] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const [vapidPublicKey, setVapidPublicKey] = useState<string | null>(null);
+  /** Why the switch cannot be used yet, found while loading. State, not a fault of the learner's. */
+  const [blocked, setBlocked] = useState<"unconfigured" | "unreachable" | null>(null);
   const [time, setTime] = useState<ReminderTime>(DEFAULT_TIME);
   const [savedTime, setSavedTime] = useState<ReminderTime>(DEFAULT_TIME);
   const [busy, setBusy] = useState(false);
@@ -90,7 +92,12 @@ export function NotificationsSection() {
         setTime(status.reminderTime);
         setSavedTime(status.reminderTime);
       } catch (cause) {
-        if (live) setError(messageFor(cause));
+        // Nothing was asked for yet, so a missing server key or a dead network is the switch's
+        // description rather than an alert the learner has to read on arrival.
+        if (live)
+          setBlocked(
+            cause instanceof ApiError && cause.status === 503 ? "unconfigured" : "unreachable",
+          );
       } finally {
         if (live) setReady(true);
       }
@@ -109,7 +116,7 @@ export function NotificationsSection() {
       return;
     }
     if (!vapidPublicKey) {
-      setError(t`Reminders are not configured yet.`);
+      setError(t`Not available on this server yet.`);
       return;
     }
     setBusy(true);
@@ -119,7 +126,7 @@ export function NotificationsSection() {
         setError(
           permission === "denied"
             ? t`Notifications are blocked. Allow them in your browser or device settings, then try again.`
-            : t`Notifications weren't enabled. You can try again when you're ready.`,
+            : t`Reminders stay off until notifications are allowed.`,
         );
         return;
       }
@@ -133,7 +140,7 @@ export function NotificationsSection() {
       await api.savePushSubscription(subscriptionInput(subscription, time));
       setEnabled(true);
       setSavedTime(time);
-      setNotice(t`Daily reminder on for this device.`);
+      setNotice(t`Reminder on for this device.`);
     } catch (cause) {
       setError(messageFor(cause));
     } finally {
@@ -153,7 +160,7 @@ export function NotificationsSection() {
         await subscription.unsubscribe();
       }
       setEnabled(false);
-      setNotice(t`Daily reminder off for this device.`);
+      setNotice(t`Reminder off for this device.`);
     } catch (cause) {
       setError(messageFor(cause));
     } finally {
@@ -171,7 +178,7 @@ export function NotificationsSection() {
       if (!subscription) throw new Error("Push subscription is missing");
       await api.savePushSubscription(subscriptionInput(subscription, time));
       setSavedTime(time);
-      setNotice(t`Reminder set for ${time}.`);
+      setNotice(t`Reminder time saved.`);
     } catch (cause) {
       setError(messageFor(cause));
     } finally {
@@ -182,144 +189,88 @@ export function NotificationsSection() {
   const pushSupported = supportsPush();
   const needsInstall = install.isIOS && !install.installed;
   const permissionBlocked = pushSupported && Notification.permission === "denied";
+  const unusable = !needsInstall && (!ready || !vapidPublicKey);
   const validTime = /^([01]\d|2[0-3]):(00|15|30|45)$/.test(time);
   const reminderAvailable = pushSupported || needsInstall;
   const zone = timezone().replaceAll("_", " ");
 
   return (
-    <>
-      <SettingsGroup title={t`App`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="grid max-w-[42ch] gap-0.5">
-            <span className="flex items-center gap-2 text-base font-medium">
-              <Download className="size-4 text-muted" aria-hidden="true" />
-              <Trans>Install Lymi</Trans>
-            </span>
-            <span className="text-sm text-muted">
-              {install.installed ? (
-                <Trans>Installed on this device.</Trans>
-              ) : (
-                <Trans>Open Lymi like an app and allow review reminders.</Trans>
-              )}
-            </span>
-          </span>
-          {!install.installed && (
-            <Button
-              size="sm"
-              onClick={async () => {
-                if (install.canPrompt) await promptToInstall();
-                else setInstallHelp(true);
-              }}
-            >
-              {install.canPrompt ? t`Install Lymi` : t`View install steps`}
-            </Button>
+    <SettingsGroup
+      title={t`Daily reminder`}
+      description={t`A notification on this device when cards are due.`}
+    >
+      {!reminderAvailable ? (
+        <p className="text-base text-muted">
+          <Trans>This browser can’t show reminders.</Trans>
+        </p>
+      ) : (
+        <div className="edge grid rounded-md bg-plate">
+          <Switch
+            className="px-4 py-3.5"
+            checked={enabled}
+            disabled={unusable || busy || permissionBlocked}
+            onChange={(on) => void (on ? enable() : disable())}
+            leading={
+              <span
+                className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
+                aria-hidden="true"
+              >
+                <Bell className="size-4" />
+              </span>
+            }
+            label={t`Send a daily reminder`}
+            description={
+              needsInstall
+                ? t`Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there.`
+                : blocked === "unconfigured"
+                  ? t`Not available on this server yet.`
+                  : blocked === "unreachable"
+                    ? t`Couldn’t check this device. Reload to try again.`
+                    : permissionBlocked
+                      ? t`Notifications are blocked. Allow them in your browser or device settings.`
+                      : enabled
+                        ? t`At ${savedTime}, ${zone} time, only on days with cards due.`
+                        : t`Only on days with cards due.`
+            }
+          />
+          {enabled && (
+            <div className="flex flex-wrap items-end gap-3 border-t border-edge px-4 py-3.5">
+              <Field
+                label={t`Time`}
+                error={validTime ? undefined : t`Choose 00, 15, 30 or 45 minutes.`}
+                className="w-40"
+              >
+                <Input
+                  type="time"
+                  step={900}
+                  value={time}
+                  disabled={busy}
+                  onChange={(event) => setTime(event.target.value as ReminderTime)}
+                />
+              </Field>
+              <Button
+                aria-disabled={busy || time === savedTime || !validTime}
+                onClick={() => void saveTime()}
+              >
+                <Trans>Save time</Trans>
+              </Button>
+            </div>
           )}
         </div>
-      </SettingsGroup>
-
-      <SettingsGroup title={t`Reminders`}>
-        {!reminderAvailable ? (
-          <p className="text-sm text-muted">
-            <Trans>
-              This browser does not support review reminders. You can still install and use Lymi.
-            </Trans>
+      )}
+      <div className="min-h-5 text-sm" aria-live="polite">
+        {error ? (
+          <p className="text-danger" role="alert">
+            {error}
           </p>
-        ) : (
-          <>
-            <Switch
-              checked={enabled}
-              disabled={
-                (!needsInstall && !ready) ||
-                busy ||
-                permissionBlocked ||
-                (!needsInstall && !vapidPublicKey)
-              }
-              onChange={(on) => void (on ? enable() : disable())}
-              label={
-                <span className="flex items-center gap-2">
-                  <Bell className="size-4 text-muted" aria-hidden="true" />
-                  <Trans>Send a daily review reminder</Trans>
-                </span>
-              }
-              description={
-                permissionBlocked
-                  ? t`Notifications are blocked in your browser or device settings.`
-                  : needsInstall
-                    ? t`Install Lymi first. iPhone and iPad only allow web-app reminders after installation.`
-                    : !vapidPublicKey
-                      ? t`Reminders are not configured yet.`
-                      : t`Only when cards are due. This setting applies to this device.`
-              }
-            />
-            {enabled && (
-              <div className="mt-3 flex flex-wrap items-end gap-3">
-                <Field
-                  label={t`Reminder time`}
-                  hint={t`Uses ${zone}.`}
-                  error={validTime ? undefined : t`Choose 00, 15, 30, or 45 minutes.`}
-                  className="w-44"
-                >
-                  <Input
-                    type="time"
-                    step={900}
-                    value={time}
-                    disabled={busy}
-                    onChange={(event) => setTime(event.target.value as ReminderTime)}
-                  />
-                </Field>
-                <Button
-                  size="sm"
-                  aria-disabled={busy || time === savedTime || !validTime}
-                  onClick={() => void saveTime()}
-                >
-                  <Trans>Save reminder</Trans>
-                </Button>
-              </div>
-            )}
-          </>
-        )}
-        <div className="min-h-5 text-sm" aria-live="polite">
-          {error ? (
-            <p className="text-danger" role="alert">
-              {error}
-            </p>
-          ) : notice ? (
-            <p className="text-muted">{notice}</p>
-          ) : null}
-        </div>
-      </SettingsGroup>
+        ) : notice ? (
+          <p className="text-muted">{notice}</p>
+        ) : null}
+      </div>
 
-      <Dialog
-        open={installHelp}
-        onClose={() => setInstallHelp(false)}
-        title={install.isIOS ? t`Add Lymi to your Home Screen` : t`Install Lymi`}
-        actions={
-          <Button onClick={() => setInstallHelp(false)}>
-            <Trans>Close</Trans>
-          </Button>
-        }
-      >
-        {install.isIOS ? (
-          <ol className="grid list-decimal gap-2 ps-5">
-            <li>
-              <Trans>Open Lymi in Safari and select Share.</Trans>
-            </li>
-            <li>
-              <Trans>Select Add to Home Screen and keep Open as Web App on.</Trans>
-            </li>
-            <li>
-              <Trans>Open Lymi from its new icon, then turn on the daily reminder.</Trans>
-            </li>
-          </ol>
-        ) : (
-          <p>
-            <Trans>
-              Open your browser menu and select Install Lymi or Add to Dock. Installation is not
-              offered by every desktop browser.
-            </Trans>
-          </p>
-        )}
-      </Dialog>
-    </>
+      {needsInstall && (
+        <InstallDialog open={installHelp} onClose={() => setInstallHelp(false)} ios />
+      )}
+    </SettingsGroup>
   );
 }

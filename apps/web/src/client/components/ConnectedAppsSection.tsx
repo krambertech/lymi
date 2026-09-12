@@ -1,12 +1,15 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { Plug } from "lucide-react";
+import { type ReactNode, useEffect, useState } from "react";
 import type { ConnectedApp } from "../lib/api";
 import { api } from "../lib/api";
+import { publicSiteUrl } from "../lib/origins";
 import { connectedAppsQuery } from "../lib/queries";
 import { AppMark, identifyApp } from "./AppMark";
-import { Button } from "./Button";
+import { Button, buttonClass } from "./Button";
 import { Chip } from "./Chip";
+import { EmptySection } from "./EmptyState";
 import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
 
@@ -24,33 +27,44 @@ export function ConnectedAppsSection() {
   });
 
   return (
-    <SettingsGroup title={t`Connected apps`}>
-      <p className="max-w-[62ch] text-base text-text-2">
-        <Trans>
-          MCP clients that signed in to Lymi, such as Claude Desktop. Disconnecting stops an app
-          renewing its access, so it is locked out within the hour and has to ask again.
-        </Trans>
-      </p>
-
+    <SettingsGroup
+      title={t`Connected apps`}
+      description={t`Assistants that signed in to Lymi, such as Claude or ChatGPT.`}
+    >
       {apps.isPending && <Skeleton className="h-14 w-full" />}
 
       {apps.isSuccess && apps.data.length === 0 && (
-        <p className="text-base text-muted">
-          <Trans>Nothing connected.</Trans>
-        </p>
+        <EmptySection
+          icon={<Plug />}
+          title={t`No apps connected`}
+          body={t`Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks.`}
+          action={
+            <a href={publicSiteUrl("/docs/mcp")} className={buttonClass("secondary")}>
+              <Trans>How to connect</Trans>
+            </a>
+          }
+        />
       )}
 
       {apps.data && apps.data.length > 0 && (
-        <ul className="grid">
-          {apps.data.map((item) => (
-            <AppRow
-              key={item.id}
-              item={item}
-              disconnecting={disconnect.isPending && disconnect.variables === item.id}
-              onDisconnect={() => disconnect.mutate(item.id)}
-            />
-          ))}
-        </ul>
+        <>
+          <ul className="grid">
+            {apps.data.map((item) => (
+              <AppRow
+                key={item.id}
+                item={item}
+                disconnecting={disconnect.isPending && disconnect.variables === item.id}
+                onDisconnect={() => disconnect.mutate(item.id)}
+              />
+            ))}
+          </ul>
+          <p className="max-w-[60ch] text-sm text-muted">
+            <Trans>
+              Read lists decks and cards. Read and write also adds, edits and archives them. Access
+              is chosen when the app signs in; disconnect and sign in again to change it.
+            </Trans>
+          </p>
+        </>
       )}
 
       {disconnect.isError && (
@@ -59,6 +73,18 @@ export function ConnectedAppsSection() {
         </p>
       )}
     </SettingsGroup>
+  );
+}
+
+/** A link into the docs, from a sentence in Settings. */
+export function DocLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a
+      href={href}
+      className="text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
+    >
+      {children}
+    </a>
   );
 }
 

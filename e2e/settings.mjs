@@ -8,6 +8,7 @@ export const e2eAccounts = [
   "responsive-creation",
   "review-batching",
   "word-detail",
+  "language",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

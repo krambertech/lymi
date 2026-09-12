@@ -381,6 +381,7 @@ export function Screens() {
               archivedCount={9}
               theme="system"
               onTheme={noop}
+              appLanguage="en"
               websiteUrl="https://lymi.app/"
               static={{ path: "/you" }}
             />

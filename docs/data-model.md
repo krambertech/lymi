@@ -52,6 +52,7 @@ erDiagram
   }
   user_settings {
     text user_id PK
+    text app_language "nullable en | uk | ru"
     text meaning_language "default en"
   }
   deck_members {

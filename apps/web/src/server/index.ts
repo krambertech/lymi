@@ -17,6 +17,7 @@ import { audio } from "./routes/audio";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
+import { dev } from "./routes/dev";
 import { keys } from "./routes/keys";
 import { push } from "./routes/push";
 import { review } from "./routes/review";
@@ -100,6 +101,9 @@ app.get("/robots.txt", describe({ hide: true }), (c) => {
     "cache-control": "public, max-age=3600",
   });
 });
+
+// Local development only: personas, seeding and due-date knobs. 404 on any other origin.
+app.route("/api/dev", dev);
 
 // Everything else under /api needs a session cookie or an API key. What the caller may then
 // do is declared on each route with describe(): writes need the write scope, learner-only

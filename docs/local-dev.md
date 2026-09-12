@@ -1,0 +1,92 @@
+# Local development
+
+How to run the product on this machine and put it into any state worth looking at, whether you are a person at the keyboard or an agent driving a browser. Everything here exists only while `PRODUCT_URL` is a loopback address; production answers 404 to all of it.
+
+## Start the server
+
+```bash
+pnpm install
+cp apps/web/.dev.vars.example apps/web/.dev.vars   # Google values can stay empty
+pnpm db:migrate
+pnpm --filter @lymi/web dev --port 5241
+```
+
+`pnpm dev` runs the product and the public website together. The product alone is enough for most work, and the `.claude/launch.json` entry named `lymi` starts it on port 5241, which is what `.dev.vars` names as `PRODUCT_URL`.
+
+If `pnpm db:migrate` fails with "table already exists" or a migration name it has never seen, the local D1 was built from another branch. `pnpm local db:fresh` moves it aside and applies every migration again. Nothing in that directory is production data.
+
+## Become a persona
+
+Open this URL in a browser and you are signed in and on Today:
+
+```text
+http://localhost:5241/api/dev/sign-in?as=learner
+```
+
+No password is typed anywhere. The server creates the account on first use, seeds it if it is empty, sets the session cookie, and redirects. Add `returnTo=/library` to land elsewhere, `reset=1` to reseed an account that already has data, or `seed=0` to sign in and leave the data as it is.
+
+| Persona | Account | Starts with |
+| --- | --- | --- |
+| `fresh` | Fresh | Nothing. The first-run screens. |
+| `learner` | Kateryna | Three weeks in: three decks, 43 cards, 9 due, a 4-day streak, three cards an assistant added today, one archived deck and one archived card. |
+| `streak` | Sanna | Fourteen days running and nothing due. The lantern is unlit. |
+| `backlog` | Marco | A month away: four decks, 60 cards, all due. |
+| `polyglot` | Оксана | Meanings in Ukrainian. Italian, Finnish, and a deck with no language. |
+
+The accounts are `<id>@lymi.local`. They pass the invitation allowlist only on a loopback origin, so `.dev.vars` needs no entry for them. `pnpm local personas` prints the same table from the running server.
+
+A real account signed in locally through Google works with every tool below too; it just has no persona of its own, so seeding it loads `learner` unless another persona is named.
+
+## Change the state from the panel
+
+The round button in the bottom-right corner of every product screen opens the developer panel above it. The backtick key toggles it too. It is five rows showing the current value; the first four are searchable lists, the theme is a segmented control:
+
+- **Persona**: who you are. Choosing another signs you in as that account and reloads the screen you were on.
+- **Due**: how many cards are due now. Choose a number, or every card.
+- **Data**: what the account holds. Reseed it, empty it, or load another persona's data into it.
+- **Meanings**: the meaning language.
+- **Theme**: system, light or dark.
+
+Each change refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The last thing that happened is written at the bottom. The panel is compiled into the Vite dev server only; a production build has no trace of it.
+
+## Change the state from a terminal
+
+`pnpm local` talks to the running server. Every command signs in as a persona first, so nothing has to be pasted from a browser.
+
+```bash
+pnpm local personas               # what each persona starts with
+pnpm local url streak /insights   # the sign-in URL for a persona and a screen
+pnpm local open backlog           # the same, opened in the default browser
+pnpm local state --as learner     # who is signed in and what the account holds
+pnpm local seed --as fresh        # load the account's own persona data
+pnpm local seed polyglot --as learner --reset   # any persona's data into any account
+pnpm local reset --as learner     # empty the account
+pnpm local due 5 --as learner     # exactly five cards due now
+pnpm local due all --as streak
+pnpm local db:fresh               # rebuild the local D1 from the migrations
+```
+
+`--as` defaults to `LYMI_PERSONA`, then `learner`. `--url` defaults to `LYMI_URL`, then `PRODUCT_URL` in `apps/web/.dev.vars`, then `http://localhost:5241`.
+
+## Call the routes directly
+
+The panel and the CLI use these. They sit under `/api/dev`, outside the OpenAPI document.
+
+| Route | Does |
+| --- | --- |
+| `GET /api/dev/personas` | Lists the personas. No session needed. |
+| `GET` or `POST /api/dev/sign-in?as=<id>` | Signs the persona in; seeds an empty account. GET redirects, POST answers JSON. Both set the cookies. |
+| `GET /api/dev/state` | The signed-in account, its persona, counts and settings. |
+| `POST /api/dev/seed` `{ persona? }` | Empties the account and loads a persona's data. |
+| `POST /api/dev/reset` | Empties the account. |
+| `POST /api/dev/due` `{ count: n \| "all" }` | Makes exactly `count` cards due now and moves the rest to tomorrow or later. |
+
+Seeding goes through the same services as the app and the API, so decks and cards carry audit rows and scheduling state. The review history is then replayed through the real scheduler in memory and written back in one go. The same persona seeds the same grades every time.
+
+## How the gate works
+
+`devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides three things: whether email and password sign-in is on, whether `/api/dev` exists, and whether a `@lymi.local` address may create an account. Production's `PRODUCT_URL` is `https://my.lymi.app`.
+
+The client side is gated separately by `import.meta.env.DEV`. The panel and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind that flag, so the production bundle never includes them.
+
+The Playwright suite runs the product through Vite with a loopback `PRODUCT_URL`, so the routes exist there too. The tests do not use them: `docs/testing.md` keeps the canonical journey on the public flows.

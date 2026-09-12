@@ -8,6 +8,10 @@ A vocabulary app for one learner. Read [`CONTEXT.md`](CONTEXT.md) before naming 
 
 Two deployables: `apps/site` is the Astro public site plus its narrow beta/health Worker; `apps/web` is the Vite React product and Hono Worker. `packages/core` is what both Workers and a future React Native app import unchanged — Drizzle schema, Zod types, FSRS. Anything the product client and server both need lives there.
 
+## Testing locally
+
+Start the product with the `lymi` entry in `.claude/launch.json` (port 5241). To get a signed-in session, navigate the browser to `/api/dev/sign-in?as=learner`; never type a password. Personas, the developer panel (backtick key), `pnpm local`, and the `/api/dev` routes are in [`docs/local-dev.md`](docs/local-dev.md). If migrations fail against the local D1, `pnpm local db:fresh` rebuilds it.
+
 ## Before you push
 
 For branch creation, syncing with `main`, commit messages, pull request titles, and merging, follow [`docs/git-workflow.md`](docs/git-workflow.md).

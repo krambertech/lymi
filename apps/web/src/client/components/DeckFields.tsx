@@ -75,7 +75,7 @@ export function languageName(tag: string, locale: string = globalI18n.locale): s
 
 const optionLists = new Map<string, ComboboxOption[]>();
 /** The list in the interface language, sorted the way that language sorts. */
-function optionsFor(locale: string): ComboboxOption[] {
+export function optionsFor(locale: string): ComboboxOption[] {
   let list = optionLists.get(locale);
   if (!list) {
     list = TAGS.map((tag) => ({ value: tag, label: languageName(tag, locale), hint: tag })).sort(
@@ -87,7 +87,7 @@ function optionsFor(locale: string): ComboboxOption[] {
 }
 
 /** Loose BCP 47, the same shape the API accepts. */
-const TAG_RE = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/;
+export const LANGUAGE_TAG_RE = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/;
 
 interface LanguageProps {
   value: string | null;
@@ -123,7 +123,7 @@ export function LanguageField({ value, onChange, label, hint, error }: LanguageP
         options={options}
         clearLabel={t`No language`}
         searchLabel={t`Search languages`}
-        accept={(query) => (TAG_RE.test(query) ? query : null)}
+        accept={(query) => (LANGUAGE_TAG_RE.test(query) ? query : null)}
         acceptLabel={(tag) => t`Use “${tag}” as the tag`}
         emptyLabel={t`No language by that name. Type its tag to use it anyway.`}
       />

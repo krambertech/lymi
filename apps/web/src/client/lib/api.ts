@@ -13,6 +13,7 @@ import type {
   Rating,
   ReminderTime,
   Scope,
+  SettingsPatch,
 } from "@lymi/core";
 import type { Card, CardState, Deck, Review } from "@lymi/core/schema";
 
@@ -44,6 +45,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
+export type Settings = { meaningLanguage: string };
 export type Me = { id: string; name: string; email: string; image: string | null };
 export type Settings = {
   userId: string;
@@ -158,6 +160,9 @@ export const api = {
       method: "DELETE",
       body: JSON.stringify(body),
     }),
+  settings: () => request<Settings>("/api/settings"),
+  updateSettings: (body: SettingsPatch) =>
+    request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),
   queue: (deckId?: string) => request<Queue>(`/api/review/queue${deckId ? `?deck=${deckId}` : ""}`),
   history: (days = 7) =>
     request<{ days: number[]; streak: number }>(

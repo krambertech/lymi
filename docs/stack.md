@@ -128,7 +128,7 @@ FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline)
 
 Enrichment runs in the background after any add that leaves fields empty, whether the card came from the web quick-capture sheet or from an integration. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
 
-OpenAI remains the text-enrichment vendor and is also the default speech provider for every language on its published TTS support list. Google Cloud Text-to-Speech Chirp 3 HD covers languages outside that list, or supported locales when OpenAI is not configured. The routing layer is provider-neutral, so an R2 hit does not parse credentials or call either vendor.
+OpenAI remains the text-enrichment vendor and is also the default speech provider for every language on its published TTS support list. Google Cloud Text-to-Speech Chirp 3 HD covers languages outside that list and becomes the runtime fallback for supported locales when OpenAI is not configured or its request fails. The routing layer is provider-neutral, so an R2 hit does not parse credentials or call either vendor.
 
 ### MCP: stateless handler in the product Worker
 
@@ -187,7 +187,7 @@ Local development accepts email and password sign-in so the app is usable before
 - Sign-in: Google only at launch. Apple can be added when React Native arrives.
 - Origins and deployments: `lymi-site` serves the public website and docs on `lymi.app`; `lymi` serves the product, auth, API, MCP and PWA on `my.lymi.app`.
 - Auth: Better Auth from the start, no Cloudflare Access interim.
-- AI: OpenAI for text enrichment and default speech. Google Chirp 3 HD covers languages outside OpenAI's published list.
+- AI: OpenAI for text enrichment and default speech. Google Chirp 3 HD covers languages outside OpenAI's published list and falls back for supported locales when OpenAI fails.
 - Integrations (5 September 2026): MCP clients are Claude Desktop and Codex first, so OAuth from day one via `@better-auth/mcp`. Personal API keys via the `apiKey` plugin. Two scopes, `read` and `write`.
 - Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
 - Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.

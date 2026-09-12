@@ -152,14 +152,16 @@ export function openAiSupportsLanguage(language: string): boolean {
 
 /** Prefer OpenAI; use Chirp only when OpenAI is unsupported or unavailable. */
 export function createSpeechProviders(env: SpeechBindings, language: string): SpeechProvider[] {
+  const providers: SpeechProvider[] = [];
+
   if (openAiSupportsLanguage(language) && env.OPENAI_API_KEY?.trim()) {
-    return [createOpenAiSpeechProvider(env, language)];
+    providers.push(createOpenAiSpeechProvider(env, language));
   }
 
   const locale = chirpLocale(language);
   if (locale && env.GOOGLE_CLOUD_TTS_CREDENTIALS?.trim()) {
-    return [createGoogleChirpProvider(env, { locale })];
+    providers.push(createGoogleChirpProvider(env, { locale }));
   }
 
-  return [];
+  return providers;
 }

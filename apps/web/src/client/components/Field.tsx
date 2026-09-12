@@ -1,11 +1,10 @@
 import { clsx } from "clsx";
-import { AlertCircle, ChevronDown } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import {
   createContext,
   forwardRef,
   type InputHTMLAttributes,
   type ReactNode,
-  type SelectHTMLAttributes,
   type TextareaHTMLAttributes,
   useContext,
   useId,
@@ -32,7 +31,7 @@ interface FieldProps {
   className?: string | undefined;
 }
 
-/** Label, control, hint and error wired together. Put one Input, Textarea or Select inside. */
+/** Label, control, hint and error wired together. Put one Input, Textarea, Select or Combobox inside. */
 export function Field({ label, hint, error, aside, children, className }: FieldProps) {
   const id = useId();
   const hintId = hint ? `${id}-hint` : undefined;
@@ -112,28 +111,6 @@ export const Textarea = forwardRef<
     />
   );
 });
-
-export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
-  function Select({ className, children, ...props }, ref) {
-    const a11y = useControlProps(props);
-    return (
-      <span className="relative block">
-        <select
-          ref={ref}
-          className={clsx(controlBase, controlSize, "appearance-none ps-3.5 pe-9", className)}
-          {...props}
-          {...a11y}
-        >
-          {children}
-        </select>
-        <ChevronDown
-          className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-muted"
-          aria-hidden="true"
-        />
-      </span>
-    );
-  },
-);
 
 /** Wires a control to its Field's id, hint, error and invalid state. Exported for Combobox. */
 export function useControlProps(props: {

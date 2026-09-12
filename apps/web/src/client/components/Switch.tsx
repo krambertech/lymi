@@ -23,7 +23,7 @@ export function Switch({
   return (
     <label
       className={clsx(
-        "flex cursor-pointer items-start justify-between gap-4 py-1",
+        "flex min-h-11 cursor-pointer items-start justify-between gap-4 py-1 md:min-h-10",
         disabled && "cursor-not-allowed opacity-45",
         className,
       )}

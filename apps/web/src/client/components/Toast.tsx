@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 interface ToastProps {
   children: ReactNode;
@@ -20,37 +20,47 @@ interface ToastProps {
  */
 export function Toast({ children, action, onDismiss, duration, className, inline }: ToastProps) {
   const [leaving, setLeaving] = useState(false);
+  const [held, setHeld] = useState(false);
   const words = typeof children === "string" ? children.split(/\s+/).length : 6;
   const ms = duration ?? Math.max(4000, 1500 + words * 350);
 
+  // The clock pauses while the tab is hidden and while the pointer or focus is on the toast,
+  // so an Undo cannot leave under a hand reaching for it.
+  const remaining = useRef(ms);
   useEffect(() => {
-    if (inline || !onDismiss) return;
-    let remaining = ms;
+    if (inline || !onDismiss || held) return;
     let started = Date.now();
     const leave = () => {
       setLeaving(true);
       window.setTimeout(() => onDismiss(), 150);
     };
-    let t = window.setTimeout(leave, remaining);
+    let t = window.setTimeout(leave, Math.max(remaining.current, 800));
     const onVis = () => {
       if (document.hidden) {
         window.clearTimeout(t);
-        remaining -= Date.now() - started;
+        remaining.current -= Date.now() - started;
       } else {
         started = Date.now();
-        t = window.setTimeout(leave, Math.max(remaining, 800));
+        t = window.setTimeout(leave, Math.max(remaining.current, 800));
       }
     };
     document.addEventListener("visibilitychange", onVis);
     return () => {
       window.clearTimeout(t);
+      remaining.current -= Date.now() - started;
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, [ms, onDismiss, inline]);
+  }, [onDismiss, inline, held]);
 
   return (
     <div
       role="status"
+      onPointerEnter={() => setHeld(true)}
+      onPointerLeave={() => setHeld(false)}
+      onFocus={() => setHeld(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setHeld(false);
+      }}
       className={clsx(
         "flex w-fit max-w-[calc(100vw-32px)] items-center gap-3 rounded-md bg-text py-2.5 ps-4 pe-2 text-base text-canvas",
         !inline &&

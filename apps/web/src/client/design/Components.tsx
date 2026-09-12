@@ -5,10 +5,12 @@ import { Avatar } from "../components/Avatar";
 import { Button, IconButton } from "../components/Button";
 import { Checkbox } from "../components/Checkbox";
 import { Chip, SourceChip, StateChip } from "../components/Chip";
+import { Select } from "../components/Combobox";
 import { DeckCard } from "../components/DeckCard";
+import { LanguageField } from "../components/DeckFields";
 import { Dialog } from "../components/Dialog";
 import { EmptyState } from "../components/EmptyState";
-import { Field, Input, Select, Textarea } from "../components/Field";
+import { Field, Input, Textarea } from "../components/Field";
 import { Flame } from "../components/Flame";
 import { Kbd } from "../components/Kbd";
 import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
@@ -23,12 +25,22 @@ import { Toast } from "../components/Toast";
 import { Pair, Section, Specimen, Sub } from "./Frame";
 import { deckCards, history, streakDays } from "./mock";
 
+const DECKS = [
+  { value: "d1", label: "Lesson 14" },
+  { value: "d2", label: "Portuguese" },
+  { value: "d3", label: "Українська для Марко" },
+];
+
 export function Components() {
   const [seg, setSeg] = useState("recognise");
   const [sw, setSw] = useState(true);
   const [cb, setCb] = useState(false);
   const [dialog, setDialog] = useState(false);
   const [text, setText] = useState("");
+  const [deck, setDeck] = useState<string | null>("d1");
+  const [deckEmpty, setDeckEmpty] = useState<string | null>(null);
+  const [lang, setLang] = useState<string | null>("it");
+  const [langEmpty, setLangEmpty] = useState<string | null>(null);
   return (
     <Section
       id="components"
@@ -100,12 +112,6 @@ export function Components() {
               >
                 <Input placeholder="to hurry up" />
               </Field>
-              <Field label="Deck">
-                <Select defaultValue="d1">
-                  <option value="d1">Lesson 14</option>
-                  <option value="d2">Portuguese</option>
-                </Select>
-              </Field>
               <Field label="Source" error="Keep it under 200 characters.">
                 <Input defaultValue="Il Gattopardo, chapter two, the long passage about the ballroom and everything Tancredi said" />
               </Field>
@@ -126,6 +132,38 @@ export function Components() {
                 />
                 <Input placeholder="Search this deck" aria-label="Search" className="pl-9" />
               </div>
+            </div>
+          )}
+        </Pair>
+      </Sub>
+
+      <Sub
+        title="Select and Combobox"
+        note="Both are the same box as every other control. Open, a panel floats under the box in the top layer, so the form does not move. Select is for a short list: the arrows walk it and typing a letter jumps to a name. Combobox is for a list of forty: the panel starts with a search field and the names filter as you type. The chosen row leads with a check, and every row keeps that room so nothing shifts when one is chosen."
+      >
+        <Pair>
+          {() => (
+            <div className="grid gap-4 @xl:grid-cols-2">
+              <Field label="Deck">
+                <Select value={deck} onChange={setDeck} options={DECKS} />
+              </Field>
+              <Field label="Deck" hint="Nothing chosen yet.">
+                <Select
+                  value={deckEmpty}
+                  onChange={setDeckEmpty}
+                  options={DECKS}
+                  placeholder="Choose a deck"
+                />
+              </Field>
+              <LanguageField value={lang} onChange={setLang} hint="Forty names, so it searches." />
+              <LanguageField
+                value={langEmpty}
+                onChange={setLangEmpty}
+                error="Choose the language the words are in."
+              />
+              <Field label="Deck" hint="Cannot change while a review is running.">
+                <Select value={deck} onChange={setDeck} options={DECKS} disabled />
+              </Field>
             </div>
           )}
         </Pair>

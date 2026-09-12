@@ -3,6 +3,9 @@ import { signInAsTestLearner } from "./auth";
 
 test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
   await page.goto("/library?from=reminder&deck=italian");
+  await expect(page.getByRole("heading", { name: "Sign in to Lymi" })).toBeVisible({
+    timeout: 15_000,
+  });
   await expect(page).toHaveURL(/\/login\?returnTo=%2Flibrary%3Ffrom%3Dreminder%26deck%3Ditalian$/);
 
   await signInAsTestLearner(page, testInfo, "deep-link", "/library?from=reminder&deck=italian");

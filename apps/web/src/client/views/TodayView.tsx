@@ -17,8 +17,10 @@ import { Page, type StaticNav } from "./Shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
-  /** One review count per day, oldest first, today last. Ninety days feed the streak. */
+  /** One review count per day, oldest first, today last. Seven feed the lights. */
   history: number[] | undefined;
+  /** Days in a row, from the server, unbounded by `history`. Derived from it when absent. */
+  streak?: number | undefined;
   /** Cards that landed since the last review, by deck. Empty until the endpoint exists. */
   arrivals?: NewCards[] | undefined;
   /** Worded forecast, e.g. "31 tomorrow, 9 on Monday". */
@@ -42,6 +44,7 @@ function plural(n: number, one: string, many: string) {
 export function TodayView({
   decks,
   history,
+  streak,
   arrivals,
   forecast,
   name,
@@ -52,10 +55,12 @@ export function TodayView({
   const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
   const dueDecks = decks?.filter((d) => d.due > 0) ?? [];
-  const loading = decks === undefined;
+  /* Both queries gate the hero. It is vertically centred, so a streak block that arrives after
+     the decks — or a skeleton that leaves once an empty history lands — would recentre it. */
+  const loading = decks === undefined || history === undefined;
   const nothingYet = !loading && total === 0;
   const lit = due > 0;
-  const run = history ? streakLength(history) : 0;
+  const run = streak ?? (history ? streakLength(history) : 0);
   const everReviewed = !!history?.some((n) => n > 0);
   /* With nothing under it the hero would cling to the top of an empty screen, so it takes the
      room instead and centres in it. When something follows, it sits up and gives that the space. */
@@ -109,6 +114,8 @@ export function TodayView({
             <Skeleton className="mt-3.5 h-10 w-40" />
             <Skeleton className="mt-2 h-5 w-56" />
             <Skeleton className="mt-5.5 h-14 w-full rounded-lg @3xl:w-44" />
+            <Skeleton className="mt-8 h-6 w-36" />
+            <Skeleton className="mt-3.5 h-[68px] w-[269px]" />
           </>
         ) : (
           <>
@@ -162,29 +169,17 @@ export function TodayView({
           </>
         )}
 
-        {/* The streak sits outside the branch above: it arrives on its own query, after the
-            decks, and the hero is centred, so it has to hold its room in both states or the
-            whole screen jolts upward when the lights land. */}
-        {loading || history === undefined ? (
-          <div className="mt-8 grid justify-items-center gap-3.5" aria-hidden="true">
-            <Skeleton className="h-6 w-36" />
-            <Skeleton className="h-[68px] w-[269px]" />
-          </div>
-        ) : (
-          everReviewed && (
-            <div className="mt-8 grid justify-items-center gap-3.5">
-              {/* The flame counts the run; the lights say which days and how full each was.
+        {!loading && everReviewed && (
+          <div className="mt-8 grid justify-items-center gap-3.5">
+            {/* The flame counts the run; the lights say which days and how full each was.
                   One statement each, which is the whole of the streak. */}
-              <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
-                <Flame className="size-7" flicker={run > 0} />
-                {run === 0 ? "No streak yet" : `${plural(run, "day", "days")} in a row`}
-              </p>
-              <SevenLights days={history.slice(-7)} size="lg" />
-              {lit && forecast && (
-                <p className="mt-1 text-sm text-muted tabular-nums">{forecast}</p>
-              )}
-            </div>
-          )
+            <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
+              <Flame className="size-7" flicker={run > 0} />
+              {run === 0 ? "No streak yet" : `${plural(run, "day", "days")} in a row`}
+            </p>
+            <SevenLights days={history.slice(-7)} size="lg" />
+            {lit && forecast && <p className="mt-1 text-sm text-muted tabular-nums">{forecast}</p>}
+          </div>
         )}
       </section>
 

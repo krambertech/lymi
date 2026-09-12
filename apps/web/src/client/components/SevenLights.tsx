@@ -44,10 +44,17 @@ const FILL: Record<1 | 2 | 3, string> = {
   3: "bg-amber",
 };
 
+/** How far up the glass the light reaches. The non-colour half of the signal. */
+const HEIGHT: Record<1 | 2 | 3, string> = { 1: "h-1/3", 2: "h-2/3", 3: "h-full" };
+
 /**
  * The last seven days as seven lights: the lantern's glass, seen small. Lit when you reviewed
- * that day, brighter for a fuller day. No streak count, no pressure — an unlit day is just an
- * unlit day, and the flame beside it is what counts the run.
+ * that day, and the light climbs the glass and brightens for a fuller day — height and colour
+ * carry the same step, so the difference survives without colour. No streak count, no
+ * pressure: an unlit day is just an unlit day, and the flame beside it counts the run.
+ *
+ * One image, one description. The wrapper is atomic to assistive technology, so the per-day
+ * counts go into its label rather than into titles nobody can reach from a keyboard.
  */
 export function SevenLights({ days, size = "sm", className }: Props) {
   const today = new Date();
@@ -60,11 +67,14 @@ export function SevenLights({ days, size = "sm", className }: Props) {
   // A floor under the reference, so a week of two-card days does not read as a full week.
   const reference = Math.max(...days, 10);
   const large = size === "lg";
+  const description = `Reviewed on ${lit} of the last ${days.length} days: ${days
+    .map((n, i) => `${labels[i]} ${n === 0 ? "none" : n}`)
+    .join(", ")}.`;
   return (
     <div
       className={clsx("inline-flex items-end", large ? "gap-2.5" : "gap-2", className)}
       role="img"
-      aria-label={`Reviewed on ${lit} of the last ${days.length} days`}
+      aria-label={description}
     >
       {days.map((n, i) => {
         const l = level(n, reference);
@@ -75,16 +85,26 @@ export function SevenLights({ days, size = "sm", className }: Props) {
             className={clsx("grid justify-items-center", large ? "gap-2" : "gap-1.5")}
             title={`${labels[i]}: ${n} reviewed`}
           >
+            {/* The glass is always drawn; the light inside it rises with the day. */}
             <i
               className={clsx(
-                "block transition-[background-color,box-shadow] duration-300",
+                "relative block overflow-hidden edge-inset bg-plate-2",
                 large
                   ? "h-11 w-8 rounded-[6px_6px_8px_8px]"
                   : "h-[18px] w-[13px] rounded-[4px_4px_5px_5px]",
-                l === 0 ? "edge-inset bg-plate-2" : FILL[l],
                 isToday && l === 0 && "edge-2",
               )}
-            />
+            >
+              {l !== 0 && (
+                <i
+                  className={clsx(
+                    "absolute inset-x-0 bottom-0 block transition-[height,background-color] duration-300",
+                    HEIGHT[l],
+                    FILL[l],
+                  )}
+                />
+              )}
+            </i>
             <span
               className={clsx(
                 "tabular-nums",

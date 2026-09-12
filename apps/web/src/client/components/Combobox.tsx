@@ -31,6 +31,11 @@ interface BaseProps {
   clearLabel?: string | undefined;
   /** Shown on the trigger when nothing is chosen. */
   placeholder?: string | undefined;
+  /**
+   * Cannot be changed right now. The box stays focusable and announced, like a Button, and
+   * swallows the press; it does not drop out of the tab order the way a native select would.
+   */
+  disabled?: boolean | undefined;
 }
 
 interface ComboboxProps extends BaseProps {
@@ -84,6 +89,7 @@ function Picker({
   onChange,
   options,
   clearLabel,
+  disabled,
   placeholder: placeholderProp,
   searchLabel: searchLabelProp,
   label,
@@ -300,15 +306,22 @@ function Picker({
         aria-expanded={open}
         aria-controls={open ? listId : undefined}
         aria-activedescendant={selectOpen ? activeId : undefined}
+        aria-disabled={disabled || undefined}
         className={clsx(
           controlBase,
           controlSize,
           "flex items-center gap-2 ps-3.5 pe-3 text-start",
           open && "edge-2",
           empty && "text-muted",
+          disabled && "cursor-not-allowed bg-plate-2 text-muted hoverable:hover:edge",
         )}
-        onClick={() => (open ? close() : start(""))}
+        onClick={() => {
+          if (disabled) return;
+          if (open) close();
+          else start("");
+        }}
         onKeyDown={(e) => {
+          if (disabled) return;
           if (open) return onKey(e);
           if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
             e.preventDefault();
@@ -349,6 +362,8 @@ function Picker({
             <input
               ref={searchRef}
               role="combobox"
+              aria-describedby={a11y["aria-describedby"]}
+              aria-invalid={a11y["aria-invalid"]}
               aria-expanded={open}
               aria-controls={listId}
               aria-autocomplete="list"

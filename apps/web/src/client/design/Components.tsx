@@ -161,6 +161,9 @@ export function Components() {
                 onChange={setLangEmpty}
                 error="Choose the language the words are in."
               />
+              <Field label="Deck" hint="Cannot change while a review is running.">
+                <Select value={deck} onChange={setDeck} options={DECKS} disabled />
+              </Field>
             </div>
           )}
         </Pair>

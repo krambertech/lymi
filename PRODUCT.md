@@ -20,6 +20,8 @@ It exists because the current tools each fail in one way. Anki is capable and un
 
 Success for the private version looks like this: Kateryna reviews in Lymi most days by choice, adding a lesson's vocabulary takes a few minutes instead of an evening, AI suggestions are useful and easy to correct, and cards and progress are the same on the phone and the laptop.
 
+Within a review, due cards with the same scheduling priority are mixed before they are shown so capture or edit order does not become a memorisation cue.
+
 ## Brand Personality
 
 Three words: warm, calm, quick.

@@ -8,8 +8,8 @@ import { asked } from "./decks";
 import { memberOf } from "./members";
 
 /**
- * Cards due now, oldest due first. The scheduler preview stays available to API
- * clients even though the first-party review UI deliberately keeps it out of sight.
+ * Select the oldest cards due now, then shuffle equal-priority ties. The scheduler preview
+ * stays available to API clients even though the first-party review UI keeps it out of sight.
  */
 export async function reviewQueue(
   { db, userId }: ServiceContext,
@@ -46,7 +46,8 @@ export async function reviewQueue(
     .where(where);
 
   const uniqueRows = oneDirectionPerCard(rows).slice(0, limit);
-  const items = uniqueRows.map(({ card, state }) => {
+  const shuffledRows = shuffleEqualPriorityItems(uniqueRows, ({ state }) => state.due.getTime());
+  const items = shuffledRows.map(({ card, state }) => {
     const next = preview(deserializeState(state.fsrs), now);
     return {
       card,
@@ -73,6 +74,28 @@ export function oneDirectionPerCard<T extends { card: { id: string } }>(rows: T[
     seen.add(card.id);
     return true;
   });
+}
+
+/** Shuffle ties without letting a lower-priority card jump the queue. */
+export function shuffleEqualPriorityItems<T>(
+  items: readonly T[],
+  priorityOf: (item: T) => number,
+  random = Math.random,
+): T[] {
+  const shuffled: T[] = [];
+  for (let start = 0; start < items.length; ) {
+    const priority = priorityOf(items[start] as T);
+    let end = start + 1;
+    while (end < items.length && priorityOf(items[end] as T) === priority) end += 1;
+    const group = items.slice(start, end);
+    for (let i = group.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(random() * (i + 1));
+      [group[i], group[j]] = [group[j] as T, group[i] as T];
+    }
+    shuffled.push(...group);
+    start = end;
+  }
+  return shuffled;
 }
 
 /**

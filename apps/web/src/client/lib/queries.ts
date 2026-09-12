@@ -36,6 +36,9 @@ export const queueQuery = (deckId?: string) =>
     queryKey: ["queue", deckId ?? "all"],
     queryFn: () => api.queue(deckId),
     staleTime: 0,
+    // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 /**
  * Seven days for the lights. The run itself comes back as `streak`, counted on the server with

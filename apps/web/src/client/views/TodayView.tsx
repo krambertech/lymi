@@ -1,27 +1,25 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { streakLength } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
 import { Button, buttonClass } from "../components/Button";
-import { Flame } from "../components/Flame";
 import { Lantern } from "../components/Lantern";
 import { LearnerMenu } from "../components/LearnerMenu";
 import { NavLink } from "../components/NavLink";
 import type { NewCards } from "../components/NewCardsRow";
 import { NewCardsRow } from "../components/NewCardsRow";
-import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
+import { type StreakSummary, StreakWeek } from "../components/Streak";
 import type { DeckSummary } from "../lib/api";
 import { Page, type StaticNav, TopBar } from "./Shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
-  /** One review count per day, oldest first, today last. Seven feed the lights. */
-  history: number[] | undefined;
-  /** Days in a row, from the server, unbounded by `history`. Derived from it when absent. */
-  streak?: number | undefined;
+  /** The streak and the days behind it. The week and the run sit under the button. */
+  streak: StreakSummary | undefined;
+  /** The streak pill, at the top of the phone's screen. The rail carries it on desktop. */
+  streakButton?: ReactNode | undefined;
   /** Cards that landed since the last review, by deck. Empty until the endpoint exists. */
   arrivals?: NewCards[] | undefined;
   /** Worded forecast, e.g. "31 tomorrow, 9 on Monday". */
@@ -42,12 +40,12 @@ export interface TodayProps {
 /**
  * Home. One question and one action: the count is the heading, the lantern is the only object
  * on the screen, and nothing here is a plate except the decks that arrived while you were away.
- * The streak is the seven lights and one line under the button, never a panel of its own.
+ * The week and the run sit under the button, never as a panel of their own.
  */
 export function TodayView({
   decks,
-  history,
   streak,
+  streakButton,
   arrivals,
   forecast,
   name,
@@ -66,11 +64,10 @@ export function TodayView({
   const dueDecks = decks?.filter((d) => d.due > 0) ?? [];
   /* Both queries gate the hero. It is vertically centred, so a streak block that arrives after
      the decks — or a skeleton that leaves once an empty history lands — would recentre it. */
-  const loading = decks === undefined || history === undefined;
+  const loading = decks === undefined || streak === undefined;
   const nothingYet = !loading && total === 0;
   const lit = due > 0;
-  const run = streak ?? (history ? streakLength(history) : 0);
-  const everReviewed = !!history?.some((n) => n > 0);
+  const everReviewed = !!streak && streak.days.length > 0;
   /* With nothing under it the hero would cling to the top of an empty screen, so it takes the
      room instead and centres in it. When something follows, it sits up and gives that the space. */
   const hasArrivals = !!arrivals && arrivals.length > 0;
@@ -99,6 +96,7 @@ export function TodayView({
     <Page width="md">
       {/* The rail carries capture and the learner on desktop, so this row is the phone's. */}
       <TopBar
+        back={streakButton}
         actions={
           <>
             <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
@@ -191,17 +189,7 @@ export function TodayView({
 
         {!loading && everReviewed && (
           <div className="mt-8 grid justify-items-center gap-3.5">
-            {/* The flame counts the run; the lights say which days and how full each was.
-                  One statement each, which is the whole of the streak. */}
-            <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
-              <Flame className="size-7" flicker={run > 0} />
-              {run === 0 ? (
-                <Trans>No streak yet</Trans>
-              ) : (
-                <Plural value={run} one="# day in a row" other="# days in a row" />
-              )}
-            </p>
-            <SevenLights days={history.slice(-7)} size="lg" />
+            <StreakWeek summary={streak} size="lg" />
             {lit && forecast && <p className="mt-1 text-sm text-muted tabular-nums">{forecast}</p>}
           </div>
         )}

@@ -23,8 +23,8 @@ import { ErrorTip } from "../components/ErrorTip";
 import { Kbd } from "../components/Kbd";
 import { Lantern } from "../components/Lantern";
 import { Progress } from "../components/Progress";
-import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
+import { type StreakSummary, StreakWeek } from "../components/Streak";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
 
@@ -575,7 +575,8 @@ export interface SessionDoneProps {
   moreDue?: number | undefined;
   /** Named here rather than over every card, because here it is a fact about what was reviewed. */
   deckName?: string | undefined;
-  history?: number[] | undefined;
+  /** The week and the run, as Today shows them. */
+  streak?: StreakSummary | undefined;
   action?: ReactNode | undefined;
 }
 
@@ -586,7 +587,7 @@ export interface SessionDoneProps {
  * pause with a way on, not a failure to finish: the batch really did end, and the next one is a
  * decision rather than an endless list.
  */
-export function SessionDone({ done, moreDue = 0, deckName, history, action }: SessionDoneProps) {
+export function SessionDone({ done, moreDue = 0, deckName, streak, action }: SessionDoneProps) {
   const lit = done > 0;
   const paused = lit && moreDue > 0;
   return (
@@ -635,7 +636,7 @@ export function SessionDone({ done, moreDue = 0, deckName, history, action }: Se
           <Trans>Come back later, or add something new.</Trans>
         )}
       </p>
-      {history && <SevenLights days={history.slice(-7)} className="complete-copy mt-6" />}
+      {streak && <StreakWeek summary={streak} className="complete-copy mt-6" />}
       <div className="complete-copy mt-6 flex flex-wrap items-center justify-center gap-2">
         {action}
       </div>

@@ -48,6 +48,7 @@ English component text is the source. `pnpm i18n:extract` updates the Lingui cat
 | meaning language | мова значень | язык значений |
 | reminder | нагадування | напоминание |
 | streak / run | серія | серия |
+| daily goal | денна мета | дневная цель |
 
 Add a row when a durable product term appears.
 

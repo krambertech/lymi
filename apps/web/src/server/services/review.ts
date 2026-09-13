@@ -1,11 +1,21 @@
 import type { GradeInput } from "@lymi/core";
 import { deserializeState, newId, preview, schedule, serializeState } from "@lymi/core";
-import { and, asc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
+import { and, asc, eq, gte, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
-import { asked } from "./decks";
+import { dateFormatter } from "./days";
+import { dueWhere } from "./due";
 import { memberOf } from "./members";
+import {
+  type DayProgress,
+  openDay,
+  reviewZone,
+  type StateBefore,
+  settleDay,
+  streak as streakSummary,
+} from "./review-days";
+import { getSettings } from "./settings";
 
 /**
  * Select the oldest cards due now, then shuffle equal-priority ties. The scheduler preview
@@ -17,17 +27,7 @@ export async function reviewQueue(
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
   const now = new Date();
-  // An archived deck leaves every list, review included; its cards keep their progress. A
-  // deck the learner left keeps their states too, and `memberOf` keeps them out of the queue.
-  const where = and(
-    eq(schema.cardStates.userId, userId),
-    memberOf(userId),
-    lte(schema.cardStates.due, now),
-    isNull(schema.cards.archivedAt),
-    isNull(schema.decks.archivedAt),
-    asked,
-    opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
-  );
+  const where = dueWhere(userId, now, opts.deckId);
 
   const rows = await db
     .select({ card: schema.cards, state: schema.cardStates })
@@ -101,8 +101,10 @@ export function shuffleEqualPriorityItems<T>(
 /**
  * Apply one grade. Only the learner grades; integrations never reach this function.
  * Idempotent enough for offline replay: a review older than the state's last review is a no-op.
+ * Every accepted grade is one attempt toward the learner-local day it happened on, fixed now.
  */
-export async function gradeCard({ db, userId, actor }: ServiceContext, input: GradeInput) {
+export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
+  const { db, userId, actor } = ctx;
   const { cardId, direction, rating } = input;
   const reviewedAt = input.reviewedAt ?? new Date();
 
@@ -122,16 +124,37 @@ export async function gradeCard({ db, userId, actor }: ServiceContext, input: Gr
   if (!row) throw notFound("Card");
   const state = row.state;
 
+  const zone = await reviewZone(ctx, input.timezone);
+  const settings = await getSettings(ctx);
+  const date = dateFormatter(zone).format(reviewedAt);
+
   if (state.lastReview && state.lastReview.getTime() >= reviewedAt.getTime()) {
+    const [existing] = await db
+      .select()
+      .from(schema.reviewDays)
+      .where(and(eq(schema.reviewDays.userId, userId), eq(schema.reviewDays.date, date)));
+    const day: DayProgress = existing
+      ? await settleDay(ctx, existing, "check")
+      : { date, attempts: 0, goal: settings.dailyGoal, outcome: "open" };
     return {
       ok: true as const,
       duplicate: true as const,
       due: state.due.toISOString(),
       state: state.state,
+      reviewId: null,
+      day,
     };
   }
 
   const result = schedule(deserializeState(state.fsrs), rating, reviewedAt);
+  const reviewDay = await openDay(ctx, date, zone, settings.dailyGoal);
+  const reviewId = newId();
+  const before: StateBefore = {
+    fsrs: state.fsrs,
+    due: state.due.getTime(),
+    state: state.state,
+    lastReview: state.lastReview?.getTime() ?? null,
+  };
 
   await db.batch([
     db
@@ -145,7 +168,7 @@ export async function gradeCard({ db, userId, actor }: ServiceContext, input: Gr
       })
       .where(eq(schema.cardStates.id, state.id)),
     db.insert(schema.reviews).values({
-      id: newId(),
+      id: reviewId,
       userId,
       cardId,
       cardStateId: state.id,
@@ -158,6 +181,8 @@ export async function gradeCard({ db, userId, actor }: ServiceContext, input: Gr
       difficultyAfter: result.card.difficulty,
       reviewedAt,
       source: "web",
+      reviewDayId: reviewDay.id,
+      stateBefore: JSON.stringify(before),
     }),
   ]);
   await audit(db, {
@@ -174,6 +199,8 @@ export async function gradeCard({ db, userId, actor }: ServiceContext, input: Gr
     duplicate: false as const,
     due: result.card.due.toISOString(),
     state: result.card.state,
+    reviewId,
+    day: await settleDay(ctx, reviewDay, "grade"),
   };
 }
 
@@ -182,9 +209,10 @@ export async function gradeCard({ db, userId, actor }: ServiceContext, input: Gr
  * the seven lights. `tzOffset` is minutes, as Date.getTimezoneOffset reports it.
  */
 export async function reviewHistory(
-  { db, userId }: ServiceContext,
+  ctx: ServiceContext,
   opts: { days?: number | undefined; tzOffset?: number | undefined } = {},
 ) {
+  const { db, userId } = ctx;
   const days = Math.min(Math.max(opts.days ?? 7, 1), 90);
   const tz = opts.tzOffset ?? 0;
   const now = new Date();
@@ -207,29 +235,7 @@ export async function reviewHistory(
     if (i >= 0 && i < days) counts[i] = (counts[i] ?? 0) + 1;
   }
 
-  // The current run, exact, with no window: a streak counted from `counts` alone can never be
-  // longer than `days`. Grouped by UTC day and resolved to the learner's zone the way
-  // `stats.ts` does, so the query is bounded by days rather than by reviews. Reviews inside
-  // one UTC day touch at most two local days, the local dates of its first and last review.
-  const grouped = await db
-    .select({
-      first: sql<number>`min(${schema.reviews.reviewedAt})`,
-      last: sql<number>`max(${schema.reviews.reviewedAt})`,
-    })
-    .from(schema.reviews)
-    .where(eq(schema.reviews.userId, userId))
-    .groupBy(sql`date(${schema.reviews.reviewedAt} / 1000, 'unixepoch')`);
-  const localDay = (ms: number) => Math.floor((ms - tz * 60_000) / 86_400_000);
-  const lit = new Set<number>();
-  for (const g of grouped) {
-    lit.add(localDay(g.first));
-    lit.add(localDay(g.last));
-  }
-  const today = localDay(now.getTime());
-  // Today is still open until it ends, so an unreviewed morning keeps yesterday's run.
-  let day = lit.has(today) ? today : today - 1;
-  let streak = 0;
-  for (; lit.has(day); day -= 1) streak += 1;
-
+  // The run is the goal streak, the same one the streak endpoint reports.
+  const { current: streak } = await streakSummary(ctx);
   return { days: counts, streak };
 }

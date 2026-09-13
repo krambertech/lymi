@@ -1,14 +1,20 @@
-import { streakLength } from "@lymi/core";
-import { Flame } from "../../components/Flame";
 import { MonthBars } from "../../components/MonthBars";
 import { RunStrip } from "../../components/RunStrip";
 import { SevenLights } from "../../components/SevenLights";
 import { StateStripe } from "../../components/StateStripe";
 import { StatPlate } from "../../components/StatPlate";
+import { StreakButton, StreakPanel, StreakWeek } from "../../components/Streak";
 import { TrendLine } from "../../components/TrendLine";
 import { Variants } from "../Frame";
-import { history, insights, streakDays, streakDaysOpen, thinInsights } from "../mock";
-import type { Group } from "./types";
+import {
+  history,
+  insights,
+  streakDaysOpen,
+  streakFrom,
+  streak as streakSummary,
+  thinInsights,
+} from "../mock";
+import { type Group, noop } from "./types";
 
 const trend = insights.recall.series.map((p) => ({
   at: p.at,
@@ -20,40 +26,74 @@ const trend = insights.recall.series.map((p) => ({
 export const streak: Group = {
   slug: "streak",
   title: "Streak",
-  lede: "The flame counts days in a row and the seven lights say which days. On Today they sit together under the review button, never in a panel of their own.",
+  lede: "The daily review goal and the streak are one mechanic. The run is a pill in the chrome that opens the streak modal; Today and the end of a review pair the week with the run.",
   entries: [
     {
-      slug: "streak",
-      name: "Flame and run",
-      source: "components/Flame.tsx",
-      note: "Today stays open until it ends, so an unreviewed morning still shows yesterday’s streak.",
+      slug: "pill",
+      name: "Streak pill",
+      source: "components/Streak.tsx",
+      note: "The flame is out with no run, still while today's goal is open, and flickers once it is reached. It sits on the rail's first line on desktop and at the start of the top bar on the phone.",
       Demo: () => (
         <Variants
           items={[
             {
-              label: "Reviewed today",
-              note: "The flame flickers and the last light is lit.",
+              label: "Phone",
+              note: "A plate with a 44 px hit area.",
+              render: () => <StreakButton variant="phone" summary={streakSummary} />,
+            },
+            {
+              label: "Rail",
+              note: "Ghost until hovered.",
+              render: () => <StreakButton variant="rail" summary={streakSummary} />,
+            },
+            {
+              label: "No run",
+              note: "The flame is out.",
               render: () => (
-                <div className="grid w-full justify-items-center gap-3.5 py-2">
-                  <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
-                    <Flame className="size-7" flicker />
-                    {streakLength(streakDays)} days in a row
-                  </p>
-                  <SevenLights days={streakDays.slice(-7)} size="lg" />
-                </div>
+                <StreakButton
+                  variant="phone"
+                  summary={{
+                    ...streakSummary,
+                    current: 0,
+                    days: [],
+                    today: { ...streakSummary.today, attempts: 0, outcome: "open" },
+                  }}
+                />
               ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "modal",
+      name: "Streak modal",
+      source: "components/Streak.tsx",
+      note: "Today's attempts against the goal, the longest run, days reviewed and the month. A day that counted is ringed; a faint band joins the days that kept the run. The goal is changed here and nowhere else.",
+      Demo: () => (
+        <div className="edge-2 max-w-[400px] rounded-xl bg-plate p-5">
+          <StreakPanel summary={streakSummary} onGoalChange={noop} />
+        </div>
+      ),
+    },
+    {
+      slug: "week",
+      name: "Week and run",
+      source: "components/Streak.tsx",
+      note: "Today stays open until it ends, so an unfinished morning still shows yesterday's run beside the week.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Goal reached today",
+              note: "The last light is full.",
+              render: () => <StreakWeek summary={streakSummary} size="lg" />,
             },
             {
               label: "Not yet today",
-              note: "The run holds and today’s light waits.",
+              note: "The run holds and today's light waits.",
               render: () => (
-                <div className="grid w-full justify-items-center gap-3.5 py-2">
-                  <p className="flex items-center gap-2 text-md font-medium tabular-nums text-text-2">
-                    <Flame className="size-7" flicker />
-                    {streakLength(streakDaysOpen)} days in a row
-                  </p>
-                  <SevenLights days={streakDaysOpen.slice(-7)} size="lg" />
-                </div>
+                <StreakWeek summary={streakFrom(streakDaysOpen.map((n) => n * 2))} size="lg" />
               ),
             },
           ]}
@@ -64,7 +104,7 @@ export const streak: Group = {
       slug: "seven-lights",
       name: "Seven lights",
       source: "components/SevenLights.tsx",
-      note: "A day’s light takes three steps of amber, from the lantern’s glass to its flame, by how full the day was against the week’s busiest. The steps mix toward the glass, so “a little” never looks like “nothing” in the dark room.",
+      note: "A day that counted is full. Otherwise the light reaches its middle step at half that day's own goal. The steps mix toward the glass, so “a little” never looks like “nothing” in the dark room.",
       Demo: () => (
         <Variants
           items={[

@@ -6,6 +6,7 @@ import { Button } from "../components/Button";
 import { NewDeckForm } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
 import { SheetPanel } from "../components/Sheet";
+import { StreakButton } from "../components/Streak";
 import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
@@ -133,14 +134,15 @@ export const SCREENS: Entry[] = [
     slug: "today",
     name: "Today",
     source: "views/TodayView.tsx",
-    note: "One question and one action. The lantern is lit and glowing when cards are due, dark when they are not, and the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The streak is the seven lights and one line, on both screens. What an integration added since the last review follows.",
+    note: "One question and one action. The lantern is lit and glowing when cards are due, dark when they are not, and the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The week and the run sit under the button; the run is also the pill in the chrome. What an integration added since the last review follows.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Cards due" initial="dark" path="/">
             <TodayView
               decks={m.decks}
-              history={m.streakDays}
+              streak={m.streak}
+              streakButton={<StreakButton variant="phone" summary={m.streak} />}
               arrivals={m.arrivals}
               forecast="31 tomorrow, 9 on Monday"
               name={m.me.name}
@@ -151,7 +153,7 @@ export const SCREENS: Entry[] = [
           <PhoneShot caption="Nothing due" initial="light" path="/">
             <TodayView
               decks={m.quietDecks}
-              history={m.streakDaysOpen}
+              streak={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
               forecast="31 tomorrow, 9 on Monday"
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
@@ -161,7 +163,7 @@ export const SCREENS: Entry[] = [
           <PhoneShot caption="First run" initial="light" path="/">
             <TodayView
               decks={[]}
-              history={m.noHistory}
+              streak={m.streakFrom(m.noHistory)}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
               static={{ path: "/" }}
@@ -176,12 +178,13 @@ export const SCREENS: Entry[] = [
                 name={m.me.name}
                 docsUrl="https://lymi.app/docs"
                 onAdd={noop}
+                streak={<StreakButton variant="rail" summary={m.streak} />}
                 static={{ path: "/" }}
               />
               <main className="@container flex min-w-0 flex-1 flex-col">
                 <TodayView
                   decks={m.decks}
-                  history={m.streakDays}
+                  streak={m.streak}
                   arrivals={m.arrivals}
                   forecast="31 tomorrow, 9 on Monday"
                   name={m.me.name}
@@ -264,7 +267,7 @@ export const SCREENS: Entry[] = [
               <SessionDone
                 done={11}
                 deckName="Lesson 14"
-                history={m.history}
+                streak={m.streakFrom(m.history)}
                 action={
                   <Button variant="primary" size="lg">
                     Done

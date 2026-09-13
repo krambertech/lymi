@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
 
-/** Nine consecutive backdated days. A run counted from a seven-day window would say 7. */
+/**
+ * Nine consecutive backdated days, each meeting a goal of one review. A run counted from a
+ * seven-day window would say 7.
+ */
 test("the streak is exact beyond the seven days the lights show", async ({ page }, testInfo) => {
   test.setTimeout(180_000);
   await signInAsTestLearner(page, testInfo, "core-learning");
@@ -10,6 +13,14 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
     expect(res.ok(), `${path} failed with ${res.status()}`).toBeTruthy();
     return res.json();
   };
+  const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const put = async (path: string, data: unknown) => {
+    const res = await page.request.put(path, { data });
+    expect(res.ok(), `${path} failed with ${res.status()}`).toBeTruthy();
+  };
+  await put("/api/settings/timezone", { mode: "manual", timezone: zone });
+  const goal = await page.request.patch("/api/settings", { data: { dailyGoal: 1 } });
+  expect(goal.ok()).toBeTruthy();
   const deck = (
     (await post("/api/decks", { name: "Lesson 14", defaultLanguage: "it" })) as { id: string }
   ).id;
@@ -47,7 +58,51 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   await page.goto("/today");
   await page.evaluate(() => localStorage.clear());
   await page.reload();
-  await expect(page.getByText("9 days in a row")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Streak: 9 days in a row" })).toBeVisible();
   const lights = page.getByRole("img", { name: /Reviewed on 7 of the last 7 days: / });
   await expect(lights).toBeVisible();
+
+  const streak = (await (
+    await page.request.get(`/api/stats/streak?tz=${encodeURIComponent(zone)}`)
+  ).json()) as { current: number; longest: number; today: { goal: number; outcome: string } };
+  // The account is shared with the core flow, which may already have finished today at its own goal.
+  expect(streak).toMatchObject({ current: 9, longest: 9 });
+  expect(["goal_met", "exhausted"]).toContain(streak.today.outcome);
+
+  // Today counted either way: at its goal, or with nothing left to review.
+  const finished = /Daily goal reached\.|That’s the lot for today\./;
+
+  // The phone opens the streak as a full-screen modal.
+  await page.getByRole("button", { name: "Streak: 9 days in a row" }).click();
+  const modal = page.getByRole("dialog");
+  await expect(modal.getByText("Longest streak")).toBeVisible();
+  // Measured once the entrance has settled, since it starts slightly scaled.
+  await expect.poll(async () => (await modal.boundingBox())?.width).toBe(390);
+  // On a phone the modal is the whole screen, so a tap on its empty space is not a backdrop tap.
+  await modal.click({ position: { x: 195, y: 820 } });
+  await expect(modal).toBeVisible();
+  await modal.getByRole("button", { name: "Change daily goal" }).click();
+  await modal.getByText("Keen").click();
+  await expect(modal.getByText("Saved")).toBeVisible();
+  const settings = (await (await page.request.get("/api/settings")).json()) as {
+    dailyGoal: number;
+  };
+  expect(settings.dailyGoal).toBe(50);
+  // Today was already met, so the higher goal applies from tomorrow.
+  await modal.getByRole("button", { name: "Back to streak" }).click();
+  await expect(modal.getByText(finished)).toBeVisible();
+  await modal.getByRole("button", { name: "Close" }).click();
+  await expect(modal).toBeHidden();
+
+  // Desktop opens the same panel centred over the page.
+  await page.setViewportSize({ width: 1280, height: 820 });
+  await page.getByRole("button", { name: "Streak: 9 days in a row" }).click();
+  await expect(modal.getByText(finished)).toBeVisible();
+  await expect.poll(async () => (await modal.boundingBox())?.width).toBe(400);
+  // Shrinking the window with the modal open turns it into the full-screen one, never a hidden modal.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(modal.getByText(finished)).toBeVisible();
+  await expect.poll(async () => (await modal.boundingBox())?.width).toBe(390);
+  await page.keyboard.press("Escape");
+  await expect(modal).toBeHidden();
 });

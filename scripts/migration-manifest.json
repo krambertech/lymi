@@ -35,6 +35,10 @@
     {
       "name": "0008_black_champions.sql",
       "sha256": "515557f964196081b5d073304b99f663aa9cf532db3a113538b2517fcb2a8b52"
+    },
+    {
+      "name": "0009_shallow_prodigy.sql",
+      "sha256": "573868f5186f201174871947f1adbf40b218d8f2b15961286fa338d32a498575"
     }
   ]
 }

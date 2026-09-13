@@ -1,5 +1,6 @@
 import type { InsightsOut } from "@lymi/core";
 import type { Card, CardState, Review } from "@lymi/core/schema";
+import type { StreakSummary } from "../components/Streak";
 import type { DeckSummary, QueueItem } from "../lib/api";
 import type { WordEvent } from "../views/WordView";
 
@@ -205,6 +206,8 @@ function review(
     scheduledDays,
     stabilityAfter: 4,
     difficultyAfter: 6.1,
+    reviewDayId: null,
+    stateBefore: null,
     reviewedAt: new Date(now - daysAgo * day),
     source: "web",
   };
@@ -393,3 +396,45 @@ export const thinInsights: InsightsOut = {
   })),
   leeches: { lapses: 4, reviews: 6, cards: [] },
 };
+
+/**
+ * A streak built from counts per day, oldest first, today last, the way the server would report
+ * it for a goal of 10: a day with ten or more attempts counts, and runs are counted from them.
+ */
+export function streakFrom(counts: number[], goal = 10): StreakSummary {
+  const back = (n: number) => new Date(Date.UTC(2026, 8, 13 - n)).toISOString().slice(0, 10);
+  const all = counts.map((attempts, i) => ({
+    date: back(counts.length - 1 - i),
+    attempts,
+    goal,
+    satisfied: attempts >= goal,
+    nothingDue: false,
+  }));
+  const todayCount = counts.at(-1) ?? 0;
+  let current = 0;
+  for (let i = all.length - (todayCount >= goal ? 1 : 2); i >= 0 && all[i]?.satisfied; i--)
+    current++;
+  let longest = 0;
+  let run = 0;
+  for (const d of all) {
+    run = d.satisfied ? run + 1 : 0;
+    longest = Math.max(longest, run);
+  }
+  const days = all.filter((d) => d.attempts > 0);
+  return {
+    today: {
+      date: back(0),
+      attempts: todayCount,
+      goal,
+      outcome: todayCount >= goal ? "goal_met" : "open",
+    },
+    goal,
+    current,
+    longest,
+    reviewedDays: days.length,
+    days,
+  };
+}
+
+/** The streak panel's data: a run up to today with a gap before it. */
+export const streak = streakFrom(streakDays.map((n) => n * 2));

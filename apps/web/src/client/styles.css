@@ -504,6 +504,75 @@
   }
 }
 
+/* ---- Streak ------------------------------------------------------------ */
+
+/* The flame before today has a review: the lantern's ember colour, so "not yet" is not amber. */
+.flame-out .flame > path {
+  fill: var(--edge-2);
+  transition: fill 300ms var(--ease-out);
+}
+.flame-out .flame > .flame-core {
+  fill: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* The wick taking when today's first review lands, the lantern's catch at pill size. */
+  .flame-catch .flame {
+    --flame-anim: catch 620ms var(--ease-out) both;
+  }
+  /* A new count rolls up into place rather than swapping. */
+  .streak-tick {
+    animation: streak-tick 320ms var(--ease-out) both;
+  }
+  /* The current run draws across from its first day, the way the connection rail does. */
+  .streak-draw {
+    animation: streak-draw 260ms var(--ease-out) var(--draw-delay, 0ms) both;
+  }
+  .streak-pop {
+    animation: streak-pop 240ms var(--ease-out) var(--draw-delay, 0ms) both;
+  }
+  .streak-fill {
+    animation: streak-fill 520ms var(--ease-out) 120ms both;
+  }
+}
+.streak-fill {
+  transition: transform 300ms var(--ease-out);
+}
+@keyframes streak-tick {
+  from {
+    opacity: 0;
+    transform: translateY(60%);
+  }
+}
+@keyframes streak-pop {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+}
+@keyframes streak-draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[dir="rtl"] .streak-draw {
+  animation-name: streak-draw-rtl;
+}
+@keyframes streak-draw-rtl {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes streak-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
 /* ---- Connection -------------------------------------------------------- */
 
 /*

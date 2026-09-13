@@ -56,6 +56,8 @@ interface SidebarProps {
   docsUrl: string;
   /** Something an integration wrote is unseen. A dot, never a count. */
   unseen?: boolean | undefined;
+  /** The streak pill, which shares the first line with capture. */
+  streak?: ReactNode | undefined;
   static?: StaticNav;
   className?: string | undefined;
 }
@@ -78,6 +80,7 @@ export function Sidebar({
   signingOut,
   docsUrl,
   unseen,
+  streak,
   static: st,
   className,
 }: SidebarProps) {
@@ -96,6 +99,7 @@ export function Sidebar({
           <AppTile size={28} title="Lymi" />
           <Wordmark size={18} className="text-text" />
         </span>
+        {streak}
         {onSearch && (
           <IconButton label={t`Search`} size="sm" onClick={onSearch}>
             <Search />

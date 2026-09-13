@@ -40,13 +40,10 @@ export const queueQuery = (deckId?: string) =>
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
-/**
- * Seven days for the lights. The run itself comes back as `streak`, counted on the server with
- * no window, so it is never capped by how much history the lights happen to show.
- */
-export const historyQuery = queryOptions({
-  queryKey: ["history", 7],
-  queryFn: () => api.history(7),
+/** The flame in the chrome and the panel behind it. A review invalidates it on the way out. */
+export const streakQuery = queryOptions({
+  queryKey: ["streak"],
+  queryFn: api.streak,
   staleTime: 60_000,
 });
 // Every figure here moves with a review, and nothing else invalidates this key on the way

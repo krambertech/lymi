@@ -10,12 +10,21 @@ interface Props {
    * streak is the only thing under the button and has the room to be looked at.
    */
   size?: "sm" | "lg" | undefined;
+  /** Each day's own goal, as it was that day. Where there is one, the middle step begins at half of it. */
+  goals?: (number | null)[] | undefined;
+  /** Which days counted toward a streak. Those are full whatever they held. */
+  satisfied?: boolean[] | undefined;
+  /** The learner-local YYYY-MM-DD of each day. Without them the labels count back from the device's today. */
+  dates?: string[] | undefined;
   className?: string | undefined;
 }
 
 /**
- * A day's light carries three steps of amber, by how much that day held. The reference is the
- * week's own busiest day with a floor under it, so a quiet week is not flattered into looking
+ * A day's light carries three steps of amber, by how much that day held. A day that counted toward
+ * a streak is full, and one measured against a goal reaches the middle step at half of that
+ * day's own goal, so lowering today's goal never rewrites how an earlier day looks. Without a goal
+ * the reference is
+ * the week's own busiest day with a floor under it, so a quiet week is not flattered into looking
  * heavy and one big Tuesday does not wash the rest of the week out.
  *
  * Seven days grade; the thirty-day strip in Insights deliberately does not. Over a month,
@@ -23,8 +32,15 @@ interface Props {
  * steady stretch. Over a week it is the difference between "I turned up" and "I turned up and
  * did the lot", which is a thing the learner already knows and likes seeing.
  */
-function level(n: number, reference: number): 0 | 1 | 2 | 3 {
+function level(
+  n: number,
+  reference: number,
+  goal?: number | null,
+  counted?: boolean,
+): 0 | 1 | 2 | 3 {
+  if (counted) return 3;
   if (n <= 0) return 0;
+  if (goal) return n >= goal ? 3 : n >= goal / 2 ? 2 : 1;
   const share = n / reference;
   if (share >= 0.67) return 3;
   if (share >= 0.34) return 2;
@@ -56,11 +72,17 @@ const HEIGHT: Record<1 | 2 | 3, string> = { 1: "h-1/3", 2: "h-2/3", 3: "h-full" 
  * One image, one description. The wrapper is atomic to assistive technology, so the per-day
  * counts go into its label rather than into titles nobody can reach from a keyboard.
  */
-export function SevenLights({ days, size = "sm", className }: Props) {
+export function SevenLights({ days, size = "sm", goals, satisfied, dates, className }: Props) {
   const { t, i18n } = useLingui();
   const today = new Date();
-  const weekday = new Intl.DateTimeFormat(i18n.locale, { weekday: "short" });
+  // A learner-local date is formatted at noon UTC in UTC, so no device zone can move it a day.
+  const weekday = new Intl.DateTimeFormat(i18n.locale, {
+    weekday: "short",
+    ...(dates ? { timeZone: "UTC" } : {}),
+  });
   const labels = days.map((_, i) => {
+    const date = dates?.[i];
+    if (date) return weekday.format(new Date(`${date}T12:00:00Z`));
     const d = new Date(today);
     d.setDate(today.getDate() - (days.length - 1 - i));
     return weekday.format(d);
@@ -84,7 +106,7 @@ export function SevenLights({ days, size = "sm", className }: Props) {
       aria-label={description}
     >
       {days.map((n, i) => {
-        const l = level(n, reference);
+        const l = level(n, reference, goals?.[i], satisfied?.[i]);
         const isToday = i === days.length - 1;
         const day = labels[i];
         return (

@@ -1,9 +1,9 @@
-import { GradeInput, GradeOut, QueueOut } from "@lymi/core";
+import { GradeInput, GradeOut, QueueOut, ReviewDayProgress, UndoInput, UndoOut } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
-import { gradeCard, reviewHistory, reviewQueue } from "../services";
+import { checkToday, gradeCard, reviewHistory, reviewQueue, undoReview } from "../services";
 
 export const review = new Hono<AppEnv>();
 
@@ -53,7 +53,7 @@ review.get(
     tags: ["Review"],
     summary: "Reviews per day",
     description:
-      "Counts for the last N days in the learner's timezone, oldest first. Feeds the seven lights on Today.",
+      "Counts for the last N days in the learner's timezone, oldest first. `GET /api/stats/streak` has every day and the goal.",
     ok: { schema: HistoryOut, description: "One count per day" },
     errors: [400],
   }),
@@ -71,10 +71,47 @@ review.post(
     summary: "Grade a card",
     learnerOnly: true,
     description:
-      "Learner only: API keys and MCP tokens get 403 whatever their scope. A grade older than the state's last review is ignored and reported as `duplicate`, which makes offline replay safe.",
+      "Learner only: API keys and MCP tokens get 403 whatever their scope. A grade older than the state's last review is ignored and reported as `duplicate`, which makes offline replay safe. Every accepted grade is one attempt toward the learner-local day it happened on; `day` says where that day stands.",
     ok: { schema: GradeOut, description: "The new schedule" },
     errors: [400, 404],
   }),
   body(GradeInput, "grade"),
   async (c) => c.json(await gradeCard(ctxOf(c), c.req.valid("json"))),
+);
+
+review.post(
+  "/undo",
+  describe({
+    tags: ["Review"],
+    summary: "Undo a grade",
+    learnerOnly: true,
+    description:
+      "Learner only. Restores the card state the grade replaced and removes the attempt from its day's count, which can reopen a completed goal. Only the latest grade of a card's direction can be undone; an older one is 409. Undoing twice is harmless.",
+    ok: { schema: UndoOut, description: "The day after the undo" },
+    errors: [400, 404, 409],
+  }),
+  body(UndoInput, "undo"),
+  async (c) =>
+    c.json({ ok: true as const, day: await undoReview(ctxOf(c), c.req.valid("json").reviewId) }),
+);
+
+const TodayBody = z.object({
+  timezone: z.string().max(64).optional().meta({
+    description: "The device zone, used only if no review zone has been reported yet",
+  }),
+});
+
+review.post(
+  "/today",
+  describe({
+    tags: ["Review"],
+    summary: "Settle today",
+    learnerOnly: true,
+    description:
+      "Learner only; call it when the app is opened. With nothing eligible and no attempts, today is confirmed as nothing due, which protects the streak without adding to it. With attempts and nothing eligible, today is exhausted and counts. A day with no visit is never confirmed.",
+    ok: { schema: ReviewDayProgress, description: "Where today stands" },
+    errors: [400],
+  }),
+  body(TodayBody, "today"),
+  async (c) => c.json(await checkToday(ctxOf(c), c.req.valid("json").timezone)),
 );

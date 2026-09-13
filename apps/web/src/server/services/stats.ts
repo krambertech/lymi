@@ -1,6 +1,7 @@
 import { and, desc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
+import { addDays, dateFormatter, daysBetween } from "./days";
 import { asked } from "./decks";
 import { memberOf } from "./members";
 
@@ -33,37 +34,6 @@ export interface MonthTotal {
 export type Period = 30 | 90 | 0;
 
 const DAY_MS = 86_400_000;
-
-/** Resolves an instant to its local calendar date. Falls back to UTC for an unknown zone. */
-function dateFormatter(zone: string): Intl.DateTimeFormat {
-  try {
-    // en-CA formats as YYYY-MM-DD, which is the shape every caller here wants.
-    return new Intl.DateTimeFormat("en-CA", {
-      timeZone: zone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-  } catch {
-    return new Intl.DateTimeFormat("en-CA", {
-      timeZone: "UTC",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-  }
-}
-
-/** Calendar arithmetic on a YYYY-MM-DD, which no timezone can shift. */
-function addDays(date: string, n: number): string {
-  const [y, m, d] = date.split("-").map(Number);
-  return new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, (d ?? 1) + n)).toISOString().slice(0, 10);
-}
-
-/** Whole days from `from` to `to`, both local dates. */
-function daysBetween(from: string, to: string): number {
-  return Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / DAY_MS);
-}
 
 /** The Monday on or before a local date, so weeks line up with how a week is read. */
 function weekOf(date: string): string {

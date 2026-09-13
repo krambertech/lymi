@@ -27,6 +27,7 @@ vi.mock("../services", async () => {
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
     insights: vi.fn(),
+    streak: vi.fn(),
   };
 });
 
@@ -105,6 +106,7 @@ describe("Lymi MCP server", () => {
       "get_deck",
       "get_insights",
       "get_settings",
+      "get_streak",
       "list_decks",
       "restore_card",
       "restore_deck",
@@ -118,6 +120,14 @@ describe("Lymi MCP server", () => {
     // Archive is reversible, so no client should ask for confirmation before it.
     expect(byName.get("archive_card")?.annotations?.destructiveHint).toBe(false);
     for (const tool of tools) expect(tool.outputSchema).toBeDefined();
+  });
+
+  it("never offers the daily goal as something an assistant can change", async () => {
+    const client = await connect("write");
+    const { tools } = await client.listTools();
+    const update = tools.find((t) => t.name === "update_settings");
+
+    expect(Object.keys(update?.inputSchema.properties ?? {})).toEqual(["appLanguage"]);
   });
 
   it("lists decks with the learner's meaning language, so an assistant knows what to write", async () => {
@@ -138,6 +148,11 @@ describe("Lymi MCP server", () => {
       userId: "user-1",
       appLanguage: "uk",
       meaningLanguage: "uk",
+      dailyGoal: 50,
+      dailyGoalChosenAt: null,
+      reviewTimezone: null,
+      reviewTimezoneMode: "automatic",
+      reviewTimezoneUpdatedAt: null,
       createdAt: now,
       updatedAt: now,
     });

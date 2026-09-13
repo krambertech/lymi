@@ -6,5 +6,6 @@ export * from "./decks";
 export * from "./members";
 export * from "./push";
 export * from "./review";
+export * from "./review-days";
 export * from "./settings";
 export * from "./stats";

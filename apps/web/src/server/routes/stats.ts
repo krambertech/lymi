@@ -1,9 +1,9 @@
-import { InsightsOut } from "@lymi/core";
+import { InsightsOut, StreakOut } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
 import { ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
-import { insights } from "../services";
+import { insights, streak } from "../services";
 
 export const stats = new Hono<AppEnv>();
 
@@ -36,4 +36,20 @@ stats.get(
     const { period, tz } = c.req.valid("query");
     return c.json(await insights(ctxOf(c), { period, zone: tz }));
   },
+);
+
+const StreakQuery = InsightsQuery.pick({ tz: true });
+
+stats.get(
+  "/streak",
+  describe({
+    tags: ["Review"],
+    summary: "The streak and the days behind it",
+    description:
+      "Today's attempts against the daily goal, days in a row whose goal was satisfied, the longest run, how many days had a review, and every day with an attempt or a nothing-due confirmation. Days follow the learner's review timezone; `tz` is used only until one is known.",
+    ok: { schema: StreakOut, description: "The streak" },
+    errors: [400],
+  }),
+  query(StreakQuery, "query"),
+  async (c) => c.json(await streak(ctxOf(c), { zone: c.req.valid("query").tz })),
 );

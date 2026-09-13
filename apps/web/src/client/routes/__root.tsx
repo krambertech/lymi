@@ -16,6 +16,7 @@ import { ApiError, api, flushOutbox } from "../lib/api";
 import { activate, bootstrapLanguage, isAppLanguage, isBareShell, pickLocale } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
+import { Streak, useSettleToday } from "../lib/streak";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/Shell";
 
@@ -60,6 +61,7 @@ function Shell() {
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
   const leave = useSignOut();
+  useSettleToday(!bare && me.isSuccess);
 
   const appLanguage = settings.data?.appLanguage;
   useEffect(() => {
@@ -142,6 +144,7 @@ function Shell() {
               onCreateDeck={add.openDeck}
               onSignOut={leave.signOut}
               signingOut={leave.busy}
+              streak={me.isSuccess ? <Streak variant="rail" /> : undefined}
               className="hidden @3xl/shell:flex"
             />
           )

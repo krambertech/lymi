@@ -141,7 +141,7 @@ function AppRow({
       {confirming ? (
         <div className="enter-fade flex gap-3">
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
-            <Trans>Keep</Trans>
+            <Trans>Stay connected</Trans>
           </Button>
           <Button
             size="sm"

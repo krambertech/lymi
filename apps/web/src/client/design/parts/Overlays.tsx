@@ -186,7 +186,7 @@ export const overlays: Group = {
               actions={
                 <>
                   <Button variant="ghost" onClick={() => setOpen(false)}>
-                    Keep it
+                    Keep account
                   </Button>
                   <Button variant="danger" onClick={() => setOpen(false)}>
                     Delete account

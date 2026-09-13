@@ -49,7 +49,7 @@ export function ConsentView({
   const claimed = app.claimed;
   const never = [
     t`Grade your reviews or change your progress`,
-    t`Make or read API keys`,
+    t`Create or read API keys`,
     t`Sign in as you anywhere else`,
   ];
   return (

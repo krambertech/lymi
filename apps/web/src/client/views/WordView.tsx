@@ -340,7 +340,7 @@ export function WordView({
 
   const source = (s: Card["meaningSource"]) =>
     s === "ai"
-      ? t`The AI wrote this`
+      ? t`AI wrote this`
       : s === "manual"
         ? t`You wrote this`
         : s === "lesson"

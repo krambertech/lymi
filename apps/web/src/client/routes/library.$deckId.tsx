@@ -140,12 +140,12 @@ function DeckPage() {
             onClick: () => save.mutate({ id: saveError.id, patch: saveError.patch }),
           }}
         >
-          <Trans>Couldn’t save “{failedTerm}”. Check the connection.</Trans>
+          <Trans>Couldn’t save “{failedTerm}”. Check your connection and try again.</Trans>
         </Toast>
       )}
       {audioError && (
         <Toast key="audio" onDismiss={() => setAudioError(false)}>
-          <Trans>Pronunciation audio is unavailable. Try again in a moment.</Trans>
+          <Trans>Couldn’t play the pronunciation. Try again in a moment.</Trans>
         </Toast>
       )}
       {undo && (

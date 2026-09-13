@@ -11,7 +11,7 @@ function Archived() {
   return (
     <ComingSoonView
       title={t`Archived`}
-      body={t`Cards and decks you put away. Restore undoes it. Nothing here is deleted.`}
+      body={t`Cards and decks you archived. Restore puts them back. Nothing here is deleted.`}
     />
   );
 }

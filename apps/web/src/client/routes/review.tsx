@@ -109,7 +109,7 @@ function Review() {
         setAudioState("idle");
         setAudioError({
           item: `${current.card.id}-${current.direction}`,
-          message: t`Pronunciation audio is unavailable. Try again in a moment.`,
+          message: t`Couldn’t play the pronunciation. Try again in a moment.`,
         });
       }
     }
@@ -137,7 +137,7 @@ function Review() {
     },
     onError: () => {
       setPendingRating(null);
-      setGradeError(t`That grade didn’t save. Try once more.`);
+      setGradeError(t`Couldn’t save that grade. Try again.`);
     },
     onSettled: invalidateReviewData,
   });

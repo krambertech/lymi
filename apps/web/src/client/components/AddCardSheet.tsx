@@ -118,7 +118,7 @@ export function AddCardForm({
           setInvalid(
             fieldErrors(parsed.error, {
               deckId: t`Choose a deck for it to go in.`,
-              term: term.trim() ? t`That is longer than a card holds.` : t`Type the term.`,
+              term: term.trim() ? t`Keep the term under 500 characters.` : t`Type the term.`,
               meaning: t`Keep the meaning under 1000 characters.`,
             }),
           );
@@ -176,7 +176,7 @@ export function AddCardForm({
       {noDecks ? (
         <Field
           label={t`Deck`}
-          hint={t`A card lands in a deck. Make the first one and this card goes in it.`}
+          hint={t`A card lands in a deck. Create the first one and this card goes in it.`}
         >
           <Button onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
             <Plus aria-hidden="true" />

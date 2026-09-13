@@ -11,7 +11,7 @@ function ActivityRoute() {
   return (
     <ComingSoonView
       title={t`Activity`}
-      body={t`Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here.`}
+      body={t`Every change a connected app, an API key or the AI made, by day. Inspect, edit or archive any card from here.`}
     />
   );
 }

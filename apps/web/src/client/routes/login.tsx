@@ -69,12 +69,12 @@ function issueFor(code: string | undefined): SignInIssue | null {
     };
   }
   if (RETRYABLE.has(code)) {
-    return { message: msg`That sign-in did not finish. Try again.`, blocked: false };
+    return { message: msg`Sign-in didn’t finish. Try again.`, blocked: false };
   }
   // An unknown code is more often a blocked account than a blip, so do not promise a retry
   // will work.
   return {
-    message: msg`Sign in did not finish. Try again. If you have not been invited, request an invitation.`,
+    message: msg`Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation.`,
     blocked: false,
   };
 }
@@ -117,9 +117,9 @@ function Login() {
           // better-auth returns the failure rather than throwing, so a silent `await` here
           // left the button spinning and then stopping with nothing said.
           const res = await signInWithGoogle(returnTo);
-          if (res.error) setFailed(t`Sign-in didn’t go through. Try again.`);
+          if (res.error) setFailed(t`Sign-in didn’t finish. Try again.`);
         } catch {
-          setFailed(t`Can’t reach the sign-in service. Check your connection.`);
+          setFailed(t`Couldn’t reach the sign-in service. Check your connection and try again.`);
         } finally {
           setBusy(false);
         }

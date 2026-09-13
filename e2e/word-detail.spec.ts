@@ -39,7 +39,7 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
       .click();
     await expect(page).toHaveURL(/\?card=/);
     await expect(page.getByRole("heading", { level: 1, name: term })).toBeVisible();
-    await expect(shown("The AI wrote this")).toBeVisible();
+    await expect(shown("AI wrote this")).toBeVisible();
     await expect(shown("Added")).toBeVisible();
   });
 

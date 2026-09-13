@@ -113,8 +113,8 @@ msgid "{appName} was not connected"
 msgstr "{appName} was not connected"
 
 #: src/client/views/LibraryView.tsx
-msgid "{archivedCount, plural, one {# deck put away} other {# decks put away}}"
-msgstr "{archivedCount, plural, one {# deck put away} other {# decks put away}}"
+msgid "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
+msgstr "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
 
 #: src/client/components/NewCardsRow.tsx
 msgid "{count, plural, one {# new} other {# new}}"
@@ -303,8 +303,8 @@ msgid "90 days"
 msgstr "90 days"
 
 #: src/client/components/AddCardSheet.tsx
-msgid "A card lands in a deck. Make the first one and this card goes in it."
-msgstr "A card lands in a deck. Make the first one and this card goes in it."
+msgid "A card lands in a deck. Create the first one and this card goes in it."
+msgstr "A card lands in a deck. Create the first one and this card goes in it."
 
 #: src/client/views/WordView.tsx
 msgid "a connected app"
@@ -438,6 +438,7 @@ msgid "AI meaning"
 msgstr "AI meaning"
 
 #: src/client/components/Chip.tsx
+#: src/client/views/WordView.tsx
 msgid "AI wrote this"
 msgstr "AI wrote this"
 
@@ -561,10 +562,6 @@ msgstr "by {who} · meaning from the lesson"
 msgid "calls itself “{0}”"
 msgstr "calls itself “{0}”"
 
-#: src/client/routes/login.tsx
-msgid "Can’t reach the sign-in service. Check your connection."
-msgstr "Can’t reach the sign-in service. Check your connection."
-
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/components/NewDeckSheet.tsx
@@ -580,9 +577,13 @@ msgstr "Card"
 msgid "Card options"
 msgstr "Card options"
 
+#: src/client/views/InsightsView.tsx
+msgid "Cards"
+msgstr "Cards"
+
 #: src/client/routes/archived.tsx
-msgid "Cards and decks you put away. Restore undoes it. Nothing here is deleted."
-msgstr "Cards and decks you put away. Restore undoes it. Nothing here is deleted."
+msgid "Cards and decks you archived. Restore puts them back. Nothing here is deleted."
+msgstr "Cards and decks you archived. Restore puts them back. Nothing here is deleted."
 
 #: src/client/views/DeckSettingsView.tsx
 msgid "Cards from Marco’s Tuesday lessons."
@@ -592,9 +593,10 @@ msgstr "Cards from Marco’s Tuesday lessons."
 msgid "Change daily goal"
 msgstr "Change daily goal"
 
+#: src/client/views/InsightsView.tsx
 #: src/client/views/ReviewView.tsx
-msgid "Check your connection, then try again."
-msgstr "Check your connection, then try again."
+msgid "Check your connection and try again."
+msgstr "Check your connection and try again."
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Choose 00, 15, 30 or 45 minutes."
@@ -626,10 +628,6 @@ msgstr "Clear"
 #: src/client/views/WordView.tsx
 msgid "Close"
 msgstr "Close"
-
-#: src/client/views/InsightsView.tsx
-msgid "Collection"
-msgstr "Collection"
 
 #: src/client/views/ReviewView.tsx
 msgid "Come back later, or add something new."
@@ -667,26 +665,47 @@ msgstr "Copied"
 msgid "Copy"
 msgstr "Copy"
 
-#: src/client/views/InsightsView.tsx
-msgid "Could not load your numbers"
-msgstr "Could not load your numbers"
-
 #: src/client/components/NotificationsSection.tsx
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Couldn’t check this device. Reload to try again."
+
+#: src/client/views/InsightsView.tsx
+msgid "Couldn’t load Insights"
+msgstr "Couldn’t load Insights"
+
+#: src/client/views/ReviewView.tsx
+msgid "Couldn’t load your cards"
+msgstr "Couldn’t load your cards"
+
+#: src/client/routes/library.$deckId.tsx
+#: src/client/routes/review.tsx
+msgid "Couldn’t play the pronunciation. Try again in a moment."
+msgstr "Couldn’t play the pronunciation. Try again in a moment."
 
 #: src/client/lib/api.ts
 #: src/client/routes/consent.tsx
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Couldn’t reach Lymi. Check your connection and try again."
 
+#: src/client/routes/login.tsx
+msgid "Couldn’t reach the sign-in service. Check your connection and try again."
+msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
+
 #: src/client/routes/library.$deckId.tsx
-msgid "Couldn’t save “{failedTerm}”. Check the connection."
-msgstr "Couldn’t save “{failedTerm}”. Check the connection."
+msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
+msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
+
+#: src/client/routes/review.tsx
+msgid "Couldn’t save that grade. Try again."
+msgstr "Couldn’t save that grade. Try again."
 
 #: src/client/views/SettingsView.tsx
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
+
+#: src/client/components/NotificationsSection.tsx
+msgid "Couldn’t save the reminder. Check your connection and try again."
+msgstr "Couldn’t save the reminder. Check your connection and try again."
 
 #: src/client/components/NewDeckSheet.tsx
 msgid "Create deck"
@@ -695,6 +714,10 @@ msgstr "Create deck"
 #: src/client/components/ApiKeysSection.tsx
 msgid "Create key"
 msgstr "Create key"
+
+#: src/client/views/ConsentView.tsx
+msgid "Create or read API keys"
+msgstr "Create or read API keys"
 
 #: src/client/components/GoalPicker.tsx
 msgid "Custom"
@@ -822,8 +845,8 @@ msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
 
 #: src/client/routes/activity.tsx
-msgid "Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here."
-msgstr "Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here."
+msgid "Every change a connected app, an API key or the AI made, by day. Inspect, edit or archive any card from here."
+msgstr "Every change a connected app, an API key or the AI made, by day. Inspect, edit or archive any card from here."
 
 #: src/client/views/WordView.tsx
 msgid "Example"
@@ -968,14 +991,17 @@ msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
 
-#: src/client/components/ApiKeysSection.tsx
-#: src/client/components/ConnectedAppsSection.tsx
-msgid "Keep"
-msgstr "Keep"
-
 #: src/client/routes/review.tsx
 msgid "Keep going"
 msgstr "Keep going"
+
+#: src/client/components/ApiKeysSection.tsx
+msgid "Keep key"
+msgstr "Keep key"
+
+#: src/client/components/NewDeckSheet.tsx
+msgid "Keep the language tag under 12 characters."
+msgstr "Keep the language tag under 12 characters."
 
 #: src/client/components/AddCardSheet.tsx
 msgid "Keep the meaning under 1000 characters."
@@ -988,6 +1014,10 @@ msgstr "Keep the name under 32 characters."
 #: src/client/components/NewDeckSheet.tsx
 msgid "Keep the name under 80 characters."
 msgstr "Keep the name under 80 characters."
+
+#: src/client/components/AddCardSheet.tsx
+msgid "Keep the term under 500 characters."
+msgstr "Keep the term under 500 characters."
 
 #: src/client/views/InsightsView.tsx
 msgid "Keeps coming back"
@@ -1087,14 +1117,6 @@ msgstr "Lymi home"
 msgid "Main"
 msgstr "Main"
 
-#: src/client/views/TodayView.tsx
-msgid "Make a deck"
-msgstr "Make a deck"
-
-#: src/client/views/ConsentView.tsx
-msgid "Make or read API keys"
-msgstr "Make or read API keys"
-
 #: src/client/routes/consent.tsx
 msgid "Manage connected apps"
 msgstr "Manage connected apps"
@@ -1169,6 +1191,7 @@ msgstr "New card"
 #: src/client/components/AddMenu.tsx
 #: src/client/components/NewDeckSheet.tsx
 #: src/client/views/LibraryView.tsx
+#: src/client/views/TodayView.tsx
 msgid "New deck"
 msgstr "New deck"
 
@@ -1357,22 +1380,14 @@ msgstr "Previous card"
 msgid "Previous month"
 msgstr "Previous month"
 
-#: src/client/views/ReviewView.tsx
-msgid "Produce"
-msgstr "Produce"
-
 #: src/client/components/DeckFields.tsx
+#: src/client/views/ReviewView.tsx
 msgid "Production"
 msgstr "Production"
 
 #: src/client/views/ReviewView.tsx
 msgid "Production card for {front}"
 msgstr "Production card for {front}"
-
-#: src/client/routes/library.$deckId.tsx
-#: src/client/routes/review.tsx
-msgid "Pronunciation audio is unavailable. Try again in a moment."
-msgstr "Pronunciation audio is unavailable. Try again in a moment."
 
 #: src/client/components/Streak.tsx
 msgid "Reach today’s goal to keep it going."
@@ -1416,15 +1431,12 @@ msgstr "Recall by month: {series}. The schedule aims for 90%."
 msgid "Recall by week: {series}. The schedule aims for 90%."
 msgstr "Recall by week: {series}. The schedule aims for 90%."
 
-#: src/client/views/ReviewView.tsx
-msgid "Recognise"
-msgstr "Recognise"
-
 #: src/client/components/Connection.tsx
 msgid "Recognised app at"
 msgstr "Recognised app at"
 
 #: src/client/components/DeckFields.tsx
+#: src/client/views/ReviewView.tsx
 msgid "Recognition"
 msgstr "Recognition"
 
@@ -1470,6 +1482,10 @@ msgid "Retry"
 msgstr "Retry"
 
 #: src/client/views/ReviewView.tsx
+msgid "Reveal the card"
+msgstr "Reveal the card"
+
+#: src/client/views/ReviewView.tsx
 msgid "Reveal the card when you have it"
 msgstr "Reveal the card when you have it"
 
@@ -1477,10 +1493,6 @@ msgstr "Reveal the card when you have it"
 #: src/client/views/TodayView.tsx
 msgid "Review"
 msgstr "Review"
-
-#: src/client/views/ReviewView.tsx
-msgid "Review couldn’t load"
-msgstr "Review couldn’t load"
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
@@ -1613,10 +1625,6 @@ msgstr "Sign in as you anywhere else"
 msgid "Sign in before choosing what it may do."
 msgstr "Sign in before choosing what it may do."
 
-#: src/client/routes/login.tsx
-msgid "Sign in did not finish. Try again. If you have not been invited, request an invitation."
-msgstr "Sign in did not finish. Try again. If you have not been invited, request an invitation."
-
 #: src/client/lib/api.ts
 msgid "Sign in required"
 msgstr "Sign in required"
@@ -1634,8 +1642,12 @@ msgid "Sign out and lose them"
 msgstr "Sign out and lose them"
 
 #: src/client/routes/login.tsx
-msgid "Sign-in didn’t go through. Try again."
-msgstr "Sign-in didn’t go through. Try again."
+msgid "Sign-in didn’t finish. Try again."
+msgstr "Sign-in didn’t finish. Try again."
+
+#: src/client/routes/login.tsx
+msgid "Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation."
+msgstr "Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation."
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "So you know which key to revoke later."
@@ -1657,6 +1669,10 @@ msgstr "stability · difficulty {0}"
 #: src/client/components/ShortcutsDialog.tsx
 msgid "Start review"
 msgstr "Start review"
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Stay connected"
+msgstr "Stay connected"
 
 #: src/client/lib/use-sign-out.tsx
 msgid "Stay signed in"
@@ -1693,10 +1709,6 @@ msgid "Tap Add to Home Screen."
 msgstr "Tap Add to Home Screen."
 
 #: src/client/views/ReviewView.tsx
-msgid "Tap card to reveal"
-msgstr "Tap card to reveal"
-
-#: src/client/views/ReviewView.tsx
 msgid "Tap the card when you have it"
 msgstr "Tap the card when you have it"
 
@@ -1707,22 +1719,6 @@ msgstr "Term"
 #: src/client/lib/api.ts
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
-
-#: src/client/routes/review.tsx
-msgid "That grade didn’t save. Try once more."
-msgstr "That grade didn’t save. Try once more."
-
-#: src/client/components/AddCardSheet.tsx
-msgid "That is longer than a card holds."
-msgstr "That is longer than a card holds."
-
-#: src/client/components/NewDeckSheet.tsx
-msgid "That is too long for a language tag."
-msgstr "That is too long for a language tag."
-
-#: src/client/routes/login.tsx
-msgid "That sign-in did not finish. Try again."
-msgstr "That sign-in did not finish. Try again."
 
 #: src/client/lib/api.ts
 msgid "That’s no longer here. Reload to see what changed."
@@ -1743,10 +1739,6 @@ msgstr "the AI"
 #: src/client/views/WordView.tsx
 msgid "the AI wrote {what}"
 msgstr "the AI wrote {what}"
-
-#: src/client/views/WordView.tsx
-msgid "The AI wrote this"
-msgstr "The AI wrote this"
 
 #: src/client/views/WordView.tsx
 msgid "the API"
@@ -1795,10 +1787,6 @@ msgstr "the notes"
 #: src/client/views/WordView.tsx
 msgid "the pronunciation"
 msgstr "the pronunciation"
-
-#: src/client/views/InsightsView.tsx
-msgid "The request did not come back. Nothing is lost; try again."
-msgstr "The request did not come back. Nothing is lost; try again."
 
 #: src/client/views/WordView.tsx
 msgid "the tags"
@@ -1878,10 +1866,6 @@ msgstr "Try another Google account"
 #: src/client/components/AddCardSheet.tsx
 msgid "Type the term."
 msgstr "Type the term."
-
-#: src/client/components/NotificationsSection.tsx
-msgid "Unable to save the reminder. Check your connection and try again."
-msgstr "Unable to save the reminder. Check your connection and try again."
 
 #: src/client/routes/library.$deckId.tsx
 #: src/client/routes/library.tsx

@@ -337,13 +337,13 @@ export function ReviewCard({
         <button
           type="button"
           onClick={onReveal}
-          aria-label={t`Tap card to reveal`}
+          aria-label={t`Reveal the card`}
           className="absolute inset-0 z-10 rounded-xl"
         />
       )}
       <div className="flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs">
         <span>
-          {recog ? <Trans>Recognise</Trans> : <Trans>Produce</Trans>}
+          {recog ? <Trans>Recognition</Trans> : <Trans>Production</Trans>}
           {card.language && <span> · {card.language.toUpperCase()}</span>}
         </span>
         <ReviewStateChip state={item.fsrsState} />
@@ -651,10 +651,10 @@ export function ReviewError({ retry, action }: { retry: () => void; action?: Rea
         <CircleAlert className="size-5" aria-hidden="true" />
       </span>
       <h2 className="text-2xl font-medium">
-        <Trans>Review couldn’t load</Trans>
+        <Trans>Couldn’t load your cards</Trans>
       </h2>
       <p className="mt-2 max-w-[30ch] text-md text-muted">
-        <Trans>Check your connection, then try again.</Trans>
+        <Trans>Check your connection and try again.</Trans>
       </p>
       <div className="mt-6 flex items-center gap-2">
         <Button variant="primary" onClick={retry}>

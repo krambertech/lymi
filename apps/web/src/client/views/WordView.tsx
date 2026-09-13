@@ -20,7 +20,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
 import { directionLabel, languageName } from "../components/DeckFields";
 import { Field, Input, Textarea } from "../components/Field";
-import { Sheet } from "../components/Sheet";
+import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -529,25 +529,28 @@ export function WordView({
         </div>
       )}
 
-      <Sheet open={moving} onOpenChange={setMoving} title={t`Move “${card.term}” to`}>
-        <ul className="grid gap-1">
-          {elsewhere.map((d) => (
-            <li key={d.id}>
-              <button
-                type="button"
-                onClick={() => {
-                  setMoving(false);
-                  onMove?.(d.id);
-                }}
-                className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-left text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
-              >
-                <span className="truncate font-medium">{d.name}</span>
-                <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
-              </button>
-            </li>
-          ))}
-        </ul>
-      </Sheet>
+      <Dialog open={moving} onOpenChange={setMoving}>
+        <DialogContent className="w-[min(92vw,440px)]">
+          <DialogTitle>{t`Move “${card.term}” to`}</DialogTitle>
+          <ul className="grid gap-1">
+            {elsewhere.map((d) => (
+              <li key={d.id}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMoving(false);
+                    onMove?.(d.id);
+                  }}
+                  className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-left text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+                >
+                  <span className="truncate font-medium">{d.name}</span>
+                  <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </DialogContent>
+      </Dialog>
 
       <section className="grid gap-4 border-t border-edge pt-5">
         <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">

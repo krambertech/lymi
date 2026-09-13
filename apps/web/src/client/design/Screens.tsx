@@ -5,7 +5,6 @@ import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
 import { NewDeckForm } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
-import { SheetPanel } from "../components/Sheet";
 import { StreakButton } from "../components/Streak";
 import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
@@ -21,6 +20,7 @@ import { TodayView } from "../views/TodayView";
 import { Desktop, type FrameTheme, Phone, useFrameTheme } from "./Frame";
 import * as m from "./mock";
 import type { Entry } from "./parts/types";
+import { SheetPreview } from "./SheetPreview";
 
 const noop = () => {};
 
@@ -404,17 +404,15 @@ export const SCREENS: Entry[] = [
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Add a card" initial="dark" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
-              <div className="edge-2 rounded-t-xl bg-plate">
-                <SheetPanel variant="drawer" title="Add a card" titleHidden>
-                  <AddCardForm
-                    decks={m.decks}
-                    deckId="d1"
-                    onCancel={noop}
-                    onSubmit={() => undefined}
-                    static
-                  />
-                </SheetPanel>
-              </div>
+              <SheetPreview shape="drawer" title="Add a card" titleHidden>
+                <AddCardForm
+                  decks={m.decks}
+                  deckId="d1"
+                  onCancel={noop}
+                  onSubmit={() => undefined}
+                  static
+                />
+              </SheetPreview>
             </div>
           </PhoneShot>
         </div>
@@ -425,17 +423,15 @@ export const SCREENS: Entry[] = [
     slug: "making-a-deck",
     name: "Making a deck",
     source: "views/DeckSettingsView.tsx",
-    note: "A deck is a name and two settings, so creating one is a sheet rather than a wizard: the name is the field that matters and the rest already has an answer. The sheet takes the shape of the machine it is on: a drawer under the thumb on the phone, a centred modal on a desktop, same panel inside both. Everything chosen there can be changed afterwards on the deck's own settings screen, which is a screen and not a sheet because the back gesture should work and the direction choice needs room to say what it does. Nothing there has a Save button.",
+    note: "A deck is a name and two settings, so creating one is a sheet rather than a wizard: the name is the field that matters and the rest already has an answer. The sheet takes the shape of the machine it is on: a drawer under the thumb on the phone, a centred modal on a desktop, same form inside both. Everything chosen there can be changed afterwards on the deck's own settings screen, which is a screen and not a sheet because the back gesture should work and the direction choice needs room to say what it does. Nothing there has a Save button.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="New deck" initial="light" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
-              <div className="edge-2 rounded-t-xl bg-plate">
-                <SheetPanel variant="drawer" title="New deck">
-                  <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
-                </SheetPanel>
-              </div>
+              <SheetPreview shape="drawer" title="New deck">
+                <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
+              </SheetPreview>
             </div>
           </PhoneShot>
           <PhoneShot caption="Deck settings" initial="dark" path="/library">
@@ -464,11 +460,9 @@ export const SCREENS: Entry[] = [
               <main className="@container relative flex min-w-0 flex-1 flex-col">
                 <LibraryView decks={m.decks} archivedCount={9} static={{ path: "/library" }} />
                 <div className="absolute inset-0 grid place-items-center bg-scrim">
-                  <div className="edge-2 w-[min(92%,440px)] rounded-xl bg-plate">
-                    <SheetPanel variant="modal" title="New deck">
-                      <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
-                    </SheetPanel>
-                  </div>
+                  <SheetPreview shape="dialog" title="New deck" className="w-[min(92%,440px)]">
+                    <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
+                  </SheetPreview>
                 </div>
               </main>
             </Desktop>

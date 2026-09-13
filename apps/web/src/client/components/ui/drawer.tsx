@@ -49,6 +49,9 @@ function Drawer({
   );
 }
 
+/** Lymi's addition: keeps a focused field above the software keyboard in a drawer that holds a form. */
+const DrawerVirtualKeyboardProvider = DrawerPrimitive.VirtualKeyboardProvider;
+
 function DrawerTrigger({ ...props }: DrawerPrimitive.Trigger.Props) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
@@ -198,4 +201,5 @@ export {
   DrawerSwipeHandle,
   DrawerTitle,
   DrawerTrigger,
+  DrawerVirtualKeyboardProvider,
 };

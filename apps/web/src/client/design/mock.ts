@@ -265,7 +265,7 @@ export const arrivals = [
   { deckId: "d2", deckName: "Portuguese", count: 3, actor: "You", when: "today" },
 ];
 
-export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com", image: null };
+export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com" };
 
 /** Insights, at the point where there is enough history for every block to say something. */
 const insightDays = (() => {

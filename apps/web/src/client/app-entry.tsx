@@ -63,8 +63,11 @@ export function mountApp(root: HTMLElement) {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           buster: __QUERY_CACHE_BUSTER__,
           dehydrateOptions: {
+            // A Blob does not survive JSON, and a query filled by setQueryData carries no meta.
             shouldDehydrateQuery: (query) =>
-              defaultShouldDehydrateQuery(query) && query.meta?.persist !== false,
+              defaultShouldDehydrateQuery(query) &&
+              query.meta?.persist !== false &&
+              !(query.state.data instanceof Blob),
           },
         }}
       >

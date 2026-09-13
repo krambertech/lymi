@@ -72,10 +72,14 @@ export function McpOverview() {
         the consent screen means every write it attempts is refused, with a message telling it to
         ask you to reconnect.
       </p>
+      <p>
+        Disconnect an assistant under <strong>Settings → Connected apps</strong> and its next
+        request is refused, even if its token has not expired. It has to ask you again.
+      </p>
 
       <H2>What a connected assistant can do</H2>
       <p>
-        Sixteen tools, the same surface as the API less review grading. The assistant reads their
+        Seventeen tools, the same surface as the API less review grading. The assistant reads their
         descriptions, so you rarely name one yourself: ask it to add the cards from a lesson, and it
         finds the deck and calls <code>add_cards</code>.
       </p>
@@ -106,7 +110,7 @@ export function McpOverview() {
             term: <code>search_cards</code>,
             def: "Cards matching text in the term, meaning, example or notes. Can look through archived cards.",
           },
-          { term: <code>get_card</code>, def: "One card, every field." },
+          { term: <code>get_card</code>, def: "One card, with everything written on it." },
           {
             term: <code>add_cards</code>,
             def: "One or many cards in a call. A duplicate is skipped, never rejected, and the result names the existing card.",

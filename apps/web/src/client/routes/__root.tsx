@@ -13,6 +13,7 @@ import { NewDeckSheet } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api, flushOutbox } from "../lib/api";
+import { LearnerAvatarProvider } from "../lib/avatar";
 import { activate, bootstrapLanguage, isAppLanguage, isBareShell, pickLocale } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
@@ -131,7 +132,7 @@ function Shell() {
   if (bare) return <Outlet />;
 
   return (
-    <>
+    <LearnerAvatarProvider enabled={me.isSuccess}>
       <AppShell
         // A session closes the app around it. The phone already hid its pill during review; the
         // rail stayed up with search, capture, every deck and the profile, which made focus a
@@ -166,6 +167,6 @@ function Shell() {
         open={add.open === "deck"}
         onOpenChange={(v) => (v ? add.openDeck() : add.close("deck"))}
       />
-    </>
+    </LearnerAvatarProvider>
   );
 }

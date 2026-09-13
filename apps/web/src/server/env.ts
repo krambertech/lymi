@@ -23,6 +23,8 @@ export interface Bindings extends Env {
   APP_PREVIEW?: string;
   /** Capability checked before an isolated pull-request Worker serves the product. */
   APP_PREVIEW_KEY?: string;
+  /** The token OpenAI's plugin submission portal issues for domain verification. */
+  OPENAI_APPS_CHALLENGE?: string;
 }
 
 /** True for localhost, 127.0.0.1 and [::1]. Decides every local-only capability. */

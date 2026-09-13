@@ -21,6 +21,7 @@ erDiagram
   reviews ||--o| review_undos : "taken back"
   user ||--o{ audit_log : "every write"
   user ||--|| user_settings : has
+  user ||--o| user_avatars : "photo"
   user ||--o{ apikey : "personal keys"
   user ||--o{ push_subscriptions : "one per subscribed device"
 
@@ -63,6 +64,15 @@ erDiagram
     text review_timezone "nullable IANA zone"
     text review_timezone_mode "automatic | manual"
     int review_timezone_updated_at "nullable"
+  }
+  user_avatars {
+    text user_id PK
+    text custom_key "nullable opaque R2 key"
+    text custom_version "nullable delivery token"
+    int custom_revision "bumped by every learner write"
+    text google_key "nullable opaque R2 key"
+    text google_version "nullable delivery token"
+    int google_fetched_at "nullable, when that fetch began"
   }
   deck_members {
     text id PK
@@ -159,6 +169,10 @@ A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_memb
 
 A deck has at most one unrevoked `deck_invitations` link, enforced by a partial unique index. Turning the link off sets `revoked_at` for good, and turning it on again inserts a new row with a new token. The token is a capability: it appears in the join URL and nowhere else, never in audit payloads, logs or error messages. `/join/<token>` is rendered by the product Worker; it shows up to three recent cards, and its title and Open Graph tags carry none. A signed-out visitor's link rides through sign-in in a ten-minute HttpOnly cookie, which lets `user.create.before` admit an account that is not on `ALLOWED_EMAILS`, and `session.create.after` completes the membership. Repeated joins make one membership and one audit row.
 
+### Avatars
+
+The learner's upload and the Google fallback sit in separate columns, and the upload wins while it exists. Both are 320 px WebP objects in the private `PRIVATE_IMAGES` bucket, re-encoded by the Images binding so no metadata survives, under random keys that name neither the learner nor the source. `/api/avatar/<version>` serves only the active version, with `private, no-store`; the client holds the bytes in memory through TanStack Query, so sign-out clears them. An upload or removal sends `If-Match` with `custom_revision` and gets 409 if the photo changed since. Each Google sign-in refreshes the fallback from the ID token's `picture`, fetched only from `*.googleusercontent.com`; a refresh that started earlier than the stored one is dropped, and a failed one keeps the previous photo and never blocks sign-in.
+
 ### Why the scheduling state is JSON
 
 `card_states.fsrs` holds the full ts-fsrs Card object (stability, difficulty, reps, lapses, learning step, due, last review). `due` and `state` are copied out into real columns so the queue can be queried without parsing JSON. If ts-fsrs adds a field, nothing needs a migration.
@@ -184,7 +198,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 ### Rules the API enforces
 
 - Reads need any credential. Writes need the `write` scope, or 403.
-- Grading and key management are the learner's alone. Any key or token gets 403, whatever its scope.
+- Grading, key management and the learner's photo are the learner's alone. Any key or token gets 403, whatever its scope.
 - Join links are managed and followed only from the app. Reading, turning on, or turning off a deck's link needs the owner's session; joining needs the learner's session. Any key or token gets 403.
 - A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.

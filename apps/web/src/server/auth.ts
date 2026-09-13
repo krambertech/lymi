@@ -2,6 +2,7 @@ import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
 import type { GenericEndpointContext } from "@better-auth/core";
 import { mcp } from "@better-auth/mcp";
+import { and, eq } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
@@ -11,14 +12,25 @@ import type { Db } from "./db";
 import { schema } from "./db";
 import { allowedEmails, type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
 import { attributes, cookieName, joinTokenFrom } from "./join-cookie";
+import {
+  avatarRow,
+  hasGoogleAvatar,
+  importGoogleAvatar,
+  pictureFromIdToken,
+} from "./services/avatars";
 import { ServiceError } from "./services/context";
 import { joinLinkAdmits, joinThroughLink } from "./services/invitations";
 
 /**
  * Better Auth must be created per request on Workers because D1 and KV bindings are
  * only available inside the request. It is cheap; nothing here does I/O at construction.
+ * `waitUntil` lets work that must not delay sign-in finish after the response.
  */
-export function createAuth(env: Bindings, db: Db) {
+export function createAuth(
+  env: Bindings,
+  db: Db,
+  waitUntil?: ((work: Promise<unknown>) => void) | undefined,
+) {
   const allowed = allowedEmails(env);
   const dev = devToolsEnabled(env);
 
@@ -142,6 +154,9 @@ export function createAuth(env: Bindings, db: Db) {
           // Finish a join that sign-in interrupted. A refused join still signs the learner
           // in; the join page then says why.
           after: async (session, context) => {
+            if (isGoogleCallback(context)) {
+              await syncGoogleAvatar(env, db, session.userId, waitUntil);
+            }
             const token = joinTokenFrom(env.PRODUCT_URL, headersOf(context));
             if (!token) return;
             try {
@@ -165,6 +180,59 @@ export function createAuth(env: Bindings, db: Db) {
 
 export type Auth = ReturnType<typeof createAuth>;
 export type SessionUser = NonNullable<Awaited<ReturnType<Auth["api"]["getSession"]>>>["user"];
+
+function isGoogleCallback(context: GenericEndpointContext | null): boolean {
+  // The router sets the matched path, "/callback/google"; direct API calls keep the pattern.
+  const path = context?.path;
+  return (
+    (path === "/callback/google" || path === "/callback/:id") && context?.params?.id === "google"
+  );
+}
+
+/** How long a first sign-in waits for the Google photo before the rest finishes in the background. */
+const FIRST_IMPORT_WAIT_MS = 6_000;
+
+/**
+ * Refreshes the Google fallback photo from the ID token Google just issued. A first import
+ * is awaited for a bounded time so the first screen usually has the photo; a refresh runs
+ * after the response. Neither can fail sign-in. Issue 98.
+ */
+async function syncGoogleAvatar(
+  env: Bindings,
+  db: Db,
+  userId: string,
+  waitUntil: ((work: Promise<unknown>) => void) | undefined,
+) {
+  const refresh = await avatarRow({ db, userId }).then(hasGoogleAvatar, () => false);
+  const work = (async () => {
+    const picture = await googlePictureOf(db, userId);
+    if (!picture) return;
+    await importGoogleAvatar(
+      { db, userId },
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      picture,
+    );
+  })().catch(() => console.error("Importing the Google photo failed"));
+  let background = false;
+  try {
+    if (waitUntil) {
+      waitUntil(work);
+      background = true;
+    }
+  } catch {}
+  if (refresh && background) return;
+  if (!background) return void (await work);
+  await Promise.race([work, new Promise((resolve) => setTimeout(resolve, FIRST_IMPORT_WAIT_MS))]);
+}
+
+/** Better Auth stores the ID token from the code exchange with Google on every sign-in. */
+async function googlePictureOf(db: Db, userId: string): Promise<string | null> {
+  const [account] = await db
+    .select({ idToken: schema.account.idToken })
+    .from(schema.account)
+    .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "google")));
+  return account?.idToken ? pictureFromIdToken(account.idToken) : null;
+}
 
 function headersOf(context: GenericEndpointContext | null): Headers | undefined {
   return context?.headers ?? context?.request?.headers;

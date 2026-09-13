@@ -1,4 +1,5 @@
 export * from "./audio";
+export * from "./avatars";
 export * from "./cards";
 export * from "./connected-apps";
 export * from "./context";

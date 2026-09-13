@@ -408,6 +408,10 @@ msgstr "Речення, у якому він живе"
 msgid "Access"
 msgstr "Доступ"
 
+#: src/client/components/AccountSection.tsx
+msgid "Account"
+msgstr "Обліковий запис"
+
 #: src/client/components/LearnerMenu.tsx
 #: src/client/routes/activity.tsx
 #: src/client/views/Shell.tsx
@@ -525,6 +529,10 @@ msgstr "Застосунок"
 msgid "an app with no address"
 msgstr "застосунок без адреси"
 
+#: src/client/components/AccountSection.tsx
+msgid "Animated images can’t be used. Choose a still image."
+msgstr "Анімовані зображення не підходять. Вибери нерухоме."
+
 #: src/client/views/ReviewView.tsx
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
@@ -635,6 +643,7 @@ msgstr "називає себе «{0}»"
 
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/ApiKeysSection.tsx
+#: src/client/components/AvatarEditor.tsx
 #: src/client/components/NewDeckSheet.tsx
 #: src/client/views/DeckDetailView.tsx
 msgid "Cancel"
@@ -668,6 +677,10 @@ msgstr "Картки з цієї колоди"
 msgid "Change daily goal"
 msgstr "Змінити денну мету"
 
+#: src/client/components/AccountSection.tsx
+msgid "Change photo"
+msgstr "Змінити фото"
+
 #: src/client/views/JoinView.tsx
 #: src/server/join-page.ts
 msgid "Check that the whole link was copied, or ask for a new one."
@@ -693,6 +706,10 @@ msgstr "Вибрати оцінку повторення"
 #: src/client/components/GoalPicker.tsx
 msgid "Choose a whole number from 1 to 200."
 msgstr "Вибери ціле число від 1 до 200."
+
+#: src/client/components/AccountSection.tsx
+msgid "Choose new photo"
+msgstr "Вибрати нове фото"
 
 #: src/client/components/Combobox.tsx
 msgid "Choose one"
@@ -778,6 +795,7 @@ msgstr "Не вдалося завантажити картки"
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не вдалося відтворити вимову. Спробуй ще раз за мить."
 
+#: src/client/components/AccountSection.tsx
 #: src/client/lib/api.ts
 #: src/client/routes/consent.tsx
 msgid "Couldn’t reach Lymi. Check your connection and try again."
@@ -798,6 +816,10 @@ msgstr "Не вдалося зберегти оцінку. Спробуй ще �
 #: src/client/views/SettingsView.tsx
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
+
+#: src/client/components/AccountSection.tsx
+msgid "Couldn’t save the photo. Try again."
+msgstr "Не вдалося зберегти фото. Спробуй ще раз."
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Couldn’t save the reminder. Check your connection and try again."
@@ -889,6 +911,14 @@ msgstr "Документація"
 #: src/client/views/WordView.tsx
 msgid "Done"
 msgstr "Готово"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Drag or use the arrow keys to move the photo."
+msgstr "Перетягни фото або рухай його клавішами зі стрілками."
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Drag to move the photo. Pinch or use the slider to zoom."
+msgstr "Перетягни, щоб посунути фото. Щоб змінити масштаб, зведи або розведи пальці чи скористайся повзунком."
 
 #: src/client/views/InsightsView.tsx
 msgid "due this week"
@@ -1513,9 +1543,25 @@ msgstr "Необов’язково"
 msgid "peak, {0}"
 msgstr "пік, {0}"
 
+#: src/client/components/AccountSection.tsx
+msgid "Photo"
+msgstr "Фото"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Photo position"
+msgstr "Положення фото"
+
+#: src/client/components/AccountSection.tsx
+msgid "Photo removed"
+msgstr "Фото прибрано"
+
 #: src/client/views/ReviewView.tsx
 msgid "Play pronunciation"
 msgstr "Відтворити вимову"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Position your photo"
+msgstr "Розташуй фото"
 
 #: src/client/views/WordView.tsx
 msgid "Previous card"
@@ -1622,6 +1668,10 @@ msgstr "Час нагадування збережено."
 msgid "Reminders stay off until notifications are allowed."
 msgstr "Нагадування вимкнені, доки не дозволиш сповіщення."
 
+#: src/client/components/AccountSection.tsx
+msgid "Remove photo"
+msgstr "Прибрати фото"
+
 #: src/client/views/ReviewView.tsx
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
@@ -1682,6 +1732,10 @@ msgstr "Відкликати ключ"
 #: src/client/views/WordView.tsx
 msgid "Right now"
 msgstr "Зараз"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Save photo"
+msgstr "Зберегти фото"
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Save time"
@@ -1897,6 +1951,22 @@ msgstr "Умови"
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не вдалося. Онови сторінку й повтори спробу."
 
+#: src/client/components/AccountSection.tsx
+msgid "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
+msgstr "Не вдалося відкрити файл. Вибери зображення JPEG, PNG або WebP."
+
+#: src/client/components/AccountSection.tsx
+msgid "That image couldn’t be used. Choose a still JPEG, PNG or WebP image."
+msgstr "Це зображення не підходить. Вибери нерухоме зображення JPEG, PNG або WebP."
+
+#: src/client/components/AccountSection.tsx
+msgid "That image is too large. Choose one under 25 MB."
+msgstr "Зображення завелике. Вибери файл до 25 МБ."
+
+#: src/client/components/AccountSection.tsx
+msgid "That image is too small. Choose one at least 16 pixels wide."
+msgstr "Зображення замале. Вибери таке, що має щонайменше 16 пікселів завширшки."
+
 #: src/client/lib/api.ts
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
@@ -2079,6 +2149,7 @@ msgstr "Вимкнути посилання для приєднання?"
 msgid "Type the term."
 msgstr "Введи термін."
 
+#: src/client/components/AccountSection.tsx
 #: src/client/routes/library.$deckId.tsx
 #: src/client/routes/library.tsx
 msgid "Undo"
@@ -2193,3 +2264,23 @@ msgstr "Це написано тобою"
 #: src/client/views/JoinView.tsx
 msgid "Your deck"
 msgstr "Твоя колода"
+
+#: src/client/components/AccountSection.tsx
+msgid "Your Google photo is back"
+msgstr "Знову показуємо фото з Google"
+
+#: src/client/components/AccountSection.tsx
+msgid "Your photo was changed somewhere else. Check it, then try again."
+msgstr "Фото змінилося деінде. Перевір його й спробуй ще раз."
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Zoom"
+msgstr "Масштаб"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Zoom in"
+msgstr "Збільшити"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Zoom out"
+msgstr "Зменшити"

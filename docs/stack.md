@@ -29,7 +29,7 @@ flowchart LR
     Client[Typed API client]
   end
   D1[(D1, SQLite)]
-  R2[(R2, audio)]
+  R2[(R2, audio + private images)]
   KV[(KV, sessions cache)]
 
   Public --> Islands
@@ -74,7 +74,7 @@ This is a design requirement with a technical checklist:
 
 - `display: standalone`, `theme-color` per theme, splash icons, iOS `apple-mobile-web-app-*` meta.
 - `100dvh` layouts, safe-area insets, no body scroll, scroll containers per screen.
-- Bottom sheet via Vaul, page transitions via the View Transitions API with a Motion fallback.
+- Bottom drawers via Base UI's Drawer, page transitions via the View Transitions API with a Motion fallback.
 - `touch-action: manipulation`, 44 px targets, 16 px inputs, haptics via `navigator.vibrate` where available.
 - Keyboard shortcuts and a command palette on desktop; the same routes, a different shell.
 
@@ -161,6 +161,10 @@ Route logic lives in service functions that take `db`, `userId` and `actor`. Hon
 ### Audio: first play, then R2
 
 Pronunciation audio is generated only when the learner first presses play. Cards without a language never show the control and never call a speech provider. The Worker uses OpenAI for its published languages and Chirp 3 HD only for coverage gaps or when OpenAI is not configured, stores the MP3 in R2, and remembers the object on the card. The cache identity includes the term, locale, provider, model and voice, and changing the term or language detaches stale audio.
+
+### Avatars: Images binding, private R2
+
+A photo is normalised on the Worker by the Cloudflare Images binding, not by a WASM codec: decoding runs outside the Worker's CPU budget and adds nothing to the bundle, and WebP output drops all metadata. The client crops to a square and uploads the crop; the server sniffs the bytes, bounds size and pixels, refuses SVG and animation, and re-encodes whatever arrives. Local development and service tests use the binding's offline mode. Rules are in [the data model](data-model.md#avatars).
 
 ### Repo: pnpm workspace
 

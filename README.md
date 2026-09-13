@@ -8,6 +8,7 @@ A vocabulary app with a storm lantern. Collect cards from language lessons, let 
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
+- [docs/mcp-directory-review.md](docs/mcp-directory-review.md): what ChatGPT and Claude directory review checks, and the review cases
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
 - [docs/plans](docs/plans): order of work for passes that are decided but not built
 - [docs/proposals](docs/proposals/README.md): future product directions under consideration, not committed plans
@@ -72,7 +73,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 
 1. `wrangler login`
 2. `wrangler d1 create lymi` and paste the `database_id` into `apps/web/wrangler.jsonc`
-3. `wrangler r2 bucket create lymi-audio`
+3. `wrangler r2 bucket create lymi-audio` and `wrangler r2 bucket create lymi-private-images`, and enable Cloudflare Images for the Images binding
 4. `wrangler kv namespace create SESSIONS` and paste the id
 5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
 6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
@@ -85,3 +86,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 After initial setup, each Cloudflare Workers Builds project runs its package's `deploy:ci` script with a D1-enabled build token so pending migrations succeed before a new Worker version becomes active. Both scripts safely retry if the other build is applying the same shared migration. Migration files already merged to `main` are immutable; create a new migration after syncing rather than renaming or replacing an existing one.
 
 See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.
+
+## License
+
+[FSL-1.1-MIT](LICENSE.md). You can read, run, and change the code for any purpose except offering a competing product. Each version becomes MIT two years after its release. The license grants no rights to the Lymi name or the lantern mark.

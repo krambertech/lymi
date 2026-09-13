@@ -9,7 +9,7 @@ import { decksQuery } from "../lib/queries";
 import { Button } from "./Button";
 import { Select } from "./Combobox";
 import { Field, Input } from "./Field";
-import { Sheet } from "./Sheet";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 interface Props {
   open: boolean;
@@ -36,24 +36,28 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
     },
   });
   return (
-    <Sheet open={open} onOpenChange={onOpenChange} title={t`Add a card`} titleHidden>
-      <AddCardForm
-        key={open ? `open:${deckId ?? "default"}` : "closed"}
-        decks={decks.data}
-        deckId={deckId}
-        pending={create.isPending}
-        error={create.isError ? errorMessage(create.error) : undefined}
-        onCancel={() => onOpenChange(false)}
-        onCreateDeck={
-          onCreateDeck &&
-          (() => {
-            onOpenChange(false);
-            onCreateDeck();
-          })
-        }
-        onSubmit={(input) => create.mutateAsync(input)}
-      />
-    </Sheet>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="w-[min(92vw,440px)]">
+        {/* The term field says what this is; the name stays for screen readers. */}
+        <DialogTitle className="sr-only">{t`Add a card`}</DialogTitle>
+        <AddCardForm
+          key={open ? `open:${deckId ?? "default"}` : "closed"}
+          decks={decks.data}
+          deckId={deckId}
+          pending={create.isPending}
+          error={create.isError ? errorMessage(create.error) : undefined}
+          onCancel={() => onOpenChange(false)}
+          onCreateDeck={
+            onCreateDeck &&
+            (() => {
+              onOpenChange(false);
+              onCreateDeck();
+            })
+          }
+          onSubmit={(input) => create.mutateAsync(input)}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }
 

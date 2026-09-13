@@ -78,6 +78,13 @@
       "when": 1789308807231,
       "tag": "0010_tiresome_purifiers",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1789314013890,
+      "tag": "0011_sudden_mole_man",
+      "breakpoints": true
     }
   ]
 }

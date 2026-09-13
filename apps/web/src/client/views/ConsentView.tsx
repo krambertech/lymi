@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import type { AppIdentity } from "../components/AppMark";
 import { Button } from "../components/Button";
 import { AppIdentityLine, Connection } from "../components/Connection";
+import { PublicPolicyLinks } from "../components/PublicPolicyLinks";
 import { Skeleton } from "../components/Skeleton";
 import { Switch } from "../components/Switch";
 
@@ -171,6 +172,7 @@ export function ConsentView({
           </p>
         )}
       </div>
+      <PublicPolicyLinks />
     </div>
   );
 }

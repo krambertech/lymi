@@ -72,6 +72,13 @@ export function ConnectedAppsSection() {
           {errorMessage(disconnect.error)}
         </p>
       )}
+
+      <p className="text-sm text-muted">
+        <Trans>
+          Read Lymi’s <DocLink href={publicSiteUrl("/privacy")}>privacy policy</DocLink> or get help
+          from <DocLink href={publicSiteUrl("/support")}>support</DocLink>.
+        </Trans>
+      </p>
     </SettingsGroup>
   );
 }

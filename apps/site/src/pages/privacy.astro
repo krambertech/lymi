@@ -1,0 +1,147 @@
+---
+import PublicDocumentLayout from "../layouts/PublicDocumentLayout.astro";
+---
+
+<PublicDocumentLayout
+  title="Privacy policy · Lymi"
+  description="How Lymi handles account, learning, integration and service data."
+  canonicalPath="/privacy"
+  heading="Privacy policy"
+  lead="This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
+  updated="13 September 2026"
+>
+  <h2>Who is responsible</h2>
+  <p>
+    Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy,
+    “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <a href="mailto:hello@lymi.app">hello@lymi.app</a>.
+  </p>
+
+  <h2>Data Lymi receives</h2>
+  <h3>Beta access requests</h3>
+  <p>
+    If you request access, we store your email address, where on the site you made the request,
+    and when you made it. Requesting access does not create an account.
+  </p>
+
+  <h3>Account and sign-in data</h3>
+  <p>
+    Google sign-in gives Lymi your name, email address, profile image if available, and identifiers
+    needed to connect the Google account to Lymi. We also keep session records, which can include
+    an IP address, browser information and sign-in tokens.
+  </p>
+
+  <h3>Learning data</h3>
+  <p>
+    We store the decks and cards you create or join. A card can include a term, meaning,
+    pronunciation, example, notes, tags, language, source, learning direction and generated audio.
+    We also store archive state, review history, scheduling state, goals, streaks, time zone,
+    preferences and an activity record of changes.
+  </p>
+  <p>
+    Review history is append-only while the account exists so the schedule and learning record stay
+    honest. Undo creates a separate record rather than rewriting the original review.
+  </p>
+
+  <h3>API and connected-app data</h3>
+  <p>
+    If you create an API key, we store the key record, its name, permissions, usage counters and
+    dates. If you connect an app through MCP, we store the app identity, the permissions you grant,
+    consent records and access or refresh tokens. Lymi records whether a change came from you, an
+    API key, a connected app, AI or the system.
+  </p>
+  <p>
+    A connected assistant may read lesson material in the conversation where you use it. Lymi does
+    not receive that raw lesson material unless the assistant sends it in a card field such as the
+    term, meaning, example, notes or source. The assistant provider handles the conversation under
+    its own terms and privacy policy.
+  </p>
+
+  <h3>Audio and reminders</h3>
+  <p>
+    When pronunciation audio is first requested, Lymi sends the card term and language to a speech
+    provider. It stores the resulting audio so it can be reused. We do not send the rest of the card
+    for speech generation.
+  </p>
+  <p>
+    If you enable review reminders, we store a push endpoint, browser-generated encryption keys,
+    your reminder time and time zone, and delivery state. Reminder notifications contain a due-card
+    count, not card text.
+  </p>
+
+  <h3>Service data</h3>
+  <p>
+    Our hosting provider processes request metadata, security signals, timings and error logs needed
+    to operate and protect Lymi. Query strings are redacted from Worker logs. We avoid putting card
+    content, email addresses, access tokens and other private content in logs.
+  </p>
+
+  <h2>Why we use data</h2>
+  <ul>
+    <li>To provide accounts, decks, cards, review scheduling, audio, reminders, API access and connected apps.</li>
+    <li>To authenticate requests, enforce permissions, prevent abuse and investigate failures.</li>
+    <li>To answer support requests and act on privacy requests.</li>
+    <li>To manage private-beta access and email people who asked to hear when a place opens.</li>
+    <li>To meet legal obligations and protect the rights and safety of Lymi and its users.</li>
+  </ul>
+  <p>
+    Depending on the activity and applicable law, we process data to perform our agreement with you,
+    with your consent, for legitimate interests such as security and service reliability, or to meet
+    a legal obligation. You can withdraw optional consent, such as reminders, at any time.
+  </p>
+
+  <h2>Service providers and other recipients</h2>
+  <ul>
+    <li><strong>Cloudflare</strong> provides the website, application, database, object storage, session storage, network protection and operational logs.</li>
+    <li><strong>Google</strong> provides Google sign-in and may provide speech generation when configured as the fallback provider.</li>
+    <li><strong>OpenAI</strong> may provide speech generation. A configured Cloudflare AI Gateway may relay that request.</li>
+    <li><strong>Your connected apps</strong> receive only the data allowed by the permissions you approve. Disconnecting an app stops future access but does not erase data the app already received.</li>
+    <li><strong>Your browser’s push service</strong> receives an encrypted reminder when you enable notifications.</li>
+  </ul>
+  <p>
+    These providers may process data in countries outside Estonia or the European Economic Area.
+    Where required, we rely on the transfer safeguards made available for the relevant service.
+  </p>
+
+  <h2>How long we keep data</h2>
+  <ul>
+    <li>Beta access requests stay until you ask us to remove them or the beta list is retired.</li>
+    <li>Account and learning data stay while your account is active and are removed when we complete an account-deletion request, except where law requires a longer period.</li>
+    <li>Sessions normally expire after 30 days and may be refreshed while you remain active.</li>
+    <li>API keys stay until you revoke them or they expire. Connected-app tokens and consent stay until expiry, revocation, disconnection or account deletion.</li>
+    <li>Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted.</li>
+    <li>Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle.</li>
+    <li>Cloudflare keeps operational logs under the active service configuration. Lymi does not maintain a separate long-term copy of Worker logs.</li>
+  </ul>
+
+  <h2>Your choices and rights</h2>
+  <p>
+    You can edit card content and settings, archive and restore cards or decks, revoke API keys,
+    disconnect apps, and turn reminders off in Lymi. Archive is reversible and is not deletion.
+  </p>
+  <p>
+    Account-wide access, export, correction and deletion are not self-service yet. Email <a href="mailto:hello@lymi.app?subject=Lymi%20privacy%20request">hello@lymi.app</a> from your
+    account address and describe what you need. We may ask you to verify your identity before acting.
+    We will respond as required by applicable data-protection law. You may also complain to the
+    Estonian Data Protection Inspectorate or your local supervisory authority.
+  </p>
+
+  <h2>Cookies and local storage</h2>
+  <p>
+    Lymi uses an authentication cookie to keep you signed in. The public site and app also use local
+    browser storage for preferences and offline product behavior. We do not use advertising cookies.
+  </p>
+
+  <h2>Security and children</h2>
+  <p>
+    We use access controls, encrypted transport and provider security controls to protect data, but
+    no online service can guarantee absolute security. Do not share API keys, connection tokens or
+    other credentials. Lymi is not directed to children who cannot lawfully consent to this processing.
+  </p>
+
+  <h2>Changes and contact</h2>
+  <p>
+    We may update this policy when Lymi or the law changes. We will update the date above and give
+    additional notice when a change materially affects your rights. Questions and privacy requests
+    can be sent to <a href="mailto:hello@lymi.app">hello@lymi.app</a>.
+  </p>
+</PublicDocumentLayout>

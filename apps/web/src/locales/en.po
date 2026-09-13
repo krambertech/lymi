@@ -1489,6 +1489,10 @@ msgstr "Previous card"
 msgid "Previous month"
 msgstr "Previous month"
 
+#: src/client/components/PublicPolicyLinks.tsx
+msgid "Privacy"
+msgstr "Privacy"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "Private"
 msgstr "Private"
@@ -1527,6 +1531,10 @@ msgstr "Read lists decks and cards. Read and write also adds, edits and archives
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
 msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
+msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Read the quickstart"
@@ -1821,6 +1829,10 @@ msgstr "Still need an invitation?"
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 
+#: src/client/components/PublicPolicyLinks.tsx
+msgid "Support"
+msgstr "Support"
+
 #: src/client/views/SettingsView.tsx
 msgid "System"
 msgstr "System"
@@ -1840,6 +1852,10 @@ msgstr "Tap the card when you have it"
 #: src/client/components/AddCardSheet.tsx
 msgid "Term"
 msgstr "Term"
+
+#: src/client/components/PublicPolicyLinks.tsx
+msgid "Terms"
+msgstr "Terms"
 
 #: src/client/lib/api.ts
 msgid "That didn’t go through. Reload and try again."

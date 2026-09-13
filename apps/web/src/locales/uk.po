@@ -1525,6 +1525,10 @@ msgstr "Попередня картка"
 msgid "Previous month"
 msgstr "Попередній місяць"
 
+#: src/client/components/PublicPolicyLinks.tsx
+msgid "Privacy"
+msgstr "Конфіденційність"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "Private"
 msgstr "Приватна"
@@ -1563,6 +1567,10 @@ msgstr "«Читання» переглядає колоди й картки. «
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
 msgstr "«Читання» переглядає колоди й картки. «Читання й запис» також додає, редагує й архівує їх. Доступ вибирається, коли застосунок входить; щоб змінити його, відключи застосунок і увійди знову."
+
+#: src/client/components/ConnectedAppsSection.tsx
+msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
+msgstr "Прочитайте <0>політику конфіденційності</0> Lymi або зверніться до <1>служби підтримки</1>."
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Read the quickstart"
@@ -1857,6 +1865,10 @@ msgstr "Запрошення все ще потрібне?"
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Серія: {0, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
 
+#: src/client/components/PublicPolicyLinks.tsx
+msgid "Support"
+msgstr "Підтримка"
+
 #: src/client/views/SettingsView.tsx
 msgid "System"
 msgstr "Системна"
@@ -1876,6 +1888,10 @@ msgstr "Торкнися картки, коли згадаєш"
 #: src/client/components/AddCardSheet.tsx
 msgid "Term"
 msgstr "Термін"
+
+#: src/client/components/PublicPolicyLinks.tsx
+msgid "Terms"
+msgstr "Умови"
 
 #: src/client/lib/api.ts
 msgid "That didn’t go through. Reload and try again."

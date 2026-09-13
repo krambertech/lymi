@@ -1,0 +1,73 @@
+---
+import PublicDocumentLayout from "../layouts/PublicDocumentLayout.astro";
+---
+
+<PublicDocumentLayout
+  title="Support · Lymi"
+  description="Help with Lymi sign-in, connected apps, API access, MCP and privacy requests."
+  canonicalPath="/support"
+  heading="Support"
+  lead="Email hello@lymi.app for help with Lymi. The notes below solve the most common sign-in and connection problems."
+  updated="13 September 2026"
+>
+  <h2>Contact Lymi</h2>
+  <p>
+    Email <a href="mailto:hello@lymi.app">hello@lymi.app</a>. If the problem involves an account,
+    write from the email address you use to sign in. Include what you were trying to do, what happened,
+    and the browser or connected app you were using.
+  </p>
+  <p>
+    Do not send passwords, API keys, OAuth tokens, private lesson text or a full export unless we
+    specifically ask for a safe, limited example. A screenshot should hide private card content and
+    account details that are not needed to explain the problem.
+  </p>
+
+  <h2>Sign-in help</h2>
+  <ol>
+    <li>Open <a href="https://my.lymi.app/login">Lymi sign-in</a> and choose the Google account that was invited.</li>
+    <li>If you see that the app is private, check that you selected the approved email address.</li>
+    <li>If sign-in returns to the wrong page, start again from the Lymi page you meant to open.</li>
+    <li>If the problem continues, send us the exact message and the time it happened. Do not send the callback URL if it contains a code or token.</li>
+  </ol>
+
+  <h2>Connected-app help</h2>
+  <ol>
+    <li>In Lymi Settings, confirm the app appears under Connected apps and has the permission you intended.</li>
+    <li>If permissions are wrong, disconnect it, then connect again and choose read-only or read-and-write on the consent screen.</li>
+    <li>If you do not recognize a connected app, disconnect it immediately and contact us.</li>
+  </ol>
+  <p>
+    See the <a href="/docs/mcp">MCP overview</a> for how permissions work and the setup guides for <a href="/docs/mcp/claude">Claude</a> and <a href="/docs/mcp/chatgpt">ChatGPT and Codex</a>.
+  </p>
+
+  <h2>API help</h2>
+  <ol>
+    <li>Send the key in the <code>x-api-key</code> header, never in a URL.</li>
+    <li>Check that the key still exists in Settings and has the scope the request needs.</li>
+    <li>A <code>401</code> usually means the key is missing, wrong or revoked. A <code>403</code> means the key does not have permission for that action.</li>
+    <li>If a key may have leaked, revoke it and create a new one before contacting support.</li>
+  </ol>
+  <p>Use the <a href="/docs/authentication">authentication guide</a> and <a href="/docs/api">API reference</a> for request details.</p>
+
+  <h2>MCP connection help</h2>
+  <ol>
+    <li>Use <code>https://my.lymi.app/mcp</code> as the server URL.</li>
+    <li>Complete Google sign-in and the Lymi consent screen in the browser window that opens.</li>
+    <li>If the client says registration or authorization failed, check its Lymi setup guide and remove any older Lymi connection before adding it again.</li>
+    <li>Send support the client name, the exact error text and the time it occurred. Never send its token.</li>
+  </ol>
+
+  <h2>Access, export, correction or deletion</h2>
+  <p>
+    These account-wide requests are handled by email while self-service tools are not available.
+    Write to <a href="mailto:hello@lymi.app?subject=Lymi%20data%20request">hello@lymi.app</a> from
+    your account address and say whether you want access, an export, a correction or deletion. We may
+    ask you to verify your identity before acting. Removing a beta request can be requested the same way.
+  </p>
+
+  <h2>Security reports</h2>
+  <p>
+    If you believe you found a security issue, email <a href="mailto:hello@lymi.app?subject=Lymi%20security%20report">hello@lymi.app</a> with a concise
+    description and safe reproduction steps. Do not access another person’s data or include live credentials.
+  </p>
+</PublicDocumentLayout>

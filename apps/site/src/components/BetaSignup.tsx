@@ -139,6 +139,16 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
                 </Button>
               </div>
             </Field>
+            <p className="mt-3 text-sm text-muted">
+              We use your email only for this access request. Read the{" "}
+              <a
+                href="/privacy"
+                className="rounded-xs text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
+              >
+                privacy policy
+              </a>
+              .
+            </p>
           </motion.form>
         )}
       </AnimatePresence>

@@ -3,6 +3,9 @@ export const prerender = true;
 const paths = [
   "/",
   "/join",
+  "/privacy",
+  "/terms",
+  "/support",
   "/docs",
   "/docs/quickstart",
   "/docs/cards",

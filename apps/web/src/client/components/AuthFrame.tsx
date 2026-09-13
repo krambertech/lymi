@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Lantern } from "./Lantern";
 import { Wordmark } from "./Logo";
+import { PublicPolicyLinks } from "./PublicPolicyLinks";
 
 interface Props {
   children: ReactNode;
@@ -33,6 +34,7 @@ export function AuthFrame({ children, footer, homeHref = "/" }: Props) {
           {footer && (
             <div className="mx-auto flex w-full max-w-[500px] justify-center">{footer}</div>
           )}
+          <PublicPolicyLinks className="mt-6" />
         </div>
       </main>
     </div>

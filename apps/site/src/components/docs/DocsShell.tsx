@@ -248,6 +248,21 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
                 )}
               </nav>
             )}
+
+            <footer className="mt-12 border-t border-edge pt-6 text-sm text-muted">
+              <p>Lymi is provided by Krambertech OÜ.</p>
+              <nav aria-label="Policies and support" className="mt-3 flex flex-wrap gap-5">
+                <a href="/privacy" className="rounded-xs hoverable:hover:text-text">
+                  Privacy
+                </a>
+                <a href="/terms" className="rounded-xs hoverable:hover:text-text">
+                  Terms
+                </a>
+                <a href="/support" className="rounded-xs hoverable:hover:text-text">
+                  Support
+                </a>
+              </nav>
+            </footer>
           </div>
         </main>
 

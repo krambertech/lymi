@@ -46,16 +46,20 @@ describe("product origin routing", () => {
     });
   });
 
-  it.each(["/docs", "/docs/api?operation=cards", "/join?source=login"])(
-    "redirects public routes to the site Worker: %s",
-    (path) => {
-      expect(decision(`https://my.lymi.app${path}`)).toEqual({
-        kind: "redirect",
-        location: `https://lymi.app${path}`,
-        status: 308,
-      });
-    },
-  );
+  it.each([
+    "/docs",
+    "/docs/api?operation=cards",
+    "/join?source=login",
+    "/privacy",
+    "/terms",
+    "/support?from=settings",
+  ])("redirects public routes to the site Worker: %s", (path) => {
+    expect(decision(`https://my.lymi.app${path}`)).toEqual({
+      kind: "redirect",
+      location: `https://lymi.app${path}`,
+      status: 308,
+    });
+  });
 
   it.each(["/public-landing", "/sitemap.xml", "/apiish", "/unknown"])(
     "does not turn unknown public-looking paths into the product shell: %s",

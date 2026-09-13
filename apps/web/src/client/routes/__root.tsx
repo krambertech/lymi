@@ -27,13 +27,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function Root() {
+  const { pathname } = useLocation();
   return (
     // Under reduced motion, Motion drops travel and scale and keeps the fades.
     <MotionConfig reducedMotion="user">
       <AddCardProvider>
         <SignOutProvider>
           <Shell />
-          {DevPanel && (
+          {/* Personas and seeds mean nothing on the design system pages. */}
+          {DevPanel && !pathname.startsWith("/design") && (
             <Suspense fallback={null}>
               <DevPanel />
             </Suspense>

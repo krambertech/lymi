@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import { Loader2 } from "lucide-react";
 import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from "react";
 import { Kbd } from "./Kbd";
+import { chain, useTooltip } from "./Tooltip";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -29,7 +30,8 @@ const iconSide =
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
   secondary: "edge bg-plate text-text hoverable:hover:bg-hover",
-  ghost: "bg-transparent text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
+  // `hover`, not `plate-2`: in the light room plate-2 is the rail, so the fill vanished there.
+  ghost: "bg-transparent text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
   danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
 };
 
@@ -109,34 +111,65 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
-/** A square button holding one icon. The hit area is at least 40 px even when the box is smaller. */
+/**
+ * A square button holding one icon. The hit area is at least 40 px even when the box is smaller.
+ * Its label is the accessible name and shows as a tooltip; it stays quiet while its menu is open.
+ */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { label, size = "md", variant = "ghost", round, className, children, ...rest },
+  {
+    label,
+    size = "md",
+    variant = "ghost",
+    round,
+    className,
+    children,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerDown,
+    onFocus,
+    onBlur,
+    onKeyDown,
+    ...rest
+  },
   ref,
 ) {
+  const expanded = rest["aria-expanded"] === true || rest["aria-expanded"] === "true";
+  const tip = useTooltip(label, { disabled: expanded || rest.disabled });
   return (
-    <button
-      ref={ref}
-      type="button"
-      aria-label={label}
-      title={label}
-      className={clsx(
-        "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45",
-        round ? "rounded-full" : "rounded-sm",
-        "before:absolute before:-inset-1.5 before:content-['']",
-        variant === "ghost" && "text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
-        variant === "secondary" && "edge bg-plate text-text-2 hoverable:hover:bg-hover",
-        variant === "primary" && "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
-        variant === "danger" &&
-          "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
-        size === "sm" && "size-8 [&_svg]:size-4",
-        size === "md" && "size-10 [&_svg]:size-[18px]",
-        size === "lg" && "size-12 [&_svg]:size-5",
-        className,
-      )}
-      {...rest}
-    >
-      {children}
-    </button>
+    <>
+      <button
+        ref={(node) => {
+          tip.triggerRef.current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref) ref.current = node;
+        }}
+        type="button"
+        aria-label={label}
+        className={clsx(
+          "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45",
+          round ? "rounded-full" : "rounded-sm",
+          "before:absolute before:-inset-1.5 before:content-['']",
+          variant === "ghost" && "text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
+          variant === "secondary" && "edge bg-plate text-text-2 hoverable:hover:bg-hover",
+          variant === "primary" && "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
+          variant === "danger" &&
+            "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
+          size === "sm" && "size-8 [&_svg]:size-4",
+          size === "md" && "size-10 [&_svg]:size-[18px]",
+          size === "lg" && "size-12 [&_svg]:size-5",
+          className,
+        )}
+        {...rest}
+        onPointerEnter={chain(tip.handlers.onPointerEnter, onPointerEnter)}
+        onPointerLeave={chain(tip.handlers.onPointerLeave, onPointerLeave)}
+        onPointerDown={chain(tip.handlers.onPointerDown, onPointerDown)}
+        onFocus={chain(tip.handlers.onFocus, onFocus)}
+        onBlur={chain(tip.handlers.onBlur, onBlur)}
+        onKeyDown={chain(tip.handlers.onKeyDown, onKeyDown)}
+      >
+        {children}
+      </button>
+      {tip.bubble}
+    </>
   );
 });

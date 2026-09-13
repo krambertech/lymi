@@ -1,4 +1,4 @@
-import { Section, Specimen, Sub } from "./Frame";
+import { Doc, Specimen, Sub } from "./Frame";
 
 const SCALE: {
   name: string;
@@ -98,11 +98,10 @@ const SCALE: {
   },
 ];
 
-export function Type() {
+export function Typography() {
   return (
-    <Section
-      id="type"
-      title="Type"
+    <Doc
+      title="Typography"
       lede="One family: Onest, variable, 400 to 600, with Latin extended and Cyrillic so Italian, Portuguese and Ukrainian cards all set in the same voice. The term on the card is the largest thing on any screen and it is set at 500, not bold. Everything else is 400 or 500. 600 is reserved for the wordmark, counts and kbd."
     >
       <Sub
@@ -176,6 +175,6 @@ export function Type() {
           </div>
         </Specimen>
       </Sub>
-    </Section>
+    </Doc>
   );
 }

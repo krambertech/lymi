@@ -3,7 +3,7 @@ import { Button } from "../components/Button";
 import { Lantern } from "../components/Lantern";
 import { Segmented } from "../components/Segmented";
 import { Toast } from "../components/Toast";
-import { Pair, Section, Specimen, Sub } from "./Frame";
+import { Doc, Pair, Specimen, Sub } from "./Frame";
 
 const TIMINGS: [string, string, string][] = [
   ["Press", "scale 0.97, 150 ms ease-out", "Every button and row. Confirms the tap landed."],
@@ -23,6 +23,16 @@ const TIMINGS: [string, string, string][] = [
     "From the corner nearest the button that opened it. Never a slide.",
   ],
   ["Reveal", "fade + 4 px, 200 ms ease-out", "The meaning unfolding under the rule."],
+  [
+    "Segmented",
+    "chip slides, 200 ms ease-out",
+    "The chosen plate moves to the new option. A keyboard change jumps.",
+  ],
+  [
+    "Tooltip",
+    "500 ms wait, in 120 ms, out 80 ms",
+    "Grows from the side nearest its control. The next one along a row opens at once.",
+  ],
   [
     "Flare",
     "flame scale 1.2×1.35, 320 ms, then back",
@@ -53,8 +63,7 @@ export function Motion() {
   };
   const [card, setCard] = useState(0);
   return (
-    <Section
-      id="motion"
+    <Doc
       title="Motion"
       lede="Motion conveys state and nothing else. Most transitions are 150 to 250 ms with a strong ease-out. Keyboard-initiated actions do not animate. The flame moves on its own because a flame does; it is the one piece of ambient motion, and it stops under reduced motion."
     >
@@ -162,6 +171,6 @@ export function Motion() {
           reveal enhances an already visible default.
         </p>
       </Sub>
-    </Section>
+    </Doc>
   );
 }

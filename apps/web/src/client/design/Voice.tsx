@@ -1,4 +1,4 @@
-import { Section, Sub } from "./Frame";
+import { Doc, Sub } from "./Frame";
 
 const PAIRS: [string, string, string][] = [
   ["End of session", "That’s the lot", "Congratulations! You did it! 🎉"],
@@ -17,8 +17,7 @@ const PAIRS: [string, string, string][] = [
 
 export function Voice() {
   return (
-    <Section
-      id="voice"
+    <Doc
       title="Voice"
       lede="Plain and friendly. It counts cards, not points. It never nags and never celebrates for you. Undo replaces confirmation wherever it can. Anything the AI wrote says so."
     >
@@ -59,6 +58,6 @@ export function Voice() {
           ))}
         </div>
       </Sub>
-    </Section>
+    </Doc>
   );
 }

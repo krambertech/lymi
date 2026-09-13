@@ -938,6 +938,18 @@
   }
 }
 
+/* The Base UI drawer still follows a drag under reduced motion, but arrives and leaves as a
+   crossfade. Unlayered, so it outranks the direction utilities in `ui/drawer.tsx`. */
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="drawer-popup"][data-swipe-direction] {
+    --closed-transform: translate3d(var(--translate-x, 0px), var(--translate-y, 0px), 0);
+  }
+  [data-slot="drawer-popup"][data-starting-style],
+  [data-slot="drawer-popup"][data-ending-style] {
+    opacity: 0;
+  }
+}
+
 /* Toast rises from the bottom edge and leaves faster than it came. */
 .toast-enter {
   opacity: 1;

@@ -1,7 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { BookMarked, PenLine, Plus } from "lucide-react";
 import { IconButton } from "./Button";
-import { Menu, MenuItem, MenuList, MenuTrigger } from "./Menu";
+import {
+  ResponsiveMenu,
+  ResponsiveMenuContent,
+  ResponsiveMenuItem,
+  ResponsiveMenuShortcut,
+  ResponsiveMenuTrigger,
+} from "./ResponsiveMenu";
 
 /**
  * One plus for both things a learner adds. It sits in the rail beside the mark on desktop and
@@ -23,26 +29,25 @@ export function AddMenu({
 }) {
   const { t } = useLingui();
   return (
-    <Menu>
-      <MenuTrigger>
-        {(p) => (
-          <IconButton label={t`Add`} variant={variant} round size={size} {...p}>
+    <ResponsiveMenu>
+      <ResponsiveMenuTrigger
+        render={
+          <IconButton label={t`Add`} variant={variant} round size={size}>
             <Plus />
           </IconButton>
-        )}
-      </MenuTrigger>
-      <MenuList align={align}>
-        <MenuItem kbd="N" icon={<PenLine aria-hidden="true" />} onSelect={onAddCard}>
+        }
+      />
+      <ResponsiveMenuContent label={t`Add`} align={align}>
+        <ResponsiveMenuItem onClick={onAddCard}>
+          <PenLine aria-hidden="true" />
           <Trans>New card</Trans>
-        </MenuItem>
-        <MenuItem
-          icon={<BookMarked aria-hidden="true" />}
-          onSelect={onCreateDeck}
-          disabled={!onCreateDeck}
-        >
+          <ResponsiveMenuShortcut>N</ResponsiveMenuShortcut>
+        </ResponsiveMenuItem>
+        <ResponsiveMenuItem onClick={onCreateDeck} disabled={!onCreateDeck}>
+          <BookMarked aria-hidden="true" />
           <Trans>New deck</Trans>
-        </MenuItem>
-      </MenuList>
-    </Menu>
+        </ResponsiveMenuItem>
+      </ResponsiveMenuContent>
+    </ResponsiveMenu>
   );
 }

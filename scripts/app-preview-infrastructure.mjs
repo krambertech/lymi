@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
+import { spawnSync } from "node:child_process";
 import { createHmac } from "node:crypto";
 import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const apiRoot = "https://api.cloudflare.com/client/v4/accounts";
@@ -95,6 +97,13 @@ async function exactD1(client, name) {
   return result.find((item) => item.name === name) ?? null;
 }
 
+function createD1(client, name) {
+  return cfRequest(client, "/d1/database", {
+    method: "POST",
+    body: JSON.stringify({ name, primary_location_hint: "eeur" }),
+  });
+}
+
 async function exactNamespace(client, title) {
   const result = await cfRequest(client, "/storage/kv/namespaces?per_page=1000");
   return result.find((item) => item.title === title) ?? null;
@@ -144,11 +153,7 @@ export async function ensurePreviewInfrastructure({
     cfRequest(client, "/workers/subdomain"),
     ensure(
       () => exactD1(client, names.databaseName),
-      () =>
-        cfRequest(client, "/d1/database", {
-          method: "POST",
-          body: JSON.stringify({ name: names.databaseName, primary_location_hint: "eeur" }),
-        }),
+      () => createD1(client, names.databaseName),
     ),
     ensure(
       () => exactNamespace(client, names.namespaceTitle),
@@ -178,6 +183,90 @@ export async function ensurePreviewInfrastructure({
     namespaceId: namespace.id,
     workerExists: exists,
   };
+}
+
+export function migrationFailureReason({ status, output = "", error }) {
+  if (error) return error.message;
+  const lines = output
+    // biome-ignore lint/suspicious/noControlCharactersInRegex: strips Wrangler's ANSI colors.
+    .replace(/\u001b\[[0-9;]*m/g, "")
+    .split("\n")
+    .map((line) => line.trim());
+  const reported = lines.findLast((line) => line.includes("[ERROR]"));
+  return reported?.replace(/^.*\[ERROR\]\s*/, "") || `Wrangler exited with code ${status}`;
+}
+
+function applyWithWrangler(configPath) {
+  const result = spawnSync(
+    "pnpm",
+    [
+      "--filter",
+      "@lymi/web",
+      "exec",
+      "wrangler",
+      "d1",
+      "migrations",
+      "apply",
+      "DB",
+      "--remote",
+      "--config",
+      resolve(configPath),
+    ],
+    { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], maxBuffer: 64 * 1024 * 1024 },
+  );
+  process.stdout.write(result.stdout ?? "");
+  process.stderr.write(result.stderr ?? "");
+  return {
+    ok: result.status === 0,
+    reason: migrationFailureReason({
+      status: result.status,
+      output: `${result.stdout ?? ""}\n${result.stderr ?? ""}`,
+      error: result.error,
+    }),
+  };
+}
+
+// Wrangler records migrations by filename, so a rebase that renumbers one re-runs it; the preview holds only seeded data, so any failure rebuilds it once.
+export async function migratePreviewDatabase({
+  accountId,
+  token,
+  prNumber,
+  configPath,
+  applyMigrations = () => applyWithWrangler(configPath),
+  fetchImpl = fetch,
+  log = (line) => process.stdout.write(`${line}\n`),
+}) {
+  if (!accountId || !token) throw new Error("Cloudflare preview credentials are required");
+  const names = previewNames(prNumber);
+  const config = JSON.parse(readFileSync(configPath, "utf8"));
+  const binding = config.d1_databases?.find((item) => item.binding === "DB");
+  if (binding?.database_name !== names.databaseName) {
+    throw new Error(`${configPath} is not bound to ${names.databaseName}`);
+  }
+
+  const first = await applyMigrations();
+  if (first.ok) return { rebuilt: false, databaseId: binding.database_id };
+
+  log(
+    `::warning title=Preview database rebuilt::Migrations did not apply to ${names.databaseName} (${first.reason}). Rebuilding it from empty and applying the full migration list.`,
+  );
+  const client = { accountId, token, fetchImpl };
+  const existing = await exactD1(client, names.databaseName);
+  if (existing) await cfRequest(client, `/d1/database/${existing.uuid}`, { method: "DELETE" });
+  const database = await createD1(client, names.databaseName);
+  if (!database?.uuid) throw new Error("Cloudflare did not return the rebuilt preview database");
+
+  binding.database_id = database.uuid;
+  writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+
+  const second = await applyMigrations();
+  if (!second.ok) {
+    throw new Error(
+      `Migrations fail on an empty preview database (${second.reason}). This is a broken migration, not a stale preview.`,
+    );
+  }
+  log(`Rebuilt ${names.databaseName} and applied every migration.`);
+  return { rebuilt: true, databaseId: database.uuid };
 }
 
 export async function cleanupPreviewInfrastructure({
@@ -252,6 +341,23 @@ async function prepareFromCli([prNumber, inputPath, outputPath, secretsPath]) {
   process.stdout.write(`Prepared isolated app preview resources for PR #${prNumber}.\n`);
 }
 
+async function migrateFromCli([prNumber, configPath]) {
+  if (!prNumber || !configPath) {
+    throw new Error("Usage: app-preview-infrastructure.mjs migrate <pr-number> <preview-config>");
+  }
+  try {
+    await migratePreviewDatabase({
+      accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
+      token: process.env.CLOUDFLARE_API_TOKEN,
+      prNumber,
+      configPath,
+    });
+  } catch (error) {
+    process.stdout.write(`::error title=Preview migrations failed::${error.message}\n`);
+    process.exitCode = 1;
+  }
+}
+
 async function cleanupFromCli([prNumber]) {
   if (!prNumber) {
     throw new Error("Usage: app-preview-infrastructure.mjs cleanup <pr-number>");
@@ -267,6 +373,7 @@ async function cleanupFromCli([prNumber]) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const [command, ...args] = process.argv.slice(2);
   if (command === "prepare") await prepareFromCli(args);
+  else if (command === "migrate") await migrateFromCli(args);
   else if (command === "cleanup") await cleanupFromCli(args);
-  else throw new Error("Expected prepare or cleanup");
+  else throw new Error("Expected prepare, migrate or cleanup");
 }

@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { cookieName } from "../server/join-cookie";
 import { cookiePrefix, devPersonaCookieName } from "./cookies";
 
 describe("cookie names", () => {
@@ -8,14 +7,12 @@ describe("cookie names", () => {
     (productUrl) => {
       expect(cookiePrefix(productUrl)).toBe("lymi");
       expect(devPersonaCookieName(productUrl)).toBe("lymi_dev_persona");
-      expect(cookieName(productUrl)).toBe("__Host-lymi-join");
     },
   );
 
   it("names every cookie after the port on a loopback server", () => {
     expect(cookiePrefix("http://localhost:5241")).toBe("lymi-5241");
     expect(devPersonaCookieName("http://127.0.0.1:5300/")).toBe("lymi-5300_dev_persona");
-    expect(cookieName("http://[::1]:56320")).toBe("lymi-56320-join");
   });
 
   it("gives two local servers different names", () => {

@@ -104,8 +104,14 @@ msgstr "{0, plural, one {повторення} few {повторення} many {
 
 #. placeholder {0}: history.length - HISTORY_ROWS
 #: src/client/views/WordView.tsx
-msgid "{0, plural, one {Show # older} other {Show # older}}"
+msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Показати ще # старіший запис} few {Показати ще # старіші записи} many {Показати ще # старіших записів} other {Показати ще # запису}}"
+
+#. placeholder {0}: i18n._(modeLabel(item.review.mode))
+#. placeholder {1}: item.next
+#: src/client/views/WordView.tsx
+msgid "{0} · {1}"
+msgstr "{0} · {1}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
@@ -897,10 +903,6 @@ msgstr "Відхилити"
 #: src/client/views/DeckSettingsView.tsx
 msgid "Description"
 msgstr "Опис"
-
-#: src/client/views/WordView.tsx
-msgid "Difficulty"
-msgstr "Складність"
 
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Disconnect"

@@ -53,7 +53,10 @@ export function ReviewTimeline({ start, reviews, dues, now = new Date() }: Props
     return () => observer.disconnect();
   }, []);
 
-  const sorted = [...reviews].sort((a, b) => a.at.getTime() - b.at.getTime());
+  // One mark per day, carrying that day's last grade, so the gaps between days stay visible.
+  const sorted = [...reviews]
+    .sort((a, b) => a.at.getTime() - b.at.getTime())
+    .filter((r, i, all) => all[i + 1]?.at.toDateString() !== r.at.toDateString());
   const layout = layoutTimeline({
     start,
     now,

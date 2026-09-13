@@ -374,6 +374,14 @@ export function WordView({
   }));
   const readOnly = !onSave;
   const [olderShown, setOlderShown] = useState(false);
+  const firstOlderRef = useRef<HTMLLIElement>(null);
+  const focusOlderRef = useRef(false);
+  // The button leaves when pressed, so focus moves to the first row it revealed.
+  useEffect(() => {
+    if (!olderShown || !focusOlderRef.current) return;
+    focusOlderRef.current = false;
+    firstOlderRef.current?.focus();
+  }, [olderShown]);
   const gradeLabel = (rating: number) => {
     const grade = GRADES.find((g) => g.rating === rating);
     return grade ? i18n._(grade.label) : String(rating);
@@ -660,7 +668,7 @@ export function WordView({
         <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
           <Trans>Schedule</Trans>
         </h2>
-        {schedules.length === 0 ? (
+        {started.length === 0 ? (
           <p className="text-sm text-text-2">
             <Trans>Not asked yet. It joins the next review.</Trans>
           </p>
@@ -683,11 +691,8 @@ export function WordView({
                   <th scope="col" className="pe-3 pb-2 text-start font-medium">
                     <Trans>Next</Trans>
                   </th>
-                  <th scope="col" className="pe-3 pb-2 text-end font-medium">
-                    <Trans>Reviews</Trans>
-                  </th>
                   <th scope="col" className="pb-2 text-end font-medium">
-                    <Trans>Difficulty</Trans>
+                    <Trans>Reviews</Trans>
                   </th>
                 </tr>
               </thead>
@@ -710,7 +715,7 @@ export function WordView({
                             {next.when}
                             {next.date && <span className="block text-muted">{next.date}</span>}
                           </td>
-                          <td className="py-2.5 pe-3 text-end">
+                          <td className="py-2.5 text-end">
                             {i18n.number(fsrs.reps)}
                             {fsrs.lapses > 0 && (
                               <span className="block text-muted">
@@ -722,20 +727,13 @@ export function WordView({
                               </span>
                             )}
                           </td>
-                          <td className="py-2.5 text-end">
-                            {i18n.number(fsrs.difficulty, {
-                              minimumFractionDigits: 1,
-                              maximumFractionDigits: 1,
-                            })}
-                          </td>
                         </>
                       ) : (
                         <>
                           <td className="py-2.5 pe-3 text-muted">
                             <Trans>Not started</Trans>
                           </td>
-                          <td className="py-2.5 pe-3 text-end text-muted">–</td>
-                          <td className="py-2.5 text-end text-muted">–</td>
+                          <td className="py-2.5 text-end text-muted">{i18n.number(0)}</td>
                         </>
                       )}
                     </tr>
@@ -753,9 +751,11 @@ export function WordView({
             <Trans>History</Trans>
           </h2>
           <ol className="grid gap-3">
-            {shownHistory.map((item) => (
+            {shownHistory.map((item, i) => (
               <li
                 key={item.key}
+                ref={i === HISTORY_ROWS ? firstOlderRef : undefined}
+                tabIndex={i === HISTORY_ROWS ? -1 : undefined}
                 className="grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-baseline gap-x-2.5 leading-5"
               >
                 {item.kind === "review" ? (
@@ -765,17 +765,16 @@ export function WordView({
                 )}
                 <p className="min-w-0 break-words text-base">
                   {item.kind === "review" ? (
-                    <>
-                      <span className="font-medium">{gradeLabel(item.review.rating)}</span>{" "}
-                      <span className="text-text-2">{i18n._(modeLabel(item.review.mode))}</span>
-                    </>
+                    <span className="font-medium">{gradeLabel(item.review.rating)}</span>
                   ) : (
                     <span className="text-text-2">{item.event.text}</span>
                   )}
                 </p>
                 <span className="whitespace-nowrap text-sm text-muted">{dayLabel(item.at)}</span>
                 <p className="col-span-2 col-start-2 text-sm text-muted">
-                  {item.kind === "review" ? item.next : item.event.actor}
+                  {item.kind === "review"
+                    ? t`${i18n._(modeLabel(item.review.mode))} · ${item.next}`
+                    : item.event.actor}
                 </p>
               </li>
             ))}
@@ -788,13 +787,16 @@ export function WordView({
           {history.length > HISTORY_ROWS && !olderShown && (
             <button
               type="button"
-              onClick={() => setOlderShown(true)}
-              className="justify-self-start rounded-xs py-1 text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
+              onClick={() => {
+                focusOlderRef.current = true;
+                setOlderShown(true);
+              }}
+              className="-my-2.5 min-h-11 justify-self-start rounded-xs text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
             >
               <Plural
                 value={history.length - HISTORY_ROWS}
-                one="Show # older"
-                other="Show # older"
+                one="Show # older entry"
+                other="Show # older entries"
               />
             </button>
           )}

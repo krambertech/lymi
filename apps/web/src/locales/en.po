@@ -68,8 +68,14 @@ msgstr "{0, plural, one {review} other {reviews}}"
 
 #. placeholder {0}: history.length - HISTORY_ROWS
 #: src/client/views/WordView.tsx
-msgid "{0, plural, one {Show # older} other {Show # older}}"
-msgstr "{0, plural, one {Show # older} other {Show # older}}"
+msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
+msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
+
+#. placeholder {0}: i18n._(modeLabel(item.review.mode))
+#. placeholder {1}: item.next
+#: src/client/views/WordView.tsx
+msgid "{0} · {1}"
+msgstr "{0} · {1}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
@@ -861,10 +867,6 @@ msgstr "Deny"
 #: src/client/views/DeckSettingsView.tsx
 msgid "Description"
 msgstr "Description"
-
-#: src/client/views/WordView.tsx
-msgid "Difficulty"
-msgstr "Difficulty"
 
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Disconnect"

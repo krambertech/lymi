@@ -85,3 +85,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 After initial setup, each Cloudflare Workers Builds project runs its package's `deploy:ci` script with a D1-enabled build token so pending migrations succeed before a new Worker version becomes active. Both scripts safely retry if the other build is applying the same shared migration. Migration files already merged to `main` are immutable; create a new migration after syncing rather than renaming or replacing an existing one.
 
 See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.
+
+## License
+
+[FSL-1.1-MIT](LICENSE.md). You can read, run, and change the code for any purpose except offering a competing product. Each version becomes MIT two years after its release. The license grants no rights to the Lymi name or the lantern mark.

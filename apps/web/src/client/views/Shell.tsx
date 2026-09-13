@@ -37,7 +37,8 @@ export const NAV: {
   exact?: boolean;
 }[] = [
   { to: "/today", label: msg`Today`, icon: Sun, exact: true },
-  { to: "/library", label: msg`Library`, icon: BookMarked },
+  // Exact, so a deck page lights only its own row under Decks.
+  { to: "/library", label: msg`Library`, icon: BookMarked, exact: true },
   { to: "/insights", label: msg`Insights`, icon: ChartNoAxesColumn },
   { to: "/activity", label: msg`Activity`, icon: Activity },
 ];

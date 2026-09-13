@@ -19,7 +19,13 @@ import { Button, IconButton } from "../components/Button";
 import { directionLabel, languageName } from "../components/DeckFields";
 import { EmptyState } from "../components/EmptyState";
 import { Input } from "../components/Field";
-import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
+import {
+  ResponsiveMenu,
+  ResponsiveMenuContent,
+  ResponsiveMenuItem,
+  ResponsiveMenuSeparator,
+  ResponsiveMenuTrigger,
+} from "../components/ResponsiveMenu";
 import { Segmented } from "../components/Segmented";
 import { Skeleton } from "../components/Skeleton";
 import { StateStripe, stateDot } from "../components/StateStripe";
@@ -377,36 +383,33 @@ export function DeckDetailView({
   );
 
   const deckMenu = (
-    <Menu>
-      <MenuTrigger>
-        {(p) => (
-          <IconButton label={t`Deck options`} {...p}>
+    <ResponsiveMenu>
+      <ResponsiveMenuTrigger
+        render={
+          <IconButton label={t`Deck options`}>
             <MoreHorizontal />
           </IconButton>
-        )}
-      </MenuTrigger>
-      <MenuList align="end">
-        <MenuItem icon={<Settings2 />} onSelect={onSettings} disabled={!onSettings}>
+        }
+      />
+      <ResponsiveMenuContent label={t`Deck options`} align="end">
+        <ResponsiveMenuItem onClick={onSettings} disabled={!onSettings}>
+          <Settings2 />
           <Trans>Deck settings</Trans>
-        </MenuItem>
-        <MenuItem
-          icon={<Download />}
-          onSelect={() => deck && cards && exportCsv(deck.name, cards)}
+        </ResponsiveMenuItem>
+        <ResponsiveMenuItem
+          onClick={() => deck && cards && exportCsv(deck.name, cards)}
           disabled={!deck || !cards?.length}
         >
+          <Download />
           <Trans>Export as CSV</Trans>
-        </MenuItem>
-        <MenuSeparator />
-        <MenuItem
-          icon={<Archive />}
-          tone="danger"
-          onSelect={onArchiveDeck}
-          disabled={!onArchiveDeck}
-        >
+        </ResponsiveMenuItem>
+        <ResponsiveMenuSeparator />
+        <ResponsiveMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
+          <Archive />
           <Trans>Archive deck</Trans>
-        </MenuItem>
-      </MenuList>
-    </Menu>
+        </ResponsiveMenuItem>
+      </ResponsiveMenuContent>
+    </ResponsiveMenu>
   );
 
   // The plate above carries the counts, so the filter is names and dots.

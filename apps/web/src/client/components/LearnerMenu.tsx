@@ -15,8 +15,15 @@ import { type ReactNode, useState } from "react";
 import { promptToInstall, useInstallState } from "../lib/pwa-install";
 import { Avatar } from "./Avatar";
 import { InstallDialog } from "./InstallDialog";
-import { Menu, MenuItem, MenuLink, MenuList, MenuSeparator, MenuTrigger } from "./Menu";
 import type { StaticNav } from "./NavLink";
+import {
+  ResponsiveMenu,
+  ResponsiveMenuContent,
+  ResponsiveMenuItem,
+  ResponsiveMenuLinkItem,
+  ResponsiveMenuSeparator,
+  ResponsiveMenuTrigger,
+} from "./ResponsiveMenu";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 
 type Place = "/settings" | "/activity" | "/insights" | "/archived";
@@ -63,27 +70,31 @@ export function LearnerMenu({
   const installable = !install.installed && (install.canPrompt || install.isIOS);
 
   const place = (to: Place, icon: ReactNode, label: ReactNode, trailing?: ReactNode) => (
-    <MenuLink
-      icon={icon}
-      trailing={trailing}
-      render={(p) =>
-        st ? <a href={to} {...p} onClick={(e) => e.preventDefault()} /> : <Link to={to} {...p} />
+    <ResponsiveMenuLinkItem
+      render={
+        st ? (
+          // biome-ignore lint/a11y/useAnchorContent: the menu row renders its label into this anchor
+          <a href={to} onClick={(e) => e.preventDefault()} />
+        ) : (
+          <Link to={to} />
+        )
       }
     >
-      {label}
-    </MenuLink>
+      {icon}
+      <span className="flex-1">{label}</span>
+      {trailing}
+    </ResponsiveMenuLinkItem>
   );
   const dot = <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />;
 
   return (
     <>
-      <Menu className={variant === "rail" ? "w-full" : undefined}>
-        <MenuTrigger>
-          {(p) =>
+      <ResponsiveMenu>
+        <ResponsiveMenuTrigger
+          render={
             variant === "rail" ? (
               <button
                 type="button"
-                {...p}
                 aria-busy={signingOut || undefined}
                 className={clsx(
                   "flex h-14 w-full items-center gap-3 rounded-md px-2 text-start transition-[background-color,box-shadow,opacity] duration-150",
@@ -98,7 +109,6 @@ export function LearnerMenu({
             ) : (
               <button
                 type="button"
-                {...p}
                 aria-busy={signingOut || undefined}
                 className={clsx(
                   "relative inline-flex rounded-full transition-opacity before:absolute before:-inset-1.5 before:content-['']",
@@ -110,11 +120,12 @@ export function LearnerMenu({
               </button>
             )
           }
-        </MenuTrigger>
-        <MenuList
+        />
+        <ResponsiveMenuContent
+          label={short}
           align={variant === "rail" ? "start" : "end"}
           side={variant === "rail" ? "top" : "bottom"}
-          className={variant === "rail" ? "w-full" : "min-w-56"}
+          className={variant === "rail" ? undefined : "min-w-56"}
         >
           {name && (
             <>
@@ -122,7 +133,7 @@ export function LearnerMenu({
                 <span className="truncate text-base font-medium text-text">{name}</span>
                 {email && <span className="truncate text-xs text-muted">{email}</span>}
               </div>
-              <MenuSeparator />
+              <ResponsiveMenuSeparator />
             </>
           )}
 
@@ -138,41 +149,40 @@ export function LearnerMenu({
             place("/insights", <ChartNoAxesColumn aria-hidden="true" />, <Trans>Insights</Trans>)}
           {place("/archived", <Archive aria-hidden="true" />, <Trans>Archived</Trans>)}
 
-          <MenuSeparator />
+          <ResponsiveMenuSeparator />
           {variant === "rail" && (
-            <MenuItem icon={<Keyboard aria-hidden="true" />} onSelect={() => setShortcuts(true)}>
+            <ResponsiveMenuItem onClick={() => setShortcuts(true)}>
+              <Keyboard aria-hidden="true" />
               <Trans>Keyboard shortcuts</Trans>
-            </MenuItem>
+            </ResponsiveMenuItem>
           )}
           {installable && (
-            <MenuItem
-              icon={<Download aria-hidden="true" />}
-              onSelect={() => {
+            <ResponsiveMenuItem
+              onClick={() => {
                 if (install.canPrompt) void promptToInstall();
                 else setInstallHelp(true);
               }}
             >
+              <Download aria-hidden="true" />
               <Trans>Install Lymi</Trans>
-            </MenuItem>
+            </ResponsiveMenuItem>
           )}
-          <MenuLink
-            icon={<BookOpen aria-hidden="true" />}
-            render={(p) => <a href={docsUrl} {...p} />}
-          >
+          <ResponsiveMenuLinkItem render={<a href={docsUrl} />}>
+            <BookOpen aria-hidden="true" />
             <Trans>Docs</Trans>
-          </MenuLink>
+          </ResponsiveMenuLinkItem>
 
-          <MenuSeparator />
-          <MenuItem
-            tone="danger"
-            icon={<LogOut aria-hidden="true" />}
-            onSelect={onSignOut}
+          <ResponsiveMenuSeparator />
+          <ResponsiveMenuItem
+            variant="destructive"
+            onClick={onSignOut}
             disabled={!onSignOut || signingOut}
           >
+            <LogOut aria-hidden="true" />
             <Trans>Sign out</Trans>
-          </MenuItem>
-        </MenuList>
-      </Menu>
+          </ResponsiveMenuItem>
+        </ResponsiveMenuContent>
+      </ResponsiveMenu>
 
       {variant === "rail" && (
         <ShortcutsDialog open={shortcuts} onClose={() => setShortcuts(false)} />

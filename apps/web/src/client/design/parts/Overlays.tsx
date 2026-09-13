@@ -2,8 +2,15 @@ import { Archive, Download, MoreHorizontal, Pencil, Volume2 } from "lucide-react
 import { useState } from "react";
 import { Button, IconButton } from "../../components/Button";
 import { Dialog } from "../../components/Dialog";
-import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../../components/Menu";
 import { NewDeckForm } from "../../components/NewDeckSheet";
+import {
+  ResponsiveMenu,
+  ResponsiveMenuContent,
+  ResponsiveMenuItem,
+  ResponsiveMenuSeparator,
+  ResponsiveMenuShortcut,
+  ResponsiveMenuTrigger,
+} from "../../components/ResponsiveMenu";
 import { Sheet, SheetPanel } from "../../components/Sheet";
 import { Variants } from "../Frame";
 import { type Group, noop } from "./types";
@@ -11,12 +18,12 @@ import { type Group, noop } from "./types";
 export const menu: Group = {
   slug: "menu",
   title: "Menu",
-  lede: "A few actions behind one button. It grows out of the corner nearest the button, scale 0.94 to 1 over 140 ms, and the hover is one fill that slides between rows without crossing a separator.",
+  lede: "A few actions behind one button. On a desktop it grows out of the corner nearest the button, scale 0.94 to 1 over 140 ms, and the hover is one fill that slides between rows without crossing a separator. On a touch device the same rows rise in a drawer.",
   entries: [
     {
       slug: "menu",
       name: "Menu",
-      source: "components/Menu.tsx",
+      source: "components/ResponsiveMenu.tsx",
       Demo: () => (
         <Variants
           items={[
@@ -24,26 +31,32 @@ export const menu: Group = {
               label: "Deck options",
               note: "Items lead with an icon and may show a shortcut. A destructive item goes last, under a rule, in the danger tone.",
               render: () => (
-                <Menu>
-                  <MenuTrigger>
-                    {(p) => (
-                      <Button size="sm" {...p}>
+                <ResponsiveMenu>
+                  <ResponsiveMenuTrigger
+                    render={
+                      <Button size="sm">
                         Deck options
                         <MoreHorizontal aria-hidden="true" />
                       </Button>
-                    )}
-                  </MenuTrigger>
-                  <MenuList align="start">
-                    <MenuItem icon={<Pencil />}>Rename</MenuItem>
-                    <MenuItem icon={<Download />} kbd="⌘E">
+                    }
+                  />
+                  <ResponsiveMenuContent label="Deck options" align="start">
+                    <ResponsiveMenuItem>
+                      <Pencil />
+                      Rename
+                    </ResponsiveMenuItem>
+                    <ResponsiveMenuItem>
+                      <Download />
                       Export as CSV
-                    </MenuItem>
-                    <MenuSeparator />
-                    <MenuItem icon={<Archive />} tone="danger">
+                      <ResponsiveMenuShortcut>⌘E</ResponsiveMenuShortcut>
+                    </ResponsiveMenuItem>
+                    <ResponsiveMenuSeparator />
+                    <ResponsiveMenuItem variant="destructive">
+                      <Archive />
                       Archive deck
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                    </ResponsiveMenuItem>
+                  </ResponsiveMenuContent>
+                </ResponsiveMenu>
               ),
             },
           ]}

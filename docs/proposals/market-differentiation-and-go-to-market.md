@@ -922,6 +922,8 @@ AI tutoring, competitive games, public deck marketplaces, classes, broad PDF or 
 
 ### SEO strategy for a low-maintenance launch
 
+[Search and AI discovery for lymi.app](search-and-ai-discovery.md) audits the built site against this strategy and orders the work.
+
 SEO should be treated as a product and evidence system, not a volume-writing system. Google's current guidance prioritizes useful, reliable, people-first content and explicitly says that no technique can guarantee first place; changes may take weeks or months to affect search ([SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)).
 
 #### Layer 1: make public pages reliably indexable

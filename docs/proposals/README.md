@@ -30,4 +30,5 @@ Aim for fewer than 1,000 words. Link extended research instead of reproducing it
 | [End-to-end testing CI policy](end-to-end-testing-ci-policy.md) | Exploration |
 | [Public deck library and progressive series](public-deck-library-and-progressive-series.md) | Accepted by ADR 0015 and ADR 0016; planned in [docs/plans/2026-09-13-public-deck-library-and-progressive-series.md](../plans/2026-09-13-public-deck-library-and-progressive-series.md) |
 | [Shared decks](shared-decks.md) | Accepted by ADR 0011, planned |
+| [Search and AI discovery for lymi.app](search-and-ai-discovery.md) | Exploration; refines the search layer of the go-to-market proposal |
 | [Payments and a low-cost paid plan](premium-subscription-and-payments.md) | Exploration |

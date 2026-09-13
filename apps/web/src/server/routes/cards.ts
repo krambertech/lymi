@@ -19,9 +19,9 @@ import {
   addCards,
   archiveCard,
   cardHistory,
-  getCard,
   restoreCard,
   searchCards,
+  showCard,
   updateCard,
 } from "../services";
 
@@ -94,7 +94,7 @@ cards.get(
     ok: { schema: CardOut, description: "The card" },
     errors: [404],
   }),
-  async (c) => c.json(await getCard(ctxOf(c), c.req.param("id"))),
+  async (c) => c.json(await showCard(ctxOf(c), c.req.param("id"))),
 );
 
 cards.get(

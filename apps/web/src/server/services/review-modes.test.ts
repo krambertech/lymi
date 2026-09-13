@@ -202,3 +202,33 @@ describe("review modes after the migration", () => {
     expect(follows).toMatchObject({ directions: null, reviewModes: null });
   });
 });
+
+describe("GET /api/cards/:id", () => {
+  it("returns the card with its review modes, as PATCH and MCP do", async () => {
+    const { Hono } = await import("hono");
+    const { cards } = await import("../routes/cards");
+    const test = await testDb();
+    try {
+      const ctx = await (await import("./test-db")).learner(test.db, "g", "G");
+      const deck = await createDeck(ctx, { name: "Get", directions: "production" });
+      const [added] = await addCards(ctx, [{ deckId: deck.id, term: "get" }]);
+      if (added?.status !== "added") throw new Error("card not added");
+      const app = new Hono<import("../index").AppEnv>();
+      app.use("*", async (c, next) => {
+        c.set("db", test.db);
+        c.set("user", { id: "g" } as never);
+        c.set("actor", "user");
+        c.set("scope", "write");
+        await next();
+      });
+      app.route("/api/cards", cards);
+      const res = await app.request(`/api/cards/${added.card.id}`);
+      const body = (await res.json()) as Record<string, unknown>;
+      expect(res.status).toBe(200);
+      expect(body).toMatchObject({ reviewModes: null, directions: null });
+      expect(body).not.toHaveProperty("reviewModeKeys");
+    } finally {
+      await test.dispose();
+    }
+  }, 60_000);
+});

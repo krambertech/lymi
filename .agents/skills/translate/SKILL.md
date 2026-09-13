@@ -1,7 +1,7 @@
 ---
 name: translate
 description: |
-  Translate and maintain Lymi's Ukrainian and Russian Lingui catalogs, and transcreate the public site's copy. Use when interface or site strings change, catalogs have empty entries, or a localization check fails.
+  Translate and maintain Lymi's Ukrainian and Russian Lingui catalogs and transcreate site copy. Use when interface or site strings change, catalogs have empty entries, or a localization check fails.
 ---
 
 # Translate Lymi's catalogs
@@ -26,15 +26,15 @@ English component text is the source. `pnpm i18n:extract` updates the Lingui cat
 
 ## Site copy is transcreated
 
-The landing and Join pages in `apps/site` explain Lymi to someone who has never used it. A faithful translation that reads like a translation fails that reader. For site catalogs, write what a native copywriter would write for the same reader and the same job; this replaces "translate meaning, not English syntax". The rest of the translation bar still applies.
+Landing and Join copy in `apps/site` must read as if it was written in Ukrainian or Russian. For site catalogs, this replaces "translate meaning, not English syntax"; the rest of the bar applies.
 
-1. **Name each block's job.** Before writing, state in one line who reads the headline, paragraph or button and what it should make them understand or do, using [`PRODUCT.md`](../../../PRODUCT.md). The job is the source; the English wording is one way to do it.
-2. **Fix the message boundaries.** A headline or paragraph split across several `<Trans>` or `msg` messages locks the translation to English sentence order. Wrap the whole headline or paragraph as one message in the component, run `pnpm i18n:extract`, then write.
-3. **Draft candidates for the lines that sell.** For each headline, subheading, call to action, page title, meta description and Open Graph or Twitter text, write two or three candidates that take different angles. Put your recommendation in the catalog. List all of them in the pull request with the block's job and one line on what each trades, so Kateryna picks. Body paragraphs get one version.
-4. **Change the wording, keep the substance.** Idiom, metaphor, sentence order, rhythm and which detail leads are free to change. Every product fact stays exactly as the English states it: add no feature, promise or number, and drop none. Keep the calm voice from [`DESIGN.md`](../../../DESIGN.md): no hype, urgency or exclamation marks.
-5. **Use the reader's search words in metadata.** The page title and meta description use the phrase a Ukrainian or Russian speaker would search for, which may not match the English. Visible copy still follows the glossary.
-6. **Write each language from the job.** Draft the Russian from the English and the job, never by adapting the Ukrainian, and the reverse. The two readers need different idioms.
-7. **Read it cold.** Read each block as a native speaker who has never seen the English. Rewrite any phrase that only makes sense when translated back. Flag a headline that may wrap badly at phone width for visual review.
+1. **Start from the job.** Name who reads each block and what it should make them do, from [`PRODUCT.md`](../../../PRODUCT.md).
+2. **Wrap whole units.** Make each headline and paragraph one message, then run `pnpm i18n:extract`.
+3. **Offer candidates.** Write two or three for each headline, call to action, page title and social or meta description. Put your pick in the catalog and list all of them in the pull request, one line each.
+4. **Keep the facts.** Change idiom, order and rhythm freely. Add or drop no feature, promise or number.
+5. **Use search words in metadata.** The title and description use what a native speaker would search for.
+6. **Write each language from the English.** Never adapt one translation into the other.
+7. **Read it cold.** Rewrite anything that only makes sense in English.
 
 ## Glossary
 

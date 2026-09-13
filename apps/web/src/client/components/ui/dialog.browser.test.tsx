@@ -90,6 +90,32 @@ describe("Dialog", () => {
     }
   });
 
+  test(
+    desktop
+      ? "takes its width from the caller"
+      : "spans the drawer with the same inset on both sides, whatever width the caller asks for",
+    async () => {
+      await render(
+        <Dialog defaultOpen>
+          <DialogContent className="w-[min(92vw,440px)]">
+            <DialogTitle>New deck</DialogTitle>
+            <input aria-label="Name" className="w-full" />
+          </DialogContent>
+        </Dialog>,
+      );
+      const popup = page.getByRole("dialog", { name: "New deck" });
+      await expect.element(popup).toBeVisible();
+      const field = page.getByRole("textbox", { name: "Name" }).element().getBoundingClientRect();
+      const box = popup.element().getBoundingClientRect();
+      if (desktop) {
+        expect(box.width).toBeCloseTo(440, 0);
+      } else {
+        expect(field.left - box.left).toBeGreaterThan(0);
+        expect(box.right - field.right).toBeCloseTo(field.left - box.left, 0);
+      }
+    },
+  );
+
   test("is named by its title and described by its description", async () => {
     const screen = await render(<Harness />);
     await screen.getByRole("button", { name: "Sign out" }).click();

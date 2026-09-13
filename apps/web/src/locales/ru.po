@@ -717,7 +717,6 @@ msgid "Choose new photo"
 msgstr "Выбрать новое фото"
 
 #: src/client/components/AddCardSheet.tsx
-#: src/client/components/Combobox.tsx
 #: src/client/views/SettingsView.tsx
 msgid "Choose one"
 msgstr "Выбери один вариант"
@@ -1494,10 +1493,6 @@ msgstr "Здесь пока ничего"
 msgid "Nothing in it yet"
 msgstr "Здесь пока пусто"
 
-#: src/client/components/Combobox.tsx
-msgid "Nothing matches"
-msgstr "Ничего не найдено"
-
 #: src/client/views/DeckDetailView.tsx
 msgid "Nothing matches “{q}”"
 msgstr "Ничего не найдено по запросу «{q}»"
@@ -1847,7 +1842,6 @@ msgstr "sbrigarsi"
 msgid "Schedule"
 msgstr "Расписание"
 
-#: src/client/components/Combobox.tsx
 #: src/client/components/ShortcutsDialog.tsx
 #: src/client/views/Shell.tsx
 msgid "Search"
@@ -2254,10 +2248,6 @@ msgstr "Обновлено {lastAdded}"
 #: src/client/components/DeckFields.tsx
 msgid "Use “{tag}” as the tag"
 msgstr "Использовать «{tag}» как тег"
-
-#: src/client/components/Combobox.tsx
-msgid "Use “{v}”"
-msgstr "Использовать «{v}»"
 
 #: src/client/components/NewDeckSheet.tsx
 msgid "Use a language tag like ca, pt-BR or zh-Hant."

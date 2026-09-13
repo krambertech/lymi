@@ -146,6 +146,8 @@ describe("Tooltip", () => {
       await render(
         <TooltipProvider>
           <dialog ref={(node) => node?.showModal()}>
+            {/* Takes the dialog's autofocus, so Tab lands on the control rather than leaving the page. */}
+            <button type="button">Before</button>
             <IconButton label="Close" size="sm">
               <Pencil />
             </IconButton>

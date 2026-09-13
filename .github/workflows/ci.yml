@@ -209,4 +209,4 @@ jobs:
         env:
           PREVIEW_URL: ${{ steps.preview.outputs.url }}
           PREVIEW_VERSION_ID: ${{ steps.preview.outputs.version_id }}
-        run: node scripts/check-deployment.mjs "$PREVIEW_URL/api/health" lymi-site "$PREVIEW_VERSION_ID"
+        run: node scripts/check-deployment.mjs "$PREVIEW_URL/api/health" lymi-site "$PREVIEW_VERSION_ID" 10

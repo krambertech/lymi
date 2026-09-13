@@ -711,7 +711,9 @@ msgstr "Вибери ціле число від 1 до 200."
 msgid "Choose new photo"
 msgstr "Вибрати нове фото"
 
+#: src/client/components/AddCardSheet.tsx
 #: src/client/components/Combobox.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Choose one"
 msgstr "Вибери один варіант"
 

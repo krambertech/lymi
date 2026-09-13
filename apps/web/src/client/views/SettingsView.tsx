@@ -4,11 +4,17 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import type { ReactNode } from "react";
 import { AccountGroup } from "../components/AccountSection";
-import { Select } from "../components/Combobox";
 import { Field } from "../components/Field";
 import { Segmented } from "../components/Segmented";
 import { SettingsGroup } from "../components/SettingsGroup";
 import { Skeleton } from "../components/Skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
 import type { Me } from "../lib/api";
 import type { ThemeChoice } from "../lib/theme";
 import { Page, PageHeader } from "./Shell";
@@ -71,11 +77,22 @@ export function SettingsView({
           <Field label={t`Language`} className="w-56 [&_label]:sr-only">
             <Select
               value={language}
-              onChange={(v) => {
+              onValueChange={(v) => {
                 if (v && v !== language) onLanguage(v as AppLanguage);
               }}
-              options={LANGUAGES}
-            />
+              items={LANGUAGES}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={t`Choose one`} />
+              </SelectTrigger>
+              <SelectContent aria-label={t`Language`}>
+                {LANGUAGES.map((o) => (
+                  <SelectItem key={o.value} value={o.value}>
+                    {o.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </Field>
         ) : (
           <Skeleton className="h-10 w-56 rounded-md" />

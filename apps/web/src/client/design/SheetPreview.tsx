@@ -8,13 +8,11 @@ import type { ReactNode } from "react";
 export function SheetPreview({
   shape,
   title,
-  titleHidden,
   className,
   children,
 }: {
   shape: "drawer" | "dialog";
   title: string;
-  titleHidden?: boolean | undefined;
   className?: string | undefined;
   children: ReactNode;
 }) {
@@ -32,7 +30,7 @@ export function SheetPreview({
         </div>
       )}
       <div className={clsx("grid gap-4", shape === "drawer" ? "px-4 pt-2 pb-5" : "p-5")}>
-        <h2 className={titleHidden ? "sr-only" : "text-lg font-medium text-text"}>{title}</h2>
+        <h2 className="text-lg font-medium text-text">{title}</h2>
         {children}
       </div>
     </div>

@@ -1,12 +1,21 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Checkbox } from "../../components/Checkbox";
-import { Select } from "../../components/Combobox";
 import { CopyField } from "../../components/CopyField";
 import { LanguageField } from "../../components/DeckFields";
 import { Field, Input, Textarea } from "../../components/Field";
 import { Segmented } from "../../components/Segmented";
 import { Switch } from "../../components/Switch";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
 import { Variants } from "../Frame";
 import type { Group } from "./types";
 
@@ -232,19 +241,53 @@ export const forms: Group = {
   ],
 };
 
+const OWN_DECKS = DECKS.slice(0, 2);
+const SHARED_DECKS = [
+  { value: "d3", label: "Українська для Марко" },
+  { value: "d4", label: "Eesti keel, class of 2026" },
+];
+
+function DeckSelect({
+  value,
+  onChange,
+  placeholder,
+  disabled,
+}: {
+  value: string | null;
+  onChange: (value: string | null) => void;
+  placeholder?: string | undefined;
+  disabled?: boolean | undefined;
+}) {
+  return (
+    <Select value={value} onValueChange={onChange} items={DECKS} disabled={disabled}>
+      <SelectTrigger>
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent aria-label="Deck">
+        {DECKS.map((d) => (
+          <SelectItem key={d.value} value={d.value}>
+            {d.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+
 export const select: Group = {
   slug: "select",
   title: "Select",
-  lede: "For a short list. Closed, it is the same box as every other control. Open, a panel floats under it in the top layer, so the form does not move. The arrows walk the rows and typing a letter jumps to a name. The chosen row leads with a check, and every row keeps that room so nothing shifts.",
+  lede: "For a short list. Closed, it is the same box as every other control. On a desktop a panel unfolds under it, the arrows walk the rows and typing a letter jumps to a name. On a touch device the same rows rise in a drawer, under the thumb, and swipe away. The chosen row leads with a check, and every row keeps that room so nothing shifts.",
   entries: [
     {
       slug: "select",
       name: "Select",
-      source: "components/Combobox.tsx",
+      source: "components/ui/select.tsx",
       Demo: function SelectDemo() {
         const [deck, setDeck] = useState<string | null>("d1");
         const [empty, setEmpty] = useState<string | null>(null);
         const [missing, setMissing] = useState<string | null>(null);
+        const [grouped, setGrouped] = useState<string | null>("d3");
         return (
           <Variants
             items={[
@@ -253,7 +296,7 @@ export const select: Group = {
                 note: "A value is set. Open it to see the check on that row.",
                 render: () => (
                   <Field label="Deck" className={box}>
-                    <Select value={deck} onChange={setDeck} options={DECKS} />
+                    <DeckSelect value={deck} onChange={setDeck} />
                   </Field>
                 ),
               },
@@ -262,12 +305,7 @@ export const select: Group = {
                 note: "The placeholder names what to pick.",
                 render: () => (
                   <Field label="Deck" className={box}>
-                    <Select
-                      value={empty}
-                      onChange={setEmpty}
-                      options={DECKS}
-                      placeholder="Choose a deck"
-                    />
+                    <DeckSelect value={empty} onChange={setEmpty} placeholder="Choose a deck" />
                   </Field>
                 ),
               },
@@ -276,12 +314,7 @@ export const select: Group = {
                 note: "Submitted without a choice.",
                 render: () => (
                   <Field label="Deck" error="Choose a deck for this card." className={box}>
-                    <Select
-                      value={missing}
-                      onChange={setMissing}
-                      options={DECKS}
-                      placeholder="Choose a deck"
-                    />
+                    <DeckSelect value={missing} onChange={setMissing} placeholder="Choose a deck" />
                   </Field>
                 ),
               },
@@ -294,7 +327,43 @@ export const select: Group = {
                     hint="Cannot change while a review is running."
                     className={box}
                   >
-                    <Select value={deck} onChange={setDeck} options={DECKS} disabled />
+                    <DeckSelect value={deck} onChange={setDeck} disabled />
+                  </Field>
+                ),
+              },
+              {
+                label: "Groups",
+                note: "Two kinds of the same thing, each under a small label, with a rule between them. The hover fill never crosses the rule.",
+                render: () => (
+                  <Field label="Deck" className={box}>
+                    <Select
+                      value={grouped}
+                      onValueChange={setGrouped}
+                      items={[...OWN_DECKS, ...SHARED_DECKS]}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose a deck" />
+                      </SelectTrigger>
+                      <SelectContent aria-label="Deck">
+                        <SelectGroup>
+                          <SelectLabel>Your decks</SelectLabel>
+                          {OWN_DECKS.map((d) => (
+                            <SelectItem key={d.value} value={d.value}>
+                              {d.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                        <SelectSeparator />
+                        <SelectGroup>
+                          <SelectLabel>Shared with you</SelectLabel>
+                          {SHARED_DECKS.map((d) => (
+                            <SelectItem key={d.value} value={d.value}>
+                              {d.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </Field>
                 ),
               },

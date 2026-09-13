@@ -112,7 +112,7 @@ export const Textarea = forwardRef<
   );
 });
 
-/** Wires a control to its Field's id, hint, error and invalid state. Exported for Combobox. */
+/** Wires a control to its Field's id, hint, error and invalid state. Exported for Combobox and Select. */
 export function useControlProps(props: {
   id?: string | undefined;
   "aria-describedby"?: string | undefined;

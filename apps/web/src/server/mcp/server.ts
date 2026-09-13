@@ -356,7 +356,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         version: CardImagePatch.shape.version,
       }),
       outputSchema: CardOut,
-      annotations: { ...write, openWorldHint: true },
+      ...writeTool({ idempotent: false, overwrites: true }),
     },
     ({ cardId, url, data, description, version }) =>
       run("set_card_image", async () => {
@@ -386,7 +386,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Change what the card's picture description says. Null removes it, which pauses picture review for the card. Needs write.",
       inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardImagePatch.shape),
       outputSchema: CardOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: false, overwrites: true }),
     },
     ({ cardId, ...patch }) =>
       run("describe_card_image", async () => {
@@ -403,7 +403,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Hide the card's picture. Picture review pauses with its schedule intact; restore_card_image brings both back. Needs write.",
       inputSchema: z.object({ cardId: z.string().min(1), version: CardImagePatch.shape.version }),
       outputSchema: CardOut,
-      annotations: write,
+      ...writeTool({ idempotent: false }),
     },
     ({ cardId, version }) =>
       run("archive_card_image", async () => {
@@ -419,7 +419,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description: "Bring back the picture archived last, and picture review with it. Needs write.",
       inputSchema: z.object({ cardId: z.string().min(1), version: CardImagePatch.shape.version }),
       outputSchema: CardOut,
-      annotations: write,
+      ...writeTool({ idempotent: false }),
     },
     ({ cardId, version }) =>
       run("restore_card_image", async () => {

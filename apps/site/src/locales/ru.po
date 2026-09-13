@@ -511,8 +511,8 @@ msgid "Often called Iceland’s unofficial motto."
 msgstr "Её часто называют неофициальным девизом Исландии."
 
 #: src/components/landing/LandingView.tsx
-msgid "Open app"
-msgstr "Открыть приложение"
+msgid "Open Lymi"
+msgstr "Открыть Lymi"
 
 #: src/components/landing/AssistantMarks.tsx
 msgid "Other apps"

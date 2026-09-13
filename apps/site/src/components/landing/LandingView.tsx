@@ -66,7 +66,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             </a>
             <span className="hidden @2xl:contents">
               <a href={openAppUrl} className={buttonClass("ghost", "sm")}>
-                <Trans>Open app</Trans>
+                <Trans>Open Lymi</Trans>
               </a>
             </span>
             <a href="#join" className={buttonClass("secondary", "sm")}>
@@ -285,7 +285,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               <Trans>Support</Trans>
             </a>
             <a href={openAppUrl} className="rounded-xs hoverable:hover:text-text">
-              <Trans>Open app</Trans>
+              <Trans>Open Lymi</Trans>
             </a>
           </div>
         </div>

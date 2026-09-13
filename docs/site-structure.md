@@ -22,7 +22,7 @@ The product Worker permanently redirects `/docs`, `/docs/*`, `/join`, `/privacy`
 
 Having an account is different from being signed in. An existing learner with an expired product session reaches sign-in and returns to the original safe product path after authenticating. Return paths must be internal product routes; protocol-relative, external, malformed, hashed and authentication routes fall back to Today. Joining the beta list does not create an account, and access remains limited to the product's configured email allowlist.
 
-The public landing page's Open app link always goes to the product root and lets that origin resolve session state. The product's You screen links back to the public website. Authentication cookies remain host-only on `my.lymi.app` and are never sent to the website.
+The public landing page's Open Lymi link always goes to the product root and lets that origin resolve session state. The product's You screen links back to the public website. Authentication cookies remain host-only on `my.lymi.app` and are never sent to the website.
 
 ## Deployment and PWA boundary
 

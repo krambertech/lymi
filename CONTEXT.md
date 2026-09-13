@@ -30,7 +30,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Grade**: The learner's rating of one recall, 1 Forgot to 4 Easy. _Avoid_: Score, answer, rating (in prose)
 
-**Direction**: Which way a card is asked. Recognition shows the term. Production shows the meaning.
+**Review mode**: What a review shows before reveal (the cue) and what the learner grades (the target). Recognition is term → meaning and production is meaning → term. A deck and a card each have a list, and a card's list overrides its deck's. Only one mode of a card comes up in a review. ADR 0014. _Avoid_: Card type, side, front and back
+
+**Direction**: The older name for a deck's or card's text review modes, still accepted by the API. Recognition shows the term. Production shows the meaning.
 
 **Streak**: Days in a row whose daily goal was satisfied, drawn as the flame. Today adds once satisfied and is otherwise skipped, so an unfinished morning still shows yesterday's streak; a confirmed nothing-due day keeps the run without adding to it. Distinct from the seven lights, which say which days rather than how many. _Avoid_: Chain, run, days active
 

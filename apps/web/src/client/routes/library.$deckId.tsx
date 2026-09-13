@@ -1,11 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
-import type { Card } from "@lymi/core/schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api } from "../lib/api";
+import { api, type Card } from "../lib/api";
 import { cardHistoryQuery, deckCardsQuery, decksQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { DeckDetailView } from "../views/DeckDetailView";

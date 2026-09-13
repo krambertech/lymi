@@ -17,10 +17,13 @@ const appDir = fileURLToPath(new URL("../../../", import.meta.url));
 /**
  * A real D1 for service tests: wrangler's local runtime, in memory, with every migration
  * applied. The same database the Worker runs on, so a query that works here works there.
+ * `before` stops short of one migration so a test can seed data and apply the rest itself.
  */
-export async function testDb(): Promise<{
+export async function testDb(opts: { before?: string } = {}): Promise<{
   db: Db;
   env: TestBindings;
+  raw: D1Database;
+  migrate: (file: string) => Promise<void>;
   dispose: () => Promise<void>;
 }> {
   const proxy = await getPlatformProxy<TestBindings>({
@@ -29,18 +32,28 @@ export async function testDb(): Promise<{
     envFiles: [],
     persist: false,
   });
-  const migrations = readdirSync(`${appDir}migrations`)
-    .filter((file) => file.endsWith(".sql"))
-    .sort();
-  for (const file of migrations) {
+  const migrate = async (file: string) => {
     const statements = readFileSync(`${appDir}migrations/${file}`, "utf8")
       .split("--> statement-breakpoint")
       .map((statement) => statement.trim())
       // D1 refuses `PRAGMA foreign_keys`; it owns that setting itself.
       .filter((statement) => statement && !/^PRAGMA foreign_keys/i.test(statement));
     for (const statement of statements) await proxy.env.DB.prepare(statement).run();
+  };
+  const migrations = readdirSync(`${appDir}migrations`)
+    .filter((file) => file.endsWith(".sql"))
+    .sort();
+  for (const file of migrations) {
+    if (opts.before && file >= opts.before) break;
+    await migrate(file);
   }
-  return { db: createDb(proxy.env.DB), env: proxy.env, dispose: () => proxy.dispose() };
+  return {
+    db: createDb(proxy.env.DB),
+    env: proxy.env,
+    raw: proxy.env.DB,
+    migrate,
+    dispose: () => proxy.dispose(),
+  };
 }
 
 /** A signed-in learner. Inserts the Better Auth user row the foreign keys need. */

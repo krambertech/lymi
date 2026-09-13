@@ -1,9 +1,10 @@
 import type { Direction, MemberRole } from "@lymi/core";
-import { emptyState, newId, serializeState } from "@lymi/core";
+import { emptyState, modeOfStateDirection, newId, serializeState } from "@lymi/core";
 import { and, eq, inArray, isNotNull, isNull, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
+import { deckModes } from "./modes";
 
 /**
  * Decks the learner may see: their own, plus every deck they are an active member of.
@@ -51,6 +52,7 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
   const role: MemberRole = row.deck.userId === userId ? "owner" : (row.memberRole ?? "learner");
   return {
     ...row.deck,
+    reviewModes: deckModes(row.deck.directions),
     role,
     owner: { id: row.deck.userId, name: row.ownerName },
   };
@@ -127,6 +129,7 @@ export async function fillStates(
             cardId,
             userId,
             direction,
+            mode: modeOfStateDirection(direction),
             due: now,
             state: 0,
             fsrs,
@@ -174,7 +177,7 @@ export function stateStatementsForCard(db: Db, cardId: string, now = new Date())
         where deck_members.removed_at is null
       )
       select lower(hex(randomblob(10))), target.card_id, learners.user_id, ${direction},
-        ${due}, 0, ${fsrs}, null, ${due}, ${due}
+        ${due}, 0, ${fsrs}, null, ${due}, ${due}, ${modeOfStateDirection(direction)}
       from target cross join learners
       where target.directions = 'both' or target.directions = ${direction}`,
     ),
@@ -194,7 +197,7 @@ function stateStatementsForLearner(
     stateInsert(
       db,
       sql`select lower(hex(randomblob(10))), cards.id, ${userId}, ${direction},
-        ${due}, 0, ${fsrs}, null, ${due}, ${due}
+        ${due}, 0, ${fsrs}, null, ${due}, ${due}, ${modeOfStateDirection(direction)}
       from cards join decks on decks.id = cards.deck_id
       where cards.deck_id = ${deckId}
         and (coalesce(cards.directions, decks.directions) = 'both'

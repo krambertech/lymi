@@ -36,7 +36,7 @@ review.get(
     tags: ["Review"],
     summary: "Cards due now",
     description:
-      "Oldest due first, with at most one direction per card. Includes the four dates each grade would schedule for clients that need a preview.",
+      "Oldest due first, with at most one review mode per card. Each item says its `mode`: show the cue before reveal and grade the target. Includes the four dates each grade would schedule for clients that need a preview.",
     ok: { schema: QueueOut, description: "The queue" },
     errors: [400],
   }),
@@ -71,7 +71,7 @@ review.post(
     summary: "Grade a card",
     learnerOnly: true,
     description:
-      "Learner only: API keys and MCP tokens get 403 whatever their scope. A grade older than the state's last review is ignored and reported as `duplicate`, which makes offline replay safe. Every accepted grade is one attempt toward the learner-local day it happened on; `day` says where that day stands.",
+      "Learner only: API keys and MCP tokens get 403 whatever their scope. Name the graded `mode`; the legacy `direction` is still accepted. A grade older than the state's last review is ignored and reported as `duplicate`, which makes offline replay safe. Every accepted grade is one attempt toward the learner-local day it happened on; `day` says where that day stands.",
     ok: { schema: GradeOut, description: "The new schedule" },
     errors: [400, 404],
   }),
@@ -86,7 +86,7 @@ review.post(
     summary: "Undo a grade",
     learnerOnly: true,
     description:
-      "Learner only. Restores the card state the grade replaced and removes the attempt from its day's count, which can reopen a completed goal. Only the latest grade of a card's direction can be undone; an older one is 409. Undoing twice is harmless.",
+      "Learner only. Restores the card state the grade replaced and removes the attempt from its day's count, which can reopen a completed goal. Only the latest grade of a card's review mode can be undone; an older one is 409. Undoing twice is harmless.",
     ok: { schema: UndoOut, description: "The day after the undo" },
     errors: [400, 404, 409],
   }),

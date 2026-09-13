@@ -24,7 +24,7 @@ Update `PRODUCT.md`, `DESIGN.md`, `CONTEXT.md`, `docs/data-model.md` and `docs/s
 
 ### 2. Expand review persistence
 
-Add nullable canonical mode fields beside legacy directions in decks, cards, card states, reviews and active-session manifests. Add a `card_images` table with opaque ID and object key, owner, dimensions, type, size, description, source kind, version, provenance, timestamps and archive state; enforce one active image per card while retaining archived versions. Generate and inspect an additive migration. Complete when current text review behaves unchanged with dual reads and writes.
+Add nullable canonical mode fields beside legacy directions in card states, reviews and active-session manifests; decks keep their direction for text modes, and cards gain a picture-mode list when pictures arrive (ADR 0014, amended). Add a `card_images` table with opaque ID and object key, owner, dimensions, type, size, description, source kind, version, provenance, timestamps and archive state; enforce one active image per card while retaining archived versions. Generate and inspect an additive migration. Complete when current text review behaves unchanged with dual reads and writes.
 
 ### 3. Backfill without changing evidence
 
@@ -36,7 +36,7 @@ Store normalized bytes in a dedicated private R2 binding and expose one applicat
 
 ### 5. Add the editing experience
 
-Add one Picture section with upload, paste, device selection, description, processing, error, replace, conflict, archive and restore states. Expose learner-language review choices and explain missing eligibility when a deck default uses pictures. Complete when mobile and desktop flows are accessible and a description cannot accidentally be replaced by asynchronous work.
+Add one Picture section with upload, paste, device selection, description, processing, error, replace, conflict, archive and restore states. Expose learner-language review choices and explain missing eligibility when a card's modes use pictures. Complete when mobile and desktop flows are accessible and a description cannot accidentally be replaced by asynchronous work.
 
 ### 6. Add visual and offline review
 

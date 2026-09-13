@@ -1,6 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { deserializeState } from "@lymi/core";
-import type { Card, CardState, Review } from "@lymi/core/schema";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
@@ -29,7 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
-import type { DeckSummary } from "../lib/api";
+import type { Card, CardState, DeckSummary, Review } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./Shell";
 import { type WordEvent, type WordPatch, WordView } from "./WordView";

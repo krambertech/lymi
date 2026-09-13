@@ -17,11 +17,22 @@ import type {
   Rating,
   ReminderTime,
   ReviewDayProgress,
+  ReviewMode,
   Scope,
   SettingsPatch,
   StreakOut,
 } from "@lymi/core";
-import type { Card, CardState, Deck, Review } from "@lymi/core/schema";
+import type {
+  Card as CardRow,
+  CardState as CardStateRow,
+  Deck,
+  Review as ReviewRow,
+} from "@lymi/core/schema";
+
+/** A card as the API sends it, with its own review modes or null when it follows its deck. */
+export type Card = CardRow & { reviewModes: ReviewMode[] | null };
+export type CardState = Omit<CardStateRow, "mode"> & { mode: ReviewMode };
+export type Review = Omit<ReviewRow, "mode"> & { mode: ReviewMode };
 
 /** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {
@@ -97,6 +108,7 @@ export type DeckSummary = Pick<
   Deck,
   "id" | "name" | "description" | "defaultLanguage" | "directions" | "position"
 > & {
+  reviewModes: ReviewMode[];
   total: number;
   due: number;
   /** The learner's role in the deck and who owns it. Only the owner writes. ADR 0011. */
@@ -105,6 +117,7 @@ export type DeckSummary = Pick<
 };
 export type QueueItem = {
   card: Card;
+  mode: ReviewMode;
   direction: Direction;
   stateId: string;
   fsrsState: number;

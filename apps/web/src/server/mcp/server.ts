@@ -8,18 +8,18 @@ import {
   Directions,
   FieldSource,
   InsightsOut,
+  ReviewMode,
   SettingsPatch,
   StreakOut,
 } from "@lymi/core";
-import type { Card, Deck } from "@lymi/core/schema";
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import {
   addCards,
   archiveCard,
   archiveDeck,
+  type CardView,
   createDeck,
-  getCard,
   getDeck,
   getSettings,
   insights,
@@ -29,6 +29,7 @@ import {
   restoreDeck,
   ServiceError,
   searchCards,
+  showCard,
   streak,
   updateCard,
   updateDeck,
@@ -139,7 +140,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       outputSchema: CardOut,
       ...readTool,
     },
-    ({ cardId }) => run("get_card", async () => result(cardOut(await getCard(ctx, cardId)))),
+    ({ cardId }) => run("get_card", async () => result(cardOut(await showCard(ctx, cardId)))),
   );
 
   server.registerTool(
@@ -274,7 +275,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Edit a deck",
       description:
-        "Rename a deck, or change its description, default language or directions. Send only what changes. Needs write.",
+        "Rename a deck, or change its description, default language or review modes. Send only what changes. Needs write.",
       inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckInput.partial().shape),
       outputSchema: DeckOut,
       ...writeTool({ idempotent: false, overwrites: true }),
@@ -563,6 +564,10 @@ const CardOut = z.object({
   tags: z.array(z.string()),
   source: z.string().nullable(),
   directions: Directions.nullable(),
+  reviewModes: z
+    .array(ReviewMode)
+    .nullable()
+    .describe("Overrides the deck's review modes when set"),
   meaningSource: FieldSource.nullable(),
   exampleSource: FieldSource.nullable(),
   archivedAt: Timestamp.nullable(),
@@ -570,7 +575,7 @@ const CardOut = z.object({
 });
 type CardOut = z.infer<typeof CardOut>;
 
-function cardOut(card: Card): CardOut {
+function cardOut(card: CardView): CardOut {
   return {
     id: card.id,
     deckId: card.deckId,
@@ -583,6 +588,7 @@ function cardOut(card: Card): CardOut {
     tags: card.tags,
     source: card.source,
     directions: card.directions,
+    reviewModes: card.reviewModes,
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
@@ -596,18 +602,20 @@ const DeckOut = z.object({
   description: z.string().nullable(),
   defaultLanguage: z.string().nullable(),
   directions: Directions,
+  reviewModes: z.array(ReviewMode),
   archivedAt: Timestamp.nullable(),
   createdAt: Timestamp,
 });
 type DeckOut = z.infer<typeof DeckOut>;
 
-function deckOut(deck: Deck): DeckOut {
+function deckOut(deck: Awaited<ReturnType<typeof getDeck>>): DeckOut {
   return {
     id: deck.id,
     name: deck.name,
     description: deck.description,
     defaultLanguage: deck.defaultLanguage,
     directions: deck.directions,
+    reviewModes: deck.reviewModes,
     archivedAt: deck.archivedAt ? deck.archivedAt.toISOString() : null,
     createdAt: deck.createdAt.toISOString(),
   };
@@ -640,6 +648,7 @@ const DeckSummaryOut = z.object({
   description: z.string().nullable(),
   defaultLanguage: z.string().nullable(),
   directions: Directions,
+  reviewModes: z.array(ReviewMode),
   total: z.number().int(),
   due: z.number().int(),
 });
@@ -651,6 +660,7 @@ function deckSummary(deck: Awaited<ReturnType<typeof listDecks>>[number]) {
     description: deck.description,
     defaultLanguage: deck.defaultLanguage,
     directions: deck.directions,
+    reviewModes: deck.reviewModes,
     total: deck.total,
     due: deck.due,
   };

@@ -1,5 +1,8 @@
 import { ErrorOut } from "@lymi/core";
-import type { Context, MiddlewareHandler, ValidationTargets } from "hono";
+import { APIError } from "better-auth/api";
+import type { Context, ErrorHandler, MiddlewareHandler, ValidationTargets } from "hono";
+import { HTTPException } from "hono/http-exception";
+import { routePath } from "hono/route";
 import {
   type DescribeRouteOptions,
   describeRoute,
@@ -128,6 +131,26 @@ const ERRORS = {
   429: "The key is over its rate limit.",
   503: "This capability is not configured or temporarily unavailable.",
 } as const;
+
+export const handleError: ErrorHandler<AppEnv> = (err, c) => {
+  if (err instanceof ServiceError) {
+    return c.json({ error: err.message, issues: err.details }, statusOf(err));
+  }
+  if (err instanceof APIError) {
+    return c.json({ error: err.body?.message ?? err.message }, err.statusCode as 400);
+  }
+  // Hono's own errors, such as the 400 its validator throws on a body that is not JSON.
+  if (err instanceof HTTPException) {
+    return c.json({ error: err.message }, err.status);
+  }
+  // Drizzle and D1 messages carry the SQL and its bound learner data, so only the class name is logged.
+  console.error("Request failed", {
+    method: c.req.method,
+    route: routePath(c, -1),
+    error: err.name,
+  });
+  return c.json({ error: "Something went wrong" }, 500);
+};
 
 export function statusOf(err: ServiceError): 400 | 403 | 404 | 409 | 503 {
   switch (err.code) {

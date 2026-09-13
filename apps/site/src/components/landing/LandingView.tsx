@@ -29,21 +29,6 @@ const RESPONSE = `{
   }
 }`;
 
-const LOOP = [
-  {
-    title: "Capture it",
-    body: "Save a term by hand, from an assistant, or through the API.",
-  },
-  {
-    title: "Enrich it",
-    body: "Let AI fill only the fields you left empty. Every source stays visible.",
-  },
-  {
-    title: "Remember it",
-    body: "Recall first, reveal second. Lymi schedules what comes next.",
-  },
-] as const;
-
 const USE_CASES = [
   {
     id: "languages",
@@ -122,54 +107,20 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
       </header>
 
       <main>
-        <section aria-labelledby="loop-title" className="border-y border-edge px-5 @2xl:px-10">
-          <h2 id="loop-title" className="sr-only">
-            How Lymi works
-          </h2>
-          <ol className="mx-auto grid max-w-[1120px] @2xl:grid-cols-3">
-            {LOOP.map((item, index) => (
-              <li
-                key={item.title}
-                className="flex gap-4 border-b border-edge py-7 last:border-b-0 @2xl:border-r @2xl:border-b-0 @2xl:px-8 @2xl:first:pl-0 @2xl:last:border-r-0 @2xl:last:pr-0"
-              >
-                <span className="pt-0.5 text-xs tabular-nums text-amber-text">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="text-md font-medium text-text">{item.title}</h3>
-                  <p className="mt-1 max-w-[32ch] text-sm text-muted">{item.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section
-          aria-labelledby="use-cases-title"
-          className="border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28"
-        >
+        <section className="border-y border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
           <div className="mx-auto max-w-[1040px]">
-            <h2
-              id="use-cases-title"
-              className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:whitespace-nowrap @2xl:text-5xl"
-            >
-              For whatever you’re learning.
-            </h2>
-
-            <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @4xl:grid-cols-4 @4xl:gap-4">
-              {USE_CASES.map((useCase) => (
-                <li
-                  id={`use-case-${useCase.id}`}
-                  key={useCase.id}
-                  className="edge rounded-lg bg-canvas px-6 py-6 @4xl:min-h-[180px] @4xl:py-7"
-                >
-                  <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
-                    {useCase.title}
-                  </h3>
-                  <p className="mt-3 max-w-[28ch] text-sm text-muted">{useCase.body}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="mx-auto max-w-[680px] text-center">
+              <h2 className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
+                The right moment matters.
+              </h2>
+              <p className="mt-5 text-md text-text-2">
+                Memory fades. A well-timed recall strengthens it and lets the next gap grow. Lymi
+                schedules with FSRS, then adapts to every grade.
+              </p>
+            </div>
+            <div className="mt-14">
+              <WhyItWorks />
+            </div>
           </div>
         </section>
 
@@ -207,6 +158,35 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             <div className="order-2 min-w-0 py-4 @4xl:order-1 @4xl:pr-6">
               <EnrichDemo />
             </div>
+          </div>
+        </section>
+
+        <section
+          aria-labelledby="use-cases-title"
+          className="border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28"
+        >
+          <div className="mx-auto max-w-[1040px]">
+            <h2
+              id="use-cases-title"
+              className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:whitespace-nowrap @2xl:text-5xl"
+            >
+              For whatever you’re learning.
+            </h2>
+
+            <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @4xl:grid-cols-4 @4xl:gap-4">
+              {USE_CASES.map((useCase) => (
+                <li
+                  id={`use-case-${useCase.id}`}
+                  key={useCase.id}
+                  className="edge rounded-lg bg-canvas px-6 py-6 @4xl:min-h-[180px] @4xl:py-7"
+                >
+                  <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
+                    {useCase.title}
+                  </h3>
+                  <p className="mt-3 max-w-[28ch] text-sm text-muted">{useCase.body}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -287,23 +267,6 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           </div>
         </section>
 
-        <section className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
-          <div className="mx-auto max-w-[1040px]">
-            <div className="mx-auto max-w-[680px] text-center">
-              <h2 className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
-                The right moment matters.
-              </h2>
-              <p className="mt-5 text-md text-text-2">
-                Memory fades. A well-timed recall strengthens it and lets the next gap grow. Lymi
-                schedules with FSRS, then adapts to every grade.
-              </p>
-            </div>
-            <div className="mt-14">
-              <WhyItWorks />
-            </div>
-          </div>
-        </section>
-
         <section id="join" className="scroll-mt-8 px-5 py-20 @2xl:px-10 @4xl:py-28">
           <div className="mx-auto grid max-w-[1040px] gap-10 rounded-2xl bg-plate-2 p-7 edge-inset @2xl:p-12 @4xl:grid-cols-[0.9fr_1.1fr] @4xl:items-center @4xl:gap-20 @4xl:p-16">
             <div>
@@ -311,8 +274,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
                 Bring your next lesson with you.
               </h2>
               <p className="mt-5 max-w-[44ch] text-md text-text-2">
-                Join the private beta for unlimited cards and every integration. We will write when
-                there is room.
+                <Trans>The private beta is free. We’ll write when there’s room for you.</Trans>
               </p>
             </div>
             <JoinBeta />

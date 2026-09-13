@@ -22,18 +22,9 @@ const NOTES = [
 ] as const;
 
 export function WhyItWorks() {
-  const figure = useRef<HTMLElement>(null);
-  const inView = useInView(figure, { once: true, amount: 0.24 });
-  const still = useReducedMotion();
-
   return (
-    <figure ref={figure} className="m-0">
-      <motion.ul
-        className="flex flex-wrap justify-center gap-x-7 gap-y-2 text-xs"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: inView ? 1 : 0 }}
-        transition={{ duration: still ? 0.18 : 0.35 }}
-      >
+    <figure className="m-0">
+      <ul className="flex flex-wrap justify-center gap-x-7 gap-y-2 text-xs">
         <li className="flex items-center gap-2 text-text-2">
           <span className="h-px w-7 bg-amber" aria-hidden="true" />
           Reviewed with Lymi
@@ -42,7 +33,7 @@ export function WhyItWorks() {
           <span className="h-px w-7 bg-muted" aria-hidden="true" />
           Learned once, never revisited
         </li>
-      </motion.ul>
+      </ul>
 
       <svg
         viewBox="0 0 320 104"
@@ -70,34 +61,18 @@ export function WhyItWorks() {
           </text>
         </g>
 
-        <motion.path
-          d={FADED}
-          fill="none"
-          stroke="var(--muted)"
-          strokeWidth="0.9"
-          strokeLinecap="round"
-          initial={still ? false : { pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: still ? 1 : inView ? 1 : 0, opacity: inView ? 1 : 0 }}
-          transition={{ duration: still ? 0.18 : 1.8, ease: [0.19, 1, 0.22, 1] }}
-        />
-        <motion.path
+        <path d={FADED} fill="none" stroke="var(--muted)" strokeWidth="0.9" strokeLinecap="round" />
+        <path
           d={REVIEWED}
           fill="none"
           stroke="var(--amber)"
           strokeWidth="1.15"
           strokeLinecap="round"
           strokeLinejoin="round"
-          initial={still ? false : { pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: still ? 1 : inView ? 1 : 0, opacity: inView ? 1 : 0 }}
-          transition={{
-            duration: still ? 0.18 : 2.6,
-            delay: still || !inView ? 0 : 0.22,
-            ease: [0.19, 1, 0.22, 1],
-          }}
         />
 
-        {[70, 130, 228].map((x, index) => (
-          <motion.circle
+        {[70, 130, 228].map((x) => (
+          <circle
             key={x}
             cx={x}
             cy={14}
@@ -105,12 +80,6 @@ export function WhyItWorks() {
             fill="var(--flame-core)"
             stroke="var(--amber)"
             strokeWidth="0.45"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: inView ? 1 : 0 }}
-            transition={{
-              duration: 0.2,
-              delay: still || !inView ? 0 : 0.9 + index * 0.52,
-            }}
           />
         ))}
 
@@ -125,27 +94,14 @@ export function WhyItWorks() {
       </svg>
 
       <div className="mx-auto mt-8 grid max-w-[860px] gap-8 @2xl:grid-cols-2 @2xl:gap-12">
-        {NOTES.map((note, index) => (
-          <motion.div
-            key={note.title}
-            className="border-t border-edge pt-5"
-            initial={still ? { opacity: 0 } : { opacity: 0, y: 8 }}
-            animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : still ? 0 : 8 }}
-            transition={{
-              duration: still ? 0.18 : 0.48,
-              delay: still || !inView ? 0 : 1.3 + index * 0.55,
-              ease: [0.19, 1, 0.22, 1],
-            }}
-          >
+        {NOTES.map((note) => (
+          <div key={note.title} className="border-t border-edge pt-5">
             <p className="text-xs text-amber-text">{note.moment}</p>
             <h3 className="mt-2 text-lg font-medium text-text">{note.title}</h3>
             <p className="mt-2 text-base text-text-2">{note.body}</p>
-          </motion.div>
+          </div>
         ))}
       </div>
     </figure>
   );
 }
-
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useRef } from "react";

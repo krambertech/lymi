@@ -410,6 +410,10 @@ msgstr "The knack of reading the room"
 msgid "The player would pass, if chess allowed it."
 msgstr "The player would pass, if chess allowed it."
 
+#: src/components/landing/LandingView.tsx
+msgid "The private beta is free. We’ll write when there’s room for you."
+msgstr "The private beta is free. We’ll write when there’s room for you."
+
 #: src/components/landing/hand-cards.ts
 msgid "The push behind ragtime, funk and reggae."
 msgstr "The push behind ragtime, funk and reggae."

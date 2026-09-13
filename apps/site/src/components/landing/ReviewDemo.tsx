@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { SAMPLE_CARDS } from "./cards";
 
 /**
@@ -21,16 +21,10 @@ const DECK = [SAMPLE_CARDS[0], SAMPLE_CARDS[3], SAMPLE_CARDS[1], SAMPLE_CARDS[6]
 
 const SPRING = { type: "spring", duration: 0.68, bounce: 0.14 } as const;
 
-/**
- * One working review. It demonstrates recall, reveal, and grading once it enters the viewport,
- * then leaves the controls available so the reader can continue from the final card.
- */
+/** One working review that waits on an unturned card until the visitor presses it. */
 export function ReviewDemo() {
-  const box = useRef<HTMLDivElement>(null);
   const advanceTimer = useRef<number | null>(null);
-  const sequenceTimers = useRef<number[]>([]);
   const still = useReducedMotion();
-  const inView = useInView(box, { once: true, amount: 0.4 });
   const [index, setIndex] = useState(0);
   const [revealedFor, setRevealedFor] = useState(-1);
   const [answered, setAnswered] = useState<number | null>(null);
@@ -39,67 +33,28 @@ export function ReviewDemo() {
   const chosen = answered === null ? null : GRADES[answered];
   const revealed = revealedFor === index;
 
-  const stopSequence = useCallback(() => {
-    sequenceTimers.current.forEach(window.clearTimeout);
-    sequenceTimers.current = [];
-  }, []);
-
-  const answer = useCallback(
-    (n: number) => {
-      if (!revealed || answered !== null) return;
-      stopSequence();
-      setAnswered(n);
-      advanceTimer.current = window.setTimeout(
-        () => {
-          setIndex((i) => i + 1);
-          setAnswered(null);
-        },
-        still ? 0 : 1250,
-      );
-    },
-    [answered, revealed, still, stopSequence],
-  );
-
-  useEffect(() => {
-    if (!inView) return;
-    if (still) {
-      setRevealedFor(0);
-      return;
-    }
-
-    const later = (delay: number, action: () => void) => {
-      sequenceTimers.current.push(window.setTimeout(action, delay));
-    };
-    later(900, () => setRevealedFor(0));
-    later(2600, () => setAnswered(2));
-    later(3800, () => {
-      setIndex(1);
-      setRevealedFor(-1);
-      setAnswered(null);
-    });
-    later(5000, () => setRevealedFor(1));
-    later(6800, () => setAnswered(3));
-    later(8000, () => {
-      setIndex(2);
-      setRevealedFor(-1);
-      setAnswered(null);
-    });
-    later(9200, () => setRevealedFor(2));
-
-    return stopSequence;
-  }, [inView, still, stopSequence]);
+  const answer = (n: number) => {
+    if (!revealed || answered !== null) return;
+    setAnswered(n);
+    advanceTimer.current = window.setTimeout(
+      () => {
+        setIndex((i) => i + 1);
+        setAnswered(null);
+      },
+      still ? 0 : 1250,
+    );
+  };
 
   useEffect(() => {
     return () => {
-      stopSequence();
       if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current);
     };
-  }, [stopSequence]);
+  }, []);
 
   if (!card) return null;
 
   return (
-    <div ref={box} className="rounded-md outline-offset-4">
+    <div className="rounded-md outline-offset-4">
       <div className="mx-auto flex max-w-[380px] items-center justify-between text-2xs tracking-[0.06em] text-muted uppercase">
         <span>Tonight</span>
         <span className="tabular-nums">{DECK.length - (index % DECK.length)} due</span>
@@ -149,10 +104,7 @@ export function ReviewDemo() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={still ? { duration: 0 } : { duration: 0.2 }}
-                    onClick={() => {
-                      stopSequence();
-                      setRevealedFor(index);
-                    }}
+                    onClick={() => setRevealedFor(index)}
                     className="mt-5 w-full rounded-sm border border-edge-2 border-dashed py-2.5 text-sm text-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-text-2"
                   >
                     Show the meaning

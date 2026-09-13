@@ -6,6 +6,7 @@ import {
   Directions,
   FieldSource,
   MemberRole,
+  Rating,
   ReminderTime,
   ReviewMode,
   Scope,
@@ -253,6 +254,64 @@ export const QueueItemOut = z
 export const QueueOut = z
   .object({ total: z.number().int(), items: z.array(QueueItemOut) })
   .meta({ id: "Queue" });
+
+const DrawModeOut = z
+  .object({
+    mode: ReviewMode.meta({ description: "Show the cue before reveal and grade the target" }),
+    direction: Direction.optional().meta({
+      description: "Legacy form of `mode`, present for text modes only",
+    }),
+    stateId: z.string(),
+    fsrsState: z.number().int().meta({ description: "0 New, 1 Learning, 2 Review, 3 Relearning" }),
+    due: Timestamp,
+    retrievability: z
+      .number()
+      .meta({ description: "At the start of the day, 0 to 1; 0 for a direction never reviewed" }),
+    added: Timestamp.meta({ description: "When the direction began to exist for the learner" }),
+    hasCue: z
+      .boolean()
+      .meta({ description: "False when the card lacks what this direction shows first" }),
+  })
+  .meta({ id: "DrawMode" });
+
+const DrawCardOut = z
+  .object({
+    card: CardOut,
+    modes: z.array(DrawModeOut).meta({ description: "In the order they are introduced" }),
+  })
+  .meta({ id: "DrawCard" });
+
+const DrawLogEntryOut = z
+  .object({
+    cardId: z.string(),
+    mode: ReviewMode,
+    direction: Direction.optional().meta({
+      description: "Legacy form of `mode`, present for text modes only",
+    }),
+    rating: Rating,
+    stateBefore: z.number().int().meta({ description: "FSRS state before the grade" }),
+    at: Timestamp,
+  })
+  .meta({ id: "DrawLogEntry" });
+
+export const DrawOut = z
+  .object({
+    day: z.object({
+      date: z.string().meta({ description: "Local YYYY-MM-DD" }),
+      zone: z.string().meta({ description: "The review timezone the day follows" }),
+      start: Timestamp,
+      end: Timestamp.meta({ description: "The start of the next day, exclusive" }),
+    }),
+    goal: z.number().int(),
+    attempts: z.number().int().meta({ description: "Accepted, non-undone grades today" }),
+    total: z.number().int().meta({ description: "Cards that can be reviewed today in this scope" }),
+    cards: z.array(DrawCardOut),
+    log: z
+      .array(DrawLogEntryOut)
+      .meta({ description: "Today's grades in every scope, oldest first" }),
+  })
+  .meta({ id: "Draw" });
+export type DrawOut = z.infer<typeof DrawOut>;
 
 export const GradeOut = z
   .object({

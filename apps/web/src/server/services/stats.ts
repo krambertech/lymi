@@ -1,7 +1,7 @@
 import { and, desc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
-import { addDays, dateFormatter, daysBetween } from "./days";
+import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
 import { memberOf } from "./members";
 
@@ -59,7 +59,7 @@ export interface RecallPoint {
 async function retention(
   { db, userId }: ServiceContext,
   since: Date | null,
-  fmt: Intl.DateTimeFormat,
+  fmt: LocalDateFormatter,
   bucket: "week" | "month",
 ): Promise<{ passed: number; failed: number; series: RecallPoint[] }> {
   const rows = await db
@@ -122,7 +122,7 @@ async function retention(
  */
 async function lights(
   { db, userId }: ServiceContext,
-  fmt: Intl.DateTimeFormat,
+  fmt: LocalDateFormatter,
 ): Promise<DayLight[]> {
   // Grouped by UTC day, keeping the first and last review of each. Reviews inside one UTC
   // day span 24 hours, so they can touch at most two local days, and those two are the
@@ -230,7 +230,7 @@ async function collection({ db, userId }: ServiceContext) {
  * Cards due on each of the next seven local days, today first. Anything already overdue is
  * counted into today, because that is when the learner will meet it.
  */
-async function forecast({ db, userId }: ServiceContext, fmt: Intl.DateTimeFormat) {
+async function forecast({ db, userId }: ServiceContext, fmt: LocalDateFormatter) {
   const today = fmt.format(new Date());
   // One extra day of slack so a due time late on day seven is not cut off by the zone.
   const horizon = new Date(Date.parse(`${addDays(today, 8)}T00:00:00Z`) + DAY_MS);

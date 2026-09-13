@@ -13,15 +13,20 @@ export type { FsrsCard };
 export { State };
 
 /**
+ * One learning and relearning step, ADR 0019. The step sets FSRS state only: a missed mode
+ * returns after a number of attempts, not minutes, so `draw` never reads the ten minutes.
+ */
+export const LEARNING_STEPS = ["10m"] as const;
+
+/**
  * One scheduler for the whole app. Parameters are the FSRS defaults for now;
  * once there is review history they can be optimised per user.
  */
 const scheduler = fsrs(
   generatorParameters({
     enable_fuzz: true,
-    // Cards graduate to Review after these learning steps.
-    learning_steps: ["1m", "10m"],
-    relearning_steps: ["10m"],
+    learning_steps: LEARNING_STEPS,
+    relearning_steps: LEARNING_STEPS,
   }),
 );
 
@@ -128,5 +133,7 @@ export function deserializeState(json: string): FsrsCard {
   const card = { ...(raw as unknown as FsrsCard), due: new Date(raw.due as string) };
   if (raw.last_review) card.last_review = new Date(raw.last_review as string);
   else delete (card as Partial<FsrsCard>).last_review;
+  // A card on the old two-step ladder would graduate on Forgot once the ladder has one step.
+  card.learning_steps = Math.min(card.learning_steps, LEARNING_STEPS.length - 1);
   return card;
 }

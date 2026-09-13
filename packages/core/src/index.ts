@@ -1,3 +1,4 @@
+export * from "./draw";
 export * from "./fsrs";
 export * from "./ids";
 export * from "./images";

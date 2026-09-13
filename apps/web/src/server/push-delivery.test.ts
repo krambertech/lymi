@@ -9,6 +9,7 @@ import {
 
 const candidate = {
   id: "push-1",
+  user_id: "learner-1",
   endpoint: "https://push.example/subscription",
   p256dh: "public-key",
   auth: "auth-key",
@@ -16,19 +17,19 @@ const candidate = {
   timezone: "Europe/Tallinn",
   last_sent_local_date: null,
   app_language: null,
-  due_count: 7,
+  review_timezone: null as string | null,
 };
+const seven = async () => 7;
 
 function fakeEnv(row = candidate, claimChanges = 1) {
   const statements: string[] = [];
   const prepare = vi.fn((sql: string) => {
     statements.push(sql);
-    return {
-      bind: vi.fn(() => ({
-        all: vi.fn().mockResolvedValue({ results: [row] }),
-        run: vi.fn().mockResolvedValue({ meta: { changes: claimChanges } }),
-      })),
+    const statement = {
+      all: vi.fn().mockResolvedValue({ results: [row] }),
+      run: vi.fn().mockResolvedValue({ meta: { changes: claimChanges } }),
     };
+    return { ...statement, bind: vi.fn(() => statement) };
   });
   const env = Object.assign(Object.create(null), {
     DB: Object.assign(Object.create(null), { prepare }) as D1Database,
@@ -100,24 +101,48 @@ describe("review reminder delivery", () => {
   it("claims the local date and sends one reminder", async () => {
     const { env, statements } = fakeEnv();
     const send = vi.fn().mockResolvedValue(undefined);
+    const count = vi.fn(seven);
     await expect(
-      dispatchReviewReminders(env, new Date("2026-09-06T16:07:00.000Z"), send),
+      dispatchReviewReminders(env, new Date("2026-09-06T16:07:00.000Z"), send, count),
     ).resolves.toEqual({ considered: 1, sent: 1, expired: 0, failed: 0 });
     expect(send).toHaveBeenCalledOnce();
     expect(send).toHaveBeenCalledWith(expect.objectContaining({ id: "push-1" }), 7, env);
     expect(statements.some((sql) => sql.includes("last_sent_local_date = ?"))).toBe(true);
+    expect(count).toHaveBeenCalledWith("learner-1", "Europe/Tallinn", expect.any(Date));
+  });
+
+  it("counts the review day in the review zone, not the device zone", async () => {
+    const { env } = fakeEnv({ ...candidate, review_timezone: "Asia/Tokyo" });
+    const count = vi.fn(seven);
+    await dispatchReviewReminders(env, new Date("2026-09-06T16:07:00.000Z"), vi.fn(), count);
+    expect(count).toHaveBeenCalledWith("learner-1", "Asia/Tokyo", expect.any(Date));
   });
 
   it("does not send without due cards or after another invocation won the claim", async () => {
-    const noCards = fakeEnv({ ...candidate, due_count: 0 });
+    const noCards = fakeEnv();
     const send = vi.fn().mockResolvedValue(undefined);
     expect(
-      await dispatchReviewReminders(noCards.env, new Date("2026-09-06T16:07:00.000Z"), send),
+      await dispatchReviewReminders(
+        noCards.env,
+        new Date("2026-09-06T16:07:00.000Z"),
+        send,
+        async () => 0,
+      ),
     ).toMatchObject({ sent: 0 });
+
+    const closed = fakeEnv();
+    const count = vi.fn(seven);
+    await dispatchReviewReminders(closed.env, new Date("2026-09-06T12:00:00.000Z"), send, count);
+    expect(count).not.toHaveBeenCalled();
 
     const duplicate = fakeEnv(candidate, 0);
     expect(
-      await dispatchReviewReminders(duplicate.env, new Date("2026-09-06T16:07:00.000Z"), send),
+      await dispatchReviewReminders(
+        duplicate.env,
+        new Date("2026-09-06T16:07:00.000Z"),
+        send,
+        seven,
+      ),
     ).toMatchObject({ sent: 0 });
     expect(send).not.toHaveBeenCalled();
   });
@@ -129,6 +154,7 @@ describe("review reminder delivery", () => {
       expired.env,
       new Date("2026-09-06T16:07:00.000Z"),
       vi.fn().mockRejectedValue(gone),
+      seven,
     );
     expect(expiredResult).toMatchObject({ expired: 1, failed: 0 });
     expect(expired.statements.some((sql) => sql.includes("DELETE FROM push_subscriptions"))).toBe(
@@ -140,6 +166,7 @@ describe("review reminder delivery", () => {
       transient.env,
       new Date("2026-09-06T16:07:00.000Z"),
       vi.fn().mockRejectedValue(new Error("temporary")),
+      seven,
     );
     expect(failedResult).toMatchObject({ expired: 0, failed: 1 });
     expect(

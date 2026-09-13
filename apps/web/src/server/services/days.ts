@@ -1,25 +1,19 @@
+import { localDate } from "@lymi/core";
+
 /** Calendar arithmetic on learner-local dates. Everything stored is UTC; a day is a zone's date. */
 
 const DAY_MS = 86_400_000;
 
-/** Resolves an instant to its local calendar date. Falls back to UTC for an unknown zone. */
-export function dateFormatter(zone: string): Intl.DateTimeFormat {
-  try {
-    // en-CA formats as YYYY-MM-DD, which is the shape every caller here wants.
-    return new Intl.DateTimeFormat("en-CA", {
-      timeZone: zone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-  } catch {
-    return new Intl.DateTimeFormat("en-CA", {
-      timeZone: "UTC",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-  }
+/**
+ * Resolves an instant to its local YYYY-MM-DD through the one implementation in core, so a
+ * grade's review day and the draw's day window can never disagree about the date.
+ */
+export function dateFormatter(zone: string): LocalDateFormatter {
+  return { format: (instant) => localDate(instant, zone) };
+}
+
+export interface LocalDateFormatter {
+  format: (instant: Date) => string;
 }
 
 /** Calendar arithmetic on a YYYY-MM-DD, which no timezone can shift. */

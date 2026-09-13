@@ -103,9 +103,10 @@ describe("a member studies the owner's deck", () => {
     expect(await dueFor(kateryna, deck.id)).toBe(2);
     expect((await reviewQueue(kateryna, { deckId: deck.id })).total).toBe(before.total);
     // Insights spans every deck Anna studies, so count the change this deck made.
+    // Good on a new card graduates it: the one learning step is only for a miss.
     expect((await insights(anna)).cards).toMatchObject({
       total: annaBefore.total + 2,
-      learning: annaBefore.learning + 1,
+      known: annaBefore.known + 1,
       new: annaBefore.new + 1,
     });
   });

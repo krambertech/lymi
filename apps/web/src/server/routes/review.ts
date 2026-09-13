@@ -1,9 +1,24 @@
-import { GradeInput, GradeOut, QueueOut, ReviewDayProgress, UndoInput, UndoOut } from "@lymi/core";
+import {
+  DrawOut,
+  GradeInput,
+  GradeOut,
+  QueueOut,
+  ReviewDayProgress,
+  UndoInput,
+  UndoOut,
+} from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
-import { checkToday, gradeCard, reviewHistory, reviewQueue, undoReview } from "../services";
+import {
+  checkToday,
+  gradeCard,
+  reviewDraw,
+  reviewHistory,
+  reviewQueue,
+  undoReview,
+} from "../services";
 
 export const review = new Hono<AppEnv>();
 
@@ -34,9 +49,9 @@ review.get(
   "/queue",
   describe({
     tags: ["Review"],
-    summary: "Cards due now",
+    summary: "Cards to review today, in order",
     description:
-      "Oldest due first, with at most one review mode per card. Each item says its `mode`: show the cue before reveal and grade the target. Includes the four dates each grade would schedule for clients that need a preview.",
+      "The order today's review takes if every grade succeeds: cards missed earlier today at their gaps, cards left learning from an earlier day, then the reviews you still know best with one new card in five. One review mode per card per day; each item says its `mode`: show the cue before reveal and grade the target. `total` counts every card that can be reviewed today. Includes the four dates each grade would schedule for clients that need a preview.",
     ok: { schema: QueueOut, description: "The queue" },
     errors: [400],
   }),
@@ -44,6 +59,39 @@ review.get(
   async (c) => {
     const { deck, limit } = c.req.valid("query");
     return c.json(await reviewQueue(ctxOf(c), { deckId: deck, limit }));
+  },
+);
+
+const DrawQuery = z.object({
+  deck: z.string().optional().meta({ description: "Limit the cards to one deck" }),
+  limit: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(500)
+    .optional()
+    .meta({ description: "Cards from the front of the order. Default 100" }),
+  tz: z
+    .string()
+    .max(64)
+    .optional()
+    .meta({ description: "IANA timezone, used only until a review zone is known" }),
+});
+
+review.get(
+  "/draw",
+  describe({
+    tags: ["Review"],
+    summary: "What the draw reads",
+    description:
+      "The inputs a client needs to pick the next card itself: the learner-local day, the goal, the cards at the front of today's order with every direction they are asked in, and today's accepted grades in every scope. A card missed today is included whatever the limit. Nothing about a review is stored, so the same inputs give the same next card on every device.",
+    ok: { schema: DrawOut, description: "The draw's inputs" },
+    errors: [400],
+  }),
+  query(DrawQuery, "query"),
+  async (c) => {
+    const { deck, limit, tz } = c.req.valid("query");
+    return c.json(await reviewDraw(ctxOf(c), { deckId: deck, limit, zone: tz }));
   },
 );
 

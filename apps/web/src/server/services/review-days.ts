@@ -6,7 +6,7 @@ import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { addDays, dateFormatter, daysBetween } from "./days";
-import { dueCount } from "./due";
+import { drawableCount } from "./draw";
 import { ensureSettings, getSettings } from "./settings";
 
 /**
@@ -131,7 +131,11 @@ export async function settleDay(
 ): Promise<DayProgress> {
   const attempts = await attemptsOn(ctx, day.id);
   const isToday = day.date === dateFormatter(day.timezone).format(now);
-  const empty = isToday && attempts > 0 && attempts < day.goal && (await dueCount(ctx, now)) === 0;
+  const empty =
+    isToday &&
+    attempts > 0 &&
+    attempts < day.goal &&
+    (await drawableCount(ctx, { now, zone: day.timezone })) === 0;
 
   let outcome: Outcome;
   if (attempts >= day.goal) outcome = "goal_met";
@@ -158,7 +162,7 @@ export async function checkToday(ctx: ServiceContext, reported?: string | undefi
   const settings = await getSettings(ctx);
   const now = new Date();
   const date = dateFormatter(zone).format(now);
-  const due = await dueCount(ctx, now);
+  const due = await drawableCount(ctx, { now, zone });
   const [existing] = await ctx.db
     .select()
     .from(schema.reviewDays)

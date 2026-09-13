@@ -3,6 +3,7 @@ import { useRender } from "@base-ui/react/use-render";
 import { cn } from "cn";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
+import { useDrawerListKeyDown } from "../../lib/drawer-list-keys";
 import { useFluidHover } from "../../lib/fluid-hover";
 import { FluidHighlight } from "../FluidHighlight";
 import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
@@ -146,40 +147,12 @@ function AnchoredContent({
   );
 }
 
-/**
- * The rows in a drawer, with the anchored menu's keyboard model for a touch device with a keyboard
- * attached: rows are out of the tab order, arrow keys walk them, disabled rows included so a screen
- * reader still hears them, and Tab leaves the menu, which closes it.
- */
+/** The rows in a drawer, with the anchored menu's keyboard model: the arrows wrap at the ends, as Base UI's menu does. */
 function DrawerMenuContent({ "aria-label": label, className, children }: ContentProps) {
   const { setOpen } = useDropdownMenu("DropdownMenuContent");
   const ref = React.useRef<HTMLDivElement>(null);
-  const onKeyDown = React.useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Tab") {
-        e.preventDefault();
-        setOpen(false);
-        return;
-      }
-      const items = Array.from(ref.current?.querySelectorAll<HTMLElement>(ITEM) ?? []);
-      const i = items.indexOf(document.activeElement as HTMLElement);
-      const to =
-        e.key === "ArrowDown"
-          ? items[(i + 1) % items.length]
-          : e.key === "ArrowUp"
-            ? items[(i - 1 + items.length) % items.length]
-            : e.key === "Home"
-              ? items[0]
-              : e.key === "End"
-                ? items.at(-1)
-                : undefined;
-      if (to) {
-        e.preventDefault();
-        to.focus();
-      }
-    },
-    [setOpen],
-  );
+  const onLeave = React.useCallback(() => setOpen(false), [setOpen]);
+  const onKeyDown = useDrawerListKeyDown(ref, { items: ITEM, loop: true, onLeave });
   return (
     <DrawerContent
       aria-label={label}

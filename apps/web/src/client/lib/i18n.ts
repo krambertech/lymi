@@ -20,8 +20,7 @@ export function pickLocale(languages: readonly string[] = navigator.languages): 
   return "en";
 }
 
-/** The last language the learner chose on this browser, written the moment it was chosen. */
-export function readStoredLanguage(): AppLanguage | null {
+function readStored(): AppLanguage | null {
   try {
     const value = localStorage.getItem(KEY);
     return isAppLanguage(value) ? value : null;
@@ -53,7 +52,7 @@ export function activate(locale: AppLanguage) {
  * the settings query correct it once it lands.
  */
 export function bootstrapLanguage(pathname: string) {
-  const stored = isBareShell(pathname) ? null : readStoredLanguage();
+  const stored = isBareShell(pathname) ? null : readStored();
   const locale = stored ?? pickLocale();
   i18n.load(locale, catalogs[locale]);
   i18n.activate(locale);

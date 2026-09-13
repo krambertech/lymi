@@ -127,6 +127,15 @@ describe("Select", () => {
     await expect.element(listbox()).toBeVisible();
     await expect.element(page.getByRole("group", { name: "Your decks" })).toBeInTheDocument();
     await expect.element(page.getByRole("group", { name: "Shared with you" })).toBeInTheDocument();
+    // An unlabelled group names nothing, rather than pointing at an id that is not there.
+    const groups = page.getByRole("group").elements();
+    expect(
+      groups.every(
+        (g) =>
+          !g.hasAttribute("aria-labelledby") ||
+          document.getElementById(g.getAttribute("aria-labelledby") as string),
+      ),
+    ).toBe(true);
     expect(document.querySelector('[data-slot="select-separator"]')).not.toBeNull();
     const chosen = option("Українська для Марко");
     await expect.element(chosen).toHaveAttribute("aria-selected", "true");
@@ -145,6 +154,7 @@ describe("Select", () => {
       await expect.element(listbox()).toBeVisible();
       await expect.element(option("Portuguese")).toBeVisible();
       await expect.poll(() => box.getAttribute("aria-expanded")).toBe("true");
+      await expect.poll(() => box.hasAttribute("data-popup-open")).toBe(true);
       if (desktop) {
         expect(document.querySelector('[data-slot="drawer-popup"]')).toBeNull();
         const rect = box.getBoundingClientRect();
@@ -229,6 +239,28 @@ describe("Select", () => {
 
     expect(onValueChange).toHaveBeenCalledExactlyOnceWith(null);
     await expect.element(combobox()).toHaveTextContent("Choose a deck");
+  });
+
+  test("a null row with its own label shows that label in the box", async () => {
+    await render(
+      <Select defaultValue="d1" items={[{ value: null, label: "No deck" }, ...DECKS]}>
+        <SelectTrigger>
+          <SelectValue placeholder="Choose a deck" />
+        </SelectTrigger>
+        <SelectContent aria-label="Deck">
+          <SelectItem value={null}>No deck</SelectItem>
+          {DECKS.map((deck) => (
+            <SelectItem key={deck.value} value={deck.value}>
+              {deck.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>,
+    );
+    await page.getByRole("combobox").click();
+    await option("No deck").click();
+
+    await expect.element(page.getByRole("combobox")).toHaveTextContent("No deck");
   });
 
   test("closes on Escape and hands focus back to the box", async () => {

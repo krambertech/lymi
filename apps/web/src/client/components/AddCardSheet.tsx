@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { CardInput } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { type AddCardOutcome, api, type DeckSummary, errorMessage } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { decksQuery } from "../lib/queries";
@@ -97,6 +97,10 @@ export function AddCardForm({
   useEffect(() => {
     if (!deck && decks?.[0]) setDeck(decks[0].id);
   }, [decks, deck]);
+  const deckItems = useMemo(
+    () => (decks ?? []).map((d) => ({ value: d.id, label: d.name })),
+    [decks],
+  );
 
   const noDecks = decks?.length === 0;
   const deckName = decks?.find((d) => d.id === deck)?.name;
@@ -194,15 +198,15 @@ export function AddCardForm({
               setDeck(v ?? "");
               setInvalid(({ deckId: _, ...rest }) => rest);
             }}
-            items={(decks ?? []).map((d) => ({ value: d.id, label: d.name }))}
+            items={deckItems}
           >
             <SelectTrigger>
               <SelectValue placeholder={t`Choose one`} />
             </SelectTrigger>
             <SelectContent aria-label={t`Deck`}>
-              {(decks ?? []).map((d) => (
-                <SelectItem key={d.id} value={d.id}>
-                  {d.name}
+              {deckItems.map((d) => (
+                <SelectItem key={d.value} value={d.value}>
+                  {d.label}
                 </SelectItem>
               ))}
             </SelectContent>

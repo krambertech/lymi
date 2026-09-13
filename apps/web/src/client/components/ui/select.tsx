@@ -4,6 +4,7 @@ import { cn } from "cn";
 import { Check, ChevronDown } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
+import { useDrawerListKeyDown } from "../../lib/drawer-list-keys";
 import { useFluidHover } from "../../lib/fluid-hover";
 import { controlBase, controlSize, useControlProps } from "../Field";
 import { FluidHighlight } from "../FluidHighlight";
@@ -149,12 +150,12 @@ function SelectTrigger({ className, children, ...props }: TriggerProps) {
   const classes = cn(
     controlBase,
     controlSize,
-    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:edge-2 data-placeholder:text-muted",
+    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:edge-2 data-placeholder:text-muted",
     className,
   );
   const chevron = (
     <ChevronDown
-      className="size-4 shrink-0 text-muted transition-transform duration-150 motion-reduce:transition-none [[data-open]>&]:rotate-180"
+      className="size-4 shrink-0 text-muted transition-transform duration-150 motion-reduce:transition-none [[data-popup-open]>&]:rotate-180"
       aria-hidden="true"
     />
   );
@@ -174,7 +175,8 @@ function SelectTrigger({ className, children, ...props }: TriggerProps) {
       aria-haspopup="listbox"
       aria-expanded={open}
       aria-required={required || undefined}
-      data-open={open || undefined}
+      // The attribute Base UI's own triggers carry, so both shapes style the open box the same way.
+      data-popup-open={open || undefined}
       data-placeholder={value === null || undefined}
       disabled={disabled}
       className={classes}
@@ -203,12 +205,14 @@ function SelectValue({ placeholder, className, children }: ValueProps) {
       </SelectPrimitive.Value>
     );
   }
+  const named = items?.find((item) => item.value === value)?.label;
+  // Like Base UI: a null row's own label, e.g. "No language", before the placeholder.
   const label =
     typeof children === "function"
       ? children(value)
       : value === null
-        ? placeholder
-        : (children ?? items?.find((item) => item.value === value)?.label ?? value);
+        ? (named ?? placeholder)
+        : (children ?? named ?? value);
   return (
     <span data-slot="select-value" className={classes}>
       {label}
@@ -273,46 +277,17 @@ function AnchoredContent({
   );
 }
 
-/**
- * The rows in a drawer, with the anchored list's keyboard model for a touch device with a keyboard
- * attached: rows are out of the tab order, the arrows walk them, disabled rows included so a screen
- * reader still hears them, typing a letter jumps to a name, and Tab leaves the list, which closes it.
- */
+/** The rows in a drawer, with the anchored list's keyboard model: the arrows stop at the ends, as Base UI's list does. */
 function DrawerListContent({ "aria-label": label, className, children }: ContentProps) {
   const { setOpen } = useSelect("SelectContent");
   const ref = React.useRef<HTMLDivElement>(null);
-  const typed = React.useRef({ text: "", at: 0 });
-  const onKeyDown = React.useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Tab") {
-        e.preventDefault();
-        setOpen(false);
-        return;
-      }
-      const rows = Array.from(ref.current?.querySelectorAll<HTMLElement>(OPTION) ?? []);
-      if (rows.length === 0) return;
-      const i = rows.indexOf(document.activeElement as HTMLElement);
-      let to: HTMLElement | undefined;
-      if (e.key === "ArrowDown") to = rows[Math.min(i + 1, rows.length - 1)];
-      else if (e.key === "ArrowUp") to = rows[Math.max(i - 1, 0)];
-      else if (e.key === "Home") to = rows[0];
-      else if (e.key === "End") to = rows.at(-1);
-      else if (e.key.length === 1 && e.key !== " " && !e.metaKey && !e.ctrlKey && !e.altKey) {
-        // Letters typed within 600 ms of each other spell one name; a single letter walks the matches.
-        const now = Date.now();
-        const text = (now - typed.current.at < 600 ? typed.current.text : "") + e.key.toLowerCase();
-        typed.current = { text, at: now };
-        const from = text.length === 1 ? i + 1 : Math.max(i, 0);
-        const order = rows.map((_, k) => rows[(k + from) % rows.length] as HTMLElement);
-        to = order.find((row) => row.textContent?.trim().toLowerCase().startsWith(text));
-      }
-      if (to) {
-        e.preventDefault();
-        to.focus();
-      }
-    },
-    [setOpen],
-  );
+  const onLeave = React.useCallback(() => setOpen(false), [setOpen]);
+  const onKeyDown = useDrawerListKeyDown(ref, {
+    items: OPTION,
+    loop: false,
+    typeahead: true,
+    onLeave,
+  });
   return (
     <DrawerContent
       // Through the drawer rather than an effect, so it still knows the box to hand focus back to.
@@ -340,7 +315,11 @@ function DrawerListContent({ "aria-label": label, className, children }: Content
   );
 }
 
-const GroupLabelContext = React.createContext<string | undefined>(undefined);
+/** A drawer group names itself by its label only once a label has mounted. */
+const GroupLabelContext = React.createContext<{
+  id: string;
+  register: (mounted: boolean) => void;
+} | null>(null);
 
 function SelectGroup({
   className,
@@ -350,7 +329,9 @@ function SelectGroup({
   children: React.ReactNode;
 }) {
   const { shape } = useSelect("SelectGroup");
-  const labelId = React.useId();
+  const id = React.useId();
+  const [labelled, setLabelled] = React.useState(false);
+  const context = React.useMemo(() => ({ id, register: setLabelled }), [id]);
   if (shape === "desktop") {
     return (
       <SelectPrimitive.Group data-slot="select-group" className={className}>
@@ -359,9 +340,14 @@ function SelectGroup({
     );
   }
   return (
-    <GroupLabelContext.Provider value={labelId}>
+    <GroupLabelContext.Provider value={context}>
       {/* biome-ignore lint/a11y/useSemanticElements: a group of options, which a fieldset is not */}
-      <div role="group" aria-labelledby={labelId} data-slot="select-group" className={className}>
+      <div
+        role="group"
+        aria-labelledby={labelled ? id : undefined}
+        data-slot="select-group"
+        className={className}
+      >
         {children}
       </div>
     </GroupLabelContext.Provider>
@@ -376,14 +362,19 @@ function SelectLabel({
   children: React.ReactNode;
 }) {
   const { shape } = useSelect("SelectLabel");
-  const labelId = React.useContext(GroupLabelContext);
+  const group = React.useContext(GroupLabelContext);
+  const register = group?.register;
+  React.useEffect(() => {
+    register?.(true);
+    return () => register?.(false);
+  }, [register]);
   const classes = cn("px-2.5 py-1.5 text-xs text-muted", className);
   return shape === "desktop" ? (
     <SelectPrimitive.GroupLabel data-slot="select-label" className={classes}>
       {children}
     </SelectPrimitive.GroupLabel>
   ) : (
-    <div id={labelId} data-slot="select-label" className={classes}>
+    <div id={group?.id} data-slot="select-label" className={classes}>
       {children}
     </div>
   );

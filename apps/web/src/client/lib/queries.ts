@@ -7,10 +7,14 @@ export const meQuery = queryOptions({
   retry: false,
   staleTime: 5 * 60_000,
 });
+// Not persisted: the persister writes a second late, so a snapshot could outlive a language change
+// and, with this staleTime, hold the old language for minutes after a reload. The stored choice
+// in lib/i18n covers boot until the fetch lands.
 export const settingsQuery = queryOptions({
   queryKey: ["settings"],
   queryFn: api.settings,
   staleTime: 5 * 60_000,
+  meta: { persist: false },
 });
 // Counts change with every review, so the persisted copy is only a placeholder until the refetch lands.
 export const decksQuery = queryOptions({

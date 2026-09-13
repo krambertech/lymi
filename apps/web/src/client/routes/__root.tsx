@@ -13,6 +13,7 @@ import { AddCardSheet } from "../components/AddCardSheet";
 import { NewDeckSheet } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
 import { Toaster } from "../components/ui/toast";
+import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api, flushOutbox } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
@@ -46,18 +47,21 @@ function Root() {
   return (
     // Under reduced motion, Motion drops travel and scale and keeps the fades.
     <MotionConfig reducedMotion="user">
-      <AddCardProvider>
-        <SignOutProvider>
-          <Shell />
-          <Toaster label={t`Notifications`} closeLabel={t`Dismiss`} />
-          {/* Personas and seeds mean nothing on the design system pages. */}
-          {DevPanel && !pathname.startsWith("/design") && (
-            <Suspense fallback={null}>
-              <DevPanel />
-            </Suspense>
-          )}
-        </SignOutProvider>
-      </AddCardProvider>
+      {/* One provider, so the next tooltip along a row of controls opens at once. */}
+      <TooltipProvider>
+        <AddCardProvider>
+          <SignOutProvider>
+            <Shell />
+            <Toaster label={t`Notifications`} closeLabel={t`Dismiss`} />
+            {/* Personas and seeds mean nothing on the design system pages. */}
+            {DevPanel && !pathname.startsWith("/design") && (
+              <Suspense fallback={null}>
+                <DevPanel />
+              </Suspense>
+            )}
+          </SignOutProvider>
+        </AddCardProvider>
+      </TooltipProvider>
     </MotionConfig>
   );
 }

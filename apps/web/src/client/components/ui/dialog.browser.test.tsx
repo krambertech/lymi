@@ -2,22 +2,23 @@ import { useRef, useState } from "react";
 import { describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import { DESKTOP_QUERY } from "../lib/device";
+import { DESKTOP_QUERY } from "../../lib/device";
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-  ResponsiveDialogTrigger,
-} from "./ResponsiveDialog";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
 import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuTrigger,
-} from "./ResponsiveMenu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
 
 const desktop = inject("machine") === "desktop";
 
@@ -43,36 +44,34 @@ function Harness({
   const [open, setOpen] = useState(false);
   const stay = useRef<HTMLButtonElement>(null);
   return (
-    <ResponsiveDialog
+    <Dialog
       open={open}
       onOpenChange={(next) => {
         setOpen(next);
         onOpenChange?.(next);
       }}
     >
-      <ResponsiveDialogTrigger render={<button type="button">Sign out</button>} />
-      <ResponsiveDialogContent {...(safeFirst ? { initialFocus: stay } : {})}>
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Some grades haven’t synced</ResponsiveDialogTitle>
-          <ResponsiveDialogDescription>
-            Sign out once you’re back online.
-          </ResponsiveDialogDescription>
-        </ResponsiveDialogHeader>
+      <DialogTrigger render={<button type="button">Sign out</button>} />
+      <DialogContent {...(safeFirst ? { initialFocus: stay } : {})}>
+        <DialogHeader>
+          <DialogTitle>Some grades haven’t synced</DialogTitle>
+          <DialogDescription>Sign out once you’re back online.</DialogDescription>
+        </DialogHeader>
         <input aria-label="Note" />
-        <ResponsiveDialogFooter>
+        <DialogFooter>
           <button type="button" ref={stay} onClick={() => setOpen(false)}>
             Stay signed in
           </button>
           <button type="button">Sign out and lose them</button>
-        </ResponsiveDialogFooter>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
 const dialog = () => page.getByRole("dialog", { name: "Some grades haven’t synced" });
 
-describe("ResponsiveDialog", () => {
+describe("Dialog", () => {
   test(desktop ? "is a centred dialog" : "is a drawer from the bottom edge", async () => {
     const screen = await render(<Harness />);
     await screen.getByRole("button", { name: "Sign out" }).click();
@@ -146,6 +145,23 @@ describe("ResponsiveDialog", () => {
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 
+  test("closes from a DialogClose part", async () => {
+    const screen = await render(
+      <Dialog>
+        <DialogTrigger render={<button type="button">Shortcuts</button>} />
+        <DialogContent>
+          <DialogTitle>Keyboard shortcuts</DialogTitle>
+          <DialogClose render={<button type="button">Done</button>} />
+        </DialogContent>
+      </Dialog>,
+    );
+    await screen.getByRole("button", { name: "Shortcuts" }).click();
+    await expect.element(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toBeVisible();
+    await page.getByRole("button", { name: "Done" }).click();
+
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
   test("lands focus on the safe action when asked", async () => {
     const screen = await render(<Harness safeFirst />);
     await openWithKeyboard(screen.getByRole("button", { name: "Sign out" }));
@@ -168,22 +184,20 @@ describe("ResponsiveDialog", () => {
       const [open, setOpen] = useState(false);
       return (
         <>
-          <ResponsiveMenu>
-            <ResponsiveMenuTrigger render={<button type="button">Options</button>} />
-            <ResponsiveMenuContent label="Options">
-              <ResponsiveMenuItem onClick={() => setOpen(true)}>
-                Keyboard shortcuts
-              </ResponsiveMenuItem>
-            </ResponsiveMenuContent>
-          </ResponsiveMenu>
-          <ResponsiveDialog open={open} onOpenChange={setOpen}>
-            <ResponsiveDialogContent>
-              <ResponsiveDialogTitle>Keyboard shortcuts</ResponsiveDialogTitle>
+          <DropdownMenu>
+            <DropdownMenuTrigger render={<button type="button">Options</button>} />
+            <DropdownMenuContent aria-label="Options">
+              <DropdownMenuItem onClick={() => setOpen(true)}>Keyboard shortcuts</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent>
+              <DialogTitle>Keyboard shortcuts</DialogTitle>
               <button type="button" onClick={() => setOpen(false)}>
                 Close
               </button>
-            </ResponsiveDialogContent>
-          </ResponsiveDialog>
+            </DialogContent>
+          </Dialog>
         </>
       );
     }

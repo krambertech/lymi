@@ -4,13 +4,13 @@ import { useNavigate } from "@tanstack/react-router";
 import { createContext, type ReactNode, useCallback, useContext, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from "../components/ResponsiveDialog";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../components/ui/dialog";
 import { flushOutbox, outboxSize } from "./api";
 import { signOut as endSession } from "./auth";
 import { clearPersistedLearnerState } from "./persisted";
@@ -65,21 +65,21 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
   return (
     <SignOutCtx.Provider value={{ signOut, busy }}>
       {children}
-      <ResponsiveDialog open={queued > 0} onOpenChange={(next) => !next && setQueued(0)}>
-        <ResponsiveDialogContent initialFocus={stayRef}>
-          <ResponsiveDialogHeader>
-            <ResponsiveDialogTitle>
+      <Dialog open={queued > 0} onOpenChange={(next) => !next && setQueued(0)}>
+        <DialogContent initialFocus={stayRef}>
+          <DialogHeader>
+            <DialogTitle>
               <Trans>Some grades haven’t synced</Trans>
-            </ResponsiveDialogTitle>
-            <ResponsiveDialogDescription>
+            </DialogTitle>
+            <DialogDescription>
               <Plural
                 value={queued}
                 one="# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it."
                 other="# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them."
               />
-            </ResponsiveDialogDescription>
-          </ResponsiveDialogHeader>
-          <ResponsiveDialogFooter>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
             <Button ref={stayRef} onClick={() => setQueued(0)}>
               <Trans>Stay signed in</Trans>
             </Button>
@@ -93,9 +93,9 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
             >
               <Trans>Sign out and lose them</Trans>
             </Button>
-          </ResponsiveDialogFooter>
-        </ResponsiveDialogContent>
-      </ResponsiveDialog>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </SignOutCtx.Provider>
   );
 }

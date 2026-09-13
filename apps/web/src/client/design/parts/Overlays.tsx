@@ -2,15 +2,15 @@ import { Archive, Download, MoreHorizontal, Pencil, Volume2 } from "lucide-react
 import { useState } from "react";
 import { Button, IconButton } from "../../components/Button";
 import { NewDeckForm } from "../../components/NewDeckSheet";
-import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from "../../components/ResponsiveDialog";
 import { Sheet, SheetPanel } from "../../components/Sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -180,7 +180,7 @@ export const overlays: Group = {
     {
       slug: "dialog",
       name: "Dialog",
-      source: "components/ResponsiveDialog.tsx",
+      source: "components/ui/dialog.tsx",
       note: "For the one action that cannot be undone. Everywhere else, act and offer Undo. Centred on a desktop; on a touch device a drawer with the actions stacked, the primary on top.",
       Demo: function DialogDemo() {
         const [open, setOpen] = useState(false);
@@ -199,25 +199,25 @@ export const overlays: Group = {
                 },
               ]}
             />
-            <ResponsiveDialog open={open} onOpenChange={setOpen}>
-              <ResponsiveDialogContent>
-                <ResponsiveDialogHeader>
-                  <ResponsiveDialogTitle>Delete this account?</ResponsiveDialogTitle>
-                  <ResponsiveDialogDescription>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Delete this account?</DialogTitle>
+                  <DialogDescription>
                     Every deck, card and review goes with it. This is the one action in Lymi that
                     cannot be undone.
-                  </ResponsiveDialogDescription>
-                </ResponsiveDialogHeader>
-                <ResponsiveDialogFooter>
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
                   <Button variant="ghost" onClick={() => setOpen(false)}>
                     Keep it
                   </Button>
                   <Button variant="danger" onClick={() => setOpen(false)}>
                     Delete account
                   </Button>
-                </ResponsiveDialogFooter>
-              </ResponsiveDialogContent>
-            </ResponsiveDialog>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </>
         );
       },

@@ -1,13 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "./Button";
 import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from "./ResponsiveDialog";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 
 /**
  * The steps for a browser that has no install prompt of its own. iPhone and iPad only let a
@@ -24,14 +24,12 @@ export function InstallDialog({
 }) {
   const { t } = useLingui();
   return (
-    <ResponsiveDialog open={open} onOpenChange={(next) => !next && onClose()}>
-      <ResponsiveDialogContent>
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>
-            {ios ? t`Add Lymi to your Home Screen` : t`Install Lymi`}
-          </ResponsiveDialogTitle>
+    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{ios ? t`Add Lymi to your Home Screen` : t`Install Lymi`}</DialogTitle>
           {ios ? (
-            <ResponsiveDialogDescription render={<ol className="grid list-decimal gap-2 ps-5" />}>
+            <DialogDescription render={<ol className="grid list-decimal gap-2 ps-5" />}>
               <li>
                 <Trans>Open Lymi in Safari and tap Share.</Trans>
               </li>
@@ -41,21 +39,21 @@ export function InstallDialog({
               <li>
                 <Trans>Open Lymi from the new icon.</Trans>
               </li>
-            </ResponsiveDialogDescription>
+            </DialogDescription>
           ) : (
-            <ResponsiveDialogDescription>
+            <DialogDescription>
               <Trans>
                 Open your browser menu and choose Install Lymi. Not every browser offers it.
               </Trans>
-            </ResponsiveDialogDescription>
+            </DialogDescription>
           )}
-        </ResponsiveDialogHeader>
-        <ResponsiveDialogFooter>
+        </DialogHeader>
+        <DialogFooter>
           <Button onClick={onClose}>
             <Trans>Close</Trans>
           </Button>
-        </ResponsiveDialogFooter>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

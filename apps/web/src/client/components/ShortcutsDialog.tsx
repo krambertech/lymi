@@ -3,13 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "./Button";
 import { Kbd } from "./Kbd";
-import {
-  ResponsiveDialog,
-  ResponsiveDialogContent,
-  ResponsiveDialogFooter,
-  ResponsiveDialogHeader,
-  ResponsiveDialogTitle,
-} from "./ResponsiveDialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 
 export const SHORTCUTS: [string, MessageDescriptor][] = [
   ["N", msg`Add a card`],
@@ -24,11 +18,11 @@ export const SHORTCUTS: [string, MessageDescriptor][] = [
 export function ShortcutsDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t, i18n } = useLingui();
   return (
-    <ResponsiveDialog open={open} onOpenChange={(next) => !next && onClose()}>
-      <ResponsiveDialogContent>
-        <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>{t`Keyboard shortcuts`}</ResponsiveDialogTitle>
-        </ResponsiveDialogHeader>
+    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t`Keyboard shortcuts`}</DialogTitle>
+        </DialogHeader>
         <dl className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2.5 text-base">
           {SHORTCUTS.map(([k, what]) => (
             <div key={k} className="contents">
@@ -39,12 +33,12 @@ export function ShortcutsDialog({ open, onClose }: { open: boolean; onClose: () 
             </div>
           ))}
         </dl>
-        <ResponsiveDialogFooter>
+        <DialogFooter>
           <Button onClick={onClose}>
             <Trans>Close</Trans>
           </Button>
-        </ResponsiveDialogFooter>
-      </ResponsiveDialogContent>
-    </ResponsiveDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

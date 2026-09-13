@@ -168,14 +168,14 @@ export function DeckSettingsView({
                 onChange={(e) => setDescription(e.target.value)}
                 onBlur={commitDescription}
                 maxLength={500}
-                placeholder={t`Words from Marco’s Tuesday lessons.`}
+                placeholder={t`Cards from Marco’s Tuesday lessons.`}
                 className="min-h-20"
               />
             </Field>
             <LanguageField
               value={deck.defaultLanguage}
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}
-              hint={t`The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings.`}
+              hint={t`The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings.`}
             />
           </SettingsGroup>
 

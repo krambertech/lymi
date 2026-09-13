@@ -58,7 +58,7 @@ export const PAGES: DocPage[] = [
     to: "/docs/recipes",
     nav: "Recipes",
     title: "Recipes",
-    blurb: "Import a word list, back up a deck, and keep a script safe to re-run.",
+    blurb: "Import a lesson, back up a deck, and keep a script safe to re-run.",
     section: "Guides",
   },
   {

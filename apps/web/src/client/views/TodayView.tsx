@@ -173,7 +173,7 @@ export function TodayView({
                 aria-disabled={!onAdd}
                 kbd="N"
               >
-                <Trans>Add a word</Trans>
+                <Trans>Add a card</Trans>
               </Button>
             )}
             {nothingYet && (
@@ -250,7 +250,7 @@ function DeckLine({
   if (nothingYet)
     return (
       <p className={line}>
-        <Trans>Add a word from your last lesson and the lantern comes on.</Trans>
+        <Trans>Add a card from your last lesson and the lantern comes on.</Trans>
       </p>
     );
 

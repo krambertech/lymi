@@ -76,7 +76,7 @@ export function McpOverview() {
       <H2>What a connected assistant can do</H2>
       <p>
         Sixteen tools, the same surface as the API less review grading. The assistant reads their
-        descriptions, so you rarely name one yourself: ask it to add the words from a lesson, and it
+        descriptions, so you rarely name one yourself: ask it to add the cards from a lesson, and it
         finds the deck and calls <code>add_cards</code>.
       </p>
       <Defs

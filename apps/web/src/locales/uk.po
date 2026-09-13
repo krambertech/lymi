@@ -259,6 +259,10 @@ msgstr "30 днів"
 msgid "90 days"
 msgstr "90 днів"
 
+#: src/client/components/AddCardSheet.tsx
+msgid "A card lands in a deck. Make the first one and this card goes in it."
+msgstr "Картка потрапляє до колоди. Створи першу, і ця картка опиниться в ній."
+
 #: src/client/views/WordView.tsx
 msgid "a connected app"
 msgstr "підключений застосунок"
@@ -268,8 +272,8 @@ msgid "a day"
 msgstr "день"
 
 #: src/server/push-delivery.ts
-msgid "A few words are ready"
-msgstr "Кілька слів готові"
+msgid "A few cards are ready"
+msgstr "Кілька карток готові"
 
 #: src/client/views/WordView.tsx
 msgid "a field"
@@ -299,10 +303,6 @@ msgstr "Сповіщення на цьому пристрої, коли є ка�
 msgid "A sentence it lives in"
 msgstr "Речення, у якому він живе"
 
-#: src/client/components/AddCardSheet.tsx
-msgid "A word lands in a deck. Make the first one and this word goes in it."
-msgstr "Слово потрапляє до колоди. Створи першу, і це слово опиниться в ній."
-
 #. placeholder {0}: i18n.number(recall, { style: "percent", maximumFractionDigits: 0 })
 #: src/client/components/StateStripe.tsx
 msgid "about {0} would come back today"
@@ -324,6 +324,16 @@ msgstr "Активність"
 msgid "Add"
 msgstr "Додати"
 
+#: src/client/components/AddCardSheet.tsx
+#: src/client/components/ShortcutsDialog.tsx
+#: src/client/views/TodayView.tsx
+msgid "Add a card"
+msgstr "Додати картку"
+
+#: src/client/views/TodayView.tsx
+msgid "Add a card from your last lesson and the lantern comes on."
+msgstr "Додай картку з останнього уроку, і ліхтар засвітиться."
+
 #: src/client/views/WordView.tsx
 msgid "Add a meaning"
 msgstr "Додати значення"
@@ -332,18 +342,9 @@ msgstr "Додати значення"
 msgid "Add a sentence it lives in"
 msgstr "Додати речення, у якому він живе"
 
-#: src/client/components/ShortcutsDialog.tsx
-#: src/client/views/TodayView.tsx
-msgid "Add a word"
-msgstr "Додати слово"
-
-#: src/client/views/TodayView.tsx
-msgid "Add a word from your last lesson and the lantern comes on."
-msgstr "Додай слово з останнього уроку, і ліхтар засвітиться."
-
-#: src/client/components/AddCardSheet.tsx
-msgid "Add a word or phrase"
-msgstr "Додати слово або фразу"
+#: src/client/views/DeckDetailView.tsx
+msgid "Add card"
+msgstr "Додати картку"
 
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
@@ -358,16 +359,12 @@ msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders 
 msgstr "Спершу додай Lymi на початковий екран. iPhone та iPad дозволяють нагадування лише звідти."
 
 #: src/client/views/DeckDetailView.tsx
-msgid "Add the first word from your lesson. The lantern lights when a card is due."
-msgstr "Додай перше слово з уроку. Ліхтар засвітиться, коли картку треба буде повторити."
+msgid "Add the first card from your lesson. The lantern lights when one is due."
+msgstr "Додай першу картку з уроку. Ліхтар засвітиться, коли настане час повторення."
 
 #: src/client/components/AddCardSheet.tsx
 msgid "Add to {deckName}"
 msgstr "Додати до {deckName}"
-
-#: src/client/views/DeckDetailView.tsx
-msgid "Add word"
-msgstr "Додати слово"
 
 #: src/client/views/ConsentView.tsx
 msgid "Add, edit and archive cards"
@@ -536,9 +533,17 @@ msgstr "Скасувати"
 msgid "Card"
 msgstr "Картка"
 
+#: src/client/views/WordView.tsx
+msgid "Card options"
+msgstr "Параметри картки"
+
 #: src/client/routes/archived.tsx
 msgid "Cards and decks you put away. Restore undoes it. Nothing here is deleted."
 msgstr "Картки й колоди в архіві. Відновлення все повертає. Тут нічого не видалено."
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Cards from Marco’s Tuesday lessons."
+msgstr "Картки з вівторкових уроків Марко."
 
 #: src/client/views/ReviewView.tsx
 msgid "Check your connection, then try again."
@@ -550,7 +555,7 @@ msgstr "Вибери 00, 15, 30 або 45 хвилин."
 
 #: src/client/components/AddCardSheet.tsx
 msgid "Choose a deck for it to go in."
-msgstr "Вибери колоду для цього слова."
+msgstr "Вибери колоду для цієї картки."
 
 #: src/client/views/ReviewView.tsx
 msgid "Choose a recall grade"
@@ -738,13 +743,13 @@ msgstr "Порожня колода"
 msgid "Enriched"
 msgstr "Доповнено"
 
+#: src/client/views/DeckDetailView.tsx
+msgid "Every card in this deck is somewhere else in the schedule."
+msgstr "Кожна картка в цій колоді має інше місце в розкладі."
+
 #: src/client/components/DeckFields.tsx
 msgid "Every card is asked twice."
 msgstr "Кожну картку запитують двічі."
-
-#: src/client/views/DeckDetailView.tsx
-msgid "Every word in this deck is somewhere else in the schedule."
-msgstr "Кожне слово в цій колоді має інше місце в розкладі."
 
 #: src/client/routes/activity.tsx
 msgid "Every write an integration or the AI made, by day. Cards can be inspected, edited or archived from here."
@@ -931,8 +936,8 @@ msgid "Learning means the interval is still short. Grade it Good a couple more t
 msgstr "«У вивченні» означає, що інтервал досі короткий. Оціни картку як «Добре» ще кілька разів, і вона стане засвоєною, а повторення відбуватимуться з інтервалом у кілька тижнів."
 
 #: src/client/components/AddCardSheet.tsx
-msgid "Leave it empty and AI can suggest one later."
-msgstr "Залиш порожнім, і ШІ зможе запропонувати варіант пізніше."
+msgid "Leave it empty and AI can fill it in later."
+msgstr "Залиш порожнім, і ШІ зможе заповнити його пізніше."
 
 #: src/client/views/ReviewView.tsx
 msgid "Leave review"
@@ -1059,6 +1064,10 @@ msgstr "нова"
 msgid "New"
 msgstr "Нова"
 
+#: src/client/components/AddMenu.tsx
+msgid "New card"
+msgstr "Нова картка"
+
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/AddMenu.tsx
 #: src/client/components/NewDeckSheet.tsx
@@ -1078,22 +1087,18 @@ msgstr "«Нова» означає, що картку ще не запитув�
 msgid "New since your last review"
 msgstr "Нові після останнього повторення"
 
-#: src/client/components/AddMenu.tsx
-msgid "New word"
-msgstr "Нове слово"
-
 #: src/client/components/DeckCard.tsx
 msgid "Next {next}"
 msgstr "Далі {next}"
+
+#: src/client/views/WordView.tsx
+msgid "Next card"
+msgstr "Наступна картка"
 
 #. placeholder {0}: spanLabel(i18n, r.scheduledDays)
 #: src/client/views/WordView.tsx
 msgid "next in {0}"
 msgstr "далі через {0}"
-
-#: src/client/views/WordView.tsx
-msgid "Next word"
-msgstr "Наступне слово"
 
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "No apps connected"
@@ -1197,13 +1202,13 @@ msgstr "Сповіщення заблоковано. Дозволь їх у на
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Сповіщення заблоковано. Дозволь їх у налаштуваннях браузера або пристрою."
 
-#: src/client/views/LibraryView.tsx
-msgid "One per course works well, or one per topic. Words remember which lesson they came from."
-msgstr "Одна колода на курс або тему зазвичай працює добре. Слова пам’ятають, із якого уроку вони прийшли."
-
 #: src/server/push-delivery.ts
-msgid "One word is ready"
-msgstr "Одне слово готове"
+msgid "One card is ready"
+msgstr "Одна картка готова"
+
+#: src/client/views/LibraryView.tsx
+msgid "One per course works well, or one per topic. Cards remember which lesson they came from."
+msgstr "Одна колода на курс або тему зазвичай працює добре. Картки пам’ятають, із якого уроку вони прийшли."
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Only on days with cards due."
@@ -1236,8 +1241,8 @@ msgid "Play pronunciation"
 msgstr "Відтворити вимову"
 
 #: src/client/views/WordView.tsx
-msgid "Previous word"
-msgstr "Попереднє слово"
+msgid "Previous card"
+msgstr "Попередня картка"
 
 #: src/client/views/ReviewView.tsx
 msgid "Produce"
@@ -1429,8 +1434,8 @@ msgid "Search languages"
 msgstr "Пошук мов"
 
 #: src/client/views/DeckDetailView.tsx
-msgid "Search looks at the word and its meaning."
-msgstr "Пошук перевіряє слово та його значення."
+msgid "Search looks at the term and its meaning."
+msgstr "Пошук перевіряє термін і його значення."
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Search this deck"
@@ -1449,12 +1454,12 @@ msgid "See {0} → recall “{1}”"
 msgstr "Побачити {0} → згадати «{1}»"
 
 #: src/client/components/DeckFields.tsx
-msgid "See the meaning, recall the word."
-msgstr "Побачити значення й згадати слово."
+msgid "See the meaning, recall the term."
+msgstr "Побачити значення й згадати термін."
 
 #: src/client/components/DeckFields.tsx
-msgid "See the word, recall what it means."
-msgstr "Побачити слово й згадати його значення."
+msgid "See the term, recall what it means."
+msgstr "Побачити термін і згадати його значення."
 
 #: src/client/views/ConsentView.tsx
 msgid "See your decks and cards"
@@ -1572,6 +1577,10 @@ msgstr "Торкнися картки, щоб відкрити"
 msgid "Tap the card when you have it"
 msgstr "Торкнися картки, коли згадаєш"
 
+#: src/client/components/AddCardSheet.tsx
+msgid "Term"
+msgstr "Термін"
+
 #: src/client/routes/review.tsx
 msgid "That grade didn’t save. Try once more."
 msgstr "Не вдалося зберегти оцінку. Спробуй ще раз."
@@ -1612,6 +1621,10 @@ msgstr "API"
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "Застосунок не вказав, куди перейти далі. Спробуй ще раз із застосунку."
 
+#: src/client/routes/library.$deckId.tsx
+msgid "the card"
+msgstr "картку"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
 msgstr "Колода зникне з Бібліотеки, а її картки перестануть з’являтися. Нічого не видаляється, а «Відновити» поверне її."
@@ -1625,12 +1638,12 @@ msgid "the language"
 msgstr "мову"
 
 #: src/client/components/DeckFields.tsx
-msgid "The language the words are in. It fills in on every new card."
-msgstr "Мова, якою написані слова. Вона заповнюється в кожній новій картці."
+msgid "The language this deck’s cards are in. It fills in on every new card."
+msgstr "Мова карток у цій колоді. Вона заповнюється в кожній новій картці."
 
 #: src/client/views/DeckSettingsView.tsx
-msgid "The language the words are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
-msgstr "Мова, якою записані слова. З неї починається кожна нова картка, і без неї не працюють вимова та ШІ. Значення пишуться мовою значень, яка повторює мову застосунку в Налаштуваннях."
+msgid "The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
+msgstr "Мова карток у цій колоді. З неї починається кожна нова картка, і без неї не працюють вимова та ШІ. Значення пишуться мовою значень, яка повторює мову застосунку в Налаштуваннях."
 
 #: src/client/views/WordView.tsx
 msgid "the meaning"
@@ -1652,10 +1665,9 @@ msgstr "Запит не отримав відповіді. Нічого не в�
 msgid "the tags"
 msgstr "теги"
 
-#: src/client/routes/library.$deckId.tsx
 #: src/client/views/WordView.tsx
-msgid "the word"
-msgstr "слово"
+msgid "the term"
+msgstr "термін"
 
 #: src/client/views/SettingsView.tsx
 msgid "Theme"
@@ -1704,8 +1716,8 @@ msgid "Try another Google account"
 msgstr "Спробувати інший обліковий запис Google"
 
 #: src/client/components/AddCardSheet.tsx
-msgid "Type the word or phrase."
-msgstr "Введи слово або фразу."
+msgid "Type the term."
+msgstr "Введи термін."
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Unable to save the reminder. Check your connection and try again."
@@ -1772,18 +1784,6 @@ msgstr "Що це означає"
 #: src/client/views/WordView.tsx
 msgid "within the day"
 msgstr "протягом дня"
-
-#: src/client/views/WordView.tsx
-msgid "Word options"
-msgstr "Параметри слова"
-
-#: src/client/components/AddCardSheet.tsx
-msgid "Word or phrase"
-msgstr "Слово або фраза"
-
-#: src/client/views/DeckSettingsView.tsx
-msgid "Words from Marco’s Tuesday lessons."
-msgstr "Слова з вівторкових уроків Марко."
 
 #: src/client/views/WordView.tsx
 msgid "would come back right now"

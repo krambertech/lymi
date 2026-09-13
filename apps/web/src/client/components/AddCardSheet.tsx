@@ -36,7 +36,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
     },
   });
   return (
-    <Sheet open={open} onOpenChange={onOpenChange} title={t`Add a word or phrase`} titleHidden>
+    <Sheet open={open} onOpenChange={onOpenChange} title={t`Add a card`} titleHidden>
       <AddCardForm
         key={open ? `open:${deckId ?? "default"}` : "closed"}
         decks={decks.data}
@@ -118,9 +118,7 @@ export function AddCardForm({
           setInvalid(
             fieldErrors(parsed.error, {
               deckId: t`Choose a deck for it to go in.`,
-              term: term.trim()
-                ? t`That is longer than a card holds.`
-                : t`Type the word or phrase.`,
+              term: term.trim() ? t`That is longer than a card holds.` : t`Type the term.`,
               meaning: t`Keep the meaning under 1000 characters.`,
             }),
           );
@@ -142,7 +140,7 @@ export function AddCardForm({
         inputRef.current?.focus();
       }}
     >
-      <Field label={t`Word or phrase`} error={invalid.term}>
+      <Field label={t`Term`} error={invalid.term}>
         <Input
           ref={inputRef}
           autoFocus={!st}
@@ -162,7 +160,7 @@ export function AddCardForm({
       <Field
         label={t`Meaning`}
         aside={t`Optional`}
-        hint={t`Leave it empty and AI can suggest one later.`}
+        hint={t`Leave it empty and AI can fill it in later.`}
         error={invalid.meaning}
       >
         <Input
@@ -178,7 +176,7 @@ export function AddCardForm({
       {noDecks ? (
         <Field
           label={t`Deck`}
-          hint={t`A word lands in a deck. Make the first one and this word goes in it.`}
+          hint={t`A card lands in a deck. Make the first one and this card goes in it.`}
         >
           <Button onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
             <Plus aria-hidden="true" />

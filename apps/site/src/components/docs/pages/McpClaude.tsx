@@ -13,7 +13,7 @@ export function McpClaude() {
       <Code lang="text" label="MCP server URL" code={`${ORIGIN}/mcp`} />
 
       <p>
-        Once connected, ask Claude to add the words from a lesson, list what is due, or find a card.
+        Once connected, ask Claude to add the cards from a lesson, list what is due, or find a card.
         What it can and cannot do is on <a href="/docs/mcp">Connect an assistant</a>.
       </p>
 

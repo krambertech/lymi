@@ -60,7 +60,9 @@ export const CardOut = z
     id: z.string(),
     userId: z.string(),
     deckId: z.string(),
-    term: z.string().meta({ description: "The word or phrase, in the language being learned" }),
+    term: z
+      .string()
+      .meta({ description: "What the card asks about, in the language being learned" }),
     normalizedTerm: z.string().meta({ description: "The key the duplicate rule compares" }),
     meaning: z.string().nullable(),
     pronunciation: z.string().nullable(),
@@ -111,7 +113,7 @@ export const CardWithStateOut = z
   .meta({ id: "CardWithState" });
 
 /** One outcome per card sent. A duplicate is skipped, never rejected. See ADR 0004. */
-/** One review of one card, as the word's history shows it. */
+/** One review of one card, as the card's history shows it. */
 export const ReviewOut = z
   .object({
     id: z.string(),

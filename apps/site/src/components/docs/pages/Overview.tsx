@@ -7,7 +7,7 @@ export function Overview() {
   return (
     <div className="doc-prose">
       <Lead>
-        Lymi keeps the words you are learning and asks you about them again at the right time. This
+        Lymi keeps the cards you are learning and asks you about them again at the right time. This
         API is the same one the app uses, so anything you can do by hand you can do from a script, a
         shortcut or an assistant.
       </Lead>
@@ -15,8 +15,7 @@ export function Overview() {
       <div className="mb-10 flex items-center gap-4 rounded-lg bg-plate p-4 edge">
         <Lantern variant="lit" flicker glow className="size-14 shrink-0" />
         <p className="!mb-0 text-base text-text-2">
-          Collect a word once, wherever you meet it. Lymi keeps it and brings it back before you
-          forget.
+          Add a card once, wherever you meet it. Lymi keeps it and brings it back before you forget.
         </p>
       </div>
 
@@ -42,7 +41,7 @@ export function Overview() {
             def: (
               <>
                 An assistant connects to <code>/mcp</code> and asks you to sign in once. Best for
-                “add these five words to my Italian deck” in the middle of a conversation.
+                “add these five cards to my Italian deck” in the middle of a conversation.
               </>
             ),
           },
@@ -68,7 +67,7 @@ export function Overview() {
       </p>
       <ul>
         <li>
-          <strong>Grading a review.</strong> Only you can say whether you remembered a word.
+          <strong>Grading a review.</strong> Only you can say whether you remembered a card.
         </li>
         <li>
           <strong>Managing API keys.</strong> A key can never mint or revoke another key.

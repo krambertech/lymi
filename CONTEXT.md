@@ -6,9 +6,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 ### Content
 
-**Card**: One thing worth remembering: a term and whatever context it has. A card added by an integration is an ordinary card from the moment it lands. _Avoid_: Flashcard, entry, proposal, draft, suggestion
+**Card**: One thing worth remembering: a term and whatever context it has. It may hold a word, a phrase or anything else, so the interface counts and names cards, never words. A card added by an integration is an ordinary card from the moment it lands. _Avoid_: Word, flashcard, entry, proposal, draft, suggestion
 
-**Term**: The word or phrase on the card, in the language being learned. _Avoid_: Word, front
+**Term**: What the card asks about, in the language being learned: a word, a phrase or anything else worth remembering. _Avoid_: Word, front
 
 **Deck**: A named group of cards. It may carry a default language, but language lives on the card. _Avoid_: Collection, list, folder
 

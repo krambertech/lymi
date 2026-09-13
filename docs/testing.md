@@ -85,7 +85,7 @@ The consent is remembered per client and learner, so a second authorize goes str
 
 1. Create a local account through the UI.
 2. Seed a deck through the authenticated API as test setup.
-3. Add a word and meaning through the UI.
+3. Add a card with a meaning through the UI.
 4. Review and grade the due card.
 5. Reload and confirm the persisted result.
 

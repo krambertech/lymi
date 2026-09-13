@@ -188,7 +188,7 @@ print(r.json()["status"])  # "added" or "skipped"`,
           <p>
             You get <code>201</code> with <code>status: "added"</code> and the whole card. If that
             term is already in one of your decks you get <code>200</code> with{" "}
-            <code>status: "skipped"</code> and the card that already holds it. Adding the same word
+            <code>status: "skipped"</code> and the card that already holds it. Adding the same term
             twice is never an error.
           </p>
           <Code
@@ -223,7 +223,7 @@ print(r.json()["status"])  # "added" or "skipped"`,
 
       <H2>Adding a whole lesson</H2>
       <p>
-        One lesson is twenty to forty words. Send them together rather than one call per word:{" "}
+        One lesson is twenty to forty cards. Send them together rather than one call per card:{" "}
         <code>POST /api/cards/batch</code> takes up to 200 cards, across any decks, and returns one
         outcome per card in the order you sent them.
       </p>
@@ -250,7 +250,7 @@ print(r.json()["status"])  # "added" or "skipped"`,
           {
             to: "/docs/recipes",
             title: "Recipes",
-            blurb: "Import a word list and back a deck up.",
+            blurb: "Import a lesson and back a deck up.",
           },
         ]}
       />

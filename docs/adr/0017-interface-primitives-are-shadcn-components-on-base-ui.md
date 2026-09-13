@@ -11,7 +11,7 @@ The product app's interactive foundations are shadcn components built on Base UI
 
 `docs/stack.md` said shadcn supplied the accessible primitives, but it was never installed. Every foundation was written by hand on `<dialog>`, the `popover` attribute and custom keyboard handling, with vaul for the phone drawer, and vaul is no longer maintained. The [accepted proposal](../proposals/shadcn-base-ui-design-system.md) sets the direction and the component order.
 
-The overlays showed what that cost. `Sheet` decided "desktop" by width and a fine pointer, the streak modal by width alone, and card detail by a container query, so a touch tablet got a drawer for one form and a centred modal for the streak. Menus stayed small anchored lists on a phone. The open card closed on Back; the full-screen streak did not. Four open-and-close implementations disagreed on scroll lock, backdrop presses and focus return. The proposal leaves overlay shapes to each component, which is how this drift happened, so the rule is recorded here.
+The overlays showed what that cost. `Sheet` decided "desktop" by width and a fine pointer, the streak modal by width alone, and card detail by a container query, so a touch tablet got a drawer for one form and a centred modal for the streak. Menus stayed small anchored lists on a phone. The open card closed on Back; the full-screen streak did not. Four open-and-close implementations disagreed on scroll lock, backdrop presses and focus return. Left to each component, overlay shapes drift like this again, and the rule cannot be reversed one component at a time, so it is recorded here.
 
 ## Decision
 
@@ -44,7 +44,5 @@ Where the shape adapts, a Lymi composite such as `ResponsiveMenu` or `Responsive
 ## Consequences
 
 `@base-ui/react` and `cn` join the stack, vaul leaves it once the last sheet moves, and components gain real-browser tests in Vitest browser mode on desktop Chromium and touch Chromium and WebKit. Each primitive needs a restyle pass before use; `shadcn add --diff` still shows upstream changes, though our classes will always differ.
-
-The proposal states that no ADR is needed. The device rule and the moment-or-place split cut across every overlay and cannot be reversed one component at a time, so this record supersedes that line.
 
 Delivery follows [the implementation plan](../plans/2026-09-13-shadcn-base-ui-design-system.md), starting with issues #119 to #122.

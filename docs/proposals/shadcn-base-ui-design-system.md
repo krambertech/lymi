@@ -36,7 +36,7 @@ The current Button and IconButton remain Lymi-owned initially because their acce
 
 A thin convenience composite may cover the common label, control, description and error arrangement, but the compound Field parts are canonical. Controls forward native form props and refs so a future TanStack Form adoption does not require another component rewrite; TanStack Form itself is not part of this work.
 
-The responsive sheet experience remains a Lymi composite over shadcn Dialog and Drawer. It chooses a gesture-capable Drawer on touch surfaces and a centred Dialog on desktop, then freezes that choice while open so a resize cannot remount a partially completed form.
+Overlays that change shape are Lymi composites that mirror the anatomy of the shadcn component they wrap. `ResponsiveMenu` is an anchored Dropdown Menu on desktop and a Drawer with the same items on touch; `ResponsiveDialog` is a centred Dialog on desktop and a gesture-capable Drawer on touch, for forms and confirmations alike. Each reads the device rule as it opens and freezes that choice while open, so a resize cannot remount a partially completed form. [ADR 0017](../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) records the rule, including places such as the streak that keep their state in the URL.
 
 The existing StreakCalendar remains a product visualization. shadcn Calendar, which is a React DayPicker selection control, enters the system only when Lymi has a date-selection journey.
 
@@ -44,7 +44,7 @@ The existing StreakCalendar remains a product visualization. shadcn Calendar, wh
 
 This work does not restyle Lymi to resemble default shadcn, replace its tokens or motion language, migrate the public site, publish a registry, create a shared UI package, add a form-state library, introduce a date picker, or refactor unrelated product components.
 
-No ADR is required for the initial adoption because the components are source-owned inside the client and can be replaced independently; a later shared package or public registry would be a separate, harder-to-reverse decision.
+The components themselves are source-owned and can be replaced independently, but the overlay rule cuts across every overlay, so it is recorded in [ADR 0017](../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md). A later shared package or public registry would be a separate, harder-to-reverse decision.
 
 ## Evidence of success
 

@@ -25,7 +25,7 @@ const GAP = { up: "1rem", across: "0.75rem" };
 
 /**
  * A deck's cards drifting past, slowly enough to read. Hover pauses it, a tap or Enter toggles it,
- * and under reduced motion it stands still; the row can then be scrolled instead.
+ * and under reduced motion or with too few cards to loop it stands still; the row then scrolls by hand.
  */
 export function CardStream({ cards, language, direction, className }: Props) {
   const { t } = useLingui();
@@ -44,18 +44,19 @@ export function CardStream({ cards, language, direction, className }: Props) {
       className={clsx(
         "flex shrink-0 gap-(--stream-gap)",
         up ? "flex-col" : "flex-row",
+        // A row that scrolls by hand keeps the page's inset at both ends.
+        !up && (moving ? "motion-reduce:px-5" : "px-5"),
         copy === "second" && "motion-reduce:hidden",
       )}
     >
-      {cards.map((card, index) => (
+      {cards.map((card) => (
         <li
           key={`${card.term}:${card.meaning ?? ""}`}
           className={clsx(
             "edge grid shrink-0 content-start gap-1 bg-plate",
             up
               ? "w-full rounded-lg px-6 py-5 [&:nth-child(4n+1)]:-translate-x-6 [&:nth-child(4n+3)]:translate-x-6"
-              : "w-52 rounded-lg px-4.5 py-4",
-            !up && index === 0 && copy === "first" && "motion-reduce:ms-5",
+              : "w-52 snap-start rounded-lg px-4.5 py-4",
           )}
         >
           <span
@@ -82,9 +83,13 @@ export function CardStream({ cards, language, direction, className }: Props) {
       <div
         className={clsx(
           "size-full overflow-hidden",
-          up
-            ? "[mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]"
-            : "[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] motion-reduce:overflow-x-auto motion-reduce:[mask-image:none]",
+          up &&
+            "[mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]",
+          !up && "snap-x snap-mandatory scroll-px-5",
+          !up &&
+            (moving
+              ? "[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] motion-reduce:overflow-x-auto motion-reduce:[mask-image:none]"
+              : "overflow-x-auto"),
         )}
       >
         {moving ? (
@@ -98,7 +103,9 @@ export function CardStream({ cards, language, direction, className }: Props) {
             {track("second")}
           </div>
         ) : (
-          <div className={clsx(up ? "mx-auto grid h-full max-w-[22rem] content-center" : "px-5")}>
+          <div
+            className={up ? "mx-auto grid h-full max-w-[22rem] content-center" : "mx-auto w-max"}
+          >
             {track("first")}
           </div>
         )}

@@ -1,3 +1,4 @@
+import { clsx } from "clsx";
 import {
   AppWindow,
   Globe,
@@ -14,31 +15,20 @@ import { Lantern } from "../Lantern";
 interface Place {
   label: string;
   icon: LucideIcon;
-  /** Centre of the tile, in diagram pixels. */
-  x: number;
 }
-
-const WIDTH = 480;
-const HEIGHT = 440;
-const TOP_Y = 36;
-const BOTTOM_Y = HEIGHT - 36;
-const CENTRE = { x: WIDTH / 2, y: HEIGHT / 2 };
-/** Half the tile height and half the lantern tile, so rails start and end at the edges. */
-const TILE_HALF = 22;
-const LANTERN_HALF = 48;
 
 /** Where cards come from, along the top. */
 const SOURCES: readonly Place[] = [
-  { label: "Shortcuts", icon: Smartphone, x: 84 },
-  { label: "Spreadsheets", icon: Sheet, x: 240 },
-  { label: "AI assistants", icon: MessageCircle, x: 396 },
+  { label: "Shortcuts", icon: Smartphone },
+  { label: "Spreadsheets", icon: Sheet },
+  { label: "AI assistants", icon: MessageCircle },
 ];
 
 /** Where they can show up, along the bottom. */
 const DESTINATIONS: readonly Place[] = [
-  { label: "Widgets", icon: LayoutGrid, x: 82 },
-  { label: "Websites", icon: Globe, x: 240 },
-  { label: "Your own app", icon: AppWindow, x: 398 },
+  { label: "Widgets", icon: LayoutGrid },
+  { label: "Websites", icon: Globe },
+  { label: "Your own app", icon: AppWindow },
 ];
 
 /** One card's trip: in from a source, through Lymi, out to a destination. The paths cross on purpose. */
@@ -48,39 +38,99 @@ const TRIPS = [
   { from: 2, to: 0 },
 ] as const;
 
-/** How far apart the rails meet the lantern's tile, so they fan out instead of stacking. */
-const FAN = 22;
+interface Geometry {
+  width: number;
+  height: number;
+  /** Centre of each column of tiles, in diagram pixels. */
+  columns: readonly [number, number, number];
+  topY: number;
+  bottomY: number;
+  tileHalf: number;
+  lanternHalf: number;
+  /** How far apart the rails meet the lantern's tile, so they fan out instead of stacking. */
+  fan: number;
+  /** Phones stack each tile's icon over its label so three fit across. */
+  stacked: boolean;
+}
+
+const WIDE: Geometry = {
+  width: 480,
+  height: 440,
+  columns: [84, 240, 396],
+  topY: 36,
+  bottomY: 404,
+  tileHalf: 22,
+  lanternHalf: 48,
+  fan: 22,
+  stacked: false,
+};
+
+const COMPACT: Geometry = {
+  width: 320,
+  height: 400,
+  columns: [52, 160, 268],
+  topY: 32,
+  bottomY: 368,
+  tileHalf: 31,
+  lanternHalf: 40,
+  fan: 16,
+  stacked: true,
+};
+
 /** Rails tuck this far under a tile, so no seam shows at the edge. */
 const TUCK = 3;
 
-const inPath = (x: number, slot: number) => {
-  const y0 = TOP_Y + TILE_HALF - TUCK;
-  const y1 = CENTRE.y - LANTERN_HALF + TUCK;
-  const x1 = CENTRE.x + (slot - 1) * FAN;
+const inPath = (g: Geometry, slot: number) => {
+  const x0 = g.columns[slot] ?? g.width / 2;
+  const y0 = g.topY + g.tileHalf - TUCK;
+  const x1 = g.width / 2 + (slot - 1) * g.fan;
+  const y1 = g.height / 2 - g.lanternHalf + TUCK;
   const mid = (y0 + y1) / 2;
-  return `M ${x} ${y0} C ${x} ${mid}, ${x1} ${mid}, ${x1} ${y1}`;
+  return `M ${x0} ${y0} C ${x0} ${mid}, ${x1} ${mid}, ${x1} ${y1}`;
 };
 
-const outPath = (x: number, slot: number) => {
-  const y0 = CENTRE.y + LANTERN_HALF - TUCK;
-  const y1 = BOTTOM_Y - TILE_HALF + TUCK;
-  const x0 = CENTRE.x + (slot - 1) * FAN;
+const outPath = (g: Geometry, slot: number) => {
+  const x0 = g.width / 2 + (slot - 1) * g.fan;
+  const y0 = g.height / 2 + g.lanternHalf - TUCK;
+  const x1 = g.columns[slot] ?? g.width / 2;
+  const y1 = g.bottomY - g.tileHalf + TUCK;
   const mid = (y0 + y1) / 2;
-  return `M ${x0} ${y0} C ${x0} ${mid}, ${x} ${mid}, ${x} ${y1}`;
+  return `M ${x0} ${y0} C ${x0} ${mid}, ${x1} ${mid}, ${x1} ${y1}`;
 };
 
 const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
 const EASE_TRAVEL = "cubic-bezier(0.65, 0, 0.35, 1)";
+const EASE_SWELL = "cubic-bezier(0.37, 0, 0.63, 1)";
+const LIT_RAIL: Keyframe[] = [
+  { opacity: 0 },
+  { opacity: 1, offset: 0.2 },
+  { opacity: 1, offset: 0.7 },
+  { opacity: 0 },
+];
+
+/** Lymi between the tools that add cards and the places that show them, at two sizes. */
+export function ApiConnections() {
+  return (
+    <>
+      <div className="@xl:hidden">
+        <Diagram g={COMPACT} />
+      </div>
+      <div className="hidden @xl:block">
+        <Diagram g={WIDE} />
+      </div>
+    </>
+  );
+}
 
 /**
- * Lymi between the tools that add cards and the places that show them. One card at a time
- * leaves a source, drops into the lantern, whose flame swells, and comes out at a destination.
- * Everything that moves animates transform, opacity or offset-distance, driven by WAAPI so
- * React never re-renders mid-trip.
+ * One card at a time leaves a source, drops into the lantern, whose flame swells, and comes out
+ * at a destination. Everything that moves animates transform, opacity or offset-distance through
+ * WAAPI, so React never re-renders mid-trip. A hidden diagram never comes into view, so only the
+ * one on screen runs.
  */
-export function ApiConnections() {
+function Diagram({ g }: { g: Geometry }) {
   const root = useRef<HTMLDivElement>(null);
-  const chip = useRef<HTMLSpanElement>(null);
+  const dot = useRef<HTMLSpanElement>(null);
   const lantern = useRef<HTMLSpanElement>(null);
   const sourceTiles = useRef<(HTMLLIElement | null)[]>([]);
   const destinationTiles = useRef<(HTMLLIElement | null)[]>([]);
@@ -91,7 +141,7 @@ export function ApiConnections() {
 
   useEffect(() => {
     if (!visible || still) return;
-    const card = chip.current;
+    const card = dot.current;
     const flame = lantern.current?.querySelector(".flame");
     if (!card || !flame) return;
 
@@ -121,10 +171,6 @@ export function ApiConnections() {
 
     const trip = (index: number) => {
       const { from, to } = TRIPS[index] ?? TRIPS[0];
-      const source = SOURCES[from];
-      const destination = DESTINATIONS[to];
-      if (!source || !destination) return Promise.resolve();
-
       return Promise.all([
         // The source sends: a small press, and its rail lights for the length of the trip in.
         at(0, () => {
@@ -132,33 +178,18 @@ export function ApiConnections() {
             duration: 420,
             easing: EASE_OUT,
           });
-          play(
-            inRails.current[from],
-            [
-              { opacity: 0 },
-              { opacity: 1, offset: 0.2 },
-              { opacity: 1, offset: 0.7 },
-              { opacity: 0 },
-            ],
-            {
-              duration: 1700,
-              easing: "linear",
-            },
-          );
+          play(inRails.current[from], LIT_RAIL, { duration: 1700, easing: "linear" });
         }),
         // The card rides the curve and slips under the lantern's tile.
         at(140, () => {
-          card.style.offsetPath = `path("${inPath(source.x, from)}")`;
+          card.style.offsetPath = `path("${inPath(g, from)}")`;
           play(
             card,
             [
               { offsetDistance: "0%", opacity: 1 },
               { offsetDistance: "100%", opacity: 1 },
             ],
-            {
-              duration: 1050,
-              easing: EASE_TRAVEL,
-            },
+            { duration: 1050, easing: EASE_TRAVEL },
           );
         }),
         // It lands: the flame swells over its own flicker and eases back.
@@ -166,12 +197,8 @@ export function ApiConnections() {
           play(
             flame,
             [
-              { transform: "scale(1, 1)", easing: "cubic-bezier(0.37, 0, 0.63, 1)" },
-              {
-                transform: "scale(1.12, 1.26)",
-                offset: 0.38,
-                easing: "cubic-bezier(0.37, 0, 0.63, 1)",
-              },
+              { transform: "scale(1, 1)", easing: EASE_SWELL },
+              { transform: "scale(1.12, 1.26)", offset: 0.38, easing: EASE_SWELL },
               { transform: "scale(1, 1)" },
             ],
             { duration: 1200, composite: "add" },
@@ -179,30 +206,15 @@ export function ApiConnections() {
         }),
         // Out the other side, to where it will be shown.
         at(1500, () => {
-          play(
-            outRails.current[to],
-            [
-              { opacity: 0 },
-              { opacity: 1, offset: 0.2 },
-              { opacity: 1, offset: 0.7 },
-              { opacity: 0 },
-            ],
-            {
-              duration: 1600,
-              easing: "linear",
-            },
-          );
-          card.style.offsetPath = `path("${outPath(destination.x, to)}")`;
+          play(outRails.current[to], LIT_RAIL, { duration: 1600, easing: "linear" });
+          card.style.offsetPath = `path("${outPath(g, to)}")`;
           play(
             card,
             [
               { offsetDistance: "0%", opacity: 1 },
               { offsetDistance: "100%", opacity: 1 },
             ],
-            {
-              duration: 1000,
-              easing: EASE_TRAVEL,
-            },
+            { duration: 1000, easing: EASE_TRAVEL },
           );
         }),
         // The destination takes it.
@@ -229,8 +241,15 @@ export function ApiConnections() {
       for (const id of timers) window.clearTimeout(id);
       for (const animation of running) animation.cancel();
     };
-  }, [visible, still]);
+  }, [visible, still, g]);
 
+  const viewBox = `0 0 ${g.width} ${g.height}`;
+  const tileClass = clsx(
+    "absolute flex -translate-x-1/2 -translate-y-1/2 items-center rounded-lg bg-canvas edge",
+    g.stacked
+      ? "w-[100px] flex-col gap-1.5 px-1.5 py-2.5 text-center"
+      : "gap-2.5 px-3.5 py-3 whitespace-nowrap",
+  );
   const tile = (place: Place) => (
     <>
       <place.icon
@@ -238,120 +257,109 @@ export function ApiConnections() {
         strokeWidth={1.75}
         className="size-[18px] shrink-0 text-text-2"
       />
-      <span className="text-sm text-text">{place.label}</span>
+      <span className={clsx("text-text", g.stacked ? "text-xs leading-4" : "text-sm")}>
+        {place.label}
+      </span>
     </>
   );
 
   return (
-    <div ref={root}>
-      {/* Phones and narrow columns get the list without the diagram. */}
-      <ul className="grid grid-cols-2 gap-2.5 @xl:hidden">
-        {[...SOURCES, ...DESTINATIONS].map((place) => (
+    <div ref={root} className="relative mx-auto" style={{ width: g.width, height: g.height }}>
+      <svg aria-hidden="true" viewBox={viewBox} className="absolute inset-0 size-full">
+        {SOURCES.map((place, i) => (
+          <path
+            key={place.label}
+            d={inPath(g, i)}
+            className="fill-none stroke-edge-2"
+            strokeDasharray="3 5"
+          />
+        ))}
+        {DESTINATIONS.map((place, i) => (
+          <path
+            key={place.label}
+            d={outPath(g, i)}
+            className="fill-none stroke-edge-2"
+            strokeDasharray="3 5"
+          />
+        ))}
+      </svg>
+
+      {/* Lit copies of each rail, one layer apiece so lighting one is a composited fade. */}
+      {SOURCES.map((place, i) => (
+        <svg
+          key={place.label}
+          ref={(el) => {
+            inRails.current[i] = el;
+          }}
+          aria-hidden="true"
+          viewBox={viewBox}
+          className="absolute inset-0 size-full opacity-0"
+        >
+          <path d={inPath(g, i)} className="fill-none stroke-amber" strokeWidth={1.5} />
+        </svg>
+      ))}
+      {DESTINATIONS.map((place, i) => (
+        <svg
+          key={place.label}
+          ref={(el) => {
+            outRails.current[i] = el;
+          }}
+          aria-hidden="true"
+          viewBox={viewBox}
+          className="absolute inset-0 size-full opacity-0"
+        >
+          <path d={outPath(g, i)} className="fill-none stroke-amber" strokeWidth={1.5} />
+        </svg>
+      ))}
+
+      <span
+        aria-hidden="true"
+        ref={dot}
+        className="absolute top-0 left-0 size-2.5 rounded-full border-2 border-plate bg-amber opacity-0 [offset-anchor:center] [offset-rotate:0deg]"
+      />
+
+      <span
+        ref={lantern}
+        aria-hidden="true"
+        className="absolute grid place-items-center rounded-2xl bg-canvas edge"
+        style={{
+          left: g.width / 2 - g.lanternHalf,
+          top: g.height / 2 - g.lanternHalf,
+          width: g.lanternHalf * 2,
+          height: g.lanternHalf * 2,
+        }}
+      >
+        <Lantern variant="lit" flicker className={g.stacked ? "size-12" : "size-14"} />
+      </span>
+
+      <ul aria-label="Where cards come from" className="contents">
+        {SOURCES.map((place, i) => (
           <li
             key={place.label}
-            className="flex items-center gap-2.5 rounded-lg bg-canvas px-3.5 py-3 edge"
+            ref={(el) => {
+              sourceTiles.current[i] = el;
+            }}
+            className={tileClass}
+            style={{ left: g.columns[i], top: g.topY }}
           >
             {tile(place)}
           </li>
         ))}
       </ul>
-
-      <div className="relative mx-auto hidden @xl:block" style={{ width: WIDTH, height: HEIGHT }}>
-        <svg
-          aria-hidden="true"
-          viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-          className="absolute inset-0 size-full"
-        >
-          {SOURCES.map((place, i) => (
-            <path
-              key={place.label}
-              d={inPath(place.x, i)}
-              className="fill-none stroke-edge-2"
-              strokeDasharray="3 5"
-            />
-          ))}
-          {DESTINATIONS.map((place, i) => (
-            <path
-              key={place.label}
-              d={outPath(place.x, i)}
-              className="fill-none stroke-edge-2"
-              strokeDasharray="3 5"
-            />
-          ))}
-        </svg>
-
-        {/* Lit copies of each rail, one layer apiece so lighting one is a composited fade. */}
-        {SOURCES.map((place, i) => (
-          <svg
-            key={place.label}
-            ref={(el) => {
-              inRails.current[i] = el;
-            }}
-            aria-hidden="true"
-            viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-            className="absolute inset-0 size-full opacity-0"
-          >
-            <path d={inPath(place.x, i)} className="fill-none stroke-amber" strokeWidth={1.5} />
-          </svg>
-        ))}
+      <ul aria-label="Where they can show up" className="contents">
         {DESTINATIONS.map((place, i) => (
-          <svg
+          <li
             key={place.label}
             ref={(el) => {
-              outRails.current[i] = el;
+              destinationTiles.current[i] = el;
             }}
-            aria-hidden="true"
-            viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-            className="absolute inset-0 size-full opacity-0"
+            className={tileClass}
+            style={{ left: g.columns[i], top: g.bottomY }}
           >
-            <path d={outPath(place.x, i)} className="fill-none stroke-amber" strokeWidth={1.5} />
-          </svg>
+            {tile(place)}
+          </li>
         ))}
-
-        <span
-          aria-hidden="true"
-          ref={chip}
-          className="absolute top-0 left-0 size-2.5 rounded-full border-2 border-plate bg-amber opacity-0 [offset-anchor:center] [offset-rotate:0deg]"
-        />
-
-        <span
-          ref={lantern}
-          aria-hidden="true"
-          className="absolute grid size-24 place-items-center rounded-2xl bg-canvas edge"
-          style={{ left: CENTRE.x - LANTERN_HALF, top: CENTRE.y - LANTERN_HALF }}
-        >
-          <Lantern variant="lit" flicker className="size-14" />
-        </span>
-
-        <ul aria-label="Where cards come from" className="contents">
-          {SOURCES.map((place, i) => (
-            <li
-              key={place.label}
-              ref={(el) => {
-                sourceTiles.current[i] = el;
-              }}
-              className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-lg bg-canvas px-3.5 py-3 whitespace-nowrap edge"
-              style={{ left: place.x, top: TOP_Y }}
-            >
-              {tile(place)}
-            </li>
-          ))}
-        </ul>
-        <ul aria-label="Where they can show up" className="contents">
-          {DESTINATIONS.map((place, i) => (
-            <li
-              key={place.label}
-              ref={(el) => {
-                destinationTiles.current[i] = el;
-              }}
-              className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-lg bg-canvas px-3.5 py-3 whitespace-nowrap edge"
-              style={{ left: place.x, top: BOTTOM_Y }}
-            >
-              {tile(place)}
-            </li>
-          ))}
-        </ul>
-      </div>
+      </ul>
     </div>
   );
 }

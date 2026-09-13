@@ -20,7 +20,7 @@ It exists because the current tools each fail in one way. Anki is capable and un
 
 Success for the private version looks like this: Kateryna reviews in Lymi most days by choice, adding a lesson's vocabulary takes a few minutes instead of an evening, what the AI enriches is useful and easy to correct, and cards and progress are the same on the phone and the laptop.
 
-Within a review, due cards with the same scheduling priority are mixed before they are shown so capture or edit order does not become a memorisation cue.
+Within a review, cards are drawn with weighted randomness rather than a strict order, so capture or edit order does not become a memorisation cue and a large deck cannot hide new material.
 
 ## Daily Review Goal
 
@@ -34,13 +34,13 @@ The learner-local day initially uses the current device timezone without asking 
 
 Every accepted, non-undone grade counts exactly once toward the daily goal, including Forgot and every later attempt at the same card. The goal counts recall attempts, not distinct cards or correct answers, so forgetting never increases the required work. Reviews already completed that day count toward the total, and Undo removes the undone attempt.
 
-An active review is durable. Its current card, order, progress, unseen-card buffer, and timed retries survive reloads, backgrounding, reconnecting, and movement between phone and laptop. Lymi keeps up to 20 unseen cards locally and starts a background refill toward 20 when 10 remain, capped by the remaining goal and available work. Foreground and reconnect checks reconcile the buffer. Every fetch merges into the active review and never replaces it or silently restarts progress.
+A review is never stored. Lymi recomputes the next card from the cards, today's reviews, and the date. The same synced state gives the same next card after a reload, offline, on another device, or in another scope. A grade from another device can change the next card, and an offline grade that arrives after a later grade of the same card does not count. The rules are in [ADR 0019](docs/adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md).
 
-When both ordinary due reviews and new cards are available, Lymi targets approximately one new card after every four ordinary reviews. Learning and relearning cards that are already due retain priority, and if either the ordinary-review or new-card group runs out, the other can fill the remaining daily goal. This proportion is an internal fairness rule, not a separate learner setting or a promised fixed quota.
+When both reviews and new cards are available, one attempt in five is a new card. If either runs out, the other fills the goal. The draw favours reviews you still know and recently added cards, but anything eligible can appear. Every fourth new card is the oldest not yet started, so a large deck keeps moving. These proportions are internal rules, not settings or quotas.
 
-A forgotten card returns in the same direction when its FSRS learning or relearning step becomes due. Lymi mixes it into the next few unseen cards instead of showing it immediately or holding it until the end. Its sibling direction stays out of that review because the revealed answer would make the second prompt dishonest.
+A forgotten card returns in the same direction a few cards later, then after longer gaps, up to three times a day. After that it waits until tomorrow. Hard on a card still being learned brings it back the same way. A card left in learning from an earlier day returns early in the next review. Once one direction of a card is reviewed, the other waits until tomorrow, because the answer would give it away. A card starts one direction at a time in its deck's order, which begins with production by default.
 
-The completion state reports the actual number reviewed and confirms that today's streak goal is complete. It offers **Review forgotten** when cards still need another look, **Review another round** when more eligible cards are available, and **Done**. Another round contains up to 10 additional attempts, ends earlier when no eligible cards remain, and may be chosen again after it finishes. Continuing is optional and cannot make a completed streak goal incomplete. When zero cards are due, the empty state protects but does not increase the streak and offers **Add cards**; adding alone does not count toward the review goal. An empty local buffer while offline or after a failed refresh is not evidence that all useful reviews are finished.
+The completion state reports the actual number reviewed and confirms that today's streak goal is complete. It offers **Review forgotten** when a card's latest grade today is Forgot, showing each such card once even past its three returns, **Review another round** when more eligible cards are available, and **Done**. Another round contains up to 10 additional attempts, ends earlier when no eligible cards remain, and may be chosen again after it finishes. Continuing is optional and cannot make a completed streak goal incomplete. When zero cards are due, the empty state protects but does not increase the streak and offers **Add cards**; adding alone does not count toward the review goal. Running out of cards while offline or after a failed refresh is not evidence that all useful reviews are finished.
 
 ## Brand Personality
 

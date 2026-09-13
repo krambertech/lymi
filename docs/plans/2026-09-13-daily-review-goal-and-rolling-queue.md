@@ -1,6 +1,6 @@
 # Daily review goal and rolling queue
 
-**Status:** Accepted for implementation on 13 September 2026. Product behavior is fixed in [the accepted proposal](../proposals/daily-review-goal-and-rolling-queue.md), [PRODUCT.md](../../PRODUCT.md), and [DESIGN.md](../../DESIGN.md). This plan chooses persistence, synchronization, and delivery order; it does not authorize deployment.
+**Status:** Step 1 completed by #65. Steps 2 to 5 are superseded by [ADR 0019](../adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md) and replaced by [the review draw plan](2026-09-13-review-draw.md); the persistence and session design below is historical.
 
 ## Done when
 

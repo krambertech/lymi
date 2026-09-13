@@ -1,0 +1,170 @@
+import { Pencil } from "lucide-react";
+import { describe, expect, inject, test } from "vitest";
+import { page, userEvent } from "vitest/browser";
+import { render } from "vitest-browser-react";
+import { IconButton } from "../Button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+
+const desktop = inject("machine") === "desktop";
+
+const tip = (text: string) => page.getByText(text, { exact: true });
+
+/** The popup carries no role, so tests find it by its slot; `page.getByText` sees `aria-hidden` text. */
+const openTips = () => document.querySelectorAll('[data-slot="tooltip-content"]');
+
+/** WebKit's Tab skips buttons, so a key press first keeps script focus keyboard-visible. */
+async function tabTo(target: { element: () => Element }) {
+  await userEvent.keyboard("{Shift}");
+  (target.element() as HTMLElement).focus();
+}
+
+function Row({ delay }: { delay?: number | undefined }) {
+  return (
+    <TooltipProvider delay={delay}>
+      <div className="flex gap-1">
+        <Tooltip>
+          <TooltipTrigger render={<button type="button" aria-label="Rename" />}>R</TooltipTrigger>
+          <TooltipContent>Rename</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger render={<button type="button" aria-label="Archive deck" />}>
+            A
+          </TooltipTrigger>
+          <TooltipContent>Archive deck</TooltipContent>
+        </Tooltip>
+      </div>
+    </TooltipProvider>
+  );
+}
+
+describe("Tooltip", () => {
+  test("stays closed until asked, and the trigger's name never depends on it", async () => {
+    const screen = await render(<Row />);
+    const trigger = screen.getByRole("button", { name: "Rename" });
+    await expect.element(trigger).toBeInTheDocument();
+    expect(openTips()).toHaveLength(0);
+    expect(trigger.element().getAttribute("aria-describedby")).toBeNull();
+  });
+
+  test("opens on keyboard focus at once, hidden from assistive technology, in Lymi's ink", async () => {
+    const screen = await render(<Row />);
+    await tabTo(screen.getByRole("button", { name: "Rename" }));
+
+    await expect.element(tip("Rename")).toBeVisible();
+    const popup = openTips()[0];
+    expect(popup?.getAttribute("aria-hidden")).toBe("true");
+    expect(popup?.getAttribute("role")).toBeNull();
+    const probe = document.body.appendChild(document.createElement("div"));
+    probe.className = "bg-text";
+    expect(popup && getComputedStyle(popup).backgroundColor).toBe(
+      getComputedStyle(probe).backgroundColor,
+    );
+    probe.remove();
+  });
+
+  test("closes on Escape and on blur", async () => {
+    const screen = await render(<Row />);
+    await tabTo(screen.getByRole("button", { name: "Rename" }));
+    await expect.element(tip("Rename")).toBeVisible();
+    await userEvent.keyboard("{Escape}");
+    await expect.poll(() => openTips().length).toBe(0);
+
+    const archive = screen.getByRole("button", { name: "Archive deck" });
+    await tabTo(archive);
+    await expect.element(tip("Archive deck")).toBeVisible();
+    (archive.element() as HTMLElement).blur();
+    await expect.poll(() => openTips().length).toBe(0);
+  });
+
+  test("a disabled tooltip never opens, so a menu button stays quiet while its menu is open", async () => {
+    const screen = await render(
+      <TooltipProvider>
+        <Tooltip disabled>
+          <TooltipTrigger render={<button type="button" aria-label="Card options" />}>
+            …
+          </TooltipTrigger>
+          <TooltipContent>Card options</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>,
+    );
+    const trigger = screen.getByRole("button", { name: "Card options" });
+    await tabTo(trigger);
+    await expect.element(trigger).toHaveFocus();
+    if (desktop) await trigger.hover();
+    await new Promise((r) => setTimeout(r, 700));
+
+    expect(openTips()).toHaveLength(0);
+  });
+
+  test.runIf(desktop)("waits under a still pointer, then shows", async () => {
+    const screen = await render(<Row />);
+    await screen.getByRole("button", { name: "Rename" }).hover();
+    await new Promise((r) => setTimeout(r, 150));
+    expect(openTips()).toHaveLength(0);
+
+    await expect.element(tip("Rename"), { timeout: 2000 }).toBeVisible();
+  });
+
+  test.runIf(desktop)("the next tooltip along a row opens at once, with no fade", async () => {
+    const screen = await render(<Row delay={0} />);
+    await screen.getByRole("button", { name: "Rename" }).hover();
+    await expect.element(tip("Rename")).toBeVisible();
+    await screen.getByRole("button", { name: "Archive deck" }).hover();
+
+    await expect.element(tip("Archive deck")).toBeVisible();
+    await expect.element(tip("Archive deck")).toHaveAttribute("data-instant");
+  });
+
+  test.runIf(desktop)("pressing the control closes it", async () => {
+    const screen = await render(<Row delay={0} />);
+    const trigger = screen.getByRole("button", { name: "Rename" });
+    await trigger.hover();
+    await expect.element(tip("Rename")).toBeVisible();
+    await trigger.click();
+
+    await expect.poll(() => openTips().length).toBe(0);
+  });
+
+  test.runIf(!desktop)("a tap never opens it", async () => {
+    const screen = await render(<Row delay={0} />);
+    await screen.getByRole("button", { name: "Rename" }).click();
+    await new Promise((r) => setTimeout(r, 150));
+
+    expect(openTips()).toHaveLength(0);
+  });
+});
+
+describe("IconButton", () => {
+  test("keeps its label as the accessible name and shows it as the tooltip", async () => {
+    const screen = await render(
+      <TooltipProvider>
+        <IconButton label="Rename" size="sm">
+          <Pencil />
+        </IconButton>
+      </TooltipProvider>,
+    );
+    const button = screen.getByRole("button", { name: "Rename" });
+    await expect.element(button).toHaveAttribute("aria-label", "Rename");
+    expect(openTips()).toHaveLength(0);
+    await tabTo(button);
+
+    await expect.element(button).toHaveFocus();
+    await expect.element(tip("Rename")).toBeVisible();
+  });
+
+  test("stays quiet while expanded", async () => {
+    const screen = await render(
+      <TooltipProvider>
+        <IconButton label="Card options" aria-expanded>
+          <Pencil />
+        </IconButton>
+      </TooltipProvider>,
+    );
+    const button = screen.getByRole("button", { name: "Card options" });
+    await tabTo(button);
+    await expect.element(button).toHaveFocus();
+    await new Promise((r) => setTimeout(r, 150));
+
+    expect(openTips()).toHaveLength(0);
+  });
+});

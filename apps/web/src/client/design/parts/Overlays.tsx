@@ -81,8 +81,8 @@ export const overlays: Group = {
     {
       slug: "tooltip",
       name: "Tooltip",
-      source: "components/Tooltip.tsx",
-      note: "Every icon button shows its label as a tooltip. It is never a native title, and it never appears on touch.",
+      source: "components/ui/tooltip.tsx",
+      note: "Every icon button shows its label as a tooltip. It is never a native title, it never appears on touch, and it repeats the accessible name rather than standing in for it.",
       Demo: () => (
         <Variants
           items={[
@@ -119,6 +119,32 @@ export const overlays: Group = {
                 <IconButton label="Deck options" size="sm">
                   <MoreHorizontal />
                 </IconButton>
+              ),
+            },
+            {
+              label: "On a menu button",
+              note: "Pressing the button is the answer to what it does, so the name leaves as the menu opens and stays quiet until it closes.",
+              render: () => (
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={
+                      <IconButton label="Card options" size="sm">
+                        <MoreHorizontal />
+                      </IconButton>
+                    }
+                  />
+                  <DropdownMenuContent aria-label="Card options" align="start">
+                    <DropdownMenuItem>
+                      <Pencil />
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive">
+                      <Archive />
+                      Archive
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               ),
             },
           ]}

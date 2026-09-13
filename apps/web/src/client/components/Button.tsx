@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { Loader2 } from "lucide-react";
 import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from "react";
 import { Kbd } from "./Kbd";
-import { chain, useTooltip } from "./Tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -116,60 +116,40 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * Its label is the accessible name and shows as a tooltip; it stays quiet while its menu is open.
  */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  {
-    label,
-    size = "md",
-    variant = "ghost",
-    round,
-    className,
-    children,
-    onPointerEnter,
-    onPointerLeave,
-    onPointerDown,
-    onFocus,
-    onBlur,
-    onKeyDown,
-    ...rest
-  },
+  { label, size = "md", variant = "ghost", round, className, children, ...rest },
   ref,
 ) {
   const expanded = rest["aria-expanded"] === true || rest["aria-expanded"] === "true";
-  const tip = useTooltip(label, { disabled: expanded || rest.disabled });
   return (
-    <>
-      <button
-        ref={(node) => {
-          tip.triggerRef.current = node;
-          if (typeof ref === "function") ref(node);
-          else if (ref) ref.current = node;
-        }}
-        type="button"
-        aria-label={label}
-        className={clsx(
-          "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45",
-          round ? "rounded-full" : "rounded-sm",
-          "before:absolute before:-inset-1.5 before:content-['']",
-          variant === "ghost" && "text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
-          variant === "secondary" && "edge bg-plate text-text-2 hoverable:hover:bg-hover",
-          variant === "primary" && "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
-          variant === "danger" &&
-            "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
-          size === "sm" && "size-8 [&_svg]:size-4",
-          size === "md" && "size-10 [&_svg]:size-[18px]",
-          size === "lg" && "size-12 [&_svg]:size-5",
-          className,
-        )}
-        {...rest}
-        onPointerEnter={chain(tip.handlers.onPointerEnter, onPointerEnter)}
-        onPointerLeave={chain(tip.handlers.onPointerLeave, onPointerLeave)}
-        onPointerDown={chain(tip.handlers.onPointerDown, onPointerDown)}
-        onFocus={chain(tip.handlers.onFocus, onFocus)}
-        onBlur={chain(tip.handlers.onBlur, onBlur)}
-        onKeyDown={chain(tip.handlers.onKeyDown, onKeyDown)}
+    <Tooltip disabled={expanded || rest.disabled}>
+      <TooltipTrigger
+        render={
+          <button
+            ref={ref}
+            type="button"
+            aria-label={label}
+            className={clsx(
+              "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45",
+              round ? "rounded-full" : "rounded-sm",
+              "before:absolute before:-inset-1.5 before:content-['']",
+              variant === "ghost" &&
+                "text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
+              variant === "secondary" && "edge bg-plate text-text-2 hoverable:hover:bg-hover",
+              variant === "primary" && "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
+              variant === "danger" &&
+                "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
+              size === "sm" && "size-8 [&_svg]:size-4",
+              size === "md" && "size-10 [&_svg]:size-[18px]",
+              size === "lg" && "size-12 [&_svg]:size-5",
+              className,
+            )}
+            {...rest}
+          />
+        }
       >
         {children}
-      </button>
-      {tip.bubble}
-    </>
+      </TooltipTrigger>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
   );
 });

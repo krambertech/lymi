@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import type { LucideIcon } from "lucide-react";
-import { useTooltip } from "../components/Tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import { useIndicator } from "../lib/use-indicator";
 
 export interface IconOption<T extends string> {
@@ -58,26 +58,25 @@ function Option<T extends string>({
   on: boolean;
   onSelect: (keyboard: boolean) => void;
 }) {
-  const tip = useTooltip(option.label);
   return (
-    <>
-      <button
-        ref={(node) => {
-          tip.triggerRef.current = node;
-        }}
-        type="button"
-        aria-label={option.label}
-        aria-pressed={on}
-        {...tip.handlers}
-        onClick={(e) => onSelect(e.detail === 0)}
-        className={clsx(
-          "relative grid size-6 place-items-center rounded-full transition-colors duration-150",
-          on ? "text-text" : "text-muted hoverable:hover:text-text",
-        )}
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <button
+            type="button"
+            aria-label={option.label}
+            aria-pressed={on}
+            onClick={(e) => onSelect(e.detail === 0)}
+            className={clsx(
+              "relative grid size-6 place-items-center rounded-full transition-colors duration-150",
+              on ? "text-text" : "text-muted hoverable:hover:text-text",
+            )}
+          />
+        }
       >
         <option.Icon aria-hidden="true" className="size-3.5" />
-      </button>
-      {tip.bubble}
-    </>
+      </TooltipTrigger>
+      <TooltipContent>{option.label}</TooltipContent>
+    </Tooltip>
   );
 }

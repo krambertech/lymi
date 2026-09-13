@@ -712,65 +712,6 @@
   }
 }
 
-/* ---- Tooltip ------------------------------------------------------------ */
-
-/*
- * The name of an icon control, in the toast's inverted ink. It grows out of the side nearest
- * its trigger. A second tooltip opened while moving along a row of controls appears at once.
- */
-.tooltip {
-  position: fixed;
-  inset: auto;
-  margin: 0;
-  width: max-content;
-  max-width: 240px;
-  padding: 4px 8px;
-  border: 0;
-  border-radius: var(--radius-xs);
-  background: var(--text);
-  color: var(--canvas);
-  font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
-  font-weight: 500;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-2px) scale(0.97);
-  transform-origin: top center;
-  transition:
-    opacity 80ms var(--ease-out),
-    transform 80ms var(--ease-out),
-    overlay 80ms allow-discrete,
-    display 80ms allow-discrete;
-}
-.tooltip[data-side="top"] {
-  transform: translateY(2px) scale(0.97);
-  transform-origin: bottom center;
-}
-.tooltip:popover-open {
-  opacity: 1;
-  transform: none;
-  transition-duration: 120ms;
-}
-@starting-style {
-  .tooltip:popover-open {
-    opacity: 0;
-    transform: translateY(-2px) scale(0.97);
-  }
-  .tooltip[data-side="top"]:popover-open {
-    transform: translateY(2px) scale(0.97);
-  }
-}
-.tooltip[data-instant] {
-  transition-duration: 0ms;
-}
-@media (prefers-reduced-motion: reduce) {
-  .tooltip,
-  .tooltip[data-side="top"],
-  .tooltip:popover-open {
-    transform: none;
-  }
-}
-
 /* ---- Fluid hover ------------------------------------------------------- */
 
 /*

@@ -40,9 +40,19 @@ export function ErrorTip({ anchor, message }: Props) {
       window.innerWidth - w - EDGE,
     );
     const above = r.top - h - GAP;
-    el.toggleAttribute("data-below", above < EDGE);
+    const below = above < EDGE;
+    el.toggleAttribute("data-below", below);
     el.style.left = `${left}px`;
-    el.style.top = `${above < EDGE ? r.bottom + GAP : above}px`;
+    el.style.top = `${below ? r.bottom + GAP : above}px`;
+    // Enter from the control's side, mirroring the exit in styles.css.
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.animate(
+      [
+        { opacity: 0, transform: still ? "none" : `translateY(${below ? -4 : 4}px) scale(0.98)` },
+        { opacity: 1, transform: "none" },
+      ],
+      { duration: 180, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
+    );
 
     const close = () => setOpen(false);
     const timer = window.setTimeout(close, SHOWN_MS);

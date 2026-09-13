@@ -1605,6 +1605,10 @@ msgid "Picture described"
 msgstr "Опис зображення змінено"
 
 #: src/client/views/WordView.tsx
+msgid "Picture description removed"
+msgstr "Опис зображення видалено"
+
+#: src/client/views/WordView.tsx
 msgid "Picture restored"
 msgstr "Зображення відновлено"
 

@@ -4,13 +4,11 @@ import { ImageOff } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { CardImage } from "../lib/api";
 import { useCardPicture } from "../lib/card-images";
+import { Skeleton } from "./Skeleton";
 
 export interface CardPictureProps {
   image: CardImage;
-  /**
-   * The tallest the picture may be, as a CSS length. The box keeps the picture's own shape
-   * inside it, so nothing is cropped and nothing moves when the bytes land.
-   */
+  /** The tallest the picture may be, as a CSS length; the box keeps the picture's shape. */
   maxHeight: string;
   /** What to show when the picture cannot load: its description, or a quiet placeholder. */
   fallback?: "description" | "placeholder" | undefined;
@@ -38,8 +36,6 @@ export function CardPicture({
   if (status === "failed") {
     return (
       <div
-        role="img"
-        aria-label={image.description ?? undefined}
         className={clsx(
           "grid min-h-24 content-center justify-items-start gap-2 rounded-lg bg-plate-2 p-4",
           className,
@@ -50,7 +46,7 @@ export function CardPicture({
           <Trans>Couldn’t load the picture</Trans>
         </span>
         {fallback === "description" && image.description && (
-          <p aria-hidden="true" className="text-xl leading-snug text-text [overflow-wrap:anywhere]">
+          <p className="text-xl leading-snug text-text [overflow-wrap:anywhere]">
             {image.description}
           </p>
         )}
@@ -72,10 +68,10 @@ export function CardPicture({
           width={image.width}
           height={image.height}
           draggable={false}
-          className="picture-in size-full object-contain"
+          className="enter-fade size-full object-contain"
         />
       ) : (
-        <div className="skeleton absolute inset-0 rounded-[inherit]" aria-hidden="true" />
+        <Skeleton className="absolute inset-0 rounded-[inherit]" />
       )}
     </div>
   );

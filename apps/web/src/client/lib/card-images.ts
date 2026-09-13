@@ -3,13 +3,7 @@ import { useEffect, useState } from "react";
 import type { CardImage, QueueItem } from "./api";
 import { meQuery } from "./queries";
 
-/**
- * Card pictures kept for offline review. Each learner gets their own Cache Storage bucket, and
- * every bucket is dropped when the learner changes, so a shared browser never shows one
- * learner's pictures to another. The picture's URL carries its id, so a replaced picture is a
- * new entry rather than a stale one. The HTTP cache is not used: the server marks pictures
- * `no-cache`.
- */
+/** Card pictures kept per learner in Cache Storage for offline review; the rules are in DESIGN.md. */
 const PREFIX = "lymi-card-images-";
 /** A review looks this far ahead, and the bucket holds about two sessions of it. */
 const LOOKAHEAD = 3;
@@ -17,21 +11,35 @@ const MAX_ENTRIES = 60;
 
 const supported = () => typeof caches !== "undefined";
 
-/** Drop every learner's pictures. Part of clearing the learner's state. */
+/** Each learner's bucket, opened once per page, or null where Cache Storage refuses. */
+const buckets = new Map<string, Promise<Cache | null>>();
+
+/** Drop every learner's pictures, as part of clearing the learner's state. */
 export async function clearCardImages(): Promise<void> {
+  buckets.clear();
   if (!supported()) return;
   const names = await caches.keys();
   await Promise.all(names.filter((n) => n.startsWith(PREFIX)).map((n) => caches.delete(n)));
 }
 
-async function bucketFor(userId: string): Promise<Cache> {
+function bucketFor(userId: string): Promise<Cache | null> {
+  const opened = buckets.get(userId);
+  if (opened) return opened;
   const name = `${PREFIX}${userId}`;
-  // Anything left under another learner's name is from before a switch that skipped sign-out.
-  const names = await caches.keys();
-  await Promise.all(
-    names.filter((n) => n.startsWith(PREFIX) && n !== name).map((n) => caches.delete(n)),
-  );
-  return caches.open(name);
+  const opening = (async () => {
+    try {
+      // Anything under another learner's name is from a switch that skipped sign-out.
+      const names = await caches.keys();
+      await Promise.all(
+        names.filter((n) => n.startsWith(PREFIX) && n !== name).map((n) => caches.delete(n)),
+      );
+      return await caches.open(name);
+    } catch {
+      return null;
+    }
+  })();
+  buckets.set(userId, opening);
+  return opening;
 }
 
 async function trim(bucket: Cache) {
@@ -43,7 +51,7 @@ async function trim(bucket: Cache) {
 
 const inflight = new Map<string, Promise<Blob>>();
 
-/** The picture's bytes: from this learner's bucket, or fetched once and kept there. */
+/** The picture's bytes from this learner's bucket, or fetched and kept there when the bucket works. */
 function loadPicture(userId: string | undefined, url: string): Promise<Blob> {
   const key = `${userId ?? ""}:${url}`;
   const running = inflight.get(key);
@@ -52,13 +60,16 @@ function loadPicture(userId: string | undefined, url: string): Promise<Blob> {
     // Only product URLs are kept; the design page's drawn pictures are data URLs.
     const cacheable = supported() && /^https?:$/.test(new URL(url, location.href).protocol);
     const bucket = userId && cacheable ? await bucketFor(userId) : null;
-    const hit = await bucket?.match(url);
+    const hit = await bucket?.match(url).catch(() => undefined);
     if (hit) return hit.blob();
     const response = await fetch(url, { credentials: "include" });
     if (!response.ok) throw new Error(`Picture request failed with ${response.status}`);
     if (bucket) {
-      await bucket.put(url, response.clone());
-      void trim(bucket);
+      // A full or refusing bucket only costs the offline copy, never the picture on screen.
+      await bucket
+        .put(url, response.clone())
+        .then(() => trim(bucket))
+        .catch(() => undefined);
     }
     return response.blob();
   })().finally(() => inflight.delete(key));
@@ -74,12 +85,14 @@ export function useCardPicture(image: Pick<CardImage, "url"> | null | undefined)
   status: PictureStatus;
 } {
   const me = useQuery(meQuery);
+  // Waiting for the learner keeps a cold start from loading uncached and then again cached.
+  const ready = !me.isPending;
   const userId = me.data?.id;
   const url = image?.url;
   const [state, setState] = useState<{ url: string; src: string | null; status: PictureStatus }>();
 
   useEffect(() => {
-    if (!url) return;
+    if (!url || !ready) return;
     let alive = true;
     let objectUrl: string | null = null;
     setState({ url, src: null, status: "loading" });
@@ -95,7 +108,7 @@ export function useCardPicture(image: Pick<CardImage, "url"> | null | undefined)
       alive = false;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [url, userId]);
+  }, [url, userId, ready]);
 
   if (!url) return { src: null, status: "failed" };
   if (state?.url !== url) return { src: null, status: "loading" };

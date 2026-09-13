@@ -125,7 +125,10 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
       detail: list ? i18n._(msg`${list}, by ${who}`) : i18n._(msg`by ${who}`),
     };
   }
-  const picture = pictureEvents[e.action];
+  const picture =
+    e.action === "update_image" && payload.description === null
+      ? msg`Picture description removed`
+      : pictureEvents[e.action];
   if (picture) return { at, label: i18n._(picture), detail: i18n._(msg`by ${who}`) };
   if (e.action === "archive")
     return { at, label: i18n._(msg`Archived`), detail: i18n._(msg`by ${who}`) };

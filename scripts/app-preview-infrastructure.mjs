@@ -192,8 +192,14 @@ export function migrationFailureReason({ status, output = "", error }) {
     .replace(/\u001b\[[0-9;]*m/g, "")
     .split("\n")
     .map((line) => line.trim());
-  const reported = lines.findLast((line) => line.includes("[ERROR]"));
-  return reported?.replace(/^.*\[ERROR\]\s*/, "") || `Wrangler exited with code ${status}`;
+  const start = lines.findLastIndex((line) => line.includes("[ERROR]"));
+  if (start < 0) return `Wrangler exited with code ${status}`;
+  // Remote failures put the SQLite message on the lines after the API error.
+  const end = lines.indexOf("", start);
+  return lines
+    .slice(start, end < 0 ? undefined : end)
+    .join(" ")
+    .replace(/^.*\[ERROR\]\s*/, "");
 }
 
 function applyWithWrangler(configPath) {

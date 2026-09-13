@@ -2,7 +2,6 @@ import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/c
 import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type CardPatch, deserializeState, type FsrsCard, retrievability } from "@lymi/core";
-import type { Card, CardState, Review } from "@lymi/core/schema";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -28,7 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
-import type { CardEvent } from "../lib/api";
+import type { Card, CardEvent, CardState, Review } from "../lib/api";
 import { BackButton, TopBar } from "./Shell";
 
 /** A line in the word's history that is not a review: when it arrived, what the AI added. */

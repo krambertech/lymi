@@ -1,5 +1,15 @@
-import type { GradeInput } from "@lymi/core";
-import { deserializeState, newId, preview, schedule, serializeState } from "@lymi/core";
+import type { GradeInput, ReviewModeKey } from "@lymi/core";
+import {
+  deserializeState,
+  modeKey,
+  modeOf,
+  modesFromDirections,
+  newId,
+  preview,
+  schedule,
+  serializeState,
+  stateDirection,
+} from "@lymi/core";
 import { and, asc, eq, gte, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
@@ -7,6 +17,7 @@ import { notFound, type ServiceContext } from "./context";
 import { dateFormatter } from "./days";
 import { dueWhere } from "./due";
 import { memberOf } from "./members";
+import { stateMode, withModes } from "./modes";
 import {
   type DayProgress,
   openDay,
@@ -50,7 +61,8 @@ export async function reviewQueue(
   const items = shuffledRows.map(({ card, state }) => {
     const next = preview(deserializeState(state.fsrs), now);
     return {
-      card,
+      card: withModes(card),
+      mode: modeOf(stateMode(state)),
       direction: state.direction,
       stateId: state.id,
       fsrsState: state.state,
@@ -105,7 +117,9 @@ export function shuffleEqualPriorityItems<T>(
  */
 export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
   const { db, userId, actor } = ctx;
-  const { cardId, direction, rating } = input;
+  const { cardId, rating } = input;
+  const key = gradedMode(input);
+  const direction = stateDirection(key);
   const reviewedAt = input.reviewedAt ?? new Date();
 
   const [row] = await db
@@ -173,6 +187,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       cardId,
       cardStateId: state.id,
       direction,
+      mode: key,
       rating,
       state: result.log.state,
       elapsedDays: result.log.elapsedDays,
@@ -191,7 +206,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     action: "grade",
     entity: "review",
     entityId: cardId,
-    payload: { rating, direction },
+    payload: { rating, direction, mode: key },
   });
 
   return {
@@ -202,6 +217,13 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     reviewId,
     day: await settleDay(ctx, reviewDay, "grade"),
   };
+}
+
+/** The mode a grade names. A legacy direction maps to the text mode it always meant. */
+function gradedMode(input: GradeInput): ReviewModeKey {
+  if (input.mode) return modeKey(input.mode);
+  const [key] = modesFromDirections(input.direction ?? "recognition");
+  return key as ReviewModeKey;
 }
 
 /**

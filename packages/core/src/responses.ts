@@ -7,6 +7,7 @@ import {
   FieldSource,
   MemberRole,
   ReminderTime,
+  ReviewMode,
   Scope,
 } from "./types";
 
@@ -46,7 +47,10 @@ export const DeckOut = z
     name: z.string(),
     description: z.string().nullable(),
     defaultLanguage: z.string().nullable().meta({ description: "Prefills language on new cards" }),
-    directions: Directions,
+    directions: Directions.meta({ description: "Legacy form of `reviewModes`" }),
+    reviewModes: z
+      .array(ReviewMode)
+      .meta({ description: "How cards that follow the deck are asked" }),
     position: z.number().int(),
     archivedAt: Timestamp.nullable(),
     createdAt: Timestamp,
@@ -62,7 +66,8 @@ export const DeckSummaryOut = z
     name: z.string(),
     description: z.string().nullable(),
     defaultLanguage: z.string().nullable(),
-    directions: Directions,
+    directions: Directions.meta({ description: "Legacy form of `reviewModes`" }),
+    reviewModes: z.array(ReviewMode),
     position: z.number().int(),
     total: z.number().int().meta({ description: "Active cards in the deck" }),
     due: z.number().int().meta({ description: "Cards with a direction due now for the caller" }),
@@ -87,7 +92,13 @@ export const CardOut = z
     language: z.string().nullable().meta({ description: "BCP 47 tag, or null" }),
     tags: z.array(z.string()),
     source: z.string().nullable().meta({ description: "Free text: where the card came from" }),
-    directions: Directions.nullable().meta({ description: "Overrides the deck when set" }),
+    directions: Directions.nullable().meta({
+      description: "Legacy form of `reviewModes`. Overrides the deck when set.",
+    }),
+    reviewModes: z
+      .array(ReviewMode)
+      .nullable()
+      .meta({ description: "Overrides the deck's review modes when set" }),
     meaningSource: FieldSource.nullable(),
     exampleSource: FieldSource.nullable(),
     audioKey: z.string().nullable(),
@@ -109,7 +120,8 @@ export const CardStateOut = z
     id: z.string(),
     cardId: z.string(),
     userId: z.string(),
-    direction: Direction,
+    mode: ReviewMode,
+    direction: Direction.meta({ description: "Legacy form of `mode`" }),
     due: Timestamp,
     state: z
       .number()
@@ -134,7 +146,8 @@ export const ReviewOut = z
   .object({
     id: z.string(),
     cardId: z.string(),
-    direction: Direction,
+    mode: ReviewMode,
+    direction: Direction.meta({ description: "Legacy form of `mode`" }),
     rating: z.number().int().min(1).max(4),
     state: z.number().int().meta({ description: "FSRS state before this review" }),
     elapsedDays: z.number().int(),
@@ -162,7 +175,9 @@ export type CardEventOut = z.infer<typeof CardEventOut>;
 /** Everything that ever happened to a card: its reviews and its writes, newest first. */
 export const CardHistoryOut = z
   .object({
-    states: z.array(CardStateOut).meta({ description: "One per direction the card is asked" }),
+    states: z
+      .array(CardStateOut)
+      .meta({ description: "One per review mode the card has been asked in" }),
     reviews: z.array(ReviewOut),
     events: z.array(CardEventOut),
   })
@@ -189,7 +204,8 @@ export const AddCardsOut = z
 export const QueueItemOut = z
   .object({
     card: CardOut,
-    direction: Direction,
+    mode: ReviewMode.meta({ description: "Show the cue before reveal and grade the target" }),
+    direction: Direction.meta({ description: "Legacy form of `mode`" }),
     stateId: z.string(),
     fsrsState: z.number().int(),
     next: z

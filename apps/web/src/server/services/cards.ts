@@ -6,14 +6,18 @@ import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { memberOf, stateStatementsForCard } from "./members";
+import { presentModeRow, resolveDirections, withModes } from "./modes";
+
+/** A card as callers outside the server see it. */
+export type CardView = ReturnType<typeof withModes<Card>>;
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
  * caller learns which card already holds the term and in which deck. See ADR 0004.
  */
 export type AddCardOutcome =
-  | { status: "added"; card: Card }
-  | { status: "skipped"; term: string; existing: Card; deckName: string };
+  | { status: "added"; card: CardView }
+  | { status: "skipped"; term: string; existing: CardView; deckName: string };
 
 /** One card. Same rule as the batch, one outcome. */
 export async function addCard(ctx: ServiceContext, input: CardInput): Promise<AddCardOutcome> {
@@ -91,7 +95,7 @@ export async function addCards(
       outcomes.push({
         status: "skipped",
         term: input.term,
-        existing: hit.card,
+        existing: withModes(hit.card),
         deckName: hit.deckName,
       });
       continue;
@@ -110,7 +114,7 @@ export async function addCards(
       language,
       tags: input.tags ?? [],
       source: input.source ?? null,
-      directions: input.directions ?? null,
+      directions: resolveDirections(input) ?? null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       audioKey: null,
@@ -133,7 +137,7 @@ export async function addCards(
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
     existing.set(dupKey(language, key), { card, deckName: deck.name });
-    outcomes.push({ status: "added", card });
+    outcomes.push({ status: "added", card: withModes(card) });
   }
 
   await runInBatches(db, groups);
@@ -213,8 +217,10 @@ export async function searchCards({ db, userId }: ServiceContext, search: CardSe
     )
     .orderBy(desc(schema.cards.createdAt))
     .limit(needle ? SEARCH_SCAN_LIMIT : limit);
-  if (!needle) return rows;
-  return rows.filter((row) => matchesSearch(row.card, needle)).slice(0, limit);
+  const matched = needle
+    ? rows.filter((row) => matchesSearch(row.card, needle)).slice(0, limit)
+    : rows;
+  return matched.map((row) => ({ ...row, card: withModes(row.card) }));
 }
 
 /** The most rows one text search reads before matching. */
@@ -246,6 +252,11 @@ export async function getCard({ db, userId }: ServiceContext, id: string) {
     .where(and(eq(schema.cards.id, id), memberOf(userId)));
   if (!row) throw notFound("Card");
   return row.card;
+}
+
+/** A card with its review modes, for callers outside the server. */
+export async function showCard(ctx: ServiceContext, id: string): Promise<CardView> {
+  return withModes(await getCard(ctx, id));
 }
 
 /** The card, or forbidden when the learner can see it but does not own it. */
@@ -288,8 +299,8 @@ export async function cardHistory(ctx: ServiceContext, id: string) {
       .orderBy(desc(schema.auditLog.createdAt)),
   ]);
   return {
-    states,
-    reviews,
+    states: states.map(presentModeRow),
+    reviews: reviews.map(presentModeRow),
     events: writes.map((w) => ({
       id: w.id,
       actor: w.actor,
@@ -316,10 +327,13 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
   const pronunciationChanged =
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
+  const { reviewModes, directions: _legacy, ...fields } = patch;
+  const directions = resolveDirections(patch);
   const update = db
     .update(schema.cards)
     .set({
-      ...patch,
+      ...fields,
+      ...(directions !== undefined ? { directions } : {}),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
       updatedAt: new Date(),
@@ -328,7 +342,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
   await runInBatches(db, [
     [
       update,
-      ...(patch.directions !== undefined || patch.deckId !== undefined
+      ...(directions !== undefined || patch.deckId !== undefined
         ? stateStatementsForCard(db, id)
         : []),
       auditStatement(db, {
@@ -341,7 +355,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       }),
     ],
   ]);
-  return getCard(ctx, id);
+  return showCard(ctx, id);
 }
 
 /** Archive, never delete. Undo is `restoreCard`. */

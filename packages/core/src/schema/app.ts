@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { REVIEW_MODE_KEYS } from "../types";
 import { user } from "./auth";
 
 const timestamps = {
@@ -230,9 +231,12 @@ export const cardStates = sqliteTable(
     fsrs: text("fsrs").notNull(),
     lastReview: integer("last_review", { mode: "timestamp_ms" }),
     ...timestamps,
+    /** Canonical review mode. Null only on rows an older Worker wrote; read through `stateMode`. ADR 0014. */
+    mode: text("mode", { enum: REVIEW_MODE_KEYS }),
   },
   (t) => [
     uniqueIndex("card_states_card_user_dir_idx").on(t.cardId, t.userId, t.direction),
+    uniqueIndex("card_states_card_user_mode_idx").on(t.cardId, t.userId, t.mode),
     index("card_states_due_idx").on(t.userId, t.due),
   ],
 );
@@ -268,6 +272,8 @@ export const reviews = sqliteTable(
     reviewDayId: text("review_day_id").references(() => reviewDays.id, { onDelete: "cascade" }),
     /** The card state this grade replaced, as JSON, so Undo can put it back. Null before undo. */
     stateBefore: text("state_before"),
+    /** Canonical review mode. Null only on rows an older Worker wrote. ADR 0014. */
+    mode: text("mode", { enum: REVIEW_MODE_KEYS }),
   },
   (t) => [
     index("reviews_card_idx").on(t.cardId, t.reviewedAt),

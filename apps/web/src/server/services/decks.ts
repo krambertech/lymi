@@ -5,6 +5,7 @@ import { audit } from "../audit";
 import { schema } from "../db";
 import { notFound, type ServiceContext } from "./context";
 import { deckAccess, fillStates, learnersOf, memberOf, ownedDeck } from "./members";
+import { deckModes, presentModeRow, resolveDirections, withModes } from "./modes";
 
 /**
  * A card is asked the way its own `directions` says, or the deck's when it has none. A state
@@ -56,6 +57,7 @@ export async function listDecks({ db, userId }: ServiceContext) {
     .orderBy(asc(schema.decks.position), asc(schema.decks.createdAt));
   return rows.map(({ ownerId, ownerName, memberRole, ...deck }) => ({
     ...deck,
+    reviewModes: deckModes(deck.directions),
     role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
     owner: { id: ownerId, name: ownerName },
   }));
@@ -70,7 +72,7 @@ export async function createDeck(ctx: ServiceContext, input: DeckInput) {
     name: input.name,
     description: input.description ?? null,
     defaultLanguage: input.defaultLanguage ?? null,
-    directions: input.directions ?? "recognition",
+    directions: resolveDirections(input) ?? "recognition",
   });
   await audit(db, {
     userId,
@@ -96,7 +98,7 @@ export async function getDeck(ctx: ServiceContext, id: string) {
 export async function listDeckCards(ctx: ServiceContext, deckId: string) {
   const { db, userId } = ctx;
   await deckAccess(ctx, deckId);
-  return db
+  const rows = await db
     .select({ card: schema.cards, state: schema.cardStates })
     .from(schema.cards)
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
@@ -112,6 +114,10 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
     )
     .where(and(eq(schema.cards.deckId, deckId), isNull(schema.cards.archivedAt)))
     .orderBy(sql`${schema.cards.createdAt} desc`);
+  return rows.map(({ card, state }) => ({
+    card: withModes(card),
+    state: state && presentModeRow(state),
+  }));
 }
 
 export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
@@ -119,13 +125,15 @@ export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPatch) {
   const { db, userId, actor } = ctx;
   await ownedDeck(ctx, id);
+  const { reviewModes, ...fields } = patch;
+  const directions = resolveDirections(patch) ?? undefined;
   const result = await db
     .update(schema.decks)
-    .set({ ...patch, updatedAt: new Date() })
+    .set({ ...fields, ...(directions ? { directions } : {}), updatedAt: new Date() })
     .where(eq(schema.decks.id, id))
     .returning({ id: schema.decks.id });
   if (result.length === 0) throw notFound("Deck");
-  if (patch.directions) await openDirections(ctx, id, patch.directions);
+  if (directions) await openDirections(ctx, id, directions);
   await audit(db, {
     userId,
     actor,

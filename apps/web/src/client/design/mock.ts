@@ -1,7 +1,6 @@
 import type { InsightsOut } from "@lymi/core";
-import type { Card, CardState, Review } from "@lymi/core/schema";
 import type { StreakSummary } from "../components/Streak";
-import type { DeckSummary, QueueItem } from "../lib/api";
+import type { Card, CardState, DeckSummary, QueueItem, Review } from "../lib/api";
 import type { WordEvent } from "../views/WordView";
 
 const now = Date.now();
@@ -16,6 +15,7 @@ export const decks: DeckSummary[] = [
     description: null,
     defaultLanguage: "it",
     directions: "recognition",
+    reviewModes: [{ cue: "term", target: "meaning" }],
     position: 0,
     total: 64,
     due: 8,
@@ -27,6 +27,7 @@ export const decks: DeckSummary[] = [
     description: null,
     defaultLanguage: "pt-BR",
     directions: "recognition",
+    reviewModes: [{ cue: "term", target: "meaning" }],
     position: 1,
     total: 41,
     due: 3,
@@ -38,6 +39,10 @@ export const decks: DeckSummary[] = [
     description: null,
     defaultLanguage: "uk",
     directions: "both",
+    reviewModes: [
+      { cue: "term", target: "meaning" },
+      { cue: "meaning", target: "term" },
+    ],
     position: 2,
     total: 12,
     due: 0,
@@ -49,6 +54,7 @@ export const decks: DeckSummary[] = [
     description: null,
     defaultLanguage: "et",
     directions: "recognition",
+    reviewModes: [{ cue: "term", target: "meaning" }],
     position: 3,
     total: 38,
     due: 5,
@@ -86,6 +92,7 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     tags: [],
     source: "Lesson 14",
     directions: null,
+    reviewModes: null,
     meaningSource: "lesson",
     exampleSource: null,
     audioKey: null,
@@ -165,6 +172,7 @@ function state(cardId: string, s: number, dueIn: number, reps = 0, lapses = 0): 
     cardId,
     userId: "u1",
     direction: "recognition",
+    mode: { cue: "term", target: "meaning" },
     due: new Date(now + dueIn),
     state: s,
     fsrs: JSON.stringify({
@@ -212,6 +220,7 @@ function review(
     cardId: "c6",
     cardStateId: "s-c6",
     direction: "recognition",
+    mode: { cue: "term", target: "meaning" },
     rating,
     state,
     elapsedDays,
@@ -247,6 +256,7 @@ export const wordEvents: WordEvent[] = [
 
 export const queueItem: QueueItem = {
   card: byId("c1"),
+  mode: { cue: "term", target: "meaning" },
   direction: "recognition",
   stateId: "s-c1",
   fsrsState: 0,
@@ -261,6 +271,7 @@ export const queueItem: QueueItem = {
 export const queueItemProduce: QueueItem = {
   ...queueItem,
   card: byId("c3"),
+  mode: { cue: "meaning", target: "term" },
   direction: "production",
   fsrsState: 2,
 };

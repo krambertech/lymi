@@ -1,9 +1,9 @@
 import type { CardInput } from "@lymi/core";
-import type { Card, Deck } from "@lymi/core/schema";
 import { Client } from "@modelcontextprotocol/client";
 import { InMemoryTransport } from "@modelcontextprotocol/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Db } from "../db";
+import type { CardView, getDeck } from "../services";
 import { ServiceError } from "../services/context";
 import { buildMcpServer, type McpPrincipal, withAiSourceDefaults } from "./server";
 
@@ -19,7 +19,7 @@ vi.mock("../services", async () => {
     archiveDeck: vi.fn(),
     restoreDeck: vi.fn(),
     searchCards: vi.fn(),
-    getCard: vi.fn(),
+    showCard: vi.fn(),
     addCards: vi.fn(),
     updateCard: vi.fn(),
     archiveCard: vi.fn(),
@@ -37,13 +37,14 @@ const now = new Date("2026-09-12T10:00:00.000Z");
 
 const owned = { role: "owner" as const, owner: { id: "user-1", name: "Kateryna" } };
 
-const deck: Deck & typeof owned = {
+const deck: Awaited<ReturnType<typeof getDeck>> = {
   id: "deck-1",
   userId: "user-1",
   name: "Italian",
   description: null,
   defaultLanguage: "it",
   directions: "recognition",
+  reviewModes: [{ cue: "term", target: "meaning" }],
   position: 0,
   archivedAt: null,
   createdAt: now,
@@ -51,7 +52,7 @@ const deck: Deck & typeof owned = {
   ...owned,
 };
 
-const card: Card = {
+const card: CardView = {
   id: "card-1",
   userId: "user-1",
   deckId: "deck-1",
@@ -65,6 +66,7 @@ const card: Card = {
   tags: [],
   source: null,
   directions: null,
+  reviewModes: null,
   meaningSource: "ai",
   exampleSource: null,
   audioKey: null,
@@ -164,6 +166,7 @@ describe("Lymi MCP server", () => {
         description: null,
         defaultLanguage: "it",
         directions: "recognition",
+        reviewModes: [{ cue: "term", target: "meaning" }],
         position: 0,
         total: 12,
         due: 3,
@@ -196,6 +199,7 @@ describe("Lymi MCP server", () => {
           description: null,
           defaultLanguage: "it",
           directions: "recognition",
+          reviewModes: [{ cue: "term", target: "meaning" }],
           total: 12,
           due: 3,
         },
@@ -363,7 +367,7 @@ describe("Lymi MCP server", () => {
 
   it("answers an unexpected failure with a retry message, never the internal error", async () => {
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
-    services.getCard.mockRejectedValue(
+    services.showCard.mockRejectedValue(
       new Error("D1_ERROR: no such column: cards.secret at offset 42 SQLITE_ERROR"),
     );
     const client = await connect("read");
@@ -379,15 +383,35 @@ describe("Lymi MCP server", () => {
   });
 
   it("returns a card without the bookkeeping columns", async () => {
-    services.getCard.mockResolvedValue(card);
+    services.showCard.mockResolvedValue(card);
     const client = await connect("read");
 
     const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
 
-    expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
+    expect(res.structuredContent).toMatchObject({
+      id: "card-1",
+      term: "sbrigarsi",
+      reviewModes: null,
+    });
     for (const column of ["createdBy", "updatedAt", "userId", "normalizedTerm", "audioKey"]) {
       expect(res.structuredContent).not.toHaveProperty(column);
     }
+  });
+
+  it("returns a card's own review modes as cue and target, beside the legacy direction", async () => {
+    services.showCard.mockResolvedValue({
+      ...card,
+      directions: "production",
+      reviewModes: [{ cue: "meaning", target: "term" }],
+    });
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
+
+    expect(res.structuredContent).toMatchObject({
+      directions: "production",
+      reviewModes: [{ cue: "meaning", target: "term" }],
+    });
   });
 
   it("returns a deck with its cards and each card's due time, dates as ISO strings", async () => {
@@ -400,6 +424,7 @@ describe("Lymi MCP server", () => {
           cardId: "card-1",
           userId: "user-1",
           direction: "recognition",
+          mode: { cue: "term", target: "meaning" },
           due: now,
           state: 0,
           fsrs: "{}",

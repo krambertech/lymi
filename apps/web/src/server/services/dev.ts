@@ -195,6 +195,7 @@ async function simulateReviews(
         cardId: entry.row.cardId,
         cardStateId: entry.row.id,
         direction: entry.row.direction,
+        mode: entry.row.mode,
         rating,
         state: result.log.state,
         elapsedDays: result.log.elapsedDays,

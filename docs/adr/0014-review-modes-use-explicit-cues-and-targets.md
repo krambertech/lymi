@@ -19,9 +19,11 @@ The valid modes are term → meaning, meaning → term, image → term and image
 
 Recognition remains a compatibility alias for term → meaning, production for meaning → term, and both for those two modes. Migration adds canonical mode identity before retiring legacy direction fields. Old browser bundles and queued offline grades remain accepted through a documented compatibility window.
 
-Decks store ordered default modes and a card may override them. ADR 0007's filter behavior remains: disabling a mode makes its state ineligible but never deletes it. An image mode is eligible only while the card has an active image and a non-answer-revealing description.
+Decks and cards use the same `reviewModes` list, and a card's list overrides its deck's. Picture modes are set on the card only, because a picture belongs to one card: a deck lists text modes, which its legacy direction already stores, and allowing picture defaults on decks later adds storage without changing the API. A card whose modes are all picture modes is asked in the text mode with the same target until it has an eligible picture. ADR 0007's filter behavior remains: disabling a mode makes its state ineligible but never deletes it. An image mode is eligible only while the card has an active image and a non-answer-revealing description.
 
 The cue is the content shown before reveal and the target is what the learner grades. Other card content may appear after reveal as context. Only one mode for a card may occur in a review session.
+
+Amended on 13 September 2026: picture modes moved from deck defaults to cards, keeping one mode format for both.
 
 ## Considered options
 

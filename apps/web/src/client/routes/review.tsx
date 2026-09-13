@@ -7,6 +7,7 @@ import { Button, buttonClass } from "../components/Button";
 import { api, gradeWithOutbox, type QueueItem } from "../lib/api";
 import { decksQuery, queueQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
+import { itemKey } from "../lib/review-modes";
 import {
   GRADES,
   GradeBar,
@@ -47,7 +48,7 @@ function Review() {
   const items = queue.data?.items ?? [];
   const current: QueueItem | undefined = items[index];
   const currentCardId = current?.card.id;
-  const currentItemKey = current ? `${current.card.id}-${current.direction}` : undefined;
+  const currentItemKey = current ? itemKey(current) : undefined;
   const total = queue.data?.total ?? 0;
   const sessionTotal = items.length;
   const finished = queue.isSuccess && !current;
@@ -107,7 +108,7 @@ function Review() {
         playingAudio.current = null;
         setAudioState("idle");
         setAudioError({
-          item: `${current.card.id}-${current.direction}`,
+          item: itemKey(current),
           message: t`Couldn’t play the pronunciation. Try again in a moment.`,
         });
       }
@@ -122,7 +123,7 @@ function Review() {
 
   const grade = useMutation({
     mutationFn: ({ item, rating }: { item: QueueItem; rating: Rating }) =>
-      gradeWithOutbox({ cardId: item.card.id, direction: item.direction, rating }),
+      gradeWithOutbox({ cardId: item.card.id, mode: item.mode, rating }),
     onSuccess: () => {
       setGradeError(null);
       setPendingRating(null);
@@ -231,7 +232,7 @@ function Review() {
       {current && (
         <>
           <ReviewCard
-            key={`${current.card.id}-${current.direction}`}
+            key={itemKey(current)}
             item={current}
             revealed={revealed}
             animateReveal={animateReveal}

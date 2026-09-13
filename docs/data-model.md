@@ -14,7 +14,7 @@ erDiagram
   decks ||--o{ deck_members : "shared with"
   decks ||--o{ deck_invitations : "join link"
   user ||--o{ deck_members : "studies"
-  cards ||--o{ card_states : "one per learner per direction"
+  cards ||--o{ card_states : "one per learner per review mode"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
   review_days ||--o{ reviews : "counts toward"
@@ -96,6 +96,7 @@ erDiagram
     text card_id FK
     text user_id FK
     text direction "recognition | production"
+    text mode "mode key; null only on rows an older Worker wrote"
     int due "ms timestamp"
     int state "0 New 1 Learning 2 Review 3 Relearning"
     text fsrs "ts-fsrs Card as JSON"
@@ -107,6 +108,7 @@ erDiagram
     text card_id FK
     text user_id FK
     text direction
+    text mode "mode key; null only on rows an older Worker wrote"
     int rating "1 Again 2 Hard 3 Good 4 Easy"
     int state "state before review"
     int elapsed_days
@@ -177,9 +179,13 @@ The learner's upload and the Google fallback sit in separate columns, and the up
 
 `card_states.fsrs` holds the full ts-fsrs Card object (stability, difficulty, reps, lapses, learning step, due, last review). `due` and `state` are copied out into real columns so the queue can be queried without parsing JSON. If ts-fsrs adds a field, nothing needs a migration.
 
-### Directions
+### Review modes
 
-`decks.directions` says how cards in the deck are asked: `recognition` (see the term, recall the meaning), `production` (see the meaning, produce the term) or `both`. A card may override with its own `directions`. Each concrete direction gets its own `card_states` row with its own schedule, because recognising and producing are different skills. When a deck switches to `both`, the missing state rows are created due now.
+A review mode is a cue and a target: `term_to_meaning` (recognition) or `meaning_to_term` (production). The API sends a list of `{ cue, target }` as `reviewModes` on decks and cards, and a card's list overrides its deck's. Each mode a card is asked in gets its own `card_states` row with its own schedule, because recognising and producing are different skills. Turning a mode on creates the missing rows due now; turning one off leaves them uncounted (ADR 0007). ADR 0014 is the decision.
+
+The move from directions is expand and contract, and it is in the expand phase. `decks.directions` and `cards.directions` store the list, since a text-mode list maps one-to-one onto them, and `directions` stays in the API as its legacy spelling. `card_states.direction` and `reviews.direction` stay the identity a grade finds; `mode` is written beside them and read as `coalesce(mode, mapping of direction)`, so a row an older Worker writes during a deploy still reads correctly. Migration 0012 adds `mode` and backfills it idempotently without touching schedules or review facts. Grades may name `mode` or the legacy `direction`, so queued offline grades replay onto the same schedule.
+
+Contraction is a later, separate migration, once apps and offline outboxes from before modes are gone. Run the backfill updates at the end of 0012 again first. Do not rebuild `card_states` or `reviews` with `DROP TABLE`: D1 keeps foreign keys on, and dropping `card_states` cascades into `reviews`.
 
 ### Tags and source
 

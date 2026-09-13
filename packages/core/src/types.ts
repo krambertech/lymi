@@ -34,9 +34,36 @@ export const LanguageTag = z
   .max(12, "Keep the language tag under 12 characters.")
   .regex(/^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/, "Use a language tag like ca, pt-BR or zh-Hant.");
 
-/** Which way a deck (or a single card) is asked. */
+/** Which way a deck (or a single card) is asked. The legacy form of `reviewModes`. ADR 0014. */
 export const Directions = z.enum(["recognition", "production", "both"]);
 export type Directions = z.infer<typeof Directions>;
+
+/** The stable key persistence uses for one review mode. ADR 0014. */
+export const REVIEW_MODE_KEYS = ["term_to_meaning", "meaning_to_term"] as const;
+export const ReviewModeKey = z.enum(REVIEW_MODE_KEYS);
+export type ReviewModeKey = z.infer<typeof ReviewModeKey>;
+
+/** What a review shows before reveal, and what the learner grades. */
+export const ReviewMode = z
+  .union([
+    z.object({ cue: z.literal("term"), target: z.literal("meaning") }),
+    z.object({ cue: z.literal("meaning"), target: z.literal("term") }),
+  ])
+  .meta({
+    id: "ReviewMode",
+    description: "The cue shown before reveal and the target the learner grades",
+  });
+export type ReviewMode = z.infer<typeof ReviewMode>;
+
+/** How a deck, or a card on its own, is asked: one or more modes, each once. */
+export const ReviewModes = z
+  .array(ReviewMode)
+  .min(1, "Choose at least one review mode.")
+  .max(REVIEW_MODE_KEYS.length)
+  .refine(
+    (modes) => new Set(modes.map((m) => `${m.cue}:${m.target}`)).size === modes.length,
+    "List each review mode once.",
+  );
 
 /** What a learner may do in a deck. Only `owner` and `learner` are granted today. ADR 0011. */
 export const MemberRole = z.enum(["owner", "editor", "contributor", "learner"]);
@@ -56,7 +83,8 @@ export const DeckInput = z.object({
     .nullable()
     .optional(),
   defaultLanguage: LanguageTag.nullable().optional(),
-  directions: Directions.optional(),
+  directions: Directions.optional().meta({ description: "Legacy form of `reviewModes`" }),
+  reviewModes: ReviewModes.optional(),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
@@ -70,7 +98,12 @@ export const CardInput = z.object({
   language: LanguageTag.nullable().optional(),
   tags: z.array(z.string().trim().min(1).max(40)).max(20).optional(),
   source: z.string().trim().max(200).optional(),
-  directions: Directions.nullable().optional(),
+  directions: Directions.nullable()
+    .optional()
+    .meta({ description: "Legacy form of `reviewModes`. Null follows the deck." }),
+  reviewModes: ReviewModes.nullable()
+    .optional()
+    .meta({ description: "Overrides the deck's review modes. Null follows the deck." }),
   meaningSource: FieldSource.optional(),
   exampleSource: FieldSource.optional(),
 });
@@ -119,15 +152,27 @@ export const CardPatch = CardInput.partial()
   });
 export type CardPatch = z.infer<typeof CardPatch>;
 
-export const GradeInput = z.object({
-  cardId: z.string().min(1),
-  direction: Direction,
-  rating: Rating,
-  /** Client time of the review, so offline grades keep their real timestamp. */
-  reviewedAt: z.coerce.date().optional(),
-  /** The device zone, used only to set the review zone the first time one is reported. */
-  timezone: z.string().max(64).optional(),
-});
+/**
+ * One grade names its review mode. `direction` is the form grades took before review modes,
+ * still accepted so an older app or a queued offline grade replays onto the same schedule.
+ */
+export const GradeInput = z
+  .object({
+    cardId: z.string().min(1),
+    mode: ReviewMode.optional(),
+    direction: Direction.optional().meta({
+      description: "Legacy. recognition is term → meaning and production is meaning → term.",
+    }),
+    rating: Rating,
+    /** Client time of the review, so offline grades keep their real timestamp. */
+    reviewedAt: z.coerce.date().optional(),
+    /** The device zone, used only to set the review zone the first time one is reported. */
+    timezone: z.string().max(64).optional(),
+  })
+  .refine((grade) => grade.mode || grade.direction, {
+    message: "Say which review mode was graded.",
+    path: ["mode"],
+  });
 export type GradeInput = z.infer<typeof GradeInput>;
 
 /** The languages the interface exists in. Closed so a stored value always has a catalog. */

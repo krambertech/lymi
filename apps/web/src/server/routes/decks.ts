@@ -65,7 +65,7 @@ decks.patch(
   describe({
     tags: ["Decks"],
     summary: "Update a deck",
-    description: "Rename it, or change its language or directions. Needs the write scope.",
+    description: "Rename it, or change its language or review modes. Needs the write scope.",
     ok: { schema: DeckOut, description: "The updated deck" },
     errors: [400, 404],
   }),

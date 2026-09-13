@@ -501,7 +501,8 @@ export const JoinPreviewOut = z
         language: z.string().nullable(),
         lastAddedAt: Timestamp.nullable(),
         samples: z.array(z.object({ term: z.string(), meaning: z.string().nullable() })).meta({
-          description: "Up to three recent cards, shown on the page and never in its metadata",
+          description:
+            "Up to ten cards drawn at random, shown on the page and never in its metadata",
         }),
       })
       .nullable()

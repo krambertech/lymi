@@ -29,7 +29,7 @@ A deck has one join link. The owner can turn it off. A deck can also have named 
 
 Turning the link off removes nobody. Removing a member takes the deck out of their Library and blocks them: the join link no longer admits them, and only a named invitation from the owner lets them back. Leaving is different. A member who leaves can rejoin through the link. In both cases their states and reviews stay, so a return resumes where they were.
 
-The join page is `my.lymi.app/join/<token>`. The product Worker renders it on the server with Open Graph tags. It shows the deck's name, owner, card count, and language, a few recent cards as examples, and one button. The title and Open Graph tags name the deck, owner, and count but no cards, so a chat's link preview shows none. A link that was turned off gets a page that says so. The exact path `/join` on the product origin keeps redirecting to the public site's beta page.
+The join page is `my.lymi.app/join/<token>`. The product Worker renders it on the server with Open Graph tags. It shows the deck's name, owner, card count, and language, a few cards drawn at random as examples, and one button. The title and Open Graph tags name the deck, owner, and count but no cards, so a chat's link preview shows none. A link that was turned off gets a page that says so. The exact path `/join` on the product origin keeps redirecting to the public site's beta page.
 
 ## Roles are stored now and used later
 

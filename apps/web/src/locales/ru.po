@@ -13,12 +13,21 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: today.goal
+#. placeholder {1}: today.attempts
+#. placeholder {2}: today.attempts
+#: src/client/components/Streak.tsx
+msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
+msgstr "{0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
+
 #. placeholder {0}: decks.length
 #: src/client/views/LibraryView.tsx
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}} · {total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
 #. placeholder {0}: fsrs.reps
+#. placeholder {0}: today.attempts
+#: src/client/components/Streak.tsx
 #: src/client/views/WordView.tsx
 msgid "{0, plural, one {# review} other {# reviews}}"
 msgstr "{0, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
@@ -34,10 +43,20 @@ msgstr "{0, plural, one {# повторение} few {# повторения} ma
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {карточка} few {карточки} many {карточек} other {карточки}}"
 
+#. placeholder {0}: summary.current
+#: src/client/components/Streak.tsx
+msgid "{0, plural, one {day in a row} other {days in a row}}"
+msgstr "{0, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
+
 #. placeholder {0}: consistency.longestRun
 #: src/client/views/InsightsView.tsx
 msgid "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {Longest run # days. Unbroken stretches join up.}}"
 msgstr "{0, plural, one {Самая длинная серия — # день. Непрерывные отрезки соединяются.} few {Самая длинная серия — # дня. Непрерывные отрезки соединяются.} many {Самая длинная серия — # дней. Непрерывные отрезки соединяются.} other {Самая длинная серия — # дня. Непрерывные отрезки соединяются.}}"
+
+#. placeholder {0}: Number(draft) || 0
+#: src/client/components/GoalPicker.tsx
+msgid "{0, plural, one {review} other {reviews}}"
+msgstr "{0, plural, one {повторение} few {повторения} many {повторений} other {повторения}}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
@@ -101,6 +120,14 @@ msgstr "{archivedCount, plural, one {# колода отложена} few {# к�
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# новая} few {# новые} many {# новых} other {# новой}}"
 
+#: src/client/components/StreakCalendar.tsx
+msgid "{count, plural, one {# review} other {# reviews}}"
+msgstr "{count, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
+
+#: src/client/components/Streak.tsx
+msgid "{current, plural, one {day in a row} other {days in a row}}"
+msgstr "{current, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
+
 #: src/client/components/SevenLights.tsx
 msgid "{day} none"
 msgstr "{day}: нет"
@@ -108,6 +135,22 @@ msgstr "{day}: нет"
 #: src/client/components/SevenLights.tsx
 msgid "{day}: {n} reviewed"
 msgstr "{day}: повторено {n}"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "{day}: {reviews}, goal missed"
+msgstr "{day}: {reviews}, цель не достигнута"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "{day}: goal reached, {reviews}"
+msgstr "{day}: цель достигнута, {reviews}"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "{day}: no reviews"
+msgstr "{day}: без повторений"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "{day}: nothing due"
+msgstr "{day}: ничего не было"
 
 #: src/client/views/WordView.tsx
 msgid "{days, plural, one {# day} other {# days}}"
@@ -205,6 +248,7 @@ msgstr "{moreDue, plural, one {{done} повторено из {deckName}. Ещё
 msgid "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
 msgstr "{moreDue, plural, one {{done} повторено. Ещё # готова, когда захочешь.} few {{done} повторено. Ещё # готовы, когда захочешь.} many {{done} повторено. Ещё # готовы, когда захочешь.} other {{done} повторено. Ещё # готовой, когда захочешь.}}"
 
+#: src/client/components/GoalPicker.tsx
 #: src/client/views/DeckDetailView.tsx
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
@@ -212,10 +256,6 @@ msgstr "{n, plural, one {# повторение} few {# повторения} ma
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оценка из офлайн-повторения ещё не дошла до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить её.} few {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} many {# оценок из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} other {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.}}"
-
-#: src/client/views/TodayView.tsx
-msgid "{run, plural, one {# day in a row} other {# days in a row}}"
-msgstr "{run, plural, one {# день подряд} few {# дня подряд} many {# дней подряд} other {# дня подряд}}"
 
 #: src/client/views/TodayView.tsx
 msgid "{total, plural, one {# card in your decks, all ahead of you.} other {# cards in your decks, all ahead of you.}}"
@@ -484,6 +524,10 @@ msgstr "В {savedTime} по времени {zone}, только в дни, ко�
 msgid "Back"
 msgstr "Назад"
 
+#: src/client/components/Streak.tsx
+msgid "Back to streak"
+msgstr "Назад к серии"
+
 #: src/client/views/WordView.tsx
 msgid "back within the day"
 msgstr "вернётся в течение дня"
@@ -544,6 +588,10 @@ msgstr "Карточки и колоды в архиве. Восстановле
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Карточки с уроков Марко по вторникам."
 
+#: src/client/components/Streak.tsx
+msgid "Change daily goal"
+msgstr "Изменить дневную цель"
+
 #: src/client/views/ReviewView.tsx
 msgid "Check your connection, then try again."
 msgstr "Проверь соединение и попробуй снова."
@@ -560,6 +608,10 @@ msgstr "Выбери колоду для этой карточки."
 msgid "Choose a recall grade"
 msgstr "Выбрать оценку повторения"
 
+#: src/client/components/GoalPicker.tsx
+msgid "Choose a whole number from 1 to 200."
+msgstr "Выбери целое число от 1 до 200."
+
 #: src/client/components/Combobox.tsx
 msgid "Choose one"
 msgstr "Выбери один вариант"
@@ -570,6 +622,7 @@ msgstr "Очистить"
 
 #: src/client/components/InstallDialog.tsx
 #: src/client/components/ShortcutsDialog.tsx
+#: src/client/components/Streak.tsx
 #: src/client/views/WordView.tsx
 msgid "Close"
 msgstr "Закрыть"
@@ -638,6 +691,19 @@ msgstr "Создать колоду"
 msgid "Create key"
 msgstr "Создать ключ"
 
+#: src/client/components/GoalPicker.tsx
+msgid "Custom"
+msgstr "Своя"
+
+#: src/client/components/GoalPicker.tsx
+#: src/client/components/Streak.tsx
+msgid "Daily goal"
+msgstr "Дневная цель"
+
+#: src/client/components/Streak.tsx
+msgid "Daily goal reached."
+msgstr "Дневная цель достигнута."
+
 #: src/client/components/NotificationsSection.tsx
 msgid "Daily reminder"
 msgstr "Ежедневное напоминание"
@@ -645,6 +711,10 @@ msgstr "Ежедневное напоминание"
 #: src/client/views/SettingsView.tsx
 msgid "Dark"
 msgstr "Тёмная"
+
+#: src/client/components/Streak.tsx
+msgid "Days reviewed"
+msgstr "Дней с повторениями"
 
 #: src/client/components/MonthBars.tsx
 msgid "Days reviewed each month"
@@ -843,6 +913,10 @@ msgstr "За какой период показано запоминание"
 msgid "how it is asked"
 msgstr "как задаётся"
 
+#: src/client/components/Streak.tsx
+msgid "How many reviews keep your streak each day. Every grade counts, including Forgot and a card you see again."
+msgstr "Сколько повторений в день сохраняет серию. Считается каждая оценка, даже «Не помню» и карточка, которую видишь снова."
+
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "How to connect"
 msgstr "Как подключить"
@@ -867,6 +941,11 @@ msgstr "Обзор"
 msgid "Install Lymi"
 msgstr "Установить Lymi"
 
+#: src/client/components/GoalPicker.tsx
+msgctxt "daily goal"
+msgid "Intense"
+msgstr "Интенсивно"
+
 #: src/client/views/ConsentView.tsx
 msgid "It calls itself “{claimed}”. Lymi cannot check that. The address above is the part that is checked."
 msgstr "Оно называет себя «{claimed}». Lymi не может это проверить. Проверен только адрес выше."
@@ -878,6 +957,11 @@ msgstr "Оно может читать твои карточки, а также 
 #: src/client/views/ConnectedView.tsx
 msgid "It can read your decks and cards. It cannot change anything."
 msgstr "Оно может читать твои колоды и карточки. Ничего менять не может."
+
+#: src/client/components/GoalPicker.tsx
+msgctxt "daily goal"
+msgid "Keen"
+msgstr "Усердно"
 
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/components/ConnectedAppsSection.tsx
@@ -965,6 +1049,11 @@ msgstr "Библиотека"
 msgid "Light"
 msgstr "Светлая"
 
+#: src/client/components/GoalPicker.tsx
+msgctxt "daily goal"
+msgid "Light"
+msgstr "Легко"
+
 #: src/client/views/ConsentView.tsx
 msgid "List, search and read them. Any connector needs this."
 msgstr "Просматривать список, искать и читать. Это нужно каждому коннектору."
@@ -972,6 +1061,10 @@ msgstr "Просматривать список, искать и читать. �
 #: src/client/components/ApiKeysSection.tsx
 msgid "Lists and searches decks and cards."
 msgstr "Просматривает списки и ищет колоды и карточки."
+
+#: src/client/components/Streak.tsx
+msgid "Longest streak"
+msgstr "Самая длинная серия"
 
 #: src/client/views/WordView.tsx
 msgid "Lymi"
@@ -1099,6 +1192,10 @@ msgstr "Следующая карточка"
 msgid "next in {0}"
 msgstr "дальше через {0}"
 
+#: src/client/components/StreakCalendar.tsx
+msgid "Next month"
+msgstr "Следующий месяц"
+
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "No apps connected"
 msgstr "Нет подключённых приложений"
@@ -1132,10 +1229,6 @@ msgstr "Значения пока нет"
 msgid "No reviews yet. Each block here will be a day."
 msgstr "Повторений пока нет. Каждый блок здесь будет обозначать один день."
 
-#: src/client/views/TodayView.tsx
-msgid "No streak yet"
-msgstr "Серии пока нет"
-
 #: src/client/views/WordView.tsx
 msgid "Not asked yet. It joins the next review."
 msgstr "Ещё не спрашивалась. Появится в следующем повторении."
@@ -1143,6 +1236,10 @@ msgstr "Ещё не спрашивалась. Появится в следующ
 #: src/client/components/NotificationsSection.tsx
 msgid "Not available on this server yet."
 msgstr "На этом сервере пока недоступно."
+
+#: src/client/components/Streak.tsx
+msgid "Not saved. Try again."
+msgstr "Не сохранено. Попробуй ещё раз."
 
 #: src/client/views/ComingSoonView.tsx
 msgid "Not yet"
@@ -1156,6 +1253,10 @@ msgstr "Заметки"
 #: src/client/views/TodayView.tsx
 msgid "Nothing due"
 msgstr "Нечего повторять"
+
+#: src/client/components/Streak.tsx
+msgid "Nothing due today, so your streak is safe."
+msgstr "Сегодня нечего повторять, так что серия в безопасности."
 
 #: src/client/views/InsightsView.tsx
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
@@ -1243,6 +1344,10 @@ msgstr "Воспроизвести произношение"
 msgid "Previous card"
 msgstr "Предыдущая карточка"
 
+#: src/client/components/StreakCalendar.tsx
+msgid "Previous month"
+msgstr "Предыдущий месяц"
+
 #: src/client/views/ReviewView.tsx
 msgid "Produce"
 msgstr "Воспроизвести"
@@ -1259,6 +1364,14 @@ msgstr "Карточка на воспроизведение для {front}"
 #: src/client/routes/review.tsx
 msgid "Pronunciation audio is unavailable. Try again in a moment."
 msgstr "Аудио с произношением недоступно. Попробуй ещё раз через минуту."
+
+#: src/client/components/Streak.tsx
+msgid "Reach today’s goal to keep it going."
+msgstr "Достигни сегодняшней цели, чтобы продолжить серию."
+
+#: src/client/components/Streak.tsx
+msgid "Reach today’s goal to start a streak."
+msgstr "Достигни сегодняшней цели, чтобы начать серию."
 
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/components/ConnectedAppsSection.tsx
@@ -1368,6 +1481,10 @@ msgstr "Повторения были в {lit} из последних {total, p
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}: {perDay}."
 msgstr "Повторения были в {lit} из последних {total, plural, one {# дня} few {# дней} many {# дней} other {# дня}}: {perDay}."
 
+#: src/client/components/GoalPicker.tsx
+msgid "Reviews a day"
+msgstr "Повторений в день"
+
 #: src/client/views/InsightsView.tsx
 msgid "Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
 msgstr "Повторения за день, насколько хорошо материал запоминается, и карточки, которые постоянно возвращаются. Здесь появятся данные, когда накопится немного истории."
@@ -1392,6 +1509,7 @@ msgstr "Сейчас"
 msgid "Save time"
 msgstr "Сохранить время"
 
+#: src/client/components/Streak.tsx
 #: src/client/views/DeckSettingsView.tsx
 msgid "Saved"
 msgstr "Сохранено"
@@ -1540,6 +1658,11 @@ msgstr "Начать повторение"
 msgid "Stay signed in"
 msgstr "Остаться в приложении"
 
+#: src/client/components/GoalPicker.tsx
+msgctxt "daily goal"
+msgid "Steady"
+msgstr "Ровно"
+
 #: src/client/views/WordView.tsx
 msgid "still in its first steps"
 msgstr "ещё на первых шагах"
@@ -1547,6 +1670,11 @@ msgstr "ещё на первых шагах"
 #: src/client/views/LoginView.tsx
 msgid "Still need an invitation?"
 msgstr "Всё ещё нужно приглашение?"
+
+#. placeholder {0}: summary.current
+#: src/client/components/Streak.tsx
+msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
+msgstr "Серия: {0, plural, one {# день подряд} few {# дня подряд} many {# дней подряд} other {# дня подряд}}"
 
 #: src/client/views/SettingsView.tsx
 msgid "System"
@@ -1591,6 +1719,10 @@ msgstr "Вход не завершён. Попробуй снова."
 #: src/client/views/ReviewView.tsx
 msgid "That’s the lot"
 msgstr "На сегодня всё"
+
+#: src/client/components/Streak.tsx
+msgid "That’s the lot for today."
+msgstr "На сегодня всё."
 
 #: src/client/views/WordView.tsx
 msgid "the AI"
@@ -1697,9 +1829,30 @@ msgid "today"
 msgstr "сегодня"
 
 #: src/client/components/PillNav.tsx
+#: src/client/components/Streak.tsx
 #: src/client/views/Shell.tsx
 msgid "Today"
 msgstr "Сегодня"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "Today, {day}: {reviews}"
+msgstr "Сегодня, {day}: {reviews}"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "Today, {day}: goal reached, {reviews}"
+msgstr "Сегодня, {day}: цель достигнута, {reviews}"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "Today, {day}: no reviews yet"
+msgstr "Сегодня, {day}: пока без повторений"
+
+#: src/client/components/StreakCalendar.tsx
+msgid "Today, {day}: nothing due"
+msgstr "Сегодня, {day}: нечего повторять"
+
+#: src/client/components/Streak.tsx
+msgid "Today’s goal"
+msgstr "Цель на сегодня"
 
 #: src/client/views/InsightsView.tsx
 #: src/client/views/ReviewView.tsx

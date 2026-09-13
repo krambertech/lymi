@@ -9,6 +9,7 @@ import {
   FieldSource,
   InsightsOut,
   SettingsPatch,
+  StreakOut,
 } from "@lymi/core";
 import type { Card, Deck } from "@lymi/core/schema";
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
@@ -28,6 +29,7 @@ import {
   restoreDeck,
   ServiceError,
   searchCards,
+  streak,
   updateCard,
   updateDeck,
   updateSettings,
@@ -320,7 +322,8 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_settings",
     {
       title: "Get settings",
-      description: "The learner's settings: the language meanings are written in.",
+      description:
+        "The learner's settings: the language meanings are written in, and the daily goal in recall attempts, where every accepted grade counts, Forgot and repeated cards included.",
       inputSchema: z.object({}),
       outputSchema: SettingsOut,
       annotations: read,
@@ -334,7 +337,8 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Change settings",
       description:
         "Change the app language, which also sets the language meanings are written in. Cards already written are not translated. Needs write.",
-      inputSchema: SettingsPatch,
+      // The daily goal is the learner's own: a write grant covers cards, not how much they study.
+      inputSchema: SettingsPatch.pick({ appLanguage: true }),
       outputSchema: SettingsOut,
       annotations: { ...write, idempotentHint: true },
     },
@@ -370,6 +374,28 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ period, timezone }) =>
       run(async () => result(await insights(ctx, { period, zone: timezone }))),
+  );
+
+  server.registerTool(
+    "get_streak",
+    {
+      title: "Get the streak",
+      description:
+        "Today's attempts against the daily goal, days in a row whose goal was satisfied, the longest run, how many days had a review, and every day with an attempt. Days follow the learner's review timezone.",
+      inputSchema: z.object({
+        timezone: z
+          .string()
+          .min(1)
+          .max(64)
+          .optional()
+          .describe(
+            "IANA timezone such as Europe/Tallinn, used only until the learner's own review timezone is known.",
+          ),
+      }),
+      outputSchema: z.object(StreakOut.shape),
+      annotations: read,
+    },
+    ({ timezone }) => run(async () => result(await streak(ctx, { zone: timezone }))),
   );
 
   return server;
@@ -526,10 +552,18 @@ const SettingsOut = z.object({
   meaningLanguage: z
     .string()
     .describe("The language meanings are written in. Follows the app language."),
+  dailyGoal: z
+    .number()
+    .int()
+    .describe("Recall attempts that satisfy a day's streak goal. Only the learner changes it."),
 });
 
 function settingsOut(settings: Awaited<ReturnType<typeof getSettings>>) {
-  return { appLanguage: settings.appLanguage, meaningLanguage: settings.meaningLanguage };
+  return {
+    appLanguage: settings.appLanguage,
+    meaningLanguage: settings.meaningLanguage,
+    dailyGoal: settings.dailyGoal,
+  };
 }
 
 const DeckSummaryOut = z.object({

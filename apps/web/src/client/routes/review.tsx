@@ -5,7 +5,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, buttonClass } from "../components/Button";
 import { api, gradeWithOutbox, type QueueItem } from "../lib/api";
-import { decksQuery, historyQuery, queueQuery } from "../lib/queries";
+import { decksQuery, queueQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import {
   GRADES,
@@ -30,7 +30,7 @@ function Review() {
   const navigate = useNavigate();
   const queue = useQuery(queueQuery(deck));
   const decks = useQuery(decksQuery);
-  const history = useQuery(historyQuery);
+  const streak = useQuery(streakQuery);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [flare, setFlare] = useState(false);
@@ -117,7 +117,7 @@ function Review() {
 
   const invalidateReviewData = useCallback(() => {
     qc.invalidateQueries({ queryKey: ["decks"] });
-    qc.invalidateQueries({ queryKey: ["history"] });
+    qc.invalidateQueries({ queryKey: ["streak"] });
     qc.invalidateQueries({ queryKey: ["insights"] });
   }, [qc]);
 
@@ -208,7 +208,7 @@ function Review() {
           done={done}
           moreDue={moreDue}
           deckName={deckName}
-          history={history.data?.days}
+          streak={streak.data}
           action={
             moreDue > 0 ? (
               <>

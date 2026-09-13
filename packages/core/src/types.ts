@@ -125,6 +125,8 @@ export const GradeInput = z.object({
   rating: Rating,
   /** Client time of the review, so offline grades keep their real timestamp. */
   reviewedAt: z.coerce.date().optional(),
+  /** The device zone, used only to set the review zone the first time one is reported. */
+  timezone: z.string().max(64).optional(),
 });
 export type GradeInput = z.infer<typeof GradeInput>;
 
@@ -132,11 +134,27 @@ export type GradeInput = z.infer<typeof GradeInput>;
 export const AppLanguage = z.enum(["en", "uk", "ru"]);
 export type AppLanguage = z.infer<typeof AppLanguage>;
 
+export const DEFAULT_DAILY_GOAL = 50;
+export const DAILY_GOAL_PRESETS = [10, 25, 50, 100] as const;
+
+/** Recall attempts that satisfy a day's streak goal. Every accepted, non-undone grade is one. */
+export const DailyGoal = z
+  .number({ error: "Type a number of reviews." })
+  .int("Use a whole number of reviews.")
+  .min(1, "A goal is at least one review.")
+  .max(200, "Keep the goal to 200 reviews or fewer.");
+export type DailyGoal = z.infer<typeof DailyGoal>;
+
 export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */
   appLanguage: AppLanguage.optional(),
+  dailyGoal: DailyGoal.optional(),
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
+
+/** Takes one attempt back: its count, and the card state it replaced. */
+export const UndoInput = z.object({ reviewId: z.string().min(1) });
+export type UndoInput = z.infer<typeof UndoInput>;
 
 /** Daily reminders run on quarter-hour boundaries so one shared cron can deliver them. */
 export const ReminderTime = z
@@ -155,7 +173,7 @@ const PushKey = z
   .max(512)
   .regex(/^[A-Za-z0-9_-]+$/);
 
-const TimeZone = z
+export const TimeZone = z
   .string()
   .min(1)
   .max(64)
@@ -167,6 +185,17 @@ const TimeZone = z
       return false;
     }
   }, "Use an IANA timezone such as Europe/Tallinn");
+
+/** A visible page reporting its device zone. Moves the review day only while the mode is automatic. */
+export const DeviceTimezoneInput = z.object({ timezone: TimeZone });
+export type DeviceTimezoneInput = z.infer<typeof DeviceTimezoneInput>;
+
+/** Settings: follow the device, or keep one zone until the learner returns to automatic. */
+export const ReviewTimezoneInput = z.discriminatedUnion("mode", [
+  z.object({ mode: z.literal("automatic") }),
+  z.object({ mode: z.literal("manual"), timezone: TimeZone }),
+]);
+export type ReviewTimezoneInput = z.infer<typeof ReviewTimezoneInput>;
 
 /** One browser installation. Push endpoints are capabilities and never appear in responses. */
 export const PushSubscriptionInput = z.object({

@@ -29,6 +29,8 @@ export interface LibraryProps {
   docsUrl?: string | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
+  /** The streak pill, beside capture on the phone. The rail carries it on desktop. */
+  streakButton?: ReactNode | undefined;
   static?: StaticNav;
 }
 
@@ -51,6 +53,7 @@ export function LibraryView({
   docsUrl,
   onSignOut,
   signingOut,
+  streakButton,
   static: st,
 }: LibraryProps) {
   const { t } = useLingui();
@@ -79,6 +82,7 @@ export function LibraryView({
   return (
     <Page>
       <TopBar
+        back={streakButton}
         actions={
           <>
             <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />

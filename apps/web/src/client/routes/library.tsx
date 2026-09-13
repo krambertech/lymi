@@ -7,6 +7,7 @@ import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
 import { publicSiteUrl } from "../lib/origins";
 import { deckCardsQuery, decksQuery, meQuery } from "../lib/queries";
+import { Streak } from "../lib/streak";
 import { useSignOut } from "../lib/use-sign-out";
 import { LibraryView } from "../views/LibraryView";
 
@@ -81,6 +82,7 @@ function DeckList() {
         docsUrl={publicSiteUrl("/docs")}
         onSignOut={leave.signOut}
         signingOut={leave.busy}
+        streakButton={<Streak variant="phone" />}
       />
       {archived && (
         <Toast

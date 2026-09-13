@@ -133,11 +133,15 @@ export function McpOverview() {
                 <code>get_settings</code>, <code>update_settings</code>
               </>
             ),
-            def: "The language your meanings are written in.",
+            def: "The language your meanings are written in. Reading also returns your daily goal, which only you can change.",
           },
           {
             term: <code>get_insights</code>,
             def: "Recall rate, days reviewed, cards by stage, the week ahead, and the cards that keep coming back.",
+          },
+          {
+            term: <code>get_streak</code>,
+            def: "Today against your daily goal, days in a row that met it, the longest run, and every day with a review.",
           },
         ]}
       />

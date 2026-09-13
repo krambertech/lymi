@@ -17,6 +17,22 @@ import {
  */
 const Timestamp = z.iso.datetime().meta({ description: "ISO 8601 timestamp" });
 
+/** Where one learner-local day stands against its streak goal. */
+export const ReviewDayOutcome = z.enum(["open", "goal_met", "exhausted", "nothing_due"]).meta({
+  description:
+    "open: not yet satisfied. goal_met: the goal's attempts landed. exhausted: every eligible review was done below the goal. nothing_due: nothing was eligible, which protects the streak without adding to it.",
+});
+
+export const ReviewDayProgress = z
+  .object({
+    date: z.string().meta({ description: "Local YYYY-MM-DD" }),
+    attempts: z.number().int().meta({ description: "Accepted, non-undone grades that day" }),
+    goal: z.number().int(),
+    outcome: ReviewDayOutcome,
+  })
+  .meta({ id: "ReviewDayProgress" });
+export type ReviewDayProgress = z.infer<typeof ReviewDayProgress>;
+
 /** Whose deck it is and what the caller may do in it. */
 const Membership = {
   role: MemberRole.meta({ description: "The caller's role in the deck" }),
@@ -194,6 +210,11 @@ export const GradeOut = z
       .meta({ description: "True when an older or equal review already existed" }),
     due: Timestamp,
     state: z.number().int(),
+    reviewId: z
+      .string()
+      .nullable()
+      .meta({ description: "The attempt, for Undo. Null when the grade was a duplicate." }),
+    day: ReviewDayProgress,
   })
   .meta({ id: "GradeResult" });
 
@@ -207,6 +228,18 @@ export const SettingsOut = z
     meaningLanguage: z
       .string()
       .meta({ description: "The language meanings are written in. Follows the app language." }),
+    dailyGoal: z.number().int().meta({
+      description:
+        "Recall attempts that satisfy a day's streak goal. 50 until the learner chooses.",
+    }),
+    dailyGoalChosenAt: Timestamp.nullable().meta({
+      description: "When the learner chose the goal. Null means the first review should ask.",
+    }),
+    reviewTimezone: z
+      .string()
+      .nullable()
+      .meta({ description: "IANA zone that decides where a review day begins" }),
+    reviewTimezoneMode: z.enum(["automatic", "manual"]),
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })
@@ -340,6 +373,47 @@ export const InsightsOut = z
   })
   .meta({ id: "Insights" });
 export type InsightsOut = z.infer<typeof InsightsOut>;
+
+export const StreakOut = z
+  .object({
+    today: ReviewDayProgress,
+    goal: z.number().int().meta({
+      description:
+        "The learner's chosen goal. Today keeps the goal it opened with once it is finished; later days use this.",
+    }),
+    current: z.number().int().meta({
+      description:
+        "Days in a row whose goal was satisfied. Today adds once satisfied and is otherwise skipped; a nothing-due day keeps the run without adding.",
+    }),
+    longest: z.number().int().meta({ description: "The longest such run anywhere in the history" }),
+    reviewedDays: z.number().int().meta({ description: "Days with at least one attempt, ever" }),
+    days: z
+      .array(
+        z.object({
+          date: LocalDate,
+          attempts: z.number().int(),
+          goal: z
+            .number()
+            .int()
+            .nullable()
+            .meta({ description: "The goal that day was measured against. Null before goals." }),
+          satisfied: z.boolean().meta({
+            description:
+              "The day counts toward a streak: its goal was met, its eligible reviews were exhausted, or it predates goals and had a review",
+          }),
+          nothingDue: z.boolean(),
+        }),
+      )
+      .meta({
+        description: "Every day with an attempt or a nothing-due confirmation, oldest first",
+      }),
+  })
+  .meta({ id: "Streak" });
+export type StreakOut = z.infer<typeof StreakOut>;
+
+export const UndoOut = z
+  .object({ ok: z.literal(true), day: ReviewDayProgress })
+  .meta({ id: "UndoResult" });
 
 export const OkOut = z.object({ ok: z.literal(true) }).meta({ id: "Ok" });
 

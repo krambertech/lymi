@@ -88,6 +88,18 @@ export const userSettings = sqliteTable("user_settings", {
   appLanguage: text("app_language"),
   /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
+  /** Recall attempts that satisfy a learner-local day's streak goal. 50 is the suggestion. */
+  dailyGoal: integer("daily_goal").notNull().default(50),
+  /** When the learner chose the goal. Null until they do, so the first review can ask. */
+  dailyGoalChosenAt: integer("daily_goal_chosen_at", { mode: "timestamp_ms" }),
+  /** IANA zone that decides where a review day begins. Null until a visible page reports one. */
+  reviewTimezone: text("review_timezone"),
+  /** Automatic follows the foregrounded device; manual keeps the zone chosen in Settings. */
+  reviewTimezoneMode: text("review_timezone_mode", { enum: ["automatic", "manual"] })
+    .notNull()
+    .default("automatic"),
+  /** When a visible page last moved the automatic zone. */
+  reviewTimezoneUpdatedAt: integer("review_timezone_updated_at", { mode: "timestamp_ms" }),
   ...timestamps,
 });
 
@@ -204,9 +216,54 @@ export const reviews = sqliteTable(
     source: text("source", { enum: ["web", "api", "mcp"] })
       .notNull()
       .default("web"),
+    /** The learner-local day this attempt counts toward, fixed when it lands. Null before goals. */
+    reviewDayId: text("review_day_id").references(() => reviewDays.id, { onDelete: "cascade" }),
+    /** The card state this grade replaced, as JSON, so Undo can put it back. Null before undo. */
+    stateBefore: text("state_before"),
   },
-  (t) => [index("reviews_card_idx").on(t.cardId, t.reviewedAt)],
+  (t) => [
+    index("reviews_card_idx").on(t.cardId, t.reviewedAt),
+    index("reviews_day_idx").on(t.reviewDayId),
+  ],
 );
+
+/**
+ * One learner-local date's streak goal. Attempts are counted from `reviews` less
+ * `review_undos`, never stored here; this row keeps what the day was measured against and
+ * what it came to. Pre-goal history has no row and keeps its old meaning: a reviewed day.
+ */
+export const reviewDays = sqliteTable(
+  "review_days",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** Local YYYY-MM-DD in `timezone`. */
+    date: text("date").notNull(),
+    /** The goal when the day opened; it follows goal changes only while the day is open. */
+    goal: integer("goal").notNull(),
+    timezone: text("timezone").notNull(),
+    /** The server found nothing eligible before any attempt, which protects the streak. */
+    zeroDueConfirmedAt: integer("zero_due_confirmed_at", { mode: "timestamp_ms" }),
+    outcome: text("outcome", { enum: ["open", "goal_met", "exhausted", "nothing_due"] })
+      .notNull()
+      .default("open"),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("review_days_user_date_idx").on(t.userId, t.date)],
+);
+
+/** An attempt taken back with Undo. The review row stays; this removes it from every count. */
+export const reviewUndos = sqliteTable("review_undos", {
+  reviewId: text("review_id")
+    .primaryKey()
+    .references(() => reviews.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  undoneAt: integer("undone_at", { mode: "timestamp_ms" }).notNull(),
+});
 
 /** Every write, by whoever made it. This is what makes API and MCP changes visible in the product. */
 export const auditLog = sqliteTable(
@@ -234,6 +291,7 @@ export type DeckMember = typeof deckMembers.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;
+export type ReviewDay = typeof reviewDays.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type AuditEntry = typeof auditLog.$inferSelect;
 

@@ -13,9 +13,17 @@ import type {
   PushSubscriptionInput,
   Rating,
   ReminderTime,
+  ReviewDayProgress,
   Scope,
+  SettingsPatch,
+  StreakOut,
 } from "@lymi/core";
 import type { Card, CardState, Deck, Review } from "@lymi/core/schema";
+
+/** The device's IANA zone. The server decides whether it moves the review day. */
+export function deviceTimezone(): string {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+}
 
 export class ApiError extends Error {
   constructor(
@@ -50,6 +58,10 @@ export type Settings = {
   userId: string;
   appLanguage: AppLanguage | null;
   meaningLanguage: string;
+  dailyGoal: number;
+  dailyGoalChosenAt: string | null;
+  reviewTimezone: string | null;
+  reviewTimezoneMode: "automatic" | "manual";
   createdAt: string;
   updatedAt: string;
 };
@@ -114,7 +126,7 @@ export type PushSubscriptionStatus = {
 export const api = {
   me: () => request<Me>("/api/me"),
   settings: () => request<Settings>("/api/settings"),
-  updateSettings: (body: { appLanguage: AppLanguage }) =>
+  updateSettings: (body: SettingsPatch) =>
     request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),
   decks: () => request<DeckSummary[]>("/api/decks"),
   createDeck: (body: DeckInput) =>
@@ -163,10 +175,18 @@ export const api = {
       body: JSON.stringify(body),
     }),
   queue: (deckId?: string) => request<Queue>(`/api/review/queue${deckId ? `?deck=${deckId}` : ""}`),
-  history: (days = 7) =>
-    request<{ days: number[]; streak: number }>(
-      `/api/review/history?days=${days}&tz=${new Date().getTimezoneOffset()}`,
-    ),
+  streak: () => request<StreakOut>(`/api/stats/streak?tz=${encodeURIComponent(deviceTimezone())}`),
+  /** Settle today: confirms a nothing-due day, or an exhausted one. Send from a visible page. */
+  checkToday: () =>
+    request<ReviewDayProgress>("/api/review/today", {
+      method: "POST",
+      body: JSON.stringify({ timezone: deviceTimezone() }),
+    }),
+  reportTimezone: () =>
+    request<Settings>("/api/settings/timezone/device", {
+      method: "PUT",
+      body: JSON.stringify({ timezone: deviceTimezone() }),
+    }),
   insights: (period: 30 | 90 | 0 = 30) =>
     request<InsightsOut>(
       `/api/stats/insights?period=${period}&tz=${encodeURIComponent(
@@ -176,7 +196,11 @@ export const api = {
   grade: (body: GradeInput) =>
     request<{ ok: true; due: string }>("/api/review/grade", {
       method: "POST",
-      body: JSON.stringify({ ...body, reviewedAt: (body.reviewedAt ?? new Date()).toISOString() }),
+      body: JSON.stringify({
+        ...body,
+        reviewedAt: (body.reviewedAt ?? new Date()).toISOString(),
+        timezone: body.timezone ?? deviceTimezone(),
+      }),
     }),
 };
 

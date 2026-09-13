@@ -15,6 +15,9 @@ erDiagram
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per direction"
   card_states ||--o{ reviews : "append-only"
+  user ||--o{ review_days : "one per local date"
+  review_days ||--o{ reviews : "counts toward"
+  reviews ||--o| review_undos : "taken back"
   user ||--o{ audit_log : "every write"
   user ||--|| user_settings : has
   user ||--o{ apikey : "personal keys"
@@ -54,6 +57,11 @@ erDiagram
     text user_id PK
     text app_language "nullable en | uk | ru"
     text meaning_language "default en"
+    int daily_goal "recall attempts, default 50"
+    int daily_goal_chosen_at "nullable until chosen"
+    text review_timezone "nullable IANA zone"
+    text review_timezone_mode "automatic | manual"
+    int review_timezone_updated_at "nullable"
   }
   deck_members {
     text id PK
@@ -89,6 +97,22 @@ erDiagram
     real difficulty_after
     int reviewed_at
     text source "web | api | mcp"
+    text review_day_id FK "nullable: null before daily goals"
+    text state_before "nullable JSON card state this grade replaced, for Undo"
+  }
+  review_days {
+    text id PK
+    text user_id FK
+    text date "local YYYY-MM-DD, unique per user"
+    int goal "snapshot; follows goal changes while open"
+    text timezone "IANA zone the date was taken in"
+    int zero_due_confirmed_at "nullable"
+    text outcome "open | goal_met | exhausted | nothing_due"
+  }
+  review_undos {
+    text review_id PK
+    text user_id FK
+    int undone_at
   }
   audit_log {
     text id PK
@@ -116,6 +140,10 @@ erDiagram
 All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 19-character strings, time-prefixed so they sort by creation. Learning content is never deleted by the app: decks and cards archive, while reviews and audit rows are permanent. Push subscriptions are device capabilities, not learning content, and are deleted when the learner turns reminders off or the push service reports that the subscription has expired.
 
 The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
+
+### Review days
+
+A review day is one learner-local date measured against its streak goal. Attempts are counted from `reviews` less `review_undos`, never stored as a counter. A grade fixes `review_day_id` when it lands, in the review timezone of that moment, so a later timezone change never moves completed history. `outcome` only moves forward on a grade or a lower goal; Undo recomputes it and can reopen a day. Reviews from before daily goals have no day and still count as a reviewed day. The rules are in [the daily review goal proposal](proposals/daily-review-goal-and-rolling-queue.md) and live in `services/review-days.ts`.
 
 ### Shared decks
 

@@ -2,16 +2,19 @@ import { Doc, Sub } from "./Frame";
 
 const PAIRS: [string, string, string][] = [
   ["End of session", "That’s the lot", "Congratulations! You did it! 🎉"],
-  ["Nothing due", "Nothing due  ·  Coming up: 31 tomorrow", "You’re all caught up!"],
+  ["Nothing due", "Nothing due · Coming up: 31 cards tomorrow", "You’re all caught up!"],
   ["Empty deck", "Empty deck. Add the first card from your lesson.", "No cards found."],
-  ["Archive", "Archived “sbrigarsi”  ·  Undo", "Are you sure you want to delete this card?"],
+  ["Archive", "Archived “sbrigarsi” · Undo", "Are you sure you want to delete this card?"],
   ["Primary action", "Review 11 due", "Start learning"],
-  ["Error", "Keep it under 200 characters.", "Invalid input"],
+  ["Field error", "Keep it under 200 characters.", "Invalid input"],
+  ["Load error", "Couldn’t load your cards. Check your connection and try again.", "Error 500"],
+  ["Revoke", "Keep key · Revoke key", "Cancel · OK"],
   ["AI label", "AI meaning", "✨ Magic suggestion"],
+  ["Count", "11 due · Lesson 14 and Portuguese", "You have 11 cards to review today! 🔥"],
   [
-    "Count",
-    "11 due · Lesson 14 and Portuguese",
-    "You have 11 cards to review today! 🔥 Day 14 streak",
+    "Reminder",
+    "11 cards are waiting when you have a moment.",
+    "You haven’t reviewed today. Don’t fall behind!",
   ],
 ];
 
@@ -25,10 +28,14 @@ export function Voice() {
         <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
           {[
             "Sentence case everywhere. Title Case only for proper nouns.",
-            "Say what happens: “Review 11 due”, “Add to Lesson 14”, “Archived ‘sbrigarsi’”. Not “Submit”, “OK”, “Start”.",
-            "Numbers are counts of cards and days. Never points, streaks, XP or percentages.",
+            "Say what happens: a button reads “Review 11 due” or “Add to Lesson 14”, a toast reads Archived “sbrigarsi”. Not “Submit”, “OK”, “Start”.",
             "No exclamation marks in the interface. No emoji.",
-            "Errors say how to fix it: “Keep it under 200 characters.” Not “Invalid input”.",
+            "Field errors say how to fix it: “Keep it under 200 characters.” Not “Invalid input”.",
+            "Other errors say “Couldn’t [verb] [thing].” and then the fix. Never a status code.",
+            "“New deck” opens the form. “Create deck” submits it.",
+            "Confirm only what has no undo. The destructive button names the consequence, “Revoke key”, and the safe one names what stays, “Keep key”.",
+            "Screen names and grade names keep their capitals inside a sentence: “Restore it from Archived”, “Grade it Hard”.",
+            "Reminders and other notifications carry no guilt and no urgency.",
             "Anything generated is labelled where it appears: “AI meaning”, “AI example”. The label is a chip, not a sparkle.",
             "Keyboard hints are part of the copy on desktop: the button says “Review 11 due” and shows R.",
             "Curly quotes and the ellipsis character in rendered text.",

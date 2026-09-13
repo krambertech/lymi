@@ -251,7 +251,7 @@ function KeyRow({
       {confirming ? (
         <div className="enter-fade flex gap-3">
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
-            <Trans>Keep</Trans>
+            <Trans>Keep key</Trans>
           </Button>
           <Button
             size="sm"

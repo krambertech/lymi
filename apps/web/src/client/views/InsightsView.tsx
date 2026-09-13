@@ -68,8 +68,8 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         <PageHeader title={t`Insights`} />
         <EmptyState
           lantern="unlit"
-          title={t`Could not load your numbers`}
-          body={t`The request did not come back. Nothing is lost; try again.`}
+          title={t`Couldn’t load Insights`}
+          body={t`Check your connection and try again.`}
           action={
             <Button variant="secondary" onClick={onRetry} loading={busy}>
               <Trans>Try again</Trans>
@@ -201,7 +201,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         />
 
         <StatPlate
-          label={t`Collection`}
+          label={t`Cards`}
           value={cards.total}
           unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
           figure={

@@ -53,7 +53,7 @@ function subscriptionInput(
 /** Resolved when the error happens, so the sentence is in the language active at the time. */
 function messageFor(error: unknown) {
   if (error instanceof ApiError) return error.message;
-  return i18n._(msg`Unable to save the reminder. Check your connection and try again.`);
+  return i18n._(msg`Couldn’t save the reminder. Check your connection and try again.`);
 }
 
 export function NotificationsSection() {

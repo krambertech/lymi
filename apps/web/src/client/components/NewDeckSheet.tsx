@@ -82,7 +82,7 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
               name: name.trim() ? t`Keep the name under 80 characters.` : t`Give the deck a name.`,
               defaultLanguage:
                 language && language.length > 12
-                  ? t`That is too long for a language tag.`
+                  ? t`Keep the language tag under 12 characters.`
                   : t`Use a language tag like ca, pt-BR or zh-Hant.`,
             }),
           );

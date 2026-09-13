@@ -174,7 +174,7 @@ export function LibraryView({
             className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
           >
             <span className="font-medium">
-              <Plural value={archivedCount} one="# deck put away" other="# decks put away" />
+              <Plural value={archivedCount} one="# archived deck" other="# archived decks" />
             </span>
             <span className="flex items-center gap-1 text-sm text-muted">
               <Trans>Show</Trans>

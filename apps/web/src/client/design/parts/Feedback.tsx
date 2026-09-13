@@ -92,8 +92,8 @@ export const feedback: Group = {
               render: () => (
                 <EmptyState
                   title="Nothing here yet"
-                  body="Make a deck, add a card from your last lesson, and the lantern comes on."
-                  action={<Button variant="primary">Make a deck</Button>}
+                  body="Create a deck, add a card from your last lesson, and the lantern comes on."
+                  action={<Button variant="primary">New deck</Button>}
                   className="w-full py-4"
                 />
               ),

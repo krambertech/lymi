@@ -251,7 +251,7 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 Warm neutrals, nearly grey. Amber is the only saturated accent, the colour that means act; the three card-state colours below describe and never ask. Amber is: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the streak modal's month and its goal track, the thirty-day strip and the month bars — the same lit glass at every size, which makes it the flame rather than a sixth thing.
 
-Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber: Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
+Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Cards bar on Insights. They are not accents and they are not amber: Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
 
@@ -335,7 +335,7 @@ On the phone every screen starts with the same top bar, `TopBar` in `views/Shell
 
 The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act". The two exceptions are the lights, which are the streak, and the single bar the sentence above the chart is pointing at.
 
-Four plates in a 2x2 grid — Recall, Consistency, Collection, Ahead — each carrying a number and one line of plain words. The line is not a caption. 91% says nothing until the plate says the schedule aims for 90, and a grid of numbers without those lines is the dashboard the product does without. Under them the month bars run full width, then the cards that keep coming back.
+Four plates in a 2x2 grid — Recall, Consistency, Cards, Ahead — each carrying a number and one line of plain words. The line is not a caption. 91% says nothing until the plate says the schedule aims for 90, and a grid of numbers without those lines is the dashboard the product does without. Under them the month bars run full width, then the cards that keep coming back.
 
 Consistency and the months answer different questions and neither replaces the other. The thirty-day strip is texture: which days, and how long the runs were. The month bars are trend: whether the habit is holding across seasons. Both draw a day as lit or unlit and never grade it by how many cards it held, because grading turns a habit picture into a scoreboard and makes a heavy Tuesday look better than a steady one.
 
@@ -385,7 +385,14 @@ Rules: one primary per view. Every control has default, hover, focus, active, di
 
 ## Voice
 
-Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "That's the lot", not "Congratulations!". Errors say how to fix it. Anything the AI wrote is labelled where it appears.
+Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "That's the lot", not "Congratulations!". Anything the AI wrote is labelled where it appears.
+
+- A field error says how to fix it: "Keep the term under 500 characters."
+- Any other error says "Couldn't [verb] [thing]." and then the fix, never a status code: "Couldn't save the reminder. Check your connection and try again."
+- "New deck" opens the form; "Create deck" submits it.
+- Confirmation stays only where there is nothing to undo. The destructive button names the consequence ("Revoke key") and the safe button names what stays ("Keep key").
+- Screen names (Library, Settings, Activity) and grade names (Forgot, Hard, Good, Easy) keep their capitals inside a sentence.
+- Reminders and other notifications carry no guilt and no urgency.
 
 ## Documentation
 

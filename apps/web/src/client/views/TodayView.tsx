@@ -177,12 +177,15 @@ export function TodayView({
               </Button>
             )}
             {nothingYet && (
-              <To
-                to="/library"
-                className={buttonClass("primary", "lg", "mt-5.5 w-full @3xl:w-auto @3xl:px-10")}
+              <Button
+                variant="primary"
+                size="lg"
+                className="mt-5.5 w-full @3xl:w-auto @3xl:px-10"
+                onClick={onCreateDeck}
+                aria-disabled={!onCreateDeck}
               >
-                <Trans>Make a deck</Trans>
-              </To>
+                <Trans>New deck</Trans>
+              </Button>
             )}
           </>
         )}

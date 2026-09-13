@@ -246,7 +246,7 @@ export const SCREENS: Entry[] = [
           <PhoneShot caption="Revealed" initial="light" path="/review" bare>
             <ReviewPhone revealed />
           </PhoneShot>
-          <PhoneShot caption="Produce direction, revealed" initial="dark" path="/review" bare>
+          <PhoneShot caption="Production direction, revealed" initial="dark" path="/review" bare>
             <ReviewPhone revealed produce />
           </PhoneShot>
         </div>
@@ -554,7 +554,7 @@ export const SCREENS: Entry[] = [
             <LoginView onGoogle={noop} app={CLAUDE} />
           </PhoneShot>
           <PhoneShot caption="Sign-in failed" initial="light" path="/login" bare>
-            <LoginView onGoogle={noop} error="Sign-in didn’t go through. Try again." />
+            <LoginView onGoogle={noop} error="Sign-in didn’t finish. Try again." />
           </PhoneShot>
           <PhoneShot caption="Not on the invite list" initial="dark" path="/login" bare>
             <LoginView

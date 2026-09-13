@@ -31,7 +31,7 @@ export type Scope = z.infer<typeof Scope>;
 export const LanguageTag = z
   .string()
   .min(2, "A language tag is at least two letters, like it or uk.")
-  .max(12, "That is too long for a language tag.")
+  .max(12, "Keep the language tag under 12 characters.")
   .regex(/^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/, "Use a language tag like ca, pt-BR or zh-Hant.");
 
 /** Which way a deck (or a single card) is asked. */
@@ -62,7 +62,7 @@ export type DeckInput = z.infer<typeof DeckInput>;
 
 export const CardInput = z.object({
   deckId: z.string().min(1, "Choose a deck for it to go in."),
-  term: z.string().trim().min(1, "Type the term.").max(500, "That is longer than a card holds."),
+  term: z.string().trim().min(1, "Type the term.").max(500, "Keep the term under 500 characters."),
   meaning: z.string().trim().max(1000, "Keep the meaning under 1000 characters.").optional(),
   pronunciation: z.string().trim().max(200).optional(),
   example: z.string().trim().max(1000).optional(),

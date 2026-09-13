@@ -127,7 +127,19 @@ export default defineConfig({
         plugins: [react(), tailwindcss()],
         resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
         optimizeDeps: {
-          include: ["react", "react-dom", "react-dom/client", "vitest-browser-react"],
+          include: [
+            "react",
+            "react-dom",
+            "react-dom/client",
+            "vitest-browser-react",
+            // Discovered mid-run, a dependency reloads the page and loads a second React.
+            "@base-ui/react/dialog",
+            "@base-ui/react/drawer",
+            "@base-ui/react/menu",
+            "@base-ui/react/merge-props",
+            "@base-ui/react/separator",
+            "@base-ui/react/use-render",
+          ],
         },
         test: {
           name: "components",

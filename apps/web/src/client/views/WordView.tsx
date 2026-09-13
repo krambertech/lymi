@@ -1,31 +1,33 @@
 import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
-import {
-  type CardPatch,
-  deserializeState,
-  type FsrsCard,
-  type ReviewMode,
-  retrievability,
-} from "@lymi/core";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { type CardPatch, deserializeState, type FsrsCard, type ReviewMode } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
+  ArchiveRestore,
   ArrowDown,
   ArrowUp,
   Check,
   ChevronRight,
   FolderInput,
+  Image as ImageIcon,
+  type LucideIcon,
   MoreHorizontal,
   Pencil,
+  Plus,
+  Sparkle,
   Volume2,
   X,
 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
 import { CardPicture } from "../components/CardPicture";
+import { StateChip } from "../components/Chip";
 import { languageName } from "../components/DeckFields";
 import { Field, Input, Textarea } from "../components/Field";
+import { GRADES, GradeMark, Mark } from "../components/Grade";
+import { ReviewTimeline } from "../components/ReviewTimeline";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
   DropdownMenu,
@@ -38,16 +40,18 @@ import type { Card, CardEvent, CardState, Review } from "../lib/api";
 import { modeLabel } from "../lib/review-modes";
 import { BackButton, TopBar } from "./Shell";
 
-/** A line in the word's history that is not a review: when it arrived, what the AI added. */
+/** A write in the word's history, not a review: what changed, and who changed it. */
 export interface WordEvent {
   /** The audit row's id, for a key that survives two writes in the same millisecond. */
   id?: string | undefined;
   at: Date;
-  label: string;
-  detail: string;
+  kind: "added" | "edited" | "enriched" | "moved" | "archived" | "restored" | "picture";
+  /** "Meaning changed to “snow”". */
+  text: string;
+  /** "by you". */
+  actor: string;
 }
 
-/** The fields the page edits. An emptied field is sent as "", which is what the API accepts. */
 export type WordPatch = Pick<
   CardPatch,
   "meaning" | "example" | "notes" | "meaningSource" | "exampleSource"
@@ -81,6 +85,26 @@ const pictureEvents: Record<string, MessageDescriptor> = {
   restore_image: msg`Picture restored`,
 };
 
+/** A single short text change names its new value, so the history says what the word became. */
+const changedTo: Record<string, (value: string) => MessageDescriptor> = {
+  term: (value) => msg`Term changed to “${value}”`,
+  meaning: (value) => msg`Meaning changed to “${value}”`,
+  pronunciation: (value) => msg`Pronunciation changed to “${value}”`,
+  example: (value) => msg`Example changed to “${value}”`,
+  notes: (value) => msg`Notes changed to “${value}”`,
+};
+const QUOTED_MAX = 60;
+
+const eventIcon: Record<WordEvent["kind"], LucideIcon> = {
+  added: Plus,
+  edited: Pencil,
+  enriched: Sparkle,
+  moved: FolderInput,
+  archived: Archive,
+  restored: ArchiveRestore,
+  picture: ImageIcon,
+};
+
 /** "the meaning, the example and the notes", joined the way the interface language joins. */
 function listOf(items: string[], locale: string): string {
   try {
@@ -91,50 +115,60 @@ function listOf(items: string[], locale: string): string {
 }
 
 /**
- * An audit line as the history reads it: "Added · by a connected app". Runs outside React, so it
- * reads the global i18n; the route recomputes it when the history changes.
+ * An audit line as the history reads it: "Meaning changed to “snow”", by you. Runs outside
+ * React, so it reads the global i18n; the route recomputes it when the history changes.
  */
 export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent {
-  const at = new Date(e.at);
+  const base = { id: e.id, at: new Date(e.at) };
   const actor = actorName[e.actor];
   const who = actor ? i18n._(actor) : e.actor;
+  const by = i18n._(msg`by ${who}`);
   const payload =
     e.payload && typeof e.payload === "object" ? (e.payload as Record<string, unknown>) : {};
-  const fields = Object.keys(payload).flatMap((k) => {
-    const name = fieldName[k];
-    return name ? [i18n._(name)] : [];
-  });
-  const list = listOf(fields, i18n.locale);
   if (e.action === "create") {
-    const detail =
+    const text =
       payload.meaningSource === "lesson"
-        ? i18n._(msg`by ${who} · meaning from the lesson`)
-        : i18n._(msg`by ${who}`);
-    return { at, label: i18n._(msg`Added`), detail };
-  }
-  if (e.action === "update") {
-    if ("deckId" in payload)
-      return { at, label: i18n._(msg`Moved`), detail: i18n._(msg`to another deck, by ${who}`) };
-    if (e.actor === "ai") {
-      const what = list || i18n._(msg`a field`);
-      return { at, label: i18n._(msg`Enriched`), detail: i18n._(msg`the AI wrote ${what}`) };
-    }
-    return {
-      at,
-      label: i18n._(msg`Edited`),
-      detail: list ? i18n._(msg`${list}, by ${who}`) : i18n._(msg`by ${who}`),
-    };
+        ? i18n._(msg`Card added, meaning from the lesson`)
+        : i18n._(msg`Card added`);
+    return { ...base, kind: "added", text, actor: by };
   }
   const picture =
     e.action === "update_image" && payload.description === null
       ? msg`Picture description removed`
       : pictureEvents[e.action];
-  if (picture) return { at, label: i18n._(picture), detail: i18n._(msg`by ${who}`) };
+  if (picture) return { ...base, kind: "picture", text: i18n._(picture), actor: by };
   if (e.action === "archive")
-    return { at, label: i18n._(msg`Archived`), detail: i18n._(msg`by ${who}`) };
+    return { ...base, kind: "archived", text: i18n._(msg`Archived`), actor: by };
   if (e.action === "restore")
-    return { at, label: i18n._(msg`Restored`), detail: i18n._(msg`by ${who}`) };
-  return { at, label: e.action, detail: i18n._(msg`by ${who}`) };
+    return { ...base, kind: "restored", text: i18n._(msg`Restored`), actor: by };
+  if (e.action !== "update") return { ...base, kind: "edited", text: e.action, actor: by };
+  if ("deckId" in payload)
+    return { ...base, kind: "moved", text: i18n._(msg`Moved to another deck`), actor: by };
+
+  const keys = Object.keys(payload).filter((k) => k in fieldName);
+  const list =
+    listOf(
+      keys.flatMap((k) => {
+        const name = fieldName[k];
+        return name ? [i18n._(name)] : [];
+      }),
+      i18n.locale,
+    ) || i18n._(msg`a field`);
+  if (e.actor === "ai")
+    return { ...base, kind: "enriched", text: i18n._(msg`Enriched ${list}`), actor: by };
+  const only = keys.length === 1 ? keys[0] : undefined;
+  const value = only ? payload[only] : undefined;
+  if (only && typeof value === "string" && value.trim()) {
+    const next = value.trim();
+    if (only === "language") {
+      const text = i18n._(msg`Language changed to ${languageName(next, i18n.locale)}`);
+      return { ...base, kind: "edited", text, actor: by };
+    }
+    const message = changedTo[only];
+    if (message && next.length <= QUOTED_MAX)
+      return { ...base, kind: "edited", text: i18n._(message(next)), actor: by };
+  }
+  return { ...base, kind: "edited", text: i18n._(msg`Edited ${list}`), actor: by };
 }
 
 export interface WordProps {
@@ -167,19 +201,6 @@ export interface WordProps {
   variant: "page" | "panel";
 }
 
-const gradeName: Record<number, MessageDescriptor> = {
-  1: msg`Forgot`,
-  2: msg`Hard`,
-  3: msg`Good`,
-  4: msg`Easy`,
-};
-const stateName: Record<number, MessageDescriptor> = {
-  0: msg`New`,
-  1: msg`Learning`,
-  2: msg`Known`,
-  3: msg`Relearning`,
-};
-
 /** The FSRS memory model, or null for a state that has none yet. */
 function readFsrs(state: CardState | null): FsrsCard | null {
   if (!state) return null;
@@ -191,41 +212,36 @@ function readFsrs(state: CardState | null): FsrsCard | null {
   }
 }
 
-/** "Due in 3 days", as the interface language says it. Read the message at render time. */
-function dueLabel(i18n: I18n, due: Date, now = Date.now()): string {
-  const days = Math.round((due.getTime() - now) / 86_400_000);
-  if (due.getTime() <= now || days < 1) return i18n._(msg`Due today`);
-  if (days === 1) return i18n._(msg`Due tomorrow`);
+/** When a mode is back, as the schedule table says it, with the date once it is days away. */
+function nextLabel(i18n: I18n, due: Date, now: Date): { when: string; date?: string } {
+  if (due.getTime() <= now.getTime()) return { when: i18n._(msg`Due now`) };
+  const days = Math.round((startOfDay(due) - startOfDay(now)) / 86_400_000);
+  if (days === 0) return { when: i18n._(msg`Later today`) };
+  if (days === 1) return { when: i18n._(msg`Tomorrow`) };
+  const date = i18n.date(due, { day: "numeric", month: "short" });
   if (days < 30)
-    return i18n._(msg`${plural(days, { one: "Due in # day", other: "Due in # days" })}`);
+    return { when: i18n._(msg`${plural(days, { one: "In # day", other: "In # days" })}`), date };
   const months = Math.round(days / 30);
-  return i18n._(msg`${plural(months, { one: "Due in # month", other: "Due in # months" })}`);
+  return {
+    when: i18n._(msg`${plural(months, { one: "In # month", other: "In # months" })}`),
+    date,
+  };
+}
+
+function startOfDay(d: Date): number {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 }
 
 /** A stretch of days in words: "a day", "12 days", "3 months". */
 function spanLabel(i18n: I18n, days: number): string {
-  if (days < 1) return i18n._(msg`within the day`);
   if (days === 1) return i18n._(msg`a day`);
   if (days < 30) return i18n._(msg`${plural(days, { one: "# day", other: "# days" })}`);
   const months = Math.round(days / 30);
   return i18n._(msg`${plural(months, { one: "# month", other: "# months" })}`);
 }
 
-/** The mark beside a grade: four tones of ink, full to dashed, so Forgot is never red. */
-function GradeMark({ rating }: { rating: number }) {
-  return (
-    <i
-      aria-hidden="true"
-      className={clsx(
-        "inline-block size-2.5 shrink-0 rounded-full border-[1.5px]",
-        rating === 4 && "border-text bg-text",
-        rating === 3 && "border-text bg-text/45",
-        rating === 2 && "border-text bg-text/15",
-        rating === 1 && "border-dashed border-text bg-transparent",
-      )}
-    />
-  );
-}
+/** How many History rows show before "Show older". */
+const HISTORY_ROWS = 8;
 
 /** A field at rest: its label, where it came from, and the text. Press it to edit. */
 function ReadField({
@@ -351,47 +367,54 @@ export function WordView({
   variant,
 }: WordProps) {
   const { t, i18n } = useLingui();
+  const now = new Date();
   const schedules = (states?.length ? states : state ? [state] : []).map((st) => ({
     st,
     fsrs: readFsrs(st),
   }));
-  const asked = schedules.length > 1;
   const readOnly = !onSave;
+  const [olderShown, setOlderShown] = useState(false);
+  const gradeLabel = (rating: number) => {
+    const grade = GRADES.find((g) => g.rating === rating);
+    return grade ? i18n._(grade.label) : String(rating);
+  };
   // Reviews and writes in one order, newest first, so a fresh edit sits above older reviews.
-  const timeline = [
+  const history = [
     ...(reviews ?? []).map((r) => {
-      const when =
-        r.elapsedDays === 0 && r.state === 0
-          ? t`first time`
-          : t`after ${spanLabel(i18n, r.elapsedDays)}`;
-      const then =
+      const at = new Date(r.reviewedAt);
+      const next =
         r.scheduledDays > 0
           ? t`next in ${spanLabel(i18n, r.scheduledDays)}`
-          : t`back within the day`;
-      const direction = i18n._(modeLabel(r.mode)).toLocaleLowerCase(i18n.locale);
-      return {
-        kind: "review" as const,
-        key: `r-${r.id}`,
-        at: new Date(r.reviewedAt),
-        rating: r.rating,
-        label: "",
-        detail: asked ? t`${direction} · ${when}, ${then}` : t`${when}, ${then}`,
-      };
+          : startOfDay(at) === startOfDay(now)
+            ? t`back later today`
+            : t`back the same day`;
+      return { kind: "review" as const, key: `r-${r.id}`, at, review: r, next };
     }),
     ...(events ?? []).map((e, i) => ({
       kind: "event" as const,
       key: `e-${e.id ?? i}`,
       at: e.at,
-      rating: 0,
-      label: e.label,
-      detail: e.detail,
+      event: e,
     })),
   ].sort((a, b) => b.at.getTime() - a.at.getTime());
-  const elsewhere = (decks ?? []).filter((d) => d.id !== card.deckId);
-  const gradeLabel = (rating: number) => {
-    const name = gradeName[rating];
-    return name ? i18n._(name) : String(rating);
+  const shownHistory = olderShown ? history : history.slice(0, HISTORY_ROWS);
+  const dayLabel = (d: Date) => {
+    const ago = Math.round((startOfDay(now) - startOfDay(d)) / 86_400_000);
+    if (ago === 0) return t`Today`;
+    if (ago === 1) return t`Yesterday`;
+    return i18n.date(d, {
+      day: "numeric",
+      month: "short",
+      ...(d.getFullYear() !== now.getFullYear() ? { year: "numeric" } : {}),
+    });
   };
+  const timelineReviews = (reviews ?? []).map((r) => ({
+    id: r.id,
+    at: new Date(r.reviewedAt),
+    rating: r.rating,
+  }));
+  const started = schedules.filter(({ st }) => st.state !== 0);
+  const elsewhere = (decks ?? []).filter((d) => d.id !== card.deckId);
   // At rest the word reads as a page. Editing is asked for, one field or all of them.
   const [editing, setEditing] = useState(false);
   const [moving, setMoving] = useState(false);
@@ -635,141 +658,146 @@ export function WordView({
 
       <section className="grid gap-4 border-t border-edge pt-5">
         <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
-          <Trans>Right now</Trans>
+          <Trans>Schedule</Trans>
         </h2>
-        {schedules.length === 0 && (
+        {schedules.length === 0 ? (
           <p className="text-sm text-text-2">
             <Trans>Not asked yet. It joins the next review.</Trans>
           </p>
+        ) : (
+          <>
+            {timelineReviews.length > 0 && (
+              <ReviewTimeline
+                start={new Date(card.createdAt)}
+                now={now}
+                reviews={timelineReviews}
+                dues={started.map(({ st }) => ({ id: st.id, at: new Date(st.due) }))}
+              />
+            )}
+            <table className="w-full border-collapse text-sm tabular-nums">
+              <thead>
+                <tr className="border-b border-edge text-xs text-muted">
+                  <th scope="col" className="pe-3 pb-2 text-start font-medium">
+                    <Trans>Mode</Trans>
+                  </th>
+                  <th scope="col" className="pe-3 pb-2 text-start font-medium">
+                    <Trans>Next</Trans>
+                  </th>
+                  <th scope="col" className="pe-3 pb-2 text-end font-medium">
+                    <Trans>Reviews</Trans>
+                  </th>
+                  <th scope="col" className="pb-2 text-end font-medium">
+                    <Trans>Difficulty</Trans>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {schedules.map(({ st, fsrs }) => {
+                  const next = st.state !== 0 ? nextLabel(i18n, new Date(st.due), now) : null;
+                  return (
+                    <tr key={st.id} className="border-b border-edge align-top last:border-b-0">
+                      <th scope="row" className="py-2.5 pe-3 text-start font-normal">
+                        <span className="grid justify-items-start gap-1">
+                          <span className="text-base font-medium">
+                            {i18n._(modeLabel(st.mode))}
+                          </span>
+                          <StateChip state={st.state} size="sm" />
+                        </span>
+                      </th>
+                      {next && fsrs ? (
+                        <>
+                          <td className="py-2.5 pe-3">
+                            {next.when}
+                            {next.date && <span className="block text-muted">{next.date}</span>}
+                          </td>
+                          <td className="py-2.5 pe-3 text-end">
+                            {i18n.number(fsrs.reps)}
+                            {fsrs.lapses > 0 && (
+                              <span className="block text-muted">
+                                <Plural
+                                  value={fsrs.lapses}
+                                  one="Forgot once"
+                                  other="Forgot # times"
+                                />
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-2.5 text-end">
+                            {i18n.number(fsrs.difficulty, {
+                              minimumFractionDigits: 1,
+                              maximumFractionDigits: 1,
+                            })}
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td className="py-2.5 pe-3 text-muted">
+                            <Trans>Not started</Trans>
+                          </td>
+                          <td className="py-2.5 pe-3 text-end text-muted">–</td>
+                          <td className="py-2.5 text-end text-muted">–</td>
+                        </>
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </>
         )}
-        {schedules.map(({ st, fsrs }) => {
-          const recall = fsrs ? retrievability(fsrs) : 0;
-          const label = i18n._(stateName[st.state] ?? msg`New`);
-          return (
-            <div key={st.id} className="grid gap-3">
-              {asked && (
-                <h3 className="text-sm font-medium capitalize text-text-2">
-                  {i18n._(modeLabel(st.mode))}
-                </h3>
-              )}
-              {fsrs ? (
-                <>
-                  <dl className="grid grid-cols-2 gap-x-4 gap-y-3 @sm:grid-cols-4">
-                    <div className="grid gap-0.5">
-                      <dd className="text-lg font-medium tracking-[-0.01em]">{label}</dd>
-                      <dt className="text-xs text-muted">
-                        {fsrs.lapses > 0
-                          ? t`${plural(fsrs.reps, { one: "# review", other: "# reviews" })}, ${plural(
-                              fsrs.lapses,
-                              { one: "# lapse", other: "# lapses" },
-                            )}`
-                          : t`${plural(fsrs.reps, { one: "# review", other: "# reviews" })}`}
-                      </dt>
-                    </div>
-                    <div className="grid gap-0.5">
-                      <dd className="text-lg font-medium tracking-[-0.01em]">
-                        {dueLabel(i18n, new Date(st.due))}
-                      </dd>
-                      <dt className="text-xs text-muted">
-                        {fsrs.scheduled_days > 0
-                          ? t`scheduled after ${spanLabel(i18n, fsrs.scheduled_days)}`
-                          : t`still in its first steps`}
-                      </dt>
-                    </div>
-                    <div className="grid gap-0.5">
-                      <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
-                        {i18n.number(recall, { style: "percent", maximumFractionDigits: 0 })}
-                      </dd>
-                      <dt className="text-xs text-muted">
-                        <Trans>would come back right now</Trans>
-                      </dt>
-                    </div>
-                    <div className="grid gap-0.5">
-                      <dd className="text-lg font-medium tracking-[-0.01em] tabular-nums">
-                        {spanLabel(i18n, Math.round(fsrs.stability))}
-                      </dd>
-                      <dt className="text-xs text-muted">
-                        <Trans>
-                          stability · difficulty{" "}
-                          {i18n.number(fsrs.difficulty, {
-                            minimumFractionDigits: 1,
-                            maximumFractionDigits: 1,
-                          })}
-                        </Trans>
-                      </dt>
-                    </div>
-                  </dl>
-                  <p className="text-sm text-text-2">
-                    {st.state === 2
-                      ? t`Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps.`
-                      : st.state === 0
-                        ? t`New means it has not been asked yet. It joins the next review.`
-                        : t`Learning means the interval is still short. Grade it Good a couple more times and it becomes known, with reviews weeks apart.`}
-                  </p>
-                </>
-              ) : (
-                <p className="text-sm text-text-2">
-                  <Trans>Not asked yet. It joins the next review.</Trans>
-                </p>
-              )}
-            </div>
-          );
-        })}
       </section>
 
       {(reviews || events) && (
-        <section className="grid gap-2 border-t border-edge pt-5">
-          <div className="flex items-baseline justify-between gap-3">
-            <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
-              <Trans>History</Trans>
-            </h2>
-            {reviews && reviews.length > 0 && (
-              <span className="flex items-center gap-1" aria-hidden="true">
-                {[...reviews]
-                  .sort(
-                    (a, b) => new Date(a.reviewedAt).getTime() - new Date(b.reviewedAt).getTime(),
-                  )
-                  .slice(-12)
-                  .map((r) => (
-                    <GradeMark key={r.id} rating={r.rating} />
-                  ))}
-              </span>
-            )}
-          </div>
-          <ol className="grid">
-            {timeline.map((item) => (
+        <section className="grid gap-4 border-t border-edge pt-5">
+          <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+            <Trans>History</Trans>
+          </h2>
+          <ol className="grid gap-3">
+            {shownHistory.map((item) => (
               <li
                 key={item.key}
-                className="grid grid-cols-[5.5rem_minmax(0,1fr)] items-baseline gap-3 py-2 text-sm"
+                className="grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-baseline gap-x-2.5 leading-5"
               >
-                <span className="text-text-2 tabular-nums">
-                  {i18n.date(item.at, { weekday: "short", day: "numeric", month: "short" })}
-                </span>
-                <span className="min-w-0">
+                {item.kind === "review" ? (
+                  <GradeMark rating={item.review.rating} className="row-span-2 self-start" />
+                ) : (
+                  <Mark icon={eventIcon[item.event.kind]} className="row-span-2 self-start" />
+                )}
+                <p className="min-w-0 break-words text-base">
                   {item.kind === "review" ? (
-                    <span className="me-2 inline-flex items-center gap-2 font-medium">
-                      <GradeMark rating={item.rating} />
-                      {gradeLabel(item.rating)}
-                    </span>
+                    <>
+                      <span className="font-medium">{gradeLabel(item.review.rating)}</span>{" "}
+                      <span className="text-text-2">{i18n._(modeLabel(item.review.mode))}</span>
+                    </>
                   ) : (
-                    <span className="me-2 inline-flex items-center gap-2 text-text-2">
-                      <i
-                        aria-hidden="true"
-                        className="inline-block size-2.5 shrink-0 rounded-full border-[1.5px] border-edge-2 bg-plate-2"
-                      />
-                      {item.label}
-                    </span>
+                    <span className="text-text-2">{item.event.text}</span>
                   )}
-                  <span className="text-muted">{item.detail}</span>
-                </span>
+                </p>
+                <span className="whitespace-nowrap text-sm text-muted">{dayLabel(item.at)}</span>
+                <p className="col-span-2 col-start-2 text-sm text-muted">
+                  {item.kind === "review" ? item.next : item.event.actor}
+                </p>
               </li>
             ))}
-            {timeline.length === 0 && (
-              <li className="py-2 text-sm text-muted">
+            {history.length === 0 && (
+              <li className="text-sm text-muted">
                 <Trans>Nothing yet.</Trans>
               </li>
             )}
           </ol>
+          {history.length > HISTORY_ROWS && !olderShown && (
+            <button
+              type="button"
+              onClick={() => setOlderShown(true)}
+              className="justify-self-start rounded-xs py-1 text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
+            >
+              <Plural
+                value={history.length - HISTORY_ROWS}
+                one="Show # older"
+                other="Show # older"
+              />
+            </button>
+          )}
         </section>
       )}
     </article>

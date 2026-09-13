@@ -1,26 +1,14 @@
-import type { I18n, MessageDescriptor } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
-import {
-  Brain,
-  Check,
-  CircleAlert,
-  Loader2,
-  type LucideIcon,
-  Pointer,
-  RotateCcw,
-  Volume2,
-  X,
-  Zap,
-} from "lucide-react";
+import { CircleAlert, Loader2, Pointer, RotateCcw, Volume2, X } from "lucide-react";
 import { AnimatePresence, motion, useAnimate, useReducedMotion, type Variants } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
 import { CardPicture } from "../components/CardPicture";
 import { Chip, SourceChip, StateChip } from "../components/Chip";
 import { ErrorTip } from "../components/ErrorTip";
+import { GRADES } from "../components/Grade";
 import { Kbd } from "../components/Kbd";
 import { Lantern } from "../components/Lantern";
 import { Progress } from "../components/Progress";
@@ -30,19 +18,6 @@ import type { QueueItem } from "../lib/api";
 import { lanternFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
 import { modeLabel } from "../lib/review-modes";
-
-export const GRADES: {
-  rating: Rating;
-  label: MessageDescriptor;
-  key: string;
-  icon: LucideIcon;
-  iconClass: string;
-}[] = [
-  { rating: 1, label: msg`Forgot`, key: "1", icon: RotateCcw, iconClass: "text-grade-forgot" },
-  { rating: 2, label: msg`Hard`, key: "2", icon: Brain, iconClass: "text-grade-hard" },
-  { rating: 3, label: msg`Good`, key: "3", icon: Check, iconClass: "text-grade-good" },
-  { rating: 4, label: msg`Easy`, key: "4", icon: Zap, iconClass: "text-grade-easy" },
-];
 
 export interface ReviewHeaderProps {
   done: number;

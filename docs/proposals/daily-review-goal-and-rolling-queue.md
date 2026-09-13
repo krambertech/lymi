@@ -34,20 +34,20 @@ A goal of 50 can therefore contain fewer than 50 distinct cards when a forgotten
 
 ## Review model
 
-[ADR 0018](../adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md) replaces the durable session this section first described. The next card is recomputed from the eligible cards, today's review log, the scope, and the learner-local date, so nothing about an active review is stored:
+[ADR 0018](../adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md) replaces the stored session this section first described. Lymi recomputes the next card from the cards, today's review log, the scope, and the learner-local date.
 
-- the same synced state gives the same next card after a reload, offline, or on another device, while another device's grades may change it;
-- grades still in the offline outbox count as part of today's log, and one replayed after a later grade of the same card is a duplicate;
-- a deck, every deck, or a later series or category is only a filter over the same order;
-- one ordinary attempt in five goes to a new card while both groups are available, every fourth new card is the oldest not yet started, and the rest of the draw is weighted rather than strict.
+- The same synced state gives the same next card after a reload, offline, or on another device. Grades from another device can change it.
+- Grades in the offline outbox count as part of today's log. One replayed after a later grade of the same card is a duplicate.
+- A deck, every deck, or a later category filters the same order.
+- One attempt in five is a new card while both groups are available. Every fourth new card is the oldest not yet started. The rest of the draw is weighted.
 
 ## Forgotten cards
 
-FSRS uses one 10-minute step for learning and relearning. A grade that leaves a direction learning or relearning brings it back after about 3, then about 6, then about 12 further attempts, counted in today's log. After three returns in a day, a further slip waits until the next day, and a direction still learning or relearning from an earlier day is mixed in every 3 attempts at the start of the next review. Returns take precedence over new-card slots without using them.
+A forgotten direction returns after about 3, then 6, then 12 attempts. After three returns, it waits until the next day. A direction left in learning from an earlier day returns every 3 attempts early in the next review. Returns come before new-card slots and do not use them.
 
-A retry is another ordinary review attempt and counts toward the daily goal. Once one direction of a card is reviewed, the other direction waits until the next learner-local day because the revealed answer would leak it.
+Each return is an ordinary attempt and counts toward the goal. Once one direction of a card is reviewed, the other waits until the next day, because the answer would give it away.
 
-For the end state, a card is still forgotten when its latest grade for that direction in the current learner-local day is Forgot. A later Hard, Good, or Easy grade removes it from that set.
+A card is still forgotten when its latest grade today for that direction is Forgot. A later Hard, Good, or Easy removes it.
 
 ## Goal completion
 

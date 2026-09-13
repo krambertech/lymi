@@ -97,6 +97,27 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
   await expect(photo(page)).toHaveAttribute("src", /^blob:/);
   await page.unroute("**/api/avatar");
 
+  // A change refused as stale refetches the photo once, not on every render.
+  let reads = 0;
+  await page.route("**/api/avatar", (route) => {
+    if (route.request().method() === "GET") reads += 1;
+    return route.request().method() === "PUT"
+      ? route.fulfill({ status: 409, body: "{}" })
+      : route.fallback();
+  });
+  await face.click();
+  await page.getByRole("menuitem", { name: "Choose new photo" }).click();
+  await pick(page, "stale.png", "image/png", png(400, 400));
+  reads = 0;
+  await page.getByRole("button", { name: "Save photo" }).click();
+  await expect(page.getByRole("alert")).toHaveText(
+    "Your photo was changed somewhere else. Check it, then try again.",
+  );
+  await page.waitForTimeout(1500);
+  expect(reads).toBeLessThanOrEqual(2);
+  await page.getByRole("button", { name: "Cancel" }).click();
+  await page.unroute("**/api/avatar");
+
   // Removal is immediate and can be undone from the toast.
   await face.click();
   await page.getByRole("menuitem", { name: "Remove photo" }).click();

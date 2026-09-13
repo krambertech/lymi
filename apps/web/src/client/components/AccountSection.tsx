@@ -15,15 +15,15 @@ import {
 } from "../lib/avatar";
 import { Avatar } from "./Avatar";
 import { AvatarEditor, type PickedImage } from "./AvatarEditor";
-import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuTrigger,
-} from "./ResponsiveMenu";
 import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
 import { Toast } from "./Toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 /** Photos larger than this are refused before decoding; the cropped square is far smaller. */
 const MAX_PICK_BYTES = 25 * 1024 * 1024;
@@ -78,19 +78,19 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
         {!onChoose ? (
           avatar
         ) : source === "custom" && onRemove ? (
-          <ResponsiveMenu>
-            <ResponsiveMenuTrigger render={face()} />
-            <ResponsiveMenuContent label={t`Photo`} align="start">
-              <ResponsiveMenuItem onClick={onChoose}>
+          <DropdownMenu>
+            <DropdownMenuTrigger render={face()} />
+            <DropdownMenuContent aria-label={t`Photo`} align="start">
+              <DropdownMenuItem onClick={onChoose}>
                 <ImageUp aria-hidden="true" />
                 {t`Choose new photo`}
-              </ResponsiveMenuItem>
-              <ResponsiveMenuItem onClick={onRemove}>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onRemove}>
                 <ImageMinus aria-hidden="true" />
                 {t`Remove photo`}
-              </ResponsiveMenuItem>
-            </ResponsiveMenuContent>
-          </ResponsiveMenu>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           face({ onClick: onChoose })
         )}
@@ -135,7 +135,6 @@ export function AccountSection({
 
   const failure = (error: unknown) => {
     if (error instanceof ApiError && error.status === 409) {
-      void qc.invalidateQueries({ queryKey: avatarQuery.queryKey });
       return t`Your photo was changed somewhere else. Check it, then try again.`;
     }
     if (error instanceof ApiError && error.status === 400) {
@@ -155,17 +154,28 @@ export function AccountSection({
     return next;
   };
 
+  /** A refused change was made from an old revision; fetch the current one so a retry can land. */
+  const refreshIfStale = (error: unknown) => {
+    if (error instanceof ApiError && error.status === 409) {
+      void qc.invalidateQueries({ queryKey: avatarQuery.queryKey });
+    }
+  };
+
   const save = useMutation({
     mutationFn: (square: Blob) => store(square, avatar.data?.revision ?? 0),
     onMutate: () => setNotice(null),
     onSuccess: () => setPicked(null),
+    onError: refreshIfStale,
   });
 
   const restore = useMutation({
     mutationFn: ({ square, revision }: { square: Blob; revision: number }) =>
       store(square, revision),
     onMutate: () => setNotice(null),
-    onError: (error) => tell(failure(error)),
+    onError: (error) => {
+      refreshIfStale(error);
+      tell(failure(error));
+    },
   });
 
   const remove = useMutation({
@@ -182,7 +192,10 @@ export function AccountSection({
           : undefined;
       tell(next.source === "google" ? t`Your Google photo is back` : t`Photo removed`, undo);
     },
-    onError: (error) => tell(failure(error)),
+    onError: (error) => {
+      refreshIfStale(error);
+      tell(failure(error));
+    },
   });
 
   const choose = async (file: File | undefined) => {

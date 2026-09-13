@@ -189,10 +189,13 @@ function isGoogleCallback(context: GenericEndpointContext | null): boolean {
   );
 }
 
+/** How long a first sign-in waits for the Google photo before the rest finishes in the background. */
+const FIRST_IMPORT_WAIT_MS = 6_000;
+
 /**
  * Refreshes the Google fallback photo from the ID token Google just issued. A first import
- * is awaited, within the fetch's own time budget, so the first screen already has the photo;
- * a refresh runs after the response. Neither can fail sign-in. Issue 98.
+ * is awaited for a bounded time so the first screen usually has the photo; a refresh runs
+ * after the response. Neither can fail sign-in. Issue 98.
  */
 async function syncGoogleAvatar(
   env: Bindings,
@@ -210,12 +213,16 @@ async function syncGoogleAvatar(
       picture,
     );
   })().catch(() => console.error("Importing the Google photo failed"));
-  if (refresh && waitUntil) {
-    try {
-      return waitUntil(work);
-    } catch {}
-  }
-  await work;
+  let background = false;
+  try {
+    if (waitUntil) {
+      waitUntil(work);
+      background = true;
+    }
+  } catch {}
+  if (refresh && background) return;
+  if (!background) return void (await work);
+  await Promise.race([work, new Promise((resolve) => setTimeout(resolve, FIRST_IMPORT_WAIT_MS))]);
 }
 
 /** Better Auth stores the ID token from the code exchange with Google on every sign-in. */

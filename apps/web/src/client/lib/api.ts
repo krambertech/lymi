@@ -19,6 +19,8 @@ import type {
   ReminderTime,
   ReviewDayProgress,
   ReviewMode,
+  Round,
+  RoundsOut,
   Scope,
   SettingsPatch,
   StreakOut,
@@ -239,7 +241,14 @@ export const api = {
       method: "DELETE",
       body: JSON.stringify(body),
     }),
-  queue: (deckId?: string) => request<Queue>(`/api/review/queue${deckId ? `?deck=${deckId}` : ""}`),
+  queue: (deckId?: string, round?: Round) => {
+    const params = new URLSearchParams();
+    if (deckId) params.set("deck", deckId);
+    if (round) params.set("round", round);
+    const search = params.toString();
+    return request<Queue>(`/api/review/queue${search ? `?${search}` : ""}`);
+  },
+  rounds: () => request<RoundsOut>(`/api/review/rounds?tz=${encodeURIComponent(deviceTimezone())}`),
   streak: () => request<StreakOut>(`/api/stats/streak?tz=${encodeURIComponent(deviceTimezone())}`),
   /** Settle today: confirms a nothing-due day, or an exhausted one. Send from a visible page. */
   checkToday: () =>

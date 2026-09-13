@@ -65,6 +65,9 @@ export const decks: DeckSummary[] = [
 
 export const quietDecks: DeckSummary[] = decks.map((d) => ({ ...d, due: 0 }));
 
+/** Today's rounds on a morning with cards due. */
+export const rounds = { forgotten: 3, new: 12, slipping: 5 };
+
 export const history = [4, 12, 0, 9, 15, 7, 11];
 
 /**

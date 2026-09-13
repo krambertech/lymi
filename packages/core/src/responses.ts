@@ -255,6 +255,21 @@ export const QueueOut = z
   .object({ total: z.number().int(), items: z.array(QueueItemOut) })
   .meta({ id: "Queue" });
 
+export const RoundsOut = z
+  .object({
+    forgotten: z
+      .number()
+      .int()
+      .meta({ description: "Cards whose latest grade today is Forgot, across every deck" }),
+    new: z.number().int().meta({ description: "Cards not yet reviewed that can start today" }),
+    slipping: z.number().int().meta({
+      description:
+        "Cards forgotten at least 4 times in at least 6 reviews and not reviewed today, due or not",
+    }),
+  })
+  .meta({ id: "ReviewRounds" });
+export type RoundsOut = z.infer<typeof RoundsOut>;
+
 const DrawModeOut = z
   .object({
     mode: ReviewMode.meta({ description: "Show the cue before reveal and grade the target" }),

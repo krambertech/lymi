@@ -190,7 +190,9 @@ export function Cards() {
         Reading the queue is open to any key. <code>GET /api/review/queue</code> returns today’s
         cards in the order a review would take them if every grade succeeded, and each item carries{" "}
         <code>next</code>: the four dates each grade would schedule. A client can show “Good · 6 d”
-        with no extra round trip.
+        with no extra round trip. Add <code>round=forgotten</code>, <code>round=new</code> or{" "}
+        <code>round=slipping</code> for one of Today’s rounds; <code>GET /api/review/rounds</code>{" "}
+        counts each.
       </p>
       <Note tone="careful" title="Only you can grade">
         <p>

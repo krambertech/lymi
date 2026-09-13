@@ -13,6 +13,7 @@ import {
   ImageDescription,
   InsightsOut,
   ReviewMode,
+  RoundsOut,
   SettingsPatch,
   StreakOut,
 } from "@lymi/core";
@@ -35,6 +36,7 @@ import {
   restoreCard,
   restoreCardImage,
   restoreDeck,
+  reviewRounds,
   ServiceError,
   searchCards,
   showCard,
@@ -162,18 +164,19 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Due counts",
       description:
-        "How many cards are waiting to be reviewed right now, in total and per deck. Only the learner can review them, in the app.",
+        "How many cards are waiting to be reviewed right now, in total and per deck, and how many are in each Today round: forgotten today, new, and slipping (forgotten at least 4 times in at least 6 reviews). Only the learner can review them, in the app.",
       inputSchema: z.object({}),
       outputSchema: DueOut,
       ...readTool,
     },
     () =>
       run("due_counts", async () => {
-        const decks = await listDecks(ctx);
+        const [decks, rounds] = await Promise.all([listDecks(ctx), reviewRounds(ctx)]);
         return result({
           dueNow: decks.reduce((sum, d) => sum + d.due, 0),
           total: decks.reduce((sum, d) => sum + d.total, 0),
           decks: decks.map((d) => ({ id: d.id, name: d.name, due: d.due, total: d.total })),
+          rounds,
         });
       }),
   );
@@ -817,6 +820,7 @@ const DueOut = z.object({
   decks: z.array(
     z.object({ id: z.string(), name: z.string(), due: z.number().int(), total: z.number().int() }),
   ),
+  rounds: z.object(RoundsOut.shape),
 });
 
 const AddCardsOut = z.object({

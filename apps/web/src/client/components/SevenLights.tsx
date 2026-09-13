@@ -100,7 +100,8 @@ export function SevenLights({ days, size = "sm", goals, satisfied, dates, classN
     .join(", ");
   const description = t`Reviewed on ${lit} of the last ${plural(total, { one: "# day", other: "# days" })}: ${perDay}.`;
   return (
-    <div
+    // A span, so the lights can sit inside a button such as the streak card.
+    <span
       className={clsx("inline-flex items-end", large ? "gap-2.5" : "gap-2", className)}
       role="img"
       aria-label={description}
@@ -147,6 +148,6 @@ export function SevenLights({ days, size = "sm", goals, satisfied, dates, classN
           </span>
         );
       })}
-    </div>
+    </span>
   );
 }

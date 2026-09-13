@@ -35,7 +35,7 @@ function parseLocal(date: string): Date {
 /**
  * The one screen where charts belong, and the only one where looking at them is a choice.
  * Four numbers, each with the sentence that makes it mean something, then the months, then
- * the cards that keep coming back.
+ * the cards that keep slipping.
  *
  * Every figure draws in ink except the lights, which stay amber because they are the
  * streak's lights. A chart series in amber would make this the one screen where the accent
@@ -107,7 +107,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         <EmptyState
           lantern="still"
           title={t`Nothing to say yet`}
-          body={t`Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you.`}
+          body={t`Reviews per day, how much is sticking, and the cards that keep slipping. This fills in once there is some history behind you.`}
           className="flex-1"
         />
       </Page>
@@ -303,7 +303,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         <section className="edge mt-3 overflow-hidden rounded-xl bg-plate">
           <div className="flex items-baseline justify-between gap-3 px-5 pt-5 pb-3">
             <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
-              <Trans>Keeps coming back</Trans>
+              <Trans>Keeps slipping</Trans>
             </h2>
             <span className="text-xs text-muted">
               <Trans>Forgotten {leeches.lapses}+ times</Trans>

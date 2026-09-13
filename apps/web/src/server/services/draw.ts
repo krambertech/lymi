@@ -18,6 +18,7 @@ import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { memberOf } from "./members";
 import { askedSql, stateMode } from "./modes";
+import { slippingCardIds, slippingStates } from "./slipping";
 
 /**
  * What `draw` in core needs, loaded from D1: every mode that could be reviewed today and
@@ -57,6 +58,8 @@ export interface DrawInputs {
   cards: DrawCard[];
   log: DrawLogEntry[];
   states: Map<string, DrawState>;
+  /** Slipping card ids, when the options asked for them. */
+  slipping: Set<string>;
 }
 
 export interface DrawOptions {
@@ -64,6 +67,8 @@ export interface DrawOptions {
   /** The review zone. Callers resolve it, so a count never writes a setting. */
   zone: string;
   deckId?: string | undefined;
+  /** Also load slipping cards whatever their due, for the slipping round. */
+  slipping?: boolean | undefined;
 }
 
 interface ModeRow {
@@ -128,7 +133,11 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     isNull(schema.cards.archivedAt),
     isNull(schema.decks.archivedAt),
     asked,
-    or(lt(schema.cardStates.due, day.end), gte(schema.cardStates.lastReview, day.start)),
+    or(
+      lt(schema.cardStates.due, day.end),
+      gte(schema.cardStates.lastReview, day.start),
+      opts.slipping ? slippingStates(ctx) : undefined,
+    ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
   );
   const siblingOn = and(
@@ -138,7 +147,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     sql.raw(askedSql("sibling.direction")),
   );
 
-  const [candidates, log] = await Promise.all([
+  const [candidates, log, slipping] = await Promise.all([
     db
       .select({
         card: {
@@ -178,6 +187,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
         ),
       )
       .orderBy(asc(schema.reviews.reviewedAt), asc(schema.reviews.id)),
+    opts.slipping ? slippingCardIds(ctx) : Promise.resolve([]),
   ]);
 
   const cards = new Map<
@@ -232,6 +242,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       at: r.reviewedAt,
     })),
     states,
+    slipping: new Set(slipping.map((row) => row.id)),
   };
 }
 

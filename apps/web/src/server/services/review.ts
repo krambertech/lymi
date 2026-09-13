@@ -1,4 +1,4 @@
-import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey } from "@lymi/core";
+import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey, Round } from "@lymi/core";
 import {
   deserializeState,
   drawableCount,
@@ -11,6 +11,7 @@ import {
   modesFromDirections,
   newId,
   preview,
+  roundOrder,
   schedule,
   serializeState,
   stateDirection,
@@ -40,17 +41,25 @@ import { getSettings } from "./settings";
  */
 export async function reviewQueue(
   ctx: ServiceContext,
-  opts: { deckId?: string | undefined; limit?: number | undefined } = {},
+  opts: { deckId?: string | undefined; limit?: number | undefined; round?: Round | undefined } = {},
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
   const now = new Date();
   const zone = await reviewZone(ctx);
-  const scope = { deckId: opts.deckId };
-  const { cards, log, day, states } = await drawInputs(ctx, { ...scope, now, zone });
-  const order = drawOrder(cards, log, day, scope, limit);
-  const content = await presentContent(ctx, [...new Set(order.map((d) => d.cardId))]);
+  const { round, deckId } = opts;
+  const { cards, log, day, states, slipping } = await drawInputs(ctx, {
+    deckId,
+    now,
+    zone,
+    slipping: round === "slipping",
+  });
+  const order = round
+    ? roundOrder(cards, log, day, { deckId, round, slipping })
+    : drawOrder(cards, log, day, { deckId }, limit);
+  const front = order.slice(0, limit);
+  const content = await presentContent(ctx, [...new Set(front.map((d) => d.cardId))]);
 
-  const items = order.flatMap((drawn) => {
+  const items = front.flatMap((drawn) => {
     const state = states.get(drawKey(drawn.cardId, drawn.mode));
     const card = content.get(drawn.cardId);
     if (!state || !card) return [];
@@ -75,7 +84,16 @@ export async function reviewQueue(
     ];
   });
 
-  return { total: drawableCount(cards, log, day, scope), items };
+  const total = round ? order.length : drawableCount(cards, log, day, { deckId });
+  return { total, items };
+}
+
+/** How many cards each Today round holds right now, across every deck. */
+export async function reviewRounds(ctx: ServiceContext, opts: { zone?: string | undefined } = {}) {
+  const zone = await reviewZone(ctx, opts.zone);
+  const { cards, log, day, slipping } = await drawInputs(ctx, { zone, slipping: true });
+  const count = (round: Round) => roundOrder(cards, log, day, { round, slipping }).length;
+  return { forgotten: count("forgotten"), new: count("new"), slipping: count("slipping") };
 }
 
 /**

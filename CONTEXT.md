@@ -38,6 +38,10 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Streak**: Days in a row whose daily goal was satisfied, drawn as the flame. Today adds once satisfied and is otherwise skipped, so an unfinished morning still shows yesterday's streak; a confirmed nothing-due day keeps the run without adding to it. Distinct from the seven lights, which say which days rather than how many. _Avoid_: Chain, run, days active
 
+**Round**: A review of a chosen set beside the day's draw: another round of up to 10 eligible cards, or one of Today's groups, new cards, forgotten today or slipping. Each card comes once, and every grade counts like any review. _Avoid_: Session, quiz, practice
+
+**Slipping card**: A card forgotten at least 4 times in at least 6 reviews. Insights lists them; Today offers them as a round. _Avoid_: Leech (in copy), stuck card, hard card
+
 **Review day**: One learner-local date measured against its goal. It is open until satisfied, then goal met or exhausted; a day Lymi confirms had nothing eligible is nothing due. The day boundary follows the review timezone. _Avoid_: Session, day (in the API)
 
 **Daily goal**: How many recall attempts satisfy a learner-local day's streak goal, 50 unless the learner chooses otherwise. Every accepted grade counts, Forgot and a card seen again included; completing every eligible review below the goal also satisfies the day. Changed only in the streak modal. _Avoid_: Target, quota, XP, cards per day

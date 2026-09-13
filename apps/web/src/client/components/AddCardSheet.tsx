@@ -32,6 +32,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
       await Promise.all([
         qc.invalidateQueries({ queryKey: ["decks"] }),
         qc.invalidateQueries({ queryKey: ["queue"] }),
+        qc.invalidateQueries({ queryKey: ["rounds"] }),
       ]);
     },
   });

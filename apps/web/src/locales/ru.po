@@ -236,29 +236,33 @@ msgstr "{done} повторено из {deckName}. Остальное может
 msgid "{done} reviewed. The rest can wait a while."
 msgstr "{done} повторено. Остальное может немного подождать."
 
+#: src/client/views/ReviewView.tsx
+msgid "{done} reviewed. Today shows what’s left."
+msgstr "Повторено: {done}. Остальное — в «Сегодня»."
+
 #: src/client/components/DeckCard.tsx
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# на сегодня} few {# на сегодня} many {# на сегодня} other {# на сегодня}}"
+
+#: src/client/views/TodayView.tsx
+msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
+msgstr "{due, plural, one {карточка к повторению в колоде {deckName}} few {карточки к повторению в колоде {deckName}} many {карточек к повторению в колоде {deckName}} other {карточки к повторению в колоде {deckName}}}"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "{due, plural, one {card due now} other {cards due now}}"
 msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
+#: src/client/views/TodayView.tsx
+msgid "{due, plural, one {card due today} other {cards due today}}"
+msgstr "{due, plural, one {карточка к повторению сегодня} few {карточки к повторению сегодня} many {карточек к повторению сегодня} other {карточки к повторению сегодня}}"
+
 #: src/server/push-delivery.ts
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {# карточка ждёт, когда у тебя будет минутка.} few {# карточки ждут, когда у тебя будет минутка.} many {# карточек ждут, когда у тебя будет минутка.} other {# карточки ждёт, когда у тебя будет минутка.}}"
 
-#: src/client/views/TodayView.tsx
-msgid "{due} due"
-msgstr "К повторению: {due}"
-
 #: src/client/views/InsightsView.tsx
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# карточка в ближайшие семь дней.} few {# карточки в ближайшие семь дней.} many {# карточек в ближайшие семь дней.} other {# карточки в ближайшие семь дней.}}"
-
-#: src/client/views/TodayView.tsx
-msgid "{first} and {second}"
-msgstr "{first} и {second}"
 
 #: src/client/components/StateStripe.tsx
 msgid "{fresh} new, {learning} learning, {known} known"
@@ -280,6 +284,13 @@ msgstr "{label}: {lit} из {days, plural, one {# дня} few {# дней} many 
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: пока {lit} из {days, plural, one {# дня} few {# дней} many {# дней} other {# дня}}"
 
+#. placeholder {0}: summary.today.goal
+#. placeholder {1}: summary.today.attempts
+#. placeholder {2}: summary.today.attempts
+#: src/client/components/Streak.tsx
+msgid "{label}. Today: {0, plural, one {{1} of # review} other {{2} of # reviews}}"
+msgstr "{label}. Сегодня: {0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Новые люди не могут присоединиться. Человек, который уже присоединился, продолжает изучать колоду.} few {Новые люди не могут присоединиться. # человека, которые уже присоединились, продолжают изучать колоду.} many {Новые люди не могут присоединиться. # человек, которые уже присоединились, продолжают изучать колоду.} other {Новые люди не могут присоединиться. # человека, которые уже присоединились, продолжают изучать колоду.}}"
@@ -291,10 +302,6 @@ msgstr "{months, plural, one {# месяц} few {# месяца} many {# мес�
 #: src/client/views/WordView.tsx
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {Через # месяц} few {Через # месяца} many {Через # месяцев} other {Через # месяца}}"
-
-#: src/client/views/TodayView.tsx
-msgid "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
-msgstr "{more, plural, one {{first}, {second} и ещё # колода} few {{first}, {second} и ещё # колоды} many {{first}, {second} и ещё # колод} other {{first}, {second} и ещё # колоды}}"
 
 #: src/client/views/ReviewView.tsx
 msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
@@ -313,10 +320,6 @@ msgstr "{n, plural, one {# повторение} few {# повторения} ma
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оценка из офлайн-повторения ещё не дошла до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить её.} few {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} many {# оценок из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} other {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.}}"
 
-#: src/client/views/TodayView.tsx
-msgid "{total, plural, one {# card in your decks, all ahead of you.} other {# cards in your decks, all ahead of you.}}"
-msgstr "{total, plural, one {В твоих колодах # карточка, и всё ещё впереди.} few {В твоих колодах # карточки, и всё ещё впереди.} many {В твоих колодах # карточек, и всё ещё впереди.} other {В твоих колодах # карточки, и всё ещё впереди.}}"
-
 #: src/client/components/DeckCard.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
@@ -333,6 +336,11 @@ msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {#
 #: src/client/views/ReviewView.tsx
 msgid "<0/> of {total}"
 msgstr "<0/> из {total}"
+
+#. placeholder {0}: d.due
+#: src/client/views/TodayView.tsx
+msgid "<0>{0}</0> due"
+msgstr "<0>{0}</0> к повторению"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"
@@ -417,7 +425,6 @@ msgstr "Аккаунт"
 #: src/client/components/LearnerMenu.tsx
 #: src/client/routes/activity.tsx
 #: src/client/views/Shell.tsx
-#: src/client/views/TodayView.tsx
 msgid "Activity"
 msgstr "Активность"
 
@@ -737,10 +744,6 @@ msgstr "Закрыть"
 msgid "Come back later, or add something new."
 msgstr "Вернись позже или добавь что-нибудь новое."
 
-#: src/client/views/TodayView.tsx
-msgid "Coming up: {forecast}."
-msgstr "Дальше: {forecast}."
-
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "connected {connected}"
 msgstr "подключено {connected}"
@@ -858,6 +861,10 @@ msgid "Daily goal"
 msgstr "Дневная цель"
 
 #: src/client/components/Streak.tsx
+msgid "Daily goal reached"
+msgstr "Дневная цель достигнута"
+
+#: src/client/components/Streak.tsx
 msgid "Daily goal reached."
 msgstr "Дневная цель достигнута."
 
@@ -895,6 +902,10 @@ msgstr "Настройки колоды"
 #: src/client/views/Shell.tsx
 msgid "Decks"
 msgstr "Колоды"
+
+#: src/client/views/TodayView.tsx
+msgid "Decks to review"
+msgstr "Колоды к повторению"
 
 #: src/client/views/ConsentView.tsx
 msgid "Deny"
@@ -1019,6 +1030,10 @@ msgstr "Не помню"
 msgid "Forgot recently"
 msgstr "Недавно забыто"
 
+#: src/client/views/TodayView.tsx
+msgid "Forgot today"
+msgstr "Забытые сегодня"
+
 #: src/client/components/ShortcutsDialog.tsx
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Не помню, Трудно, Хорошо, Легко"
@@ -1027,6 +1042,10 @@ msgstr "Не помню, Трудно, Хорошо, Легко"
 #: src/client/views/InsightsView.tsx
 msgid "Forgotten {0}+ times"
 msgstr "Забыто {0}+ раз"
+
+#: src/client/views/TodayView.tsx
+msgid "Forgotten 4 or more times"
+msgstr "Забыты не меньше 4 раз"
 
 #: src/client/components/Chip.tsx
 #: src/client/views/WordView.tsx
@@ -1048,6 +1067,10 @@ msgstr "Хорошо"
 #: src/client/views/ConsentView.tsx
 msgid "Grade your reviews or change your progress"
 msgstr "Оценивать повторения или менять прогресс"
+
+#: src/client/views/TodayView.tsx
+msgid "Graded Forgot today"
+msgstr "Сегодня с оценкой «Не помню»"
 
 #: src/client/views/ConsentView.tsx
 msgid "Granting as <0>{email}</0>"
@@ -1176,8 +1199,9 @@ msgid "Keep the term under 500 characters."
 msgstr "Термин должен быть короче 500 символов."
 
 #: src/client/views/InsightsView.tsx
-msgid "Keeps coming back"
-msgstr "Постоянно возвращаются"
+#: src/client/views/TodayView.tsx
+msgid "Keeps slipping"
+msgstr "Постоянно забываются"
 
 #: src/client/components/LearnerMenu.tsx
 #: src/client/components/ShortcutsDialog.tsx
@@ -1232,6 +1256,7 @@ msgstr "Разрешить {appName} пользоваться твоим Lymi?"
 #: src/client/views/DeckDetailView.tsx
 #: src/client/views/LibraryView.tsx
 #: src/client/views/Shell.tsx
+#: src/client/views/TodayView.tsx
 msgid "Library"
 msgstr "Библиотека"
 
@@ -1354,6 +1379,10 @@ msgstr "Новая"
 msgid "New card"
 msgstr "Новая карточка"
 
+#: src/client/views/TodayView.tsx
+msgid "New cards"
+msgstr "Новые карточки"
+
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/AddMenu.tsx
 #: src/client/components/NewDeckSheet.tsx
@@ -1365,10 +1394,6 @@ msgstr "Новая колода"
 #: src/client/components/ApiKeysSection.tsx
 msgid "New key"
 msgstr "Новый ключ"
-
-#: src/client/views/TodayView.tsx
-msgid "New since your last review"
-msgstr "Новые после последнего повторения"
 
 #: src/client/views/WordView.tsx
 msgid "Next"
@@ -1448,6 +1473,10 @@ msgstr "Ещё не спрашивалась. Появится в следующ
 #: src/client/components/NotificationsSection.tsx
 msgid "Not available on this server yet."
 msgstr "На этом сервере пока недоступно."
+
+#: src/client/views/TodayView.tsx
+msgid "Not reviewed yet"
+msgstr "Ещё не повторялись"
 
 #: src/client/components/Streak.tsx
 msgid "Not saved. Try again."
@@ -1781,9 +1810,21 @@ msgstr "Открой карточку, когда вспомнишь"
 msgid "Review"
 msgstr "Повторение"
 
+#: src/client/views/TodayView.tsx
+msgid "Review forgotten"
+msgstr "Повторить забытые"
+
+#: src/client/views/TodayView.tsx
+msgid "Review new"
+msgstr "Повторить новые"
+
 #: src/client/views/JoinView.tsx
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Повторяй в своём темпе. Новые карточки появляются, как только их добавляют."
+
+#: src/client/views/TodayView.tsx
+msgid "Review slipping"
+msgstr "Повторить сложные"
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
@@ -1802,8 +1843,8 @@ msgid "Reviews a day"
 msgstr "Повторений в день"
 
 #: src/client/views/InsightsView.tsx
-msgid "Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
-msgstr "Повторения за день, насколько хорошо материал запоминается, и карточки, которые постоянно возвращаются. Здесь появятся данные, когда накопится немного истории."
+msgid "Reviews per day, how much is sticking, and the cards that keep slipping. This fills in once there is some history behind you."
+msgstr "Повторения по дням, сколько запоминается, и карточки, которые постоянно забываются. Здесь появится больше, когда накопится история."
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Revoke"
@@ -1816,6 +1857,10 @@ msgstr "Вместо этого отозвать"
 #: src/client/components/ApiKeysSection.tsx
 msgid "Revoke key"
 msgstr "Отозвать ключ"
+
+#: src/client/views/ReviewView.tsx
+msgid "Round done"
+msgstr "Раунд завершён"
 
 #: src/client/components/AvatarEditor.tsx
 msgid "Save photo"
@@ -2058,6 +2103,7 @@ msgid "That’s the lot"
 msgstr "На сегодня всё"
 
 #: src/client/components/Streak.tsx
+#: src/client/views/TodayView.tsx
 msgid "That’s the lot for today."
 msgstr "На сегодня всё."
 
@@ -2184,6 +2230,7 @@ msgstr "сегодня"
 #: src/client/components/ReviewTimeline.tsx
 #: src/client/components/Streak.tsx
 #: src/client/views/Shell.tsx
+#: src/client/views/TodayView.tsx
 #: src/client/views/WordView.tsx
 msgid "Today"
 msgstr "Сегодня"

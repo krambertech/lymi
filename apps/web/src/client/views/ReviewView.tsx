@@ -627,6 +627,8 @@ export interface SessionDoneProps {
   moreDue?: number | undefined;
   /** Named here rather than over every card, because here it is a fact about what was reviewed. */
   deckName?: string | undefined;
+  /** A round from Today ended, which says nothing about the rest of the day's cards. */
+  round?: boolean | undefined;
   /** The week and the run, as Today shows them. */
   streak?: StreakSummary | undefined;
   action?: ReactNode | undefined;
@@ -639,7 +641,14 @@ export interface SessionDoneProps {
  * pause with a way on, not a failure to finish: the batch really did end, and the next one is a
  * decision rather than an endless list.
  */
-export function SessionDone({ done, moreDue = 0, deckName, streak, action }: SessionDoneProps) {
+export function SessionDone({
+  done,
+  moreDue = 0,
+  deckName,
+  round = false,
+  streak,
+  action,
+}: SessionDoneProps) {
   const lit = done > 0;
   const paused = lit && moreDue > 0;
   return (
@@ -653,6 +662,8 @@ export function SessionDone({ done, moreDue = 0, deckName, streak, action }: Ses
       <h2 className="complete-copy text-3xl font-medium">
         {paused ? (
           <Trans>A good pause</Trans>
+        ) : round ? (
+          <Trans>Round done</Trans>
         ) : lit ? (
           <Trans>That’s the lot</Trans>
         ) : (
@@ -674,6 +685,8 @@ export function SessionDone({ done, moreDue = 0, deckName, streak, action }: Ses
               other={`${done} reviewed. # more are ready when you are.`}
             />
           )
+        ) : round ? (
+          <Trans>{done} reviewed. Today shows what’s left.</Trans>
         ) : lit ? (
           deckName ? (
             <Trans>

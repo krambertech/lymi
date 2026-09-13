@@ -394,6 +394,75 @@ export function forgottenToday(log: readonly DrawLogEntry[]): { cardId: string; 
     .map(({ cardId, mode }) => ({ cardId, mode }));
 }
 
+/** The groups Today offers to review on their own, beside the day's draw. */
+export const ROUNDS = ["forgotten", "new", "slipping"] as const;
+export type Round = (typeof ROUNDS)[number];
+
+export interface RoundScope extends DrawScope {
+  round: Round;
+  /** Cards that keep slipping, found from their whole review history. Only that round reads it. */
+  slipping?: ReadonlySet<string> | undefined;
+}
+
+/**
+ * A round: one Today group in the order it is reviewed, each card once. Forgotten cards come
+ * in the mode they were forgotten in, even past their returns. New cards take the next unseen
+ * modes oldest first, as the draw introduces them. A slipping card comes in its weakest known
+ * mode whether or not it is due, weakest first, and is graded like any review.
+ */
+export function roundOrder(
+  cards: readonly DrawCard[],
+  log: readonly DrawLogEntry[],
+  day: DayWindow,
+  scope: RoundScope,
+  limit = Number.POSITIVE_INFINITY,
+): Drawn[] {
+  const inScope = cards.filter((card) => !scope.deckId || card.deckId === scope.deckId);
+  const out: Drawn[] = [];
+  const taken = new Set<string>();
+  const push = (cardId: string, mode: ModeKey, kind: DrawKind) => {
+    if (taken.has(cardId) || out.length >= limit) return;
+    taken.add(cardId);
+    out.push({ cardId, mode, kind });
+  };
+  const reviewed = new Set(log.map((entry) => entry.cardId));
+
+  switch (scope.round) {
+    case "forgotten": {
+      const known = new Set(
+        inScope.flatMap((card) => card.modes.map((mode) => drawKey(card.cardId, mode.mode))),
+      );
+      for (const f of forgottenToday(log)) {
+        if (known.has(drawKey(f.cardId, f.mode))) push(f.cardId, f.mode, "return");
+      }
+      break;
+    }
+    case "new":
+      for (const c of plan(cards, day, scope, DRAW_POLICY).oldest) {
+        if (!reviewed.has(c.cardId)) push(c.cardId, c.mode.mode, "unseen");
+      }
+      break;
+    case "slipping": {
+      const weakest = inScope.flatMap((card) => {
+        if (!scope.slipping?.has(card.cardId) || reviewed.has(card.cardId)) return [];
+        const [mode] = card.modes
+          .filter((m) => m.hasCue && reachedReview(m))
+          .sort((a, b) => a.retrievability - b.retrievability);
+        return mode ? [{ cardId: card.cardId, mode }] : [];
+      });
+      const tie = (c: Candidate) => unit(day.date, c.cardId, c.mode.mode);
+      weakest.sort((a, b) => a.mode.retrievability - b.mode.retrievability || tie(a) - tie(b));
+      for (const c of weakest) push(c.cardId, c.mode.mode, "review");
+      break;
+    }
+    default: {
+      const _exhaustive: never = scope.round;
+      return _exhaustive;
+    }
+  }
+  return out;
+}
+
 const DATE_PARTS: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "2-digit",

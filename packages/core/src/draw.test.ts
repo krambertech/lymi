@@ -18,6 +18,7 @@ import {
   RETURN_GAPS,
   RETURN_JITTER,
   returnGap,
+  roundOrder,
   startOfLocalDay,
 } from "./draw";
 import type { Rating } from "./types";
@@ -415,5 +416,79 @@ describe("the learner-local day", () => {
     expect(startOfLocalDay("2026-09-13", "Nowhere/Nowhere")).toEqual(
       new Date("2026-09-13T00:00:00Z"),
     );
+  });
+});
+
+describe("rounds", () => {
+  it("brings each card forgotten today once, in the mode it was forgotten in", () => {
+    const cards = [
+      card("a", [{ mode: "meaning_to_term", state: State.Relearning, due: noon }]),
+      card("b", [{ mode: "meaning_to_term", state: State.Review, due: noon }]),
+      card("c", [{ mode: "term_to_meaning", state: State.Relearning, due: noon }]),
+    ];
+    const log = [
+      grade("a", 1),
+      grade("b", 1),
+      grade("b", 3, State.Relearning),
+      grade("c", 1, State.Review, "term_to_meaning"),
+      grade("a", 1, State.Relearning),
+    ];
+    expect(roundOrder(cards, log, day, { round: "forgotten" })).toEqual([
+      { cardId: "a", mode: "meaning_to_term", kind: "return" },
+      { cardId: "c", mode: "term_to_meaning", kind: "return" },
+    ]);
+  });
+
+  it("keeps forgotten cards to the deck in scope", () => {
+    const cards = [review("a", 0.5, "deck-a"), review("b", 0.5, "deck-b")];
+    const log = [grade("a", 1), grade("b", 1)];
+    const order = roundOrder(cards, log, day, { round: "forgotten", deckId: "deck-b" });
+    expect(order.map((d) => d.cardId)).toEqual(["b"]);
+  });
+
+  it("starts new cards oldest first and skips cards reviewed today", () => {
+    const cards = [
+      unseen("young", daysAgo(1)),
+      unseen("old", daysAgo(9)),
+      unseen("mid", daysAgo(4)),
+    ];
+    const log = [grade("mid", 3, State.New)];
+    const order = roundOrder(cards, log, day, { round: "new" });
+    expect(order).toEqual([
+      { cardId: "old", mode: "meaning_to_term", kind: "unseen" },
+      { cardId: "young", mode: "meaning_to_term", kind: "unseen" },
+    ]);
+  });
+
+  it("takes slipping cards in their weakest known mode, due or not, weakest first", () => {
+    const later = new Date(day.end.getTime() + 5 * DAY);
+    const cards = [
+      card("strong", [{ mode: "meaning_to_term", retrievability: 0.8, due: later }]),
+      card("weak", [
+        { mode: "meaning_to_term", retrievability: 0.7, due: later },
+        { mode: "term_to_meaning", retrievability: 0.3, due: later },
+      ]),
+      card("ignored", [{ mode: "meaning_to_term", retrievability: 0.1 }]),
+      card("fresh", [{ mode: "meaning_to_term", state: State.New }]),
+    ];
+    const slipping = new Set(["strong", "weak", "fresh"]);
+    expect(roundOrder(cards, [], day, { round: "slipping", slipping })).toEqual([
+      { cardId: "weak", mode: "term_to_meaning", kind: "review" },
+      { cardId: "strong", mode: "meaning_to_term", kind: "review" },
+    ]);
+  });
+
+  it("leaves a slipping card out once it is reviewed today", () => {
+    const cards = [review("a", 0.4), review("b", 0.5)];
+    const order = roundOrder(cards, [grade("a", 1)], day, {
+      round: "slipping",
+      slipping: new Set(["a", "b"]),
+    });
+    expect(order.map((d) => d.cardId)).toEqual(["b"]);
+  });
+
+  it("stops at the limit", () => {
+    const cards = Array.from({ length: 5 }, (_, i) => unseen(`n${i}`, daysAgo(i + 1)));
+    expect(roundOrder(cards, [], day, { round: "new" }, 2)).toHaveLength(2);
   });
 });

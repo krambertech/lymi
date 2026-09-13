@@ -23,7 +23,7 @@ const TOKENS: Token[] = [
   { name: "edge-2", role: "Stronger hairline: focused or hovered edges, dividers that must read." },
   {
     name: "text",
-    role: "Words and the lantern's metal. Also checked controls and unread dots.",
+    role: "Words. Also the metal of the lantern in the light room.",
     on: "canvas",
   },
   { name: "text-2", role: "Secondary words: meanings, examples, nav.", on: "canvas" },
@@ -123,7 +123,7 @@ export function Colour() {
   return (
     <Doc
       title="Colour"
-      lede="Two rooms, one flame. Neutrals are warm and nearly grey. Amber means act or lit, and everything else is ink. Surfaces are flat: no gradients, no drop shadows, one hairline edge. Ratios are measured live against this page."
+      lede="Two rooms, one flame. Neutrals are warm and nearly grey. Amber is the only saturated colour and appears at most twice per screen. Surfaces are flat: no gradients, no drop shadows, one hairline edge. Ratios are measured live against this page."
     >
       <Sub title="Two rooms">
         <div className="grid gap-3 @3xl:grid-cols-2">
@@ -162,7 +162,7 @@ export function Colour() {
       <Sub title="Rules">
         <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
           {[
-            "Amber means act or lit: the flame, the primary action, the capture button, due counts, a reviewed day, the one Insights bar a sentence points at, the connection rail once access is granted, and the toast's Undo. Everything else is ink.",
+            "Amber twice per screen at most: the flame and the primary action. A due count in amber-text is the third allowed use.",
             "Status is never colour alone. New, Learning and Known carry a label and a dot.",
             "Depth is one edge. Cards, inputs and rows get --edge; on hover or focus it becomes --edge-2. Nothing casts a shadow.",
             "No gradient on any surface. The app icon is the one exception. If something needs to feel lit, it is the lantern, and it uses --glow.",

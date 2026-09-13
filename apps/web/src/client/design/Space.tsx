@@ -13,7 +13,7 @@ export function Space() {
         <Specimen className="items-end gap-6">
           {[4, 8, 16, 24, 32, 48].map((n) => (
             <div key={n} className="grid justify-items-center gap-2">
-              <div className="bg-text/20" style={{ width: n, height: n }} />
+              <div className="bg-amber-soft" style={{ width: n, height: n }} />
               <span className="text-2xs text-muted tabular-nums">{n}</span>
             </div>
           ))}

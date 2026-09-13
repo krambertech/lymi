@@ -36,7 +36,7 @@ export function Checkbox({
           className={clsx(
             "grid size-5 place-items-center rounded-[6px] transition-colors duration-150",
             "peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring",
-            checked ? "bg-text text-canvas" : "edge-2 bg-plate",
+            checked ? "bg-amber text-amber-ink" : "edge-2 bg-plate",
           )}
         >
           <Check

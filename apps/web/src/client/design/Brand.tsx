@@ -114,7 +114,7 @@ export function Brand() {
             "Don’t add a second illustration. The lantern is the one drawing; everything else is a standard control.",
             "Don’t outline, rotate or bevel the mark. Don’t put it in a circle unless the platform demands one.",
             "Don’t show two flames at once. If the lantern is on the screen, the wordmark is plain.",
-            "Don’t use amber outside the list under Colour. Amber means act or lit; everything else is ink.",
+            "Don’t let amber appear more than twice on a screen: the flame, and the one thing to press.",
           ].map((t) => (
             <li key={t} className="edge rounded-md bg-plate px-4 py-3">
               {t}

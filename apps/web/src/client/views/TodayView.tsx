@@ -215,7 +215,7 @@ export function TodayView({
             </h2>
             <To
               to="/activity"
-              className="relative text-sm font-medium text-text underline decoration-muted underline-offset-4 before:absolute before:-inset-x-2 before:-inset-y-3.5 before:content-['']"
+              className="relative text-sm font-medium text-amber-text before:absolute before:-inset-x-2 before:-inset-y-3.5 before:content-['']"
             >
               <Trans>Activity</Trans>
             </To>

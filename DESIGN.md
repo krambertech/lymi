@@ -249,22 +249,13 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 ## Colour
 
-Warm neutrals, nearly grey. **Amber means act or lit, and everything else is ink.** Amber is the only saturated accent, and it goes on exactly these:
+Warm neutrals, nearly grey. Amber is the only saturated accent, the colour that means act; the three card-state colours below describe and never ask. Amber is: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the thirty-day strip and the month bars — the same lit glass at three sizes, which makes it the flame rather than a sixth thing.
 
-- The flame.
-- The primary action, one per view.
-- The capture button, which is the app's standing action rather than the page's.
-- A due count, in `amber-text`.
-- A day the learner reviewed: the seven lights, the run strip and the month bars, the same lit glass at three sizes.
-- The one Insights bar the sentence above its chart points at.
-- The connection rail, once an app is granted access.
-- The toast's Undo, in `toast-action`, because the toast is the text colour and `amber-text` would not read on it.
-
-A due count repeated down Library or a deck table is one decision shown once per row, not a new use. Anything not on the list is ink, including checked switches and checkboxes, unread dots, chart lines, links and the Easy grade. The three card-state colours below describe and never ask.
-
-Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber. Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
+Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber: Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
+
+The twice-per-screen count is about chrome and actions. A status chip in a list repeats once per row, as `StateChip` already does down a deck table and as the due counts do down Library. That is one decision shown many times, not many uses of amber.
 
 Text on canvas meets 4.5:1 in both rooms, including `muted`. `faint` is decorative and never carries words. Dark is not inverted light: the plate is lighter than the canvas in both rooms.
 
@@ -342,7 +333,7 @@ On the phone every screen starts with the same top bar, `TopBar` in `views/Shell
 
 ## Insights
 
-The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act or lit". The exceptions are the days the learner reviewed, which are lit in the thirty-day strip and the month bars as they are in the seven lights, and the single bar the sentence above the chart is pointing at.
+The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act". The two exceptions are the lights, which are the streak, and the single bar the sentence above the chart is pointing at.
 
 Four plates in a 2x2 grid — Recall, Consistency, Collection, Ahead — each carrying a number and one line of plain words. The line is not a caption. 91% says nothing until the plate says the schedule aims for 90, and a grid of numbers without those lines is the dashboard the product does without. Under them the month bars run full width, then the cards that keep coming back.
 
@@ -407,9 +398,9 @@ Prose is `text-2` at 15.5 px on a 44 rem column; headings and bold are `text`. T
 ## Don't
 
 - No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
-- No amber outside the list under Colour.
+- No amber outside the flame, the primary action and a due count. The streak's flame is that same flame, so it counts as one.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
-- No simplified small cut.
+- No simplified small cut. No amber beyond the flame and the primary action.
 - No two flames in one mark. If the lantern is on the screen, the wordmark is plain. The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
 - No translucent glass, and no room colour painted inside the mark. The lantern must survive being put on a surface it did not expect.
 - No display serif, no sparkle icon, no confetti.

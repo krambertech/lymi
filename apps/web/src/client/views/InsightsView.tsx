@@ -37,9 +37,9 @@ function parseLocal(date: string): Date {
  * Four numbers, each with the sentence that makes it mean something, then the months, then
  * the cards that keep coming back.
  *
- * Every figure draws in ink except the reviewed days, which stay amber because they are the
- * streak's lights, and the one bar the sentence points at. A chart series in amber would make
- * this the one screen where the accent means "data" rather than "act or lit".
+ * Every figure draws in ink except the lights, which stay amber because they are the
+ * streak's lights. A chart series in amber would make this the one screen where the accent
+ * means "data" rather than "act".
  */
 export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: InsightsProps) {
   const { t, i18n } = useLingui();

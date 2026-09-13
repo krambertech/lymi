@@ -5,8 +5,8 @@ import { clsx } from "clsx";
  *
  * Eight pixels, inside the card's width, never on the screen edge: a hairline at the top of a
  * phone fights the rounded corners and the status bar, and reads as a rendering fault rather than
- * a thing. The fill is ink rather than amber, because amber means act or lit, and a track that
- * creeps across every card is neither.
+ * a thing. The fill is ink rather than amber, because amber belongs to the flame, the one primary
+ * action and a due count, and a track that creeps across every card is none of those.
  *
  * The label is announced, not shown.
  */

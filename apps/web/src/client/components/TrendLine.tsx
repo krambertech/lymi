@@ -56,8 +56,8 @@ function curve(pts: { x: number; y: number }[]): string {
 /**
  * A rate over time, with the level it is aiming at drawn behind it. Ink, not amber: on
  * Insights amber means a day the learner reviewed, and a second meaning on the same screen
- * would make the accent decorative. The last point is a solid dot, because that is the one
- * the number above the chart is talking about.
+ * would make the accent decorative. The last point is the exception, because that is the
+ * one the number above the chart is talking about.
  *
  * The scale never starts at zero. Retention lives between about 70% and 100%, and a zero
  * baseline flattens every real change into a line across the top.
@@ -149,7 +149,7 @@ export function TrendLine({
       </svg>
       {last && (
         <span
-          className="pointer-events-none absolute size-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-text"
+          className="pointer-events-none absolute size-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber"
           style={{ left: `${(last.x / W) * 100}%`, top: `${(last.y / H) * 100}%` }}
           aria-hidden="true"
         />

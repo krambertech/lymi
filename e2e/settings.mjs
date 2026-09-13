@@ -9,6 +9,7 @@ export const e2eAccounts = [
   "review-batching",
   "word-detail",
   "language",
+  "join-owner",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

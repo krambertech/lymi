@@ -161,6 +161,34 @@ export const deckMembers = sqliteTable(
 );
 
 /**
+ * How people reach a shared deck. V0 has only the join link: `token` is its unguessable URL
+ * part, at most one per deck is unrevoked, and revocation is permanent, so turning the link
+ * on again makes a new row and a new URL. Named Google-email invitations join later. ADR 0011.
+ */
+export const deckInvitations = sqliteTable(
+  "deck_invitations",
+  {
+    id: text("id").primaryKey(),
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    kind: text("kind", { enum: ["link"] })
+      .notNull()
+      .default("link"),
+    /** A capability: never log it, audit it or put it in an error message. */
+    token: text("token").notNull(),
+    revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
+    ...timestamps,
+  },
+  (t) => [
+    uniqueIndex("deck_invitations_token_idx").on(t.token),
+    uniqueIndex("deck_invitations_active_link_idx")
+      .on(t.deckId)
+      .where(sql`kind = 'link' and revoked_at is null`),
+  ],
+);
+
+/**
  * FSRS state per learner per card per direction. The full ts-fsrs Card lives in `fsrs` as
  * JSON so the library can evolve without a migration; `due` and `state` are copied out for
  * queries. A shared deck's card has one row per member, so progress is never shared.
@@ -288,6 +316,7 @@ export const auditLog = sqliteTable(
 export type Deck = typeof decks.$inferSelect;
 export type Card = typeof cards.$inferSelect;
 export type DeckMember = typeof deckMembers.$inferSelect;
+export type DeckInvitation = typeof deckInvitations.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;

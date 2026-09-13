@@ -415,6 +415,48 @@ export const UndoOut = z
   .object({ ok: z.literal(true), day: ReviewDayProgress })
   .meta({ id: "UndoResult" });
 
+export const JoinLinkOut = z
+  .object({
+    link: z
+      .object({ url: z.string(), createdAt: Timestamp })
+      .nullable()
+      .meta({ description: "The deck's join link, or null while sharing is off" }),
+    members: z.number().int().meta({ description: "People who joined and are still in the deck" }),
+  })
+  .meta({ id: "JoinLink" });
+export type JoinLinkOut = z.infer<typeof JoinLinkOut>;
+
+/** What a join page may show. Never cards, and nothing about the deck unless the link works. */
+export const JoinPreviewOut = z
+  .object({
+    status: z.enum(["live", "off", "archived", "invalid"]),
+    deck: z
+      .object({
+        name: z.string(),
+        total: z.number().int(),
+        owner: z.object({ name: z.string() }),
+        language: z.string().nullable(),
+        lastAddedAt: Timestamp.nullable(),
+        samples: z.array(z.object({ term: z.string(), meaning: z.string().nullable() })).meta({
+          description: "Up to three recent cards, shown on the page and never in its metadata",
+        }),
+      })
+      .nullable()
+      .meta({ description: "Present only while the link works" }),
+    viewer: z
+      .enum(["signed-out", "visitor", "member", "owner", "removed"])
+      .meta({ description: "Who is looking: not signed in, not in the deck, in it, or removed" }),
+    deckId: z
+      .string()
+      .nullable()
+      .meta({ description: "Present only when the viewer can already open the deck" }),
+  })
+  .meta({ id: "JoinPreview" });
+export type JoinPreviewOut = z.infer<typeof JoinPreviewOut>;
+
+export const JoinOut = z.object({ deckId: z.string(), role: MemberRole }).meta({ id: "Join" });
+export type JoinOut = z.infer<typeof JoinOut>;
+
 export const OkOut = z.object({ ok: z.literal(true) }).meta({ id: "Ok" });
 
 export const ErrorOut = z

@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { api, errorMessage } from "../lib/api";
-import { deckCardsQuery, decksQuery } from "../lib/queries";
+import { deckCardsQuery, decksQuery, joinLinkQuery } from "../lib/queries";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/DeckSettingsView";
 
 export const Route = createFileRoute("/library/$deckId/settings")({
@@ -19,6 +19,8 @@ function DeckSettings() {
   const cards = useQuery(deckCardsQuery(deckId));
   const deck = decks.data?.find((d) => d.id === deckId);
   // The oldest card with a meaning, so the direction rows read the same way twice running.
+  const isOwner = deck?.role === "owner";
+  const joinLink = useQuery({ ...joinLinkQuery(deckId), enabled: isOwner });
   const example = cards.data?.filter((c) => c.card.meaning).at(-1)?.card;
 
   const [saved, setSaved] = useState(false);
@@ -48,6 +50,26 @@ function DeckSettings() {
     },
   });
 
+  const turnOn = useMutation({
+    mutationFn: () => api.turnOnJoinLink(deckId),
+    onSuccess: (value) => qc.setQueryData(joinLinkQuery(deckId).queryKey, value),
+  });
+  const turnOff = useMutation({
+    mutationFn: () => api.turnOffJoinLink(deckId),
+    onSuccess: () =>
+      qc.setQueryData(joinLinkQuery(deckId).queryKey, (prev) => ({
+        link: null,
+        members: prev?.members ?? 0,
+      })),
+  });
+  const sharingError = turnOn.isError
+    ? t`Could not turn on the join link. Try again.`
+    : turnOff.isError
+      ? t`Could not turn off the join link. Try again.`
+      : joinLink.isError
+        ? t`Could not load the join link.`
+        : undefined;
+
   return (
     <DeckSettingsView
       deck={deck}
@@ -57,6 +79,19 @@ function DeckSettings() {
       saved={saved}
       error={save.isError ? errorMessage(save.error) : undefined}
       onArchive={() => archive.mutate()}
+      sharing={
+        isOwner
+          ? {
+              deckName: deck.name,
+              link: joinLink.data?.link,
+              members: joinLink.data?.members ?? 0,
+              onTurnOn: () => turnOn.mutate(),
+              onTurnOff: () => turnOff.mutate(),
+              pending: turnOn.isPending ? "on" : turnOff.isPending ? "off" : undefined,
+              error: sharingError,
+            }
+          : undefined
+      }
     />
   );
 }

@@ -29,7 +29,7 @@ A deck has one join link. The owner can turn it off. A deck can also have named 
 
 Turning the link off removes nobody. Removing a member takes the deck out of their Library and blocks them: the join link no longer admits them, and only a named invitation from the owner lets them back. Leaving is different. A member who leaves can rejoin through the link. In both cases their states and reviews stay, so a return resumes where they were.
 
-The join page is `my.lymi.app/join/<token>`. The product Worker renders it on the server with Open Graph tags. It shows the deck's name, card count, and owner, with one button. It shows no cards. A link that was turned off gets a page that says so. The exact path `/join` on the product origin keeps redirecting to the public site's beta page.
+The join page is `my.lymi.app/join/<token>`. The product Worker renders it on the server with Open Graph tags. It shows the deck's name, owner, card count, and language, a few recent cards as examples, and one button. The title and Open Graph tags name the deck, owner, and count but no cards, so a chat's link preview shows none. A link that was turned off gets a page that says so. The exact path `/join` on the product origin keeps redirecting to the public site's beta page.
 
 ## Roles are stored now and used later
 
@@ -45,6 +45,7 @@ A learner reads the deck and grades their own states. Every write to the deck's 
 - **Keep `ALLOWED_EMAILS` and add classmates by hand.** Rejected. Every invitation would edit a production secret.
 - **Render the join page on `lymi.app`.** Rejected. Sign-in and sessions live only on `my.lymi.app` under [ADR 0008](0008-public-website-and-product-use-separate-origins.md).
 - **A `shared_decks` table next to `decks`.** Rejected. One table lets Library, the queue, and the API treat a shared deck as a deck.
+- **Show no cards before joining.** Rejected 13 September 2026. Anyone with the link can join and see every card, so hiding them protected only the chat preview, which stays card-free, and left the page with nothing to show a classmate what they would study.
 - **Show the owner how many cards each member knows.** Rejected. That is a classroom product with consent questions this decision does not take on.
 
 ## Consequences

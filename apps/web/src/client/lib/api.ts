@@ -8,6 +8,9 @@ import type {
   Direction,
   GradeInput,
   InsightsOut,
+  JoinLinkOut,
+  JoinOut,
+  JoinPreviewOut,
   MemberRole,
   PushEndpointInput,
   PushSubscriptionInput,
@@ -162,6 +165,17 @@ export const api = {
     request<{ ok: true }>(`/api/decks/${id}/archive`, { method: "POST" }),
   restoreDeck: (id: string) =>
     request<{ ok: true }>(`/api/decks/${id}/restore`, { method: "POST" }),
+  joinLink: (deckId: string) => request<JoinLinkOut>(`/api/decks/${deckId}/join-link`),
+  turnOnJoinLink: (deckId: string) =>
+    request<JoinLinkOut>(`/api/decks/${deckId}/join-link`, { method: "POST" }),
+  turnOffJoinLink: (deckId: string) =>
+    request<{ ok: true }>(`/api/decks/${deckId}/join-link`, { method: "DELETE" }),
+  joinPreview: (token: string) => request<JoinPreviewOut>(`/api/join/${encodeURIComponent(token)}`),
+  /** Holds the link in a short-lived cookie so the sign-in that follows joins the deck. */
+  holdJoinLink: (token: string) =>
+    request<{ ok: true }>(`/api/join/${encodeURIComponent(token)}/sign-in`, { method: "POST" }),
+  join: (token: string) =>
+    request<JoinOut>(`/api/join/${encodeURIComponent(token)}`, { method: "POST" }),
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>

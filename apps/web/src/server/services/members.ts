@@ -1,7 +1,7 @@
 import type { Direction, MemberRole } from "@lymi/core";
 import { emptyState, newId, serializeState } from "@lymi/core";
-import { and, eq, inArray, isNull, sql } from "@lymi/core/db";
-import { audit, auditStatement } from "../audit";
+import { and, eq, inArray, isNotNull, isNull, sql } from "@lymi/core/db";
+import { audit } from "../audit";
 import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 
@@ -198,7 +198,12 @@ function stateStatementsForLearner(
       from cards join decks on decks.id = cards.deck_id
       where cards.deck_id = ${deckId}
         and (coalesce(cards.directions, decks.directions) = 'both'
-          or coalesce(cards.directions, decks.directions) = ${direction})`,
+          or coalesce(cards.directions, decks.directions) = ${direction})
+        and exists (
+          select 1 from deck_members
+          where deck_members.deck_id = ${deckId} and deck_members.user_id = ${userId}
+            and deck_members.removed_at is null
+        )`,
     ),
   );
 }
@@ -238,6 +243,18 @@ export async function join(
     throw new ServiceError("forbidden", "The owner removed you from this deck");
   }
 
+  // The membership write re-checks what admits the learner, so an owner who turns the link off
+  // or archives the deck mid-join wins. A concurrent repeat loses the insert or the update, so
+  // its `joined_at` never lands and its audit row is skipped.
+  const membershipId = existing?.id ?? newId();
+  const at = now.getTime();
+  const admitted = opts.invitationId
+    ? sql`exists (
+        select 1 from deck_invitations join decks on decks.id = deck_invitations.deck_id
+        where deck_invitations.id = ${opts.invitationId} and deck_invitations.deck_id = ${deckId}
+          and deck_invitations.revoked_at is null and decks.archived_at is null
+      )`
+    : sql`exists (select 1 from decks where decks.id = ${deckId} and decks.archived_at is null)`;
   const membership = existing
     ? db
         .update(schema.deckMembers)
@@ -248,27 +265,44 @@ export async function join(
           invitationId: opts.invitationId ?? existing.invitationId,
           updatedAt: now,
         })
-        .where(eq(schema.deckMembers.id, existing.id))
-    : db.insert(schema.deckMembers).values({
-        id: newId(),
-        deckId,
-        userId,
-        role: "learner",
-        invitationId: opts.invitationId ?? null,
-        joinedAt: now,
-      });
+        .where(
+          and(
+            eq(schema.deckMembers.id, existing.id),
+            eq(schema.deckMembers.removedBy, "self"),
+            isNotNull(schema.deckMembers.removedAt),
+            admitted,
+          ),
+        )
+    : db
+        .insert(schema.deckMembers)
+        .select(
+          sql`select ${membershipId}, ${deckId}, ${userId}, 'learner', ${opts.invitationId ?? null},
+            ${at}, null, null, ${at}, ${at}
+          where ${admitted}`,
+        )
+        .onConflictDoNothing({ target: [schema.deckMembers.deckId, schema.deckMembers.userId] });
   await runBatch(db, [
     membership,
     ...stateStatementsForLearner(db, deckId, userId, now),
-    auditStatement(db, {
-      userId: deck.userId,
-      actor,
-      action: "join",
-      entity: "deck",
-      entityId: deckId,
-      payload: { memberId: userId },
-    }),
+    db.insert(schema.auditLog).select(
+      sql`select ${newId()}, ${deck.userId}, ${actor}, 'join', 'deck', ${deckId},
+        ${JSON.stringify({ memberId: userId })}, ${at}
+      where exists (
+        select 1 from deck_members
+        where id = ${membershipId} and joined_at = ${at} and removed_at is null
+      )`,
+    ),
   ]);
+
+  const [after] = await db
+    .select({ removedAt: schema.deckMembers.removedAt })
+    .from(schema.deckMembers)
+    .where(and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, userId)));
+  if (!after || after.removedAt) {
+    throw opts.invitationId
+      ? new ServiceError("not_found", "This join link does not work")
+      : notFound("Deck");
+  }
   return { ok: true as const, role: "learner" as const };
 }
 

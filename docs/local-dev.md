@@ -35,6 +35,8 @@ No password is typed anywhere. The server creates the account on first use, seed
 
 The accounts are `<id>@lymi.local`. They pass the invitation allowlist only on a loopback origin, so `.dev.vars` needs no entry for them. `pnpm local personas` prints the same table from the running server.
 
+To see a deck's join page, turn on its join link in deck settings and open the link signed out, or signed in as another persona with `/api/dev/sign-in?as=streak&returnTo=/join/<token>`. Adding `?dev=1` to a join link offers the local email sign-in, which carries the link through sign-in like Google does, so an address on no allowlist can join.
+
 A real account signed in locally through Google works with every tool below too; it just has no persona of its own, so seeding it loads `learner` unless another persona is named.
 
 ## Change the state from the panel

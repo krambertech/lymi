@@ -1,4 +1,11 @@
-import { CardWithStateOut, DeckInput, DeckOut, DeckSummaryOut, OkOut } from "@lymi/core";
+import {
+  CardWithStateOut,
+  DeckInput,
+  DeckOut,
+  DeckSummaryOut,
+  JoinLinkOut,
+  OkOut,
+} from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe } from "../http";
@@ -7,9 +14,12 @@ import {
   archiveDeck,
   createDeck,
   getDeck,
+  getJoinLink,
   listDeckCards,
   listDecks,
   restoreDeck,
+  turnOffJoinLink,
+  turnOnJoinLink,
   updateDeck,
 } from "../services";
 
@@ -86,6 +96,59 @@ decks.post(
   }),
   async (c) => c.json(await restoreDeck(ctxOf(c), c.req.param("id"))),
 );
+
+const JOIN_LINK =
+  "Owner only, from the app: any API key or token gets 403. Anyone with the link can join the deck.";
+
+decks.get(
+  "/:id/join-link",
+  describe({
+    tags: ["Decks"],
+    summary: "Get a deck's join link",
+    learnerOnly: true,
+    description: JOIN_LINK,
+    ok: { schema: JoinLinkOut, description: "The join link, or null while sharing is off" },
+    errors: [404],
+  }),
+  async (c) => {
+    const { link, members } = await getJoinLink(ctxOf(c), c.req.param("id"));
+    return c.json({ link: link && joinLinkOut(c.env.PRODUCT_URL, link), members });
+  },
+);
+
+decks.post(
+  "/:id/join-link",
+  describe({
+    tags: ["Decks"],
+    summary: "Turn on a deck's join link",
+    learnerOnly: true,
+    description: `${JOIN_LINK} Returns the link that is already on, if there is one.`,
+    ok: { schema: JoinLinkOut, description: "The join link" },
+    errors: [400, 404],
+  }),
+  async (c) => {
+    await turnOnJoinLink(ctxOf(c), c.req.param("id"));
+    const { link, members } = await getJoinLink(ctxOf(c), c.req.param("id"));
+    return c.json({ link: link && joinLinkOut(c.env.PRODUCT_URL, link), members });
+  },
+);
+
+decks.delete(
+  "/:id/join-link",
+  describe({
+    tags: ["Decks"],
+    summary: "Turn off a deck's join link",
+    learnerOnly: true,
+    description: `${JOIN_LINK} Members stay. The URL never works again; turning it on makes a new one.`,
+    ok: { schema: OkOut, description: "Off" },
+    errors: [404],
+  }),
+  async (c) => c.json(await turnOffJoinLink(ctxOf(c), c.req.param("id"))),
+);
+
+function joinLinkOut(productUrl: string, link: { token: string; createdAt: Date }) {
+  return { url: new URL(`/join/${link.token}`, productUrl).toString(), createdAt: link.createdAt };
+}
 
 decks.get(
   "/:id/cards",

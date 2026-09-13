@@ -1,5 +1,6 @@
 import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
+import type { GenericEndpointContext } from "@better-auth/core";
 import { mcp } from "@better-auth/mcp";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -9,6 +10,9 @@ import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
 import { allowedEmails, type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
+import { attributes, cookieName, joinTokenFrom } from "./join-cookie";
+import { ServiceError } from "./services/context";
+import { joinLinkAdmits, joinThroughLink } from "./services/invitations";
 
 /**
  * Better Auth must be created per request on Workers because D1 and KV bindings are
@@ -118,17 +122,37 @@ export function createAuth(env: Bindings, db: Db) {
     databaseHooks: {
       user: {
         create: {
-          // The allowlist. While the app is private, only these accounts can create a user.
-          before: async (user) => {
+          // The allowlist. While the app is private, only these accounts, or someone who
+          // arrived through a working join link, can create a user. ADR 0011.
+          before: async (user, context) => {
             const email = user.email.toLowerCase();
             // Persona accounts need no entry in .dev.vars; they cannot exist outside a local D1.
             const persona = dev && email.endsWith(DEV_EMAIL_DOMAIN);
-            if (!allowed.has(email) && !persona) {
-              throw new APIError("FORBIDDEN", {
-                message: "This is a private app. Your account is not on the list.",
-              });
+            if (allowed.has(email) || persona) return { data: user };
+            const token = joinTokenFrom(env.PRODUCT_URL, headersOf(context));
+            if (token && (await joinLinkAdmits(db, token))) return { data: user };
+            throw new APIError("FORBIDDEN", {
+              message: "This is a private app. Your account is not on the list.",
+            });
+          },
+        },
+      },
+      session: {
+        create: {
+          // Finish a join that sign-in interrupted. A refused join still signs the learner
+          // in; the join page then says why.
+          after: async (session, context) => {
+            const token = joinTokenFrom(env.PRODUCT_URL, headersOf(context));
+            if (!token) return;
+            try {
+              await joinThroughLink({ db, userId: session.userId, actor: "user" }, token);
+            } catch (err) {
+              if (!(err instanceof ServiceError)) console.error("Joining after sign-in failed");
             }
-            return { data: user };
+            context?.setCookie(cookieName(env.PRODUCT_URL), "", {
+              ...attributes(env.PRODUCT_URL),
+              maxAge: 0,
+            });
           },
         },
       },
@@ -141,6 +165,10 @@ export function createAuth(env: Bindings, db: Db) {
 
 export type Auth = ReturnType<typeof createAuth>;
 export type SessionUser = NonNullable<Awaited<ReturnType<Auth["api"]["getSession"]>>>["user"];
+
+function headersOf(context: GenericEndpointContext | null): Headers | undefined {
+  return context?.headers ?? context?.request?.headers;
+}
 
 /**
  * The OAuth provider's endpoint metadata types optional fields as `?: undefined`, which

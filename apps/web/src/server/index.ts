@@ -8,6 +8,7 @@ import { createDb, type Db } from "./db";
 import type { Bindings } from "./env";
 import { fetchConfiguredAsset } from "./html";
 import { describe, statusOf } from "./http";
+import { joinPage } from "./join-page";
 import { handleMcpRequest } from "./mcp";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
@@ -17,6 +18,7 @@ import { audio } from "./routes/audio";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
+import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
 import { push } from "./routes/push";
 import { review } from "./routes/review";
@@ -72,6 +74,11 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 
 // Better Auth owns everything under /api/auth.
 app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
+
+// A deck's join page. Signed-out classmates land here from a chat, so it sits before
+// authentication and renders its own state. ADR 0011.
+app.get("/join/:token", joinPage);
+app.route("/api/join", joinOpen);
 
 // OAuth discovery lives at the site root by RFC 8414 and RFC 9728. Better Auth answers these
 // from its request hooks, so they are forwarded as they are.
@@ -130,6 +137,7 @@ app.get(
 );
 
 app.route("/api/decks", decks);
+app.route("/api/join", join);
 app.route("/api/cards", cards);
 app.route("/api/review", review);
 app.route("/api/settings", settings);

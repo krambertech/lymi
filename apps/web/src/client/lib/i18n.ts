@@ -60,7 +60,12 @@ export function bootstrapLanguage(pathname: string) {
 }
 
 export function isBareShell(pathname: string): boolean {
-  return pathname === "/login" || pathname === "/consent" || pathname.startsWith("/design");
+  return (
+    pathname === "/login" ||
+    pathname === "/consent" ||
+    pathname.startsWith("/join/") ||
+    pathname.startsWith("/design")
+  );
 }
 
 /** "2 d" in English, "2 дн." in Ukrainian: the browser's own narrow unit for the active locale. */

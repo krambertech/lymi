@@ -2,10 +2,10 @@ import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions } from "@lymi/core";
-import { clsx } from "clsx";
 import { useId } from "react";
 import { Combobox, type ComboboxOption } from "./Combobox";
 import { Field } from "./Field";
+import { RadioCard } from "./RadioCard";
 import { Segmented } from "./Segmented";
 
 /**
@@ -180,10 +180,7 @@ interface DirectionProps {
   disabled?: boolean | undefined;
 }
 
-/**
- * One choice, three rows, each spelling out what the learner will be shown. Selection is
- * carried by the edge and the dot: amber stays on the flame and the one primary action.
- */
+/** One choice, three rows, each spelling out what the learner will be shown. */
 export function DirectionField({ value, onChange, example, total, disabled }: DirectionProps) {
   const { t, i18n } = useLingui();
   const name = useId();
@@ -198,48 +195,18 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
       <legend className="sr-only">
         <Trans>How cards are asked</Trans>
       </legend>
-      {DIRECTIONS.map((o) => {
-        const on = o.value === value;
-        return (
-          <label
-            key={o.value}
-            className={clsx(
-              "flex cursor-pointer items-start gap-3 rounded-md bg-plate p-3.5",
-              "transition-[box-shadow,background-color,scale] duration-150 active:scale-[0.99]",
-              "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring",
-              on ? "edge-2" : "edge hoverable:hover:bg-hover",
-              disabled && "cursor-not-allowed opacity-45",
-            )}
-          >
-            <input
-              type="radio"
-              name={name}
-              value={o.value}
-              checked={on}
-              onChange={() => onChange(o.value)}
-              className="peer sr-only"
-            />
-            <span
-              aria-hidden="true"
-              className={clsx(
-                "mt-0.5 grid size-[18px] shrink-0 place-items-center rounded-full transition-[box-shadow] duration-150",
-                on ? "shadow-[0_0_0_1px_var(--text)]" : "edge-2",
-              )}
-            >
-              <span
-                className={clsx(
-                  "size-2.5 rounded-full bg-text transition-[scale,opacity] duration-150 motion-reduce:transition-none",
-                  on ? "scale-100 opacity-100" : "scale-50 opacity-0",
-                )}
-              />
-            </span>
-            <span className="grid gap-0.5">
-              <span className="text-base font-medium text-text">{i18n._(o.label)}</span>
-              <span className="text-sm text-text-2">{shown(o)}</span>
-            </span>
-          </label>
-        );
-      })}
+      {DIRECTIONS.map((o) => (
+        <RadioCard
+          key={o.value}
+          name={name}
+          value={o.value}
+          checked={o.value === value}
+          onChange={() => onChange(o.value)}
+          title={i18n._(o.label)}
+          description={shown(o)}
+          disabled={disabled}
+        />
+      ))}
       <p className="pt-1 text-sm text-muted">
         {total ? (
           <Trans>

@@ -38,6 +38,7 @@ describe("product origin routing", () => {
     "/manifest.webmanifest",
     "/sw.js",
     "/robots.txt",
+    "/join/AbCdEfGhIjKlMnOpQrStUvWxYz012345",
   ])("keeps the product contract on my.lymi.app: %s", (path) => {
     expect(decision(`https://my.lymi.app${path}`)).toEqual({
       kind: "continue",

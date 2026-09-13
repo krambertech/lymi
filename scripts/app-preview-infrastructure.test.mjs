@@ -286,6 +286,12 @@ test("names the Wrangler error that stopped the migrations", () => {
     migrationFailureReason({ status: 1, output }),
     "table card_images already exists at offset 13: SQLITE_ERROR",
   );
+  const remote =
+    "[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mA request to the Cloudflare API (/accounts/a/d1/database/db/query) failed.[0m\n  table `card_images` already exists at offset 13: SQLITE_ERROR [code: 7500]\n\n🪵  Logs were written to /tmp/wrangler.log\n";
+  assert.equal(
+    migrationFailureReason({ status: 1, output: remote }),
+    "A request to the Cloudflare API (/accounts/a/d1/database/db/query) failed. table `card_images` already exists at offset 13: SQLITE_ERROR [code: 7500]",
+  );
   assert.equal(migrationFailureReason({ status: 7, output: "" }), "Wrangler exited with code 7");
 });
 

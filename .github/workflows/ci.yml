@@ -347,15 +347,6 @@ jobs:
           apps/web/dist/lymi/wrangler.preview.json
           apps/web/dist/lymi/preview-secrets.json
 
-      - name: "TEMPORARY: simulate a renumbered migration"
-        env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
-        run: >-
-          pnpm --filter @lymi/web exec wrangler d1 execute DB --remote
-          --config dist/lymi/wrangler.preview.json
-          --command "UPDATE d1_migrations SET name = '0014_card_images.sql' WHERE name = '0013_card_images.sql'"
-
       - name: Apply preview database migrations
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

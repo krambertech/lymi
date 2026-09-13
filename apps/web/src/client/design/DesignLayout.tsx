@@ -32,7 +32,7 @@ export function DesignLayout() {
     <div className="@container/shell flex min-h-dvh bg-canvas text-text">
       <div className="sticky top-0 hidden h-dvh w-64 shrink-0 self-start @3xl/shell:block">
         <aside className="flex h-full flex-col border-e border-edge bg-rail">
-          <div className="mx-3 mt-8 mb-6 flex h-10 items-center justify-between gap-2 ps-2.5">
+          <div className="mx-3 mt-8 mb-6 flex min-h-10 items-center justify-between gap-2 ps-2.5">
             <Home />
             <IconToggle label="Theme" value={theme} onChange={setTheme} options={ROOM_THEMES} />
           </div>

@@ -288,7 +288,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
               "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
               stack ? "pb-1" : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
               // The first label shares its corner with the theme switch.
-              i === 0 && (stack ? "pe-20" : "pe-20 @3xl:pe-5"),
+              i === 0 && (stack ? "pe-28 hoverable:pe-20" : "pe-28 hoverable:pe-20 @3xl:pe-5"),
             )}
           >
             <p className="font-semibold text-text">{v.label}</p>
@@ -297,7 +297,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
           <div
             className={clsx(
               "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
-              !stack && "@3xl:pe-20",
+              !stack && "@3xl:pe-28 @3xl:hoverable:pe-20",
             )}
           >
             {v.render(theme)}

@@ -71,11 +71,12 @@ function Option<T extends string>({
         {...tip.handlers}
         onClick={(e) => onSelect(e.detail === 0)}
         className={clsx(
-          "relative grid size-6 place-items-center rounded-full transition-colors duration-150",
+          // 44 px targets on touch, the small pill only where a fine pointer can aim at it.
+          "relative grid size-11 place-items-center rounded-full transition-colors duration-150 hoverable:size-6",
           on ? "text-text" : "text-muted hoverable:hover:text-text",
         )}
       >
-        <option.Icon aria-hidden="true" className="size-3.5" />
+        <option.Icon aria-hidden="true" className="size-5 hoverable:size-3.5" />
       </button>
       {tip.bubble}
     </>

@@ -31,3 +31,5 @@ Aim for 300–700 words. Exceed that only when compression would hide a material
 | [0012](0012-interface-text-is-english-source-translated-by-lingui.md) | Interface text is English source in the code, translated through Lingui catalogs |
 | [0013](0013-app-language-is-one-setting-that-meaning-language-follows.md) | App language is one stored setting, and meaning language follows it |
 | [0014](0014-review-modes-use-explicit-cues-and-targets.md) | Review modes use explicit cues and targets |
+| [0015](0015-published-decks-use-pinned-localized-editions.md) | Published decks use pinned localized editions and learner-controlled updates |
+| [0016](0016-public-catalog-pages-render-on-the-public-worker.md) | Public catalog pages render on the public Worker |

@@ -1,9 +1,16 @@
 import { Plural, Trans } from "@lingui/react/macro";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { createContext, type ReactNode, useCallback, useContext, useState } from "react";
+import { createContext, type ReactNode, useCallback, useContext, useRef, useState } from "react";
 import { Button } from "../components/Button";
-import { Dialog } from "../components/Dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from "../components/ResponsiveDialog";
 import { flushOutbox, outboxSize } from "./api";
 import { signOut as endSession } from "./auth";
 import { clearPersistedLearnerState } from "./persisted";
@@ -24,6 +31,7 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
   const [busy, setBusy] = useState(false);
   const [queued, setQueued] = useState(0);
+  const stayRef = useRef<HTMLButtonElement>(null);
 
   const leave = useCallback(async () => {
     setBusy(true);
@@ -57,13 +65,22 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
   return (
     <SignOutCtx.Provider value={{ signOut, busy }}>
       {children}
-      <Dialog
-        open={queued > 0}
-        onClose={() => setQueued(0)}
-        title={<Trans>Some grades haven’t synced</Trans>}
-        actions={
-          <>
-            <Button onClick={() => setQueued(0)} autoFocus>
+      <ResponsiveDialog open={queued > 0} onOpenChange={(next) => !next && setQueued(0)}>
+        <ResponsiveDialogContent initialFocus={stayRef}>
+          <ResponsiveDialogHeader>
+            <ResponsiveDialogTitle>
+              <Trans>Some grades haven’t synced</Trans>
+            </ResponsiveDialogTitle>
+            <ResponsiveDialogDescription>
+              <Plural
+                value={queued}
+                one="# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it."
+                other="# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them."
+              />
+            </ResponsiveDialogDescription>
+          </ResponsiveDialogHeader>
+          <ResponsiveDialogFooter>
+            <Button ref={stayRef} onClick={() => setQueued(0)}>
               <Trans>Stay signed in</Trans>
             </Button>
             <Button
@@ -76,15 +93,9 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
             >
               <Trans>Sign out and lose them</Trans>
             </Button>
-          </>
-        }
-      >
-        <Plural
-          value={queued}
-          one="# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it."
-          other="# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them."
-        />
-      </Dialog>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
     </SignOutCtx.Provider>
   );
 }

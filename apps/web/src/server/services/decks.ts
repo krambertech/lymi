@@ -17,7 +17,7 @@ export const asked = sql`(
   or card_states.direction = coalesce(cards.directions, decks.directions)
 )`;
 
-/** All active decks the learner can see, with their own due count, in the learner's order. */
+/** All active decks the learner can see, with how many of their cards are due, in the learner's order. */
 export async function listDecks({ db, userId }: ServiceContext) {
   const now = Date.now();
   const rows = await db
@@ -29,8 +29,10 @@ export async function listDecks({ db, userId }: ServiceContext) {
       directions: schema.decks.directions,
       position: schema.decks.position,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
+      // Cards, not direction states: a review session asks one direction per card, so this is
+      // the number Review starts, the same count the queue reports as its total.
       due: sql<number>`(
-        select count(*) from card_states
+        select count(distinct card_states.card_id) from card_states
         join cards on cards.id = card_states.card_id
         where cards.deck_id = decks.id and cards.archived_at is null
           and card_states.user_id = ${userId}

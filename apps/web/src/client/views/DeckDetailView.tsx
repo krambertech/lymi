@@ -177,7 +177,7 @@ function DuePlate({
           {i18n.number(due)}
         </span>
         <span className="text-md text-text-2">
-          <Plural value={due} one="card due today" other="cards due today" />
+          <Plural value={due} one="card due now" other="cards due now" />
         </span>
         {next && <span className="text-sm text-muted">{t`The next card is back ${next}.`}</span>}
       </h2>

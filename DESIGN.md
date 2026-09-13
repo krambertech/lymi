@@ -25,9 +25,9 @@ colors:
   glow: "#f5ad4873"
   good: "#186f4b"
   good-soft: "#1f7d551f"
-  state-new: "#b1a9a3"
-  state-learning: "#e1c841"
-  state-learning-soft: "#e1c84138"
+  state-new: "#867f79"
+  state-learning: "#ab8704"
+  state-learning-soft: "#ab870429"
   state-learning-text: "#6e580f"
   danger: "#b3331f"
   danger-soft: "#b3331f1a"
@@ -49,7 +49,7 @@ colors:
   dark-metal: "#f3f0eb"
   dark-good: "#78c496"
   dark-danger: "#e3745d"
-  dark-state-new: "#6c6158"
+  dark-state-new: "#83786e"
   dark-state-learning: "#e1d569"
   dark-state-learning-text: "#e4db83"
 typography:
@@ -222,7 +222,7 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 Warm neutrals, nearly grey. Amber is the only saturated accent, the colour that means act; the three card-state colours below describe and never ask. Amber is: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the thirty-day strip and the month bars — the same lit glass at three sizes, which makes it the flame rather than a sixth thing.
 
-Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber: Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
+Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber: Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
 
@@ -328,7 +328,7 @@ The seven lights sit with it. They say which days, where the streak says how man
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport.
 
-A deck opens on its plate: the cards due today set large, the whole deck's split between New, Learning and Known beside icons in their state colours, and the Review button. It is the one place a count gets hero size outside Today, because on a deck the number is the size of the thing the button starts, not a score. The three counts are the deck, not today's share of it, so they never read as zero on a quiet day; the stripe under the plate draws the same split, and the filter under the stripe names the states with their dots and no numbers, so no count appears twice. On the phone the plate stacks and the button is full width; on desktop it is one row. With nothing due the plate keeps its shape: a zero, the deck's counts, when the next card is back, and Add card where Review was. On the phone, search sits in the top bar beside back and the deck menu and replaces it while open; on desktop it stays beside the filter, where `/` lands.
+A deck opens on its plate: the cards due now set large, the whole deck's split between New, Learning and Known beside icons in their state colours, and the Review button. It is the one place a count gets hero size outside Today, because on a deck the number is the size of the thing the button starts, not a score. The three counts are the deck, not today's share of it, so they never read as zero on a quiet day; the stripe under the plate draws the same split, and the filter under the stripe names the states with their dots and no numbers, so no count appears twice. On the phone the plate stacks and the button is full width; on desktop it is one row. With nothing due the plate keeps its shape: a zero, the deck's counts, when the next card is back, and Add card where Review was. On the phone, search sits in the top bar beside back and the deck menu and replaces it while open; on desktop it stays beside the filter, where `/` lands.
 
 Deck actions live behind one menu: Deck settings opens a screen, and the name is changed there rather than inline, Export writes a CSV, Archive leaves the deck list with an Undo toast. Cards archive the same way, from the row.
 

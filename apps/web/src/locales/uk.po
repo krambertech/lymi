@@ -146,8 +146,8 @@ msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# на сьогодні} few {# на сьогодні} many {# на сьогодні} other {# на сьогодні}}"
 
 #: src/client/views/DeckDetailView.tsx
-msgid "{due, plural, one {card due today} other {cards due today}}"
-msgstr "{due, plural, one {картка на сьогодні} few {картки на сьогодні} many {карток на сьогодні} other {картки на сьогодні}}"
+msgid "{due, plural, one {card due now} other {cards due now}}"
+msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
 #: src/server/push-delivery.ts
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"

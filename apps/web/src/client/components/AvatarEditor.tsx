@@ -21,7 +21,7 @@ import {
   panCrop,
 } from "../lib/avatar-crop";
 import { Button, IconButton } from "./Button";
-import { Sheet } from "./Sheet";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 /** A decoded image the learner picked, ready to crop. */
 export interface PickedImage {
@@ -52,24 +52,26 @@ const ZOOM_STEP = 0.25;
 export function AvatarEditor({ image, onCancel, onSave, saving, error }: Props) {
   const { t } = useLingui();
   return (
-    <Sheet
+    <Dialog
       open={image !== null}
       onOpenChange={(open) => {
         if (!open && !saving) onCancel();
       }}
-      title={t`Position your photo`}
     >
-      {image && (
-        <CropStage
-          key={image.url}
-          image={image}
-          onCancel={onCancel}
-          onSave={onSave}
-          saving={saving}
-          error={error}
-        />
-      )}
-    </Sheet>
+      <DialogContent className="w-[min(92vw,440px)]">
+        <DialogTitle>{t`Position your photo`}</DialogTitle>
+        {image && (
+          <CropStage
+            key={image.url}
+            image={image}
+            onCancel={onCancel}
+            onSave={onSave}
+            saving={saving}
+            error={error}
+          />
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -185,7 +187,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
         onPointerCancel={onPointerEnd}
         onKeyDown={onKeyDown}
         // Moving the photo inside the phone's drawer must not swipe the drawer away.
-        data-vaul-no-drag=""
+        data-base-ui-swipe-ignore=""
         className="edge relative mx-auto aspect-square w-full max-w-80 cursor-grab touch-none select-none overflow-hidden rounded-lg bg-plate-2 active:cursor-grabbing"
       >
         <img

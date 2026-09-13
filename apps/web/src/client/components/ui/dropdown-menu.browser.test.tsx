@@ -1,16 +1,18 @@
 import { describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import { DESKTOP_QUERY } from "../lib/device";
+import { DESKTOP_QUERY } from "../../lib/device";
 import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuLinkItem,
-  ResponsiveMenuSeparator,
-  ResponsiveMenuShortcut,
-  ResponsiveMenuTrigger,
-} from "./ResponsiveMenu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuLinkItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
 
 const desktop = inject("machine") === "desktop";
 
@@ -22,19 +24,19 @@ async function openWithKeyboard(trigger: { element: () => Element }) {
 
 function Harness({ onEdit = () => {} }: { onEdit?: () => void }) {
   return (
-    <ResponsiveMenu>
-      <ResponsiveMenuTrigger render={<button type="button">Options</button>} />
-      <ResponsiveMenuContent label="Card options" align="end">
-        <ResponsiveMenuItem onClick={onEdit}>
+    <DropdownMenu>
+      <DropdownMenuTrigger render={<button type="button">Options</button>} />
+      <DropdownMenuContent aria-label="Card options" align="end">
+        <DropdownMenuItem onClick={onEdit}>
           Edit
-          <ResponsiveMenuShortcut>E</ResponsiveMenuShortcut>
-        </ResponsiveMenuItem>
-        <ResponsiveMenuItem disabled>Move to…</ResponsiveMenuItem>
-        <ResponsiveMenuLinkItem render={<a href="#settings" />}>Settings</ResponsiveMenuLinkItem>
-        <ResponsiveMenuSeparator />
-        <ResponsiveMenuItem variant="destructive">Archive</ResponsiveMenuItem>
-      </ResponsiveMenuContent>
-    </ResponsiveMenu>
+          <DropdownMenuShortcut>E</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled>Move to…</DropdownMenuItem>
+        <DropdownMenuLinkItem render={<a href="#settings" />}>Settings</DropdownMenuLinkItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive">Archive</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -42,7 +44,35 @@ test("the device rule matches the machine this browser stands in for", () => {
   expect(window.matchMedia(DESKTOP_QUERY).matches).toBe(desktop);
 });
 
-describe("ResponsiveMenu", () => {
+describe("DropdownMenu", () => {
+  test("renders every part in this shape: group, label, destructive row and inset", async () => {
+    const screen = await render(
+      <DropdownMenu>
+        <DropdownMenuTrigger render={<button type="button">Account</button>} />
+        <DropdownMenuContent aria-label="Account">
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Signed in as Kateryna</DropdownMenuLabel>
+            <DropdownMenuItem inset>Settings</DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive">Sign out</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>,
+    );
+    await screen.getByRole("button", { name: "Account" }).click();
+
+    await expect.element(page.getByRole("menu", { name: "Account" })).toBeVisible();
+    await expect.element(page.getByRole("group")).toBeInTheDocument();
+    await expect.element(page.getByText("Signed in as Kateryna")).toBeVisible();
+    await expect
+      .element(page.getByRole("menuitem", { name: "Settings" }))
+      .toHaveAttribute("data-inset");
+    await expect
+      .element(page.getByRole("menuitem", { name: "Sign out" }))
+      .toHaveAttribute("data-variant", "destructive");
+    await expect.element(page.getByRole("separator")).toBeInTheDocument();
+  });
+
   test(desktop ? "anchors to its trigger" : "rises as a drawer named by its label", async () => {
     const screen = await render(<Harness />);
     await screen.getByRole("button", { name: "Options" }).click();

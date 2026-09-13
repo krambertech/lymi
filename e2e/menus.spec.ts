@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 /**
  * A menu on a touch device is a drawer, and a drawer is put away with the thumb. The rest of the
- * menu's behavior is proven per component in `ResponsiveMenu.browser.test.tsx`; a drag needs a page
+ * menu's behavior is proven per component in `ui/dropdown-menu.browser.test.tsx`; a drag needs a page
  * and a device. The design page renders the real menu without signing in.
  */
 test.skip(({ isMobile }) => !isMobile, "The drawer is the touch shape.");

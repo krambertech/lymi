@@ -26,11 +26,11 @@ Add the Base UI-flavoured shadcn configuration, `@base-ui/react`, composition ut
 
 ### 2. Replace menus
 
-Add the generated Dropdown Menu and Drawer families, apply Lymi styling, add a `ResponsiveMenu` composite that is an anchored dropdown on desktop and a drawer with menu semantics on touch, and migrate Add, learner, deck and card menus to it. Preserve router-link composition, disabled and destructive items, keyboard hints, focus restoration and any fluid highlight that can remain purely presentational; complete when the old Menu and menu-only behavior helpers are gone and keyboard plus pointer journeys pass.
+Add the generated Dropdown Menu and Drawer families, apply Lymi styling, make `DropdownMenu` itself an anchored dropdown on desktop and a drawer with menu semantics on touch, and migrate Add, learner, deck and card menus to it. Preserve router-link composition, disabled and destructive items, keyboard hints, focus restoration and any fluid highlight that can remain purely presentational; complete when the old Menu and menu-only behavior helpers are gone and keyboard plus pointer journeys pass.
 
 ### 3. Replace modal surfaces
 
-Add the generated compound Dialog and a Lymi `ResponsiveDialog` composite over Dialog and Drawer, migrate information and confirmation dialogs to it so they become drawers with stacked actions on touch, then migrate the form sheets. Preserve swipe dismissal, software-keyboard behavior, scroll containment, accessible titles and the frozen mobile-or-desktop choice while open; complete when Add Card, New Deck, API Key creation and Move Card use the new surface and Vaul plus the old Dialog and Sheet APIs are unused.
+Add the generated compound Dialog, make it a centred dialog on desktop and a drawer on touch, migrate information and confirmation dialogs to it so they become drawers with stacked actions on touch, then migrate the form sheets. Preserve swipe dismissal, software-keyboard behavior, scroll containment, accessible titles and the frozen mobile-or-desktop choice while open; complete when Add Card, New Deck, API Key creation and Move Card use the new surface and Vaul plus the old Dialog and Sheet APIs are unused.
 
 ### 4. Replace selection popups
 

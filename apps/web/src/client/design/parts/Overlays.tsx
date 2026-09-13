@@ -3,15 +3,15 @@ import { useState } from "react";
 import { Button, IconButton } from "../../components/Button";
 import { Dialog } from "../../components/Dialog";
 import { NewDeckForm } from "../../components/NewDeckSheet";
-import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuSeparator,
-  ResponsiveMenuShortcut,
-  ResponsiveMenuTrigger,
-} from "../../components/ResponsiveMenu";
 import { Sheet, SheetPanel } from "../../components/Sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
 import { Variants } from "../Frame";
 import { type Group, noop } from "./types";
 
@@ -23,7 +23,7 @@ export const menu: Group = {
     {
       slug: "menu",
       name: "Menu",
-      source: "components/ResponsiveMenu.tsx",
+      source: "components/ui/dropdown-menu.tsx",
       Demo: () => (
         <Variants
           items={[
@@ -31,8 +31,8 @@ export const menu: Group = {
               label: "Deck options",
               note: "Items lead with an icon and may show a shortcut. A destructive item goes last, under a rule, in the danger tone.",
               render: () => (
-                <ResponsiveMenu>
-                  <ResponsiveMenuTrigger
+                <DropdownMenu>
+                  <DropdownMenuTrigger
                     render={
                       <Button size="sm">
                         Deck options
@@ -40,23 +40,23 @@ export const menu: Group = {
                       </Button>
                     }
                   />
-                  <ResponsiveMenuContent label="Deck options" align="start">
-                    <ResponsiveMenuItem>
+                  <DropdownMenuContent aria-label="Deck options" align="start">
+                    <DropdownMenuItem>
                       <Pencil />
                       Rename
-                    </ResponsiveMenuItem>
-                    <ResponsiveMenuItem>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
                       <Download />
                       Export as CSV
-                      <ResponsiveMenuShortcut>⌘E</ResponsiveMenuShortcut>
-                    </ResponsiveMenuItem>
-                    <ResponsiveMenuSeparator />
-                    <ResponsiveMenuItem variant="destructive">
+                      <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive">
                       <Archive />
                       Archive deck
-                    </ResponsiveMenuItem>
-                  </ResponsiveMenuContent>
-                </ResponsiveMenu>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               ),
             },
           ]}

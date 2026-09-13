@@ -2,12 +2,12 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { BookMarked, PenLine, Plus } from "lucide-react";
 import { IconButton } from "./Button";
 import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuShortcut,
-  ResponsiveMenuTrigger,
-} from "./ResponsiveMenu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 /**
  * One plus for both things a learner adds. It sits in the rail beside the mark on desktop and
@@ -29,25 +29,25 @@ export function AddMenu({
 }) {
   const { t } = useLingui();
   return (
-    <ResponsiveMenu>
-      <ResponsiveMenuTrigger
+    <DropdownMenu>
+      <DropdownMenuTrigger
         render={
           <IconButton label={t`Add`} variant={variant} round size={size}>
             <Plus />
           </IconButton>
         }
       />
-      <ResponsiveMenuContent label={t`Add`} align={align}>
-        <ResponsiveMenuItem onClick={onAddCard}>
+      <DropdownMenuContent aria-label={t`Add`} align={align}>
+        <DropdownMenuItem onClick={onAddCard}>
           <PenLine aria-hidden="true" />
           <Trans>New card</Trans>
-          <ResponsiveMenuShortcut>N</ResponsiveMenuShortcut>
-        </ResponsiveMenuItem>
-        <ResponsiveMenuItem onClick={onCreateDeck} disabled={!onCreateDeck}>
+          <DropdownMenuShortcut>N</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onCreateDeck} disabled={!onCreateDeck}>
           <BookMarked aria-hidden="true" />
           <Trans>New deck</Trans>
-        </ResponsiveMenuItem>
-      </ResponsiveMenuContent>
-    </ResponsiveMenu>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

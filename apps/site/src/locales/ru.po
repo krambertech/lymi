@@ -671,7 +671,7 @@ msgstr "Таблицы"
 
 #: src/components/landing/LandingView.tsx
 msgid "Start with the term. Keep control of the rest."
-msgstr "Добавь термин. Остальное решаешь ты."
+msgstr "От тебя — термин, от Lymi — остальное."
 
 #: src/components/landing/hand-cards.ts
 msgid "Statistics"

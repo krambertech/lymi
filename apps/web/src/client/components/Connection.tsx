@@ -9,7 +9,7 @@ export type ConnectionState = "asking" | "connected" | "refused";
 
 /**
  * The app that asked and the lantern, joined by a rail. While the decision is open the rail
- * is a dotted track; when the grant lands it draws across in amber and the lantern lights up.
+ * is a dotted track; when the grant lands it draws across in amber and the flame rises.
  * The lantern waits for the rail to arrive, so the two read as one movement rather than two.
  */
 export function Connection({
@@ -22,7 +22,7 @@ export function Connection({
   className?: string | undefined;
 }) {
   const connected = state === "connected";
-  // Long enough that the rail is nearly across when the wick catches, short enough that the
+  // Long enough that the rail is nearly across when the flame rises, short enough that the
   // two still read as one movement.
   const lit = useLagged(connected, 300);
 
@@ -40,14 +40,12 @@ export function Connection({
         {connected && <span className="rail-fill absolute inset-0 rounded-full bg-amber" />}
       </span>
       <span className="edge grid size-16 shrink-0 place-items-center rounded-lg bg-plate">
-        {/* The key replays the wick catching when the rail arrives, rather than swapping. */}
+        {/* The flame rises when the rail arrives and dies down on a refusal. */}
         <Lantern
-          key={lit ? "lit" : "waiting"}
-          variant={state === "refused" ? "unlit" : "lit"}
+          out={state === "refused"}
+          progress={lit ? 1 : undefined}
           flicker={state === "asking"}
           glow={connected}
-          litUp={lit}
-          catchLight={lit}
           className="size-10"
         />
       </span>

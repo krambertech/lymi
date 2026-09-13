@@ -301,7 +301,7 @@ export const personas: Persona[] = [
   {
     id: "streak",
     name: "Sanna",
-    description: "Fourteen days running and nothing left to do today. The lantern is unlit.",
+    description: "Fourteen days running and nothing due today. The small flame stays lit.",
     appLanguage: "en",
     reviewDays: everyDay(13, 0),
     dueNow: 0,

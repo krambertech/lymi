@@ -19,6 +19,7 @@ Aim for fewer than 1,000 words. Link extended research instead of reproducing it
 
 | Proposal | Status |
 | --- | --- |
+| [Daily review goal and rolling queue](daily-review-goal-and-rolling-queue.md) | Accepted; planned in [docs/plans/2026-09-13-daily-review-goal-and-rolling-queue.md](../plans/2026-09-13-daily-review-goal-and-rolling-queue.md) |
 | [Public website and product app architecture](public-website-and-product-app.md) | Partially accepted by ADR 0008 |
 | [Market differentiation and go-to-market](market-differentiation-and-go-to-market.md) | Exploration; the localization section is decided by ADR 0012 and 0013 and planned in [docs/plans/2026-09-12-localization.md](../plans/2026-09-12-localization.md) |
 | [Open-source strategy](open-source-strategy.md) | Exploration |

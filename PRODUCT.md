@@ -22,19 +22,41 @@ Success for the private version looks like this: Kateryna reviews in Lymi most d
 
 Within a review, due cards with the same scheduling priority are mixed before they are shown so capture or edit order does not become a memorisation cue.
 
+## Daily Review Goal
+
+The daily review goal and the streak are one mechanic. The learner chooses how many recall attempts they want to complete per learner-local day. Reaching that number satisfies the day's streak goal; if at least one review is available but fewer than the goal, completing all available reviews also satisfies it without pulling future cards forward.
+
+Before the first review, Lymi asks the learner to choose this goal and suggests 50 attempts. The same control later lives in the streak modal, with quick choices of 10, 25, 50, and 100 plus a custom whole number from 1 to 200. The saved choice applies on later days; Today and Settings do not introduce separate goal editors.
+
+The streak counts consecutive learner-local days whose goal was satisfied. Its current length appears as a number beside the seven-day review lights on Today and at review completion. A day that ends without satisfying the goal resets the current streak to zero, while the learner's review history remains intact. When zero cards are eligible, opening Lymi and letting it confirm that nothing is due protects the current streak without increasing it; not opening still makes the day missed.
+
+The learner-local day initially uses the current device timezone without asking during setup. While the timezone remains automatic, the most recently foregrounded device may update it when its timezone changes during travel; a background device cannot overwrite that choice. A timezone chosen explicitly in Settings becomes a manual override and is not changed automatically until the learner returns it to automatic. Timezone changes affect current and future day boundaries without rewriting completed review history.
+
+Every accepted, non-undone grade counts exactly once toward the daily goal, including Forgot and every later attempt at the same card. The goal counts recall attempts, not distinct cards or correct answers, so forgetting never increases the required work. Reviews already completed that day count toward the total, and Undo removes the undone attempt.
+
+An active review is durable. Its current card, order, progress, unseen-card buffer, and timed retries survive reloads, backgrounding, reconnecting, and movement between phone and laptop. Lymi keeps up to 20 unseen cards locally and starts a background refill toward 20 when 10 remain, capped by the remaining goal and available work. Foreground and reconnect checks reconcile the buffer. Every fetch merges into the active review and never replaces it or silently restarts progress.
+
+When both ordinary due reviews and new cards are available, Lymi targets approximately one new card after every four ordinary reviews. Learning and relearning cards that are already due retain priority, and if either the ordinary-review or new-card group runs out, the other can fill the remaining daily goal. This proportion is an internal fairness rule, not a separate learner setting or a promised fixed quota.
+
+A forgotten card returns in the same direction when its FSRS learning or relearning step becomes due. Lymi mixes it into the next few unseen cards instead of showing it immediately or holding it until the end. Its sibling direction stays out of that review because the revealed answer would make the second prompt dishonest.
+
+The completion state reports the actual number reviewed and confirms that today's streak goal is complete. It offers **Review forgotten** when cards still need another look, **Review another round** when more eligible cards are available, and **Done**. Another round contains up to 10 additional attempts, ends earlier when no eligible cards remain, and may be chosen again after it finishes. Continuing is optional and cannot make a completed streak goal incomplete. When zero cards are due, the empty state protects but does not increase the streak and offers **Add cards**; adding alone does not count toward the review goal. An empty local buffer while offline or after a failed refresh is not evidence that all useful reviews are finished.
+
 ## Brand Personality
 
 Three words: warm, calm, quick.
 
-The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. It is lit while you review, it flickers when a card lands, and it brightens when the session is done. That is the emotional register: a small warm light you bring with you, not a coach, not a game, not a productivity dashboard.
+The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. Its flame is the continuity of remembering: repetition keeps it alive. In the signed-in product, the flame goes out only when the streak breaks. While the streak is alive, it begins each day small and steady, grows subtly after every accepted review regardless of grade, and reaches its full height when the daily goal is complete. A confirmed zero-due day leaves the small flame alive without implying that any review was required or completed.
 
-Voice is plain and friendly. It says "That's the lot" at the end of a session, not "Congratulations!" It counts cards, not points. It never nags. Undo is everywhere, because cheap mistakes are most of what "delightful" means in a review app.
+Brand-only appearances do not expose learner state. The app icon, login, and public surfaces use one canonical healthy flame. That is the emotional register: a small warm light you bring with you, not a coach, not a game, not a productivity dashboard.
 
-Playfulness is allowed in six places, each tied to something the user did: the flame flaring on a good answer, the lantern brightening at the end of a session, the lantern unlit when nothing is due, seven small lights for the last seven days, the flame counting days in a row, and the Undo toast. Everywhere else the interface is quiet. The lantern is the only thing that glows; every other surface is flat with one hairline edge.
+Voice is plain and friendly. It says "Daily goal reached" when the chosen number is complete and "That's the lot" when no useful reviews remain, not "Congratulations!" It counts cards, not points. It never nags. Undo is everywhere, because cheap mistakes are most of what "delightful" means in a review app.
+
+Playfulness is allowed in four places, each tied to honest product state: the flame growing after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. Everywhere else the interface is quiet. The lantern is the only thing that glows; every other surface is flat with one hairline edge.
 
 ## Anti-references
 
-- **Duolingo.** No mascot with a personality, no confetti, no push notifications that guilt.
+- **Duolingo.** No mascot with a personality, no streak pressure, no confetti, no push notifications that guilt.
 - **Anki.** No walls of settings, no default-widget grey, no feeling that the tool is fighting you.
 - **Generic AI apps.** No sparkle icon on every AI feature, no purple-to-blue gradient, no "magic".
 - **Editorial dark mode.** No display serifs, no near-black with a lone neon accent, no landing-page typography inside an app.

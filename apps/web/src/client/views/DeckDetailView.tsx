@@ -524,7 +524,7 @@ export function DeckDetailView({
               : undefined
           }
           actions={
-            <span className="hidden items-center gap-1.5 @3xl:flex">
+            <span className="hidden items-center gap-1.5 @3xl/shell:flex">
               {addButton}
               {deckMenu}
             </span>
@@ -532,7 +532,7 @@ export function DeckDetailView({
         />
 
         {/* While the phone searches, the list is the answer, so the plate and stripe step aside. */}
-        <div className={clsx(searchOpen && "hidden @3xl:block")}>
+        <div className={clsx(searchOpen && "hidden @3xl/shell:block")}>
           {deck === undefined || cards === undefined ? (
             <Skeleton className="h-[260px] rounded-2xl" />
           ) : cards.length > 0 ? (
@@ -554,7 +554,7 @@ export function DeckDetailView({
           <div
             className={clsx(
               "mb-2 flex flex-wrap items-center gap-x-3 gap-y-2",
-              searchOpen ? "mt-2 @3xl:mt-4" : "mt-4",
+              searchOpen ? "mt-2 @3xl/shell:mt-4" : "mt-4",
             )}
           >
             <Segmented
@@ -570,7 +570,7 @@ export function DeckDetailView({
               ]}
             />
             {/* Desktop keeps search beside the filter, where "/" lands; the phone has it up top. */}
-            <div className="relative ms-auto hidden w-52 min-w-0 @3xl:block">
+            <div className="relative ms-auto hidden w-52 min-w-0 @3xl/shell:block">
               <Search
                 className="pointer-events-none absolute start-0 top-1/2 size-4 -translate-y-1/2 text-muted"
                 aria-hidden="true"

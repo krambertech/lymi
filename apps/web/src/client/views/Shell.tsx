@@ -198,7 +198,7 @@ export function TopBar({
 }: {
   back?: ReactNode | undefined;
   actions?: ReactNode | undefined;
-  /** A screen under another one (deck settings) keeps the bar on desktop for its way back. */
+  /** Keep the bar at every width: a nested screen (deck settings) needs its way back on desktop too. */
   nested?: boolean | undefined;
   className?: string | undefined;
 }) {

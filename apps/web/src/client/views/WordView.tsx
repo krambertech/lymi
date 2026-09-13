@@ -401,7 +401,9 @@ export function WordView({
     >
       {variant === "page" ? (
         // The article's gap would push the term further from the bar than a page title sits.
+        // The page variant is only drawn where the column is narrow, so the bar always shows with it.
         <TopBar
+          nested
           className="-mb-4"
           back={<BackButton label={deckName} onClick={onBack} />}
           actions={controls}

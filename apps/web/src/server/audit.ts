@@ -6,7 +6,7 @@ type AuditInput = {
   userId: string;
   actor: Actor;
   action: string;
-  entity: "deck" | "card" | "review";
+  entity: "deck" | "card" | "review" | "account";
   entityId: string;
   payload?: unknown;
 };

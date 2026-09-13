@@ -4,14 +4,26 @@ import { getPlatformProxy } from "wrangler";
 import { createDb, type Db, schema } from "../db";
 import type { ServiceContext } from "./context";
 
+/** The local bindings service tests use: Images runs offline, R2 is in memory. */
+export type TestBindings = {
+  DB: D1Database;
+  SESSIONS: KVNamespace;
+  PRIVATE_IMAGES: R2Bucket;
+  IMAGES: ImagesBinding;
+};
+
 const appDir = fileURLToPath(new URL("../../../", import.meta.url));
 
 /**
  * A real D1 for service tests: wrangler's local runtime, in memory, with every migration
  * applied. The same database the Worker runs on, so a query that works here works there.
  */
-export async function testDb(): Promise<{ db: Db; dispose: () => Promise<void> }> {
-  const proxy = await getPlatformProxy<{ DB: D1Database }>({
+export async function testDb(): Promise<{
+  db: Db;
+  env: TestBindings;
+  dispose: () => Promise<void>;
+}> {
+  const proxy = await getPlatformProxy<TestBindings>({
     configPath: `${appDir}wrangler.jsonc`,
     // No `.env` files. Wrangler still reads `.dev.vars` on its own; nothing here uses it.
     envFiles: [],
@@ -28,7 +40,7 @@ export async function testDb(): Promise<{ db: Db; dispose: () => Promise<void> }
       .filter((statement) => statement && !/^PRAGMA foreign_keys/i.test(statement));
     for (const statement of statements) await proxy.env.DB.prepare(statement).run();
   }
-  return { db: createDb(proxy.env.DB), dispose: () => proxy.dispose() };
+  return { db: createDb(proxy.env.DB), env: proxy.env, dispose: () => proxy.dispose() };
 }
 
 /** A signed-in learner. Inserts the Better Auth user row the foreign keys need. */

@@ -43,6 +43,10 @@
     {
       "name": "0010_tiresome_purifiers.sql",
       "sha256": "af62543250e61661a45fa0ab89b68c535776f6f8e970da961974f4e458c0a63a"
+    },
+    {
+      "name": "0011_sudden_mole_man.sql",
+      "sha256": "cfa5ce024656a0537072419ccea25e07c9c89207c0c6d1045b64304968fb0932"
     }
   ]
 }

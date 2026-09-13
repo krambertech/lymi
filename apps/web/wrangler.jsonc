@@ -38,7 +38,13 @@
       "migrations_dir": "migrations"
     }
   ],
-  "r2_buckets": [{ "binding": "AUDIO", "bucket_name": "lymi-audio" }],
+  "r2_buckets": [
+    { "binding": "AUDIO", "bucket_name": "lymi-audio" },
+    // Avatars now, card images later. Never public: images leave only through authenticated routes.
+    { "binding": "PRIVATE_IMAGES", "bucket_name": "lymi-private-images" }
+  ],
+  // Decodes, resizes and re-encodes uploads; WebP output carries no metadata.
+  "images": { "binding": "IMAGES" },
   "kv_namespaces": [
     {
       "binding": "SESSIONS",

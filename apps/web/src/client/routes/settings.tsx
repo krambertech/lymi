@@ -2,6 +2,7 @@ import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { AccountSection } from "../components/AccountSection";
 import { ApiKeysSection } from "../components/ApiKeysSection";
 import { ConnectedAppsSection } from "../components/ConnectedAppsSection";
 import { NotificationsSection } from "../components/NotificationsSection";
@@ -49,6 +50,7 @@ function SettingsRoute() {
       language={settings.isSuccess ? (settings.data.appLanguage ?? pickLocale()) : undefined}
       onLanguage={language.mutate}
       languageError={language.isError}
+      account={<AccountSection name={me.data?.name} email={me.data?.email} />}
       theme={theme}
       onTheme={(t) => {
         setTheme(t);

@@ -103,6 +103,26 @@ export const userSettings = sqliteTable("user_settings", {
   ...timestamps,
 });
 
+/**
+ * The learner's photo. The Google fallback and the learner's own upload live in separate
+ * columns so neither can overwrite the other; the upload wins while it exists. Keys are
+ * opaque R2 object names and versions are the opaque tokens delivery URLs carry.
+ */
+export const userAvatars = sqliteTable("user_avatars", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  customKey: text("custom_key"),
+  customVersion: text("custom_version"),
+  /** Bumped by every learner write, so a write started from an older state is refused. */
+  customRevision: integer("custom_revision").notNull().default(0),
+  googleKey: text("google_key"),
+  googleVersion: text("google_version"),
+  /** When the fetch behind `googleKey` began. An older fetch that finishes later is dropped. */
+  googleFetchedAt: integer("google_fetched_at", { mode: "timestamp_ms" }),
+  ...timestamps,
+});
+
 /** One row per browser installation that explicitly opted into a daily review reminder. */
 export const pushSubscriptions = sqliteTable(
   "push_subscriptions",
@@ -320,6 +340,7 @@ export type DeckInvitation = typeof deckInvitations.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;
+export type UserAvatar = typeof userAvatars.$inferSelect;
 export type ReviewDay = typeof reviewDays.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type AuditEntry = typeof auditLog.$inferSelect;

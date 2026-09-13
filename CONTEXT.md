@@ -50,7 +50,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Activity**: The list of writes made by integrations and the AI, shown in the app so nothing lands unseen. Cards can be inspected, edited or archived from there. _Avoid_: Review queue, inbox, approvals, history (for this screen)
 
-**Settings**: The screen holding every setting: language, theme, the review timezone, the daily reminder, connected apps and API keys. Nothing else lives there. _Avoid_: You, profile, account, preferences
+**Settings**: The screen holding every setting: the learner's photo, language, theme, the review timezone, the daily reminder, connected apps and API keys. Nothing else lives there. _Avoid_: You, profile, account, preferences
 
 **Learner menu**: The menu behind the learner's name in the rail and their avatar on the phone. It leads to Settings, Archived, the docs and sign-out, and on the phone to Activity and Insights as well; keyboard shortcuts appear where there is a keyboard and Install where the browser can do it. _Avoid_: Profile menu, account menu, user menu
 

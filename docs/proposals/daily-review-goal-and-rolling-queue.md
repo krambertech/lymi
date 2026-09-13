@@ -6,7 +6,7 @@ decision: accepted
 
 # Daily review goal and rolling queue
 
-This document preserves the accepted product direction for a daily review goal, a review that survives interruption, and intentional same-day repetition of forgotten cards. The queue sections follow [ADR 0018](../adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md), and delivery is staged in [the review draw plan](../plans/2026-09-13-review-draw.md).
+This document preserves the accepted product direction for a daily review goal, a review that survives interruption, and intentional same-day repetition of forgotten cards. The queue sections follow [ADR 0019](../adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md), and delivery is staged in [the review draw plan](../plans/2026-09-13-review-draw.md).
 
 ## Learner outcome
 
@@ -34,7 +34,7 @@ A goal of 50 can therefore contain fewer than 50 distinct cards when a forgotten
 
 ## Review model
 
-[ADR 0018](../adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md) replaces the stored session this section first described. Lymi recomputes the next card from the cards, today's review log, the scope, and the learner-local date.
+[ADR 0019](../adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md) replaces the stored session this section first described. Lymi recomputes the next card from the cards, today's review log, the scope, and the learner-local date.
 
 - The same synced state gives the same next card after a reload, offline, or on another device. Grades from another device can change it.
 - Grades in the offline outbox count as part of today's log. One replayed after a later grade of the same card is a duplicate.

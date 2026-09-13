@@ -1,6 +1,6 @@
 # Review draw simulations
 
-The evidence behind the weights in [ADR 0018](../../../docs/adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md). These scripts model the rules, not the real `draw`. Step 4 of [the plan](../../../docs/plans/2026-09-13-review-draw.md) replaces them.
+The evidence behind the weights in [ADR 0019](../../../docs/adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md). These scripts model the rules, not the real `draw`. Step 4 of [the plan](../../../docs/plans/2026-09-13-review-draw.md) replaces them.
 
 Run from `packages/core` with Node 22.22 or later. Seeds are fixed, so the output matches the tables below.
 

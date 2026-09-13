@@ -1,10 +1,10 @@
 # Reviews draw the next card from today's log
 
-**Status:** Accepted on 13 September 2026. Rules are in [ADR 0018](../adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md); goal behavior is in [the proposal](../proposals/daily-review-goal-and-rolling-queue.md) and [PRODUCT.md](../../PRODUCT.md#daily-review-goal). This plan replaces steps 2 to 5 of [the rolling queue plan](2026-09-13-daily-review-goal-and-rolling-queue.md).
+**Status:** Accepted on 13 September 2026. Rules are in [ADR 0019](../adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md); goal behavior is in [the proposal](../proposals/daily-review-goal-and-rolling-queue.md) and [PRODUCT.md](../../PRODUCT.md#daily-review-goal). This plan replaces steps 2 to 5 of [the rolling queue plan](2026-09-13-daily-review-goal-and-rolling-queue.md).
 
 ## Done when
 
-- One drawable definition and one `draw` function in core serve the queue, the client, every count, day exhaustion, and reminders. Tests cover every ADR 0018 rule.
+- One drawable definition and one `draw` function in core serve the queue, the client, every count, day exhaustion, and reminders. Tests cover every ADR 0019 rule.
 - A forgotten card returns in the same review. A card left learning from yesterday comes back early in today's review.
 - The same synced state gives the same next card after a reload, offline, Undo, or a device or scope change.
 - The header counts today's attempts against the goal. The goal screen offers Review forgotten, Review another round, and Done.

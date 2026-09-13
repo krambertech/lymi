@@ -34,7 +34,7 @@ The learner-local day initially uses the current device timezone without asking 
 
 Every accepted, non-undone grade counts exactly once toward the daily goal, including Forgot and every later attempt at the same card. The goal counts recall attempts, not distinct cards or correct answers, so forgetting never increases the required work. Reviews already completed that day count toward the total, and Undo removes the undone attempt.
 
-A review is never stored. Lymi recomputes the next card from the cards, today's reviews, and the date. The same synced state gives the same next card after a reload, offline, on another device, or in another scope. A grade from another device can change the next card, and an offline grade that arrives after a later grade of the same card does not count. The rules are in [ADR 0018](docs/adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md).
+A review is never stored. Lymi recomputes the next card from the cards, today's reviews, and the date. The same synced state gives the same next card after a reload, offline, on another device, or in another scope. A grade from another device can change the next card, and an offline grade that arrives after a later grade of the same card does not count. The rules are in [ADR 0019](docs/adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md).
 
 When both reviews and new cards are available, one attempt in five is a new card. If either runs out, the other fills the goal. The draw favours reviews you still know and recently added cards, but anything eligible can appear. Every fourth new card is the oldest not yet started, so a large deck keeps moving. These proportions are internal rules, not settings or quotas.
 

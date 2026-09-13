@@ -3,7 +3,7 @@
 import { appendFileSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
-export function findPreviewUrl(output, { workerName, alias }) {
+export function findPreview(output, { workerName, alias }) {
   const uploads = output
     .split(/\r?\n/)
     .filter(Boolean)
@@ -18,6 +18,7 @@ export function findPreviewUrl(output, { workerName, alias }) {
 
   const upload = uploads.at(-1);
   if (!upload) throw new Error(`Wrangler did not report a version upload for ${workerName}`);
+  if (!upload.version_id) throw new Error(`Wrangler did not report an uploaded version ID`);
   if (!upload.preview_alias_url) {
     throw new Error(`Wrangler uploaded ${workerName} without the requested stable preview alias`);
   }
@@ -28,11 +29,17 @@ export function findPreviewUrl(output, { workerName, alias }) {
     throw new Error(`Wrangler returned an unexpected preview alias URL for ${workerName}`);
   }
 
-  return url.href.replace(/\/$/, "");
+  return { url: url.href.replace(/\/$/, ""), versionId: upload.version_id };
 }
 
-function writeGitHubResult(url, alias) {
-  if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `url=${url}\n`);
+export function findPreviewUrl(output, options) {
+  return findPreview(output, options).url;
+}
+
+function writeGitHubResult({ url, versionId }, alias) {
+  if (process.env.GITHUB_OUTPUT) {
+    appendFileSync(process.env.GITHUB_OUTPUT, `url=${url}\nversion_id=${versionId}\n`);
+  }
   if (process.env.GITHUB_STEP_SUMMARY) {
     appendFileSync(
       process.env.GITHUB_STEP_SUMMARY,
@@ -54,7 +61,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     throw new Error("Usage: preview-url.mjs <wrangler-output> <worker-name> <alias>");
   }
 
-  const url = findPreviewUrl(readFileSync(outputPath, "utf8"), { workerName, alias });
-  writeGitHubResult(url, alias);
-  process.stdout.write(`Stable public-site preview: ${url}\n`);
+  const preview = findPreview(readFileSync(outputPath, "utf8"), { workerName, alias });
+  writeGitHubResult(preview, alias);
+  process.stdout.write(`Stable public-site preview: ${preview.url}\n`);
 }

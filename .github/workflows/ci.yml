@@ -208,4 +208,5 @@ jobs:
       - name: Verify preview version
         env:
           PREVIEW_URL: ${{ steps.preview.outputs.url }}
-        run: node scripts/check-deployment.mjs "$PREVIEW_URL/api/health" lymi-site "$GITHUB_SHA"
+          PREVIEW_VERSION_ID: ${{ steps.preview.outputs.version_id }}
+        run: node scripts/check-deployment.mjs "$PREVIEW_URL/api/health" lymi-site "$PREVIEW_VERSION_ID"

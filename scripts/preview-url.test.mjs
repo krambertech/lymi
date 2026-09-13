@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { findPreviewUrl } from "./preview-url.mjs";
+import { findPreview, findPreviewUrl } from "./preview-url.mjs";
 
 const upload = {
   type: "version-upload",
@@ -17,6 +17,16 @@ test("returns the stable alias rather than the version-specific preview", () => 
   assert.equal(
     findPreviewUrl(output, { workerName: "lymi-site", alias: "pr-73" }),
     "https://pr-73-lymi-site.example.workers.dev",
+  );
+});
+
+test("returns the uploaded Worker version for health verification", () => {
+  assert.deepEqual(
+    findPreview(JSON.stringify(upload), { workerName: "lymi-site", alias: "pr-73" }),
+    {
+      url: "https://pr-73-lymi-site.example.workers.dev",
+      versionId: "version-id",
+    },
   );
 });
 

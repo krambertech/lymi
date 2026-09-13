@@ -1,6 +1,7 @@
 import { msg, plural } from "@lingui/core/macro";
 import type { Bindings } from "./env";
 import { serverI18n } from "./i18n";
+import { askedSql } from "./services/modes";
 
 interface ReminderCandidate {
   id: string;
@@ -148,8 +149,7 @@ export async function dispatchReviewReminders(
            AND s.due <= ?
            AND c.archived_at IS NULL
            AND d.archived_at IS NULL
-           AND (coalesce(c.directions, d.directions) = 'both'
-                OR s.direction = coalesce(c.directions, d.directions))) AS due_count
+           AND ${askedSql("s.direction", { cards: "c", decks: "d" })}) AS due_count
        FROM push_subscriptions ps
        LEFT JOIN user_settings us ON us.user_id = ps.user_id`,
   )

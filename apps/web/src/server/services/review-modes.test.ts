@@ -110,6 +110,7 @@ describe("review mode backfill", () => {
 
   it("keeps reading a row an older Worker wrote without a mode", async () => {
     const ctx: ServiceContext = { db, userId: "u", actor: "user" };
+    await migrate("0013_card_images.sql");
     await raw
       .prepare(
         "update card_states set mode = case id when 's1' then null else mode end, due = 0, fsrs = ?",
@@ -241,9 +242,55 @@ describe("GET /api/cards/:id", () => {
       const res = await app.request(`/api/cards/${added.card.id}`);
       const body = (await res.json()) as Record<string, unknown>;
       expect(res.status).toBe(200);
-      expect(body).toMatchObject({ reviewModes: null, directions: null });
+      expect(body).toMatchObject({ reviewModes: null, directions: null, image: null });
+      // The stored mode list is a column on the card row; the API shows `reviewModes` instead.
+      expect(body).not.toHaveProperty("reviewModeKeys");
     } finally {
       await test.dispose();
     }
   }, 60_000);
+});
+
+describe("picture modes on cards", () => {
+  let dispose: () => Promise<void>;
+  let ctx: ServiceContext;
+
+  beforeAll(async () => {
+    const test = await testDb();
+    dispose = test.dispose;
+    await test.raw
+      .prepare("insert into user (id, name, email) values ('p', 'P', 'p@lymi.test')")
+      .run();
+    ctx = { db: test.db, userId: "p", actor: "user" };
+  }, 60_000);
+  afterAll(async () => dispose());
+
+  it("refuses picture modes on a deck", async () => {
+    await expect(
+      createDeck(ctx, { name: "Signs", reviewModes: [{ cue: "image", target: "meaning" }] }),
+    ).rejects.toThrow("on each card");
+  });
+
+  it("keeps a card's picture modes when an older app writes only directions", async () => {
+    const deck = await createDeck(ctx, { name: "Mixed" });
+    const [added] = await addCards(ctx, [
+      {
+        deckId: deck.id,
+        term: "mixed",
+        reviewModes: [
+          { cue: "meaning", target: "term" },
+          { cue: "image", target: "term" },
+        ],
+      },
+    ]);
+    if (added?.status !== "added") throw new Error("card not added");
+    expect(added.card.directions).toBe("production");
+
+    const legacy = await updateCard(ctx, added.card.id, { directions: "both" });
+    expect(legacy.reviewModes).toEqual([
+      { cue: "term", target: "meaning" },
+      { cue: "meaning", target: "term" },
+      { cue: "image", target: "term" },
+    ]);
+  });
 });

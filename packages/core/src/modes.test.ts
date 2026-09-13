@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   directionsFromModes,
+  effectiveModes,
   modeKey,
   modeOf,
   modeOfStateDirection,
@@ -27,6 +28,18 @@ describe("review modes", () => {
     for (const key of ReviewModeKey.options) {
       expect(modeOfStateDirection(stateDirection(key))).toBe(key);
     }
+  });
+
+  it("stands a picture-only list's legacy direction in by target, and heals a stale list", () => {
+    expect(directionsFromModes(["image_to_meaning"])).toBe("recognition");
+    expect(directionsFromModes(["image_to_term", "image_to_meaning"])).toBe("both");
+    expect(directionsFromModes(["image_to_meaning", "meaning_to_term"])).toBe("production");
+    expect(effectiveModes("recognition", ["image_to_meaning"])).toEqual(["image_to_meaning"]);
+    // An older Worker switched the card to production after the list was stored.
+    expect(effectiveModes("production", ["image_to_term", "term_to_meaning"])).toEqual([
+      "image_to_term",
+      "meaning_to_term",
+    ]);
   });
 
   it("accepts a legacy grade and a mode grade, and needs one of them", () => {

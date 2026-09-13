@@ -1,12 +1,16 @@
 import type { Scope } from "@lymi/core";
 import {
   AppLanguage,
+  CardImageImportInput,
+  CardImagePatch,
   CardInput,
   CardPatch,
   CardSearchInput,
   DeckInput,
   Directions,
   FieldSource,
+  IMAGE_LIMITS,
+  ImageDescription,
   InsightsOut,
   ReviewMode,
   SettingsPatch,
@@ -17,15 +21,19 @@ import { z } from "zod";
 import {
   addCards,
   archiveCard,
+  archiveCardImage,
   archiveDeck,
   type CardView,
   createDeck,
+  describeCardImage,
   getDeck,
   getSettings,
+  importCardImage,
   insights,
   listDeckCards,
   listDecks,
   restoreCard,
+  restoreCardImage,
   restoreDeck,
   ServiceError,
   searchCards,
@@ -34,7 +42,9 @@ import {
   updateCard,
   updateDeck,
   updateSettings,
+  uploadCardImage,
 } from "../services";
+import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
 
 /** What one MCP request runs as. Built from the verified access token, never from the body. */
@@ -43,6 +53,8 @@ export interface McpPrincipal {
   scope: Scope;
   /** Named in the step-up challenge when a read-only connection tries to write. */
   resourceMetadataUrl: string;
+  /** Picture storage and processing, missing where the Worker has no bindings. */
+  images?: CardImageStorage | undefined;
 }
 
 /** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
@@ -55,6 +67,8 @@ Start with list_decks. It names the decks, their languages and the language mean
 When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material, "ai" when you wrote it. If a field is missing, leave it out rather than guessing; the learner can fill it in later.
 
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
+
+A card may have one picture, set with set_card_image from a public link or base64 bytes. Give it a description of what the picture shows that never names the term or meaning: it is what a screen reader says and what review shows if the picture cannot load. Picture review modes (cue "image") are set on each card with update_card or add_cards, never on a deck, and ask only while the card has a described picture. A road sign would be reviewModes [{ "cue": "image", "target": "meaning" }]; until it has a described picture, a card of picture modes only is asked in the text mode with the same target instead.
 
 Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 
@@ -323,6 +337,98 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   );
 
   server.registerTool(
+    "set_card_image",
+    {
+      title: "Set a card's picture",
+      description:
+        "Give a card its one picture, replacing any it has. Send a public http or https url, or base64 data. Lymi stores a private, normalized copy and never shows the link. JPEG, PNG, WebP and still GIF up to 10 MB; SVG and animation are refused. Pass the card's imageVersion as version so a newer change is not overwritten. Needs write.",
+      inputSchema: z.object({
+        cardId: z.string().min(1),
+        url: CardImageImportInput.shape.url.optional(),
+        data: z
+          .base64()
+          .max(Math.ceil((IMAGE_LIMITS.maxBytes * 4) / 3) + 4)
+          .optional()
+          .describe("The picture's bytes, base64. Send this or url, not both."),
+        description: ImageDescription.optional().describe(
+          "What the picture shows, never naming the term or meaning",
+        ),
+        version: CardImagePatch.shape.version,
+      }),
+      outputSchema: CardOut,
+      ...writeTool({ idempotent: false, overwrites: true }),
+    },
+    ({ cardId, url, data, description, version }) =>
+      run("set_card_image", async () => {
+        denyReads(principal);
+        const images = imagesOf(principal);
+        if ((url === undefined) === (data === undefined)) {
+          throw new ServiceError("invalid", "Send either url or data.");
+        }
+        const card = url
+          ? await importCardImage(ctx, cardId, { url, description, version }, images)
+          : await uploadCardImage(
+              ctx,
+              cardId,
+              Uint8Array.from(atob(data as string), (c) => c.charCodeAt(0)),
+              { description, version },
+              images,
+            );
+        return result(cardOut(card));
+      }),
+  );
+
+  server.registerTool(
+    "describe_card_image",
+    {
+      title: "Describe a card's picture",
+      description:
+        "Change what the card's picture description says. Null removes it, which pauses picture review for the card. Needs write.",
+      inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardImagePatch.shape),
+      outputSchema: CardOut,
+      ...writeTool({ idempotent: false, overwrites: true }),
+    },
+    ({ cardId, ...patch }) =>
+      run("describe_card_image", async () => {
+        denyReads(principal);
+        return result(cardOut(await describeCardImage(ctx, cardId, patch)));
+      }),
+  );
+
+  server.registerTool(
+    "archive_card_image",
+    {
+      title: "Archive a card's picture",
+      description:
+        "Hide the card's picture. Picture review pauses with its schedule intact; restore_card_image brings both back. Needs write.",
+      inputSchema: z.object({ cardId: z.string().min(1), version: CardImagePatch.shape.version }),
+      outputSchema: CardOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ cardId, version }) =>
+      run("archive_card_image", async () => {
+        denyReads(principal);
+        return result(cardOut(await archiveCardImage(ctx, cardId, { version })));
+      }),
+  );
+
+  server.registerTool(
+    "restore_card_image",
+    {
+      title: "Restore a card's picture",
+      description: "Bring back the picture archived last, and picture review with it. Needs write.",
+      inputSchema: z.object({ cardId: z.string().min(1), version: CardImagePatch.shape.version }),
+      outputSchema: CardOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ cardId, version }) =>
+      run("restore_card_image", async () => {
+        denyReads(principal);
+        return result(cardOut(await restoreCardImage(ctx, cardId, { version })));
+      }),
+  );
+
+  server.registerTool(
     "get_settings",
     {
       title: "Get settings",
@@ -465,6 +571,11 @@ function denyReads(principal: McpPrincipal): void {
   if (principal.scope !== "write") throw new ReadOnlyConnection();
 }
 
+function imagesOf(principal: McpPrincipal): CardImageStorage {
+  if (!principal.images) throw new ServiceError("unavailable", "Pictures are not configured");
+  return principal.images;
+}
+
 /** What a field's text can come from over MCP. "manual" is the learner's own hand, never a model's. */
 const McpFieldSource = z.enum(["lesson", "ai"]);
 
@@ -568,6 +679,17 @@ const CardOut = z.object({
     .array(ReviewMode)
     .nullable()
     .describe("Overrides the deck's review modes when set"),
+  image: z
+    .object({
+      id: z.string(),
+      url: z.string(),
+      width: z.number().int(),
+      height: z.number().int(),
+      description: z.string().nullable(),
+      source: z.enum(["upload", "url"]),
+    })
+    .nullable(),
+  imageVersion: z.string().nullable(),
   meaningSource: FieldSource.nullable(),
   exampleSource: FieldSource.nullable(),
   archivedAt: Timestamp.nullable(),
@@ -589,6 +711,15 @@ function cardOut(card: CardView): CardOut {
     source: card.source,
     directions: card.directions,
     reviewModes: card.reviewModes,
+    image: card.image && {
+      id: card.image.id,
+      url: card.image.url,
+      width: card.image.width,
+      height: card.image.height,
+      description: card.image.description,
+      source: card.image.source,
+    },
+    imageVersion: card.imageVersion,
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,

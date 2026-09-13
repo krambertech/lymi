@@ -15,6 +15,7 @@ erDiagram
   decks ||--o{ deck_invitations : "join link"
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
+  cards ||--o{ card_images : "one active picture"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
   review_days ||--o{ reviews : "counts toward"
@@ -52,6 +53,8 @@ erDiagram
     text meaning_source "lesson | ai | manual"
     text example_source "lesson | ai | manual"
     text audio_key "nullable R2 key"
+    json review_modes "nullable mode keys, read only while directions is set"
+    text image_version "nullable opaque token of the last picture write"
     text created_by "user | api | mcp | ai | system"
     int archived_at "nullable"
   }
@@ -95,7 +98,7 @@ erDiagram
     text id PK
     text card_id FK
     text user_id FK
-    text direction "recognition | production"
+    text direction "recognition | production | picture mode key"
     text mode "mode key; null only on rows an older Worker wrote"
     int due "ms timestamp"
     int state "0 New 1 Learning 2 Review 3 Relearning"
@@ -119,6 +122,21 @@ erDiagram
     text source "web | api | mcp"
     text review_day_id FK "nullable: null before daily goals"
     text state_before "nullable JSON card state this grade replaced, for Undo"
+  }
+  card_images {
+    text id PK
+    text card_id FK
+    text user_id FK "the card's owner"
+    text object_key "private R2 key, never returned"
+    text content_type "image/webp"
+    int width
+    int height
+    int byte_size
+    text description "nullable; picture modes wait for one"
+    text source_kind "upload | url"
+    text source_host "nullable, host of an imported link"
+    text status "active | archived | replaced, one active per card"
+    text created_by "user | api | mcp | ai | system"
   }
   review_days {
     text id PK
@@ -181,11 +199,15 @@ The learner's upload and the Google fallback sit in separate columns, and the up
 
 ### Review modes
 
-A review mode is a cue and a target: `term_to_meaning` (recognition) or `meaning_to_term` (production). The API sends a list of `{ cue, target }` as `reviewModes` on decks and cards, and a card's list overrides its deck's. Each mode a card is asked in gets its own `card_states` row with its own schedule, because recognising and producing are different skills. Turning a mode on creates the missing rows due now; turning one off leaves them uncounted (ADR 0007). ADR 0014 is the decision.
+A review mode is a cue and a target: `term_to_meaning` (recognition), `meaning_to_term` (production), `image_to_term` or `image_to_meaning`. Picture modes are set on cards only; a deck refuses them. The API sends a list of `{ cue, target }` as `reviewModes` on decks and cards, and a card's list overrides its deck's. Each mode a card is asked in gets its own `card_states` row with its own schedule, because recognising and producing are different skills. Turning a mode on creates the missing rows due now; turning one off leaves them uncounted (ADR 0007). A picture mode is asked only while the card has an active picture with a description. A card whose list holds only picture modes stores the text mode with the same target in `directions` and is asked in it until it has such a picture; that fallback is never asked beside the picture mode. ADR 0014 is the decision.
 
-The move from directions is expand and contract, and it is in the expand phase. `decks.directions` and `cards.directions` store the list, since a text-mode list maps one-to-one onto them, and `directions` stays in the API as its legacy spelling. `card_states.direction` and `reviews.direction` stay the identity a grade finds; `mode` is written beside them and read as `coalesce(mode, mapping of direction)`, so a row an older Worker writes during a deploy still reads correctly. Migration 0012 adds `mode` and backfills it idempotently without touching schedules or review facts. Grades may name `mode` or the legacy `direction`, so queued offline grades replay onto the same schedule.
+The move from directions is expand and contract, and it is in the expand phase. `decks.directions` stores a deck's list, since a text-mode list maps one-to-one onto it, and `cards.directions` stores a card's text modes. `cards.review_modes` adds a card's order and picture modes, and `effectiveModes` in `packages/core/src/modes.ts` heals a list an older Worker left stale by writing only `directions`. A legacy `directions` write replaces a card's text modes and keeps its picture modes. `directions` stays in the API as the legacy spelling. `card_states.direction` and `reviews.direction` stay the identity a grade finds: `recognition` and `production` for text modes, the mode key for picture modes, so the legacy unique index covers every mode; `mode` is written beside them and read as `coalesce(mode, mapping of direction)`, so a row an older Worker writes during a deploy still reads correctly. Migration 0012 adds `mode` and backfills it idempotently without touching schedules or review facts. Grades may name `mode` or the legacy `direction`, so queued offline grades replay onto the same schedule. Queue items carry `direction` for text modes only, so an app from before modes cannot grade a picture mode as its text sibling.
 
 Contraction is a later, separate migration, once apps and offline outboxes from before modes are gone. Run the backfill updates at the end of 0012 again first. Do not rebuild `card_states` or `reviews` with `DROP TABLE`: D1 keeps foreign keys on, and dropping `card_states` cascades into `reviews`.
+
+### Pictures
+
+A card has at most one active `card_images` row; a replaced picture keeps its row and its R2 object, and an archived one comes back with restore. Pictures share the private `PRIVATE_IMAGES` bucket and the Images binding with avatars, re-encoded to WebP of at most 1600 px a side under random keys, and `/api/cards/:id/image/:imageId` serves only the active one with `private, no-store`. Every picture write claims `cards.image_version` with a fresh token in the same batch as the change, and the batch's other statements run only if the claim landed; the claim's own row count says which write won, and only the loser deletes its uploaded object and gets a 409. A link import fetches once within 10 seconds and 10 MB, over http or https on the default port, with no credentials in the URL, and checks every redirect against private hosts. Callers may send the `imageVersion` they read as `version`. Descriptions that contain the term or the whole meaning are refused. Object keys, descriptions and source URLs never go into logs or errors, and only the host of an imported link is kept.
 
 ### Tags and source
 

@@ -51,6 +51,10 @@
     {
       "name": "0012_review_modes.sql",
       "sha256": "56af69067e01c6d3b8f9a5e7bfcc378572c9f22199bf0b677f66f6325c81ea38"
+    },
+    {
+      "name": "0013_card_images.sql",
+      "sha256": "8ed78262c9879d97b7f37852d2c3f3938aeadf585f48c87bed90c315eef3668f"
     }
   ]
 }

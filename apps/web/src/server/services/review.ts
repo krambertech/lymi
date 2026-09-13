@@ -1,6 +1,7 @@
 import type { GradeInput, ReviewModeKey } from "@lymi/core";
 import {
   deserializeState,
+  legacyDirection,
   modeKey,
   modeOf,
   modesFromDirections,
@@ -13,11 +14,12 @@ import {
 import { and, asc, eq, gte, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
+import { presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
 import { dateFormatter } from "./days";
 import { dueWhere } from "./due";
 import { memberOf } from "./members";
-import { stateMode, withModes } from "./modes";
+import { stateMode } from "./modes";
 import {
   type DayProgress,
   openDay,
@@ -58,12 +60,20 @@ export async function reviewQueue(
 
   const uniqueRows = oneDirectionPerCard(rows).slice(0, limit);
   const shuffledRows = shuffleEqualPriorityItems(uniqueRows, ({ state }) => state.due.getTime());
-  const items = shuffledRows.map(({ card, state }) => {
+  const cards = await presentCards(
+    db,
+    shuffledRows.map(({ card }) => card),
+  );
+  const items = shuffledRows.map(({ state }, index) => {
     const next = preview(deserializeState(state.fsrs), now);
+    const key = stateMode(state);
+    const direction = legacyDirection(key);
     return {
-      card: withModes(card),
-      mode: modeOf(stateMode(state)),
-      direction: state.direction,
+      card: cards[index] as (typeof cards)[number],
+      mode: modeOf(key),
+      // An older app reads only `direction`, so a picture mode leaves it out rather than let
+      // that app grade the text sibling.
+      ...(direction ? { direction } : {}),
       stateId: state.id,
       fsrsState: state.state,
       next: {

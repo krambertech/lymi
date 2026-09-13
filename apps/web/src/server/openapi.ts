@@ -82,6 +82,11 @@ export function mountOpenApi(app: Hono<AppEnv>) {
             description:
               "What is due, and what it would be scheduled to. Grading is the learner's alone.",
           },
+          {
+            name: "Pictures",
+            description:
+              "A card's one private picture: set from bytes or a public link, described, archived and restored.",
+          },
           { name: "Settings", description: "The learner's own preferences." },
           {
             name: "API keys",

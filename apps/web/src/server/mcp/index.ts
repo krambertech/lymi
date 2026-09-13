@@ -44,7 +44,7 @@ export function mcpResourceMetadataUrl(env: ProductOrigin): string {
 /** A disconnect deletes the consent but not the token, so consent decides access and scope. */
 export async function authorizeMcpClaims(
   claims: Record<string, unknown>,
-  deps: { db: Db; env: ProductOrigin },
+  deps: { db: Db; env: ProductOrigin & Partial<Pick<Bindings, "PRIVATE_IMAGES" | "IMAGES">> },
 ): Promise<McpPrincipal | Response> {
   const userId = typeof claims.sub === "string" ? claims.sub : null;
   const clientId = typeof claims.client_id === "string" ? claims.client_id : null;
@@ -60,6 +60,10 @@ export async function authorizeMcpClaims(
     ctx: { db: deps.db, userId, actor: "mcp" },
     scope: tokenWrites && consent === "write" ? "write" : "read",
     resourceMetadataUrl: mcpResourceMetadataUrl(deps.env),
+    images:
+      deps.env.PRIVATE_IMAGES && deps.env.IMAGES
+        ? { bucket: deps.env.PRIVATE_IMAGES, images: deps.env.IMAGES }
+        : undefined,
   };
 }
 

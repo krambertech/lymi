@@ -587,7 +587,7 @@ msgstr "Архивировано «{deckName}»"
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси новую ссылку у того, кто ей поделился."
 
-#. placeholder {0}: listOf( schedules.map((x) => directionLabel(x.st.direction).toLocaleLowerCase(i18n.locale), ), i18n.locale, )
+#. placeholder {0}: listOf( schedules.map((x) => i18n._(modeLabel(x.st.mode)).toLocaleLowerCase(i18n.locale)), i18n.locale, )
 #: src/client/views/WordView.tsx
 msgid "asked by {0}"
 msgstr "задано как {0}"
@@ -1560,6 +1560,18 @@ msgstr "Положение фото"
 msgid "Photo removed"
 msgstr "Фото убрано"
 
+#: src/client/lib/review-modes.ts
+msgid "Picture → meaning"
+msgstr "Изображение → значение"
+
+#: src/client/lib/review-modes.ts
+msgid "Picture → term"
+msgstr "Изображение → термин"
+
+#: src/client/views/ReviewView.tsx
+msgid "Picture card"
+msgstr "Карточка с изображением"
+
 #: src/client/views/ReviewView.tsx
 msgid "Play pronunciation"
 msgstr "Воспроизвести произношение"
@@ -1585,7 +1597,7 @@ msgid "Private"
 msgstr "Приватная"
 
 #: src/client/components/DeckFields.tsx
-#: src/client/views/ReviewView.tsx
+#: src/client/lib/review-modes.ts
 msgid "Production"
 msgstr "Воспроизведение"
 
@@ -1644,7 +1656,7 @@ msgid "Recognised app at"
 msgstr "Распознанное приложение по адресу"
 
 #: src/client/components/DeckFields.tsx
-#: src/client/views/ReviewView.tsx
+#: src/client/lib/review-modes.ts
 msgid "Recognition"
 msgstr "Распознавание"
 

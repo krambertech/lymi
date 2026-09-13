@@ -7,7 +7,7 @@ import {
   generatorParameters,
   State,
 } from "ts-fsrs";
-import type { Direction, Directions, Rating } from "./types";
+import type { Rating } from "./types";
 
 export type { FsrsCard };
 export { State };
@@ -129,9 +129,4 @@ export function deserializeState(json: string): FsrsCard {
   if (raw.last_review) card.last_review = new Date(raw.last_review as string);
   else delete (card as Partial<FsrsCard>).last_review;
   return card;
-}
-
-/** "both" expands to the two concrete directions a card state row can have. */
-export function expandDirections(d: Directions): Direction[] {
-  return d === "both" ? ["recognition", "production"] : [d];
 }

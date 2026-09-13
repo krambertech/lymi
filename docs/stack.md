@@ -80,9 +80,11 @@ This is a design requirement with a technical checklist:
 
 The bar is "could be mistaken for native." Every screen is checked on a real iPhone in standalone mode before it ships.
 
-### UI: Tailwind v4 + shadcn/ui, tokens from DESIGN.md
+### UI: Tailwind v4 + shadcn/ui on Base UI, tokens from DESIGN.md
 
-Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what DESIGN.md defines. shadcn/ui supplies the accessible primitives (dialog, popover, dropdown, tabs) and gets restyled to Lymi's radius, type and palette. Motion for the lantern and transitions.
+Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what DESIGN.md defines. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. The hand-built foundations move over one at a time, following [the migration plan](plans/2026-09-13-shadcn-base-ui-design-system.md). Motion for the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md).
+
+Alternative considered: hand-built primitives on `<dialog>` and the `popover` attribute with vaul for the drawer. That was the first version. vaul stopped being maintained, and four separate open-and-close implementations disagreed on scroll lock, focus return and which device got which shape.
 
 ### Type: self-hosted Onest, sizes in rem
 

@@ -6,8 +6,8 @@ import type { Actor, AppLanguage, Directions, FieldSource } from "@lymi/core";
  * looked at in a state that is otherwise slow to reach: the first run, a long streak, a
  * backlog after a break, meanings in another language.
  *
- * Nothing here reaches production. The routes that read this file answer 404 unless the
- * product is served from a loopback origin.
+ * Nothing here reaches production. The routes ship only in local and preview builds, and
+ * their runtime gate accepts loopback or an isolated capability-protected preview.
  */
 export interface Persona {
   id: string;

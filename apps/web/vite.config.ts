@@ -11,6 +11,7 @@ import { configDefaults } from "vitest/config";
 import { e2eAllowedEmails } from "../../e2e/settings.mjs";
 
 const isE2E = process.env.LYMI_E2E === "1";
+const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";
 
 /**
  * Stamped into the persisted query cache. Any rebuild discards a cache written by an older
@@ -19,7 +20,10 @@ const isE2E = process.env.LYMI_E2E === "1";
 const buildId = Date.now().toString(36);
 
 export default defineConfig({
-  define: { __QUERY_CACHE_BUSTER__: JSON.stringify(buildId) },
+  define: {
+    __QUERY_CACHE_BUSTER__: JSON.stringify(buildId),
+    "import.meta.env.LYMI_APP_PREVIEW": JSON.stringify(isAppPreview),
+  },
   plugins: [
     tanstackRouter({
       target: "react",

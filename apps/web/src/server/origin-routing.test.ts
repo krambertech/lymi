@@ -32,6 +32,7 @@ describe("product origin routing", () => {
     "/login?returnTo=%2Flibrary",
     "/consent?client_id=https%3A%2F%2Fclient.example",
     "/api/health",
+    "/_preview?key=capability",
     "/api/openapi.json",
     "/mcp",
     "/.well-known/oauth-protected-resource/mcp",

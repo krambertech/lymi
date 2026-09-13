@@ -36,19 +36,24 @@ export function findPreviewUrl(output, options) {
   return findPreview(output, options).url;
 }
 
-function writeGitHubResult({ url, versionId }, alias) {
+function writeGitHubResult({ url, versionId }, alias, kind = "site") {
   if (process.env.GITHUB_OUTPUT) {
     appendFileSync(process.env.GITHUB_OUTPUT, `url=${url}\nversion_id=${versionId}\n`);
   }
   if (process.env.GITHUB_STEP_SUMMARY) {
+    const app = kind === "app";
+    const openUrl = app ? process.env.APP_PREVIEW_ENTRY_URL : url;
+    if (app && !openUrl) throw new Error("APP_PREVIEW_ENTRY_URL is required for an app preview");
     appendFileSync(
       process.env.GITHUB_STEP_SUMMARY,
       [
-        "## Public-site preview",
+        app ? "## Product-app preview" : "## Public-site preview",
         "",
-        `[Open the stable ${alias} preview](${url})`,
+        `[Open the stable ${alias} preview](${openUrl})`,
         "",
-        "The link follows this pull request across new commits and points to its latest successful preview upload.",
+        app
+          ? "The protected link signs into isolated synthetic data. It follows this pull request across new commits and cannot reach production bindings."
+          : "The link follows this pull request across new commits and points to its latest successful preview upload.",
         "",
       ].join("\n"),
     );
@@ -56,12 +61,14 @@ function writeGitHubResult({ url, versionId }, alias) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const [outputPath, workerName, alias] = process.argv.slice(2);
+  const [outputPath, workerName, alias, kind = "site"] = process.argv.slice(2);
   if (!outputPath || !workerName || !alias) {
     throw new Error("Usage: preview-url.mjs <wrangler-output> <worker-name> <alias>");
   }
 
   const preview = findPreview(readFileSync(outputPath, "utf8"), { workerName, alias });
-  writeGitHubResult(preview, alias);
-  process.stdout.write(`Stable public-site preview: ${preview.url}\n`);
+  writeGitHubResult(preview, alias, kind);
+  process.stdout.write(
+    `Stable ${kind === "app" ? "app" : "public-site"} preview: ${preview.url}\n`,
+  );
 }

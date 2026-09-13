@@ -5,6 +5,7 @@ import { ciFailures, renderCiSummary } from "./ci-summary.mjs";
 test("the summary makes browser coverage and failed gates explicit", () => {
   const summary = renderCiSummary({
     COVERAGE: "Chromium",
+    APP_PREVIEW: "true",
     SITE_PREVIEW: "true",
     RUN_E2E: "true",
     PLAN_RESULT: "success",
@@ -29,6 +30,7 @@ test("the summary makes browser coverage and failed gates explicit", () => {
 
   assert.match(summary, /\*\*Browser coverage:\*\* Chromium/);
   assert.match(summary, /\*\*Public-site preview:\*\* Scheduled after quality checks/);
+  assert.match(summary, /\*\*Product-app preview:\*\* Scheduled after quality checks/);
   assert.match(summary, /\| Quality checks \| Failed \|/);
   assert.match(summary, /\| TypeScript \| Failed \|/);
   assert.match(summary, /\| Interface strings \| Passed \|/);

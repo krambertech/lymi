@@ -37,7 +37,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
-/** The local-only routes under /api/dev. Every call 404s outside a loopback origin. */
+/** Persona routes available only on loopback and capability-protected app previews. */
 export const devApi = {
   personas: () => request<{ personas: PersonaSummary[] }>("/api/dev/personas"),
   state: () => request<DevState>("/api/dev/state"),

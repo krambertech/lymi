@@ -11,6 +11,7 @@ import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
+import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
 import { audio } from "./routes/audio";
@@ -39,6 +40,9 @@ export type AppEnv = {
 };
 
 const app = new Hono<AppEnv>();
+
+app.use("*", requirePreviewAccess);
+app.get("/_preview", openPreview);
 
 // The product root is an auth-aware door: a current session goes to Today, while a signed-out
 // learner gets the sign-in screen. The public root is owned by the separate site Worker.
@@ -122,10 +126,9 @@ app.get("/robots.txt", describe({ hide: true }), (c) => {
   });
 });
 
-// Local development only: personas, seeding and due-date knobs. The import is behind a
-// build-time flag, so the production Worker never contains these modules; the routes also
-// answer 404 on any origin that is not loopback, as defence in depth.
-if (import.meta.env.DEV) {
+// Personas and data controls exist only in local development and isolated preview builds.
+// The production build drops the import; the routes also verify the runtime origin.
+if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
   const { dev } = await import("./routes/dev");
   app.route("/api/dev", dev);
 }

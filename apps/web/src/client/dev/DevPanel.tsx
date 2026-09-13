@@ -13,12 +13,13 @@ import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
 import { type DevCounts, devApi } from "./dev-api";
 
 /**
- * Local development only. One small form: who you are, how many cards are due, what the
- * account holds, the meaning language and the theme. Every row is the app's own Combobox,
+ * Local development and isolated app previews only. One small form: who you are, how many
+ * cards are due, what the account holds, the meaning language and the theme. Every row is
+ * the app's own Combobox,
  * so a person reads the current value at a glance and an agent changes it with one call.
  * The panel opens above the button that toggles it, in the bottom-right corner; the
  * backtick key toggles it too. Never bundled: the root route imports it behind
- * `import.meta.env.DEV`.
+ * a compile-time development or preview branch.
  */
 
 const OPEN_KEY = "lymi-dev-panel";
@@ -310,7 +311,7 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
           role="status"
           className={clsx("min-w-0 flex-1", note?.tone === "danger" ? "text-danger" : "text-muted")}
         >
-          {note?.text ?? (personas.isError ? "Off: the product is not on localhost." : "")}
+          {note?.text ?? (personas.isError ? "Preview tools are unavailable." : "")}
         </p>
         <p className="flex shrink-0 gap-4 text-muted">
           <FooterLink href="/design">Design</FooterLink>

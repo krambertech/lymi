@@ -115,6 +115,7 @@ export function decideOriginRoute(
     url.pathname === "/" ||
     isProductBrowserPath(url.pathname) ||
     isJoinPagePath(url.pathname) ||
+    url.pathname === "/_preview" ||
     atOrBelow(url.pathname, "/api") ||
     atOrBelow(url.pathname, "/mcp") ||
     atOrBelow(url.pathname, "/.well-known") ||

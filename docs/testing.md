@@ -49,6 +49,7 @@ WebKit does not focus a button that is clicked, so a test about focus return ope
 - Every push to `main` and `/e2e` command runs Chromium and WebKit plus the deployment-package dry run.
 - A manually dispatched workflow runs the full policy by default and can explicitly skip browser E2E.
 - Public-site pull requests upload a preview after the quality job passes without waiting for browser E2E. The stable `pr-<number>` alias follows the pull request across new commits and appears as GitHub's View deployment link and in the job summary.
+- Product-affecting pull requests provision an isolated app preview after quality passes. GitHub's View deployment link establishes the preview capability, signs in a synthetic learner and opens seeded data; the same link follows later commits.
 
 Every run writes a final summary with its selected browser coverage and the outcome of each job and gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
 
@@ -60,9 +61,11 @@ Failed browser runs retain screenshots, video from the retry, a Playwright trace
 
 `pnpm deploy:check` builds both production applications, verifies the artifact boundary and asks Wrangler to compile and validate each generated deployment package without authenticating or uploading anything. CI runs both already-built package checks for production-affecting pull requests, every push to `main`, and manual runs.
 
-Separate Cloudflare Workers Builds projects own production delivery for `apps/site` and `apps/web`. Keep both production branches on `main` and disable non-production branch builds. GitHub Actions owns public-site previews because its tested path plan can distinguish a new site branch from an unrelated branch without Cloudflare's zero-change fallback. Product previews remain disabled because preview URLs cannot support Lymi's canonical-origin authentication.
+Separate Cloudflare Workers Builds projects own production delivery for `apps/site` and `apps/web`. Keep both production branches on `main` and disable non-production branch builds. GitHub Actions owns both preview paths because its tested plan can distinguish each deployable and build the product in an explicitly isolated preview mode. The production `lymi` Worker keeps preview URLs disabled because its versions retain production bindings and canonical-origin authentication.
 
 The `site-preview` GitHub environment holds `CLOUDFLARE_ACCOUNT_ID` and a narrowly scoped `CLOUDFLARE_SITE_PREVIEW_TOKEN`. A site-affecting pull request uploads `lymi-site` with alias `pr-<number>`, records that stable URL as the GitHub deployment target, and checks `/api/health` for the exact Worker version it uploaded. Pull requests from forks never receive these credentials or run the upload job.
+
+The `app-preview` environment holds `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_APP_PREVIEW_TOKEN` and `LYMI_APP_PREVIEW_AUTH_SECRET`. Its token is limited to Worker Scripts, D1, KV and R2 edit access. Each affected same-repository pull request gets a `lymi-app-pr-<number>` Worker with matching disposable storage, a stable `preview-lymi-app-pr-<number>` URL and per-pull-request auth/access keys derived from the root secret. CI applies migrations, uploads without a production deployment, verifies the exact health version, follows the protected entry link, signs in the synthetic learner and confirms seeded decks. The close workflow removes only resources whose names are derived from that validated pull request number.
 
 Use `pnpm verify` as each Workers Builds build command. Use each package's `deploy:ci` script as its deploy command, backed by a custom Workers Builds API token with D1 edit access. Both scripts apply pending remote migrations before activating a Worker version; this keeps either independently deployed Worker from reaching production against an older schema. The migration step is safe to retry when both builds start for the same shared-schema commit. This duplicates the base gate on production deployments, but makes each independent Cloudflare pipeline fail closed instead of deploying while GitHub CI is red.
 

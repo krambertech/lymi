@@ -23,8 +23,11 @@ import { Streak, useSettleToday } from "../lib/streak";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/Shell";
 
-// Local development only. Vite drops the import from a production build with the branch.
-const DevPanel = import.meta.env.DEV ? lazy(() => import("../dev/DevPanel")) : null;
+// Local and isolated preview builds only. Vite drops the import from production.
+const DevPanel =
+  import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW
+    ? lazy(() => import("../dev/DevPanel"))
+    : null;
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   component: Root,

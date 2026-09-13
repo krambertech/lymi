@@ -21,11 +21,11 @@
 ## Section order
 
 1. The hand of cards. Shipped.
-2. The right moment: a forgetting curve the visitor changes.
-3. Recall first, reveal second: the review demo.
-4. A goal you set: the daily goal, the seven lights and the flame.
-5. Enrichment, with pronunciation the visitor can play.
-6. For whatever you're learning: use cases that open vertical pages.
+2. For whatever you're learning: use cases that open vertical pages.
+3. The right moment: a forgetting curve the visitor changes.
+4. Recall first, reveal second: the review demo.
+5. A goal you set: the daily goal, the seven lights and the flame.
+6. Enrichment, with pronunciation the visitor can play.
 7. Your assistant: marks, the conversation demo and setup links.
 8. The API.
 9. Join the beta.

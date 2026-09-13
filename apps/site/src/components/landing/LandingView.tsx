@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/react/macro";
+import { BriefcaseBusiness, GraduationCap, Languages, Telescope } from "lucide-react";
 import { productUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { highlight } from "../docs/highlight";
@@ -32,21 +33,25 @@ const RESPONSE = `{
 const USE_CASES = [
   {
     id: "languages",
+    icon: Languages,
     title: "A new language",
     body: "Words and phrases from lessons, conversations, and reading.",
   },
   {
     id: "courses",
+    icon: GraduationCap,
     title: "A course or lesson",
     body: "Ideas from classes, workshops, and exam preparation.",
   },
   {
     id: "professional-terms",
+    icon: BriefcaseBusiness,
     title: "A professional field",
     body: "Terms and concepts from a new role, project, or technical domain.",
   },
   {
     id: "personal-interests",
+    icon: Telescope,
     title: "A personal interest",
     body: "Things worth keeping from books, hobbies, and everyday curiosity.",
   },
@@ -107,7 +112,41 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
       </header>
 
       <main>
-        <section className="border-y border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+        <section
+          aria-labelledby="use-cases-title"
+          className="border-y border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28"
+        >
+          <div className="mx-auto max-w-[1040px]">
+            <h2
+              id="use-cases-title"
+              className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:whitespace-nowrap @2xl:text-5xl"
+            >
+              For whatever you’re learning.
+            </h2>
+
+            <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @4xl:grid-cols-4 @4xl:gap-4">
+              {USE_CASES.map((useCase) => (
+                <li
+                  id={`use-case-${useCase.id}`}
+                  key={useCase.id}
+                  className="edge rounded-lg bg-canvas px-6 py-6 @4xl:min-h-[180px] @4xl:py-7"
+                >
+                  <useCase.icon
+                    aria-hidden="true"
+                    strokeWidth={1.75}
+                    className="size-6 text-text-2"
+                  />
+                  <h3 className="mt-5 text-lg font-medium tracking-[-0.02em] text-text">
+                    {useCase.title}
+                  </h3>
+                  <p className="mt-3 max-w-[28ch] text-sm text-muted">{useCase.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
           <div className="mx-auto max-w-[1040px]">
             <div className="mx-auto max-w-[680px] text-center">
               <h2 className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
@@ -158,35 +197,6 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             <div className="order-2 min-w-0 py-4 @4xl:order-1 @4xl:pr-6">
               <EnrichDemo />
             </div>
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="use-cases-title"
-          className="border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28"
-        >
-          <div className="mx-auto max-w-[1040px]">
-            <h2
-              id="use-cases-title"
-              className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:whitespace-nowrap @2xl:text-5xl"
-            >
-              For whatever you’re learning.
-            </h2>
-
-            <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @4xl:grid-cols-4 @4xl:gap-4">
-              {USE_CASES.map((useCase) => (
-                <li
-                  id={`use-case-${useCase.id}`}
-                  key={useCase.id}
-                  className="edge rounded-lg bg-canvas px-6 py-6 @4xl:min-h-[180px] @4xl:py-7"
-                >
-                  <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
-                    {useCase.title}
-                  </h3>
-                  <p className="mt-3 max-w-[28ch] text-sm text-muted">{useCase.body}</p>
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 

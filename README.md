@@ -8,6 +8,7 @@ A vocabulary app with a storm lantern. Collect cards from language lessons, let 
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
+- [docs/mcp-directory-review.md](docs/mcp-directory-review.md): what ChatGPT and Claude directory review checks, and the review cases
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
 - [docs/plans](docs/plans): order of work for passes that are decided but not built
 - [docs/proposals](docs/proposals/README.md): future product directions under consideration, not committed plans

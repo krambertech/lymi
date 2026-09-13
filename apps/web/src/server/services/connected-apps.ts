@@ -1,3 +1,4 @@
+import type { Scope } from "@lymi/core";
 import { and, eq, inArray, isNull } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
@@ -23,16 +24,40 @@ export async function clientNames(
 }
 
 /**
+ * What the learner's standing consent lets this client do, or null once they disconnected it.
+ * The MCP endpoint checks this on every request, because an access token is a JWT that cannot
+ * be recalled and would otherwise outlive a disconnect by up to an hour.
+ */
+export async function grantedScope(
+  { db, userId }: Pick<ServiceContext, "db" | "userId">,
+  clientId: string,
+): Promise<Scope | null> {
+  const rows = await db
+    .select({ scopes: schema.oauthConsent.scopes })
+    .from(schema.oauthConsent)
+    .where(and(eq(schema.oauthConsent.clientId, clientId), eq(schema.oauthConsent.userId, userId)));
+  if (rows.length === 0) return null;
+  return rows.some((row) => consentScopes(row.scopes).includes("write")) ? "write" : "read";
+}
+
+/** The adapter serialises the array before Drizzle's JSON column does, so a read yields a JSON string. */
+function consentScopes(value: unknown): unknown[] {
+  if (Array.isArray(value)) return value;
+  if (typeof value !== "string") return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Cut a client off from this learner.
  *
- * Deleting the consent row only decides whether the client's next authorize request prompts.
- * Access tokens are JWTs the Worker verifies against its own JWKS with no database hit, so an
- * issued one cannot be recalled and stays good until it expires, an hour at the plugin's
- * default. The refresh token is the part that can be stopped: the refresh grant checks its
- * `revoked` column. Revoke it and the client is locked out once its access token runs out.
- *
- * Access token rows are marked revoked as well. That does not gate the MCP endpoint, but it
- * keeps `/oauth2/introspect` honest about what is still live.
+ * Deleting the consent row stops the MCP endpoint at once (see `grantedScope`) and makes the
+ * client's next authorize request prompt. The refresh token is revoked too, so the refresh
+ * grant refuses it. Access token rows are marked revoked to keep `/oauth2/introspect` honest.
  */
 export async function revokeClientTokens(
   { db, userId }: Pick<ServiceContext, "db" | "userId">,

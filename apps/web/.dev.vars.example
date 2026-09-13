@@ -19,3 +19,5 @@ OPENAI_BASE_URL=
 OPENAI_SPEECH_MODEL=gpt-4o-mini-tts
 OPENAI_SPEECH_VOICE=marin
 AI_GATEWAY_TOKEN=
+# Only while an OpenAI plugin submission is verifying the domain.
+OPENAI_APPS_CHALLENGE=

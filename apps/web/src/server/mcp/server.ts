@@ -40,6 +40,8 @@ import type { ServiceContext } from "../services/context";
 export interface McpPrincipal {
   ctx: ServiceContext;
   scope: Scope;
+  /** Protected resource metadata, named in the challenge a read-only connection gets on a write. */
+  resourceMetadataUrl: string;
 }
 
 /** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
@@ -63,6 +65,7 @@ Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 export function buildMcpServer(principal: McpPrincipal): McpServer {
   const server = new McpServer({ name: "lymi", version: "0.2.0" }, { instructions: INSTRUCTIONS });
   const { ctx } = principal;
+  const run = (fn: () => Promise<CallToolResult>) => runTool(fn, principal);
 
   server.registerTool(
     "list_decks",
@@ -72,7 +75,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Every active deck with its card count and how many cards are due now, plus the language meanings are written in. Call this first: card adds need a deck id.",
       inputSchema: z.object({}),
       outputSchema: DecksOut,
-      annotations: read,
+      ...readTool,
     },
     () =>
       run(async () => {
@@ -91,7 +94,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description: `One deck and its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, or to find one card, use search_cards.`,
       inputSchema: z.object({ deckId: z.string().min(1) }),
       outputSchema: DeckWithCardsOut,
-      annotations: read,
+      ...readTool,
     },
     ({ deckId }) =>
       run(async () => {
@@ -116,7 +119,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Find cards by text in the term, meaning, example or notes, in one deck or all of them. Leave the query empty to list the newest cards. Set archived to true to look through archived cards, for example to find one to restore.",
       inputSchema: CardSearchInput,
       outputSchema: SearchOut,
-      annotations: read,
+      ...readTool,
     },
     (search) =>
       run(async () => {
@@ -131,10 +134,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_card",
     {
       title: "Get a card",
-      description: "One card by id, every field.",
+      description: "One card by id, with everything the learner wrote on it.",
       inputSchema: z.object({ cardId: z.string().min(1) }),
       outputSchema: CardOut,
-      annotations: read,
+      ...readTool,
     },
     ({ cardId }) => run(async () => result(cardOut(await getCard(ctx, cardId)))),
   );
@@ -147,7 +150,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "How many cards are waiting to be reviewed right now, in total and per deck. Only the learner can review them, in the app.",
       inputSchema: z.object({}),
       outputSchema: DueOut,
-      annotations: read,
+      ...readTool,
     },
     () =>
       run(async () => {
@@ -174,7 +177,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           .describe("Up to 200 cards. Outcomes come back in the same order."),
       }),
       outputSchema: AddCardsOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true }),
     },
     ({ cards }) =>
       run(async () => {
@@ -204,7 +207,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         'Change fields on one card. Send only what changes; a field left out keeps its text. A meaning or example you change is labelled "ai" unless you say it came from the lesson. Setting deckId moves the card. Needs write.',
       inputSchema: z.object({ cardId: z.string().min(1) }).extend(McpCardPatch.shape),
       outputSchema: CardOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true, overwrites: true }),
     },
     ({ cardId, ...patch }) =>
       run(async () => {
@@ -221,7 +224,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Hide a card without destroying it. It leaves the deck and the review queue; restore_card brings it back with its schedule intact. Needs write.",
       inputSchema: z.object({ cardId: z.string().min(1) }),
       outputSchema: OkOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true }),
     },
     ({ cardId }) =>
       run(async () => {
@@ -239,7 +242,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Bring an archived card back, schedule and all. Find archived cards with search_cards and archived set to true. Needs write.",
       inputSchema: z.object({ cardId: z.string().min(1) }),
       outputSchema: OkOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true }),
     },
     ({ cardId }) =>
       run(async () => {
@@ -257,7 +260,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Make a new deck. Give it a default language so cards added without one inherit it. Check list_decks first: a deck for this language or lesson may exist. Needs write.",
       inputSchema: DeckInput,
       outputSchema: DeckOut,
-      annotations: write,
+      ...writeTool({ idempotent: false }),
     },
     (input) =>
       run(async () => {
@@ -274,7 +277,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Rename a deck, or change its description, default language or directions. Send only what changes. Needs write.",
       inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckInput.partial().shape),
       outputSchema: DeckOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true, overwrites: true }),
     },
     ({ deckId, ...patch }) =>
       run(async () => {
@@ -291,7 +294,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Hide a deck. Its cards stay and leave the review queue with it; restore_deck brings it back. Needs write.",
       inputSchema: z.object({ deckId: z.string().min(1) }),
       outputSchema: OkOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true }),
     },
     ({ deckId }) =>
       run(async () => {
@@ -308,7 +311,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description: "Bring an archived deck and its cards back. Needs write.",
       inputSchema: z.object({ deckId: z.string().min(1) }),
       outputSchema: OkOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true }),
     },
     ({ deckId }) =>
       run(async () => {
@@ -326,7 +329,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "The learner's settings: the language meanings are written in, and the daily goal in recall attempts, where every accepted grade counts, Forgot and repeated cards included.",
       inputSchema: z.object({}),
       outputSchema: SettingsOut,
-      annotations: read,
+      ...readTool,
     },
     () => run(async () => result(settingsOut(await getSettings(ctx)))),
   );
@@ -340,7 +343,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       // The daily goal is the learner's own: a write grant covers cards, not how much they study.
       inputSchema: SettingsPatch.pick({ appLanguage: true }),
       outputSchema: SettingsOut,
-      annotations: { ...write, idempotentHint: true },
+      ...writeTool({ idempotent: true }),
     },
     (patch) =>
       run(async () => {
@@ -370,7 +373,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       // Rebuilt without its OpenAPI id: a schema whose JSON form is a $ref makes the SDK
       // wrap the result in { result }, and the assistant would read one level too deep.
       outputSchema: z.object(InsightsOut.shape),
-      annotations: read,
+      ...readTool,
     },
     ({ period, timezone }) =>
       run(async () => result(await insights(ctx, { period, zone: timezone }))),
@@ -393,7 +396,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           ),
       }),
       outputSchema: z.object(StreakOut.shape),
-      annotations: read,
+      ...readTool,
     },
     ({ timezone }) => run(async () => result(await streak(ctx, { zone: timezone }))),
   );
@@ -401,17 +404,40 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   return server;
 }
 
-const read = { readOnlyHint: true, destructiveHint: false, openWorldHint: false };
-const write = { readOnlyHint: false, destructiveHint: false, openWorldHint: false };
+/**
+ * Every tool touches only this learner's Lymi data, so none is open-world. `securitySchemes`
+ * is the Apps SDK's per-tool auth declaration; the SDK passes only `_meta` through, which
+ * ChatGPT also reads.
+ */
+const readTool = {
+  annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
+  _meta: { securitySchemes: [{ type: "oauth2", scopes: ["read"] }] },
+};
 
-/** The consent screen let the learner untick write. The token is the source of truth. */
+/** Archive is reversible, so only an edit that replaces text with no way back is destructive. */
+function writeTool({
+  idempotent,
+  overwrites = false,
+}: {
+  idempotent: boolean;
+  overwrites?: boolean;
+}) {
+  return {
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: overwrites,
+      idempotentHint: idempotent,
+      openWorldHint: false,
+    },
+    _meta: { securitySchemes: [{ type: "oauth2", scopes: ["write"] }] },
+  };
+}
+
+class ReadOnlyConnection extends Error {}
+
+/** The consent screen let the learner untick write, and the grant is the source of truth. */
 function denyReads(principal: McpPrincipal): void {
-  if (principal.scope !== "write") {
-    throw new ServiceError(
-      "forbidden",
-      "This connection can only read. Ask the learner to reconnect and leave write ticked on the consent screen.",
-    );
-  }
+  if (principal.scope !== "write") throw new ReadOnlyConnection();
 }
 
 /** What a field's text can come from over MCP. "manual" is the learner's own hand, never a model's. */
@@ -441,14 +467,42 @@ export function withAiSourceDefaults<T extends SourcedFields>(input: T): T {
   };
 }
 
-/** A ServiceError is the tool's answer; anything else is a bug and surfaces as one. */
-async function run(fn: () => Promise<CallToolResult>): Promise<CallToolResult> {
+/**
+ * A ServiceError is the tool's answer. Anything else is a bug whose message may carry SQL,
+ * so it goes to the Worker log and the assistant gets a plain retry message.
+ */
+async function runTool(
+  fn: () => Promise<CallToolResult>,
+  principal: McpPrincipal,
+): Promise<CallToolResult> {
   try {
     return await fn();
   } catch (err) {
-    if (err instanceof ServiceError) return failure(err.message, err.details);
-    throw err;
+    if (err instanceof ReadOnlyConnection) return readOnlyFailure(principal);
+    if (err instanceof ServiceError) return failure(err.message);
+    console.error(err);
+    return failure("Lymi could not finish this just now. Try again in a moment.");
   }
+}
+
+/**
+ * ChatGPT reads `mcp/www_authenticate` on a tool error as a step-up challenge and offers to
+ * reconnect; other clients relay the text to the learner.
+ */
+function readOnlyFailure(principal: McpPrincipal): CallToolResult {
+  const message =
+    "This connection can only read. Ask the learner to reconnect and leave write ticked on the consent screen.";
+  const challenge = [
+    `resource_metadata="${principal.resourceMetadataUrl}"`,
+    `error="insufficient_scope"`,
+    `scope="read write offline_access"`,
+    `error_description="${message}"`,
+  ].join(", ");
+  return {
+    isError: true,
+    content: [{ type: "text", text: message }],
+    _meta: { "mcp/www_authenticate": [`Bearer ${challenge}`] },
+  };
 }
 
 function result(structured: Record<string, unknown>): CallToolResult {
@@ -458,12 +512,12 @@ function result(structured: Record<string, unknown>): CallToolResult {
   };
 }
 
-function failure(message: string, details?: unknown): CallToolResult {
-  const text = details === undefined ? message : `${message}\n${JSON.stringify(details, null, 2)}`;
-  return { isError: true, content: [{ type: "text", text }] };
+function failure(message: string): CallToolResult {
+  return { isError: true, content: [{ type: "text", text: message }] };
 }
 
-// What crosses the wire. Dates become ISO strings; internal columns stay behind.
+// What crosses the wire: what the learner wrote and ids the next call needs. Dates become ISO
+// strings; bookkeeping such as which actor wrote a row stays in Activity.
 
 const Timestamp = z.iso.datetime();
 
@@ -493,10 +547,8 @@ const CardOut = z.object({
   directions: Directions.nullable(),
   meaningSource: FieldSource.nullable(),
   exampleSource: FieldSource.nullable(),
-  createdBy: z.string(),
   archivedAt: Timestamp.nullable(),
   createdAt: Timestamp,
-  updatedAt: Timestamp,
 });
 type CardOut = z.infer<typeof CardOut>;
 
@@ -515,10 +567,8 @@ function cardOut(card: Card): CardOut {
     directions: card.directions,
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
-    createdBy: card.createdBy,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
     createdAt: card.createdAt.toISOString(),
-    updatedAt: card.updatedAt.toISOString(),
   };
 }
 

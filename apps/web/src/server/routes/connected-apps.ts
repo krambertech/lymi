@@ -74,7 +74,7 @@ connectedApps.delete(
     tags: ["Connected apps"],
     summary: "Disconnect an app",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Revokes the app's refresh token, so it is locked out once its current access token expires (one hour at most) and has to ask again.`,
+    description: `${LEARNER_ONLY} Removes the grant and revokes the app's refresh token. Its next MCP request is refused and it has to ask again.`,
     ok: { schema: OkOut, description: "Disconnected" },
     errors: [404],
   }),

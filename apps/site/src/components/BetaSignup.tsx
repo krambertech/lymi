@@ -70,10 +70,11 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
             {compact ? (
               <AuthNotice
                 tone="success"
-                title={join.data.alreadyOn ? "You’re already on the list." : "You’re on the list."}
+                title={join.data.alreadyOn ? "We already have your request." : "Request received."}
               >
-                We’ll email <bdi className="font-medium text-text">{email.trim()}</bdi> when your
-                invitation is ready. Nothing to do until then.
+                If a place opens, we’ll email{" "}
+                <bdi className="font-medium text-text">{email.trim()}</bdi>. Nothing to do until
+                then.
               </AuthNotice>
             ) : (
               <>
@@ -81,11 +82,12 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
                   <Check aria-hidden="true" className="size-5" />
                 </span>
                 <p className="mt-4 text-xl font-medium text-text">
-                  {join.data.alreadyOn ? "You’re already on the list." : "You’re on the list."}
+                  {join.data.alreadyOn ? "We already have your request." : "Request received."}
                 </p>
                 <p className="mt-2 text-base text-text-2">
-                  We’ll email <bdi className="font-medium text-text">{email.trim()}</bdi> when your
-                  invitation is ready. Nothing to do until then.
+                  If a place opens, we’ll email{" "}
+                  <bdi className="font-medium text-text">{email.trim()}</bdi>. Nothing to do until
+                  then.
                 </p>
               </>
             )}
@@ -103,7 +105,7 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
               error={error}
               hint={
                 source === "landing"
-                  ? "We’ll only use this address to send your invitation. Joining does not create an account."
+                  ? "We’ll only use this address to reply to your request. Requesting access does not create an account."
                   : undefined
               }
             >
@@ -133,7 +135,7 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
                   loading={join.isPending}
                   className={clsx("w-full", layout === "inline" && "@xl:w-auto")}
                 >
-                  {source === "join" ? "Request invitation" : "Join the beta"}
+                  Request access
                 </Button>
               </div>
             </Field>

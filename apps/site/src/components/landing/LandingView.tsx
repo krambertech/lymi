@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/react/macro";
+import { BriefcaseBusiness, GraduationCap, Languages, Telescope } from "lucide-react";
 import { productUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { highlight } from "../docs/highlight";
@@ -29,39 +30,28 @@ const RESPONSE = `{
   }
 }`;
 
-const LOOP = [
-  {
-    title: "Capture it",
-    body: "Save a term by hand, from an assistant, or through the API.",
-  },
-  {
-    title: "Enrich it",
-    body: "Let AI fill only the fields you left empty. Every source stays visible.",
-  },
-  {
-    title: "Remember it",
-    body: "Recall first, reveal second. Lymi schedules what comes next.",
-  },
-] as const;
-
 const USE_CASES = [
   {
     id: "languages",
+    icon: Languages,
     title: "A new language",
     body: "Words and phrases from lessons, conversations, and reading.",
   },
   {
     id: "courses",
+    icon: GraduationCap,
     title: "A course or lesson",
     body: "Ideas from classes, workshops, and exam preparation.",
   },
   {
     id: "professional-terms",
+    icon: BriefcaseBusiness,
     title: "A professional field",
     body: "Terms and concepts from a new role, project, or technical domain.",
   },
   {
     id: "personal-interests",
+    icon: Telescope,
     title: "A personal interest",
     body: "Things worth keeping from books, hobbies, and everyday curiosity.",
   },
@@ -91,7 +81,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               </a>
             </span>
             <a href="#join" className={buttonClass("secondary", "sm")}>
-              Join the beta
+              Request access
             </a>
           </div>
         </nav>
@@ -109,7 +99,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             </p>
             <div className="mt-8">
               <a href="#join" className={buttonClass("primary", "lg")}>
-                <Trans>Join the private beta</Trans>
+                <Trans>Request access</Trans>
               </a>
             </div>
             <p className="mt-3.5 text-sm text-muted">
@@ -122,31 +112,9 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
       </header>
 
       <main>
-        <section aria-labelledby="loop-title" className="border-y border-edge px-5 @2xl:px-10">
-          <h2 id="loop-title" className="sr-only">
-            How Lymi works
-          </h2>
-          <ol className="mx-auto grid max-w-[1120px] @2xl:grid-cols-3">
-            {LOOP.map((item, index) => (
-              <li
-                key={item.title}
-                className="flex gap-4 border-b border-edge py-7 last:border-b-0 @2xl:border-r @2xl:border-b-0 @2xl:px-8 @2xl:first:pl-0 @2xl:last:border-r-0 @2xl:last:pr-0"
-              >
-                <span className="pt-0.5 text-xs tabular-nums text-amber-text">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="text-md font-medium text-text">{item.title}</h3>
-                  <p className="mt-1 max-w-[32ch] text-sm text-muted">{item.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
         <section
           aria-labelledby="use-cases-title"
-          className="border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28"
+          className="border-y border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28"
         >
           <div className="mx-auto max-w-[1040px]">
             <h2
@@ -163,13 +131,35 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
                   key={useCase.id}
                   className="edge rounded-lg bg-canvas px-6 py-6 @4xl:min-h-[180px] @4xl:py-7"
                 >
-                  <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
+                  <useCase.icon
+                    aria-hidden="true"
+                    strokeWidth={1.75}
+                    className="size-6 text-text-2"
+                  />
+                  <h3 className="mt-5 text-lg font-medium tracking-[-0.02em] text-text">
                     {useCase.title}
                   </h3>
                   <p className="mt-3 max-w-[28ch] text-sm text-muted">{useCase.body}</p>
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+          <div className="mx-auto max-w-[1040px]">
+            <div className="mx-auto max-w-[680px] text-center">
+              <h2 className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
+                The right moment matters.
+              </h2>
+              <p className="mt-5 text-md text-text-2">
+                Memory fades. A well-timed recall strengthens it and lets the next gap grow. Lymi
+                schedules with FSRS, then adapts to every grade.
+              </p>
+            </div>
+            <div className="mt-14">
+              <WhyItWorks />
+            </div>
           </div>
         </section>
 
@@ -287,23 +277,6 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           </div>
         </section>
 
-        <section className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
-          <div className="mx-auto max-w-[1040px]">
-            <div className="mx-auto max-w-[680px] text-center">
-              <h2 className="text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
-                The right moment matters.
-              </h2>
-              <p className="mt-5 text-md text-text-2">
-                Memory fades. A well-timed recall strengthens it and lets the next gap grow. Lymi
-                schedules with FSRS, then adapts to every grade.
-              </p>
-            </div>
-            <div className="mt-14">
-              <WhyItWorks />
-            </div>
-          </div>
-        </section>
-
         <section id="join" className="scroll-mt-8 px-5 py-20 @2xl:px-10 @4xl:py-28">
           <div className="mx-auto grid max-w-[1040px] gap-10 rounded-2xl bg-plate-2 p-7 edge-inset @2xl:p-12 @4xl:grid-cols-[0.9fr_1.1fr] @4xl:items-center @4xl:gap-20 @4xl:p-16">
             <div>
@@ -311,8 +284,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
                 Bring your next lesson with you.
               </h2>
               <p className="mt-5 max-w-[44ch] text-md text-text-2">
-                Join the private beta for unlimited cards and every integration. We will write when
-                there is room.
+                <Trans>The private beta is free. If we can invite you, we’ll email you.</Trans>
               </p>
             </div>
             <JoinBeta />

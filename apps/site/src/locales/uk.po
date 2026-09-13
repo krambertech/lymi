@@ -217,10 +217,6 @@ msgstr ""
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr ""
 
-#: src/components/landing/LandingView.tsx
-msgid "Join the private beta"
-msgstr ""
-
 #: src/components/landing/hand-cards.ts
 msgid "Just the right amount: not too much, not too little"
 msgstr ""
@@ -318,6 +314,10 @@ msgstr ""
 msgid "Replay pronunciation"
 msgstr ""
 
+#: src/components/landing/LandingView.tsx
+msgid "Request access"
+msgstr ""
+
 #: src/components/landing/hand-cards.ts
 msgid "Reviews spread over days stick better than the same reviews crammed together"
 msgstr ""
@@ -408,6 +408,10 @@ msgstr ""
 
 #: src/components/landing/hand-cards.ts
 msgid "The player would pass, if chess allowed it."
+msgstr ""
+
+#: src/components/landing/LandingView.tsx
+msgid "The private beta is free. If we can invite you, we’ll email you."
 msgstr ""
 
 #: src/components/landing/hand-cards.ts

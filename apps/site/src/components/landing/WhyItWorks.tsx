@@ -8,30 +8,18 @@ const FADED = "M34 14 C48 42 64 60 90 66 C136 73 222 75 306 76";
 const REVIEWED =
   "M34 14 C46 29 58 40 70 45 L70 14 C88 27 108 35 130 38 L130 14 C160 24 194 30 228 33 L228 14 C254 20 281 23 306 25";
 
-const NOTES = [
-  {
-    moment: "After the first recall",
-    title: "Retrieving strengthens memory",
-    body: "Lymi asks before it shows. Trying to retrieve an idea strengthens later recall more than simply reading it again, as Roediger and Karpicke found in 2006.",
-  },
-  {
-    moment: "As the gaps widen",
-    title: "Successful reviews buy time",
-    body: "When recall goes well, the next review can wait longer. Dunlosky and colleagues rated practice testing and distributed practice as highly effective techniques in 2013.",
-  },
-] as const;
-
 export function WhyItWorks() {
+  const { t } = useLingui();
   return (
     <figure className="m-0">
       <ul className="flex flex-wrap justify-center gap-x-7 gap-y-2 text-xs">
         <li className="flex items-center gap-2 text-text-2">
           <span className="h-px w-7 bg-amber" aria-hidden="true" />
-          Reviewed with Lymi
+          <Trans>Reviewed with Lymi</Trans>
         </li>
         <li className="flex items-center gap-2 text-muted">
           <span className="h-px w-7 bg-muted" aria-hidden="true" />
-          Learned once, never revisited
+          <Trans>Learned once, never revisited</Trans>
         </li>
       </ul>
 
@@ -39,9 +27,9 @@ export function WhyItWorks() {
         viewBox="0 0 320 104"
         className="mx-auto mt-8 w-full max-w-[920px]"
         role="img"
-        aria-label="Recall over thirty days. A card learned once fades quickly. A card reviewed on days 3, 8, and 19 returns to full recall each time, then fades more slowly as the gaps grow."
+        aria-label={t`Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow.`}
       >
-        <title>How well-timed reviews change recall</title>
+        <title>{t`How well-timed reviews change recall`}</title>
 
         <g stroke="var(--edge)" strokeWidth="0.55">
           <line x1="34" y1="14" x2="306" y2="14" />
@@ -85,23 +73,64 @@ export function WhyItWorks() {
 
         <g fill="var(--muted)" fontSize="4.2">
           <text x="34" y="92">
-            DAY 0
+            {t`DAY 0`}
           </text>
           <text x="306" y="92" textAnchor="end">
-            DAY 30
+            {t`DAY 30`}
           </text>
         </g>
       </svg>
 
+      <figcaption className="mx-auto mt-3 max-w-[680px] text-center text-xs text-muted">
+        <Trans>Illustration only. Your review timing adapts to what you remember.</Trans>
+      </figcaption>
+
       <div className="mx-auto mt-8 grid max-w-[860px] gap-8 @2xl:grid-cols-2 @2xl:gap-12">
-        {NOTES.map((note) => (
-          <div key={note.title} className="border-t border-edge pt-5">
-            <p className="text-xs text-amber-text">{note.moment}</p>
-            <h3 className="mt-2 text-lg font-medium text-text">{note.title}</h3>
-            <p className="mt-2 text-base text-text-2">{note.body}</p>
-          </div>
-        ))}
+        <div className="border-t border-edge pt-5">
+          <p className="text-xs text-amber-text">
+            <Trans>After the first recall</Trans>
+          </p>
+          <h3 className="mt-2 text-lg font-medium text-text">
+            <Trans>Retrieving strengthens memory</Trans>
+          </h3>
+          <p className="mt-2 text-base text-text-2">
+            <Trans>
+              Lymi asks before it shows. Trying to retrieve an idea strengthens later recall more
+              than simply reading it again, as{" "}
+              <a
+                href="https://pubmed.ncbi.nlm.nih.gov/16507066/"
+                className="underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+              >
+                Roediger and Karpicke found in 2006
+              </a>
+              .
+            </Trans>
+          </p>
+        </div>
+        <div className="border-t border-edge pt-5">
+          <p className="text-xs text-amber-text">
+            <Trans>As the gaps widen</Trans>
+          </p>
+          <h3 className="mt-2 text-lg font-medium text-text">
+            <Trans>Successful reviews buy time</Trans>
+          </h3>
+          <p className="mt-2 text-base text-text-2">
+            <Trans>
+              When recall goes well, the next review can wait longer. In 2013,{" "}
+              <a
+                href="https://www.psychologicalscience.org/publications/journals/pspi/learning-techniques.html"
+                className="underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+              >
+                Dunlosky and colleagues rated practice testing and distributed practice as highly
+                effective techniques
+              </a>
+              .
+            </Trans>
+          </p>
+        </div>
       </div>
     </figure>
   );
 }
+
+import { Trans, useLingui } from "@lingui/react/macro";

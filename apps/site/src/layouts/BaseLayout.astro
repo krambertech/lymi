@@ -1,19 +1,26 @@
 ---
 import onestLatin from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url";
+import onestCyrillic from "@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url";
 import "../styles.css";
 
 interface Props {
   title: string;
   description: string;
   canonicalPath: string;
+  localizedPage?: "landing" | "join" | undefined;
+  shareImageAlt?: string | undefined;
 }
 
-const { title, description, canonicalPath } = Astro.props;
+const { title, description, canonicalPath, localizedPage, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
 const site = Astro.site ?? "https://lymi.app";
 const canonical = new URL(canonicalPath, site).toString();
 // Rendered by scripts/icons.sh from the brand geometry.
 const shareImage = new URL("/share.png", site).toString();
-const shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”";
+const locale = Astro.currentLocale ?? "en";
+const localizedPath = (language: "en" | "uk" | "ru") => {
+  const page = localizedPage === "join" ? "join" : "";
+  return language === "en" ? `/${page}` : `/${language}/${page}`;
+};
 ---
 
 <!doctype html>
@@ -27,6 +34,16 @@ const shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {
+      localizedPage && (
+        <>
+          <link rel="alternate" hreflang="en" href={new URL(localizedPath("en"), site)} />
+          <link rel="alternate" hreflang="uk" href={new URL(localizedPath("uk"), site)} />
+          <link rel="alternate" hreflang="ru" href={new URL(localizedPath("ru"), site)} />
+          <link rel="alternate" hreflang="x-default" href={new URL(localizedPath("en"), site)} />
+        </>
+      )
+    }
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -45,6 +62,7 @@ const shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what
     <meta name="theme-color" content="#151210" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="preload" href={onestLatin} as="font" type="font/woff2" crossorigin />
+    {locale !== "en" && <link rel="preload" href={onestCyrillic} as="font" type="font/woff2" crossorigin />}
     <script is:inline>
       try {
         var t = localStorage.getItem("lymi-theme");

@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import {
   AppWindow,
@@ -13,22 +16,23 @@ import { useEffect, useRef } from "react";
 import { Lantern } from "../Lantern";
 
 interface Place {
-  label: string;
+  id: string;
+  label: MessageDescriptor;
   icon: LucideIcon;
 }
 
 /** Where cards come from, along the top. */
 const SOURCES: readonly Place[] = [
-  { label: "Shortcuts", icon: Smartphone },
-  { label: "Spreadsheets", icon: Sheet },
-  { label: "AI assistants", icon: MessageCircle },
+  { id: "shortcuts", label: msg`Shortcuts`, icon: Smartphone },
+  { id: "spreadsheets", label: msg`Spreadsheets`, icon: Sheet },
+  { id: "ai-assistants", label: msg`AI assistants`, icon: MessageCircle },
 ];
 
 /** Where they can show up, along the bottom. */
 const DESTINATIONS: readonly Place[] = [
-  { label: "Widgets", icon: LayoutGrid },
-  { label: "Websites", icon: Globe },
-  { label: "Your own app", icon: AppWindow },
+  { id: "widgets", label: msg`Widgets`, icon: LayoutGrid },
+  { id: "websites", label: msg`Websites`, icon: Globe },
+  { id: "own-app", label: msg`Your own app`, icon: AppWindow },
 ];
 
 /** One card's trip: in from a source, through Lymi, out to a destination. The paths cross on purpose. */
@@ -129,6 +133,7 @@ export function ApiConnections() {
  * one on screen runs.
  */
 function Diagram({ g }: { g: Geometry }) {
+  const { i18n, t } = useLingui();
   const root = useRef<HTMLDivElement>(null);
   const dot = useRef<HTMLSpanElement>(null);
   const lantern = useRef<HTMLSpanElement>(null);
@@ -258,7 +263,7 @@ function Diagram({ g }: { g: Geometry }) {
         className="size-[18px] shrink-0 text-text-2"
       />
       <span className={clsx("text-text", g.stacked ? "text-xs leading-4" : "text-sm")}>
-        {place.label}
+        {i18n._(place.label)}
       </span>
     </>
   );
@@ -268,7 +273,7 @@ function Diagram({ g }: { g: Geometry }) {
       <svg aria-hidden="true" viewBox={viewBox} className="absolute inset-0 size-full">
         {SOURCES.map((place, i) => (
           <path
-            key={place.label}
+            key={place.id}
             d={inPath(g, i)}
             className="fill-none stroke-edge-2"
             strokeDasharray="3 5"
@@ -276,7 +281,7 @@ function Diagram({ g }: { g: Geometry }) {
         ))}
         {DESTINATIONS.map((place, i) => (
           <path
-            key={place.label}
+            key={place.id}
             d={outPath(g, i)}
             className="fill-none stroke-edge-2"
             strokeDasharray="3 5"
@@ -287,7 +292,7 @@ function Diagram({ g }: { g: Geometry }) {
       {/* Lit copies of each rail, one layer apiece so lighting one is a composited fade. */}
       {SOURCES.map((place, i) => (
         <svg
-          key={place.label}
+          key={place.id}
           ref={(el) => {
             inRails.current[i] = el;
           }}
@@ -300,7 +305,7 @@ function Diagram({ g }: { g: Geometry }) {
       ))}
       {DESTINATIONS.map((place, i) => (
         <svg
-          key={place.label}
+          key={place.id}
           ref={(el) => {
             outRails.current[i] = el;
           }}
@@ -332,10 +337,10 @@ function Diagram({ g }: { g: Geometry }) {
         <Lantern variant="lit" flicker className={g.stacked ? "size-12" : "size-14"} />
       </span>
 
-      <ul aria-label="Where cards come from" className="contents">
+      <ul aria-label={t`Where cards come from`} className="contents">
         {SOURCES.map((place, i) => (
           <li
-            key={place.label}
+            key={place.id}
             ref={(el) => {
               sourceTiles.current[i] = el;
             }}
@@ -346,10 +351,10 @@ function Diagram({ g }: { g: Geometry }) {
           </li>
         ))}
       </ul>
-      <ul aria-label="Where they can show up" className="contents">
+      <ul aria-label={t`Where cards can show up`} className="contents">
         {DESTINATIONS.map((place, i) => (
           <li
-            key={place.label}
+            key={place.id}
             ref={(el) => {
               destinationTiles.current[i] = el;
             }}

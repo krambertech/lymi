@@ -205,24 +205,27 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
           value={cards.total}
           unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
           figure={
-            // The one figure here that carries colour, and it borrows rather than invents:
-            // amber for New, green for Known, a plain edge for Learning, which is exactly how
-            // `StateChip` marks the same three states everywhere else in the app.
+            // The one figure here that carries colour, and it is the state colours every other
+            // stripe, dot and chip in the app uses: grey new, yellow learning, green known.
             <div
               className="flex h-3 w-full gap-1"
               role="img"
               aria-label={t`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
             >
               {cards.new > 0 && (
-                <i className="block rounded-full bg-amber" style={{ flexGrow: cards.new }} />
+                <i className="block rounded-full bg-state-new" style={{ flexGrow: cards.new }} />
               )}
               {cards.learning > 0 && (
-                // Ink rather than `plate-2`: a well-coloured segment between two saturated
-                // ones reads as a gap in the bar instead of a third state.
-                <i className="block rounded-full bg-text/30" style={{ flexGrow: cards.learning }} />
+                <i
+                  className="block rounded-full bg-state-learning"
+                  style={{ flexGrow: cards.learning }}
+                />
               )}
               {cards.known > 0 && (
-                <i className="block rounded-full bg-good" style={{ flexGrow: cards.known }} />
+                <i
+                  className="block rounded-full bg-state-known"
+                  style={{ flexGrow: cards.known }}
+                />
               )}
             </div>
           }

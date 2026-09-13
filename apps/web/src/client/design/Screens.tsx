@@ -303,6 +303,8 @@ export function Screens() {
               learning={m.learning}
               next={{ d3: "Monday" }}
               archivedCount={2}
+              name={m.me.name}
+              docsUrl="https://lymi.app/docs"
               static={{ path: "/library" }}
             />
           </PhoneShot>

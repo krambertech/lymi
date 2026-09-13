@@ -3,17 +3,21 @@ import type { FieldSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { BookOpen, PencilLine, Sparkle } from "lucide-react";
 import type { ReactNode } from "react";
+import { stateDot } from "./StateStripe";
 
 export type ChipTone = "default" | "new" | "learning" | "known" | "ai" | "danger";
 
 const tones: Record<ChipTone, string> = {
   default: "bg-plate-2 text-text-2",
-  new: "bg-amber-soft text-amber-text",
-  learning: "edge bg-transparent text-text-2",
+  new: "bg-plate-2 text-text-2",
+  learning: "bg-state-learning-soft text-state-learning-text",
   known: "bg-good-soft text-good",
   ai: "border border-dashed border-edge-2 bg-transparent text-muted",
   danger: "bg-danger-soft text-danger",
 };
+
+/** The dot carries the state colour even where the text stays ink. */
+const dots: Partial<Record<ChipTone, string>> = stateDot;
 
 export function Chip({
   tone = "default",
@@ -37,7 +41,12 @@ export function Chip({
         className,
       )}
     >
-      {dot && <i className="size-1.5 rounded-full bg-current" aria-hidden="true" />}
+      {dot && (
+        <i
+          className={clsx("size-1.5 rounded-full", dots[tone] ?? "bg-current")}
+          aria-hidden="true"
+        />
+      )}
       {children}
     </span>
   );

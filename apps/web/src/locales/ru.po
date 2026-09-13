@@ -145,6 +145,10 @@ msgstr "{done} повторено. Остальное может немного 
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# на сегодня} few {# на сегодня} many {# на сегодня} other {# на сегодня}}"
 
+#: src/client/views/DeckDetailView.tsx
+msgid "{due, plural, one {card due today} other {cards due today}}"
+msgstr "{due, plural, one {карточка на сегодня} few {карточки на сегодня} many {карточек на сегодня} other {карточки на сегодня}}"
+
 #: src/server/push-delivery.ts
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {# карточка ждёт, когда у тебя будет минутка.} few {# карточки ждут, когда у тебя будет минутка.} many {# карточек ждут, когда у тебя будет минутка.} other {# карточки ждёт, когда у тебя будет минутка.}}"
@@ -161,13 +165,13 @@ msgstr "{dueSoon, plural, one {# карточка в ближайшие семь
 msgid "{first} and {second}"
 msgstr "{first} и {second}"
 
+#: src/client/components/StateStripe.tsx
+msgid "{fresh} new, {learning} learning, {known} known"
+msgstr "Новые: {fresh}, в изучении: {learning}, выученные: {known}"
+
 #: src/client/views/InsightsView.tsx
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан на # повторении, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} few {Показатель запоминания основан на # повторениях, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} many {Показатель запоминания основан на # повторениях, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} other {Показатель запоминания основан на # повторения, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.}}"
-
-#: src/client/components/StateStripe.tsx
-msgid "{known} known, {learning} learning, {fresh} new"
-msgstr "Выученные: {known}, в изучении: {learning}, новые: {fresh}"
 
 #: src/client/views/ReviewView.tsx
 msgid "{label}, next in {schedules}"
@@ -222,7 +226,6 @@ msgid "{total, plural, one {# card in your decks, all ahead of you.} other {# ca
 msgstr "{total, plural, one {В твоих колодах # карточка, и всё ещё впереди.} few {В твоих колодах # карточки, и всё ещё впереди.} many {В твоих колодах # карточек, и всё ещё впереди.} other {В твоих колодах # карточки, и всё ещё впереди.}}"
 
 #: src/client/components/DeckCard.tsx
-#: src/client/views/DeckDetailView.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
@@ -302,11 +305,6 @@ msgstr "Уведомление на этом устройстве, когда е
 #: src/client/views/WordView.tsx
 msgid "A sentence it lives in"
 msgstr "Предложение, в котором он живёт"
-
-#. placeholder {0}: i18n.number(recall, { style: "percent", maximumFractionDigits: 0 })
-#: src/client/components/StateStripe.tsx
-msgid "about {0} would come back today"
-msgstr "около {0} вернулись бы сегодня"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Access"
@@ -526,6 +524,7 @@ msgstr "Не удаётся связаться с сервисом входа. �
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/components/NewDeckSheet.tsx
+#: src/client/views/DeckDetailView.tsx
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -661,10 +660,6 @@ msgstr "колода"
 #: src/client/views/DeckSettingsView.tsx
 msgid "Deck"
 msgstr "Колода"
-
-#: src/client/views/DeckDetailView.tsx
-msgid "Deck name"
-msgstr "Название колоды"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Deck options"
@@ -1332,10 +1327,6 @@ msgstr "Время напоминания сохранено."
 msgid "Reminders stay off until notifications are allowed."
 msgstr "Напоминания выключены, пока не разрешишь уведомления."
 
-#: src/client/views/DeckDetailView.tsx
-msgid "Rename"
-msgstr "Переименовать"
-
 #: src/client/views/ReviewView.tsx
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
@@ -1356,14 +1347,10 @@ msgstr "Повторить"
 msgid "Reveal the card when you have it"
 msgstr "Открой карточку, когда вспомнишь"
 
+#: src/client/views/DeckDetailView.tsx
 #: src/client/views/TodayView.tsx
 msgid "Review"
 msgstr "Повторение"
-
-#. placeholder {0}: deck.due
-#: src/client/views/DeckDetailView.tsx
-msgid "Review {0} due"
-msgstr "Повторить: {0}"
 
 #: src/client/views/ReviewView.tsx
 msgid "Review couldn’t load"
@@ -1648,6 +1635,10 @@ msgstr "Язык карточек в этой колоде. С него начи
 #: src/client/views/WordView.tsx
 msgid "the meaning"
 msgstr "значение"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "The next card is back {next}."
+msgstr "Следующая карточка вернётся {next}."
 
 #: src/client/views/WordView.tsx
 msgid "the notes"

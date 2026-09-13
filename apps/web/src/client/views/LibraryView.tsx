@@ -7,9 +7,10 @@ import { AddMenu } from "../components/AddMenu";
 import { Button } from "../components/Button";
 import { DeckCard } from "../components/DeckCard";
 import { EmptyState } from "../components/EmptyState";
+import { LearnerMenu } from "../components/LearnerMenu";
 import { Skeleton } from "../components/Skeleton";
 import type { DeckSummary } from "../lib/api";
-import { Page, PageHeader, type StaticNav } from "./Shell";
+import { Page, PageHeader, type StaticNav, TopBar } from "./Shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
@@ -21,6 +22,13 @@ export interface LibraryProps {
   archivedCount?: number | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
+  /** The learner, for the avatar that opens their menu on the phone. */
+  name?: string | undefined;
+  email?: string | undefined;
+  unseen?: boolean | undefined;
+  docsUrl?: string | undefined;
+  onSignOut?: (() => void | Promise<void>) | undefined;
+  signingOut?: boolean | undefined;
   static?: StaticNav;
 }
 
@@ -37,6 +45,12 @@ export function LibraryView({
   archivedCount,
   onAdd,
   onCreateDeck,
+  name,
+  email,
+  unseen,
+  docsUrl,
+  onSignOut,
+  signingOut,
   static: st,
 }: LibraryProps) {
   const { t } = useLingui();
@@ -64,17 +78,29 @@ export function LibraryView({
 
   return (
     <Page>
+      <TopBar
+        actions={
+          <>
+            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+            <LearnerMenu
+              variant="phone"
+              name={name}
+              email={email}
+              unseen={unseen}
+              docsUrl={docsUrl ?? "/"}
+              onSignOut={onSignOut}
+              signingOut={signingOut}
+              static={st}
+            />
+          </>
+        }
+      />
       <PageHeader
         title={t`Library`}
         sub={
           loading
             ? undefined
             : t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
-        }
-        actions={
-          <div className="@3xl/shell:hidden">
-            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-          </div>
         }
       />
 

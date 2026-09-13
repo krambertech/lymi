@@ -54,7 +54,7 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
   });
 
   await test.step("review and persist the result", async () => {
-    await page.getByRole("button", { name: "Review 1 due" }).click();
+    await page.getByRole("button", { name: "Review", exact: true }).click();
     await expect(page.getByLabel("Recognition card for sbrigarsi")).toBeVisible();
     await page.getByRole("button", { name: "Tap card to reveal" }).click();
     await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
@@ -62,6 +62,6 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
 
     await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeVisible();
     await page.reload();
-    await expect(page.getByRole("heading", { name: "Nothing due" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^0 cards due today/ })).toBeVisible();
   });
 });

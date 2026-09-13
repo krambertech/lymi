@@ -145,6 +145,10 @@ msgstr "{done} повторено. Решта може трохи зачекат
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# на сьогодні} few {# на сьогодні} many {# на сьогодні} other {# на сьогодні}}"
 
+#: src/client/views/DeckDetailView.tsx
+msgid "{due, plural, one {card due today} other {cards due today}}"
+msgstr "{due, plural, one {картка на сьогодні} few {картки на сьогодні} many {карток на сьогодні} other {картки на сьогодні}}"
+
 #: src/server/push-delivery.ts
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {# картка чекає, коли матимеш хвилинку.} few {# картки чекають, коли матимеш хвилинку.} many {# карток чекають, коли матимеш хвилинку.} other {# картки чекає, коли матимеш хвилинку.}}"
@@ -161,13 +165,13 @@ msgstr "{dueSoon, plural, one {# картка протягом наступни�
 msgid "{first} and {second}"
 msgstr "{first} і {second}"
 
+#: src/client/components/StateStripe.tsx
+msgid "{fresh} new, {learning} learning, {known} known"
+msgstr "Нові: {fresh}, у вивченні: {learning}, засвоєні: {known}"
+
 #: src/client/views/InsightsView.tsx
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Показник запам’ятовування базується на # повторенні, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} few {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} many {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} other {Показник запам’ятовування базується на # повторення, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.}}"
-
-#: src/client/components/StateStripe.tsx
-msgid "{known} known, {learning} learning, {fresh} new"
-msgstr "Засвоєні: {known}, у вивченні: {learning}, нові: {fresh}"
 
 #: src/client/views/ReviewView.tsx
 msgid "{label}, next in {schedules}"
@@ -222,7 +226,6 @@ msgid "{total, plural, one {# card in your decks, all ahead of you.} other {# ca
 msgstr "{total, plural, one {У твоїх колодах # картка, і все ще попереду.} few {У твоїх колодах # картки, і все ще попереду.} many {У твоїх колодах # карток, і все ще попереду.} other {У твоїх колодах # картки, і все ще попереду.}}"
 
 #: src/client/components/DeckCard.tsx
-#: src/client/views/DeckDetailView.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
@@ -302,11 +305,6 @@ msgstr "Сповіщення на цьому пристрої, коли є ка�
 #: src/client/views/WordView.tsx
 msgid "A sentence it lives in"
 msgstr "Речення, у якому він живе"
-
-#. placeholder {0}: i18n.number(recall, { style: "percent", maximumFractionDigits: 0 })
-#: src/client/components/StateStripe.tsx
-msgid "about {0} would come back today"
-msgstr "приблизно {0} повернулися б сьогодні"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Access"
@@ -526,6 +524,7 @@ msgstr "Не вдається зв’язатися із сервісом вхо
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/ApiKeysSection.tsx
 #: src/client/components/NewDeckSheet.tsx
+#: src/client/views/DeckDetailView.tsx
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -661,10 +660,6 @@ msgstr "колода"
 #: src/client/views/DeckSettingsView.tsx
 msgid "Deck"
 msgstr "Колода"
-
-#: src/client/views/DeckDetailView.tsx
-msgid "Deck name"
-msgstr "Назва колоди"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Deck options"
@@ -1332,10 +1327,6 @@ msgstr "Час нагадування збережено."
 msgid "Reminders stay off until notifications are allowed."
 msgstr "Нагадування вимкнені, доки не дозволиш сповіщення."
 
-#: src/client/views/DeckDetailView.tsx
-msgid "Rename"
-msgstr "Перейменувати"
-
 #: src/client/views/ReviewView.tsx
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
@@ -1356,14 +1347,10 @@ msgstr "Повторити"
 msgid "Reveal the card when you have it"
 msgstr "Відкрий картку, коли згадаєш"
 
+#: src/client/views/DeckDetailView.tsx
 #: src/client/views/TodayView.tsx
 msgid "Review"
 msgstr "Повторення"
-
-#. placeholder {0}: deck.due
-#: src/client/views/DeckDetailView.tsx
-msgid "Review {0} due"
-msgstr "Повторити: {0}"
 
 #: src/client/views/ReviewView.tsx
 msgid "Review couldn’t load"
@@ -1648,6 +1635,10 @@ msgstr "Мова карток у цій колоді. З неї починаєт
 #: src/client/views/WordView.tsx
 msgid "the meaning"
 msgstr "значення"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "The next card is back {next}."
+msgstr "Наступна картка повернеться {next}."
 
 #: src/client/views/WordView.tsx
 msgid "the notes"

@@ -5,7 +5,9 @@ import { useMemo } from "react";
 import { Toast } from "../components/Toast";
 import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
-import { deckCardsQuery, decksQuery } from "../lib/queries";
+import { publicSiteUrl } from "../lib/origins";
+import { deckCardsQuery, decksQuery, meQuery } from "../lib/queries";
+import { useSignOut } from "../lib/use-sign-out";
 import { LibraryView } from "../views/LibraryView";
 
 export const Route = createFileRoute("/library")({
@@ -30,6 +32,8 @@ function DeckList() {
   const navigate = useNavigate();
   const { archived, name } = Route.useSearch();
   const decks = useQuery(decksQuery);
+  const me = useQuery(meQuery);
+  const leave = useSignOut();
   const add = useAddCard();
 
   // The stripe on each card needs the split of its states. One learner has a handful of
@@ -72,6 +76,11 @@ function DeckList() {
         learning={progress.learning}
         onAdd={add.openCard}
         onCreateDeck={add.openDeck}
+        name={me.data?.name}
+        email={me.data?.email}
+        docsUrl={publicSiteUrl("/docs")}
+        onSignOut={leave.signOut}
+        signingOut={leave.busy}
       />
       {archived && (
         <Toast

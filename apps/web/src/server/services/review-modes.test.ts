@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { emptyState, serializeState } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -12,6 +13,18 @@ import { testDb } from "./test-db";
  * The expand-and-contract migration for review modes, ADR 0014: the backfill converges from any
  * starting point without touching schedules or review facts, and older clients keep working.
  */
+/** The backfill statements at the end of migration 0012, which a contraction runs again. */
+const backfill = readFileSync(
+  new URL("../../../migrations/0012_review_modes.sql", import.meta.url),
+  "utf8",
+)
+  .split("--> statement-breakpoint")
+  .filter((statement) => statement.includes("UPDATE"));
+
+async function runBackfill(raw: D1Database) {
+  for (const statement of backfill) await raw.prepare(statement).run();
+}
+
 describe("review mode backfill", () => {
   let db: Db;
   let raw: D1Database;
@@ -28,7 +41,7 @@ describe("review mode backfill", () => {
   const withoutMode = (rows: Record<string, unknown>[]) =>
     rows.map(({ mode: _mode, ...row }) => row);
 
-  it("maps legacy rows once, keeps every other fact, and converges when run again", async () => {
+  it("maps legacy rows in the migration, keeps every other fact, and converges when run again", async () => {
     const at = 1_757_000_000_000;
     await raw.batch([
       raw.prepare("insert into user (id, name, email) values ('u', 'U', 'u@lymi.test')"),
@@ -54,15 +67,20 @@ describe("review mode backfill", () => {
     const before = { states: await snapshot("card_states"), reviews: await snapshot("reviews") };
 
     await migrate("0012_review_modes.sql");
-    // An older Worker kept writing between the two migrations, and one row already has its mode.
-    await raw.batch([
-      raw.prepare(
+    const migrated = { states: await snapshot("card_states"), reviews: await snapshot("reviews") };
+    expect(withoutMode(migrated.states)).toEqual(before.states);
+    expect(withoutMode(migrated.reviews)).toEqual(before.reviews);
+    expect(migrated.reviews[0]).toMatchObject({ mode: "term_to_meaning" });
+
+    // An older Worker wrote a row without a mode during the deploy; running the backfill again
+    // maps only that row.
+    await raw
+      .prepare(
         `insert into card_states (id, card_id, user_id, direction, due, state, fsrs, created_at, updated_at)
          values ('s4', 'c2', 'u', 'production', ${at + 8}, 0, '{}', ${at}, ${at})`,
-      ),
-      raw.prepare("update card_states set mode = 'meaning_to_term' where id = 's2'"),
-    ]);
-    await migrate("0013_backfill_review_modes.sql");
+      )
+      .run();
+    await runBackfill(raw);
 
     const modes = await raw.prepare("select id, mode from card_states order by id").all();
     expect(modes.results).toEqual([
@@ -72,21 +90,19 @@ describe("review mode backfill", () => {
       { id: "s4", mode: "meaning_to_term" },
     ]);
     const after = { states: await snapshot("card_states"), reviews: await snapshot("reviews") };
-    expect(withoutMode(after.states.slice(0, 3))).toEqual(before.states);
-    expect(withoutMode(after.reviews)).toEqual(before.reviews);
-    expect(after.reviews[0]).toMatchObject({ mode: "term_to_meaning" });
+    expect(after.states.slice(0, 3)).toEqual(migrated.states);
 
-    await migrate("0013_backfill_review_modes.sql");
+    await runBackfill(raw);
     expect({ states: await snapshot("card_states"), reviews: await snapshot("reviews") }).toEqual(
       after,
     );
   });
 
   it("backfills an empty database without error", async () => {
-    const empty = await testDb({ before: "0013_" });
+    const empty = await testDb();
     try {
-      await empty.migrate("0013_backfill_review_modes.sql");
-      await empty.migrate("0013_backfill_review_modes.sql");
+      await runBackfill(empty.raw);
+      await runBackfill(empty.raw);
     } finally {
       await empty.dispose();
     }

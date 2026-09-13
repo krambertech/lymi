@@ -50,11 +50,7 @@
     },
     {
       "name": "0012_review_modes.sql",
-      "sha256": "0bbaf953209647aaf687ce1532761618bac58f5658f31945cc6e771bc1894d1a"
-    },
-    {
-      "name": "0013_backfill_review_modes.sql",
-      "sha256": "e994536f87c924b1801256a5ddb0774f8c2a28681d028c8d0661a1452ff57c06"
+      "sha256": "56af69067e01c6d3b8f9a5e7bfcc378572c9f22199bf0b677f66f6325c81ea38"
     }
   ]
 }

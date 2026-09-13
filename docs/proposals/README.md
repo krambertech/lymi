@@ -19,6 +19,7 @@ Aim for fewer than 1,000 words. Link extended research instead of reproducing it
 
 | Proposal | Status |
 | --- | --- |
+| [Card images and visual review](card-images-and-visual-review.md) | Accepted by ADR 0014, planned in [docs/plans/2026-09-13-card-images-and-visual-review.md](../plans/2026-09-13-card-images-and-visual-review.md) |
 | [Daily review goal and rolling queue](daily-review-goal-and-rolling-queue.md) | Accepted; planned in [docs/plans/2026-09-13-daily-review-goal-and-rolling-queue.md](../plans/2026-09-13-daily-review-goal-and-rolling-queue.md) |
 | [Lantern flame metaphor](lantern-flame-metaphor.md) | Exploration |
 | [Public website and product app architecture](public-website-and-product-app.md) | Partially accepted by ADR 0008 |

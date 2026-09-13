@@ -64,7 +64,7 @@ export function Toast({ children, action, onDismiss, duration, className, inline
       className={clsx(
         "flex w-fit max-w-[calc(100vw-32px)] items-center gap-3 rounded-md bg-text py-2.5 ps-4 pe-2 text-base text-canvas",
         !inline &&
-          "fixed bottom-[calc(env(safe-area-inset-bottom)+80px)] left-1/2 z-(--z-toast) -translate-x-1/2 @3xl:bottom-6",
+          "fixed bottom-[calc(env(safe-area-inset-bottom)+80px)] left-1/2 z-(--z-toast) -translate-x-1/2 @3xl/shell:bottom-6",
         !inline && (leaving ? "toast-exit" : "toast-enter"),
         className,
       )}
@@ -74,7 +74,7 @@ export function Toast({ children, action, onDismiss, duration, className, inline
         <button
           type="button"
           onClick={action.onClick}
-          className="relative -my-1 rounded-[6px] px-2.5 py-1.5 font-semibold text-toast-action transition-[background-color,scale] duration-150 hoverable:hover:bg-canvas/10 active:scale-[0.97] before:absolute before:-inset-1 before:content-['']"
+          className="relative -my-1 rounded-[6px] px-2.5 py-1.5 font-semibold text-toast-action transition-[background-color,scale] duration-150 hoverable:hover:bg-canvas/10 active:scale-[0.97] before:absolute before:-inset-x-1 before:-inset-y-2 before:content-['']"
         >
           {action.label}
         </button>

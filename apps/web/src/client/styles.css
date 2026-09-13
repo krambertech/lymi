@@ -258,15 +258,33 @@
   }
 }
 
-/* One hairline edge. Used instead of border so it never changes layout. */
+/* One hairline edge, a shadow so it never changes layout; forced colours drop shadows, so there it becomes an outline the system paints. */
 @utility edge {
   box-shadow: 0 0 0 1px var(--edge);
+  @media (forced-colors: active) {
+    &:not(:focus-visible) {
+      outline: 1px solid transparent;
+      outline-offset: -1px;
+    }
+  }
 }
 @utility edge-2 {
   box-shadow: 0 0 0 1px var(--edge-2);
+  @media (forced-colors: active) {
+    &:not(:focus-visible) {
+      outline: 1px solid transparent;
+      outline-offset: -1px;
+    }
+  }
 }
 @utility edge-inset {
   box-shadow: inset 0 0 0 1px var(--edge);
+  @media (forced-colors: active) {
+    &:not(:focus-visible) {
+      outline: 1px solid transparent;
+      outline-offset: -1px;
+    }
+  }
 }
 /* The lantern's glow. Only the lantern wears it, and inside the lantern only
    the light does: metal does not glow, and a filter on the whole drawing halos
@@ -488,7 +506,8 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .picker-panel,
-  .picker-panel:not(:popover-open) {
+  .picker-panel:not(:popover-open),
+  .picker-panel[data-flipped]:not(:popover-open) {
     transform: none;
   }
 }
@@ -734,6 +753,25 @@
   }
 }
 
+/* The phone drawer. vaul slides it on its own 500 ms curve; under reduced motion it fades instead,
+   and these selectors out-rank the ones vaul injects at runtime. */
+@media (prefers-reduced-motion: reduce) {
+  .sheet-drawer[data-vaul-drawer][data-vaul-snap-points="false"][data-vaul-drawer-direction="bottom"][data-state="open"] {
+    animation: enter-fade 150ms var(--ease-out) both;
+  }
+  .sheet-drawer[data-vaul-drawer][data-vaul-snap-points="false"][data-vaul-drawer-direction="bottom"][data-state="closed"] {
+    animation: exit-fade 140ms var(--ease-out) both;
+  }
+  .sheet-overlay[data-vaul-overlay][data-state] {
+    animation-duration: 150ms;
+  }
+}
+@keyframes exit-fade {
+  to {
+    opacity: 0;
+  }
+}
+
 /* Toast rises from the bottom edge and leaves faster than it came. */
 .toast-enter {
   opacity: 1;
@@ -760,7 +798,7 @@
 @keyframes spinner-enter {
   from {
     opacity: 0;
-    scale: 0.25;
+    scale: 0.8;
     filter: blur(4px);
   }
 }
@@ -769,7 +807,8 @@
   .enter-menu,
   .enter-fade,
   .complete-lantern,
-  .complete-copy {
+  .complete-copy,
+  .spinner-enter {
     animation: enter-fade 150ms both;
   }
   .toast-enter,
@@ -808,7 +847,7 @@
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
 }
-/* Clears the floating pill: its 56 px height, the 24 px it floats, and a gap. */
-.pb-safe-nav {
+/* Clears the floating pill (56 px, floating 24 px, and a gap); a utility so a shell variant can replace it. */
+@utility pb-safe-nav {
   padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
 }

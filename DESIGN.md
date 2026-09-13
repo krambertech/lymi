@@ -214,7 +214,7 @@ Three words: warm, calm, quick.
 
 ## Surfaces are flat
 
-Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of four tones: `canvas` (the room), `rail` (the navigation, one step off the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it. Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Nothing lifts, and amber never marks state.
+Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of four tones: `canvas` (the room), `rail` (the navigation, one step off the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it. Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour. Nothing lifts, and amber never marks state.
 
 The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it.
 
@@ -284,7 +284,7 @@ The auth screens have one moving part: the connection. The app that asked and th
 
 The flame flickers on a 2.6 s loop because a flame does, and three things move on that one loop: the flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both. A flame that changes size under a halo that holds still is the thing that reads as fake. The wick catches over 620 ms when the lantern goes from unlit to lit, rather than swapping. Carried, the body rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
 
-Under `prefers-reduced-motion` the flame holds still, reveal, completion, card and toast crossfade with no travel, the pointing hand appears without tapping, the list hover fades in on the row under the pointer instead of sliding, and the skeleton stops shimmering. The glow stays, because a glow is a state, not a movement.
+Under `prefers-reduced-motion` the flame holds still, reveal, completion, card, toast, spinner and the phone drawer crossfade with no travel, the pointing hand appears without tapping, the list hover fades in on the row under the pointer instead of sliding, and the skeleton stops shimmering. The glow stays, because a glow is a state, not a movement.
 
 ## Layout
 
@@ -328,7 +328,7 @@ Settings exposes the review timezone as **Automatic** by default and permits an 
 
 `components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Tooltip, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, TopBar and BackButton (in `views/Shell.tsx`), StateStripe, Flame, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
 
-`views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport.
+`views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport. Chrome that follows the rail — page padding, top bars, back rows, the toast's clearance for the pill — queries the whole window's `@3xl/shell`, because the rail appears at a 768 px window while the column beside it is still narrower.
 
 A deck opens on its plate: the cards due now set large, the whole deck's split between New, Learning and Known beside icons in their state colours, and the Review button. It is the one place a count gets hero size outside Today, because on a deck the number is the size of the thing the button starts, not a score. The three counts are the deck, not today's share of it, so they never read as zero on a quiet day; the stripe under the plate draws the same split, and the filter under the stripe names the states with their dots and no numbers, so no count appears twice. On the phone the plate stacks and the button is full width; on desktop it is one row. With nothing due the plate keeps its shape: a zero, the deck's counts, when the next card is back, and Add card where Review was. On the phone, search sits in the top bar beside back and the deck menu and replaces it while open; on desktop it stays beside the filter, where `/` lands.
 

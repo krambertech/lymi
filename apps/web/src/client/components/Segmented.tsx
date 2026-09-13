@@ -57,10 +57,12 @@ export function Segmented<T extends string>({
             }}
             className={clsx(
               "relative rounded-[11px] px-3 font-medium transition-[color,scale] duration-150 active:scale-[0.97]",
-              // The pseudo-element carries the touch target past the visible pill: 28 px of
-              // button plus 8 px either side clears the 44 px floor without changing layout.
+              // The pseudo-element carries the touch target to the track's edge (md) or 8 px past
+              // the 28 px pill (sm), clearing the 44 px floor without changing layout.
               "before:absolute before:inset-x-0 before:content-['']",
-              size === "md" ? "h-full text-[16px] md:text-base" : "h-7 text-xs before:-inset-y-2",
+              size === "md"
+                ? "h-full text-[16px] before:-inset-y-[3px] md:text-base"
+                : "h-7 text-xs before:-inset-y-2",
               on ? "text-text" : "text-muted hoverable:hover:text-text",
             )}
           >

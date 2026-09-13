@@ -174,7 +174,7 @@ export function MenuList({
 function itemClass(tone: "default" | "danger", disabled?: boolean) {
   return clsx(
     // The hover fill is the shared FluidHighlight behind the items, so no hover of its own.
-    "relative flex h-10 w-full items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-base outline-none transition-colors",
+    "relative flex h-11 w-full items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-base outline-none transition-colors md:h-10",
     "focus-visible:bg-hover",
     tone === "danger" ? "text-danger [&_svg]:text-danger" : "text-text [&_svg]:text-muted",
     disabled && "opacity-45",

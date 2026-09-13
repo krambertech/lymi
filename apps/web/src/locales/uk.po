@@ -622,6 +622,11 @@ msgstr "Не вдалося завантажити показники"
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Не вдалося перевірити цей пристрій. Онови сторінку, щоб спробувати ще раз."
 
+#: src/client/lib/api.ts
+#: src/client/routes/consent.tsx
+msgid "Couldn’t reach Lymi. Check your connection and try again."
+msgstr "Не вдалося зв’язатися з Lymi. Перевір з’єднання й повтори спробу."
+
 #: src/client/routes/library.$deckId.tsx
 msgid "Couldn’t save “{failedTerm}”. Check the connection."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання."
@@ -1213,6 +1218,10 @@ msgstr "Одна колода на курс або тему зазвичай п�
 msgid "Only on days with cards due."
 msgstr "Лише в дні, коли є картки до повторення."
 
+#: src/client/lib/api.ts
+msgid "Only the deck’s owner can change this."
+msgstr "Змінювати це може лише власник колоди."
+
 #: src/client/components/InstallDialog.tsx
 msgid "Open Lymi from the new icon."
 msgstr "Відкрий Lymi з нової іконки."
@@ -1518,11 +1527,6 @@ msgstr "Щоб потім знати, який ключ відкликати."
 msgid "Some grades haven’t synced"
 msgstr "Деякі оцінки ще не синхронізовано"
 
-#. placeholder {0}: res.status
-#: src/client/lib/api.ts
-msgid "Something went wrong ({0})"
-msgstr "Щось пішло не так ({0})"
-
 #: src/client/routes/consent.tsx
 msgid "Something went wrong. Try again from the app."
 msgstr "Щось пішло не так. Спробуй ще раз із застосунку."
@@ -1572,6 +1576,10 @@ msgstr "Торкнися картки, коли згадаєш"
 msgid "Term"
 msgstr "Термін"
 
+#: src/client/lib/api.ts
+msgid "That didn’t go through. Reload and try again."
+msgstr "Не вдалося. Онови сторінку й повтори спробу."
+
 #: src/client/routes/review.tsx
 msgid "That grade didn’t save. Try once more."
 msgstr "Не вдалося зберегти оцінку. Спробуй ще раз."
@@ -1587,6 +1595,10 @@ msgstr "Це задовге для мовного тегу."
 #: src/client/routes/login.tsx
 msgid "That sign-in did not finish. Try again."
 msgstr "Вхід не завершено. Спробуй ще раз."
+
+#: src/client/lib/api.ts
+msgid "That’s no longer here. Reload to see what changed."
+msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
 
 #: src/client/views/ReviewView.tsx
 msgid "That’s the lot"
@@ -1769,8 +1781,8 @@ msgid "week of {0}"
 msgstr "тиждень від {0}"
 
 #: src/client/views/ConsentView.tsx
-msgid "What it adds lands at once, labelled, and you can undo any of it."
-msgstr "Усе додане з’являється одразу з позначкою, і будь-яку дію можна скасувати."
+msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
+msgstr "Усе додане з’являється одразу й має позначку. Будь-що з цього можна редагувати або архівувати."
 
 #: src/client/views/WordView.tsx
 msgid "What it means"

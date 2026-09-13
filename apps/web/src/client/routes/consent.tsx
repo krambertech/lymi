@@ -63,13 +63,26 @@ function Consent() {
     setBusy(accepting ? "allow" : "deny");
     // The endpoint reads `scope` as "narrow the request to these"; omit it when unchanged.
     const narrowed = accepting && granted.length < requested.size;
-    const res = await authClient.oauth2.consent({
-      accept: accepting,
-      ...(narrowed ? { scope: granted.join(" ") } : {}),
-    });
+    const unreachable = t`Couldn’t reach Lymi. Check your connection and try again.`;
+    let res: Awaited<ReturnType<typeof authClient.oauth2.consent>>;
+    try {
+      res = await authClient.oauth2.consent({
+        accept: accepting,
+        ...(narrowed ? { scope: granted.join(" ") } : {}),
+      });
+    } catch {
+      setBusy(null);
+      setError(unreachable);
+      return;
+    }
     if (res.error) {
       setBusy(null);
-      setError(res.error.message ?? t`Something went wrong. Try again from the app.`);
+      // The auth server's message is English and written for developers.
+      setError(
+        !res.error.status || res.error.status >= 500
+          ? unreachable
+          : t`Something went wrong. Try again from the app.`,
+      );
       return;
     }
     const target = redirectTargetOf(res.data);

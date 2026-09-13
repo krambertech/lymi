@@ -4,7 +4,7 @@ import type { Deck } from "@lymi/core/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { api } from "../lib/api";
+import { api, errorMessage } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button } from "./Button";
 import { DirectionCompact, LanguageField } from "./DeckFields";
@@ -38,7 +38,7 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
       <NewDeckForm
         key={open ? "open" : "closed"}
         pending={create.isPending}
-        error={create.isError ? (create.error as Error).message : undefined}
+        error={create.isError ? errorMessage(create.error) : undefined}
         onCancel={() => onOpenChange(false)}
         onSubmit={(input) => create.mutateAsync(input)}
       />

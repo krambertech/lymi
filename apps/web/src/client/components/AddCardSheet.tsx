@@ -3,7 +3,7 @@ import { CardInput } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { type AddCardOutcome, api, type DeckSummary } from "../lib/api";
+import { type AddCardOutcome, api, type DeckSummary, errorMessage } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { decksQuery } from "../lib/queries";
 import { Button } from "./Button";
@@ -42,7 +42,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
         decks={decks.data}
         deckId={deckId}
         pending={create.isPending}
-        error={create.isError ? (create.error as Error).message : undefined}
+        error={create.isError ? errorMessage(create.error) : undefined}
         onCancel={() => onOpenChange(false)}
         onCreateDeck={
           onCreateDeck &&

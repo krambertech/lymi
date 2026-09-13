@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { api } from "../lib/api";
+import { api, errorMessage } from "../lib/api";
 import { deckCardsQuery, decksQuery } from "../lib/queries";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/DeckSettingsView";
 
@@ -55,7 +55,7 @@ function DeckSettings() {
       onSave={(patch) => save.mutate(patch)}
       saving={save.isPending}
       saved={saved}
-      error={save.isError ? (save.error as Error).message : undefined}
+      error={save.isError ? errorMessage(save.error) : undefined}
       onArchive={() => archive.mutate()}
     />
   );

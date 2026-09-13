@@ -36,7 +36,7 @@ const variants: Record<ButtonVariant, string> = {
 };
 
 const sizes: Record<ButtonSize, string> = {
-  sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4",
+  sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4 before:absolute before:-inset-1.5 before:content-['']",
   md: "h-10 px-(--btn-px) [--btn-px:16px] text-base [&_svg]:size-[18px]",
   lg: "h-12 px-(--btn-px) [--btn-px:20px] text-md [&_svg]:size-5",
 };

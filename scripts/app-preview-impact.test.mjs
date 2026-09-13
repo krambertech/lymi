@@ -21,3 +21,21 @@ test("skips site-only, documentation, design-source, and agent-only changes", ()
 test("requires a preview when a pull request mixes product and unrelated changes", () => {
   assert.equal(requiresAppPreview(["docs/README.md", "apps/web/src/server/index.ts"]), true);
 });
+
+test("skips changes that only touch unit and component tests", () => {
+  assert.equal(requiresAppPreview(["apps/web/src/client/routes/today.test.tsx"]), false);
+  assert.equal(
+    requiresAppPreview(["packages/core/src/fsrs.test.ts", "apps/web/src/server/app.test.ts"]),
+    false,
+  );
+});
+
+test("requires a preview when a pull request mixes tests and product changes", () => {
+  assert.equal(
+    requiresAppPreview([
+      "apps/web/src/client/routes/today.test.tsx",
+      "apps/web/src/client/routes/today.tsx",
+    ]),
+    true,
+  );
+});

@@ -1,3 +1,5 @@
+import { isTestFile } from "./e2e-impact.mjs";
+
 const appPreviewPrefixes = ["apps/web/", "packages/core/", "scripts/"];
 
 const appPreviewFiles = new Set([
@@ -12,8 +14,9 @@ const appPreviewFiles = new Set([
 ]);
 
 export function requiresAppPreview(paths) {
-  return paths.some(
-    (path) =>
-      appPreviewFiles.has(path) || appPreviewPrefixes.some((prefix) => path.startsWith(prefix)),
-  );
+  return paths.some((path) => {
+    if (appPreviewFiles.has(path)) return true;
+    if (isTestFile(path)) return false;
+    return appPreviewPrefixes.some((prefix) => path.startsWith(prefix));
+  });
 }

@@ -79,3 +79,11 @@ test("the final result rejects a missing coverage decision", () => {
     ["coverage planning"],
   );
 });
+
+test("the summary says a draft pull request waits for review before its app preview", () => {
+  const summary = renderCiSummary({ APP_PREVIEW: "true", DRAFT: "true" });
+  assert.match(
+    summary,
+    /\*\*Product-app preview:\*\* Skipped until the pull request is ready for review/,
+  );
+});

@@ -47,11 +47,13 @@ export function renderCiSummary(env) {
         ? "Not needed"
         : "Not selected";
   const appPreview =
-    env.APP_PREVIEW === "true"
-      ? "Scheduled after quality checks"
-      : env.APP_PREVIEW === "false"
-        ? "Not needed"
-        : "Not selected";
+    env.APP_PREVIEW === "true" && env.DRAFT === "true"
+      ? "Skipped until the pull request is ready for review"
+      : env.APP_PREVIEW === "true"
+        ? "Scheduled after quality checks"
+        : env.APP_PREVIEW === "false"
+          ? "Not needed"
+          : "Not selected";
 
   return [
     "## CI evidence",

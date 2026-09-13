@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
   workflow_dispatch:
@@ -199,6 +200,7 @@ jobs:
           PLAN_REASON: ${{ needs.plan.outputs.reason }}
           SITE_PREVIEW: ${{ needs.plan.outputs.run_site_preview }}
           APP_PREVIEW: ${{ needs.plan.outputs.run_app_preview }}
+          DRAFT: ${{ github.event.pull_request.draft }}
           RUN_E2E: ${{ needs.plan.outputs.run_e2e }}
           PLAN_RESULT: ${{ needs.plan.result }}
           QUALITY_RESULT: ${{ needs.quality.result }}
@@ -294,6 +296,7 @@ jobs:
     if: >-
       needs.quality.result == 'success' &&
       github.event_name == 'pull_request' &&
+      !github.event.pull_request.draft &&
       needs.plan.outputs.run_app_preview == 'true' &&
       github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest

@@ -295,6 +295,23 @@ test("names the Wrangler error that stopped the migrations", () => {
   assert.equal(migrationFailureReason({ status: 7, output: "" }), "Wrangler exited with code 7");
 });
 
+test("cleanup succeeds for a pull request that never deployed a preview", async () => {
+  const deleted = [];
+  const fetchImpl = async (url, init = {}) => {
+    if ((init.method ?? "GET") === "DELETE") {
+      deleted.push(url);
+      return response(null, 404);
+    }
+    if (url.includes("/d1/database?")) return response([]);
+    if (url.includes("/storage/kv/namespaces?")) return response([]);
+    if (url.includes("/r2/buckets?")) return response({ buckets: [] });
+    throw new Error(`Unexpected ${url}`);
+  };
+
+  await cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
+  assert.deepEqual(deleted, [`${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`]);
+});
+
 function apiRoot() {
   return "https://api.cloudflare.com/client/v4/accounts/account";
 }

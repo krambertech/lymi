@@ -49,7 +49,7 @@ WebKit does not focus a button that is clicked, so a test about focus return ope
 - Every push to `main` and `/e2e` command runs Chromium and WebKit plus the deployment-package dry run.
 - A manually dispatched workflow runs the full policy by default and can explicitly skip browser E2E.
 - Public-site pull requests upload a preview after the quality job passes without waiting for browser E2E. The stable `pr-<number>` alias follows the pull request across new commits and appears as GitHub's View deployment link and in the job summary.
-- Product-affecting pull requests provision an isolated app preview after quality passes. GitHub's View deployment link establishes the preview capability, signs in a synthetic learner and opens seeded data; the same link follows later commits.
+- Product-affecting pull requests provision an isolated app preview after quality passes. Drafts and changes that touch only `*.test.ts` or `*.test.tsx` files get none; marking a draft ready for review deploys it. GitHub's View deployment link establishes the preview capability, signs in a synthetic learner and opens seeded data; the same link follows later commits.
 
 Every run writes a final summary with its selected browser coverage and the outcome of each job and gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
 

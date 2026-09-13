@@ -112,6 +112,7 @@ describe("LanguageField", () => {
     expect(options()).toEqual([]);
     await userEvent.keyboard("{Enter}");
     expect(onChange).not.toHaveBeenCalled();
+    await expect.element(search()).toHaveValue("not a language");
     expect(trigger.textContent).toBe("Italian");
   });
 
@@ -123,6 +124,35 @@ describe("LanguageField", () => {
 
     expect(onChange).toHaveBeenCalledExactlyOnceWith(null);
     await expect.element(box()).toHaveTextContent("No language");
+  });
+
+  test("the list keeps its filter while it closes, instead of flashing every language", async () => {
+    await render(<Harness />);
+    await open();
+    await userEvent.keyboard("fin");
+    await expect.poll(options).toEqual(["Finnishfi"]);
+
+    const counts: number[] = [];
+    const sample = () => {
+      const listbox = document.querySelector('[role="listbox"]');
+      if (!listbox) return;
+      counts.push(listbox.querySelectorAll('[role="option"]').length);
+      requestAnimationFrame(sample);
+    };
+    await userEvent.keyboard("{Escape}");
+    sample();
+    await expect.poll(() => document.querySelector('[role="listbox"]')).toBeNull();
+
+    expect(Math.max(0, ...counts)).toBeLessThanOrEqual(1);
+  });
+
+  test("opens with the chosen language in view", async () => {
+    await render(<Harness initial="vi" />);
+    await open();
+
+    await expect
+      .element(page.getByRole("option", { name: /^Vietnamese/ }))
+      .toBeInViewport({ ratio: 1 });
   });
 
   test("the search is empty again when it reopens", async () => {

@@ -6,6 +6,7 @@ import { DESKTOP_QUERY } from "../../lib/device";
 import { Field } from "../Field";
 import {
   Combobox,
+  ComboboxCollection,
   ComboboxContent,
   ComboboxEmpty,
   ComboboxGroup,
@@ -65,6 +66,16 @@ const highlighted = () =>
     .elements()
     .find((el) => el.hasAttribute("data-highlighted"))?.textContent;
 
+/** A tap as a phone sends it, all in one task, which is quicker than any pointer the driver moves. */
+function tap(el: Element) {
+  const init = { bubbles: true, cancelable: true, composed: true, pointerId: 1, isPrimary: true };
+  el.dispatchEvent(new PointerEvent("pointerdown", { ...init, pointerType: "touch" }));
+  el.dispatchEvent(new PointerEvent("pointerup", { ...init, pointerType: "touch" }));
+  el.dispatchEvent(new MouseEvent("mousedown", init));
+  el.dispatchEvent(new MouseEvent("mouseup", init));
+  el.dispatchEvent(new MouseEvent("click", init));
+}
+
 /** Opens from the keyboard, so focus has somewhere to return to: WebKit never focuses a tapped button. */
 async function openWithKeyboard() {
   (box().element() as HTMLElement).focus();
@@ -86,38 +97,53 @@ function Harness({
   const [value, setValue] = useState<string | null>(initial);
   // Room around the box, so a press "outside" lands on the page and not on the label.
   return (
-    <Field label="Language" error={error} className="m-12 w-80">
-      <Combobox
-        items={LANGUAGES}
-        value={byValue(value)}
-        onValueChange={(next) => {
-          setValue(next?.value ?? null);
-          onValueChange?.(next?.value ?? null);
-        }}
-        isItemEqualToValue={(a, b) => a.value === b.value}
-        disabled={disabled}
-      >
-        <ComboboxTrigger>
-          <ComboboxValue placeholder="Choose a language" />
-        </ComboboxTrigger>
-        <ComboboxContent aria-label="Language">
-          <ComboboxInput placeholder="Search languages" />
-          <ComboboxEmpty>No language by that name.</ComboboxEmpty>
-          <ComboboxList>
-            {(language: Language) => (
-              <ComboboxItem key={language.value} value={language}>
-                <span className="flex-1 truncate">{language.label}</span>
-                <ComboboxItemHint>{language.value}</ComboboxItemHint>
-              </ComboboxItem>
-            )}
-          </ComboboxList>
-        </ComboboxContent>
-      </Combobox>
-    </Field>
+    <>
+      <Field label="Language" error={error} className="m-12 w-80">
+        <Combobox
+          items={LANGUAGES}
+          value={byValue(value)}
+          onValueChange={(next) => {
+            setValue(next?.value ?? null);
+            onValueChange?.(next?.value ?? null);
+          }}
+          isItemEqualToValue={(a, b) => a.value === b.value}
+          disabled={disabled}
+        >
+          <ComboboxTrigger>
+            <ComboboxValue placeholder="Choose a language" />
+          </ComboboxTrigger>
+          <ComboboxContent aria-label="Language">
+            <ComboboxInput placeholder="Search languages" />
+            <ComboboxEmpty>No language by that name.</ComboboxEmpty>
+            <ComboboxList>
+              {(language: Language) => (
+                <ComboboxItem key={language.value} value={language}>
+                  <span className="flex-1 truncate">{language.label}</span>
+                  <ComboboxItemHint>{language.value}</ComboboxItemHint>
+                </ComboboxItem>
+              )}
+            </ComboboxList>
+          </ComboboxContent>
+        </Combobox>
+      </Field>
+      <button type="button">Next field</button>
+    </>
   );
 }
 
 describe("Combobox", () => {
+  test("a quick tap opens it, and it stays open", async () => {
+    await render(<Harness />);
+    const trigger = box().element();
+    tap(trigger);
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    expect(trigger.getAttribute("aria-expanded")).toBe("true");
+    await expect.element(listbox()).toBeVisible();
+    const controls = trigger.getAttribute("aria-controls");
+    if (controls) expect(document.getElementById(controls)).not.toBeNull();
+  });
+
   test("the Field's label names the box, and the box shows the chosen label", async () => {
     await render(<Harness />);
     await expect.element(box()).toHaveTextContent("Italian");
@@ -127,7 +153,7 @@ describe("Combobox", () => {
   test("shows the placeholder when nothing is chosen", async () => {
     await render(<Harness initial={null} />);
     await expect.element(box()).toHaveTextContent("Choose a language");
-    await expect.element(box()).toHaveAttribute("data-placeholder");
+    expect(box().element().querySelector("[data-placeholder]")).not.toBeNull();
   });
 
   test(
@@ -224,6 +250,50 @@ describe("Combobox", () => {
     expect(document.querySelector('[data-slot="combobox-separator"]')).not.toBeNull();
   });
 
+  test("filters grouped items, and a group with no match leaves with its label", async () => {
+    const own = [{ value: "et", label: "Estonian" }];
+    const rest = [
+      { value: "fi", label: "Finnish" },
+      { value: "fr", label: "French" },
+    ];
+    const groups = [
+      { value: "Your decks", items: own },
+      { value: "Everything else", items: rest },
+    ];
+    await render(
+      <Combobox items={groups} defaultValue={own[0]}>
+        <ComboboxTrigger>
+          <ComboboxValue placeholder="Choose a language" />
+        </ComboboxTrigger>
+        <ComboboxContent aria-label="Language">
+          <ComboboxInput placeholder="Search languages" />
+          <ComboboxList>
+            {(group: (typeof groups)[number]) => (
+              <ComboboxGroup key={group.value} items={group.items}>
+                <ComboboxLabel>{group.value}</ComboboxLabel>
+                <ComboboxCollection>
+                  {(language: Language) => (
+                    <ComboboxItem key={language.value} value={language}>
+                      {language.label}
+                    </ComboboxItem>
+                  )}
+                </ComboboxCollection>
+              </ComboboxGroup>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>,
+    );
+    (page.getByRole("combobox").first().element() as HTMLElement).focus();
+    await userEvent.keyboard("{Enter}");
+    await expect.element(search()).toHaveFocus();
+    await userEvent.keyboard("fr");
+
+    await expect.poll(() => page.getByRole("option").elements().length).toBe(1);
+    expect(page.getByRole("group", { name: "Your decks" }).elements()).toHaveLength(0);
+    await expect.element(page.getByRole("group", { name: "Everything else" })).toBeInTheDocument();
+  });
+
   test("filters as you type, highlights the first match, and Enter takes it", async () => {
     const onValueChange = vi.fn();
     await render(<Harness onValueChange={onValueChange} />);
@@ -240,6 +310,19 @@ describe("Combobox", () => {
     await expect.element(box()).toHaveFocus();
   });
 
+  test("typing on the closed box highlights the first match, not the chosen row's place", async () => {
+    const onValueChange = vi.fn();
+    await render(<Harness onValueChange={onValueChange} />);
+    (box().element() as HTMLElement).focus();
+    await userEvent.keyboard("po");
+
+    await expect.element(search()).toHaveValue("po");
+    await expect.poll(() => page.getByRole("option").elements().length).toBeGreaterThan(1);
+    await expect.poll(highlighted).toContain("Polish");
+    await userEvent.keyboard("{Enter}");
+    expect(onValueChange).toHaveBeenCalledExactlyOnceWith("pl");
+  });
+
   test("typing on the closed box opens it and searches for what was typed", async () => {
     const onValueChange = vi.fn();
     await render(<Harness onValueChange={onValueChange} />);
@@ -253,17 +336,26 @@ describe("Combobox", () => {
     expect(onValueChange).toHaveBeenCalledExactlyOnceWith("uk");
   });
 
-  test("opens on the chosen row, and the arrows walk the rows, keeping the highlighted one in view", async () => {
+  test("opens with the chosen row in view", async () => {
+    await render(<Harness initial="uk" />);
+    await openWithKeyboard();
+
+    await expect.element(option("Ukrainian")).toBeInViewport({ ratio: 1 });
+    await expect.element(option("Ukrainian")).toHaveAttribute("aria-selected", "true");
+  });
+
+  test("the arrows walk the rows, keeping the highlighted one in view", async () => {
     await render(<Harness />);
     await openWithKeyboard();
-    await expect.poll(highlighted).toContain("Italian");
-    await userEvent.keyboard("{ArrowDown}");
-    await expect.poll(highlighted).toContain("Japanese");
-    await userEvent.keyboard("{ArrowUp}{ArrowUp}");
-    await expect.poll(highlighted).toContain("Hindi");
+    if (desktop) await expect.poll(highlighted).toContain("Italian");
     await userEvent.keyboard("{End}");
     await expect.poll(highlighted).toContain("Ukrainian");
     await expect.element(option("Ukrainian")).toBeInViewport({ ratio: 1 });
+    await userEvent.keyboard("{ArrowUp}{ArrowUp}");
+    await expect.poll(highlighted).toContain("Swedish");
+    await userEvent.keyboard("{Home}");
+    await expect.poll(highlighted).toContain("Arabic");
+    await expect.element(option("Arabic")).toBeInViewport({ ratio: 1 });
   });
 
   test("picks a row with the pointer, closes, and shows it in the box", async () => {
@@ -289,6 +381,9 @@ describe("Combobox", () => {
     expect(page.getByRole("option").elements()).toHaveLength(0);
     await userEvent.keyboard("{Enter}");
     expect(onValueChange).not.toHaveBeenCalled();
+    // Nothing to take, so the search stays open with what was typed.
+    await expect.element(search()).toHaveValue("klingon");
+    await expect.element(listbox()).toBeInTheDocument();
     expect(trigger.textContent).toBe("Italian");
   });
 
@@ -305,7 +400,7 @@ describe("Combobox", () => {
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
-  test("Tab leaves the search field and closes the panel without choosing", async () => {
+  test("Tab closes the panel without choosing and moves on to the next field", async () => {
     const onValueChange = vi.fn();
     await render(<Harness onValueChange={onValueChange} />);
     await openWithKeyboard();
@@ -314,6 +409,7 @@ describe("Combobox", () => {
 
     await expect.element(listbox()).not.toBeInTheDocument();
     expect(onValueChange).not.toHaveBeenCalled();
+    await expect.poll(() => document.activeElement?.textContent).toBe("Next field");
   });
 
   test("opens again with an empty search", async () => {

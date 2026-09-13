@@ -161,8 +161,9 @@ export function LanguageField({ value, onChange, label, hint, error }: LanguageP
         isItemEqualToValue={(a, b) => a.value === b.value}
         inputValue={query}
         onInputValueChange={setQuery}
+        // On opening rather than closing, so the closing list does not flash back to every language.
         onOpenChange={(open) => {
-          if (!open) setQuery("");
+          if (open) setQuery("");
         }}
       >
         <ComboboxTrigger>

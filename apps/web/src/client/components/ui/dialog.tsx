@@ -100,7 +100,11 @@ function DialogContent({
   if (useDialogShape("DialogContent") === "touch") {
     return (
       <DrawerContent {...focus}>
-        <div data-slot="dialog-content" className="grid gap-4 px-4 pt-2 pb-5">
+        {/* One column that never grows past the drawer, so a long unbroken value truncates instead. */}
+        <div
+          data-slot="dialog-content"
+          className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4 px-4 pt-2 pb-5"
+        >
           {children}
         </div>
       </DrawerContent>

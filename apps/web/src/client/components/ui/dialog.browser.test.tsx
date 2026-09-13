@@ -93,13 +93,16 @@ describe("Dialog", () => {
   test(
     desktop
       ? "takes its width from the caller"
-      : "spans the drawer with the same inset on both sides, whatever width the caller asks for",
+      : "spans the drawer with the same inset on both sides, and long content never widens it",
     async () => {
       await render(
         <Dialog defaultOpen>
           <DialogContent className="w-[min(92vw,440px)]">
             <DialogTitle>New deck</DialogTitle>
             <input aria-label="Name" className="w-full" />
+            <button type="button" className="whitespace-nowrap">
+              {`Add to ${"Long learning ".repeat(12)}`}
+            </button>
           </DialogContent>
         </Dialog>,
       );
@@ -112,6 +115,8 @@ describe("Dialog", () => {
       } else {
         expect(field.left - box.left).toBeGreaterThan(0);
         expect(box.right - field.right).toBeCloseTo(field.left - box.left, 0);
+        expect(document.documentElement.scrollWidth).toBeLessThanOrEqual(window.innerWidth);
+        expect(field.right).toBeLessThanOrEqual(box.right);
       }
     },
   );

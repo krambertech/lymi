@@ -16,12 +16,7 @@ import {
   DrawerVirtualKeyboardProvider,
 } from "./drawer";
 
-/*
- * shadcn's Combobox, in the shape of the machine: on a desktop a panel anchored under its box, on a
- * touch device the same search and rows in a drawer under the thumb. Closed, it is Select's box;
- * open, the search field leads and the rows filter as you type. Every part renders both shapes, so a
- * call site never asks which machine it is on. ADR 0017.
- */
+// shadcn's Combobox in the machine's shape: a panel under the box on a desktop, a drawer on touch. ADR 0017.
 
 type Shape = "desktop" | "touch";
 
@@ -29,6 +24,8 @@ interface ComboboxContextValue {
   shape: Shape;
   open: boolean;
   setOpen: (open: boolean) => void;
+  disabled: boolean;
+  trigger: React.RefObject<HTMLButtonElement | null>;
   input: React.RefObject<HTMLInputElement | null>;
 }
 
@@ -49,14 +46,13 @@ type ComboboxProps<Value, Multiple extends boolean | undefined, Item> = Omit<
   onOpenChange?: ((open: boolean) => void) | undefined;
 };
 
-/**
- * The first match is highlighted while typing, so Enter takes it. The pointer's fill is its own, so
- * Enter picks the keyboard's row and never the row a resting pointer happens to be over.
- */
+// The pointer's fill is its own, so Enter takes the keyboard's row, never the one a resting pointer is on.
 function Combobox<Value, Multiple extends boolean | undefined = false, Item = Value>({
   open: controlledOpen,
   defaultOpen = false,
   onOpenChange,
+  onOpenChangeComplete,
+  disabled = false,
   children,
   ...props
 }: ComboboxProps<Value, Multiple, Item>) {
@@ -70,8 +66,12 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
     [onOpenChange],
   );
   const shape = useOverlayShape(open);
+  const trigger = React.useRef<HTMLButtonElement>(null);
   const input = React.useRef<HTMLInputElement>(null);
-  const context = React.useMemo(() => ({ shape, open, setOpen, input }), [shape, open, setOpen]);
+  const context = React.useMemo(
+    () => ({ shape, open, setOpen, disabled, trigger, input }),
+    [shape, open, setOpen, disabled],
+  );
   return (
     <ComboboxContext.Provider value={context}>
       {/* On touch the list is inline in the drawer, and the drawer's open state is the list's. */}
@@ -79,14 +79,21 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
         autoHighlight
         highlightItemOnHover={false}
         {...props}
+        disabled={disabled}
         open={open}
         onOpenChange={(next) => setOpen(next)}
+        onOpenChangeComplete={shape === "desktop" ? onOpenChangeComplete : undefined}
         inline={shape === "touch"}
       >
         {shape === "desktop" ? (
           children
         ) : (
-          <Drawer open={open} onOpenChange={(next) => setOpen(next)} showSwipeHandle>
+          <Drawer
+            open={open}
+            onOpenChange={(next) => setOpen(next)}
+            onOpenChangeComplete={onOpenChangeComplete}
+            showSwipeHandle
+          >
             <DrawerVirtualKeyboardProvider>{children}</DrawerVirtualKeyboardProvider>
           </Drawer>
         )}
@@ -107,12 +114,16 @@ const setInputValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype
 
 /** The box. Put a `ComboboxValue` inside; the chevron is already there. */
 function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
-  const { shape, open, setOpen, input } = useCombobox("ComboboxTrigger");
+  const { shape, open, setOpen, disabled, trigger, input } = useCombobox("ComboboxTrigger");
   const a11y = useControlProps(props);
   const typed = React.useRef("");
-  // A letter typed on the closed box opens it and starts the search with that letter, as the
-  // platform's own pickers do; letters that arrive before the field has focus are kept.
+  // A letter on the closed box opens it with that letter searched; letters typed before the field has focus are kept.
   const onKeyDown = (e: BaseUIEvent<React.KeyboardEvent<HTMLButtonElement>>) => {
+    if (shape === "touch" && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+      e.preventDefault();
+      setOpen(true);
+      return;
+    }
     if (e.key.length !== 1 || e.key === " " || e.metaKey || e.ctrlKey || e.altKey) return;
     // Base UI's own typeahead would choose the matching row without showing it.
     e.preventBaseUIHandler();
@@ -122,14 +133,18 @@ function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
     if (waiting) return;
     setOpen(true);
     let frames = 0;
+    let settled = 0;
     const hand = () => {
       const field = input.current;
-      if (field && document.activeElement === field) {
-        // Held letters came first, before any that reached the field once it had focus.
+      // Two frames after focus lands, so the list has put its highlight on the chosen row first.
+      if (field && document.activeElement === field && ++settled > 2) {
         setInputValue?.call(field, typed.current + field.value);
-        field.dispatchEvent(new Event("input", { bubbles: true }));
+        // As typing, so Base UI filters and highlights the first match rather than treating it as autofill.
+        field.dispatchEvent(
+          new InputEvent("input", { bubbles: true, inputType: "insertText", data: typed.current }),
+        );
         typed.current = "";
-      } else if (++frames < 30) {
+      } else if (++frames < 60) {
         requestAnimationFrame(hand);
       } else {
         typed.current = "";
@@ -137,31 +152,48 @@ function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
     };
     requestAnimationFrame(hand);
   };
+  const classes = cn(
+    controlBase,
+    controlSize,
+    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:edge-2",
+    className,
+  );
+  const chevron = (
+    <ChevronDown
+      className="size-4 shrink-0 text-muted transition-transform duration-150 motion-reduce:transition-none [[data-popup-open]>&]:rotate-180"
+      aria-hidden="true"
+    />
+  );
+  if (shape === "touch") {
+    // The drawer's own trigger: Base UI's would toggle the list a second time on the same tap.
+    return (
+      <DrawerTrigger
+        ref={trigger}
+        data-slot="combobox-trigger"
+        {...a11y}
+        role="combobox"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        data-popup-open={open || undefined}
+        disabled={disabled}
+        onKeyDown={onKeyDown}
+        className={classes}
+      >
+        {children}
+        {chevron}
+      </DrawerTrigger>
+    );
+  }
   return (
     <ComboboxPrimitive.Trigger
+      ref={trigger}
       data-slot="combobox-trigger"
       {...a11y}
-      // Inline, the list has no popup of its own to open or announce: the drawer's trigger opens the
-      // drawer, and hands focus back to the box when it closes.
-      {...(shape === "touch" && {
-        render: <DrawerTrigger />,
-        "aria-haspopup": "dialog" as const,
-        "aria-expanded": open,
-        "data-popup-open": open || undefined,
-      })}
       onKeyDown={onKeyDown}
-      className={cn(
-        controlBase,
-        controlSize,
-        "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-placeholder:text-muted data-popup-open:edge-2",
-        className,
-      )}
+      className={classes}
     >
       {children}
-      <ChevronDown
-        className="size-4 shrink-0 text-muted transition-transform duration-150 motion-reduce:transition-none [[data-popup-open]>&]:rotate-180"
-        aria-hidden="true"
-      />
+      {chevron}
     </ComboboxPrimitive.Trigger>
   );
 }
@@ -178,7 +210,17 @@ interface ValueProps {
 function ComboboxValue({ placeholder, className, children }: ValueProps) {
   return (
     <span data-slot="combobox-value" className={cn("flex-1 truncate", className)}>
-      <ComboboxPrimitive.Value placeholder={placeholder}>{children}</ComboboxPrimitive.Value>
+      <ComboboxPrimitive.Value
+        placeholder={
+          placeholder == null ? undefined : (
+            <span data-placeholder="" className="text-muted">
+              {placeholder}
+            </span>
+          )
+        }
+      >
+        {children}
+      </ComboboxPrimitive.Value>
     </span>
   );
 }
@@ -231,19 +273,50 @@ function AnchoredContent({
   );
 }
 
-/**
- * The search and its rows in a drawer. The list keeps one height while it filters, so the drawer
- * does not jump with every letter, and focus lands in the search field as it rises. Tab leaves and
- * closes it, as it leaves the anchored panel, instead of circling inside the drawer.
- */
+function tabNeighbour(from: HTMLElement, backwards: boolean, skip: Element | null) {
+  const all = [
+    ...document.querySelectorAll<HTMLElement>(
+      "a[href], button, input, select, textarea, [tabindex]",
+    ),
+  ].filter(
+    (el) =>
+      el === from ||
+      (el.tabIndex >= 0 &&
+        !(el as HTMLButtonElement).disabled &&
+        !el.hasAttribute("data-base-ui-focus-guard") &&
+        !skip?.contains(el) &&
+        el.getClientRects().length > 0),
+  );
+  const i = all.indexOf(from);
+  return all[i + (backwards ? -1 : 1)] ?? from;
+}
+
+// One list height while it filters, so the drawer does not jump with every letter. Tab moves on, as from the panel.
 function DrawerSearchContent({ "aria-label": label, className, children }: ContentProps) {
-  const { input, setOpen } = useCombobox("ComboboxContent");
+  const { input, trigger, setOpen } = useCombobox("ComboboxContent");
+  const ref = React.useRef<HTMLDivElement>(null);
+  const tabbed = React.useRef<"forward" | "back" | null>(null);
+  React.useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      ref.current
+        ?.querySelector('[role="option"][aria-selected="true"]')
+        ?.scrollIntoView({ block: "nearest" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
   return (
     <DrawerContent
       initialFocus={input}
+      finalFocus={() => {
+        const box = trigger.current;
+        if (!tabbed.current || !box) return true;
+        const popup = ref.current?.closest('[data-slot="drawer-popup"]') ?? null;
+        return tabNeighbour(box, tabbed.current === "back", popup);
+      }}
       onKeyDown={(e) => {
         if (e.key !== "Tab") return;
         e.preventDefault();
+        tabbed.current = e.shiftKey ? "back" : "forward";
         setOpen(false);
       }}
     >
@@ -251,6 +324,7 @@ function DrawerSearchContent({ "aria-label": label, className, children }: Conte
         <DrawerTitle className="text-sm font-medium text-text-2">{label}</DrawerTitle>
       </DrawerHeader>
       <div
+        ref={ref}
         data-slot="combobox-content"
         className={cn("flex h-[min(24rem,60dvh)] flex-col px-2 pt-2", className)}
       >
@@ -281,6 +355,13 @@ function ComboboxInput({ placeholder, className }: InputProps) {
       <ComboboxPrimitive.Input
         ref={input}
         data-slot="combobox-input"
+        onKeyDown={(e) => {
+          // With no row to take, Enter keeps the search open with what was typed.
+          if (e.key === "Enter" && !e.currentTarget.getAttribute("aria-activedescendant")) {
+            e.preventBaseUIHandler();
+            e.preventDefault();
+          }
+        }}
         aria-label={placeholder}
         placeholder={placeholder}
         autoCapitalize="none"
@@ -323,8 +404,7 @@ function ComboboxList<Item>({ className, children }: ListProps<Item>) {
   const ref = React.useRef<HTMLDivElement>(null);
   const hover = useFluidHover(ref, { items: OPTION, dividers: '[data-slot="combobox-separator"]' });
   const { hide, remeasure } = hover;
-  // Keys land in the search field, beside the list: typing re-filters the rows under a still
-  // pointer, and the arrows move a highlight that carries its own fill.
+  // Keys land in the search field beside the list, and each one moves or re-filters the rows under the pointer.
   React.useEffect(() => {
     const onKey = () => {
       hide();

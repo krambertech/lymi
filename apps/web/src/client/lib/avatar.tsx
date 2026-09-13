@@ -32,6 +32,8 @@ export function avatarImageQuery(version: string | null | undefined) {
     },
     enabled: Boolean(version),
     staleTime: Number.POSITIVE_INFINITY,
+    // A replaced photo's bytes are never asked for again; do not keep them for the session.
+    gcTime: 60_000,
     retry: 1,
     meta: { persist: false },
   });

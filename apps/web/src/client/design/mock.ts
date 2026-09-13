@@ -245,14 +245,25 @@ export const wordReviews: Review[] = [
 ];
 export const wordEvents: WordEvent[] = [
   {
-    at: new Date(now - 9 * day),
-    label: "Enriched",
-    detail: "the AI wrote the example and the pronunciation",
+    id: "e3",
+    at: new Date(now - 4 * day),
+    kind: "edited",
+    text: "Meaning changed to “to take it personally”",
+    actor: "by you",
   },
   {
+    id: "e2",
     at: new Date(now - 9 * day),
-    label: "Added",
-    detail: "by Claude, from your lesson notes · meaning from the lesson",
+    kind: "enriched",
+    text: "Enriched the example and the pronunciation",
+    actor: "by the AI",
+  },
+  {
+    id: "e1",
+    at: new Date(now - 9 * day),
+    kind: "added",
+    text: "Card added, meaning from the lesson",
+    actor: "by Claude",
   },
 ];
 

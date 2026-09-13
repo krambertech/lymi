@@ -40,7 +40,7 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
     await expect(page).toHaveURL(/\?card=/);
     await expect(page.getByRole("heading", { level: 1, name: term })).toBeVisible();
     await expect(shown("AI wrote this")).toBeVisible();
-    await expect(shown("Added")).toBeVisible();
+    await expect(shown("Card added")).toBeVisible();
   });
 
   await test.step("edit the meaning and watch the source become yours", async () => {
@@ -52,7 +52,7 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
     await page.getByRole("button", { name: "Done", exact: true }).click();
     await expect(shown("to hurry up, to get a move on")).toBeVisible();
     await expect(shown("You wrote this")).toBeVisible();
-    await expect(shown("Edited")).toBeVisible();
+    await expect(shown("Meaning changed to “to hurry up, to get a move on”")).toBeVisible();
   });
 
   await test.step("move it to the other deck", async () => {

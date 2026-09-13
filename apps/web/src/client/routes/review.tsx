@@ -4,13 +4,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, buttonClass } from "../components/Button";
+import { GRADES } from "../components/Grade";
 import { api, gradeWithOutbox, type QueueItem } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
 import { decksQuery, queueQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import { itemKey } from "../lib/review-modes";
 import {
-  GRADES,
   GradeBar,
   ReviewCard,
   ReviewError,

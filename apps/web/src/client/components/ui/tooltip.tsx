@@ -1,17 +1,19 @@
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import { cn } from "cn";
+import * as React from "react";
 
 /*
- * shadcn's Tooltip on Base UI, in the toast's inverted ink. It is a visual name for a control
- * whose accessible name it repeats, so the popup is hidden from assistive technology and the
- * trigger keeps its own `aria-label`. Mouse hover after a pause, keyboard focus at once, never on
- * touch. One provider at the client root shares the delay, so the next tooltip along a row of
- * controls opens with no wait and no fade. ADR 0017.
+ * shadcn's Tooltip on Base UI: a visual name for a control whose accessible name it repeats, so
+ * the popup is hidden from assistive technology; timing and behaviour are DESIGN.md's tooltip
+ * paragraph, ADR 0017.
  */
 
 const DELAY = 500;
 /** Moving from one control to the next inside this window skips the delay and the fade. */
 const WARM = 400;
+
+/** A native modal dialog paints above every z-index, so a name for a control inside one renders inside it. */
+const TopLayerContext = React.createContext<HTMLElement | null>(null);
 
 function TooltipProvider({
   delay = DELAY,
@@ -29,13 +31,29 @@ function TooltipProvider({
 }
 
 /** A name never holds a control, so the pointer passes through it and it closes on the way out. */
-function Tooltip({ disableHoverablePopup = true, ...props }: TooltipPrimitive.Root.Props) {
+function Tooltip({
+  disableHoverablePopup = true,
+  onOpenChange,
+  children,
+  ...props
+}: TooltipPrimitive.Root.Props) {
+  const [topLayer, setTopLayer] = React.useState<HTMLElement | null>(null);
   return (
-    <TooltipPrimitive.Root
-      data-slot="tooltip"
-      disableHoverablePopup={disableHoverablePopup}
-      {...props}
-    />
+    <TopLayerContext.Provider value={topLayer}>
+      <TooltipPrimitive.Root
+        data-slot="tooltip"
+        disableHoverablePopup={disableHoverablePopup}
+        onOpenChange={(open, details) => {
+          if (open) setTopLayer(details.trigger?.closest<HTMLElement>("dialog:modal") ?? null);
+          // One Escape closes the name and whatever holds its control.
+          if (details.reason === "escape-key") details.allowPropagation();
+          onOpenChange?.(open, details);
+        }}
+        {...props}
+      >
+        {children}
+      </TooltipPrimitive.Root>
+    </TopLayerContext.Provider>
   );
 }
 
@@ -54,8 +72,9 @@ function TooltipContent({
   ...props
 }: TooltipPrimitive.Popup.Props &
   Pick<TooltipPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
+  const topLayer = React.useContext(TopLayerContext);
   return (
-    <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Portal container={topLayer ?? undefined}>
       <TooltipPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -69,7 +88,7 @@ function TooltipContent({
           aria-hidden="true"
           className={cn(
             // Grows out of the side nearest its control: in over 120 ms, out in 80, at once along a row.
-            "pointer-events-none w-max max-w-60 origin-(--transform-origin) rounded-xs bg-text px-2 py-1 text-xs font-medium text-canvas transition-[opacity,translate,scale] duration-80 ease-(--ease-out) [--tip-y:-2px] data-open:duration-120 data-instant:duration-0 data-[side=top]:[--tip-y:2px] data-starting-style:translate-y-(--tip-y) data-starting-style:scale-97 data-starting-style:opacity-0 data-ending-style:translate-y-(--tip-y) data-ending-style:scale-97 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+            "pointer-events-none w-max max-w-60 origin-(--transform-origin) rounded-xs bg-text px-2 py-1 text-xs font-medium text-canvas transition-[opacity,translate,scale] duration-80 ease-(--ease-out) [--tip-y:-2px] data-open:duration-120 data-[instant=delay]:duration-0 data-[side=top]:[--tip-y:2px] data-starting-style:translate-y-(--tip-y) data-starting-style:scale-97 data-starting-style:opacity-0 data-ending-style:translate-y-(--tip-y) data-ending-style:scale-97 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
             className,
           )}
           {...props}

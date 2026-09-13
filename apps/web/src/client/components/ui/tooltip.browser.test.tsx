@@ -3,6 +3,7 @@ import { describe, expect, inject, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { IconButton } from "../Button";
+import { Dialog, DialogContent, DialogTitle } from "./dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 const desktop = inject("machine") === "desktop";
@@ -114,8 +115,49 @@ describe("Tooltip", () => {
     await screen.getByRole("button", { name: "Archive deck" }).hover();
 
     await expect.element(tip("Archive deck")).toBeVisible();
-    await expect.element(tip("Archive deck")).toHaveAttribute("data-instant");
+    await expect.element(tip("Archive deck")).toHaveAttribute("data-instant", "delay");
   });
+
+  test.runIf(desktop)("one Escape closes the name and the dialog around its control", async () => {
+    await render(
+      <TooltipProvider>
+        <Dialog defaultOpen>
+          <DialogContent>
+            <DialogTitle>Photo</DialogTitle>
+            <IconButton label="Zoom in" size="sm">
+              <Pencil />
+            </IconButton>
+          </DialogContent>
+        </Dialog>
+      </TooltipProvider>,
+    );
+    await expect.element(page.getByRole("dialog")).toBeVisible();
+    await tab();
+    await expect.element(tip("Zoom in")).toBeVisible();
+    await userEvent.keyboard("{Escape}");
+
+    await expect.poll(() => openTips().length).toBe(0);
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  test.runIf(desktop)(
+    "renders inside a native modal dialog, which paints above every z-index",
+    async () => {
+      await render(
+        <TooltipProvider>
+          <dialog ref={(node) => node?.showModal()}>
+            <IconButton label="Close" size="sm">
+              <Pencil />
+            </IconButton>
+          </dialog>
+        </TooltipProvider>,
+      );
+      await tab();
+
+      await expect.element(tip("Close")).toBeVisible();
+      expect(openTips()[0]?.closest("dialog")).not.toBeNull();
+    },
+  );
 
   test.runIf(desktop)("pressing the control closes it", async () => {
     const screen = await render(<Row delay={0} />);

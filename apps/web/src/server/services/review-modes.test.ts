@@ -242,7 +242,9 @@ describe("GET /api/cards/:id", () => {
       const res = await app.request(`/api/cards/${added.card.id}`);
       const body = (await res.json()) as Record<string, unknown>;
       expect(res.status).toBe(200);
-      expect(body).toMatchObject({ reviewModes: null, directions: null });
+      expect(body).toMatchObject({ reviewModes: null, directions: null, image: null });
+      // The stored mode list is a column on the card row; the API shows `reviewModes` instead.
+      expect(body).not.toHaveProperty("reviewModeKeys");
     } finally {
       await test.dispose();
     }

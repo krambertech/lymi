@@ -11,7 +11,7 @@ import {
   restoreCardImage,
   uploadCardImage,
 } from "./card-images";
-import { addCards, showCard } from "./cards";
+import { addCards, showCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { dueCount } from "./due";
@@ -325,6 +325,21 @@ describe("card pictures", () => {
 
     await archiveCardImage(owner, card.id, {});
     expect(await asked()).toEqual([{ cue: "term", target: "meaning" }]);
+  });
+
+  it("asks a card by text again when a picture it gained picture-only modes for is archived", async () => {
+    const deck = await createDeck(owner, { name: "Signs later" });
+    const [added] = await addCards(owner, [{ deckId: deck.id, term: "later", meaning: "Later" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const deps = { bucket: bucket(), images: processor() };
+    await uploadCardImage(owner, added.card.id, jpeg, { description: "A blue square" }, deps);
+    await updateCard(owner, added.card.id, { reviewModes: [{ cue: "image", target: "term" }] });
+    const asked = async () =>
+      (await reviewQueue(owner, { deckId: deck.id })).items.map((item) => item.mode);
+    expect(await asked()).toEqual([{ cue: "image", target: "term" }]);
+
+    await archiveCardImage(owner, added.card.id, {});
+    expect(await asked()).toEqual([{ cue: "meaning", target: "term" }]);
   });
 
   it("serves the picture to members, gives members their own picture states, and hides it from strangers", async () => {

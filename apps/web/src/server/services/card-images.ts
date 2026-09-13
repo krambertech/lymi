@@ -227,7 +227,8 @@ async function setStatus(
       .update(schema.cardImages)
       .set({ status, updatedAt: new Date() })
       .where(and(eq(schema.cardImages.id, image.id), claimed(card.id, token))),
-    ...(status === "active" ? stateStatementsForCard(ctx.db, card.id) : []),
+    // Archiving can make a text fallback asked that the card never had a state for.
+    ...stateStatementsForCard(ctx.db, card.id),
     audit.statement,
   ]);
   await confirm(ctx.db, audit.id);

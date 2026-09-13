@@ -81,14 +81,21 @@ function stateInserts(db: Db, where: SQL, learners: SQL, now: Date): Statement[]
   });
 }
 
-/** Every deck's owner and active members. */
-const deckLearners = sql`select id as deck_id, user_id from decks
-  union all
-  select deck_id, user_id from deck_members where removed_at is null`;
+/** One deck's owner and active members, so a statement never scans every deck. */
+function deckLearners(deckId: SQL) {
+  return sql`select id as deck_id, user_id from decks where id = ${deckId}
+    union all
+    select deck_id, user_id from deck_members where deck_id = ${deckId} and removed_at is null`;
+}
 
 /** One card's states for everyone who studies its deck, as membership stands inside the batch. */
 export function stateStatementsForCard(db: Db, cardId: string, now = new Date()): Statement[] {
-  return stateInserts(db, sql`cards.id = ${cardId}`, deckLearners, now);
+  return stateInserts(
+    db,
+    sql`cards.id = ${cardId}`,
+    deckLearners(sql`(select deck_id from cards where id = ${cardId})`),
+    now,
+  );
 }
 
 /** States for every card that follows the deck, after the deck's modes change. */
@@ -96,7 +103,7 @@ export function stateStatementsForDeck(db: Db, deckId: string, now = new Date())
   return stateInserts(
     db,
     sql`cards.deck_id = ${deckId} and cards.directions is null and cards.archived_at is null`,
-    deckLearners,
+    deckLearners(sql`${deckId}`),
     now,
   );
 }

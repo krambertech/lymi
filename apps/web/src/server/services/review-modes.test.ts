@@ -247,6 +247,8 @@ describe("GET /api/cards/:id", () => {
       await test.dispose();
     }
   }, 60_000);
+});
+
 describe("picture modes on cards", () => {
   let dispose: () => Promise<void>;
   let ctx: ServiceContext;

@@ -30,7 +30,7 @@ if (leakedPwa) throw new Error(`Public-site build exposes a product PWA asset: $
 const publicMarkers = [
   "Lymi · Keep what you learn",
   "Every route the Lymi API serves, read from the running server.",
-  "Join the private beta",
+  "Bring your next lesson with you.",
 ];
 for (const path of filesBelow(productDist)) {
   if (!/\.(?:css|html|js)$/.test(path) || statSync(path).size > 10_000_000) continue;

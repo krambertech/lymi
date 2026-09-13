@@ -80,9 +80,9 @@ test("the public Worker owns beta signup without exposing product APIs", async (
     (response) =>
       response.request().method() === "POST" && response.url() === `${publicSite}/api/beta`,
   );
-  await page.getByRole("button", { name: "Request invitation" }).click();
+  await page.getByRole("button", { name: "Request access" }).click();
   expect((await signup).status()).toBe(200);
-  await expect(page.getByRole("status")).toContainText("You’re on the list.");
+  await expect(page.getByRole("status")).toContainText("Request received.");
 });
 
 test("clearing an installed product origin recovers from stale browser storage", async ({

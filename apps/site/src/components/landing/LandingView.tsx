@@ -81,7 +81,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               </a>
             </span>
             <a href="#join" className={buttonClass("secondary", "sm")}>
-              Join the beta
+              Request access
             </a>
           </div>
         </nav>
@@ -99,7 +99,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             </p>
             <div className="mt-8">
               <a href="#join" className={buttonClass("primary", "lg")}>
-                <Trans>Join the private beta</Trans>
+                <Trans>Request access</Trans>
               </a>
             </div>
             <p className="mt-3.5 text-sm text-muted">
@@ -284,7 +284,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
                 Bring your next lesson with you.
               </h2>
               <p className="mt-5 max-w-[44ch] text-md text-text-2">
-                <Trans>The private beta is free. We’ll write when there’s room for you.</Trans>
+                <Trans>The private beta is free. If we can invite you, we’ll email you.</Trans>
               </p>
             </div>
             <JoinBeta />

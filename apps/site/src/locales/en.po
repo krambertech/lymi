@@ -217,10 +217,6 @@ msgstr "It will all work out"
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "It’s why a half-read chapter keeps nagging at you."
 
-#: src/components/landing/LandingView.tsx
-msgid "Join the private beta"
-msgstr "Join the private beta"
-
 #: src/components/landing/hand-cards.ts
 msgid "Just the right amount: not too much, not too little"
 msgstr "Just the right amount: not too much, not too little"
@@ -318,6 +314,10 @@ msgstr "Quick nunchi means sensing a mood before anyone says a word."
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
+#: src/components/landing/LandingView.tsx
+msgid "Request access"
+msgstr "Request access"
+
 #: src/components/landing/hand-cards.ts
 msgid "Reviews spread over days stick better than the same reviews crammed together"
 msgstr "Reviews spread over days stick better than the same reviews crammed together"
@@ -411,8 +411,8 @@ msgid "The player would pass, if chess allowed it."
 msgstr "The player would pass, if chess allowed it."
 
 #: src/components/landing/LandingView.tsx
-msgid "The private beta is free. We’ll write when there’s room for you."
-msgstr "The private beta is free. We’ll write when there’s room for you."
+msgid "The private beta is free. If we can invite you, we’ll email you."
+msgstr "The private beta is free. If we can invite you, we’ll email you."
 
 #: src/components/landing/hand-cards.ts
 msgid "The push behind ragtime, funk and reggae."

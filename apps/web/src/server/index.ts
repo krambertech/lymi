@@ -3,7 +3,7 @@ import { MeOut } from "@lymi/core";
 import { Hono } from "hono";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
-import type { Bindings } from "./env";
+import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
 import { describe, handleError } from "./http";
 import { joinPage } from "./join-page";
@@ -171,7 +171,8 @@ app.notFound((c) => {
 app.onError(handleError);
 
 export default {
-  fetch(request: Request, env: Bindings, executionCtx: ExecutionContext) {
+  fetch(request: Request, configuredEnv: Bindings, executionCtx: ExecutionContext) {
+    const env = withServedOrigin(request.url, configuredEnv);
     const originResponse = responseForOriginDecision(
       decideOriginRoute(request.url, canonicalOrigins(env)),
     );

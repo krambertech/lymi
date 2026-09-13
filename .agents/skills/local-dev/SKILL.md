@@ -9,13 +9,13 @@ Full detail is in [docs/local-dev.md](../../../docs/local-dev.md). This is the o
 
 ## Start
 
-Use the Browser pane's `preview_start` with the launch configuration named `lymi`. It serves the product on port 5241, which is the `PRODUCT_URL` in `apps/web/.dev.vars`. Do not start it through Bash.
+Use the Browser pane's `preview_start` with the launch configuration named `lymi`. It prefers port 5241 and takes a free port when another worktree holds it; use the port `preview_start` reports. Do not start it through Bash.
 
 If the server logs a migration error, or `pnpm db:migrate` reports a table that already exists, run `pnpm local db:fresh` and start the server again.
 
 ## Sign in
 
-Navigate the tab to `http://localhost:5241/api/dev/sign-in?as=<persona>`. The response sets the session cookie and redirects to Today. Never type a password, and never hand a password to the user to type; the persona accounts need none.
+Navigate the tab to `/api/dev/sign-in?as=<persona>` on that port. The response sets the session cookie and redirects to Today. Never type a password, and never hand a password to the user to type; the persona accounts need none.
 
 Personas: `fresh` (nothing), `learner` (three decks, a few due, a streak, cards from an assistant), `streak` (fourteen days, nothing due), `backlog` (everything due), `polyglot` (Ukrainian interface and meanings, a deck with no language). `pnpm local personas` prints them.
 

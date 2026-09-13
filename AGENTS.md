@@ -10,7 +10,7 @@ Two deployables: `apps/site` is the Astro public site plus its narrow beta/healt
 
 ## Testing locally
 
-Start the product with the `lymi` entry in `.claude/launch.json` (port 5241). To get a signed-in session, navigate the browser to `/api/dev/sign-in?as=learner`; never type a password. Personas, the developer panel (backtick key), `pnpm local`, and the `/api/dev` routes are in [`docs/local-dev.md`](docs/local-dev.md). If migrations fail against the local D1, `pnpm local db:fresh` rebuilds it.
+Start the product with the `lymi` entry in `.claude/launch.json` (port 5241, or a free port when another worktree holds it). To get a signed-in session, navigate the browser to `/api/dev/sign-in?as=learner`; never type a password. Personas, the developer panel (backtick key), `pnpm local`, and the `/api/dev` routes are in [`docs/local-dev.md`](docs/local-dev.md). If migrations fail against the local D1, `pnpm local db:fresh` rebuilds it.
 
 ## Before you push
 

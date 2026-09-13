@@ -8,6 +8,7 @@ export type DocPath =
   | "/docs/quickstart"
   | "/docs/authentication"
   | "/docs/cards"
+  | "/docs/scheduling"
   | "/docs/recipes"
   | "/docs/api"
   | "/docs/mcp"
@@ -52,7 +53,14 @@ export const PAGES: DocPage[] = [
     to: "/docs/cards",
     nav: "Decks and cards",
     title: "Decks and cards",
-    blurb: "How a card is shaped, what happens to duplicates, and how reviews are scheduled.",
+    blurb: "How a card is shaped, what happens to duplicates, and which modes it is asked in.",
+    section: "Guides",
+  },
+  {
+    to: "/docs/scheduling",
+    nav: "Review scheduling",
+    title: "How reviews are scheduled",
+    blurb: "When a card is due, which card comes next, and the simulations behind the rules.",
     section: "Guides",
   },
   {

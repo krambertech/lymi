@@ -13,6 +13,7 @@ const paths = [
   "/docs",
   "/docs/quickstart",
   "/docs/cards",
+  "/docs/scheduling",
   "/docs/mcp",
   "/docs/mcp/claude",
   "/docs/mcp/chatgpt",

@@ -41,7 +41,8 @@ Documentation source lives in `apps/site/src/components/docs`, with one Astro pa
 | `/docs` | What the API is and which way in to choose. |
 | `/docs/quickstart` | Make a key, add a card and see it in the app. |
 | `/docs/authentication` | Keys, scopes, rate limit and error codes. |
-| `/docs/cards` | Card shape, duplicate rules, directions and FSRS. |
+| `/docs/cards` | Card shape, duplicate rules, directions and FSRS states. |
+| `/docs/scheduling` | How FSRS sets intervals and how the draw picks the next card. Tables, the simulated day and interval examples are computed from `packages/core` at build time; the year-long studies come from `packages/core/simulation/results.json`. |
 | `/docs/recipes` | Import a word list, safely re-run a script and back up a deck. |
 | `/docs/api` | Browser-rendered reference loaded from `https://my.lymi.app/api/openapi.json` without credentials. |
 | `/docs/mcp`, `/docs/mcp/claude`, `/docs/mcp/chatgpt` | Connecting an assistant to `https://my.lymi.app/mcp`. |

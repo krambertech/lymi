@@ -1,0 +1,73 @@
+{
+  "fingerprint": "408081a1f8a26922e91c0c96c4c448b2c29a3cf92351981608693a9819e7e78e",
+  "reviewOrder": [
+    {
+      "id": "due",
+      "introduced": 2421,
+      "remembered": 1976,
+      "late": 1149
+    },
+    {
+      "id": "lowest",
+      "introduced": 2472,
+      "remembered": 1985,
+      "late": 1924
+    },
+    {
+      "id": "highest",
+      "introduced": 2874,
+      "remembered": 2285,
+      "late": 1298
+    },
+    {
+      "id": "random",
+      "introduced": 2492,
+      "remembered": 2007,
+      "late": 1199
+    },
+    {
+      "id": "forgetting",
+      "introduced": 2442,
+      "remembered": 1986,
+      "late": 1341
+    },
+    {
+      "id": "lymi",
+      "introduced": 2630,
+      "remembered": 2078,
+      "late": 936
+    }
+  ],
+  "newCards": [
+    {
+      "id": "halving",
+      "medianWait": 6,
+      "p90Wait": 19,
+      "joinedStarted": 101
+    },
+    {
+      "id": "floor",
+      "medianWait": 24,
+      "p90Wait": 176,
+      "joinedStarted": 217
+    },
+    {
+      "id": "equal",
+      "medianWait": 62,
+      "p90Wait": 191,
+      "joinedStarted": 245
+    },
+    {
+      "id": "oldest",
+      "medianWait": 154,
+      "p90Wait": 228,
+      "joinedStarted": 300
+    },
+    {
+      "id": "lymi",
+      "medianWait": 6,
+      "p90Wait": 20,
+      "joinedStarted": 223
+    }
+  ]
+}

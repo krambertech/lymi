@@ -41,9 +41,8 @@ export function isLoopbackUrl(value: string): boolean {
 export function appPreviewEnabled(env: {
   PRODUCT_URL: string;
   APP_PREVIEW?: string | undefined;
-  APP_PREVIEW_KEY?: string | undefined;
 }): boolean {
-  if (env.APP_PREVIEW !== "true" || (env.APP_PREVIEW_KEY?.length ?? 0) < 32) return false;
+  if (env.APP_PREVIEW !== "true") return false;
   try {
     const url = new URL(env.PRODUCT_URL);
     return (

@@ -20,21 +20,25 @@ describe("developer tools gate", () => {
     expect(devToolsEnabled(preview)).toBe(true);
   });
 
-  it("fails closed for incomplete or non-preview remote configuration", () => {
-    const key = "a-preview-capability-that-is-long-enough";
+  it("fails closed for non-preview remote configuration", () => {
     expect(
       appPreviewEnabled({
         PRODUCT_URL: "https://my.lymi.app",
         APP_PREVIEW: "true",
-        APP_PREVIEW_KEY: key,
       }),
     ).toBe(false);
+    expect(appPreviewEnabled({ PRODUCT_URL: "https://my.lymi.app", APP_PREVIEW: "true" })).toBe(
+      false,
+    );
+  });
+
+  it("lets the access middleware validate the preview capability", () => {
     expect(
       appPreviewEnabled({
         PRODUCT_URL: "https://preview-lymi-app-pr-105.example.workers.dev",
         APP_PREVIEW: "true",
       }),
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it("treats every loopback spelling the same", () => {

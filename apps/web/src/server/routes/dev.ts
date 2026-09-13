@@ -1,5 +1,6 @@
 import { type Context, Hono } from "hono";
 import { z } from "zod";
+import { devPersonaCookieName } from "../../shared/cookies";
 import { safeProductReturnPath } from "../../shared/origins";
 import type { Auth } from "../auth";
 import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
@@ -82,7 +83,10 @@ dev.on(
     const headers = new Headers();
     for (const cookie of signed.cookies) headers.append("set-cookie", cookie);
     // Read by the client on boot: a change of persona throws the persisted query cache away.
-    headers.append("set-cookie", `lymi_dev_persona=${persona.id}; Path=/; SameSite=Lax`);
+    headers.append(
+      "set-cookie",
+      `${devPersonaCookieName(c.env.PRODUCT_URL)}=${persona.id}; Path=/; SameSite=Lax`,
+    );
 
     if (c.req.method === "GET") {
       const destination = new URL(safeProductReturnPath(returnTo), c.env.PRODUCT_URL);

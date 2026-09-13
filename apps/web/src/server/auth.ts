@@ -7,6 +7,7 @@ import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
 import { jwt } from "better-auth/plugins/jwt";
+import { cookiePrefix } from "../shared/cookies";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
@@ -173,7 +174,7 @@ export function createAuth(
       },
     },
     advanced: {
-      cookiePrefix: "lymi",
+      cookiePrefix: cookiePrefix(env.PRODUCT_URL),
     },
   });
 }

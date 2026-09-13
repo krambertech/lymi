@@ -149,7 +149,7 @@ describe("signing in with Google", () => {
 
     expect(result.status).toBe(302);
     expect(result.location).toBe("/today");
-    expect([...result.jar.keys()].some((name) => name.includes("session_token"))).toBe(true);
+    expect(result.jar.has("lymi-4999.session_token")).toBe(true);
     // Registered with waitUntil as a safety net, but already stored when the callback answers.
     expect(pending).toHaveLength(1);
     expect(photos).toEqual(["https://lh3.googleusercontent.com/a/first=s512-c"]);

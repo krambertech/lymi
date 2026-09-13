@@ -64,7 +64,7 @@ export function mountOpenApi(app: Hono<AppEnv>) {
             session: {
               type: "apiKey",
               in: "cookie",
-              name: "lymi.session_token",
+              name: "__Secure-lymi.session_token",
               description: "The app's own session. Learner-only routes need this.",
             },
           },

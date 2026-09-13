@@ -18,6 +18,16 @@ const PRODUCT_PATHS = [
   "/design",
 ] as const;
 
+/** True for localhost, 127.0.0.1 and [::1]. Decides every local-only capability. */
+export function isLoopbackUrl(value: string): boolean {
+  try {
+    const hostname = new URL(value).hostname;
+    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]";
+  } catch {
+    return false;
+  }
+}
+
 /** Browser routes owned by the product rather than the public website. */
 export function isProductBrowserPath(pathname: string): boolean {
   return PRODUCT_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));

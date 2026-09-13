@@ -93,7 +93,7 @@ describe("pronunciation audio", () => {
   it("generates only on first play and reuses R2 afterward", async () => {
     let stored: R2ObjectBody | null = null;
     const get = vi.fn(async () => stored);
-    const put = vi.fn(async (key: string) => {
+    const put = vi.fn(async (key: string, _value: unknown) => {
       stored = storedAudio(key);
     });
     const bucket = new Proxy(Object.create(null) as R2Bucket, {
@@ -108,6 +108,9 @@ describe("pronunciation audio", () => {
 
     expect(speech).toHaveBeenCalledTimes(1);
     expect(put).toHaveBeenCalledTimes(1);
+    const storedValue = put.mock.calls[0]?.[1];
+    expect(storedValue).toBeInstanceOf(Uint8Array);
+    expect([...((storedValue as Uint8Array | undefined) ?? [])]).toEqual([1, 2, 3]);
     expect(providers).toHaveBeenCalledWith("et");
   });
 
@@ -173,6 +176,69 @@ describe("pronunciation audio", () => {
 
     expect(openai).toHaveBeenCalledOnce();
     expect(chirp).not.toHaveBeenCalled();
+  });
+
+  it("tries a later provider when an earlier provider returns oversized audio", async () => {
+    let stored: R2ObjectBody | null = null;
+    const put = vi.fn(async (key: string) => {
+      stored = storedAudio(key);
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({
+          get: vi.fn(async () => stored),
+          put,
+        })[property as "get"],
+    });
+    const openai = vi.fn(
+      async () =>
+        new Response(new Uint8Array([1]), {
+          headers: { "content-length": "8000001" },
+        }),
+    );
+    const chirp = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+
+    await pronunciationAudio(context(card()), "card-1", {
+      bucket,
+      providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
+    });
+
+    expect(openai).toHaveBeenCalledOnce();
+    expect(chirp).toHaveBeenCalledOnce();
+    expect(put).toHaveBeenCalledOnce();
+    expect(warn).toHaveBeenCalledWith(
+      JSON.stringify({
+        event: "pronunciation_provider_failed",
+        provider: "openai",
+        language: "et",
+        error: "AudioResponseError",
+      }),
+    );
+  });
+
+  it("tries a later provider when an earlier provider returns empty audio", async () => {
+    let stored: R2ObjectBody | null = null;
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({
+          get: vi.fn(async () => stored),
+          put: vi.fn(async (key: string) => {
+            stored = storedAudio(key);
+          }),
+        })[property as "get"],
+    });
+    const openai = vi.fn(async () => new Response(new Uint8Array()));
+    const chirp = vi.fn(async () => new Response(new Uint8Array([4, 5, 6])));
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+
+    await pronunciationAudio(context(card()), "card-1", {
+      bucket,
+      providers: () => [provider("openai", openai), provider("google-chirp", chirp)],
+    });
+
+    expect(openai).toHaveBeenCalledOnce();
+    expect(chirp).toHaveBeenCalledOnce();
   });
 
   it("never reaches R2 or a provider for a card without a language", async () => {

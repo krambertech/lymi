@@ -7,6 +7,8 @@ import { schema } from "../db";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 
+const MAX_AUDIO_BYTES = 8_000_000;
+
 interface AudioDependencies {
   bucket: R2Bucket;
   /** Lazy so remembered audio can play without parsing credentials or reaching a provider. */
@@ -48,10 +50,10 @@ export async function pronunciationAudio(
       return cached;
     }
 
-    let generated: Response;
+    let audio: Uint8Array;
     try {
-      generated = await provider.speech({ text: card.term, language: language.data });
-      if (!generated.body) throw new Error("Speech provider returned no audio");
+      const generated = await provider.speech({ text: card.term, language: language.data });
+      audio = await boundedAudio(generated);
     } catch (error) {
       lastFailure = error;
       const status = providerStatus(error);
@@ -67,7 +69,7 @@ export async function pronunciationAudio(
       continue;
     }
 
-    await deps.bucket.put(key, generated.body, {
+    await deps.bucket.put(key, audio, {
       httpMetadata: {
         contentType: provider.contentType,
         cacheControl: "private, max-age=31536000",
@@ -91,6 +93,56 @@ export async function pronunciationAudio(
     "Pronunciation audio is temporarily unavailable",
     lastFailure instanceof Error ? { cause: lastFailure.name } : undefined,
   );
+}
+
+async function boundedAudio(response: Response): Promise<Uint8Array> {
+  if (!response.body) throw new AudioResponseError("Speech provider returned no audio");
+
+  const contentLength = response.headers.get("content-length");
+  const declaredLength = contentLength === null ? null : Number(contentLength);
+  if (
+    declaredLength !== null &&
+    Number.isFinite(declaredLength) &&
+    declaredLength > MAX_AUDIO_BYTES
+  ) {
+    await response.body.cancel();
+    throw new AudioResponseError("Speech provider returned oversized audio");
+  }
+
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let byteLength = 0;
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      if (chunk.value.byteLength === 0) continue;
+      byteLength += chunk.value.byteLength;
+      if (byteLength > MAX_AUDIO_BYTES) {
+        await reader.cancel();
+        throw new AudioResponseError("Speech provider returned oversized audio");
+      }
+      chunks.push(chunk.value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+
+  if (byteLength === 0) throw new AudioResponseError("Speech provider returned no audio");
+  const audio = new Uint8Array(byteLength);
+  let offset = 0;
+  for (const chunk of chunks) {
+    audio.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return audio;
+}
+
+class AudioResponseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AudioResponseError";
+  }
 }
 
 function providerStatus(error: unknown): number | null {

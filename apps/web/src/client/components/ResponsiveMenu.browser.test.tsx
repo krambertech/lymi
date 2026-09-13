@@ -106,6 +106,22 @@ describe("ResponsiveMenu", () => {
     await expect.element(item(/Edit/)).toHaveFocus();
   });
 
+  test("keeps its rows out of the tab order, and Tab leaves and closes the menu", async () => {
+    const screen = await render(<Harness />);
+    const trigger = screen.getByRole("button", { name: "Options" });
+    await openWithKeyboard(trigger);
+    await expect.element(page.getByRole("menuitem", { name: /Edit/ })).toHaveFocus();
+    // Roving focus: at most the active row is reachable with Tab.
+    const reachable = page
+      .getByRole("menuitem")
+      .elements()
+      .filter((row) => (row as HTMLElement).tabIndex >= 0);
+    expect(reachable.length).toBeLessThanOrEqual(1);
+    await userEvent.keyboard("{Tab}");
+
+    await expect.element(page.getByRole("menu")).not.toBeInTheDocument();
+  });
+
   test("a link row navigates and closes the menu", async () => {
     const screen = await render(<Harness />);
     await screen.getByRole("button", { name: "Options" }).click();

@@ -144,29 +144,39 @@ function AnchoredContent({
 }
 
 /**
- * The rows in a drawer. Arrow keys walk them, for a touch device with a keyboard attached, and stop
- * on disabled rows the way the anchored menu does, so a screen reader still hears them.
+ * The rows in a drawer, with the anchored menu's keyboard model for a touch device with a keyboard
+ * attached: rows are out of the tab order, arrow keys walk them, disabled rows included so a screen
+ * reader still hears them, and Tab leaves the menu, which closes it.
  */
 function DrawerMenu({ label, children }: { label: string; children: ReactNode }) {
+  const { setOpen } = useMenu("ResponsiveMenuContent");
   const ref = useRef<HTMLDivElement>(null);
-  const onKeyDown = useCallback((e: KeyboardEvent) => {
-    const items = Array.from(ref.current?.querySelectorAll<HTMLElement>(ITEM) ?? []);
-    const i = items.indexOf(document.activeElement as HTMLElement);
-    const to =
-      e.key === "ArrowDown"
-        ? items[(i + 1) % items.length]
-        : e.key === "ArrowUp"
-          ? items[(i - 1 + items.length) % items.length]
-          : e.key === "Home"
-            ? items[0]
-            : e.key === "End"
-              ? items.at(-1)
-              : undefined;
-    if (to) {
-      e.preventDefault();
-      to.focus();
-    }
-  }, []);
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        setOpen(false);
+        return;
+      }
+      const items = Array.from(ref.current?.querySelectorAll<HTMLElement>(ITEM) ?? []);
+      const i = items.indexOf(document.activeElement as HTMLElement);
+      const to =
+        e.key === "ArrowDown"
+          ? items[(i + 1) % items.length]
+          : e.key === "ArrowUp"
+            ? items[(i - 1 + items.length) % items.length]
+            : e.key === "Home"
+              ? items[0]
+              : e.key === "End"
+                ? items.at(-1)
+                : undefined;
+      if (to) {
+        e.preventDefault();
+        to.focus();
+      }
+    },
+    [setOpen],
+  );
   return (
     <DrawerContent
       // Through the drawer rather than an effect, so it still knows the trigger to hand focus back to.
@@ -219,6 +229,7 @@ function DrawerMenuItem({
     props: {
       type: "button",
       role: "menuitem",
+      tabIndex: -1,
       "aria-disabled": disabled || undefined,
       "data-disabled": disabled ? "" : undefined,
       "data-variant": variant,
@@ -258,6 +269,7 @@ function DrawerMenuLinkItem({ render, className, children }: LinkItemProps) {
     props: mergeProps<"a">(
       {
         role: "menuitem",
+        tabIndex: -1,
         className: cn(menuItemClassName, "active:bg-hover", className),
         onClick: () => setOpen(false),
       },

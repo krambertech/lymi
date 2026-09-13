@@ -13,19 +13,15 @@ test("a menu rises as a drawer and swipes away", async ({ page }) => {
   const drawer = page.getByRole("dialog", { name: "Deck options" });
   await expect(drawer.getByRole("menuitem", { name: "Archive deck" })).toBeVisible();
 
-  // The drawer rises for 450 ms; a drag that starts mid-rise measures from the wrong place.
-  await expect(drawer).toBeInViewport({ ratio: 1 });
-  await page.waitForTimeout(500);
+  // A drag that starts mid-rise measures from the wrong place, so wait for the rise to finish.
+  await drawer.evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)));
   const box = await drawer.boundingBox();
   if (!box) throw new Error("The drawer has no box.");
   const x = box.x + box.width / 2;
   const y = box.y + 8;
   await page.mouse.move(x, y);
   await page.mouse.down();
-  for (let step = 1; step <= 10; step++) {
-    await page.mouse.move(x, y + step * 30);
-    await page.waitForTimeout(16);
-  }
+  await page.mouse.move(x, y + 300, { steps: 10 });
   await page.mouse.up();
 
   await expect(drawer).toBeHidden();

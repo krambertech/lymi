@@ -23,7 +23,7 @@ Decks and cards use the same `reviewModes` list, and a card's list overrides its
 
 The cue is the content shown before reveal and the target is what the learner grades. Other card content may appear after reveal as context. Only one mode for a card may occur in a review session.
 
-Amended on 14 September 2026: picture modes moved from deck defaults to cards, keeping one mode format for both.
+Amended on 13 September 2026: picture modes moved from deck defaults to cards, keeping one mode format for both.
 
 ## Considered options
 

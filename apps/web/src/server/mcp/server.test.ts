@@ -388,10 +388,30 @@ describe("Lymi MCP server", () => {
 
     const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
 
-    expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
+    expect(res.structuredContent).toMatchObject({
+      id: "card-1",
+      term: "sbrigarsi",
+      reviewModes: null,
+    });
     for (const column of ["createdBy", "updatedAt", "userId", "normalizedTerm", "audioKey"]) {
       expect(res.structuredContent).not.toHaveProperty(column);
     }
+  });
+
+  it("returns a card's own review modes as cue and target, beside the legacy direction", async () => {
+    services.showCard.mockResolvedValue({
+      ...card,
+      directions: "production",
+      reviewModes: [{ cue: "meaning", target: "term" }],
+    });
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
+
+    expect(res.structuredContent).toMatchObject({
+      directions: "production",
+      reviewModes: [{ cue: "meaning", target: "term" }],
+    });
   });
 
   it("returns a deck with its cards and each card's due time, dates as ISO strings", async () => {

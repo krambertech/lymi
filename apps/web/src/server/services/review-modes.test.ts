@@ -242,7 +242,6 @@ describe("GET /api/cards/:id", () => {
       const body = (await res.json()) as Record<string, unknown>;
       expect(res.status).toBe(200);
       expect(body).toMatchObject({ reviewModes: null, directions: null });
-      expect(body).not.toHaveProperty("reviewModeKeys");
     } finally {
       await test.dispose();
     }

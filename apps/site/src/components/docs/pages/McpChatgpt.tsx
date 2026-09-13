@@ -19,9 +19,14 @@ export function McpChatgpt() {
 
       <H2>ChatGPT</H2>
       <p>
-        Custom connectors need developer mode, and they need a plan that allows them: Pro, Plus,
-        Business, Enterprise or Education. On a managed workspace an admin has to permit custom
-        connectors first.
+        Custom connectors need developer mode on the web, which Plus, Pro, Business, Enterprise and
+        Education accounts have. OpenAI's help center limits write actions to Business, Enterprise
+        and Education, so on Plus or Pro expect ChatGPT to read your decks but not change them. On a
+        workspace plan an admin has to allow developer mode first.
+      </p>
+      <p>
+        By default ChatGPT asks before a write, such as adding cards or archiving a deck. You can
+        let it remember your answer for a tool for the rest of the conversation.
       </p>
       <Steps>
         <div>
@@ -84,8 +89,14 @@ url = "${ORIGIN}/mcp"`}
           can sign in, whatever the OpenAI account is.
         </li>
         <li>
-          <strong>Registration fails.</strong> Lymi has no dynamic client registration, by design. A
-          client that cannot use a Client ID Metadata Document has no way to identify itself here.
+          <strong>Registration fails.</strong> Lymi has no dynamic client registration, by design.
+          ChatGPT and current Codex use a Client ID Metadata Document instead. If an older Codex
+          tries to register, update it, or run{" "}
+          <code>codex mcp login lymi --oauth-client-registration cimd</code>.
+        </li>
+        <li>
+          <strong>Writes are refused.</strong> The connection was granted read only. Reconnect and
+          leave write ticked on the consent screen.
         </li>
       </ul>
 

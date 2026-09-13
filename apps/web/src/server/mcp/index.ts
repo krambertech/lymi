@@ -3,19 +3,15 @@ import { createMcpHandler } from "agents/mcp/server";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
 import type { Bindings } from "../env";
+import { grantedScope } from "../services/connected-apps";
 import { buildMcpServer, type McpPrincipal } from "./server";
 
 /** The scopes an MCP client is told to ask for. offline_access buys it a refresh token. */
 export const MCP_CHALLENGE_SCOPES = ["read", "write", "offline_access"] as const;
 
 /**
- * Handle one request to /mcp.
- *
- * `requireMcpAuth` verifies the bearer token against this Worker's own JWKS (signature,
- * issuer, audience, expiry) with no database hit, and answers an unauthenticated request
- * with 401 and the RFC 9728 `WWW-Authenticate: Bearer resource_metadata=...` header that
- * starts the OAuth flow in Claude Desktop and Codex. The verified claims become the
- * principal every tool runs as.
+ * `requireMcpAuth` verifies the JWT and answers a bad token with the RFC 9728 challenge;
+ * `authorizeMcpClaims` then checks the live consent.
  */
 export function handleMcpRequest(
   request: Request,
@@ -23,7 +19,11 @@ export function handleMcpRequest(
 ): Promise<Response> {
   const protectedHandler = requireMcpAuth(
     deps.auth,
-    (req, claims) => handleVerifiedMcpRequest(req, claims, deps),
+    async (req, claims) => {
+      const principal = await authorizeMcpClaims(claims, deps);
+      if (principal instanceof Response) return principal;
+      return handleVerifiedMcpRequest(req, principal, deps.env);
+    },
     { resource: mcpResource(deps.env), challengeScopes: MCP_CHALLENGE_SCOPES },
   );
   return protectedHandler(request);
@@ -37,35 +37,43 @@ export function mcpResource(env: ProductOrigin): string {
   return `${env.PRODUCT_URL}/mcp`;
 }
 
-/**
- * Serve one request whose token has already been verified. Split from the guard so the
- * transport and the tool wiring can be exercised with synthetic claims.
- */
-export function handleVerifiedMcpRequest(
-  req: Request,
+export function mcpResourceMetadataUrl(env: ProductOrigin): string {
+  return new URL("/.well-known/oauth-protected-resource/mcp", env.PRODUCT_URL).toString();
+}
+
+/** A disconnect deletes the consent but not the token, so consent decides access and scope. */
+export async function authorizeMcpClaims(
   claims: Record<string, unknown>,
   deps: { db: Db; env: ProductOrigin },
-): Promise<Response> {
+): Promise<McpPrincipal | Response> {
   const userId = typeof claims.sub === "string" ? claims.sub : null;
-  if (!userId) return Promise.resolve(jsonRpcError(401, "The access token has no subject"));
-  const scopes = scopesOf(claims.scope);
-  const principal: McpPrincipal = {
+  const clientId = typeof claims.client_id === "string" ? claims.client_id : null;
+  if (!userId || !clientId) {
+    return unauthorized(deps.env, "The access token does not name a learner and a client");
+  }
+  const consent = await grantedScope({ db: deps.db, userId }, clientId);
+  if (!consent) {
+    return unauthorized(deps.env, "This connection was disconnected in Lymi. Sign in again.");
+  }
+  const tokenWrites = scopesOf(claims.scope).has("write");
+  return {
     ctx: { db: deps.db, userId, actor: "mcp" },
-    scope: scopes.has("write") ? "write" : "read",
+    scope: tokenWrites && consent === "write" ? "write" : "read",
+    resourceMetadataUrl: mcpResourceMetadataUrl(deps.env),
   };
+}
+
+/** Split from the auth checks so the transport can be tested alone. */
+export function handleVerifiedMcpRequest(
+  req: Request,
+  principal: McpPrincipal,
+  env: ProductOrigin,
+): Promise<Response> {
   const handler = createMcpHandler(() => buildMcpServer(principal), {
     route: "/mcp",
-    allowedHostnames: [new URL(deps.env.PRODUCT_URL).hostname],
+    allowedHostnames: [new URL(env.PRODUCT_URL).hostname],
   });
-  return handler.fetch(req, {
-    authInfo: {
-      token: bearerOf(req) ?? "",
-      clientId: typeof claims.client_id === "string" ? claims.client_id : "",
-      scopes: [...scopes],
-      ...(typeof claims.exp === "number" ? { expiresAt: claims.exp } : {}),
-      resource: new URL(mcpResource(deps.env)),
-    },
-  });
+  return handler.fetch(req);
 }
 
 /** The `scope` claim is a space-separated string by RFC 9068; some issuers send an array. */
@@ -75,16 +83,18 @@ function scopesOf(claim: unknown): Set<string> {
   return new Set();
 }
 
-function bearerOf(req: Request): string | null {
-  const header = req.headers.get("authorization");
-  if (!header) return null;
-  const [type, token] = header.split(" ", 2);
-  return type?.toLowerCase() === "bearer" && token ? token : null;
-}
-
-function jsonRpcError(status: number, message: string): Response {
+function unauthorized(env: ProductOrigin, message: string): Response {
+  const challenge = [
+    `resource_metadata="${mcpResourceMetadataUrl(env)}"`,
+    `scope="${MCP_CHALLENGE_SCOPES.join(" ")}"`,
+    `error="invalid_token"`,
+    `error_description="${message}"`,
+  ].join(", ");
   return new Response(
     JSON.stringify({ jsonrpc: "2.0", error: { code: -32000, message }, id: null }),
-    { status, headers: { "content-type": "application/json" } },
+    {
+      status: 401,
+      headers: { "content-type": "application/json", "www-authenticate": `Bearer ${challenge}` },
+    },
   );
 }

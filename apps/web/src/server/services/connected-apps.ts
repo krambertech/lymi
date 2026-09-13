@@ -1,3 +1,4 @@
+import type { Scope } from "@lymi/core";
 import { and, eq, inArray, isNull } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
@@ -22,17 +23,34 @@ export async function clientNames(
   return new Map(rows.map((row) => [row.clientId, row.name]));
 }
 
+/** Access tokens outlive a disconnect by up to an hour, so every MCP request checks consent. */
+export async function grantedScope(
+  { db, userId }: Pick<ServiceContext, "db" | "userId">,
+  clientId: string,
+): Promise<Scope | null> {
+  const rows = await db
+    .select({ scopes: schema.oauthConsent.scopes })
+    .from(schema.oauthConsent)
+    .where(and(eq(schema.oauthConsent.clientId, clientId), eq(schema.oauthConsent.userId, userId)));
+  if (rows.length === 0) return null;
+  return rows.some((row) => consentScopes(row.scopes).includes("write")) ? "write" : "read";
+}
+
+/** Better Auth serialises the array before Drizzle's JSON column does, so reads yield a string. */
+function consentScopes(value: unknown): unknown[] {
+  if (Array.isArray(value)) return value;
+  if (typeof value !== "string") return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 /**
- * Cut a client off from this learner.
- *
- * Deleting the consent row only decides whether the client's next authorize request prompts.
- * Access tokens are JWTs the Worker verifies against its own JWKS with no database hit, so an
- * issued one cannot be recalled and stays good until it expires, an hour at the plugin's
- * default. The refresh token is the part that can be stopped: the refresh grant checks its
- * `revoked` column. Revoke it and the client is locked out once its access token runs out.
- *
- * Access token rows are marked revoked as well. That does not gate the MCP endpoint, but it
- * keeps `/oauth2/introspect` honest about what is still live.
+ * Deleting the consent row already stops MCP access; revoking tokens also blocks refresh and
+ * keeps `/oauth2/introspect` accurate.
  */
 export async function revokeClientTokens(
   { db, userId }: Pick<ServiceContext, "db" | "userId">,

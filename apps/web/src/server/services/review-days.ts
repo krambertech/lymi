@@ -7,7 +7,7 @@ import { schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { addDays, dateFormatter, daysBetween } from "./days";
 import { dueCount } from "./due";
-import { getSettings } from "./settings";
+import { ensureSettings, getSettings } from "./settings";
 
 /**
  * The daily review goal and the streak are one mechanic: a learner-local day counts when its
@@ -37,6 +37,7 @@ export async function reviewZone(ctx: ServiceContext, reported?: string | undefi
   if (!reported || !isZone(reported)) return "UTC";
   // An integration's zone is a guess about where the learner is; it reads with it but never stores it.
   if (ctx.actor !== "user") return reported;
+  await ensureSettings(ctx);
   await ctx.db
     .update(schema.userSettings)
     .set({ reviewTimezone: reported, reviewTimezoneUpdatedAt: new Date(), updatedAt: new Date() })
@@ -57,7 +58,7 @@ function isZone(zone: string) {
 
 /** A visible page's device zone. Moves the day boundary only while the mode is automatic. */
 export async function reportDeviceTimezone(ctx: ServiceContext, input: DeviceTimezoneInput) {
-  await getSettings(ctx);
+  await ensureSettings(ctx);
   await ctx.db
     .update(schema.userSettings)
     .set({
@@ -76,7 +77,7 @@ export async function reportDeviceTimezone(ctx: ServiceContext, input: DeviceTim
 
 /** Settings: keep one zone, or go back to following the device. */
 export async function setReviewTimezone(ctx: ServiceContext, input: ReviewTimezoneInput) {
-  await getSettings(ctx);
+  await ensureSettings(ctx);
   await ctx.db
     .update(schema.userSettings)
     .set(

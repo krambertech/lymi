@@ -19,6 +19,8 @@ export interface Bindings extends Env {
   VAPID_PUBLIC_KEY?: string;
   VAPID_PRIVATE_KEY?: string;
   VAPID_SUBJECT?: string;
+  /** The token OpenAI's plugin submission portal issues for domain verification. */
+  OPENAI_APPS_CHALLENGE?: string;
 }
 
 /** True for localhost, 127.0.0.1 and [::1]. Decides every local-only capability. */

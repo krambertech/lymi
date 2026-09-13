@@ -78,6 +78,7 @@ async function connect(scope: McpPrincipal["scope"]) {
   const principal: McpPrincipal = {
     ctx: { db: {} as Db, userId: "user-1", actor: "mcp" },
     scope,
+    resourceMetadataUrl: "https://my.lymi.app/.well-known/oauth-protected-resource/mcp",
   };
   const server = buildMcpServer(principal);
   const [clientSide, serverSide] = InMemoryTransport.createLinkedPair();
@@ -119,7 +120,32 @@ describe("Lymi MCP server", () => {
     expect(byName.get("add_cards")?.annotations?.readOnlyHint).toBe(false);
     // Archive is reversible, so no client should ask for confirmation before it.
     expect(byName.get("archive_card")?.annotations?.destructiveHint).toBe(false);
-    for (const tool of tools) expect(tool.outputSchema).toBeDefined();
+    // An edit replaces the learner's text with no way back.
+    expect(byName.get("update_card")?.annotations?.destructiveHint).toBe(true);
+    expect(byName.get("create_deck")?.annotations?.idempotentHint).toBe(false);
+    // A repeated add skips every card; a repeated edit or archive writes to Activity again.
+    expect(byName.get("add_cards")?.annotations?.idempotentHint).toBe(true);
+    expect(byName.get("update_card")?.annotations?.idempotentHint).toBe(false);
+    expect(byName.get("archive_card")?.annotations?.idempotentHint).toBe(false);
+  });
+
+  it("declares a title, every hint directory review asks for, and the scope each tool needs", async () => {
+    const client = await connect("write");
+    const { tools } = await client.listTools();
+
+    for (const tool of tools) {
+      const { annotations } = tool;
+      expect(tool.title, tool.name).toBeTruthy();
+      expect(tool.outputSchema, tool.name).toBeDefined();
+      expect(typeof annotations?.readOnlyHint, tool.name).toBe("boolean");
+      expect(typeof annotations?.destructiveHint, tool.name).toBe("boolean");
+      expect(annotations?.openWorldHint, tool.name).toBe(false);
+      if (!annotations?.readOnlyHint) {
+        expect(typeof annotations?.idempotentHint, tool.name).toBe("boolean");
+      }
+      const scope = annotations?.readOnlyHint ? "read" : "write";
+      expect(tool._meta?.securitySchemes, tool.name).toEqual([{ type: "oauth2", scopes: [scope] }]);
+    }
   });
 
   it("never offers the daily goal as something an assistant can change", async () => {
@@ -233,6 +259,9 @@ describe("Lymi MCP server", () => {
         type: "text",
         text: expect.stringContaining("leave write ticked"),
       });
+      expect(res._meta?.["mcp/www_authenticate"], name).toEqual([
+        expect.stringContaining('error="insufficient_scope"'),
+      ]);
     }
     expect(services.addCards).not.toHaveBeenCalled();
     expect(services.updateCard).not.toHaveBeenCalled();
@@ -330,6 +359,35 @@ describe("Lymi MCP server", () => {
 
     expect(res.isError).toBe(true);
     expect(res.content[0]).toMatchObject({ type: "text", text: "Deck not found" });
+  });
+
+  it("answers an unexpected failure with a retry message, never the internal error", async () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    services.getCard.mockRejectedValue(
+      new Error("D1_ERROR: no such column: cards.secret at offset 42 SQLITE_ERROR"),
+    );
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
+
+    expect(res.isError).toBe(true);
+    expect(JSON.stringify(res.content)).not.toContain("D1_ERROR");
+    expect(res.content[0]).toMatchObject({ text: expect.stringContaining("Try again") });
+    expect(JSON.stringify(spy.mock.calls)).not.toContain("D1_ERROR");
+    expect(spy).toHaveBeenCalledWith("MCP tool failed", { tool: "get_card", error: "Error" });
+    spy.mockRestore();
+  });
+
+  it("returns a card without the bookkeeping columns", async () => {
+    services.getCard.mockResolvedValue(card);
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
+
+    expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
+    for (const column of ["createdBy", "updatedAt", "userId", "normalizedTerm", "audioKey"]) {
+      expect(res.structuredContent).not.toHaveProperty(column);
+    }
   });
 
   it("returns a deck with its cards and each card's due time, dates as ISO strings", async () => {

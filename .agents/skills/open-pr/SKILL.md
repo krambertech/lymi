@@ -22,16 +22,17 @@ Continue only when the intended PR diff is isolated and understood.
 
 - Review the complete diff against the request and repository invariants. Remove scope creep, debug remnants, and accidental generated changes.
 - Run `pnpm verify` plus any focused, E2E, visual, migration, or integration verification required by the change. Fix failures before opening the PR.
-- Derive a Conventional Commit title and concise body from the actual change, following the Git workflow and [pull request template](../../../.github/pull_request_template.md).
-- For a user-visible change, capture only the visual evidence that materially helps review; follow [the screenshot guidance](references/screenshots.md).
+- Derive a Conventional Commit title from the actual change and the Git workflow.
+- Copy [the pull request template](../../../.github/pull_request_template.md) to a temporary file, fill it, remove every guidance comment and unused optional section, and preserve its headings and order. Do not compose a parallel body from memory.
+- For any rendered UI change, capture and attach visual evidence by following [the screenshot guidance](references/screenshots.md). A browser screenshot visible only in the agent conversation is not attached evidence.
 
 Continue only when the final diff is reviewable and every available required local check passes. Report unavailable or intentionally skipped checks honestly.
 
 ## Open or update the PR
 
-- Commit the intended change, push its branch, then create or update the PR against `main`.
-- Verify the PR's base, title, body, displayed diff, and URL after creation.
-- Attach visual evidence when applicable using a supported mechanism, then verify that it renders. If attachment is unavailable, hand the files to the user and describe them as not yet attached.
+- Commit the intended change, push its branch, then create or update the PR against `main` from the filled template.
+- Attach every required image in the same operation when possible, then read the PR back and confirm its base, title, body, displayed diff, uploaded image references, and URL.
+- If a required screenshot cannot be saved or attached, keep the PR in the **blocked** state, hand the files or exact failure to the user, and say that the visual evidence is not attached.
 
 ## Supervise the PR
 

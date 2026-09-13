@@ -90,6 +90,28 @@ test("reuses exact existing preview resources", async () => {
   assert.equal(calls.filter(([, method]) => method === "POST").length, 0);
 });
 
+test("creates preview KV without an account-restricted jurisdiction", async () => {
+  let namespaceBody;
+  const fetchImpl = async (url, init = {}) => {
+    if (url.endsWith("/workers/subdomain")) return response({ subdomain: "example" });
+    if (url.includes("/d1/database?")) {
+      return response([{ name: "lymi-app-pr-105-db", uuid: "db-id" }]);
+    }
+    if (url.includes("/storage/kv/namespaces?") && !init.method) return response([]);
+    if (url.endsWith("/storage/kv/namespaces") && init.method === "POST") {
+      namespaceBody = JSON.parse(init.body);
+      return response({ title: "lymi-app-pr-105-sessions", id: "kv-id" });
+    }
+    if (url.includes("/r2/buckets?")) {
+      return response({ buckets: [{ name: "lymi-app-pr-105-audio" }] });
+    }
+    throw new Error(`Unexpected ${url}`);
+  };
+
+  await ensurePreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
+  assert.deepEqual(namespaceBody, { title: "lymi-app-pr-105-sessions" });
+});
+
 test("cleanup deletes only the exact pull request resources", async () => {
   const deleted = [];
   const fetchImpl = async (url, init = {}) => {

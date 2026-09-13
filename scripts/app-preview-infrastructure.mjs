@@ -144,7 +144,7 @@ export async function ensurePreviewInfrastructure({
       () =>
         cfRequest(client, "/storage/kv/namespaces", {
           method: "POST",
-          body: JSON.stringify({ title: names.namespaceTitle, jurisdiction: "eu" }),
+          body: JSON.stringify({ title: names.namespaceTitle }),
         }),
     ),
     ensure(

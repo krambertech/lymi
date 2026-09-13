@@ -3,6 +3,7 @@
 import { appendFileSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { requiresE2E } from "./e2e-impact.mjs";
+import { requiresSitePreview } from "./site-preview-impact.mjs";
 
 function fullPlan(reason) {
   return {
@@ -11,12 +12,14 @@ function fullPlan(reason) {
     playwrightArgs: "",
     coverage: "Chromium + WebKit",
     runDeployCheck: true,
+    runSitePreview: false,
     reason,
   };
 }
 
 export function createCiPlan({ eventName, changedPaths = [], manualE2E = true }) {
   if (eventName === "pull_request") {
+    const runSitePreview = requiresSitePreview(changedPaths);
     if (!requiresE2E(changedPaths)) {
       return {
         runE2E: false,
@@ -24,6 +27,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
         playwrightArgs: "",
         coverage: "No browser E2E",
         runDeployCheck: false,
+        runSitePreview,
         reason: "This pull request changes no production-affecting paths.",
       };
     }
@@ -34,6 +38,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
       playwrightArgs: "--project=chromium",
       coverage: "Chromium",
       runDeployCheck: true,
+      runSitePreview,
       reason: "This pull request changes production-affecting paths.",
     };
   }
@@ -45,6 +50,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
       playwrightArgs: "",
       coverage: "No browser E2E",
       runDeployCheck: true,
+      runSitePreview: false,
       reason: "The manually dispatched run explicitly disabled browser E2E.",
     };
   }
@@ -74,6 +80,7 @@ function writeGitHubOutputs(plan) {
     playwright_args: plan.playwrightArgs,
     coverage: plan.coverage,
     run_deploy_check: String(plan.runDeployCheck),
+    run_site_preview: String(plan.runSitePreview),
     reason: plan.reason,
   };
 
@@ -95,6 +102,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   process.stdout.write(
     `CI plan: ${plan.coverage}; deployment package check ${
       plan.runDeployCheck ? "enabled" : "skipped"
-    }. ${plan.reason}\n`,
+    }; public-site preview ${plan.runSitePreview ? "enabled" : "skipped"}. ${plan.reason}\n`,
   );
 }

@@ -13,6 +13,18 @@ test("production pull requests run Chromium and a deployment package check", () 
   assert.equal(plan.playwrightArgs, "--project=chromium");
   assert.equal(plan.coverage, "Chromium");
   assert.equal(plan.runDeployCheck, true);
+  assert.equal(plan.runSitePreview, false);
+});
+
+test("public-site pull requests schedule a preview after the base gates", () => {
+  const plan = createCiPlan({
+    eventName: "pull_request",
+    changedPaths: ["apps/site/src/pages/index.astro"],
+  });
+
+  assert.equal(plan.runE2E, true);
+  assert.equal(plan.runDeployCheck, true);
+  assert.equal(plan.runSitePreview, true);
 });
 
 test("documentation pull requests skip browser and deployment checks", () => {
@@ -24,6 +36,7 @@ test("documentation pull requests skip browser and deployment checks", () => {
   assert.equal(plan.runE2E, false);
   assert.equal(plan.coverage, "No browser E2E");
   assert.equal(plan.runDeployCheck, false);
+  assert.equal(plan.runSitePreview, false);
 });
 
 test("main receives full cross-browser and deployment coverage", () => {
@@ -34,6 +47,7 @@ test("main receives full cross-browser and deployment coverage", () => {
   assert.equal(plan.playwrightArgs, "");
   assert.equal(plan.coverage, "Chromium + WebKit");
   assert.equal(plan.runDeployCheck, true);
+  assert.equal(plan.runSitePreview, false);
 });
 
 test("manual runs are full by default and can explicitly skip browser E2E", () => {
@@ -42,4 +56,5 @@ test("manual runs are full by default and can explicitly skip browser E2E", () =
   const optedOut = createCiPlan({ eventName: "workflow_dispatch", manualE2E: false });
   assert.equal(optedOut.runE2E, false);
   assert.equal(optedOut.runDeployCheck, true);
+  assert.equal(optedOut.runSitePreview, false);
 });

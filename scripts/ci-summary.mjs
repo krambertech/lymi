@@ -19,11 +19,19 @@ export function renderCiSummary(env) {
   const coverage = env.COVERAGE || "Not selected";
   const reason =
     env.PLAN_REASON || "An earlier gate stopped before the coverage plan was selected.";
+  const sitePreview =
+    env.SITE_PREVIEW === "true"
+      ? "Scheduled after CI"
+      : env.SITE_PREVIEW === "false"
+        ? "Not needed"
+        : "Not selected";
 
   return [
     "## CI evidence",
     "",
     `**Browser coverage:** ${coverage}`,
+    "",
+    `**Public-site preview:** ${sitePreview}`,
     "",
     reason,
     "",

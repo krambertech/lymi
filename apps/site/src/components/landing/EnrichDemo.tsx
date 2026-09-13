@@ -55,7 +55,7 @@ function Row({ label, source, filled, children }: RowProps) {
         animate={{ opacity: filled ? 1 : 0 }}
         transition={still ? { duration: 0 } : { duration: 0.34, delay: 0.1 }}
         className={clsx(
-          "mt-0.5 shrink-0 rounded-xs px-1.5 py-px text-[9px] tracking-[0.06em] uppercase",
+          "mt-0.5 shrink-0 rounded-xs px-1.5 py-px text-[0.5625rem] tracking-[0.06em] uppercase",
           source === "AI" ? "bg-amber-soft text-amber-text" : "bg-plate-2 text-muted",
         )}
       >

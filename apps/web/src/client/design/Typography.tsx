@@ -50,11 +50,11 @@ const SCALE: {
   },
   {
     name: "lg",
-    cls: "text-lg",
+    cls: "text-lg font-medium",
     size: "17 / 1.4",
-    weight: "400",
-    use: "Large input text.",
-    sample: "magari",
+    weight: "400–500",
+    use: "Deck names, sheet and dialog titles, card stats.",
+    sample: "Travel phrases",
   },
   {
     name: "md",
@@ -82,11 +82,11 @@ const SCALE: {
   },
   {
     name: "xs",
-    cls: "text-xs",
+    cls: "text-xs font-medium uppercase tracking-[0.06em]",
     size: "12 / 1.4",
     weight: "500",
     use: "Chips, table headers, section eyebrows.",
-    sample: "RECOGNISE · IT",
+    sample: "Recognise · it",
   },
   {
     name: "2xs",
@@ -106,7 +106,7 @@ export function Typography() {
     >
       <Sub
         title="Scale"
-        note="Fixed pixel steps, ratio about 1.17. Headings tighten to −0.02em; the term on the card to −0.03em. Body never tracks."
+        note="Hand-tuned steps in rem, shown here as px at the 16 px default: 1 to 1.5 px apart up to 17, then each about 1.2 to 1.27 times the one below. Headings tighten to −0.02em; the term on the card to −0.03em. Body never tracks."
       >
         <div className="edge overflow-hidden rounded-lg bg-plate">
           {SCALE.map((s) => (

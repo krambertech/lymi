@@ -414,7 +414,7 @@ function Picker({
                   aria-selected={on}
                   onClick={() => pick(row)}
                   className={clsx(
-                    "relative flex h-11 cursor-pointer items-center gap-2 rounded-sm px-2.5 text-[16px] md:h-10 md:text-base",
+                    "relative flex h-11 cursor-pointer items-center gap-2 rounded-sm px-2.5 text-[1rem] md:h-10 md:text-base",
                     current ? "text-text" : "text-text-2",
                     current && !hover.shown && "bg-hover",
                   )}

@@ -210,7 +210,7 @@ function Operation({ route, doc, defs }: { route: Route; doc: Doc; defs: Defs })
           className="!m-0 flex flex-wrap items-center gap-2.5 !text-base !font-normal"
         >
           <MethodTag method={method} />
-          <code className="doc-code-inline !bg-transparent !px-0 !text-[13px] text-text">
+          <code className="doc-code-inline !bg-transparent !px-0 !text-[0.8125rem] text-text">
             {path}
           </code>
         </h3>

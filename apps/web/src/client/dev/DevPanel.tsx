@@ -233,7 +233,7 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
     >
       <h2 id={headingId} className="flex items-center gap-2 px-5 pt-4 text-base font-medium">
         Developer tools
-        <Kbd className="h-5 px-1.5 text-[10px]">`</Kbd>
+        <Kbd className="h-5 px-1.5 text-[0.625rem]">`</Kbd>
       </h2>
 
       <div className="grid gap-3.5 overflow-y-auto overscroll-contain px-5 pt-4 pb-5">

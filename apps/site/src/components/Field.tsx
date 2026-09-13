@@ -75,7 +75,7 @@ export const controlBase =
  * whatever it sits in — and because a sheet renders in a portal, where a container query has
  * nothing to measure and would silently never fire.
  */
-export const controlSize = "h-11 text-[16px] md:h-10 md:text-base";
+export const controlSize = "h-11 text-[1rem] md:h-10 md:text-base";
 
 type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size">;
 
@@ -104,7 +104,7 @@ export const Textarea = forwardRef<
       ref={ref}
       className={clsx(
         controlBase,
-        "min-h-24 resize-y px-3.5 py-2.5 text-[16px] leading-relaxed md:text-base",
+        "min-h-24 resize-y px-3.5 py-2.5 text-[1rem] leading-relaxed md:text-base",
         className,
       )}
       {...props}

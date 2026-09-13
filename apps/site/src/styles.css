@@ -1,6 +1,70 @@
 @import "tailwindcss";
 
 /*
+ * Onest from @fontsource-variable/onest; a browser fetches a script's file only when the page
+ * uses a character in its range.
+ */
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("@fontsource-variable/onest/files/onest-latin-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("@fontsource-variable/onest/files/onest-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("@fontsource-variable/onest/files/onest-cyrillic-ext-wght-normal.woff2") format("woff2");
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/*
+ * Arial resized to Onest's average width and line box, per weight band because Onest widens as it
+ * gets heavier, so the swap does not reflow; docs/stack.md has the method.
+ */
+@font-face {
+  font-family: "Onest Fallback";
+  font-weight: 100 450;
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans");
+  size-adjust: 105.95%;
+  ascent-override: 91.56%;
+  descent-override: 28.79%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Onest Fallback";
+  font-weight: 451 900;
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans");
+  size-adjust: 106.95%;
+  ascent-override: 90.7%;
+  descent-override: 28.52%;
+  line-gap-override: 0%;
+}
+
+/*
  * Lymi tokens. Two rooms: a dark one lit by the lantern, a light one at noon.
  * The theme follows the OS unless the user picks one in Settings. Tokens sit on
  * :root and on any [data-theme] element so a frame on the design page can be
@@ -104,7 +168,8 @@
 }
 
 @theme inline {
-  --font-sans: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans:
+    "Onest", "Onest Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   /*
    * The one exception to "one family", for two jobs: code on the docs site, and the strings
    * in the app that are proofread character by character rather than read, such as an API key
@@ -152,28 +217,29 @@
   --color-scrim: var(--scrim);
   --color-toast-action: var(--toast-action);
 
-  /* Type scale. Fixed, ratio about 1.17. */
-  --text-2xs: 11px;
+  /* Type scale. In rem so the reader's default font size moves it; each step is the px value
+     in DESIGN.md at the 16 px default. */
+  --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1.3;
-  --text-xs: 12px;
+  --text-xs: 0.75rem;
   --text-xs--line-height: 1.4;
-  --text-sm: 13px;
+  --text-sm: 0.8125rem;
   --text-sm--line-height: 1.45;
-  --text-base: 14.5px;
+  --text-base: 0.90625rem;
   --text-base--line-height: 1.5;
-  --text-md: 15.5px;
+  --text-md: 0.96875rem;
   --text-md--line-height: 1.5;
-  --text-lg: 17px;
+  --text-lg: 1.0625rem;
   --text-lg--line-height: 1.4;
-  --text-xl: 20px;
+  --text-xl: 1.25rem;
   --text-xl--line-height: 1.3;
-  --text-2xl: 24px;
+  --text-2xl: 1.5rem;
   --text-2xl--line-height: 1.2;
-  --text-3xl: 30px;
+  --text-3xl: 1.875rem;
   --text-3xl--line-height: 1.15;
-  --text-4xl: 38px;
+  --text-4xl: 2.375rem;
   --text-4xl--line-height: 1.05;
-  --text-5xl: 46px;
+  --text-5xl: 2.875rem;
   --text-5xl--line-height: 1;
 
   --radius-xs: 6px;
@@ -244,7 +310,7 @@
   input,
   textarea,
   select {
-    font-size: 16px;
+    font-size: 1rem;
   }
   :focus-visible {
     outline: 2px solid var(--ring);
@@ -751,7 +817,7 @@
 /* Code blocks. Ink and weight carry the syntax; nothing here is amber. */
 .doc-code {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.65;
   tab-size: 2;
   color: var(--text-2);

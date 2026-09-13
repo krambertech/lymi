@@ -81,7 +81,12 @@ typography:
     fontFamily: "Onest, system-ui, sans-serif"
     fontSize: "20px"
     fontWeight: 400
-    lineHeight: 1.35
+    lineHeight: 1.3
+  subhead:
+    fontFamily: "Onest, system-ui, sans-serif"
+    fontSize: "17px"
+    fontWeight: 500
+    lineHeight: 1.4
   lede:
     fontFamily: "Onest, system-ui, sans-serif"
     fontSize: "15.5px"
@@ -268,7 +273,7 @@ The app icon is always the dark room: ivory lantern, lit and glowing, on the dar
 
 ## Type
 
-One family, Onest (variable 300–800, Latin extended and Cyrillic). The word on the card is the largest thing on any screen and is set at 500, not bold. Everything else is 400 or 500; 600 is for the wordmark, counts and kbd. Fixed pixel scale, ratio about 1.17. Headings track −0.02em, the word −0.03em, body never. Tabular figures on anything that changes. Curly quotes and the ellipsis character in copy. Uppercase only at 12 px, tracked +0.06em.
+One family, Onest, self-hosted as a variable font declared for weights 400–600, with Latin, Latin extended and Cyrillic files. The word on the card is the largest thing on any screen and is set at 500, not bold. Everything else is 400 or 500; 600 is for the wordmark, counts and kbd. The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px from 11 to 17, display sizes by about 1.2 to 1.27 from 20 to 46. It is set in rem so it follows the reader's default font size; the sizes in the frontmatter and in this document are px at the 16 px default. Headings track −0.02em, the word −0.03em, body never. Tabular figures on anything that changes. Curly quotes and the ellipsis character in copy. Uppercase only at 12 px, tracked +0.06em.
 
 One exception to the single family. `font-mono` is a system monospace stack, nothing downloaded, and it has two jobs: code on the docs site, and the strings in the app that are proofread character by character rather than read — an API key, a client's hostname, a header name in copy. Onest draws 0/O and 1/l too alike for a secret where a mistyped character is a silent 401. Nothing else uses it: not numbers, not code-ish labels, not UI text. The design system page sets its state annotations in it for the same reason as docs, so a note about a component never reads as part of the component.
 

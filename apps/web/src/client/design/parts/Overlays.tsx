@@ -1,9 +1,16 @@
 import { Archive, Download, MoreHorizontal, Pencil, Volume2 } from "lucide-react";
 import { useState } from "react";
 import { Button, IconButton } from "../../components/Button";
-import { Dialog } from "../../components/Dialog";
 import { NewDeckForm } from "../../components/NewDeckSheet";
 import { Sheet, SheetPanel } from "../../components/Sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -173,8 +180,8 @@ export const overlays: Group = {
     {
       slug: "dialog",
       name: "Dialog",
-      source: "components/Dialog.tsx",
-      note: "For the one action that cannot be undone. Everywhere else, act and offer Undo.",
+      source: "components/ui/dialog.tsx",
+      note: "For the one action that cannot be undone. Everywhere else, act and offer Undo. Centred on a desktop; on a touch device a drawer with the actions stacked, the primary on top.",
       Demo: function DialogDemo() {
         const [open, setOpen] = useState(false);
         return (
@@ -183,7 +190,7 @@ export const overlays: Group = {
               items={[
                 {
                   label: "Delete account",
-                  note: "The safe choice is a ghost button and comes first.",
+                  note: "The safe choice is a ghost button: first in the row on a desktop, under the primary on a touch device.",
                   render: () => (
                     <Button size="sm" onClick={() => setOpen(true)}>
                       Open dialog
@@ -192,23 +199,24 @@ export const overlays: Group = {
                 },
               ]}
             />
-            <Dialog
-              open={open}
-              onClose={() => setOpen(false)}
-              title="Delete this account?"
-              actions={
-                <>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Delete this account?</DialogTitle>
+                  <DialogDescription>
+                    Every deck, card and review goes with it. This is the one action in Lymi that
+                    cannot be undone.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
                   <Button variant="ghost" onClick={() => setOpen(false)}>
-                    Keep account
+                    Keep it
                   </Button>
                   <Button variant="danger" onClick={() => setOpen(false)}>
                     Delete account
                   </Button>
-                </>
-              }
-            >
-              Every deck, card and review goes with it. This is the one action in Lymi that cannot
-              be undone.
+                </DialogFooter>
+              </DialogContent>
             </Dialog>
           </>
         );

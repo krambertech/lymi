@@ -2,8 +2,8 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "./Button";
-import { Dialog } from "./Dialog";
 import { Kbd } from "./Kbd";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 
 export const SHORTCUTS: [string, MessageDescriptor][] = [
   ["N", msg`Add a card`],
@@ -18,26 +18,27 @@ export const SHORTCUTS: [string, MessageDescriptor][] = [
 export function ShortcutsDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t, i18n } = useLingui();
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      title={t`Keyboard shortcuts`}
-      actions={
-        <Button onClick={onClose}>
-          <Trans>Close</Trans>
-        </Button>
-      }
-    >
-      <dl className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2.5">
-        {SHORTCUTS.map(([k, what]) => (
-          <div key={k} className="contents">
-            <dt>
-              <Kbd className="h-6 px-2 text-xs">{k}</Kbd>
-            </dt>
-            <dd className="text-text-2">{i18n._(what)}</dd>
-          </div>
-        ))}
-      </dl>
+    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t`Keyboard shortcuts`}</DialogTitle>
+        </DialogHeader>
+        <dl className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2.5 text-base">
+          {SHORTCUTS.map(([k, what]) => (
+            <div key={k} className="contents">
+              <dt>
+                <Kbd className="h-6 px-2 text-xs">{k}</Kbd>
+              </dt>
+              <dd className="text-text-2">{i18n._(what)}</dd>
+            </div>
+          ))}
+        </dl>
+        <DialogFooter>
+          <Button onClick={onClose}>
+            <Trans>Close</Trans>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 }

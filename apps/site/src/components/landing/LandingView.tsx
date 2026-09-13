@@ -261,11 +261,23 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             <a href="/docs/mcp" className="rounded-xs hoverable:hover:text-text">
               MCP
             </a>
+            <a href="/privacy" className="rounded-xs hoverable:hover:text-text">
+              Privacy
+            </a>
+            <a href="/terms" className="rounded-xs hoverable:hover:text-text">
+              Terms
+            </a>
+            <a href="/support" className="rounded-xs hoverable:hover:text-text">
+              Support
+            </a>
             <a href={openAppUrl} className="rounded-xs hoverable:hover:text-text">
               Open app
             </a>
           </div>
         </div>
+        <p className="mx-auto mt-6 max-w-[1040px] text-xs text-muted">
+          Lymi is provided by Krambertech OÜ.
+        </p>
       </footer>
     </div>
   );

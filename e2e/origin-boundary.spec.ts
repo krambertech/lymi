@@ -13,6 +13,10 @@ test("the public surface has no install contract while the product keeps its PWA
     "href",
     "http://localhost:4173/",
   );
+  await expect(page.getByRole("link", { name: "Privacy", exact: true })).toHaveAttribute(
+    "href",
+    "/privacy",
+  );
 
   await page.goto("/login?dev=1");
   await expect(page.locator("html")).toHaveAttribute("data-lymi-surface", "product");
@@ -22,6 +26,10 @@ test("the public surface has no install contract while the product keeps its PWA
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
   await expect(page.getByRole("heading", { name: "Sign in to Lymi" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Privacy" })).toHaveAttribute(
+    "href",
+    "http://localhost:4174/privacy",
+  );
 
   await page.goto("/docs/api");
   await expect(page).toHaveURL(`${publicSite}/docs/api/`);
@@ -29,6 +37,15 @@ test("the public surface has no install contract while the product keeps its PWA
     "href",
     "https://lymi.app/docs/api",
   );
+
+  for (const path of ["privacy", "terms", "support"]) {
+    await page.goto(`/${path}`);
+    await expect(page).toHaveURL(`${publicSite}/${path}/`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      `https://lymi.app/${path}`,
+    );
+  }
 });
 
 test("each origin exposes only its own route and indexing contract", async ({ page, request }) => {
@@ -46,6 +63,14 @@ test("each origin exposes only its own route and indexing contract", async ({ pa
 
   const productUnknown = await request.get("/public-page-that-does-not-exist");
   expect(productUnknown.status()).toBe(404);
+
+  const metadata = await request.get("/.well-known/oauth-protected-resource/mcp");
+  expect(metadata.status()).toBe(200);
+  expect(await metadata.json()).toMatchObject({
+    resource_documentation: `${publicSite}/docs/mcp`,
+    resource_policy_uri: `${publicSite}/privacy`,
+    resource_tos_uri: `${publicSite}/terms`,
+  });
 
   await page.goto(`${publicSite}/docs`);
   await expect(page.getByRole("heading", { name: "Lymi API" })).toBeVisible();
@@ -75,6 +100,10 @@ test("the public Worker owns beta signup without exposing product APIs", async (
 
   const uiEmail = `separate-deployments-ui-${run}@example.com`;
   await page.goto(`${publicSite}/join/`);
+  await expect(page.getByRole("link", { name: "privacy policy" })).toHaveAttribute(
+    "href",
+    "/privacy",
+  );
   await page.getByRole("textbox", { name: "Email address" }).fill(uiEmail);
   const signup = page.waitForResponse(
     (response) =>

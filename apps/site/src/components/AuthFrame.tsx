@@ -31,6 +31,20 @@ export function AuthFrame({ children, footer, homeHref = "/" }: Props) {
           {footer && (
             <div className="mx-auto flex w-full max-w-[500px] justify-center">{footer}</div>
           )}
+          <nav
+            aria-label="Lymi policies and support"
+            className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted"
+          >
+            <a href="/privacy" className="rounded-xs hoverable:hover:text-text">
+              Privacy
+            </a>
+            <a href="/terms" className="rounded-xs hoverable:hover:text-text">
+              Terms
+            </a>
+            <a href="/support" className="rounded-xs hoverable:hover:text-text">
+              Support
+            </a>
+          </nav>
         </div>
       </main>
     </div>

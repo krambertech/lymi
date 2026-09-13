@@ -10,6 +10,7 @@ import { fetchConfiguredAsset } from "./html";
 import { describe, statusOf } from "./http";
 import { joinPage } from "./join-page";
 import { handleMcpRequest } from "./mcp";
+import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
 import { authenticate } from "./principal";
@@ -84,13 +85,18 @@ app.route("/api/join", joinOpen);
 // from its request hooks, so they are forwarded as they are.
 app.on(
   ["GET", "HEAD"],
-  [
-    "/.well-known/oauth-authorization-server",
-    "/.well-known/oauth-authorization-server/*",
-    "/.well-known/oauth-protected-resource",
-    "/.well-known/oauth-protected-resource/*",
-  ],
+  ["/.well-known/oauth-authorization-server", "/.well-known/oauth-authorization-server/*"],
   (c) => c.get("auth").handler(c.req.raw),
+);
+app.on(
+  ["GET", "HEAD"],
+  ["/.well-known/oauth-protected-resource", "/.well-known/oauth-protected-resource/*"],
+  async (c) =>
+    advertisePublicResourceMetadata(
+      c.req.raw,
+      await c.get("auth").handler(c.req.raw),
+      canonicalOrigins(c.env).publicSite,
+    ),
 );
 
 // The OpenAPI document and its reference UI. Public, so they sit before authentication.

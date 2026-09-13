@@ -8,6 +8,7 @@ Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-sit
 | --- | --- | --- |
 | `lymi.app/` | `apps/site` | Prerendered public landing page with interactive React islands. It remains visible whether or not a product session exists. |
 | `lymi.app/join` | `apps/site` | Public private-beta information and invitation request. |
+| `lymi.app/privacy`, `/terms`, `/support` | `apps/site` | Public privacy, service terms and support information. |
 | `lymi.app/docs/*` | `apps/site` | Public documentation, MCP setup and API reference. |
 | `lymi.app/api/beta` | `apps/site` Worker | Website-owned beta signup action. |
 | `lymi.app/api/health` | `apps/site` Worker | Public deployment identity and active version. |
@@ -17,7 +18,7 @@ Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-sit
 | `my.lymi.app/api/*` | `apps/web` Worker | Product and integration API, Better Auth, OpenAPI and product health. |
 | `my.lymi.app/mcp`, `/.well-known/*` | `apps/web` Worker | MCP endpoint and OAuth discovery. |
 
-The product Worker permanently redirects `/docs`, `/docs/*` and `/join` to the public origin while preserving path and query. Every other unknown browser path returns the product 404 or authenticated SPA behavior; it cannot fall through to a public landing page. The public Worker serves its prerendered routes and returns 404 for product API paths. There is no `api.lymi.app`.
+The product Worker permanently redirects `/docs`, `/docs/*`, `/join`, `/privacy`, `/terms` and `/support` to the public origin while preserving path and query. Every other unknown browser path returns the product 404 or authenticated SPA behavior; it cannot fall through to a public landing page. The public Worker serves its prerendered routes and returns 404 for product API paths. There is no `api.lymi.app`.
 
 Having an account is different from being signed in. An existing learner with an expired product session reaches sign-in and returns to the original safe product path after authenticating. Return paths must be internal product routes; protocol-relative, external, malformed, hashed and authentication routes fall back to Today. Joining the beta list does not create an account, and access remains limited to the product's configured email allowlist.
 
@@ -45,7 +46,7 @@ Documentation source lives in `apps/site/src/components/docs`, with one Astro pa
 | `/docs/api` | Browser-rendered reference loaded from `https://my.lymi.app/api/openapi.json` without credentials. |
 | `/docs/mcp`, `/docs/mcp/claude`, `/docs/mcp/chatgpt` | Connecting an assistant to `https://my.lymi.app/mcp`. |
 
-The product OpenAPI route permits CORS only for the exact public website origin and does not permit credentials. `my.lymi.app/api/docs` redirects to the public API reference. Still to write: `/docs/privacy`, once the policies and capabilities are defined.
+The product OpenAPI route permits CORS only for the exact public website origin and does not permit credentials. `my.lymi.app/api/docs` redirects to the public API reference. Privacy, terms and support are top-level public routes so they remain stable for people, connected apps and provider listings.
 
 ## Commands and configuration
 

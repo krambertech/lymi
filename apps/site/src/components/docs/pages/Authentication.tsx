@@ -159,6 +159,10 @@ content-type: application/json`}
         and revoke it. That is final and takes effect on the next request. Nothing the key added is
         removed; the cards stay where they are.
       </p>
+      <p>
+        The <a href="/privacy">privacy policy</a> explains how Lymi handles account and API data. If
+        a key or request is not working, follow the <a href="/support">API support steps</a>.
+      </p>
 
       <NextLinks
         items={[

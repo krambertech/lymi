@@ -22,6 +22,7 @@ export type OriginRouteDecision =
   | { kind: "misdirected"; status: 421 };
 
 const PRODUCT_ASSETS = ["/assets/", "/brand/", "/icons/", "/workbox-"] as const;
+const PUBLIC_SITE_PATHS = new Set(["/join", "/privacy", "/terms", "/support"]);
 const VITE_DEV_ASSETS = [
   "/@fs/",
   "/@id/",
@@ -102,7 +103,7 @@ export function decideOriginRoute(
     return { kind: "misdirected", status: 421 };
   }
 
-  if (atOrBelow(url.pathname, "/docs") || url.pathname === "/join") {
+  if (atOrBelow(url.pathname, "/docs") || PUBLIC_SITE_PATHS.has(url.pathname)) {
     return redirectTo(configured.publicSite, url);
   }
 

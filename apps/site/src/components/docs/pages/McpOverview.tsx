@@ -151,6 +151,12 @@ export function McpOverview() {
         <code>ai</code> on the card, so you can always tell its text from the lesson’s. Lymi does
         not fill in missing fields yet; that enrichment is a separate pass.
       </p>
+      <p>
+        Lymi receives the fields the assistant submits, not the rest of the conversation or raw
+        lesson material unless it is included in a field. Read the{" "}
+        <a href="/privacy">privacy policy</a> for how connected-app data is handled and{" "}
+        <a href="/support">MCP support</a> if the connection does not complete.
+      </p>
 
       <H2>What a connected assistant can never do</H2>
       <ul>

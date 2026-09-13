@@ -15,11 +15,11 @@ msgstr ""
 
 #: src/components/landing/hand-cards.ts
 msgid "“J’ai la flemme” is the whole excuse."
-msgstr "Всё оправдание умещается в «J’ai la flemme»."
+msgstr "«J’ai la flemme» — и никаких других объяснений."
 
 #: src/components/landing/hand-cards.ts
 msgid "“May it come easy”, said to someone at work"
-msgstr "«Пусть работа даётся легко» — пожелание тому, кто за неё берётся"
+msgstr "«Пусть будет легко» — говорят тому, кто работает"
 
 #: src/components/landing/hand-cards.ts
 msgid "“Schönen Feierabend!” wishes someone a good evening off."
@@ -52,27 +52,27 @@ msgstr "9 дней"
 
 #: src/components/landing/hand-cards.ts
 msgid "A brilliant first round rarely repeats in the second."
-msgstr "Блестящий первый результат редко повторяется во второй раз."
+msgstr "Блестящий первый раунд редко удаётся повторить во втором."
 
 #: src/components/landing/hand-cards.ts
 msgid "A café, an evening or a person can all be gezellig."
-msgstr "Gezellig может быть кафе, вечер или человек."
+msgstr "Gezellig бывает и кафе, и вечер, и человек."
 
 #: src/components/landing/hand-cards.ts
 msgid "A clever fix made from whatever is at hand"
-msgstr "Находчивое решение из того, что есть под рукой"
+msgstr "Смекалистое решение из подручных средств"
 
 #: src/components/landing/LandingView.tsx
 msgid "A course or lesson"
-msgstr "Учебный курс"
+msgstr "Курсы и занятия"
 
 #: src/components/landing/LandingView.tsx
 msgid "A Finnish verb, a chess term, a line from a physics paper. Save it once, hear how it’s said, and Lymi brings it back right before you’d forget."
-msgstr "Финский глагол, шахматный термин или строка из научной статьи. Сохрани это в Lymi, послушай произношение и повтори как раз тогда, когда уже начинаешь забывать."
+msgstr "Финский глагол, шахматный термин, строчка из статьи по физике. Сохрани один раз, послушай произношение — и Lymi напомнит об этом как раз перед тем, как забудется."
 
 #: src/components/landing/hand-cards.ts
 msgid "A flat plate on a door says push; a handle says pull."
-msgstr "Плоская пластина на двери подсказывает толкать, ручка — тянуть."
+msgstr "Гладкая накладка на двери подсказывает «толкай», ручка — «тяни»."
 
 #: src/components/landing/hand-cards.ts
 msgid "A longing for someone or something that is gone"
@@ -84,23 +84,23 @@ msgstr "Иностранный язык"
 
 #: src/components/landing/hand-cards.ts
 msgid "A partnership between fungi and plant roots, trading water for sugar"
-msgstr "Сотрудничество грибов и корней растений: вода в обмен на сахара"
+msgstr "Союз грибов и корней растений: вода в обмен на сахар"
 
 #: src/components/landing/LandingView.tsx
 msgid "A personal interest"
-msgstr "Личные интересы"
+msgstr "Увлечения"
 
 #: src/components/landing/LandingView.tsx
 msgid "A professional field"
-msgstr "Рабочие термины"
+msgstr "Работа"
 
 #: src/components/landing/hand-cards.ts
 msgid "A pun on tsunde oku, to leave piled, and doku, reading."
-msgstr "Игра слов: tsunde oku — складывать стопкой, а doku — чтение."
+msgstr "Игра слов: tsunde oku — «оставить лежать стопкой» и doku — «чтение»."
 
 #: src/components/landing/hand-cards.ts
 msgid "A thank-you to everyone who brought the food to the table."
-msgstr "Благодарность всем, благодаря кому еда появилась на столе."
+msgstr "Благодарность всем, чьими трудами еда оказалась на столе."
 
 #: src/components/landing/hand-cards.ts
 msgid "A thermostat that turns on at 19° and off at 21°."
@@ -112,11 +112,11 @@ msgstr "Акценты, которые приходятся между осно�
 
 #: src/components/landing/LandingView.tsx
 msgid "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
-msgstr "Добавь термин с урока. Lymi может дополнить недостающее: значение, пример, произношение и язык. Твой текст останется без изменений."
+msgstr "Добавь термин с урока. Lymi дополнит недостающее: значение, пример, произношение и язык, — а твой текст не тронет."
 
 #: src/components/landing/AssistantChat.tsx
 msgid "Added to Chess, with the meaning and an example."
-msgstr "Готово — карточка уже в колоде «Шахматы», со значением и примером."
+msgstr "Готово: карточка в колоде «Шахматы», со значением и примером."
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "After the first recall"
@@ -136,7 +136,7 @@ msgstr "ИИ-ассистенты"
 
 #: src/components/JoinView.tsx
 msgid "Already invited?"
-msgstr "Приглашение уже есть?"
+msgstr "Уже есть приглашение?"
 
 #: src/components/landing/hand-cards.ts
 msgid "Also called the frequency illusion."
@@ -144,7 +144,7 @@ msgstr "Другое название — иллюзия частотности.
 
 #: src/components/landing/hand-cards.ts
 msgid "An extreme result is usually followed by a more ordinary one"
-msgstr "За исключительным результатом обычно следует более обычный"
+msgstr "После выдающегося результата обычно идёт более скромный"
 
 #: src/components/landing/hand-cards.ts
 msgid "An idea that only sounds brilliant after a few drinks"
@@ -152,7 +152,7 @@ msgstr "Идея, которая кажется гениальной тольк�
 
 #: src/components/landing/AssistantChat.tsx
 msgid "And what am I due to review tonight?"
-msgstr "Что мне повторить сегодня вечером?"
+msgstr "А что мне повторить сегодня вечером?"
 
 #: src/components/landing/AssistantChat.tsx
 #: src/components/landing/cards.ts
@@ -166,15 +166,15 @@ msgstr "Справочник API"
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "As the gaps widen"
-msgstr "Когда перерывы между повторениями растут"
+msgstr "Когда интервалы растут"
 
 #: src/components/landing/hand-cards.ts
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
-msgstr "На вопрос, хотелось бы выиграть в лотерею: «Magari!»"
+msgstr "На вопрос «Хочешь выиграть в лотерею?» — «Magari!»"
 
 #: src/components/landing/hand-cards.ts
 msgid "Auditors use it to spot figures that were made up."
-msgstr "Аудиторы используют его, чтобы находить выдуманные числа."
+msgstr "С его помощью аудиторы находят выдуманные цифры."
 
 #: src/components/landing/ReviewDemo.tsx
 msgid "Back in 10 minutes."
@@ -211,11 +211,11 @@ msgstr "Шахматы · новая"
 
 #: src/components/landing/ReviewDemo.tsx
 msgid "Choose a grade to move to the next card."
-msgstr "Выбери оценку — и переходи к следующей карточке."
+msgstr "Выбери оценку, чтобы перейти к следующей карточке."
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Click to turn it over"
-msgstr "Нажми, чтобы открыть"
+msgstr "Нажми, чтобы перевернуть"
 
 #: src/components/landing/hand-cards.ts
 msgid "Clocking off, and the free evening that follows"
@@ -232,7 +232,7 @@ msgstr "Кулинария"
 
 #: src/components/landing/hand-cards.ts
 msgid "Cosy and convivial; good company"
-msgstr "Уютно и душевно, в приятной компании"
+msgstr "Уютный и душевный; в хорошей компании"
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "DAY 0"
@@ -256,7 +256,7 @@ msgstr "Не сноси забор, пока не поймёшь, зачем е�
 
 #: src/components/landing/hand-cards.ts
 msgid "Drinking at home, alone, in your underwear"
-msgstr "Выпивать дома в одиночестве, в нижнем белье"
+msgstr "Выпивать дома в одиночку в одних трусах"
 
 #: src/components/landing/ReviewDemo.tsx
 msgid "Easy"
@@ -284,12 +284,12 @@ msgstr "Español"
 
 #: src/components/landing/hand-cards.ts
 msgid "Every detail in a story should earn its place."
-msgstr "Каждая деталь в истории должна быть на своём месте не просто так."
+msgstr "В сюжете не должно быть лишних деталей."
 
 #: src/components/landing/cards.ts
 #: src/components/landing/hand-cards.ts
 msgid "Everything prepped and to hand before you start"
-msgstr "Всё подготовлено и под рукой ещё до начала работы"
+msgstr "Всё готово и под рукой, прежде чем начать"
 
 #: src/components/landing/EnrichDemo.tsx
 msgid "Example"
@@ -301,11 +301,11 @@ msgstr "Объяснять код вслух строка за строкой, �
 
 #: src/components/landing/hand-cards.ts
 msgid "Fado, Portugal’s mournful song, is built on it."
-msgstr "На этом чувстве держится фаду — печальная музыка Португалии."
+msgstr "На этом чувстве держится фаду — печальная португальская песня."
 
 #: src/components/landing/cards.ts
 msgid "Feeling low; in a slump"
-msgstr "Быть подавленным, переживать спад"
+msgstr "Плохое настроение; упадок сил"
 
 #: src/components/landing/hand-cards.ts
 msgid "Finnish has a word for a night with no plans to go out."
@@ -349,7 +349,7 @@ msgstr "Трудно"
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "How well-timed reviews change recall"
-msgstr "Как повторения вовремя помогают запоминать"
+msgstr "Как своевременные повторения помогают помнить"
 
 #: src/components/landing/hand-cards.ts
 msgid "Ice, jää, plus edge, äär: four ä in a row."
@@ -394,7 +394,7 @@ msgstr "Всё образуется"
 
 #: src/components/landing/hand-cards.ts
 msgid "It’s why a half-read chapter keeps nagging at you."
-msgstr "Поэтому недочитанная глава никак не выходит из головы."
+msgstr "Вот почему недочитанная глава не даёт покоя."
 
 #: src/components/landing/hand-cards.ts
 msgid "Just the right amount: not too much, not too little"
@@ -402,7 +402,7 @@ msgstr "Ровно столько, сколько нужно: не слишко�
 
 #: src/components/landing/LandingView.tsx
 msgid "Keep the next thing you learn."
-msgstr "Начни запоминать надолго."
+msgstr "Пусть новое не забывается."
 
 #: src/components/landing/LandingView.tsx
 msgid "Keep what you learn."
@@ -414,7 +414,7 @@ msgstr "Язык"
 
 #: src/components/landing/hand-cards.ts
 msgid "Latin for “you shall have the body”."
-msgstr "По-латыни — «ты будешь иметь тело»."
+msgstr "По-латыни — «ты должен иметь тело»."
 
 #: src/components/landing/hand-cards.ts
 msgid "Law"
@@ -438,20 +438,20 @@ msgstr "Lymi · Запоминай надолго"
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "Lymi asks before it shows. Trying to retrieve an idea strengthens later recall more than simply reading it again, as <0>Roediger and Karpicke found in 2006</0>."
-msgstr "Lymi сначала задаёт вопрос и лишь потом показывает ответ. Когда стараешься вспомнить самостоятельно, запоминаешь лучше, чем при повторном чтении. Это подтвердили <0>Рёдигер и Карпике в исследовании 2006 года</0>."
+msgstr "Lymi сначала спрашивает, а потом показывает. Попытка вспомнить укрепляет память сильнее, чем простое перечитывание, — это показали <0>Рёдигер и Карпике в 2006 году</0>."
 
 #: src/components/landing/LandingView.tsx
 msgid "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
-msgstr "У Lymi есть публичный API, поэтому твои приложения и инструменты могут работать с карточками. Добавляй слова через быстрые команды на телефоне, импортируй уроки из таблиц или показывай карточки для повторения на своём сайте."
+msgstr "У Lymi есть публичный API, так что приложения и инструменты, которыми ты уже пользуешься, могут работать с твоими карточками. Добавь слово через быструю команду на телефоне, перенеси урок из таблицы или покажи на своём сайте, что пора повторить."
 
 #: src/components/AuthFrame.tsx
 #: src/components/landing/LandingView.tsx
 msgid "Lymi home"
-msgstr "Главная Lymi"
+msgstr "Главная страница Lymi"
 
 #: src/components/JoinView.tsx
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
-msgstr "Пока Lymi доступна по приглашениям. Оставь электронную почту — мы напишем, когда появится место."
+msgstr "Пока в Lymi можно попасть только по приглашению. Оставь электронную почту — мы напишем, когда появится место."
 
 #: src/components/landing/LandingView.tsx
 msgid "Lymi is provided by Krambertech OÜ."
@@ -471,7 +471,7 @@ msgstr "Значение"
 
 #: src/components/landing/LandingView.tsx
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each grade to decide when the card returns."
-msgstr "Со временем мы забываем изученное. Повторение в нужный момент укрепляет память, и к карточке можно дольше не возвращаться. После каждой оценки Lymi рассчитывает, когда показать её снова."
+msgstr "Память слабеет. Если вспомнить что-то вовремя, оно закрепляется, и следующий перерыв может быть длиннее. По каждой оценке Lymi решает, когда вернуть карточку."
 
 #: src/components/landing/hand-cards.ts
 msgid "Most land plants have one."
@@ -537,7 +537,7 @@ msgstr "Послушать произношение"
 
 #: src/components/landing/LandingView.tsx
 msgid "Plug Lymi into anything."
-msgstr "Подключай Lymi к своим инструментам."
+msgstr "Подключай Lymi к чему угодно."
 
 #: src/components/landing/hand-cards.ts
 msgid "Prefer the explanation that needs the fewest assumptions"
@@ -557,7 +557,7 @@ msgstr "Психология"
 
 #: src/components/landing/hand-cards.ts
 msgid "Quick nunchi means sensing a mood before anyone says a word."
-msgstr "Быстрое нунчи — это уловить настроение ещё до того, как кто-то заговорит."
+msgstr "Хорошее нунчи — уловить настроение, пока никто ещё не сказал ни слова."
 
 #: src/components/landing/LandingView.tsx
 msgid "Recall first. Reveal second."
@@ -595,15 +595,15 @@ msgstr "Открой значение и оцени, насколько хоро
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "Reviewed with Lymi"
-msgstr "С регулярными повторениями в Lymi"
+msgstr "С повторениями в Lymi"
 
 #: src/components/landing/hand-cards.ts
 msgid "Reviews spread over days stick better than the same reviews crammed together"
-msgstr "Повторения в разные дни запоминаются лучше, чем столько же повторений подряд"
+msgstr "Несколько повторений в разные дни работают лучше, чем столько же за один раз"
 
 #: src/components/landing/hand-cards.ts
 msgid "Reward lines of code, and the code gets longer."
-msgstr "Вознаграждай количество строк — и код станет длиннее."
+msgstr "Поощряй за количество строк — и код станет длиннее."
 
 #: src/components/landing/hand-cards.ts
 msgid "Said before eating: “I humbly receive”"
@@ -611,11 +611,11 @@ msgstr "Говорят перед едой: «Смиренно принимаю�
 
 #: src/components/landing/hand-cards.ts
 msgid "Said to anyone about to eat, the way French says bon appétit."
-msgstr "Так желают приятного аппетита каждому, кто собирается есть, как французское bon appétit."
+msgstr "Говорят каждому, кто садится есть, — как французское bon appétit."
 
 #: src/components/landing/cards.ts
 msgid "Sample twice as fast as the highest frequency"
-msgstr "Дискретизируй вдвое быстрее самой высокой частоты"
+msgstr "Дискретизируй с частотой вдвое выше максимальной"
 
 #: src/components/landing/LandingView.tsx
 msgid "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in what’s missing, says it aloud, and brings the card back before you forget. Free during the private beta."
@@ -627,7 +627,7 @@ msgstr "Произношение"
 
 #: src/components/landing/hand-cards.ts
 msgid "Schnaps, spirits, plus Idee, idea."
-msgstr "Schnaps — алкоголь, Idee — идея."
+msgstr "Schnaps — водка, Idee — идея."
 
 #: src/components/landing/LandingView.tsx
 msgid "See how it works"
@@ -635,7 +635,7 @@ msgstr "Как это работает"
 
 #: src/components/landing/AssistantChat.tsx
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
-msgstr "Семь карточек: четыре по финскому, две шахматные и одна из статьи об обработке сигналов."
+msgstr "Семь карточек: четыре по финскому, две шахматные и одна из той статьи об обработке сигналов."
 
 #: src/components/landing/ApiConnections.tsx
 msgid "Shortcuts"
@@ -663,7 +663,7 @@ msgstr "Так себе; небрежно"
 
 #: src/components/landing/hand-cards.ts
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
-msgstr "Sobre — над, mesa — стол. Собремеса может длиться дольше самой трапезы."
+msgstr "Sobre — «над», mesa — «стол». Бывает, что она длится дольше самой еды."
 
 #: src/components/landing/ApiConnections.tsx
 msgid "Spreadsheets"
@@ -679,7 +679,7 @@ msgstr "Статистика"
 
 #: src/components/landing/LandingView.tsx
 msgid "Stay in the conversation."
-msgstr "Добавляй карточки прямо из разговора."
+msgstr "Добавляй карточки, не выходя из разговора."
 
 #: src/components/landing/hand-cards.ts
 msgid "Staying at the table to talk after a meal"
@@ -691,11 +691,11 @@ msgstr "Держаться за что-то лишь из-за уже вложе
 
 #: src/components/landing/cards.ts
 msgid "Stubborn grit; carrying on anyway"
-msgstr "Упрямая стойкость; продолжать несмотря ни на что"
+msgstr "Упрямая стойкость; не сдаваться несмотря ни на что"
 
 #: src/components/landing/hand-cards.ts
 msgid "Stubborn grit; carrying on when it gets hard"
-msgstr "Упрямая стойкость; продолжать, когда становится трудно"
+msgstr "Упрямая стойкость; не сдаваться, когда трудно"
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "Successful reviews buy time"
@@ -711,7 +711,7 @@ msgstr "Солнечный свет, пробивающийся сквозь л�
 
 #: src/components/landing/hand-cards.ts
 msgid "Sunlight filtering through leaves"
-msgstr "Солнечный свет, просачивающийся сквозь листья"
+msgstr "Солнечный свет, пробивающийся сквозь листья"
 
 #: src/components/landing/cards.ts
 msgid "Suomi · noun"
@@ -731,7 +731,7 @@ msgstr "Шведы говорят так и о кофе, и о рабочем в
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Tap to turn it over"
-msgstr "Коснись, чтобы открыть"
+msgstr "Коснись, чтобы перевернуть"
 
 #: src/components/landing/hand-cards.ts
 msgid "Tape, a spare part and some nerve."
@@ -747,7 +747,7 @@ msgstr "Условия"
 
 #: src/components/landing/LandingView.tsx
 msgid "Terms and concepts from a new role, project, or technical field."
-msgstr "Термины и понятия для новой роли, проекта или технической области."
+msgstr "Термины и понятия для новой должности, проекта или технической области."
 
 #: src/components/landing/AssistantChat.tsx
 msgid "That chess term you just used, add it to my deck."
@@ -759,7 +759,7 @@ msgstr "Список заявок временно недоступен. Адр�
 
 #: src/components/landing/hand-cards.ts
 msgid "The browning that gives seared, baked and toasted food its flavour"
-msgstr "Подрумянивание, которое придаёт вкус жареной, печёной и поджаренной еде"
+msgstr "Подрумянивание, которое придаёт вкус жареному, печёному и тостам"
 
 #: src/components/landing/hand-cards.ts
 msgid "The duck never answers. It doesn’t need to."
@@ -767,15 +767,15 @@ msgstr "Утка никогда не отвечает. Ей и не нужно."
 
 #: src/components/landing/hand-cards.ts
 msgid "The earthy smell of rain on dry ground"
-msgstr "Землистый запах дождя на сухой земле"
+msgstr "Запах дождя, пролившегося на сухую землю"
 
 #: src/components/landing/hand-cards.ts
 msgid "The edge of the ice"
-msgstr "Край льда"
+msgstr "Кромка льда"
 
 #: src/components/landing/hand-cards.ts
 msgid "The knack of reading the room"
-msgstr "Умение чувствовать настроение в комнате"
+msgstr "Умение чувствовать настроение людей вокруг"
 
 #: src/components/landing/LandingView.tsx
 msgid "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
@@ -783,7 +783,7 @@ msgstr "Фонарь и логотип Lymi над английской надп
 
 #: src/components/landing/cards.ts
 msgid "The output depends on the history of the input"
-msgstr "Выход зависит от предыстории входных данных"
+msgstr "Результат зависит от того, что было на входе раньше"
 
 #: src/components/landing/hand-cards.ts
 msgid "The player would pass, if chess allowed it."
@@ -795,7 +795,7 @@ msgstr "Участие в закрытой бете бесплатное. Ост
 
 #: src/components/landing/hand-cards.ts
 msgid "The push behind ragtime, funk and reggae."
-msgstr "Именно она придаёт движение рэгтайму, фанку и регги."
+msgstr "Именно она даёт драйв рэгтайму, фанку и регги."
 
 #: src/components/landing/LandingView.tsx
 msgid "The right moment matters."
@@ -811,11 +811,11 @@ msgstr "Интересное из книг, увлечений и повседн
 
 #: src/components/landing/cards.ts
 msgid "To belong; to be heard"
-msgstr "Принадлежать; быть услышанным"
+msgstr "Принадлежать; быть слышным"
 
 #: src/components/landing/hand-cards.ts
 msgid "To not be able to be bothered"
-msgstr "Не иметь ни малейшего желания что-то делать"
+msgstr "Лень; неохота ничего делать"
 
 #: src/components/landing/ReviewDemo.tsx
 msgid "Tonight"
@@ -827,7 +827,7 @@ msgstr "Слишком много попыток. Подожди минуту и
 
 #: src/components/landing/LandingView.tsx
 msgid "Try to recall the meaning before Lymi shows it. Then grade how well you remembered. Difficult cards return sooner; easy ones wait."
-msgstr "Сначала попробуй вспомнить значение. Затем открой ответ и оцени себя. То, что даётся труднее, Lymi покажет раньше; легче — позже."
+msgstr "Попробуй вспомнить значение, прежде чем Lymi его покажет. Потом оцени, насколько хорошо получилось. Трудные карточки вернутся раньше, лёгкие подождут."
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Turn a few cards over"
@@ -835,7 +835,7 @@ msgstr "Переверни несколько карточек"
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Turn it over"
-msgstr "Открыть карточку"
+msgstr "Перевернуть"
 
 #: src/components/BetaSignup.tsx
 msgid "Unable to reach the beta list. Check your connection and try again."
@@ -875,11 +875,11 @@ msgstr "Если карточка вспоминается легко, к ней
 
 #: src/components/landing/hand-cards.ts
 msgid "When the output depends on the history of the input"
-msgstr "Когда выход зависит от предыстории входных данных"
+msgstr "Когда результат зависит от того, что было на входе раньше"
 
 #: src/components/landing/ApiConnections.tsx
 msgid "Where cards can show up"
-msgstr "Куда можно передавать карточки"
+msgstr "Где могут появляться карточки"
 
 #: src/components/landing/ApiConnections.tsx
 msgid "Where cards come from"
@@ -895,7 +895,7 @@ msgstr "слово"
 
 #: src/components/landing/LandingView.tsx
 msgid "Words and phrases from lessons, conversations, and reading."
-msgstr "Слова и фразы с уроков, из разговоров и чтения."
+msgstr "Слова и фразы с уроков, из разговоров и прочитанного."
 
 #: src/components/landing/hand-cards.ts
 msgid "Writing"

@@ -307,6 +307,8 @@ A grant lasts until it is taken back, so Settings has Connected apps beside API 
 
 The app icon is always the dark room: ivory lantern, lit and glowing, on the dark canvas. Assets are in `apps/web/public/brand/` and regenerate with `node scripts/brand.mjs && sh scripts/icons.sh`.
 
+The link preview for the public site, `apps/site/public/share.png`, is the app icon's room widened to 1200 × 630: the lit row lockup over “Keep what you learn.” in the same warm centre. Everything sits in the middle 630 px, so an app that crops the preview to a square keeps the whole picture.
+
 ## Type
 
 One family, Onest, self-hosted as a variable font declared for weights 400–600, with Latin, Latin extended and Cyrillic files. The word on the card is the largest thing on any screen and is set at 500, not bold. Everything else is 400 or 500; 600 is for the wordmark, counts and kbd. The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px from 11 to 17, display sizes by about 1.2 to 1.27 from 20 to 46. It is set in rem so it follows the reader's default font size; the sizes in the frontmatter and in this document are px at the 16 px default. Headings track −0.02em, the word −0.03em, body never. Tabular figures on anything that changes. Curly quotes and the ellipsis character in copy. Uppercase only at 12 px, tracked +0.06em.
@@ -420,7 +422,7 @@ Prose is `text-2` at 15.5 px on a 44 rem column; headings and bold are `text`. T
 
 ## Don't
 
-- No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
+- No gradients on any surface; the app icon and the link preview, which shares its warm centre, are the exception. No drop shadows. No glow on anything but the lantern.
 - No amber outside the flame, the primary action and a due count. The streak's flame is that same flame, so it counts as one.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
 - No simplified small cut. No amber beyond the flame and the primary action.

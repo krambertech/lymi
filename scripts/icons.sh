@@ -13,3 +13,7 @@ rsvg-convert -w 512 -h 512 "$BRAND/app-icon-maskable.svg" -o "$OUT/maskable-512.
 # iOS applies its own corner mask; the tile is square and opaque.
 rsvg-convert -w 180 -h 180 apps/web/public/icon-ios.svg -o "$OUT/apple-touch-icon.png"
 echo "icons written to $OUT"
+# The share image sets its line in Onest, so the font has to be installed where fontconfig finds it.
+fc-list | grep -q Onest || { echo "install Onest to render share.png" >&2; exit 1; }
+rsvg-convert -w 1200 -h 630 apps/site/public/brand/share.svg -o apps/site/public/share.png
+echo "share image written to apps/site/public/share.png"

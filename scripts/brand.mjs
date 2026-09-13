@@ -89,6 +89,27 @@ const wordmark = (c, { flame = false, x = 0, y = 0, height = 100 } = {}) => {
   };
 };
 
+// Row lockup, same geometry as LOCKUP in components/Logo.tsx: foot on the baseline, 0.17em gap.
+// Bounds of the drawing inside its 120 box: x 31.5 to 88.5, y 15.25 to 106.
+const lockup = (c, { glow = false } = {}) => {
+  const L = 130;
+  const ls = L / 120;
+  const lanternX = -31.5 * ls;
+  const lanternY = -106 * ls;
+  const textX = (88.5 - 31.5) * ls + 17;
+  const top = Math.min(WM.top, 15.25 * ls - 106 * ls) - 2;
+  const lh = WM.bottom - top;
+  const lw = textX + WM.width;
+  const scaleTo = 100 / lh;
+  return {
+    width: Math.ceil(lw * scaleTo),
+    body: `<g transform="scale(${scaleTo.toFixed(4)}) translate(0 ${(-top).toFixed(2)})">
+  <g transform="translate(${lanternX.toFixed(2)} ${lanternY.toFixed(2)}) scale(${ls.toFixed(4)})">${lanternBody(c, { glow })}</g>
+  ${wordmark(c, { x: textX, y: WM.top * (100 / (WM.bottom - WM.top)) * 0 }).body.replace(/translate\(([\d.]+) ([\d.-]+)\) scale\([\d.]+\)/, `translate(${textX} 0) scale(1)`)}
+</g>`,
+  };
+};
+
 for (const [name, c] of [
   ["light", light],
   ["dark", dark],
@@ -106,28 +127,8 @@ for (const [name, c] of [
   writeFileSync(join(out, `wordmark-${name}.svg`), svg(Math.ceil(wm.width), 100, wm.body));
   const lit = wordmark(c, { flame: true });
   writeFileSync(join(out, `wordmark-lit-${name}.svg`), svg(Math.ceil(lit.width), 100, lit.body));
-  // Row lockup, same geometry as LOCKUP in components/Logo.tsx: foot on the baseline, 0.17em gap.
-  // Bounds of the drawing inside its 120 box: x 31.5 to 88.5, y 15.25 to 106.
-  const L = 130;
-  const ls = L / 120;
-  const lanternX = -31.5 * ls;
-  const lanternY = -106 * ls;
-  const textX = (88.5 - 31.5) * ls + 17;
-  const top = Math.min(WM.top, 15.25 * ls - 106 * ls) - 2;
-  const lh = WM.bottom - top;
-  const lw = textX + WM.width;
-  const scaleTo = 100 / lh;
-  writeFileSync(
-    join(out, `lockup-${name}.svg`),
-    svg(
-      Math.ceil(lw * scaleTo),
-      100,
-      `<g transform="scale(${scaleTo.toFixed(4)}) translate(0 ${(-top).toFixed(2)})">
-  <g transform="translate(${lanternX.toFixed(2)} ${lanternY.toFixed(2)}) scale(${ls.toFixed(4)})">${lanternBody(c)}</g>
-  ${wordmark(c, { x: textX, y: WM.top * (100 / (WM.bottom - WM.top)) * 0 }).body.replace(/translate\(([\d.]+) ([\d.-]+)\) scale\([\d.]+\)/, `translate(${textX} 0) scale(1)`)}
-</g>`,
-    ),
-  );
+  const row = lockup(c);
+  writeFileSync(join(out, `lockup-${name}.svg`), svg(row.width, 100, row.body));
 }
 
 // App icon: the dark room, always. A warm centre sits behind the flame.
@@ -179,4 +180,24 @@ for (const filename of readdirSync(siteOut)) {
   writeFileSync(path, readFileSync(path, "utf8").replace(/[ \t]+$/gm, ""));
 }
 writeFileSync(join(root, "apps/site/public/icon.svg"), favicon());
+
+// Link preview for the public site, rendered to share.png by icons.sh. Everything sits in the middle
+// 630 px, so apps that crop the preview to a square keep the mark and the line. The warm centre is
+// the app icon's, the one gradient the system allows.
+const share = () => {
+  const height = 180;
+  const k = height / 100;
+  const row = lockup(dark, { glow: true });
+  const x = (1200 - row.width * k) / 2;
+  return svg(
+    1200,
+    630,
+    `${glowDef(dark, 5)}<defs><radialGradient id="warm" gradientUnits="userSpaceOnUse" cx="540" cy="290" r="560"><stop offset="0" stop-color="${dark.amber}" stop-opacity="0.2"/><stop offset="1" stop-color="${dark.amber}" stop-opacity="0"/></radialGradient></defs>
+  <rect width="1200" height="630" fill="${dark.canvas}"/>
+  <rect width="1200" height="630" fill="url(#warm)"/>
+  <g transform="translate(${x.toFixed(2)} 168) scale(${k})">${row.body}</g>
+  <text x="600" y="450" text-anchor="middle" fill="${dark.metal}" font-family="Onest" font-weight="500" font-size="56" letter-spacing="-1.7">Keep what you learn.</text>`,
+  );
+};
+writeFileSync(join(siteOut, "share.svg"), share());
 console.log("brand assets written to", out, "and", siteOut);

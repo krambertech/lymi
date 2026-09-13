@@ -185,6 +185,7 @@ function Review() {
       <ReviewHeader
         done={done}
         total={sessionTotal}
+        animateCount={animateNextCard}
         flare={flare}
         onClose={() => navigate({ to: "/today" })}
       />

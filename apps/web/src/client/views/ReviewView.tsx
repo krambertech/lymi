@@ -44,6 +44,8 @@ export const GRADES: {
 export interface ReviewHeaderProps {
   done: number;
   total: number;
+  /** Roll the count when it changes. Off when the grade came from the keyboard. */
+  animateCount?: boolean | undefined;
   flare?: boolean | undefined;
   onClose?: (() => void) | undefined;
 }
@@ -61,7 +63,13 @@ const EASE_OUT = [0.22, 1, 0.36, 1] as const;
  * The lantern's drawing starts about a quarter of the way into its box, so the negative margin
  * puts the metal, not the box, on the card's outer edge.
  */
-export function ReviewHeader({ done, total, flare, onClose }: ReviewHeaderProps) {
+export function ReviewHeader({
+  done,
+  total,
+  animateCount = true,
+  flare,
+  onClose,
+}: ReviewHeaderProps) {
   const { t } = useLingui();
   return (
     <header className="flex min-h-14 shrink-0 items-center gap-3 pt-2 @3xl:pt-4">
@@ -73,7 +81,7 @@ export function ReviewHeader({ done, total, flare, onClose }: ReviewHeaderProps)
       />
       <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
         <Trans>
-          <RollingCount value={done} /> of {total}
+          <RollingCount value={done} animate={animateCount} /> of {total}
         </Trans>
       </span>
       {/* Quiet but not small: a 40 px circle with a 52 px hit area, pulled out so the X sits on the card edge. */}
@@ -90,16 +98,20 @@ export function ReviewHeader({ done, total, flare, onClose }: ReviewHeaderProps)
 }
 
 /** The count rolls up when a card lands, so the change is seen rather than noticed later. */
-function RollingCount({ value }: { value: number }) {
+function RollingCount({ value, animate }: { value: number; animate: boolean }) {
   return (
     <span className="relative inline-grid overflow-hidden align-bottom">
       <AnimatePresence initial={false} mode="popLayout">
         <motion.span
           key={value}
           className="inline-block"
-          initial={{ y: "80%", opacity: 0 }}
+          initial={animate ? { y: "80%", opacity: 0 } : false}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: "-80%", opacity: 0, transition: { duration: 0.14, ease: EASE_OUT } }}
+          exit={
+            animate
+              ? { y: "-80%", opacity: 0, transition: { duration: 0.14, ease: EASE_OUT } }
+              : { opacity: 0, transition: { duration: 0 } }
+          }
           transition={{ duration: 0.22, ease: EASE_OUT }}
         >
           {value}
@@ -431,7 +443,10 @@ const gradeRise: Variants = {
  * the card, so the word's two movements land as one. It clips only while opening, so a pressed
  * grade's scale and focus ring are not cut off afterwards; mounting on each reveal resets that.
  */
-function OpeningStrip({ animate, children }: { animate: boolean; children: ReactNode }) {
+function OpeningStrip({ animate: wanted, children }: { animate: boolean; children: ReactNode }) {
+  // Height is not a transform, so MotionConfig's reduced motion does not stop it; this does.
+  const reduce = useReducedMotion();
+  const animate = wanted && !reduce;
   const [opened, setOpened] = useState(!animate);
   return (
     <motion.div

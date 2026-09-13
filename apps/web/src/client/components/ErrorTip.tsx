@@ -69,8 +69,9 @@ export function ErrorTip({ anchor, message }: Props) {
         <CircleAlert className="mt-0.5 size-4 shrink-0 text-danger" aria-hidden="true" />
         <span>{message}</span>
       </span>
+      {/* Only while shown: it sits inside the word's line, and would otherwise be read with it. */}
       <span className="sr-only" role="alert">
-        {message}
+        {open ? message : null}
       </span>
     </>
   );

@@ -5,14 +5,15 @@
 
 export const GEMINI_CLI_CLIENT_PATH = "/oauth/gemini-cli.json";
 
-/** The loopback callback Gemini CLI listens on; a 127.0.0.1 redirect may use any port (RFC 8252 §7.3). */
-export const GEMINI_CLI_REDIRECT_URI = "http://127.0.0.1/oauth/callback";
+/** A 127.0.0.1 redirect matches any port (RFC 8252 §7.3), so learners can pick a free one. */
+const GEMINI_CLI_REDIRECT_URI = "http://127.0.0.1/oauth/callback";
 
 export function geminiCliClientMetadata(siteOrigin: string) {
   return {
     client_id: new URL(GEMINI_CLI_CLIENT_PATH, siteOrigin).toString(),
     client_name: "Gemini CLI",
     client_uri: new URL("/docs/mcp/gemini", siteOrigin).toString(),
+    application_type: "native",
     redirect_uris: [GEMINI_CLI_REDIRECT_URI],
     grant_types: ["authorization_code", "refresh_token"],
     response_types: ["code"],

@@ -10,8 +10,8 @@ export function McpGemini() {
   return (
     <div className="doc-prose">
       <Lead>
-        Gemini CLI connects to Lymi as a remote MCP server and signs in with OAuth. It needs two
-        more lines of config than Claude Code or Codex, because it cannot identify itself the way
+        Gemini CLI connects to Lymi as a remote MCP server and signs in with OAuth. Unlike Claude
+        Code or Codex, it needs a client ID in its config, because it cannot identify itself the way
         Lymi asks.
       </Lead>
 
@@ -87,8 +87,9 @@ export function McpGemini() {
 
       <H2>The Gemini app</H2>
       <p>
-        This guide does not cover it. Custom connectors in the Gemini app need Gemini Spark, and
-        Spark is limited to personal accounts in the US. Lymi has not been tested there.
+        This guide does not cover it. On a personal account, custom connectors in the Gemini app
+        need Gemini Spark, which is only available in the US. Lymi has not been tested there or in
+        Gemini Enterprise.
       </p>
 
       <H2>When it does not connect</H2>

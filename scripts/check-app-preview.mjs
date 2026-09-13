@@ -24,7 +24,34 @@ async function manualFetch(url, jar, fetchImpl) {
   return response;
 }
 
-export async function checkAppPreview(entryUrl, fetchImpl = fetch) {
+// A newly created Worker can answer 404 or drop the connection before its preview surface is live.
+async function openEntry(entry, jar, { attempts, retryDelayMs, fetchImpl, onRetry }) {
+  for (let attempt = 1; ; attempt += 1) {
+    let reason;
+    try {
+      const response = await manualFetch(entry, jar, fetchImpl);
+      if (response.status !== 404) return response;
+      reason = "HTTP 404";
+    } catch (error) {
+      reason = error.message;
+    }
+    if (attempt === attempts) {
+      throw new Error(
+        `GET /_preview was not live after ${attempts} attempt(s); last response: ${reason}`,
+      );
+    }
+    onRetry(reason, attempt, attempts);
+    await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+  }
+}
+
+export async function checkAppPreview(
+  entryUrl,
+  { attempts = 1, retryDelayMs = 5_000, fetchImpl = fetch, onRetry = () => {} } = {},
+) {
+  if (!Number.isInteger(attempts) || attempts < 1) {
+    throw new Error("app preview check attempts must be a positive integer");
+  }
   const entry = new URL(entryUrl);
   if (
     entry.protocol !== "https:" ||
@@ -35,7 +62,7 @@ export async function checkAppPreview(entryUrl, fetchImpl = fetch) {
   }
 
   const jar = new Map();
-  const opened = await manualFetch(entry, jar, fetchImpl);
+  const opened = await openEntry(entry, jar, { attempts, retryDelayMs, fetchImpl, onRetry });
   if (opened.status !== 303 || !opened.headers.get("location")) {
     throw new Error(`preview entry returned HTTP ${opened.status} instead of a sign-in redirect`);
   }
@@ -66,8 +93,20 @@ export async function checkAppPreview(entryUrl, fetchImpl = fetch) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const entryUrl = process.env.PREVIEW_ENTRY_URL;
   if (!entryUrl) throw new Error("PREVIEW_ENTRY_URL is required");
-  const result = await checkAppPreview(entryUrl);
-  process.stdout.write(
-    `App preview sign-in is healthy: ${result.decks} seeded deck(s), destination ${result.destination}.\n`,
-  );
+  try {
+    const result = await checkAppPreview(entryUrl, {
+      attempts: 10,
+      onRetry(reason, attempt, total) {
+        process.stdout.write(
+          `App preview entry not live (${attempt}/${total}): ${reason}; retrying in 5 seconds.\n`,
+        );
+      },
+    });
+    process.stdout.write(
+      `App preview sign-in is healthy: ${result.decks} seeded deck(s), destination ${result.destination}.\n`,
+    );
+  } catch (error) {
+    process.stderr.write(`App preview sign-in check failed: ${error.message}\n`);
+    process.exitCode = 1;
+  }
 }

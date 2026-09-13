@@ -20,14 +20,14 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
 import { directionLabel, languageName } from "../components/DeckFields";
 import { Field, Input, Textarea } from "../components/Field";
-import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuSeparator,
-  ResponsiveMenuTrigger,
-} from "../components/ResponsiveMenu";
 import { Sheet } from "../components/Sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
 import type { CardEvent } from "../lib/api";
 import { BackButton, TopBar } from "./Shell";
 
@@ -365,33 +365,33 @@ export function WordView({
       <IconButton label={t`Next card`} size={size} onClick={onNext} aria-disabled={!hasNext}>
         <ArrowDown />
       </IconButton>
-      <ResponsiveMenu>
-        <ResponsiveMenuTrigger
+      <DropdownMenu>
+        <DropdownMenuTrigger
           render={
             <IconButton label={t`Card options`} size={size}>
               <MoreHorizontal />
             </IconButton>
           }
         />
-        <ResponsiveMenuContent label={t`Card options`} align="end">
-          <ResponsiveMenuItem onClick={() => startEditing()} disabled={readOnly}>
+        <DropdownMenuContent aria-label={t`Card options`} align="end">
+          <DropdownMenuItem onClick={() => startEditing()} disabled={readOnly}>
             <Pencil />
             <Trans>Edit</Trans>
-          </ResponsiveMenuItem>
-          <ResponsiveMenuItem
+          </DropdownMenuItem>
+          <DropdownMenuItem
             onClick={() => setMoving(true)}
             disabled={!onMove || elsewhere.length === 0}
           >
             <FolderInput />
             <Trans>Move to…</Trans>
-          </ResponsiveMenuItem>
-          <ResponsiveMenuSeparator />
-          <ResponsiveMenuItem variant="destructive" onClick={onArchive} disabled={!onArchive}>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive" onClick={onArchive} disabled={!onArchive}>
             <Archive />
             <Trans>Archive</Trans>
-          </ResponsiveMenuItem>
-        </ResponsiveMenuContent>
-      </ResponsiveMenu>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       {variant === "panel" && (
         <IconButton label={t`Close`} size="sm" onClick={onClose}>
           <X />

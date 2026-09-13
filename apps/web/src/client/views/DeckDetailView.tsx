@@ -19,16 +19,16 @@ import { Button, IconButton } from "../components/Button";
 import { directionLabel, languageName } from "../components/DeckFields";
 import { EmptyState } from "../components/EmptyState";
 import { Input } from "../components/Field";
-import {
-  ResponsiveMenu,
-  ResponsiveMenuContent,
-  ResponsiveMenuItem,
-  ResponsiveMenuSeparator,
-  ResponsiveMenuTrigger,
-} from "../components/ResponsiveMenu";
 import { Segmented } from "../components/Segmented";
 import { Skeleton } from "../components/Skeleton";
 import { StateStripe, stateDot } from "../components/StateStripe";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
 import type { DeckSummary } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./Shell";
@@ -383,33 +383,33 @@ export function DeckDetailView({
   );
 
   const deckMenu = (
-    <ResponsiveMenu>
-      <ResponsiveMenuTrigger
+    <DropdownMenu>
+      <DropdownMenuTrigger
         render={
           <IconButton label={t`Deck options`}>
             <MoreHorizontal />
           </IconButton>
         }
       />
-      <ResponsiveMenuContent label={t`Deck options`} align="end">
-        <ResponsiveMenuItem onClick={onSettings} disabled={!onSettings}>
+      <DropdownMenuContent aria-label={t`Deck options`} align="end">
+        <DropdownMenuItem onClick={onSettings} disabled={!onSettings}>
           <Settings2 />
           <Trans>Deck settings</Trans>
-        </ResponsiveMenuItem>
-        <ResponsiveMenuItem
+        </DropdownMenuItem>
+        <DropdownMenuItem
           onClick={() => deck && cards && exportCsv(deck.name, cards)}
           disabled={!deck || !cards?.length}
         >
           <Download />
           <Trans>Export as CSV</Trans>
-        </ResponsiveMenuItem>
-        <ResponsiveMenuSeparator />
-        <ResponsiveMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
           <Archive />
           <Trans>Archive deck</Trans>
-        </ResponsiveMenuItem>
-      </ResponsiveMenuContent>
-    </ResponsiveMenu>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 
   // The plate above carries the counts, so the filter is names and dots.

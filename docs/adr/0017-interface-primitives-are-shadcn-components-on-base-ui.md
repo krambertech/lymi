@@ -31,12 +31,13 @@ The shape comes from one rule, `(min-width: 768px) and (hover: hover) and (point
 | Confirmation | Centred dialog, actions in a row | Drawer, actions stacked with the primary on top |
 | Place | Centred dialog, or docked beside the page | Full screen from the end edge, with a back button |
 
-Where the shape adapts, a Lymi composite such as `ResponsiveMenu` or `ResponsiveDialog` mirrors the anatomy of the shadcn component it wraps, so a call site reads the same in both shapes and never branches on the device. Tooltip, Select and Combobox stay anchored to their control everywhere.
+The adaptation lives inside the shadcn component itself: `DropdownMenu` and `Dialog` render their desktop shape or a drawer from the same parts, so a call site uses shadcn's names, never branches on the device, and has no second component to choose instead. Every part a component exports is tested in both shapes; a part no screen uses is left out until it brings its drawer shape and tests. Tooltip, Select and Combobox stay anchored to their control everywhere.
 
 ## Considered options
 
 - **Keep the hand-built primitives and add an adaptive layer:** rejected. It keeps an unmaintained drag library, and nesting, scroll lock and focus return stay our code.
 - **Lymi prop-driven facades such as `<Sheet title actions>` over Base UI:** rejected. The first attempt worked, but it hid the compound API behind a second contract that every new primitive would have to reinvent.
+- **Adaptive composites such as `ResponsiveMenu` beside unchanged shadcn copies:** rejected. It kept the copies closer to upstream, but it left two components for every overlay and a choice nobody should have to make.
 - **Radix as the base:** rejected. Radix has no drawer, so vaul would stay, and shadcn now defaults to Base UI.
 - **Anchored menus and centred confirmations on touch:** rejected. On a phone they sit away from the thumb, and a drawer is how the forms already open.
 - **Alias shadcn's colour variables to Lymi tokens:** rejected because of the `muted` collision.

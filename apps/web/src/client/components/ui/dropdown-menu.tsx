@@ -1,234 +1,365 @@
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
+import { useRender } from "@base-ui/react/use-render";
 import { cn } from "cn";
-import { CheckIcon, ChevronRightIcon } from "lucide-react";
-import type * as React from "react";
+import * as React from "react";
+import { useOverlayShape } from "../../lib/device";
+import { useFluidHover } from "../../lib/fluid-hover";
+import { FluidHighlight } from "../FluidHighlight";
+import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
 
-/** A menu row. Shared with `ResponsiveMenu`, so a row reads the same in its drawer. */
-const menuItemClassName =
+/*
+ * shadcn's Dropdown Menu, in the shape of the machine: anchored to its trigger on a desktop, a
+ * drawer with the same rows and menu semantics on a touch device. Every part below renders both
+ * shapes, so a call site never asks which machine it is on. ADR 0017.
+ *
+ * Checkbox, radio and submenu parts are left out until a screen needs one: each must bring its
+ * drawer shape and its tests with it.
+ */
+
+type Shape = "desktop" | "touch";
+
+const DropdownMenuContext = React.createContext<{
+  shape: Shape;
+  setOpen: (open: boolean) => void;
+} | null>(null);
+
+function useDropdownMenu(part: string) {
+  const context = React.useContext(DropdownMenuContext);
+  if (!context) throw new Error(`${part} must be used within a DropdownMenu.`);
+  return context;
+}
+
+const ITEM = '[role="menuitem"]';
+
+const itemClassName =
   "group/dropdown-menu-item relative flex h-11 w-full cursor-default items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-base text-text outline-none select-none transition-colors md:h-10 focus-visible:bg-hover data-highlighted:bg-hover data-inset:ps-9 data-[variant=destructive]:text-danger data-disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:text-muted data-[variant=destructive]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4";
 
-function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
-  return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
+/** Pressed feedback for a row under a finger, where there is no hover. */
+const touchItemClassName = "active:bg-hover";
+
+function DropdownMenu({
+  open: controlled,
+  defaultOpen = false,
+  onOpenChange,
+  children,
+}: {
+  open?: boolean | undefined;
+  defaultOpen?: boolean | undefined;
+  onOpenChange?: ((open: boolean) => void) | undefined;
+  children: React.ReactNode;
+}) {
+  const [uncontrolled, setUncontrolled] = React.useState(defaultOpen);
+  const open = controlled ?? uncontrolled;
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      setUncontrolled(next);
+      onOpenChange?.(next);
+    },
+    [onOpenChange],
+  );
+  const shape = useOverlayShape(open);
+  const context = React.useMemo(() => ({ shape, setOpen }), [shape, setOpen]);
+  return (
+    <DropdownMenuContext.Provider value={context}>
+      {shape === "desktop" ? (
+        // Not modal: the page keeps its scrollbar, so nothing under the menu shifts as it opens.
+        <MenuPrimitive.Root
+          data-slot="dropdown-menu"
+          open={open}
+          onOpenChange={setOpen}
+          modal={false}
+          highlightItemOnHover={false}
+        >
+          {children}
+        </MenuPrimitive.Root>
+      ) : (
+        <Drawer open={open} onOpenChange={setOpen} showSwipeHandle>
+          {children}
+        </Drawer>
+      )}
+    </DropdownMenuContext.Provider>
+  );
 }
 
-function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
-  return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
+/** Compose the control through `render`: `<DropdownMenuTrigger render={<IconButton … />} />`. */
+function DropdownMenuTrigger({ render }: { render: React.ReactElement }) {
+  const { shape } = useDropdownMenu("DropdownMenuTrigger");
+  return shape === "desktop" ? (
+    <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" render={render} />
+  ) : (
+    <DrawerTrigger data-slot="dropdown-menu-trigger" render={render} />
+  );
 }
 
-function DropdownMenuTrigger({ ...props }: MenuPrimitive.Trigger.Props) {
-  return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
+interface ContentProps {
+  /** Names the menu for screen readers in both shapes. */
+  "aria-label": string;
+  align?: "start" | "center" | "end" | undefined;
+  /** "top" for a trigger at the foot of the screen, so the list opens into the room above. */
+  side?: "top" | "bottom" | undefined;
+  sideOffset?: number | undefined;
+  className?: string | undefined;
+  children: React.ReactNode;
 }
 
-function DropdownMenuContent({
+function DropdownMenuContent(props: ContentProps) {
+  const { shape } = useDropdownMenu("DropdownMenuContent");
+  return shape === "desktop" ? <AnchoredContent {...props} /> : <DrawerMenuContent {...props} />;
+}
+
+function AnchoredContent({
+  "aria-label": label,
   align = "start",
-  alignOffset = 0,
   side = "bottom",
   sideOffset = 6,
   className,
-  ...props
-}: MenuPrimitive.Popup.Props &
-  Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
+  children,
+}: ContentProps) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const hover = useFluidHover(ref, { items: ITEM, dividers: '[role="separator"]' });
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
         className="isolate z-(--z-dropdown) outline-none"
         align={align}
-        alignOffset={alignOffset}
         side={side}
         sideOffset={sideOffset}
       >
         <MenuPrimitive.Popup
+          ref={ref}
           data-slot="dropdown-menu-content"
+          aria-label={label}
           className={cn(
             // Grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms.
             "edge-2 relative max-h-(--available-height) w-(--anchor-width) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md bg-plate p-1 text-text outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
             className,
           )}
-          {...props}
-        />
+          // Keyboard moves focus, and focus carries its own fill; two fills would be two cursors.
+          onKeyDown={hover.hide}
+          {...hover.handlers}
+        >
+          <FluidHighlight hover={hover} />
+          {children}
+        </MenuPrimitive.Popup>
       </MenuPrimitive.Positioner>
     </MenuPrimitive.Portal>
   );
 }
 
-function DropdownMenuGroup({ ...props }: MenuPrimitive.Group.Props) {
-  return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
+/**
+ * The rows in a drawer, with the anchored menu's keyboard model for a touch device with a keyboard
+ * attached: rows are out of the tab order, arrow keys walk them, disabled rows included so a screen
+ * reader still hears them, and Tab leaves the menu, which closes it.
+ */
+function DrawerMenuContent({ "aria-label": label, className, children }: ContentProps) {
+  const { setOpen } = useDropdownMenu("DropdownMenuContent");
+  const ref = React.useRef<HTMLDivElement>(null);
+  const onKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        setOpen(false);
+        return;
+      }
+      const items = Array.from(ref.current?.querySelectorAll<HTMLElement>(ITEM) ?? []);
+      const i = items.indexOf(document.activeElement as HTMLElement);
+      const to =
+        e.key === "ArrowDown"
+          ? items[(i + 1) % items.length]
+          : e.key === "ArrowUp"
+            ? items[(i - 1 + items.length) % items.length]
+            : e.key === "Home"
+              ? items[0]
+              : e.key === "End"
+                ? items.at(-1)
+                : undefined;
+      if (to) {
+        e.preventDefault();
+        to.focus();
+      }
+    },
+    [setOpen],
+  );
+  return (
+    <DrawerContent
+      aria-label={label}
+      // Through the drawer rather than an effect, so it still knows the trigger to hand focus back to.
+      initialFocus={() =>
+        ref.current?.querySelector<HTMLElement>(`${ITEM}:not([aria-disabled="true"])`) ?? true
+      }
+    >
+      <div
+        ref={ref}
+        role="menu"
+        aria-label={label}
+        data-slot="dropdown-menu-content"
+        onKeyDown={onKeyDown}
+        className={cn("grid p-2 pt-1", className)}
+      >
+        {children}
+      </div>
+    </DrawerContent>
+  );
+}
+
+function DropdownMenuGroup({ children }: { children: React.ReactNode }) {
+  const { shape } = useDropdownMenu("DropdownMenuGroup");
+  return shape === "desktop" ? (
+    <MenuPrimitive.Group data-slot="dropdown-menu-group">{children}</MenuPrimitive.Group>
+  ) : (
+    // biome-ignore lint/a11y/useSemanticElements: a group of menu items, which a fieldset is not
+    <div role="group" data-slot="dropdown-menu-group">
+      {children}
+    </div>
+  );
 }
 
 function DropdownMenuLabel({
   className,
   inset,
-  ...props
-}: MenuPrimitive.GroupLabel.Props & {
-  inset?: boolean;
+  children,
+}: {
+  className?: string | undefined;
+  inset?: boolean | undefined;
+  children: React.ReactNode;
 }) {
-  return (
+  const { shape } = useDropdownMenu("DropdownMenuLabel");
+  const classes = cn("px-2.5 py-1.5 text-xs text-muted data-inset:ps-9", className);
+  return shape === "desktop" ? (
     <MenuPrimitive.GroupLabel
       data-slot="dropdown-menu-label"
       data-inset={inset}
-      className={cn("px-2.5 py-1.5 text-xs text-muted data-inset:ps-9", className)}
-      {...props}
-    />
+      className={classes}
+    >
+      {children}
+    </MenuPrimitive.GroupLabel>
+  ) : (
+    <div data-slot="dropdown-menu-label" data-inset={inset} className={classes}>
+      {children}
+    </div>
   );
 }
 
-function DropdownMenuItem({
-  className,
-  inset,
-  variant = "default",
-  ...props
-}: MenuPrimitive.Item.Props & {
-  inset?: boolean;
-  variant?: "default" | "destructive";
-}) {
+interface ItemProps {
+  onClick?: (() => void) | undefined;
+  disabled?: boolean | undefined;
+  inset?: boolean | undefined;
+  variant?: "default" | "destructive" | undefined;
+  className?: string | undefined;
+  children: React.ReactNode;
+}
+
+function DropdownMenuItem(props: ItemProps) {
+  const { shape } = useDropdownMenu("DropdownMenuItem");
+  if (shape === "touch") return <DrawerMenuItem {...props} />;
+  const { onClick, disabled, inset, variant = "default", className, children } = props;
   return (
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
-      className={cn(menuItemClassName, className)}
-      {...props}
-    />
+      disabled={disabled}
+      onClick={() => onClick?.()}
+      className={cn(itemClassName, className)}
+    >
+      {children}
+    </MenuPrimitive.Item>
   );
 }
 
-/** Lymi's addition: a row that navigates, built on Base UI's `Menu.LinkItem`. */
-function DropdownMenuLinkItem({
-  className,
+function DrawerMenuItem({
+  onClick,
+  disabled,
   inset,
-  ...props
-}: MenuPrimitive.LinkItem.Props & {
-  inset?: boolean;
-}) {
+  variant = "default",
+  className,
+  children,
+}: ItemProps) {
+  const { setOpen } = useDropdownMenu("DropdownMenuItem");
+  return useRender({
+    defaultTagName: "button",
+    props: {
+      type: "button",
+      role: "menuitem",
+      tabIndex: -1,
+      "data-slot": "dropdown-menu-item",
+      "data-inset": inset || undefined,
+      "data-variant": variant,
+      "aria-disabled": disabled || undefined,
+      "data-disabled": disabled ? "" : undefined,
+      className: cn(itemClassName, touchItemClassName, className),
+      onClick: () => {
+        if (disabled) return;
+        setOpen(false);
+        onClick?.();
+      },
+      children,
+    },
+  });
+}
+
+interface LinkItemProps {
+  /** The anchor: a router `Link`, or a plain `<a href>`. */
+  render: React.ReactElement;
+  inset?: boolean | undefined;
+  className?: string | undefined;
+  children: React.ReactNode;
+}
+
+/** Lymi's addition: a row that navigates, on Base UI's `Menu.LinkItem`. */
+function DropdownMenuLinkItem(props: LinkItemProps) {
+  const { shape } = useDropdownMenu("DropdownMenuLinkItem");
+  if (shape === "touch") return <DrawerMenuLinkItem {...props} />;
+  const { render, inset, className, children } = props;
   return (
     <MenuPrimitive.LinkItem
       data-slot="dropdown-menu-link-item"
       data-inset={inset}
-      className={cn(menuItemClassName, className)}
-      {...props}
-    />
-  );
-}
-
-function DropdownMenuSub({ ...props }: MenuPrimitive.SubmenuRoot.Props) {
-  return <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
-}
-
-function DropdownMenuSubTrigger({
-  className,
-  inset,
-  children,
-  ...props
-}: MenuPrimitive.SubmenuTrigger.Props & {
-  inset?: boolean;
-}) {
-  return (
-    <MenuPrimitive.SubmenuTrigger
-      data-slot="dropdown-menu-sub-trigger"
-      data-inset={inset}
-      className={cn(menuItemClassName, "data-popup-open:bg-hover", className)}
-      {...props}
+      closeOnClick
+      render={render}
+      className={cn(itemClassName, className)}
     >
       {children}
-      <ChevronRightIcon className="ms-auto rtl:rotate-180" />
-    </MenuPrimitive.SubmenuTrigger>
+    </MenuPrimitive.LinkItem>
   );
 }
 
-function DropdownMenuSubContent({
-  align = "start",
-  alignOffset = -3,
-  side = "inline-end",
-  sideOffset = 0,
-  className,
-  ...props
-}: React.ComponentProps<typeof DropdownMenuContent>) {
-  return (
-    <DropdownMenuContent
-      data-slot="dropdown-menu-sub-content"
-      className={cn("w-auto", className)}
-      align={align}
-      alignOffset={alignOffset}
-      side={side}
-      sideOffset={sideOffset}
-      {...props}
-    />
-  );
+function DrawerMenuLinkItem({ render, inset, className, children }: LinkItemProps) {
+  const { setOpen } = useDropdownMenu("DropdownMenuLinkItem");
+  return useRender({
+    defaultTagName: "a",
+    render,
+    props: {
+      role: "menuitem",
+      tabIndex: -1,
+      "data-slot": "dropdown-menu-link-item",
+      "data-inset": inset || undefined,
+      className: cn(itemClassName, touchItemClassName, className),
+      onClick: () => setOpen(false),
+      children,
+    },
+  });
 }
 
-function DropdownMenuCheckboxItem({
-  className,
-  children,
-  checked,
-  inset,
-  ...props
-}: MenuPrimitive.CheckboxItem.Props & {
-  inset?: boolean;
-}) {
-  return (
-    <MenuPrimitive.CheckboxItem
-      data-slot="dropdown-menu-checkbox-item"
-      data-inset={inset}
-      className={cn(menuItemClassName, "pe-9", className)}
-      checked={checked}
-      {...props}
-    >
-      <span
-        className="pointer-events-none absolute end-2.5 flex items-center justify-center"
-        data-slot="dropdown-menu-checkbox-item-indicator"
-      >
-        <MenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon />
-        </MenuPrimitive.CheckboxItemIndicator>
-      </span>
-      {children}
-    </MenuPrimitive.CheckboxItem>
-  );
-}
-
-function DropdownMenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
-  return <MenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
-}
-
-function DropdownMenuRadioItem({
-  className,
-  children,
-  inset,
-  ...props
-}: MenuPrimitive.RadioItem.Props & {
-  inset?: boolean;
-}) {
-  return (
-    <MenuPrimitive.RadioItem
-      data-slot="dropdown-menu-radio-item"
-      data-inset={inset}
-      className={cn(menuItemClassName, "pe-9", className)}
-      {...props}
-    >
-      <span
-        className="pointer-events-none absolute end-2.5 flex items-center justify-center"
-        data-slot="dropdown-menu-radio-item-indicator"
-      >
-        <MenuPrimitive.RadioItemIndicator>
-          <CheckIcon />
-        </MenuPrimitive.RadioItemIndicator>
-      </span>
-      {children}
-    </MenuPrimitive.RadioItem>
-  );
-}
-
-function DropdownMenuSeparator({ className, ...props }: MenuPrimitive.Separator.Props) {
-  return (
+function DropdownMenuSeparator({ className }: { className?: string | undefined }) {
+  const { shape } = useDropdownMenu("DropdownMenuSeparator");
+  return shape === "desktop" ? (
     <MenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
       className={cn("-mx-1 my-1 h-px bg-edge", className)}
-      {...props}
+    />
+  ) : (
+    <hr
+      data-slot="dropdown-menu-separator"
+      className={cn("mx-2.5 my-1 h-px border-0 bg-edge", className)}
     />
   );
 }
 
+/** A keyboard hint beside a row. Touch has no keyboard to hint at, so the drawer leaves it out. */
 function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"span">) {
+  const { shape } = useDropdownMenu("DropdownMenuShortcut");
+  if (shape === "touch") return null;
   return (
     <span
       data-slot="dropdown-menu-shortcut"
@@ -240,20 +371,12 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"spa
 
 export {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuLinkItem,
-  DropdownMenuPortal,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-  menuItemClassName,
 };

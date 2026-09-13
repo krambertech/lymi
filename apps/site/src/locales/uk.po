@@ -113,6 +113,10 @@ msgstr ""
 msgid "Chess"
 msgstr ""
 
+#: src/components/landing/HandOfCards.tsx
+msgid "Click to turn it over"
+msgstr ""
+
 #: src/components/landing/hand-cards.ts
 msgid "Clocking off, and the free evening that follows"
 msgstr ""

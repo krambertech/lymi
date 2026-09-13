@@ -17,6 +17,8 @@ const HAND_SIZE = 5;
 const DEAL_STAGGER_MS = 90;
 const DEAL_MS = 720;
 const TOSS_MS = 620;
+/** How long the first card waits, untouched, before it shows how it turns. */
+const HINT_AFTER_MS = 2400;
 const DEALT_KEY = "lymi-hand-dealt";
 
 interface Dealt {
@@ -74,6 +76,8 @@ interface CardProps {
   playing: boolean;
   onPlay: (card: HandCard) => void;
   onPress: () => void;
+  /** Shown on the front face once a visitor has waited without turning anything. */
+  hint?: string | null | undefined;
   flipRef?: ((el: HTMLDivElement | null) => void) | undefined;
 }
 
@@ -88,6 +92,7 @@ function FanCard({
   playing,
   onPlay,
   onPress,
+  hint,
   flipRef,
 }: CardProps) {
   const { t, i18n } = useLingui();
@@ -171,8 +176,11 @@ function FanCard({
       <div ref={flipRef} className="hand-flip">
         <div className="hand-face" aria-hidden={revealed || undefined}>
           {top}
-          <p className={clsx("mt-auto text-base text-muted", !front && "invisible")}>
-            <Trans>Tap to turn it over</Trans>
+          <p
+            className="hand-hint mt-auto text-base text-muted"
+            data-shown={hint ? true : undefined}
+          >
+            {hint}
           </p>
         </div>
         <div className="hand-face hand-back" aria-hidden={!revealed || undefined}>
@@ -210,6 +218,9 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
   const nextKey = useRef(0);
   const audio = useRef<HTMLAudioElement | null>(null);
   const frontFlip = useRef<HTMLDivElement | null>(null);
+  const [hint, setHint] = useState(false);
+  const [finePointer, setFinePointer] = useState(true);
+  const taught = useRef(false);
 
   // The hand is random, so it is dealt after hydration rather than rendered on the server.
   useEffect(() => {
@@ -219,6 +230,7 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
       sessionStorage.setItem(DEALT_KEY, "1");
     } catch {}
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     const first: Dealt[] = [];
     for (let i = 0; i < HAND_SIZE; i++) {
       first.push({ key: nextKey.current++, card: draw(pile.current, first, cards) });
@@ -231,22 +243,32 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
       return;
     }
     const settle = window.setTimeout(
-      () => {
-        setPhase("front");
-        // The front card leans as if about to turn, once, so a visitor sees that it can.
-        frontFlip.current?.animate(
-          [
-            { transform: "rotateY(0deg)" },
-            { transform: "rotateY(-32deg)" },
-            { transform: "rotateY(0deg)" },
-          ],
-          { duration: 1100, delay: 260, easing: "cubic-bezier(0.37, 0, 0.63, 1)" },
-        );
-      },
+      () => setPhase("front"),
       DEAL_STAGGER_MS * (HAND_SIZE - 1) + DEAL_MS,
     );
     return () => window.clearTimeout(settle);
   }, [cards]);
+
+  // A visitor who has not turned the first card after a moment is shown how: the card is pressed
+  // and lifts at one edge as if turning, and a line says what to do. Anyone who already knows
+  // never sees either.
+  useEffect(() => {
+    if (phase !== "front" || taught.current) return;
+    const wait = window.setTimeout(() => {
+      setHint(true);
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      frontFlip.current?.animate(
+        [
+          { transform: "scale(1) rotateY(0deg)" },
+          { transform: "scale(0.965) rotateY(0deg)", offset: 0.16 },
+          { transform: "scale(1) rotateY(-30deg)", offset: 0.55 },
+          { transform: "scale(1) rotateY(0deg)" },
+        ],
+        { duration: 1300, easing: "cubic-bezier(0.37, 0, 0.63, 1)" },
+      );
+    }, HINT_AFTER_MS);
+    return () => window.clearTimeout(wait);
+  }, [phase]);
 
   useEffect(() => () => audio.current?.pause(), []);
 
@@ -270,6 +292,8 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
   const reveal = useCallback(() => {
     const front = hand[0];
     if (phase !== "front" || !front) return;
+    taught.current = true;
+    setHint(false);
     setPhase("back");
     setAnnounce(`${front.card.term}: ${i18n._(front.card.meaning)}`);
   }, [hand, phase, i18n]);
@@ -327,6 +351,13 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
               playing={k === 0 && playing === card.id}
               onPlay={play}
               onPress={press}
+              hint={
+                k === 0 && hint
+                  ? finePointer
+                    ? t`Click to turn it over`
+                    : t`Tap to turn it over`
+                  : null
+              }
               flipRef={
                 k === 0
                   ? (el) => {

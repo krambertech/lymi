@@ -885,6 +885,18 @@
 .hand-back {
   transform: rotateY(180deg);
 }
+/* The turning hint arrives only when a visitor seems unsure, so it eases in rather than sitting there. */
+.hand-hint {
+  opacity: 0;
+  translate: 0 6px;
+  transition:
+    opacity 360ms var(--ease-out),
+    translate 480ms var(--ease-out);
+}
+.hand-hint[data-shown] {
+  opacity: 1;
+  translate: 0 0;
+}
 /* Onest has no IPA letters; fall back to faces that do rather than a mix of widths. */
 .hand-ipa {
   font-family: Onest, "Charis SIL", "Doulos SIL", "Segoe UI", system-ui, sans-serif;
@@ -906,5 +918,8 @@
   }
   .hand-card[data-revealed] .hand-back {
     opacity: 1;
+  }
+  .hand-hint {
+    translate: none;
   }
 }

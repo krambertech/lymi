@@ -28,7 +28,7 @@ The daily review goal and the streak are one mechanic. The learner chooses how m
 
 Before the first review, Lymi asks the learner to choose this goal and suggests 50 attempts. The same control later lives in the streak modal, with quick choices of 10, 25, 50, and 100 plus a custom whole number from 1 to 200. The saved choice applies on later days; Today and Settings do not introduce separate goal editors.
 
-The streak counts consecutive learner-local days whose goal was satisfied. Its current length appears as a number beside the seven-day review lights on Today and at review completion. A day that ends without satisfying the goal resets the current streak to zero, while the learner's review history remains intact. When zero cards are eligible, opening Lymi and letting it confirm that nothing is due protects the current streak without increasing it; not opening still makes the day missed.
+The streak counts consecutive learner-local days whose goal was satisfied. `DESIGN.md` "The streak" covers how the number and the seven lights show it, and "The flame" covers the flame. A day that ends without satisfying the goal resets the current streak to zero, while the learner's review history remains intact. When zero cards are eligible, opening Lymi and letting it confirm that nothing is due protects the current streak without increasing it; not opening still makes the day missed.
 
 The learner-local day initially uses the current device timezone without asking during setup. While the timezone remains automatic, the most recently foregrounded device may update it when its timezone changes during travel; a background device cannot overwrite that choice. A timezone chosen explicitly in Settings becomes a manual override and is not changed automatically until the learner returns it to automatic. Timezone changes affect current and future day boundaries without rewriting completed review history.
 
@@ -46,7 +46,7 @@ The completion state reports the actual number reviewed and confirms that today'
 
 Three words: warm, calm, quick.
 
-The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. Its flame is the continuity of remembering: repetition keeps it alive. In the signed-in product, the flame goes out only when the streak breaks. While the streak is alive, it begins each day small and steady, grows subtly after every accepted review regardless of grade, and reaches its full height when the daily goal is complete. A confirmed zero-due day leaves the small flame alive without implying that any review was required or completed.
+The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. Its flame is the continuity of remembering: repetition keeps it alive, so it goes out only when the streak breaks. What it shows in the signed-in product is in `DESIGN.md`, under "The lantern" and "The flame".
 
 Brand-only appearances do not expose learner state. The app icon, login, and public surfaces use one canonical healthy flame. That is the emotional register: a small warm light you bring with you, not a coach, not a game, not a productivity dashboard.
 

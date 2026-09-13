@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { Brand } from "./Brand";
 import { Colour } from "./Colour";
+import { FlamePage } from "./Flame";
 import { LanternPage } from "./Lantern";
 import { Motion } from "./Motion";
 import { actions } from "./parts/Actions";
@@ -14,6 +15,7 @@ import { menu, overlays } from "./parts/Overlays";
 import type { Group } from "./parts/types";
 import { SCREENS } from "./Screens";
 import { Space } from "./Space";
+import { StreakPage } from "./Streak";
 import { Typography } from "./Typography";
 import { Voice } from "./Voice";
 
@@ -30,6 +32,8 @@ export interface Foundation {
 export const FOUNDATIONS: Foundation[] = [
   { slug: "brand", title: "Brand", source: "design/Brand.tsx", Page: Brand },
   { slug: "lantern", title: "Lantern", source: "design/Lantern.tsx", Page: LanternPage },
+  { slug: "flame", title: "Flame", source: "design/Flame.tsx", Page: FlamePage },
+  { slug: "streak", title: "Streak", source: "design/Streak.tsx", Page: StreakPage },
   { slug: "colour", title: "Colour", source: "design/Colour.tsx", Page: Colour },
   { slug: "typography", title: "Typography", source: "design/Typography.tsx", Page: Typography },
   { slug: "space", title: "Space and shape", source: "design/Space.tsx", Page: Space },

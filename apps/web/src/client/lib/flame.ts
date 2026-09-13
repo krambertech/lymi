@@ -52,3 +52,22 @@ export function lanternFor(summary: StreakOut | undefined): {
   const { attempts, goal } = summary.today;
   return { out: false, progress: goal > 0 ? Math.min(attempts / goal, 1) : 0 };
 }
+
+export type StreakFlameState = "out" | "lit" | "full";
+
+/** The streak flame's size in each state: the brand flame while lit, the lantern's full once met. */
+export const STREAK_FLAME_SIZE: Record<StreakFlameState, number> = {
+  out: FLAME_SIZE.out,
+  lit: 1,
+  full: FLAME_SIZE.full,
+};
+
+/**
+ * What the pill and the streak modal show. Read from `lanternFor`, so the small flame is out,
+ * lit or full exactly when the lantern is; it only leaves out the growth between reviews.
+ */
+export function streakFlameFor(summary: StreakOut): StreakFlameState {
+  const { out, progress } = lanternFor(summary);
+  if (out) return "out";
+  return progress === 1 ? "full" : "lit";
+}

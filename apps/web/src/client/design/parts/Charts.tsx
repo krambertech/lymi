@@ -26,29 +26,52 @@ const trend = insights.recall.series.map((p) => ({
 export const streak: Group = {
   slug: "streak",
   title: "Streak",
-  lede: "The daily review goal and the streak are one mechanic. The run is a pill in the chrome that opens the streak modal; Today and the end of a review pair the week with the run.",
+  lede: "The streak's components: the pill, the modal it opens, the week with the run, and the seven lights. What the streak means is on the Streak foundation page.",
   entries: [
     {
       slug: "pill",
       name: "Streak pill",
       source: "components/Streak.tsx",
-      note: "The flame is out with no run, still while today's goal is open, and flickers once it is reached. It sits on the rail's first line on desktop and at the start of the top bar on the phone.",
+      note: "The run and its flame, always in the chrome: on the rail's first line on desktop and at the start of the top bar on the phone. Its flame's states are on the Flame page.",
       Demo: () => (
         <Variants
           items={[
             {
-              label: "Phone",
-              note: "A plate with a 44 px hit area.",
-              render: () => <StreakButton variant="phone" summary={streakSummary} />,
+              label: "Goal met",
+              note: "Full and flickering. A plate with a 44 px hit area on the phone; ghost until hovered on the rail.",
+              render: () => (
+                <div className="flex items-center gap-3">
+                  <StreakButton variant="phone" summary={streakSummary} />
+                  <StreakButton variant="rail" summary={streakSummary} />
+                </div>
+              ),
             },
             {
-              label: "Rail",
-              note: "Ghost until hovered.",
-              render: () => <StreakButton variant="rail" summary={streakSummary} />,
+              label: "Goal open",
+              note: "Lit and still. The run holds until today ends.",
+              render: () => (
+                <StreakButton
+                  variant="phone"
+                  summary={streakFrom(streakDaysOpen.map((n) => n * 2))}
+                />
+              ),
             },
             {
-              label: "No run",
-              note: "The flame is out.",
+              label: "Nothing due",
+              note: "Lit and still: kept, not grown.",
+              render: () => (
+                <StreakButton
+                  variant="phone"
+                  summary={{
+                    ...streakSummary,
+                    today: { ...streakSummary.today, attempts: 0, outcome: "nothing_due" },
+                  }}
+                />
+              ),
+            },
+            {
+              label: "No streak",
+              note: "The lantern's ember.",
               render: () => (
                 <StreakButton
                   variant="phone"

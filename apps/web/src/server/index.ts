@@ -53,7 +53,7 @@ app.get("/", async (c) => {
   return c.redirect(destination.toString(), 302);
 });
 
-// OpenAI's plugin submission checks this host owns the MCP server. The body is the bare token.
+// OpenAI's plugin submission reads the bare token here to confirm this host owns the MCP server.
 app.get("/.well-known/openai-apps-challenge", describe({ hide: true }), (c) => {
   const token = c.env.OPENAI_APPS_CHALLENGE?.trim();
   if (!token) return c.text("Not found", 404);

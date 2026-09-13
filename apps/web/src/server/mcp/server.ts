@@ -40,7 +40,7 @@ import type { ServiceContext } from "../services/context";
 export interface McpPrincipal {
   ctx: ServiceContext;
   scope: Scope;
-  /** Protected resource metadata, named in the challenge a read-only connection gets on a write. */
+  /** Named in the step-up challenge when a read-only connection tries to write. */
   resourceMetadataUrl: string;
 }
 
@@ -404,11 +404,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   return server;
 }
 
-/**
- * Every tool touches only this learner's Lymi data, so none is open-world. `securitySchemes`
- * is the Apps SDK's per-tool auth declaration; the SDK passes only `_meta` through, which
- * ChatGPT also reads.
- */
+/** The SDK drops a top-level `securitySchemes`; ChatGPT also reads it from `_meta`. */
 const readTool = {
   annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
   _meta: { securitySchemes: [{ type: "oauth2", scopes: ["read"] }] },
@@ -435,7 +431,7 @@ function writeTool({
 
 class ReadOnlyConnection extends Error {}
 
-/** The consent screen let the learner untick write, and the grant is the source of truth. */
+/** The learner may have unticked write on the consent screen. */
 function denyReads(principal: McpPrincipal): void {
   if (principal.scope !== "write") throw new ReadOnlyConnection();
 }
@@ -467,10 +463,7 @@ export function withAiSourceDefaults<T extends SourcedFields>(input: T): T {
   };
 }
 
-/**
- * A ServiceError is the tool's answer. Anything else is a bug whose message may carry SQL,
- * so it goes to the Worker log and the assistant gets a plain retry message.
- */
+/** A ServiceError speaks to the assistant; other errors may carry SQL, so they stay in the log. */
 async function runTool(
   fn: () => Promise<CallToolResult>,
   principal: McpPrincipal,
@@ -485,10 +478,7 @@ async function runTool(
   }
 }
 
-/**
- * ChatGPT reads `mcp/www_authenticate` on a tool error as a step-up challenge and offers to
- * reconnect; other clients relay the text to the learner.
- */
+/** ChatGPT treats `mcp/www_authenticate` on a tool error as a step-up challenge. */
 function readOnlyFailure(principal: McpPrincipal): CallToolResult {
   const message =
     "This connection can only read. Ask the learner to reconnect and leave write ticked on the consent screen.";
@@ -516,8 +506,7 @@ function failure(message: string): CallToolResult {
   return { isError: true, content: [{ type: "text", text: message }] };
 }
 
-// What crosses the wire: what the learner wrote and ids the next call needs. Dates become ISO
-// strings; bookkeeping such as which actor wrote a row stays in Activity.
+// Output carries the learner's text and the ids a follow-up call needs, not bookkeeping.
 
 const Timestamp = z.iso.datetime();
 

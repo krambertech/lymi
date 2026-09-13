@@ -23,11 +23,7 @@ export async function clientNames(
   return new Map(rows.map((row) => [row.clientId, row.name]));
 }
 
-/**
- * What the learner's standing consent lets this client do, or null once they disconnected it.
- * The MCP endpoint checks this on every request, because an access token is a JWT that cannot
- * be recalled and would otherwise outlive a disconnect by up to an hour.
- */
+/** Access tokens outlive a disconnect by up to an hour, so every MCP request checks consent. */
 export async function grantedScope(
   { db, userId }: Pick<ServiceContext, "db" | "userId">,
   clientId: string,
@@ -40,7 +36,7 @@ export async function grantedScope(
   return rows.some((row) => consentScopes(row.scopes).includes("write")) ? "write" : "read";
 }
 
-/** The adapter serialises the array before Drizzle's JSON column does, so a read yields a JSON string. */
+/** Better Auth serialises the array before Drizzle's JSON column does, so reads yield a string. */
 function consentScopes(value: unknown): unknown[] {
   if (Array.isArray(value)) return value;
   if (typeof value !== "string") return [];
@@ -53,11 +49,8 @@ function consentScopes(value: unknown): unknown[] {
 }
 
 /**
- * Cut a client off from this learner.
- *
- * Deleting the consent row stops the MCP endpoint at once (see `grantedScope`) and makes the
- * client's next authorize request prompt. The refresh token is revoked too, so the refresh
- * grant refuses it. Access token rows are marked revoked to keep `/oauth2/introspect` honest.
+ * Deleting the consent row already stops MCP access; revoking tokens also blocks refresh and
+ * keeps `/oauth2/introspect` accurate.
  */
 export async function revokeClientTokens(
   { db, userId }: Pick<ServiceContext, "db" | "userId">,

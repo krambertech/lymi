@@ -10,13 +10,8 @@ import { buildMcpServer, type McpPrincipal } from "./server";
 export const MCP_CHALLENGE_SCOPES = ["read", "write", "offline_access"] as const;
 
 /**
- * Handle one request to /mcp.
- *
- * `requireMcpAuth` verifies the bearer token against this Worker's own JWKS (signature,
- * issuer, audience, expiry) with no database hit, and answers an unauthenticated request
- * with 401 and the RFC 9728 `WWW-Authenticate: Bearer resource_metadata=...` header that
- * starts the OAuth flow. The verified claims are then checked against the learner's standing
- * consent and become the principal every tool runs as.
+ * `requireMcpAuth` verifies the JWT and answers a bad token with the RFC 9728 challenge;
+ * `authorizeMcpClaims` then checks the live consent.
  */
 export function handleMcpRequest(
   request: Request,
@@ -42,17 +37,11 @@ export function mcpResource(env: ProductOrigin): string {
   return `${env.PRODUCT_URL}/mcp`;
 }
 
-/** Where a client rediscovers the authorization server when a challenge sends it back. */
 export function mcpResourceMetadataUrl(env: ProductOrigin): string {
   return new URL("/.well-known/oauth-protected-resource/mcp", env.PRODUCT_URL).toString();
 }
 
-/**
- * Turn verified claims into a principal, or a 401 that sends the client back to sign in.
- *
- * A token alone is not enough: the learner may have disconnected the client since it was
- * issued. Consent is the live grant, so the effective scope is the narrower of the two.
- */
+/** A disconnect deletes the consent but not the token, so consent decides access and scope. */
 export async function authorizeMcpClaims(
   claims: Record<string, unknown>,
   deps: { db: Db; env: ProductOrigin },
@@ -74,7 +63,7 @@ export async function authorizeMcpClaims(
   };
 }
 
-/** Serve one request whose principal is settled. Split out so the transport can be tested alone. */
+/** Split from the auth checks so the transport can be tested alone. */
 export function handleVerifiedMcpRequest(
   req: Request,
   principal: McpPrincipal,

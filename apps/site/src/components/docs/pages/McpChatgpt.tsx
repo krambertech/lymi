@@ -24,8 +24,8 @@ export function McpChatgpt() {
         admin has to allow developer mode first.
       </p>
       <p>
-        Developer mode reads and writes. ChatGPT asks you to confirm each write, such as adding
-        cards or archiving a deck, before it runs. Reads run without asking.
+        In developer mode a connector can read and write. ChatGPT asks you to confirm each write,
+        such as adding cards or archiving a deck. Reads run without asking.
       </p>
       <Steps>
         <div>
@@ -89,8 +89,8 @@ url = "${ORIGIN}/mcp"`}
         </li>
         <li>
           <strong>Registration fails.</strong> Lymi has no dynamic client registration, by design.
-          ChatGPT and current Codex identify themselves with a Client ID Metadata Document instead.
-          If an older Codex tries to register, update it, or run{" "}
+          ChatGPT and current Codex use a Client ID Metadata Document instead. If an older Codex
+          tries to register, update it, or run{" "}
           <code>codex mcp login lymi --oauth-client-registration cimd</code>.
         </li>
         <li>

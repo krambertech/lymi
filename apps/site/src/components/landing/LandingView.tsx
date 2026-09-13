@@ -223,11 +223,12 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
 
         <section className="flex min-h-[680px] items-center border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28">
           <div className="mx-auto w-full max-w-[1040px]">
-            <div className="grid items-end gap-8 @4xl:grid-cols-[0.9fr_1.1fr] @4xl:gap-20">
+            {/* Same columns as the example below, so the copy starts on its divider. */}
+            <div className="grid items-start gap-8 @4xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] @4xl:gap-0">
               <h2 className="max-w-[12ch] text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
                 One endpoint. Everything else.
               </h2>
-              <div className="max-w-[520px] @4xl:justify-self-end">
+              <div className="max-w-[520px]">
                 <p className="text-md text-text-2">
                   Send cards from a script, a notes app, a spreadsheet, or anything else that can
                   make an HTTP request. Include what you know; Lymi keeps the source and lets you
@@ -257,10 +258,13 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
                   /api/cards
                 </p>
               </div>
-              <div className="grid @3xl:grid-cols-[1.08fr_0.92fr]">
-                <pre className="doc-code overflow-x-auto p-6 @2xl:p-8">
-                  <code>{highlight(REQUEST, "json")}</code>
-                </pre>
+              <div className="grid @3xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+                <div className="p-6 @2xl:p-8">
+                  <p className="text-xs text-muted">Request</p>
+                  <pre className="doc-code overflow-x-auto pt-5">
+                    <code>{highlight(REQUEST, "json")}</code>
+                  </pre>
+                </div>
                 <div className="border-t border-edge p-6 @2xl:p-8 @3xl:border-t-0 @3xl:border-l">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-xs text-muted">Response</p>

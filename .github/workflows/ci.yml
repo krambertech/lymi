@@ -355,6 +355,18 @@ jobs:
           pnpm --filter @lymi/web exec wrangler d1 migrations apply DB --remote
           --config dist/lymi/wrangler.preview.json
 
+      - name: Create app preview Worker
+        if: steps.infrastructure.outputs.worker_exists != 'true'
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
+        run: |
+          pnpm --filter @lymi/web exec wrangler deploy \
+            --config dist/lymi/wrangler.preview.json \
+            --secrets-file dist/lymi/preview-secrets.json \
+            --tag "$GITHUB_SHA" \
+            --message "Create app preview for PR #${{ github.event.pull_request.number }} at $GITHUB_SHA"
+
       - name: Upload stable app preview
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

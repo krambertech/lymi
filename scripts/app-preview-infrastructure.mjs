@@ -108,6 +108,16 @@ async function exactBucket(client, name) {
   return result.buckets?.find((item) => item.name === name) ?? null;
 }
 
+async function workerExists(client, name) {
+  const settings = await cfRequest(
+    client,
+    `/workers/scripts/${encodeURIComponent(name)}/settings`,
+    {},
+    true,
+  );
+  return settings !== null;
+}
+
 async function ensure(find, create) {
   const existing = await find();
   if (existing) return existing;
@@ -129,7 +139,8 @@ export async function ensurePreviewInfrastructure({
   if (!accountId || !token) throw new Error("Cloudflare preview credentials are required");
   const names = previewNames(prNumber);
   const client = { accountId, token, fetchImpl };
-  const [{ subdomain }, database, namespace, bucket] = await Promise.all([
+  const [exists, { subdomain }, database, namespace, bucket] = await Promise.all([
+    workerExists(client, names.workerName),
     cfRequest(client, "/workers/subdomain"),
     ensure(
       () => exactD1(client, names.databaseName),
@@ -165,6 +176,7 @@ export async function ensurePreviewInfrastructure({
     previewUrl: `https://${names.alias}-${names.workerName}.${subdomain}.workers.dev`,
     databaseId: database.uuid,
     namespaceId: namespace.id,
+    workerExists: exists,
   };
 }
 
@@ -225,7 +237,7 @@ async function prepareFromCli([prNumber, inputPath, outputPath, secretsPath]) {
   const entryUrl = new URL("/_preview", infrastructure.previewUrl);
   entryUrl.searchParams.set("key", secrets.APP_PREVIEW_KEY);
   if (process.env.GITHUB_OUTPUT) {
-    process.stdout.write(`::add-mask::${secrets.APP_PREVIEW_KEY}\n`);
+    // This scoped capability is intentionally published as the GitHub deployment URL.
     appendFileSync(
       process.env.GITHUB_OUTPUT,
       `${[
@@ -233,6 +245,7 @@ async function prepareFromCli([prNumber, inputPath, outputPath, secretsPath]) {
         `entry_url=${entryUrl}`,
         `preview_url=${infrastructure.previewUrl}`,
         `database_name=${infrastructure.names.databaseName}`,
+        `worker_exists=${infrastructure.workerExists}`,
       ].join("\n")}\n`,
     );
   }

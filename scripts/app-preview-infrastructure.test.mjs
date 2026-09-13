@@ -67,6 +67,7 @@ test("reuses exact existing preview resources", async () => {
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     calls.push([url, init.method ?? "GET"]);
+    if (url.endsWith("/workers/scripts/lymi-app-pr-105/settings")) return response({});
     if (url.endsWith("/workers/subdomain")) return response({ subdomain: "example" });
     if (url.includes("/d1/database?")) {
       return response([{ name: "lymi-app-pr-105-db", uuid: "db-id" }]);
@@ -87,12 +88,16 @@ test("reuses exact existing preview resources", async () => {
     fetchImpl,
   });
   assert.equal(result.previewUrl, "https://preview-lymi-app-pr-105.example.workers.dev");
+  assert.equal(result.workerExists, true);
   assert.equal(calls.filter(([, method]) => method === "POST").length, 0);
 });
 
 test("creates preview KV without an account-restricted jurisdiction", async () => {
   let namespaceBody;
   const fetchImpl = async (url, init = {}) => {
+    if (url.endsWith("/workers/scripts/lymi-app-pr-105/settings")) {
+      return response(null, 404);
+    }
     if (url.endsWith("/workers/subdomain")) return response({ subdomain: "example" });
     if (url.includes("/d1/database?")) {
       return response([{ name: "lymi-app-pr-105-db", uuid: "db-id" }]);
@@ -108,8 +113,9 @@ test("creates preview KV without an account-restricted jurisdiction", async () =
     throw new Error(`Unexpected ${url}`);
   };
 
-  await ensurePreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
+  const result = await ensurePreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
   assert.deepEqual(namespaceBody, { title: "lymi-app-pr-105-sessions" });
+  assert.equal(result.workerExists, false);
 });
 
 test("cleanup deletes only the exact pull request resources", async () => {

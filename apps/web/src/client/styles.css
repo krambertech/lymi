@@ -908,11 +908,27 @@
   }
 }
 
-/* Under reduced motion the Base UI toast stack still reorders, but a toast arrives and leaves as a
-   crossfade. Unlayered, so it outranks the transition utility in `ui/toast.tsx`. */
+/* Under reduced motion a toast crossfades in its stack position, and these unlayered rules outrank the utilities in `ui/toast.tsx`. */
 @media (prefers-reduced-motion: reduce) {
   [data-slot="toast"] {
     transition-property: opacity, height;
+  }
+  [data-slot="toast"][data-starting-style],
+  [data-slot="toast"][data-ending-style]:not([data-limited]) {
+    opacity: 0;
+    transform: translateX(var(--toast-swipe-movement-x))
+      translateY(
+        calc(
+          var(--toast-swipe-movement-y) -
+          (var(--toast-index) * var(--peek)) -
+          (var(--shrink) * var(--height))
+        )
+      )
+      scale(var(--scale));
+  }
+  [data-slot="toast"][data-expanded][data-starting-style],
+  [data-slot="toast"][data-expanded][data-ending-style]:not([data-limited]) {
+    transform: translateX(var(--toast-swipe-movement-x)) translateY(var(--offset-y));
   }
 }
 /* A spinner taking over from a label. */

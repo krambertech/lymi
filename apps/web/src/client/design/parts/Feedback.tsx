@@ -140,7 +140,6 @@ export const feedback: Group = {
   ],
 };
 
-/** A real toast held open in place, on its own manager so it never replaces the app's toast. */
 function ToastPreview({
   title,
   action,
@@ -150,6 +149,7 @@ function ToastPreview({
   action?: string | undefined;
   type?: "error" | undefined;
 }) {
+  // Its own manager, so a held-open preview never joins the app's stack.
   const [manager] = useState(createToastManager);
   useEffect(() => {
     const id = manager.add({
@@ -165,7 +165,7 @@ function ToastPreview({
       <ToastViewport aria-label="Toast preview" className="static mx-0 w-full">
         <ToastList
           closeLabel="Dismiss"
-          className="static h-auto [transform:none] data-expanded:h-auto data-expanded:[transform:none]"
+          className="static h-auto [transform:none] data-expanded:h-auto data-expanded:[transform:none] data-starting-style:[transform:none] [&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:none]"
         />
       </ToastViewport>
     </ToastProvider>

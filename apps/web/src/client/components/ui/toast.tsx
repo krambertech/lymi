@@ -1,14 +1,6 @@
 import { type ToastManagerAddOptions, Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { cn } from "cn";
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  Loader2Icon,
-  OctagonXIcon,
-  TriangleAlertIcon,
-  XIcon,
-} from "lucide-react";
-import type * as React from "react";
+import { OctagonXIcon, XIcon } from "lucide-react";
 
 const manager = ToastPrimitive.createToastManager();
 
@@ -36,8 +28,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
     <ToastPrimitive.Viewport
       data-slot="toast-viewport"
       className={cn(
-        // Clears the phone's pill nav; the rail replaces the pill at the same 768 px window. A toast
-        // travels this inset too, so it enters and leaves from below the screen's edge.
+        // The inset clears the phone's pill nav below 768 px, and a toast travels it so it enters and leaves past the screen's edge.
         "pointer-events-none fixed inset-x-4 bottom-(--toast-inset) z-(--z-toast) mx-auto w-auto max-w-sm outline-none [--toast-inset:calc(env(safe-area-inset-bottom)+80px)] sm:end-4 sm:start-auto sm:mx-0 sm:w-full md:[--toast-inset:1rem]",
         className,
       )}
@@ -135,22 +126,14 @@ function ToastClose({ className, children, ...props }: ToastPrimitive.Close.Prop
 }
 
 function ToastIcon({ type }: { type: string | undefined }) {
-  let icon: React.ReactNode = null;
-
-  if (type === "success") icon = <CircleCheckIcon aria-hidden="true" />;
-  if (type === "info") icon = <InfoIcon aria-hidden="true" />;
-  if (type === "warning") icon = <TriangleAlertIcon aria-hidden="true" />;
-  if (type === "error") icon = <OctagonXIcon aria-hidden="true" />;
-  if (type === "loading") icon = <Loader2Icon className="animate-spin" aria-hidden="true" />;
-
-  if (!icon) return null;
+  if (type !== "error") return null;
 
   return (
     <span
       data-slot="toast-icon"
       className="shrink-0 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4"
     >
-      {icon}
+      <OctagonXIcon aria-hidden="true" />
     </span>
   );
 }

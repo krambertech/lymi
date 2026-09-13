@@ -34,12 +34,16 @@ describe("toast", () => {
     const front = region().getByText("Archived “sette”");
     await expect.element(front).toBeVisible();
 
-    await expect.poll(() => box("sette").top - box("sei").top).toBeGreaterThan(8);
-    await expect.poll(() => box("sette").top - box("sei").top).toBeLessThan(16);
+    // The stack settles after Base UI measures each toast and the 500 ms motion ends, which is slow on CI.
+    const settle = { timeout: 5000 };
+    await expect.poll(() => box("sette").top - box("sei").top, settle).toBeGreaterThan(8);
+    await expect.poll(() => box("sette").top - box("sei").top, settle).toBeLessThan(16);
 
     await userEvent.hover(front);
-    await expect.poll(() => box("sette").top - box("sei").bottom).toBeGreaterThanOrEqual(6);
-    await expect.poll(() => box("sei").top - box("cinque").bottom).toBeGreaterThanOrEqual(6);
+    await expect.poll(() => box("sette").top - box("sei").bottom, settle).toBeGreaterThanOrEqual(6);
+    await expect
+      .poll(() => box("sei").top - box("cinque").bottom, settle)
+      .toBeGreaterThanOrEqual(6);
   });
 
   test("its one action runs", async () => {

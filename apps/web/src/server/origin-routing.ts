@@ -1,6 +1,7 @@
 import {
   DEFAULT_PRODUCT_ORIGIN,
   DEFAULT_PUBLIC_SITE_ORIGIN,
+  isJoinPagePath,
   isProductBrowserPath,
 } from "../shared/origins";
 
@@ -112,6 +113,7 @@ export function decideOriginRoute(
   if (
     url.pathname === "/" ||
     isProductBrowserPath(url.pathname) ||
+    isJoinPagePath(url.pathname) ||
     atOrBelow(url.pathname, "/api") ||
     atOrBelow(url.pathname, "/mcp") ||
     atOrBelow(url.pathname, "/.well-known") ||

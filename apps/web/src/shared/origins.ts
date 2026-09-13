@@ -23,6 +23,11 @@ export function isProductBrowserPath(pathname: string): boolean {
   return PRODUCT_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
 }
 
+/** A deck's join page, `/join/<token>`. Exact `/join` is the public beta page. ADR 0011. */
+export function isJoinPagePath(pathname: string): boolean {
+  return /^\/join\/[A-Za-z0-9_-]+$/.test(pathname);
+}
+
 /** Routes a signed-out learner may safely resume after authentication. */
 function isProtectedProductPath(pathname: string): boolean {
   return PRODUCT_PATHS.slice(0, 9).some(
@@ -44,7 +49,7 @@ export function safeProductReturnPath(value: string | null | undefined): string 
     if (
       url.origin !== "https://product.invalid" ||
       url.hash ||
-      !isProtectedProductPath(url.pathname)
+      !(isProtectedProductPath(url.pathname) || isJoinPagePath(url.pathname))
     ) {
       return DEFAULT_PRODUCT_RETURN_PATH;
     }

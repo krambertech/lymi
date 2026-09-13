@@ -2,7 +2,7 @@ import { registerSW } from "virtual:pwa-register";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import { QueryClient } from "@tanstack/react-query";
+import { defaultShouldDehydrateQuery, QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
@@ -62,6 +62,10 @@ export function mountApp(root: HTMLElement) {
           persister,
           maxAge: 1000 * 60 * 60 * 24 * 7,
           buster: __QUERY_CACHE_BUSTER__,
+          dehydrateOptions: {
+            shouldDehydrateQuery: (query) =>
+              defaultShouldDehydrateQuery(query) && query.meta?.persist !== false,
+          },
         }}
       >
         <I18nProvider i18n={i18n}>

@@ -12,6 +12,42 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
+"POT-Creation-Date: 2026-09-12 11:15+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+"POT-Creation-Date: 2026-09-12 11:15+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+"POT-Creation-Date: 2026-09-12 11:15+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #. placeholder {0}: today.goal
 #. placeholder {1}: today.attempts
@@ -39,7 +75,9 @@ msgid "{0, plural, one {# review} other {# reviews}}, {1, plural, one {# lapse} 
 msgstr "{0, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}, {1, plural, one {# забуття} few {# забуття} many {# забуттів} other {# забуття}}"
 
 #. placeholder {0}: cards.total
+#. placeholder {0}: deck.total
 #: src/client/views/InsightsView.tsx
+#: src/client/views/JoinView.tsx
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {картка} few {картки} many {карток} other {картки}}"
 
@@ -228,6 +266,10 @@ msgstr "{label}: поки що {lit} з {days, plural, one {# дня} few {# д�
 msgid "{list}, by {who}"
 msgstr "{list}, автор: {who}"
 
+#: src/client/views/DeckSettingsView.tsx
+msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
+msgstr "{members, plural, one {Нові люди не можуть приєднатися. Людина, яка вже приєдналася, далі вивчає колоду.} few {Нові люди не можуть приєднатися. # людини, які вже приєдналися, далі вивчають колоду.} many {Нові люди не можуть приєднатися. # людей, які вже приєдналися, далі вивчають колоду.} other {Нові люди не можуть приєднатися. # людини, які вже приєдналися, далі вивчають колоду.}}"
+
 #: src/client/views/WordView.tsx
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# місяць} few {# місяці} many {# місяців} other {# місяця}}"
@@ -239,6 +281,10 @@ msgstr "{months, plural, one {Через # місяць} few {Через # мі�
 #: src/client/views/TodayView.tsx
 msgid "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
 msgstr "{more, plural, one {{first}, {second} і ще # колода} few {{first}, {second} і ще # колоди} many {{first}, {second} і ще # колод} other {{first}, {second} і ще # колоди}}"
+
+#: src/client/views/JoinView.tsx
+msgid "{more, plural, one {# more card} other {# more cards}}"
+msgstr "{more, plural, one {Ще # картка} few {Ще # картки} many {Ще # карток} other {Ще # картки}}"
 
 #: src/client/views/ReviewView.tsx
 msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
@@ -253,6 +299,14 @@ msgstr "{moreDue, plural, one {{done} повторено. Ще # готова, �
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
+#: src/client/views/JoinView.tsx
+msgid "{ownerName} shared a deck with you"
+msgstr "{ownerName} ділиться з тобою колодою"
+
+#: src/client/views/JoinView.tsx
+msgid "{ownerName} will see your name once you join."
+msgstr "Після приєднання {ownerName} побачить твоє ім’я."
+
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оцінка з офлайн-повторення ще не дійшла до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти її.} few {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} many {# оцінок з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} other {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.}}"
@@ -264,6 +318,10 @@ msgstr "{total, plural, one {У твоїх колодах # картка, і в�
 #: src/client/components/DeckCard.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
+
+#: src/server/join-page.ts
+msgid "{total, plural, one {# card} other {# cards}} from {owner}. Join to review them on your own schedule."
+msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}} від {owner}. Приєднуйся, щоб повторювати їх у своєму темпі."
 
 #: src/client/views/WordView.tsx
 msgid "{when}, {then}"
@@ -471,6 +529,14 @@ msgstr "застосунок без адреси"
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
 
+#: src/client/views/DeckSettingsView.tsx
+msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
+msgstr "Будь-хто з посиланням може приєднатися й повторювати твої картки у своєму темпі. Вони не можуть змінювати картки, а ти не бачиш їхнього прогресу."
+
+#: src/client/views/JoinView.tsx
+msgid "Anyone with this link can join and review these cards."
+msgstr "Будь-хто з цим посиланням може приєднатися й повторювати ці картки."
+
 #: src/client/views/WordView.tsx
 msgid "Anything to remember it by"
 msgstr "Будь-що, що допоможе це запам’ятати"
@@ -507,6 +573,11 @@ msgstr "Заархівовано «{archivedTerm}»"
 #: src/client/routes/library.tsx
 msgid "Archived “{deckName}”"
 msgstr "Заархівовано «{deckName}»"
+
+#: src/client/views/JoinView.tsx
+#: src/server/join-page.ts
+msgid "Ask the person who shared it for a new link."
+msgstr "Попроси нове посилання в того, хто ним поділився."
 
 #. placeholder {0}: listOf( schedules.map((x) => directionLabel(x.st.direction).toLocaleLowerCase(i18n.locale), ), i18n.locale, )
 #: src/client/views/WordView.tsx
@@ -589,9 +660,18 @@ msgstr "Архівовані картки й колоди. Відновленн�
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Картки з вівторкових уроків Марко."
 
+#: src/client/views/JoinView.tsx
+msgid "Cards from this deck"
+msgstr "Картки з цієї колоди"
+
 #: src/client/components/Streak.tsx
 msgid "Change daily goal"
 msgstr "Змінити денну мету"
+
+#: src/client/views/JoinView.tsx
+#: src/server/join-page.ts
+msgid "Check that the whole link was copied, or ask for a new one."
+msgstr "Перевір, що посилання скопійоване повністю, або попроси нове."
 
 #: src/client/views/InsightsView.tsx
 #: src/client/views/ReviewView.tsx
@@ -664,6 +744,22 @@ msgstr "Скопійовано"
 #: src/client/components/CopyField.tsx
 msgid "Copy"
 msgstr "Копіювати"
+
+#: src/client/routes/join.$token.tsx
+msgid "Could not join. Check your connection and try again."
+msgstr "Не вдалося приєднатися. Перевір з’єднання й спробуй ще раз."
+
+#: src/client/routes/library.$deckId.settings.tsx
+msgid "Could not load the join link."
+msgstr "Не вдалося завантажити посилання для приєднання."
+
+#: src/client/routes/library.$deckId.settings.tsx
+msgid "Could not turn off the join link. Try again."
+msgstr "Не вдалося вимкнути посилання для приєднання. Спробуй ще раз."
+
+#: src/client/routes/library.$deckId.settings.tsx
+msgid "Could not turn on the join link. Try again."
+msgstr "Не вдалося увімкнути посилання для приєднання. Спробуй ще раз."
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Couldn’t check this device. Reload to try again."
@@ -903,6 +999,10 @@ msgstr "З уроку"
 msgid "Give the deck a name."
 msgstr "Назви колоду."
 
+#: src/client/views/JoinView.tsx
+msgid "Go to Lymi"
+msgstr "Перейти в Lymi"
+
 #: src/client/views/ReviewView.tsx
 #: src/client/views/WordView.tsx
 msgid "Good"
@@ -986,6 +1086,22 @@ msgstr "Він може читати твої картки, а також дод
 msgid "It can read your decks and cards. It cannot change anything."
 msgstr "Він може читати твої колоди й картки. Нічого змінювати не може."
 
+#: src/client/views/JoinView.tsx
+msgid "Join"
+msgstr "Приєднатися"
+
+#: src/server/join-page.ts
+msgid "Join {name} on Lymi"
+msgstr "Приєднуйся до колоди «{name}» у Lymi"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Join link"
+msgstr "Посилання для приєднання"
+
+#: src/client/views/JoinView.tsx
+msgid "Join with Google"
+msgstr "Приєднатися через Google"
+
 #: src/client/components/GoalPicker.tsx
 msgctxt "daily goal"
 msgid "Keen"
@@ -998,6 +1114,10 @@ msgstr "Продовжуй"
 #: src/client/components/ApiKeysSection.tsx
 msgid "Keep key"
 msgstr "Залишити ключ"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Keep sharing"
+msgstr "Не вимикати"
 
 #: src/client/components/NewDeckSheet.tsx
 msgid "Keep the language tag under 12 characters."
@@ -1038,10 +1158,18 @@ msgstr "Засвоєні"
 msgid "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
 msgstr "«Засвоєна» означає, що тепер між повтореннями минають тижні або місяці. Оцінка «Не пам’ятаю» повертає картку до коротких кроків."
 
+#: src/client/views/JoinView.tsx
+msgid "language"
+msgstr "мова"
+
 #: src/client/components/DeckFields.tsx
 #: src/client/views/SettingsView.tsx
 msgid "Language"
 msgstr "Мова"
+
+#: src/client/views/JoinView.tsx
+msgid "Last added {lastAdded}"
+msgstr "Востаннє додано {lastAdded}"
 
 #: src/client/components/Chip.tsx
 #: src/client/views/DeckDetailView.tsx
@@ -1088,6 +1216,10 @@ msgstr "Світла"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Link off"
+msgstr "Посилання вимкнено"
 
 #: src/client/views/ConsentView.tsx
 msgid "List, search and read them. Any connector needs this."
@@ -1257,6 +1389,11 @@ msgstr "Значення поки немає"
 msgid "No reviews yet. Each block here will be a day."
 msgstr "Повторень поки немає. Кожен блок тут позначатиме один день."
 
+#: src/client/views/JoinView.tsx
+#: src/server/join-page.ts
+msgid "Nobody can join it while it is archived."
+msgstr "Поки колода в архіві, до неї ніхто не може приєднатися."
+
 #: src/client/views/WordView.tsx
 msgid "Not asked yet. It joins the next review."
 msgstr "Ще не запитувалася. З’явиться в наступному повторенні."
@@ -1346,6 +1483,14 @@ msgstr "Лише в дні, коли є картки до повторення."
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
 
+#: src/client/views/DeckSettingsView.tsx
+msgid "Only you study this deck."
+msgstr "Цю колоду вивчаєш лише ти."
+
+#: src/client/views/JoinView.tsx
+msgid "Open deck"
+msgstr "Відкрити колоду"
+
 #: src/client/components/InstallDialog.tsx
 msgid "Open Lymi from the new icon."
 msgstr "Відкрий Lymi з нової іконки."
@@ -1379,6 +1524,10 @@ msgstr "Попередня картка"
 #: src/client/components/StreakCalendar.tsx
 msgid "Previous month"
 msgstr "Попередній місяць"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Private"
+msgstr "Приватна"
 
 #: src/client/components/DeckFields.tsx
 #: src/client/views/ReviewView.tsx
@@ -1608,6 +1757,18 @@ msgstr "Прогрес повторення"
 msgid "Settings"
 msgstr "Налаштування"
 
+#: src/client/views/DeckSettingsView.tsx
+msgid "Share link"
+msgstr "Поділитися посиланням"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Shared by link"
+msgstr "Доступ за посиланням"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Sharing"
+msgstr "Спільний доступ"
+
 #: src/client/views/DeckDetailView.tsx
 #: src/client/views/LibraryView.tsx
 msgid "Show"
@@ -1772,6 +1933,10 @@ msgstr "Мова карток у цій колоді. Вона заповнює�
 msgid "The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
 msgstr "Мова карток у цій колоді. З неї починається кожна нова картка, і без неї не працюють вимова та ШІ. Значення пишуться мовою значень, яка повторює мову застосунку в Налаштуваннях."
 
+#: src/client/views/DeckSettingsView.tsx
+msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
+msgstr "Посилання перестане працювати назавжди. Ті, хто приєднався, залишаться в колоді, а наступне поширення створить нове посилання."
+
 #: src/client/views/WordView.tsx
 msgid "the meaning"
 msgstr "значення"
@@ -1804,9 +1969,28 @@ msgstr "Тема"
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
 
+#: src/client/views/JoinView.tsx
+#: src/server/join-page.ts
+msgid "This deck is archived"
+msgstr "Ця колода в архіві"
+
 #: src/client/routes/login.tsx
 msgid "This Google account has not been invited. Request an invitation, or try another account."
 msgstr "Цей обліковий запис Google не запрошено. Попроси запрошення або спробуй інший обліковий запис."
+
+#: src/client/views/JoinView.tsx
+#: src/server/join-page.ts
+msgid "This join link does not work"
+msgstr "Це посилання для приєднання не працює"
+
+#: src/client/views/JoinView.tsx
+#: src/server/join-page.ts
+msgid "This join link is turned off"
+msgstr "Це посилання для приєднання вимкнено"
+
+#: src/client/routes/join.$token.tsx
+msgid "This join link stopped working. Ask for a new one."
+msgstr "Це посилання перестало працювати. Попроси нове."
 
 #: src/client/routes/consent.tsx
 msgid "This link is missing the app that asked. Start again from the app."
@@ -1862,6 +2046,18 @@ msgstr "Спробувати ще раз"
 #: src/client/views/LoginView.tsx
 msgid "Try another Google account"
 msgstr "Спробувати інший обліковий запис Google"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Turn off link"
+msgstr "Вимкнути посилання"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Turn off the join link"
+msgstr "Вимкнути посилання для приєднання"
+
+#: src/client/views/DeckSettingsView.tsx
+msgid "Turn off the join link?"
+msgstr "Вимкнути посилання для приєднання?"
 
 #: src/client/components/AddCardSheet.tsx
 msgid "Type the term."
@@ -1925,6 +2121,10 @@ msgstr "Усе додане з’являється одразу й має по�
 msgid "What it means"
 msgstr "Що це означає"
 
+#: src/client/views/DeckSettingsView.tsx
+msgid "Who can join this deck"
+msgstr "Хто може приєднатися до цієї колоди"
+
 #: src/client/views/WordView.tsx
 msgid "within the day"
 msgstr "протягом дня"
@@ -1941,6 +2141,14 @@ msgstr "ти"
 msgid "You"
 msgstr "Ти"
 
+#: src/client/views/JoinView.tsx
+msgid "You are already in this deck."
+msgstr "Ти вже в цій колоді."
+
+#: src/client/views/JoinView.tsx
+msgid "You are still in the deck."
+msgstr "Ти досі в колоді."
+
 #: src/client/components/DeckFields.tsx
 msgid "You can change this later. It applies to every card in the deck."
 msgstr "Це можна змінити пізніше. Налаштування діє для кожної картки в колоді."
@@ -1949,7 +2157,23 @@ msgstr "Це можна змінити пізніше. Налаштування 
 msgid "You can close this tab."
 msgstr "Цю вкладку можна закрити."
 
+#: src/client/routes/join.$token.tsx
+msgid "You cannot join this deck through this link."
+msgstr "Через це посилання не можна приєднатися до цієї колоди."
+
+#: src/client/views/JoinView.tsx
+msgid "You review the cards on your own schedule. {ownerName} writes them and does not see your progress."
+msgstr "Ти повторюєш картки у своєму темпі. {ownerName} додає їх і не бачить твого прогресу."
+
+#: src/client/views/JoinView.tsx
+msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
+msgstr "Тебе прибрали з цієї колоди, тому це посилання не додасть тебе знову. Твої повторення збережено."
+
 #: src/client/components/Chip.tsx
 #: src/client/views/WordView.tsx
 msgid "You wrote this"
 msgstr "Це написано тобою"
+
+#: src/client/views/JoinView.tsx
+msgid "Your deck"
+msgstr "Твоя колода"

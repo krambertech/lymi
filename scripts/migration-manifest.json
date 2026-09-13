@@ -39,6 +39,10 @@
     {
       "name": "0009_shallow_prodigy.sql",
       "sha256": "573868f5186f201174871947f1adbf40b218d8f2b15961286fa338d32a498575"
+    },
+    {
+      "name": "0010_tiresome_purifiers.sql",
+      "sha256": "af62543250e61661a45fa0ab89b68c535776f6f8e970da961974f4e458c0a63a"
     }
   ]
 }

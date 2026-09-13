@@ -4,7 +4,7 @@
 
 ## Outcome
 
-The owner posts one link in a class chat. A classmate opens it on a phone, sees the deck's name, card count, and owner but no cards, signs in with Google, joins once, and lands in the shared deck. They review on their own schedule. Cards the owner adds later appear as new for the classmate. The owner can see and remove members but cannot see their learning progress.
+The owner posts one link in a class chat. A classmate opens it on a phone, sees the deck's name, owner, card count, and a few example cards, signs in with Google, joins once, and lands in the shared deck. They review on their own schedule. Cards the owner adds later appear as new for the classmate. The owner can see and remove members but cannot see their learning progress.
 
 ## Decisions
 
@@ -13,7 +13,7 @@ The owner posts one link in a class chat. A classmate opens it on a phone, sees 
 - The owner alone sees the member list. Members see the owner's name, not other members.
 - Leaving preserves progress and permits rejoining through the active link. Removal by the owner preserves progress and blocks the generic link; named invitation re-admission follows in v1.
 - Turning sharing off removes nobody and permanently invalidates that URL. Enabling sharing again creates a new URL.
-- The join page lives at `my.lymi.app/join/<token>`, shows deck metadata but no cards, and returns a successful join to the shared deck.
+- The join page lives at `my.lymi.app/join/<token>`, shows deck metadata and a few example cards but keeps cards out of its link-preview metadata, and returns a successful join to the shared deck.
 
 ## Current foundation
 
@@ -33,7 +33,7 @@ The owner posts one link in a class chat. A classmate opens it on a phone, sees 
 
 ### Acceptance evidence
 
-- [ ] A valid link shows the deck name, card count, and owner without exposing card content.
+- [ ] A valid link shows the deck name, owner, card count, and up to three example cards, and its title and Open Graph tags carry no card content.
 - [ ] A signed-out, unallowlisted Google account can join through a valid link and lands in the shared deck.
 - [ ] A signed-in learner can join directly; repeated posts and repeated auth callbacks create one active membership and no duplicate states or audit entries.
 - [ ] A malformed, revoked, or archived-deck link cannot admit an account or create membership.

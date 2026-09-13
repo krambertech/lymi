@@ -12,6 +12,7 @@ erDiagram
   user ||--o{ cards : owns
   decks ||--o{ cards : contains
   decks ||--o{ deck_members : "shared with"
+  decks ||--o{ deck_invitations : "join link"
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per direction"
   card_states ||--o{ reviews : "append-only"
@@ -72,6 +73,13 @@ erDiagram
     int joined_at
     int removed_at "nullable, never deleted"
     text removed_by "nullable: owner | self"
+  }
+  deck_invitations {
+    text id PK
+    text deck_id FK
+    text kind "link"
+    text token "unique, 32 base64url chars"
+    int revoked_at "nullable, permanent"
   }
   card_states {
     text id PK
@@ -149,6 +157,8 @@ A review day is one learner-local date measured against its streak goal. Attempt
 
 A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_members` row. Leaving or being removed sets `removed_at` and keeps the row; `removed_by = 'owner'` blocks the join link until a named invitation. `card_states` is unique per `(card_id, user_id, direction)`, so each learner of a shared card has their own schedule. Every read goes through `memberOf` in `services/members.ts`; every write to a deck's content requires the owner. [ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md).
 
+A deck has at most one unrevoked `deck_invitations` link, enforced by a partial unique index. Turning the link off sets `revoked_at` for good, and turning it on again inserts a new row with a new token. The token is a capability: it appears in the join URL and nowhere else, never in audit payloads, logs or error messages. `/join/<token>` is rendered by the product Worker; it shows up to three recent cards, and its title and Open Graph tags carry none. A signed-out visitor's link rides through sign-in in a ten-minute HttpOnly cookie, which lets `user.create.before` admit an account that is not on `ALLOWED_EMAILS`, and `session.create.after` completes the membership. Repeated joins make one membership and one audit row.
+
 ### Why the scheduling state is JSON
 
 `card_states.fsrs` holds the full ts-fsrs Card object (stability, difficulty, reps, lapses, learning step, due, last review). `due` and `state` are copied out into real columns so the queue can be queried without parsing JSON. If ts-fsrs adds a field, nothing needs a migration.
@@ -175,6 +185,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 
 - Reads need any credential. Writes need the `write` scope, or 403.
 - Grading and key management are the learner's alone. Any key or token gets 403, whatever its scope.
+- Join links are managed and followed only from the app. Reading, turning on, or turning off a deck's link needs the owner's session; joining needs the learner's session. Any key or token gets 403.
 - A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
 - A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.

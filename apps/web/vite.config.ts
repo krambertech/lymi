@@ -85,7 +85,13 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         importScripts: ["/push-sw.js"],
         navigateFallback: "/index.html",
-        navigateFallbackDenylist: [/^\/$/, /^\/api\//, /^\/mcp/, /^\/docs(?:\/|$)/, /^\/join$/],
+        navigateFallbackDenylist: [
+          /^\/$/,
+          /^\/api\//,
+          /^\/mcp/,
+          /^\/docs(?:\/|$)/,
+          /^\/join(?:\/|$)/,
+        ],
         runtimeCaching: [
           {
             urlPattern: /\/api\/audio\//,

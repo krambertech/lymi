@@ -8,8 +8,16 @@ describe("safeProductReturnPath", () => {
     );
   });
 
+  it("lets sign-in return to a join page", () => {
+    expect(safeProductReturnPath("/join/AbCdEfGhIjKlMnOpQrStUvWxYz012345?continue=1")).toBe(
+      "/join/AbCdEfGhIjKlMnOpQrStUvWxYz012345?continue=1",
+    );
+  });
+
   it.each([
     "https://elsewhere.example/today",
+    "/join",
+    "/join/a/b",
     "//elsewhere.example/today",
     "/\\elsewhere.example/today",
     "/%zz",

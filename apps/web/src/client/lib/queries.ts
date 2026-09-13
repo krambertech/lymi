@@ -25,6 +25,22 @@ export const deckCardsQuery = (deckId: string) =>
     queryFn: () => api.deckCards(deckId),
     staleTime: 0,
   });
+/** Join links are capabilities, so neither query is written to the persisted cache. */
+export const joinLinkQuery = (deckId: string) =>
+  queryOptions({
+    queryKey: ["decks", deckId, "join-link"],
+    queryFn: () => api.joinLink(deckId),
+    staleTime: 0,
+    meta: { persist: false },
+  });
+export const joinPreviewQuery = (token: string) =>
+  queryOptions({
+    queryKey: ["join", token],
+    queryFn: () => api.joinPreview(token),
+    staleTime: 0,
+    retry: false,
+    meta: { persist: false },
+  });
 export const cardHistoryQuery = (cardId: string) =>
   queryOptions({
     queryKey: ["cards", cardId, "history"],

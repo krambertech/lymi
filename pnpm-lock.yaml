@@ -20,6 +20,9 @@ importers:
 
   apps/site:
     dependencies:
+      '@fontsource-variable/onest':
+        specifier: ^5.3.1
+        version: 5.3.1
       '@lingui/core':
         specifier: 6.7.0
         version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)
@@ -117,6 +120,9 @@ importers:
       '@better-auth/utils':
         specifier: 0.4.2
         version: 0.4.2
+      '@fontsource-variable/onest':
+        specifier: ^5.3.1
+        version: 5.3.1
       '@hono/standard-validator':
         specifier: ^0.2.3
         version: 0.2.3(@standard-schema/spec@1.1.0)(hono@4.13.7)
@@ -1989,6 +1995,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/onest@5.3.1':
+    resolution: {integrity: sha512-xaaw6G4HDB2/RczsWLD/2bnib4ykmQlTlBUN3GOEOiyErilZukQWVJG95h9zwAy0i8KY+QzDa+COPfqhI72Acw==}
 
   '@hono/node-server@2.1.1':
     resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
@@ -8170,6 +8179,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.2':
     optional: true
+
+  '@fontsource-variable/onest@5.3.1': {}
 
   '@hono/node-server@2.1.1(hono@4.13.7)':
     dependencies:

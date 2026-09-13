@@ -25,7 +25,7 @@ function Row({ label, source, children }: RowProps) {
       <div className="flex-1 text-sm text-text-2">{children}</div>
       <span
         className={clsx(
-          "mt-0.5 shrink-0 rounded-xs px-1.5 py-px text-[9px] tracking-[0.06em] uppercase",
+          "mt-0.5 shrink-0 rounded-xs px-1.5 py-px text-[0.5625rem] tracking-[0.06em] uppercase",
           source === "AI" ? "bg-amber-soft text-amber-text" : "bg-plate-2 text-muted",
         )}
       >

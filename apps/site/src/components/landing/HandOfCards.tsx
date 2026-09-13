@@ -188,7 +188,7 @@ function FanCard({
           <p className="mt-auto border-t border-edge-2 pt-3.5 text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
             {say(card.meaning)}
           </p>
-          <p className="mt-2 text-[13.5px] leading-[1.45] text-muted">{say(card.note)}</p>
+          <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
         </div>
       </div>
     </div>

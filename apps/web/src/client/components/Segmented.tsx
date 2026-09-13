@@ -61,7 +61,7 @@ export function Segmented<T extends string>({
               // the 28 px pill (sm), clearing the 44 px floor without changing layout.
               "before:absolute before:inset-x-0 before:content-['']",
               size === "md"
-                ? "h-full text-[16px] before:-inset-y-[3px] md:text-base"
+                ? "h-full text-[1rem] before:-inset-y-[3px] md:text-base"
                 : "h-7 text-xs before:-inset-y-2",
               on ? "text-text" : "text-muted hoverable:hover:text-text",
             )}

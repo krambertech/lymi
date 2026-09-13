@@ -88,14 +88,6 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/$/, /^\/api\//, /^\/mcp/, /^\/docs(?:\/|$)/, /^\/join$/],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "fonts",
-              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 },
-            },
-          },
-          {
             urlPattern: /\/api\/audio\//,
             handler: "CacheFirst",
             options: {

@@ -17,6 +17,7 @@
     "hand:audio": "node scripts/hand-audio.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/onest": "^5.3.1",
     "@lingui/core": "6.7.0",
     "@lingui/react": "6.7.0",
     "@lymi/core": "workspace:*",

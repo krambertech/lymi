@@ -51,6 +51,7 @@
     "@better-auth/mcp": "1.7.2",
     "@better-auth/oauth-provider": "1.7.2",
     "@better-auth/utils": "0.4.2",
+    "@fontsource-variable/onest": "^5.3.1",
     "@hono/standard-validator": "^0.2.3",
     "@lingui/core": "6.7.0",
     "@lingui/react": "6.7.0",

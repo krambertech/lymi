@@ -10,9 +10,9 @@ import { devCounts, resetAccount, seedPersona, setDue } from "../services/dev";
 import { getSettings } from "../services/settings";
 
 /**
- * Local development only. One URL signs a persona in, one call seeds or empties an account,
- * one moves the due dates. Every route answers 404 unless the product is served from a
- * loopback origin, and none of them is in the OpenAPI document.
+ * Local development and isolated app previews only. One URL signs a persona in, one call
+ * seeds or empties an account, and one moves due dates. Every route answers 404 unless its
+ * runtime gate is valid, and none of them is in the OpenAPI document.
  *
  * Mounted above `authenticate`: sign-in has no session yet, and the rest check for one here.
  */
@@ -161,7 +161,7 @@ dev.post("/due", describe({ hide: true, open: true }), body(DueBody, "due"), asy
 
 /**
  * Sign the persona's account in through Better Auth's own email flow, creating it on first
- * use. The password is fixed and public; the accounts cannot exist outside a local D1.
+ * use. The password is fixed and public; the accounts exist only in disposable data stores.
  */
 async function signInPersona(auth: Auth, persona: Persona) {
   const email = personaEmail(persona.id);

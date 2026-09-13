@@ -29,6 +29,7 @@ jobs:
       playwright_args: ${{ steps.coverage.outputs.playwright_args }}
       coverage: ${{ steps.coverage.outputs.coverage }}
       run_deploy_check: ${{ steps.coverage.outputs.run_deploy_check }}
+      run_app_preview: ${{ steps.coverage.outputs.run_app_preview }}
       run_site_preview: ${{ steps.coverage.outputs.run_site_preview }}
       reason: ${{ steps.coverage.outputs.reason }}
     steps:
@@ -197,6 +198,7 @@ jobs:
           COVERAGE: ${{ needs.plan.outputs.coverage }}
           PLAN_REASON: ${{ needs.plan.outputs.reason }}
           SITE_PREVIEW: ${{ needs.plan.outputs.run_site_preview }}
+          APP_PREVIEW: ${{ needs.plan.outputs.run_app_preview }}
           RUN_E2E: ${{ needs.plan.outputs.run_e2e }}
           PLAN_RESULT: ${{ needs.plan.result }}
           QUALITY_RESULT: ${{ needs.quality.result }}
@@ -285,3 +287,102 @@ jobs:
           PREVIEW_URL: ${{ steps.preview.outputs.url }}
           PREVIEW_VERSION_ID: ${{ steps.preview.outputs.version_id }}
         run: node scripts/check-deployment.mjs "$PREVIEW_URL/api/health" lymi-site "$PREVIEW_VERSION_ID" 10
+
+  app_preview:
+    name: app preview
+    needs: [plan, quality]
+    if: >-
+      needs.quality.result == 'success' &&
+      github.event_name == 'pull_request' &&
+      needs.plan.outputs.run_app_preview == 'true' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      deployments: write
+    environment:
+      name: app-preview
+      url: ${{ steps.infrastructure.outputs.entry_url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      # Version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install product dependencies
+        run: pnpm install --frozen-lockfile --filter @lymi/web...
+
+      - name: Check preview credentials
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
+          LYMI_APP_PREVIEW_AUTH_SECRET: ${{ secrets.LYMI_APP_PREVIEW_AUTH_SECRET }}
+        run: |
+          if [[ -z "$CLOUDFLARE_ACCOUNT_ID" || -z "$CLOUDFLARE_API_TOKEN" || -z "$LYMI_APP_PREVIEW_AUTH_SECRET" ]]; then
+            echo "::error::Configure CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_APP_PREVIEW_TOKEN, and LYMI_APP_PREVIEW_AUTH_SECRET in the app-preview environment."
+            exit 1
+          fi
+
+      - name: Build isolated product preview
+        env:
+          LYMI_APP_PREVIEW: "1"
+        run: pnpm --filter @lymi/web run build
+
+      - name: Prepare isolated preview resources
+        id: infrastructure
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
+          LYMI_APP_PREVIEW_AUTH_SECRET: ${{ secrets.LYMI_APP_PREVIEW_AUTH_SECRET }}
+        run: >-
+          node scripts/app-preview-infrastructure.mjs prepare
+          "${{ github.event.pull_request.number }}"
+          apps/web/dist/lymi/wrangler.json
+          apps/web/dist/lymi/wrangler.preview.json
+          apps/web/dist/lymi/preview-secrets.json
+
+      - name: Apply preview database migrations
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
+        run: >-
+          pnpm --filter @lymi/web exec wrangler d1 migrations apply DB --remote
+          --config dist/lymi/wrangler.preview.json
+
+      - name: Upload stable app preview
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
+          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler-app-output.jsonl
+        run: |
+          pnpm --filter @lymi/web exec wrangler versions upload \
+            --config dist/lymi/wrangler.preview.json \
+            --preview-alias preview \
+            --secrets-file dist/lymi/preview-secrets.json \
+            --tag "$GITHUB_SHA" \
+            --message "App preview for PR #${{ github.event.pull_request.number }} at $GITHUB_SHA"
+
+      - name: Record stable app preview
+        id: preview
+        env:
+          APP_PREVIEW_ENTRY_URL: ${{ steps.infrastructure.outputs.entry_url }}
+          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler-app-output.jsonl
+          WORKER_NAME: ${{ steps.infrastructure.outputs.worker_name }}
+        run: node scripts/preview-url.mjs "$WRANGLER_OUTPUT_FILE_PATH" "$WORKER_NAME" preview app
+
+      - name: Verify app preview version
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+          PREVIEW_VERSION_ID: ${{ steps.preview.outputs.version_id }}
+        run: node scripts/check-deployment.mjs "$PREVIEW_URL/api/health" lymi-product "$PREVIEW_VERSION_ID" 10
+
+      - name: Verify preview sign-in and seeded data
+        env:
+          PREVIEW_ENTRY_URL: ${{ steps.infrastructure.outputs.entry_url }}
+        run: node scripts/check-app-preview.mjs

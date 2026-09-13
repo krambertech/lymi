@@ -46,6 +46,12 @@ export function renderCiSummary(env) {
       : env.SITE_PREVIEW === "false"
         ? "Not needed"
         : "Not selected";
+  const appPreview =
+    env.APP_PREVIEW === "true"
+      ? "Scheduled after quality checks"
+      : env.APP_PREVIEW === "false"
+        ? "Not needed"
+        : "Not selected";
 
   return [
     "## CI evidence",
@@ -53,6 +59,8 @@ export function renderCiSummary(env) {
     `**Browser coverage:** ${coverage}`,
     "",
     `**Public-site preview:** ${sitePreview}`,
+    "",
+    `**Product-app preview:** ${appPreview}`,
     "",
     reason,
     "",

@@ -32,6 +32,7 @@ const publicMarkers = [
   "Every route the Lymi API serves, read from the running server.",
   "Bring your next lesson with you.",
 ];
+const previewOnlyMarkers = ["lymi-dev-password", "Make every card due"];
 for (const path of filesBelow(productDist)) {
   if (!/\.(?:css|html|js)$/.test(path) || statSync(path).size > 10_000_000) continue;
   const source = readFileSync(path, "utf8");
@@ -39,6 +40,12 @@ for (const path of filesBelow(productDist)) {
   if (marker) {
     throw new Error(
       `Product build still contains public-site content (${marker}) in ${relativeTo(productDist, path)}`,
+    );
+  }
+  const previewMarker = previewOnlyMarkers.find((value) => source.includes(value));
+  if (previewMarker) {
+    throw new Error(
+      `Production product build contains preview-only tools (${previewMarker}) in ${relativeTo(productDist, path)}`,
     );
   }
 }
@@ -56,5 +63,5 @@ for (const dist of [productDist, siteDist]) {
 }
 
 process.stdout.write(
-  "Deployment boundary check passed: site has no PWA assets; product has no public pages; no uncompiled Lingui macro.\n",
+  "Deployment boundary check passed: site has no PWA assets; product has no public pages or preview tools; no uncompiled Lingui macro.\n",
 );

@@ -2,6 +2,7 @@
 
 import { appendFileSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
+import { requiresAppPreview } from "./app-preview-impact.mjs";
 import { requiresE2E } from "./e2e-impact.mjs";
 import { requiresSitePreview } from "./site-preview-impact.mjs";
 
@@ -12,6 +13,7 @@ function fullPlan(reason) {
     playwrightArgs: "",
     coverage: "Chromium + WebKit",
     runDeployCheck: true,
+    runAppPreview: false,
     runSitePreview: false,
     reason,
   };
@@ -19,6 +21,7 @@ function fullPlan(reason) {
 
 export function createCiPlan({ eventName, changedPaths = [], manualE2E = true }) {
   if (eventName === "pull_request") {
+    const runAppPreview = requiresAppPreview(changedPaths);
     const runSitePreview = requiresSitePreview(changedPaths);
     if (!requiresE2E(changedPaths)) {
       return {
@@ -27,6 +30,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
         playwrightArgs: "",
         coverage: "No browser E2E",
         runDeployCheck: false,
+        runAppPreview,
         runSitePreview,
         reason: "This pull request changes no production-affecting paths.",
       };
@@ -38,6 +42,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
       playwrightArgs: "--project=chromium",
       coverage: "Chromium",
       runDeployCheck: true,
+      runAppPreview,
       runSitePreview,
       reason: "This pull request changes production-affecting paths.",
     };
@@ -50,6 +55,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
       playwrightArgs: "",
       coverage: "No browser E2E",
       runDeployCheck: true,
+      runAppPreview: false,
       runSitePreview: false,
       reason: "The manually dispatched run explicitly disabled browser E2E.",
     };
@@ -80,6 +86,7 @@ function writeGitHubOutputs(plan) {
     playwright_args: plan.playwrightArgs,
     coverage: plan.coverage,
     run_deploy_check: String(plan.runDeployCheck),
+    run_app_preview: String(plan.runAppPreview),
     run_site_preview: String(plan.runSitePreview),
     reason: plan.reason,
   };
@@ -102,6 +109,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   process.stdout.write(
     `CI plan: ${plan.coverage}; deployment package check ${
       plan.runDeployCheck ? "enabled" : "skipped"
-    }; public-site preview ${plan.runSitePreview ? "enabled" : "skipped"}. ${plan.reason}\n`,
+    }; app preview ${plan.runAppPreview ? "enabled" : "skipped"}; public-site preview ${
+      plan.runSitePreview ? "enabled" : "skipped"
+    }. ${plan.reason}\n`,
   );
 }

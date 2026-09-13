@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { devToolsEnabled, isLoopbackUrl } from "./env";
+import { appPreviewEnabled, devToolsEnabled, isLoopbackUrl } from "./env";
 
 describe("developer tools gate", () => {
   it("opens only for a loopback product origin", () => {
@@ -8,6 +8,33 @@ describe("developer tools gate", () => {
     expect(devToolsEnabled({ PRODUCT_URL: "https://my.lymi.app" })).toBe(false);
     expect(devToolsEnabled({ PRODUCT_URL: "https://localhost.lymi.app" })).toBe(false);
     expect(devToolsEnabled({ PRODUCT_URL: "not a url" })).toBe(false);
+  });
+
+  it("opens for a fully configured isolated app preview", () => {
+    const preview = {
+      PRODUCT_URL: "https://preview-lymi-app-pr-105.example.workers.dev",
+      APP_PREVIEW: "true",
+      APP_PREVIEW_KEY: "a-preview-capability-that-is-long-enough",
+    };
+    expect(appPreviewEnabled(preview)).toBe(true);
+    expect(devToolsEnabled(preview)).toBe(true);
+  });
+
+  it("fails closed for incomplete or non-preview remote configuration", () => {
+    const key = "a-preview-capability-that-is-long-enough";
+    expect(
+      appPreviewEnabled({
+        PRODUCT_URL: "https://my.lymi.app",
+        APP_PREVIEW: "true",
+        APP_PREVIEW_KEY: key,
+      }),
+    ).toBe(false);
+    expect(
+      appPreviewEnabled({
+        PRODUCT_URL: "https://preview-lymi-app-pr-105.example.workers.dev",
+        APP_PREVIEW: "true",
+      }),
+    ).toBe(false);
   });
 
   it("treats every loopback spelling the same", () => {

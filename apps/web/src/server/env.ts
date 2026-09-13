@@ -19,6 +19,10 @@ export interface Bindings extends Env {
   VAPID_PUBLIC_KEY?: string;
   VAPID_PRIVATE_KEY?: string;
   VAPID_SUBJECT?: string;
+  /** Present only on isolated pull-request Workers. */
+  APP_PREVIEW?: string;
+  /** Capability checked before an isolated pull-request Worker serves the product. */
+  APP_PREVIEW_KEY?: string;
 }
 
 /** True for localhost, 127.0.0.1 and [::1]. Decides every local-only capability. */
@@ -31,13 +35,31 @@ export function isLoopbackUrl(value: string): boolean {
   }
 }
 
-/**
- * The developer tools exist only while the product is served from a loopback origin:
- * email sign-in, the `/api/dev` routes and the persona accounts. Production's PRODUCT_URL
- * is `https://my.lymi.app`, so none of it is reachable there.
- */
-export function devToolsEnabled(env: { PRODUCT_URL: string }): boolean {
-  return isLoopbackUrl(env.PRODUCT_URL);
+/** Preview-only capabilities fail closed unless both the build flag and isolated hostname agree. */
+export function appPreviewEnabled(env: {
+  PRODUCT_URL: string;
+  APP_PREVIEW?: string | undefined;
+  APP_PREVIEW_KEY?: string | undefined;
+}): boolean {
+  if (env.APP_PREVIEW !== "true" || (env.APP_PREVIEW_KEY?.length ?? 0) < 32) return false;
+  try {
+    const url = new URL(env.PRODUCT_URL);
+    return (
+      url.protocol === "https:" &&
+      /^preview-lymi-app-pr-\d+\.[a-z0-9-]+\.workers\.dev$/.test(url.hostname) &&
+      url.pathname === "/" &&
+      !url.search &&
+      !url.hash
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function devToolsEnabled(
+  env: { PRODUCT_URL: string } & Partial<Pick<Bindings, "APP_PREVIEW" | "APP_PREVIEW_KEY">>,
+): boolean {
+  return isLoopbackUrl(env.PRODUCT_URL) || appPreviewEnabled(env);
 }
 
 /** Persona accounts end in this domain. They exist only in a local D1. */

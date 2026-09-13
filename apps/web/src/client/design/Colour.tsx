@@ -2,7 +2,18 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { contrast } from "./contrast";
 import { Doc, Sub } from "./Frame";
 
-const TOKENS: { name: string; role: string; text?: string; decorative?: boolean }[] = [
+interface Token {
+  name: string;
+  role: string;
+  /** Measure this token as the foreground on the named background. */
+  on?: string;
+  /** Measure the named foreground on this token as the background. */
+  ink?: string;
+  /** Graphics need 3:1 rather than 4.5:1; decorative tokens need nothing. */
+  kind?: "graphic" | "decorative";
+}
+
+const TOKENS: Token[] = [
   { name: "canvas", role: "The room. Page background." },
   { name: "rail", role: "The navigation rail: one surface off the room, so chrome reads apart." },
   { name: "plate", role: "A thing in the room: cards, rows, inputs, the active nav item." },
@@ -10,62 +21,96 @@ const TOKENS: { name: string; role: string; text?: string; decorative?: boolean 
   { name: "hover", role: "Plate on hover." },
   { name: "edge", role: "The one hairline. Alpha, so it sits on any plate." },
   { name: "edge-2", role: "Stronger hairline: focused or hovered edges, dividers that must read." },
-  { name: "text", role: "Words. Also the metal of the lantern in the light room.", text: "canvas" },
-  { name: "text-2", role: "Secondary words: meanings, examples, nav.", text: "canvas" },
-  { name: "muted", role: "Labels, counts, hints. Still 4.5:1 on canvas.", text: "canvas" },
+  {
+    name: "text",
+    role: "Words. Also the metal of the lantern in the light room.",
+    on: "canvas",
+  },
+  { name: "text-2", role: "Secondary words: meanings, examples, nav.", on: "canvas" },
+  { name: "muted", role: "Labels, counts, hints. Still 4.5:1 on canvas.", on: "canvas" },
   {
     name: "faint",
     role: "Decorative only: dashes, unlit day letters. Never for words.",
-    text: "canvas",
+    on: "canvas",
+    kind: "decorative",
   },
-  { name: "amber", role: "The flame and the one thing to press.", text: "amber-ink" },
-  { name: "amber-text", role: "Amber as text: due counts.", text: "canvas" },
-  { name: "amber-soft", role: "Amber tint: New chip, glass, selection." },
-  { name: "good", role: "Known. Status only, always with a label.", text: "canvas" },
+  {
+    name: "amber",
+    role: "The flame, the primary action and the capture button.",
+    ink: "amber-ink",
+  },
+  { name: "amber-hover", role: "Amber under the pointer.", ink: "amber-ink" },
+  { name: "amber-ink", role: "Words and icons on amber." },
+  { name: "amber-text", role: "Amber as text: due counts.", on: "canvas" },
+  { name: "amber-soft", role: "Text selection." },
+  {
+    name: "toast-action",
+    role: "Undo on the toast. The toast is the text colour, so this is the amber that reads on it.",
+    on: "text",
+  },
+  { name: "good", role: "Success and a 2xx. Always with a word or an icon.", on: "canvas" },
+  { name: "good-soft", role: "Tint behind the Known chip and success notices." },
+  {
+    name: "state-new",
+    role: "New: the stripe, dots and icons. Never words.",
+    on: "canvas",
+    kind: "graphic",
+  },
+  {
+    name: "state-learning",
+    role: "Learning: the stripe, dots and icons. Mustard by day, to hold 3:1.",
+    on: "canvas",
+    kind: "graphic",
+  },
+  { name: "state-learning-soft", role: "Tint behind the Learning chip." },
+  { name: "state-learning-text", role: "Words inside the Learning chip.", on: "canvas" },
+  {
+    name: "state-known",
+    role: "Known: the stripe, dots and icons. The same value as good.",
+    on: "canvas",
+    kind: "graphic",
+  },
   {
     name: "danger",
     role: "Destructive actions and errors. Always with an icon or a word.",
-    text: "canvas",
+    on: "canvas",
   },
+  { name: "danger-soft", role: "The danger button at rest, and error tints." },
+  {
+    name: "ring",
+    role: "The focus outline on every control. Neutral, never amber.",
+    on: "canvas",
+    kind: "graphic",
+  },
+  { name: "scrim", role: "Behind a modal or a drawer." },
+  { name: "shimmer", role: "The sweep across a loading skeleton." },
 ];
 
-function Swatch({
-  name,
-  textOn,
-  decorative,
-}: {
-  name: string;
-  textOn?: string | undefined;
-  decorative?: boolean | undefined;
-}) {
+function verdict(ratio: number, kind: Token["kind"]): string {
+  if (kind === "decorative") return " · decorative";
+  if (kind === "graphic") return ratio >= 3 ? " · non-text" : " · fails";
+  return ratio >= 4.5 ? "" : ratio >= 3 ? " · large only" : " · fails";
+}
+
+function Swatch({ name, on, ink, kind }: Token) {
   const ref = useRef<HTMLDivElement>(null);
   const [ratio, setRatio] = useState<number | null>(null);
+  const bg = on ? `var(--${on})` : `var(--${name})`;
+  const fg = on ? `var(--${name})` : ink ? `var(--${ink})` : undefined;
   useLayoutEffect(() => {
-    if (!textOn) return;
-    // Text tokens are measured against canvas; on-colour tokens against themselves.
-    const fg = textOn === "canvas" ? `var(--${name})` : `var(--${textOn})`;
-    const bg = textOn === "canvas" ? "var(--canvas)" : `var(--${name})`;
+    if (!fg) return;
     setRatio(contrast(fg, bg, ref.current));
-  }, [name, textOn]);
+  }, [fg, bg]);
   return (
     <div ref={ref} className="grid gap-1.5">
       <div
         className="edge flex h-14 items-end rounded-sm px-2 pb-1.5 text-2xs font-semibold tabular-nums"
-        style={{
-          background: textOn === "canvas" ? "var(--canvas)" : `var(--${name})`,
-          color: textOn === "canvas" ? `var(--${name})` : textOn ? `var(--${textOn})` : undefined,
-        }}
+        style={{ background: bg, color: fg }}
       >
         {ratio && (
           <span title="Contrast ratio">
             {ratio.toFixed(1)}:1
-            {decorative
-              ? " · decorative"
-              : ratio >= 4.5
-                ? ""
-                : ratio >= 3
-                  ? " · large only"
-                  : " · fails"}
+            {verdict(ratio, kind)}
           </span>
         )}
       </div>
@@ -93,12 +138,7 @@ export function Colour() {
               </h3>
               <div className="grid grid-cols-3 gap-3 @xl:grid-cols-5">
                 {TOKENS.map((tk) => (
-                  <Swatch
-                    key={tk.name}
-                    name={tk.name}
-                    textOn={tk.text}
-                    decorative={tk.decorative}
-                  />
+                  <Swatch key={tk.name} {...tk} />
                 ))}
               </div>
             </div>

@@ -6,7 +6,11 @@ import { Toast } from "../components/Toast";
 import { Doc, Pair, Specimen, Sub } from "./Frame";
 
 const TIMINGS: [string, string, string][] = [
-  ["Press", "scale 0.97, 150 ms ease-out", "Every button and row. Confirms the tap landed."],
+  [
+    "Press",
+    "scale 0.97, 150 ms ease-out",
+    "Buttons, segments, the pill nav. Deck cards 0.98, grades 0.96, direction rows 0.99; menu and rail rows do not scale.",
+  ],
   [
     "Hover",
     "background and edge, 150 ms",
@@ -22,7 +26,16 @@ const TIMINGS: [string, string, string][] = [
     "scale 0.94 to 1 + fade, 140 ms ease-out",
     "From the corner nearest the button that opened it. Never a slide.",
   ],
-  ["Reveal", "fade + 4 px, 200 ms ease-out", "The meaning unfolding under the rule."],
+  [
+    "Reveal",
+    "word 340 ms, rule 360 ms, lines 10 px out of 4 px blur in 260 ms, 50 ms apart",
+    "The word glides up, the rule draws from the start edge, and the meaning, example and sources rise under it.",
+  ],
+  [
+    "Grades",
+    "strip opens 340 ms; each 10 px rise in 220 ms, 35 ms apart, 80 ms in",
+    "The strip only exists after reveal, so the card shrinks as the word glides.",
+  ],
   [
     "Segmented",
     "chip slides, 200 ms ease-out",
@@ -46,7 +59,7 @@ const TIMINGS: [string, string, string][] = [
   ],
   [
     "Sheet",
-    "drawer: vaul curve. Modal: in 200 ms, out 140 ms",
+    "drawer: vaul curve, 500 ms each way. Modal: in 200 ms, out 140 ms",
     "A drawer on the phone, a centred modal on a desktop.",
   ],
   ["Theme switch", "none", "Transitions are suspended for one frame so the room swaps at once."],

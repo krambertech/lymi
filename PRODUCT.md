@@ -14,11 +14,11 @@ The first version was private and single-user. Shared decks ([ADR 0011](docs/adr
 
 ## Product Purpose
 
-Lymi is a vocabulary app for language learners. It collects words and phrases from lesson material, lets AI do the tedious part of preparing a card, and schedules review with a modern spaced-repetition algorithm (FSRS or equivalent).
+Lymi is a vocabulary app for language learners. It collects words and phrases from lesson material, lets AI fill in the tedious fields of a card, and schedules review with a modern spaced-repetition algorithm (FSRS or equivalent).
 
 It exists because the current tools each fail in one way. Anki is capable and unpleasant. Mochi is pretty and hard to feed from outside. AI card generators are fast and untrustworthy. Lymi should be pleasant, programmable, and honest about what the AI wrote versus what came from the lesson.
 
-Success for the private version looks like this: Kateryna reviews in Lymi most days by choice, adding a lesson's vocabulary takes a few minutes instead of an evening, AI suggestions are useful and easy to correct, and cards and progress are the same on the phone and the laptop.
+Success for the private version looks like this: Kateryna reviews in Lymi most days by choice, adding a lesson's vocabulary takes a few minutes instead of an evening, what the AI enriches is useful and easy to correct, and cards and progress are the same on the phone and the laptop.
 
 Within a review, due cards with the same scheduling priority are mixed before they are shown so capture or edit order does not become a memorisation cue.
 
@@ -66,8 +66,8 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 ## Design Principles
 
 1. **The words are the content.** Every screen is built around the word on the card. Type, spacing and colour serve legibility first. Nothing competes with the word for attention.
-2. **Quick before clever.** Capture and review are the two things done every day. They get keyboard shortcuts, one-tap answers, and no confirmation dialogs. Cleverness goes into the AI preparation step, where the user has time.
-3. **Show what the AI did.** Anything generated is labelled and reviewable before it is saved. Lesson-sourced content and AI-sourced content look different. The user can always fix or reject a suggestion in one action.
+2. **Quick before clever.** Capture and review are the two things done every day. They get keyboard shortcuts, one-tap answers, and no confirmation dialogs. Cleverness goes into enrichment, where the user has time.
+3. **Show what the AI did.** Anything the AI wrote carries its field source, so AI text is never mistaken for the lesson. Enrichment fills only empty fields and never overwrites text. A card an integration adds is an ordinary card from the moment it lands, and Activity lists the write so the learner can inspect, edit or archive it.
 4. **Standard controls, one symbol.** Buttons, inputs, chips and lists look like what they are. The lantern is the single piece of illustration in the app, and it appears at full size only where there is nothing else to look at.
 5. **Cheap mistakes.** Every destructive or scheduling action can be undone within a few seconds. Archive instead of delete. Progress is never lost to a wrong tap.
 6. **Same app on both screens.** Desktop and phone are the same product with different layouts, not a main app and a companion. Review continuity across devices is a feature, not a sync detail.
@@ -78,7 +78,7 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 - Light and dark themes are both first-class. The app follows the OS unless the user picks one. Dark is a warm room lit by the lantern, not black.
 - All motion respects `prefers-reduced-motion`. The flame flicker, the flare, and the end-of-session glow each have a crossfade or static alternative.
 - Everything works from the keyboard on desktop: grading (1 to 4), reveal (Space), add (N), review (R), search (/).
-- Tap targets are at least 44 px on the phone. Grade buttons are 56 px tall.
+- Tap targets are at least 44 px on the phone. Grade buttons are 72 px tall.
 - Inputs are 16 px or larger so iOS does not zoom.
 - Status is never colour alone. "New", "Learning" and "Known" chips carry a label and, where colour is used, a dot.
 - Audio has a visible control and never autoplays.

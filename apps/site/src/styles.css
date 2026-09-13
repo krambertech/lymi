@@ -137,7 +137,7 @@
 
   --text: oklch(0.95 0.01 85);
   --text-2: oklch(0.8 0.018 75);
-  --muted: oklch(0.65 0.022 70);
+  --muted: oklch(0.7 0.022 70);
   --faint: oklch(0.48 0.02 65);
 
   --amber: oklch(0.82 0.15 74);

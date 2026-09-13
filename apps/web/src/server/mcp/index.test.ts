@@ -65,11 +65,15 @@ describe("handleVerifiedMcpRequest", () => {
     );
     expect(list.status).toBe(200);
     const tools = (await resultOf(list)) as {
-      result: { tools: { name: string; _meta?: Record<string, unknown> }[] };
+      result: {
+        tools: { name: string; securitySchemes?: unknown; _meta?: Record<string, unknown> }[];
+      };
     };
     const addCards = tools.result.tools.find((t) => t.name === "add_cards");
-    // The per-tool auth declaration has to survive the transport, not just the registration.
-    expect(addCards?._meta?.securitySchemes).toEqual([{ type: "oauth2", scopes: ["write"] }]);
+    // The per-tool auth declaration has to survive the transport, at the top level and in _meta.
+    const schemes = [{ type: "oauth2", scopes: ["write"] }];
+    expect(addCards?.securitySchemes).toEqual(schemes);
+    expect(addCards?._meta?.securitySchemes).toEqual(schemes);
   });
 
   it("refuses a request for a host that is not the product origin", async () => {

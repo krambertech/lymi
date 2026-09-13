@@ -1,7 +1,8 @@
+import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import type { Db } from "../db";
+import { type Db, schema } from "../db";
 import type { ServiceContext } from "./context";
-import { getSettings, updateSettings } from "./settings";
+import { ensureSettings, getSettings, updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -38,5 +39,21 @@ describe("daily goal", () => {
     const updated = await updateSettings({ ...kateryna, actor: "mcp" }, { appLanguage: "uk" });
 
     expect(updated).toMatchObject({ appLanguage: "uk", dailyGoal: 50 });
+  });
+});
+
+describe("reading settings", () => {
+  it("writes nothing, and the defaults it returns match a stored row", async () => {
+    const reader = await learner(db, "reader", "Reader");
+    const rows = () =>
+      db.select().from(schema.userSettings).where(eq(schema.userSettings.userId, "reader"));
+
+    const read = await getSettings({ ...reader, actor: "mcp" });
+    expect(await rows()).toEqual([]);
+
+    await ensureSettings(reader);
+    const [stored] = await rows();
+    const { createdAt: _createdAt, updatedAt: _updatedAt, ...defaults } = read;
+    expect(stored).toMatchObject(defaults);
   });
 });

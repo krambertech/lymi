@@ -123,6 +123,10 @@ describe("Lymi MCP server", () => {
     // An edit replaces the learner's text with no way back.
     expect(byName.get("update_card")?.annotations?.destructiveHint).toBe(true);
     expect(byName.get("create_deck")?.annotations?.idempotentHint).toBe(false);
+    // A repeated add skips every card; a repeated edit or archive writes to Activity again.
+    expect(byName.get("add_cards")?.annotations?.idempotentHint).toBe(true);
+    expect(byName.get("update_card")?.annotations?.idempotentHint).toBe(false);
+    expect(byName.get("archive_card")?.annotations?.idempotentHint).toBe(false);
   });
 
   it("declares a title, every hint directory review asks for, and the scope each tool needs", async () => {
@@ -369,6 +373,8 @@ describe("Lymi MCP server", () => {
     expect(res.isError).toBe(true);
     expect(JSON.stringify(res.content)).not.toContain("D1_ERROR");
     expect(res.content[0]).toMatchObject({ text: expect.stringContaining("Try again") });
+    expect(JSON.stringify(spy.mock.calls)).not.toContain("D1_ERROR");
+    expect(spy).toHaveBeenCalledWith("MCP tool failed", { tool: "get_card", error: "Error" });
     spy.mockRestore();
   });
 

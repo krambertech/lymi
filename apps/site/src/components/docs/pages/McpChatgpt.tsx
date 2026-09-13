@@ -19,13 +19,14 @@ export function McpChatgpt() {
 
       <H2>ChatGPT</H2>
       <p>
-        Custom connectors need developer mode, which OpenAI offers on the web for Plus, Pro,
-        Business, Enterprise and Education. On a Business, Enterprise or Education workspace an
-        admin has to allow developer mode first.
+        Custom connectors need developer mode on the web, which Plus, Pro, Business, Enterprise and
+        Education accounts have. OpenAI's help center limits write actions to Business, Enterprise
+        and Education, so on Plus or Pro expect ChatGPT to read your decks but not change them. On a
+        workspace plan an admin has to allow developer mode first.
       </p>
       <p>
-        In developer mode a connector can read and write. ChatGPT asks you to confirm each write,
-        such as adding cards or archiving a deck. Reads run without asking.
+        By default ChatGPT asks before a write, such as adding cards or archiving a deck. You can
+        let it remember your answer for a tool for the rest of the conversation.
       </p>
       <Steps>
         <div>

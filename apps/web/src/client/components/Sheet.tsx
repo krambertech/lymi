@@ -71,7 +71,8 @@ export function SheetPanel({
         <div className="mx-auto -mt-1 h-1 w-9 rounded-full bg-edge-2" aria-hidden="true" />
       )}
       <Title
-        id={titleId}
+        // Omitted rather than undefined, so `Drawer.Title` keeps the id its dialog is labelled by.
+        {...(titleId ? { id: titleId } : {})}
         className={clsx(titleHidden ? "sr-only" : "text-lg font-medium text-text")}
       >
         {title}

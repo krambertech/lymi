@@ -111,7 +111,7 @@ export function ConsentView({
                 disabled={deciding}
                 leading={<GrantDot on={allowWrite} />}
                 label={t`Add, edit and archive cards`}
-                description={t`What it adds lands at once, labelled, and you can undo any of it.`}
+                description={t`What it adds lands at once and is labelled. You can edit or archive any of it.`}
                 className="gap-3"
               />
             </li>

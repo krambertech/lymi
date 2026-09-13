@@ -104,9 +104,9 @@ export function Sheet({ open, onOpenChange, title, titleHidden, children }: Shee
   ) : (
     <Drawer.Root open={open} onOpenChange={onOpenChange} repositionInputs={false}>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 z-(--z-backdrop) bg-scrim" />
+        <Drawer.Overlay className="sheet-overlay fixed inset-0 z-(--z-backdrop) bg-scrim" />
         <Drawer.Content
-          className="edge-2 fixed inset-x-0 bottom-0 z-(--z-sheet) mx-auto w-full max-w-md rounded-t-xl bg-plate outline-none pb-safe"
+          className="sheet-drawer edge-2 fixed inset-x-0 bottom-0 z-(--z-sheet) mx-auto w-full max-w-md rounded-t-xl bg-plate outline-none pb-safe"
           aria-describedby={undefined}
         >
           <SheetPanel

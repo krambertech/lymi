@@ -157,7 +157,9 @@ interface AppTileProps {
  * one gradient Lymi allows, because an icon is a picture of the lantern, not a surface.
  */
 export function AppTile({ size = 28, glow = true, className, title }: AppTileProps) {
-  const a11y = title ? { role: "img" as const } : { "aria-hidden": true as const };
+  const a11y = title
+    ? { role: "img" as const, "aria-label": title }
+    : { "aria-hidden": true as const };
   // The drawing spans y 15.25 to 106 of its 120 box, which is centred closely enough that the
   // tile needs no nudge: the margins come out at about 14 % top and bottom.
   const box = size * 0.94;
@@ -177,7 +179,6 @@ export function AppTile({ size = 28, glow = true, className, title }: AppTilePro
       }}
       {...a11y}
     >
-      {title && <span className="sr-only">{title}</span>}
       <Lantern
         glow={glow}
         style={

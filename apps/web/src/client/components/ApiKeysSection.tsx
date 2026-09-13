@@ -5,7 +5,7 @@ import { ApiKeyInput, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { type ApiKeySummary, api } from "../lib/api";
+import { type ApiKeySummary, api, errorMessage } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
@@ -121,7 +121,7 @@ export function ApiKeysSection() {
         <NewKeyForm
           key={making ? "open" : "closed"}
           pending={create.isPending}
-          error={create.isError ? (create.error as Error).message : undefined}
+          error={create.isError ? errorMessage(create.error) : undefined}
           onCancel={() => {
             setMaking(false);
             create.reset();
@@ -249,7 +249,7 @@ function KeyRow({
         </p>
       </div>
       {confirming ? (
-        <div className="enter-fade flex gap-1.5">
+        <div className="enter-fade flex gap-3">
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
             <Trans>Keep</Trans>
           </Button>
@@ -306,7 +306,7 @@ function FreshKey({
         </p>
       </div>
       <CopyField value={value} label={t`API key for ${name}`} />
-      <div className="flex gap-1.5">
+      <div className="flex gap-3">
         <Button size="sm" variant="ghost" onClick={onDone}>
           <Trans>Done</Trans>
         </Button>

@@ -572,10 +572,10 @@ export function DeckDetailView({
             {/* Desktop keeps search beside the filter, where "/" lands; the phone has it up top. */}
             <div className="relative ms-auto hidden w-52 min-w-0 @3xl/shell:block">
               <Search
-                className="pointer-events-none absolute start-0 top-1/2 size-4 -translate-y-1/2 text-muted"
+                className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
                 aria-hidden="true"
               />
-              <input
+              <Input
                 ref={searchRef}
                 enterKeyHint="search"
                 value={q}
@@ -583,7 +583,7 @@ export function DeckDetailView({
                 placeholder={t`Search this deck`}
                 aria-label={t`Search this deck`}
                 autoComplete="off"
-                className="h-9 w-full bg-transparent ps-6 text-sm text-text outline-none placeholder:text-muted"
+                className="ps-9"
               />
             </div>
           </div>
@@ -633,7 +633,7 @@ export function DeckDetailView({
                           onClick={() => setOpen(isOpen ? null : card.id)}
                           aria-current={isOpen || undefined}
                           className={clsx(
-                            "-mx-3 grid w-[calc(100%+1.5rem)] grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 rounded-md px-3 py-2.5 text-left transition-[background-color,box-shadow] duration-150",
+                            "-mx-3 grid w-[calc(100%+1.5rem)] grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 rounded-md px-3 py-2.5 text-start transition-[background-color,box-shadow] duration-150",
                             isOpen
                               ? "edge-2 bg-plate"
                               : "hoverable:hover:edge hoverable:hover:bg-plate",
@@ -644,7 +644,7 @@ export function DeckDetailView({
                           </span>
                           <span
                             className={clsx(
-                              "row-span-2 self-start text-right text-sm tabular-nums",
+                              "row-span-2 self-start text-end text-sm tabular-nums",
                               dueNow ? "font-semibold text-amber-text" : "text-muted",
                             )}
                           >
@@ -703,7 +703,7 @@ export function DeckDetailView({
       {/* Desktop: the card beside the list. Sticky, with its own scroll, so J and K walk the
           list while the page follows. */}
       {word && (
-        <aside className="sticky top-0 hidden max-h-dvh w-[400px] shrink-0 overflow-y-auto border-l border-edge bg-canvas px-7 pb-10 pt-6 @3xl:block">
+        <aside className="sticky top-0 hidden max-h-dvh w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-canvas px-7 pb-10 pt-6 @3xl:block">
           {word}
         </aside>
       )}

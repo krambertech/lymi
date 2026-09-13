@@ -87,7 +87,7 @@ export function Sidebar({
   return (
     <aside
       className={clsx(
-        "flex h-full w-60 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-edge bg-rail px-3 pb-4 pt-safe",
+        "flex h-full w-60 shrink-0 flex-col gap-0.5 overflow-y-auto border-e border-edge bg-rail px-3 pb-4 pt-safe",
         className,
       )}
     >
@@ -260,7 +260,7 @@ export function Page({
   return (
     <div
       className={clsx(
-        "mx-auto flex w-full flex-1 flex-col px-5 pt-5 pb-safe-nav @3xl:px-8 @3xl:pb-12 @3xl:pt-8",
+        "mx-auto flex w-full flex-1 flex-col px-5 pt-5 pb-safe-nav @3xl/shell:px-8 @3xl/shell:pb-12 @3xl/shell:pt-8",
         width === "md" ? "max-w-2xl" : "max-w-(--column)",
         className,
       )}

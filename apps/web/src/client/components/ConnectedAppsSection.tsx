@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plug } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 import type { ConnectedApp } from "../lib/api";
-import { api } from "../lib/api";
+import { api, errorMessage } from "../lib/api";
 import { publicSiteUrl } from "../lib/origins";
 import { connectedAppsQuery } from "../lib/queries";
 import { AppMark, identifyApp } from "./AppMark";
@@ -69,7 +69,7 @@ export function ConnectedAppsSection() {
 
       {disconnect.isError && (
         <p className="text-sm text-danger" role="alert">
-          {(disconnect.error as Error).message}
+          {errorMessage(disconnect.error)}
         </p>
       )}
     </SettingsGroup>
@@ -139,7 +139,7 @@ function AppRow({
         </p>
       </div>
       {confirming ? (
-        <div className="enter-fade flex gap-1.5">
+        <div className="enter-fade flex gap-3">
           <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
             <Trans>Keep</Trans>
           </Button>

@@ -396,7 +396,9 @@ export function WordView({
     <article
       className={clsx(
         "@container flex min-w-0 flex-col gap-6",
-        variant === "page" ? "px-5 pb-safe-nav pt-5 @3xl:px-8 @3xl:pt-8" : "",
+        variant === "page"
+          ? "px-5 pb-safe-nav pt-5 @3xl/shell:px-8 @3xl/shell:pb-12 @3xl/shell:pt-8"
+          : "",
       )}
     >
       {variant === "page" ? (

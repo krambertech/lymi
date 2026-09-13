@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useMutation } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Check } from "lucide-react";
@@ -19,29 +20,27 @@ interface Props {
 
 const enter = { duration: 0.2, ease: [0.22, 1, 0.36, 1] } as const;
 
-function messageFor(error: unknown): string {
-  if (error instanceof ApiError) {
-    if (error.status === 400) return "Enter an email address like you@example.com.";
-    if (error.status === 429) return "Too many attempts. Wait a minute, then try again.";
-    if (error.status >= 500) {
-      return "The beta list is temporarily unavailable. Your email was not saved. Try again later.";
-    }
-  }
-  return "Unable to reach the beta list. Check your connection and try again.";
-}
-
 /**
  * The waiting-list action shared by the public landing page and invitation page. It captures
  * interest only: no account is created and no access is granted.
  */
 export function BetaSignup({ source, layout = "inline", compact = false }: Props) {
+  const { t } = useLingui();
   const still = useReducedMotion();
   const [email, setEmail] = useState("");
   const success = useRef<HTMLDivElement>(null);
   const join = useMutation({
     mutationFn: (address: string) => joinBeta(address, source),
   });
-  const error = join.isError ? messageFor(join.error) : undefined;
+  const error = join.isError
+    ? join.error instanceof ApiError && join.error.status === 400
+      ? t`Enter an email address like you@example.com.`
+      : join.error instanceof ApiError && join.error.status === 429
+        ? t`Too many attempts. Wait a minute, then try again.`
+        : join.error instanceof ApiError && join.error.status >= 500
+          ? t`The beta list is temporarily unavailable. Your email was not saved. Try again later.`
+          : t`Unable to reach the beta list. Check your connection and try again.`
+    : undefined;
 
   useEffect(() => {
     if (join.isSuccess) success.current?.focus();
@@ -70,11 +69,15 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
             {compact ? (
               <AuthNotice
                 tone="success"
-                title={join.data.alreadyOn ? "We already have your request." : "Request received."}
+                title={
+                  join.data.alreadyOn ? t`We already have your request.` : t`Request received.`
+                }
               >
-                If a place opens, we’ll email{" "}
-                <bdi className="font-medium text-text">{email.trim()}</bdi>. Nothing to do until
-                then.
+                <Trans>
+                  If a place opens, we’ll email{" "}
+                  <bdi className="font-medium text-text">{email.trim()}</bdi>. Nothing to do until
+                  then.
+                </Trans>
               </AuthNotice>
             ) : (
               <>
@@ -82,12 +85,14 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
                   <Check aria-hidden="true" className="size-5" />
                 </span>
                 <p className="mt-4 text-xl font-medium text-text">
-                  {join.data.alreadyOn ? "We already have your request." : "Request received."}
+                  {join.data.alreadyOn ? t`We already have your request.` : t`Request received.`}
                 </p>
                 <p className="mt-2 text-base text-text-2">
-                  If a place opens, we’ll email{" "}
-                  <bdi className="font-medium text-text">{email.trim()}</bdi>. Nothing to do until
-                  then.
+                  <Trans>
+                    If a place opens, we’ll email{" "}
+                    <bdi className="font-medium text-text">{email.trim()}</bdi>. Nothing to do until
+                    then.
+                  </Trans>
                 </p>
               </>
             )}
@@ -100,15 +105,7 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
             exit={still ? { opacity: 0 } : { opacity: 0, y: -4 }}
             transition={still ? { duration: 0 } : { duration: 0.14, ease: "easeOut" }}
           >
-            <Field
-              label="Email address"
-              error={error}
-              hint={
-                source === "landing"
-                  ? "We’ll only use this address to reply to your request. Requesting access does not create an account."
-                  : undefined
-              }
-            >
+            <Field label={t`Email address`} error={error}>
               <div
                 className={clsx(
                   "grid gap-3",
@@ -135,19 +132,22 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
                   loading={join.isPending}
                   className={clsx("w-full", layout === "inline" && "@xl:w-auto")}
                 >
-                  Request access
+                  <Trans>Request access</Trans>
                 </Button>
               </div>
             </Field>
             <p className="mt-3 text-sm text-muted">
-              We use your email only for this access request. Read the{" "}
-              <a
-                href="/privacy"
-                className="rounded-xs text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
-              >
-                privacy policy
-              </a>
-              .
+              <Trans>
+                We use your email only for this access request. It does not create an account. Read
+                the{" "}
+                <a
+                  href="/privacy"
+                  className="rounded-xs text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
+                >
+                  privacy policy
+                </a>
+                .
+              </Trans>
             </p>
           </motion.form>
         )}

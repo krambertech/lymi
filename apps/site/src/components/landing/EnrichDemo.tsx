@@ -1,17 +1,12 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { SAMPLE_CARDS } from "./cards";
 
 const CARD = SAMPLE_CARDS[0];
 
-const FIELDS = [
-  { key: "Meaning", value: CARD?.meaning ?? "" },
-  { key: "Example", value: CARD?.example ?? "" },
-  { key: "Say it", value: CARD?.say ?? "" },
-];
-
 interface RowProps {
-  label: string;
+  label: ReactNode;
   source: "Lesson" | "AI";
   children: ReactNode;
 }
@@ -29,7 +24,7 @@ function Row({ label, source, children }: RowProps) {
           source === "AI" ? "bg-amber-soft text-amber-text" : "bg-plate-2 text-muted",
         )}
       >
-        {source}
+        {source === "AI" ? <Trans>AI</Trans> : <Trans>Lesson</Trans>}
       </span>
     </div>
   );
@@ -37,19 +32,24 @@ function Row({ label, source, children }: RowProps) {
 
 /** Every field names its source, so AI text is never mistaken for something the lesson said. */
 export function EnrichDemo() {
+  const { i18n } = useLingui();
   if (!CARD) return null;
 
   return (
     <div className="mx-auto max-w-[420px]">
       <div className="bg-plate px-5 py-3 edge" style={{ borderRadius: 14 }}>
-        <Row label="Term" source="Lesson">
+        <Row label={<Trans>Term</Trans>} source="Lesson">
           <span className="text-xl font-medium tracking-[-0.026em] text-text">{CARD.term}</span>
         </Row>
-        {FIELDS.map((f) => (
-          <Row key={f.key} label={f.key} source="AI">
-            {f.value}
-          </Row>
-        ))}
+        <Row label={<Trans>Meaning</Trans>} source="AI">
+          {i18n._(CARD.meaning)}
+        </Row>
+        <Row label={<Trans>Example</Trans>} source="AI">
+          {CARD.example}
+        </Row>
+        <Row label={<Trans>Say it</Trans>} source="AI">
+          {CARD.say}
+        </Row>
       </div>
     </div>
   );

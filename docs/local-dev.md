@@ -11,7 +11,7 @@ pnpm db:migrate
 pnpm --filter @lymi/web dev --port 5241
 ```
 
-`pnpm dev` runs the product and the public website together. The product alone is enough for most work, and the `.claude/launch.json` entry named `lymi` starts it on port 5241, which is what `.dev.vars` names as `PRODUCT_URL`.
+`pnpm dev` runs the product and the public website together. The product alone is enough for most work, and the `.claude/launch.json` entry named `lymi` starts it on port 5241, or on a free port when another worktree already holds 5241. A loopback `PRODUCT_URL` follows whichever port the request arrived on, so `.dev.vars` needs no per-worktree edit.
 
 If `pnpm db:migrate` fails with "table already exists" or a migration name it has never seen, the local D1 was built from another branch. `pnpm local db:fresh` moves it aside and applies every migration again. Nothing in that directory is production data.
 

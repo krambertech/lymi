@@ -11,7 +11,7 @@ export default defineConfig({
   vite: {
     plugins: [
       tailwindcss(),
-      lingui(),
+      lingui({ failOnMissing: true }),
       babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
     ],
   },

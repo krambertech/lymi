@@ -1,13 +1,11 @@
 import type { Actor, Scope } from "@lymi/core";
 import { MeOut } from "@lymi/core";
-import { APIError } from "better-auth/api";
 import { Hono } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { createDb, type Db } from "./db";
-import type { Bindings } from "./env";
+import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
-import { describe, statusOf } from "./http";
+import { describe, handleError } from "./http";
 import { joinPage } from "./join-page";
 import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
@@ -27,7 +25,6 @@ import { push } from "./routes/push";
 import { review } from "./routes/review";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
-import { ServiceError } from "./services/context";
 
 export type AppEnv = {
   Bindings: Bindings;
@@ -174,23 +171,11 @@ app.notFound((c) => {
   return fetchConfiguredAsset(c.req.raw, c.env);
 });
 
-app.onError((err, c) => {
-  if (err instanceof ServiceError) {
-    return c.json({ error: err.message, issues: err.details }, statusOf(err));
-  }
-  if (err instanceof APIError) {
-    return c.json({ error: err.body?.message ?? err.message }, err.statusCode as 400);
-  }
-  // Hono's own errors, such as the 400 its validator throws on a body that is not JSON.
-  if (err instanceof HTTPException) {
-    return c.json({ error: err.message }, err.status);
-  }
-  console.error(err);
-  return c.json({ error: "Something went wrong" }, 500);
-});
+app.onError(handleError);
 
 export default {
-  fetch(request: Request, env: Bindings, executionCtx: ExecutionContext) {
+  fetch(request: Request, configuredEnv: Bindings, executionCtx: ExecutionContext) {
+    const env = withServedOrigin(request.url, configuredEnv);
     const originResponse = responseForOriginDecision(
       decideOriginRoute(request.url, canonicalOrigins(env)),
     );

@@ -61,6 +61,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | reminder | нагадування | напоминание |
 | streak / run | серія | серия |
 | daily goal | денна мета | дневная цель |
+| AI | AI (never ШІ) | AI (never ИИ) |
 
 Add a row when a durable product term appears.
 

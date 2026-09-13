@@ -1,8 +1,15 @@
+import { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import { EmptyState } from "../../components/EmptyState";
 import { Progress } from "../../components/Progress";
 import { Skeleton } from "../../components/Skeleton";
-import { Toast } from "../../components/Toast";
+import {
+  createToastManager,
+  ToastList,
+  ToastProvider,
+  ToastViewport,
+  toast,
+} from "../../components/ui/toast";
 import { Variants } from "../Frame";
 import { type Group, noop } from "./types";
 
@@ -31,24 +38,41 @@ export const feedback: Group = {
     {
       slug: "toast",
       name: "Toast",
-      source: "components/Toast.tsx",
-      note: "The text colour, one at a time. It pauses while the tab is hidden and leaves faster than it came.",
+      source: "components/ui/toast.tsx",
+      note: "The shadcn Base UI toast in Lymi's colours: the text colour, one optional action, a close button, and an icon for an error. Up to three collapse into a stack with the newest in front, and it opens while the pointer or keyboard focus is on it. Timers hold then, and while the window is in the background.",
       Demo: () => (
         <Variants
           items={[
             {
+              label: "Try it",
+              note: "Fires the app's real toast: bottom centre on a phone, the bottom-end corner from 640 px. Four in a row shows the oldest leaving once three are up. Point at the stack to open it.",
+              render: () => <ToastTriggers />,
+            },
+            {
               label: "With Undo",
               note: "After an action that can be taken back. Undo replaces a confirmation dialog.",
+              render: () => <ToastPreview title="Archived “sbrigarsi”" action="Undo" />,
+            },
+            {
+              label: "Error with Retry",
+              note: "Something failed and can be tried again. An error is announced at once.",
               render: () => (
-                <Toast inline action={{ label: "Undo", onClick: noop }}>
-                  Archived “sbrigarsi”
-                </Toast>
+                <ToastPreview
+                  type="error"
+                  title="Couldn’t save “sbrigarsi”. Check your connection and try again."
+                  action="Retry"
+                />
               ),
             },
             {
-              label: "Plain",
-              note: "Says something happened, with nothing to take back.",
-              render: () => <Toast inline>Copied to the clipboard</Toast>,
+              label: "Error",
+              note: "Says what failed and what to do, with nothing to press.",
+              render: () => (
+                <ToastPreview
+                  type="error"
+                  title="Couldn’t play the pronunciation. Try again in a moment."
+                />
+              ),
             },
           ]}
         />
@@ -115,3 +139,86 @@ export const feedback: Group = {
     },
   ],
 };
+
+function ToastPreview({
+  title,
+  action,
+  type,
+}: {
+  title: string;
+  action?: string | undefined;
+  type?: "error" | undefined;
+}) {
+  // Its own manager, so a held-open preview never joins the app's stack.
+  const [manager] = useState(createToastManager);
+  useEffect(() => {
+    const id = manager.add({
+      title,
+      type,
+      timeout: 0,
+      ...(action ? { actionProps: { children: action, onClick: noop } } : {}),
+    });
+    return () => manager.close(id);
+  }, [manager, title, action, type]);
+  return (
+    <ToastProvider toastManager={manager}>
+      <ToastViewport aria-label="Toast preview" className="static mx-0 w-full">
+        <ToastList
+          closeLabel="Dismiss"
+          className="static h-auto [transform:none] data-expanded:h-auto data-expanded:[transform:none] data-starting-style:[transform:none] [&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:none]"
+        />
+      </ToastViewport>
+    </ToastProvider>
+  );
+}
+
+function ToastTriggers() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button
+        size="sm"
+        onClick={() => {
+          const id = toast.add({
+            title: "Archived “sbrigarsi”",
+            actionProps: { children: "Undo", onClick: () => toast.close(id) },
+          });
+        }}
+      >
+        Archive a card
+      </Button>
+      <Button
+        size="sm"
+        onClick={() => {
+          const id = toast.add({
+            type: "error",
+            title: "Couldn’t save “sbrigarsi”. Check your connection and try again.",
+            actionProps: { children: "Retry", onClick: () => toast.close(id) },
+          });
+        }}
+      >
+        Fail a save
+      </Button>
+      <Button
+        size="sm"
+        onClick={() =>
+          toast.add({
+            type: "error",
+            title: "Couldn’t play the pronunciation. Try again in a moment.",
+          })
+        }
+      >
+        Fail a pronunciation
+      </Button>
+      <Button
+        size="sm"
+        onClick={() => {
+          ["uno", "due", "tre", "quattro"].forEach((term, i) => {
+            window.setTimeout(() => toast.add({ title: `Archived “${term}”` }), i * 700);
+          });
+        }}
+      >
+        Four in a row
+      </Button>
+    </div>
+  );
+}

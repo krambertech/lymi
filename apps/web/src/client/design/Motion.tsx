@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "../components/Button";
 import { Lantern } from "../components/Lantern";
-import { Toast } from "../components/Toast";
+import { toast } from "../components/ui/toast";
 import { FLAME_MOTION } from "../lib/flame";
 import { DocLink } from "./DocLink";
 import { Doc, Specimen, Sub } from "./Frame";
@@ -61,8 +61,8 @@ const TIMINGS: [string, string, string][] = [
   ],
   [
     "Toast",
-    "in 240 ms, out 140 ms, both ease-out",
-    "Exit is faster than entry. One toast at a time.",
+    "500 ms on an ease-out-expo curve, in and out",
+    "shadcn's default: older toasts step back 12 px and 10% smaller, and the stack spreads on hover.",
   ],
   [
     "Drawer and dialog",
@@ -73,11 +73,6 @@ const TIMINGS: [string, string, string][] = [
 ];
 
 export function Motion() {
-  const [toast, setToast] = useState<"off" | "in" | "out">("off");
-  const dismiss = () => {
-    setToast("out");
-    window.setTimeout(() => setToast("off"), 150);
-  };
   const [card, setCard] = useState(0);
   return (
     <Doc
@@ -119,7 +114,7 @@ export function Motion() {
 
       <Sub
         title="Try it"
-        note="A card arriving, and a toast. The toast pauses its timer while the tab is hidden and leaves faster than it came."
+        note="A card arriving, and the real toast at the foot of the window. Press a few times to stack them, then point at the stack to open it."
       >
         <Specimen className="gap-6">
           <div className="grid gap-3">
@@ -133,22 +128,17 @@ export function Motion() {
               Next card
             </Button>
           </div>
-          <div className="grid gap-3">
-            <div className="grid h-28 w-72 place-items-center">
-              {toast !== "off" ? (
-                <Toast
-                  inline
-                  className={toast === "out" ? "toast-exit" : "toast-enter"}
-                  action={{ label: "Undo", onClick: dismiss }}
-                >
-                  Archived “sbrigarsi”
-                </Toast>
-              ) : (
-                <span className="text-sm text-muted">No toast</span>
-              )}
-            </div>
-            <Button size="sm" onClick={() => (toast === "in" ? dismiss() : setToast("in"))}>
-              {toast === "in" ? "Dismiss" : "Show toast"}
+          <div className="grid content-end gap-3">
+            <Button
+              size="sm"
+              onClick={() => {
+                const id = toast.add({
+                  title: "Archived “sbrigarsi”",
+                  actionProps: { children: "Undo", onClick: () => toast.close(id) },
+                });
+              }}
+            >
+              Show toast
             </Button>
           </div>
         </Specimen>

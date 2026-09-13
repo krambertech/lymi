@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -11,6 +12,7 @@ import { lazy, Suspense, useEffect, useRef } from "react";
 import { AddCardSheet } from "../components/AddCardSheet";
 import { NewDeckSheet } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
+import { Toaster } from "../components/ui/toast";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api, flushOutbox } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
@@ -29,6 +31,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function Root() {
+  const { t } = useLingui();
   const { pathname } = useLocation();
   return (
     // Under reduced motion, Motion drops travel and scale and keeps the fades.
@@ -36,6 +39,7 @@ function Root() {
       <AddCardProvider>
         <SignOutProvider>
           <Shell />
+          <Toaster label={t`Notifications`} closeLabel={t`Dismiss`} />
           {/* Personas and seeds mean nothing on the design system pages. */}
           {DevPanel && !pathname.startsWith("/design") && (
             <Suspense fallback={null}>

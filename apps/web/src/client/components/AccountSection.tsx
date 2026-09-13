@@ -17,13 +17,13 @@ import { Avatar } from "./Avatar";
 import { AvatarEditor, type PickedImage } from "./AvatarEditor";
 import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
-import { Toast } from "./Toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { toast } from "./ui/toast";
 
 /** Photos larger than this are refused before decoding; the cropped square is far smaller. */
 const MAX_PICK_BYTES = 25 * 1024 * 1024;
@@ -111,7 +111,7 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
   );
 }
 
-type Notice = { id: number; text: string; undo?: (() => void) | undefined };
+const PHOTO_TOAST = "photo";
 
 /** The Account group with the photo wired up: pick, crop, save, and remove with Undo. */
 export function AccountSection({
@@ -127,11 +127,17 @@ export function AccountSection({
   const photo = useLearnerAvatar();
   const input = useRef<HTMLInputElement>(null);
   const [picked, setPicked] = useState<PickedImage | null>(null);
-  const [notice, setNotice] = useState<Notice | null>(null);
 
   useEffect(() => () => closePicked(picked), [picked]);
 
-  const tell = (text: string, undo?: () => void) => setNotice({ id: Date.now(), text, undo });
+  const tell = (text: string, undo?: () => void) =>
+    toast.add({
+      id: PHOTO_TOAST,
+      title: text,
+      actionProps: undo ? { children: t`Undo`, onClick: undo } : undefined,
+    });
+  const warn = (text: string) =>
+    toast.add({ id: PHOTO_TOAST, type: "error", title: text, actionProps: undefined });
 
   const failure = (error: unknown) => {
     if (error instanceof ApiError && error.status === 409) {
@@ -163,7 +169,7 @@ export function AccountSection({
 
   const save = useMutation({
     mutationFn: (square: Blob) => store(square, avatar.data?.revision ?? 0),
-    onMutate: () => setNotice(null),
+    onMutate: () => toast.close(PHOTO_TOAST),
     onSuccess: () => setPicked(null),
     onError: refreshIfStale,
   });
@@ -171,16 +177,16 @@ export function AccountSection({
   const restore = useMutation({
     mutationFn: ({ square, revision }: { square: Blob; revision: number }) =>
       store(square, revision),
-    onMutate: () => setNotice(null),
+    onMutate: () => toast.close(PHOTO_TOAST),
     onError: (error) => {
       refreshIfStale(error);
-      tell(failure(error));
+      warn(failure(error));
     },
   });
 
   const remove = useMutation({
     mutationFn: () => removeAvatar(avatar.data?.revision ?? 0),
-    onMutate: () => setNotice(null),
+    onMutate: () => toast.close(PHOTO_TOAST),
     onSuccess: (next, _vars) => {
       const previous = avatar.data?.version
         ? qc.getQueryData<Blob>(avatarImageQuery(avatar.data.version).queryKey)
@@ -194,17 +200,17 @@ export function AccountSection({
     },
     onError: (error) => {
       refreshIfStale(error);
-      tell(failure(error));
+      warn(failure(error));
     },
   });
 
   const choose = async (file: File | undefined) => {
-    setNotice(null);
+    toast.close(PHOTO_TOAST);
     save.reset();
     if (!file) return;
     const problem = await checkPick(file);
     if (problem) {
-      tell(pickMessage(problem));
+      warn(pickMessage(problem));
       return;
     }
     const url = URL.createObjectURL(file);
@@ -214,13 +220,13 @@ export function AccountSection({
       await img.decode();
     } catch {
       URL.revokeObjectURL(url);
-      tell(pickMessage("unreadable"));
+      warn(pickMessage("unreadable"));
       return;
     }
     const pixels = img.naturalWidth * img.naturalHeight;
     if (pixels > MAX_PICK_PIXELS || Math.min(img.naturalWidth, img.naturalHeight) < 16) {
       URL.revokeObjectURL(url);
-      tell(pickMessage(pixels > MAX_PICK_PIXELS ? "too_large" : "too_small"));
+      warn(pickMessage(pixels > MAX_PICK_PIXELS ? "too_large" : "too_small"));
       return;
     }
     setPicked({ url, width: img.naturalWidth, height: img.naturalHeight });
@@ -274,15 +280,6 @@ export function AccountSection({
           await save.mutateAsync(square).catch(() => undefined);
         }}
       />
-      {notice && (
-        <Toast
-          key={notice.id}
-          onDismiss={() => setNotice(null)}
-          action={notice.undo ? { label: t`Undo`, onClick: notice.undo } : undefined}
-        >
-          {notice.text}
-        </Toast>
-      )}
     </>
   );
 }

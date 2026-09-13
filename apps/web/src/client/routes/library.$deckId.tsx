@@ -1,12 +1,13 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import type { Card } from "@lymi/core/schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { Toast } from "../components/Toast";
+import { useMemo } from "react";
+import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
 import { cardHistoryQuery, deckCardsQuery, decksQuery } from "../lib/queries";
+import { useArchiveDeck } from "../lib/use-archive-deck";
 import { DeckDetailView } from "../views/DeckDetailView";
 import { describeEvent } from "../views/WordView";
 
@@ -37,7 +38,6 @@ function DeckPage() {
   const history = useQuery({ ...cardHistoryQuery(openCardId ?? ""), enabled: !!openCardId });
   const deck = decks.data?.find((d) => d.id === deckId);
   const add = useAddCard();
-  const [undo, setUndo] = useState<{ id: string; term: string } | null>(null);
 
   const events = useMemo(
     () => history.data?.events.map((e) => describeEvent(e, i18n)),
@@ -53,15 +53,15 @@ function DeckPage() {
       search: id ? { card: id } : {},
       replace: !!openCardId,
     });
-  const [saveError, setSaveError] = useState<{
-    id: string;
-    patch: Parameters<typeof api.updateCard>[1];
-    term: string;
-  } | null>(null);
-  const [audioError, setAudioError] = useState(false);
   const playAudio = (card: Card) => {
-    setAudioError(false);
-    new Audio(api.audioUrl(card.id)).play().catch(() => setAudioError(true));
+    toast.close("audio");
+    new Audio(api.audioUrl(card.id)).play().catch(() =>
+      toast.add({
+        id: "audio",
+        type: "error",
+        title: t`Couldn’t play the pronunciation. Try again in a moment.`,
+      }),
+    );
   };
 
   const invalidate = () => {
@@ -71,92 +71,64 @@ function DeckPage() {
   const archive = useMutation({
     mutationFn: (id: string) => api.archiveCard(id),
     onSuccess: (_r, id) => {
-      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`Card`;
-      setUndo({ id, term });
+      const archivedTerm = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`Card`;
       invalidate();
+      toast.add({
+        id: `archive-${id}`,
+        title: t`Archived “${archivedTerm}”`,
+        actionProps: { children: t`Undo`, onClick: () => restore.mutate(id) },
+      });
     },
   });
   const restore = useMutation({
     mutationFn: (id: string) => api.restoreCard(id),
-    onSuccess: () => {
-      setUndo(null);
+    onSuccess: (_r, id) => {
       invalidate();
+      toast.close(`archive-${id}`);
     },
   });
   const save = useMutation({
     mutationFn: ({ id, patch }: { id: string; patch: Parameters<typeof api.updateCard>[1] }) =>
       api.updateCard(id, patch),
     onSuccess: (_card, { id }) => {
-      setSaveError(null);
+      toast.close(`save-${id}`);
       invalidate();
       qc.invalidateQueries({ queryKey: ["cards", id, "history"] });
     },
-    // The editor has already closed, so the draft lives here until it lands or is given up.
+    // The editor has already closed, so the draft rides on Retry until it lands or the toast leaves.
     onError: (_e, { id, patch }) => {
-      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`the card`;
-      setSaveError({ id, patch, term });
+      const failedTerm = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`the card`;
+      toast.add({
+        id: `save-${id}`,
+        type: "error",
+        title: t`Couldn’t save “${failedTerm}”. Check your connection and try again.`,
+        actionProps: { children: t`Retry`, onClick: () => save.mutate({ id, patch }) },
+      });
     },
   });
-  const archiveDeck = useMutation({
-    mutationFn: () => api.archiveDeck(deckId),
-    onSuccess: () => {
-      invalidate();
-      navigate({ to: "/library", search: { archived: deckId, name: deck?.name ?? t`Deck` } });
-    },
-  });
-
-  const failedTerm = saveError?.term;
-  const archivedTerm = undo?.term;
+  const archiveDeck = useArchiveDeck(deckId, deck?.name);
 
   return (
-    <>
-      <DeckDetailView
-        deck={deck}
-        cards={cards.data}
-        onAdd={() => add.openCard(deckId)}
-        onArchive={(id) => archive.mutate(id)}
-        onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
-        onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
-        onArchiveDeck={() => archiveDeck.mutate()}
-        openCardId={openCardId ?? null}
-        onOpen={setOpen}
-        states={history.data?.states}
-        reviews={history.data?.reviews}
-        events={events}
-        onPlayAudio={playAudio}
-        onSaveCard={(id, patch) => save.mutate({ id, patch })}
-        decks={decks.data}
-        onMove={(id, toDeck) => {
-          setOpen(null);
-          save.mutate({ id, patch: { deckId: toDeck } });
-        }}
-      />
-      {saveError && (
-        <Toast
-          key={`save-${saveError.id}`}
-          onDismiss={() => setSaveError(null)}
-          action={{
-            label: t`Retry`,
-            onClick: () => save.mutate({ id: saveError.id, patch: saveError.patch }),
-          }}
-        >
-          <Trans>Couldn’t save “{failedTerm}”. Check your connection and try again.</Trans>
-        </Toast>
-      )}
-      {audioError && (
-        <Toast key="audio" onDismiss={() => setAudioError(false)}>
-          <Trans>Couldn’t play the pronunciation. Try again in a moment.</Trans>
-        </Toast>
-      )}
-      {undo && (
-        <Toast
-          key={undo.id}
-          onDismiss={() => setUndo(null)}
-          action={{ label: t`Undo`, onClick: () => restore.mutate(undo.id) }}
-        >
-          <Trans>Archived “{archivedTerm}”</Trans>
-        </Toast>
-      )}
-    </>
+    <DeckDetailView
+      deck={deck}
+      cards={cards.data}
+      onAdd={() => add.openCard(deckId)}
+      onArchive={(id) => archive.mutate(id)}
+      onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
+      onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
+      onArchiveDeck={() => archiveDeck.mutate()}
+      openCardId={openCardId ?? null}
+      onOpen={setOpen}
+      states={history.data?.states}
+      reviews={history.data?.reviews}
+      events={events}
+      onPlayAudio={playAudio}
+      onSaveCard={(id, patch) => save.mutate({ id, patch })}
+      decks={decks.data}
+      onMove={(id, toDeck) => {
+        setOpen(null);
+        save.mutate({ id, patch: { deckId: toDeck } });
+      }}
+    />
   );
 }

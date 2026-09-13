@@ -35,6 +35,7 @@ function png(width: number, height: number): Buffer {
 const account = (page: Page) =>
   page.locator("section").filter({ has: page.getByRole("heading", { name: "Account" }) });
 const photo = (page: Page) => account(page).locator("img");
+const notifications = (page: Page) => page.getByRole("region", { name: "Notifications" });
 
 async function pick(page: Page, name: string, mimeType: string, buffer: Buffer) {
   await page.locator('input[type="file"]').setInputFiles({ name, mimeType, buffer });
@@ -56,7 +57,7 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
     "image/png",
     Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>'),
   );
-  await expect(page.getByRole("status").filter({ hasText: "couldn’t be opened" })).toHaveText(
+  await expect(page.getByRole("alert").filter({ hasText: "couldn’t be opened" })).toHaveText(
     "That file couldn’t be opened. Choose a JPEG, PNG or WebP image.",
   );
   await expect(page.getByRole("heading", { name: "Position your photo" })).toHaveCount(0);
@@ -125,13 +126,13 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
   const restored = page.waitForResponse(
     (r) => r.request().method() === "PUT" && r.url().endsWith("/api/avatar"),
   );
-  await page.getByRole("status").getByRole("button", { name: "Undo" }).click();
+  await notifications(page).getByRole("button", { name: "Undo" }).click();
   expect((await restored).status()).toBe(200);
   await expect(photo(page)).toHaveAttribute("src", /^blob:/);
 
   await face.click();
   await page.getByRole("menuitem", { name: "Remove photo" }).click();
-  await expect(page.getByRole("status").filter({ hasText: "Photo removed" })).toBeVisible();
+  await expect(notifications(page).getByText("Photo removed")).toBeVisible();
   await expect(photo(page)).toHaveCount(0);
   await page.reload();
   await expect(photo(page)).toHaveCount(0);

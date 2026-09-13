@@ -4,7 +4,11 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { IconButton } from "../components/Button";
 import { AppTile, Wordmark } from "../components/Logo";
-import { Sheet } from "../components/Sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "../components/ui/dialog";
 import { setTheme } from "../lib/theme";
 import { DocLink } from "./DocLink";
 import { ROOM_THEMES, usePageTheme } from "./Frame";
@@ -55,11 +59,14 @@ export function DesignLayout() {
         </main>
       </div>
 
-      <Sheet open={menu} onOpenChange={setMenu} title="Design system">
-        <nav aria-label="Design system" className="-mx-3 max-h-[70dvh] overflow-y-auto px-3">
-          <Contents onNavigate={() => setMenu(false)} />
-        </nav>
-      </Sheet>
+      <Dialog open={menu} onOpenChange={setMenu}>
+        <DialogContent className="w-[min(92vw,440px)]">
+          <DialogTitle>Design system</DialogTitle>
+          <nav aria-label="Design system" className="-mx-3 max-h-[70dvh] overflow-y-auto px-3">
+            <Contents onNavigate={() => setMenu(false)} />
+          </nav>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

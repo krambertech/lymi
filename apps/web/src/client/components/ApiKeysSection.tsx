@@ -16,9 +16,13 @@ import { CopyField } from "./CopyField";
 import { EmptySection } from "./EmptyState";
 import { Field, Input } from "./Field";
 import { Lantern } from "./Lantern";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "./ui/dialog";
 import { Segmented } from "./Segmented";
 import { SettingsGroup } from "./SettingsGroup";
-import { Sheet } from "./Sheet";
 import { Skeleton } from "./Skeleton";
 
 /**
@@ -117,18 +121,21 @@ export function ApiKeysSection() {
         </Button>
       )}
 
-      <Sheet open={making} onOpenChange={setMaking} title={t`New key`}>
-        <NewKeyForm
-          key={making ? "open" : "closed"}
-          pending={create.isPending}
-          error={create.isError ? errorMessage(create.error) : undefined}
-          onCancel={() => {
-            setMaking(false);
-            create.reset();
-          }}
-          onSubmit={(input) => create.mutate(input)}
-        />
-      </Sheet>
+      <Dialog open={making} onOpenChange={setMaking}>
+        <DialogContent className="w-[min(92vw,440px)]">
+          <DialogTitle>{t`New key`}</DialogTitle>
+          <NewKeyForm
+            key={making ? "open" : "closed"}
+            pending={create.isPending}
+            error={create.isError ? errorMessage(create.error) : undefined}
+            onCancel={() => {
+              setMaking(false);
+              create.reset();
+            }}
+            onSubmit={(input) => create.mutate(input)}
+          />
+        </DialogContent>
+      </Dialog>
     </SettingsGroup>
   );
 }

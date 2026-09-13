@@ -65,9 +65,9 @@ const TIMINGS: [string, string, string][] = [
     "Exit is faster than entry. One toast at a time.",
   ],
   [
-    "Sheet",
-    "drawer: vaul curve, 500 ms each way. Modal: in 200 ms, out 140 ms",
-    "A drawer on the phone, a centred modal on a desktop.",
+    "Drawer and dialog",
+    "drawer: in 450 ms, out up to 320 ms by flick. Dialog: in 200 ms, out 140 ms",
+    "A drawer on a touch device, a centred dialog on a desktop.",
   ],
   ["Theme switch", "none", "Transitions are suspended for one frame so the room swaps at once."],
 ];

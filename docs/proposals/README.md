@@ -25,6 +25,7 @@ Aim for fewer than 1,000 words. Link extended research instead of reproducing it
 | [Public website and product app architecture](public-website-and-product-app.md) | Partially accepted by ADR 0008 |
 | [Market differentiation and go-to-market](market-differentiation-and-go-to-market.md) | Exploration; the localization section is decided by ADR 0012 and 0013 and planned in [docs/plans/2026-09-12-localization.md](../plans/2026-09-12-localization.md) |
 | [Open-source strategy](open-source-strategy.md) | Exploration |
+| [Interactive MCP apps](interactive-mcp-apps.md) | Exploration |
 | [End-to-end testing CI policy](end-to-end-testing-ci-policy.md) | Exploration |
 | [Shared decks](shared-decks.md) | Accepted by ADR 0011, planned |
 | [Payments and a low-cost paid plan](premium-subscription-and-payments.md) | Exploration |

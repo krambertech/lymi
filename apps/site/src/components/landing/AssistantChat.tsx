@@ -2,8 +2,6 @@ import { clsx } from "clsx";
 import { Check } from "lucide-react";
 import type { ReactNode } from "react";
 
-const CLIENTS = ["Claude", "ChatGPT", "Claude Code", "Codex"] as const;
-
 type Turn = { from: "you" | "them"; body: ReactNode };
 
 const CONVERSATION: Turn[] = [
@@ -39,32 +37,22 @@ const CONVERSATION: Turn[] = [
 
 export function AssistantChat() {
   return (
-    <div>
-      <ul className="flex max-w-[460px] flex-wrap gap-2" aria-label="Supported assistant clients">
-        {CLIENTS.map((client) => (
-          <li key={client} className="rounded-full bg-plate-2 px-3 py-1.5 text-xs text-text-2 edge">
-            {client}
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-8 flex max-w-[460px] flex-col gap-3">
-        {CONVERSATION.map((turn, i) => (
-          <div
-            // biome-ignore lint/suspicious/noArrayIndexKey: the script is fixed, so the index is the identity
-            key={i}
-            className={clsx(
-              "px-3.5 py-2.5 text-sm edge",
-              turn.from === "you"
-                ? "max-w-[82%] self-end bg-plate-2 text-text"
-                : "max-w-[88%] self-start bg-plate text-text-2",
-            )}
-            style={{ borderRadius: 14 }}
-          >
-            {turn.body}
-          </div>
-        ))}
-      </div>
+    <div className="flex max-w-[460px] flex-col gap-3">
+      {CONVERSATION.map((turn, i) => (
+        <div
+          // biome-ignore lint/suspicious/noArrayIndexKey: the script is fixed, so the index is the identity
+          key={i}
+          className={clsx(
+            "px-3.5 py-2.5 text-sm edge",
+            turn.from === "you"
+              ? "max-w-[82%] self-end bg-plate-2 text-text"
+              : "max-w-[88%] self-start bg-plate text-text-2",
+          )}
+          style={{ borderRadius: 14 }}
+        >
+          {turn.body}
+        </div>
+      ))}
     </div>
   );
 }

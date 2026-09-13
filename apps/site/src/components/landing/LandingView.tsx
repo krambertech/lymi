@@ -5,6 +5,7 @@ import { buttonClass } from "../Button";
 import { highlight } from "../docs/highlight";
 import { Lockup } from "../Logo";
 import { AssistantChat } from "./AssistantChat";
+import { AssistantMarks } from "./AssistantMarks";
 import { EnrichDemo } from "./EnrichDemo";
 import { HandOfCards } from "./HandOfCards";
 import { JoinBeta } from "./JoinBeta";
@@ -210,15 +211,9 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
                 When a term appears while you are talking with an assistant, ask it to add the card
                 there and then. The conversation continues; the card waits in Lymi.
               </p>
-              <p className="mt-5 text-sm text-muted">
-                Works with Claude, ChatGPT, and other assistants that support MCP.
-              </p>
-              <a
-                href="/docs/mcp"
-                className="mt-6 inline-block rounded-xs py-1 text-sm text-amber-text underline underline-offset-4"
-              >
-                Connect an assistant
-              </a>
+              <div className="mt-8">
+                <AssistantMarks />
+              </div>
             </div>
             <div className="min-w-0 @4xl:pl-6">
               <AssistantChat />
@@ -228,24 +223,28 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
 
         <section className="flex min-h-[680px] items-center border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28">
           <div className="mx-auto w-full max-w-[1040px]">
-            <div className="grid items-end gap-8 @4xl:grid-cols-[0.9fr_1.1fr] @4xl:gap-20">
+            {/* Same columns as the example below, so the copy starts on its divider. */}
+            <div className="grid items-start gap-8 @4xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] @4xl:gap-0">
               <h2 className="max-w-[12ch] text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
                 One endpoint. Everything else.
               </h2>
-              <div className="max-w-[520px] @4xl:justify-self-end">
+              <div className="max-w-[520px]">
                 <p className="text-md text-text-2">
-                  Send a card from a reading list, notes app, or script. Include what you know; Lymi
-                  keeps the source and lets you complete the card later.
+                  Send cards from a script, a notes app, a spreadsheet, or anything else that can
+                  make an HTTP request. Include what you know; Lymi keeps the source and lets you
+                  complete the card later.
                 </p>
                 <p className="mt-3 text-sm text-muted">
                   Each key is read-only or read-and-write, and API-created cards stay identifiable.
                 </p>
-                <a
-                  href="/docs/api"
-                  className="mt-6 inline-block rounded-xs py-1 text-sm text-amber-text underline underline-offset-4"
-                >
-                  Explore the API reference
-                </a>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <a href="/docs/quickstart" className={buttonClass("secondary")}>
+                    Quickstart
+                  </a>
+                  <a href="/docs/api" className={buttonClass("ghost")}>
+                    API reference
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -259,10 +258,13 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
                   /api/cards
                 </p>
               </div>
-              <div className="grid @3xl:grid-cols-[1.08fr_0.92fr]">
-                <pre className="doc-code overflow-x-auto p-6 @2xl:p-8">
-                  <code>{highlight(REQUEST, "json")}</code>
-                </pre>
+              <div className="grid @3xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+                <div className="p-6 @2xl:p-8">
+                  <p className="text-xs text-muted">Request</p>
+                  <pre className="doc-code overflow-x-auto pt-5">
+                    <code>{highlight(REQUEST, "json")}</code>
+                  </pre>
+                </div>
                 <div className="border-t border-edge p-6 @2xl:p-8 @3xl:border-t-0 @3xl:border-l">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-xs text-muted">Response</p>
@@ -310,6 +312,10 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             </a>
           </div>
         </div>
+        <p className="mx-auto mt-6 max-w-[1040px] text-xs text-muted">
+          Claude and Claude Code are trademarks of Anthropic. ChatGPT and Codex are trademarks of
+          OpenAI. Gemini is a trademark of Google.
+        </p>
       </footer>
     </div>
   );

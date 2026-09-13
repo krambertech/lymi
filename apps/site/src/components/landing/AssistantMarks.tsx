@@ -18,9 +18,8 @@ type Assistant = {
 };
 
 /**
- * Each assistant links to its guide under /docs/mcp, except Gemini, which uses the overview
- * until it has one. Claude, Claude Code and MCP paths are from simple-icons (CC0); OpenAI,
- * Codex and Gemini from lobe-icons (MIT).
+ * Each assistant links to its guide under /docs/mcp. Claude, Claude Code and MCP paths are
+ * from simple-icons (CC0); OpenAI, Codex and Gemini from lobe-icons (MIT).
  */
 const ASSISTANTS: readonly Assistant[] = [
   {
@@ -56,7 +55,7 @@ const ASSISTANTS: readonly Assistant[] = [
   },
   {
     name: "Gemini",
-    guide: "/docs/mcp",
+    guide: "/docs/mcp/gemini#gemini-cli",
     brand: [
       "#3186ff",
       {

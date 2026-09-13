@@ -19,5 +19,6 @@ The MCP endpoint itself is `createMcpHandler` from the Agents SDK, stateless, in
 
 - Better Auth is load-bearing. A vendor change would mean rewriting auth, keys and OAuth together.
 - Client registration is by Client ID Metadata Documents or pre-registration, not dynamic registration. Codex and Claude Desktop both follow this.
+- A client that only knows dynamic registration gets a Client ID Metadata Document that Lymi publishes on the public site, limited to loopback redirects, instead of dynamic registration being switched on. Gemini CLI is the first, at `/oauth/gemini-cli.json`.
 - The Worker verifies access tokens against its own JWKS, so MCP requests do not hit D1 for auth.
 - Integrations can never grade a review, whatever their scope.

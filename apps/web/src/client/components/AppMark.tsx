@@ -1,5 +1,7 @@
 import { t } from "@lingui/core/macro";
+import { GEMINI_CLI_CLIENT_PATH } from "@lymi/core";
 import { clsx } from "clsx";
+import { publicSiteUrl } from "../lib/origins";
 
 /**
  * Who is asking. An MCP client identifies itself with a Client ID Metadata Document, so its
@@ -17,8 +19,18 @@ import { clsx } from "clsx";
  * marks whose brand is monochrome, which then take the room's ink.
  */
 
-/** Paths from simple-icons (CC0). Trademarks belong to their owners; used here to name them. */
-const MARKS: { hosts: string[]; name: string; path: string; brand?: string }[] = [
+/**
+ * Paths from simple-icons (CC0), and Gemini from lobe-icons (MIT). Trademarks belong to their
+ * owners; used here to name them. `clientIds` names a client by the exact document Lymi
+ * publishes for it, since its host is Lymi's own.
+ */
+const MARKS: {
+  hosts: string[];
+  clientIds?: string[];
+  name: string;
+  path: string;
+  brand?: string;
+}[] = [
   {
     hosts: ["claude.ai", "claude.com", "anthropic.com"],
     name: "Claude",
@@ -34,6 +46,13 @@ const MARKS: { hosts: string[]; name: string; path: string; brand?: string }[] =
     hosts: ["zed.dev"],
     name: "Zed",
     path: "M2.25 1.5a.75.75 0 0 0-.75.75v16.5H0V2.25A2.25 2.25 0 0 1 2.25 0h20.095c1.002 0 1.504 1.212.795 1.92L10.764 14.298h3.486V12.75h1.5v1.922a1.125 1.125 0 0 1-1.125 1.125H9.264l-2.578 2.578h11.689V9h1.5v9.375a1.5 1.5 0 0 1-1.5 1.5H5.185L2.562 22.5H21.75a.75.75 0 0 0 .75-.75V5.25H24v16.5A2.25 2.25 0 0 1 21.75 24H1.655C.653 24 .151 22.788.86 22.08L13.19 9.75H9.75v1.5h-1.5V9.375A1.125 1.125 0 0 1 9.375 8.25h5.314l2.625-2.625H5.625V15h-1.5V5.625a1.5 1.5 0 0 1 1.5-1.5h13.19L21.438 1.5z",
+  },
+  {
+    hosts: [],
+    clientIds: [publicSiteUrl(GEMINI_CLI_CLIENT_PATH)],
+    name: "Gemini CLI",
+    brand: "#3186ff",
+    path: "M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z",
   },
 ];
 
@@ -62,7 +81,11 @@ export function identifyApp(
 ): AppIdentity {
   const host = hostOf(clientId);
   const known = host
-    ? MARKS.find((m) => m.hosts.some((h) => h === host || host.endsWith(`.${h}`)))
+    ? MARKS.find(
+        (m) =>
+          m.clientIds?.includes(clientId ?? "") ||
+          m.hosts.some((h) => h === host || host.endsWith(`.${h}`)),
+      )
     : undefined;
   const claimed = claimedName?.trim() || null;
   return {

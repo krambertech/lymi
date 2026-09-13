@@ -84,8 +84,9 @@ describe("ResponsiveDialog", () => {
       const r = popup.getBoundingClientRect();
       expect(Math.abs(r.left + r.width / 2 - window.innerWidth / 2)).toBeLessThan(2);
     } else {
+      // The rise is 450 ms, and a slow CI runner starts it late, so allow well past one second.
       await expect
-        .poll(() => dialog().element().getBoundingClientRect().bottom)
+        .poll(() => popup.getBoundingClientRect().bottom, { timeout: 5000 })
         .toBeCloseTo(window.innerHeight, 0);
     }
   });

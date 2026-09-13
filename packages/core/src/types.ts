@@ -39,15 +39,22 @@ export const Directions = z.enum(["recognition", "production", "both"]);
 export type Directions = z.infer<typeof Directions>;
 
 /** The stable key persistence uses for one review mode. ADR 0014. */
-export const REVIEW_MODE_KEYS = ["term_to_meaning", "meaning_to_term"] as const;
+export const REVIEW_MODE_KEYS = [
+  "term_to_meaning",
+  "meaning_to_term",
+  "image_to_term",
+  "image_to_meaning",
+] as const;
 export const ReviewModeKey = z.enum(REVIEW_MODE_KEYS);
 export type ReviewModeKey = z.infer<typeof ReviewModeKey>;
 
-/** What a review shows before reveal, and what the learner grades. */
+/** What a review shows before reveal, and what the learner grades. Only these four pairs exist. */
 export const ReviewMode = z
   .union([
     z.object({ cue: z.literal("term"), target: z.literal("meaning") }),
     z.object({ cue: z.literal("meaning"), target: z.literal("term") }),
+    z.object({ cue: z.literal("image"), target: z.literal("term") }),
+    z.object({ cue: z.literal("image"), target: z.literal("meaning") }),
   ])
   .meta({
     id: "ReviewMode",
@@ -55,7 +62,10 @@ export const ReviewMode = z
   });
 export type ReviewMode = z.infer<typeof ReviewMode>;
 
-/** How a deck, or a card on its own, is asked: one or more modes, each once. */
+/**
+ * How a deck, or a card on its own, is asked: one or more modes, each once. Picture modes belong
+ * on cards; a card of picture modes only is asked by its text fallback until it has a picture.
+ */
 export const ReviewModes = z
   .array(ReviewMode)
   .min(1, "Choose at least one review mode.")
@@ -84,7 +94,9 @@ export const DeckInput = z.object({
     .optional(),
   defaultLanguage: LanguageTag.nullable().optional(),
   directions: Directions.optional().meta({ description: "Legacy form of `reviewModes`" }),
-  reviewModes: ReviewModes.optional(),
+  reviewModes: ReviewModes.optional().meta({
+    description: "Text modes only. Picture modes are set on each card.",
+  }),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
@@ -174,6 +186,48 @@ export const GradeInput = z
     path: ["mode"],
   });
 export type GradeInput = z.infer<typeof GradeInput>;
+
+/** What a picture shows, for a screen reader and when it cannot load. Never the answer. */
+export const ImageDescription = z
+  .string()
+  .trim()
+  .min(1, "Describe the picture.")
+  .max(300, "Keep the description under 300 characters.");
+
+/**
+ * The card's image version when the caller last read it. A change that raced ahead makes the
+ * write a 409. Null expects a card that has never had a picture; leave it out to skip the check.
+ */
+const ImageVersion = z
+  .string()
+  .max(64)
+  .nullable()
+  .optional()
+  .meta({ description: "The card's `imageVersion` as last read. Omit to skip the check." });
+
+export const CardImageImportInput = z.object({
+  url: z
+    .url({ protocol: /^https?$/, error: "Use a public http or https link to a picture." })
+    .max(2048),
+  description: ImageDescription.optional(),
+  version: ImageVersion,
+});
+export type CardImageImportInput = z.infer<typeof CardImageImportInput>;
+
+/** An upload, as the form fields arrive. The file itself is checked by its bytes. */
+export const CardImageUploadFields = z.object({
+  description: ImageDescription.optional(),
+  version: ImageVersion,
+});
+
+export const CardImagePatch = z.object({
+  description: ImageDescription.nullable(),
+  version: ImageVersion,
+});
+export type CardImagePatch = z.infer<typeof CardImagePatch>;
+
+export const CardImageVersionInput = z.object({ version: ImageVersion });
+export type CardImageVersionInput = z.infer<typeof CardImageVersionInput>;
 
 /** The languages the interface exists in. Closed so a stored value always has a catalog. */
 export const AppLanguage = z.enum(["en", "uk", "ru"]);

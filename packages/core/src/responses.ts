@@ -76,6 +76,30 @@ export const DeckSummaryOut = z
   .meta({ id: "DeckSummary" });
 export type DeckSummaryOut = z.infer<typeof DeckSummaryOut>;
 
+export const CardImageOut = z
+  .object({
+    id: z.string().meta({ description: "Changes whenever the picture is replaced" }),
+    url: z.string().meta({
+      description:
+        "Path on the product origin that serves the picture to anyone who can read the card",
+    }),
+    contentType: z.string().meta({ description: "Always image/webp: pictures are normalized" }),
+    width: z.number().int(),
+    height: z.number().int(),
+    byteSize: z.number().int(),
+    description: z.string().nullable().meta({
+      description:
+        "What the picture shows, without naming the answer. Picture modes wait until there is one.",
+    }),
+    source: z.enum(["upload", "url"]),
+    sourceHost: z.string().nullable().meta({ description: "Host of an imported link" }),
+    createdBy: Actor,
+    createdAt: Timestamp,
+    updatedAt: Timestamp,
+  })
+  .meta({ id: "CardImage" });
+export type CardImageOut = z.infer<typeof CardImageOut>;
+
 export const CardOut = z
   .object({
     id: z.string(),
@@ -99,6 +123,11 @@ export const CardOut = z
       .array(ReviewMode)
       .nullable()
       .meta({ description: "Overrides the deck's review modes when set" }),
+    image: CardImageOut.nullable().meta({ description: "The active picture, if any" }),
+    imageVersion: z.string().nullable().meta({
+      description:
+        "Changes with every picture write. Send it back as `version` so a stale write gets 409.",
+    }),
     meaningSource: FieldSource.nullable(),
     exampleSource: FieldSource.nullable(),
     audioKey: z.string().nullable(),
@@ -121,7 +150,9 @@ export const CardStateOut = z
     cardId: z.string(),
     userId: z.string(),
     mode: ReviewMode,
-    direction: Direction.meta({ description: "Legacy form of `mode`" }),
+    direction: Direction.nullable().meta({
+      description: "Legacy form of `mode`. Null for picture modes.",
+    }),
     due: Timestamp,
     state: z
       .number()
@@ -147,7 +178,9 @@ export const ReviewOut = z
     id: z.string(),
     cardId: z.string(),
     mode: ReviewMode,
-    direction: Direction.meta({ description: "Legacy form of `mode`" }),
+    direction: Direction.nullable().meta({
+      description: "Legacy form of `mode`. Null for picture modes.",
+    }),
     rating: z.number().int().min(1).max(4),
     state: z.number().int().meta({ description: "FSRS state before this review" }),
     elapsedDays: z.number().int(),
@@ -205,7 +238,10 @@ export const QueueItemOut = z
   .object({
     card: CardOut,
     mode: ReviewMode.meta({ description: "Show the cue before reveal and grade the target" }),
-    direction: Direction.meta({ description: "Legacy form of `mode`" }),
+    direction: Direction.optional().meta({
+      description:
+        "Legacy form of `mode`, present for text modes only so an older client never grades a picture mode as its text sibling.",
+    }),
     stateId: z.string(),
     fsrsState: z.number().int(),
     next: z

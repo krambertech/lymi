@@ -93,6 +93,8 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     source: "Lesson 14",
     directions: null,
     reviewModes: null,
+    image: null,
+    imageVersion: null,
     meaningSource: "lesson",
     exampleSource: null,
     audioKey: null,

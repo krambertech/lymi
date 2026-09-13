@@ -1,22 +1,25 @@
 import type { DeckInput } from "@lymi/core";
-import { expandDirections, newId } from "@lymi/core";
+import { newId } from "@lymi/core";
 import { and, asc, eq, isNull, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
+import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
-import { deckAccess, fillStates, learnersOf, memberOf, ownedDeck } from "./members";
-import { deckModes, presentModeRow, resolveDirections, withModes } from "./modes";
+import { deckAccess, memberOf, ownedDeck } from "./members";
+import {
+  askedSql,
+  deckModes,
+  presentModeRow,
+  resolveDeckDirections,
+  stateStatementsForDeck,
+} from "./modes";
 
 /**
- * A card is asked the way its own `directions` says, or the deck's when it has none. A state
- * row for a direction the card is no longer asked in stays put and stops being counted, so
- * turning a direction off is a setting rather than a migration: turn it back on and the
- * progress is still there. Every due count and the review queue share this predicate.
+ * Whether a state is asked now. A state for a mode the card is no longer asked in stays put and
+ * stops being counted, so turning a mode off is a setting rather than a migration: turn it back
+ * on and the progress is still there. ADR 0007, ADR 0014.
  */
-export const asked = sql`(
-  coalesce(cards.directions, decks.directions) = 'both'
-  or card_states.direction = coalesce(cards.directions, decks.directions)
-)`;
+export const asked = sql.raw(askedSql());
 
 /** All active decks the learner can see, with how many of their cards are due, in the learner's order. */
 export async function listDecks({ db, userId }: ServiceContext) {
@@ -72,7 +75,7 @@ export async function createDeck(ctx: ServiceContext, input: DeckInput) {
     name: input.name,
     description: input.description ?? null,
     defaultLanguage: input.defaultLanguage ?? null,
-    directions: resolveDirections(input) ?? "recognition",
+    directions: resolveDeckDirections(input) ?? "recognition",
   });
   await audit(db, {
     userId,
@@ -114,8 +117,12 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
     )
     .where(and(eq(schema.cards.deckId, deckId), isNull(schema.cards.archivedAt)))
     .orderBy(sql`${schema.cards.createdAt} desc`);
-  return rows.map(({ card, state }) => ({
-    card: withModes(card),
+  const cards = await presentCards(
+    db,
+    rows.map((row) => row.card),
+  );
+  return rows.map(({ state }, index) => ({
+    card: cards[index] as CardView,
     state: state && presentModeRow(state),
   }));
 }
@@ -126,14 +133,18 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
   const { db, userId, actor } = ctx;
   await ownedDeck(ctx, id);
   const { reviewModes, ...fields } = patch;
-  const directions = resolveDirections(patch) ?? undefined;
+  const directions = resolveDeckDirections(patch);
   const result = await db
     .update(schema.decks)
     .set({ ...fields, ...(directions ? { directions } : {}), updatedAt: new Date() })
     .where(eq(schema.decks.id, id))
     .returning({ id: schema.decks.id });
   if (result.length === 0) throw notFound("Deck");
-  if (directions) await openDirections(ctx, id, directions);
+  // A mode the deck did not ask before has no states on its cards yet; `asked` handles modes turned off.
+  if (directions) {
+    const [first, ...rest] = stateStatementsForDeck(db, id);
+    if (first) await db.batch([first, ...rest]);
+  }
   await audit(db, {
     userId,
     actor,
@@ -143,35 +154,6 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
     payload: patch,
   });
   return getDeck(ctx, id);
-}
-
-/**
- * A direction the deck did not ask before has no state rows on the cards already in it, so
- * they would never come up. Give every learner of the deck a new state, due now, for each
- * card that follows the deck and each direction it now asks. Nothing is removed: `asked`
- * handles the other direction.
- */
-async function openDirections(
-  { db }: ServiceContext,
-  deckId: string,
-  directions: NonNullable<DeckPatch["directions"]>,
-) {
-  const wanted = expandDirections(directions);
-  const cards = await db
-    .select({ id: schema.cards.id })
-    .from(schema.cards)
-    .where(
-      and(
-        eq(schema.cards.deckId, deckId),
-        isNull(schema.cards.archivedAt),
-        isNull(schema.cards.directions),
-      ),
-    );
-  await fillStates(
-    { db },
-    cards.map((card) => ({ cardId: card.id, directions: wanted })),
-    await learnersOf({ db }, deckId),
-  );
 }
 
 /** Archive, never delete. The cards stay put; the deck leaves every list until restored. */

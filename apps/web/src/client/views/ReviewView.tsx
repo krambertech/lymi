@@ -28,6 +28,7 @@ import { type StreakSummary, StreakWeek } from "../components/Streak";
 import type { QueueItem } from "../lib/api";
 import { lanternFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
+import { modeLabel } from "../lib/review-modes";
 
 export const GRADES: {
   rating: Rating;
@@ -314,10 +315,17 @@ export function ReviewCard({
   audioError = null,
   className,
 }: ReviewCardProps) {
-  const { t } = useLingui();
-  const { card, direction } = item;
-  const recog = direction === "recognition";
-  const front = recog ? card.term : (card.meaning ?? card.term);
+  const { t, i18n } = useLingui();
+  const { card, mode } = item;
+  const recog = mode.target === "meaning";
+  const termCue = mode.cue === "term";
+  // A picture cue shows its description, which never names the answer, until pictures render here.
+  const front =
+    mode.cue === "term"
+      ? card.term
+      : mode.cue === "meaning"
+        ? (card.meaning ?? card.term)
+        : (card.image?.description ?? t`Picture card`);
   const back = recog ? (card.meaning ?? t`No meaning yet`) : card.term;
   const audio = (className?: string) =>
     onPlayAudio && (
@@ -334,7 +342,13 @@ export function ReviewCard({
     // on the screen should not look like a footnote. It sits above the text and below the
     // pronunciation button, which is the one thing inside the card you can press for another reason.
     <section
-      aria-label={recog ? t`Recognition card for ${front}` : t`Production card for ${front}`}
+      aria-label={
+        mode.cue === "image"
+          ? t`Picture card`
+          : recog
+            ? t`Recognition card for ${front}`
+            : t`Production card for ${front}`
+      }
       className={clsx(
         "edge relative flex min-h-0 flex-1 flex-col overflow-y-auto rounded-xl bg-plate p-5 @3xl:p-6",
         !revealed && "cursor-pointer hoverable:hover:edge-2",
@@ -351,7 +365,7 @@ export function ReviewCard({
       )}
       <div className="flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs">
         <span>
-          {recog ? <Trans>Recognition</Trans> : <Trans>Production</Trans>}
+          {i18n._(modeLabel(mode))}
           {card.language && <span> · {card.language.toUpperCase()}</span>}
         </span>
         <ReviewStateChip state={item.fsrsState} />
@@ -364,13 +378,13 @@ export function ReviewCard({
           className="grid gap-3"
         >
           <p
-            lang={recog ? (card.language ?? undefined) : undefined}
+            lang={termCue ? (card.language ?? undefined) : undefined}
             className="hyphens-auto text-4xl font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere] @3xl:text-5xl"
           >
             {front}
-            {recog && audio("z-20")}
+            {termCue && audio("z-20")}
           </p>
-          {recog && card.pronunciation && (
+          {termCue && card.pronunciation && (
             <p className="text-md text-muted">{card.pronunciation}</p>
           )}
         </motion.div>

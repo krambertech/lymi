@@ -30,7 +30,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Grade**: The learner's rating of one recall, 1 Forgot to 4 Easy. _Avoid_: Score, answer, rating (in prose)
 
-**Review mode**: What a review shows before reveal (the cue) and what the learner grades (the target). Recognition is term → meaning and production is meaning → term. A deck and a card each have a list, and a card's list overrides its deck's. Only one mode of a card comes up in a review. ADR 0014. _Avoid_: Card type, side, front and back
+**Review mode**: What a review shows before reveal (the cue) and what the learner grades (the target). Recognition is term → meaning and production is meaning → term; picture → term and picture → meaning show the card's picture and are set on the card, never the deck. A deck and a card each have a list, and a card's list overrides its deck's. A card of picture modes only is asked by its term until it has a described picture. Only one mode of a card comes up in a review. ADR 0014. _Avoid_: Card type, side, front and back
+
+**Picture**: A card's one optional image, private to the people who study its deck. Its description says what it shows without naming the answer; picture modes wait for one. Called `image` in the API. _Avoid_: Photo, attachment, media
 
 **Direction**: The older name for a deck's or card's text review modes, still accepted by the API. Recognition shows the term. Production shows the meaning.
 

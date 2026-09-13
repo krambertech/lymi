@@ -2,6 +2,7 @@ import { t } from "@lingui/core/macro";
 import type {
   ApiKeyInput,
   AppLanguage,
+  CardImageOut,
   CardInput,
   CardPatch,
   DeckInput,
@@ -29,10 +30,21 @@ import type {
   Review as ReviewRow,
 } from "@lymi/core/schema";
 
-/** A card as the API sends it, with its own review modes or null when it follows its deck. */
-export type Card = CardRow & { reviewModes: ReviewMode[] | null };
-export type CardState = Omit<CardStateRow, "mode"> & { mode: ReviewMode };
-export type Review = Omit<ReviewRow, "mode"> & { mode: ReviewMode };
+export type CardImage = CardImageOut;
+/** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
+export type Card = Omit<CardRow, "reviewModeKeys"> & {
+  reviewModes: ReviewMode[] | null;
+  image: CardImage | null;
+};
+/** `direction` is the legacy name of a text mode, and null for a picture mode. */
+export type CardState = Omit<CardStateRow, "mode" | "direction"> & {
+  mode: ReviewMode;
+  direction: Direction | null;
+};
+export type Review = Omit<ReviewRow, "mode" | "direction"> & {
+  mode: ReviewMode;
+  direction: Direction | null;
+};
 
 /** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {
@@ -118,7 +130,8 @@ export type DeckSummary = Pick<
 export type QueueItem = {
   card: Card;
   mode: ReviewMode;
-  direction: Direction;
+  /** Present for text modes only. */
+  direction?: Direction;
   stateId: string;
   fsrsState: number;
   next: Record<Rating, string>;

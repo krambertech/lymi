@@ -19,6 +19,7 @@ import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
+import { images } from "./routes/images";
 import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
 import { push } from "./routes/push";
@@ -156,6 +157,7 @@ app.get(
 app.route("/api/decks", decks);
 app.route("/api/join", join);
 app.route("/api/cards", cards);
+app.route("/api/cards", images);
 app.route("/api/review", review);
 app.route("/api/settings", settings);
 app.route("/api/stats", stats);

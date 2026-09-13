@@ -23,6 +23,8 @@ function card(patch: Partial<Card> = {}): Card {
     tags: [],
     source: null,
     directions: null,
+    reviewModeKeys: null,
+    imageVersion: null,
     meaningSource: "manual",
     exampleSource: null,
     audioKey: null,

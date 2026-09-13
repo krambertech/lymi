@@ -1,10 +1,10 @@
-import type { Direction, MemberRole } from "@lymi/core";
-import { emptyState, modeOfStateDirection, newId, serializeState } from "@lymi/core";
-import { and, eq, inArray, isNotNull, isNull, sql } from "@lymi/core/db";
+import type { MemberRole } from "@lymi/core";
+import { newId } from "@lymi/core";
+import { and, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { deckModes } from "./modes";
+import { deckModes, stateStatementsForLearner } from "./modes";
 
 /**
  * Decks the learner may see: their own, plus every deck they are an active member of.
@@ -67,149 +67,7 @@ export async function ownedDeck(ctx: ServiceContext, deckId: string) {
   return deck;
 }
 
-/** Every learner who studies the deck: the owner first, then each active member. */
-export async function learnersOf(
-  { db }: Pick<ServiceContext, "db">,
-  deckId: string,
-): Promise<string[]> {
-  const [deck] = await db
-    .select({ userId: schema.decks.userId })
-    .from(schema.decks)
-    .where(eq(schema.decks.id, deckId));
-  if (!deck) throw notFound("Deck");
-  const members = await db
-    .select({ userId: schema.deckMembers.userId })
-    .from(schema.deckMembers)
-    .where(and(eq(schema.deckMembers.deckId, deckId), isNull(schema.deckMembers.removedAt)));
-  return [deck.userId, ...members.map((m) => m.userId)];
-}
-
-/**
- * Backfill a known set of learners and cards, due now, without replacing existing state.
- * Deck-wide changes use this path; card and membership writes use transactional selects.
- */
-export async function fillStates(
-  { db }: Pick<ServiceContext, "db">,
-  wanted: { cardId: string; directions: readonly Direction[] }[],
-  learners: readonly string[],
-) {
-  if (wanted.length === 0 || learners.length === 0) return;
-  const cardIds = wanted.map((w) => w.cardId);
-  const have = new Set<string>();
-  // D1 allows 100 bound parameters per query: forty learners and fifty cards at a time.
-  for (let l = 0; l < learners.length; l += 40) {
-    for (let i = 0; i < cardIds.length; i += 50) {
-      const rows = await db
-        .select({
-          cardId: schema.cardStates.cardId,
-          userId: schema.cardStates.userId,
-          direction: schema.cardStates.direction,
-        })
-        .from(schema.cardStates)
-        .where(
-          and(
-            inArray(schema.cardStates.cardId, cardIds.slice(i, i + 50)),
-            inArray(schema.cardStates.userId, learners.slice(l, l + 40)),
-          ),
-        );
-      for (const row of rows) have.add(`${row.cardId}:${row.userId}:${row.direction}`);
-    }
-  }
-
-  const now = new Date();
-  const fsrs = serializeState(emptyState(now));
-  const inserts = [];
-  for (const { cardId, directions } of wanted) {
-    for (const userId of learners) {
-      for (const direction of directions) {
-        if (have.has(`${cardId}:${userId}:${direction}`)) continue;
-        inserts.push(
-          db.insert(schema.cardStates).values({
-            id: newId(),
-            cardId,
-            userId,
-            direction,
-            mode: modeOfStateDirection(direction),
-            due: now,
-            state: 0,
-            fsrs,
-          }),
-        );
-      }
-    }
-  }
-  // D1 caps a batch, and a deck can hold hundreds of cards.
-  for (let i = 0; i < inserts.length; i += 50) {
-    const [first, ...rest] = inserts.slice(i, i + 50);
-    if (first) await db.batch([first, ...rest]);
-  }
-}
-
 type Statement = Parameters<Db["batch"]>[0][number];
-const directions = ["recognition", "production"] as const;
-
-function stateInsert(db: Db, select: ReturnType<typeof sql>) {
-  return db
-    .insert(schema.cardStates)
-    .select(select)
-    .onConflictDoNothing({
-      target: [schema.cardStates.cardId, schema.cardStates.userId, schema.cardStates.direction],
-    });
-}
-
-/** Prepare one card's state rows from membership seen inside the surrounding transaction. */
-export function stateStatementsForCard(db: Db, cardId: string, now = new Date()): Statement[] {
-  const due = now.getTime();
-  const fsrs = serializeState(emptyState(now));
-  return directions.map((direction) =>
-    stateInsert(
-      db,
-      sql`with target as (
-        select cards.id as card_id, decks.id as deck_id, decks.user_id as owner_id,
-          coalesce(cards.directions, decks.directions) as directions
-        from cards join decks on decks.id = cards.deck_id
-        where cards.id = ${cardId}
-      ), learners(user_id) as (
-        select owner_id from target
-        union all
-        select deck_members.user_id from deck_members
-          join target on target.deck_id = deck_members.deck_id
-        where deck_members.removed_at is null
-      )
-      select lower(hex(randomblob(10))), target.card_id, learners.user_id, ${direction},
-        ${due}, 0, ${fsrs}, null, ${due}, ${due}, ${modeOfStateDirection(direction)}
-      from target cross join learners
-      where target.directions = 'both' or target.directions = ${direction}`,
-    ),
-  );
-}
-
-/** Prepare every card state, including archived ones, for one learner joining a deck. */
-function stateStatementsForLearner(
-  db: Db,
-  deckId: string,
-  userId: string,
-  now = new Date(),
-): Statement[] {
-  const due = now.getTime();
-  const fsrs = serializeState(emptyState(now));
-  return directions.map((direction) =>
-    stateInsert(
-      db,
-      sql`select lower(hex(randomblob(10))), cards.id, ${userId}, ${direction},
-        ${due}, 0, ${fsrs}, null, ${due}, ${due}, ${modeOfStateDirection(direction)}
-      from cards join decks on decks.id = cards.deck_id
-      where cards.deck_id = ${deckId}
-        and (coalesce(cards.directions, decks.directions) = 'both'
-          or coalesce(cards.directions, decks.directions) = ${direction})
-        and exists (
-          select 1 from deck_members
-          where deck_members.deck_id = ${deckId} and deck_members.user_id = ${userId}
-            and deck_members.removed_at is null
-        )`,
-    ),
-  );
-}
 
 async function runBatch(db: Db, statements: Statement[]) {
   const [first, ...rest] = statements;

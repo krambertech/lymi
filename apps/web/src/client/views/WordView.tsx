@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
-import { directionLabel, languageName } from "../components/DeckFields";
+import { languageName } from "../components/DeckFields";
 import { Field, Input, Textarea } from "../components/Field";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
@@ -28,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import type { Card, CardEvent, CardState, Review } from "../lib/api";
+import { modeLabel } from "../lib/review-modes";
 import { BackButton, TopBar } from "./Shell";
 
 /** A line in the word's history that is not a review: when it arrived, what the AI added. */
@@ -286,7 +287,7 @@ export function WordView({
         r.scheduledDays > 0
           ? t`next in ${spanLabel(i18n, r.scheduledDays)}`
           : t`back within the day`;
-      const direction = directionLabel(r.direction).toLocaleLowerCase(i18n.locale);
+      const direction = i18n._(modeLabel(r.mode)).toLocaleLowerCase(i18n.locale);
       return {
         kind: "review" as const,
         key: `r-${r.id}`,
@@ -448,9 +449,7 @@ export function WordView({
             card.source ?? deckName,
             schedules.length > 0
               ? t`asked by ${listOf(
-                  schedules.map((x) =>
-                    directionLabel(x.st.direction).toLocaleLowerCase(i18n.locale),
-                  ),
+                  schedules.map((x) => i18n._(modeLabel(x.st.mode)).toLocaleLowerCase(i18n.locale)),
                   i18n.locale,
                 )}`
               : null,
@@ -567,7 +566,7 @@ export function WordView({
             <div key={st.id} className="grid gap-3">
               {asked && (
                 <h3 className="text-sm font-medium capitalize text-text-2">
-                  {directionLabel(st.direction)}
+                  {i18n._(modeLabel(st.mode))}
                 </h3>
               )}
               {fsrs ? (

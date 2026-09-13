@@ -47,6 +47,40 @@ export async function normalizeSquareImage(
   return { bytes: output, type: "image/webp", width: encoded.width, height: encoded.height };
 }
 
+/**
+ * One WebP no longer than `maxSide` on either side, keeping the image's shape. Same checks as
+ * `normalizeSquareImage`; a smaller image keeps its size.
+ */
+export async function normalizeBoundedImage(
+  images: ImagesBinding,
+  bytes: Uint8Array,
+  maxSide: number,
+): Promise<NormalizedImage> {
+  const inspected = inspectImage(bytes);
+  if (!inspected.ok) throw rejection(inspected.reason);
+  const { width, height } = inspected.image;
+  const scale = Math.min(1, maxSide / Math.max(width, height));
+  const target = {
+    width: Math.max(1, Math.round(width * scale)),
+    height: Math.max(1, Math.round(height * scale)),
+  };
+
+  let output: Uint8Array;
+  try {
+    const result = await images
+      .input(streamOf(bytes))
+      .transform({ ...target, fit: "scale-down" })
+      .output({ format: "image/webp", quality: 85, anim: false });
+    output = new Uint8Array(await new Response(result.image()).arrayBuffer());
+  } catch {
+    throw rejection("unreadable");
+  }
+
+  const encoded = sniffImage(output);
+  if (encoded?.type !== "image/webp" || encoded.animated) throw rejection("unreadable");
+  return { bytes: output, type: "image/webp", width: encoded.width, height: encoded.height };
+}
+
 /** The whole body, or null once it passes `maxBytes`, so an oversized stream is never buffered. */
 export async function readAtMost(
   body: ReadableStream<Uint8Array> | null,

@@ -4,12 +4,10 @@ import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/d
 import type { Card } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
+import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { memberOf, stateStatementsForCard } from "./members";
-import { presentModeRow, resolveDirections, withModes } from "./modes";
-
-/** A card as callers outside the server see it. */
-export type CardView = ReturnType<typeof withModes<Card>>;
+import { memberOf } from "./members";
+import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -84,7 +82,7 @@ export async function addCards(
   }
 
   const now = new Date();
-  const outcomes: AddCardOutcome[] = [];
+  const outcomes: RawOutcome[] = [];
   // One group per card: the card, live learner states, and its audit row. A group never
   // splits across batches, so a failed batch leaves no partially created card.
   const groups: Statement[][] = [];
@@ -95,12 +93,13 @@ export async function addCards(
       outcomes.push({
         status: "skipped",
         term: input.term,
-        existing: withModes(hit.card),
+        existing: hit.card,
         deckName: hit.deckName,
       });
       continue;
     }
     const id = newId();
+    const modes = resolveCardModes(input, null);
     const card: Card = {
       id,
       userId,
@@ -114,7 +113,9 @@ export async function addCards(
       language,
       tags: input.tags ?? [],
       source: input.source ?? null,
-      directions: resolveDirections(input) ?? null,
+      directions: modes?.directions ?? null,
+      reviewModeKeys: modes?.reviewModeKeys ?? null,
+      imageVersion: null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       audioKey: null,
@@ -137,12 +138,23 @@ export async function addCards(
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
     existing.set(dupKey(language, key), { card, deckName: deck.name });
-    outcomes.push({ status: "added", card: withModes(card) });
+    outcomes.push({ status: "added", card });
   }
 
   await runInBatches(db, groups);
-  return outcomes;
+  const views = await presentCards(
+    db,
+    outcomes.map((o) => (o.status === "added" ? o.card : o.existing)),
+  );
+  return outcomes.map((outcome, index) => {
+    const card = views[index] as CardView;
+    return outcome.status === "added" ? { status: "added", card } : { ...outcome, existing: card };
+  });
 }
+
+type RawOutcome =
+  | { status: "added"; card: Card }
+  | { status: "skipped"; term: string; existing: Card; deckName: string };
 
 type Statement = Parameters<Db["batch"]>[0][number];
 
@@ -220,7 +232,11 @@ export async function searchCards({ db, userId }: ServiceContext, search: CardSe
   const matched = needle
     ? rows.filter((row) => matchesSearch(row.card, needle)).slice(0, limit)
     : rows;
-  return matched.map((row) => ({ ...row, card: withModes(row.card) }));
+  const cards = await presentCards(
+    db,
+    matched.map((row) => row.card),
+  );
+  return matched.map((row, index) => ({ card: cards[index] as CardView, deckName: row.deckName }));
 }
 
 /** The most rows one text search reads before matching. */
@@ -256,11 +272,11 @@ export async function getCard({ db, userId }: ServiceContext, id: string) {
 
 /** A card with its review modes, for callers outside the server. */
 export async function showCard(ctx: ServiceContext, id: string): Promise<CardView> {
-  return withModes(await getCard(ctx, id));
+  return presentCard(ctx.db, await getCard(ctx, id));
 }
 
 /** The card, or forbidden when the learner can see it but does not own it. */
-async function ownedCard(ctx: ServiceContext, id: string) {
+export async function ownedCard(ctx: ServiceContext, id: string) {
   const card = await getCard(ctx, id);
   if (card.userId !== ctx.userId) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
@@ -328,12 +344,15 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
   const { reviewModes, directions: _legacy, ...fields } = patch;
-  const directions = resolveDirections(patch);
+  const modes = resolveCardModes(
+    patch,
+    current.directions ? (current.reviewModeKeys ?? null) : null,
+  );
   const update = db
     .update(schema.cards)
     .set({
       ...fields,
-      ...(directions !== undefined ? { directions } : {}),
+      ...(modes ?? {}),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
       updatedAt: new Date(),
@@ -342,9 +361,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
   await runInBatches(db, [
     [
       update,
-      ...(directions !== undefined || patch.deckId !== undefined
-        ? stateStatementsForCard(db, id)
-        : []),
+      ...(modes || patch.deckId !== undefined ? stateStatementsForCard(db, id) : []),
       auditStatement(db, {
         userId,
         actor,

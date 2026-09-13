@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm";
 import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
-import { REVIEW_MODE_KEYS } from "../types";
+import { REVIEW_MODE_KEYS, type ReviewModeKey } from "../types";
 import { user } from "./auth";
 
 const timestamps = {
@@ -72,6 +72,10 @@ export const cards = sqliteTable(
       .default("user"),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
+    /** The card's own mode list, read only while `directions` overrides the deck. ADR 0014. */
+    reviewModeKeys: text("review_modes", { mode: "json" }).$type<ReviewModeKey[]>(),
+    /** Opaque token of the last picture change, so a slow write cannot overwrite a newer one. */
+    imageVersion: text("image_version"),
   },
   (t) => [
     index("cards_deck_idx").on(t.deckId, t.archivedAt),
@@ -224,7 +228,8 @@ export const cardStates = sqliteTable(
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    direction: text("direction", { enum: ["recognition", "production"] }).notNull(),
+    /** Legacy identity: recognition or production for text modes, the mode key for picture modes. */
+    direction: text("direction").notNull(),
     due: integer("due", { mode: "timestamp_ms" }).notNull(),
     /** 0 New, 1 Learning, 2 Review, 3 Relearning */
     state: integer("state").notNull().default(0),
@@ -255,7 +260,8 @@ export const reviews = sqliteTable(
     cardStateId: text("card_state_id")
       .notNull()
       .references(() => cardStates.id, { onDelete: "cascade" }),
-    direction: text("direction", { enum: ["recognition", "production"] }).notNull(),
+    /** Legacy identity, as on `card_states.direction`. */
+    direction: text("direction").notNull(),
     rating: integer("rating").notNull(),
     /** FSRS state before this review. */
     state: integer("state").notNull(),
@@ -319,6 +325,44 @@ export const reviewUndos = sqliteTable("review_undos", {
   undoneAt: integer("undone_at", { mode: "timestamp_ms" }).notNull(),
 });
 
+/**
+ * A card's picture. At most one row per card is active; replaced and archived rows stay so
+ * history and restore keep working. Bytes live in the private PRIVATE_IMAGES bucket under
+ * `object_key`, normalized to WebP without metadata. Never log the key, description or source.
+ */
+export const cardImages = sqliteTable(
+  "card_images",
+  {
+    id: text("id").primaryKey(),
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    /** The card's owner, whoever made the change. */
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    objectKey: text("object_key").notNull(),
+    contentType: text("content_type").notNull(),
+    width: integer("width").notNull(),
+    height: integer("height").notNull(),
+    byteSize: integer("byte_size").notNull(),
+    /** What the picture shows without naming the answer. Picture modes wait for one. */
+    description: text("description"),
+    sourceKind: text("source_kind", { enum: ["upload", "url"] }).notNull(),
+    /** Host of an imported link, never the full URL, which may carry credentials. */
+    sourceHost: text("source_host"),
+    status: text("status", { enum: ["active", "archived", "replaced"] })
+      .notNull()
+      .default("active"),
+    createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] }).notNull(),
+    ...timestamps,
+  },
+  (t) => [
+    uniqueIndex("card_images_active_idx").on(t.cardId).where(sql`status = 'active'`),
+    index("card_images_card_idx").on(t.cardId, t.createdAt),
+  ],
+);
+
 /** Every write, by whoever made it. This is what makes API and MCP changes visible in the product. */
 export const auditLog = sqliteTable(
   "audit_log",
@@ -344,6 +388,7 @@ export type Card = typeof cards.$inferSelect;
 export type DeckMember = typeof deckMembers.$inferSelect;
 export type DeckInvitation = typeof deckInvitations.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
+export type CardImage = typeof cardImages.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;
 export type UserAvatar = typeof userAvatars.$inferSelect;

@@ -20,6 +20,8 @@ interface Props {
 const LABEL_ROOM = 56;
 /** How far the line stops from a mark's centre. */
 const CLEAR = TIMELINE.mark / 2 + 2;
+/** A sliver of line between two close marks reads as a stray dash, so it is left out. */
+const MIN_SEGMENT = 6;
 
 /** [from, to] with a gap cut around each stop. */
 function segments(from: number, to: number, stops: number[]): [number, number][] {
@@ -27,10 +29,10 @@ function segments(from: number, to: number, stops: number[]): [number, number][]
   let at = from;
   for (const x of [...stops].sort((a, b) => a - b)) {
     if (x + CLEAR <= from || x - CLEAR >= to) continue;
-    if (x - CLEAR > at) out.push([at, x - CLEAR]);
+    if (x - CLEAR - at >= MIN_SEGMENT) out.push([at, x - CLEAR]);
     at = Math.max(at, x + CLEAR);
   }
-  if (to > at) out.push([at, to]);
+  if (to - at >= MIN_SEGMENT) out.push([at, to]);
   return out;
 }
 

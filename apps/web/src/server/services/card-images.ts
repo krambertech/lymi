@@ -1,7 +1,8 @@
 import type { CardImageImportInput, CardImagePatch, CardImageVersionInput } from "@lymi/core";
 import { newId, normaliseTerm } from "@lymi/core";
-import { and, desc, eq, sql } from "@lymi/core/db";
+import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
+import { auditStatementWhen, insertWhen } from "../audit";
 import { type Db, schema } from "../db";
 import { getCard, ownedCard, showCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
@@ -31,7 +32,7 @@ export async function uploadCardImage(
   return storeImage(ctx, card, bytes, { kind: "upload", host: null }, fields.description, deps);
 }
 
-/** Fetch a public link once and store a private copy. The link itself is never kept. */
+/** Fetch a public link once and store a private copy, keeping only the link's host. */
 export async function importCardImage(
   ctx: ServiceContext,
   cardId: string,
@@ -44,7 +45,7 @@ export async function importCardImage(
   return storeImage(ctx, card, bytes, { kind: "url", host }, input.description, deps);
 }
 
-/** Change what the active picture's description says. Null suspends the picture modes. */
+/** Change the active picture's description; null pauses the picture modes. */
 export async function describeCardImage(
   ctx: ServiceContext,
   cardId: string,
@@ -55,24 +56,23 @@ export async function describeCardImage(
   if (!image) throw new ServiceError("not_found", "This card has no picture");
   if (patch.description !== null) checkDescription(card, patch.description);
   const token = newId();
-  const audit = auditIfClaimed(ctx, card, token, "update_image", {
-    imageId: image.id,
-    description: patch.description,
-  });
-  await ctx.db.batch([
+  const [claimResult] = await ctx.db.batch([
     claim(ctx.db, card, token),
     ctx.db
       .update(schema.cardImages)
       .set({ description: patch.description, updatedAt: new Date() })
       .where(and(eq(schema.cardImages.id, image.id), claimed(card.id, token))),
     ...stateStatementsForCard(ctx.db, card.id),
-    audit.statement,
+    auditIfClaimed(ctx, card, token, "update_image", {
+      imageId: image.id,
+      description: patch.description,
+    }),
   ]);
-  await confirm(ctx.db, audit.id);
+  if (!landed(claimResult)) throw stale();
   return showCard(ctx, card.id);
 }
 
-/** Hide the picture. Picture modes pause with their schedules intact until restore. */
+/** Hide the picture, pausing picture modes with their schedules intact until restore. */
 export async function archiveCardImage(
   ctx: ServiceContext,
   cardId: string,
@@ -99,7 +99,7 @@ export async function restoreCardImage(
   return setStatus(ctx, card, image, "active", "restore_image");
 }
 
-/** The active picture's bytes for anyone who can see the card. Old versions are not served. */
+/** The active picture's bytes for anyone who can see the card; replaced and archived versions are not served. */
 export async function cardImageFile(
   ctx: ServiceContext,
   cardId: string,
@@ -170,16 +170,9 @@ async function storeImage(
 
   const token = newId();
   const now = Date.now();
-  const audit = auditIfClaimed(ctx, card, token, "set_image", {
-    imageId,
-    source: source.kind,
-    sourceHost: source.host,
-    width: normalized.width,
-    height: normalized.height,
-    ...(description === undefined ? {} : { description }),
-  });
+  let won = false;
   try {
-    await ctx.db.batch([
+    const [claimResult] = await ctx.db.batch([
       claim(ctx.db, card, token),
       ctx.db
         .update(schema.cardImages)
@@ -191,24 +184,49 @@ async function storeImage(
             claimed(card.id, token),
           ),
         ),
-      ctx.db.insert(schema.cardImages).select(
-        sql`select ${imageId}, ${card.id}, ${card.userId}, ${objectKey}, 'image/webp',
-          ${normalized.width}, ${normalized.height}, ${normalized.bytes.byteLength},
-          ${description ?? null}, ${source.kind}, ${source.host}, 'active', ${ctx.actor},
-          ${now}, ${now}
-        where ${claimed(card.id, token)}`,
+      insertWhen(
+        ctx.db,
+        schema.cardImages,
+        {
+          id: imageId,
+          cardId: card.id,
+          userId: card.userId,
+          objectKey,
+          contentType: "image/webp",
+          width: normalized.width,
+          height: normalized.height,
+          byteSize: normalized.bytes.byteLength,
+          description: description ?? null,
+          sourceKind: source.kind,
+          sourceHost: source.host,
+          status: "active",
+          createdBy: ctx.actor,
+          createdAt: now,
+          updatedAt: now,
+        },
+        schema.cards,
+        claimedRow(card.id, token),
       ),
       ...stateStatementsForCard(ctx.db, card.id),
-      audit.statement,
+      auditIfClaimed(ctx, card, token, "set_image", {
+        imageId,
+        source: source.kind,
+        sourceHost: source.host,
+        width: normalized.width,
+        height: normalized.height,
+        ...(description === undefined ? {} : { description }),
+      }),
     ]);
-    await confirm(ctx.db, audit.id);
-  } catch (error) {
-    // Only this write knew the key, so nothing else can refer to the object.
-    await deps.bucket
-      .delete(objectKey)
-      .catch(() => console.error("Discarding a card picture object failed"));
-    throw error;
+    won = landed(claimResult);
+  } finally {
+    // The object is kept only when this write's claim committed; nothing else knows its key.
+    if (!won) {
+      await deps.bucket
+        .delete(objectKey)
+        .catch(() => console.error("Discarding a card picture object failed"));
+    }
   }
+  if (!won) throw stale();
   return showCard(ctx, card.id);
 }
 
@@ -220,8 +238,7 @@ async function setStatus(
   action: string,
 ) {
   const token = newId();
-  const audit = auditIfClaimed(ctx, card, token, action, { imageId: image.id });
-  await ctx.db.batch([
+  const [claimResult] = await ctx.db.batch([
     claim(ctx.db, card, token),
     ctx.db
       .update(schema.cardImages)
@@ -229,9 +246,9 @@ async function setStatus(
       .where(and(eq(schema.cardImages.id, image.id), claimed(card.id, token))),
     // Archiving can make a text fallback asked that the card never had a state for.
     ...stateStatementsForCard(ctx.db, card.id),
-    audit.statement,
+    auditIfClaimed(ctx, card, token, action, { imageId: image.id }),
   ]);
-  await confirm(ctx.db, audit.id);
+  if (!landed(claimResult)) throw stale();
   return showCard(ctx, card.id);
 }
 
@@ -245,10 +262,7 @@ async function imageWithStatus(db: Db, cardId: string, status: CardImage["status
   return image;
 }
 
-/**
- * Take the card's image version from what this write read to a token only it knows. Every other
- * statement in the batch runs only if the claim landed, so a concurrent change wins cleanly.
- */
+/** Swap the card's image version for a token only this write knows, so the batch's gated statements run only if it won. */
 function claim(db: Db, card: Card, token: string) {
   return db
     .update(schema.cards)
@@ -258,17 +272,18 @@ function claim(db: Db, card: Card, token: string) {
     );
 }
 
+/** The card row, as it stands once this write's claim has landed. */
+function claimedRow(cardId: string, token: string) {
+  return and(eq(schema.cards.id, cardId), eq(schema.cards.imageVersion, token)) as SQL;
+}
+
 function claimed(cardId: string, token: string) {
   return sql`exists (select 1 from cards where cards.id = ${cardId} and cards.image_version = ${token})`;
 }
 
-/** The audit row lands only with the claim, so its presence says whether this write won. */
-async function confirm(db: Db, auditId: string) {
-  const [row] = await db
-    .select({ id: schema.auditLog.id })
-    .from(schema.auditLog)
-    .where(eq(schema.auditLog.id, auditId));
-  if (!row) throw stale();
+/** Whether the claim updated the card, read from the batch's own result. */
+function landed(result: unknown): boolean {
+  return (result as D1Result).meta.changes === 1;
 }
 
 function auditIfClaimed(
@@ -278,13 +293,12 @@ function auditIfClaimed(
   action: string,
   payload: Record<string, unknown>,
 ) {
-  const id = newId();
-  const statement = ctx.db.insert(schema.auditLog).select(
-    sql`select ${id}, ${card.userId}, ${ctx.actor}, ${action}, 'card', ${card.id},
-      ${JSON.stringify(payload)}, ${Date.now()}
-    where ${claimed(card.id, token)}`,
+  return auditStatementWhen(
+    ctx.db,
+    { userId: card.userId, actor: ctx.actor, action, entity: "card", entityId: card.id, payload },
+    schema.cards,
+    claimedRow(card.id, token),
   );
-  return { id, statement };
 }
 
 function stale() {

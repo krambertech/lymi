@@ -13,7 +13,7 @@ import {
 } from "./card-images";
 import { addCards, showCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
-import { createDeck } from "./decks";
+import { createDeck, listDeckCards } from "./decks";
 import { dueCount } from "./due";
 import { join } from "./members";
 import { gradeCard, reviewQueue } from "./review";
@@ -340,6 +340,22 @@ describe("card pictures", () => {
 
     await archiveCardImage(owner, added.card.id, {});
     expect(await asked()).toEqual([{ cue: "meaning", target: "term" }]);
+  });
+
+  it("shows a picture card's picture-mode progress in the deck list", async () => {
+    const { deck, card } = await signCard("listed", [{ cue: "image", target: "meaning" }]);
+    const deps = { bucket: bucket(), images: processor() };
+    await uploadCardImage(owner, card.id, jpeg, { description: "A green arrow" }, deps);
+    await gradeCard(owner, {
+      cardId: card.id,
+      mode: { cue: "image", target: "meaning" },
+      rating: 3,
+      reviewedAt: new Date(Date.now() - 1_000),
+    });
+
+    const [row] = await listDeckCards(owner, deck.id);
+    expect(row?.state?.mode).toEqual({ cue: "image", target: "meaning" });
+    expect(row?.state?.state).not.toBe(0);
   });
 
   it("serves the picture to members, gives members their own picture states, and hides it from strangers", async () => {

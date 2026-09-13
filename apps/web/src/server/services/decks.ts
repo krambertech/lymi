@@ -14,11 +14,7 @@ import {
   stateStatementsForDeck,
 } from "./modes";
 
-/**
- * Whether a state is asked now. A state for a mode the card is no longer asked in stays put and
- * stops being counted, so turning a mode off is a setting rather than a migration: turn it back
- * on and the progress is still there. ADR 0007, ADR 0014.
- */
+/** Whether a state is asked now; a mode turned off keeps its states uncounted (ADR 0007, ADR 0014). */
 export const asked = sql.raw(askedSql());
 
 /** All active decks the learner can see, with how many of their cards are due, in the learner's order. */
@@ -109,10 +105,15 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
       schema.cardStates,
       and(
         eq(schema.cardStates.cardId, schema.cards.id),
-        eq(schema.cardStates.userId, userId),
-        sql`card_states.direction = case
-          when coalesce(cards.directions, decks.directions) = 'production' then 'production'
-          else 'recognition' end`,
+        // The state for the mode the card leads with: its picture mode when that is asked.
+        sql`card_states.id = (
+          select leading.id from card_states as leading
+          where leading.card_id = cards.id and leading.user_id = ${userId}
+            and ${sql.raw(askedSql("leading.direction"))}
+          order by case when leading.direction like 'image_%' then 0
+            when leading.direction = 'recognition' then 1 else 2 end
+          limit 1
+        )`,
       ),
     )
     .where(and(eq(schema.cards.deckId, deckId), isNull(schema.cards.archivedAt)))

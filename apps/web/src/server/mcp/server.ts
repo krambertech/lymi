@@ -53,7 +53,7 @@ export interface McpPrincipal {
   scope: Scope;
   /** Named in the step-up challenge when a read-only connection tries to write. */
   resourceMetadataUrl: string;
-  /** Picture storage and processing. Missing where the Worker has no bindings. */
+  /** Picture storage and processing, missing where the Worker has no bindings. */
   images?: CardImageStorage | undefined;
 }
 
@@ -68,7 +68,7 @@ When the learner shares a lesson, transcript or text, you do the extraction: pic
 
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
 
-A card may have one picture, set with set_card_image from a public link or base64 bytes. Give it a description of what the picture shows that never names the term or meaning: it is what a screen reader says and what review shows if the picture cannot load. Picture review modes (cue "image") are set on each card with update_card or add_cards, never on a deck, and ask only while the card has a described picture. A road sign would be reviewModes [{ "cue": "image", "target": "meaning" }]; until it has a described picture, a card of picture modes only is asked by its term instead.
+A card may have one picture, set with set_card_image from a public link or base64 bytes. Give it a description of what the picture shows that never names the term or meaning: it is what a screen reader says and what review shows if the picture cannot load. Picture review modes (cue "image") are set on each card with update_card or add_cards, never on a deck, and ask only while the card has a described picture. A road sign would be reviewModes [{ "cue": "image", "target": "meaning" }]; until it has a described picture, a card of picture modes only is asked in the text mode with the same target instead.
 
 Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 

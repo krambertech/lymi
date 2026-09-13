@@ -1,11 +1,6 @@
 import type { Direction, Directions, ReviewMode, ReviewModeKey } from "./types";
 
-/**
- * One conversion between the API's cue-target objects, the persisted mode keys and the legacy
- * directions. While the expand-and-contract migration runs, the legacy `directions` columns stay
- * authoritative for text modes, because an older Worker writes only them; a card's `review_modes`
- * adds its order and picture modes. ADR 0014.
- */
+/** One conversion between cue-target objects, persisted mode keys and legacy directions (ADR 0014, docs/data-model.md). */
 
 export const TEXT_MODES = ["term_to_meaning", "meaning_to_term"] as const;
 export const IMAGE_MODES = ["image_to_term", "image_to_meaning"] as const;
@@ -39,7 +34,7 @@ export function isPictureOnly(keys: readonly ReviewModeKey[] | null): boolean {
   return !!keys && keys.length > 0 && keys.every(isImageMode);
 }
 
-/** The legacy value for a mode list. A picture-only list stores the fallbacks of its modes. */
+/** The legacy value for a mode list, using fallbacks when the list has only picture modes. */
 export function directionsFromModes(keys: readonly ReviewModeKey[]): Directions {
   const own = keys.filter((key) => !isImageMode(key));
   const text = own.length > 0 ? own : keys.filter(isImageMode).map(fallbackMode);
@@ -49,11 +44,7 @@ export function directionsFromModes(keys: readonly ReviewModeKey[]): Directions 
   return production ? "production" : "recognition";
 }
 
-/**
- * The modes in force for a card with its own list: the text modes its legacy column says, in the
- * stored order, plus the stored picture modes, so a list an older Worker left stale heals on read.
- * A picture-only list stays as stored; its fallbacks are not modes of their own.
- */
+/** The modes in force for a card's own list, healing a list an older Worker left stale. */
 export function effectiveModes(
   directions: Directions,
   stored: readonly ReviewModeKey[] | null,
@@ -66,11 +57,7 @@ export function effectiveModes(
   return modes;
 }
 
-/**
- * The value `card_states.direction` and `reviews.direction` hold for a mode. Text modes keep
- * their legacy name so older rows and the legacy unique index still identify them; a picture
- * mode has no legacy name and stores its key.
- */
+/** The value `direction` columns hold for a mode: the legacy name for text modes, the key for picture modes. */
 export function stateDirection(key: ReviewModeKey): string {
   if (key === "term_to_meaning") return "recognition";
   if (key === "meaning_to_term") return "production";

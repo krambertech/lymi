@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import type { ReviewMode, ReviewModeKey } from "@lymi/core";
 import { modeKey } from "@lymi/core";
 
-/** What each review mode is called wherever the learner sees one. ADR 0014. */
+/** What each review mode is called wherever the learner sees one (ADR 0014). */
 export const MODE_LABELS: Record<ReviewModeKey, MessageDescriptor> = {
   term_to_meaning: msg`Recognition`,
   meaning_to_term: msg`Production`,

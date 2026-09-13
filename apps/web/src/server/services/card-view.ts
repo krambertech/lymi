@@ -4,7 +4,7 @@ import type { Card, CardImage } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { cardModes } from "./modes";
 
-/** A picture as callers see it. The storage key and any source URL stay behind. */
+/** A picture as callers see it, without the storage key or source URL. */
 export interface CardImageView {
   id: string;
   url: string;

@@ -8,11 +8,7 @@ export type Fetcher = (request: Request) => Promise<Response>;
 const IMPORT_TIMEOUT_MS = 10_000;
 const MAX_REDIRECTS = 3;
 
-/**
- * Fetch a picture from a public link once. Every hop is checked again: http or https on the
- * default port, no credentials in the URL, and a public host. The platform also refuses private
- * ranges, so a name that resolves to one fails at the edge. Errors never repeat the URL.
- */
+/** Fetch a picture from a public link once, rechecking every redirect and never repeating the URL in an error; the rules are in docs/data-model.md. */
 export async function fetchRemoteImage(
   link: string,
   fetcher: Fetcher = (request) => fetch(request),

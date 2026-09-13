@@ -20,18 +20,9 @@ import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { ServiceError } from "./context";
 
-/**
- * Review modes on the server, ADR 0014. The legacy `directions` columns store a deck's modes and
- * a card's text modes, which every Worker version writes; a card's `review_modes` adds its order
- * and picture modes. `card_states.direction` stays the identity a grade finds.
- */
+/** Review modes on the server; the expand-phase storage rules are in docs/data-model.md (ADR 0014). */
 
-/**
- * Whether a state row's mode is asked, as raw SQL over `cards`, `decks` and a state direction.
- * A picture mode is asked when the card's own list names it and the card has an active, described
- * picture; a card of picture modes only asks its fallback text mode while it has no such picture.
- * Every due count, the queue, stats and reminders share it.
- */
+/** Whether a state's mode is asked, as raw SQL shared by due counts, the queue, stats and reminders. */
 export function askedSql(
   direction = "card_states.direction",
   { cards = "cards", decks = "decks" }: { cards?: string; decks?: string } = {},
@@ -58,15 +49,17 @@ export function askedSql(
 
 type Statement = Parameters<Db["batch"]>[0][number];
 
-/**
- * Insert every missing state that is asked, one statement per mode, for the cards `where` selects
- * and the learners `learners` yields as `deck_id, user_id` rows. A state that exists, including one
- * for a mode no longer asked, is never replaced.
- */
-function stateInserts(db: Db, where: SQL, learners: SQL, now: Date): Statement[] {
+/** Insert every missing asked state, one statement per mode, never replacing an existing one. */
+function stateInserts(
+  db: Db,
+  where: SQL,
+  learners: SQL,
+  now: Date,
+  keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
+): Statement[] {
   const due = now.getTime();
   const fsrs = serializeState(emptyState(now));
-  return REVIEW_MODE_KEYS.map((key) => {
+  return keys.map((key) => {
     const direction = stateDirection(key);
     return db
       .insert(schema.cardStates)
@@ -89,12 +82,18 @@ function deckLearners(deckId: SQL) {
 }
 
 /** One card's states for everyone who studies its deck, as membership stands inside the batch. */
-export function stateStatementsForCard(db: Db, cardId: string, now = new Date()): Statement[] {
+export function stateStatementsForCard(
+  db: Db,
+  cardId: string,
+  now = new Date(),
+  keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
+): Statement[] {
   return stateInserts(
     db,
     sql`cards.id = ${cardId}`,
     deckLearners(sql`(select deck_id from cards where id = ${cardId})`),
     now,
+    keys,
   );
 }
 
@@ -158,7 +157,7 @@ export interface ModeInput {
   reviewModes?: ReviewMode[] | null | undefined;
 }
 
-/** A deck's legacy column from either spelling. Picture modes belong on cards. */
+/** A deck's legacy column from either spelling, refusing picture modes, which belong on cards. */
 export function resolveDeckDirections(input: ModeInput): Directions | undefined {
   const resolved = resolveCardModes(input, null);
   if (!resolved) return undefined;
@@ -168,11 +167,7 @@ export function resolveDeckDirections(input: ModeInput): Directions | undefined 
   return resolved.directions;
 }
 
-/**
- * The columns a card write stores, or undefined when it does not touch modes. `reviewModes` wins;
- * a legacy `directions` replaces only the text modes, so an older app cannot drop picture modes it
- * never knew about. Null follows the deck again.
- */
+/** The columns a card write stores, where a legacy `directions` replaces only the text modes and keeps picture modes. */
 export function resolveCardModes(
   input: ModeInput,
   current: readonly ReviewModeKey[] | null,

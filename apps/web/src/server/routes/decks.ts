@@ -156,7 +156,7 @@ decks.get(
     tags: ["Decks"],
     summary: "List a deck's cards",
     description:
-      "Active cards, newest first, each with its recognition-direction scheduling state.",
+      "Active cards, newest first, each with the caller's scheduling state for the mode the card leads with: its picture mode when that is asked, otherwise recognition before production.",
     ok: { schema: z.array(CardWithStateOut), description: "Cards" },
   }),
   async (c) => c.json(await listDeckCards(ctxOf(c), c.req.param("id"))),

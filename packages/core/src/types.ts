@@ -48,7 +48,7 @@ export const REVIEW_MODE_KEYS = [
 export const ReviewModeKey = z.enum(REVIEW_MODE_KEYS);
 export type ReviewModeKey = z.infer<typeof ReviewModeKey>;
 
-/** What a review shows before reveal, and what the learner grades. Only these four pairs exist. */
+/** What a review shows before reveal and what the learner grades, one of four pairs. */
 export const ReviewMode = z
   .union([
     z.object({ cue: z.literal("term"), target: z.literal("meaning") }),
@@ -62,10 +62,7 @@ export const ReviewMode = z
   });
 export type ReviewMode = z.infer<typeof ReviewMode>;
 
-/**
- * How a deck, or a card on its own, is asked: one or more modes, each once. Picture modes belong
- * on cards; a card of picture modes only is asked by its text fallback until it has a picture.
- */
+/** How a deck, or a card on its own, is asked; picture modes belong on cards. */
 export const ReviewModes = z
   .array(ReviewMode)
   .min(1, "Choose at least one review mode.")
@@ -187,17 +184,14 @@ export const GradeInput = z
   });
 export type GradeInput = z.infer<typeof GradeInput>;
 
-/** What a picture shows, for a screen reader and when it cannot load. Never the answer. */
+/** What a picture shows, for a screen reader and when it cannot load, never naming the answer. */
 export const ImageDescription = z
   .string()
   .trim()
   .min(1, "Describe the picture.")
   .max(300, "Keep the description under 300 characters.");
 
-/**
- * The card's image version when the caller last read it. A change that raced ahead makes the
- * write a 409. Null expects a card that has never had a picture; leave it out to skip the check.
- */
+/** The card's `imageVersion` as last read, so a newer change makes the write a 409; null expects no picture yet. */
 const ImageVersion = z
   .string()
   .max(64)
@@ -214,7 +208,7 @@ export const CardImageImportInput = z.object({
 });
 export type CardImageImportInput = z.infer<typeof CardImageImportInput>;
 
-/** An upload, as the form fields arrive. The file itself is checked by its bytes. */
+/** An upload's form fields; the file itself is checked by its bytes. */
 export const CardImageUploadFields = z.object({
   description: ImageDescription.optional(),
   version: ImageVersion,

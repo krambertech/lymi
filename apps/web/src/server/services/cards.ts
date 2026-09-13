@@ -1,5 +1,5 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
-import { newId, normaliseTerm } from "@lymi/core";
+import { newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
@@ -126,7 +126,8 @@ export async function addCards(
     };
     groups.push([
       db.insert(schema.cards).values(card),
-      ...stateStatementsForCard(db, id, now),
+      // A new card has no picture yet, so only its text modes can be asked.
+      ...stateStatementsForCard(db, id, now, TEXT_MODES),
       auditStatement(db, {
         userId,
         actor,

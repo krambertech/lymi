@@ -1,4 +1,5 @@
 import { type Actor, newId } from "@lymi/core";
+import { getTableColumns, is, SQL, sql, type Table } from "@lymi/core/db";
 import type { Db } from "./db";
 import { schema } from "./db";
 
@@ -22,6 +23,43 @@ export function auditStatement(db: Db, entry: AuditInput) {
     entityId: entry.entityId,
     payload: entry.payload ?? null,
   });
+}
+
+/** An audit row that lands only if the `where` row exists in `from` when its batch reaches it. */
+export function auditStatementWhen(db: Db, entry: AuditInput, from: Table, where: SQL) {
+  return insertWhen(
+    db,
+    schema.auditLog,
+    {
+      id: newId(),
+      userId: entry.userId,
+      actor: entry.actor,
+      action: entry.action,
+      entity: entry.entity,
+      entityId: entry.entityId,
+      payload: JSON.stringify(entry.payload ?? null),
+    },
+    from,
+    where,
+  );
+}
+
+/** Inserts one row per `from` row matching `where`, with Drizzle checking the selected keys against the table's columns. */
+export function insertWhen<T extends Table>(
+  db: Db,
+  table: T,
+  row: { [K in keyof T["$inferInsert"]]?: unknown },
+  from: Table,
+  where: SQL,
+) {
+  const values: Record<string, SQL> = {};
+  for (const [key, column] of Object.entries(getTableColumns(table))) {
+    const value = (row as Record<string, unknown>)[key];
+    if (value !== undefined) values[key] = sql`${value}`;
+    else if (is(column.default, SQL)) values[key] = column.default;
+    else values[key] = sql`${column.default ?? null}`;
+  }
+  return db.insert(table).select((qb) => qb.select(values).from(from).where(where) as never);
 }
 
 /** One row per write. The UI reads this to show what the API, MCP or AI changed. */

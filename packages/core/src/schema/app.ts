@@ -72,7 +72,7 @@ export const cards = sqliteTable(
       .default("user"),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
-    /** The card's own mode list, read only while `directions` overrides the deck. ADR 0014. */
+    /** The card's own mode list, read only while `directions` overrides the deck (ADR 0014). */
     reviewModeKeys: text("review_modes", { mode: "json" }).$type<ReviewModeKey[]>(),
     /** Opaque token of the last picture change, so a slow write cannot overwrite a newer one. */
     imageVersion: text("image_version"),
@@ -325,11 +325,7 @@ export const reviewUndos = sqliteTable("review_undos", {
   undoneAt: integer("undone_at", { mode: "timestamp_ms" }).notNull(),
 });
 
-/**
- * A card's picture. At most one row per card is active; replaced and archived rows stay so
- * history and restore keep working. Bytes live in the private PRIVATE_IMAGES bucket under
- * `object_key`, normalized to WebP without metadata. Never log the key, description or source.
- */
+/** A card's picture, at most one active per card; the storage rules are in docs/data-model.md. */
 export const cardImages = sqliteTable(
   "card_images",
   {
@@ -346,7 +342,7 @@ export const cardImages = sqliteTable(
     width: integer("width").notNull(),
     height: integer("height").notNull(),
     byteSize: integer("byte_size").notNull(),
-    /** What the picture shows without naming the answer. Picture modes wait for one. */
+    /** What the picture shows without naming the answer; picture modes wait for one. */
     description: text("description"),
     sourceKind: text("source_kind", { enum: ["upload", "url"] }).notNull(),
     /** Host of an imported link, never the full URL, which may carry credentials. */

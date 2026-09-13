@@ -16,14 +16,35 @@ const REJECTIONS: Record<ImageRejection | "unreadable", string> = {
   unreadable: "That image couldn’t be read. Try another file.",
 };
 
+/** One square WebP of `size` pixels, cropped to fill. */
+export function normalizeSquareImage(images: ImagesBinding, bytes: Uint8Array, size: number) {
+  return normalizeImage(images, bytes, () => ({ width: size, height: size, fit: "cover" }));
+}
+
+/** One WebP no longer than `maxSide` on either side, keeping its shape; a smaller image keeps its size. */
+export function normalizeBoundedImage(images: ImagesBinding, bytes: Uint8Array, maxSide: number) {
+  return normalizeImage(images, bytes, ({ width, height }) => {
+    const scale = Math.min(1, maxSide / Math.max(width, height));
+    return {
+      width: Math.max(1, Math.round(width * scale)),
+      height: Math.max(1, Math.round(height * scale)),
+      fit: "scale-down",
+    };
+  });
+}
+
 /**
- * One bounded square WebP from any accepted still image. The bytes are checked before the
- * Images binding decodes them and again after it encodes, and WebP output carries no metadata.
+ * The one image pipeline: bytes are checked before the Images binding decodes them and again after
+ * it encodes, and WebP output carries no metadata.
  */
-export async function normalizeSquareImage(
+async function normalizeImage(
   images: ImagesBinding,
   bytes: Uint8Array,
-  size: number,
+  target: (size: { width: number; height: number }) => {
+    width: number;
+    height: number;
+    fit: "cover" | "scale-down";
+  },
 ): Promise<NormalizedImage> {
   const inspected = inspectImage(bytes);
   if (!inspected.ok) throw rejection(inspected.reason);
@@ -34,45 +55,11 @@ export async function normalizeSquareImage(
     if (!("width" in info) || info.width <= 0 || info.height <= 0) throw rejection("unsupported");
     const result = await images
       .input(streamOf(bytes))
-      .transform({ width: size, height: size, fit: "cover" })
+      .transform(target(inspected.image))
       .output({ format: "image/webp", quality: 85, anim: false });
     output = new Uint8Array(await new Response(result.image()).arrayBuffer());
   } catch (err) {
     if (err instanceof ServiceError) throw err;
-    throw rejection("unreadable");
-  }
-
-  const encoded = sniffImage(output);
-  if (encoded?.type !== "image/webp" || encoded.animated) throw rejection("unreadable");
-  return { bytes: output, type: "image/webp", width: encoded.width, height: encoded.height };
-}
-
-/**
- * One WebP no longer than `maxSide` on either side, keeping the image's shape. Same checks as
- * `normalizeSquareImage`; a smaller image keeps its size.
- */
-export async function normalizeBoundedImage(
-  images: ImagesBinding,
-  bytes: Uint8Array,
-  maxSide: number,
-): Promise<NormalizedImage> {
-  const inspected = inspectImage(bytes);
-  if (!inspected.ok) throw rejection(inspected.reason);
-  const { width, height } = inspected.image;
-  const scale = Math.min(1, maxSide / Math.max(width, height));
-  const target = {
-    width: Math.max(1, Math.round(width * scale)),
-    height: Math.max(1, Math.round(height * scale)),
-  };
-
-  let output: Uint8Array;
-  try {
-    const result = await images
-      .input(streamOf(bytes))
-      .transform({ ...target, fit: "scale-down" })
-      .output({ format: "image/webp", quality: 85, anim: false });
-    output = new Uint8Array(await new Response(result.image()).arrayBuffer());
-  } catch {
     throw rejection("unreadable");
   }
 

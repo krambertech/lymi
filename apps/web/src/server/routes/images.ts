@@ -20,7 +20,7 @@ import {
   uploadCardImage,
 } from "../services";
 
-/** A card's one picture, mounted under /api/cards. ADR 0014. */
+/** A card's one picture, mounted under /api/cards (ADR 0014). */
 export const images = new Hono<AppEnv>();
 
 const deps = (c: Context<AppEnv>) => ({ bucket: c.env.PRIVATE_IMAGES, images: c.env.IMAGES });

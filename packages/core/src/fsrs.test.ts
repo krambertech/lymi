@@ -40,6 +40,24 @@ describe("fsrs", () => {
     }
   });
 
+  it("keeps a missed card in learning with one ten-minute step", () => {
+    const missed = schedule(emptyState(now), 1, now).card;
+    expect(missed.state).toBe(State.Learning);
+    expect(missed.due.getTime() - now.getTime()).toBe(10 * 60_000);
+    const later = new Date(now.getTime() + 15 * 60_000);
+    expect(schedule(missed, 2, later).card.state).toBe(State.Learning);
+    expect(schedule(missed, 3, later).card.state).toBe(State.Review);
+  });
+
+  it("maps a card on the old second step so Forgot does not graduate it", () => {
+    const stale = { ...schedule(emptyState(now), 1, now).card, learning_steps: 1 };
+    const card = deserializeState(serializeState(stale));
+    expect(card.learning_steps).toBe(0);
+    const later = new Date(now.getTime() + 10 * 60_000);
+    expect(schedule(card, 1, later).card.state).toBe(State.Learning);
+    expect(schedule(card, 3, later).card.state).toBe(State.Review);
+  });
+
   it("round-trips through JSON", () => {
     const r = schedule(emptyState(now), 3, now);
     const back = deserializeState(serializeState(r.card));

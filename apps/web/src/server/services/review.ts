@@ -1,7 +1,11 @@
-import type { GradeInput, ReviewModeKey } from "@lymi/core";
+import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey } from "@lymi/core";
 import {
   deserializeState,
+  drawableCount,
+  drawKey,
+  drawOrder,
   legacyDirection,
+  missed,
   modeKey,
   modeOf,
   modesFromDirections,
@@ -11,15 +15,14 @@ import {
   serializeState,
   stateDirection,
 } from "@lymi/core";
-import { and, asc, eq, gte, sql } from "@lymi/core/db";
+import { and, eq, gte } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
 import { dateFormatter } from "./days";
-import { dueWhere } from "./due";
+import { cardsById, drawInputs } from "./draw";
 import { memberOf } from "./members";
-import { stateMode } from "./modes";
 import {
   type DayProgress,
   openDay,
@@ -31,93 +34,122 @@ import {
 import { getSettings } from "./settings";
 
 /**
- * Select the oldest cards due now, then shuffle equal-priority ties. The scheduler preview
- * stays available to API clients even though the first-party review UI keeps it out of sight.
+ * The order today's review takes: what `draw` would serve if every grade succeeded, ADR 0019.
+ * The scheduler preview stays available to API clients even though the first-party review UI
+ * keeps it out of sight.
  */
 export async function reviewQueue(
-  { db, userId }: ServiceContext,
+  ctx: ServiceContext,
   opts: { deckId?: string | undefined; limit?: number | undefined } = {},
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
   const now = new Date();
-  const where = dueWhere(userId, now, opts.deckId);
+  const zone = await reviewZone(ctx);
+  const scope = { deckId: opts.deckId };
+  const { cards, log, day, states } = await drawInputs(ctx, { ...scope, now, zone });
+  const order = drawOrder(cards, log, day, scope, limit);
+  const content = await presentContent(ctx, [...new Set(order.map((d) => d.cardId))]);
 
-  const rows = await db
-    .select({ card: schema.cards, state: schema.cardStates })
-    .from(schema.cardStates)
-    .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(where)
-    .orderBy(asc(schema.cardStates.due))
-    .limit(limit * 2);
-
-  const [{ total } = { total: 0 }] = await db
-    .select({ total: sql<number>`count(distinct ${schema.cardStates.cardId})` })
-    .from(schema.cardStates)
-    .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(where);
-
-  const uniqueRows = oneDirectionPerCard(rows).slice(0, limit);
-  const shuffledRows = shuffleEqualPriorityItems(uniqueRows, ({ state }) => state.due.getTime());
-  const cards = await presentCards(
-    db,
-    shuffledRows.map(({ card }) => card),
-  );
-  const items = shuffledRows.map(({ state }, index) => {
+  const items = order.flatMap((drawn) => {
+    const state = states.get(drawKey(drawn.cardId, drawn.mode));
+    const card = content.get(drawn.cardId);
+    if (!state || !card) return [];
     const next = preview(deserializeState(state.fsrs), now);
-    const key = stateMode(state);
-    const direction = legacyDirection(key);
-    return {
-      card: cards[index] as (typeof cards)[number],
-      mode: modeOf(key),
-      // An older app reads only `direction`, so a picture mode leaves it out rather than let
-      // that app grade the text sibling.
-      ...(direction ? { direction } : {}),
-      stateId: state.id,
-      fsrsState: state.state,
-      next: {
-        1: next[1].toISOString(),
-        2: next[2].toISOString(),
-        3: next[3].toISOString(),
-        4: next[4].toISOString(),
+    const direction = legacyDirection(state.mode);
+    return [
+      {
+        card,
+        mode: modeOf(state.mode),
+        // An older app reads only `direction`, so a picture mode leaves it out rather than let
+        // that app grade the text sibling.
+        ...(direction ? { direction } : {}),
+        stateId: state.id,
+        fsrsState: state.state,
+        next: {
+          1: next[1].toISOString(),
+          2: next[2].toISOString(),
+          3: next[3].toISOString(),
+          4: next[4].toISOString(),
+        },
       },
-    };
+    ];
   });
 
-  return { total, items };
+  return { total: drawableCount(cards, log, day, scope), items };
 }
 
-/** Keep sibling directions out of a session so seeing one cannot reveal the other. */
-export function oneDirectionPerCard<T extends { card: { id: string } }>(rows: T[]): T[] {
-  const seen = new Set<string>();
-  return rows.filter(({ card }) => {
-    if (seen.has(card.id)) return false;
-    seen.add(card.id);
-    return true;
-  });
-}
+/**
+ * What a client needs to draw for itself: the day, the goal, the cards at the front of the
+ * order with every mode they are asked in, and today's log in every scope. A card with a
+ * return pending is included whatever the limit, since the client holds it in hand.
+ */
+export async function reviewDraw(
+  ctx: ServiceContext,
+  opts: { deckId?: string | undefined; limit?: number | undefined; zone?: string | undefined },
+) {
+  const limit = Math.min(opts.limit ?? 100, 500);
+  const now = new Date();
+  const zone = await reviewZone(ctx, opts.zone);
+  const settings = await getSettings(ctx);
+  const scope = { deckId: opts.deckId };
+  const { cards, log, day, states } = await drawInputs(ctx, { ...scope, now, zone });
 
-/** Shuffle ties without letting a lower-priority card jump the queue. */
-export function shuffleEqualPriorityItems<T>(
-  items: readonly T[],
-  priorityOf: (item: T) => number,
-  random = Math.random,
-): T[] {
-  const shuffled: T[] = [];
-  for (let start = 0; start < items.length; ) {
-    const priority = priorityOf(items[start] as T);
-    let end = start + 1;
-    while (end < items.length && priorityOf(items[end] as T) === priority) end += 1;
-    const group = items.slice(start, end);
-    for (let i = group.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(random() * (i + 1));
-      [group[i], group[j]] = [group[j] as T, group[i] as T];
-    }
-    shuffled.push(...group);
-    start = end;
+  const include = new Set(drawOrder(cards, log, day, scope, limit).map((d) => d.cardId));
+  const latest = new Map<string, DrawLogEntry>();
+  for (const entry of log) latest.set(drawKey(entry.cardId, entry.mode), entry);
+  for (const entry of latest.values()) {
+    if (missed(entry.rating, entry.stateBefore)) include.add(entry.cardId);
   }
-  return shuffled;
+  const position = new Map([...include].map((cardId, index) => [cardId, index]));
+  const content = await presentContent(ctx, [...include]);
+
+  return {
+    day: { date: day.date, zone, start: day.start, end: day.end },
+    goal: settings.dailyGoal,
+    attempts: log.length,
+    total: drawableCount(cards, log, day, scope),
+    cards: cards
+      .filter((card) => include.has(card.cardId))
+      .sort((a, b) => (position.get(a.cardId) ?? 0) - (position.get(b.cardId) ?? 0))
+      .flatMap((card) => {
+        const modes = card.modes.flatMap((mode) => {
+          const state = states.get(drawKey(card.cardId, mode.mode));
+          if (!state) return [];
+          const direction = legacyDirection(state.mode);
+          return [
+            {
+              mode: modeOf(state.mode),
+              ...(direction ? { direction } : {}),
+              stateId: state.id,
+              fsrsState: mode.state,
+              due: mode.due,
+              retrievability: mode.retrievability,
+              added: mode.added,
+              hasCue: mode.hasCue,
+            },
+          ];
+        });
+        const row = content.get(card.cardId);
+        return row && modes.length > 0 ? [{ card: row, modes }] : [];
+      }),
+    log: log.map((entry) => ({
+      cardId: entry.cardId,
+      mode: modeOf(entry.mode as ReviewModeKey),
+      ...(legacyDirection(entry.mode as ReviewModeKey)
+        ? { direction: legacyDirection(entry.mode as ReviewModeKey) as Direction }
+        : {}),
+      rating: entry.rating,
+      stateBefore: entry.stateBefore,
+      at: entry.at,
+    })),
+  };
+}
+
+/** The cards a draw returned, as the API shows them, by id. */
+async function presentContent(ctx: ServiceContext, ids: string[]) {
+  const rows = await cardsById(ctx, ids);
+  const views = await presentCards(ctx.db, [...rows.values()]);
+  return new Map(views.map((view) => [view.id, view]));
 }
 
 /**

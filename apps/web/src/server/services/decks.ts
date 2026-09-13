@@ -5,6 +5,7 @@ import { audit } from "../audit";
 import { schema } from "../db";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
+import { drawableByDeck } from "./draw";
 import { deckAccess, memberOf, ownedDeck } from "./members";
 import {
   askedSql,
@@ -13,13 +14,16 @@ import {
   resolveDeckDirections,
   stateStatementsForDeck,
 } from "./modes";
+import { getSettings } from "./settings";
 
 /** Whether a state is asked now; a mode turned off keeps its states uncounted (ADR 0007, ADR 0014). */
 export const asked = sql.raw(askedSql());
 
-/** All active decks the learner can see, with how many of their cards are due, in the learner's order. */
-export async function listDecks({ db, userId }: ServiceContext) {
-  const now = Date.now();
+/** All active decks the learner can see, with how many of their cards can be reviewed, in the learner's order. */
+export async function listDecks(ctx: ServiceContext) {
+  const { db, userId } = ctx;
+  const zone = (await getSettings(ctx)).reviewTimezone ?? "UTC";
+  const due = await drawableByDeck(ctx, { zone });
   const rows = await db
     .select({
       id: schema.decks.id,
@@ -29,15 +33,6 @@ export async function listDecks({ db, userId }: ServiceContext) {
       directions: schema.decks.directions,
       position: schema.decks.position,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
-      // Cards, not direction states: a review session asks one direction per card, so this is
-      // the number Review starts, the same count the queue reports as its total.
-      due: sql<number>`(
-        select count(distinct card_states.card_id) from card_states
-        join cards on cards.id = card_states.card_id
-        where cards.deck_id = decks.id and cards.archived_at is null
-          and card_states.user_id = ${userId}
-          and card_states.due <= ${now} and ${asked}
-      )`,
       ownerId: schema.decks.userId,
       ownerName: schema.user.name,
       memberRole: schema.deckMembers.role,
@@ -57,6 +52,8 @@ export async function listDecks({ db, userId }: ServiceContext) {
   return rows.map(({ ownerId, ownerName, memberRole, ...deck }) => ({
     ...deck,
     reviewModes: deckModes(deck.directions),
+    // Cards, not direction states: the same count the queue reports as its total.
+    due: due.get(deck.id) ?? 0,
     role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
     owner: { id: ownerId, name: ownerName },
   }));

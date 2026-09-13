@@ -1,10 +1,12 @@
 import { msg, plural } from "@lingui/core/macro";
+import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { serverI18n } from "./i18n";
-import { askedSql } from "./services/modes";
+import { drawableCount } from "./services/draw";
 
 interface ReminderCandidate {
   id: string;
+  user_id: string;
   endpoint: string;
   p256dh: string;
   auth: string;
@@ -12,7 +14,7 @@ interface ReminderCandidate {
   timezone: string;
   last_sent_local_date: string | null;
   app_language: string | null;
-  due_count: number;
+  review_timezone: string | null;
 }
 
 interface ReminderMoment {
@@ -28,6 +30,13 @@ export interface ReminderDispatchResult {
 }
 
 type SendPush = (candidate: ReminderCandidate, due: number, env: Bindings) => Promise<void>;
+/** Cards the learner can review, by the same rule the queue uses. ADR 0019. */
+type CountDrawable = (userId: string, zone: string, now: Date) => Promise<number>;
+
+const countWith =
+  (db: ReturnType<typeof createDb>): CountDrawable =>
+  (userId, zone, now) =>
+    drawableCount({ db, userId, actor: "system" }, { now, zone });
 
 /** Local date and wall-clock time at an instant, including daylight-saving changes. */
 export function reminderMoment(now: Date, timezone: string): ReminderMoment {
@@ -125,36 +134,31 @@ async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindi
 }
 
 /**
- * Find each device whose local reminder window is open, claim that local date atomically,
- * then send. A retry cannot duplicate successful sends; transient failures release the claim.
+ * Find each device whose local reminder window is open, count what its learner can review,
+ * claim that local date atomically, then send. A retry cannot duplicate successful sends;
+ * transient failures release the claim.
  */
 export async function dispatchReviewReminders(
   env: Bindings,
   now: Date,
   send: SendPush = sendWebPush,
+  count: CountDrawable = countWith(createDb(env.DB)),
 ): Promise<ReminderDispatchResult> {
+  // A learner with several devices is counted once per dispatch.
+  const counts = new Map<string, Promise<number>>();
+  const countOnce: CountDrawable = (userId, zone, at) => {
+    const key = `${userId}|${zone}`;
+    const pending = counts.get(key) ?? count(userId, zone, at);
+    counts.set(key, pending);
+    return pending;
+  };
   const { results } = await env.DB.prepare(
-    `SELECT ps.id, ps.endpoint, ps.p256dh, ps.auth, ps.reminder_time, ps.timezone,
+    `SELECT ps.id, ps.user_id, ps.endpoint, ps.p256dh, ps.auth, ps.reminder_time, ps.timezone,
        ps.last_sent_local_date,
-       us.app_language,
-       (SELECT count(DISTINCT c.id)
-          FROM card_states s
-          JOIN cards c ON c.id = s.card_id
-          JOIN decks d ON d.id = c.deck_id
-         WHERE s.user_id = ps.user_id
-           AND (d.user_id = ps.user_id
-                OR EXISTS (SELECT 1 FROM deck_members m
-                            WHERE m.deck_id = d.id AND m.user_id = ps.user_id
-                              AND m.removed_at IS NULL))
-           AND s.due <= ?
-           AND c.archived_at IS NULL
-           AND d.archived_at IS NULL
-           AND ${askedSql("s.direction", { cards: "c", decks: "d" })}) AS due_count
+       us.app_language, us.review_timezone
        FROM push_subscriptions ps
        LEFT JOIN user_settings us ON us.user_id = ps.user_id`,
-  )
-    .bind(now.getTime())
-    .all<ReminderCandidate>();
+  ).all<ReminderCandidate>();
 
   const summary: ReminderDispatchResult = {
     considered: results.length,
@@ -164,9 +168,15 @@ export async function dispatchReviewReminders(
   };
 
   for (const candidate of results) {
-    if (Number(candidate.due_count) < 1) continue;
     const moment = reminderIsDue(now, candidate.timezone, candidate.reminder_time);
     if (!moment || candidate.last_sent_local_date === moment.localDate) continue;
+    // The review day follows the review zone; the device zone only says when to remind.
+    const due = await countOnce(
+      candidate.user_id,
+      candidate.review_timezone ?? candidate.timezone,
+      now,
+    );
+    if (due < 1) continue;
 
     const claim = await env.DB.prepare(
       `UPDATE push_subscriptions
@@ -179,7 +189,7 @@ export async function dispatchReviewReminders(
     if ((claim.meta.changes ?? 0) === 0) continue;
 
     try {
-      await send(candidate, Number(candidate.due_count), env);
+      await send(candidate, due, env);
       summary.sent += 1;
     } catch (error) {
       const statusCode = (error as { statusCode?: number }).statusCode;

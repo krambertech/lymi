@@ -132,7 +132,7 @@ Every key and every OAuth grant carries one scope, `read` or `write`. Write allo
 
 ### Spaced repetition: ts-fsrs
 
-FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline) and the server (to validate and persist). Grades and intervals are the algorithm's, not invented.
+FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline) and the server (to validate and persist). Grades and intervals are the algorithm's, not invented. One 10-minute learning step sets FSRS state only; which card comes next, and when a missed card returns, is the weighted draw in `packages/core/src/draw.ts` ([ADR 0019](adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md)).
 
 ### AI: enrichment plus lazy multilingual speech
 

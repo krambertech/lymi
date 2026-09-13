@@ -14,7 +14,7 @@ import {
 import { addCards, showCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck, listDeckCards } from "./decks";
-import { dueCount } from "./due";
+import { drawableCount } from "./draw";
 import { join } from "./members";
 import { gradeCard, reviewQueue } from "./review";
 import { learner, type TestBindings, testDb } from "./test-db";
@@ -276,11 +276,12 @@ describe("card pictures", () => {
       deps,
     );
     const pictureState = (await statesOf(card.id)).find((s) => s.mode === "image_to_term");
+    // Graded yesterday: one mode of a card per day, so a grade today would hold the picture back.
     await gradeCard(owner, {
       cardId: card.id,
       mode: { cue: "meaning", target: "term" },
       rating: 4,
-      reviewedAt: new Date(Date.now() - 1_000),
+      reviewedAt: new Date(Date.now() - 86_400_000 - 1_000),
     });
 
     const archived = await archiveCardImage(owner, card.id, {});
@@ -321,7 +322,7 @@ describe("card pictures", () => {
       deps,
     );
     expect(await asked()).toEqual([{ cue: "image", target: "meaning" }]);
-    expect((await dueCount(owner)) >= 1).toBe(true);
+    expect((await drawableCount(owner, { zone: "UTC" })) >= 1).toBe(true);
 
     await archiveCardImage(owner, card.id, {});
     expect(await asked()).toEqual([{ cue: "term", target: "meaning" }]);
@@ -382,7 +383,7 @@ describe("card pictures", () => {
     await expect(
       uploadCardImage(member, card.id, jpeg, {}, { bucket: store, images: processor() }),
     ).rejects.toMatchObject({ code: "forbidden" });
-    expect(await dueCount(member)).toBeGreaterThan(0);
+    expect(await drawableCount(member, { zone: "UTC" })).toBeGreaterThan(0);
   });
 
   it("imports from a public link without keeping the link", async () => {

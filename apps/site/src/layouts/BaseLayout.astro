@@ -5,15 +5,14 @@ interface Props {
   title: string;
   description: string;
   canonicalPath: string;
-  dark?: boolean;
 }
 
-const { title, description, canonicalPath, dark = false } = Astro.props;
+const { title, description, canonicalPath } = Astro.props;
 const canonical = new URL(canonicalPath, Astro.site ?? "https://lymi.app").toString();
 ---
 
 <!doctype html>
-<html lang={Astro.currentLocale ?? "en"} data-lymi-surface="public" data-theme={dark ? "dark" : undefined}>
+<html lang={Astro.currentLocale ?? "en"} data-lymi-surface="public">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -39,17 +38,15 @@ const canonical = new URL(canonicalPath, Astro.site ?? "https://lymi.app").toStr
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Onest:wght@400..600&display=swap"
     />
-    {!dark && (
-      <script is:inline>
-        try {
-          var t = localStorage.getItem("lymi-theme");
-          var dark =
-            t === "dark" ||
-            ((!t || t === "system") && matchMedia("(prefers-color-scheme: dark)").matches);
-          document.documentElement.dataset.theme = dark ? "dark" : "light";
-        } catch (e) {}
-      </script>
-    )}
+    <script is:inline>
+      try {
+        var t = localStorage.getItem("lymi-theme");
+        var dark =
+          t === "dark" ||
+          ((!t || t === "system") && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      } catch (e) {}
+    </script>
     <slot name="head" />
   </head>
   <body>

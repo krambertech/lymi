@@ -1,0 +1,242 @@
+{
+  "kalsarikannit": {
+    "term": "kalsarikännit",
+    "language": "fi",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "sisu": {
+    "term": "sisu",
+    "language": "fi",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "jaaaar": {
+    "term": "jäääär",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "komorebi": {
+    "term": "木漏れ日",
+    "language": "ja",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "itadakimasu": {
+    "term": "いただきます",
+    "language": "ja",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "tsundoku": {
+    "term": "積ん読",
+    "language": "ja",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "sobremesa": {
+    "term": "sobremesa",
+    "language": "es",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "saudade": {
+    "term": "saudade",
+    "language": "pt-PT",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "schnapsidee": {
+    "term": "Schnapsidee",
+    "language": "de",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "feierabend": {
+    "term": "Feierabend",
+    "language": "de",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "avoir-la-flemme": {
+    "term": "avoir la flemme",
+    "language": "fr",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "magari": {
+    "term": "magari",
+    "language": "it",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "gezellig": {
+    "term": "gezellig",
+    "language": "nl",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "lagom": {
+    "term": "lagom",
+    "language": "sv",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "nunchi": {
+    "term": "눈치",
+    "language": "ko",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "smachnoho": {
+    "term": "Смачного!",
+    "language": "uk",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "kolay-gelsin": {
+    "term": "Kolay gelsin",
+    "language": "tr",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "mamahuhu": {
+    "term": "马马虎虎",
+    "language": "zh-CN",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "thetta-reddast": {
+    "term": "Þetta reddast",
+    "language": "is",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "jugaad": {
+    "term": "जुगाड़",
+    "language": "hi",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "zeigarnik-effect": {
+    "term": "Zeigarnik effect",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "spacing-effect": {
+    "term": "spacing effect",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "baader-meinhof": {
+    "term": "Baader–Meinhof phenomenon",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "sunk-cost-fallacy": {
+    "term": "sunk cost fallacy",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "goodharts-law": {
+    "term": "Goodhart’s law",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "regression-to-the-mean": {
+    "term": "regression to the mean",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "benfords-law": {
+    "term": "Benford’s law",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "hysteresis": {
+    "term": "hysteresis",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "zugzwang": {
+    "term": "zugzwang",
+    "language": "de",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "mise-en-place": {
+    "term": "mise en place",
+    "language": "fr",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "maillard-reaction": {
+    "term": "Maillard reaction",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "chestertons-fence": {
+    "term": "Chesterton’s fence",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "occams-razor": {
+    "term": "Occam’s razor",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "habeas-corpus": {
+    "term": "habeas corpus",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "affordance": {
+    "term": "affordance",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "chekhovs-gun": {
+    "term": "Chekhov’s gun",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "rubber-duck-debugging": {
+    "term": "rubber duck debugging",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "petrichor": {
+    "term": "petrichor",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "mycorrhiza": {
+    "term": "mycorrhiza",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "syncopation": {
+    "term": "syncopation",
+    "language": "en",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  }
+}

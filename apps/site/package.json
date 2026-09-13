@@ -13,7 +13,8 @@
     "typecheck": "astro check && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",
     "cf-typegen": "wrangler types",
-    "i18n:extract": "lingui extract --clean"
+    "i18n:extract": "lingui extract --clean",
+    "hand:audio": "node scripts/hand-audio.mjs"
   },
   "dependencies": {
     "@lingui/core": "6.7.0",

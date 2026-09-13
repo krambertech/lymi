@@ -802,64 +802,124 @@
 /* ---- Landing ----------------------------------------------------------- */
 
 /*
- * The landing page is one dark room with the lantern in it. Everything here is the
- * lamp: the pool of light on the page and the way a card brightens as it crosses that
- * pool. This is the only place in Lymi with a gradient, and it is a light source rather
- * than decoration, which is the same exception the lantern's own glow already has.
- *
- * --lit is 0 for a card in the dark and 1 for one in the middle of the beam. Scripts set
- * it per frame; it is registered so a card that moves in steps can ease between values.
+ * The hand of cards. Every size comes from --cw, the card's width, which the stage sets from
+ * its own width, so the fan scales without measuring anything in script. A card's place is a
+ * data attribute and CSS owns the motion: transform and opacity only, so it composites.
  */
-@property --lit {
-  syntax: "<number>";
-  initial-value: 0;
-  inherits: true;
+.hand {
+  container-type: inline-size;
+}
+.hand-stage {
+  --cw: min(300px, 70cqw);
+  --ch: calc(var(--cw) * 1.32);
+  --spread: 10deg;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  /* Tall enough for the outer cards' lower corners, which dip as they rotate out. */
+  height: calc(var(--cw) * 1.78);
+  user-select: none;
+  /* Cards rise from under the stage's bottom edge rather than across the copy below it. */
+  clip-path: inset(-50% -100vw 0 -100vw);
+}
+@container (max-width: 420px) {
+  .hand-stage {
+    --cw: 80cqw;
+    --ch: calc(var(--cw) * 1.36);
+    --spread: 6deg;
+  }
 }
 
-.lamp-pool {
+.hand-card {
   position: absolute;
-  left: var(--lamp-x, 50%);
-  top: var(--lamp-y, 50%);
-  width: 780px;
-  height: 780px;
-  translate: calc(-50% + var(--lamp-nudge-x, 0px)) calc(-50% + var(--lamp-nudge-y, 0px));
-  transition: translate 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  top: 0;
+  left: calc(50% - var(--cw) / 2);
+  width: var(--cw);
+  height: var(--ch);
+  transform-origin: 50% 150%;
+  perspective: 1400px;
+  transition:
+    transform 620ms var(--ease-out) var(--delay, 0ms),
+    opacity 420ms var(--ease-out) var(--delay, 0ms);
+}
+.hand-card[data-place="deck"] {
+  transform: translateY(calc(var(--cw) * 1.9)) rotate(calc((var(--slot) - 2) * 4deg)) scale(0.9);
+  opacity: 0;
+}
+.hand-card[data-place="front"] {
+  transform: translateY(calc(var(--cw) * 0.08));
+  cursor: pointer;
+}
+.hand-card[data-place="fan"] {
+  transform: translateY(calc(var(--cw) * 0.16)) rotate(calc(var(--spread) * var(--angle)))
+    scale(0.95);
+}
+.hand-card[data-place="gone"] {
+  transform: translate(calc(var(--cw) * 1.15), calc(var(--cw) * -0.12)) rotate(24deg) scale(0.92);
+  opacity: 0;
+  transition-duration: 560ms;
   pointer-events: none;
-  background: radial-gradient(
-    circle closest-side,
-    var(--glow) 0%,
-    var(--amber-soft) 34%,
-    transparent 72%
-  );
 }
 
-/* A card lit by the pool. Colour, lift and halo all read from --lit together. */
-.lit-card {
-  background: color-mix(in oklab, var(--plate), var(--amber-soft) calc(var(--lit) * 70%));
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--edge), var(--amber) calc(var(--lit) * 55%)),
-    0 14px 36px -14px color-mix(in srgb, transparent, var(--glow) calc(var(--lit) * 100%));
-  translate: 0 calc(var(--lit) * -5px);
-  opacity: calc(0.4 + 0.6 * var(--lit));
+.hand-flip {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 660ms var(--ease-out);
+}
+.hand-card[data-revealed] .hand-flip {
+  transform: rotateY(180deg);
+}
+.hand-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: calc(var(--cw) * 0.08);
+  border-radius: var(--radius-xl);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge-2);
+  backface-visibility: hidden;
+}
+.hand-back {
+  transform: rotateY(180deg);
+}
+/* The turning hint arrives only when a visitor seems unsure, so it eases in rather than sitting there. */
+.hand-hint {
+  opacity: 0;
+  translate: 0 6px;
   transition:
-    --lit 480ms cubic-bezier(0.19, 1, 0.22, 1),
-    translate 480ms cubic-bezier(0.19, 1, 0.22, 1),
-    opacity 480ms ease;
+    opacity 360ms var(--ease-out),
+    translate 480ms var(--ease-out);
 }
-.lit-card .lit-label {
-  color: color-mix(in srgb, var(--faint), var(--amber-text) calc(var(--lit) * 100%));
+.hand-hint[data-shown] {
+  opacity: 1;
+  translate: 0 0;
 }
-.lit-card .lit-term {
-  color: color-mix(in srgb, var(--muted), var(--text) calc(var(--lit) * 100%));
-}
-.lit-card .lit-meaning {
-  color: var(--text-2);
-  opacity: clamp(0, calc((var(--lit) - 0.42) * 2.6), 1);
+/* Onest has no IPA letters; fall back to faces that do rather than a mix of widths. */
+.hand-ipa {
+  font-family: Onest, "Charis SIL", "Doulos SIL", "Segoe UI", system-ui, sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lamp-pool,
-  .lit-card {
+  .hand-card {
+    transition: opacity 200ms linear;
+  }
+  .hand-flip,
+  .hand-card[data-revealed] .hand-flip {
     transition: none;
+    transform: none;
+  }
+  .hand-back {
+    transform: none;
+    opacity: 0;
+    transition: opacity 200ms linear;
+  }
+  .hand-card[data-revealed] .hand-back {
+    opacity: 1;
+  }
+  .hand-hint {
+    translate: none;
   }
 }

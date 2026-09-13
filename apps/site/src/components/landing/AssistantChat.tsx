@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useRef } from "react";
 
-const CLIENTS = ["Claude", "ChatGPT", "Claude Code", "Cursor"] as const;
+const CLIENTS = ["Claude", "ChatGPT", "Claude Code", "Codex"] as const;
 
 type Turn = { from: "you" | "them"; body: ReactNode };
 

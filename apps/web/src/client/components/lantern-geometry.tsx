@@ -36,11 +36,11 @@ export const LANTERN_BOUNDS = { left: 31.5, right: 88.5, top: 15.25, bottom: 106
 
 export const FLAME: Shape[] = [
   {
-    d: "M60 58 C75.36 72.3 75.84 76.56 71.4 88.2 A12 12 0 0 1 48.6 88.2 C44.16 76.56 44.64 72.3 60 58 Z",
+    d: "M60 58 C66.5 64.5 73.8 73 73.8 84 C73.8 90.9 67.62 96.5 60 96.5 C52.38 96.5 46.2 90.9 46.2 84 C46.2 73 53.5 64.5 60 58 Z",
     fill: "flame",
   },
   {
-    d: "M60 70.2 C66.86 78.48 67.13 81.89 65.02 86.38 A5.28 5.28 0 0 1 54.98 86.38 C52.87 81.89 53.14 78.48 60 70.2 Z",
+    d: "M60 71.25 C63.25 74.5 66.9 78.75 66.9 84.25 C66.9 87.7 63.81 90.5 60 90.5 C56.19 90.5 53.1 87.7 53.1 84.25 C53.1 78.75 56.75 74.5 60 71.25 Z",
     fill: "flame-core",
   },
 ];
@@ -55,6 +55,9 @@ export const EMBER: Shape = {
   d: "M60 72 C65.6 78.5 67 82 65.4 86 A5.7 5.7 0 0 1 54.6 86 C53 82 54.4 78.5 60 72 Z",
   fill: "ember",
 };
+
+/** The ember scaled about its base to the flame's height, for the streak's Flame, where the lantern's ember is a speck. */
+export const EMBER_AT_FLAME_SIZE = "translate(60 96.45) scale(2.15) translate(-60 -89.9)";
 
 /** The bail, drawn behind the hood so the two never merge into one blob. */
 export const LANTERN_BAIL: Shape = {

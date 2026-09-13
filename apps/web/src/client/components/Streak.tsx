@@ -21,6 +21,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { streakFlameFor } from "../lib/flame";
 import { IconButton } from "./Button";
 import { Flame } from "./Flame";
 import { GoalPicker } from "./GoalPicker";
@@ -49,35 +50,15 @@ export function lastDays(summary: StreakSummary, n = 7) {
   };
 }
 
-/** Holds true for a moment after `on` turns true while mounted, never on the first render. */
-function useCatch(on: boolean, ms: number): boolean {
-  const was = useRef(on);
-  const [catching, setCatching] = useState(false);
-  useEffect(() => {
-    if (on && !was.current) {
-      setCatching(true);
-      const t = window.setTimeout(() => setCatching(false), ms);
-      was.current = on;
-      return () => window.clearTimeout(t);
-    }
-    was.current = on;
-  }, [on, ms]);
-  return catching;
-}
-
 interface PillProps {
   summary: StreakSummary | undefined;
   /** "rail" sits on the sidebar's first line; "phone" is the plate at the top of the screen. */
   variant: "rail" | "phone";
 }
 
-/**
- * The flame and the run, always in the chrome. The flame is out only when there is no run; it
- * holds still while today's goal is open, catches when it is reached, and flickers after.
- */
+/** The flame and the run, always in the chrome. DESIGN.md, "The streak". */
 function PillFace({ summary, variant }: PillProps) {
-  const done = !!summary && satisfied(summary.today.outcome);
-  const catching = useCatch(done, 700);
+  const flame = summary ? streakFlameFor(summary) : "lit";
   const current = summary?.current ?? 0;
   const mounted = useRef(false);
   useEffect(() => {
@@ -88,12 +69,9 @@ function PillFace({ summary, variant }: PillProps) {
   return (
     <>
       <Flame
-        className={clsx(
-          rail ? "h-4 w-[13px]" : "h-5 w-4",
-          current === 0 && "flame-out",
-          catching && "flame-catch",
-        )}
-        flicker={done && !catching}
+        className={rail ? "h-4 w-[13px]" : "h-5 w-4"}
+        state={flame}
+        flicker={flame === "full"}
       />
       <span className="relative overflow-hidden tabular-nums">
         <span key={current} className={clsx("block", ticked && "streak-tick")}>
@@ -198,6 +176,7 @@ export function StreakPanel({
   const backRef = useRef<HTMLButtonElement>(null);
   const { current, today } = summary;
   const done = satisfied(today.outcome);
+  const flame = streakFlameFor(summary);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
   const run = useMemo(() => {
     const dates = new Set<string>();
@@ -279,7 +258,7 @@ export function StreakPanel({
   return (
     <div className={clsx("grid gap-5", className)}>
       <header className="flex items-center gap-3.5">
-        <Flame className={clsx("h-11 w-9", current === 0 && "flame-out")} flicker={done} />
+        <Flame className="h-11 w-9" state={flame} flicker={flame === "full"} />
         <div className="grid min-w-0">
           <h2 id={titleId} className="flex items-baseline gap-2 text-text">
             <span className="text-3xl font-semibold leading-none tabular-nums">{current}</span>

@@ -505,17 +505,6 @@
     --glow-breath: 0.79;
   }
 }
-/* The streak pill's flame catching when today's goal is reached. */
-@keyframes catch {
-  from {
-    opacity: 0;
-    transform: scale(0.3, 0.1);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1, 1);
-  }
-}
 @keyframes carry {
   0%,
   100% {
@@ -537,19 +526,7 @@
 
 /* ---- Streak ------------------------------------------------------------ */
 
-/* The flame before today has a review: the lantern's ember colour, so "not yet" is not amber. */
-.flame-out .flame > path {
-  fill: var(--edge-2);
-  transition: fill 300ms var(--ease-out);
-}
-.flame-out .flame > .flame-core {
-  fill: transparent;
-}
 @media (prefers-reduced-motion: no-preference) {
-  /* The wick taking when today's first review lands, the lantern's catch at pill size. */
-  .flame-catch .flame {
-    --flame-anim: catch 620ms var(--ease-out) both;
-  }
   /* A new count rolls up into place rather than swapping. */
   .streak-tick {
     animation: streak-tick 320ms var(--ease-out) both;

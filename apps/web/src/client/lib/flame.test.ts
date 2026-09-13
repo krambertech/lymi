@@ -1,6 +1,13 @@
 import type { StreakOut } from "@lymi/core";
 import { describe, expect, it } from "vitest";
-import { FLAME_SIZE, flameSize, lanternFor } from "./flame";
+import {
+  FLAME_SIZE,
+  flameSize,
+  lanternFor,
+  STREAK_FLAME_SIZE,
+  type StreakFlameState,
+  streakFlameFor,
+} from "./flame";
 
 describe("flameSize", () => {
   it("is out only when the streak has broken", () => {
@@ -62,5 +69,43 @@ describe("lanternFor", () => {
 
   it("is the brand flame before the streak loads", () => {
     expect(lanternFor(undefined)).toEqual({ out: false, progress: undefined });
+  });
+});
+
+describe("streakFlameFor", () => {
+  const summary = (
+    current: number,
+    attempts: number,
+    outcome: StreakOut["today"]["outcome"] = "open",
+  ): StreakOut => ({
+    today: { date: "2026-09-13", attempts, goal: 50, outcome },
+    goal: 50,
+    current,
+    longest: current,
+    reviewedDays: current,
+    days: [],
+  });
+
+  const cases: [string, StreakOut, StreakFlameState][] = [
+    ["a new learner", summary(0, 0), "out"],
+    ["no streak with reviews short of the goal", summary(0, 49), "out"],
+    ["a streak with today's goal open", summary(4, 0), "lit"],
+    ["a streak partway to the goal", summary(4, 30), "lit"],
+    ["the goal met, starting a streak", summary(1, 50, "goal_met"), "full"],
+    ["the goal met on a streak", summary(5, 60, "goal_met"), "full"],
+    ["an exhausted queue", summary(2, 12, "exhausted"), "full"],
+    ["a confirmed nothing-due day", summary(4, 0, "nothing_due"), "lit"],
+  ];
+
+  it.each(cases)("shows %s", (_, s, state) => {
+    expect(streakFlameFor(s)).toBe(state);
+  });
+
+  it.each(cases)("agrees with the lantern for %s", (_, s) => {
+    const lantern = lanternFor(s);
+    const state = streakFlameFor(s);
+    expect(state === "out").toBe(lantern.out);
+    expect(state === "full").toBe(flameSize(lantern.progress, lantern.out) === FLAME_SIZE.full);
+    expect(STREAK_FLAME_SIZE[state] === FLAME_SIZE.out).toBe(lantern.out);
   });
 });

@@ -269,23 +269,47 @@ The glass is one **opaque** colour, `glass`, not a tint over a hole. A transluce
 
 There is no second cut for small sizes. The rods and the flame are exactly what keep the drawing legible when it is tiny — a simplified version that drops them collapses into a mushroom by 24 px. One drawing, every size. The browser tab uses the same drawing with the viewBox squared around its own bounds, so the mark fills the icon instead of floating in a 120 box.
 
-The streak's `Flame` crops to the flame's exact bounds, so its tip sits on the top edge of its box and the flicker grows past it. That drawing overflows its box rather than being cropped: a clipped tip is the one thing that makes the mark look broken.
-
 The geometry lives in `components/lantern-geometry.tsx` and nowhere else. `Lantern`, `Lockup` and `scripts/brand.mjs` all draw from it, so the mark cannot drift between the app and its assets.
 
-## The flame
+The lantern's flame shows the learner's day. It is out exactly when there is no streak, for a new learner or after a day that ended short of its goal; nothing due, an ended session and an unfinished morning never put it out. Reviews still count toward the goal while it is out, but they do not feed it, and the flame catches when today's goal is met.
 
-The flame is one continuous size, not a set of states. `Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak, and `fed` goes up by one for every accepted review. A screen never asks the lantern to celebrate. The live version, with a day to play through, is the Lantern page of `/design`.
+While it is lit the flame is one continuous size, not a set of states. `Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak, and `fed` goes up by one for every accepted review. `lanternFor` in `lib/flame.ts` turns the streak summary into those props. A screen never asks the lantern to celebrate. The live version, with a day to play through, is the Lantern page of `/design`.
 
 The flame starts each day at 0.72× the brand flame and grows with progress to 1.02× just before the goal. Height carries the growth and width follows at half the rate. Growth stops short of full so that reaching the goal is a rise of its own, to 1.16×, where the flame stays for the rest of the day. The halo's width follows the flame, from 0.7× the brand halo at the start of a day to 1.7× at the goal. A confirmed nothing-due day holds the start-of-day flame: alive, not grown.
 
 Every accepted review feeds the flame, and Forgot feeds it exactly as Easy does. A feed is a breath: the flame draws up and thin and the halo swells, then both settle at the new size. Reviews close together flow into one long breath, because each breath starts from wherever the last one is rather than from rest.
 
-No streak, no flame: the lantern is out exactly when the streak pill is, for a new learner or after a day that ended short of its goal. Nothing due, an ended session and an unfinished morning never put it out. Reviews still count toward the goal while it is out, but they do not feed it; the flame catches when today’s goal is met and the streak starts again. `lanternFor` in `lib/flame.ts` turns the streak summary into these props, so the lantern and the pill cannot disagree.
-
 The brand lantern, on login, the app icon and public pages, omits `progress` and shows the one canonical flame. It never shows a learner's state. Empty and error screens use it too, because an empty screen says nothing about the streak.
 
 Carried, the body swings from the bail. App launch and pull to refresh.
+
+## The flame
+
+`Flame` is the flame on its own, beside the streak number in the streak pill and the streak modal, at 16 to 44 px. It says one thing: whether the learner's streak is alive. It is not a gauge, a progress ring or a celebration, and it is never a brand mark. The live version is the Flame page of `/design`.
+
+It has three states and nothing between them, because growth between reviews would be unreadable at 16 px and restless on a mark that is on every screen:
+
+- **Out** when there is no streak, for a new learner or after a day that ended short of its goal. Nothing due, an ended session and an unfinished morning never put it out. It shows the lantern's ember scaled to the flame's height, because the ember as drawn is a speck at this size.
+- **Lit** while a streak is alive and today's goal is still open, or nothing is due: the brand flame, held still.
+- **Full** once today's goal is met or every available review is done: 1.16× the brand flame, and flickering.
+
+`streakFlameFor` in `lib/flame.ts` reads the state from the streak summary. Every grade counts toward the goal the same, so no grade changes the flame more than another.
+
+It moves on the lantern's springs from `FLAME_MOTION`: out to full is the catch, lit to full the rise, full to lit a settle, and lit to out the slow going out. Under reduced motion it jumps to the new state without flickering, and the three states still read apart: an ember, the brand flame, a taller flame.
+
+`Flame` crops to the flame's exact bounds in `components/lantern-geometry.tsx`, so its tip sits on the top edge of its box and a full or flickering flame grows past it. The drawing overflows its box rather than being cropped: a clipped tip is the one thing that makes the mark look broken.
+
+## The streak
+
+The streak is how many days in a row met their daily goal. It is the length of a habit, not a score: it never grows faster for better answers, never celebrates, and never nags to be kept. A day counts when its goal is met or every available review is done below it, every accepted grade counts once, and a confirmed nothing-due day keeps the streak without adding to it; `PRODUCT.md` "Daily Review Goal" has the full rules. On screen it is a plain number in tabular figures, secondary to the screen's content: never the largest number on the screen, a progress ring or a celebration. Its meaning never depends on colour or on a flame. Today is open until it ends, so an unfinished morning shows yesterday's streak rather than zero.
+
+Today and review completion pair the number with the seven lights: the lights say which days, the number says how many. A day's light carries three steps of amber according to progress toward that day's goal, from the lantern's glass to its flame. Full means the goal was met or every available review was completed; the middle step begins at half the goal. The steps mix toward `--glass` rather than fading to transparency: a translucent amber lands on whatever is behind it, and in the dark room that is the same lightness as an unlit day, which would make "a little" and "nothing" one picture.
+
+The run lives in the chrome as a pill: on the rail's first line on desktop, at the start of the top bar on Today and Library on the phone. Beside the number sits the flame, described under "The flame", which says whether the streak is alive. The pill opens the streak modal, the platform `<dialog>` with the sheet's rise: the whole screen on a phone, centred over the page on anything wider. The modal holds the run with one plain line about today, today's attempts against the goal, tiles for the longest streak and the days reviewed, and the month. In the month a day that counted is ringed in amber and a faint band joins the days that kept the run, so a run is a length you can see; a nothing-due day carries the band without a ring.
+
+The daily goal is edited only in the streak modal, with quick choices of 10, 25, 50, and 100 and a custom whole number from 1 to 200; there is no duplicate editor on Today or in Settings.
+
+Settings exposes the review timezone as **Automatic** by default and permits an explicit timezone override. The automatic state names the currently detected timezone; choosing a timezone makes the override clear, and returning to Automatic restores travel updates. Timezone selection is not part of first-use setup.
 
 ## Letting an app in
 
@@ -356,20 +380,6 @@ Four plates in a 2x2 grid — Recall, Consistency, Cards, Ahead — each carryin
 Consistency and the months answer different questions and neither replaces the other. The thirty-day strip is texture: which days, and how long the runs were. The month bars are trend: whether the habit is holding across seasons. Both draw a day as lit or unlit and never grade it by how many cards it held, because grading turns a habit picture into a scoreboard and makes a heavy Tuesday look better than a steady one.
 
 `RunStrip` joins consecutive lit days into one capsule. That is the whole idea: a row of separate marks has to be counted, where an unbroken capsule is a run whose length you can see.
-
-## The streak
-
-The daily review goal and the streak are one mechanic. Today and review completion pair the seven-day review lights with the current streak length as a plain number and label. The streak is secondary context beside the lights, never the largest number on the screen, a progress ring, or a celebration. The number uses tabular figures, and its meaning is available without relying on colour or the lantern state.
-
-A day's light carries three steps of amber according to progress toward that day's goal, from the lantern's glass to its flame. Full means the goal was met or every available review was completed; the middle step begins at half the goal. The steps mix toward `--glass` rather than fading to transparency: a translucent amber lands on whatever is behind it, and in the dark room that is the same lightness as an unlit day, which would make "a little" and "nothing" one picture.
-
-The streak summary opens the streak modal. The daily goal is edited only there, with quick choices of 10, 25, 50, and 100 and a custom whole number from 1 to 200; there is no duplicate editor on Today or in Settings.
-
-Today is still open until it ends, so an unfinished morning shows yesterday's streak rather than zero. A confirmed zero-due day preserves that run without increasing it; an unvisited or unfinished day breaks the run only after its learner-local date ends.
-
-The run lives in the chrome as a pill: on the rail's first line on desktop, at the start of the top bar on Today and Library on the phone. Its flame is out with no run, holds still while today's goal is open, catches when it is reached and flickers after. It opens the streak modal, the platform `<dialog>` with the sheet's rise: the whole screen on a phone, centred over the page on anything wider. The modal holds the run with one plain line about today, today's attempts against the goal, tiles for the longest streak and the days reviewed, and the month. In the month a day that counted is ringed in amber and a faint band joins the days that kept the run, so a run is a length you can see; a nothing-due day carries the band without a ring.
-
-Settings exposes the review timezone as **Automatic** by default and permits an explicit timezone override. The automatic state names the currently detected timezone; choosing a timezone makes the override clear, and returning to Automatic restores travel updates. Timezone selection is not part of first-use setup.
 
 ## Components
 

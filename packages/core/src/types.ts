@@ -62,11 +62,7 @@ export type DeckInput = z.infer<typeof DeckInput>;
 
 export const CardInput = z.object({
   deckId: z.string().min(1, "Choose a deck for it to go in."),
-  term: z
-    .string()
-    .trim()
-    .min(1, "Type the word or phrase.")
-    .max(500, "That is longer than a card holds."),
+  term: z.string().trim().min(1, "Type the term.").max(500, "That is longer than a card holds."),
   meaning: z.string().trim().max(1000, "Keep the meaning under 1000 characters.").optional(),
   pronunciation: z.string().trim().max(200).optional(),
   example: z.string().trim().max(1000).optional(),

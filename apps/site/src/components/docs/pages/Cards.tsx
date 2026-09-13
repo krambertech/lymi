@@ -4,7 +4,7 @@ import { Defs, H2, H3, Lead, NextLinks, Note } from "../Prose";
 
 const FIELDS: { name: string; type: string; note: string }[] = [
   { name: "deckId", type: "string", note: "Required. Which deck the card lands in." },
-  { name: "term", type: "string", note: "Required. The word or phrase, as you met it." },
+  { name: "term", type: "string", note: "Required. What the card asks about, as you met it." },
   { name: "meaning", type: "string", note: "What it means, in your own language." },
   { name: "pronunciation", type: "string", note: "IPA or a plain respelling." },
   { name: "example", type: "string", note: "One sentence using the term." },
@@ -34,7 +34,7 @@ export function Cards() {
     <div className="doc-prose">
       <Lead>
         A deck holds cards. A card holds one term and everything you know about it. Scheduling is
-        per direction, so the same word can be easy to recognise and hard to produce.
+        per direction, so the same card can be easy to recognise and hard to produce.
       </Lead>
 
       <H2>Decks</H2>
@@ -89,7 +89,7 @@ export function Cards() {
         source and it is recorded as <code>manual</code>.
       </Note>
 
-      <H2>The same word twice is not an error</H2>
+      <H2>The same term twice is not an error</H2>
       <p>
         Adding a term you already have is <strong>skipped and reported</strong>, never rejected. You
         get <code>200</code> instead of <code>201</code>, with the card that already holds the term

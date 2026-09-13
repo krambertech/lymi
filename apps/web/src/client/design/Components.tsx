@@ -58,7 +58,7 @@ export function Components() {
                 <Button variant="primary" kbd="R">
                   Review 11 due
                 </Button>
-                <Button kbd="N">Add word</Button>
+                <Button kbd="N">Add card</Button>
                 <Button variant="ghost">Cancel</Button>
                 <Button variant="danger">
                   <Archive aria-hidden="true" />
@@ -102,13 +102,13 @@ export function Components() {
         <Pair>
           {() => (
             <div className="grid gap-4 @xl:grid-cols-2">
-              <Field label="Word or phrase">
+              <Field label="Term">
                 <Input placeholder="sbrigarsi" defaultValue="la ringhiera" />
               </Field>
               <Field
                 label="Meaning"
                 aside="Optional"
-                hint="Leave it empty and AI can suggest one later."
+                hint="Leave it empty and AI can fill it in later."
               >
                 <Input placeholder="to hurry up" />
               </Field>
@@ -159,7 +159,7 @@ export function Components() {
               <LanguageField
                 value={langEmpty}
                 onChange={setLangEmpty}
-                error="Choose the language the words are in."
+                error="Choose the language this deck’s cards are in."
               />
               <Field label="Deck" hint="Cannot change while a review is running.">
                 <Select value={deck} onChange={setDeck} options={DECKS} disabled />
@@ -271,7 +271,7 @@ export function Components() {
           {() => (
             <EmptyState
               title="Nothing here yet"
-              body="Make a deck, add a word from your last lesson, and the lantern comes on."
+              body="Make a deck, add a card from your last lesson, and the lantern comes on."
               action={<Button variant="primary">Make a deck</Button>}
               className="py-4"
             />
@@ -330,7 +330,7 @@ export function Components() {
 
       <Sub
         title="Lists and tables"
-        note="A deck card has a face: its name and language, the stripe that says how its words split, and the one thing it asks today. A row of new cards names the actor, because an integration’s card must never look like one you typed. A table: dense, hairline rows, right-aligned tabular numbers."
+        note="A deck card has a face: its name and language, the stripe that says how its cards split, and the one thing it asks today. A row of new cards names the actor, because an integration’s card must never look like one you typed. A table: dense, hairline rows, right-aligned tabular numbers."
       >
         <Pair stack>
           {(t) => (
@@ -367,7 +367,7 @@ export function Components() {
               <Table>
                 <thead>
                   <tr>
-                    <Th>Word</Th>
+                    <Th>Term</Th>
                     <Th>Meaning</Th>
                     <Th>Status</Th>
                     <Th align="right">Next</Th>

@@ -33,7 +33,7 @@ export function AddMenu({
       </MenuTrigger>
       <MenuList align={align}>
         <MenuItem kbd="N" icon={<PenLine aria-hidden="true" />} onSelect={onAddCard}>
-          <Trans>New word</Trans>
+          <Trans>New card</Trans>
         </MenuItem>
         <MenuItem
           icon={<BookMarked aria-hidden="true" />}

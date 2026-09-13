@@ -13,7 +13,7 @@ const SCALE: {
     cls: "text-5xl font-medium tracking-[-0.03em]",
     size: "46 / 1.0",
     weight: "500",
-    use: "The word on the card, desktop.",
+    use: "The term on the card, desktop.",
     sample: "sbrigarsi",
   },
   {
@@ -21,7 +21,7 @@ const SCALE: {
     cls: "text-4xl font-medium tracking-[-0.03em]",
     size: "38 / 1.05",
     weight: "500",
-    use: "The word on the card, phone. The due count on Today, at every width.",
+    use: "The term on the card, phone. The due count on Today, at every width.",
     sample: "la ringhiera",
   },
   {
@@ -70,7 +70,7 @@ const SCALE: {
     size: "14.5 / 1.5",
     weight: "400–500",
     use: "Body, buttons, nav, table cells.",
-    sample: "Lesson 14 and Portuguese. Review, then add a word.",
+    sample: "Lesson 14 and Portuguese. Review, then add a card.",
   },
   {
     name: "sm",
@@ -78,7 +78,7 @@ const SCALE: {
     size: "13 / 1.45",
     weight: "400–500",
     use: "Field labels, hints, small buttons.",
-    sample: "Leave it empty and AI can suggest one later.",
+    sample: "Leave it empty and AI can fill it in later.",
   },
   {
     name: "xs",
@@ -103,11 +103,11 @@ export function Type() {
     <Section
       id="type"
       title="Type"
-      lede="One family: Onest, variable, 400 to 600, with Latin extended and Cyrillic so Italian, Portuguese and Ukrainian cards all set in the same voice. The word on the card is the largest thing on any screen and it is set at 500, not bold. Everything else is 400 or 500. 600 is reserved for the wordmark, counts and kbd."
+      lede="One family: Onest, variable, 400 to 600, with Latin extended and Cyrillic so Italian, Portuguese and Ukrainian cards all set in the same voice. The term on the card is the largest thing on any screen and it is set at 500, not bold. Everything else is 400 or 500. 600 is reserved for the wordmark, counts and kbd."
     >
       <Sub
         title="Scale"
-        note="Fixed pixel steps, ratio about 1.17. Headings tighten to −0.02em; the word on the card to −0.03em. Body never tracks."
+        note="Fixed pixel steps, ratio about 1.17. Headings tighten to −0.02em; the term on the card to −0.03em. Body never tracks."
       >
         <div className="edge overflow-hidden rounded-lg bg-plate">
           {SCALE.map((s) => (
@@ -133,7 +133,7 @@ export function Type() {
 
       <Sub
         title="Scripts"
-        note="The same face across every language a learner might collect. Set lang on the word so screen readers switch voice."
+        note="The same face across every language a learner might collect. Set lang on the term so screen readers switch voice."
       >
         <Specimen layout="grid" className="@3xl:grid-cols-2">
           {[

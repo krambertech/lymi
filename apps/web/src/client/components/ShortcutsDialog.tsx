@@ -6,7 +6,7 @@ import { Dialog } from "./Dialog";
 import { Kbd } from "./Kbd";
 
 export const SHORTCUTS: [string, MessageDescriptor][] = [
-  ["N", msg`Add a word`],
+  ["N", msg`Add a card`],
   ["R", msg`Start review`],
   ["/", msg`Search`],
   ["Space", msg`Show the meaning, then Good`],

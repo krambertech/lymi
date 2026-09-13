@@ -114,7 +114,7 @@ export function LanguageField({ value, onChange, label, hint, error }: LanguageP
   return (
     <Field
       label={label ?? t`Language`}
-      hint={hint ?? t`The language the words are in. It fills in on every new card.`}
+      hint={hint ?? t`The language this deck’s cards are in. It fills in on every new card.`}
       error={error}
     >
       <Combobox
@@ -143,13 +143,13 @@ export const DIRECTIONS: DirectionOption[] = [
     value: "recognition",
     label: msg`Recognition`,
     short: msg`Recognition`,
-    blurb: msg`See the word, recall what it means.`,
+    blurb: msg`See the term, recall what it means.`,
   },
   {
     value: "production",
     label: msg`Production`,
     short: msg`Production`,
-    blurb: msg`See the meaning, recall the word.`,
+    blurb: msg`See the meaning, recall the term.`,
   },
   {
     value: "both",

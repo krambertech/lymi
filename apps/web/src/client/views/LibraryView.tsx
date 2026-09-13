@@ -90,7 +90,7 @@ export function LibraryView({
         <EmptyState
           lantern="none"
           title={t`No decks yet`}
-          body={t`One per course works well, or one per topic. Words remember which lesson they came from.`}
+          body={t`One per course works well, or one per topic. Cards remember which lesson they came from.`}
           action={
             <Button variant="primary" onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
               <Plus aria-hidden="true" />

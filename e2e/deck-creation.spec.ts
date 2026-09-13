@@ -70,9 +70,9 @@ test.describe("deck and card creation", () => {
     await expect(sheet(page, "New deck")).toBeHidden();
 
     await page.keyboard.press("n");
-    const addCard = sheet(page, "Add a word or phrase");
+    const addCard = sheet(page, "Add a card");
     await expect(addCard).toBeVisible();
-    await expect(addCard.getByText("A word lands in a deck.", { exact: false })).toBeVisible();
+    await expect(addCard.getByText("A card lands in a deck.", { exact: false })).toBeVisible();
     await addCard.getByRole("button", { name: "New deck", exact: true }).click();
 
     let dialog = sheet(page, "New deck");
@@ -123,20 +123,18 @@ test.describe("deck and card creation", () => {
     const firstId = await createDeck(page, firstName);
     await createDeck(page, secondName);
 
-    const addWord = page.locator("header").getByRole("button", { name: /^Add word/ });
+    const addWord = page.locator("header").getByRole("button", { name: /^Add card/ });
     await addWord.click();
-    let dialog = sheet(page, "Add a word or phrase");
+    let dialog = sheet(page, "Add a card");
     await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(
       secondName,
     );
 
     await dialog.getByRole("button", { name: `Add to ${secondName}`, exact: true }).click();
-    await expect(dialog.getByRole("alert")).toHaveText("Type the word or phrase.");
-    await expect(
-      dialog.getByRole("textbox", { name: "Word or phrase", exact: true }),
-    ).toBeFocused();
+    await expect(dialog.getByRole("alert")).toHaveText("Type the term.");
+    await expect(dialog.getByRole("textbox", { name: "Term", exact: true })).toBeFocused();
 
-    await dialog.getByRole("textbox", { name: "Word or phrase", exact: true }).fill(term);
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill(term);
     await dialog.getByRole("textbox", { name: "Meaning", exact: true }).fill("to hurry up");
     await dialog.getByRole("button", { name: `Add to ${secondName}`, exact: true }).click();
     await expect(dialog.getByRole("status")).toHaveText(`Added “${term}”`);
@@ -153,21 +151,19 @@ test.describe("deck and card creation", () => {
     await expect(page).toHaveURL(new RegExp(`/library/${firstId}$`));
 
     await page.keyboard.press("n");
-    dialog = sheet(page, "Add a word or phrase");
+    dialog = sheet(page, "Add a card");
     await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(firstName);
-    await expect(dialog.getByRole("textbox", { name: "Word or phrase", exact: true })).toHaveValue(
-      "",
-    );
-    await dialog.getByRole("textbox", { name: "Word or phrase", exact: true }).press("Escape");
+    await expect(dialog.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("");
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).press("Escape");
     await expect(dialog).toBeHidden();
 
     await page
       .locator("header")
-      .getByRole("button", { name: /^Add word/ })
+      .getByRole("button", { name: /^Add card/ })
       .click();
-    dialog = sheet(page, "Add a word or phrase");
+    dialog = sheet(page, "Add a card");
     await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(firstName);
-    await dialog.getByRole("textbox", { name: "Word or phrase", exact: true }).fill(term);
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill(term);
     await dialog.getByRole("button", { name: `Add to ${firstName}`, exact: true }).click();
     await expect(dialog.getByRole("status")).toHaveText(`${term} is already in ${secondName}`);
     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
@@ -181,10 +177,10 @@ test.describe("deck and card creation", () => {
 
     await page
       .locator("header")
-      .getByRole("button", { name: /^Add word/ })
+      .getByRole("button", { name: /^Add card/ })
       .click();
-    const dialog = sheet(page, "Add a word or phrase");
-    await dialog.getByRole("textbox", { name: "Word or phrase", exact: true }).fill("pazienza");
+    const dialog = sheet(page, "Add a card");
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("pazienza");
     await dialog.getByRole("button", { name: `Add to ${name}`, exact: true }).click();
     await expect(dialog.getByRole("status")).toHaveText("Added “pazienza”");
     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
@@ -252,11 +248,11 @@ test.describe("deck and card creation", () => {
 
       await page.goto(`/library/${deckId}`);
       await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
-      const addWord = page.locator("header").getByRole("button", { name: /^Add word/ });
+      const addWord = page.locator("header").getByRole("button", { name: /^Add card/ });
       await addWord.click();
-      const addCard = sheet(page, "Add a word or phrase");
+      const addCard = sheet(page, "Add a card");
       await expect(addCard).toBeVisible();
-      const term = addCard.getByRole("textbox", { name: "Word or phrase", exact: true });
+      const term = addCard.getByRole("textbox", { name: "Term", exact: true });
       await expect(addCard.getByRole("button", { name: "Cancel", exact: true })).toBeVisible();
       await expect(
         addCard.getByRole("button", { name: `Add to ${name}`, exact: true }),

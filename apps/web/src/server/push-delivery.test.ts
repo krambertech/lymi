@@ -94,7 +94,7 @@ describe("review reminder delivery", () => {
       const actual = await Promise.all([1, 2, 5, 21].map((due) => reminderCopy(due, locale)));
       expect(actual.map((copy) => copy.body)).toEqual(expected);
     }
-    expect((await reminderCopy(3, "xx")).title).toBe("A few words are ready");
+    expect((await reminderCopy(3, "xx")).title).toBe("A few cards are ready");
   });
 
   it("claims the local date and sends one reminder", async () => {

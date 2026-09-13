@@ -11,7 +11,7 @@ import { DeckDetailView } from "../views/DeckDetailView";
 import { describeEvent } from "../views/WordView";
 
 export const Route = createFileRoute("/library/$deckId")({
-  // The open word lives in the URL, so the phone's back gesture closes it and a link from
+  // The open card lives in the URL, so the phone's back gesture closes it and a link from
   // anywhere can open one.
   validateSearch: (s: Record<string, unknown>): { card?: string } => ({
     ...(typeof s.card === "string" ? { card: s.card } : {}),
@@ -44,8 +44,8 @@ function DeckPage() {
     [history.data, i18n],
   );
 
-  // Opening pushes one entry so Back closes the word; walking and closing replace it, so the
-  // history never fills with words and Back after a close does not reopen one.
+  // Opening pushes one entry so Back closes the card; walking and closing replace it, so the
+  // history never fills with cards and Back after a close does not reopen one.
   const setOpen = (id: string | null) =>
     navigate({
       to: "/library/$deckId",
@@ -93,7 +93,7 @@ function DeckPage() {
     },
     // The editor has already closed, so the draft lives here until it lands or is given up.
     onError: (_e, { id, patch }) => {
-      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`the word`;
+      const term = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`the card`;
       setSaveError({ id, patch, term });
     },
   });

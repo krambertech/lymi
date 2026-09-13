@@ -10,9 +10,9 @@ export function Recipes() {
         <a href="/docs/quickstart">Quickstart</a>.
       </Lead>
 
-      <H2>Import a word list</H2>
+      <H2>Import a lesson</H2>
       <p>
-        A lesson is twenty to forty words. Send them in one batch and read the outcomes: the ones
+        A lesson is twenty to forty cards. Send them in one batch and read the outcomes: the ones
         you already had come back as <code>skipped</code>, so you learn what was new without a
         second call.
       </p>

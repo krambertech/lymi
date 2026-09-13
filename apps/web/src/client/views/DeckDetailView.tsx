@@ -303,7 +303,7 @@ export function DeckDetailView({
 
   return (
     <div className="flex min-h-0 flex-1">
-      {/* On the phone the open word replaces the list, so it is a screen with a back link. */}
+      {/* On the phone the open card replaces the list, so it is a screen with a back link. */}
       {open && deck ? (
         <div className="mx-auto w-full max-w-(--column) @3xl:hidden">
           <WordView
@@ -439,7 +439,7 @@ export function DeckDetailView({
             )}
             <Button onClick={onAdd} kbd="N">
               <Plus aria-hidden="true" />
-              <Trans>Add word</Trans>
+              <Trans>Add card</Trans>
             </Button>
           </div>
         </PageHeader>
@@ -488,10 +488,10 @@ export function DeckDetailView({
           <EmptyState
             lantern="none"
             title={t`Empty deck`}
-            body={t`Add the first word from your lesson. The lantern lights when a card is due.`}
+            body={t`Add the first card from your lesson. The lantern lights when one is due.`}
             action={
               <Button variant="primary" onClick={onAdd}>
-                <Trans>Add word</Trans>
+                <Trans>Add card</Trans>
               </Button>
             }
             className="py-6"
@@ -569,8 +569,8 @@ export function DeckDetailView({
             title={q ? t`Nothing matches “${q}”` : t`Nothing here`}
             body={
               q
-                ? t`Search looks at the word and its meaning.`
-                : t`Every word in this deck is somewhere else in the schedule.`
+                ? t`Search looks at the term and its meaning.`
+                : t`Every card in this deck is somewhere else in the schedule.`
             }
             action={
               <Button
@@ -587,7 +587,7 @@ export function DeckDetailView({
         )}
       </Page>
 
-      {/* Desktop: the word beside the list. Sticky, with its own scroll, so J and K walk the
+      {/* Desktop: the card beside the list. Sticky, with its own scroll, so J and K walk the
           list while the page follows. */}
       {word && (
         <aside className="sticky top-0 hidden max-h-dvh w-[400px] shrink-0 overflow-y-auto border-l border-edge bg-canvas px-7 pb-10 pt-6 @3xl:block">

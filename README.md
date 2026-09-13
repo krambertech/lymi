@@ -1,6 +1,6 @@
 # Lymi
 
-A vocabulary app with a storm lantern. Collect words from language lessons, let AI prepare the cards, remember them with spaced repetition. Private and single-user for now.
+A vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, remember them with spaced repetition. Private and single-user for now.
 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
 - [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts

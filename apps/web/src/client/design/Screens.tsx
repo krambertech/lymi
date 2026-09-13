@@ -292,8 +292,8 @@ export function Screens() {
       </Sub>
 
       <Sub
-        title="Library, a deck and a word"
-        note="Library is every deck as a card with a face: its name and language, how its words split between known, learning and new, and what it asks of you today. A deck is its words in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list."
+        title="Library, a deck and a card"
+        note="Library is every deck as a card with a face: its name and language, how its cards split between known, learning and new, and what it asks of you today. A deck is its cards in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list."
       >
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Library" initial="light" path="/library">
@@ -316,7 +316,7 @@ export function Screens() {
               static={{ path: "/library/d1" }}
             />
           </PhoneShot>
-          <PhoneShot caption="A word" initial="light" path="/library">
+          <PhoneShot caption="A card" initial="light" path="/library">
             <DeckDetailView
               deck={m.decks[0]}
               cards={m.deckCards}
@@ -354,7 +354,7 @@ export function Screens() {
             </Desktop>
           )}
         </Shot>
-        <Shot caption="Desktop, a deck with a word open beside it" initial="light">
+        <Shot caption="Desktop, a deck with a card open beside it" initial="light">
           {(t) => (
             <Desktop theme={t} height={760}>
               <Sidebar
@@ -382,10 +382,10 @@ export function Screens() {
           )}
         </Shot>
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
-          <PhoneShot caption="Add a word" initial="dark" path="/library" bare>
+          <PhoneShot caption="Add a card" initial="dark" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
               <div className="edge-2 rounded-t-xl bg-plate">
-                <SheetPanel variant="drawer" title="Add a word or phrase" titleHidden>
+                <SheetPanel variant="drawer" title="Add a card" titleHidden>
                   <AddCardForm
                     decks={m.decks}
                     deckId="d1"

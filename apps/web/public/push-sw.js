@@ -12,7 +12,7 @@ self.addEventListener("push", (event) => {
   const url = safeAppUrl(notification.navigate);
   event.waitUntil(
     self.registration.showNotification(title, {
-      body: notification.body || "A few words are ready when you are.",
+      body: notification.body || "A few cards are ready when you are.",
       icon: notification.icon || "/icons/icon-192.png",
       tag: "daily-review",
       data: { url },

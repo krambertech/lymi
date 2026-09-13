@@ -50,7 +50,7 @@ const actorName: Record<CardEvent["actor"], MessageDescriptor> = {
 };
 
 const fieldName: Record<string, MessageDescriptor> = {
-  term: msg`the word`,
+  term: msg`the term`,
   meaning: msg`the meaning`,
   pronunciation: msg`the pronunciation`,
   example: msg`the example`,
@@ -351,10 +351,10 @@ export function WordView({
 
   const walk = (
     <>
-      <IconButton label={t`Previous word`} size="sm" onClick={onPrev} aria-disabled={!hasPrev}>
+      <IconButton label={t`Previous card`} size="sm" onClick={onPrev} aria-disabled={!hasPrev}>
         <ArrowUp />
       </IconButton>
-      <IconButton label={t`Next word`} size="sm" onClick={onNext} aria-disabled={!hasNext}>
+      <IconButton label={t`Next card`} size="sm" onClick={onNext} aria-disabled={!hasNext}>
         <ArrowDown />
       </IconButton>
     </>
@@ -385,7 +385,7 @@ export function WordView({
           <Menu>
             <MenuTrigger>
               {(p) => (
-                <IconButton label={t`Word options`} size="sm" {...p}>
+                <IconButton label={t`Card options`} size="sm" {...p}>
                   <MoreHorizontal />
                 </IconButton>
               )}

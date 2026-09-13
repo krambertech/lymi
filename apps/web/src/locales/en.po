@@ -1507,6 +1507,10 @@ msgstr "Optional"
 msgid "peak, {0}"
 msgstr "peak, {0}"
 
+#: src/client/components/AccountSection.tsx
+msgid "Photo"
+msgstr "Photo"
+
 #: src/client/components/AvatarEditor.tsx
 msgid "Photo position"
 msgstr "Photo position"

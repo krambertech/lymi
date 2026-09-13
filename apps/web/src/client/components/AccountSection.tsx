@@ -15,7 +15,12 @@ import {
 } from "../lib/avatar";
 import { Avatar } from "./Avatar";
 import { AvatarEditor, type PickedImage } from "./AvatarEditor";
-import { Menu, MenuItem, MenuList, MenuTrigger } from "./Menu";
+import {
+  ResponsiveMenu,
+  ResponsiveMenuContent,
+  ResponsiveMenuItem,
+  ResponsiveMenuTrigger,
+} from "./ResponsiveMenu";
 import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
 import { Toast } from "./Toast";
@@ -46,7 +51,7 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
   const avatar = (
     <Avatar name={name} src={photo?.src} pending={photo?.pending || !name} size={72} />
   );
-  const face = (props: object) => (
+  const face = (props: { onClick?: () => void } = {}) => (
     <button
       type="button"
       {...props}
@@ -73,17 +78,19 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
         {!onChoose ? (
           avatar
         ) : source === "custom" && onRemove ? (
-          <Menu>
-            <MenuTrigger>{(p) => face(p)}</MenuTrigger>
-            <MenuList align="start">
-              <MenuItem icon={<ImageUp aria-hidden="true" />} onSelect={onChoose}>
+          <ResponsiveMenu>
+            <ResponsiveMenuTrigger render={face()} />
+            <ResponsiveMenuContent label={t`Photo`} align="start">
+              <ResponsiveMenuItem onClick={onChoose}>
+                <ImageUp aria-hidden="true" />
                 {t`Choose new photo`}
-              </MenuItem>
-              <MenuItem icon={<ImageMinus aria-hidden="true" />} onSelect={onRemove}>
+              </ResponsiveMenuItem>
+              <ResponsiveMenuItem onClick={onRemove}>
+                <ImageMinus aria-hidden="true" />
                 {t`Remove photo`}
-              </MenuItem>
-            </MenuList>
-          </Menu>
+              </ResponsiveMenuItem>
+            </ResponsiveMenuContent>
+          </ResponsiveMenu>
         ) : (
           face({ onClick: onChoose })
         )}

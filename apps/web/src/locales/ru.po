@@ -1543,6 +1543,10 @@ msgstr "Необязательно"
 msgid "peak, {0}"
 msgstr "пик, {0}"
 
+#: src/client/components/AccountSection.tsx
+msgid "Photo"
+msgstr "Фото"
+
 #: src/client/components/AvatarEditor.tsx
 msgid "Photo position"
 msgstr "Положение фото"

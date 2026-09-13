@@ -296,15 +296,15 @@ Consistency and the months answer different questions and neither replaces the o
 
 ## The streak
 
-The flame counts days in a row and the seven lights say which days. On Today they sit together under the review button: the flame and the run on one line, the week under it at the size worth looking at. It is never a panel of its own — a plate beside the hero turns a warm cue into a stat block, and a home screen of statistics is the thing [`PRODUCT.md`](PRODUCT.md) names as an anti-reference.
+The daily review goal and the streak are one mechanic. Today and review completion pair the seven-day review lights with the current streak length as a plain number and label. The streak is secondary context beside the lights, never the largest number on the screen, a progress ring, or a celebration. The number uses tabular figures, and its meaning is available without relying on colour or the lantern state.
 
-A day's light carries three steps of amber, from the lantern's glass to its flame, by how full that day was. The reference is the week's own busiest day with a floor under it, so a quiet week is not flattered and one heavy Tuesday does not wash the rest out. The steps mix toward `--glass` rather than fading to transparency: a translucent amber lands on whatever is behind it, and in the dark room that is the same lightness as an unlit day, which would make "a little" and "nothing" one picture.
+A day's light carries three steps of amber according to progress toward that day's goal, from the lantern's glass to its flame. Full means the goal was met or every available review was completed; the middle step begins at half the goal. The steps mix toward `--glass` rather than fading to transparency: a translucent amber lands on whatever is behind it, and in the dark room that is the same lightness as an unlit day, which would make "a little" and "nothing" one picture.
 
-Seven days grade; the thirty-day `RunStrip` on Insights deliberately does not. Over a month, shading by volume makes a habit picture into a scoreboard and rewards one heavy day over a steady stretch. Over a week it is the difference between turning up and doing the lot, which the learner already knows and likes seeing. The long views — thirty days as runs, twelve months as bars — live on Insights, where looking at them is a choice.
+The streak summary opens the streak modal. The daily goal is edited only there, with quick choices of 10, 25, 50, and 100 and a custom whole number from 1 to 200; there is no duplicate editor on Today or in Settings.
 
-Today is still open until it ends, so an unreviewed morning shows yesterday's streak rather than zero. `streakLength` in `packages/core/src/streak.ts` is the rule.
+Today is still open until it ends, so an unfinished morning shows yesterday's streak rather than zero. A confirmed zero-due day preserves that run without increasing it; an unvisited or unfinished day breaks the run only after its learner-local date ends.
 
-The seven lights sit with it. They say which days, where the streak says how many.
+Settings exposes the review timezone as **Automatic** by default and permits an explicit timezone override. The automatic state names the currently detected timezone; choosing a timezone makes the override clear, and returning to Automatic restores travel updates. Timezone selection is not part of first-use setup.
 
 ## Components
 

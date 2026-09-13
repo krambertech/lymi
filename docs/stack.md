@@ -74,7 +74,7 @@ This is a design requirement with a technical checklist:
 
 - `display: standalone`, `theme-color` per theme, splash icons, iOS `apple-mobile-web-app-*` meta.
 - `100dvh` layouts, safe-area insets, no body scroll, scroll containers per screen.
-- Bottom sheet via Vaul, page transitions via the View Transitions API with a Motion fallback.
+- Bottom drawers via Base UI's Drawer, page transitions via the View Transitions API with a Motion fallback.
 - `touch-action: manipulation`, 44 px targets, 16 px inputs, haptics via `navigator.vibrate` where available.
 - Keyboard shortcuts and a command palette on desktop; the same routes, a different shell.
 

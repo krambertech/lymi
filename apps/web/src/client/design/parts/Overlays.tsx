@@ -2,7 +2,6 @@ import { Archive, Download, MoreHorizontal, Pencil, Volume2 } from "lucide-react
 import { useState } from "react";
 import { Button, IconButton } from "../../components/Button";
 import { NewDeckForm } from "../../components/NewDeckSheet";
-import { Sheet, SheetPanel } from "../../components/Sheet";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { Variants } from "../Frame";
+import { SheetPreview } from "../SheetPreview";
 import { type Group, noop } from "./types";
 
 export const menu: Group = {
@@ -128,8 +128,8 @@ export const overlays: Group = {
     {
       slug: "sheet",
       name: "Sheet",
-      source: "components/Sheet.tsx",
-      note: "Takes the shape of the machine it is on. One SheetPanel is the inside of both shapes, and the form knows nothing about either.",
+      source: "components/Dialog.tsx",
+      note: "A form the learner asked for, in a Dialog: a drawer on a touch device, a centred dialog on a desktop, held while open. The form knows nothing about either shape.",
       Demo: function SheetDemo() {
         const [open, setOpen] = useState(false);
         return (
@@ -148,31 +148,34 @@ export const overlays: Group = {
                 },
                 {
                   label: "Drawer",
-                  note: "On the phone. Rises from the bottom edge, under the thumb, and swipes away.",
+                  note: "On a touch device. Rises from the bottom edge, under the thumb, and swipes away.",
                   render: () => (
-                    <div className="edge-2 mx-auto w-full max-w-md rounded-t-xl bg-plate">
-                      <SheetPanel variant="drawer" title="New deck">
-                        <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
-                      </SheetPanel>
-                    </div>
+                    <SheetPreview shape="drawer" title="New deck">
+                      <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
+                    </SheetPreview>
                   ),
                 },
                 {
                   label: "Modal",
                   note: "On a desktop with a fine pointer. Centred, with the card’s 6 px rise.",
                   render: () => (
-                    <div className="edge-2 mx-auto w-full max-w-[440px] rounded-xl bg-plate">
-                      <SheetPanel variant="modal" title="New deck">
-                        <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
-                      </SheetPanel>
-                    </div>
+                    <SheetPreview
+                      shape="dialog"
+                      title="New deck"
+                      className="mx-auto w-full max-w-[440px]"
+                    >
+                      <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
+                    </SheetPreview>
                   ),
                 },
               ]}
             />
-            <Sheet open={open} onOpenChange={setOpen} title="New deck">
-              <NewDeckForm onCancel={() => setOpen(false)} onSubmit={() => undefined} static />
-            </Sheet>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogContent className="w-[min(92vw,440px)]">
+                <DialogTitle>New deck</DialogTitle>
+                <NewDeckForm onCancel={() => setOpen(false)} onSubmit={() => undefined} static />
+              </DialogContent>
+            </Dialog>
           </>
         );
       },

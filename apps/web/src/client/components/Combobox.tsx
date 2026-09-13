@@ -80,8 +80,8 @@ const MAX_HEIGHT = 352;
 
 /*
  * The panel is a popover, so it lives in the top layer: it floats over the form instead of
- * pushing it down, and it escapes every ancestor, including the phone's drawer, which vaul
- * translates to drag and which would otherwise pin anything fixed inside it.
+ * pushing it down, and it escapes every ancestor, including the phone's drawer, which is
+ * translated to drag and would otherwise pin anything fixed inside it.
  */
 function Picker({
   mode,

@@ -11,6 +11,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
+  DrawerVirtualKeyboardProvider,
 } from "./drawer";
 
 /*
@@ -59,7 +60,8 @@ function Dialog({
         </DialogPrimitive.Root>
       ) : (
         <Drawer open={open} onOpenChange={setOpen} showSwipeHandle>
-          {children}
+          {/* Keeps a focused field above the software keyboard when the dialog holds a form. */}
+          <DrawerVirtualKeyboardProvider>{children}</DrawerVirtualKeyboardProvider>
         </Drawer>
       )}
     </DialogShapeContext.Provider>

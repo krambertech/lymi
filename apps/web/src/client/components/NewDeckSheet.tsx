@@ -9,7 +9,7 @@ import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button } from "./Button";
 import { DirectionCompact, LanguageField } from "./DeckFields";
 import { Field, Input } from "./Field";
-import { Sheet } from "./Sheet";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 interface Props {
   open: boolean;
@@ -34,15 +34,18 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
     },
   });
   return (
-    <Sheet open={open} onOpenChange={onOpenChange} title={t`New deck`}>
-      <NewDeckForm
-        key={open ? "open" : "closed"}
-        pending={create.isPending}
-        error={create.isError ? errorMessage(create.error) : undefined}
-        onCancel={() => onOpenChange(false)}
-        onSubmit={(input) => create.mutateAsync(input)}
-      />
-    </Sheet>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="w-[min(92vw,440px)]">
+        <DialogTitle>{t`New deck`}</DialogTitle>
+        <NewDeckForm
+          key={open ? "open" : "closed"}
+          pending={create.isPending}
+          error={create.isError ? errorMessage(create.error) : undefined}
+          onCancel={() => onOpenChange(false)}
+          onSubmit={(input) => create.mutateAsync(input)}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }
 

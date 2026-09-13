@@ -117,7 +117,12 @@ jobs:
         id: typecheck
         run: pnpm typecheck
 
-      - name: Run unit tests
+      # The component tests in `pnpm test` run the primitives in real Chromium and WebKit.
+      - name: Install component test browsers
+        id: component_browsers
+        run: pnpm exec playwright install --with-deps --only-shell chromium webkit
+
+      - name: Run unit and component tests
         id: test
         run: pnpm test
 

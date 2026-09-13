@@ -33,3 +33,4 @@ Aim for 300–700 words. Exceed that only when compression would hide a material
 | [0014](0014-review-modes-use-explicit-cues-and-targets.md) | Review modes use explicit cues and targets |
 | [0015](0015-published-decks-use-pinned-localized-editions.md) | Published decks use pinned localized editions and learner-controlled updates |
 | [0016](0016-public-catalog-pages-render-on-the-public-worker.md) | Public catalog pages render on the public Worker |
+| [0017](0017-interface-primitives-are-shadcn-components-on-base-ui.md) | Interface primitives are shadcn components on Base UI, and overlays adapt by kind and device |

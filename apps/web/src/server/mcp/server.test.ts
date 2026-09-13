@@ -367,7 +367,7 @@ describe("Lymi MCP server", () => {
 
   it("answers an unexpected failure with a retry message, never the internal error", async () => {
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
-    services.getCard.mockRejectedValue(
+    services.showCard.mockRejectedValue(
       new Error("D1_ERROR: no such column: cards.secret at offset 42 SQLITE_ERROR"),
     );
     const client = await connect("read");
@@ -383,7 +383,7 @@ describe("Lymi MCP server", () => {
   });
 
   it("returns a card without the bookkeeping columns", async () => {
-    services.getCard.mockResolvedValue(card);
+    services.showCard.mockResolvedValue(card);
     const client = await connect("read");
 
     const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });

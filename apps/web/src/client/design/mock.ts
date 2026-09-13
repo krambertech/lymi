@@ -54,6 +54,7 @@ export const decks: DeckSummary[] = [
     description: null,
     defaultLanguage: "et",
     directions: "recognition",
+    reviewModes: [{ cue: "term", target: "meaning" }],
     position: 3,
     total: 38,
     due: 5,

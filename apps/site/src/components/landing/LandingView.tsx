@@ -2,8 +2,8 @@ import { Trans } from "@lingui/react/macro";
 import { BriefcaseBusiness, GraduationCap, Languages, Telescope } from "lucide-react";
 import { productUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
-import { highlight } from "../docs/highlight";
 import { Lockup } from "../Logo";
+import { ApiConnections } from "./ApiConnections";
 import { AssistantChat } from "./AssistantChat";
 import { AssistantMarks } from "./AssistantMarks";
 import { EnrichDemo } from "./EnrichDemo";
@@ -16,20 +16,6 @@ export const LANDING_TITLE = "Lymi · Keep what you learn";
 export const LANDING_BLURB =
   "Save a Finnish verb, a chess term, or a line from a paper. Lymi adds what's missing, says it " +
   "aloud, and brings the card back right before you'd forget. Free during the private beta.";
-
-const REQUEST = `{
-  "deckId": "0mtoyiymqa34h1xeaqo",
-  "term": "hysteresis",
-  "source": "paper"
-}`;
-
-const RESPONSE = `{
-  "status": "added",
-  "card": {
-    "term": "hysteresis",
-    "createdBy": "api"
-  }
-}`;
 
 const USE_CASES = [
   {
@@ -221,60 +207,28 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           </div>
         </section>
 
-        <section className="flex min-h-[680px] items-center border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28">
-          <div className="mx-auto w-full max-w-[1040px]">
-            {/* Same columns as the example below, so the copy starts on its divider. */}
-            <div className="grid items-start gap-8 @4xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] @4xl:gap-0">
-              <h2 className="max-w-[12ch] text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">
-                One endpoint. Everything else.
+        <section className="border-b border-edge bg-plate px-5 py-20 @2xl:px-10 @4xl:py-28">
+          <div className="mx-auto grid max-w-[1040px] items-center gap-12 @4xl:grid-cols-2 @4xl:gap-20">
+            <div className="order-1 max-w-[480px] @4xl:order-2 @4xl:justify-self-end">
+              <h2 className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl">
+                Plug Lymi into anything.
               </h2>
-              <div className="max-w-[520px]">
-                <p className="text-md text-text-2">
-                  Send cards from a script, a notes app, a spreadsheet, or anything else that can
-                  make an HTTP request. Include what you know; Lymi keeps the source and lets you
-                  complete the card later.
-                </p>
-                <p className="mt-3 text-sm text-muted">
-                  Each key is read-only or read-and-write, and API-created cards stay identifiable.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <a href="/docs/quickstart" className={buttonClass("secondary")}>
-                    Quickstart
-                  </a>
-                  <a href="/docs/api" className={buttonClass("ghost")}>
-                    API reference
-                  </a>
-                </div>
+              <p className="mt-5 text-md text-text-2">
+                Lymi has a public API, so the apps and tools you already use can work with your
+                cards. Add a word from a shortcut on your phone, bring in a lesson from a
+                spreadsheet, or show what’s due on your own site.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-2">
+                <a href="/docs" className={buttonClass("secondary")}>
+                  See how it works
+                </a>
+                <a href="/docs/api" className={buttonClass("ghost")}>
+                  API reference
+                </a>
               </div>
             </div>
-
-            <div className="mt-12 min-w-0 overflow-hidden rounded-xl bg-canvas edge">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-edge px-6 py-5 @2xl:px-8">
-                <p className="text-xs text-muted">Create a card</p>
-                <p className="flex items-center gap-2 font-mono text-xs text-text-2">
-                  <span className="rounded-xs bg-plate-2 px-1.5 py-0.5 font-medium text-text">
-                    POST
-                  </span>
-                  /api/cards
-                </p>
-              </div>
-              <div className="grid @3xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
-                <div className="p-6 @2xl:p-8">
-                  <p className="text-xs text-muted">Request</p>
-                  <pre className="doc-code overflow-x-auto pt-5">
-                    <code>{highlight(REQUEST, "json")}</code>
-                  </pre>
-                </div>
-                <div className="border-t border-edge p-6 @2xl:p-8 @3xl:border-t-0 @3xl:border-l">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-xs text-muted">Response</p>
-                    <p className="font-mono text-xs text-good">201 Created</p>
-                  </div>
-                  <pre className="doc-code overflow-x-auto pt-5">
-                    <code>{highlight(RESPONSE, "json")}</code>
-                  </pre>
-                </div>
-              </div>
+            <div className="order-2 min-w-0 py-4 @4xl:order-1">
+              <ApiConnections />
             </div>
           </div>
         </section>
@@ -312,10 +266,6 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             </a>
           </div>
         </div>
-        <p className="mx-auto mt-6 max-w-[1040px] text-xs text-muted">
-          Claude and Claude Code are trademarks of Anthropic. ChatGPT and Codex are trademarks of
-          OpenAI. Gemini is a trademark of Google.
-        </p>
       </footer>
     </div>
   );

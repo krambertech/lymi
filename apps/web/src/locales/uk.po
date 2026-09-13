@@ -1826,6 +1826,10 @@ msgstr "Налаштування"
 msgid "Share link"
 msgstr "Поділитися посиланням"
 
+#: src/client/components/DeckCard.tsx
+msgid "Shared by {owner}"
+msgstr "Від {owner}"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "Shared by link"
 msgstr "Доступ за посиланням"

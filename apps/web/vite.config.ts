@@ -128,7 +128,15 @@ export default defineConfig({
         // The primitives in real browsers, one instance per machine an overlay adapts to. Not the
         // Worker's config: the Cloudflare plugin cannot run inside a browser session.
         extends: false,
-        plugins: [react(), tailwindcss()],
+        plugins: [
+          react(),
+          lingui({ failOnCompileError: true, failOnMissing: true }),
+          babel({
+            include: [/\/src\/.*\.tsx?(\?.*)?$/],
+            presets: [linguiTransformerBabelPreset()],
+          }),
+          tailwindcss(),
+        ],
         resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
         optimizeDeps: {
           include: [
@@ -136,6 +144,8 @@ export default defineConfig({
             "react-dom",
             "react-dom/client",
             "vitest-browser-react",
+            "@lingui/core",
+            "@lingui/react",
             // Discovered mid-run, a dependency reloads the page and loads a second React.
             "@base-ui/react/dialog",
             "@base-ui/react/drawer",

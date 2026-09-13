@@ -1,4 +1,5 @@
 import { Plural, Trans } from "@lingui/react/macro";
+import { Avatar } from "./Avatar";
 import { languageName } from "./DeckFields";
 import { NavLink, type StaticNav } from "./NavLink";
 import { StateStripe } from "./StateStripe";
@@ -14,6 +15,8 @@ export interface DeckCardProps {
   learning?: number | undefined;
   /** When the next card comes back, for a deck with nothing due. E.g. "Monday". */
   next?: string | null | undefined;
+  /** The owner's name on a deck the learner joined. An owned deck names nobody. */
+  owner?: string | null | undefined;
   st?: StaticNav;
 }
 
@@ -21,6 +24,7 @@ export interface DeckCardProps {
  * A deck in Library. A card rather than a row because it holds three kinds of line: the
  * name with its language, the stripe that says how the deck is split, and the one thing it
  * asks of you today. Due is the only amber, and it is text, so a page of decks stays quiet.
+ * A joined deck adds who shares it, under the name, with the join page's avatar-and-name line.
  */
 export function DeckCard({
   id,
@@ -31,6 +35,7 @@ export function DeckCard({
   known,
   learning,
   next,
+  owner,
   st,
 }: DeckCardProps) {
   return (
@@ -44,6 +49,14 @@ export function DeckCard({
         <span className="min-w-0 truncate text-lg font-medium tracking-[-0.01em]">{name}</span>
         {language && <span className="shrink-0 text-sm text-muted">{languageName(language)}</span>}
       </span>
+      {owner && (
+        <span className="-mt-1.5 flex min-w-0 items-center gap-1.5 text-sm text-text-2">
+          <Avatar name={owner} size={18} />
+          <span className="min-w-0 truncate">
+            <Trans>Shared by {owner}</Trans>
+          </span>
+        </span>
+      )}
       {known !== undefined && total > 0 && (
         <StateStripe known={known} learning={learning ?? 0} total={total} />
       )}

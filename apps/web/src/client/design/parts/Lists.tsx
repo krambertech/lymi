@@ -61,6 +61,25 @@ export const lists: Group = {
                 </div>
               ),
             },
+            {
+              label: "Shared with you",
+              note: "A joined deck names its owner under the name, the way the join page does.",
+              render: () => (
+                <div className="w-full">
+                  <DeckCard
+                    id="d4"
+                    name="Eesti keel, A1"
+                    language="et"
+                    due={5}
+                    total={38}
+                    known={12}
+                    learning={9}
+                    owner="Liis"
+                    st={{ path: "" }}
+                  />
+                </div>
+              ),
+            },
           ]}
         />
       ),

@@ -6,46 +6,47 @@ supersedes: 0010
 
 # The review queue is a deterministic weighted draw with no saved state
 
-The next card in a review is a pure function in `packages/core`: `draw(eligible modes, today's review log, scope, learner-local date)`. The same inputs always return the same card, so a review has no stored session, position, or buffer. The daily goal is the budget, and the draw spends it to keep as much remembered as possible.
+The next card is a pure function in `packages/core` of the drawable card modes, today's review log, the scope, and the learner-local date in the review timezone. A review stores no session, position, or buffer. The daily goal is the budget, and the draw spends it to keep as much remembered as possible.
 
 ## Context
 
-Today's queue orders due states by `due` ascending, takes 50, and the client walks that fixed list. A card graded Forgot cannot return in the same review, so the FSRS learning steps meant for one sitting spread across days instead. New cards have no share, so a joined deck of hundreds can fill a review. The accepted rolling-queue plan fixed this with a revisioned server session, a local mirror, and merge rules, which is more machinery than one learner's review needs.
-
-A review can cover one deck, every deck, or later a series or category. Rules that live on a session break when the scope changes; rules checked against cards and the review log do not.
+Today the client walks a fixed list of 50 due states, oldest first, so a forgotten card cannot return in the same review and new cards have no share. The accepted rolling-queue plan fixed this with a revisioned server session, which scopes of one deck, every deck, or a later category would each have to carry.
 
 ## Decision
 
-**Scheduler.** FSRS-6 through `ts-fsrs` with default weights, 90% requested retention, the default maximum interval, and one 10-minute step for both learning and relearning.
+**Scheduler.** FSRS-6 with default weights, 90% retention, the default maximum interval, and one 10-minute learning and relearning step. The step only sets FSRS state; returns count attempts, not minutes.
 
-**Eligibility.** A card mode is eligible when it is due before the end of the learner-local day, its card and deck are active, the mode is asked (ADR 0007, ADR 0014), and the learner is a member of the deck. Two further rules apply:
+**Eligible.** A mode is eligible when it is due before the end of the learner-local day, so a short step never waits and a card due this afternoon never slips a day. Its card and deck are active, the mode is asked (ADR 0007, 0014), and the learner is a member. A card introduces one mode at a time, in its mode order, skipping a mode whose cue is missing: Lymi's default order starts with meaning → term, which teaches more than the reverse (Webb, 2009). The next mode becomes new once the previous one first reaches Review. Once any mode of a card is reviewed, its other modes wait until the next day, because a revealed answer stays fresh for hours; this widens ADR 0014's session rule to the day.
 
-- A card introduces one mode at a time. Meaning → term comes first, and each further mode becomes new after the previous one first reaches Review, in the card's mode order. A card without a meaning starts with term → meaning.
-- Once any mode of a card is reviewed, the card's other modes wait until the next learner-local day.
+**Drawable** is eligible minus modes past today's return cap. The queue, Today's count, deck counts, `settleDay` exhaustion, and the reminder query all use it. **Forgotten today** is every mode whose latest grade today is Forgot; Review forgotten shows each once.
 
-**Slots.** Every fifth attempt of the day is a new-card slot while both new and review modes are eligible. When either group runs out, the other fills the slot.
+**Each attempt** takes the first of:
 
-**Draw.** Within a slot type, each eligible mode gets a random key from a hash of the date, card, and mode, weighted by its odds. Review odds rise steeply with retrievability measured at the start of the day, so cards still known are more likely than cards nearly lost. New-card odds halve for each week since the card was added and never reach zero. Because keys do not depend on the scope, any scope sees the global order with other cards filtered out.
+1. A return that has reached its gap.
+2. A mode still learning or relearning from an earlier day, spaced as a return every 3 attempts.
+3. An ordinary draw. Every fifth ordinary draw, not counting returns, is a new-card slot while both groups are drawable; otherwise either group fills it.
+4. The earliest pending return, when nothing ordinary is drawable.
 
-**Returns.** A grade that leaves a mode in learning or relearning brings it back after about 3, then about 6, then about 12 further attempts, counted in today's log with hash-based jitter. A due return takes the next slot. After three returns in a day, a further Forgot or Hard waits until the next day.
+**Returns.** A grade that leaves a mode learning or relearning returns it after 3, then 6, then 12 further attempts, with ±1 attempt of jitter. After three returns in a day, it waits until the next day.
 
-**Log.** Today's review log spans every scope. On the client it includes grades still waiting in the offline outbox, and Undo removes a grade from it.
+**Draw.** Keys come from a hash of the date, card, and mode, so every scope sees the same global order filtered. A review's odds are its retrievability at the start of the day, raised to the fourth power. Three new-card slots in four weight a card by half for each week since it was added; every fourth takes the oldest unseen card. These are named constants in core.
+
+**Log.** Today's log spans every scope, includes outbox grades on the client, and loses a grade on Undo.
 
 ## Considered options
 
-- **A revisioned server session with a local mirror.** Rejected: exact position on every device does not justify merge rules, revisions, and stale state for one learner.
-- **A bookmark saved on the device.** Rejected: it is more to build than the pure function, and it goes stale when the scope or device changes.
-- **Strict lowest retrievability first (ADR 0010).** Rejected: the Anki manual recommends it for catching up a backlog, but simulations by FSRS's author and a one-year simulation of these rules at goal 50 both remembered more with higher retrievability first when attempts are capped.
-- **Strict highest retrievability first.** Rejected for variety: it remembered about 5% more in the simulation, but a weighted draw keeps novel cards appearing and left the fewest cards over a week late.
-- **Urgency bands with random picks inside the top band.** Rejected: old cards wait for as long as the top band stays full.
+- **A revisioned server session with a local mirror:** rejected as more machinery than one learner needs.
+- **A bookmark on the device:** rejected because it goes stale across scopes and devices.
+- **Strict lowest retrievability first (ADR 0010):** rejected. The Anki manual recommends it for a temporary backlog, but the daily goal makes the cap permanent, and in [our simulation](../../packages/core/simulation/README.md) it stranded the most cards.
+- **Strict highest retrievability first:** rejected for variety. It remembered about 5% more than the weighted draw.
+- **A floor on new-card recency odds:** rejected because a growing old pile outweighs a fresh lesson.
 
 ## Consequences
 
-- Reload, offline replay, device changes, scope changes, and Undo produce the next card by recomputing it. Revealed-but-ungraded state is lost on reload.
-- The review endpoint and the client run the same function. API and MCP clients receive a drawn order; the web client draws locally so returns and outbox grades take effect without a request.
-- Today's count, deck counts, day exhaustion in `settleDay`, and the queue must share one eligibility definition, or Today will disagree with the review.
-- Cards already on the old 1-minute and 10-minute steps need a tested mapping to the single step.
-- The weight constants are tuned by simulation, and changing them changes order but never progress.
-- Lymi's approach draws on Memorize (Tabibian et al., PNAS 2019), where the optimal review rate is stochastic and set by recall probability, and on SuperMemo's randomized priority queue. The exact combination is Lymi's own.
+- The same synced log and cards give the same next card on reload, offline, another device, or another scope. Another device's grades or edits can change the current card, revealed state is lost on reload, and an offline grade replayed after a later grade of that card becomes a duplicate and does not count.
+- Eligibility needs the review log, so counts load rows and call core instead of a SQL `where`.
+- The client needs a new endpoint returning drawable modes and today's log for a scope, and dates from the review timezone rather than the device.
+- Crossing local midnight starts a new day: order, slots, and the header count reset.
+- Cards on the old 1-minute and 10-minute steps need a tested mapping.
 
-The rules are delivered through [the review draw plan](../plans/2026-09-13-review-draw.md).
+Delivery is in [the review draw plan](../plans/2026-09-13-review-draw.md).

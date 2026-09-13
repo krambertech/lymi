@@ -36,14 +36,14 @@ A goal of 50 can therefore contain fewer than 50 distinct cards when a forgotten
 
 [ADR 0018](../adr/0018-the-review-queue-is-a-deterministic-weighted-draw.md) replaces the durable session this section first described. The next card is recomputed from the eligible cards, today's review log, the scope, and the learner-local date, so nothing about an active review is stored:
 
-- a reload, reconnect, offline replay, or move between devices continues with the same cards in the same order;
-- grades still in the offline outbox count as part of today's log;
+- the same synced state gives the same next card after a reload, offline, or on another device, while another device's grades may change it;
+- grades still in the offline outbox count as part of today's log, and one replayed after a later grade of the same card is a duplicate;
 - a deck, every deck, or a later series or category is only a filter over the same order;
-- one attempt in five goes to a new card while both groups are available, and the draw within each group is weighted rather than strict.
+- one ordinary attempt in five goes to a new card while both groups are available, every fourth new card is the oldest not yet started, and the rest of the draw is weighted rather than strict.
 
 ## Forgotten cards
 
-FSRS uses one 10-minute step for learning and relearning. A grade that leaves a direction learning or relearning brings it back after about 3, then about 6, then about 12 further attempts, counted in today's log. After three returns in a day, a further slip waits until the next day.
+FSRS uses one 10-minute step for learning and relearning. A grade that leaves a direction learning or relearning brings it back after about 3, then about 6, then about 12 further attempts, counted in today's log. After three returns in a day, a further slip waits until the next day, and a direction still learning or relearning from an earlier day is mixed in every 3 attempts at the start of the next review. Returns take precedence over new-card slots without using them.
 
 A retry is another ordinary review attempt and counts toward the daily goal. Once one direction of a card is reviewed, the other direction waits until the next learner-local day because the revealed answer would leak it.
 
@@ -51,7 +51,7 @@ For the end state, a card is still forgotten when its latest grade for that dire
 
 ## Goal completion
 
-The completion state appears immediately after the required attempt count is reached or after the learner completes a non-empty eligible queue and the server confirms that no reviews remain. It confirms that today's streak requirement is complete, shows the number reviewed today, and keeps continuing optional. An empty local buffer while offline or after a failed refresh is not enough evidence to complete the day.
+The completion state appears immediately after the required attempt count is reached or after the learner completes a non-empty eligible queue and the server confirms that no reviews remain. It confirms that today's streak requirement is complete, shows the number reviewed today, and keeps continuing optional. Running out of cards while offline or after a failed refresh is not enough evidence to complete the day.
 
 The available actions are conditional:
 
@@ -94,10 +94,10 @@ No product decisions remain open in this proposal. The review draw plan divides 
 - With between one and 49 eligible cards, completing all of them and receiving a confirmed empty queue completes the streak at the honest lower count without pulling future cards forward.
 - With zero eligible cards, opening Lymi and receiving a confirmed empty state preserves the current streak without incrementing it and offers Add cards.
 - A zero-due day with no visit remains a missed day and resets the streak when no future streak protection applies.
-- An empty local buffer does not complete the streak while Lymi is unable to confirm whether more cards are eligible.
+- Running out of local cards does not complete the streak while Lymi is unable to confirm whether more cards are eligible.
 - A Forgot grade and a later retry each add one to the daily count; Undo reverses the corresponding count and review state.
-- Reloading, backgrounding, reconnecting, or reopening recomputes the same next card, order, and progress without stored review state.
-- Every fifth attempt of the day goes to a new card while both groups are available.
+- Reloading, backgrounding, reconnecting, or reopening with the same synced state recomputes the same next card, order, and progress without stored review state.
+- Every fifth ordinary attempt of the day goes to a new card while both groups are available, and returns never use that slot.
 - A forgotten direction returns after about 3, 6, and 12 further attempts, at most three times a day, and its sibling direction waits until the next day.
 - Goal completion remains complete during optional forgotten review or another round; another round stops after 10 additional attempts or when no eligible cards remain.
 - Today and review completion show the numeric current streak beside the seven-day review lights without making it dominant.

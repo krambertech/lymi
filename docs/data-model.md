@@ -211,5 +211,4 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 ## Not decided yet
 
 - One `meaning` string per card, or multiple senses as rows. Decide before the first deploy with real data.
-- Holding back the second direction of a card until the next day, so seeing the term is not a giveaway for producing it later in the same session. Queue logic, not schema.
 - Tags as a JSON column (current) or a table, once search needs them.

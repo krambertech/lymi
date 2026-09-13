@@ -9,11 +9,7 @@ import { decksQuery } from "../lib/queries";
 import { Button } from "./Button";
 import { Select } from "./Combobox";
 import { Field, Input } from "./Field";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 interface Props {
   open: boolean;

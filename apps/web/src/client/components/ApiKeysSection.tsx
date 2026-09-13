@@ -16,14 +16,10 @@ import { CopyField } from "./CopyField";
 import { EmptySection } from "./EmptyState";
 import { Field, Input } from "./Field";
 import { Lantern } from "./Lantern";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "./ui/dialog";
 import { Segmented } from "./Segmented";
 import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 /**
  * Personal API keys for curl and scripts. The list is the point of the section; making a key

@@ -4,11 +4,7 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { IconButton } from "../components/Button";
 import { AppTile, Wordmark } from "../components/Logo";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "../components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import { setTheme } from "../lib/theme";
 import { DocLink } from "./DocLink";
 import { ROOM_THEMES, usePageTheme } from "./Frame";

@@ -20,11 +20,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
 import { directionLabel, languageName } from "../components/DeckFields";
 import { Field, Input, Textarea } from "../components/Field";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "../components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,

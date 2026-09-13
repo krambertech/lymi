@@ -2,7 +2,7 @@ import { expect, type Locator, type Page, test } from "@playwright/test";
 
 /**
  * A form sheet on a touch device is a drawer, put away with the thumb. The rest of its behavior is
- * proven per component in `ResponsiveDialog.browser.test.tsx`; a drag needs a page and a device.
+ * proven per component in `ui/dialog.browser.test.tsx`; a drag needs a page and a device.
  */
 test.skip(({ isMobile }) => !isMobile, "The drawer is the touch shape.");
 

@@ -9,11 +9,7 @@ import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button } from "./Button";
 import { DirectionCompact, LanguageField } from "./DeckFields";
 import { Field, Input } from "./Field";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 interface Props {
   open: boolean;

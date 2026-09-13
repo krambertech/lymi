@@ -352,8 +352,9 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
         run: >-
-          pnpm --filter @lymi/web exec wrangler d1 migrations apply DB --remote
-          --config dist/lymi/wrangler.preview.json
+          node scripts/app-preview-infrastructure.mjs migrate
+          "${{ github.event.pull_request.number }}"
+          apps/web/dist/lymi/wrangler.preview.json
 
       - name: Create app preview Worker
         if: steps.infrastructure.outputs.worker_exists != 'true'

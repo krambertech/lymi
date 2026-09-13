@@ -1,10 +1,15 @@
 import assert from "node:assert/strict";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 import {
   cleanupPreviewInfrastructure,
   derivePreviewSecrets,
   ensurePreviewInfrastructure,
   makePreviewConfig,
+  migratePreviewDatabase,
+  migrationFailureReason,
   previewNames,
 } from "./app-preview-infrastructure.mjs";
 
@@ -144,6 +149,144 @@ test("cleanup deletes only the exact pull request resources", async () => {
     `${apiRoot()}/storage/kv/namespaces/kv-id`,
     `${apiRoot()}/d1/database/db-id`,
   ]);
+});
+
+function previewConfigFile() {
+  const path = join(mkdtempSync(join(tmpdir(), "lymi-preview-")), "wrangler.preview.json");
+  writeFileSync(
+    path,
+    JSON.stringify({
+      name: "lymi-app-pr-105",
+      d1_databases: [
+        {
+          binding: "DB",
+          database_name: "lymi-app-pr-105-db",
+          database_id: "old-db-id",
+          migrations_dir: "../../migrations",
+        },
+      ],
+    }),
+  );
+  return path;
+}
+
+function boundDatabaseId(path) {
+  return JSON.parse(readFileSync(path, "utf8")).d1_databases[0].database_id;
+}
+
+function rebuildingD1(calls) {
+  return async (url, init = {}) => {
+    const method = init.method ?? "GET";
+    calls.push([method, url]);
+    if (method === "GET" && url.includes("/d1/database?")) {
+      return response([{ name: "lymi-app-pr-105-db", uuid: "old-db-id" }]);
+    }
+    if (method === "DELETE" && url.endsWith("/d1/database/old-db-id")) return response(null);
+    if (method === "POST" && url.endsWith("/d1/database")) {
+      return response({ name: JSON.parse(init.body).name, uuid: "new-db-id" });
+    }
+    throw new Error(`Unexpected ${method} ${url}`);
+  };
+}
+
+test("keeps the preview database when its migrations apply", async () => {
+  const configPath = previewConfigFile();
+  const calls = [];
+  const result = await migratePreviewDatabase({
+    accountId,
+    token,
+    prNumber: 105,
+    configPath,
+    applyMigrations: () => ({ ok: true }),
+    fetchImpl: rebuildingD1(calls),
+    log: () => {},
+  });
+
+  assert.deepEqual(result, { rebuilt: false, databaseId: "old-db-id" });
+  assert.deepEqual(calls, []);
+  assert.equal(boundDatabaseId(configPath), "old-db-id");
+});
+
+test("rebuilds a preview database whose recorded migrations no longer match", async () => {
+  const configPath = previewConfigFile();
+  const calls = [];
+  const logs = [];
+  const appliedTo = [];
+  const result = await migratePreviewDatabase({
+    accountId,
+    token,
+    prNumber: 105,
+    configPath,
+    applyMigrations: () => {
+      appliedTo.push(boundDatabaseId(configPath));
+      return appliedTo.length === 1
+        ? { ok: false, reason: "table card_images already exists at offset 13: SQLITE_ERROR" }
+        : { ok: true };
+    },
+    fetchImpl: rebuildingD1(calls),
+    log: (line) => logs.push(line),
+  });
+
+  assert.deepEqual(result, { rebuilt: true, databaseId: "new-db-id" });
+  assert.deepEqual(appliedTo, ["old-db-id", "new-db-id"]);
+  assert.deepEqual(
+    calls.map(([method, url]) => [method, url.replace(apiRoot(), "")]),
+    [
+      ["GET", "/d1/database?name=lymi-app-pr-105-db&per_page=100"],
+      ["DELETE", "/d1/database/old-db-id"],
+      ["POST", "/d1/database"],
+    ],
+  );
+  assert.match(logs[0], /^::warning title=Preview database rebuilt::/);
+  assert.match(logs[0], /table card_images already exists/);
+});
+
+test("fails when a migration is broken on an empty preview database", async () => {
+  const configPath = previewConfigFile();
+  const logs = [];
+  let attempts = 0;
+  await assert.rejects(
+    migratePreviewDatabase({
+      accountId,
+      token,
+      prNumber: 105,
+      configPath,
+      applyMigrations: () => {
+        attempts += 1;
+        return { ok: false, reason: 'near "CREAT": syntax error' };
+      },
+      fetchImpl: rebuildingD1([]),
+      log: (line) => logs.push(line),
+    }),
+    /Migrations fail on an empty preview database \(near "CREAT": syntax error\)/,
+  );
+  assert.equal(attempts, 2);
+  assert.equal(logs.length, 1);
+});
+
+test("refuses a config bound to another pull request's database", async () => {
+  const configPath = previewConfigFile();
+  await assert.rejects(
+    migratePreviewDatabase({
+      accountId,
+      token,
+      prNumber: 106,
+      configPath,
+      applyMigrations: () => assert.fail("migrations must not run"),
+      fetchImpl: rebuildingD1([]),
+    }),
+    /not bound to lymi-app-pr-106-db/,
+  );
+});
+
+test("names the Wrangler error that stopped the migrations", () => {
+  const output =
+    "🌀 Executing on remote database DB\n\u001b[31m✘ \u001b[41;31m[\u001b[41;97mERROR\u001b[41;31m]\u001b[0m \u001b[1mtable card_images already exists at offset 13: SQLITE_ERROR\u001b[0m\n";
+  assert.equal(
+    migrationFailureReason({ status: 1, output }),
+    "table card_images already exists at offset 13: SQLITE_ERROR",
+  );
+  assert.equal(migrationFailureReason({ status: 7, output: "" }), "Wrangler exited with code 7");
 });
 
 function apiRoot() {

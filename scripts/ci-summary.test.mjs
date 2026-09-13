@@ -5,6 +5,7 @@ import { renderCiSummary } from "./ci-summary.mjs";
 test("the summary makes browser coverage and failed gates explicit", () => {
   const summary = renderCiSummary({
     COVERAGE: "Chromium",
+    SITE_PREVIEW: "true",
     PLAN_REASON: "This pull request changes production-affecting paths.",
     TITLE_OUTCOME: "success",
     DEPENDENCIES_OUTCOME: "success",
@@ -21,6 +22,7 @@ test("the summary makes browser coverage and failed gates explicit", () => {
   });
 
   assert.match(summary, /\*\*Browser coverage:\*\* Chromium/);
+  assert.match(summary, /\*\*Public-site preview:\*\* Scheduled after CI/);
   assert.match(summary, /\| TypeScript \| Failed \|/);
   assert.match(summary, /\| Migration safety \| Passed \|/);
   assert.match(summary, /green Chromium pull-request run is not full cross-browser evidence/);

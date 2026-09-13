@@ -36,3 +36,17 @@ test("accepts the independently identifiable public-site deployment", () => {
   };
   assert.equal(validateHealth(payload, "lymi-site"), payload);
 });
+
+test("can require the health endpoint to identify the expected commit", () => {
+  const payload = {
+    ok: true,
+    name: "lymi-site",
+    version: { id: "site-version", tag: "abc123", deployedAt: "2026-09-13T12:00:00.000Z" },
+  };
+
+  assert.equal(validateHealth(payload, "lymi-site", "abc123"), payload);
+  assert.throws(
+    () => validateHealth(payload, "lymi-site", "newer-commit"),
+    /did not report the expected commit tag/,
+  );
+});

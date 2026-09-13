@@ -86,7 +86,7 @@ Done when `pnpm verify`, `pnpm deploy:check:site` and `pnpm test:e2e` pass, `/uk
 3. Add `pages/uk/` and `pages/ru/` wrappers for `index` and `join`. Docs pages are not duplicated.
 4. Set `lang` from `Astro.currentLocale` in `BaseLayout.astro`, the canonical per locale, and `hreflang` for `en`, `uk`, `ru` and `x-default` on landing and Join only. Extend `sitemap.xml.ts`.
 5. Add a footer language row built with `getRelativeLocaleUrl`. The beta form shows localized messages; `/api/beta` stays English.
-6. Run the `translate` skill and turn on `failOnMissing: true`. Marketing copy gets a harder read than app copy.
+6. Run the `translate` skill and turn on `failOnMissing: true`. Landing and Join copy is transcreated rather than translated, by the skill's site section.
 
 ## Not in this plan
 

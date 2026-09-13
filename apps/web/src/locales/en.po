@@ -372,6 +372,10 @@ msgstr "A sentence it lives in"
 msgid "Access"
 msgstr "Access"
 
+#: src/client/components/AccountSection.tsx
+msgid "Account"
+msgstr "Account"
+
 #: src/client/components/LearnerMenu.tsx
 #: src/client/routes/activity.tsx
 #: src/client/views/Shell.tsx
@@ -489,6 +493,10 @@ msgstr "An app"
 msgid "an app with no address"
 msgstr "an app with no address"
 
+#: src/client/components/AccountSection.tsx
+msgid "Animated images can’t be used. Choose a still image."
+msgstr "Animated images can’t be used. Choose a still image."
+
 #: src/client/views/ReviewView.tsx
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
@@ -599,6 +607,7 @@ msgstr "calls itself “{0}”"
 
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/ApiKeysSection.tsx
+#: src/client/components/AvatarEditor.tsx
 #: src/client/components/NewDeckSheet.tsx
 #: src/client/views/DeckDetailView.tsx
 msgid "Cancel"
@@ -632,6 +641,10 @@ msgstr "Cards from this deck"
 msgid "Change daily goal"
 msgstr "Change daily goal"
 
+#: src/client/components/AccountSection.tsx
+msgid "Change photo"
+msgstr "Change photo"
+
 #: src/client/views/JoinView.tsx
 #: src/server/join-page.ts
 msgid "Check that the whole link was copied, or ask for a new one."
@@ -657,6 +670,10 @@ msgstr "Choose a recall grade"
 #: src/client/components/GoalPicker.tsx
 msgid "Choose a whole number from 1 to 200."
 msgstr "Choose a whole number from 1 to 200."
+
+#: src/client/components/AccountSection.tsx
+msgid "Choose new photo"
+msgstr "Choose new photo"
 
 #: src/client/components/Combobox.tsx
 msgid "Choose one"
@@ -742,6 +759,7 @@ msgstr "Couldn’t load your cards"
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Couldn’t play the pronunciation. Try again in a moment."
 
+#: src/client/components/AccountSection.tsx
 #: src/client/lib/api.ts
 #: src/client/routes/consent.tsx
 msgid "Couldn’t reach Lymi. Check your connection and try again."
@@ -762,6 +780,10 @@ msgstr "Couldn’t save that grade. Try again."
 #: src/client/views/SettingsView.tsx
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
+
+#: src/client/components/AccountSection.tsx
+msgid "Couldn’t save the photo. Try again."
+msgstr "Couldn’t save the photo. Try again."
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Couldn’t save the reminder. Check your connection and try again."
@@ -853,6 +875,14 @@ msgstr "Docs"
 #: src/client/views/WordView.tsx
 msgid "Done"
 msgstr "Done"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Drag or use the arrow keys to move the photo."
+msgstr "Drag or use the arrow keys to move the photo."
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Drag to move the photo. Pinch or use the slider to zoom."
+msgstr "Drag to move the photo. Pinch or use the slider to zoom."
 
 #: src/client/views/InsightsView.tsx
 msgid "due this week"
@@ -1477,9 +1507,21 @@ msgstr "Optional"
 msgid "peak, {0}"
 msgstr "peak, {0}"
 
+#: src/client/components/AvatarEditor.tsx
+msgid "Photo position"
+msgstr "Photo position"
+
+#: src/client/components/AccountSection.tsx
+msgid "Photo removed"
+msgstr "Photo removed"
+
 #: src/client/views/ReviewView.tsx
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Position your photo"
+msgstr "Position your photo"
 
 #: src/client/views/WordView.tsx
 msgid "Previous card"
@@ -1586,6 +1628,10 @@ msgstr "Reminder time saved."
 msgid "Reminders stay off until notifications are allowed."
 msgstr "Reminders stay off until notifications are allowed."
 
+#: src/client/components/AccountSection.tsx
+msgid "Remove photo"
+msgstr "Remove photo"
+
 #: src/client/views/ReviewView.tsx
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
@@ -1646,6 +1692,10 @@ msgstr "Revoke key"
 #: src/client/views/WordView.tsx
 msgid "Right now"
 msgstr "Right now"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Save photo"
+msgstr "Save photo"
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Save time"
@@ -1861,6 +1911,22 @@ msgstr "Terms"
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
 
+#: src/client/components/AccountSection.tsx
+msgid "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
+msgstr "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
+
+#: src/client/components/AccountSection.tsx
+msgid "That image couldn’t be used. Choose a still JPEG, PNG or WebP image."
+msgstr "That image couldn’t be used. Choose a still JPEG, PNG or WebP image."
+
+#: src/client/components/AccountSection.tsx
+msgid "That image is too large. Choose one under 25 MB."
+msgstr "That image is too large. Choose one under 25 MB."
+
+#: src/client/components/AccountSection.tsx
+msgid "That image is too small. Choose one at least 16 pixels wide."
+msgstr "That image is too small. Choose one at least 16 pixels wide."
+
 #: src/client/lib/api.ts
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
@@ -2043,6 +2109,7 @@ msgstr "Turn off the join link?"
 msgid "Type the term."
 msgstr "Type the term."
 
+#: src/client/components/AccountSection.tsx
 #: src/client/routes/library.$deckId.tsx
 #: src/client/routes/library.tsx
 msgid "Undo"
@@ -2157,3 +2224,23 @@ msgstr "You wrote this"
 #: src/client/views/JoinView.tsx
 msgid "Your deck"
 msgstr "Your deck"
+
+#: src/client/components/AccountSection.tsx
+msgid "Your Google photo is back"
+msgstr "Your Google photo is back"
+
+#: src/client/components/AccountSection.tsx
+msgid "Your photo was changed somewhere else. Check it, then try again."
+msgstr "Your photo was changed somewhere else. Check it, then try again."
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Zoom"
+msgstr "Zoom"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Zoom in"
+msgstr "Zoom in"
+
+#: src/client/components/AvatarEditor.tsx
+msgid "Zoom out"
+msgstr "Zoom out"

@@ -81,7 +81,7 @@ export function errorMessage(error: unknown): string {
   return error instanceof ApiError ? error.message : unreachable();
 }
 
-export type Me = { id: string; name: string; email: string; image: string | null };
+export type Me = { id: string; name: string; email: string };
 export type Settings = {
   userId: string;
   appLanguage: AppLanguage | null;

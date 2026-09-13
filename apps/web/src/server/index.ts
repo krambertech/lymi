@@ -16,6 +16,7 @@ import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
 import { audio } from "./routes/audio";
+import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
@@ -56,7 +57,10 @@ app.get("/", async (c) => {
 app.use("*", async (c, next) => {
   const db = createDb(c.env.DB);
   c.set("db", db);
-  c.set("auth", createAuth(c.env, db));
+  c.set(
+    "auth",
+    createAuth(c.env, db, (work) => c.executionCtx.waitUntil(work)),
+  );
   await next();
 });
 
@@ -137,8 +141,8 @@ app.get(
     ok: { schema: MeOut, description: "The learner" },
   }),
   (c) => {
-    const { id, name, email, image } = c.get("user");
-    return c.json({ id, name, email, image });
+    const { id, name, email } = c.get("user");
+    return c.json({ id, name, email });
   },
 );
 
@@ -152,6 +156,7 @@ app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);
 app.route("/api/push", push);
 app.route("/api/audio", audio);
+app.route("/api/avatar", avatar);
 
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);

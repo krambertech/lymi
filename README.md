@@ -72,7 +72,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 
 1. `wrangler login`
 2. `wrangler d1 create lymi` and paste the `database_id` into `apps/web/wrangler.jsonc`
-3. `wrangler r2 bucket create lymi-audio`
+3. `wrangler r2 bucket create lymi-audio` and `wrangler r2 bucket create lymi-private-images`, and enable Cloudflare Images for the Images binding
 4. `wrangler kv namespace create SESSIONS` and paste the id
 5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
 6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`

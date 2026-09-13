@@ -3,6 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import type { ReactNode } from "react";
+import { AccountGroup } from "../components/AccountSection";
 import { Select } from "../components/Combobox";
 import { Field } from "../components/Field";
 import { Segmented } from "../components/Segmented";
@@ -20,6 +21,8 @@ export interface SettingsProps {
   languageError?: boolean | undefined;
   theme: ThemeChoice;
   onTheme: (t: ThemeChoice) => void;
+  /** The Account group with a working photo. Without it, the group only shows who is signed in. */
+  account?: ReactNode | undefined;
   /** The groups that need the network: reminders, connected apps, API keys. */
   children?: ReactNode | undefined;
 }
@@ -48,15 +51,15 @@ export function SettingsView({
   languageError,
   theme,
   onTheme,
+  account,
   children,
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
     <Page width="md">
-      <PageHeader
-        title={t`Settings`}
-        sub={me ? [me.name, me.email].join(" · ") : <Skeleton className="h-4 w-56" />}
-      />
+      <PageHeader title={t`Settings`} />
+
+      {account ?? <AccountGroup name={me?.name} email={me?.email} />}
 
       <SettingsGroup
         title={t`Language`}

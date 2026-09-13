@@ -70,8 +70,7 @@ print(r.json())`,
             code={`{
   "id": "0mtoyiymrpxx21q8gp6",
   "name": "Kateryna",
-  "email": "you@example.com",
-  "image": null
+  "email": "you@example.com"
 }`}
           />
           <p>

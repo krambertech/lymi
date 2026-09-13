@@ -12,6 +12,7 @@ import {
   Settings,
 } from "lucide-react";
 import { type ReactNode, useState } from "react";
+import { useLearnerAvatar } from "../lib/avatar";
 import { promptToInstall, useInstallState } from "../lib/pwa-install";
 import { Avatar } from "./Avatar";
 import { InstallDialog } from "./InstallDialog";
@@ -64,6 +65,7 @@ export function LearnerMenu({
 }: Props) {
   const { t } = useLingui();
   const install = useInstallState();
+  const photo = useLearnerAvatar();
   const [shortcuts, setShortcuts] = useState(false);
   const [installHelp, setInstallHelp] = useState(false);
   const short = firstName(name) ?? t`You`;
@@ -103,7 +105,7 @@ export function LearnerMenu({
                   signingOut && "opacity-45",
                 )}
               >
-                <Avatar name={name} size={34} />
+                <Avatar name={name} src={photo.src} pending={photo.pending || !name} size={34} />
                 <span className="min-w-0 flex-1 truncate text-base text-text">{short}</span>
               </button>
             ) : (
@@ -115,7 +117,7 @@ export function LearnerMenu({
                   signingOut && "opacity-45",
                 )}
               >
-                <Avatar name={name} size={40} />
+                <Avatar name={name} src={photo.src} pending={photo.pending || !name} size={40} />
                 <span className="sr-only">{short}</span>
               </button>
             )

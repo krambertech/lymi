@@ -10,6 +10,8 @@ export const e2eAccounts = [
   "word-detail",
   "language",
   "join-owner",
+  "avatar",
+  "avatar-other",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

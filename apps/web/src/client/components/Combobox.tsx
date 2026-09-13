@@ -50,41 +50,20 @@ interface ComboboxProps extends BaseProps {
   emptyLabel?: string | undefined;
 }
 
-interface SelectProps extends BaseProps {
-  /** Accessible name for the list. Falls back to the Field's label. */
-  label?: string | undefined;
-}
-
-/**
- * A list too long to read is a list you search. The box stays a button; the panel that
- * opens under it starts with the search field, and the names filter as you type.
- */
-export function Combobox(props: ComboboxProps) {
-  return <Picker mode="search" {...props} />;
-}
-
-/**
- * A short list you pick from. The same box and the same panel as Combobox, without the
- * search: the arrows walk the rows and typing a letter jumps to a name.
- */
-export function Select(props: SelectProps) {
-  return <Picker mode="select" {...props} />;
-}
-
-type PickerProps = { mode: "search" | "select" } & ComboboxProps & SelectProps;
-
 /** Room the panel keeps from the box and from the edge of the viewport. */
 const GAP = 6;
 const MARGIN = 8;
 const MAX_HEIGHT = 352;
 
-/*
+/**
+ * A list too long to read is a list you search. The box stays a button; the panel that
+ * opens under it starts with the search field, and the names filter as you type.
+ *
  * The panel is a popover, so it lives in the top layer: it floats over the form instead of
  * pushing it down, and it escapes every ancestor, including the phone's drawer, which is
  * translated to drag and would otherwise pin anything fixed inside it.
  */
-function Picker({
-  mode,
+export function Combobox({
   value,
   onChange,
   options,
@@ -92,11 +71,10 @@ function Picker({
   disabled,
   placeholder: placeholderProp,
   searchLabel: searchLabelProp,
-  label,
   accept,
   acceptLabel: acceptLabelProp,
   emptyLabel: emptyLabelProp,
-}: PickerProps) {
+}: ComboboxProps) {
   const { t } = useLingui();
   const placeholder = placeholderProp ?? t`Choose one`;
   const searchLabel = searchLabelProp ?? t`Search`;
@@ -114,14 +92,12 @@ function Picker({
   const panelRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
-  const typed = useRef({ text: "", at: 0 });
   const viaKeyboard = useRef(false);
   const listId = useId();
   const optionId = useId();
   const a11y = useControlProps({});
-  const listLabel = label ?? searchLabel;
 
-  const needle = mode === "search" ? query.trim().toLowerCase() : "";
+  const needle = query.trim().toLowerCase();
   const matches = needle
     ? options.filter(
         (o) => o.label.toLowerCase().includes(needle) || o.value.toLowerCase().includes(needle),
@@ -188,8 +164,8 @@ function Picker({
   useLayoutEffect(() => {
     if (!open || !shown) return;
     place();
-    if (mode === "search") searchRef.current?.focus();
-  }, [open, shown, mode, place]);
+    searchRef.current?.focus();
+  }, [open, shown, place]);
 
   useEffect(() => {
     if (open) {
@@ -233,22 +209,12 @@ function Picker({
     hide();
     setActive(i);
   };
-  const jumpTo = (key: string) => {
-    const now = Date.now();
-    const text = (now - typed.current.at < 600 ? typed.current.text : "") + key.toLowerCase();
-    typed.current = { text, at: now };
-    const from = text.length === 1 ? active + 1 : active;
-    const order = [...rows.keys()].map((i) => (i + from) % rows.length);
-    const hit = order.find((i) => rows[i]?.label.toLowerCase().startsWith(text));
-    if (hit !== undefined) moveTo(hit);
-  };
   const start = (seed: string) => {
     // The list opens on the chosen row, so Enter keeps it and a long list scrolls to it.
     viaKeyboard.current = true;
-    setQuery(mode === "search" ? seed : "");
+    setQuery(seed);
     setActive(seed ? 0 : Math.max(chosenRow, 0));
     setOpen(true);
-    if (mode === "select" && seed) jumpTo(seed);
   };
   const close = (focusTrigger = true) => {
     setOpen(false);
@@ -274,7 +240,7 @@ function Picker({
     } else if (e.key === "End") {
       e.preventDefault();
       moveTo(rows.length - 1);
-    } else if (e.key === "Enter" || (mode === "select" && e.key === " ")) {
+    } else if (e.key === "Enter") {
       e.preventDefault();
       pick(rows[active]);
     } else if (e.key === "Escape") {
@@ -282,9 +248,6 @@ function Picker({
       close();
     } else if (e.key === "Tab") {
       close(false);
-    } else if (mode === "select" && e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      e.preventDefault();
-      jumpTo(e.key);
     }
   };
   const onBlur = (e: FocusEvent) => {
@@ -292,20 +255,16 @@ function Picker({
   };
 
   const activeId = rows[active] ? `${optionId}-${active}` : undefined;
-  const selectOpen = mode === "select" && open;
 
   return (
     <div ref={rootRef} className="relative">
-      {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: a select-only combobox, per the APG pattern, is a button with role="combobox" */}
       <button
         ref={triggerRef}
         type="button"
         {...a11y}
-        role={mode === "select" ? "combobox" : undefined}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={open ? listId : undefined}
-        aria-activedescendant={selectOpen ? activeId : undefined}
         aria-disabled={disabled || undefined}
         className={clsx(
           controlBase,
@@ -331,7 +290,6 @@ function Picker({
             start(e.key);
           }
         }}
-        onBlur={selectOpen ? onBlur : undefined}
       >
         <span className="flex-1 truncate">{triggerLabel}</span>
         <ChevronDown
@@ -356,7 +314,7 @@ function Picker({
           if (e.target !== searchRef.current) e.preventDefault();
         }}
       >
-        {shown && mode === "search" && (
+        {shown && (
           <div className="flex shrink-0 items-center gap-2.5 border-b border-edge ps-3.5 pe-3.5">
             <Search className="size-4 shrink-0 text-muted" aria-hidden="true" />
             <input
@@ -394,7 +352,7 @@ function Picker({
           id={listId}
           // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: a listbox is a list
           role="listbox"
-          aria-label={listLabel}
+          aria-label={searchLabel}
           {...hover.handlers}
           className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain p-1"
         >

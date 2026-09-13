@@ -7,9 +7,9 @@ import { type AddCardOutcome, api, type DeckSummary, errorMessage } from "../lib
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { decksQuery } from "../lib/queries";
 import { Button } from "./Button";
-import { Select } from "./Combobox";
 import { Field, Input } from "./Field";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface Props {
   open: boolean;
@@ -38,8 +38,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[min(92vw,440px)]">
-        {/* The term field says what this is; the name stays for screen readers. */}
-        <DialogTitle className="sr-only">{t`Add a card`}</DialogTitle>
+        <DialogTitle>{t`Add a card`}</DialogTitle>
         <AddCardForm
           key={open ? `open:${deckId ?? "default"}` : "closed"}
           decks={decks.data}
@@ -191,12 +190,23 @@ export function AddCardForm({
         <Field label={t`Deck`} error={invalid.deckId}>
           <Select
             value={deck || null}
-            onChange={(v) => {
+            onValueChange={(v) => {
               setDeck(v ?? "");
               setInvalid(({ deckId: _, ...rest }) => rest);
             }}
-            options={(decks ?? []).map((d) => ({ value: d.id, label: d.name }))}
-          />
+            items={(decks ?? []).map((d) => ({ value: d.id, label: d.name }))}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={t`Choose one`} />
+            </SelectTrigger>
+            <SelectContent aria-label={t`Deck`}>
+              {(decks ?? []).map((d) => (
+                <SelectItem key={d.id} value={d.id}>
+                  {d.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </Field>
       )}
       <div className="flex items-center gap-2 pt-1">

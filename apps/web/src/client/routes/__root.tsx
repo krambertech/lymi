@@ -16,7 +16,14 @@ import { Toaster } from "../components/ui/toast";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api, flushOutbox } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
-import { activate, bootstrapLanguage, isAppLanguage, isBareShell, pickLocale } from "../lib/i18n";
+import {
+  activate,
+  bootstrapLanguage,
+  isAppLanguage,
+  isBareShell,
+  pickLocale,
+  readStoredLanguage,
+} from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { Streak, useSettleToday } from "../lib/streak";
@@ -79,6 +86,12 @@ function Shell() {
     }
     if (!settings.isSuccess) return;
     if (isAppLanguage(appLanguage)) {
+      // The persisted cache is written a second late, so a snapshot hydrated on boot can predate
+      // the stored choice; the server, not the snapshot, gets to correct it.
+      if (!settings.isFetchedAfterMount && appLanguage !== readStoredLanguage()) {
+        void queryClient.invalidateQueries(settingsQuery);
+        return;
+      }
       activate(appLanguage);
       return;
     }
@@ -93,7 +106,14 @@ function Shell() {
       .catch(() => {
         seededLanguage.current = false;
       });
-  }, [appLanguage, bare, location.pathname, queryClient, settings.isSuccess]);
+  }, [
+    appLanguage,
+    bare,
+    location.pathname,
+    queryClient,
+    settings.isSuccess,
+    settings.isFetchedAfterMount,
+  ]);
 
   useEffect(() => {
     if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare) {

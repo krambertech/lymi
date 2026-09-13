@@ -263,6 +263,8 @@
   --z-sticky: 150;
   --z-backdrop: 200;
   --z-sheet: 210;
+  /* A list that belongs to a control, above any sheet the control can sit in. */
+  --z-popup: 220;
   --z-toast: 300;
   --z-tooltip: 400;
 }

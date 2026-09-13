@@ -404,7 +404,7 @@ export const SCREENS: Entry[] = [
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Add a card" initial="dark" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
-              <SheetPreview shape="drawer" title="Add a card" titleHidden>
+              <SheetPreview shape="drawer" title="Add a card">
                 <AddCardForm
                   decks={m.decks}
                   deckId="d1"

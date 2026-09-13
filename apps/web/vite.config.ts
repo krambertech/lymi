@@ -151,6 +151,7 @@ export default defineConfig({
             "@base-ui/react/drawer",
             "@base-ui/react/menu",
             "@base-ui/react/merge-props",
+            "@base-ui/react/select",
             "@base-ui/react/separator",
             "@base-ui/react/use-render",
           ],

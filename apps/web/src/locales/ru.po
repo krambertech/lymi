@@ -711,7 +711,9 @@ msgstr "Выбери целое число от 1 до 200."
 msgid "Choose new photo"
 msgstr "Выбрать новое фото"
 
+#: src/client/components/AddCardSheet.tsx
 #: src/client/components/Combobox.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Choose one"
 msgstr "Выбери один вариант"
 

@@ -27,11 +27,12 @@ The shape comes from one rule, `(min-width: 768px) and (hover: hover) and (point
 | Kind | Desktop | Touch |
 | --- | --- | --- |
 | Menu | Dropdown anchored to its trigger | Drawer with the same items and menu semantics |
+| Choice | List anchored under its box | Drawer with the same rows and listbox semantics |
 | Form | Centred dialog | Drawer |
 | Confirmation | Centred dialog, actions in a row | Drawer, actions stacked with the primary on top |
 | Place | Centred dialog, or docked beside the page | Full screen from the end edge, with a back button |
 
-The adaptation lives inside the shadcn component itself: `DropdownMenu` and `Dialog` render their desktop shape or a drawer from the same parts, so a call site uses shadcn's names, never branches on the device, and has no second component to choose instead. Every part a component exports is tested in both shapes; a part no screen uses is left out until it brings its drawer shape and tests. Tooltip, Select and Combobox stay anchored to their control everywhere.
+The adaptation lives inside the shadcn component itself: `DropdownMenu` and `Dialog` render their desktop shape or a drawer from the same parts, so a call site uses shadcn's names, never branches on the device, and has no second component to choose instead. Every part a component exports is tested in both shapes; a part no screen uses is left out until it brings its drawer shape and tests. Tooltip and Combobox stay anchored to their control everywhere. Select was first kept anchored too, and joined the rule on 13 September 2026 when its migration landed: on a phone a short list of choices is a menu with a check, and it belongs under the thumb the same way, stacking over the form drawer that holds it.
 
 ## Considered options
 

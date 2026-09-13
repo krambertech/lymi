@@ -110,18 +110,18 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
           className={cn(
             // Base.
             "group/drawer-popup edge-2 pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-text transition-[transform,height,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
-            // Nested.
+            // Nested: the drawer behind keeps its height and its content, and steps back a little.
             "data-nested-drawer-open:overflow-hidden data-nested-drawer-open:brightness-95",
             // Bleed: paint past the edge, so an overscroll never shows the page under the drawer.
             "after:pointer-events-none after:absolute after:bg-(--drawer-bleed-background,var(--color-plate)) data-[swipe-axis=x]:after:inset-y-0 data-[swipe-axis=x]:after:w-(--bleed) data-[swipe-axis=y]:after:inset-x-0 data-[swipe-axis=y]:after:h-(--bleed) data-[swipe-direction=down]:after:top-full data-[swipe-direction=left]:after:end-full data-[swipe-direction=right]:after:start-full data-[swipe-direction=up]:after:bottom-full",
             // Sizing: edge to edge on a phone, and no wider than a short form on a tablet.
             "[--drawer-content-height:var(--drawer-height,auto)] data-[swipe-axis=x]:[--drawer-content-width:75%] data-[swipe-axis=y]:[--drawer-content-max-height:85dvh] data-[swipe-axis=y]:data-snap-points:[--drawer-content-height:100dvh] data-[swipe-axis=x]:sm:[--drawer-content-width:24rem] data-[swipe-axis=y]:sm:mx-auto data-[swipe-axis=y]:sm:max-w-md",
             // Stack.
-            "[--bleed:3rem] [--peek:1rem] [--stack-height:var(--drawer-frontmost-height,var(--drawer-height,0px))] [--stack-peek-offset:max(0px,calc((var(--nested-drawers)-var(--stack-progress))*var(--peek)))] [--stack-progress:clamp(0,var(--drawer-swipe-progress),1)] [--stack-scale-base:max(0,calc(1-(var(--nested-drawers)*var(--stack-step))))] [--stack-scale:clamp(0,calc(var(--stack-scale-base)+(var(--stack-step)*var(--stack-progress))),1)] [--stack-shrink:calc(1-var(--stack-scale))] [--stack-step:0.05]",
+            "[--bleed:3rem] [--peek:1rem] [--stack-height:var(--drawer-height,0px)] [--stack-peek-offset:max(0px,calc((var(--nested-drawers)-var(--stack-progress))*var(--peek)))] [--stack-progress:clamp(0,var(--drawer-swipe-progress),1)] [--stack-scale-base:max(0,calc(1-(var(--nested-drawers)*var(--stack-step))))] [--stack-scale:clamp(0,calc(var(--stack-scale-base)+(var(--stack-step)*var(--stack-progress))),1)] [--stack-shrink:calc(1-var(--stack-scale))] [--stack-step:0.05]",
             // Transitions: a flick leaves faster than a slow drag.
             "data-ending-style:transform-(--closed-transform) data-ending-style:opacity-[0.9999] data-ending-style:duration-[calc(var(--drawer-swipe-strength)*320ms)] data-nested-drawer-swiping:duration-0 data-ending-style:data-nested-drawer-swiping:duration-[calc(var(--drawer-swipe-strength)*320ms)] data-starting-style:transform-(--closed-transform) data-swiping:duration-0 data-ending-style:data-swiping:duration-[calc(var(--drawer-swipe-strength)*320ms)]",
             // Axis: y.
-            "data-[swipe-axis=y]:inset-x-0 data-[swipe-axis=y]:data-nested-drawer-open:h-(--stack-height)",
+            "data-[swipe-axis=y]:inset-x-0",
             // Axis: x.
             "data-[swipe-axis=x]:inset-y-0 data-[swipe-axis=x]:flex-row",
             // Direction: down.
@@ -139,7 +139,7 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
           {showSwipeHandle && <DrawerSwipeHandle />}
           <DrawerPrimitive.Content
             data-slot="drawer-content"
-            className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain rounded-[inherit] pb-safe transition-opacity duration-300 ease-[cubic-bezier(0.45,1.005,0,1.005)] select-text group-data-nested-drawer-open/drawer-popup:opacity-0 group-data-nested-drawer-swiping/drawer-popup:opacity-100 group-data-swiping/drawer-popup:select-none"
+            className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain rounded-[inherit] pb-safe select-text group-data-swiping/drawer-popup:select-none"
           >
             {children}
           </DrawerPrimitive.Content>

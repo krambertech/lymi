@@ -675,7 +675,9 @@ msgstr "Choose a whole number from 1 to 200."
 msgid "Choose new photo"
 msgstr "Choose new photo"
 
+#: src/client/components/AddCardSheet.tsx
 #: src/client/components/Combobox.tsx
+#: src/client/views/SettingsView.tsx
 msgid "Choose one"
 msgstr "Choose one"
 

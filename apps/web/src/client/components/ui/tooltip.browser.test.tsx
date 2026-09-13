@@ -141,7 +141,7 @@ describe("Tooltip", () => {
   });
 
   test.runIf(desktop)(
-    "renders inside a native modal dialog, which paints above every z-index",
+    "renders inside a native modal dialog and lets one Escape close both",
     async () => {
       await render(
         <TooltipProvider>
@@ -153,9 +153,13 @@ describe("Tooltip", () => {
         </TooltipProvider>,
       );
       await tab();
-
       await expect.element(tip("Close")).toBeVisible();
       expect(openTips()[0]?.closest("dialog")).not.toBeNull();
+      // The platform closes its dialog on the same Escape, so the key must not be swallowed.
+      await userEvent.keyboard("{Escape}");
+
+      await expect.poll(() => openTips().length).toBe(0);
+      await expect.poll(() => document.querySelector("dialog:modal")).toBeNull();
     },
   );
 

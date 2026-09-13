@@ -34,19 +34,27 @@ function TooltipProvider({
 function Tooltip({
   disableHoverablePopup = true,
   onOpenChange,
+  actionsRef,
   children,
   ...props
 }: TooltipPrimitive.Root.Props) {
   const [topLayer, setTopLayer] = React.useState<HTMLElement | null>(null);
+  const ownActions = React.useRef<TooltipPrimitive.Root.Actions | null>(null);
+  const actions = actionsRef ?? ownActions;
   return (
     <TopLayerContext.Provider value={topLayer}>
       <TooltipPrimitive.Root
         data-slot="tooltip"
         disableHoverablePopup={disableHoverablePopup}
+        actionsRef={actions}
         onOpenChange={(open, details) => {
           if (open) setTopLayer(details.trigger?.closest<HTMLElement>("dialog:modal") ?? null);
-          // One Escape closes the name and whatever holds its control.
-          if (details.reason === "escape-key") details.allowPropagation();
+          // Base UI would swallow the key; letting it through closes the dialog around the control too.
+          if (details.reason === "escape-key") {
+            details.cancel();
+            details.allowPropagation();
+            queueMicrotask(() => actions.current?.close());
+          }
           onOpenChange?.(open, details);
         }}
         {...props}

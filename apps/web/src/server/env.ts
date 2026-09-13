@@ -1,3 +1,5 @@
+import { isLoopbackUrl } from "../shared/origins";
+
 /**
  * Bindings and secrets the Worker expects. `wrangler types` generates the global `Env`
  * from wrangler.jsonc; this narrows the secrets, which live in .dev.vars locally and in
@@ -25,16 +27,6 @@ export interface Bindings extends Env {
   APP_PREVIEW_KEY?: string;
   /** The token OpenAI's plugin submission portal issues for domain verification. */
   OPENAI_APPS_CHALLENGE?: string;
-}
-
-/** True for localhost, 127.0.0.1 and [::1]. Decides every local-only capability. */
-export function isLoopbackUrl(value: string): boolean {
-  try {
-    const hostname = new URL(value).hostname;
-    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]";
-  } catch {
-    return false;
-  }
 }
 
 /** Preview-only capabilities fail closed unless both the build flag and isolated hostname agree. */

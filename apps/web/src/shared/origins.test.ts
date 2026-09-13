@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { safeProductReturnPath } from "./origins";
+import { isLoopbackUrl, safeProductReturnPath } from "./origins";
 
 describe("safeProductReturnPath", () => {
   it("preserves a protected product path and query", () => {
@@ -28,5 +28,13 @@ describe("safeProductReturnPath", () => {
     "/today#grade",
   ])("rejects unsafe, malformed, or non-product destination %s", (value) => {
     expect(safeProductReturnPath(value)).toBe("/today");
+  });
+});
+
+describe("isLoopbackUrl", () => {
+  it("treats every loopback spelling the same", () => {
+    expect(isLoopbackUrl("http://[::1]:5241")).toBe(true);
+    expect(isLoopbackUrl("http://localhost")).toBe(true);
+    expect(isLoopbackUrl("http://lymi.local")).toBe(false);
   });
 });

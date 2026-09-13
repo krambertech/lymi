@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { appPreviewEnabled, devToolsEnabled, isLoopbackUrl, withServedOrigin } from "./env";
+import { appPreviewEnabled, devToolsEnabled, withServedOrigin } from "./env";
 
 describe("developer tools gate", () => {
   it("opens only for a loopback product origin", () => {
@@ -39,12 +39,6 @@ describe("developer tools gate", () => {
         APP_PREVIEW: "true",
       }),
     ).toBe(true);
-  });
-
-  it("treats every loopback spelling the same", () => {
-    expect(isLoopbackUrl("http://[::1]:5241")).toBe(true);
-    expect(isLoopbackUrl("http://localhost")).toBe(true);
-    expect(isLoopbackUrl("http://lymi.local")).toBe(false);
   });
 });
 

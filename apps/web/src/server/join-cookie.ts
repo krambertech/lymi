@@ -1,5 +1,6 @@
 import { parse, serialize } from "hono/utils/cookie";
-import { isLoopbackUrl } from "./env";
+import { cookiePrefix } from "../shared/cookies";
+import { isLoopbackUrl } from "../shared/origins";
 
 /**
  * A join link carried through sign-in. Google's callback is a cross-site top-level redirect,
@@ -8,7 +9,7 @@ import { isLoopbackUrl } from "./env";
 const MAX_AGE_SECONDS = 10 * 60;
 
 export function cookieName(productUrl: string): string {
-  return isLoopbackUrl(productUrl) ? "lymi-join" : "__Host-lymi-join";
+  return isLoopbackUrl(productUrl) ? `${cookiePrefix(productUrl)}-join` : "__Host-lymi-join";
 }
 
 export function attributes(productUrl: string) {

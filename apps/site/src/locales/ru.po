@@ -128,11 +128,11 @@ msgstr "Когда узнаёшь что-то новое, начинаешь з�
 
 #: src/components/landing/EnrichDemo.tsx
 msgid "AI"
-msgstr "ИИ"
+msgstr "AI"
 
 #: src/components/landing/ApiConnections.tsx
 msgid "AI assistants"
-msgstr "ИИ-ассистенты"
+msgstr "AI-ассистенты"
 
 #: src/components/JoinView.tsx
 msgid "Already invited?"
@@ -671,7 +671,7 @@ msgstr "Таблицы"
 
 #: src/components/landing/LandingView.tsx
 msgid "Start with the term. Keep control of the rest."
-msgstr "От тебя — термин, от Lymi — остальное."
+msgstr "Ты добавляешь термин, остальное на Lymi."
 
 #: src/components/landing/hand-cards.ts
 msgid "Statistics"

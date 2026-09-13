@@ -752,6 +752,10 @@ msgstr "Couldn’t check this device. Reload to try again."
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
 
+#: src/client/components/CardPicture.tsx
+msgid "Couldn’t load the picture"
+msgstr "Couldn’t load the picture"
+
 #: src/client/views/ReviewView.tsx
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
@@ -954,6 +958,10 @@ msgstr "Example from lesson"
 #: src/client/views/DeckDetailView.tsx
 msgid "Export as CSV"
 msgstr "Export as CSV"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Export as CSV without pictures"
+msgstr "Export as CSV without pictures"
 
 #: src/client/views/WordView.tsx
 msgid "first time"
@@ -1359,6 +1367,18 @@ msgstr "No apps connected"
 msgid "No decks yet"
 msgstr "No decks yet"
 
+#: src/client/views/WordView.tsx
+msgid "No description yet."
+msgstr "No description yet."
+
+#: src/client/views/WordView.tsx
+msgid "No description yet. Picture review waits for one, so this card is asked in its other modes."
+msgstr "No description yet. Picture review waits for one, so this card is asked in its other modes."
+
+#: src/client/views/WordView.tsx
+msgid "No description yet. Picture review waits for one, so this card is asked without its picture."
+msgstr "No description yet. Picture review waits for one, so this card is asked without its picture."
+
 #: src/client/components/ApiKeysSection.tsx
 msgid "No keys yet"
 msgstr "No keys yet"
@@ -1524,6 +1544,10 @@ msgstr "Photo position"
 msgid "Photo removed"
 msgstr "Photo removed"
 
+#: src/client/views/WordView.tsx
+msgid "Picture"
+msgstr "Picture"
+
 #: src/client/lib/review-modes.ts
 msgid "Picture → meaning"
 msgstr "Picture → meaning"
@@ -1532,9 +1556,33 @@ msgstr "Picture → meaning"
 msgid "Picture → term"
 msgstr "Picture → term"
 
+#: src/client/views/WordView.tsx
+msgid "Picture archived"
+msgstr "Picture archived"
+
 #: src/client/views/ReviewView.tsx
 msgid "Picture card"
 msgstr "Picture card"
+
+#: src/client/views/WordView.tsx
+msgid "Picture described"
+msgstr "Picture described"
+
+#: src/client/views/WordView.tsx
+msgid "Picture description removed"
+msgstr "Picture description removed"
+
+#: src/client/views/WordView.tsx
+msgid "Picture restored"
+msgstr "Picture restored"
+
+#: src/client/views/WordView.tsx
+msgid "Picture review is on, but this card has no picture. It is asked in its other modes."
+msgstr "Picture review is on, but this card has no picture. It is asked in its other modes."
+
+#: src/client/views/WordView.tsx
+msgid "Picture set"
+msgstr "Picture set"
 
 #: src/client/views/ReviewView.tsx
 msgid "Play pronunciation"
@@ -2039,6 +2087,14 @@ msgstr "Theme"
 #: src/client/components/NotificationsSection.tsx
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
+
+#: src/client/views/WordView.tsx
+msgid "This card has no picture yet, so it is asked without one."
+msgstr "This card has no picture yet, so it is asked without one."
+
+#: src/client/views/ReviewView.tsx
+msgid "This card’s picture was removed."
+msgstr "This card’s picture was removed."
 
 #: src/client/views/JoinView.tsx
 #: src/server/join-page.ts

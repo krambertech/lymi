@@ -18,6 +18,7 @@ import {
 import { AnimatePresence, motion, useAnimate, useReducedMotion, type Variants } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
+import { CardPicture } from "../components/CardPicture";
 import { Chip, SourceChip, StateChip } from "../components/Chip";
 import { ErrorTip } from "../components/ErrorTip";
 import { Kbd } from "../components/Kbd";
@@ -300,9 +301,10 @@ export interface ReviewCardProps {
 }
 
 /**
- * The card. A flat plate with one hairline edge. Before reveal it is the word alone, large.
- * After reveal the word glides up, the rule draws across, and the meaning, example and sources
- * rise in under it one after another, each labelled with its source.
+ * The card. A flat plate with one hairline edge. Before reveal it is the cue alone, large: the
+ * word, the meaning, or the picture. After reveal the cue glides up, the rule draws across, and
+ * the target rises in under it with the rest of the card as context, each line labelled with its
+ * source. A picture that cannot load gives way to its description, so the card can still be graded.
  */
 export function ReviewCard({
   item,
@@ -317,16 +319,10 @@ export function ReviewCard({
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
   const { card, mode } = item;
-  const recog = mode.target === "meaning";
-  const termCue = mode.cue === "term";
-  // A picture cue shows its description, which never names the answer, until pictures render here.
-  const front =
-    mode.cue === "term"
-      ? card.term
-      : mode.cue === "meaning"
-        ? (card.meaning ?? card.term)
-        : (card.image?.description ?? t`Picture card`);
-  const back = recog ? (card.meaning ?? t`No meaning yet`) : card.term;
+  const picture = mode.cue === "image" ? card.image : null;
+  const noMeaning = t`No meaning yet`;
+  const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
+  const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   const audio = (className?: string) =>
     onPlayAudio && (
       <AudioButton
@@ -336,19 +332,25 @@ export function ReviewCard({
         className={className}
       />
     );
+  const label =
+    mode.cue === "term"
+      ? t`Recognition card for ${front}`
+      : mode.cue === "meaning"
+        ? t`Production card for ${front}`
+        : t`Picture card`;
+  const pronunciation = card.pronunciation && (
+    <motion.p variants={answerLine} className="text-md text-muted">
+      {card.pronunciation}
+    </motion.p>
+  );
+
   return (
     // The whole plate reveals the answer, so the control is a button covering the plate rather than
     // a caption at its foot: pressing the card is what a card affords, and the most-pressed control
     // on the screen should not look like a footnote. It sits above the text and below the
     // pronunciation button, which is the one thing inside the card you can press for another reason.
     <section
-      aria-label={
-        mode.cue === "image"
-          ? t`Picture card`
-          : recog
-            ? t`Recognition card for ${front}`
-            : t`Production card for ${front}`
-      }
+      aria-label={label}
       className={clsx(
         "edge relative flex min-h-0 flex-1 flex-col overflow-y-auto rounded-xl bg-plate p-5 @3xl:p-6",
         !revealed && "cursor-pointer hoverable:hover:edge-2",
@@ -377,15 +379,29 @@ export function ReviewCard({
           transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
           className="grid gap-3"
         >
-          <p
-            lang={termCue ? (card.language ?? undefined) : undefined}
-            className="hyphens-auto text-4xl font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere] @3xl:text-5xl"
-          >
-            {front}
-            {termCue && audio("z-20")}
-          </p>
-          {termCue && card.pronunciation && (
-            <p className="text-md text-muted">{card.pronunciation}</p>
+          {mode.cue === "image" ? (
+            card.image ? (
+              // One size before and after reveal, on the start edge like the text under it.
+              <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
+            ) : (
+              // A queue fetched before the picture was archived; the server no longer asks this mode.
+              <p className="text-xl text-muted">
+                <Trans>This card’s picture was removed.</Trans>
+              </p>
+            )
+          ) : (
+            <>
+              <p
+                lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
+                className="hyphens-auto text-4xl font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere] @3xl:text-5xl"
+              >
+                {front}
+                {mode.cue === "term" && audio("z-20")}
+              </p>
+              {mode.cue === "term" && card.pronunciation && (
+                <p className="text-md text-muted">{card.pronunciation}</p>
+              )}
+            </>
           )}
         </motion.div>
 
@@ -402,21 +418,60 @@ export function ReviewCard({
               className="h-px bg-edge ltr:origin-left rtl:origin-right"
             />
             <div className="grid gap-3">
-              <motion.p
-                variants={answerLine}
-                className={clsx(
-                  "hyphens-auto leading-[1.35] text-text [overflow-wrap:anywhere]",
-                  recog ? "text-xl" : "text-3xl font-medium",
-                )}
-                lang={recog ? undefined : (card.language ?? undefined)}
-              >
-                {back}
-                {!recog && audio()}
-              </motion.p>
-              {!recog && card.pronunciation && (
-                <motion.p variants={answerLine} className="text-md text-muted">
-                  {card.pronunciation}
-                </motion.p>
+              {mode.target === "term" ? (
+                <>
+                  <motion.p
+                    variants={answerLine}
+                    className="hyphens-auto text-3xl font-medium leading-[1.2] text-text [overflow-wrap:anywhere]"
+                    lang={card.language ?? undefined}
+                  >
+                    {card.term}
+                    {audio()}
+                  </motion.p>
+                  {pronunciation}
+                  {picture && card.meaning && (
+                    <motion.p
+                      variants={answerLine}
+                      className="hyphens-auto text-xl leading-[1.35] text-text-2 [overflow-wrap:anywhere]"
+                    >
+                      {card.meaning}
+                    </motion.p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <motion.p
+                    variants={answerLine}
+                    className={clsx(
+                      "hyphens-auto leading-[1.3] text-text [overflow-wrap:anywhere]",
+                      picture ? "text-2xl font-medium" : "text-xl",
+                    )}
+                  >
+                    {back}
+                  </motion.p>
+                  {picture && (
+                    <>
+                      <motion.p
+                        variants={answerLine}
+                        className="hyphens-auto text-xl leading-[1.35] text-text-2 [overflow-wrap:anywhere]"
+                        lang={card.language ?? undefined}
+                      >
+                        {card.term}
+                        {audio()}
+                      </motion.p>
+                      {pronunciation}
+                    </>
+                  )}
+                </>
+              )}
+              {!picture && card.image && (
+                <motion.div variants={answerLine} className="py-1">
+                  <CardPicture
+                    image={card.image}
+                    maxHeight="min(16dvh, 120px)"
+                    fallback="placeholder"
+                  />
+                </motion.div>
               )}
               {card.example && (
                 <motion.p

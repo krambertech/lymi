@@ -5,6 +5,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, buttonClass } from "../components/Button";
 import { api, gradeWithOutbox, type QueueItem } from "../lib/api";
+import { usePrefetchPictures } from "../lib/card-images";
 import { decksQuery, queueQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import { itemKey } from "../lib/review-modes";
@@ -57,6 +58,7 @@ function Review() {
   // because fifty cards at a sitting is already more than an evening wants.
   const moreDue = Math.max(total - items.length, 0);
   const hint = useRevealHint(current ? `${current.stateId}-${index}` : undefined, revealed);
+  usePrefetchPictures(items, index);
 
   /**
    * Start the next batch.

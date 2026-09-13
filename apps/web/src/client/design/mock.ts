@@ -278,6 +278,41 @@ export const queueItemProduce: QueueItem = {
   fsrsState: 2,
 };
 
+/** A yield sign, drawn here so the design page needs no network or storage. */
+const yieldSign = `data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560"><path d="M160 90h480L400 500z" fill="#fff" stroke="#c8102e" stroke-width="54" stroke-linejoin="round"/></svg>',
+)}`;
+
+const { direction: _textOnly, ...pictureBase } = queueItem;
+
+export const queueItemPicture: QueueItem = {
+  ...pictureBase,
+  card: card({
+    id: "c-sign",
+    term: "Anna teed",
+    meaning: "Give way",
+    language: "et",
+    source: "Driving theory",
+    reviewModes: [{ cue: "image", target: "meaning" }],
+    image: {
+      id: "img-sign",
+      url: yieldSign,
+      contentType: "image/webp",
+      width: 800,
+      height: 560,
+      byteSize: 21_400,
+      description: "A white triangle pointing down, with a thick red border",
+      source: "url",
+      sourceHost: "upload.wikimedia.org",
+      createdBy: "mcp",
+      createdAt: new Date(now - day).toISOString(),
+      updatedAt: new Date(now - day).toISOString(),
+    },
+  }),
+  mode: { cue: "image", target: "meaning" },
+  fsrsState: 1,
+};
+
 /** Ninety quiet days: nothing reviewed, for the first-run screen. */
 export const noHistory: number[] = Array(90).fill(0);
 

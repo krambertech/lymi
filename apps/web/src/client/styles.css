@@ -764,6 +764,7 @@
     transform: scale(0.94);
   }
 }
+/* A card picture arriving over the well it held its place with. Opacity only, so it is also the reduced-motion form. */
 .enter-fade {
   animation: enter-fade 160ms var(--ease-out) both;
 }

@@ -12,6 +12,7 @@ import { NewCardsRow } from "../components/NewCardsRow";
 import { Skeleton } from "../components/Skeleton";
 import { type StreakSummary, StreakWeek } from "../components/Streak";
 import type { DeckSummary } from "../lib/api";
+import { lanternFor } from "../lib/flame";
 import { Page, type StaticNav, TopBar } from "./Shell";
 
 export interface TodayProps {
@@ -133,9 +134,9 @@ export function TodayView({
           <>
             <Lantern
               className="size-30 @3xl:size-32"
-              variant={lit ? "lit" : "unlit"}
-              flicker={lit}
-              glow={lit}
+              {...lanternFor(streak)}
+              flicker={!!streak?.current}
+              glow={!!streak?.current}
             />
             <h1 className="mt-3.5 text-4xl font-medium tabular-nums">
               {nothingYet ? (

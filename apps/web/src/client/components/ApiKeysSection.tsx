@@ -273,8 +273,8 @@ function KeyRow({
 }
 
 /**
- * The one moment in Settings where something is handed over. The lantern flares once, the
- * way it does when a card lands, and the key is the only thing on the panel worth pressing.
+ * The one moment in Settings where something is handed over. The lantern takes one breath, the
+ * way it does when a review lands, and the key is the only thing on the panel worth pressing.
  */
 function FreshKey({
   name,
@@ -288,16 +288,13 @@ function FreshKey({
   onRevoke: () => void;
 }) {
   const { t } = useLingui();
-  const [flare, setFlare] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setFlare(false), 420);
-    return () => clearTimeout(t);
-  }, []);
+  const [fed, setFed] = useState(0);
+  useEffect(() => setFed(1), []);
 
   return (
     <div className="enter-card edge grid gap-3 rounded-md bg-plate p-4" role="status">
       <div className="flex items-start gap-2.5">
-        <Lantern className="size-8 shrink-0" glow flare={flare} />
+        <Lantern className="size-8 shrink-0" glow fed={fed} />
         <p className="text-base text-text">
           <Trans>
             <span className="font-medium">{name}</span> is ready. Copy it now. It is not shown

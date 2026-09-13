@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Button } from "../components/Button";
 import { Lantern } from "../components/Lantern";
-import { Segmented } from "../components/Segmented";
 import { Toast } from "../components/Toast";
-import { Doc, Pair, Specimen, Sub } from "./Frame";
+import { FLAME_MOTION } from "../lib/flame";
+import { DocLink } from "./DocLink";
+import { Doc, Specimen, Sub } from "./Frame";
+
+const ms = (s: { visualDuration: number }) => `${Math.round(s.visualDuration * 1000)} ms`;
 
 const TIMINGS: [string, string, string][] = [
   [
@@ -47,11 +50,15 @@ const TIMINGS: [string, string, string][] = [
     "Grows from the side nearest its control. The next one along a row opens at once.",
   ],
   [
-    "Flare",
-    "flame scale 1.2×1.35, 320 ms, then back",
-    "After Good or Easy. The lantern in the header only.",
+    "Feed",
+    `breath in ${ms(FLAME_MOTION.breathIn)}, out ${ms(FLAME_MOTION.breathOut)}, springs`,
+    "Every accepted review, whatever the grade. Reviews close together flow into one breath.",
   ],
-  ["Lit up", "flame 1.15×1.28 in 320 ms, glow to 26 px in 500 ms", "Session done. Stays."],
+  [
+    "Rise",
+    `spring ${ms(FLAME_MOTION.rise)} to full height`,
+    "The daily goal reached. Once a day, and it stays.",
+  ],
   [
     "Toast",
     "in 240 ms, out 140 ms, both ease-out",
@@ -65,10 +72,7 @@ const TIMINGS: [string, string, string][] = [
   ["Theme switch", "none", "Transitions are suspended for one frame so the room swaps at once."],
 ];
 
-type State = "idle" | "flicker" | "flare" | "lit" | "catch" | "carry" | "unlit";
-
 export function Motion() {
-  const [state, setState] = useState<State>("flicker");
   const [toast, setToast] = useState<"off" | "in" | "out">("off");
   const dismiss = () => {
     setToast("out");
@@ -78,49 +82,24 @@ export function Motion() {
   return (
     <Doc
       title="Motion"
-      lede="Motion conveys state and nothing else. Most transitions are 150 to 250 ms with a strong ease-out. Keyboard-initiated actions do not animate. The flame moves on its own because a flame does; it is the one piece of ambient motion, and it stops under reduced motion."
+      lede="Motion conveys state and nothing else. Most transitions are 150 to 250 ms with a strong ease-out. Keyboard-initiated actions do not animate, except the flame, which a review feeds whether it came from a key or a tap. The flame moves on its own because a flame does; it is the one piece of ambient motion, and it holds still under reduced motion."
     >
       <Sub
-        title="Lantern states"
-        note="Flicker is a 2.6 s loop: the flame scales, the bright core beats out of phase with it, and the halo breathes with both. Flare is a one-shot after a good answer. Lit up is the end of a session and stays. Catch is the wick taking, for unlit to lit. Carried swings the body from the bail. Unlit has no flame and no glow."
+        title="The flame"
+        note="The one piece of ambient motion, and the one that carries the most meaning: it feeds on every review, rises at the daily goal, and catches or goes out with the streak."
       >
-        <Pair>
-          {() => (
-            <div className="grid justify-items-center gap-6 py-4">
-              <Lantern
-                className="size-40"
-                variant={state === "unlit" ? "unlit" : "lit"}
-                flicker={
-                  state === "flicker" || state === "flare" || state === "carry" || state === "catch"
-                }
-                glow={state !== "unlit"}
-                flare={state === "flare"}
-                litUp={state === "lit"}
-                catchLight={state === "catch"}
-                carry={state === "carry"}
-                key={state}
-              />
-              <Segmented
-                size="sm"
-                label="Lantern state"
-                value={state}
-                onChange={(v) => {
-                  setState(v);
-                  if (v === "flare") setTimeout(() => setState("flicker"), 380);
-                }}
-                options={[
-                  { value: "idle", label: "Still" },
-                  { value: "flicker", label: "Flicker" },
-                  { value: "flare", label: "Flare" },
-                  { value: "lit", label: "Lit up" },
-                  { value: "catch", label: "Catch" },
-                  { value: "carry", label: "Carried" },
-                  { value: "unlit", label: "Unlit" },
-                ]}
-              />
-            </div>
-          )}
-        </Pair>
+        <DocLink
+          to={{ kind: "page", page: "lantern" }}
+          className="edge flex items-center gap-4 rounded-lg bg-plate px-5 py-4 transition-[box-shadow,background-color] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+        >
+          <Lantern className="size-14" progress={0.6} flicker glow />
+          <span className="grid gap-0.5">
+            <span className="text-base font-medium">Lantern</span>
+            <span className="text-sm text-muted">
+              Every state and movement, with a day to play through.
+            </span>
+          </span>
+        </DocLink>
       </Sub>
 
       <Sub title="Timings">
@@ -177,7 +156,7 @@ export function Motion() {
 
       <Sub
         title="Reduced motion"
-        note="Every animation has a quieter twin. With prefers-reduced-motion: reduce, the flame holds still, the card and toast crossfade with no travel, the skeleton stops shimmering, and the glow still appears, because a glow is a state, not a movement."
+        note="Every animation has a quieter twin. With prefers-reduced-motion: reduce, the flame holds still and jumps to its new size, the card and toast crossfade with no travel, the skeleton stops shimmering, and the glow still appears, because a glow is a state, not a movement."
       >
         <p className="text-base text-text-2">
           Toggle it in your OS to see this page change. Nothing is gated on the animation: every

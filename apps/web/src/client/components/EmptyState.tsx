@@ -7,13 +7,16 @@ interface Props {
   /** Why it is empty and what to do. One sentence. */
   body?: ReactNode | undefined;
   action?: ReactNode | undefined;
-  /** "lit" when something is waiting, "unlit" when nothing is, "none" for lists. */
-  lantern?: "lit" | "unlit" | "none" | undefined;
+  /**
+   * "lit" flickers, "still" holds still, "none" is for lists. Never out: an empty screen says
+   * nothing about the streak.
+   */
+  lantern?: "lit" | "still" | "none" | undefined;
   className?: string | undefined;
 }
 
 /** An empty screen is a first-run screen, not an error. */
-export function EmptyState({ title, body, action, lantern = "unlit", className }: Props) {
+export function EmptyState({ title, body, action, lantern = "still", className }: Props) {
   return (
     <section
       className={clsx(
@@ -22,11 +25,7 @@ export function EmptyState({ title, body, action, lantern = "unlit", className }
       )}
     >
       {lantern !== "none" && (
-        <Lantern
-          variant={lantern}
-          flicker={lantern === "lit"}
-          className="mb-4 size-28 @3xl:size-32"
-        />
+        <Lantern flicker={lantern === "lit"} className="mb-4 size-28 @3xl:size-32" />
       )}
       <h2 className="text-3xl font-medium">{title}</h2>
       {body && <p className="max-w-[30ch] text-md text-muted">{body}</p>}

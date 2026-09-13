@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { Brand } from "./Brand";
 import { Colour } from "./Colour";
+import { LanternPage } from "./Lantern";
 import { Motion } from "./Motion";
 import { actions } from "./parts/Actions";
 import { charts, streak } from "./parts/Charts";
@@ -28,6 +29,7 @@ export interface Foundation {
 
 export const FOUNDATIONS: Foundation[] = [
   { slug: "brand", title: "Brand", source: "design/Brand.tsx", Page: Brand },
+  { slug: "lantern", title: "Lantern", source: "design/Lantern.tsx", Page: LanternPage },
   { slug: "colour", title: "Colour", source: "design/Colour.tsx", Page: Colour },
   { slug: "typography", title: "Typography", source: "design/Typography.tsx", Page: Typography },
   { slug: "space", title: "Space and shape", source: "design/Space.tsx", Page: Space },

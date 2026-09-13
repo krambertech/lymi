@@ -67,7 +67,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
       <Page>
         <PageHeader title={t`Insights`} />
         <EmptyState
-          lantern="unlit"
+          lantern="still"
           title={t`Couldn’t load Insights`}
           body={t`Check your connection and try again.`}
           action={
@@ -105,7 +105,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
       <Page>
         <PageHeader title={t`Insights`} />
         <EmptyState
-          lantern="unlit"
+          lantern="still"
           title={t`Nothing to say yet`}
           body={t`Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you.`}
           className="flex-1"

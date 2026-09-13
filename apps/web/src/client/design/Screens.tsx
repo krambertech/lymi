@@ -134,7 +134,7 @@ export const SCREENS: Entry[] = [
     slug: "today",
     name: "Today",
     source: "views/TodayView.tsx",
-    note: "One question and one action. The lantern is lit and glowing when cards are due, dark when they are not, and the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The week and the run sit under the button; the run is also the pill in the chrome. What an integration added since the last review follows.",
+    note: "One question and one action. The lantern glows while the streak is alive and is an ember when it has broken, never dark for nothing due; the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The week and the run sit under the button; the run is also the pill in the chrome. What an integration added since the last review follows.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
@@ -257,7 +257,7 @@ export const SCREENS: Entry[] = [
     slug: "session-done",
     name: "End of session",
     source: "views/ReviewView.tsx",
-    note: "The lantern lights up and stays. Cards counted, not points. The week’s lights show what the day added.",
+    note: "The flame rises to full and stays. Cards counted, not points. The week’s lights show what the day added.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
@@ -589,7 +589,7 @@ export const SCREENS: Entry[] = [
     slug: "connected",
     name: "Connected",
     source: "views/ConnectedView.tsx",
-    note: "The ending. An MCP client's redirect is usually a custom scheme, so the browser hands off and leaves the tab here; the rail draws across and the lantern lights. This is the only choreography outside review.",
+    note: "The ending. An MCP client's redirect is usually a custom scheme, so the browser hands off and leaves the tab here; the rail draws across and the flame rises. This is the only choreography outside review.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">

@@ -1,12 +1,13 @@
 import { Lantern } from "../components/Lantern";
 import { AppTile, Lockup, Wordmark } from "../components/Logo";
+import { DocLink } from "./DocLink";
 import { Doc, Pair, Specimen, Sub } from "./Frame";
 
 export function Brand() {
   return (
     <Doc
       title="Brand"
-      lede="Lymi is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry: lit while you review, brighter when you finish, dark when nothing is due. Three words for the whole thing: warm, calm, quick."
+      lede="Lymi is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry, and its flame is the continuity of remembering: repetition keeps it alive. Three words for the whole thing: warm, calm, quick."
     >
       <Sub
         title="The lantern"
@@ -18,20 +19,22 @@ export function Brand() {
               <figure className="grid justify-items-center gap-3 text-center">
                 <Lantern className="size-24 @2xl:size-28" flicker glow />
                 <figcaption className="text-xs text-muted">
-                  Lit, glowing. Something is due.
+                  The brand flame. Login, the app icon, public pages.
                 </figcaption>
-              </figure>
-              <figure className="grid justify-items-center gap-3 text-center">
-                <Lantern className="size-24 @2xl:size-28" variant="unlit" />
-                <figcaption className="text-xs text-muted">Unlit. Nothing due.</figcaption>
-              </figure>
-              <figure className="grid justify-items-center gap-3 text-center">
-                <Lantern className="size-24 @2xl:size-28" litUp />
-                <figcaption className="text-xs text-muted">Lit up. Session done.</figcaption>
               </figure>
             </div>
           )}
         </Pair>
+        <p className="text-base text-text-2">
+          Inside the product the flame follows the learner’s day and streak.{" "}
+          <DocLink
+            to={{ kind: "page", page: "lantern" }}
+            className="font-medium text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+          >
+            Lantern
+          </DocLink>{" "}
+          has every state and movement.
+        </p>
       </Sub>
 
       <Sub

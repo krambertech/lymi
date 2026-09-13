@@ -76,7 +76,7 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 
 - WCAG 2.2 AA is the floor. Body text meets 4.5:1 in both themes, including muted text and placeholders.
 - Light and dark themes are both first-class. The app follows the OS unless the user picks one. Dark is a warm room lit by the lantern, not black.
-- All motion respects `prefers-reduced-motion`. The flame flicker, the flare, and the end-of-session glow each have a crossfade or static alternative.
+- All motion respects `prefers-reduced-motion`. The flame's flicker, its breath after a review, and its rise at the goal each have a still alternative: the flame takes its new size and halo at once.
 - Everything works from the keyboard on desktop: grading (1 to 4), reveal (Space), add (N), review (R), search (/).
 - Tap targets are at least 44 px on the phone. Grade buttons are 72 px tall.
 - Inputs are 16 px or larger so iOS does not zoom.

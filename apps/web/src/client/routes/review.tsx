@@ -33,7 +33,6 @@ function Review() {
   const streak = useQuery(streakQuery);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
-  const [flare, setFlare] = useState(false);
   const [done, setDone] = useState(0);
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
@@ -124,13 +123,9 @@ function Review() {
   const grade = useMutation({
     mutationFn: ({ item, rating }: { item: QueueItem; rating: Rating }) =>
       gradeWithOutbox({ cardId: item.card.id, direction: item.direction, rating }),
-    onSuccess: (_res, { rating }) => {
+    onSuccess: () => {
       setGradeError(null);
       setPendingRating(null);
-      if (rating >= 3) {
-        setFlare(true);
-        window.setTimeout(() => setFlare(false), 380);
-      }
       setDone((n) => n + 1);
       setRevealed(false);
       setIndex((i) => i + 1);
@@ -186,7 +181,7 @@ function Review() {
         done={done}
         total={sessionTotal}
         animateCount={animateNextCard}
-        flare={flare}
+        streak={streak.data}
         onClose={() => navigate({ to: "/today" })}
       />
 

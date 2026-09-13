@@ -26,6 +26,7 @@ import { Progress } from "../components/Progress";
 import { Skeleton } from "../components/Skeleton";
 import { type StreakSummary, StreakWeek } from "../components/Streak";
 import type { QueueItem } from "../lib/api";
+import { lanternFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
 
 export const GRADES: {
@@ -46,7 +47,8 @@ export interface ReviewHeaderProps {
   total: number;
   /** Roll the count when it changes. Off when the grade came from the keyboard. */
   animateCount?: boolean | undefined;
-  flare?: boolean | undefined;
+  /** Today's streak, which the lantern shows. Omitted, it is the brand flame. */
+  streak?: StreakSummary | undefined;
   onClose?: (() => void) | undefined;
 }
 
@@ -58,7 +60,7 @@ const EASE_OUT = [0.22, 1, 0.36, 1] as const;
  * The deck name is deliberately absent. It is chosen two taps earlier, it cannot change for the
  * length of the session, and a long one squeezes the track down to nothing — so it moves to the
  * end screen, where it is a fact about what was reviewed rather than a caption on every card.
- * The lantern stays: the flare on a good answer is the one warm thing on this screen.
+ * The lantern stays: every accepted grade, Forgot included, feeds its flame.
  *
  * The lantern's drawing starts about a quarter of the way into its box, so the negative margin
  * puts the metal, not the box, on the card's outer edge.
@@ -67,13 +69,19 @@ export function ReviewHeader({
   done,
   total,
   animateCount = true,
-  flare,
+  streak,
   onClose,
 }: ReviewHeaderProps) {
   const { t } = useLingui();
   return (
     <header className="flex min-h-14 shrink-0 items-center gap-3 pt-2 @3xl:pt-4">
-      <Lantern className="-ms-[11.5px] -me-2 size-11" flicker glow flare={flare} />
+      <Lantern
+        className="-ms-[11.5px] -me-2 size-11"
+        {...lanternFor(streak)}
+        fed={done}
+        flicker
+        glow
+      />
       <Progress
         value={total ? done / total : 0}
         label={t`Session progress`}
@@ -581,7 +589,7 @@ export interface SessionDoneProps {
 }
 
 /**
- * The end. The lantern brightens and the seven lights show the week. Cards counted, never points.
+ * The end. The flame rises and the seven lights show the week. Cards counted, never points.
  *
  * A session is one batch of at most fifty, so more can be due when this screen appears. That is a
  * pause with a way on, not a failure to finish: the batch really did end, and the next one is a
@@ -596,9 +604,7 @@ export function SessionDone({ done, moreDue = 0, deckName, streak, action }: Ses
         className="complete-lantern mb-4 size-32 @3xl:size-36"
         flicker
         glow
-        catchLight
-        litUp={lit}
-        variant={lit ? "lit" : "unlit"}
+        {...lanternFor(streak)}
       />
       <h2 className="complete-copy text-3xl font-medium">
         {paused ? (

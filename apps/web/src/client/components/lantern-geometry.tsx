@@ -86,7 +86,7 @@ const PAINT: Record<Ink, string> = {
   ember: "var(--edge-2)",
 };
 
-function draw(s: Shape, key: string, className?: string) {
+export function draw(s: Shape, key: string, className?: string) {
   const common = {
     fill: s.fill ? PAINT[s.fill] : "none",
     ...(s.stroke ? { stroke: PAINT[s.stroke], strokeWidth: s.strokeWidth } : {}),
@@ -111,7 +111,7 @@ export function FLAME_PARTS(): ReactNode {
   );
 }
 
-/** The flame, or the ember that replaces it when nothing is due. Wears the glow. */
+/** The flame, or the ember that replaces it when the streak has broken. Wears the glow. */
 function light(lit: boolean) {
   return (
     <g className="lantern-light" key="light">

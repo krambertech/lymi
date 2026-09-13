@@ -39,10 +39,14 @@ const productionFiles = new Set([
   "tsconfig.base.json",
 ]);
 
+export function isTestFile(path) {
+  return path.endsWith(".test.ts") || path.endsWith(".test.tsx");
+}
+
 export function requiresE2E(paths) {
   return paths.some((path) => {
     if (productionFiles.has(path)) return true;
-    if (path.endsWith(".test.ts") || path.endsWith(".test.tsx")) return false;
+    if (isTestFile(path)) return false;
     if (nonProductionPrefixes.some((prefix) => path.startsWith(prefix))) return false;
     return productionPrefixes.some((prefix) => path.startsWith(prefix));
   });

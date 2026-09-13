@@ -67,7 +67,7 @@ export function Space() {
 
       <Sub
         title="Layout"
-        note="The shell caps at 1120 and centres; it never stretches. Sidebar 240, the rest is the page. Reading screens narrow to 672. The review column is 448 on the phone and 576 on desktop, and the card never grows past 440 tall on desktop."
+        note="The shell caps at 1120 and centres; it never stretches. Sidebar 240, the rest is the page. Reading screens narrow to 672. The review column is 448 on the phone and 672 on desktop, where the card fills the height between 460 and 600 so the word has room at its size."
       >
         <Specimen layout="block">
           <div className="grid gap-2 text-2xs text-muted">

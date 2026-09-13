@@ -24,7 +24,7 @@ function Today() {
       name={me.data?.name}
       email={me.data?.email}
       docsUrl={publicSiteUrl("/docs")}
-      onAdd={add.openCard}
+      onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
       onSignOut={leave.signOut}
       signingOut={leave.busy}

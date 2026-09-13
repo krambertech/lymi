@@ -103,7 +103,7 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Required. Describes the action, not the icon. */
   label: string;
   size?: ButtonSize | undefined;
-  variant?: "ghost" | "secondary" | "primary" | undefined;
+  variant?: "ghost" | "secondary" | "primary" | "danger" | undefined;
   /** A circle instead of the 10 px square. For the pronunciation button and capture. */
   round?: boolean | undefined;
   children: ReactNode;
@@ -127,6 +127,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
         variant === "ghost" && "text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
         variant === "secondary" && "edge bg-plate text-text-2 hoverable:hover:bg-hover",
         variant === "primary" && "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
+        variant === "danger" &&
+          "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
         size === "sm" && "size-8 [&_svg]:size-4",
         size === "md" && "size-10 [&_svg]:size-[18px]",
         size === "lg" && "size-12 [&_svg]:size-5",

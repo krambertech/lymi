@@ -130,10 +130,6 @@ msgid "{direction} · {when}, {then}"
 msgstr "{direction} · {when}, {then}"
 
 #: src/client/views/ReviewView.tsx
-msgid "{done} of {total}"
-msgstr "{done} из {total}"
-
-#: src/client/views/ReviewView.tsx
 msgid "{done} reviewed from {deckName}. The rest can wait a while."
 msgstr "{done} повторено из {deckName}. Остальное может немного подождать."
 
@@ -237,6 +233,10 @@ msgstr "{when}, {then}"
 #: src/client/views/InsightsView.tsx
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {# дня}}"
+
+#: src/client/views/ReviewView.tsx
+msgid "<0/> of {total}"
+msgstr "<0/> из {total}"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"
@@ -782,6 +782,10 @@ msgstr "Для интерфейса и для значений, которые �
 #: src/client/views/WordView.tsx
 msgid "Forgot"
 msgstr "Не помню"
+
+#: src/client/views/ReviewView.tsx
+msgid "Forgot recently"
+msgstr "Недавно забыто"
 
 #: src/client/components/ShortcutsDialog.tsx
 msgid "Forgot, Hard, Good, Easy"

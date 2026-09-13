@@ -493,6 +493,44 @@
   }
 }
 
+/* ---- Error tip --------------------------------------------------------- */
+
+/*
+ * Grows out of the control it describes and shrinks back into it, faster than it came. The entry
+ * is played by `ErrorTip` once it knows which side it landed on; a starting style would resolve
+ * before the side is measured.
+ */
+.error-tip {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  color: inherit;
+  opacity: 1;
+  transform: none;
+  transform-origin: bottom center;
+  transition:
+    opacity 100ms var(--ease-out),
+    transform 100ms var(--ease-out),
+    overlay 100ms allow-discrete,
+    display 100ms allow-discrete;
+}
+.error-tip[data-below] {
+  transform-origin: top center;
+}
+.error-tip:not(:popover-open) {
+  opacity: 0;
+  transform: translateY(4px) scale(0.98);
+}
+.error-tip[data-below]:not(:popover-open) {
+  transform: translateY(-4px) scale(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+  .error-tip,
+  .error-tip:not(:popover-open) {
+    transform: none;
+  }
+}
+
 /* ---- Fluid hover ------------------------------------------------------- */
 
 /*
@@ -551,26 +589,6 @@
 @keyframes enter-fade {
   from {
     opacity: 0;
-  }
-}
-/* Reveal is a quiet acknowledgement. The controls follow just behind it so the
-   two changes read as one response to the tap. */
-.answer-enter {
-  animation: answer-enter 150ms var(--ease-out) both;
-}
-@keyframes answer-enter {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-}
-.grade-enter {
-  animation: grade-enter 120ms var(--ease-out) both;
-}
-@keyframes grade-enter {
-  from {
-    opacity: 0;
-    transform: translateY(3px);
   }
 }
 .complete-lantern {
@@ -674,8 +692,6 @@
   .enter-card,
   .enter-menu,
   .enter-fade,
-  .answer-enter,
-  .grade-enter,
   .complete-lantern,
   .complete-copy {
     animation: enter-fade 150ms both;

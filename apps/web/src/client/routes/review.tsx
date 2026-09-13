@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, buttonClass } from "../components/Button";
 import { api, gradeWithOutbox, type QueueItem } from "../lib/api";
 import { decksQuery, historyQuery, queueQuery } from "../lib/queries";
+import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import {
   GRADES,
   GradeBar,
@@ -35,7 +36,8 @@ function Review() {
   const [flare, setFlare] = useState(false);
   const [done, setDone] = useState(0);
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
-  const [audioError, setAudioError] = useState<string | null>(null);
+  // Tied to the queue item, so a failure never carries onto the next card's button.
+  const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
   const playingAudio = useRef<HTMLAudioElement | null>(null);
   const [pendingRating, setPendingRating] = useState<Rating | null>(null);
   const [gradeError, setGradeError] = useState<string | null>(null);
@@ -46,6 +48,7 @@ function Review() {
   const items = queue.data?.items ?? [];
   const current: QueueItem | undefined = items[index];
   const currentCardId = current?.card.id;
+  const currentItemKey = current ? `${current.card.id}-${current.direction}` : undefined;
   const total = queue.data?.total ?? 0;
   const sessionTotal = items.length;
   const finished = queue.isSuccess && !current;
@@ -53,6 +56,7 @@ function Review() {
   // A session is one batch. What did not fit is offered as the next one rather than appended,
   // because fifty cards at a sitting is already more than an evening wants.
   const moreDue = Math.max(total - items.length, 0);
+  const hint = useRevealHint(current ? `${current.stateId}-${index}` : undefined, revealed);
 
   /**
    * Start the next batch.
@@ -103,7 +107,10 @@ function Review() {
       if (playingAudio.current === audio) {
         playingAudio.current = null;
         setAudioState("idle");
-        setAudioError(t`Pronunciation audio is unavailable. Try again in a moment.`);
+        setAudioError({
+          item: `${current.card.id}-${current.direction}`,
+          message: t`Pronunciation audio is unavailable. Try again in a moment.`,
+        });
       }
     }
   }, [audioState, current, stopAudio, t]);
@@ -158,6 +165,7 @@ function Review() {
       if (e.key === " ") {
         e.preventDefault();
         if (!revealed) {
+          recordReveal();
           setAnimateReveal(false);
           setRevealed(true);
         } else onGrade(3, "keyboard");
@@ -173,10 +181,11 @@ function Review() {
   }, [revealed, onGrade, navigate]);
 
   return (
-    <div className="mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col px-4 pb-safe @3xl:max-w-xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
+    <div className="mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
       <ReviewHeader
         done={done}
         total={sessionTotal}
+        animateCount={animateNextCard}
         flare={flare}
         onClose={() => navigate({ to: "/today" })}
       />
@@ -231,27 +240,28 @@ function Review() {
             item={current}
             revealed={revealed}
             animateReveal={animateReveal}
+            hint={hint}
             onReveal={() => {
+              recordReveal();
               setAnimateReveal(true);
               setRevealed(true);
             }}
             onPlayAudio={current.card.language ? playAudio : undefined}
             audioState={audioState}
-            className={`${animateNextCard ? "enter-card" : ""} mt-4 @3xl:min-h-[420px] @3xl:flex-none`}
+            audioError={
+              audioError && audioError.item === currentItemKey ? audioError.message : null
+            }
+            className={`${animateNextCard ? "enter-card" : ""} mt-4 @3xl:max-h-[600px] @3xl:min-h-[460px]`}
           />
-          {audioError && (
-            <p className="mt-2 text-center text-sm text-danger" role="status">
-              {audioError}
-            </p>
-          )}
           <GradeBar
             revealed={revealed}
+            animateIn={animateReveal}
             next={current.next}
             pending={grade.isPending}
             pendingRating={pendingRating}
             error={gradeError}
             onGrade={(rating) => onGrade(rating, "pointer")}
-            className={`${revealed && animateReveal ? "grade-enter" : ""} mt-3 pb-3 @3xl:pb-0`}
+            className="pt-3"
           />
         </>
       )}

@@ -1,7 +1,7 @@
 ---
 name: translate
 description: |
-  Translate and maintain Lymi's Ukrainian and Russian Lingui catalogs. Use when interface strings change, catalogs have empty entries, or a localization check fails.
+  Translate and maintain Lymi's Ukrainian and Russian Lingui catalogs and transcreate site copy. Use when interface or site strings change, catalogs have empty entries, or a localization check fails.
 ---
 
 # Translate Lymi's catalogs
@@ -23,6 +23,18 @@ English component text is the source. `pnpm i18n:extract` updates the Lingui cat
 - **Keep controls concise.** Prefer a short natural label. If space may be tight, flag it for visual review instead of distorting the translation.
 - **Never translate "Lymi".** Product names, deck names, terms and learner-written text are not in the catalogs.
 - **Use product terms consistently.** Follow the glossary with the inflection and word order the sentence requires.
+
+## Site copy is transcreated
+
+Landing and Join copy in `apps/site` must read as if it was written in Ukrainian or Russian. For site catalogs, this replaces "translate meaning, not English syntax"; the rest of the bar applies.
+
+1. **Start from the job.** Name who reads each block and what it should make them do, from [`PRODUCT.md`](../../../PRODUCT.md).
+2. **Wrap whole units.** Make each headline and paragraph one message, then run `pnpm i18n:extract`.
+3. **Offer candidates.** Write two or three for each headline, call to action, page title and social or meta description. Put your pick in the catalog and list all of them in the pull request, one line each.
+4. **Keep the facts.** Change idiom, order and rhythm freely. Add or drop no feature, promise or number.
+5. **Use search words in metadata.** The title and description use what a native speaker would search for.
+6. **Write each language from the English.** Never adapt one translation into the other.
+7. **Read it cold.** Rewrite anything that only makes sense in English.
 
 ## Glossary
 

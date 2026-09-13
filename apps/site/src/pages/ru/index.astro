@@ -1,15 +1,14 @@
 ---
-import LandingPage from "../components/islands/LandingPage";
-import { LANDING_BLURB, LANDING_TITLE, SHARE_IMAGE_ALT } from "../components/landing/LandingView";
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { pageI18n } from "../lib/i18n";
+import LandingPage from "../../components/islands/LandingPage";
+import { LANDING_BLURB, LANDING_TITLE, SHARE_IMAGE_ALT } from "../../components/landing/LandingView";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { pageI18n } from "../../lib/i18n";
 
-const locale = Astro.currentLocale ?? "en";
+const locale = Astro.currentLocale ?? "ru";
 const i18n = pageI18n(locale);
 const title = i18n._(LANDING_TITLE);
 const description = i18n._(LANDING_BLURB);
 const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
-
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -17,13 +16,13 @@ const structuredData = {
   applicationCategory: "EducationalApplication",
   operatingSystem: "Web",
   description,
-  url: "https://lymi.app/",
+  url: "https://lymi.app/ru/",
   inLanguage: locale,
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
 ---
 
-<BaseLayout title={title} description={description} canonicalPath="/" localizedPage="landing" shareImageAlt={shareImageAlt}>
+<BaseLayout title={title} description={description} canonicalPath="/ru/" localizedPage="landing" shareImageAlt={shareImageAlt}>
   <script
     slot="head"
     is:inline

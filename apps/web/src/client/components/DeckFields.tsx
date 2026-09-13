@@ -182,7 +182,7 @@ interface DirectionProps {
 
 /**
  * One choice, three rows, each spelling out what the learner will be shown. Selection is
- * carried by the edge and the dot: amber stays on the flame and the one primary action.
+ * carried by the edge and the dot, both ink, because a selection is not something to act on.
  */
 export function DirectionField({ value, onChange, example, total, disabled }: DirectionProps) {
   const { t, i18n } = useLingui();

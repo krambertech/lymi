@@ -48,14 +48,14 @@ export function Switch({
           className={clsx(
             "block h-[26px] w-[44px] rounded-full transition-colors duration-200",
             "peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring",
-            checked ? "bg-amber" : "edge-2 bg-plate-2",
+            checked ? "bg-text" : "edge-2 bg-plate-2",
           )}
         />
         <span
           aria-hidden="true"
           className={clsx(
             "absolute start-[3px] top-[3px] size-5 rounded-full transition-transform duration-200 ease-out motion-reduce:transition-none",
-            checked ? "translate-x-[18px] bg-amber-ink" : "edge bg-plate",
+            checked ? "translate-x-[18px] bg-canvas" : "edge bg-plate",
           )}
         />
       </span>

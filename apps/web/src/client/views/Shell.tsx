@@ -109,7 +109,7 @@ export function Sidebar({
           <n.icon aria-hidden="true" />
           <span className="flex-1">{i18n._(n.label)}</span>
           {n.to === "/activity" && unseen && (
-            <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />
+            <i className="size-1.5 rounded-full bg-text" aria-hidden="true" />
           )}
         </NavLink>
       ))}

@@ -2,56 +2,82 @@
 name: Lymi
 description: A vocabulary app with a storm lantern. Two rooms, one flame. Warm, calm, quick.
 colors:
-  canvas: "#f8f7f5"
-  rail: "#f1efec"
+  canvas: "#f8f6f4"
+  rail: "#f2f0ec"
   plate: "#ffffff"
-  plate-2: "#f1efec"
-  hover: "#edebe7"
-  edge: "#2a221c1a"
-  edge-2: "#2a221c33"
-  text: "#2d2622"
-  text-2: "#5a524c"
-  muted: "#7a716a"
-  faint: "#a89f97"
-  amber: "#f5ad48"
-  amber-hover: "#eb9f3a"
-  amber-ink: "#3a2a12"
-  amber-text: "#9c4d0a"
-  amber-soft: "#f5ad4829"
-  glass: "#f7e4c8"
-  glass-unlit: "#f1efec"
-  flame-core: "#fff4c2"
-  metal: "#2f2823"
-  glow: "#f5ad4873"
-  good: "#186f4b"
-  good-soft: "#1f7d551f"
+  plate-2: "#f2f0ec"
+  hover: "#eeebe6"
+  edge: "#2013081a"
+  edge-2: "#20130833"
+  text: "#1c140f"
+  text-2: "#49403a"
+  muted: "#72665f"
+  faint: "#a59d96"
+  amber: "#f8ac3d"
+  amber-hover: "#ef9d32"
+  amber-ink: "#331b06"
+  amber-text: "#9f4500"
+  amber-soft: "#f8ac3d29"
+  flame-core: "#fff4b7"
+  glass: "#fae5c9"
+  glass-unlit: "#f0ede9"
+  metal: "#1c140f"
+  glow: "#f8ac3d73"
+  good: "#006e42"
+  good-soft: "#006e421f"
   state-new: "#867f79"
   state-learning: "#ab8704"
   state-learning-soft: "#ab870429"
   state-learning-text: "#6e580f"
-  danger: "#b3331f"
-  danger-soft: "#b3331f1a"
-  dark-canvas: "#151210"
-  dark-rail: "#1b1613"
-  dark-plate: "#201b18"
-  dark-plate-2: "#2a241f"
-  dark-hover: "#2f2924"
+  state-known: "#006e42"
+  danger: "#be241f"
+  danger-soft: "#be241f1a"
+  ring: "#20130899"
+  scrim: "#1e130e59"
+  shimmer: "#ffffff66"
+  toast-action: "#fdb443"
+  grade-forgot: "#be241f"
+  grade-hard: "#72665f"
+  grade-good: "#006e42"
+  grade-easy: "#1c140f"
+  dark-canvas: "#130d09"
+  dark-rail: "#1a120e"
+  dark-plate: "#201713"
+  dark-plate-2: "#29211b"
+  dark-hover: "#302720"
   dark-edge: "#ffffff14"
   dark-edge-2: "#ffffff26"
-  dark-text: "#ebe6df"
-  dark-text-2: "#c4bcb3"
-  dark-muted: "#9b928a"
-  dark-faint: "#6b625b"
-  dark-amber: "#f6b34d"
-  dark-glass: "#46351d"
-  dark-glass-unlit: "#2a241f"
-  dark-amber-text: "#f4bd63"
-  dark-metal: "#f3f0eb"
-  dark-good: "#78c496"
-  dark-danger: "#e3745d"
+  dark-text: "#f1eee7"
+  dark-text-2: "#c5bcb1"
+  dark-muted: "#a89c90"
+  dark-faint: "#665c52"
+  dark-amber: "#fdb443"
+  dark-amber-hover: "#ffc250"
+  dark-amber-ink: "#2b1401"
+  dark-amber-text: "#f9bf60"
+  dark-amber-soft: "#fdb44324"
+  dark-flame-core: "#fff4b7"
+  dark-glass: "#432c17"
+  dark-glass-unlit: "#271f19"
+  dark-metal: "#f1eee7"
+  dark-glow: "#f6ad3b80"
+  dark-good: "#7bc495"
+  dark-good-soft: "#7bc49524"
   dark-state-new: "#83786e"
   dark-state-learning: "#e1d569"
+  dark-state-learning-soft: "#e1d56924"
   dark-state-learning-text: "#e4db83"
+  dark-state-known: "#7bc495"
+  dark-danger: "#fb8274"
+  dark-danger-soft: "#fb827424"
+  dark-ring: "#f1eee7b3"
+  dark-scrim: "#0000008c"
+  dark-shimmer: "#ffffff0f"
+  dark-toast-action: "#9f4500"
+  dark-grade-forgot: "#fb8274"
+  dark-grade-hard: "#a89c90"
+  dark-grade-good: "#7bc495"
+  dark-grade-easy: "#f1eee7"
 typography:
   word:
     fontFamily: "Onest, system-ui, sans-serif"
@@ -169,8 +195,6 @@ components:
     rounded: "{rounded.md}"
     height: "40px"
     padding: "0 14px"
-  input-focus:
-    borderColor: "{colors.amber}"
   chip:
     backgroundColor: "{colors.plate-2}"
     textColor: "{colors.text-2}"
@@ -225,13 +249,22 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 ## Colour
 
-Warm neutrals, nearly grey. Amber is the only saturated accent, the colour that means act; the three card-state colours below describe and never ask. Amber is: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the thirty-day strip and the month bars — the same lit glass at three sizes, which makes it the flame rather than a sixth thing.
+Warm neutrals, nearly grey. **Amber means act or lit, and everything else is ink.** Amber is the only saturated accent, and it goes on exactly these:
 
-Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber: Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
+- The flame.
+- The primary action, one per view.
+- The capture button, which is the app's standing action rather than the page's.
+- A due count, in `amber-text`.
+- A day the learner reviewed: the seven lights, the run strip and the month bars, the same lit glass at three sizes.
+- The one Insights bar the sentence above its chart points at.
+- The connection rail, once an app is granted access.
+- The toast's Undo, in `toast-action`, because the toast is the text colour and `amber-text` would not read on it.
+
+A due count repeated down Library or a deck table is one decision shown once per row, not a new use. Anything not on the list is ink, including checked switches and checkboxes, unread dots, chart lines, links and the Easy grade. The three card-state colours below describe and never ask.
+
+Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber. Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
-
-The twice-per-screen count is about chrome and actions. A status chip in a list repeats once per row, as `StateChip` already does down a deck table and as the due counts do down Library. That is one decision shown many times, not many uses of amber.
 
 Text on canvas meets 4.5:1 in both rooms, including `muted`. `faint` is decorative and never carries words. Dark is not inverted light: the plate is lighter than the canvas in both rooms.
 
@@ -279,11 +312,11 @@ One exception to the single family. `font-mono` is a system monospace stack, not
 
 ## Motion
 
-Motion conveys state. Press: scale 0.97, 150 ms. Hover: 150 ms, pointer devices only. In a menu or a list of options the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows and never crosses a separator; the moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors. A card arrives with a 6 px rise over 200 ms. A menu grows out of the corner nearest the button that opened it — scale 0.94 to 1 over 140 ms — because a menu belongs to its trigger, and a list that slides in from somewhere else reads as a panel that happened to land there. Reveal is the one choreographed moment, built with Motion: the word glides up to make room over 340 ms, the rule draws across from the start edge, the meaning, example and sources rise 10 px out of a 4 px blur 50 ms apart, and the four grade controls follow 35 ms apart. Until then there is no grade strip and the card takes the room; on reveal the strip opens over the same 340 ms and the card shrinks to make space, so the word's glide and the card's shrink read as one movement. An unrevealed card is the word alone. A hint at its foot, a pointing hand that taps three times and rests with a line under it saying how to reveal, appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll. The session count rolls up as each card lands. A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap; nothing is added under the card, so the layout never moves for an error. Flare is 320 ms. A segmented control's chosen plate slides to the new option over 200 ms, so the choice reads as one thing moving rather than two things blinking. Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme switch suspends transitions for one frame so the room swaps at once.
+Motion conveys state. Press scales over 150 ms: 0.97 on buttons, segments, the pill nav, back and new-card rows, 0.98 on deck cards and New deck, 0.96 on the grade buttons, 0.99 on the direction rows; menu rows and rail rows do not scale. Hover: 150 ms, pointer devices only. In a menu or a list of options the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows and never crosses a separator; the moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors. A card arrives with a 6 px rise over 200 ms. A menu grows out of the corner nearest the button that opened it — scale 0.94 to 1 over 140 ms — because a menu belongs to its trigger, and a list that slides in from somewhere else reads as a panel that happened to land there. Reveal is the one choreographed moment, built with Motion: the word glides up to make room over 340 ms, the rule draws across from the start edge over 360 ms, the meaning, example and sources rise 10 px out of a 4 px blur over 260 ms, 50 ms apart, and the four grade controls rise 10 px over 220 ms, 35 ms apart, starting 80 ms after the strip begins to open. Until then there is no grade strip and the card takes the room; on reveal the strip opens over the same 340 ms and the card shrinks to make space, so the word's glide and the card's shrink read as one movement. An unrevealed card is the word alone. A hint at its foot, a pointing hand that taps three times and rests with a line under it saying how to reveal, appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll. The session count rolls up as each card lands. A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap; nothing is added under the card, so the layout never moves for an error. Flare is 320 ms. A segmented control's chosen plate slides to the new option over 200 ms, so the choice reads as one thing moving rather than two things blinking. Toasts enter in 240 ms and leave in 140 ms, both ease-out. Keyboard-initiated actions do not animate. The theme switch suspends transitions for one frame so the room swaps at once.
 
 An icon control names itself in a tooltip, never in a native `title`, whose delay, look and touch behaviour belong to the browser. The tooltip waits 500 ms under a still pointer, grows from the side nearest the control over 120 ms and leaves in 80. Moving along a row of controls opens the next one at once, with no fade, because the reader is already reading them. Keyboard focus shows it without the wait; touch never does. It repeats the accessible name, so it is hidden from assistive technology.
 
-A sheet arrives the way its shape does: the drawer on vaul's curve from the bottom edge, the desktop modal with the card's 6 px rise over 200 ms. Both leave in 140 ms, faster than they came.
+A sheet moves the way its shape does. The drawer rises from the bottom edge on vaul's curve and takes vaul's 500 ms each way. The desktop modal arrives with the card's 6 px rise over 200 ms and leaves in 140 ms, faster than it came.
 
 The auth screens have one moving part: the connection. The app that asked and the lantern sit in matching tiles joined by a rail, dotted while the decision is open. When the grant lands the rail draws across in amber over 420 ms and the wick catches 300 ms in, so the two read as one movement rather than two. A refusal leaves the rail dotted and the lantern unlit. Under reduced motion the rail is simply filled. Nothing else on those screens animates.
 
@@ -309,7 +342,7 @@ On the phone every screen starts with the same top bar, `TopBar` in `views/Shell
 
 ## Insights
 
-The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act". The two exceptions are the lights, which are the streak, and the single bar the sentence above the chart is pointing at.
+The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act or lit". The exceptions are the days the learner reviewed, which are lit in the thirty-day strip and the month bars as they are in the seven lights, and the single bar the sentence above the chart is pointing at.
 
 Four plates in a 2x2 grid — Recall, Consistency, Collection, Ahead — each carrying a number and one line of plain words. The line is not a caption. 91% says nothing until the plate says the schedule aims for 90, and a grid of numbers without those lines is the dashboard the product does without. Under them the month bars run full width, then the cards that keep coming back.
 
@@ -341,7 +374,7 @@ Deck actions live behind one menu: Deck settings opens a screen, and the name is
 
 A deck is a name and two settings, so making one is a sheet and not a wizard. The name is the one field that matters and takes the large input; language and direction already have an answer, so they sit under it as a select and three segments. Creating it lands the learner in the empty deck, which is where the words go next. Everything chosen there is changeable afterwards.
 
-Changing it is a screen, `/library/$deckId/settings`, because on the phone it should push in and the back gesture should work, and because the direction choice needs room to say what it does: three rows, each spelling out what will be shown, using a real card from the deck. Selection is carried by the edge and a filled dot — amber stays on the flame and the one primary action. Nothing on the screen has a Save button. A choice is made when it is made, a name commits on blur and on the way out, and one quiet "Saved" in the header says so. What changing the direction does to the cards already in the deck is [ADR 0007](docs/adr/0007-a-decks-direction-is-a-filter-not-a-migration.md).
+Changing it is a screen, `/library/$deckId/settings`, because on the phone it should push in and the back gesture should work, and because the direction choice needs room to say what it does: three rows, each spelling out what will be shown, using a real card from the deck. Selection is carried by the edge and a filled dot, both ink. Nothing on the screen has a Save button. A choice is made when it is made, a name commits on blur and on the way out, and one quiet "Saved" in the header says so. What changing the direction does to the cards already in the deck is [ADR 0007](docs/adr/0007-a-decks-direction-is-a-filter-not-a-migration.md).
 
 A deck in Library is a card, not a row: it carries four numbers, and one line makes them a run of digits nobody reads. The name is on the first line, the counts on the second. A row of new cards names its actor, because a card an integration wrote must never look like one the learner typed.
 
@@ -365,7 +398,7 @@ Plain and friendly. Counts cards, not points. Never nags, never celebrates for y
 
 The docs site at `/docs` is the same two rooms. Code is set in `font-mono`, the one exception to Onest described under Type.
 
-Code is set in ink and weight, never in colour, so amber stays on the flame and the one primary action. Three tones carry the syntax: a JSON key is `text` at 500 because it is what you scan for, a value is `text-2`, and comments and punctuation are `muted`. Nothing in a snippet is `faint`; every character there carries meaning.
+Code is set in ink and weight, never in colour. Three tones carry the syntax: a JSON key is `text` at 500 because it is what you scan for, a value is `text-2`, and comments and punctuation are `muted`. Nothing in a snippet is `faint`; every character there carries meaning.
 
 The two colours the reference does use are the ones that already mean something. A response code is `good` when it is a 2xx and `danger` otherwise. An HTTP method is a neutral chip, except DELETE, which is `danger`.
 
@@ -374,9 +407,9 @@ Prose is `text-2` at 15.5 px on a 44 rem column; headings and bold are `text`. T
 ## Don't
 
 - No gradients on any surface; the app icon is the one exception. No drop shadows. No glow on anything but the lantern.
-- No amber outside the flame, the primary action and a due count. The streak's flame is that same flame, so it counts as one.
+- No amber outside the list under Colour.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
-- No simplified small cut. No amber beyond the flame and the primary action.
+- No simplified small cut.
 - No two flames in one mark. If the lantern is on the screen, the wordmark is plain. The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
 - No translucent glass, and no room colour painted inside the mark. The lantern must survive being put on a surface it did not expect.
 - No display serif, no sparkle icon, no confetti.

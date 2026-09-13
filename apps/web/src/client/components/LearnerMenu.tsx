@@ -73,7 +73,7 @@ export function LearnerMenu({
       {label}
     </MenuLink>
   );
-  const dot = <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />;
+  const dot = <i className="size-1.5 rounded-full bg-text" aria-hidden="true" />;
 
   return (
     <>

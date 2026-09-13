@@ -26,7 +26,7 @@ Aim for 300–700 words. Exceed that only when compression would hide a material
 | [0007](0007-a-decks-direction-is-a-filter-not-a-migration.md) | A deck's direction filters card states rather than migrating them |
 | [0008](0008-public-website-and-product-use-separate-origins.md) | The public website and product use separate origins |
 | [0009](0009-public-website-and-product-deploy-separately.md) | The public website and product deploy separately |
-| [0010](0010-the-review-queue-is-ordered-by-retrievability.md) | The review queue is ordered by retrievability, not by due date |
+| [0010](0010-the-review-queue-is-ordered-by-retrievability.md) | Superseded by 0018: the review queue is ordered by retrievability, not by due date |
 | [0011](0011-a-shared-deck-is-one-deck-with-many-learners.md) | A shared deck is one deck with many learners, and its invitation is the front door |
 | [0012](0012-interface-text-is-english-source-translated-by-lingui.md) | Interface text is English source in the code, translated through Lingui catalogs |
 | [0013](0013-app-language-is-one-setting-that-meaning-language-follows.md) | App language is one stored setting, and meaning language follows it |
@@ -35,3 +35,4 @@ Aim for 300–700 words. Exceed that only when compression would hide a material
 | [0016](0016-public-catalog-pages-render-on-the-public-worker.md) | Public catalog pages render on the public Worker |
 | [0017](0017-interface-primitives-are-shadcn-components-on-base-ui.md) | Interface primitives are shadcn components on Base UI, and overlays adapt by kind and device |
 | [0018](0018-product-previews-use-isolated-disposable-workers.md) | Product previews use isolated disposable Workers and synthetic learners |
+| [0018](0018-the-review-queue-is-a-deterministic-weighted-draw.md) | The review queue is a deterministic weighted draw with no saved state |

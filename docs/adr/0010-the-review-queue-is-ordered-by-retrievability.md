@@ -1,9 +1,12 @@
 ---
-status: proposed
+status: superseded
 date: 2026-09-07
+superseded_by: 0018
 ---
 
 # The review queue is ordered by retrievability, not by due date
+
+Superseded by [ADR 0018](0018-the-review-queue-is-a-deterministic-weighted-draw.md), which weights the draw toward higher retrievability instead.
 
 A session is one batch of at most fifty cards. When more than fifty are due, the order decides which fifty the learner sees, and everything that does not fit waits for the next batch. Today `reviewQueue` orders by `card_states.due` ascending — oldest first — and that choice was never made deliberately; it is the obvious `ORDER BY` and it went in with the first queue.
 

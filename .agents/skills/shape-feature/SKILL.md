@@ -50,3 +50,5 @@ Stop when the outcome, boundaries, smallest vertical slice, and acceptance evide
 Return a concise summary of the decisions, assumptions, remaining questions, recommended artifact, and next action. Add a compact handoff when the user wants to continue in a fresh session.
 
 Draft in chat by default. Create or change an artifact only when asked, and finish shaping before beginning any requested implementation.
+
+When the user asks to track a completed shape in GitHub, continue with [`create-issues`](../create-issues/SKILL.md).

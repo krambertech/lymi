@@ -6,6 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "@tanstack/react-router";
+import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect, useRef } from "react";
 import { AddCardSheet } from "../components/AddCardSheet";
 import { NewDeckSheet } from "../components/NewDeckSheet";
@@ -27,16 +28,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function Root() {
   return (
-    <AddCardProvider>
-      <SignOutProvider>
-        <Shell />
-        {DevPanel && (
-          <Suspense fallback={null}>
-            <DevPanel />
-          </Suspense>
-        )}
-      </SignOutProvider>
-    </AddCardProvider>
+    // Under reduced motion, Motion drops travel and scale and keeps the fades.
+    <MotionConfig reducedMotion="user">
+      <AddCardProvider>
+        <SignOutProvider>
+          <Shell />
+          {DevPanel && (
+            <Suspense fallback={null}>
+              <DevPanel />
+            </Suspense>
+          )}
+        </SignOutProvider>
+      </AddCardProvider>
+    </MotionConfig>
   );
 }
 

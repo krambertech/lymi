@@ -109,6 +109,7 @@ function ReviewPhone({
       <ReviewCard
         item={item}
         revealed={revealed}
+        hint={!revealed}
         onReveal={() => setRevealed(true)}
         onPlayAudio={noop}
         className="mt-4"
@@ -116,9 +117,10 @@ function ReviewPhone({
       <GradeBar
         id={!produce ? "review-grade-preview" : undefined}
         revealed={revealed}
+        animateIn
         next={item.next}
         onGrade={() => setRevealed(false)}
-        className={revealed ? "grade-enter mt-3" : "mt-3"}
+        className="pt-3"
       />
     </div>
   );
@@ -273,16 +275,16 @@ export function Screens() {
                   static={{ path: "/" }}
                 />
                 <main className="@container flex min-w-0 flex-1 flex-col">
-                  <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-8 pt-4">
+                  <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-8 pt-4">
                     <ReviewHeader done={4} total={11} />
                     <ReviewCard
                       item={m.queueItem}
                       revealed
                       onReveal={noop}
                       onPlayAudio={noop}
-                      className="mt-5 min-h-[400px] flex-none"
+                      className="mt-5 min-h-[460px] flex-none"
                     />
-                    <GradeBar revealed next={m.queueItem.next} onGrade={noop} className="mt-3" />
+                    <GradeBar revealed next={m.queueItem.next} onGrade={noop} className="pt-3" />
                   </div>
                 </main>
               </Desktop>

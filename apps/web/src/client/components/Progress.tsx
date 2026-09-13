@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 /**
  * The session track. Value is 0 to 1.
  *
- * Eight pixels, on the card's own width, never on the screen edge: a hairline at the top of a
+ * Eight pixels, inside the card's width, never on the screen edge: a hairline at the top of a
  * phone fights the rounded corners and the status bar, and reads as a rendering fault rather than
  * a thing. The fill is ink rather than amber, because amber belongs to the flame, the one primary
  * action and a due count, and a track that creeps across every card is none of those.

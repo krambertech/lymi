@@ -74,7 +74,7 @@ function DeckList() {
         decks={decks.data}
         known={progress.known}
         learning={progress.learning}
-        onAdd={add.openCard}
+        onAdd={() => add.openCard()}
         onCreateDeck={add.openDeck}
         name={me.data?.name}
         email={me.data?.email}

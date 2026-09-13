@@ -130,10 +130,6 @@ msgid "{direction} · {when}, {then}"
 msgstr "{direction} · {when}, {then}"
 
 #: src/client/views/ReviewView.tsx
-msgid "{done} of {total}"
-msgstr "{done} of {total}"
-
-#: src/client/views/ReviewView.tsx
 msgid "{done} reviewed from {deckName}. The rest can wait a while."
 msgstr "{done} reviewed from {deckName}. The rest can wait a while."
 
@@ -237,6 +233,10 @@ msgstr "{when}, {then}"
 #: src/client/views/InsightsView.tsx
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
+
+#: src/client/views/ReviewView.tsx
+msgid "<0/> of {total}"
+msgstr "<0/> of {total}"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"
@@ -782,6 +782,10 @@ msgstr "For the interface, and for the meanings the AI writes."
 #: src/client/views/WordView.tsx
 msgid "Forgot"
 msgstr "Forgot"
+
+#: src/client/views/ReviewView.tsx
+msgid "Forgot recently"
+msgstr "Forgot recently"
 
 #: src/client/components/ShortcutsDialog.tsx
 msgid "Forgot, Hard, Good, Easy"

@@ -28,7 +28,7 @@ export function Chip({
 }: {
   tone?: ChipTone | undefined;
   dot?: boolean | undefined;
-  size?: "sm" | "md" | undefined;
+  size?: "sm" | "md" | "lg" | undefined;
   children: ReactNode;
   className?: string | undefined;
 }) {
@@ -36,14 +36,20 @@ export function Chip({
     <span
       className={clsx(
         "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full font-medium tabular-nums",
-        size === "md" ? "h-[26px] px-2.5 text-xs" : "h-[22px] px-2 text-2xs",
+        size === "lg" && "h-7 gap-2 px-3 text-sm",
+        size === "md" && "h-[26px] px-2.5 text-xs",
+        size === "sm" && "h-[22px] px-2 text-2xs",
         tones[tone],
         className,
       )}
     >
       {dot && (
         <i
-          className={clsx("size-1.5 rounded-full", dots[tone] ?? "bg-current")}
+          className={clsx(
+            "rounded-full",
+            size === "lg" ? "size-2" : "size-1.5",
+            dots[tone] ?? "bg-current",
+          )}
           aria-hidden="true"
         />
       )}
@@ -58,7 +64,7 @@ export function StateChip({
   size,
 }: {
   state: number | null | undefined;
-  size?: "sm" | "md" | undefined;
+  size?: "sm" | "md" | "lg" | undefined;
 }) {
   if (state === 2)
     return (

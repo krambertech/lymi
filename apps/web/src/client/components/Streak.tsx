@@ -121,7 +121,14 @@ export function StreakWeek({
   const week = lastDays(summary);
   const large = size === "lg";
   return (
-    <div className={clsx("flex items-center", large ? "gap-5" : "gap-4", className)}>
+    <div
+      className={clsx(
+        // Stacked where the week fills the width; beside it, behind a rule, where there is room.
+        "flex flex-col items-center gap-3 @md:flex-row",
+        large ? "@md:gap-5" : "@md:gap-4",
+        className,
+      )}
+    >
       <SevenLights
         days={week.attempts}
         satisfied={week.satisfied}
@@ -129,16 +136,16 @@ export function StreakWeek({
         dates={week.dates}
         size={size}
       />
-      <p className="grid border-s border-edge ps-4 text-start">
+      <p className="flex shrink-0 items-baseline gap-1.5 @md:grid @md:gap-0 @md:border-s @md:border-edge @md:ps-4 @md:text-start">
         <span
           className={clsx(
             "font-semibold leading-none tabular-nums text-text",
-            large ? "text-2xl" : "text-lg",
+            large ? "text-lg @md:text-2xl" : "text-lg",
           )}
         >
           {summary.current}
         </span>
-        <span className="mt-1 text-xs text-muted">
+        <span className="whitespace-nowrap text-sm text-muted @md:mt-1 @md:text-xs">
           <Plural value={summary.current} one="day in a row" other="days in a row" />
         </span>
       </p>

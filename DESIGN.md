@@ -25,6 +25,10 @@ colors:
   glow: "#f5ad4873"
   good: "#186f4b"
   good-soft: "#1f7d551f"
+  state-new: "#867f79"
+  state-learning: "#ab8704"
+  state-learning-soft: "#ab870429"
+  state-learning-text: "#6e580f"
   danger: "#b3331f"
   danger-soft: "#b3331f1a"
   dark-canvas: "#151210"
@@ -45,6 +49,9 @@ colors:
   dark-metal: "#f3f0eb"
   dark-good: "#78c496"
   dark-danger: "#e3745d"
+  dark-state-new: "#83786e"
+  dark-state-learning: "#e1d569"
+  dark-state-learning-text: "#e4db83"
 typography:
   word:
     fontFamily: "Onest, system-ui, sans-serif"
@@ -166,8 +173,13 @@ components:
     height: "26px"
     padding: "0 10px"
   chip-new:
-    backgroundColor: "{colors.amber-soft}"
-    textColor: "{colors.amber-text}"
+    backgroundColor: "{colors.plate-2}"
+    textColor: "{colors.text-2}"
+    rounded: "{rounded.pill}"
+    height: "26px"
+  chip-learning:
+    backgroundColor: "{colors.state-learning-soft}"
+    textColor: "{colors.state-learning-text}"
     rounded: "{rounded.pill}"
     height: "26px"
   chip-known:
@@ -208,11 +220,13 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 ## Colour
 
-Warm neutrals, nearly grey. Amber is the only saturated colour: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the thirty-day strip and the month bars — the same lit glass at three sizes, which makes it the flame rather than a sixth thing.
+Warm neutrals, nearly grey. Amber is the only saturated accent, the colour that means act; the three card-state colours below describe and never ask. Amber is: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the thirty-day strip and the month bars — the same lit glass at three sizes, which makes it the flame rather than a sixth thing.
+
+Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Collection bar on Insights. They are not accents and they are not amber: Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
 
 Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
 
-The twice-per-screen count is about chrome and actions. A status chip in a list repeats once per row, as `StateChip` already does down a deck table and as the due and new counts do down Library. That is one decision shown many times, not many uses of amber.
+The twice-per-screen count is about chrome and actions. A status chip in a list repeats once per row, as `StateChip` already does down a deck table and as the due counts do down Library. That is one decision shown many times, not many uses of amber.
 
 Text on canvas meets 4.5:1 in both rooms, including `muted`. `faint` is decorative and never carries words. Dark is not inverted light: the plate is lighter than the canvas in both rooms.
 
@@ -282,7 +296,9 @@ The rail's first line and the page title beside it sit on the same line, 32 px d
 
 The column of content is capped at `--column` (880 px) and centres in whatever the rail leaves. It never stretches: a vocabulary app is one column, and a wider one is a worse read. On a 2560 px screen the rail fills the left edge and the column sits in the middle of the rest, so a big window gets the same read as a laptop instead of a stripe of content in a field of empty room. Reading screens narrow further to 672.
 
-Capture is one plus for both things a learner adds, a word or a deck. It is round and amber, because it is the app's standing action and the only control on every screen; the menu under it names the two things with an icon each. It sits in the rail beside the mark on desktop and in every page header on the phone, and `N` opens it from anywhere.
+Capture is one plus for both things a learner adds, a word or a deck. It is round and amber, because it is the app's standing action and the only control on every screen; the menu under it names the two things with an icon each. It sits in the rail beside the mark on desktop and in the top bar on the phone, and `N` opens it from anywhere.
+
+On the phone every screen starts with the same top bar, `TopBar` in `views/Shell.tsx`: 56 px, back on the start side, the screen's own controls on the end, and the title under it in the same place on every screen. Back is `BackButton`, a 44 px target with a 22 px chevron and the name of the screen it returns to, so a card says which deck. The controls are square ghost icon buttons at 40 px. Capture keeps its round amber shape and goes first in the group, so it never sits between two squares; the avatar, also round, follows it. On desktop the rail does this job and the bar goes, except on a screen nested under another one, such as deck settings, which keeps it for its way back.
 
 ## Insights
 
@@ -308,11 +324,13 @@ The seven lights sit with it. They say which days, where the streak says how man
 
 ## Components
 
-`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, Flame, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
+`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Field with Input, Textarea, Select, Segmented, Switch, Checkbox, Chip with StateChip and SourceChip, Kbd, Progress, Toast, Skeleton, EmptyState, SettingsGroup, SevenLights, Table, Menu, Dialog, Sheet with SheetPanel, AddCardSheet, NewDeckSheet, AddMenu, Combobox, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, TopBar and BackButton (in `views/Shell.tsx`), StateStripe, Flame, AppMark, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport.
 
-Deck actions live behind one menu: Deck settings opens a screen, Rename is inline on the title, Export writes a CSV, Archive leaves the deck list with an Undo toast. Cards archive the same way, from the row.
+A deck opens on its plate: the cards due now set large, the whole deck's split between New, Learning and Known beside icons in their state colours, and the Review button. It is the one place a count gets hero size outside Today, because on a deck the number is the size of the thing the button starts, not a score. The three counts are the deck, not today's share of it, so they never read as zero on a quiet day; the stripe under the plate draws the same split, and the filter under the stripe names the states with their dots and no numbers, so no count appears twice. On the phone the plate stacks and the button is full width; on desktop it is one row. With nothing due the plate keeps its shape: a zero, the deck's counts, when the next card is back, and Add card where Review was. On the phone, search sits in the top bar beside back and the deck menu and replaces it while open; on desktop it stays beside the filter, where `/` lands.
+
+Deck actions live behind one menu: Deck settings opens a screen, and the name is changed there rather than inline, Export writes a CSV, Archive leaves the deck list with an Undo toast. Cards archive the same way, from the row.
 
 A deck is a name and two settings, so making one is a sheet and not a wizard. The name is the one field that matters and takes the large input; language and direction already have an answer, so they sit under it as a select and three segments. Creating it lands the learner in the empty deck, which is where the words go next. Everything chosen there is changeable afterwards.
 

@@ -49,7 +49,7 @@ export const DeckSummaryOut = z
     directions: Directions,
     position: z.number().int(),
     total: z.number().int().meta({ description: "Active cards in the deck" }),
-    due: z.number().int().meta({ description: "The caller's card states due now" }),
+    due: z.number().int().meta({ description: "Cards with a direction due now for the caller" }),
     ...Membership,
   })
   .meta({ id: "DeckSummary" });

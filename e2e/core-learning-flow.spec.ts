@@ -54,7 +54,7 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
   });
 
   await test.step("review and persist the result", async () => {
-    await page.getByRole("button", { name: "Review 1 due" }).click();
+    await page.getByRole("button", { name: "Review", exact: true }).click();
     await expect(page.getByLabel("Recognition card for sbrigarsi")).toBeVisible();
     await page.getByRole("button", { name: "Tap card to reveal" }).click();
     await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();

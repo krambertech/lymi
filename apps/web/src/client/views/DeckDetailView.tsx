@@ -1,18 +1,18 @@
-import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { deserializeState, retrievability } from "@lymi/core";
+import { deserializeState } from "@lymi/core";
 import type { Card, CardState, Review } from "@lymi/core/schema";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
   Archive,
-  ChevronLeft,
+  CircleCheck,
+  Clock,
   Download,
   MoreHorizontal,
-  Pencil,
   Plus,
   Search,
   Settings2,
+  SquarePlus,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
@@ -22,10 +22,10 @@ import { Input } from "../components/Field";
 import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
 import { Segmented } from "../components/Segmented";
 import { Skeleton } from "../components/Skeleton";
-import { StateStripe } from "../components/StateStripe";
+import { StateStripe, stateDot } from "../components/StateStripe";
 import type { DeckSummary } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
-import { Page, PageHeader, type StaticNav } from "./Shell";
+import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./Shell";
 import { type WordEvent, type WordPatch, WordView } from "./WordView";
 
 type Row = { card: Card; state: CardState | null };
@@ -36,8 +36,6 @@ export interface DeckDetailProps {
   onAdd: () => void;
   onArchive: (id: string) => void;
   onReview?: (() => void) | undefined;
-  /** Rename the deck. Absent on the design page, where the menu is for show. */
-  onRename?: ((name: string) => Promise<unknown> | undefined) | undefined;
   onSettings?: (() => void) | undefined;
   onArchiveDeck?: (() => void) | undefined;
   /** The word that is open, if one is. The view owns it when the route does not. */
@@ -114,23 +112,121 @@ function reps(state: CardState | null): number {
   }
 }
 
-function recallOf(state: CardState | null): number {
-  if (!state) return 0;
-  try {
-    const c = deserializeState(state.fsrs);
-    return typeof c.stability === "number" ? retrievability(c) : 0;
-  } catch {
-    return 0;
-  }
-}
-
 type Filter = "all" | "0" | "1" | "2";
 
+/** "tomorrow", "in 3 days": when the deck's next card comes back, in the interface language. */
+function nextDueLabel(locale: string, cards: Row[], now = Date.now()): string | null {
+  let next = Number.POSITIVE_INFINITY;
+  for (const { state } of cards) {
+    const at = state ? new Date(state.due).getTime() : Number.NaN;
+    if (at > now && at < next) next = at;
+  }
+  if (!Number.isFinite(next)) return null;
+  const days = Math.round((next - now) / 86_400_000);
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  if (days < 1) return rtf.format(Math.max(1, Math.round((next - now) / 3_600_000)), "hour");
+  if (days < 30) return rtf.format(days, "day");
+  return rtf.format(Math.round(days / 30), "month");
+}
+
 /**
- * One deck: what it is, how it stands, and its words. The header is three lines with one job
- * each. The list is plain: the word, its meaning under it, and on the right when it comes
- * back and how often it has been asked. State is the filter above the list, never a pill on
- * the row. A word opens beside the list on desktop and as its own screen on the phone.
+ * The deck at a glance and the button that starts its review: how many cards are due today, how
+ * the whole deck splits between new, learning and known, and Review. With nothing due the plate
+ * keeps its shape at zero, says when the next card is back, and offers capture where Review was.
+ */
+function DuePlate({
+  deck,
+  cards,
+  counts,
+  onReview,
+  onAdd,
+}: {
+  deck: DeckSummary;
+  cards: Row[];
+  /** The whole deck by state: new, learning, known. */
+  counts: Record<0 | 1 | 2, number>;
+  onReview?: (() => void) | undefined;
+  onAdd: () => void;
+}) {
+  const { t, i18n } = useLingui();
+  const due = deck.due;
+  const next = due === 0 ? nextDueLabel(i18n.locale, cards) : null;
+
+  const split = [
+    { key: "new", n: counts[0], label: t`New`, Icon: SquarePlus, tint: "text-state-new" },
+    {
+      key: "learning",
+      n: counts[1],
+      label: t`Learning`,
+      Icon: Clock,
+      tint: "text-state-learning",
+    },
+    {
+      key: "known",
+      n: counts[2],
+      label: t`Known`,
+      Icon: CircleCheck,
+      tint: "text-state-known",
+    },
+  ];
+
+  return (
+    <section className="edge grid rounded-2xl bg-plate px-5 pt-7 pb-5 text-center @3xl:grid-cols-[auto_minmax(0,1fr)_auto] @3xl:items-center @3xl:gap-8 @3xl:px-8 @3xl:py-7 @3xl:text-start">
+      <h2 className="grid justify-items-center gap-1.5 @3xl:justify-items-start">
+        <span className="text-5xl font-semibold tracking-[-0.03em] tabular-nums">
+          {i18n.number(due)}
+        </span>
+        <span className="text-md text-text-2">
+          <Plural value={due} one="card due now" other="cards due now" />
+        </span>
+        {next && <span className="text-sm text-muted">{t`The next card is back ${next}.`}</span>}
+      </h2>
+      <dl className="mx-auto mt-6 grid w-full max-w-md grid-cols-3 divide-x divide-edge @3xl:mt-0">
+        {split.map(({ key, n, label, Icon, tint }) => (
+          <div key={key} className="grid justify-items-center gap-0.5 px-2">
+            <dt className="order-last text-sm text-muted">{label}</dt>
+            <dd
+              className={clsx(
+                "flex items-center gap-1.5 text-xl font-semibold tabular-nums",
+                n === 0 && "text-muted",
+              )}
+            >
+              <Icon className={clsx("size-[18px]", tint)} strokeWidth={2.25} aria-hidden="true" />
+              {i18n.number(n)}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      {due > 0 ? (
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={onReview}
+          aria-disabled={!onReview}
+          className="mt-7 w-full @3xl:mt-0 @3xl:w-auto @3xl:px-10"
+        >
+          <Trans>Review</Trans>
+        </Button>
+      ) : (
+        <Button
+          size="lg"
+          onClick={onAdd}
+          kbd="N"
+          className="mt-7 w-full @3xl:mt-0 @3xl:w-auto @3xl:px-8"
+        >
+          <Plus aria-hidden="true" />
+          <Trans>Add card</Trans>
+        </Button>
+      )}
+    </section>
+  );
+}
+
+/**
+ * One deck: today's review in a plate, the whole deck as a stripe, then its cards. The list is
+ * plain: the term, its meaning under it, and on the right when it comes back and how often it
+ * has been asked. State is the filter above the list, never a pill on the row. A card opens
+ * beside the list on desktop and as its own screen on the phone.
  */
 export function DeckDetailView({
   deck,
@@ -138,7 +234,6 @@ export function DeckDetailView({
   onAdd,
   onArchive,
   onReview,
-  onRename,
   onSettings,
   onArchiveDeck,
   openCardId,
@@ -164,14 +259,12 @@ export function DeckDetailView({
     },
     [onOpen],
   );
-  const [renaming, setRenaming] = useState(false);
-  const [draft, setDraft] = useState("");
-  const renameRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (renaming) renameRef.current?.select();
-  }, [renaming]);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const closeSearch = () => {
+    setQ("");
+    setSearchOpen(false);
+  };
 
   // "/" puts the caret in the deck's own search, the shortcut PRODUCT.md promises.
   useEffect(() => {
@@ -180,31 +273,18 @@ export function DeckDetailView({
       if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
       if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
       e.preventDefault();
-      searchRef.current?.focus();
+      // The desktop field is not drawn in a narrow container, so open the top bar's instead.
+      if (searchRef.current?.offsetParent) searchRef.current.focus();
+      else setSearchOpen(true);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const startRename = () => {
-    if (!deck) return;
-    setDraft(deck.name);
-    setRenaming(true);
-  };
-  const commitRename = async () => {
-    const name = draft.trim();
-    setRenaming(false);
-    if (deck && name && name !== deck.name) await onRename?.(name);
-  };
-
   const counts = useMemo(() => {
     const c = { 0: 0, 1: 0, 2: 0 };
     for (const r of cards ?? []) c[bucket(r.state?.state)]++;
     return c;
-  }, [cards]);
-  const recall = useMemo(() => {
-    if (!cards?.length) return undefined;
-    return cards.reduce((n, r) => n + recallOf(r.state), 0) / cards.length;
   }, [cards]);
 
   const shown = useMemo(() => {
@@ -257,10 +337,6 @@ export function DeckDetailView({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, shown, openIndex, setOpen]);
 
-  const total = cards?.length ?? deck?.total ?? 0;
-  const backCls =
-    "inline-flex min-h-10 items-center gap-0.5 text-sm text-muted hoverable:hover:text-text @3xl:hidden";
-
   const word = open && deck && (
     <WordView
       key={open.card.id}
@@ -294,10 +370,50 @@ export function DeckDetailView({
     />
   );
 
-  const filterLabel = (label: string, n: number) => (
-    <span className="inline-flex items-baseline gap-1.5">
+  const addButton = (
+    <IconButton label={t`Add card`} onClick={onAdd}>
+      <Plus />
+    </IconButton>
+  );
+
+  const deckMenu = (
+    <Menu>
+      <MenuTrigger>
+        {(p) => (
+          <IconButton label={t`Deck options`} {...p}>
+            <MoreHorizontal />
+          </IconButton>
+        )}
+      </MenuTrigger>
+      <MenuList align="end">
+        <MenuItem icon={<Settings2 />} onSelect={onSettings} disabled={!onSettings}>
+          <Trans>Deck settings</Trans>
+        </MenuItem>
+        <MenuItem
+          icon={<Download />}
+          onSelect={() => deck && cards && exportCsv(deck.name, cards)}
+          disabled={!deck || !cards?.length}
+        >
+          <Trans>Export as CSV</Trans>
+        </MenuItem>
+        <MenuSeparator />
+        <MenuItem
+          icon={<Archive />}
+          tone="danger"
+          onSelect={onArchiveDeck}
+          disabled={!onArchiveDeck}
+        >
+          <Trans>Archive deck</Trans>
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+
+  // The plate above carries the counts, so the filter is names and dots.
+  const filterLabel = (label: string, dot?: string) => (
+    <span className="inline-flex items-center gap-1.5">
+      {dot && <i className={clsx("size-1.5 rounded-full", dot)} aria-hidden="true" />}
       {label}
-      <span className="text-2xs text-muted tabular-nums">{n}</span>
     </span>
   );
 
@@ -339,138 +455,135 @@ export function DeckDetailView({
       ) : null}
 
       <Page className={clsx(open && "hidden @3xl:flex", open && "@3xl:me-0 @3xl:max-w-none")}>
-        <PageHeader
-          eyebrow={
-            st ? (
-              <a href="/library" onClick={(e) => e.preventDefault()} className={backCls}>
-                <ChevronLeft className="size-4" aria-hidden="true" />
-                <Trans>Library</Trans>
-              </a>
-            ) : (
-              <Link to="/library" className={backCls}>
-                <ChevronLeft className="size-4" aria-hidden="true" />
-                <Trans>Library</Trans>
-              </Link>
-            )
-          }
-          title={
-            deck && renaming ? (
-              <Input
-                ref={renameRef}
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                onBlur={commitRename}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") commitRename();
-                  if (e.key === "Escape") setRenaming(false);
-                }}
-                aria-label={t`Deck name`}
-                className="h-10 w-72 max-w-full text-2xl font-medium"
+        {/* Search opens in place of the bar on the phone; desktop keeps it beside the filter. */}
+        {searchOpen ? (
+          <header className="-mt-2 mb-2 flex h-14 items-center gap-2 @3xl/shell:hidden">
+            <div className="relative min-w-0 flex-1">
+              <Search
+                className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+                aria-hidden="true"
               />
-            ) : deck ? (
-              deck.name
-            ) : (
-              <Skeleton className="h-8 w-40" />
-            )
-          }
+              <Input
+                autoFocus
+                enterKeyHint="search"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") closeSearch();
+                }}
+                placeholder={t`Search this deck`}
+                aria-label={t`Search this deck`}
+                autoComplete="off"
+                className="w-full ps-9"
+              />
+            </div>
+            <Button variant="ghost" onClick={closeSearch}>
+              <Trans>Cancel</Trans>
+            </Button>
+          </header>
+        ) : (
+          <TopBar
+            back={
+              <BackButton label={t`Library`}>
+                {(className, content) =>
+                  st ? (
+                    <a href="/library" onClick={(e) => e.preventDefault()} className={className}>
+                      {content}
+                    </a>
+                  ) : (
+                    <Link to="/library" className={className}>
+                      {content}
+                    </Link>
+                  )
+                }
+              </BackButton>
+            }
+            actions={
+              <>
+                {cards && cards.length > 0 && (
+                  <IconButton label={t`Search this deck`} onClick={() => setSearchOpen(true)}>
+                    <Search />
+                  </IconButton>
+                )}
+                {addButton}
+                {deckMenu}
+              </>
+            }
+          />
+        )}
+        <PageHeader
+          title={deck ? deck.name : <Skeleton className="h-8 w-40" />}
           sub={
             deck
               ? [
                   deck.defaultLanguage ? languageName(deck.defaultLanguage) : null,
-                  t`${plural(total, { one: "# card", other: "# cards" })}`,
                   deck.directions !== "recognition" ? directionLabel(deck.directions) : null,
                 ]
                   .filter(Boolean)
-                  .join(" · ")
+                  .join(" · ") || undefined
               : undefined
           }
           actions={
-            <Menu>
-              <MenuTrigger>
-                {(p) => (
-                  <IconButton label={t`Deck options`} {...p}>
-                    <MoreHorizontal />
-                  </IconButton>
-                )}
-              </MenuTrigger>
-              <MenuList>
-                <MenuItem icon={<Settings2 />} onSelect={onSettings} disabled={!onSettings}>
-                  <Trans>Deck settings</Trans>
-                </MenuItem>
-                <MenuItem icon={<Pencil />} onSelect={startRename} disabled={!deck || !onRename}>
-                  <Trans>Rename</Trans>
-                </MenuItem>
-                <MenuItem
-                  icon={<Download />}
-                  onSelect={() => deck && cards && exportCsv(deck.name, cards)}
-                  disabled={!deck || !cards?.length}
-                >
-                  <Trans>Export as CSV</Trans>
-                </MenuItem>
-                <MenuSeparator />
-                <MenuItem
-                  icon={<Archive />}
-                  tone="danger"
-                  onSelect={onArchiveDeck}
-                  disabled={!onArchiveDeck}
-                >
-                  <Trans>Archive deck</Trans>
-                </MenuItem>
-              </MenuList>
-            </Menu>
+            <span className="hidden items-center gap-1.5 @3xl/shell:flex">
+              {addButton}
+              {deckMenu}
+            </span>
           }
-        >
-          {cards && cards.length > 0 ? (
+        />
+
+        {/* While the phone searches, the list is the answer, so the plate and stripe step aside. */}
+        <div className={clsx(searchOpen && "hidden @3xl/shell:block")}>
+          {deck === undefined || cards === undefined ? (
+            <Skeleton className="h-[260px] rounded-2xl" />
+          ) : cards.length > 0 ? (
+            <DuePlate deck={deck} cards={cards} counts={counts} onReview={onReview} onAdd={onAdd} />
+          ) : null}
+
+          {cards && cards.length > 0 && (
             <StateStripe
               known={counts[2]}
               learning={counts[1]}
               total={cards.length}
-              recall={recall}
-              className="mt-4 max-w-[560px]"
+              legend={false}
+              className="mt-8 @3xl:mt-10"
             />
-          ) : cards === undefined ? (
-            <Skeleton className="mt-4 h-9 w-72" />
-          ) : null}
-          <div className="mt-5 flex gap-2">
-            {deck && deck.due > 0 && (
-              <Button variant="primary" onClick={onReview} aria-disabled={!onReview}>
-                <Trans>Review {deck.due} due</Trans>
-              </Button>
-            )}
-            <Button onClick={onAdd} kbd="N">
-              <Plus aria-hidden="true" />
-              <Trans>Add card</Trans>
-            </Button>
-          </div>
-        </PageHeader>
+          )}
+        </div>
 
         {cards && cards.length > 0 && (
-          <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-2">
+          <div
+            className={clsx(
+              "mb-2 flex flex-wrap items-center gap-x-3 gap-y-2",
+              searchOpen ? "mt-2 @3xl/shell:mt-4" : "mt-4",
+            )}
+          >
             <Segmented
               size="sm"
               label={t`Show`}
               value={filter}
               onChange={setFilter}
               options={[
-                { value: "all", label: filterLabel(t`All`, cards.length) },
-                { value: "0", label: filterLabel(t`New`, counts[0]) },
-                { value: "1", label: filterLabel(t`Learning`, counts[1]) },
-                { value: "2", label: filterLabel(t`Known`, counts[2]) },
+                { value: "all", label: filterLabel(t`All`) },
+                { value: "0", label: filterLabel(t`New`, stateDot.new) },
+                { value: "1", label: filterLabel(t`Learning`, stateDot.learning) },
+                { value: "2", label: filterLabel(t`Known`, stateDot.known) },
               ]}
             />
-            <div className="relative min-w-0 basis-full @md:ms-auto @md:basis-44">
+            {/* Desktop keeps search beside the filter, where "/" lands; the phone has it up top. */}
+            <div className="relative ms-auto hidden w-52 min-w-0 @3xl/shell:block">
               <Search
                 className="pointer-events-none absolute start-0 top-1/2 size-4 -translate-y-1/2 text-muted"
                 aria-hidden="true"
               />
               <input
                 ref={searchRef}
+                enterKeyHint="search"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder={t`Search this deck`}
                 aria-label={t`Search this deck`}
                 autoComplete="off"
-                className="h-9 w-full bg-transparent ps-6 text-[16px] text-text outline-none placeholder:text-muted md:text-sm"
+                className="h-9 w-full bg-transparent ps-6 text-sm text-text outline-none placeholder:text-muted"
               />
             </div>
           </div>

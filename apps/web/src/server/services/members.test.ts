@@ -1,4 +1,4 @@
-import { and, eq } from "@lymi/core/db";
+import { and, eq, lte } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import { addCards, archiveCard, getCard, restoreCard, searchCards, updateCard } from "./cards";
@@ -42,6 +42,22 @@ async function sharedDeck(name: string, terms: string[]) {
 
 const dueFor = async (ctx: ServiceContext, deckId: string) =>
   (await listDecks(ctx)).find((d) => d.id === deckId)?.due;
+
+/** Due direction states, one per card per direction, so a missing state shows as a gap. */
+const dueStatesFor = async (ctx: ServiceContext, deckId: string) =>
+  (
+    await db
+      .select({ id: schema.cardStates.id })
+      .from(schema.cardStates)
+      .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
+      .where(
+        and(
+          eq(schema.cards.deckId, deckId),
+          eq(schema.cardStates.userId, ctx.userId),
+          lte(schema.cardStates.due, new Date()),
+        ),
+      )
+  ).length;
 
 const forbidden = expect.objectContaining({ code: "forbidden" });
 
@@ -140,8 +156,10 @@ describe("what the owner changes reaches every member", () => {
 
     await updateDeck(kateryna, deck.id, { directions: "both" });
 
-    expect(await dueFor(anna, deck.id)).toBe(4);
-    expect(await dueFor(kateryna, deck.id)).toBe(4);
+    expect(await dueStatesFor(anna, deck.id)).toBe(4);
+    expect(await dueStatesFor(kateryna, deck.id)).toBe(4);
+    // A card asked both ways is still one card due: a session asks one direction per card.
+    expect(await dueFor(anna, deck.id)).toBe(2);
   });
 
   it("a whole lesson lands complete for every member, across batches", async () => {
@@ -157,9 +175,9 @@ describe("what the owner changes reaches every member", () => {
     );
 
     expect(outcomes.every((o) => o.status === "added")).toBe(true);
-    expect(await dueFor(kateryna, deck.id)).toBe(60);
-    expect(await dueFor(anna, deck.id)).toBe(60);
-    expect(await dueFor(marko, deck.id)).toBe(60);
+    expect(await dueStatesFor(kateryna, deck.id)).toBe(60);
+    expect(await dueStatesFor(anna, deck.id)).toBe(60);
+    expect(await dueStatesFor(marko, deck.id)).toBe(60);
   });
 
   it("a card's own direction override reaches the member", async () => {
@@ -170,7 +188,7 @@ describe("what the owner changes reaches every member", () => {
 
     await updateCard(kateryna, first.id, { directions: "both" });
 
-    expect(await dueFor(anna, deck.id)).toBe(2);
+    expect(await dueStatesFor(anna, deck.id)).toBe(2);
   });
 
   it("repeating a card direction update repairs a missing member state", async () => {
@@ -191,7 +209,7 @@ describe("what the owner changes reaches every member", () => {
 
     await updateCard(kateryna, first.id, { directions: "both" });
 
-    expect(await dueFor(anna, deck.id)).toBe(2);
+    expect(await dueStatesFor(anna, deck.id)).toBe(2);
   });
 
   it("restoring a card reaches a member who joined while it was archived", async () => {

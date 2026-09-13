@@ -97,10 +97,6 @@ function DeckPage() {
       setSaveError({ id, patch, term });
     },
   });
-  const rename = useMutation({
-    mutationFn: (name: string) => api.updateDeck(deckId, { name }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["decks"] }),
-  });
   const archiveDeck = useMutation({
     mutationFn: () => api.archiveDeck(deckId),
     onSuccess: () => {
@@ -120,7 +116,6 @@ function DeckPage() {
         onAdd={() => add.openCard(deckId)}
         onArchive={(id) => archive.mutate(id)}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
-        onRename={(name) => rename.mutateAsync(name)}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
         onArchiveDeck={() => archiveDeck.mutate()}
         openCardId={openCardId ?? null}

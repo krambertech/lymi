@@ -98,7 +98,6 @@ test.describe("deck and card creation", () => {
     await dialog.getByRole("button", { name: "Create deck", exact: true }).click();
     await expect(page).toHaveURL(/\/library\/[^/]+$/);
     await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
-    await expect(page.getByText("0 cards", { exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Empty deck", exact: true })).toBeVisible();
 
     await page.goto("/library");

@@ -9,7 +9,6 @@ import {
   ArrowDown,
   ArrowUp,
   Check,
-  ChevronLeft,
   ChevronRight,
   FolderInput,
   MoreHorizontal,
@@ -24,6 +23,7 @@ import { Field, Input, Textarea } from "../components/Field";
 import { Menu, MenuItem, MenuList, MenuSeparator, MenuTrigger } from "../components/Menu";
 import { Sheet } from "../components/Sheet";
 import type { CardEvent } from "../lib/api";
+import { BackButton, TopBar } from "./Shell";
 
 /** A line in the word's history that is not a review: when it arrived, what the AI added. */
 export interface WordEvent {
@@ -349,14 +349,46 @@ export function WordView({
 
   const ai = (s: Card["meaningSource"]) => (s === "ai" ? "border-dashed border-edge-2" : "");
 
-  const walk = (
+  // The phone's page takes the shared top bar's full-size buttons; the desktop panel stays compact.
+  const size = variant === "page" ? "md" : "sm";
+  const controls = (
     <>
-      <IconButton label={t`Previous card`} size="sm" onClick={onPrev} aria-disabled={!hasPrev}>
+      <IconButton label={t`Previous card`} size={size} onClick={onPrev} aria-disabled={!hasPrev}>
         <ArrowUp />
       </IconButton>
-      <IconButton label={t`Next card`} size="sm" onClick={onNext} aria-disabled={!hasNext}>
+      <IconButton label={t`Next card`} size={size} onClick={onNext} aria-disabled={!hasNext}>
         <ArrowDown />
       </IconButton>
+      <Menu>
+        <MenuTrigger>
+          {(p) => (
+            <IconButton label={t`Card options`} size={size} {...p}>
+              <MoreHorizontal />
+            </IconButton>
+          )}
+        </MenuTrigger>
+        <MenuList align="end">
+          <MenuItem icon={<Pencil />} onSelect={() => startEditing()} disabled={readOnly}>
+            <Trans>Edit</Trans>
+          </MenuItem>
+          <MenuItem
+            icon={<FolderInput />}
+            onSelect={() => setMoving(true)}
+            disabled={!onMove || elsewhere.length === 0}
+          >
+            <Trans>Move to…</Trans>
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem icon={<Archive />} tone="danger" onSelect={onArchive} disabled={!onArchive}>
+            <Trans>Archive</Trans>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+      {variant === "panel" && (
+        <IconButton label={t`Close`} size="sm" onClick={onClose}>
+          <X />
+        </IconButton>
+      )}
     </>
   );
 
@@ -364,56 +396,24 @@ export function WordView({
     <article
       className={clsx(
         "@container flex min-w-0 flex-col gap-6",
-        variant === "page" ? "px-5 pb-safe-nav pt-3 @3xl:px-8 @3xl:pt-6" : "",
+        variant === "page" ? "px-5 pb-safe-nav pt-5 @3xl:px-8 @3xl:pt-8" : "",
       )}
     >
-      <div className="flex min-h-10 items-center justify-between gap-2">
-        {variant === "page" ? (
-          <button
-            type="button"
-            onClick={onBack}
-            className="-ms-1 inline-flex min-h-10 items-center gap-0.5 pe-2 text-sm text-muted hoverable:hover:text-text"
-          >
-            <ChevronLeft className="size-4" aria-hidden="true" />
-            {deckName}
-          </button>
-        ) : (
+      {variant === "page" ? (
+        // The article's gap would push the term further from the bar than a page title sits.
+        // The page variant is only drawn where the column is narrow, so the bar always shows with it.
+        <TopBar
+          nested
+          className="-mb-4"
+          back={<BackButton label={deckName} onClick={onBack} />}
+          actions={controls}
+        />
+      ) : (
+        <div className="flex min-h-10 items-center justify-between gap-2">
           <span className="truncate text-sm text-muted">{deckName}</span>
-        )}
-        <div className="flex items-center gap-1">
-          {walk}
-          <Menu>
-            <MenuTrigger>
-              {(p) => (
-                <IconButton label={t`Card options`} size="sm" {...p}>
-                  <MoreHorizontal />
-                </IconButton>
-              )}
-            </MenuTrigger>
-            <MenuList>
-              <MenuItem icon={<Pencil />} onSelect={() => startEditing()} disabled={readOnly}>
-                <Trans>Edit</Trans>
-              </MenuItem>
-              <MenuItem
-                icon={<FolderInput />}
-                onSelect={() => setMoving(true)}
-                disabled={!onMove || elsewhere.length === 0}
-              >
-                <Trans>Move to…</Trans>
-              </MenuItem>
-              <MenuSeparator />
-              <MenuItem icon={<Archive />} tone="danger" onSelect={onArchive} disabled={!onArchive}>
-                <Trans>Archive</Trans>
-              </MenuItem>
-            </MenuList>
-          </Menu>
-          {variant === "panel" && (
-            <IconButton label={t`Close`} size="sm" onClick={onClose}>
-              <X />
-            </IconButton>
-          )}
+          <div className="flex items-center gap-1">{controls}</div>
         </div>
-      </div>
+      )}
 
       <header className="grid gap-1.5">
         <h1 className="flex min-w-0 items-center gap-3 text-3xl font-medium leading-[1.05] tracking-[-0.03em]">

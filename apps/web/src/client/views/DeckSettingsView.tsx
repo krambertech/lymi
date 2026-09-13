@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
-import { Archive, Check, ChevronLeft } from "lucide-react";
+import { Archive, Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { type DirectionExample, DirectionField, LanguageField } from "../components/DeckFields";
@@ -9,7 +9,7 @@ import { Field, Input, Textarea } from "../components/Field";
 import { SettingsGroup } from "../components/SettingsGroup";
 import { Skeleton } from "../components/Skeleton";
 import type { DeckSummary } from "../lib/api";
-import { Page, PageHeader, type StaticNav } from "./Shell";
+import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./Shell";
 
 /** What the screen can change. The same shape the deck endpoint takes. */
 export interface DeckSettingsPatch {
@@ -96,27 +96,25 @@ export function DeckSettingsView({
     [],
   );
 
-  const backCls =
-    "inline-flex min-h-10 items-center gap-0.5 text-sm text-muted hoverable:hover:text-text";
-  const back = (
-    <>
-      <ChevronLeft className="size-4" aria-hidden="true" />
-      {deck?.name ?? t`Deck`}
-    </>
-  );
-
   return (
     <Page width="md">
-      <PageHeader
-        eyebrow={
-          st || !deck ? (
-            <span className={backCls}>{back}</span>
-          ) : (
-            <Link to="/library/$deckId" params={{ deckId: deck.id }} className={backCls}>
-              {back}
-            </Link>
-          )
+      <TopBar
+        nested
+        back={
+          <BackButton label={deck?.name ?? t`Deck`}>
+            {(className, content) =>
+              st || !deck ? (
+                <span className={className}>{content}</span>
+              ) : (
+                <Link to="/library/$deckId" params={{ deckId: deck.id }} className={className}>
+                  {content}
+                </Link>
+              )
+            }
+          </BackButton>
         }
+      />
+      <PageHeader
         title={t`Deck settings`}
         actions={
           <p className="min-h-5 text-sm text-muted" role="status">

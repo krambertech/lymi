@@ -14,7 +14,7 @@ import { NewCardsRow } from "../components/NewCardsRow";
 import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
 import type { DeckSummary } from "../lib/api";
-import { Page, type StaticNav } from "./Shell";
+import { Page, type StaticNav, TopBar } from "./Shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
@@ -98,21 +98,23 @@ export function TodayView({
   return (
     <Page width="md">
       {/* The rail carries capture and the learner on desktop, so this row is the phone's. */}
-      <header className="flex min-h-10 items-center gap-1.5 @3xl/shell:hidden">
-        <span className="ms-auto flex items-center gap-1.5">
-          <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-          <LearnerMenu
-            variant="phone"
-            name={name}
-            email={email}
-            unseen={unseen}
-            docsUrl={docsUrl ?? "/"}
-            onSignOut={onSignOut}
-            signingOut={signingOut}
-            static={st}
-          />
-        </span>
-      </header>
+      <TopBar
+        actions={
+          <>
+            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+            <LearnerMenu
+              variant="phone"
+              name={name}
+              email={email}
+              unseen={unseen}
+              docsUrl={docsUrl ?? "/"}
+              onSignOut={onSignOut}
+              signingOut={signingOut}
+              static={st}
+            />
+          </>
+        }
+      />
 
       <section
         className={clsx(

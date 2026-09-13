@@ -6,6 +6,7 @@ import {
   Activity,
   BookMarked,
   ChartNoAxesColumn,
+  ChevronLeft,
   type LucideIcon,
   Search,
   Sun,
@@ -180,6 +181,68 @@ export function AppShell({
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * The row above every screen's title: back on the start side, the screen's own controls on the
+ * end. One height and one shape everywhere, so back is always under the same thumb and the title
+ * never moves. Actions are square ghost icon buttons; the round amber capture, where a screen has
+ * it, goes first so it never sits between two squares. On desktop the rail does this job, so
+ * the bar only stays for a screen nested under another one.
+ */
+export function TopBar({
+  back,
+  actions,
+  nested = false,
+  className,
+}: {
+  back?: ReactNode | undefined;
+  actions?: ReactNode | undefined;
+  /** Keep the bar at every width: a nested screen (deck settings) needs its way back on desktop too. */
+  nested?: boolean | undefined;
+  className?: string | undefined;
+}) {
+  return (
+    <header
+      className={clsx(
+        "-mt-2 mb-2 flex h-14 items-center gap-2",
+        !nested && "@3xl/shell:hidden",
+        className,
+      )}
+    >
+      {back}
+      {actions && <div className="ms-auto flex shrink-0 items-center gap-1">{actions}</div>}
+    </header>
+  );
+}
+
+const backClass =
+  "-ms-2.5 inline-flex h-11 min-w-11 max-w-[65%] items-center gap-0.5 rounded-sm pe-2.5 ps-1 text-md text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-2 hoverable:hover:text-text [&_svg]:size-[22px] [&_svg]:shrink-0";
+
+/** Back to the screen above, named, so a card says which deck it returns to. */
+export function BackButton({
+  label,
+  onClick,
+  children,
+}: {
+  label: string;
+  /** A button when there is no route to link, e.g. closing a card back to its deck. */
+  onClick?: (() => void) | undefined;
+  /** A router link, for when back is a place. Receives the class and the content. */
+  children?: ((className: string, content: ReactNode) => ReactNode) | undefined;
+}) {
+  const content = (
+    <>
+      <ChevronLeft aria-hidden="true" />
+      <span className="truncate">{label}</span>
+    </>
+  );
+  if (children) return <>{children(backClass, content)}</>;
+  return (
+    <button type="button" onClick={onClick} className={backClass}>
+      {content}
+    </button>
   );
 }
 

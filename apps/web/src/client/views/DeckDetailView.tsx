@@ -348,6 +348,7 @@ export function DeckDetailView({
       card={open.card}
       state={open.state}
       deckName={deck.name}
+      modes={open.card.reviewModes ?? deck.reviewModes}
       states={states}
       reviews={reviews}
       events={events}
@@ -400,7 +401,11 @@ export function DeckDetailView({
           disabled={!deck || !cards?.length}
         >
           <Download />
-          <Trans>Export as CSV</Trans>
+          {cards?.some((row) => row.card.image) ? (
+            <Trans>Export as CSV without pictures</Trans>
+          ) : (
+            <Trans>Export as CSV</Trans>
+          )}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
@@ -429,6 +434,7 @@ export function DeckDetailView({
             card={open.card}
             state={open.state}
             deckName={deck.name}
+            modes={open.card.reviewModes ?? deck.reviewModes}
             states={states}
             reviews={reviews}
             events={events}

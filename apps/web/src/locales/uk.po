@@ -788,6 +788,10 @@ msgstr "Не вдалося перевірити цей пристрій. Оно
 msgid "Couldn’t load Insights"
 msgstr "Не вдалося завантажити Огляд"
 
+#: src/client/components/CardPicture.tsx
+msgid "Couldn’t load the picture"
+msgstr "Не вдалося завантажити зображення"
+
 #: src/client/views/ReviewView.tsx
 msgid "Couldn’t load your cards"
 msgstr "Не вдалося завантажити картки"
@@ -990,6 +994,10 @@ msgstr "Приклад з уроку"
 #: src/client/views/DeckDetailView.tsx
 msgid "Export as CSV"
 msgstr "Експортувати як CSV"
+
+#: src/client/views/DeckDetailView.tsx
+msgid "Export as CSV without pictures"
+msgstr "Експортувати в CSV без зображень"
 
 #: src/client/views/WordView.tsx
 msgid "first time"
@@ -1395,6 +1403,18 @@ msgstr "Немає підключених застосунків"
 msgid "No decks yet"
 msgstr "Колода ще не створена"
 
+#: src/client/views/WordView.tsx
+msgid "No description yet."
+msgstr "Опису ще немає."
+
+#: src/client/views/WordView.tsx
+msgid "No description yet. Picture review waits for one, so this card is asked in its other modes."
+msgstr "Опису ще немає. Повторення за зображенням чекає на нього, тож ця картка з’являється в інших режимах."
+
+#: src/client/views/WordView.tsx
+msgid "No description yet. Picture review waits for one, so this card is asked without its picture."
+msgstr "Опису ще немає. Повторення за зображенням чекає на нього, тож ця картка з’являється без зображення."
+
 #: src/client/components/ApiKeysSection.tsx
 msgid "No keys yet"
 msgstr "Ключів ще немає"
@@ -1560,6 +1580,10 @@ msgstr "Положення фото"
 msgid "Photo removed"
 msgstr "Фото прибрано"
 
+#: src/client/views/WordView.tsx
+msgid "Picture"
+msgstr "Зображення"
+
 #: src/client/lib/review-modes.ts
 msgid "Picture → meaning"
 msgstr "Зображення → значення"
@@ -1568,9 +1592,29 @@ msgstr "Зображення → значення"
 msgid "Picture → term"
 msgstr "Зображення → термін"
 
+#: src/client/views/WordView.tsx
+msgid "Picture archived"
+msgstr "Зображення архівовано"
+
 #: src/client/views/ReviewView.tsx
 msgid "Picture card"
 msgstr "Картка із зображенням"
+
+#: src/client/views/WordView.tsx
+msgid "Picture described"
+msgstr "Опис зображення змінено"
+
+#: src/client/views/WordView.tsx
+msgid "Picture restored"
+msgstr "Зображення відновлено"
+
+#: src/client/views/WordView.tsx
+msgid "Picture review is on, but this card has no picture. It is asked in its other modes."
+msgstr "Повторення за зображенням увімкнено, але в цієї картки немає зображення. Вона з’являється в інших режимах."
+
+#: src/client/views/WordView.tsx
+msgid "Picture set"
+msgstr "Зображення додано"
 
 #: src/client/views/ReviewView.tsx
 msgid "Play pronunciation"
@@ -2075,6 +2119,14 @@ msgstr "Тема"
 #: src/client/components/NotificationsSection.tsx
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
+
+#: src/client/views/WordView.tsx
+msgid "This card has no picture yet, so it is asked without one."
+msgstr "У цієї картки ще немає зображення, тож вона з’являється без нього."
+
+#: src/client/views/ReviewView.tsx
+msgid "This card’s picture was removed."
+msgstr "Зображення цієї картки прибрано."
 
 #: src/client/views/JoinView.tsx
 #: src/server/join-page.ts

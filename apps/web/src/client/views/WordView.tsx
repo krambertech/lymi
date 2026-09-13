@@ -1,7 +1,13 @@
 import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type CardPatch, deserializeState, type FsrsCard, retrievability } from "@lymi/core";
+import {
+  type CardPatch,
+  deserializeState,
+  type FsrsCard,
+  type ReviewMode,
+  retrievability,
+} from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -17,6 +23,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
+import { CardPicture } from "../components/CardPicture";
 import { languageName } from "../components/DeckFields";
 import { Field, Input, Textarea } from "../components/Field";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
@@ -64,6 +71,14 @@ const fieldName: Record<string, MessageDescriptor> = {
   language: msg`the language`,
   tags: msg`the tags`,
   directions: msg`how it is asked`,
+  reviewModes: msg`how it is asked`,
+};
+
+const pictureEvents: Record<string, MessageDescriptor> = {
+  set_image: msg`Picture set`,
+  update_image: msg`Picture described`,
+  archive_image: msg`Picture archived`,
+  restore_image: msg`Picture restored`,
 };
 
 /** "the meaning, the example and the notes", joined the way the interface language joins. */
@@ -110,6 +125,8 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
       detail: list ? i18n._(msg`${list}, by ${who}`) : i18n._(msg`by ${who}`),
     };
   }
+  const picture = pictureEvents[e.action];
+  if (picture) return { at, label: i18n._(picture), detail: i18n._(msg`by ${who}`) };
   if (e.action === "archive")
     return { at, label: i18n._(msg`Archived`), detail: i18n._(msg`by ${who}`) };
   if (e.action === "restore")
@@ -123,6 +140,8 @@ export interface WordProps {
   state: CardState | null;
   states?: CardState[] | undefined;
   deckName: string;
+  /** The modes the card is asked in: its own, or its deck's. */
+  modes?: ReviewMode[] | undefined;
   /** Every review, newest first. Absent until the route fetches it. */
   reviews?: Review[] | undefined;
   events?: WordEvent[] | undefined;
@@ -244,6 +263,58 @@ function ReadField({
 }
 
 /**
+ * The card's picture and its description. Pictures and picture modes arrive through the API and
+ * connected apps, so the page shows them and says what picture review is waiting for.
+ */
+function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | undefined }) {
+  const pictureReview = modes?.some((mode) => mode.cue === "image") ?? false;
+  const pictureOnly = pictureReview && (modes?.every((mode) => mode.cue === "image") ?? false);
+  const image = card.image;
+  if (!image && !pictureReview) return null;
+  return (
+    <section className="grid gap-2">
+      <span className="text-sm font-medium text-text-2">
+        <Trans>Picture</Trans>
+      </span>
+      {image ? (
+        <>
+          <CardPicture image={image} maxHeight="min(40dvh, 320px)" />
+          {image.description ? (
+            <p className="text-md leading-relaxed text-text">{image.description}</p>
+          ) : (
+            <p className="text-sm text-muted">
+              {pictureOnly ? (
+                <Trans>
+                  No description yet. Picture review waits for one, so this card is asked without
+                  its picture.
+                </Trans>
+              ) : pictureReview ? (
+                <Trans>
+                  No description yet. Picture review waits for one, so this card is asked in its
+                  other modes.
+                </Trans>
+              ) : (
+                <Trans>No description yet.</Trans>
+              )}
+            </p>
+          )}
+        </>
+      ) : (
+        <p className="text-sm text-muted">
+          {pictureOnly ? (
+            <Trans>This card has no picture yet, so it is asked without one.</Trans>
+          ) : (
+            <Trans>
+              Picture review is on, but this card has no picture. It is asked in its other modes.
+            </Trans>
+          )}
+        </p>
+      )}
+    </section>
+  );
+}
+
+/**
  * Everything Lymi knows about one word, and its whole life. The fields first, each with where
  * its text came from, and editable in place. Then the schedule as it stands, in words. Then
  * every review the word has had, with the grade and what it did. Nothing about a word is
@@ -254,6 +325,7 @@ export function WordView({
   state,
   states,
   deckName,
+  modes,
   reviews,
   events,
   hasPrev,
@@ -458,6 +530,8 @@ export function WordView({
             .join(" · ")}
         </p>
       </header>
+
+      <PictureSection card={card} modes={modes} />
 
       {editing ? (
         <div className="grid gap-4">

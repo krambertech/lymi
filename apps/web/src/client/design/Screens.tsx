@@ -99,12 +99,14 @@ function ConsentDemo({ app }: { app: typeof CLAUDE }) {
 function ReviewPhone({
   revealed: init,
   produce,
+  picture,
 }: {
   revealed: boolean;
   produce?: boolean | undefined;
+  picture?: boolean | undefined;
 }) {
   const [revealed, setRevealed] = useState(init);
-  const item = produce ? m.queueItemProduce : m.queueItem;
+  const item = picture ? m.queueItemPicture : produce ? m.queueItemProduce : m.queueItem;
   return (
     <div className="flex min-h-0 flex-1 flex-col px-4 pb-3">
       <ReviewHeader done={4} total={11} />
@@ -117,7 +119,7 @@ function ReviewPhone({
         className="mt-4"
       />
       <GradeBar
-        id={!produce ? "review-grade-preview" : undefined}
+        id={!produce && !picture ? "review-grade-preview" : undefined}
         revealed={revealed}
         animateIn
         next={item.next}
@@ -248,6 +250,12 @@ export const SCREENS: Entry[] = [
           </PhoneShot>
           <PhoneShot caption="Production direction, revealed" initial="dark" path="/review" bare>
             <ReviewPhone revealed produce />
+          </PhoneShot>
+          <PhoneShot caption="Picture → meaning" initial="light" path="/review" bare>
+            <ReviewPhone revealed={false} picture />
+          </PhoneShot>
+          <PhoneShot caption="Picture → meaning, revealed" initial="dark" path="/review" bare>
+            <ReviewPhone revealed picture />
           </PhoneShot>
         </div>
       </div>

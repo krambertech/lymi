@@ -279,7 +279,7 @@ export function StreakPanel({
   return (
     <div className={clsx("grid gap-5", className)}>
       <header className="flex items-center gap-3.5">
-        <Flame className={clsx("mx-1.5 h-11 w-9", current === 0 && "flame-out")} flicker={done} />
+        <Flame className={clsx("h-11 w-9", current === 0 && "flame-out")} flicker={done} />
         <div className="grid min-w-0">
           <h2 id={titleId} className="flex items-baseline gap-2 text-text">
             <span className="text-3xl font-semibold leading-none tabular-nums">{current}</span>
@@ -289,7 +289,8 @@ export function StreakPanel({
           </h2>
           <p className="mt-1.5 text-sm text-text-2">{status}</p>
         </div>
-        {close && <div className="ms-auto self-start">{close}</div>}
+        {/* Pulled out by the button's own padding, so the glyph sits on the card's edge below. */}
+        {close && <div className="-me-2 -mt-1 ms-auto self-start">{close}</div>}
       </header>
 
       <div className="grid gap-2.5 rounded-lg bg-plate-2 p-3.5 ps-4">

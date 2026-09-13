@@ -40,6 +40,7 @@ const TERMS: Record<string, string[]> = {
   "/docs/mcp": ["model context protocol", "oauth", "consent", "assistant", "tools"],
   "/docs/mcp/claude": ["claude desktop", "claude code", "claude.ai", "connector", "mcp add"],
   "/docs/mcp/chatgpt": ["chatgpt", "codex", "connector", "developer mode", "openai"],
+  "/docs/mcp/gemini": ["gemini", "google", "settings.json", "mcp auth", "client id"],
 };
 
 function score(page: DocPage, q: string): number {
@@ -52,7 +53,7 @@ function score(page: DocPage, q: string): number {
   return -1;
 }
 
-/** Search over the pages. Nine of them, so a substring match is the whole algorithm. */
+/** Search over the pages. Ten of them, so a substring match is the whole algorithm. */
 export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [q, setQ] = useState("");
   const [i, setI] = useState(0);

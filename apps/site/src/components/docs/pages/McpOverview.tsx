@@ -205,6 +205,11 @@ export function McpOverview() {
             title: "ChatGPT and Codex",
             blurb: "Custom connectors, and the Codex CLI.",
           },
+          {
+            to: "/docs/mcp/gemini",
+            title: "Gemini CLI",
+            blurb: "The settings.json entry, and why it names a client ID.",
+          },
         ]}
       />
     </div>

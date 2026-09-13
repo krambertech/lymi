@@ -92,9 +92,9 @@ url = "${ORIGIN}/mcp"`}
       <NextLinks
         items={[
           {
-            to: "/docs/api",
-            title: "API reference",
-            blurb: "The REST routes, which work today.",
+            to: "/docs/mcp/gemini",
+            title: "Gemini CLI",
+            blurb: "The same server, from Google's command line.",
           },
         ]}
       />

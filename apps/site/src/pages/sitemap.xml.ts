@@ -9,6 +9,7 @@ const paths = [
   "/docs/mcp",
   "/docs/mcp/claude",
   "/docs/mcp/chatgpt",
+  "/docs/mcp/gemini",
   "/docs/authentication",
   "/docs/api",
   "/docs/recipes",

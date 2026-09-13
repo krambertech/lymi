@@ -12,7 +12,8 @@ export type DocPath =
   | "/docs/api"
   | "/docs/mcp"
   | "/docs/mcp/claude"
-  | "/docs/mcp/chatgpt";
+  | "/docs/mcp/chatgpt"
+  | "/docs/mcp/gemini";
 
 export interface DocPage {
   to: DocPath;
@@ -87,6 +88,13 @@ export const PAGES: DocPage[] = [
     nav: "ChatGPT and Codex",
     title: "ChatGPT and Codex",
     blurb: "Connect Lymi to ChatGPT connectors and to the Codex CLI.",
+    section: "MCP",
+  },
+  {
+    to: "/docs/mcp/gemini",
+    nav: "Gemini CLI",
+    title: "Gemini CLI",
+    blurb: "Connect Lymi to Gemini CLI, with the client ID Lymi publishes for it.",
     section: "MCP",
   },
 ];

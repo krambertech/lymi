@@ -19,12 +19,12 @@ export const labels: Group = {
           items={[
             {
               label: "New",
-              note: "Never reviewed. Amber, because it is waiting for you.",
+              note: "Never reviewed. Grey: a state is a fact, not something to press.",
               render: () => <StateChip state={0} />,
             },
             {
               label: "Learning",
-              note: "Seen, not settled yet.",
+              note: "Seen, not settled yet. Mustard, well off amber’s hue.",
               render: () => <StateChip state={1} />,
             },
             {
@@ -34,7 +34,7 @@ export const labels: Group = {
             },
             {
               label: "Known",
-              note: "Settled. Green, and still says so in words.",
+              note: "Settled. Green, and it still says so in words.",
               render: () => <StateChip state={2} />,
             },
             {

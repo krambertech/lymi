@@ -88,7 +88,7 @@ export const streak: Group = {
 export const charts: Group = {
   slug: "charts",
   title: "Charts",
-  lede: "Insights is the one screen where charts belong. Recall and a deck’s shape draw in ink at graded opacity; a reviewed day is lit glass wherever it appears. None of it is a scoreboard.",
+  lede: "Insights is the one screen where charts belong. Figures draw in ink at graded opacity, card states keep their own three colours, and a reviewed day is lit glass wherever it appears. None of it is a scoreboard.",
   entries: [
     {
       slug: "stat-plate",
@@ -187,21 +187,27 @@ export const charts: Group = {
       slug: "state-stripe",
       name: "State stripe",
       source: "components/StateStripe.tsx",
-      note: "How a deck’s cards split between known, learning and new. The deck’s shape, not its score, so nothing in it is green or amber.",
+      note: "How a deck’s cards split between new, learning and known, in their state colours, filling left to right as cards move along. The deck’s shape, not its score.",
       Demo: () => (
         <Variants
           items={[
             {
-              label: "With recall",
-              note: "Adds the one sentence FSRS can say about the deck.",
-              render: () => (
-                <StateStripe known={31} learning={14} total={64} recall={0.87} className="w-full" />
-              ),
+              label: "With the legend",
+              note: "The counts in words under the stripe.",
+              render: () => <StateStripe known={31} learning={14} total={64} className="w-full" />,
             },
             {
-              label: "A new deck",
-              note: "Everything is new, so the stripe is an empty track.",
-              render: () => <StateStripe known={0} learning={0} total={18} className="w-full" />,
+              label: "Without the legend",
+              note: "Where a filter right below already names the states.",
+              render: () => (
+                <StateStripe
+                  known={31}
+                  learning={14}
+                  total={64}
+                  legend={false}
+                  className="w-full"
+                />
+              ),
             },
           ]}
         />

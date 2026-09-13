@@ -1,6 +1,8 @@
 # Adopt shadcn and Base UI design-system foundations
 
-**Status:** Accepted for implementation on 13 September 2026. This plan implements the [accepted proposal](../proposals/shadcn-base-ui-design-system.md) within the client design rules in [`DESIGN.md`](../../DESIGN.md); it does not authorize deployment, publication of a registry, or unrelated redesign. Ready issue drafts live in [the issue set](2026-09-13-shadcn-base-ui-design-system-issues.md).
+**Status:** Accepted for implementation on 13 September 2026. This plan implements the [accepted proposal](../proposals/shadcn-base-ui-design-system.md) within the client design rules in [`DESIGN.md`](../../DESIGN.md); it does not authorize deployment, publication of a registry, or unrelated redesign.
+
+Delivery is tracked in GitHub issues [#119](https://github.com/krambertech/lymi/issues/119), [#120](https://github.com/krambertech/lymi/issues/120), [#121](https://github.com/krambertech/lymi/issues/121), [#122](https://github.com/krambertech/lymi/issues/122), [#123](https://github.com/krambertech/lymi/issues/123), [#124](https://github.com/krambertech/lymi/issues/124), [#125](https://github.com/krambertech/lymi/issues/125), [#126](https://github.com/krambertech/lymi/issues/126), [#127](https://github.com/krambertech/lymi/issues/127), [#128](https://github.com/krambertech/lymi/issues/128), and [#129](https://github.com/krambertech/lymi/issues/129).
 
 ## Done when
 

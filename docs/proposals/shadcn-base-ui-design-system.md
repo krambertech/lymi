@@ -6,7 +6,7 @@ decision: use shadcn compound component APIs backed by Base UI for interaction-h
 
 # shadcn and Base UI design-system foundations
 
-This proposal records the accepted direction for replacing Lymi's hand-built interaction foundations with locally owned shadcn components backed by Base UI. Delivery is staged in [the implementation plan](../plans/2026-09-13-shadcn-base-ui-design-system.md), with ready issue drafts in [the issue set](../plans/2026-09-13-shadcn-base-ui-design-system-issues.md).
+This proposal records the accepted direction for replacing Lymi's hand-built interaction foundations with locally owned shadcn components backed by Base UI. Delivery is staged in [the implementation plan](../plans/2026-09-13-shadcn-base-ui-design-system.md).
 
 ## Opportunity
 

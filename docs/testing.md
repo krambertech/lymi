@@ -29,7 +29,7 @@ pnpm exec playwright install chromium webkit
 
 ## CI policy
 
-`pnpm verify` is the canonical local base gate. CI runs the same commands in the same fail-fast order but gives formatting and lint, migration safety, build, TypeScript, and unit tests their own named steps. A failure therefore identifies the broken gate without requiring an agent or developer to search a combined log.
+`pnpm verify` is the canonical local base gate. CI keeps those commands in one quality job and the same fail-fast order, with formatting and lint, migration safety, build, TypeScript, and unit tests as distinct steps. A short planning job selects coverage first, then the quality job and required browser E2E run in parallel. A final check reports every gate and fails unless the plan, quality job and required browser job succeeded.
 
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 
@@ -37,9 +37,9 @@ pnpm exec playwright install chromium webkit
 - Production-affecting pull requests add a deployment-package dry run and Chromium E2E.
 - Every push to `main` and `/e2e` command runs Chromium and WebKit plus the deployment-package dry run.
 - A manually dispatched workflow runs the full policy by default and can explicitly skip browser E2E.
-- Public-site pull requests upload a preview only after the base gates pass. The stable `pr-<number>` alias follows the pull request across new commits and appears as GitHub's View deployment link and in the job summary.
+- Public-site pull requests upload a preview after the quality job passes without waiting for browser E2E. The stable `pr-<number>` alias follows the pull request across new commits and appears as GitHub's View deployment link and in the job summary.
 
-Every run writes a summary with its selected browser coverage and the outcome of each gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
+Every run writes a final summary with its selected browser coverage and the outcome of each job and gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository. A newer commit cancels an obsolete in-progress run.
 

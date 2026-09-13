@@ -17,13 +17,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 5
     permissions:
       contents: read
     outputs:
-      run_site_preview: ${{ steps.plan.outputs.run_site_preview }}
+      title_outcome: ${{ steps.title.outcome }}
+      run_e2e: ${{ steps.coverage.outputs.run_e2e }}
+      browsers: ${{ steps.coverage.outputs.browsers }}
+      playwright_args: ${{ steps.coverage.outputs.playwright_args }}
+      coverage: ${{ steps.coverage.outputs.coverage }}
+      run_deploy_check: ${{ steps.coverage.outputs.run_deploy_check }}
+      run_site_preview: ${{ steps.coverage.outputs.run_site_preview }}
+      reason: ${{ steps.coverage.outputs.reason }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -36,16 +43,8 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: node scripts/check-pr-title.mjs "$PR_TITLE"
 
-      # Version comes from "packageManager" in package.json.
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-
       - name: Select CI coverage
-        id: plan
+        id: coverage
         env:
           EVENT_NAME: ${{ github.event_name }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -57,6 +56,36 @@ jobs:
           else
             node scripts/ci-plan.mjs < /dev/null
           fi
+
+  quality:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      dependencies_outcome: ${{ steps.dependencies.outcome }}
+      check_outcome: ${{ steps.check.outcome }}
+      i18n_outcome: ${{ steps.i18n.outcome }}
+      migrations_outcome: ${{ steps.migrations.outcome }}
+      build_outcome: ${{ steps.build.outcome }}
+      boundaries_outcome: ${{ steps.boundaries.outcome }}
+      typecheck_outcome: ${{ steps.typecheck.outcome }}
+      test_outcome: ${{ steps.test.outcome }}
+      deploy_product_outcome: ${{ steps.deploy_product.outcome }}
+      deploy_site_outcome: ${{ steps.deploy_site.outcome }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
 
       - name: Install dependencies
         id: dependencies
@@ -94,43 +123,48 @@ jobs:
 
       - name: Check product deployment package
         id: deploy_product
-        if: steps.plan.outputs.run_deploy_check == 'true'
+        if: needs.plan.outputs.run_deploy_check == 'true'
         run: pnpm --filter @lymi/web run deploy:check
 
       - name: Check public-site deployment package
         id: deploy_site
-        if: steps.plan.outputs.run_deploy_check == 'true'
+        if: needs.plan.outputs.run_deploy_check == 'true'
         run: pnpm --filter @lymi/site run deploy:check
 
-      - name: Install Playwright browsers (${{ steps.plan.outputs.coverage }})
+  browser_e2e:
+    name: browser E2E (${{ needs.plan.outputs.coverage }})
+    needs: plan
+    if: needs.plan.outputs.run_e2e == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    outputs:
+      dependencies_outcome: ${{ steps.dependencies.outcome }}
+      browsers_outcome: ${{ steps.browsers.outcome }}
+      e2e_outcome: ${{ steps.e2e.outcome }}
+    steps:
+      - uses: actions/checkout@v5
+
+      # Version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        id: dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers (${{ needs.plan.outputs.coverage }})
         id: browsers
-        if: steps.plan.outputs.run_e2e == 'true'
-        run: pnpm exec playwright install --with-deps --only-shell ${{ steps.plan.outputs.browsers }}
+        run: pnpm exec playwright install --with-deps --only-shell ${{ needs.plan.outputs.browsers }}
 
-      - name: Run browser E2E (${{ steps.plan.outputs.coverage }})
+      - name: Run browser E2E (${{ needs.plan.outputs.coverage }})
         id: e2e
-        if: steps.plan.outputs.run_e2e == 'true'
-        run: pnpm test:e2e ${{ steps.plan.outputs.playwright_args }}
-
-      - name: Summarize CI evidence
-        if: always()
-        env:
-          COVERAGE: ${{ steps.plan.outputs.coverage }}
-          PLAN_REASON: ${{ steps.plan.outputs.reason }}
-          SITE_PREVIEW: ${{ steps.plan.outputs.run_site_preview }}
-          TITLE_OUTCOME: ${{ steps.title.outcome }}
-          DEPENDENCIES_OUTCOME: ${{ steps.dependencies.outcome }}
-          CHECK_OUTCOME: ${{ steps.check.outcome }}
-          MIGRATIONS_OUTCOME: ${{ steps.migrations.outcome }}
-          BUILD_OUTCOME: ${{ steps.build.outcome }}
-          BOUNDARIES_OUTCOME: ${{ steps.boundaries.outcome }}
-          TYPECHECK_OUTCOME: ${{ steps.typecheck.outcome }}
-          TEST_OUTCOME: ${{ steps.test.outcome }}
-          DEPLOY_PRODUCT_OUTCOME: ${{ steps.deploy_product.outcome }}
-          DEPLOY_SITE_OUTCOME: ${{ steps.deploy_site.outcome }}
-          BROWSERS_OUTCOME: ${{ steps.browsers.outcome }}
-          E2E_OUTCOME: ${{ steps.e2e.outcome }}
-        run: node scripts/ci-summary.mjs
+        run: pnpm test:e2e ${{ needs.plan.outputs.playwright_args }}
 
       - name: Upload E2E diagnostics
         if: ${{ !cancelled() && steps.e2e.outcome == 'failure' }}
@@ -143,12 +177,48 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+  check:
+    needs: [plan, quality, browser_e2e]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Summarize CI evidence
+        env:
+          COVERAGE: ${{ needs.plan.outputs.coverage }}
+          PLAN_REASON: ${{ needs.plan.outputs.reason }}
+          SITE_PREVIEW: ${{ needs.plan.outputs.run_site_preview }}
+          RUN_E2E: ${{ needs.plan.outputs.run_e2e }}
+          PLAN_RESULT: ${{ needs.plan.result }}
+          QUALITY_RESULT: ${{ needs.quality.result }}
+          BROWSER_RESULT: ${{ needs.browser_e2e.result }}
+          TITLE_OUTCOME: ${{ needs.plan.outputs.title_outcome }}
+          DEPENDENCIES_OUTCOME: ${{ needs.quality.outputs.dependencies_outcome }}
+          CHECK_OUTCOME: ${{ needs.quality.outputs.check_outcome }}
+          I18N_OUTCOME: ${{ needs.quality.outputs.i18n_outcome }}
+          MIGRATIONS_OUTCOME: ${{ needs.quality.outputs.migrations_outcome }}
+          BUILD_OUTCOME: ${{ needs.quality.outputs.build_outcome }}
+          BOUNDARIES_OUTCOME: ${{ needs.quality.outputs.boundaries_outcome }}
+          TYPECHECK_OUTCOME: ${{ needs.quality.outputs.typecheck_outcome }}
+          TEST_OUTCOME: ${{ needs.quality.outputs.test_outcome }}
+          DEPLOY_PRODUCT_OUTCOME: ${{ needs.quality.outputs.deploy_product_outcome }}
+          DEPLOY_SITE_OUTCOME: ${{ needs.quality.outputs.deploy_site_outcome }}
+          BROWSER_DEPENDENCIES_OUTCOME: ${{ needs.browser_e2e.outputs.dependencies_outcome }}
+          BROWSERS_OUTCOME: ${{ needs.browser_e2e.outputs.browsers_outcome }}
+          E2E_OUTCOME: ${{ needs.browser_e2e.outputs.e2e_outcome }}
+        run: node scripts/ci-summary.mjs
+
   site_preview:
     name: site preview
-    needs: check
+    needs: [plan, quality]
     if: >-
+      needs.quality.result == 'success' &&
       github.event_name == 'pull_request' &&
-      needs.check.outputs.run_site_preview == 'true' &&
+      needs.plan.outputs.run_site_preview == 'true' &&
       github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10

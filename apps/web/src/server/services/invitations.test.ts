@@ -111,8 +111,8 @@ describe("the owner controls one join link", () => {
 });
 
 describe("the join page shows what the link opens", () => {
-  it("a working link shows the deck's size, language and three recent cards", async () => {
-    const { deck, token } = await sharedDeck("Loomad", ["koer", "kass", "hobune", "lehm"]);
+  it("a working link shows the deck's size, language and a random few cards", async () => {
+    const { deck, token } = await sharedDeck("Loomad", ["koer", "kass", "hobune", "lehm", "kana"]);
     const [bare] = await addCards(kateryna, [{ deckId: deck.id, term: "siga" }]);
     const [hobune] = await db
       .select({ id: schema.cards.id })
@@ -126,7 +126,7 @@ describe("the join page shows what the link opens", () => {
       status: "live",
       deck: {
         name: "Loomad",
-        total: 4,
+        total: 5,
         owner: { name: "Kateryna" },
         language: "et",
         lastAddedAt: expect.any(String),
@@ -135,9 +135,10 @@ describe("the join page shows what the link opens", () => {
       deckId: null,
     });
     // Cards with a meaning come first; the archived card never shows.
-    expect(preview.deck?.samples).toHaveLength(3);
-    expect(preview.deck?.samples.every((c) => c.meaning)).toBe(true);
-    expect(preview.deck?.samples.map((c) => c.term)).not.toContain("hobune");
+    const terms = preview.deck?.samples.map((c) => c.term);
+    expect(terms).toHaveLength(5);
+    expect(terms?.at(-1)).toBe("siga");
+    expect(terms).not.toContain("hobune");
   });
 
   it("tells each viewer apart and gives only the owner and members the deck id", async () => {

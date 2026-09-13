@@ -1,9 +1,12 @@
 import type { JoinPreviewOut } from "@lymi/core";
 import { newId } from "@lymi/core";
-import { and, desc, eq, isNull, sql } from "@lymi/core/db";
+import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { type ServiceContext, ServiceError } from "./context";
 import { join, ownedDeck } from "./members";
+
+/** How many cards a join page shows. They are drawn at random on every visit. */
+const JOIN_SAMPLES = 10;
 
 /** 24 random bytes as base64url: 192 bits, so a join link cannot be guessed. */
 const TOKEN_SHAPE = /^[A-Za-z0-9_-]{32}$/;
@@ -183,13 +186,13 @@ export async function previewJoin(
         })
         .from(schema.cards)
         .where(active),
-      // Recent cards with a meaning first: they show what reviewing this deck is like.
+      // A random few with a meaning first, so a visit shows the deck rather than its latest lesson.
       db
         .select({ term: schema.cards.term, meaning: schema.cards.meaning })
         .from(schema.cards)
         .where(active)
-        .orderBy(sql`${schema.cards.meaning} is null`, desc(schema.cards.createdAt))
-        .limit(3),
+        .orderBy(sql`${schema.cards.meaning} is null`, sql`random()`)
+        .limit(JOIN_SAMPLES),
     ]);
     deck = {
       name: link.deckName,

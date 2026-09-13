@@ -56,6 +56,11 @@ msgstr ""
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
 
+#. placeholder {0}: deck.total
+#: src/client/views/JoinView.tsx
+msgid "{0, plural, one {# card} other {# cards}}"
+msgstr "{0, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
+
 #. placeholder {0}: decks.length
 #: src/client/views/LibraryView.tsx
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
@@ -75,9 +80,7 @@ msgid "{0, plural, one {# review} other {# reviews}}, {1, plural, one {# lapse} 
 msgstr "{0, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}, {1, plural, one {# забывание} few {# забывания} many {# забываний} other {# забывания}}"
 
 #. placeholder {0}: cards.total
-#. placeholder {0}: deck.total
 #: src/client/views/InsightsView.tsx
-#: src/client/views/JoinView.tsx
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {карточка} few {карточки} many {карточек} other {карточки}}"
 
@@ -141,6 +144,11 @@ msgstr "Новые: {0}, в изучении: {1}, выученные: {2}"
 #: src/client/views/InsightsView.tsx
 msgid "{0} remembered, {1} forgotten."
 msgstr "Запомнено: {0}, забыто: {1}."
+
+#. placeholder {0}: deck.owner.name
+#: src/client/views/JoinView.tsx
+msgid "{0} shared a deck"
+msgstr "{0} делится колодой"
 
 #: src/client/views/ConnectedView.tsx
 msgid "{appName} is connected"
@@ -282,10 +290,6 @@ msgstr "{months, plural, one {Через # месяц} few {Через # мес�
 msgid "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
 msgstr "{more, plural, one {{first}, {second} и ещё # колода} few {{first}, {second} и ещё # колоды} many {{first}, {second} и ещё # колод} other {{first}, {second} и ещё # колоды}}"
 
-#: src/client/views/JoinView.tsx
-msgid "{more, plural, one {# more card} other {# more cards}}"
-msgstr "{more, plural, one {Ещё # карточка} few {Ещё # карточки} many {Ещё # карточек} other {Ещё # карточки}}"
-
 #: src/client/views/ReviewView.tsx
 msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
 msgstr "{moreDue, plural, one {{done} повторено из {deckName}. Ещё # готова, когда захочешь.} few {{done} повторено из {deckName}. Ещё # готовы, когда захочешь.} many {{done} повторено из {deckName}. Ещё # готовы, когда захочешь.} other {{done} повторено из {deckName}. Ещё # готовой, когда захочешь.}}"
@@ -298,14 +302,6 @@ msgstr "{moreDue, plural, one {{done} повторено. Ещё # готова,
 #: src/client/views/DeckDetailView.tsx
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
-
-#: src/client/views/JoinView.tsx
-msgid "{ownerName} shared a deck with you"
-msgstr "{ownerName} делится с тобой колодой"
-
-#: src/client/views/JoinView.tsx
-msgid "{ownerName} will see your name once you join."
-msgstr "После присоединения {ownerName} увидит твоё имя."
 
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
@@ -403,6 +399,10 @@ msgstr "Уведомление на этом устройстве, когда е
 #: src/client/views/WordView.tsx
 msgid "A sentence it lives in"
 msgstr "Предложение, в котором он живёт"
+
+#: src/client/views/JoinView.tsx
+msgid "About this deck"
+msgstr "О колоде"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Access"
@@ -669,7 +669,7 @@ msgstr "Архивные карточки и колоды. Восстановл�
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Карточки с уроков Марко по вторникам."
 
-#: src/client/views/JoinView.tsx
+#: src/client/components/CardStream.tsx
 msgid "Cards from this deck"
 msgstr "Карточки из этой колоды"
 
@@ -1197,18 +1197,10 @@ msgstr "Выученные"
 msgid "Known means the gaps between reviews are weeks or months now. A Forgot brings it back to the short steps."
 msgstr "«Выученная» означает, что теперь между повторениями проходят недели или месяцы. Оценка «Не помню» возвращает карточку к коротким шагам."
 
-#: src/client/views/JoinView.tsx
-msgid "language"
-msgstr "язык"
-
 #: src/client/components/DeckFields.tsx
 #: src/client/views/SettingsView.tsx
 msgid "Language"
 msgstr "Язык"
-
-#: src/client/views/JoinView.tsx
-msgid "Last added {lastAdded}"
-msgstr "Последняя добавлена {lastAdded}"
 
 #: src/client/components/Chip.tsx
 #: src/client/views/DeckDetailView.tsx
@@ -1281,6 +1273,7 @@ msgid "Lymi does not recognise this app. Check the address is one you meant to u
 msgstr "Lymi не распознаёт это приложение. Проверь, что хочешь использовать именно этот адрес."
 
 #: src/client/components/AuthFrame.tsx
+#: src/client/views/JoinView.tsx
 msgid "Lymi home"
 msgstr "Главная Lymi"
 
@@ -1543,6 +1536,10 @@ msgid "Only you study this deck."
 msgstr "Эту колоду изучаешь только ты."
 
 #: src/client/views/JoinView.tsx
+msgid "Only your name is shared, never your progress."
+msgstr "Видно только твоё имя, а прогресс — нет."
+
+#: src/client/views/JoinView.tsx
 msgid "Open deck"
 msgstr "Открыть колоду"
 
@@ -1562,6 +1559,10 @@ msgstr "Открой меню браузера и выбери «Установ�
 #: src/client/views/DeckSettingsView.tsx
 msgid "Optional"
 msgstr "Необязательно"
+
+#: src/client/components/CardStream.tsx
+msgid "Pause the cards"
+msgstr "Остановить карточки"
 
 #. placeholder {0}: weekday(peak.date)
 #: src/client/views/InsightsView.tsx
@@ -1765,6 +1766,10 @@ msgstr "Открой карточку, когда вспомнишь"
 #: src/client/views/TodayView.tsx
 msgid "Review"
 msgstr "Повторение"
+
+#: src/client/views/JoinView.tsx
+msgid "Review on your own schedule. New cards appear as they are added."
+msgstr "Повторяй в своём темпе. Новые карточки появляются, как только их добавляют."
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
@@ -2236,6 +2241,10 @@ msgstr "Отменить действие"
 msgid "Untitled key"
 msgstr "Ключ без названия"
 
+#: src/client/views/JoinView.tsx
+msgid "Updated {lastAdded}"
+msgstr "Обновлено {lastAdded}"
+
 #: src/client/components/DeckFields.tsx
 msgid "Use “{tag}” as the tag"
 msgstr "Использовать «{tag}» как тег"
@@ -2324,10 +2333,6 @@ msgstr "Эту вкладку можно закрыть."
 #: src/client/routes/join.$token.tsx
 msgid "You cannot join this deck through this link."
 msgstr "Через эту ссылку нельзя присоединиться к этой колоде."
-
-#: src/client/views/JoinView.tsx
-msgid "You review the cards on your own schedule. {ownerName} writes them and does not see your progress."
-msgstr "Ты повторяешь карточки в своём темпе. {ownerName} добавляет их и не видит твоего прогресса."
 
 #: src/client/views/JoinView.tsx
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."

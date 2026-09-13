@@ -213,7 +213,6 @@ msgstr "It will all work out"
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "It’s why a half-read chapter keeps nagging at you."
 
-#: src/components/landing/HandOfCards.tsx
 #: src/components/landing/LandingView.tsx
 msgid "Join the private beta"
 msgstr "Join the private beta"
@@ -414,10 +413,6 @@ msgstr "The push behind ragtime, funk and reggae."
 #: src/components/landing/hand-cards.ts
 msgid "The right to be brought before a judge rather than held without charge"
 msgstr "The right to be brought before a judge rather than held without charge"
-
-#: src/components/landing/HandOfCards.tsx
-msgid "Three new things. Lymi would bring them back right before you’d forget."
-msgstr "Three new things. Lymi would bring them back right before you’d forget."
 
 #: src/components/landing/hand-cards.ts
 msgid "To not be able to be bothered"

@@ -18,7 +18,6 @@ const DEAL_STAGGER_MS = 90;
 const DEAL_MS = 720;
 const TOSS_MS = 620;
 const DEALT_KEY = "lymi-hand-dealt";
-const JOIN_AFTER = 3;
 
 interface Dealt {
   key: number;
@@ -361,20 +360,6 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
           </p>
         )}
       </div>
-
-      <p className="mt-1 min-h-11 max-w-[38ch] text-center text-base text-balance text-text-2">
-        {turned >= JOIN_AFTER && (
-          <>
-            <Trans>Three new things. Lymi would bring them back right before you’d forget.</Trans>{" "}
-            <a
-              href="#join"
-              className="rounded-xs text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
-            >
-              <Trans>Join the private beta</Trans>
-            </a>
-          </>
-        )}
-      </p>
 
       <p className="sr-only" role="status" aria-live="polite">
         {announce}

@@ -816,7 +816,8 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  height: calc(var(--cw) * 1.62);
+  /* Tall enough for the outer cards' lower corners, which dip as they rotate out. */
+  height: calc(var(--cw) * 1.78);
   user-select: none;
   /* Cards rise from under the stage's bottom edge rather than across the copy below it. */
   clip-path: inset(-50% -100vw 0 -100vw);

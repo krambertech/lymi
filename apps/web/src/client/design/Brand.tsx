@@ -1,12 +1,11 @@
 import { Lantern } from "../components/Lantern";
 import { AppTile, Lockup, Wordmark } from "../components/Logo";
-import { Pair, Section, Specimen, Sub } from "./Frame";
+import { Doc, Pair, Specimen, Sub } from "./Frame";
 
-export function Identity() {
+export function Brand() {
   return (
-    <Section
-      id="identity"
-      title="Identity"
+    <Doc
+      title="Brand"
       lede="Lymi is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry: lit while you review, brighter when you finish, dark when nothing is due. Three words for the whole thing: warm, calm, quick."
     >
       <Sub
@@ -123,6 +122,6 @@ export function Identity() {
           ))}
         </ul>
       </Sub>
-    </Section>
+    </Doc>
   );
 }

@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
+import { useIndicator } from "../lib/use-indicator";
 
 interface Option<T extends string> {
   value: T;
@@ -26,16 +27,23 @@ export function Segmented<T extends string>({
   size?: "sm" | "md" | undefined;
   className?: string | undefined;
 }) {
+  const { containerRef, indicatorRef, jump } = useIndicator<HTMLFieldSetElement>(value);
   return (
     <fieldset
+      ref={containerRef}
       className={clsx(
-        "inline-flex w-fit gap-0.5 rounded-md bg-plate-2 p-[3px]",
+        "relative inline-flex w-fit gap-0.5 rounded-md bg-plate-2 p-[3px]",
         // Same box as an input, so a segmented control in a form is a row like every other.
         size === "md" && "h-11 md:h-10",
         className,
       )}
     >
       <legend className="sr-only">{label}</legend>
+      <span
+        ref={indicatorRef}
+        aria-hidden="true"
+        className="segment-chip edge absolute inset-y-[3px] start-0 rounded-[11px] bg-plate"
+      />
       {options.map((o) => {
         const on = o.value === value;
         return (
@@ -43,14 +51,17 @@ export function Segmented<T extends string>({
             key={o.value}
             type="button"
             aria-pressed={on}
-            onClick={() => onChange(o.value)}
+            onClick={(e) => {
+              if (e.detail === 0) jump();
+              onChange(o.value);
+            }}
             className={clsx(
-              "relative rounded-[11px] px-3 font-medium transition-[background-color,color,box-shadow,scale] duration-150 active:scale-[0.97]",
+              "relative rounded-[11px] px-3 font-medium transition-[color,scale] duration-150 active:scale-[0.97]",
               // The pseudo-element carries the touch target past the visible pill: 28 px of
               // button plus 8 px either side clears the 44 px floor without changing layout.
               "before:absolute before:inset-x-0 before:content-['']",
               size === "md" ? "h-full text-[16px] md:text-base" : "h-7 text-xs before:-inset-y-2",
-              on ? "edge bg-plate text-text" : "text-muted hoverable:hover:text-text",
+              on ? "text-text" : "text-muted hoverable:hover:text-text",
             )}
           >
             {o.label}

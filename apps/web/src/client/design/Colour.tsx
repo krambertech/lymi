@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { contrast } from "./contrast";
-import { Section, Sub } from "./Frame";
+import { Doc, Sub } from "./Frame";
 
 const TOKENS: { name: string; role: string; text?: string; decorative?: boolean }[] = [
   { name: "canvas", role: "The room. Page background." },
@@ -76,29 +76,35 @@ function Swatch({
 
 export function Colour() {
   return (
-    <Section
-      id="colour"
+    <Doc
       title="Colour"
       lede="Two rooms, one flame. Neutrals are warm and nearly grey. Amber is the only saturated colour and appears at most twice per screen. Surfaces are flat: no gradients, no drop shadows, one hairline edge. Ratios are measured live against this page."
     >
-      <div className="grid gap-3 @3xl:grid-cols-2">
-        {(["light", "dark"] as const).map((t) => (
-          <div
-            key={t}
-            data-theme={t}
-            className="@container edge rounded-lg bg-canvas p-5 text-text"
-          >
-            <h3 className="mb-4 text-sm font-medium">
-              {t === "light" ? "Light room" : "Dark room"}
-            </h3>
-            <div className="grid grid-cols-3 gap-3 @xl:grid-cols-5">
-              {TOKENS.map((tk) => (
-                <Swatch key={tk.name} name={tk.name} textOn={tk.text} decorative={tk.decorative} />
-              ))}
+      <Sub title="Two rooms">
+        <div className="grid gap-3 @3xl:grid-cols-2">
+          {(["light", "dark"] as const).map((t) => (
+            <div
+              key={t}
+              data-theme={t}
+              className="@container edge rounded-lg bg-canvas p-5 text-text"
+            >
+              <h3 className="mb-4 text-sm font-medium">
+                {t === "light" ? "Light room" : "Dark room"}
+              </h3>
+              <div className="grid grid-cols-3 gap-3 @xl:grid-cols-5">
+                {TOKENS.map((tk) => (
+                  <Swatch
+                    key={tk.name}
+                    name={tk.name}
+                    textOn={tk.text}
+                    decorative={tk.decorative}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Sub>
 
       <Sub title="Roles">
         <dl className="grid gap-x-8 gap-y-2 text-base @3xl:grid-cols-2">
@@ -129,6 +135,6 @@ export function Colour() {
           ))}
         </ul>
       </Sub>
-    </Section>
+    </Doc>
   );
 }

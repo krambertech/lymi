@@ -8,12 +8,7 @@ export default defineConfig({
     {
       path: "<rootDir>/src/locales/{locale}",
       include: ["<rootDir>/src/client", "<rootDir>/src/server"],
-      exclude: [
-        "**/*.test.ts",
-        "**/routeTree.gen.ts",
-        "**/client/design/**",
-        "**/routes/design.tsx",
-      ],
+      exclude: ["**/*.test.ts", "**/routeTree.gen.ts", "**/client/design/**", "**/routes/design.*"],
     },
   ],
   format: formatter({ lineNumbers: false }),

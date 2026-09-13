@@ -1,6 +1,17 @@
 import { clsx } from "clsx";
-import { type ReactNode, useLayoutEffect, useRef, useState } from "react";
+import { Moon, Sun } from "lucide-react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { Segmented } from "../components/Segmented";
+import { EditLink } from "./EditLink";
+import { type IconOption, IconToggle } from "./IconToggle";
 
 export type FrameTheme = "light" | "dark";
 
@@ -99,27 +110,35 @@ export function Desktop({
   );
 }
 
-/** Section wrapper on the design page. */
-export function Section({
-  id,
+/** The file behind the page being rendered, for its edit link. Set by the page, read by `Doc`. */
+export const DocSource = createContext<string | undefined>(undefined);
+
+/** One page of the design system: its title, what it is for, and its parts. */
+export function Doc({
   title,
   lede,
+  crumb,
   children,
 }: {
-  id: string;
   title: string;
   lede?: ReactNode | undefined;
+  /** A link back to the page this one belongs to. */
+  crumb?: ReactNode | undefined;
   children: ReactNode;
 }) {
+  const source = useContext(DocSource);
   return (
-    <section
-      id={id}
-      className="scroll-mt-24 border-t border-edge py-14 first:border-t-0 first:pt-4"
-    >
-      <h2 className="text-2xl font-medium">{title}</h2>
-      {lede && <p className="mt-2 max-w-[62ch] text-md text-muted">{lede}</p>}
-      <div className="mt-8 grid gap-10">{children}</div>
-    </section>
+    <article>
+      <header className="pb-12">
+        {crumb && <div className="mb-2 text-sm text-muted">{crumb}</div>}
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="text-3xl font-medium text-balance">{title}</h1>
+          {source && <EditLink path={source} />}
+        </div>
+        {lede && <p className="mt-3 max-w-[64ch] text-md text-pretty text-text-2">{lede}</p>}
+      </header>
+      <div className="grid">{children}</div>
+    </article>
   );
 }
 
@@ -127,21 +146,34 @@ export function Sub({
   id,
   title,
   note,
+  source,
   children,
 }: {
   id?: string | undefined;
-  title: string;
+  title?: ReactNode | undefined;
   note?: ReactNode | undefined;
+  /** The component's file, for its edit link. */
+  source?: string | undefined;
   children: ReactNode;
 }) {
   return (
-    <div id={id} className="grid scroll-mt-6 gap-4">
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h3 className="text-md font-medium">{title}</h3>
-        {note && <p className="max-w-[56ch] text-sm text-muted">{note}</p>}
-      </div>
+    <section
+      id={id}
+      className="grid scroll-mt-20 gap-5 border-t border-edge py-10 first:border-t-0 first:pt-0"
+    >
+      {(title || note) && (
+        <div className="grid gap-1.5">
+          {title && (
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-lg font-medium">{title}</h2>
+              {source && <EditLink path={source} />}
+            </div>
+          )}
+          {note && <p className="max-w-[68ch] text-base text-pretty text-muted">{note}</p>}
+        </div>
+      )}
       {children}
-    </div>
+    </section>
   );
 }
 
@@ -196,3 +228,87 @@ export function Pair({
     </div>
   );
 }
+
+export interface Variant {
+  label: string;
+  /** What this state is for, in one sentence. */
+  note?: ReactNode | undefined;
+  render: (theme: FrameTheme) => ReactNode;
+}
+
+function subscribeRoot(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
+
+/** The room the page is in right now. */
+export function usePageTheme(): FrameTheme {
+  return useSyncExternalStore(
+    subscribeRoot,
+    () => (document.documentElement.dataset.theme === "dark" ? "dark" : "light"),
+    () => "light",
+  );
+}
+
+/**
+ * A component's states, one labelled row each, on one canvas. The canvas follows the page's
+ * room until its own switch picks one. `stack` puts each state under its label, for things too
+ * wide to share a row with it.
+ */
+export function Variants({ items, stack }: { items: Variant[]; stack?: boolean | undefined }) {
+  const page = usePageTheme();
+  const [picked, setPicked] = useState<FrameTheme | null>(null);
+  const theme = picked ?? page;
+  return (
+    <div
+      data-theme={theme}
+      className="edge relative overflow-hidden rounded-lg bg-canvas text-text"
+    >
+      <div className="absolute end-3 top-3 z-10">
+        <IconToggle
+          label="Canvas theme"
+          value={theme}
+          onChange={(t) => setPicked(t === page ? null : t)}
+          options={ROOM_THEMES}
+        />
+      </div>
+      {items.map((v, i) => (
+        <div
+          key={v.label}
+          className={clsx(
+            "grid",
+            i > 0 && "border-t border-edge",
+            !stack && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
+          )}
+        >
+          <div
+            className={clsx(
+              // Annotations are set in mono so a note about a component never reads as part of it.
+              "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
+              stack ? "pb-1" : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
+              // The first label shares its corner with the theme switch.
+              i === 0 && (stack ? "pe-20" : "pe-20 @3xl:pe-5"),
+            )}
+          >
+            <p className="font-semibold text-text">{v.label}</p>
+            {v.note && <p className="leading-relaxed text-pretty text-muted">{v.note}</p>}
+          </div>
+          <div
+            className={clsx(
+              "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
+              !stack && "@3xl:pe-20",
+            )}
+          >
+            {v.render(theme)}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export const ROOM_THEMES: IconOption<FrameTheme>[] = [
+  { value: "light", label: "Light", Icon: Sun },
+  { value: "dark", label: "Dark", Icon: Moon },
+];

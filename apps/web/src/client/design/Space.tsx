@@ -1,9 +1,8 @@
-import { Section, Specimen, Sub } from "./Frame";
+import { Doc, Specimen, Sub } from "./Frame";
 
 export function Space() {
   return (
-    <Section
-      id="space"
+    <Doc
       title="Space and shape"
       lede="A 4 px grid. Radii grow with the size of the thing. Depth is one hairline; nothing casts a shadow, nothing is raised. Layout is structural: the sidebar collapses to a tab bar, the page column caps, and the same components lay out by their container, not the viewport."
     >
@@ -96,6 +95,6 @@ export function Space() {
           </div>
         </Specimen>
       </Sub>
-    </Section>
+    </Doc>
   );
 }

@@ -17,8 +17,9 @@ import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/Review
 import { SettingsView } from "../views/SettingsView";
 import { Sidebar } from "../views/Shell";
 import { TodayView } from "../views/TodayView";
-import { Desktop, type FrameTheme, Phone, Section, Sub, useFrameTheme } from "./Frame";
+import { Desktop, type FrameTheme, Phone, useFrameTheme } from "./Frame";
 import * as m from "./mock";
+import type { Entry } from "./parts/types";
 
 const noop = () => {};
 
@@ -126,17 +127,15 @@ function ReviewPhone({
   );
 }
 
-export function Screens() {
-  return (
-    <Section
-      id="screens"
-      title="Screens"
-      lede="Every frame here renders the real view components with sample data. Flip any one between rooms. The phone lays out as a phone because the views respond to their container, not the window."
-    >
-      <Sub
-        title="Today"
-        note="One question and one action. The lantern is lit and glowing when cards are due, dark when they are not, and the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The streak is the seven lights and one line, on both screens. What an integration added since the last review follows."
-      >
+/** Every screen, rendered from the real views with sample data. */
+export const SCREENS: Entry[] = [
+  {
+    slug: "today",
+    name: "Today",
+    source: "views/TodayView.tsx",
+    note: "One question and one action. The lantern is lit and glowing when cards are due, dark when they are not, and the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The streak is the seven lights and one line, on both screens. What an integration added since the last review follows.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Cards due" initial="dark" path="/">
             <TodayView
@@ -193,12 +192,16 @@ export function Screens() {
             </Desktop>
           )}
         </Shot>
-      </Sub>
-
-      <Sub
-        title="Insights"
-        note="The one screen where charts belong, and the only one where looking at them is a choice. Four numbers, each with the line that makes it mean something. Every figure draws in ink; the lights and the peak stay amber, because those are the streak and the thing to notice. The last frame is the first week, when almost nothing has happened yet."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "insights",
+    name: "Insights",
+    source: "views/InsightsView.tsx",
+    note: "The one screen where charts belong, and the only one where looking at them is a choice. Four numbers, each with the line that makes it mean something. Every figure draws in ink; the lights and the peak stay amber, because those are the streak and the thing to notice. The last frame is the first week, when almost nothing has happened yet.",
+    Demo: () => (
+      <div className="grid gap-10">
         <Shot caption="Desktop, Insights" initial="light">
           {(t) => (
             <Desktop theme={t} height={720}>
@@ -223,13 +226,16 @@ export function Screens() {
             <InsightsView data={m.thinInsights} period="30" onPeriod={noop} />
           </PhoneShot>
         </div>
-      </Sub>
-
-      <Sub
-        id="review-preview"
-        title="Review"
-        note="The card itself reveals the answer. Four equally weighted choices use icons and labels without exposing the scheduling algorithm; grading moves to the next card."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "review",
+    name: "Review",
+    source: "views/ReviewView.tsx",
+    note: "The card itself reveals the answer. Four equally weighted choices use icons and labels without exposing the scheduling algorithm; grading moves to the next card.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Question" initial="dark" path="/review" bare>
             <ReviewPhone revealed={false} />
@@ -241,13 +247,16 @@ export function Screens() {
             <ReviewPhone revealed produce />
           </PhoneShot>
         </div>
-      </Sub>
-
-      <Sub
-        id="session-done-preview"
-        title="End of session"
-        note="The lantern lights up and stays. Cards counted, not points. The week’s lights show what the day added."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "session-done",
+    name: "End of session",
+    source: "views/ReviewView.tsx",
+    note: "The lantern lights up and stays. Cards counted, not points. The week’s lights show what the day added.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="That’s the lot" initial="dark" path="/review" bare>
             <div className="flex flex-1 flex-col px-4">
@@ -291,12 +300,16 @@ export function Screens() {
             )}
           </Shot>
         </div>
-      </Sub>
-
-      <Sub
-        title="Library, a deck and a card"
-        note="Library is every deck as a card with a face: its name and language, how its cards split between known, learning and new, and what it asks of you today. A deck is its cards in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "library",
+    name: "Library",
+    source: "views/LibraryView.tsx",
+    note: "Library is every deck as a card with a face: its name and language, how its cards split between known, learning and new, and what it asks of you today. A deck is its cards in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Library" initial="light" path="/library">
             <LibraryView
@@ -401,16 +414,17 @@ export function Screens() {
               </div>
             </div>
           </PhoneShot>
-          <PhoneShot caption="Settings" initial="dark" path="/settings">
-            <SettingsView me={m.me} language="en" onLanguage={noop} theme="system" onTheme={noop} />
-          </PhoneShot>
         </div>
-      </Sub>
-
-      <Sub
-        title="Making a deck, and settling it"
-        note="A deck is a name and two settings, so creating one is a sheet rather than a wizard: the name is the field that matters and the rest already has an answer. The sheet takes the shape of the machine it is on: a drawer under the thumb on the phone, a centred modal on a desktop, same panel inside both. Everything chosen there can be changed afterwards on the deck's own settings screen, which is a screen and not a sheet because the back gesture should work and the direction choice needs room to say what it does. Nothing there has a Save button."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "making-a-deck",
+    name: "Making a deck",
+    source: "views/DeckSettingsView.tsx",
+    note: "A deck is a name and two settings, so creating one is a sheet rather than a wizard: the name is the field that matters and the rest already has an answer. The sheet takes the shape of the machine it is on: a drawer under the thumb on the phone, a centred modal on a desktop, same panel inside both. Everything chosen there can be changed afterwards on the deck's own settings screen, which is a screen and not a sheet because the back gesture should work and the direction choice needs room to say what it does. Nothing there has a Save button.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="New deck" initial="light" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
@@ -482,12 +496,53 @@ export function Screens() {
             </Desktop>
           )}
         </Shot>
-      </Sub>
-
-      <Sub
-        title="Login"
-        note="The front door has one job: sign in. The lantern and plain wordmark sit above one centered task. When an MCP client sent the learner here, its verified identity appears inside that same focused panel."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "settings",
+    name: "Settings",
+    source: "views/SettingsView.tsx",
+    note: "A reading screen, narrowed to 672. One group per concern, separated by rules rather than boxes. A choice applies when it is made, so nothing here has a Save button.",
+    Demo: () => (
+      <div className="grid gap-10">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="On the phone" initial="dark" path="/settings">
+            <SettingsView me={m.me} language="en" onLanguage={noop} theme="system" onTheme={noop} />
+          </PhoneShot>
+        </div>
+        <Shot caption="Desktop, Settings" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={640}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                docsUrl="https://lymi.app/docs"
+                onAdd={noop}
+                static={{ path: "/settings" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <SettingsView
+                  me={m.me}
+                  language="en"
+                  onLanguage={noop}
+                  theme="system"
+                  onTheme={noop}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+      </div>
+    ),
+  },
+  {
+    slug: "sign-in",
+    name: "Sign in",
+    source: "views/LoginView.tsx",
+    note: "The front door has one job: sign in. The lantern and plain wordmark sit above one centered task. When an MCP client sent the learner here, its verified identity appears inside that same focused panel.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Sign in" initial="dark" path="/login" bare>
             <LoginView onGoogle={noop} />
@@ -506,12 +561,16 @@ export function Screens() {
             />
           </PhoneShot>
         </div>
-      </Sub>
-
-      <Sub
-        title="Consent"
-        note="The stop between an app's sign-in and its first request. Read is stated, because a connector cannot work without it; write is the only decision, so it is the only control. A recognised host is named; anything else is titled by its address, and its own name is shown as a claim."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "consent",
+    name: "Consent",
+    source: "views/ConsentView.tsx",
+    note: "The stop between an app's sign-in and its first request. Read is stated, because a connector cannot work without it; write is the only decision, so it is the only control. A recognised host is named; anything else is titled by its address, and its own name is shown as a claim.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="A recognised app" initial="light" path="/consent" bare>
             <ConsentDemo app={CLAUDE} />
@@ -520,12 +579,16 @@ export function Screens() {
             <ConsentDemo app={UNKNOWN} />
           </PhoneShot>
         </div>
-      </Sub>
-
-      <Sub
-        title="Connected"
-        note="The ending. An MCP client's redirect is usually a custom scheme, so the browser hands off and leaves the tab here; the rail draws across and the lantern lights. This is the only choreography outside review."
-      >
+      </div>
+    ),
+  },
+  {
+    slug: "connected",
+    name: "Connected",
+    source: "views/ConnectedView.tsx",
+    note: "The ending. An MCP client's redirect is usually a custom scheme, so the browser hands off and leaves the tab here; the rail draws across and the lantern lights. This is the only choreography outside review.",
+    Demo: () => (
+      <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Connected, read and write" initial="dark" path="/consent" bare>
             <ConnectedView app={CLAUDE} scopes={{ read: true, write: true }} />
@@ -534,7 +597,7 @@ export function Screens() {
             <ConnectedView app={CLAUDE} refused />
           </PhoneShot>
         </div>
-      </Sub>
-    </Section>
-  );
-}
+      </div>
+    ),
+  },
+];

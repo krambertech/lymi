@@ -144,6 +144,7 @@ export function LibraryView({
                 known={known?.[d.id]}
                 learning={learning?.[d.id]}
                 next={next?.[d.id]}
+                owner={d.role === "owner" ? null : d.owner.name}
                 st={st}
               />
             </li>

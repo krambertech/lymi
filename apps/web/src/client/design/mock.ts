@@ -43,6 +43,18 @@ export const decks: DeckSummary[] = [
     due: 0,
     ...mine,
   },
+  {
+    id: "d4",
+    name: "Eesti keel, A1",
+    description: null,
+    defaultLanguage: "et",
+    directions: "recognition",
+    position: 3,
+    total: 38,
+    due: 5,
+    role: "learner",
+    owner: { id: "u2", name: "Liis" },
+  },
 ];
 
 export const quietDecks: DeckSummary[] = decks.map((d) => ({ ...d, due: 0 }));
@@ -183,8 +195,8 @@ export const deckCards: { card: Card; state: CardState | null }[] = [
 ];
 
 /** How the sample decks split, for the stripe on each card. */
-export const known: Record<string, number> = { d1: 31, d2: 26, d3: 4 };
-export const learning: Record<string, number> = { d1: 14, d2: 9, d3: 2 };
+export const known: Record<string, number> = { d1: 31, d2: 26, d3: 4, d4: 12 };
+export const learning: Record<string, number> = { d1: 14, d2: 9, d3: 2, d4: 9 };
 
 function review(
   id: string,

@@ -1787,6 +1787,10 @@ msgstr "Settings"
 msgid "Share link"
 msgstr "Share link"
 
+#: src/client/components/DeckCard.tsx
+msgid "Shared by {owner}"
+msgstr "Shared by {owner}"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "Shared by link"
 msgstr "Shared by link"

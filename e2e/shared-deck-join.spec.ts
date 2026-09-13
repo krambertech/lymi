@@ -95,6 +95,19 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await expect(classmate.getByText("tere hommikust", { exact: true })).toBeVisible();
   });
 
+  await test.step("Library names the owner on the joined deck only", async () => {
+    const owner = (await (await page.request.get("/api/me")).json()) as { name: string };
+    // The rail links the deck too, so read the card in the page itself.
+    await classmate.goto("/library");
+    await expect(classmate.getByRole("main").getByRole("link", { name: deckName })).toContainText(
+      `Shared by ${owner.name}`,
+    );
+    await page.goto("/library");
+    await expect(page.getByRole("main").getByRole("link", { name: deckName })).not.toContainText(
+      "Shared by",
+    );
+  });
+
   await test.step("opening the link again changes nothing", async () => {
     await classmate.goto(joinUrl);
     await expect(classmate.getByText("You are already in this deck.")).toBeVisible();

@@ -276,40 +276,46 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
       <span className="text-sm font-medium text-text-2">
         <Trans>Picture</Trans>
       </span>
-      {image ? (
-        <>
-          <CardPicture image={image} maxHeight="min(40dvh, 320px)" />
-          {image.description ? (
-            <p className="text-md leading-relaxed text-text">{image.description}</p>
-          ) : (
-            <p className="text-sm text-muted">
-              {pictureOnly ? (
-                <Trans>
-                  No description yet. Picture review waits for one, so this card is asked without
-                  its picture.
-                </Trans>
-              ) : pictureReview ? (
-                <Trans>
-                  No description yet. Picture review waits for one, so this card is asked in its
-                  other modes.
-                </Trans>
-              ) : (
-                <Trans>No description yet.</Trans>
-              )}
-            </p>
-          )}
-        </>
-      ) : (
-        <p className="text-sm text-muted">
-          {pictureOnly ? (
-            <Trans>This card has no picture yet, so it is asked without one.</Trans>
-          ) : (
-            <Trans>
-              Picture review is on, but this card has no picture. It is asked in its other modes.
-            </Trans>
-          )}
-        </p>
-      )}
+      {/* One plate, so the picture and what it says read as one thing. */}
+      <div className="edge grid w-fit max-w-full gap-3 rounded-lg bg-plate p-3">
+        {image ? (
+          <>
+            <CardPicture image={image} maxHeight="min(20dvh, 140px)" />
+            {image.description ? (
+              // Wraps to the picture's width instead of widening the card.
+              <p className="w-0 min-w-full text-sm leading-relaxed text-text">
+                {image.description}
+              </p>
+            ) : (
+              <p className="w-0 min-w-full text-sm text-muted">
+                {pictureOnly ? (
+                  <Trans>
+                    No description yet. Picture review waits for one, so this card is asked without
+                    its picture.
+                  </Trans>
+                ) : pictureReview ? (
+                  <Trans>
+                    No description yet. Picture review waits for one, so this card is asked in its
+                    other modes.
+                  </Trans>
+                ) : (
+                  <Trans>No description yet.</Trans>
+                )}
+              </p>
+            )}
+          </>
+        ) : (
+          <p className="text-sm text-muted">
+            {pictureOnly ? (
+              <Trans>This card has no picture yet, so it is asked without one.</Trans>
+            ) : (
+              <Trans>
+                Picture review is on, but this card has no picture. It is asked in its other modes.
+              </Trans>
+            )}
+          </p>
+        )}
+      </div>
     </section>
   );
 }

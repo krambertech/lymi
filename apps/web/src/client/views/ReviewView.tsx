@@ -381,16 +381,8 @@ export function ReviewCard({
         >
           {mode.cue === "image" ? (
             card.image ? (
-              <motion.div
-                layout={animateReveal}
-                transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
-              >
-                <CardPicture
-                  image={card.image}
-                  maxHeight={revealed ? "min(26dvh, 220px)" : "min(46dvh, 420px)"}
-                  className="mx-auto"
-                />
-              </motion.div>
+              // One size before and after reveal, on the start edge like the text under it.
+              <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
             ) : (
               // A queue fetched before the picture was archived; the server no longer asks this mode.
               <p className="text-xl text-muted">
@@ -476,7 +468,7 @@ export function ReviewCard({
                 <motion.div variants={answerLine} className="py-1">
                   <CardPicture
                     image={card.image}
-                    maxHeight="min(22dvh, 180px)"
+                    maxHeight="min(16dvh, 120px)"
                     fallback="placeholder"
                   />
                 </motion.div>

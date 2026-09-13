@@ -13,6 +13,448 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/landing/hand-cards.ts
+msgid "“J’ai la flemme” is the whole excuse."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "“May it come easy”, said to someone at work"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "“Schönen Feierabend!” wishes someone a good evening off."
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "{turned, plural, one {# turned} other {# turned}}"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A brilliant first round rarely repeats in the second."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A café, an evening or a person can all be gezellig."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A clever fix made from whatever is at hand"
+msgstr ""
+
+#: src/components/landing/LandingView.tsx
+msgid "A Finnish verb, a chess term, a line from a physics paper. Save it once, hear how it’s said, and Lymi brings it back right before you’d forget."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A flat plate on a door says push; a handle says pull."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A longing for someone or something that is gone"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A partnership between fungi and plant roots, trading water for sugar"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A pun on tsunde oku, to leave piled, and doku, reading."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A thank-you to everyone who brought the food to the table."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "A thermostat that turns on at 19° and off at 21°."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Accents that land between the beats"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "After you learn something new, you start noticing it everywhere"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Also called the frequency illusion."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "An extreme result is usually followed by a more ordinary one"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "An idea that only sounds brilliant after a few drinks"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Any move you make makes your position worse"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Asked whether you’d like to win the lottery: “Magari!”"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Auditors use it to spot figures that were made up."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Biology"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Buying books and letting them pile up unread"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Chess"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Clocking off, and the free evening that follows"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Cooking"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Cosy and convivial; good company"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Design"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Don’t take down a fence until you know why it was put up"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Drinking at home, alone, in your underwear"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Economics"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Enjoy your meal!"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Every detail in a story should earn its place."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Everything prepped and to hand before you start"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Explaining your code aloud, line by line, until the bug shows itself"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Fado, Portugal’s mournful song, is built on it."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Finnish has a word for a night with no plans to go out."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Finns often name it as part of the national character."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "For a cashier, a builder, or a friend who is studying."
+msgstr ""
+
+#: src/components/landing/LandingView.tsx
+msgid "Free during the private beta."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "French for “putting in place”."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "From G. K. Chesterton’s 1929 book The Thing."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Ice, jää, plus edge, äär: four ä in a row."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "idea"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "If a story shows a gun early on, it should go off later"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "If only; maybe; I wish"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "In many real data sets, about 30% of numbers start with a 1"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "It will all work out"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "It’s why a half-read chapter keeps nagging at you."
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+#: src/components/landing/LandingView.tsx
+msgid "Join the private beta"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Just the right amount: not too much, not too little"
+msgstr ""
+
 #: src/components/landing/LandingView.tsx
 msgid "Keep what you learn."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Latin for “you shall have the body”."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Law"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Literally “horse horse tiger tiger”."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Lymi schedules every card around it."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Most land plants have one."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Music"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Named after William of Ockham, a 14th-century friar."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Named by two Australian scientists in 1964."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Nature"
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "Next card"
+msgstr ""
+
+#. placeholder {0}: rest[0].card.term
+#: src/components/landing/HandOfCards.tsx
+msgid "Next card: {0}"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "noun"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Often called Iceland’s unofficial motto."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Philosophy"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "phrase"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Physics"
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "Play pronunciation"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Prefer the explanation that needs the fewest assumptions"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Programming"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Psychology"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Quick nunchi means sensing a mood before anyone says a word."
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "Replay pronunciation"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Reviews spread over days stick better than the same reviews crammed together"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Reward lines of code, and the code gets longer."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Said before eating: “I humbly receive”"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Said to anyone about to eat, the way French says bon appétit."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Schnaps, spirits, plus Idee, idea."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Sitting through a bad film because you paid for the ticket."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "So-so; careless"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Sobre, over, plus mesa, table. It can outlast the meal."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Statistics"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Staying at the table to talk after a meal"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Sticking with something because of what you have already put in"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Stubborn grit; carrying on when it gets hard"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Sugars and amino acids reacting in the heat."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Sunlight filtering through leaves"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Swedes use it for coffee and working hours alike."
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "Tap to turn it over"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Tape, a spare part and some nerve."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The browning that gives seared, baked and toasted food its flavour"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The duck never answers. It doesn’t need to."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The earthy smell of rain on dry ground"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The edge of the ice"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The knack of reading the room"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The player would pass, if chess allowed it."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The push behind ragtime, funk and reggae."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "The right to be brought before a judge rather than held without charge"
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "Three new things. Lymi would bring them back right before you’d forget."
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "To not be able to be bothered"
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "Turn a few cards over"
+msgstr ""
+
+#: src/components/landing/HandOfCards.tsx
+msgid "Turn it over"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Unfinished tasks stay on your mind more than finished ones"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "What an object’s shape tells you to do with it"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "When a measure becomes a target, it stops being a good measure"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "When the output depends on the history of the input"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "word"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Writing"
+msgstr ""
+
+#: src/components/landing/hand-cards.ts
+msgid "Written with the characters for tree, leak and sun."
 msgstr ""

@@ -56,7 +56,7 @@ Write for the next decision, not as a record of the work session. State each out
 
 ## Generated files
 
-`routeTree.gen.ts`, both `worker-configuration.d.ts` files, `packages/core/src/schema/auth.ts`, `scripts/migration-manifest.json`, and everything under `migrations/` are generated. Edit the source and re-run the generator: `pnpm db:generate` after a schema change, `pnpm --filter @lymi/web auth:schema` after a Better Auth config change, and the appropriate workspace's `cf-typegen` after a Wrangler binding change.
+`routeTree.gen.ts`, both `worker-configuration.d.ts` files, `packages/core/src/schema/auth.ts`, `scripts/migration-manifest.json`, everything under `migrations/`, and the clips in `apps/site/public/audio/hand/` are generated. Edit the source and re-run the generator: `pnpm db:generate` after a schema change, `pnpm --filter @lymi/web auth:schema` after a Better Auth config change, the appropriate workspace's `cf-typegen` after a Wrangler binding change, and `pnpm --filter @lymi/site hand:audio` (with `OPENAI_API_KEY`) after changing a landing card's term.
 
 ## Leave alone
 

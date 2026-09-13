@@ -1,19 +1,33 @@
 import { Trans } from "@lingui/react/macro";
-import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import { productUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
+import { highlight } from "../docs/highlight";
 import { Lockup } from "../Logo";
 import { AssistantChat } from "./AssistantChat";
-import { CardBelt, CardColumn } from "./CardStream";
 import { EnrichDemo } from "./EnrichDemo";
+import { HandOfCards } from "./HandOfCards";
 import { JoinBeta } from "./JoinBeta";
 import { ReviewDemo } from "./ReviewDemo";
 import { WhyItWorks } from "./WhyItWorks";
 
 export const LANDING_TITLE = "Lymi · Keep what you learn";
 export const LANDING_BLURB =
-  "Save a term, phrase, or concept while it is fresh. Lymi enriches the missing details and brings the card " +
-  "back when recalling it will help most. Free during the private beta.";
+  "Save a Finnish verb, a chess term, or a line from a paper. Lymi adds what's missing, says it " +
+  "aloud, and brings the card back right before you'd forget. Free during the private beta.";
+
+const REQUEST = `{
+  "deckId": "0mtoyiymqa34h1xeaqo",
+  "term": "hysteresis",
+  "source": "paper"
+}`;
+
+const RESPONSE = `{
+  "status": "added",
+  "card": {
+    "term": "hysteresis",
+    "createdBy": "api"
+  }
+}`;
 
 const LOOP = [
   {
@@ -53,108 +67,13 @@ const USE_CASES = [
   },
 ] as const;
 
-/**
- * The public front door. It stays in Lymi's dark room, but changes pace as the story moves:
- * an atmospheric hero, a compact three-step loop, alternating product moments, a wide evidence
- * figure, and one quiet invitation.
- */
+/** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
 export function LandingView({ productOrigin }: { productOrigin?: string | undefined } = {}) {
   const openAppUrl = new URL("/", productOrigin ?? productUrl()).toString();
-  const hero = useRef<HTMLElement>(null);
-  const [lamp, setLamp] = useState<{ x: number; y: number } | null>(null);
-  const [nudge, setNudge] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    const previousTitle = document.title;
-    document.title = LANDING_TITLE;
-    const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    const previousBlurb = description?.content;
-    if (description) description.content = LANDING_BLURB;
-
-    const existingCanonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    const canonical = existingCanonical ?? document.createElement("link");
-    if (!existingCanonical) {
-      canonical.rel = "canonical";
-      document.head.appendChild(canonical);
-    }
-    canonical.href = `${window.location.origin}/`;
-
-    const existingJsonLd = document.querySelector<HTMLScriptElement>(
-      'script[data-landing-structured-data="true"]',
-    );
-    const jsonLd = existingJsonLd ?? document.createElement("script");
-    if (!existingJsonLd) {
-      jsonLd.type = "application/ld+json";
-      jsonLd.dataset.landingStructuredData = "true";
-      document.head.appendChild(jsonLd);
-    }
-    jsonLd.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      name: "Lymi",
-      applicationCategory: "EducationalApplication",
-      operatingSystem: "Web",
-      description: LANDING_BLURB,
-      url: `${window.location.origin}/`,
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    });
-
-    return () => {
-      document.title = previousTitle;
-      if (description && previousBlurb !== undefined) description.content = previousBlurb;
-      if (!existingCanonical) canonical.remove();
-      if (!existingJsonLd) jsonLd.remove();
-    };
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const previous = root.dataset.theme;
-    root.dataset.theme = "dark";
-    return () => {
-      if (previous) root.dataset.theme = previous;
-      else delete root.dataset.theme;
-    };
-  }, []);
-
-  const onLampMove = useCallback((point: { x: number; y: number }) => {
-    const el = hero.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    setLamp({ x: point.x - r.left, y: point.y - r.top });
-  }, []);
-
-  useEffect(() => {
-    const el = hero.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    const onMove = (e: PointerEvent) => {
-      const r = el.getBoundingClientRect();
-      setNudge({
-        x: ((e.clientX - r.left) / r.width - 0.5) * 40,
-        y: ((e.clientY - r.top) / r.height - 0.5) * 20,
-      });
-    };
-    const onLeave = () => setNudge({ x: 0, y: 0 });
-    el.addEventListener("pointermove", onMove);
-    el.addEventListener("pointerleave", onLeave);
-    return () => {
-      el.removeEventListener("pointermove", onMove);
-      el.removeEventListener("pointerleave", onLeave);
-    };
-  }, []);
-
-  const lampStyle = {
-    "--lamp-x": lamp ? `${lamp.x}px` : "72%",
-    "--lamp-y": lamp ? `${lamp.y}px` : "58%",
-    "--lamp-nudge-x": `${nudge.x}px`,
-    "--lamp-nudge-y": `${nudge.y}px`,
-  } as CSSProperties;
 
   return (
-    <div className="@container min-h-dvh bg-canvas text-text">
-      <header ref={hero} className="relative isolate overflow-hidden">
-        <div className="lamp-pool -z-10" style={lampStyle} aria-hidden="true" />
-
+    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+      <header>
         <nav
           aria-label="Main navigation"
           className="mx-auto flex max-w-[1120px] items-center justify-between px-5 pt-5 @2xl:px-10 @2xl:pt-7"
@@ -163,57 +82,42 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             <Lockup size={30} flicker glow />
           </a>
           <div className="flex items-center gap-1">
+            <a href="/docs" className={buttonClass("ghost", "sm")}>
+              Docs
+            </a>
             <span className="hidden @2xl:contents">
-              <a href="/docs" className={buttonClass("ghost", "sm")}>
-                Docs
+              <a href={openAppUrl} className={buttonClass("ghost", "sm")}>
+                Open app
               </a>
             </span>
-            <a href={openAppUrl} className={buttonClass("ghost", "sm")}>
-              Open app
-            </a>
             <a href="#join" className={buttonClass("secondary", "sm")}>
               Join the beta
             </a>
           </div>
         </nav>
 
-        <div className="mx-auto grid min-h-[650px] max-w-[1120px] items-center gap-10 px-5 py-14 @2xl:grid-cols-[minmax(0,1fr)_clamp(250px,29vw,340px)] @2xl:px-10 @4xl:min-h-[720px]">
-          <div className="relative z-10 min-w-0 max-w-[620px]">
-            <h1 className="max-w-[10ch] text-5xl font-medium tracking-[-0.038em] text-text @4xl:text-[64px] @4xl:leading-[0.98]">
+        <div className="mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:min-h-[700px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)] @4xl:gap-14 @4xl:pt-14">
+          <div className="min-w-0 max-w-[540px]">
+            <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[68px] @4xl:leading-[0.98]">
               <Trans>Keep what you learn.</Trans>
             </h1>
-            <p className="mt-6 max-w-[46ch] text-lg text-text-2 @2xl:text-xl">
-              Save a term, phrase, or concept while it is fresh. Lymi enriches the missing details
-              and brings the card back when recalling it will help most.
+            <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">
+              <Trans>
+                A Finnish verb, a chess term, a line from a physics paper. Save it once, hear how
+                it’s said, and Lymi brings it back right before you’d forget.
+              </Trans>
             </p>
-
-            <div className="mt-9 flex flex-wrap items-center gap-4">
+            <div className="mt-8">
               <a href="#join" className={buttonClass("primary", "lg")}>
-                Join the private beta
-              </a>
-              <a
-                href="#how-it-works"
-                className="rounded-xs py-2 text-sm text-text underline decoration-muted underline-offset-4 transition-colors duration-150 hoverable:hover:text-amber-text"
-              >
-                See how Lymi works
+                <Trans>Join the private beta</Trans>
               </a>
             </div>
-            <p className="mt-4 text-sm text-muted">
-              Free during the private beta. Invitation only.
+            <p className="mt-3.5 text-sm text-muted">
+              <Trans>Free during the private beta.</Trans>
             </p>
-
-            <CardBelt onLampMove={onLampMove} className="-mx-5 mt-2 @2xl:hidden" />
           </div>
 
-          <div
-            className="hidden min-w-0 @2xl:block"
-            style={{
-              transform: `translate3d(${-nudge.x * 0.16}px, ${-nudge.y * 0.16}px, 0)`,
-              transition: "transform 800ms cubic-bezier(0.19, 1, 0.22, 1)",
-            }}
-          >
-            <CardColumn onLampMove={onLampMove} />
-          </div>
+          <HandOfCards />
         </div>
       </header>
 
@@ -252,12 +156,12 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               For whatever you’re learning.
             </h2>
 
-            <ul className="mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+            <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @4xl:grid-cols-4 @4xl:gap-4">
               {USE_CASES.map((useCase) => (
                 <li
                   id={`use-case-${useCase.id}`}
                   key={useCase.id}
-                  className="edge min-h-[180px] min-w-[250px] flex-1 snap-start rounded-lg bg-canvas px-6 py-7 @4xl:min-w-0"
+                  className="edge rounded-lg bg-canvas px-6 py-6 @4xl:min-h-[180px] @4xl:py-7"
                 >
                   <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
                     {useCase.title}
@@ -281,9 +185,6 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               <p className="mt-5 text-md text-text-2">
                 Look for the meaning before Lymi shows it. Then grade the recall. That one choice
                 sets the next review: difficult cards return sooner, easy ones wait.
-              </p>
-              <p className="mt-5 text-sm text-muted">
-                No points or streak pressure. Just the cards due today.
               </p>
             </div>
             <div className="min-w-0 py-4 @4xl:pl-6">
@@ -361,35 +262,24 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
             <div className="mt-12 min-w-0 overflow-hidden rounded-xl bg-canvas edge">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-edge px-6 py-5 @2xl:px-8">
                 <p className="text-xs text-muted">Create a card</p>
-                <p className="font-mono text-xs text-text-2">
-                  <span className="text-amber-text">POST</span> /api/cards
+                <p className="flex items-center gap-2 font-mono text-xs text-text-2">
+                  <span className="rounded-xs bg-plate-2 px-1.5 py-0.5 font-medium text-text">
+                    POST
+                  </span>
+                  /api/cards
                 </p>
               </div>
               <div className="grid @3xl:grid-cols-[1.08fr_0.92fr]">
-                <pre className="overflow-x-auto p-6 font-mono text-xs leading-[1.8] text-text-2 @2xl:p-8 @2xl:text-sm">
-                  <code>
-                    {"{\n"}
-                    {'  "deckId": "0mtoyiymqa34h1xeaqo",\n'}
-                    {'  "term": "hysteresis",\n'}
-                    {'  "source": "paper"\n'}
-                    {"}"}
-                  </code>
+                <pre className="doc-code overflow-x-auto p-6 @2xl:p-8">
+                  <code>{highlight(REQUEST, "json")}</code>
                 </pre>
                 <div className="border-t border-edge p-6 @2xl:p-8 @3xl:border-t-0 @3xl:border-l">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-xs text-muted">Response</p>
-                    <p className="font-mono text-xs text-amber-text">201 Created</p>
+                    <p className="font-mono text-xs text-good">201 Created</p>
                   </div>
-                  <pre className="overflow-x-auto pt-5 font-mono text-xs leading-[1.8] text-text-2 @2xl:text-sm">
-                    <code>
-                      {"{\n"}
-                      {'  "status": "added",\n'}
-                      {'  "card": {\n'}
-                      {'    "term": "hysteresis",\n'}
-                      {'    "createdBy": "api"\n'}
-                      {"  }\n"}
-                      {"}"}
-                    </code>
+                  <pre className="doc-code overflow-x-auto pt-5">
+                    <code>{highlight(RESPONSE, "json")}</code>
                   </pre>
                 </div>
               </div>

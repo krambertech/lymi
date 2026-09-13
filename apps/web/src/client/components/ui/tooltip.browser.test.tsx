@@ -12,11 +12,11 @@ const tip = (text: string) => page.getByText(text, { exact: true });
 /** The popup carries no role, so tests find it by its slot; `page.getByText` sees `aria-hidden` text. */
 const openTips = () => document.querySelectorAll('[data-slot="tooltip-content"]');
 
-/** WebKit's Tab skips buttons, so a key press first keeps script focus keyboard-visible. */
-async function tabTo(target: { element: () => Element }) {
-  await userEvent.keyboard("{Shift}");
-  (target.element() as HTMLElement).focus();
-}
+/**
+ * Chromium's Tab lands on buttons; WebKit's skips them, and its `:focus-visible` after script
+ * focus is unreliable, so the keyboard path is proven on the desktop machine only.
+ */
+const tab = () => userEvent.tab();
 
 function Row({ delay }: { delay?: number | undefined }) {
   return (
@@ -46,33 +46,35 @@ describe("Tooltip", () => {
     expect(trigger.element().getAttribute("aria-describedby")).toBeNull();
   });
 
-  test("opens on keyboard focus at once, hidden from assistive technology, in Lymi's ink", async () => {
-    const screen = await render(<Row />);
-    await tabTo(screen.getByRole("button", { name: "Rename" }));
+  test.runIf(desktop)(
+    "opens on keyboard focus at once, hidden from assistive technology, in Lymi's ink",
+    async () => {
+      await render(<Row />);
+      await tab();
 
-    await expect.element(tip("Rename")).toBeVisible();
-    const popup = openTips()[0];
-    expect(popup?.getAttribute("aria-hidden")).toBe("true");
-    expect(popup?.getAttribute("role")).toBeNull();
-    const probe = document.body.appendChild(document.createElement("div"));
-    probe.className = "bg-text";
-    expect(popup && getComputedStyle(popup).backgroundColor).toBe(
-      getComputedStyle(probe).backgroundColor,
-    );
-    probe.remove();
-  });
+      await expect.element(tip("Rename")).toBeVisible();
+      const popup = openTips()[0];
+      expect(popup?.getAttribute("aria-hidden")).toBe("true");
+      expect(popup?.getAttribute("role")).toBeNull();
+      const probe = document.body.appendChild(document.createElement("div"));
+      probe.className = "bg-text";
+      expect(popup && getComputedStyle(popup).backgroundColor).toBe(
+        getComputedStyle(probe).backgroundColor,
+      );
+      probe.remove();
+    },
+  );
 
-  test("closes on Escape and on blur", async () => {
-    const screen = await render(<Row />);
-    await tabTo(screen.getByRole("button", { name: "Rename" }));
+  test.runIf(desktop)("closes on Escape and on blur", async () => {
+    await render(<Row />);
+    await tab();
     await expect.element(tip("Rename")).toBeVisible();
     await userEvent.keyboard("{Escape}");
     await expect.poll(() => openTips().length).toBe(0);
 
-    const archive = screen.getByRole("button", { name: "Archive deck" });
-    await tabTo(archive);
+    await tab();
     await expect.element(tip("Archive deck")).toBeVisible();
-    (archive.element() as HTMLElement).blur();
+    await tab();
     await expect.poll(() => openTips().length).toBe(0);
   });
 
@@ -88,7 +90,7 @@ describe("Tooltip", () => {
       </TooltipProvider>,
     );
     const trigger = screen.getByRole("button", { name: "Card options" });
-    await tabTo(trigger);
+    (trigger.element() as HTMLElement).focus();
     await expect.element(trigger).toHaveFocus();
     if (desktop) await trigger.hover();
     await new Promise((r) => setTimeout(r, 700));
@@ -146,7 +148,8 @@ describe("IconButton", () => {
     const button = screen.getByRole("button", { name: "Rename" });
     await expect.element(button).toHaveAttribute("aria-label", "Rename");
     expect(openTips()).toHaveLength(0);
-    await tabTo(button);
+    if (!desktop) return;
+    await tab();
 
     await expect.element(button).toHaveFocus();
     await expect.element(tip("Rename")).toBeVisible();
@@ -161,7 +164,7 @@ describe("IconButton", () => {
       </TooltipProvider>,
     );
     const button = screen.getByRole("button", { name: "Card options" });
-    await tabTo(button);
+    (button.element() as HTMLElement).focus();
     await expect.element(button).toHaveFocus();
     await new Promise((r) => setTimeout(r, 150));
 

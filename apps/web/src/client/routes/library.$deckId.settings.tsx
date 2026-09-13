@@ -1,9 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { api, errorMessage } from "../lib/api";
 import { deckCardsQuery, decksQuery, joinLinkQuery } from "../lib/queries";
+import { useArchiveDeck } from "../lib/use-archive-deck";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/DeckSettingsView";
 
 export const Route = createFileRoute("/library/$deckId/settings")({
@@ -14,7 +15,6 @@ function DeckSettings() {
   const { t } = useLingui();
   const { deckId } = Route.useParams();
   const qc = useQueryClient();
-  const navigate = useNavigate();
   const decks = useQuery(decksQuery);
   const cards = useQuery(deckCardsQuery(deckId));
   const deck = decks.data?.find((d) => d.id === deckId);
@@ -41,14 +41,7 @@ function DeckSettings() {
     },
   });
 
-  const archive = useMutation({
-    mutationFn: () => api.archiveDeck(deckId),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["decks"] });
-      qc.invalidateQueries({ queryKey: ["queue"] });
-      navigate({ to: "/library", search: { archived: deckId, name: deck?.name ?? t`Deck` } });
-    },
-  });
+  const archive = useArchiveDeck(deckId, deck?.name);
 
   const turnOn = useMutation({
     mutationFn: () => api.turnOnJoinLink(deckId),

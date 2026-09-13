@@ -78,7 +78,9 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
     await expect(page.getByRole("heading", { level: 1, name: term })).toBeVisible();
     await page.getByRole("button", { name: "Card options", exact: true }).click();
     await page.getByRole("menuitem", { name: "Archive", exact: true }).click();
-    await expect(page.getByRole("status")).toContainText(`Archived “${term}”`);
+    await expect(page.getByRole("region", { name: "Notifications" })).toContainText(
+      `Archived “${term}”`,
+    );
     await expect(page.getByRole("button", { name: "Undo", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { level: 1, name: term })).toHaveCount(0);
   });

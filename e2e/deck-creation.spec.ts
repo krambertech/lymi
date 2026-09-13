@@ -197,7 +197,8 @@ test.describe("deck and card creation", () => {
 
     await page.getByRole("button", { name: "Deck options", exact: true }).click();
     await page.getByRole("menuitem", { name: "Archive deck", exact: true }).click();
-    await expect(page).toHaveURL(/\/library\?archived=/);
+    await expect(page).toHaveURL(/\/library$/);
+    await expect(page.getByRole("button", { name: "Undo", exact: true })).toBeVisible();
 
     const response = await page.request.post("/api/cards", {
       data: { deckId, term: "inaccessibile" },

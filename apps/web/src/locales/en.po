@@ -542,7 +542,7 @@ msgstr "Archived"
 msgid "Archived “{archivedTerm}”"
 msgstr "Archived “{archivedTerm}”"
 
-#: src/client/routes/library.tsx
+#: src/client/lib/use-archive-deck.ts
 msgid "Archived “{deckName}”"
 msgstr "Archived “{deckName}”"
 
@@ -830,13 +830,8 @@ msgstr "Days reviewed"
 msgid "Days reviewed each month"
 msgstr "Days reviewed each month"
 
-#: src/client/routes/library.tsx
-msgid "deck"
-msgstr "deck"
-
 #: src/client/components/AddCardSheet.tsx
-#: src/client/routes/library.$deckId.settings.tsx
-#: src/client/routes/library.$deckId.tsx
+#: src/client/lib/use-archive-deck.ts
 #: src/client/views/DeckSettingsView.tsx
 msgid "Deck"
 msgstr "Deck"
@@ -865,6 +860,10 @@ msgstr "Description"
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Disconnect"
 msgstr "Disconnect"
+
+#: src/client/routes/__root.tsx
+msgid "Dismiss"
+msgstr "Dismiss"
 
 #: src/client/components/LearnerMenu.tsx
 msgid "Docs"
@@ -1452,6 +1451,10 @@ msgstr "Nothing was shared. You can start again from {appName} whenever you like
 #: src/client/views/WordView.tsx
 msgid "Nothing yet."
 msgstr "Nothing yet."
+
+#: src/client/routes/__root.tsx
+msgid "Notifications"
+msgstr "Notifications"
 
 #: src/client/components/NotificationsSection.tsx
 msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
@@ -2114,8 +2117,8 @@ msgid "Type the term."
 msgstr "Type the term."
 
 #: src/client/components/AccountSection.tsx
+#: src/client/lib/use-archive-deck.ts
 #: src/client/routes/library.$deckId.tsx
-#: src/client/routes/library.tsx
 msgid "Undo"
 msgstr "Undo"
 

@@ -908,24 +908,12 @@
   }
 }
 
-/* Toast rises from the bottom edge and leaves faster than it came. */
-.toast-enter {
-  opacity: 1;
-  transform: translateY(0);
-  transition:
-    opacity 240ms var(--ease-out),
-    transform 240ms var(--ease-out);
-  @starting-style {
-    opacity: 0;
-    transform: translateY(12px);
+/* Under reduced motion the Base UI toast stack still reorders, but a toast arrives and leaves as a
+   crossfade. Unlayered, so it outranks the transition utility in `ui/toast.tsx`. */
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="toast"] {
+    transition-property: opacity, height;
   }
-}
-.toast-exit {
-  opacity: 0;
-  transform: translateY(8px);
-  transition:
-    opacity 140ms var(--ease-out),
-    transform 140ms var(--ease-out);
 }
 /* A spinner taking over from a label. */
 .spinner-enter {
@@ -946,10 +934,6 @@
   .complete-copy,
   .spinner-enter {
     animation: enter-fade 150ms both;
-  }
-  .toast-enter,
-  .toast-exit {
-    transform: none;
   }
 }
 

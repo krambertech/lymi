@@ -58,6 +58,10 @@ msgstr "4 days"
 msgid "9 days"
 msgstr "9 days"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "a bag"
+msgstr "a bag"
+
 #: src/components/landing/hand-cards.ts
 msgid "A brilliant first round rarely repeats in the second."
 msgstr "A brilliant first round rarely repeats in the second."
@@ -69,6 +73,10 @@ msgstr "A café, an evening or a person can all be gezellig."
 #: src/components/landing/hand-cards.ts
 msgid "A clever fix made from whatever is at hand"
 msgstr "A clever fix made from whatever is at hand"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "A coffee and a cinnamon bun, please."
+msgstr "A coffee and a cinnamon bun, please."
 
 #: src/components/landing/LandingView.tsx
 msgid "A course or lesson"
@@ -89,6 +97,10 @@ msgstr "A flat plate on a door says push; a handle says pull."
 #: src/components/landing/hand-cards.ts
 msgid "A longing for someone or something that is gone"
 msgstr "A longing for someone or something that is gone"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "a lot of"
+msgstr "a lot of"
 
 #: src/components/landing/LandingView.tsx
 msgid "A new language"
@@ -127,6 +139,10 @@ msgstr "A thermostat that turns on at 19° and off at 21°."
 msgid "A thing; a whatsit"
 msgstr "A thing; a whatsit"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "a word that makes a question"
+msgstr "a word that makes a question"
+
 #: src/components/landing/hand-cards.ts
 msgid "Accents that land between the beats"
 msgstr "Accents that land between the beats"
@@ -139,10 +155,6 @@ msgstr "Actually; really"
 #: src/components/landing/LandingView.tsx
 msgid "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
 msgstr "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
-
-#: src/components/landing/LanguagesView.tsx
-msgid "Added 6 cards to Estonian. I skipped “palun”, which you already have."
-msgstr "Added 6 cards to Estonian. I skipped “palun”, which you already have."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
@@ -185,6 +197,14 @@ msgstr "Al que madruga, Dios lo ayuda: the early bird catches the worm."
 msgid "All good?"
 msgstr "All good?"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "all right"
+msgstr "all right"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "All right. Lots of work."
+msgstr "All right. Lots of work."
+
 #: src/components/landing/NotesToCards.tsx
 msgid "Already in your deck, so it’s skipped"
 msgstr "Already in your deck, so it’s skipped"
@@ -208,6 +228,10 @@ msgstr "An idea that only sounds brilliant after a few drinks"
 #: src/components/landing/hero-words.ts
 msgid "An idea that only sounds good after a few drinks"
 msgstr "An idea that only sounds good after a few drinks"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "and"
+msgstr "and"
 
 #: src/components/landing/AssistantChat.tsx
 msgid "And what am I due to review tonight?"
@@ -240,6 +264,14 @@ msgstr "As the gaps widen"
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "Asked whether you’d like to win the lottery: “Magari!”"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "At the café"
+msgstr "At the café"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "At the shop"
+msgstr "At the shop"
+
 #: src/components/landing/hand-cards.ts
 msgid "Auditors use it to spot figures that were made up."
 msgstr "Auditors use it to spot figures that were made up."
@@ -260,17 +292,9 @@ msgstr "Back in 4 days."
 msgid "Back in 9 days."
 msgstr "Back in 9 days."
 
-#: src/components/landing/hero-words.ts
-msgid "Beautiful"
-msgstr "Beautiful"
-
 #: src/components/landing/hand-cards.ts
 msgid "Biology"
 msgstr "Biology"
-
-#: src/components/landing/hero-words.ts
-msgid "Book"
-msgstr "Book"
 
 #: src/components/landing/language-cards.ts
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
@@ -288,6 +312,10 @@ msgstr "Build"
 msgid "Buying books and letting them pile up unread"
 msgstr "Buying books and letting them pile up unread"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "by card"
+msgstr "by card"
+
 #: src/components/landing/language-cards.ts
 msgid "Can I get a coffee?"
 msgstr "Can I get a coffee?"
@@ -300,9 +328,21 @@ msgstr "Can Lymi say Estonian words aloud?"
 msgid "Can my class use it together?"
 msgstr "Can my class use it together?"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "Card or cash?"
+msgstr "Card or cash?"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Card. Thanks!"
+msgstr "Card. Thanks!"
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Cards in"
 msgstr "Cards in"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "cents"
+msgstr "cents"
 
 #: src/components/landing/cards.ts
 #: src/components/landing/hand-cards.ts
@@ -321,11 +361,10 @@ msgstr "Choose a grade to move to the next card."
 msgid "Chopsticks"
 msgstr "Chopsticks"
 
-#: src/components/landing/hero-words.ts
-msgid "Christmas"
-msgstr "Christmas"
+#: src/components/landing/estonian-scenes.ts
+msgid "cinnamon bun"
+msgstr "cinnamon bun"
 
-#: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "City; town"
 msgstr "City; town"
@@ -338,9 +377,9 @@ msgstr "Click to turn it over"
 msgid "Clocking off, and the free evening that follows"
 msgstr "Clocking off, and the free evening that follows"
 
-#: src/components/landing/hero-words.ts
-msgid "Coffee"
-msgstr "Coffee"
+#: src/components/landing/estonian-scenes.ts
+msgid "coffee"
+msgstr "coffee"
 
 #: src/components/landing/language-cards.ts
 msgid "Colleagues say it in the corridor, in emails and at the end of the day."
@@ -362,6 +401,10 @@ msgstr "Connect an assistant"
 msgid "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 
+#: src/components/landing/ConversationScenes.tsx
+msgid "Conversation"
+msgstr "Conversation"
+
 #: src/components/landing/cards.ts
 #: src/components/landing/hand-cards.ts
 msgid "Cooking"
@@ -374,6 +417,10 @@ msgstr "Cosy"
 #: src/components/landing/hand-cards.ts
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "day"
+msgstr "day"
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "DAY 0"
@@ -399,6 +446,10 @@ msgstr "Design"
 #: src/components/landing/language-cards.ts
 msgid "Deutsch · word"
 msgstr "Deutsch · word"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Do you need a bag?"
+msgstr "Do you need a bag?"
 
 #: src/components/landing/SiteFooter.tsx
 #: src/components/landing/SiteNav.tsx
@@ -445,13 +496,25 @@ msgstr "Easy"
 msgid "Economics"
 msgstr "Economics"
 
-#: src/components/landing/LanguagesView.tsx
-msgid "Eesti · new"
-msgstr "Eesti · new"
+#: src/components/landing/language-cards.ts
+msgid "Eesti · adjective"
+msgstr "Eesti · adjective"
+
+#: src/components/landing/language-cards.ts
+msgid "Eesti · noun"
+msgstr "Eesti · noun"
 
 #: src/components/landing/language-cards.ts
 msgid "Eesti · phrase"
 msgstr "Eesti · phrase"
+
+#: src/components/landing/language-cards.ts
+msgid "Eesti · verb"
+msgstr "Eesti · verb"
+
+#: src/components/landing/language-cards.ts
+msgid "Eesti · word"
+msgstr "Eesti · word"
 
 #: src/components/landing/hero-words.ts
 msgid "Effortless grace"
@@ -503,8 +566,12 @@ msgid "Estonian A2 · Tuesdays"
 msgstr "Estonian A2 · Tuesdays"
 
 #: src/components/landing/LanguagesView.tsx
-msgid "Every card says its word aloud in Estonian. The back keeps what makes it stick: the long vowel, the õ, the word that means two things at once."
-msgstr "Every card says its word aloud in Estonian. The back keeps what makes it stick: the long vowel, the õ, the word that means two things at once."
+msgid "Estonian the way it’s spoken."
+msgstr "Estonian the way it’s spoken."
+
+#: src/components/landing/estonian-scenes.ts
+msgid "euros"
+msgstr "euros"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
@@ -522,10 +589,6 @@ msgstr "Every language"
 #: src/components/landing/hand-cards.ts
 msgid "Everything prepped and to hand before you start"
 msgstr "Everything prepped and to hand before you start"
-
-#: src/components/landing/hero-words.ts
-msgid "Everything; all"
-msgstr "Everything; all"
 
 #: src/components/landing/EnrichDemo.tsx
 msgid "Example"
@@ -563,9 +626,17 @@ msgstr "Finns often name it as part of the national character."
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "For a cashier, a builder, or a friend who is studying."
 
+#: src/components/landing/estonian-scenes.ts
+msgid "For here or to go?"
+msgstr "For here or to go?"
+
 #: src/components/landing/LandingView.tsx
 msgid "For whatever you’re learning."
 msgstr "For whatever you’re learning."
+
+#: src/components/landing/estonian-scenes.ts
+msgid "for you"
+msgstr "for you"
 
 #: src/components/landing/ReviewDemo.tsx
 msgid "Forgot"
@@ -620,6 +691,10 @@ msgstr "Gladly"
 msgid "God willing"
 msgstr "God willing"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "good"
+msgstr "good"
+
 #: src/components/landing/ReviewDemo.tsx
 msgid "Good"
 msgstr "Good"
@@ -636,10 +711,18 @@ msgstr "Good luck! Literally, “into the wolf’s mouth”"
 msgid "Good morning"
 msgstr "Good morning"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "Good, thanks! And you?"
+msgstr "Good, thanks! And you?"
+
 #: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "Goodbye"
 msgstr "Goodbye"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Hang in there!"
+msgstr "Hang in there!"
 
 #: src/components/landing/ReviewDemo.tsx
 msgid "Hard"
@@ -649,18 +732,25 @@ msgstr "Hard"
 msgid "Have you eaten? A way to say hello"
 msgstr "Have you eaten? A way to say hello"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "have; am"
+msgstr "have; am"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "hello"
+msgstr "hello"
+
 #: src/components/landing/hero-words.ts
 msgid "Hello"
 msgstr "Hello"
 
-#: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "Hello; bless you"
 msgstr "Hello; bless you"
 
-#: src/components/landing/LanguagesView.tsx
-msgid "Here are my notes from today’s Estonian class. Add the new words to my deck."
-msgstr "Here are my notes from today’s Estonian class. Add the new words to my deck."
+#: src/components/landing/estonian-scenes.ts
+msgid "here"
+msgstr "here"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Here are my notes from today’s Spanish lesson. Add the new words to my deck."
@@ -669,6 +759,26 @@ msgstr "Here are my notes from today’s Spanish lesson. Add the new words to my
 #: src/components/landing/hero-words.ts
 msgid "Hi"
 msgstr "Hi"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Hi! Do you have a loyalty card?"
+msgstr "Hi! Do you have a loyalty card?"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Hi! How’s it going?"
+msgstr "Hi! How’s it going?"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Hi! What can I get you?"
+msgstr "Hi! What can I get you?"
+
+#: src/components/landing/ConversationScenes.tsx
+msgid "Hide translations"
+msgstr "Hide translations"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "how"
+msgstr "how"
 
 #: src/components/landing/cards.ts
 msgid "How likely data this extreme would be if nothing were going on"
@@ -744,9 +854,21 @@ msgstr "Illustration only. Your review timing adapts to what you remember."
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "In a bar in Spain, you ask them to “put” you one."
 
+#: src/components/landing/estonian-scenes.ts
+msgid "in cash"
+msgstr "in cash"
+
 #: src/components/landing/hand-cards.ts
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "In many real data sets, about 30% of numbers start with a 1"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "is"
+msgstr "is"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "is; have"
+msgstr "is; have"
 
 #: src/components/landing/language-cards.ts
 msgid "It depends"
@@ -755,6 +877,10 @@ msgstr "It depends"
 #: src/components/landing/hero-words.ts
 msgid "It doesn’t matter"
 msgstr "It doesn’t matter"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "it goes"
+msgstr "it goes"
 
 #: src/components/landing/language-cards.ts
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
@@ -938,6 +1064,10 @@ msgstr "Longing for what is gone"
 msgid "look forward to"
 msgstr "look forward to"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "loyalty card"
+msgstr "loyalty card"
+
 #: src/components/landing/LandingView.tsx
 msgid "Lymi · Keep what you learn"
 msgstr "Lymi · Keep what you learn"
@@ -1032,6 +1162,10 @@ msgstr "Named by two Australian scientists in 1964."
 msgid "Nature"
 msgstr "Nature"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "needed"
+msgstr "needed"
+
 #: src/components/landing/language-cards.ts
 msgid "Neuter, not feminine: every noun ending in -chen takes das."
 msgstr "Neuter, not feminine: every noun ending in -chen takes das."
@@ -1049,13 +1183,21 @@ msgstr "Next card"
 msgid "Next card: {0}"
 msgstr "Next card: {0}"
 
+#: src/components/landing/ConversationScenes.tsx
+msgid "Next: {nextTitle}"
+msgstr "Next: {nextTitle}"
+
 #: src/components/landing/language-cards.ts
 msgid "Nice to meet you; thanks in advance"
 msgstr "Nice to meet you; thanks in advance"
 
-#: src/components/landing/LanguagesView.tsx
-msgid "Nine. Today’s new words will start coming up a few at a time."
-msgstr "Nine. Today’s new words will start coming up a few at a time."
+#: src/components/landing/estonian-scenes.ts
+msgid "No, I don’t."
+msgstr "No, I don’t."
+
+#: src/components/landing/estonian-scenes.ts
+msgid "no; not"
+msgstr "no; not"
 
 #: src/components/landing/language-cards.ts
 msgid "Not “I want well”. It’s how you accept a coffee."
@@ -1081,6 +1223,10 @@ msgstr "Often called Iceland’s unofficial motto."
 msgid "Okay"
 msgstr "Okay"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "one"
+msgstr "one"
+
 #: src/components/landing/language-cards.ts
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "One word for asking, handing something over and answering thanks."
@@ -1094,11 +1240,14 @@ msgstr "Only when you ask your assistant to. Anything it writes on a card is mar
 msgid "Open Lymi"
 msgstr "Open Lymi"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "or"
+msgstr "or"
+
 #: src/components/landing/AssistantMarks.tsx
 msgid "Other apps"
 msgstr "Other apps"
 
-#: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "Personal ID code"
 msgstr "Personal ID code"
@@ -1116,6 +1265,10 @@ msgstr "phrase"
 msgid "Physics"
 msgstr "Physics"
 
+#: src/components/landing/ConversationScenes.tsx
+msgid "Play again"
+msgstr "Play again"
+
 #: src/components/landing/HandOfCards.tsx
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
@@ -1124,6 +1277,10 @@ msgstr "Play pronunciation"
 #: src/components/landing/language-cards.ts
 msgid "Pleasant; cosy"
 msgstr "Pleasant; cosy"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "please"
+msgstr "please"
 
 #: src/components/landing/hero-words.ts
 msgid "Please"
@@ -1166,6 +1323,10 @@ msgstr "Psychology"
 msgid "public transport"
 msgstr "public transport"
 
+#: src/components/landing/language-cards.ts
+msgid "Public transport"
+msgstr "Public transport"
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Questions before you start."
 msgstr "Questions before you start."
@@ -1183,6 +1344,7 @@ msgid "Reading your notes…"
 msgstr "Reading your notes…"
 
 #: src/components/landing/LandingView.tsx
+#: src/components/landing/LanguagesView.tsx
 msgid "Recall first. Reveal second."
 msgstr "Recall first. Reveal second."
 
@@ -1266,10 +1428,6 @@ msgstr "Said to cut a rambling story down to its point."
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
 
-#: src/components/landing/hero-words.ts
-msgid "Sauna"
-msgstr "Sauna"
-
 #: src/components/landing/LandingView.tsx
 msgid "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in what’s missing, says it aloud, and brings the card back before you forget. Free during the private beta."
 msgstr "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in what’s missing, says it aloud, and brings the card back before you forget. Free during the private beta."
@@ -1277,6 +1435,10 @@ msgstr "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in
 #: src/components/landing/EnrichDemo.tsx
 msgid "Say it"
 msgstr "Say it"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Saying hello"
+msgstr "Saying hello"
 
 #: src/components/landing/hand-cards.ts
 msgid "Schnaps, spirits, plus Idee, idea."
@@ -1289,6 +1451,10 @@ msgstr "See how it works"
 #: src/components/landing/hero-words.ts
 msgid "See you soon"
 msgstr "See you soon"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "see you; literally, we see"
+msgstr "see you; literally, we see"
 
 #: src/components/landing/AssistantChat.tsx
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
@@ -1305,6 +1471,10 @@ msgstr "Shortcuts"
 #: src/components/landing/ReviewDemo.tsx
 msgid "Show the meaning"
 msgstr "Show the meaning"
+
+#: src/components/landing/ConversationScenes.tsx
+msgid "Show translations"
+msgstr "Show translations"
 
 #: src/components/landing/language-cards.ts
 msgid "sight (to see)"
@@ -1338,7 +1508,7 @@ msgstr "So; well then"
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
 
-#: src/components/landing/hero-words.ts
+#: src/components/landing/language-cards.ts
 msgid "Sorry; excuse me"
 msgstr "Sorry; excuse me"
 
@@ -1391,6 +1561,10 @@ msgstr "Staying at the table to talk after a meal"
 msgid "Sticking with something because of what you have already put in"
 msgstr "Sticking with something because of what you have already put in"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "strength; hang in there"
+msgstr "strength; hang in there"
+
 #: src/components/landing/hero-words.ts
 msgid "Stubborn grit"
 msgstr "Stubborn grit"
@@ -1410,10 +1584,6 @@ msgstr "Successful reviews buy time"
 #: src/components/landing/hand-cards.ts
 msgid "Sugars and amino acids reacting in the heat."
 msgstr "Sugars and amino acids reacting in the heat."
-
-#: src/components/landing/hero-words.ts
-msgid "Summer"
-msgstr "Summer"
 
 #: src/components/landing/cards.ts
 msgid "Sunlight coming through leaves"
@@ -1467,6 +1637,10 @@ msgstr "Tape, a spare part and some nerve."
 msgid "Tea"
 msgstr "Tea"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "ten"
+msgstr "ten"
+
 #: src/components/landing/EnrichDemo.tsx
 msgid "Term"
 msgstr "Term"
@@ -1479,6 +1653,10 @@ msgstr "Terms"
 msgid "Terms and concepts from a new role, project, or technical field."
 msgstr "Terms and concepts from a new role, project, or technical field."
 
+#: src/components/landing/estonian-scenes.ts
+msgid "thank you"
+msgstr "thank you"
+
 #: src/components/landing/hero-words.ts
 msgid "Thank you"
 msgstr "Thank you"
@@ -1488,9 +1666,17 @@ msgstr "Thank you"
 msgid "Thanks for your hard work"
 msgstr "Thanks for your hard work"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "Thanks, have a good day!"
+msgstr "Thanks, have a good day!"
+
 #: src/components/landing/hero-words.ts
 msgid "Thanks; cheers"
 msgstr "Thanks; cheers"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Thanks! See you!"
+msgstr "Thanks! See you!"
 
 #: src/components/landing/AssistantChat.tsx
 msgid "That chess term you just used, add it to my deck."
@@ -1583,6 +1769,10 @@ msgstr "The right to be brought before a judge rather than held without charge"
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "The same word for someone you love and a price you’d rather not pay."
 
+#: src/components/landing/LanguagesView.tsx
+msgid "The small conversations of a first week in Estonia. Point at any word to see what it means, and keep the ones you want as cards."
+msgstr "The small conversations of a first week in Estonia. Point at any word to see what it means, and keep the ones you want as cards."
+
 #: src/components/landing/hero-words.ts
 msgid "The steam in a sauna"
 msgstr "The steam in a sauna"
@@ -1599,7 +1789,7 @@ msgstr "To belong; to be heard"
 msgid "to book"
 msgstr "to book"
 
-#: src/components/landing/LanguagesView.tsx
+#: src/components/landing/language-cards.ts
 msgid "To book; to reserve"
 msgstr "To book; to reserve"
 
@@ -1615,6 +1805,14 @@ msgstr "To feel like; to look forward to"
 #: src/components/landing/language-cards.ts
 msgid "To get up early"
 msgstr "To get up early"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "to go"
+msgstr "to go"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "To go, please."
+msgstr "To go, please."
 
 #: src/components/landing/hero-words.ts
 msgid "To meet up"
@@ -1654,6 +1852,7 @@ msgid "Too many attempts. Wait a minute, then try again."
 msgstr "Too many attempts. Wait a minute, then try again."
 
 #: src/components/landing/LandingView.tsx
+#: src/components/landing/LanguagesView.tsx
 msgid "Try to recall the meaning before Lymi shows it. Then grade how well you remembered. Difficult cards return sooner; easy ones wait."
 msgstr "Try to recall the meaning before Lymi shows it. Then grade how well you remembered. Difficult cards return sooner; easy ones wait."
 
@@ -1672,6 +1871,14 @@ msgstr "Turn your notes into cards."
 #: src/components/landing/LanguagesView.tsx
 msgid "Twelve. Today’s new words will start coming up a few at a time."
 msgstr "Twelve. Today’s new words will start coming up a few at a time."
+
+#: src/components/landing/estonian-scenes.ts
+msgid "two"
+msgstr "two"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Two euros ten."
+msgstr "Two euros ten."
 
 #: src/components/BetaSignup.tsx
 msgid "Unable to reach the beta list. Check your connection and try again."
@@ -1708,6 +1915,14 @@ msgstr "We use your email only for this access request. It does not create an ac
 #: src/components/landing/ApiConnections.tsx
 msgid "Websites"
 msgstr "Websites"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "well"
+msgstr "well"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "what"
+msgstr "what"
 
 #: src/components/landing/hand-cards.ts
 msgid "What an object’s shape tells you to do with it"
@@ -1769,6 +1984,10 @@ msgstr "word"
 msgid "Words and phrases from lessons, conversations, and reading."
 msgstr "Words and phrases from lessons, conversations, and reading."
 
+#: src/components/landing/estonian-scenes.ts
+msgid "work"
+msgstr "work"
+
 #: src/components/landing/hand-cards.ts
 msgid "Writing"
 msgstr "Writing"
@@ -1777,6 +1996,10 @@ msgstr "Writing"
 msgid "Written with the characters for tree, leak and sun."
 msgstr "Written with the characters for tree, leak and sun."
 
+#: src/components/landing/estonian-scenes.ts
+msgid "yes"
+msgstr "yes"
+
 #: src/components/landing/hero-words.ts
 msgid "Yes, actually"
 msgstr "Yes, actually"
@@ -1784,6 +2007,10 @@ msgstr "Yes, actually"
 #: src/components/landing/language-cards.ts
 msgid "Yes, actually: to contradict a no"
 msgstr "Yes, actually: to contradict a no"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Yes, one, please."
+msgstr "Yes, one, please."
 
 #: src/components/landing/hero-words.ts
 msgid "Yes, please"
@@ -1809,9 +2036,21 @@ msgstr "Yes. Press play on any card to hear it in Estonian."
 msgid "Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added."
 msgstr "Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added."
 
+#: src/components/landing/estonian-scenes.ts
+msgid "you"
+msgstr "you"
+
+#: src/components/landing/ConversationScenes.tsx
+msgid "You"
+msgstr "You"
+
 #: src/components/landing/hero-words.ts
 msgid "You can do it!"
 msgstr "You can do it!"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "you have (with “on”)"
+msgstr "you have (with “on”)"
 
 #: src/components/landing/ApiConnections.tsx
 msgid "Your own app"

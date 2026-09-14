@@ -8,14 +8,18 @@ import type { BetaSource } from "../../lib/api";
 import { productUrl } from "../../lib/origins";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
 import { AssistantMarks } from "./AssistantMarks";
+import { ConversationScenes } from "./ConversationScenes";
 import type { SampleCard } from "./cards";
+import { ESTONIAN_SCENES } from "./estonian-scenes";
 import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { HandOfCards } from "./HandOfCards";
-import { ESTONIAN_FRAMES, WORD_FRAMES, type WordFrame } from "./hero-words";
+import { Hero } from "./Hero";
+import { WORD_FRAMES, type WordFrame } from "./hero-words";
 import { JoinSection } from "./JoinSection";
 import {
   ESTONIAN,
   ESTONIAN_HAND,
+  ESTONIAN_REVIEW,
   type LanguageCard,
   LEARNING_LANGUAGES,
   type LearningLanguage,
@@ -23,6 +27,7 @@ import {
 } from "./language-cards";
 import { NotesToCards } from "./NotesToCards";
 import { type Question, Questions } from "./Questions";
+import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
 import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SiteFooter } from "./SiteFooter";
@@ -40,12 +45,6 @@ const SPANISH_ADDED: SampleCard = {
   language: "es",
   meaning: msg`To miss someone or something`,
 };
-const ESTONIAN_ADDED: SampleCard = {
-  label: msg`Eesti · new`,
-  term: "broneerima",
-  language: "et",
-  meaning: msg`To book; to reserve`,
-};
 
 interface PageProps {
   frames: WordFrame[];
@@ -61,6 +60,39 @@ interface PageProps {
   questions: Question[];
   joinTitle: ReactNode;
   source: BetaSource;
+}
+
+/** The notes photographed into cards, with the assistants that can do the reading. */
+function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
+  return (
+    <section
+      aria-labelledby="notes-title"
+      className="border-y border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+    >
+      <div className="mx-auto max-w-[1040px]">
+        <div className="mx-auto max-w-[640px] text-center">
+          <div id="notes-title">
+            <SectionTitle>
+              <Trans>Turn your notes into cards.</Trans>
+            </SectionTitle>
+          </div>
+          <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-text-2">
+            <Trans>
+              Take a photo of your notebook or the whiteboard and send it to your assistant. It
+              reads the handwriting, adds the new words to your deck and leaves out the ones you
+              already have.
+            </Trans>
+          </p>
+          <div className="mt-6">
+            <AssistantMarks compact />
+          </div>
+        </div>
+        <div className="mt-12">
+          <NotesToCards notebooks={notebooks} />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 /** The stack of cards, with a switch between every language and one when the page covers several. */
@@ -133,33 +165,7 @@ function LanguagePage(props: PageProps) {
       </header>
 
       <main>
-        <section
-          aria-labelledby="notes-title"
-          className="border-y border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
-        >
-          <div className="mx-auto max-w-[1040px]">
-            <div className="mx-auto max-w-[640px] text-center">
-              <div id="notes-title">
-                <SectionTitle>
-                  <Trans>Turn your notes into cards.</Trans>
-                </SectionTitle>
-              </div>
-              <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-text-2">
-                <Trans>
-                  Take a photo of your notebook or the whiteboard and send it to your assistant. It
-                  reads the handwriting, adds the new words to your deck and leaves out the ones you
-                  already have.
-                </Trans>
-              </p>
-              <div className="mt-6">
-                <AssistantMarks compact />
-              </div>
-            </div>
-            <div className="mt-12">
-              <NotesToCards notebooks={props.notebooks} />
-            </div>
-          </div>
-        </section>
+        <NotesSection notebooks={props.notebooks} />
 
         <HandSection body={props.handBody} hand={props.hand} languages={props.handLanguages} />
 
@@ -332,83 +338,124 @@ export function LanguagesView() {
   );
 }
 
-/** The page for people learning Estonian: its words, its notes and its class, all the way down. */
+/** The page for people learning Estonian: its words up top, then its notes, reviews and small talk. */
 export function EstonianView() {
-  const { t } = useLingui();
+  const openAppUrl = new URL("/", productUrl()).toString();
 
   return (
-    <LanguagePage
-      frames={ESTONIAN_FRAMES}
-      heroLabel={t`Keep what you learn in Estonian.`}
-      heroLede={
-        <Trans>
-          The phrase from Tuesday’s class, the word on a letter from the tax office, the thing the
-          cashier said twice. Save it in a few seconds, hear it said, and Lymi brings it back right
-          before you’d forget.
-        </Trans>
-      }
-      notebooks={[ESTONIAN]}
-      hand={ESTONIAN_HAND}
-      handBody={
-        <Trans>
-          Every card says its word aloud in Estonian. The back keeps what makes it stick: the long
-          vowel, the õ, the word that means two things at once.
-        </Trans>
-      }
-      conversation={[
-        {
-          from: "you",
-          body: (
+    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+      <header>
+        <SiteNav openAppUrl={openAppUrl} current="languages" />
+        <Hero
+          title={<Trans>Keep what you learn in Estonian.</Trans>}
+          lede={
             <Trans>
-              Here are my notes from today’s Estonian class. Add the new words to my deck.
+              The phrase from Tuesday’s class, the word on a letter from the tax office, the thing
+              the cashier said twice. Save it in a few seconds, hear it said, and Lymi brings it
+              back right before you’d forget.
             </Trans>
-          ),
-        },
-        {
-          from: "them",
-          body: (
-            <Added card={ESTONIAN_ADDED}>
-              <Trans>Added 6 cards to Estonian. I skipped “palun”, which you already have.</Trans>
-            </Added>
-          ),
-        },
-        { from: "you", body: <Trans>How many are waiting for me tonight?</Trans> },
-        {
-          from: "them",
-          body: <Trans>Nine. Today’s new words will start coming up a few at a time.</Trans>,
-        },
-      ]}
-      classDeck={{ name: ESTONIAN.classDeck.name, language: "et", cards: classCards(ESTONIAN) }}
-      questions={[
-        {
-          id: "audio",
-          question: <Trans>Can Lymi say Estonian words aloud?</Trans>,
-          answer: <Trans>Yes. Press play on any card to hear it in Estonian.</Trans>,
-        },
-        {
-          id: "letters",
-          question: <Trans>Does it keep õ, ä, ö and ü apart?</Trans>,
-          answer: (
+          }
+          cards={ESTONIAN_HAND}
+          layout="stack"
+        />
+      </header>
+
+      <main>
+        <NotesSection notebooks={[ESTONIAN]} />
+
+        <FeatureSection
+          id="how-it-works"
+          title={<Trans>Recall first. Reveal second.</Trans>}
+          body={
             <Trans>
-              Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two
-              different cards.
+              Try to recall the meaning before Lymi shows it. Then grade how well you remembered.
+              Difficult cards return sooner; easy ones wait.
             </Trans>
-          ),
-        },
-        {
-          id: "class",
-          question: <Trans>Can my class use it together?</Trans>,
-          answer: (
+          }
+        >
+          <ReviewDemo cards={ESTONIAN_REVIEW} />
+        </FeatureSection>
+
+        <section
+          aria-labelledby="scenes-title"
+          className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+        >
+          <div className="mx-auto max-w-[1040px]">
+            <div className="mx-auto max-w-[640px] text-center">
+              <div id="scenes-title">
+                <SectionTitle>
+                  <Trans>Estonian the way it’s spoken.</Trans>
+                </SectionTitle>
+              </div>
+              <p className="mx-auto mt-5 max-w-[48ch] text-md text-pretty text-text-2">
+                <Trans>
+                  The small conversations of a first week in Estonia. Point at any word to see what
+                  it means, and keep the ones you want as cards.
+                </Trans>
+              </p>
+            </div>
+            <div className="mt-12">
+              <ConversationScenes scenes={ESTONIAN_SCENES} language="et" />
+            </div>
+          </div>
+        </section>
+
+        <FeatureSection
+          demoFirst
+          title={<Trans>Share one deck with your class.</Trans>}
+          body={
             <Trans>
-              Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets
-              each new card as it’s added.
+              Make a deck for the class and send its join link. Every card you add after a lesson
+              reaches everyone who joined, and each person keeps their own schedule.
             </Trans>
-          ),
-        },
-        ...commonQuestions(),
-      ]}
-      joinTitle={<Trans>Keep the Estonian from your next class.</Trans>}
-      source="estonian"
-    />
+          }
+        >
+          <SharedDeckDemo
+            name={ESTONIAN.classDeck.name}
+            language="et"
+            cards={classCards(ESTONIAN)}
+          />
+        </FeatureSection>
+
+        <Questions
+          title={<Trans>Questions before you start.</Trans>}
+          items={[
+            {
+              id: "audio",
+              question: <Trans>Can Lymi say Estonian words aloud?</Trans>,
+              answer: <Trans>Yes. Press play on any card to hear it in Estonian.</Trans>,
+            },
+            {
+              id: "letters",
+              question: <Trans>Does it keep õ, ä, ö and ü apart?</Trans>,
+              answer: (
+                <Trans>
+                  Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are
+                  two different cards.
+                </Trans>
+              ),
+            },
+            {
+              id: "class",
+              question: <Trans>Can my class use it together?</Trans>,
+              answer: (
+                <Trans>
+                  Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins
+                  gets each new card as it’s added.
+                </Trans>
+              ),
+            },
+            ...commonQuestions(),
+          ]}
+        />
+
+        <JoinSection
+          title={<Trans>Keep the Estonian from your next class.</Trans>}
+          source="estonian"
+        />
+      </main>
+
+      <SiteFooter openAppUrl={openAppUrl} />
+    </div>
   );
 }

@@ -49,6 +49,15 @@ test("a language learner can reach the languages pages and turn notes and cards 
     );
   });
 
+  await test.step("an Estonian conversation plays out and explains its words", async () => {
+    await page.getByRole("button", { name: "At the café", exact: true }).click();
+    const word = page.getByRole("button", { name: "kaneelisai", exact: true });
+    await word.focus();
+    await expect(page.getByRole("tooltip", { name: "cinnamon bun" })).toBeVisible();
+    await page.getByRole("button", { name: "Show translations" }).click();
+    await expect(page.getByText("A coffee and a cinnamon bun, please.")).toBeVisible();
+  });
+
   await test.step("both pages are in the sitemap", async () => {
     const sitemap = await (await request.get(`${publicSite}/sitemap.xml`)).text();
     expect(sitemap).toContain("<loc>https://lymi.app/languages</loc>");

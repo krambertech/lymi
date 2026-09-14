@@ -12,6 +12,7 @@ import { SettingsGroup } from "../components/SettingsGroup";
 import { Skeleton } from "../components/Skeleton";
 import { Field, FieldDescription, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
+import { RadioGroup } from "../components/ui/radio-group";
 import { Textarea } from "../components/ui/textarea";
 import type { DeckSummary } from "../lib/api";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./Shell";
@@ -264,15 +265,18 @@ function SharingGroup({
           <Skeleton className="h-[74px]" />
         </div>
       ) : (
-        <fieldset className="grid gap-2">
-          <legend className="sr-only">
-            <Trans>Who can join this deck</Trans>
-          </legend>
+        <RadioGroup<"private" | "link">
+          aria-label={t`Who can join this deck`}
+          name={name}
+          value={shared ? "link" : "private"}
+          // Neither choice takes effect here: private asks first, and link waits for the server.
+          onValueChange={(choice) => {
+            if (choice === "private") setConfirming(true);
+            else if (!pending) onTurnOn();
+          }}
+        >
           <RadioCard
-            name={name}
             value="private"
-            checked={!shared}
-            onChange={() => setConfirming(true)}
             title={members === 0 ? t`Private` : t`Link off`}
             description={
               members === 0 ? (
@@ -294,17 +298,16 @@ function SharingGroup({
           >
             <RadioCard
               bare
-              name={name}
               value="link"
-              checked={shared}
-              onChange={() => {
-                if (!shared && !pending) onTurnOn();
-              }}
               title={t`Shared by link`}
               description={t`Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress.`}
             />
             {shared && (
-              <div className="enter-fade grid gap-3 px-3.5 pb-3.5 sm:ps-[calc(0.875rem+18px+0.75rem)]">
+              // biome-ignore lint/a11y/noStaticElementInteractions: a boundary, so arrow keys on the link and its buttons stay out of the choice above.
+              <div
+                className="enter-fade grid gap-3 px-3.5 pb-3.5 sm:ps-[calc(0.875rem+18px+0.75rem)]"
+                onKeyDown={(event) => event.stopPropagation()}
+              >
                 {link ? (
                   <CopyField value={link.url} label={t`Join link`} singleLine />
                 ) : (
@@ -363,7 +366,7 @@ function SharingGroup({
               </div>
             )}
           </div>
-        </fieldset>
+        </RadioGroup>
       )}
       {error && (
         <p className="text-sm text-danger" role="alert">

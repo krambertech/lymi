@@ -9,9 +9,9 @@ import { useInstallState } from "../lib/pwa-install";
 import { Button } from "./Button";
 import { InstallDialog } from "./InstallDialog";
 import { SettingsGroup } from "./SettingsGroup";
-import { Switch } from "./Switch";
-import { Field, FieldError, FieldLabel } from "./ui/field";
+import { Field, FieldContent, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
+import { Switch } from "./ui/switch";
 
 const DEFAULT_TIME: ReminderTime = "19:00";
 
@@ -206,34 +206,41 @@ export function NotificationsSection() {
         </p>
       ) : (
         <div className="edge grid rounded-md bg-plate">
-          <Switch
-            className="px-4 py-3.5"
-            checked={enabled}
+          <Field
+            orientation="horizontal"
             disabled={unusable || busy || permissionBlocked}
-            onChange={(on) => void (on ? enable() : disable())}
-            leading={
-              <span
-                className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
-                aria-hidden="true"
-              >
-                <Bell className="size-4" />
-              </span>
-            }
-            label={t`Send a daily reminder`}
-            description={
-              needsInstall
-                ? t`Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there.`
-                : blocked === "unconfigured"
-                  ? t`Not available on this server yet.`
-                  : blocked === "unreachable"
-                    ? t`Couldn’t check this device. Reload to try again.`
-                    : permissionBlocked
-                      ? t`Notifications are blocked. Allow them in your browser or device settings.`
-                      : enabled
-                        ? t`At ${savedTime}, ${zone} time, only on days with cards due.`
-                        : t`Only on days with cards due.`
-            }
-          />
+            className="gap-3 px-4 py-3.5"
+          >
+            <span
+              className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
+              aria-hidden="true"
+            >
+              <Bell className="size-4" />
+            </span>
+            <FieldContent className="gap-0.5">
+              <FieldLabel className="text-base text-text">{t`Send a daily reminder`}</FieldLabel>
+              <FieldDescription>
+                {needsInstall
+                  ? t`Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there.`
+                  : blocked === "unconfigured"
+                    ? t`Not available on this server yet.`
+                    : blocked === "unreachable"
+                      ? t`Couldn’t check this device. Reload to try again.`
+                      : permissionBlocked
+                        ? t`Notifications are blocked. Allow them in your browser or device settings.`
+                        : enabled
+                          ? t`At ${savedTime}, ${zone} time, only on days with cards due.`
+                          : t`Only on days with cards due.`}
+              </FieldDescription>
+            </FieldContent>
+            {/* One line tall at the label's size, so the track centres on the label's first line. */}
+            <span className="flex h-lh shrink-0 items-center text-base">
+              <Switch
+                checked={enabled}
+                onCheckedChange={(on) => void (on ? enable() : disable())}
+              />
+            </span>
+          </Field>
           {enabled && (
             <div className="flex flex-wrap items-end gap-3 border-t border-edge px-4 py-3.5">
               <Field className="w-40">

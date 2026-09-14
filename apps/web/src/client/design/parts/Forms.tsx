@@ -1,11 +1,11 @@
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../components/Button";
-import { Checkbox } from "../../components/Checkbox";
 import { CopyField } from "../../components/CopyField";
 import { LanguageField } from "../../components/DeckFields";
+import { RadioCard } from "../../components/RadioCard";
 import { Segmented } from "../../components/Segmented";
-import { Switch } from "../../components/Switch";
+import { Checkbox } from "../../components/ui/checkbox";
 import {
   Combobox,
   ComboboxCollection,
@@ -31,6 +31,7 @@ import {
   FieldSet,
 } from "../../components/ui/field";
 import { Input } from "../../components/ui/input";
+import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -41,6 +42,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
+import { Switch } from "../../components/ui/switch";
 import { Textarea } from "../../components/ui/textarea";
 import { Variants } from "../Frame";
 import type { Group } from "./types";
@@ -290,7 +292,7 @@ export const forms: Group = {
       slug: "segmented",
       name: "Segmented",
       source: "components/Segmented.tsx",
-      note: "Two to four views of the same thing. A plate-2 track with the chosen plate inside it, the same shape as the phone’s navigation pill.",
+      note: "Two to four views of the same thing, built on the Toggle Group in components/ui/toggle-group.tsx. A plate-2 track with the chosen plate inside it, the same shape as the phone’s navigation pill. The plate springs to a pointer’s choice and jumps for a key.",
       Demo: function SegmentedDemo() {
         const [seg, setSeg] = useState("recognise");
         return (
@@ -298,7 +300,7 @@ export const forms: Group = {
             items={[
               {
                 label: "Medium",
-                note: "In forms, the same height as every other control.",
+                note: "In forms, the same height as every other control. Arrow keys walk the options; Space or Enter chooses.",
                 render: () => (
                   <Segmented label="Direction" value={seg} onChange={setSeg} options={DIRECTIONS} />
                 ),
@@ -316,6 +318,30 @@ export const forms: Group = {
                   />
                 ),
               },
+              {
+                label: "Disabled option",
+                note: "Read out with the others, and skipped by the arrows.",
+                render: () => (
+                  <Segmented
+                    label="Direction"
+                    value={seg === "both" ? "recognise" : seg}
+                    onChange={setSeg}
+                    options={DIRECTIONS.map((o) => ({ ...o, disabled: o.value === "both" }))}
+                  />
+                ),
+              },
+              {
+                label: "Disabled",
+                render: () => (
+                  <Segmented
+                    disabled
+                    label="Direction"
+                    value={seg}
+                    onChange={setSeg}
+                    options={DIRECTIONS}
+                  />
+                ),
+              },
             ]}
           />
         );
@@ -324,8 +350,8 @@ export const forms: Group = {
     {
       slug: "switch",
       name: "Switch",
-      source: "components/Switch.tsx",
-      note: "A setting that applies the moment it changes. Nothing next to it has a Save button.",
+      source: "components/ui/switch.tsx",
+      note: "A setting that applies the moment it changes. Nothing next to it has a Save button. Held, the thumb stretches; let go, it springs across.",
       Demo: function SwitchDemo() {
         const [on, setOn] = useState(true);
         const [off, setOff] = useState(false);
@@ -334,18 +360,47 @@ export const forms: Group = {
             items={[
               {
                 label: "On",
-                render: () => <Switch checked={on} onChange={setOn} label="Show AI examples" />,
+                render: () => (
+                  <Field orientation="horizontal" className={`${box} justify-between gap-4`}>
+                    <FieldLabel className="text-base text-text">Show AI examples</FieldLabel>
+                    <Switch checked={on} onCheckedChange={setOn} />
+                  </Field>
+                ),
               },
               {
                 label: "Off, with a description",
-                note: "One more sentence when the label cannot say it all.",
+                note: "One more sentence when the label cannot say it all. The track centres on the label’s first line.",
                 render: () => (
-                  <Switch
-                    checked={off}
-                    onChange={setOff}
-                    label="Play audio automatically"
-                    description="Off by default. Audio always has a visible control."
-                  />
+                  <Field orientation="horizontal" className={`${box} gap-4`}>
+                    <FieldContent className="gap-0.5">
+                      <FieldLabel className="text-base text-text">
+                        Play audio automatically
+                      </FieldLabel>
+                      <FieldDescription>
+                        Off by default. Audio always has a visible control.
+                      </FieldDescription>
+                    </FieldContent>
+                    <span className="flex h-lh shrink-0 items-center text-base">
+                      <Switch checked={off} onCheckedChange={setOff} />
+                    </span>
+                  </Field>
+                ),
+              },
+              {
+                label: "Disabled",
+                note: "The description stays readable, because it is usually the reason.",
+                render: () => (
+                  <Field orientation="horizontal" disabled className={`${box} gap-4`}>
+                    <FieldContent className="gap-0.5">
+                      <FieldLabel className="text-base text-text">Send a daily reminder</FieldLabel>
+                      <FieldDescription>
+                        Notifications are blocked. Allow them in your browser settings.
+                      </FieldDescription>
+                    </FieldContent>
+                    <span className="flex h-lh shrink-0 items-center text-base">
+                      <Switch checked={false} />
+                    </span>
+                  </Field>
                 ),
               },
             ]}
@@ -356,28 +411,133 @@ export const forms: Group = {
     {
       slug: "checkbox",
       name: "Checkbox",
-      source: "components/Checkbox.tsx",
-      note: "For lists, and for a second choice that rides along with an action.",
+      source: "components/ui/checkbox.tsx",
+      note: "For lists, and for a second choice that rides along with an action. The box gives as it catches the tick, and the tick draws across.",
       Demo: function CheckboxDemo() {
         const [off, setOff] = useState(false);
         const [on, setOn] = useState(true);
+        const [agreed, setAgreed] = useState(false);
         return (
           <Variants
             items={[
               {
                 label: "Unchecked",
                 render: () => (
-                  <Checkbox
-                    checked={off}
-                    onChange={setOff}
-                    label="Also archive its review history"
-                  />
+                  <Field orientation="horizontal" className={box}>
+                    <Checkbox checked={off} onCheckedChange={setOff} />
+                    <FieldLabel className="text-base text-text">
+                      Also archive its review history
+                    </FieldLabel>
+                  </Field>
                 ),
               },
               {
                 label: "Checked",
                 render: () => (
-                  <Checkbox checked={on} onChange={setOn} label="Include AI examples" />
+                  <Field orientation="horizontal" className={box}>
+                    <Checkbox checked={on} onCheckedChange={setOn} />
+                    <FieldLabel className="text-base text-text">Include AI examples</FieldLabel>
+                  </Field>
+                ),
+              },
+              {
+                label: "Mixed",
+                note: "For a checkbox that stands for several others, some of them on.",
+                render: () => (
+                  <Field orientation="horizontal" className={box}>
+                    <Checkbox indeterminate />
+                    <FieldLabel className="text-base text-text">All cards in Lesson 14</FieldLabel>
+                  </Field>
+                ),
+              },
+              {
+                label: "Disabled",
+                render: () => (
+                  <Field orientation="horizontal" disabled className={box}>
+                    <Checkbox defaultChecked />
+                    <FieldLabel className="text-base text-text">Keep the original audio</FieldLabel>
+                  </Field>
+                ),
+              },
+              {
+                label: "Error",
+                note: "Required and left empty on submit. The field marks the box, and the message says what to do.",
+                render: () => (
+                  <Field orientation="horizontal" className={box}>
+                    <Checkbox required checked={agreed} onCheckedChange={setAgreed} />
+                    <FieldContent>
+                      <FieldLabel className="text-base text-text">
+                        I have the rights to these recordings
+                      </FieldLabel>
+                      <FieldError>{agreed ? undefined : "Confirm this to upload them."}</FieldError>
+                    </FieldContent>
+                  </Field>
+                ),
+              },
+            ]}
+          />
+        );
+      },
+    },
+    {
+      slug: "radio-group",
+      name: "Radio group",
+      source: "components/ui/radio-group.tsx",
+      note: "One of a few choices that each need a sentence. Selection is the ring and a filled dot, both ink; the dot swells in and settles. Arrow keys move the choice, as on any radio group.",
+      Demo: function RadioGroupDemo() {
+        const [direction, setDirection] = useState("recognition");
+        const [sort, setSort] = useState("due");
+        return (
+          <Variants
+            items={[
+              {
+                label: "Rows",
+                note: "RadioCard, in components/RadioCard.tsx. The whole row is the target and the edge strengthens on the chosen one.",
+                render: () => (
+                  <RadioGroup
+                    aria-label="How cards are asked"
+                    value={direction}
+                    onValueChange={setDirection}
+                    className={box}
+                  >
+                    <RadioCard
+                      value="recognition"
+                      title="Recognition"
+                      description="See the term, recall what it means."
+                    />
+                    <RadioCard
+                      value="production"
+                      title="Production"
+                      description="See the meaning, recall the term."
+                    />
+                    <RadioCard
+                      value="both"
+                      title="Both ways"
+                      description="Every card is asked twice."
+                      disabled
+                    />
+                  </RadioGroup>
+                ),
+              },
+              {
+                label: "Plain",
+                note: "Short labels in a FieldSet, each item a horizontal Field.",
+                render: () => (
+                  <FieldSet className={box}>
+                    <FieldLegend variant="label">Sort cards by</FieldLegend>
+                    <RadioGroup value={sort} onValueChange={setSort} className="gap-0">
+                      {[
+                        ["due", "When they are due"],
+                        ["added", "When they were added"],
+                        ["term", "Term, A to Z"],
+                      ].map(([value, label]) => (
+                        <Field key={value} orientation="horizontal" className="min-h-11">
+                          <RadioGroupItem value={value} />
+                          <FieldLabel className="text-base text-text">{label}</FieldLabel>
+                        </Field>
+                      ))}
+                    </RadioGroup>
+                  </FieldSet>
                 ),
               },
             ]}

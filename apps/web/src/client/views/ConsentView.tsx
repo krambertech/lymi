@@ -7,7 +7,8 @@ import { Button } from "../components/Button";
 import { AppIdentityLine, Connection } from "../components/Connection";
 import { PublicPolicyLinks } from "../components/PublicPolicyLinks";
 import { Skeleton } from "../components/Skeleton";
-import { Switch } from "../components/Switch";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
+import { Switch } from "../components/ui/switch";
 
 export interface ConsentProps {
   app: AppIdentity;
@@ -106,15 +107,19 @@ export function ConsentView({
 
           {writeRequested && (
             <li className="border-t border-edge pt-2">
-              <Switch
-                checked={allowWrite}
-                onChange={onAllowWrite}
-                disabled={deciding}
-                leading={<GrantDot on={allowWrite} />}
-                label={t`Add, edit and archive cards`}
-                description={t`What it adds lands at once and is labelled. You can edit or archive any of it.`}
-                className="gap-3"
-              />
+              <Field orientation="horizontal" disabled={deciding} className="min-h-11 gap-3 py-1">
+                <GrantDot on={allowWrite} />
+                <FieldContent className="gap-0.5">
+                  <FieldLabel className="text-base text-text">{t`Add, edit and archive cards`}</FieldLabel>
+                  <FieldDescription>
+                    {t`What it adds lands at once and is labelled. You can edit or archive any of it.`}
+                  </FieldDescription>
+                </FieldContent>
+                {/* One line tall at the label's size, so the track centres on the label's first line. */}
+                <span className="flex h-lh shrink-0 items-center text-base">
+                  <Switch checked={allowWrite} onCheckedChange={onAllowWrite} />
+                </span>
+              </Field>
             </li>
           )}
         </ul>

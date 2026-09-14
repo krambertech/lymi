@@ -41,8 +41,13 @@ const TIMINGS: [string, string, string][] = [
   ],
   [
     "Segmented",
-    "chip slides, 200 ms ease-out",
+    "plate springs, about 340 ms, bounce 0.16",
     "The chosen plate moves to the new option. A keyboard change jumps.",
+  ],
+  [
+    "Choices",
+    "springs, about 320 ms, bounce 0.3; out in 100 ms",
+    "A checkbox gives as its tick draws, a radio dot swells and settles, a held switch thumb stretches and then springs across.",
   ],
   [
     "Tooltip",

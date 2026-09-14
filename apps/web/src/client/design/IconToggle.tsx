@@ -1,7 +1,6 @@
-import { clsx } from "clsx";
 import type { LucideIcon } from "lucide-react";
+import { ToggleGroup, ToggleGroupIndicator, ToggleGroupItem } from "../components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
-import { useIndicator } from "../lib/use-indicator";
 
 export interface IconOption<T extends string> {
   value: T;
@@ -22,61 +21,33 @@ export function IconToggle<T extends string>({
   options: IconOption<T>[];
   label: string;
 }) {
-  const { containerRef, indicatorRef, jump } = useIndicator<HTMLFieldSetElement>(value);
   return (
-    <fieldset
-      ref={containerRef}
-      className="edge relative flex gap-0.5 rounded-full bg-plate-2 p-0.5"
+    <ToggleGroup<T>
+      aria-label={label}
+      value={[value]}
+      onValueChange={(next) => {
+        const chosen = next[0];
+        if (chosen !== undefined && chosen !== value) onChange(chosen);
+      }}
+      className="edge gap-0.5 rounded-full bg-plate-2 p-0.5"
     >
-      <legend className="sr-only">{label}</legend>
-      <span
-        ref={indicatorRef}
-        aria-hidden="true"
-        className="segment-chip edge absolute inset-y-0.5 start-0 rounded-full bg-plate"
-      />
+      <ToggleGroupIndicator className="edge inset-y-0.5 rounded-full bg-plate" />
       {options.map((o) => (
-        <Option
-          key={o.value}
-          option={o}
-          on={o.value === value}
-          onSelect={(keyboard) => {
-            if (keyboard) jump();
-            onChange(o.value);
-          }}
-        />
+        <Tooltip key={o.value}>
+          <TooltipTrigger
+            render={
+              <ToggleGroupItem<T>
+                value={o.value}
+                aria-label={o.label}
+                className="grid size-6 place-items-center rounded-full"
+              />
+            }
+          >
+            <o.Icon aria-hidden="true" className="size-3.5" />
+          </TooltipTrigger>
+          <TooltipContent>{o.label}</TooltipContent>
+        </Tooltip>
       ))}
-    </fieldset>
-  );
-}
-
-function Option<T extends string>({
-  option,
-  on,
-  onSelect,
-}: {
-  option: IconOption<T>;
-  on: boolean;
-  onSelect: (keyboard: boolean) => void;
-}) {
-  return (
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <button
-            type="button"
-            aria-label={option.label}
-            aria-pressed={on}
-            onClick={(e) => onSelect(e.detail === 0)}
-            className={clsx(
-              "relative grid size-6 place-items-center rounded-full transition-colors duration-150",
-              on ? "text-text" : "text-muted hoverable:hover:text-text",
-            )}
-          />
-        }
-      >
-        <option.Icon aria-hidden="true" className="size-3.5" />
-      </TooltipTrigger>
-      <TooltipContent>{option.label}</TooltipContent>
-    </Tooltip>
+    </ToggleGroup>
   );
 }

@@ -55,6 +55,11 @@ function useField() {
   return React.useContext(FieldContext);
 }
 
+/** Inside a control made of controls, such as a radio group, each item answers to its own Field rather than the group's. */
+function FieldItems({ children }: { children: React.ReactNode }) {
+  return <FieldContext.Provider value={null}>{children}</FieldContext.Provider>;
+}
+
 interface ControlProps {
   id?: string | undefined;
   "aria-describedby"?: string | undefined;
@@ -216,7 +221,12 @@ function FieldLabel({ className, htmlFor, aside, ...props }: FieldLabelProps) {
     <label
       data-slot="field-label"
       htmlFor={htmlFor ?? field?.controlId}
-      className={cn("w-fit text-sm font-medium text-text-2", className)}
+      className={cn(
+        "w-fit text-sm font-medium text-text-2",
+        // A label beside a checkbox, radio or switch presses it, so it takes the control's cursor.
+        "group-has-[[role=checkbox],[role=radio],[role=switch]]/field:cursor-pointer group-data-disabled/field:cursor-not-allowed",
+        className,
+      )}
       {...props}
     />
   );
@@ -296,6 +306,7 @@ export {
   FieldDescription,
   FieldError,
   FieldGroup,
+  FieldItems,
   FieldLabel,
   FieldLegend,
   FieldSet,

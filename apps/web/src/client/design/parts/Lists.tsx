@@ -5,8 +5,9 @@ import { SourceChip, StateChip } from "../../components/Chip";
 import { DeckCard } from "../../components/DeckCard";
 import { NewCardsRow } from "../../components/NewCardsRow";
 import { SettingsGroup } from "../../components/SettingsGroup";
-import { Switch } from "../../components/Switch";
 import { Table as DataTable, Td, Th } from "../../components/Table";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../../components/ui/field";
+import { Switch } from "../../components/ui/switch";
 import { Variants } from "../Frame";
 import { deckCards } from "../mock";
 import type { Group } from "./types";
@@ -129,19 +130,23 @@ export const lists: Group = {
                 render: () => (
                   <div className="w-full">
                     <SettingsGroup title="Review" description="How a session sounds and moves.">
-                      <Switch
-                        checked={audio}
-                        onChange={setAudio}
-                        label="Play audio automatically"
-                      />
+                      <Field orientation="horizontal" className="justify-between gap-4">
+                        <FieldLabel className="text-base text-text">
+                          Play audio automatically
+                        </FieldLabel>
+                        <Switch checked={audio} onCheckedChange={setAudio} />
+                      </Field>
                     </SettingsGroup>
                     <SettingsGroup title="Notifications">
-                      <Switch
-                        checked={reminder}
-                        onChange={setReminder}
-                        label="Evening reminder"
-                        description="Only when cards are due."
-                      />
+                      <Field orientation="horizontal" className="gap-4">
+                        <FieldContent className="gap-0.5">
+                          <FieldLabel className="text-base text-text">Evening reminder</FieldLabel>
+                          <FieldDescription>Only when cards are due.</FieldDescription>
+                        </FieldContent>
+                        <span className="flex h-lh shrink-0 items-center text-base">
+                          <Switch checked={reminder} onCheckedChange={setReminder} />
+                        </span>
+                      </Field>
                     </SettingsGroup>
                   </div>
                 ),

@@ -1,0 +1,99 @@
+import { createRef, useState } from "react";
+import { expect, test, vi } from "vitest";
+import { page, userEvent } from "vitest/browser";
+import { render } from "vitest-browser-react";
+import { RadioCard } from "../RadioCard";
+import { Field, FieldLabel, FieldLegend, FieldSet } from "./field";
+import { RadioGroup, RadioGroupItem } from "./radio-group";
+
+function Directions({ onValueChange }: { onValueChange?: (value: string) => void }) {
+  const [value, setValue] = useState("recognition");
+  return (
+    <form data-testid="form">
+      <RadioGroup
+        aria-label="How cards are asked"
+        name="directions"
+        value={value}
+        onValueChange={(next) => {
+          setValue(next);
+          onValueChange?.(next);
+        }}
+      >
+        <RadioCard value="recognition" title="Recognition" description="See the term." />
+        <RadioCard value="production" title="Production" description="See the meaning." />
+        <RadioCard value="both" title="Both ways" description="Asked twice." disabled />
+      </RadioGroup>
+      {/* A text box, since WebKit leaves buttons out of the Tab order. */}
+      <input aria-label="After" />
+    </form>
+  );
+}
+
+test("a row is named by its title, described by its sentence, and chosen anywhere on it", async () => {
+  const onValueChange = vi.fn();
+  await render(<Directions onValueChange={onValueChange} />);
+  const production = page.getByRole("radio", { name: "Production" });
+  await expect.element(production).toHaveAccessibleDescription("See the meaning.");
+  await expect.element(page.getByRole("radio", { name: "Recognition" })).toBeChecked();
+
+  await page.getByText("See the meaning.").click();
+  await expect.element(production).toBeChecked();
+  expect(onValueChange).toHaveBeenLastCalledWith("production");
+  const form = page.getByTestId("form").element() as HTMLFormElement;
+  expect(new FormData(form).get("directions")).toBe("production");
+});
+
+test("the group is one tab stop, and arrow keys move the choice past a disabled row", async () => {
+  await render(<Directions />);
+  await userEvent.tab();
+  await expect.element(page.getByRole("radio", { name: "Recognition" })).toHaveFocus();
+  await userEvent.keyboard("{ArrowDown}");
+  await expect.element(page.getByRole("radio", { name: "Production" })).toBeChecked();
+  await userEvent.keyboard("{ArrowDown}");
+  // Both ways is disabled, so the choice wraps back to the first row.
+  await expect.element(page.getByRole("radio", { name: "Recognition" })).toBeChecked();
+  await expect.element(page.getByRole("radio", { name: "Both ways" })).not.toBeChecked();
+  await userEvent.tab();
+  await expect.element(page.getByRole("textbox", { name: "After" })).toHaveFocus();
+});
+
+test("plain items take their names from Field labels, and required blocks a native submit", async () => {
+  const ref = createRef<HTMLDivElement>();
+  await render(
+    <form data-testid="form">
+      <FieldSet>
+        <FieldLegend>Sort cards by</FieldLegend>
+        <RadioGroup ref={ref} name="sort" required>
+          <Field orientation="horizontal">
+            <RadioGroupItem value="due" />
+            <FieldLabel>When they are due</FieldLabel>
+          </Field>
+          <Field orientation="horizontal">
+            <RadioGroupItem value="term" />
+            <FieldLabel>Term, A to Z</FieldLabel>
+          </Field>
+        </RadioGroup>
+      </FieldSet>
+    </form>,
+  );
+  const form = page.getByTestId("form").element() as HTMLFormElement;
+  expect(ref.current?.getAttribute("role")).toBe("radiogroup");
+  expect(form.checkValidity()).toBe(false);
+  await page.getByText("Term, A to Z").click();
+  await expect.element(page.getByRole("radio", { name: "Term, A to Z" })).toBeChecked();
+  expect(form.checkValidity()).toBe(true);
+  expect(new FormData(form).get("sort")).toBe("term");
+});
+
+test("a disabled group ignores presses and is marked for assistive technology", async () => {
+  await render(
+    <RadioGroup aria-label="Theme" defaultValue="light" disabled>
+      <RadioGroupItem value="light" aria-label="Light" />
+      <RadioGroupItem value="dark" aria-label="Dark" />
+    </RadioGroup>,
+  );
+  const dark = page.getByRole("radio", { name: "Dark" });
+  await expect.element(dark).toHaveAttribute("aria-disabled", "true");
+  await dark.click({ force: true });
+  await expect.element(dark).not.toBeChecked();
+});

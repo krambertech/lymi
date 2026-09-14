@@ -1,11 +1,9 @@
 import { clsx } from "clsx";
-import type { ReactNode } from "react";
+import { type ReactNode, useId } from "react";
+import { RadioGroupItem } from "./ui/radio-group";
 
 interface Props {
-  name: string;
   value: string;
-  checked: boolean;
-  onChange: () => void;
   title: ReactNode;
   description: ReactNode;
   /** Drawn inside a container that carries the edge, so the row adds none of its own. */
@@ -14,56 +12,38 @@ interface Props {
 }
 
 /**
- * One row of a settings choice. Selection is carried by the edge and the dot: amber stays on
- * the flame and the one primary action.
+ * One row of a settings choice, inside a `RadioGroup`. Selection is carried by the edge and the dot:
+ * amber stays on the flame and the one primary action.
  */
-export function RadioCard({
-  name,
-  value,
-  checked,
-  onChange,
-  title,
-  description,
-  bare,
-  disabled,
-}: Props) {
+export function RadioCard({ value, title, description, bare, disabled }: Props) {
+  const id = useId();
   return (
     <label
+      htmlFor={id}
       className={clsx(
         "flex cursor-pointer items-start gap-3 rounded-md p-3.5",
-        "transition-[box-shadow,background-color,scale] duration-150 active:scale-[0.99]",
-        "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring",
-        !bare && "bg-plate",
-        !bare && (checked ? "edge-2" : "edge hoverable:hover:bg-hover"),
-        bare && !checked && "hoverable:hover:bg-hover",
-        disabled && "cursor-not-allowed opacity-45",
+        "transition-[box-shadow,background-color,scale] duration-150 ease-(--ease-out) active:scale-[0.99] motion-reduce:active:scale-100",
+        "has-[[data-slot=radio-group-item]:focus-visible]:outline-2 has-[[data-slot=radio-group-item]:focus-visible]:outline-offset-2 has-[[data-slot=radio-group-item]:focus-visible]:outline-ring",
+        "hoverable:hover:not-has-data-checked:bg-hover",
+        !bare && "edge bg-plate has-data-checked:edge-2",
+        "has-data-disabled:cursor-not-allowed has-data-disabled:opacity-45 has-data-disabled:active:scale-100",
       )}
     >
-      <input
-        type="radio"
-        name={name}
+      <RadioGroupItem
+        id={id}
         value={value}
-        checked={checked}
-        onChange={onChange}
-        className="peer sr-only"
+        disabled={disabled}
+        aria-labelledby={`${id}-title`}
+        aria-describedby={`${id}-description`}
+        className="mt-0.5 focus-visible:outline-none data-disabled:opacity-100"
       />
-      <span
-        aria-hidden="true"
-        className={clsx(
-          "mt-0.5 grid size-[18px] shrink-0 place-items-center rounded-full transition-[box-shadow] duration-150",
-          checked ? "shadow-[0_0_0_1px_var(--text)]" : "edge-2",
-        )}
-      >
-        <span
-          className={clsx(
-            "size-2.5 rounded-full bg-text transition-[scale,opacity] duration-150 motion-reduce:transition-none",
-            checked ? "scale-100 opacity-100" : "scale-50 opacity-0",
-          )}
-        />
-      </span>
       <span className="grid gap-0.5">
-        <span className="text-base font-medium text-text">{title}</span>
-        <span className="text-sm text-text-2">{description}</span>
+        <span id={`${id}-title`} className="text-base font-medium text-text">
+          {title}
+        </span>
+        <span id={`${id}-description`} className="text-sm text-text-2">
+          {description}
+        </span>
       </span>
     </label>
   );

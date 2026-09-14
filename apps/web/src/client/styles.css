@@ -647,23 +647,6 @@
   }
 }
 
-/* ---- Segment chip ------------------------------------------------------- */
-
-/* The chosen option's plate, sliding between options. See `useIndicator`. */
-.segment-chip {
-  transition:
-    translate 200ms var(--ease-out),
-    width 200ms var(--ease-out);
-}
-.segment-chip[data-instant] {
-  transition: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .segment-chip {
-    transition: none;
-  }
-}
-
 /* ---- Fluid hover ------------------------------------------------------- */
 
 /*

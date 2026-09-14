@@ -12,9 +12,6 @@ const DELAY = 500;
 /** Moving from one control to the next inside this window skips the delay and the fade. */
 const WARM = 400;
 
-/** A native modal dialog paints above every z-index, so a name for a control inside one renders inside it. */
-const TopLayerContext = React.createContext<HTMLElement | null>(null);
-
 function TooltipProvider({
   delay = DELAY,
   timeout = WARM,
@@ -38,30 +35,26 @@ function Tooltip({
   children,
   ...props
 }: TooltipPrimitive.Root.Props) {
-  const [topLayer, setTopLayer] = React.useState<HTMLElement | null>(null);
   const ownActions = React.useRef<TooltipPrimitive.Root.Actions | null>(null);
   const actions = actionsRef ?? ownActions;
   return (
-    <TopLayerContext.Provider value={topLayer}>
-      <TooltipPrimitive.Root
-        data-slot="tooltip"
-        disableHoverablePopup={disableHoverablePopup}
-        actionsRef={actions}
-        onOpenChange={(open, details) => {
-          if (open) setTopLayer(details.trigger?.closest<HTMLElement>("dialog:modal") ?? null);
-          // Base UI would swallow the key; letting it through closes the dialog around the control too.
-          if (details.reason === "escape-key") {
-            details.cancel();
-            details.allowPropagation();
-            queueMicrotask(() => actions.current?.close());
-          }
-          onOpenChange?.(open, details);
-        }}
-        {...props}
-      >
-        {children}
-      </TooltipPrimitive.Root>
-    </TopLayerContext.Provider>
+    <TooltipPrimitive.Root
+      data-slot="tooltip"
+      disableHoverablePopup={disableHoverablePopup}
+      actionsRef={actions}
+      onOpenChange={(open, details) => {
+        // Base UI would swallow the key; letting it through closes the dialog around the control too.
+        if (details.reason === "escape-key") {
+          details.cancel();
+          details.allowPropagation();
+          queueMicrotask(() => actions.current?.close());
+        }
+        onOpenChange?.(open, details);
+      }}
+      {...props}
+    >
+      {children}
+    </TooltipPrimitive.Root>
   );
 }
 
@@ -80,9 +73,8 @@ function TooltipContent({
   ...props
 }: TooltipPrimitive.Popup.Props &
   Pick<TooltipPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
-  const topLayer = React.useContext(TopLayerContext);
   return (
-    <TooltipPrimitive.Portal container={topLayer ?? undefined}>
+    <TooltipPrimitive.Portal>
       <TooltipPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}

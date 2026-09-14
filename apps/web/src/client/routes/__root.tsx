@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect, useRef } from "react";
+import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
 import { NewDeckSheet } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
@@ -28,7 +29,7 @@ import {
 } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
-import { Streak, useSettleToday } from "../lib/streak";
+import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/shell";
 
@@ -38,7 +39,11 @@ const DevPanel =
     ? lazy(() => import("../dev/dev-panel"))
     : null;
 
+/** The streak is a place, so its open state is here: Back closes it, and a reload or a link keeps it. ADR 0017. */
+const RootSearch = z.object({ streak: z.literal(true).optional().catch(undefined) });
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  validateSearch: RootSearch,
   component: Root,
 });
 
@@ -205,6 +210,7 @@ function Shell() {
         open={add.open === "deck"}
         onOpenChange={(v) => (v ? add.openDeck() : add.close("deck"))}
       />
+      {me.isSuccess && <StreakPlace />}
     </LearnerAvatarProvider>
   );
 }

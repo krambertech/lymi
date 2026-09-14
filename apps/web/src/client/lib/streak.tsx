@@ -1,10 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { StreakButton, type StreakButtonProps, type StreakSummary } from "../components/streak";
+import {
+  StreakButton,
+  type StreakButtonProps,
+  type StreakPanelProps,
+  StreakPlace as StreakPlaceView,
+  type StreakSummary,
+} from "../components/streak";
 import { api, type Settings } from "./api";
 import { settingsQuery, streakQuery } from "./queries";
 
-type GoalStatus = StreakButtonProps["goalStatus"];
+type GoalStatus = StreakPanelProps["goalStatus"];
 
 /**
  * Changes the daily goal on the tap, in the streak and in settings. Writes run one after another,
@@ -104,16 +111,50 @@ export function useSettleToday(enabled: boolean) {
   }, [enabled, qc]);
 }
 
+/**
+ * The streak's open state, in the URL. Opening pushes one entry so Back closes it; closing replaces
+ * that entry, so Back after a close does not open it again. The open card works the same way.
+ */
+export function useStreakOpen() {
+  const { streak } = useSearch({ from: "__root__" });
+  const navigate = useNavigate();
+  const setOpen = (open: boolean) => {
+    if (open === (streak === true)) return;
+    void navigate({
+      to: ".",
+      search: (prev) => ({ ...prev, streak: open ? true : undefined }),
+      replace: !open,
+    });
+  };
+  return [streak === true, setOpen] as const;
+}
+
 /** The streak pill with its data. The views take it as a slot so the design page can pass a static one. */
 export function Streak({ variant, className }: Pick<StreakButtonProps, "variant" | "className">) {
   const streak = useQuery(streakQuery);
-  const goal = useDailyGoal();
+  const [, setOpen] = useStreakOpen();
   // A skeleton that never resolves is worse than no pill, e.g. offline with nothing cached.
   if (streak.isError && !streak.data) return null;
   return (
     <StreakButton
       variant={variant}
       className={className}
+      summary={streak.data}
+      onOpen={() => setOpen(true)}
+    />
+  );
+}
+
+/** The one streak place in the app, however many pills and cards open it. */
+export function StreakPlace() {
+  const streak = useQuery(streakQuery);
+  const goal = useDailyGoal();
+  const [open, setOpen] = useStreakOpen();
+  if (!streak.data) return null;
+  return (
+    <StreakPlaceView
+      open={open}
+      onOpenChange={setOpen}
       summary={streak.data}
       onGoalChange={goal.change}
       goalStatus={goal.status}

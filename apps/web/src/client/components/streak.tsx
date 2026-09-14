@@ -20,7 +20,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
 import { streakFlameFor } from "../lib/flame";
 import { IconButton } from "./button";
 import { Flame } from "./flame";
@@ -28,6 +27,7 @@ import { GoalPicker } from "./goal-picker";
 import { SevenLights } from "./seven-lights";
 import { Skeleton } from "./skeleton";
 import { addDays, StreakCalendar } from "./streak-calendar";
+import { Dialog, DialogContent } from "./ui/dialog";
 
 export type StreakSummary = StreakOut;
 
@@ -235,7 +235,7 @@ export interface StreakPanelProps {
   goalStatus?: "saving" | "saved" | "error" | undefined;
   titleId?: string | undefined;
   className?: string | undefined;
-  /** The modal's close button, placed at the end of the panel's first line. */
+  /** The place's close button, placed at the end of the panel's first line. */
   close?: ReactNode | undefined;
 }
 
@@ -277,12 +277,11 @@ export function StreakPanel({
   }, [byDate, done, today.date]);
   const firstMonth = summary.days[0]?.date.slice(0, 7) ?? today.date.slice(0, 7);
 
-  const firstRender = useRef(true);
+  // Only a change of view moves focus; comparing views, not counting runs, survives StrictMode's double effect.
+  const shownView = useRef(view);
   useLayoutEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
+    if (shownView.current === view) return;
+    shownView.current = view;
     (view === "goal" ? backRef : editRef).current?.focus();
   }, [view]);
 
@@ -343,7 +342,11 @@ export function StreakPanel({
       <header className="flex items-center gap-3.5">
         <Flame className="h-11 w-9" state={flame} flicker={flame === "full"} />
         <div className="grid min-w-0">
-          <h2 id={titleId} className="flex items-baseline gap-2 text-text">
+          <h2
+            id={titleId}
+            tabIndex={-1}
+            className="flex items-baseline gap-2 text-text outline-none"
+          >
             <span className="text-3xl font-semibold leading-none tabular-nums">{current}</span>
             <span className="text-md font-medium">
               <Plural value={current} one="day in a row" other="days in a row" />
@@ -411,21 +414,18 @@ export function StreakPanel({
   );
 }
 
-export interface StreakButtonProps extends Omit<StreakPanelProps, "summary" | "titleId" | "close"> {
+export interface StreakButtonProps {
   summary: StreakSummary | undefined;
   variant: StreakFace;
   className?: string | undefined;
+  /** Opens the app's one streak place. Without it the button opens a place of its own, as on the design page. */
+  onOpen?: (() => void) | undefined;
 }
 
-/**
- * The pill and the modal it opens: the whole screen on a phone, centred over the page on
- * anything wider. The platform `<dialog>` owns focus, Escape and the top layer.
- */
-export function StreakButton({ summary, variant, className, ...panel }: StreakButtonProps) {
+/** The pill in the chrome, or the card on Today. Every face opens the same place. */
+export function StreakButton({ summary, variant, className, onOpen }: StreakButtonProps) {
   const { t } = useLingui();
-  const [opened, setOpened] = useState(0);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const titleId = useId();
+  const [ownOpen, setOwnOpen] = useState(false);
   const rail = variant === "rail";
   const card = variant === "card";
   const status = useCardStatus(summary);
@@ -460,17 +460,13 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
         className,
       );
 
-  const close = () => dialogRef.current?.close();
   return (
     <>
       <button
         type="button"
         aria-label={card ? `${label}. ${status}` : label}
         aria-haspopup="dialog"
-        onClick={() => {
-          setOpened((n) => n + 1);
-          dialogRef.current?.showModal();
-        }}
+        onClick={() => (onOpen ? onOpen() : setOwnOpen(true))}
         className={face}
       >
         {card ? (
@@ -479,44 +475,41 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
           <PillFace summary={summary} variant={variant} />
         )}
       </button>
-      {/* In the body, because a pill inside a hidden rail or header would hide an open modal with it
-          when the window crosses the breakpoint, and leave the page inert behind nothing. */}
-      {createPortal(
-        // biome-ignore lint/a11y/useKeyWithClickEvents: the native dialog closes on Escape; this click only catches the backdrop
-        <dialog
-          ref={dialogRef}
-          aria-labelledby={titleId}
-          onClick={(e) => {
-            // Full screen on a phone the dialog is the sheet itself, so only the centred modal has a backdrop.
-            if (e.target === dialogRef.current && window.matchMedia("(min-width: 48rem)").matches) {
-              close();
-            }
-          }}
-          className={clsx(
-            "sheet-modal overflow-y-auto overscroll-contain bg-plate text-start text-text",
-            // A phone gets the whole screen; anything wider gets a centred modal.
-            "max-md:m-0 max-md:h-dvh max-md:max-h-none max-md:w-full max-md:max-w-none max-md:px-5 max-md:pt-[max(env(safe-area-inset-top),20px)] max-md:pb-[max(env(safe-area-inset-bottom),20px)]",
-            "md:edge-2 md:m-auto md:w-[400px] md:max-w-[92vw] md:rounded-xl md:p-5",
-          )}
-        >
-          {/* Each opening is a fresh panel: this month, the run drawing in, and the streak view first. */}
-          {opened > 0 && (
-            <StreakPanel
-              key={opened}
-              className="mx-auto max-w-md"
-              summary={summary}
-              titleId={titleId}
-              close={
-                <IconButton label={t`Close`} size="sm" onClick={close}>
-                  <X aria-hidden="true" />
-                </IconButton>
-              }
-              {...panel}
-            />
-          )}
-        </dialog>,
-        document.body,
-      )}
+      {!onOpen && <StreakPlace open={ownOpen} onOpenChange={setOwnOpen} summary={summary} />}
     </>
+  );
+}
+
+export interface StreakPlaceProps extends Omit<StreakPanelProps, "titleId" | "close"> {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+/**
+ * What the flame opens, as a place: centred over the page on a desktop, rising over the whole screen
+ * on touch. Each opening is a fresh panel: this month, the run drawing in, the streak view first.
+ */
+export function StreakPlace({ open, onOpenChange, ...panel }: StreakPlaceProps) {
+  const { t } = useLingui();
+  const titleId = useId();
+  return (
+    <Dialog kind="place" open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className="w-[min(92vw,400px)]"
+        aria-labelledby={titleId}
+        // The run, not its first control: opened from a link, a focused control would show its tooltip at once.
+        initialFocus={() => document.getElementById(titleId)}
+      >
+        <StreakPanel
+          titleId={titleId}
+          close={
+            <IconButton label={t`Close`} size="sm" onClick={() => onOpenChange(false)}>
+              <X aria-hidden="true" />
+            </IconButton>
+          }
+          {...panel}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }

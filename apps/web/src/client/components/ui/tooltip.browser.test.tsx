@@ -140,31 +140,6 @@ describe("Tooltip", () => {
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 
-  test.runIf(desktop)(
-    "renders inside a native modal dialog and lets one Escape close both",
-    async () => {
-      await render(
-        <TooltipProvider>
-          <dialog ref={(node) => node?.showModal()}>
-            {/* Takes the dialog's autofocus, so Tab lands on the control rather than leaving the page. */}
-            <button type="button">Before</button>
-            <IconButton label="Close" size="sm">
-              <Pencil />
-            </IconButton>
-          </dialog>
-        </TooltipProvider>,
-      );
-      await tab();
-      await expect.element(tip("Close")).toBeVisible();
-      expect(openTips()[0]?.closest("dialog")).not.toBeNull();
-      // The platform closes its dialog on the same Escape, so the key must not be swallowed.
-      await userEvent.keyboard("{Escape}");
-
-      await expect.poll(() => openTips().length).toBe(0);
-      await expect.poll(() => document.querySelector("dialog:modal")).toBeNull();
-    },
-  );
-
   test.runIf(desktop)("pressing the control closes it", async () => {
     const screen = await render(<Row delay={0} />);
     const trigger = screen.getByRole("button", { name: "Rename" });

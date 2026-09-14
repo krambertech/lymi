@@ -789,55 +789,6 @@
     transform: scale(0.92);
   }
 }
-/*
- * The streak modal, the last native `<dialog>` until it becomes a place. It is in the top layer, so it can only
- * be animated out by keeping it there while it goes: `overlay` and `display` transition
- * discretely, which is what stops the browser removing it on the first frame. The rise is the
- * card's, 6 px over 200 ms, and it leaves faster than it came, like the toast.
- */
-.sheet-modal {
-  opacity: 0;
-  transform: translateY(6px) scale(0.99);
-  transition:
-    opacity 140ms var(--ease-out),
-    transform 140ms var(--ease-out),
-    overlay 140ms allow-discrete,
-    display 140ms allow-discrete;
-}
-.sheet-modal[open] {
-  opacity: 1;
-  transform: none;
-  transition-duration: 200ms;
-}
-@starting-style {
-  .sheet-modal[open] {
-    opacity: 0;
-    transform: translateY(6px) scale(0.99);
-  }
-}
-.sheet-modal::backdrop {
-  background: transparent;
-  transition:
-    background 140ms var(--ease-out),
-    overlay 140ms allow-discrete,
-    display 140ms allow-discrete;
-}
-.sheet-modal[open]::backdrop {
-  background: var(--scrim);
-  transition-duration: 200ms;
-}
-@starting-style {
-  .sheet-modal[open]::backdrop {
-    background: transparent;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sheet-modal,
-  .sheet-modal[open] {
-    transform: none;
-  }
-}
-
 /* The Base UI drawer still follows a drag under reduced motion, but arrives and leaves as a
    crossfade. Unlayered, so it outranks the direction utilities in `ui/drawer.tsx`. */
 @media (prefers-reduced-motion: reduce) {

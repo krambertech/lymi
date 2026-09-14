@@ -16,30 +16,39 @@ import {
 
 /*
  * shadcn's Dialog, in the shape of the machine: centred on a desktop, a drawer from the bottom edge
- * on a touch device, for a form and a question alike. Every part below renders both shapes, so a
- * call site never asks which machine it is on. Lymi drops the generated corner close button: its
- * dialogs end in explicit actions. ADR 0017.
+ * on a touch device, for a form and a question alike. A place, such as the streak, rises over the
+ * whole screen on touch instead. Every part below renders both shapes, so a call site never
+ * asks which machine it is on. Lymi drops the generated corner close button: its dialogs end in
+ * explicit actions. ADR 0017.
  */
 
 type Shape = "desktop" | "touch";
+type Kind = "moment" | "place";
 
-const DialogShapeContext = React.createContext<Shape | null>(null);
+const DialogShapeContext = React.createContext<{ shape: Shape; kind: Kind } | null>(null);
+
+function useDialogContext(part: string) {
+  const context = React.useContext(DialogShapeContext);
+  if (!context) throw new Error(`${part} must be used within a Dialog.`);
+  return context;
+}
 
 function useDialogShape(part: string) {
-  const shape = React.useContext(DialogShapeContext);
-  if (!shape) throw new Error(`${part} must be used within a Dialog.`);
-  return shape;
+  return useDialogContext(part).shape;
 }
 
 function Dialog({
   open: controlled,
   defaultOpen = false,
   onOpenChange,
+  kind = "moment",
   children,
 }: {
   open?: boolean | undefined;
   defaultOpen?: boolean | undefined;
   onOpenChange?: ((open: boolean) => void) | undefined;
+  /** A moment is done and dismissed; a place is gone to and read, and its open state is the caller's URL. */
+  kind?: Kind | undefined;
   children: React.ReactNode;
 }) {
   const [uncontrolled, setUncontrolled] = React.useState(defaultOpen);
@@ -52,12 +61,17 @@ function Dialog({
     [onOpenChange],
   );
   const shape = useOverlayShape(open);
+  const context = React.useMemo(() => ({ shape, kind }), [shape, kind]);
   return (
-    <DialogShapeContext.Provider value={shape}>
+    <DialogShapeContext.Provider value={context}>
       {shape === "desktop" ? (
         <DialogPrimitive.Root data-slot="dialog" open={open} onOpenChange={setOpen}>
           {children}
         </DialogPrimitive.Root>
+      ) : kind === "place" ? (
+        <Drawer open={open} onOpenChange={setOpen}>
+          {children}
+        </Drawer>
       ) : (
         <Drawer open={open} onOpenChange={setOpen} showSwipeHandle>
           {/* Keeps a focused field above the software keyboard when the dialog holds a form. */}
@@ -88,16 +102,39 @@ function DialogClose({ render }: { render: React.ReactElement }) {
 function DialogContent({
   className,
   initialFocus,
+  "aria-labelledby": labelledBy,
   children,
 }: {
   /** Dresses the centred dialog, usually its width. The drawer sizes itself, so it ignores this. */
   className?: string | undefined;
   /** Where focus lands on opening, when the first control is not the safe one. */
   initialFocus?: DialogPrimitive.Popup.Props["initialFocus"];
+  /** Names it by a heading inside it, for content that renders its own title rather than DialogTitle. */
+  "aria-labelledby"?: string | undefined;
   children: React.ReactNode;
 }) {
-  const focus = initialFocus === undefined ? {} : { initialFocus };
-  if (useDialogShape("DialogContent") === "touch") {
+  const focus = {
+    ...(initialFocus === undefined ? {} : { initialFocus }),
+    ...(labelledBy === undefined ? {} : { "aria-labelledby": labelledBy }),
+  };
+  const { shape, kind } = useDialogContext("DialogContent");
+  if (shape === "touch" && kind === "place") {
+    return (
+      <DrawerContent
+        {...focus}
+        // The whole screen, edge to edge on a tablet too, with square corners that meet the display's own.
+        className="data-[swipe-direction=down]:rounded-none data-[swipe-axis=y]:[--drawer-content-height:100dvh] data-[swipe-axis=y]:[--drawer-content-max-height:100dvh] data-[swipe-axis=y]:sm:max-w-none"
+      >
+        <div
+          data-slot="dialog-content"
+          className="mx-auto grid w-full max-w-md min-w-0 grid-cols-[minmax(0,1fr)] gap-4 px-5 pt-[max(env(safe-area-inset-top),16px)] pb-5"
+        >
+          {children}
+        </div>
+      </DrawerContent>
+    );
+  }
+  if (shape === "touch") {
     return (
       <DrawerContent {...focus}>
         {/* One column that never grows past the drawer, so a long unbroken value truncates instead. */}

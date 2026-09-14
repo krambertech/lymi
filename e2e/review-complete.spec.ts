@@ -239,15 +239,23 @@ test("a round that crosses the goal keeps going and says the goal is reached", a
   test.skip(browserName !== "chromium", "logic, not rendering");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await signInAsTestLearner(page, testInfo, "review-round-crosses");
-  await setGoal(page, 3);
+  await setGoal(page, 5);
   await addCards(page, await addDeck(page, "Cross"), "Cross", 8);
 
   await page.goto("/review");
-  await gradeWithKey(page, "1", "1 of 3");
-  await gradeWithKey(page, "1", "2 of 3");
+  await gradeWithKey(page, "1", "1 of 5");
+  await gradeWithKey(page, "1", "2 of 5");
+  await gradeWithKey(page, "1", "3 of 5");
 
-  await page.goto("/review?round=forgotten");
-  await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
+  await test.step("a round reopened from Today counts what is left of it", async () => {
+    await page.goto("/review?round=forgotten");
+    await expect(page.getByText("0 of 3", { exact: true })).toBeVisible();
+    await gradeWithKey(page, "3", "1 of 3");
+    await page.getByRole("button", { name: "Leave review" }).click();
+    await page.getByRole("link", { name: /Review forgotten/ }).click();
+    await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
+  });
+
   await test.step("the goal's attempt lands mid-round without stopping it", async () => {
     await gradeWithKey(page, "3", "1 of 2");
     await expect(heading(page, "Daily goal reached")).toBeHidden();
@@ -255,7 +263,7 @@ test("a round that crosses the goal keeps going and says the goal is reached", a
   });
   await expect(heading(page, "Daily goal reached")).toBeVisible();
   await expect(page.getByText(/^2\s*reviews in this round$/)).toBeVisible();
-  await expect(page.getByText("4 reviews today", { exact: true })).toBeVisible();
+  await expect(page.getByText("6 reviews today", { exact: true })).toBeVisible();
   await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
   await expect(page.getByRole("button", { name: /Review \d+ more card/ })).toBeVisible();
 });

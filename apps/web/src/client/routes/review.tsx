@@ -114,11 +114,16 @@ function Review() {
 
   // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
   const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
-  const roundItems = roundQueue.data?.items;
+  // Like the draw, the round's list and the day's streak wait for this mount's fetch, so a leg is sized and judged from now.
+  const roundItems =
+    roundQueue.isFetchedAfterMount || roundQueue.fetchStatus !== "fetching"
+      ? roundQueue.data?.items
+      : undefined;
+  const streakSettled = streak.isFetchedAfterMount || streak.fetchStatus !== "fetching";
   const today = streak.data?.today;
   // The first leg is Today's round, or the draw to the goal, or one more round once the goal is met.
   useEffect(() => {
-    if (leg || !data || !state || (round && !roundItems)) return;
+    if (leg || !data || !state || !streakSettled || (round && !roundItems)) return;
     const { attempts } = state;
     const base = {
       date: state.day.date,
@@ -136,7 +141,7 @@ function Review() {
       const size = drawableUpTo(data, state, deck, EXTRA_ROUND) || EXTRA_ROUND;
       setLeg({ ...base, kind: "more", until: attempts + size });
     }
-  }, [round, roundItems, leg, data, state, today, deck]);
+  }, [round, roundItems, leg, data, state, streakSettled, today, deck]);
 
   const drawLeg = leg?.kind === "goal" || leg?.kind === "more" ? leg : null;
   const atStop = !!drawLeg && !!state && state.attempts >= drawLeg.until;
@@ -214,7 +219,6 @@ function Review() {
   // Confirmed stays confirmed through a background refetch, so the end never blinks out and replays.
   const confirmed = !!data && data.fetchedAt >= lastChange;
   const stopped = !!leg && !!data && !!state && !current && (!drawLeg || atStop || exhausted);
-  const met = !!data && !!state && state.attempts >= data.goal;
   const left = useMemo(
     () =>
       stopped && data && state
@@ -226,15 +230,16 @@ function Review() {
     () => (stopped && data && state ? forgottenRound(data, state, deck) : []),
     [stopped, data, state, deck],
   );
-  // Below the goal, an empty draw waits for a fetch begun after the last grade before it says so.
-  const checking =
-    stopped && left === 0 && !met && !confirmed && !(unreachable && !draw.isFetching);
+  // An empty draw waits for a fetch begun after the last grade, so the heading never changes once shown.
+  const checking = stopped && left === 0 && !confirmed && !(unreachable && !draw.isFetching);
   useEffect(() => {
     if (checking && !unreachable && !draw.isFetching) void draw.refetch();
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
+  // A deck's end names the deck and weighs the other decks, so it waits for them while they load.
+  const decksLoading = !!deck && !decks.data && decks.fetchStatus === "fetching";
   const result = useMemo(
     () =>
-      stopped && !checking && leg && data && state
+      stopped && !checking && !decksLoading && leg && data && state
         ? reviewEnd({
             stretch: drawLeg ? drawLeg.kind : "list",
             goal: data.goal,
@@ -251,6 +256,7 @@ function Review() {
     [
       stopped,
       checking,
+      decksLoading,
       leg,
       drawLeg,
       data,
@@ -516,7 +522,7 @@ function Review() {
               goal={data.goal}
               from={leg?.from}
               roundCount={legDone}
-              deckName={end.namesDeck ? deckName : undefined}
+              deckName={deckName}
               streak={streakNow}
               streakBefore={held.week}
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}

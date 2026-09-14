@@ -247,6 +247,17 @@ describe("the end of a stretch", () => {
     expect(screen({ from: 0, attempts: 0, left: 0 }).heading).toBe("nothing_due");
   });
 
+  it("after the goal, a deck that runs out still offers the other decks", () => {
+    const end = screen({ from: 12, attempts: 15, left: 0, scoped: true, otherDecks: DECKS });
+    expect(end).toMatchObject({ heading: "nothing_left", namesDeck: true, satisfied: true });
+    expect(kinds(end)).toEqual(["Music", "Spanish", "Maths"]);
+  });
+
+  it("a reload after the goal with nothing to draw counts the day, not an empty round", () => {
+    const end = screen({ stretch: "more", from: 12, attempts: 12, left: 0, satisfiedBefore: true });
+    expect(end).toMatchObject({ heading: "nothing_left", count: "day", celebration: "none" });
+  });
+
   it("a reload onto a finished day tells it again without celebrating", () => {
     const end = screen({ from: 7, attempts: 7, left: 0, satisfiedBefore: true });
     expect(end).toMatchObject({ heading: "nothing_left", celebration: "none" });
@@ -323,7 +334,7 @@ describe("every end, whatever the inputs", () => {
     const turned = end.satisfied && !c.satisfiedBefore && c.attempts > c.from;
     expect(end.celebration !== "none").toBe(turned);
     if (end.celebration === "full") expect(c.stretch).toBe("goal");
-    expect(end.count).toBe(c.stretch === "goal" ? "day" : "round");
+    expect(end.count).toBe(c.stretch === "goal" || c.attempts === c.from ? "day" : "round");
 
     const offer = (kind: string) => end.offers.filter((o) => o.kind === kind);
     for (const o of end.offers) expect(o.count).toBeGreaterThan(0);
@@ -334,7 +345,7 @@ describe("every end, whatever the inputs", () => {
     for (const o of offer("more")) expect(o.count).toBeLessThanOrEqual(EXTRA_ROUND);
 
     const decks = offer("deck");
-    const shouldList = c.scoped && c.left === 0 && c.confirmed && !met;
+    const shouldList = c.scoped && c.left === 0 && c.confirmed;
     if (!shouldList) expect(decks).toEqual([]);
     else {
       const due = (c.otherDecks ?? []).filter((d) => d.due > 0).map((d) => d.due);

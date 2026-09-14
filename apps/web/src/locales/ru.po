@@ -1536,6 +1536,10 @@ msgid "Nothing left in {deckName}"
 msgstr "В колоде {deckName} больше ничего"
 
 #: src/client/views/review-view.tsx
+msgid "Nothing left in this deck"
+msgstr "В этой колоде больше ничего"
+
+#: src/client/views/review-view.tsx
 msgid "Nothing left today"
 msgstr "На сегодня больше ничего"
 

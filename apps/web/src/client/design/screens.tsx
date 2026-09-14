@@ -182,7 +182,7 @@ function ReviewEndShot({
               goal={goal}
               from={from}
               roundCount={attempts - from}
-              deckName={end.namesDeck ? deckName : undefined}
+              deckName={deckName}
               streak={after}
               streakBefore={before}
               actions={

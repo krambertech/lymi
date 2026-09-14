@@ -669,7 +669,7 @@ export interface ReviewCompleteProps {
   from?: number | undefined;
   /** Attempts in this stretch, the large number when the end counts the round. */
   roundCount?: number | undefined;
-  /** The deck a deck review is of, which Nothing left names. */
+  /** The deck a deck review is of, which Nothing left names when the end is about it alone. */
   deckName?: string | undefined;
   /** The streak with this review in it. */
   streak?: StreakSummary | undefined;
@@ -853,10 +853,12 @@ export function ReviewComplete({
           {screen.heading === "goal_reached" ? (
             <Trans>Daily goal reached</Trans>
           ) : screen.heading === "nothing_left" ? (
-            deckName ? (
+            !screen.namesDeck ? (
+              <Trans>Nothing left today</Trans>
+            ) : deckName ? (
               <Trans>Nothing left in {deckName}</Trans>
             ) : (
-              <Trans>Nothing left today</Trans>
+              <Trans>Nothing left in this deck</Trans>
             )
           ) : screen.heading === "nothing_due" ? (
             <Trans>Nothing due</Trans>

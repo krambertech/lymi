@@ -110,7 +110,7 @@ export interface EndScreen {
   satisfied: boolean;
   /** Nothing left is about the review's deck alone, since other decks still have cards. */
   namesDeck: boolean;
-  /** The large number: today's attempts, or this stretch's. */
+  /** The large number: today's attempts, or this stretch's once it holds any. */
   count: "day" | "round";
   /** The ways on, in order. Done is always offered beside them. */
   offers: Offer[];
@@ -119,10 +119,7 @@ export interface EndScreen {
 /** Other decks the end of a deck review lists at most. */
 export const OTHER_DECKS = 3;
 
-/**
- * The end of a stretch, by where the day stands; PRODUCT.md, "Daily Review Goal". `unchecked` is a
- * draw that ran dry below the goal without a fetch to confirm it, which proves nothing about the day.
- */
+/** The end of a stretch by where the day stands, or `unchecked`; PRODUCT.md, "Daily Review Goal". */
 export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
   const { stretch, goal, from, attempts, left, scoped } = input;
   const met = attempts >= goal;
@@ -147,7 +144,7 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
   if (!met && left > 0) offers.push({ kind: "goal", count: Math.min(left, goal - attempts) });
   if (input.forgotten > 0) offers.push({ kind: "forgotten", count: input.forgotten });
   if (met && left > 0) offers.push({ kind: "more", count: Math.min(left, EXTRA_ROUND) });
-  if (scoped && ranOut && !met) {
+  if (scoped && ranOut) {
     const decks = (input.otherDecks ?? [])
       .filter((d) => d.due > 0)
       .sort((a, b) => b.due - a.due)
@@ -160,7 +157,8 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
     celebration: turned ? (stretch === "goal" ? "full" : "light") : "none",
     satisfied,
     namesDeck: heading === "nothing_left" && elsewhere,
-    count: stretch === "goal" ? "day" : "round",
+    // A stretch with no attempts in it, such as a reload onto a finished day, counts the day.
+    count: stretch === "goal" || attempts === from ? "day" : "round",
     offers,
   };
 }

@@ -1500,6 +1500,10 @@ msgid "Nothing left in {deckName}"
 msgstr "Nothing left in {deckName}"
 
 #: src/client/views/review-view.tsx
+msgid "Nothing left in this deck"
+msgstr "Nothing left in this deck"
+
+#: src/client/views/review-view.tsx
 msgid "Nothing left today"
 msgstr "Nothing left today"
 

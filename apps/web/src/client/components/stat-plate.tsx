@@ -34,7 +34,7 @@ export function StatPlate({
     <section className={clsx("edge flex flex-col gap-3 rounded-xl bg-plate p-5", className)}>
       {/* 34 px is the segmented control at `sm` plus its track padding. Fixed so a plate
           with a control and one without still line up across the grid. */}
-      <div className="flex min-h-[34px] items-center justify-between gap-3">
+      <div className="flex min-h-[34px] flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <h3 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h3>
         {control}
       </div>

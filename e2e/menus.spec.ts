@@ -11,7 +11,7 @@ test("a menu rises as a drawer and swipes away", async ({ page }) => {
   await page.goto("/design/components/menu");
   await page.getByRole("button", { name: "Deck options", exact: true }).click();
   const drawer = page.getByRole("dialog", { name: "Deck options" });
-  await expect(drawer.getByRole("menuitem", { name: "Archive deck" })).toBeVisible();
+  await expect(drawer.getByRole("menuitem", { name: "Archive", exact: true })).toBeVisible();
 
   // A drag that starts mid-rise measures from the wrong place, so wait for the rise to finish.
   await drawer.evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)));

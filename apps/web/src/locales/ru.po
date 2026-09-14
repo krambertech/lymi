@@ -561,12 +561,12 @@ msgstr "Ключ API для {name}"
 msgid "API keys"
 msgstr "Ключи API"
 
+#: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 #: src/client/views/word-view.tsx
 msgid "Archive"
 msgstr "Архивировать"
 
-#: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 msgid "Archive deck"
 msgstr "Архивировать колоду"
@@ -720,8 +720,9 @@ msgid "Choose a whole number from 1 to 200."
 msgstr "Выбери целое число от 1 до 200."
 
 #: src/client/components/account-section.tsx
-msgid "Choose new photo"
-msgstr "Выбрать новое фото"
+msgctxt "photo"
+msgid "Choose new…"
+msgstr "Выбрать новое…"
 
 #: src/client/components/add-card-sheet.tsx
 #: src/client/views/settings-view.tsx
@@ -906,7 +907,6 @@ msgid "Deck options"
 msgstr "Параметры колоды"
 
 #: src/client/routes/library.$deckId.settings.tsx
-#: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 msgid "Deck settings"
 msgstr "Настройки колоды"
@@ -1805,8 +1805,9 @@ msgid "Reminders stay off until notifications are allowed."
 msgstr "Напоминания выключены, пока не разрешишь уведомления."
 
 #: src/client/components/account-section.tsx
-msgid "Remove photo"
-msgstr "Убрать фото"
+msgctxt "photo"
+msgid "Remove"
+msgstr "Убрать"
 
 #: src/client/views/review-view.tsx
 msgid "Replay pronunciation"
@@ -1971,6 +1972,7 @@ msgstr "Присылать ежедневное напоминание"
 
 #: src/client/components/learner-menu.tsx
 #: src/client/routes/settings.tsx
+#: src/client/views/deck-detail-view.tsx
 #: src/client/views/settings-view.tsx
 msgid "Settings"
 msgstr "Настройки"

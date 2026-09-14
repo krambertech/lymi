@@ -88,7 +88,7 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
       : route.fallback(),
   );
   await face.click();
-  await page.getByRole("menuitem", { name: "Choose new photo" }).click();
+  await page.getByRole("menuitem", { name: "Choose new…" }).click();
   await pick(page, "second.png", "image/png", png(400, 400));
   await page.getByRole("button", { name: "Save photo" }).click();
   await expect(page.getByRole("alert")).toHaveText("Couldn’t save the photo. Try again.");
@@ -107,7 +107,7 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
       : route.fallback();
   });
   await face.click();
-  await page.getByRole("menuitem", { name: "Choose new photo" }).click();
+  await page.getByRole("menuitem", { name: "Choose new…" }).click();
   await pick(page, "stale.png", "image/png", png(400, 400));
   reads = 0;
   await page.getByRole("button", { name: "Save photo" }).click();
@@ -121,7 +121,7 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
 
   // Removal is immediate and can be undone from the toast.
   await face.click();
-  await page.getByRole("menuitem", { name: "Remove photo" }).click();
+  await page.getByRole("menuitem", { name: "Remove", exact: true }).click();
   await expect(photo(page)).toHaveCount(0);
   const restored = page.waitForResponse(
     (r) => r.request().method() === "PUT" && r.url().endsWith("/api/avatar"),
@@ -131,7 +131,7 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
   await expect(photo(page)).toHaveAttribute("src", /^blob:/);
 
   await face.click();
-  await page.getByRole("menuitem", { name: "Remove photo" }).click();
+  await page.getByRole("menuitem", { name: "Remove", exact: true }).click();
   await expect(notifications(page).getByText("Photo removed")).toBeVisible();
   await expect(photo(page)).toHaveCount(0);
   await page.reload();

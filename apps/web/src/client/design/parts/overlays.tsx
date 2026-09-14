@@ -60,7 +60,7 @@ export const menu: Group = {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive">
                       <Archive />
-                      Archive deck
+                      Archive
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

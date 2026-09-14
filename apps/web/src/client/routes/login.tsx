@@ -8,7 +8,7 @@ import { z } from "zod";
 import { safeProductReturnPath } from "../../shared/origins";
 import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
-import { Input } from "../components/Field";
+import { Input } from "../components/ui/input";
 import { authClient, followOAuthRedirect, signInWithGoogle } from "../lib/auth";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { LoginView } from "../views/LoginView";

@@ -5,7 +5,7 @@ import { DAILY_GOAL_PRESETS, DailyGoal } from "@lymi/core";
 import { clsx } from "clsx";
 import { CircleAlert } from "lucide-react";
 import { type ReactNode, useId, useRef, useState } from "react";
-import { Input } from "./Field";
+import { Input } from "./ui/input";
 
 const NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
   10: msg({ message: "Light", context: "daily goal" }),

@@ -5,7 +5,6 @@ import { Check, ChevronDown, Search } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
-import { controlBase, controlSize, useControlProps } from "../Field";
 import { FluidHighlight } from "../FluidHighlight";
 import {
   Drawer,
@@ -15,6 +14,8 @@ import {
   DrawerTrigger,
   DrawerVirtualKeyboardProvider,
 } from "./drawer";
+import { useField, useFieldControl } from "./field";
+import { controlBase, controlSize } from "./input";
 
 // shadcn's Combobox in the machine's shape: a panel under the box on a desktop, a drawer on touch. ADR 0017.
 
@@ -52,10 +53,12 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
   defaultOpen = false,
   onOpenChange,
   onOpenChangeComplete,
-  disabled = false,
+  disabled: disabledProp = false,
   children,
   ...props
 }: ComboboxProps<Value, Multiple, Item>) {
+  const field = useField();
+  const disabled = disabledProp || Boolean(field?.disabled);
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
   const open = controlledOpen ?? uncontrolledOpen;
   const setOpen = React.useCallback(
@@ -115,7 +118,7 @@ const setInputValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype
 /** The box. Put a `ComboboxValue` inside; the chevron is already there. */
 function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
   const { shape, open, setOpen, disabled, trigger, input } = useCombobox("ComboboxTrigger");
-  const a11y = useControlProps(props);
+  const a11y = useFieldControl(props);
   const typed = React.useRef("");
   // A letter on the closed box opens it with that letter searched; letters typed before the field has focus are kept.
   const onKeyDown = (e: BaseUIEvent<React.KeyboardEvent<HTMLButtonElement>>) => {
@@ -155,7 +158,7 @@ function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
   const classes = cn(
     controlBase,
     controlSize,
-    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:edge-2",
+    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:not-aria-invalid:edge-2",
     className,
   );
   const chevron = (

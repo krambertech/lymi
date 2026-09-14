@@ -25,7 +25,6 @@ import { Button, IconButton } from "../components/Button";
 import { CardPicture } from "../components/CardPicture";
 import { StateChip } from "../components/Chip";
 import { languageName } from "../components/DeckFields";
-import { Field, Input, Textarea } from "../components/Field";
 import { GRADES, GradeMark, Mark } from "../components/Grade";
 import { ReviewTimeline } from "../components/ReviewTimeline";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
@@ -36,6 +35,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
+import { Field, FieldLabel } from "../components/ui/field";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
 import type { Card, CardEvent, CardState, Review } from "../lib/api";
 import { modeLabel } from "../lib/review-modes";
 import { BackButton, TopBar } from "./Shell";
@@ -575,7 +577,11 @@ export function WordView({
 
       {editing ? (
         <div className="grid gap-4">
-          <Field label={t`Meaning`} aside={source(card.meaningSource)}>
+          <Field>
+            <div className="flex items-baseline justify-between gap-3">
+              <FieldLabel>{t`Meaning`}</FieldLabel>
+              <span className="text-xs text-muted">{source(card.meaningSource)}</span>
+            </div>
             <Input
               ref={meaningRef}
               key={`m-${card.id}`}
@@ -588,7 +594,11 @@ export function WordView({
               placeholder={t`What it means`}
             />
           </Field>
-          <Field label={t`Example`} aside={source(card.exampleSource)}>
+          <Field>
+            <div className="flex items-baseline justify-between gap-3">
+              <FieldLabel>{t`Example`}</FieldLabel>
+              <span className="text-xs text-muted">{source(card.exampleSource)}</span>
+            </div>
             <Textarea
               ref={exampleRef}
               key={`e-${card.id}`}
@@ -599,7 +609,8 @@ export function WordView({
               rows={2}
             />
           </Field>
-          <Field label={t`Notes`}>
+          <Field>
+            <FieldLabel>{t`Notes`}</FieldLabel>
             <Textarea
               ref={notesRef}
               key={`n-${card.id}`}

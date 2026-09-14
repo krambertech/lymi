@@ -14,12 +14,13 @@ import { Chip } from "./Chip";
 import { DocLink } from "./ConnectedAppsSection";
 import { CopyField } from "./CopyField";
 import { EmptySection } from "./EmptyState";
-import { Field, Input } from "./Field";
 import { Lantern } from "./Lantern";
 import { Segmented } from "./Segmented";
 import { SettingsGroup } from "./SettingsGroup";
 import { Skeleton } from "./Skeleton";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { Field, FieldDescription, FieldError, FieldLabel } from "./ui/field";
+import { Input } from "./ui/input";
 
 /**
  * Personal API keys for curl and scripts. The list is the point of the section; making a key
@@ -179,7 +180,8 @@ function NewKeyForm({
         onSubmit(parsed.data);
       }}
     >
-      <Field label={t`Name`} hint={t`So you know which key to revoke later.`} error={invalid.name}>
+      <Field>
+        <FieldLabel>{t`Name`}</FieldLabel>
         <Input
           autoFocus
           value={name}
@@ -192,6 +194,11 @@ function NewKeyForm({
           autoComplete="off"
           enterKeyHint="done"
         />
+        {invalid.name ? (
+          <FieldError>{invalid.name}</FieldError>
+        ) : (
+          <FieldDescription>{t`So you know which key to revoke later.`}</FieldDescription>
+        )}
       </Field>
       <div className="grid gap-1.5">
         <span className="text-sm font-medium text-text-2">

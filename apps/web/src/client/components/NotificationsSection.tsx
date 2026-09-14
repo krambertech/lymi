@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { ApiError, api } from "../lib/api";
 import { useInstallState } from "../lib/pwa-install";
 import { Button } from "./Button";
-import { Field, Input } from "./Field";
 import { InstallDialog } from "./InstallDialog";
 import { SettingsGroup } from "./SettingsGroup";
 import { Switch } from "./Switch";
+import { Field, FieldError, FieldLabel } from "./ui/field";
+import { Input } from "./ui/input";
 
 const DEFAULT_TIME: ReminderTime = "19:00";
 
@@ -235,11 +236,8 @@ export function NotificationsSection() {
           />
           {enabled && (
             <div className="flex flex-wrap items-end gap-3 border-t border-edge px-4 py-3.5">
-              <Field
-                label={t`Time`}
-                error={validTime ? undefined : t`Choose 00, 15, 30 or 45 minutes.`}
-                className="w-40"
-              >
+              <Field className="w-40">
+                <FieldLabel>{t`Time`}</FieldLabel>
                 <Input
                   type="time"
                   step={900}
@@ -247,6 +245,7 @@ export function NotificationsSection() {
                   disabled={busy}
                   onChange={(event) => setTime(event.target.value as ReminderTime)}
                 />
+                {!validTime && <FieldError>{t`Choose 00, 15, 30 or 45 minutes.`}</FieldError>}
               </Field>
               <Button
                 aria-disabled={busy || time === savedTime || !validTime}

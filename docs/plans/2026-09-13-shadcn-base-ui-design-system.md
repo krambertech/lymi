@@ -42,7 +42,7 @@ Add one Tooltip provider and one Toast renderer at the application root, then mi
 
 ### 6. Establish compound fields and text controls
 
-Add Field, FieldLabel, FieldDescription, FieldError, FieldSet, FieldLegend, FieldGroup, FieldContent, Input, Textarea and Native Select. Keep current Zod submission parsing, localized validation messages and focus-first-invalid behavior, provide one optional thin convenience composite, migrate every caller and remove the prop-driven Field API when its final caller moves.
+Add Field, FieldLabel, FieldDescription, FieldError, FieldSet, FieldLegend, FieldGroup, FieldContent, Input and Textarea. Keep current Zod submission parsing, localized validation messages and focus-first-invalid behavior, migrate every caller to the compound parts and remove the prop-driven Field API when its final caller moves.
 
 ### 7. Establish choice controls
 

@@ -3,7 +3,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Wrench, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
-import { Field } from "../components/Field";
 import { Kbd } from "../components/Kbd";
 import { Segmented } from "../components/Segmented";
 import {
@@ -17,6 +16,7 @@ import {
   ComboboxTrigger,
   ComboboxValue,
 } from "../components/ui/combobox";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
 import { ApiError, api } from "../lib/api";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
@@ -394,12 +394,12 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <Field
-      label={label}
-      hint={hint}
-      className="grid-cols-[68px_minmax(0,1fr)] items-start gap-x-3 gap-y-1 [&>div:first-child]:mt-2.5 [&>p]:col-start-2 [&>p]:text-xs [&>p]:leading-snug"
-    >
-      {children}
+    <Field orientation="horizontal">
+      <FieldLabel className="mt-2.5 w-[68px] shrink-0">{label}</FieldLabel>
+      <FieldContent className="gap-1">
+        {children}
+        {hint && <FieldDescription className="text-xs leading-snug">{hint}</FieldDescription>}
+      </FieldContent>
     </Field>
   );
 }

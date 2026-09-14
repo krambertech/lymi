@@ -7,10 +7,12 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { CopyField } from "../components/CopyField";
 import { type DirectionExample, DirectionField, LanguageField } from "../components/DeckFields";
-import { Field, Input, Textarea } from "../components/Field";
 import { RadioCard } from "../components/RadioCard";
 import { SettingsGroup } from "../components/SettingsGroup";
 import { Skeleton } from "../components/Skeleton";
+import { Field, FieldDescription, FieldLabel } from "../components/ui/field";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
 import type { DeckSummary } from "../lib/api";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./Shell";
 
@@ -161,7 +163,8 @@ export function DeckSettingsView({
       {deck && (
         <>
           <SettingsGroup title={t`Deck`}>
-            <Field label={t`Name`}>
+            <Field>
+              <FieldLabel>{t`Name`}</FieldLabel>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -174,11 +177,11 @@ export function DeckSettingsView({
                 autoComplete="off"
               />
             </Field>
-            <Field
-              label={t`Description`}
-              aside={t`Optional`}
-              hint={t`A note to yourself about what is in here.`}
-            >
+            <Field>
+              <div className="flex items-baseline justify-between gap-3">
+                <FieldLabel>{t`Description`}</FieldLabel>
+                <span className="text-xs text-muted">{t`Optional`}</span>
+              </div>
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -187,11 +190,12 @@ export function DeckSettingsView({
                 placeholder={t`Cards from Marco’s Tuesday lessons.`}
                 className="min-h-20"
               />
+              <FieldDescription>{t`A note to yourself about what is in here.`}</FieldDescription>
             </Field>
             <LanguageField
               value={deck.defaultLanguage}
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}
-              hint={t`The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings.`}
+              description={t`The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings.`}
             />
           </SettingsGroup>
 

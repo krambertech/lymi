@@ -30,11 +30,11 @@ Generated shadcn Base UI components become the recognizable upstream starting po
 
 The first phase replaces interaction-heavy foundations: Dropdown Menu, Dialog, Drawer, Select, Combobox, Tooltip and Toast. Each primitive-focused change migrates every caller and removes the superseded API in the same pull request; the repository does not carry two competing component contracts.
 
-The second phase establishes compound form foundations: Field and its semantic parts, Input, Textarea, Native Select, Checkbox, Radio Group, Switch and Toggle Group. Product controls such as LanguageField, DirectionField, GoalPicker and Segmented remain Lymi components composed from those foundations.
+The second phase establishes compound form foundations: Field and its semantic parts, Input, Textarea, Checkbox, Radio Group, Switch and Toggle Group. Product controls such as LanguageField, DirectionField, GoalPicker and Segmented remain Lymi components composed from those foundations.
 
 The current Button and IconButton remain Lymi-owned initially because their accessible disabled state, loading behavior, keyboard hints, hit areas and variants express existing product rules. They already forward refs and spread native props, so Base UI triggers can compose them through `render`.
 
-A thin convenience composite may cover the common label, control, description and error arrangement, but the compound Field parts are canonical. Controls forward native form props and refs so a future TanStack Form adoption does not require another component rewrite; TanStack Form itself is not part of this work.
+The compound Field parts are the only form-row API. A convenience composite and Native Select were built for issue #127 and removed before merge, so every form is written one way and every choice list is Select or Combobox. Controls forward native form props and refs so a future TanStack Form adoption does not require another component rewrite; TanStack Form itself is not part of this work.
 
 Overlays that change shape adapt inside the shadcn component itself, so there is one component per overlay. `DropdownMenu` is anchored on desktop and a Drawer with the same items on touch; `Dialog` is centred on desktop and a gesture-capable Drawer on touch, for forms and confirmations alike. Each reads the device rule as it opens and freezes that choice while open, so a resize cannot remount a partially completed form. [ADR 0017](../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) records the rule, including places such as the streak that keep their state in the URL.
 

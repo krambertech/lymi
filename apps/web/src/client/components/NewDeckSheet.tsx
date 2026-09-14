@@ -8,8 +8,9 @@ import { api, errorMessage } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button } from "./Button";
 import { DirectionCompact, LanguageField } from "./DeckFields";
-import { Field, Input } from "./Field";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { Field, FieldError, FieldLabel } from "./ui/field";
+import { Input } from "./ui/input";
 
 interface Props {
   open: boolean;
@@ -96,7 +97,8 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
         void onSubmit(parsed.data);
       }}
     >
-      <Field label={t`Name`} error={invalid.name}>
+      <Field>
+        <FieldLabel>{t`Name`}</FieldLabel>
         <Input
           autoFocus={!st}
           value={name}
@@ -109,6 +111,7 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
           enterKeyHint="done"
           maxLength={80}
         />
+        <FieldError>{invalid.name}</FieldError>
       </Field>
       <LanguageField
         value={language}

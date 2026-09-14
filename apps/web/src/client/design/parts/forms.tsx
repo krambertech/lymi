@@ -1,6 +1,6 @@
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, ZoomIn, ZoomOut } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../../components/button";
+import { Button, IconButton } from "../../components/button";
 import { CopyField } from "../../components/copy-field";
 import { LanguageField } from "../../components/deck-fields";
 import { RadioCard } from "../../components/radio-card";
@@ -42,6 +42,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
+import { Slider } from "../../components/ui/slider";
 import { Switch } from "../../components/ui/switch";
 import { Textarea } from "../../components/ui/textarea";
 import { Variants } from "../frame";
@@ -401,6 +402,59 @@ export const forms: Group = {
                       <Switch checked={false} />
                     </span>
                   </Field>
+                ),
+              },
+            ]}
+          />
+        );
+      },
+    },
+    {
+      slug: "slider",
+      name: "Slider",
+      source: "components/ui/slider.tsx",
+      note: "A value that is easier to judge by eye than to type, such as a photo's zoom. Buttons beside it take the same value in steps, and the arrow keys move it. The thumb grows a little while it is held.",
+      Demo: function SliderDemo() {
+        const [zoom, setZoom] = useState(1.5);
+        const step = (by: number) => setZoom((z) => Math.min(3, Math.max(1, z + by)));
+        return (
+          <Variants
+            items={[
+              {
+                label: "With step buttons",
+                note: "The avatar editor's zoom, from 1× to 3×.",
+                render: () => (
+                  <div className={`${box} flex items-center gap-2`}>
+                    <IconButton label="Zoom out" size="sm" onClick={() => step(-0.25)}>
+                      <ZoomOut />
+                    </IconButton>
+                    <Slider
+                      min={1}
+                      max={3}
+                      step={0.01}
+                      value={zoom}
+                      onValueChange={setZoom}
+                      aria-label="Zoom"
+                      className="min-w-0 flex-1"
+                    />
+                    <IconButton label="Zoom in" size="sm" onClick={() => step(0.25)}>
+                      <ZoomIn />
+                    </IconButton>
+                  </div>
+                ),
+              },
+              {
+                label: "Disabled",
+                note: "While the photo saves.",
+                render: () => (
+                  <Slider
+                    min={1}
+                    max={3}
+                    defaultValue={2}
+                    disabled
+                    aria-label="Zoom"
+                    className={box}
+                  />
                 ),
               },
             ]}

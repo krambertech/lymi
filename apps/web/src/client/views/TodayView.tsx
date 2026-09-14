@@ -251,8 +251,8 @@ function DueHeading({
 }
 
 /**
- * The rounds, as rows in one plate. Every row stays, so the list keeps its shape: a round with
- * cards opens its review, and an empty one says so plainly, or offers to add cards.
+ * The rounds, as three tiles that always stay, so none is ever left on its own. A tile with cards
+ * opens its review; an empty one says so plainly, and an empty New cards tile offers to add some.
  */
 function Rounds({
   rounds,
@@ -264,13 +264,14 @@ function Rounds({
   st: StaticNav;
 }) {
   const { t } = useLingui();
-  const rows = [
+  const tiles = [
     {
       round: "forgotten" as const,
       count: rounds.forgotten,
       label: t`Forgot today`,
       detail: t`Graded Forgot today`,
       empty: t`Nothing forgotten today`,
+      action: t`Review forgotten`,
     },
     {
       round: "new" as const,
@@ -278,6 +279,7 @@ function Rounds({
       label: t`New cards`,
       detail: t`Not reviewed yet`,
       empty: t`Add some from your next lesson`,
+      action: t`Review new`,
     },
     {
       round: "slipping" as const,
@@ -285,66 +287,64 @@ function Rounds({
       label: t`Keeps slipping`,
       detail: t`Forgotten 4 or more times`,
       empty: t`No card keeps slipping`,
+      action: t`Review slipping`,
     },
   ];
-  const row = "flex min-h-18 w-full items-center gap-4 py-3 ps-5 pe-4 text-start";
-  const face = (item: (typeof rows)[number], live: boolean) => (
+  const tile =
+    "edge flex w-full items-center gap-4 rounded-xl bg-plate py-4 ps-5 pe-4 text-start @3xl:h-full @3xl:flex-col @3xl:items-stretch @3xl:gap-0 @3xl:p-0";
+  const pressable =
+    "group transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover";
+  const face = (item: (typeof tiles)[number], live: boolean) => (
     <>
       <span
         className={clsx(
-          "min-w-9 text-3xl font-medium leading-none tracking-[-0.02em] tabular-nums",
+          "min-w-10 text-4xl font-medium leading-none tracking-[-0.03em] tabular-nums @3xl:px-5 @3xl:pt-5 @3xl:pb-3 @3xl:text-5xl",
           !live && "text-muted",
         )}
       >
         {item.count}
       </span>
-      <span className="grid min-w-0 flex-1 gap-0.5">
-        <span className="truncate text-md font-medium">{item.label}</span>
+      <span className="grid min-w-0 flex-1 content-start gap-0.5 @3xl:px-5 @3xl:pb-4">
+        <span className="text-md font-medium">{item.label}</span>
         <span className="text-sm text-muted">{live ? item.detail : item.empty}</span>
       </span>
     </>
   );
+  const footer =
+    "@3xl:justify-between @3xl:border-t @3xl:border-edge @3xl:py-2.5 @3xl:ps-5 @3xl:pe-3";
 
   return (
     <section aria-labelledby="today-more" className="grid gap-2.5">
       <h2 id="today-more" className="flex min-h-8 items-center px-1 text-lg font-medium">
         <Trans>More to review</Trans>
       </h2>
-      <ul className="edge overflow-hidden rounded-xl bg-plate">
-        {rows.map((item) => (
-          <li key={item.round} className="border-edge not-first:border-t">
+      <ul className="grid gap-3 @3xl:grid-cols-3 @3xl:gap-4">
+        {tiles.map((item) => (
+          <li key={item.round}>
             {item.count > 0 ? (
               <To
                 to="/review"
                 search={{ round: item.round }}
                 st={st}
-                className={clsx(
-                  row,
-                  "group transition-[background-color] duration-150 hoverable:hover:bg-hover",
-                )}
+                className={clsx(tile, pressable)}
               >
                 {face(item, true)}
-                <Go>
-                  <Trans>Review</Trans>
-                </Go>
+                <Go className={footer}>{item.action}</Go>
               </To>
             ) : item.round === "new" ? (
               <button
                 type="button"
                 onClick={onAdd}
                 aria-disabled={!onAdd || undefined}
-                className={clsx(
-                  row,
-                  "group transition-[background-color] duration-150 hoverable:hover:bg-hover",
-                )}
+                className={clsx(tile, pressable)}
               >
                 {face(item, false)}
-                <Go icon={<Plus className="size-4" aria-hidden="true" />}>
+                <Go className={footer} icon={<Plus className="size-4" aria-hidden="true" />}>
                   <Trans>Add cards</Trans>
                 </Go>
               </button>
             ) : (
-              <div className={row}>{face(item, false)}</div>
+              <div className={tile}>{face(item, false)}</div>
             )}
           </li>
         ))}
@@ -371,8 +371,8 @@ function Go({
         className,
       )}
     >
-      {/* The circle alone on a phone, where the label would squeeze the row's text. */}
-      {children && <span className="sr-only @xl:not-sr-only">{children}</span>}
+      {/* The circle alone on a phone, where the label would squeeze the text beside it. */}
+      {children && <span className="sr-only @3xl:not-sr-only">{children}</span>}
       <span className="edge-inset grid size-8 place-items-center rounded-full bg-plate-2 text-text transition-[background-color,box-shadow] duration-150 group-hover:bg-plate">
         {icon ?? <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />}
       </span>

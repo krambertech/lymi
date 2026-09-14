@@ -1794,9 +1794,21 @@ msgstr "Reveal the card when you have it"
 msgid "Review"
 msgstr "Review"
 
+#: src/client/views/TodayView.tsx
+msgid "Review forgotten"
+msgstr "Review forgotten"
+
+#: src/client/views/TodayView.tsx
+msgid "Review new"
+msgstr "Review new"
+
 #: src/client/views/JoinView.tsx
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Review on your own schedule. New cards appear as they are added."
+
+#: src/client/views/TodayView.tsx
+msgid "Review slipping"
+msgstr "Review slipping"
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"

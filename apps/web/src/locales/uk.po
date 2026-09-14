@@ -1830,9 +1830,21 @@ msgstr "Відкрий картку, коли згадаєш"
 msgid "Review"
 msgstr "Повторення"
 
+#: src/client/views/TodayView.tsx
+msgid "Review forgotten"
+msgstr "Повторити забуті"
+
+#: src/client/views/TodayView.tsx
+msgid "Review new"
+msgstr "Повторити нові"
+
 #: src/client/views/JoinView.tsx
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Повторюй у своєму темпі. Нові картки з’являються, щойно їх додають."
+
+#: src/client/views/TodayView.tsx
+msgid "Review slipping"
+msgstr "Повторити складні"
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"

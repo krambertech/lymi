@@ -1,15 +1,12 @@
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import { cn } from "cn";
-import { animate, motion, useMotionValue, useReducedMotion } from "motion/react";
+import { animate, motion, useMotionValue, useReducedMotionConfig } from "motion/react";
 import * as React from "react";
+import { focusChosen, leavesGroup } from "../../lib/choice-focus";
 import { CHOICE_FADE, CHOICE_SLIDE } from "../../lib/choice-motion";
 
-/*
- * shadcn's Toggle Group, without its variants: the look belongs to the Lymi component built on it,
- * such as Segmented. `ToggleGroupIndicator` is Lymi's addition, the plate that moves to the pressed
- * item, so every group that has one moves it the same way.
- */
+// shadcn's Toggle Group without its variants, plus the plate that moves under the pressed item; Segmented owns the look.
 
 const GROUP = '[data-slot="toggle-group"]';
 // By state rather than slot, since an item composed into another trigger takes that trigger's slot.
@@ -26,6 +23,10 @@ function ToggleGroup<Value extends string>({
   value,
   defaultValue,
   onValueChange,
+  onBlur,
+  onFocus,
+  multiple,
+  disabled,
   children,
   ...props
 }: ToggleGroupProps<Value>) {
@@ -36,15 +37,28 @@ function ToggleGroup<Value extends string>({
       data-slot="toggle-group"
       value={value}
       defaultValue={defaultValue}
+      multiple={multiple}
+      disabled={disabled}
       onValueChange={(next, details) => {
         setUncontrolled(next);
         onValueChange?.(next, details);
+      }}
+      onFocus={(event) => {
+        if (!multiple) focusChosen(event, "[aria-pressed]", PRESSED);
+        onFocus?.(event);
+      }}
+      // Once, as focus leaves the group, the way a single native control reports it.
+      onBlur={(event) => {
+        if (leavesGroup(event)) onBlur?.(event);
       }}
       className={cn("relative flex w-fit items-center", className)}
       {...props}
     >
       {children}
-      {name && pressed.map((v) => <input key={v} type="hidden" name={name} value={v} />)}
+      {name &&
+        pressed.map((v) => (
+          <input key={v} type="hidden" name={name} value={v} disabled={disabled} />
+        ))}
     </ToggleGroupPrimitive>
   );
 }
@@ -70,13 +84,10 @@ function ToggleGroupItem<Value extends string>({
   );
 }
 
-/**
- * The plate under the pressed item of a horizontal group. Put it first inside `ToggleGroup`. It springs to
- * a new choice made with the pointer, and jumps for a key, a resize and its first placement.
- */
+/** The plate under the pressed item of a horizontal group, first inside `ToggleGroup`; DESIGN.md "Motion" has its timing. */
 function ToggleGroupIndicator({ className }: { className?: string | undefined }) {
   const ref = React.useRef<HTMLSpanElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionConfig() ?? false;
   const reduceRef = React.useRef(reduce);
   reduceRef.current = reduce;
   const x = useMotionValue(0);

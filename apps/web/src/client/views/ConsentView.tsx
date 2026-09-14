@@ -107,12 +107,21 @@ export function ConsentView({
 
           {writeRequested && (
             <li className="border-t border-edge pt-2">
-              <Field orientation="horizontal" disabled={deciding} className="min-h-11 gap-3 py-1">
+              <Field
+                orientation="horizontal"
+                disabled={deciding}
+                className="relative min-h-11 gap-3 py-1"
+              >
                 <GrantDot on={allowWrite} />
                 <FieldContent className="gap-0.5">
-                  <FieldLabel className="text-base text-text">{t`Add, edit and archive cards`}</FieldLabel>
+                  {/* Stretched over the row, so a tap on the sentence flips the switch too. */}
+                  <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+                    <Trans>Add, edit and archive cards</Trans>
+                  </FieldLabel>
                   <FieldDescription>
-                    {t`What it adds lands at once and is labelled. You can edit or archive any of it.`}
+                    <Trans>
+                      What it adds lands at once and is labelled. You can edit or archive any of it.
+                    </Trans>
                   </FieldDescription>
                 </FieldContent>
                 {/* One line tall at the label's size, so the track centres on the label's first line. */}

@@ -97,3 +97,42 @@ test("a disabled group ignores presses and is marked for assistive technology", 
   await dark.click({ force: true });
   await expect.element(dark).not.toBeChecked();
 });
+
+test("Tab lands on the chosen row, and arrow keys in a control inside a row stay with that control", async () => {
+  const onValueChange = vi.fn();
+  function Harness() {
+    const [value, setValue] = useState("custom");
+    return (
+      <>
+        <input aria-label="Before" />
+        <RadioGroup
+          aria-label="Daily goal"
+          value={value}
+          onValueChange={(next) => {
+            setValue(next);
+            onValueChange(next);
+          }}
+        >
+          <RadioGroupItem value="light" aria-label="Light" />
+          <RadioGroupItem value="custom" aria-label="Custom" />
+          <input type="number" aria-label="Reviews a day" defaultValue={12} />
+        </RadioGroup>
+      </>
+    );
+  }
+  await render(<Harness />);
+  page.getByRole("textbox", { name: "Before" }).element().focus();
+  await userEvent.tab();
+  await expect.element(page.getByRole("radio", { name: "Custom" })).toHaveFocus();
+
+  const reviews = page.getByRole("spinbutton", { name: "Reviews a day" });
+  await reviews.click();
+  await userEvent.keyboard("{ArrowUp}{ArrowUp}");
+  await expect.element(reviews).toHaveValue(14);
+  await expect.element(reviews).toHaveFocus();
+  expect(onValueChange).not.toHaveBeenCalled();
+
+  await page.getByRole("radio", { name: "Light" }).click();
+  await expect.element(page.getByRole("radio", { name: "Light" })).toBeChecked();
+  expect(onValueChange).toHaveBeenCalledTimes(1);
+});

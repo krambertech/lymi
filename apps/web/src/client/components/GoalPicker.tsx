@@ -122,8 +122,6 @@ export function GoalPicker({ value, onChange, className }: Props) {
                   onChange={(e) => setDraft(e.target.value)}
                   onBlur={commit}
                   onKeyDown={(e) => {
-                    // Arrow keys in the number belong to the number, not to the choice around it.
-                    e.stopPropagation();
                     if (e.key === "Enter") e.currentTarget.blur();
                   }}
                   className="h-9! w-20 text-end tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"

@@ -1,16 +1,22 @@
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group";
 import { cn } from "cn";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotionConfig } from "motion/react";
+import { focusChosen, fromItem } from "../../lib/choice-focus";
 import { CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP } from "../../lib/choice-motion";
 import { FieldItems, useField, useFieldControl } from "./field";
 
-// shadcn's Radio Group. Selection is carried by the ring and a filled dot, both ink: amber stays on the flame.
+// shadcn's Radio Group; selection is the ring and an ink dot, because amber stays on the flame.
+
+const ITEM = '[role="radio"]';
 
 function RadioGroup<Value>({
   className,
   disabled,
   children,
+  onFocus,
+  onKeyDown,
+  onKeyDownCapture,
   ...props
 }: RadioGroupPrimitive.Props<Value>) {
   const field = useField();
@@ -20,6 +26,19 @@ function RadioGroup<Value>({
       data-slot="radio-group"
       disabled={disabled || field?.disabled}
       className={cn("group/radio-group grid w-full gap-2", className)}
+      onFocus={(event) => {
+        focusChosen(event, ITEM, `${ITEM}[aria-checked="true"]`);
+        onFocus?.(event);
+      }}
+      // Arrow keys in a control nested in a row, such as a number or a link's buttons, stay with that control.
+      onKeyDownCapture={(event) => {
+        if (!fromItem(event, ITEM)) event.preventBaseUIHandler();
+        onKeyDownCapture?.(event);
+      }}
+      onKeyDown={(event) => {
+        if (!fromItem(event, ITEM)) event.preventBaseUIHandler();
+        onKeyDown?.(event);
+      }}
       {...props}
       {...control}
     >
@@ -64,12 +83,11 @@ function RadioGroupItem({ className, disabled, ...props }: RadioPrimitive.Root.P
 }
 
 function RadioDot({ checked }: { checked: boolean }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionConfig() ?? false;
   return (
     <motion.span
       aria-hidden="true"
       initial={false}
-      // Swells in past its size and settles; on the way out it just shrinks away.
       animate={checked ? { scale: 1, opacity: 1 } : { scale: reduce ? 1 : 0.3, opacity: 0 }}
       transition={
         reduce

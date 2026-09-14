@@ -55,6 +55,21 @@ test("the thumb travels to the end it is switched to and stays inside the track"
   expect(Math.round((thumb()?.width ?? 0) * 10) / 10).toBe(20);
 });
 
+test("in a right-to-left page the thumb starts at the right and travels left", async () => {
+  await render(
+    <div dir="rtl">
+      <Switch aria-label="Autoplay" />
+    </div>,
+  );
+  const control = page.getByRole("switch", { name: "Autoplay" });
+  const track = control.element().getBoundingClientRect();
+  const thumb = () =>
+    control.element().querySelector('[data-slot="switch-thumb"] > span')?.getBoundingClientRect();
+  expect(Math.round(track.right - (thumb()?.right ?? 0))).toBe(3);
+  await control.click();
+  await expect.poll(() => Math.round((thumb()?.left ?? 0) - track.left)).toBe(3);
+});
+
 test("it submits with a form, and a Field decides invalid and disabled", async () => {
   const ref = createRef<HTMLElement>();
   await render(

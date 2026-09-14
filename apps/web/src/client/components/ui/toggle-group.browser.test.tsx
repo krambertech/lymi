@@ -1,3 +1,4 @@
+import { MotionConfig } from "motion/react";
 import { useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -77,6 +78,19 @@ test("the plate settles under a pointer's choice", async () => {
   await expect.poll(() => offset(system.element())).toEqual({ start: 0, width: 0 });
 });
 
+test("under reduced motion the plate appears at a pointer's choice and fades in there", async () => {
+  await render(
+    <MotionConfig reducedMotion="always">
+      <Theme />
+    </MotionConfig>,
+  );
+  const dark = page.getByRole("button", { name: "Dark" });
+  await dark.click();
+  await expect.element(dark).toHaveAttribute("aria-pressed", "true");
+  expect(offset(dark.element())).toEqual({ start: 0, width: 0 });
+  await expect.poll(() => getComputedStyle(indicator()).opacity).toBe("1");
+});
+
 test("arrow keys walk the options, Enter chooses, and the plate jumps straight there", async () => {
   await render(<Theme />);
   await userEvent.tab();
@@ -117,4 +131,51 @@ test("a disabled option cannot be chosen, and a disabled group cannot change", a
   await expect
     .element(page.getByRole("button", { name: "B", exact: true }))
     .toHaveAttribute("aria-disabled", "true");
+});
+
+test("Tab lands on the chosen option, and blur is reported once as focus leaves the group", async () => {
+  const onBlur = vi.fn();
+  function Harness() {
+    const [value, setValue] = useState("system");
+    return (
+      <>
+        <input aria-label="Before" />
+        <Segmented
+          label="Theme"
+          value={value}
+          onChange={setValue}
+          options={OPTIONS}
+          onBlur={onBlur}
+        />
+        <input aria-label="After" />
+      </>
+    );
+  }
+  await render(<Harness />);
+  page.getByRole("textbox", { name: "Before" }).element().focus();
+  await userEvent.tab();
+  const system = page.getByRole("button", { name: "Follow the system" });
+  await expect.element(system).toHaveFocus();
+  await userEvent.keyboard("{ArrowLeft}{ArrowLeft}");
+  expect(onBlur).not.toHaveBeenCalled();
+  await userEvent.tab();
+  await expect.element(page.getByRole("textbox", { name: "After" })).toHaveFocus();
+  expect(onBlur).toHaveBeenCalledTimes(1);
+});
+
+test("a disabled group submits nothing, as a disabled native control would", async () => {
+  await render(
+    <form data-testid="form">
+      <Segmented
+        label="Theme"
+        name="theme"
+        value="light"
+        onChange={() => {}}
+        options={OPTIONS}
+        disabled
+      />
+    </form>,
+  );
+  const form = page.getByTestId("form").element() as HTMLFormElement;
+  expect(new FormData(form).getAll("theme")).toEqual([]);
 });

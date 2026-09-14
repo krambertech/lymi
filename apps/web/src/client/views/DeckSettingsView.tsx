@@ -303,11 +303,7 @@ function SharingGroup({
               description={t`Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress.`}
             />
             {shared && (
-              // biome-ignore lint/a11y/noStaticElementInteractions: a boundary, so arrow keys on the link and its buttons stay out of the choice above.
-              <div
-                className="enter-fade grid gap-3 px-3.5 pb-3.5 sm:ps-[calc(0.875rem+18px+0.75rem)]"
-                onKeyDown={(event) => event.stopPropagation()}
-              >
+              <div className="enter-fade grid gap-3 px-3.5 pb-3.5 sm:ps-[calc(0.875rem+18px+0.75rem)]">
                 {link ? (
                   <CopyField value={link.url} label={t`Join link`} singleLine />
                 ) : (

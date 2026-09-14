@@ -1,6 +1,6 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import { cn } from "cn";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotionConfig } from "motion/react";
 import * as React from "react";
 import { CHOICE_SLIDE, INSTANT } from "../../lib/choice-motion";
 import { useField, useFieldControl } from "./field";
@@ -49,7 +49,8 @@ function Switch({ className, disabled, onPointerDown, ...props }: SwitchPrimitiv
     >
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
-        className="pointer-events-none absolute start-[3px] top-[3px]"
+        // Laid out left to right and mirrored in a right-to-left page, so the travel needs no sign.
+        className="pointer-events-none absolute start-[3px] top-[3px] h-5 w-[38px] [direction:ltr] rtl:-scale-x-100"
         render={(thumbProps, state) => (
           <span {...thumbProps}>
             <SwitchThumb checked={state.checked} held={held && !state.disabled} />
@@ -61,20 +62,14 @@ function Switch({ className, disabled, onPointerDown, ...props }: SwitchPrimitiv
 }
 
 function SwitchThumb({ checked, held }: { checked: boolean; held: boolean }) {
-  const reduce = useReducedMotion();
-  const ref = React.useRef<HTMLSpanElement>(null);
-  const [rtl, setRtl] = React.useState(false);
-  React.useLayoutEffect(() => {
-    if (ref.current) setRtl(getComputedStyle(ref.current).direction === "rtl");
-  }, []);
+  const reduce = useReducedMotionConfig() ?? false;
   const stretch = held && !reduce ? STRETCH : 0;
   const x = checked ? TRAVEL - stretch : 0;
   return (
     <motion.span
-      ref={ref}
       initial={false}
       // Held, the thumb widens like a fingertip pressed flat; let go, it springs across and settles.
-      animate={{ x: rtl ? -x : x, width: 20 + stretch }}
+      animate={{ x, width: 20 + stretch }}
       transition={reduce ? INSTANT : CHOICE_SLIDE}
       className={cn(
         "block h-5 rounded-full transition-[background-color,box-shadow] duration-200",

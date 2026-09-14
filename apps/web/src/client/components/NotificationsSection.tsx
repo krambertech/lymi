@@ -209,7 +209,7 @@ export function NotificationsSection() {
           <Field
             orientation="horizontal"
             disabled={unusable || busy || permissionBlocked}
-            className="gap-3 px-4 py-3.5"
+            className="relative gap-3 px-4 py-3.5"
           >
             <span
               className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
@@ -218,7 +218,10 @@ export function NotificationsSection() {
               <Bell className="size-4" />
             </span>
             <FieldContent className="gap-0.5">
-              <FieldLabel className="text-base text-text">{t`Send a daily reminder`}</FieldLabel>
+              {/* Stretched over the row, so a tap on the bell or the sentence flips the switch too. */}
+              <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+                <Trans>Send a daily reminder</Trans>
+              </FieldLabel>
               <FieldDescription>
                 {needsInstall
                   ? t`Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there.`

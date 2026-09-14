@@ -52,7 +52,7 @@ export function lastDays(summary: StreakSummary, n = 7) {
 
 interface PillProps {
   summary: StreakSummary | undefined;
-  /** "rail" sits on the sidebar's first line; "phone" is the plate at the top of the screen. */
+  /** "rail" sits on the sidebar's first line; "phone" in the top bar, beside capture. */
   variant: "rail" | "phone";
 }
 
@@ -456,7 +456,7 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
         "relative inline-flex shrink-0 items-center rounded-full font-semibold text-text transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.97]",
         rail
           ? "h-8 gap-1.5 px-2.5 text-sm before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover"
-          : "h-10 gap-2 bg-plate px-3.5 text-base edge before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-hover",
+          : "h-10 gap-2 px-2.5 text-base before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-hover",
         className,
       );
 

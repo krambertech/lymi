@@ -24,6 +24,7 @@ function Today() {
       decks={decks.data}
       streak={streak.data}
       streakCard={<Streak variant="card" />}
+      streakButton={<Streak variant="phone" />}
       rounds={rounds.data}
       name={me.data?.name}
       email={me.data?.email}

@@ -13,13 +13,15 @@ import { Skeleton } from "../components/skeleton";
 import type { StreakSummary } from "../components/streak";
 import type { DeckSummary } from "../lib/api";
 import { lanternFor } from "../lib/flame";
-import { Page, PageHeader, type StaticNav, TopBar } from "./shell";
+import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
   streak: StreakSummary | undefined;
   /** The streak card beside the due card. A slot, so the design page can pass a static one. */
   streakCard?: ReactNode | undefined;
+  /** The streak pill, beside capture on the phone. The rail carries it on desktop. */
+  streakButton?: ReactNode | undefined;
   /** How many cards each round holds. Missing offline, which hides the rounds. */
   rounds?: RoundsOut | undefined;
   /** The learner, for the avatar that opens their menu on the phone. */
@@ -47,6 +49,7 @@ export function TodayView({
   decks,
   streak,
   streakCard,
+  streakButton,
   rounds,
   name,
   email,
@@ -70,8 +73,10 @@ export function TodayView({
     <Page>
       {/* The rail carries capture and the learner on desktop, so this row is the phone's. */}
       <TopBar
+        back={<TileLockup size="bar" />}
         actions={
           <>
+            {streakButton}
             <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
             <LearnerMenu
               variant="phone"

@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { BookMarked, Sun } from "lucide-react";
 import { NavLink, type StaticNav } from "./nav-link";
+import { SlidingPlate } from "./ui/sliding-plate";
 
 /** Every destination in the phone pill. Review is a button on the screen, never a tab. */
 export const PILL_NAV = [
@@ -17,12 +18,17 @@ export const PILL_NAV = [
 export function PillNav({ static: st }: { static?: StaticNav }) {
   const { t, i18n } = useLingui();
   const item =
-    "inline-flex h-11 items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[background-color,color,box-shadow,scale] duration-150 active:scale-[0.97] hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-5";
+    "relative inline-flex h-11 items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[color,scale] duration-150 active:scale-[0.97] hoverable:hover:text-text [&.active]:text-text [&_svg]:size-5";
   return (
     <nav
       aria-label={t`Main`}
-      className="pointer-events-auto flex gap-1 rounded-full bg-plate-2 p-1.5 edge"
+      className="pointer-events-auto relative flex gap-1 rounded-full bg-plate-2 p-1.5 edge"
     >
+      <SlidingPlate
+        chosen='[aria-current="page"]'
+        attribute="aria-current"
+        className="edge inset-y-1.5 rounded-full bg-plate"
+      />
       {PILL_NAV.map((n) => (
         <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
           <n.icon aria-hidden="true" />

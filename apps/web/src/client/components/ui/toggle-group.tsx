@@ -1,10 +1,9 @@
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import { cn } from "cn";
-import { animate, motion, useMotionValue, useReducedMotionConfig } from "motion/react";
 import * as React from "react";
 import { focusChosen, leavesGroup } from "../../lib/choice-focus";
-import { CHOICE_FADE, CHOICE_SLIDE } from "../../lib/choice-motion";
+import { SlidingPlate } from "./sliding-plate";
 
 // shadcn's Toggle Group without its variants, plus the plate that moves under the pressed item; Segmented owns the look.
 
@@ -87,75 +86,13 @@ function ToggleGroupItem<Value extends string>({
 
 /** The plate under the pressed item of a horizontal group, first inside `ToggleGroup`; DESIGN.md "Motion" has its timing. */
 function ToggleGroupIndicator({ className }: { className?: string | undefined }) {
-  const ref = React.useRef<HTMLSpanElement>(null);
-  const reduce = useReducedMotionConfig() ?? false;
-  const reduceRef = React.useRef(reduce);
-  reduceRef.current = reduce;
-  const x = useMotionValue(0);
-  const width = useMotionValue(0);
-  const opacity = useMotionValue(1);
-
-  React.useLayoutEffect(() => {
-    const chip = ref.current;
-    const group = chip?.parentElement;
-    if (!chip || !group) return;
-    let placed = false;
-    let keyboard = false;
-
-    const place = (glide: boolean) => {
-      const on = Array.from(group.querySelectorAll<HTMLElement>(PRESSED)).find(
-        (item) => item.closest(GROUP) === group,
-      );
-      chip.hidden = !on;
-      if (!on) {
-        placed = false;
-        return;
-      }
-      // Measured inside the group, so the plate never chases the group itself across the page.
-      const rtl = getComputedStyle(group).direction === "rtl";
-      const start = rtl ? group.clientWidth - on.offsetLeft - on.offsetWidth : on.offsetLeft;
-      const toX = rtl ? -start : start;
-      const toWidth = on.offsetWidth;
-      if (placed && glide && !reduceRef.current) {
-        animate(x, toX, CHOICE_SLIDE);
-        animate(width, toWidth, CHOICE_SLIDE);
-      } else {
-        const moved = placed && (toX !== x.get() || toWidth !== width.get());
-        x.jump(toX);
-        width.jump(toWidth);
-        // Under reduced motion the plate fades in where it lands instead of travelling there.
-        if (moved && glide) animate(opacity, [0, 1], CHOICE_FADE);
-      }
-      placed = true;
-    };
-
-    place(false);
-    // A click the keyboard made has no pointer detail; the flag lasts only for the change that click causes.
-    const onClick = (event: MouseEvent) => {
-      keyboard = event.detail === 0;
-      setTimeout(() => {
-        keyboard = false;
-      });
-    };
-    group.addEventListener("click", onClick, true);
-    const pressed = new MutationObserver(() => place(!keyboard));
-    pressed.observe(group, { subtree: true, attributeFilter: ["data-pressed"] });
-    const resized = new ResizeObserver(() => place(false));
-    resized.observe(group);
-    return () => {
-      group.removeEventListener("click", onClick, true);
-      pressed.disconnect();
-      resized.disconnect();
-    };
-  }, [x, width, opacity]);
-
   return (
-    <motion.span
-      ref={ref}
-      aria-hidden="true"
+    <SlidingPlate
+      chosen={PRESSED}
+      attribute="data-pressed"
+      within={GROUP}
       data-slot="toggle-group-indicator"
-      style={{ x, width, opacity }}
-      className={cn("pointer-events-none absolute start-0", className)}
+      className={className}
     />
   );
 }

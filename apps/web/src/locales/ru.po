@@ -312,10 +312,6 @@ msgstr "{months, plural, one {Через # месяц} few {Через # мес�
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
-#: src/client/lib/document-title.ts
-msgid "{name} · Lymi"
-msgstr "{name} · Lymi"
-
 #: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
 msgstr "{n, plural, one {Повторить # карточку из колоды {name}} few {Повторить # карточки из колоды {name}} many {Повторить # карточек из колоды {name}} other {Повторить # карточки из колоды {name}}}"
@@ -327,6 +323,10 @@ msgstr "{n, plural, one {Повторить # забытую карточку} f
 #: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # more card} other {Review # more cards}}"
 msgstr "{n, plural, one {Повторить ещё # карточку} few {Повторить ещё # карточки} many {Повторить ещё # карточек} other {Повторить ещё # карточки}}"
+
+#: src/client/lib/document-title.ts
+msgid "{name} · Lymi"
+msgstr "{name} · Lymi"
 
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"

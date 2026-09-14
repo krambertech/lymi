@@ -276,10 +276,6 @@ msgstr "{months, plural, one {In # month} other {In # months}}"
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
-#: src/client/lib/document-title.ts
-msgid "{name} · Lymi"
-msgstr "{name} · Lymi"
-
 #: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
 msgstr "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
@@ -291,6 +287,10 @@ msgstr "{n, plural, one {Review # forgotten card} other {Review # forgotten card
 #: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # more card} other {Review # more cards}}"
 msgstr "{n, plural, one {Review # more card} other {Review # more cards}}"
+
+#: src/client/lib/document-title.ts
+msgid "{name} · Lymi"
+msgstr "{name} · Lymi"
 
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"

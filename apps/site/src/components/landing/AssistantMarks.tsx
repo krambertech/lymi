@@ -137,8 +137,29 @@ function Mark({ assistant }: { assistant: Assistant }) {
 }
 
 /** The assistants a visitor can connect from, each opening its setup guide. */
-export function AssistantMarks() {
+export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
   const { t, i18n } = useLingui();
+  if (compact) {
+    return (
+      <ul aria-label={t`Connect an assistant`} className="flex flex-wrap justify-center gap-2">
+        {ASSISTANTS.map((assistant) => {
+          const name = assistant.label ? i18n._(assistant.label) : assistant.name;
+          return (
+            <li key={assistant.name}>
+              <a
+                href={assistant.guide}
+                aria-label={name}
+                title={name}
+                className="edge grid size-11 place-items-center rounded-full bg-plate text-text transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover"
+              >
+                <Mark assistant={assistant} />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
   return (
     <ul aria-label={t`Connect an assistant`} className="flex flex-wrap gap-2">
       {ASSISTANTS.map((assistant) => (

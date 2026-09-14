@@ -238,5 +238,113 @@
     "language": "en",
     "model": "gpt-4o-mini-tts",
     "voice": "marin"
+  },
+  "madrugar": {
+    "term": "madrugar",
+    "language": "es",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "embarazada": {
+    "term": "embarazada",
+    "language": "es-ES",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "ojala": {
+    "term": "ojalá",
+    "language": "es",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "me-pones-un-cafe": {
+    "term": "¿Me pones un café?",
+    "language": "es-ES",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "otsukaresama": {
+    "term": "お疲れ様です",
+    "language": "ja",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "hashi": {
+    "term": "箸",
+    "language": "ja",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "je-veux-bien": {
+    "term": "je veux bien",
+    "language": "fr",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "ca-marche": {
+    "term": "ça marche",
+    "language": "fr",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "bref": {
+    "term": "bref",
+    "language": "fr",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "das-maedchen": {
+    "term": "das Mädchen",
+    "language": "de",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "aufhoeren": {
+    "term": "aufhören",
+    "language": "de",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "palun": {
+    "term": "palun",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "head-aega": {
+    "term": "head aega",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "isikukood": {
+    "term": "isikukood",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "tervist": {
+    "term": "tervist",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "monus": {
+    "term": "mõnus",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "linn": {
+    "term": "linn",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "kallis": {
+    "term": "kallis",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
   }
 }

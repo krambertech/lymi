@@ -927,6 +927,99 @@
   pointer-events: none;
 }
 
+/* Lesson notes in a hand: Caveat for Latin and Cyrillic, Klee One's pencil strokes for Japanese. */
+.notes-hand {
+  font-family: "Caveat", "Klee One", cursive;
+  font-weight: 500;
+}
+
+/*
+ * Words behind the languages hero. Each is placed by slot, leans away from the pointer by its
+ * depth, and wanders on its own slow loop; nearer words are larger, stronger and lean further.
+ */
+.word-field {
+  --px: 0;
+  --py: 0;
+}
+.floating-word {
+  left: var(--mx);
+  top: var(--my);
+}
+@container (min-width: 48rem) {
+  .floating-word {
+    left: var(--x);
+    top: var(--y);
+  }
+}
+.floating-word-lean {
+  display: inline-block;
+  transform: translate(
+    calc(var(--px) * var(--depth) * -38px),
+    calc(var(--py) * var(--depth) * -26px)
+  );
+  transition: transform 900ms var(--ease-out);
+}
+.floating-word-term {
+  display: inline-block;
+  opacity: var(--depth);
+  transition:
+    opacity 250ms var(--ease-out),
+    filter 250ms var(--ease-out);
+  animation: word-wander var(--wander) ease-in-out var(--wander-delay) infinite;
+}
+.floating-word:hover .floating-word-term {
+  opacity: 1;
+  filter: none;
+}
+@keyframes word-wander {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  25% {
+    translate: 10px -12px;
+    rotate: 1.5deg;
+  }
+  50% {
+    translate: -6px -4px;
+    rotate: -1deg;
+  }
+  75% {
+    translate: -12px 9px;
+    rotate: 0.5deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-word-lean {
+    transform: none;
+  }
+  .floating-word-term {
+    animation: none;
+  }
+}
+
+/* One language's cards squared up: those behind peek out below, and a new language deals in from the side. */
+.hand-stage[data-layout="stack"] {
+  height: calc(var(--ch) + var(--cw) * 0.24);
+}
+.hand-stage[data-layout="stack"] .hand-card {
+  transform-origin: 50% 100%;
+}
+.hand-stage[data-layout="stack"] .hand-card[data-place="deck"] {
+  transform: translateX(calc(var(--cw) * 0.3)) rotate(4deg) scale(0.96);
+}
+.hand-stage[data-layout="stack"] .hand-card[data-place="front"] {
+  transform: none;
+}
+.hand-stage[data-layout="stack"] .hand-card[data-place="fan"] {
+  transform: translateY(calc(var(--slot) * var(--cw) * 0.05)) scale(calc(1 - var(--slot) * 0.05));
+}
+.hand-stage[data-layout="stack"] .hand-card[data-place="gone"] {
+  transform: translate(calc(var(--cw) * -0.3), calc(var(--cw) * 0.04)) rotate(-5deg) scale(0.96);
+  transition-duration: 380ms;
+}
+
 .hand-flip {
   position: absolute;
   inset: 0;

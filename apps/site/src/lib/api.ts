@@ -7,9 +7,12 @@ export class ApiError extends Error {
   }
 }
 
+/** Which public page someone joined from. */
+export type BetaSource = "landing" | "join" | "languages" | "estonian";
+
 export async function joinBeta(
   email: string,
-  source: "landing" | "join" = "landing",
+  source: BetaSource = "landing",
 ): Promise<{ alreadyOn: boolean }> {
   const response = await fetch("/api/beta", {
     method: "POST",

@@ -23,6 +23,12 @@ importers:
       '@fontsource-variable/onest':
         specifier: ^5.3.1
         version: 5.3.1
+      '@fontsource/caveat':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/klee-one':
+        specifier: 5.3.0
+        version: 5.3.0
       '@lingui/core':
         specifier: 6.7.0
         version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)
@@ -2058,6 +2064,12 @@ packages:
 
   '@fontsource-variable/onest@5.3.1':
     resolution: {integrity: sha512-xaaw6G4HDB2/RczsWLD/2bnib4ykmQlTlBUN3GOEOiyErilZukQWVJG95h9zwAy0i8KY+QzDa+COPfqhI72Acw==}
+
+  '@fontsource/caveat@5.3.0':
+    resolution: {integrity: sha512-eHTfzQxFSW9ABERRLNruHoNJmKed2J7pqTUc5lp4a4POMgXGKpxmWj3d9Hz10kmAg6iuTTLe6UagbA4bnsmfQw==}
+
+  '@fontsource/klee-one@5.3.0':
+    resolution: {integrity: sha512-1mnMRQO70AnTCHaWy5ovYKjbvszpOp7//bMDZ+PnjBMmar5YRcbskVzM4u+Syd8CMWw353R3BvsrsKQrwVRnEw==}
 
   '@hono/node-server@2.1.1':
     resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
@@ -8135,6 +8147,10 @@ snapshots:
   '@floating-ui/utils@0.2.12': {}
 
   '@fontsource-variable/onest@5.3.1': {}
+
+  '@fontsource/caveat@5.3.0': {}
+
+  '@fontsource/klee-one@5.3.0': {}
 
   '@hono/node-server@2.1.1(hono@4.13.7)':
     dependencies:

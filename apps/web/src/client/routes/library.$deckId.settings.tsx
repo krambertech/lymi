@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { api, errorMessage } from "../lib/api";
+import { useDocumentTitle } from "../lib/document-title";
 import { deckCardsQuery, decksQuery, joinLinkQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/deck-settings-view";
@@ -18,6 +19,7 @@ function DeckSettings() {
   const decks = useQuery(decksQuery);
   const cards = useQuery(deckCardsQuery(deckId));
   const deck = decks.data?.find((d) => d.id === deckId);
+  useDocumentTitle(t`Deck settings`);
   // The oldest card with a meaning, so the direction rows read the same way twice running.
   const isOwner = deck?.role === "owner";
   const joinLink = useQuery({ ...joinLinkQuery(deckId), enabled: isOwner });

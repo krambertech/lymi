@@ -6,6 +6,7 @@ import { z } from "zod";
 import { identifyApp } from "../components/app-mark";
 import { buttonClass } from "../components/button";
 import { authClient } from "../lib/auth";
+import { useDocumentTitle } from "../lib/document-title";
 import { meQuery } from "../lib/queries";
 import { ConnectedView } from "../views/connected-view";
 import { ConsentView } from "../views/consent-view";
@@ -53,6 +54,8 @@ function Consent() {
   });
 
   const app = identifyApp(clientId, client.data?.client_name);
+  const appName = app.name;
+  useDocumentTitle(t`Connect ${appName}`);
 
   async function decide(accept: boolean) {
     setError(null);

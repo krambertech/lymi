@@ -1,6 +1,8 @@
+import { useLingui } from "@lingui/react/macro";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useDocumentTitle } from "../lib/document-title";
 import { insightsQuery } from "../lib/queries";
 import { InsightsView, type Period } from "../views/insights-view";
 
@@ -9,6 +11,8 @@ export const Route = createFileRoute("/insights")({
 });
 
 function Insights() {
+  const { t } = useLingui();
+  useDocumentTitle(t`Insights`);
   const [period, setPeriod] = useState<Period>("30");
   const { data, isError, isFetching, refetch } = useQuery(
     insightsQuery(Number(period) as 30 | 90 | 0),

@@ -10,6 +10,7 @@ import { identifyApp } from "../components/app-mark";
 import { Button } from "../components/button";
 import { Input } from "../components/ui/input";
 import { authClient, followOAuthRedirect, signInWithGoogle } from "../lib/auth";
+import { useDocumentTitle } from "../lib/document-title";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { LoginView } from "../views/login-view";
 
@@ -86,6 +87,7 @@ function Login() {
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState<string | null>(null);
   const issue = issueFor(error);
+  useDocumentTitle(t`Sign in`);
 
   // The client's own name, for an app we ship no mark for. Best-effort: the door still works
   // from the client_id host alone, so a failure here is not shown.

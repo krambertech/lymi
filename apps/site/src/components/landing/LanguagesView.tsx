@@ -365,6 +365,7 @@ export function EstonianView() {
 
         <FeatureSection
           id="how-it-works"
+          demoFirst
           title={<Trans>Recall first. Reveal second.</Trans>}
           body={
             <Trans>
@@ -376,18 +377,17 @@ export function EstonianView() {
           <ReviewDemo cards={ESTONIAN_REVIEW} />
         </FeatureSection>
 
-        <FeatureSection
-          demoFirst
-          title={<Trans>Estonian the way it’s spoken.</Trans>}
+        <ConversationScenes
+          title={<Trans>Learn to speak Estonian.</Trans>}
           body={
             <Trans>
-              Small conversations from a first week in Estonia. Point at a word to see what it
-              means, or at a line to read it in English.
+              Keep the phrases you’ll actually say. Every card plays aloud, and Lymi asks both ways:
+              what a phrase means, and how to say it from the meaning.
             </Trans>
           }
-        >
-          <ConversationScenes scenes={ESTONIAN_SCENES} language="et" />
-        </FeatureSection>
+          scenes={ESTONIAN_SCENES}
+          language="et"
+        />
 
         <FeatureSection
           demoFirst

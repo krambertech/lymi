@@ -341,6 +341,10 @@ msgid "Cards in"
 msgstr "Cards in"
 
 #: src/components/landing/estonian-scenes.ts
+msgid "Catching up with a friend"
+msgstr "Catching up with a friend"
+
+#: src/components/landing/estonian-scenes.ts
 msgid "cents"
 msgstr "cents"
 
@@ -565,10 +569,6 @@ msgstr "Estonian"
 msgid "Estonian A2 · Tuesdays"
 msgstr "Estonian A2 · Tuesdays"
 
-#: src/components/landing/LanguagesView.tsx
-msgid "Estonian the way it’s spoken."
-msgstr "Estonian the way it’s spoken."
-
 #: src/components/landing/estonian-scenes.ts
 msgid "euros"
 msgstr "euros"
@@ -735,6 +735,10 @@ msgstr "Have you eaten? A way to say hello"
 #: src/components/landing/estonian-scenes.ts
 msgid "have; am"
 msgstr "have; am"
+
+#: src/components/landing/ConversationScenes.tsx
+msgid "Hear this line"
+msgstr "Hear this line"
 
 #: src/components/landing/estonian-scenes.ts
 msgid "hello"
@@ -928,6 +932,10 @@ msgid "Keep the next thing you learn."
 msgstr "Keep the next thing you learn."
 
 #: src/components/landing/LanguagesView.tsx
+msgid "Keep the phrases you’ll actually say. Every card plays aloud, and Lymi asks both ways: what a phrase means, and how to say it from the meaning."
+msgstr "Keep the phrases you’ll actually say. Every card plays aloud, and Lymi asks both ways: what a phrase means, and how to say it from the meaning."
+
+#: src/components/landing/LanguagesView.tsx
 msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
 msgstr "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
 
@@ -1019,6 +1027,10 @@ msgstr "Law"
 #: src/components/landing/SiteFooter.tsx
 msgid "Learn"
 msgstr "Learn"
+
+#: src/components/landing/LanguagesView.tsx
+msgid "Learn to speak Estonian."
+msgstr "Learn to speak Estonian."
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "Learned once, never revisited"
@@ -1236,9 +1248,17 @@ msgstr "Open Lymi"
 msgid "or"
 msgstr "or"
 
+#: src/components/landing/estonian-scenes.ts
+msgid "Ordering a coffee to go"
+msgstr "Ordering a coffee to go"
+
 #: src/components/landing/AssistantMarks.tsx
 msgid "Other apps"
 msgstr "Other apps"
+
+#: src/components/landing/estonian-scenes.ts
+msgid "Paying at the checkout"
+msgstr "Paying at the checkout"
 
 #: src/components/landing/language-cards.ts
 msgid "Personal ID code"
@@ -1343,6 +1363,10 @@ msgstr "Remember Estonian vocabulary · Lymi"
 #: src/components/landing/HandOfCards.tsx
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
+
+#: src/components/landing/ConversationScenes.tsx
+msgid "Replay this line"
+msgstr "Replay this line"
 
 #: src/components/BetaSignup.tsx
 #: src/components/JoinView.tsx
@@ -1475,10 +1499,6 @@ msgstr "Signals"
 #: src/components/landing/hand-cards.ts
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Sitting through a bad film because you paid for the ticket."
-
-#: src/components/landing/LanguagesView.tsx
-msgid "Small conversations from a first week in Estonia. Point at a word to see what it means, or at a line to read it in English."
-msgstr "Small conversations from a first week in Estonia. Point at a word to see what it means, or at a line to read it in English."
 
 #: src/components/landing/hero-words.ts
 msgid "So-so"
@@ -2023,10 +2043,6 @@ msgstr "Yes. Whoever makes the cards shares the deck’s join link, and everyone
 #: src/components/landing/estonian-scenes.ts
 msgid "you"
 msgstr "you"
-
-#: src/components/landing/ConversationScenes.tsx
-msgid "You"
-msgstr "You"
 
 #: src/components/landing/hero-words.ts
 msgid "You can do it!"

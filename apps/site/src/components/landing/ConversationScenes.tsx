@@ -1,12 +1,17 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { Volume2 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useEffect, useId, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { Scene, SceneLine, Token } from "./estonian-scenes";
+import { SectionTitle } from "./FeatureSection";
 
-/** Time to read a line before the next one is said. */
-const LINE_MS = 1700;
-const EASE = [0.22, 1, 0.36, 1] as const;
+/** Time to read and hear a line before the next one is said. */
+const LINE_MS = 1900;
+/** How long a finished conversation stays before the next situation begins. */
+const SCENE_REST_MS = 4200;
+const _EASE = [0.22, 1, 0.36, 1] as const;
 
 function Word({ token, language }: { token: Token; language: string }) {
   const { i18n } = useLingui();
@@ -25,7 +30,7 @@ function Word({ token, language }: { token: Token; language: string }) {
       <span
         id={id}
         role="tooltip"
-        className="pointer-events-none absolute bottom-full start-1/2 z-20 mb-2 -translate-x-1/2 translate-y-1 rounded-sm bg-text px-2.5 py-1 text-sm font-normal whitespace-nowrap text-canvas opacity-0 transition-[opacity,translate] duration-150 ease-out group-focus-within/word:translate-y-0 group-focus-within/word:opacity-100 hoverable:group-hover/word:translate-y-0 hoverable:group-hover/word:opacity-100"
+        className="pointer-events-none absolute bottom-full start-1/2 z-20 mb-2 -translate-x-1/2 translate-y-1 rounded-md bg-text px-3.5 py-2 text-base leading-tight font-normal tracking-normal whitespace-nowrap text-canvas @2xl:text-lg opacity-0 transition-[opacity,translate] duration-150 ease-out group-focus-within/word:translate-y-0 group-focus-within/word:opacity-100 hoverable:group-hover/word:translate-y-0 hoverable:group-hover/word:opacity-100"
       >
         {i18n._(token.gloss)}
       </span>
@@ -33,141 +38,264 @@ function Word({ token, language }: { token: Token; language: string }) {
   );
 }
 
-function Line({ line, language }: { line: SceneLine; language: string }) {
-  const { i18n } = useLingui();
+function Bubble({
+  line,
+  language,
+  index,
+  playing,
+  onPlay,
+}: {
+  line: SceneLine;
+  language: string;
+  index: number;
+  playing: boolean;
+  onPlay: () => void;
+}) {
+  const { t, i18n } = useLingui();
+  const you = line.speaker === "you";
   return (
-    <div className="group/line grid grid-cols-[28px_minmax(0,1fr)] items-start gap-3">
-      {/* As tall as the line's first row, so the speaker centres on it. */}
-      <span className="flex h-[1.3em] items-center text-xl">
-        {line.speaker === "you" ? (
-          <span className="grid size-7 place-items-center rounded-full bg-amber-soft text-[0.5625rem] font-medium text-amber-text">
-            <Trans>You</Trans>
-          </span>
-        ) : (
-          <img
-            src={`/avatars/${line.speaker.avatar}.svg`}
-            alt={line.speaker.name}
-            width={28}
-            height={28}
-            className="size-7 rounded-full"
-          />
-        )}
-      </span>
-      <div className="min-w-0">
-        <p className="text-xl leading-[1.3] font-medium tracking-[-0.02em] text-pretty text-text">
+    <div className={clsx("group/line flex flex-col", you ? "items-end" : "items-start")}>
+      {/* Each bubble drifts on its own slow loop, so the exchange feels spoken rather than stacked. */}
+      <div
+        className="scene-bubble flex max-w-[92%] items-center gap-2"
+        style={{ animationDelay: `${-index * 1.1}s` }}
+      >
+        <p
+          className={clsx(
+            "rounded-[22px] px-5 py-3 text-xl leading-snug font-medium tracking-[-0.015em] text-text @2xl:text-2xl",
+            you ? "order-2 rounded-ee-md bg-plate-2" : "rounded-es-md bg-plate edge",
+          )}
+        >
           {line.tokens.map((token, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: a line's words are fixed, so the index is the identity
             <Word key={i} token={token} language={language} />
           ))}
         </p>
-        <p className="mt-0.5 text-sm text-muted opacity-0 transition-opacity duration-200 group-focus-within/line:opacity-100 hoverable:group-hover/line:opacity-100">
-          {i18n._(line.translation)}
-        </p>
+        <button
+          type="button"
+          onClick={onPlay}
+          aria-label={playing ? t`Replay this line` : t`Hear this line`}
+          className={clsx(
+            "relative grid size-9 shrink-0 place-items-center rounded-full transition-[opacity,background-color,color,scale] duration-150 ease-out active:scale-95 hoverable:hover:bg-hover",
+            "before:absolute before:-inset-1 before:content-['']",
+            playing ? "text-amber-text" : "text-muted hoverable:hover:text-text",
+            you && "order-1",
+            // A fine pointer finds it on the line; a touch screen, which cannot hover, always shows it.
+            "group-focus-within/line:opacity-100 hoverable:opacity-0 hoverable:group-hover/line:opacity-100",
+            playing && "opacity-100",
+          )}
+        >
+          <Volume2 aria-hidden="true" className={clsx("size-4", playing && "scene-playing")} />
+        </button>
       </div>
+      <p
+        className={clsx(
+          "mt-1 px-2 text-sm text-muted opacity-0 transition-opacity duration-200 group-focus-within/line:opacity-100 hoverable:group-hover/line:opacity-100",
+        )}
+      >
+        {i18n._(line.translation)}
+      </p>
     </div>
   );
 }
 
 interface Props {
+  title: ReactNode;
+  body: ReactNode;
   scenes: Scene[];
   /** BCP 47 tag of the conversations. */
   language: string;
 }
 
 /**
- * Short conversations that play out line by line once they are on screen. A word shows its meaning
- * and a line its translation under the pointer or keyboard focus; choosing a scene plays it again.
+ * Everyday conversations as floating lines. The situations sit beside them; each one plays out
+ * once it is on screen, every line can be heard, and every word shows its meaning.
  */
-export function ConversationScenes({ scenes, language }: Props) {
+export function ConversationScenes({ title, body, scenes, language }: Props) {
   const { t, i18n } = useLingui();
   const still = useReducedMotion();
   const root = useRef<HTMLDivElement>(null);
+  const audio = useRef<HTMLAudioElement | null>(null);
   const [sceneId, setSceneId] = useState(scenes[0]?.id);
   const scene = scenes.find((s) => s.id === sceneId) ?? (scenes[0] as Scene);
   const [shown, setShown] = useState({ id: scene.id, run: 0, count: 0 });
   const [seen, setSeen] = useState(false);
+  const [playing, setPlaying] = useState<string | null>(null);
+  const [held, setHeld] = useState(false);
   const count = still ? scene.lines.length : shown.id === scene.id ? shown.count : 0;
-  const playing = seen && count < scene.lines.length;
+  const saying = seen && count < scene.lines.length;
   const done = count >= scene.lines.length;
 
   useEffect(() => {
     const el = root.current;
     if (!el) return;
+    const hold = () => setHeld(true);
+    const release = () => setHeld(false);
+    el.addEventListener("pointerenter", hold);
+    el.addEventListener("pointerleave", release);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) setSeen(true);
       },
-      // Starts once the card's top is a third of the way up the screen, however tall it is.
+      // Starts once the section's top is a third of the way up the screen, however tall it is.
       { rootMargin: "0px 0px -33% 0px" },
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      el.removeEventListener("pointerenter", hold);
+      el.removeEventListener("pointerleave", release);
+    };
   }, []);
 
   useEffect(() => {
-    if (!playing || still) return;
+    if (!saying || still) return;
     const next = window.setTimeout(
       () => setShown((s) => ({ ...s, count: (s.id === scene.id ? s.count : 0) + 1 })),
       count === 0 ? 450 : LINE_MS,
     );
     return () => window.clearTimeout(next);
-  }, [playing, still, count, scene.id]);
+  }, [saying, still, count, scene.id]);
 
-  const play = (id: string) => {
+  // A finished conversation rests, then the next situation plays, unless the visitor is reading or listening.
+  useEffect(() => {
+    if (!done || still || held || playing || !seen) return;
+    const upcoming = scenes[(scenes.indexOf(scene) + 1) % scenes.length] as Scene;
+    const rest = window.setTimeout(() => {
+      setSceneId(upcoming.id);
+      setShown((s) => ({ id: upcoming.id, run: s.run + 1, count: 0 }));
+    }, SCENE_REST_MS);
+    return () => window.clearTimeout(rest);
+  }, [done, still, held, playing, seen, scene, scenes]);
+
+  useEffect(() => () => audio.current?.pause(), []);
+
+  const play = useCallback((id: string) => {
+    audio.current?.pause();
+    const clip = new Audio(`/audio/hand/${id}.mp3`);
+    audio.current = clip;
+    setPlaying(id);
+    const stop = () => setPlaying((current) => (current === id ? null : current));
+    clip.addEventListener("ended", stop);
+    clip.addEventListener("error", stop);
+    clip.play().catch(stop);
+  }, []);
+
+  const choose = (id: string) => {
+    audio.current?.pause();
+    setPlaying(null);
     setSceneId(id);
     setShown((s) => ({ id, run: s.run + 1, count: 0 }));
     setSeen(true);
   };
 
   return (
-    <div ref={root} className="mx-auto w-full max-w-[460px] rounded-xl bg-plate edge">
-      <fieldset className="m-0 flex min-w-0 gap-5 border-0 border-b border-edge px-5 pt-4 @2xl:px-6">
-        <legend className="sr-only">{t`Conversation`}</legend>
-        {scenes.map((s) => {
-          const active = s.id === scene.id;
-          return (
-            <button
-              key={s.id}
-              type="button"
-              aria-pressed={active}
-              onClick={() => play(s.id)}
-              className={clsx(
-                "-mb-px border-b-2 pb-3 text-sm transition-colors duration-150",
-                active
-                  ? "border-text font-medium text-text"
-                  : "border-transparent text-muted hoverable:hover:text-text",
-              )}
-            >
-              {i18n._(s.title)}
-            </button>
-          );
-        })}
-      </fieldset>
+    <section
+      ref={root}
+      className="overflow-x-clip border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+    >
+      <div className="mx-auto grid max-w-[1040px] items-center gap-12 @4xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] @4xl:gap-20">
+        <div className="max-w-[420px]">
+          <SectionTitle>{title}</SectionTitle>
+          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+          <fieldset className="m-0 mt-9 flex min-w-0 flex-col gap-1 border-0 p-0">
+            <legend className="sr-only">{t`Conversation`}</legend>
+            {scenes.map((s) => {
+              const active = s.id === scene.id;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => choose(s.id)}
+                  className="group/scene grid grid-cols-[12px_minmax(0,1fr)] items-baseline gap-3 rounded-md py-2 text-start"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={clsx(
+                      "size-2 translate-y-[-1px] rounded-full transition-colors duration-150",
+                      active ? "bg-text" : "bg-edge-2 hoverable:group-hover/scene:bg-muted",
+                    )}
+                  />
+                  <span>
+                    <span
+                      className={clsx(
+                        "block text-lg font-medium tracking-[-0.015em] transition-colors duration-150",
+                        active ? "text-text" : "text-muted hoverable:group-hover/scene:text-text-2",
+                      )}
+                    >
+                      {i18n._(s.title)}
+                    </span>
+                    <span className="block text-sm text-muted">{i18n._(s.detail)}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </fieldset>
+        </div>
 
-      {/* Every line is laid out from the start so the card never changes height. */}
-      <ol className="m-0 flex list-none flex-col gap-3 p-5 @2xl:p-6">
-        {scene.lines.map((line, i) => {
-          const said = i < count;
-          const current = i === count - 1 || done;
-          return (
-            <motion.li
-              // biome-ignore lint/suspicious/noArrayIndexKey: lines are said in order and never reorder
-              key={`${scene.id}-${shown.run}-${i}`}
-              className={clsx(!said && "invisible")}
-              aria-hidden={!said || undefined}
-              initial={false}
-              animate={
-                said
-                  ? { opacity: current ? 1 : 0.45, y: 0, filter: "blur(0px)" }
-                  : { opacity: 0, y: still ? 0 : 10, filter: still ? "blur(0px)" : "blur(6px)" }
-              }
-              transition={{ duration: still ? 0 : 0.55, ease: EASE }}
-            >
-              <Line line={line} language={language} />
-            </motion.li>
-          );
-        })}
-      </ol>
-    </div>
+        {/* Every situation is laid out in the same cell, so the block is as tall as the longest one and never jumps. */}
+        <div className="grid">
+          {scenes
+            .filter((s) => s.id !== scene.id)
+            .map((s) => (
+              <ol
+                key={s.id}
+                aria-hidden="true"
+                className="invisible col-start-1 row-start-1 m-0 flex list-none flex-col gap-2 p-0"
+              >
+                {s.lines.map((line, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: lines are said in order and never reorder
+                  <li key={i}>
+                    <Bubble
+                      line={line}
+                      language={language}
+                      index={i}
+                      playing={false}
+                      onPlay={() => {}}
+                    />
+                  </li>
+                ))}
+              </ol>
+            ))}
+          <ol className="col-start-1 row-start-1 m-0 flex list-none flex-col gap-2 p-0">
+            {scene.lines.map((line, i) => {
+              const said = i < count;
+              const current = i === count - 1 || done;
+              return (
+                <motion.li
+                  // biome-ignore lint/suspicious/noArrayIndexKey: lines are said in order and never reorder
+                  key={`${scene.id}-${shown.run}-${i}`}
+                  className={clsx(!said && "invisible")}
+                  aria-hidden={!said || undefined}
+                  initial={false}
+                  animate={
+                    said
+                      ? { opacity: current ? 1 : 0.55, y: 0, scale: 1, filter: "blur(0px)" }
+                      : still
+                        ? { opacity: 0 }
+                        : { opacity: 0, y: 24, scale: 0.94, filter: "blur(8px)" }
+                  }
+                  transition={
+                    still ? { duration: 0 } : { type: "spring", duration: 0.7, bounce: 0.18 }
+                  }
+                  style={{
+                    transformOrigin: line.speaker === "you" ? "right bottom" : "left bottom",
+                  }}
+                >
+                  <Bubble
+                    line={line}
+                    language={language}
+                    index={i}
+                    playing={playing === line.audio}
+                    onPlay={() => play(line.audio)}
+                  />
+                </motion.li>
+              );
+            })}
+          </ol>
+        </div>
+      </div>
+    </section>
   );
 }

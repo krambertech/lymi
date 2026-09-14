@@ -1,4 +1,4 @@
-// Generates pronunciation audio for the landing and languages hands with the product's own speech provider.
+// Generates pronunciation audio for the landing and languages hands and the Estonian conversations with the product's own speech provider.
 // Only cards whose term, language, model or voice changed are regenerated.
 // Usage: OPENAI_API_KEY=… pnpm --filter @lymi/site hand:audio
 import {
@@ -30,6 +30,18 @@ if (cards.length !== declared || cards.length === 0) {
     `Read ${cards.length} of ${declared} cards; keep id, source, kind, language, term in that order.`,
   );
 }
+
+// The Estonian conversations speak each line whole, under the clip name the line declares.
+const scenes = readFileSync(join(site, "src/components/landing/estonian-scenes.ts"), "utf8");
+const lines = [...scenes.matchAll(/audio: "([^"]+)",\s*say: "([^"]+)",/g)].map(([, id, term]) => ({
+  id,
+  language: "et",
+  term,
+}));
+if (lines.length !== (scenes.match(/audio: "/g) ?? []).length) {
+  throw new Error("Read fewer conversation lines than declared; keep audio then say on each line.");
+}
+cards.push(...lines);
 
 if (!process.env.OPENAI_API_KEY?.trim()) throw new Error("Set OPENAI_API_KEY to generate audio.");
 mkdirSync(outDir, { recursive: true });

@@ -121,6 +121,39 @@ describe("Dialog", () => {
     },
   );
 
+  test(
+    desktop
+      ? "as a place, is still a centred dialog, named by its own heading"
+      : "as a place, rises over the whole screen, named by its own heading",
+    async () => {
+      await render(
+        <Dialog kind="place" defaultOpen>
+          <DialogContent className="w-[min(92vw,400px)]" aria-labelledby="place-title">
+            <h2 id="place-title">9 days in a row</h2>
+          </DialogContent>
+        </Dialog>,
+      );
+      const place = page.getByRole("dialog", { name: "9 days in a row" });
+      await expect.element(place).toBeVisible();
+      const popup = place.element() as HTMLElement;
+      if (desktop) {
+        expect(popup.dataset.slot).toBe("dialog-content");
+        expect(popup.getBoundingClientRect().width).toBeCloseTo(400, 0);
+      } else {
+        expect(popup.dataset.slot).toBe("drawer-popup");
+        expect(popup.dataset.swipeDirection).toBe("down");
+        await expect
+          .poll(() => popup.getBoundingClientRect().top, { timeout: 5000 })
+          .toBeCloseTo(0, 0);
+        const box = popup.getBoundingClientRect();
+        expect(box.width).toBeCloseTo(window.innerWidth, 0);
+        expect(box.height).toBeCloseTo(window.innerHeight, 0);
+        expect(getComputedStyle(popup).borderTopLeftRadius).toBe("0px");
+        expect(popup.querySelector('[data-slot="drawer-swipe-handle"]')).toBeNull();
+      }
+    },
+  );
+
   test("is named by its title and described by its description", async () => {
     const screen = await render(<Harness />);
     await screen.getByRole("button", { name: "Sign out" }).click();

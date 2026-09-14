@@ -91,11 +91,25 @@ export const streak: Group = {
       slug: "modal",
       name: "Streak modal",
       source: "components/streak.tsx",
-      note: "Today's attempts against the goal, the longest run, days reviewed and the month. A day that counted is ringed; a faint band joins the days that kept the run. The goal is changed here and nowhere else.",
+      note: "Today's attempts against the goal, the longest run, days reviewed and the month. A day that counted is ringed; a faint band joins the days that kept the run. The goal is changed here and nowhere else. It is a place: centred on a desktop, rising over the whole screen on touch, and in the app its open state is `?streak=true`.",
       Demo: () => (
-        <div className="edge-2 max-w-[400px] rounded-xl bg-plate p-5">
-          <StreakPanel summary={streakSummary} onGoalChange={noop} />
-        </div>
+        <Variants
+          items={[
+            {
+              label: "Try it",
+              note: "Opens the real place in this machine's shape. On the design page its open state stays local.",
+              render: () => <StreakButton variant="phone" summary={streakSummary} />,
+            },
+            {
+              label: "The panel",
+              render: () => (
+                <div className="edge-2 max-w-[400px] rounded-xl bg-plate p-5">
+                  <StreakPanel summary={streakSummary} onGoalChange={noop} />
+                </div>
+              ),
+            },
+          ]}
+        />
       ),
     },
     {

@@ -73,9 +73,10 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   // Today counted either way: at its goal, or with nothing left to review.
   const finished = /Daily goal reached\.|Nothing left today\./;
 
-  // The phone opens the streak as a full-screen modal.
+  // The phone opens the streak as a place rising over the whole screen.
   await card.click();
   const modal = page.getByRole("dialog");
+  await expect(page).toHaveURL(/[?&]streak=true/);
   await expect(modal.getByText("Longest streak")).toBeVisible();
   // Measured once the entrance has settled, since it starts slightly scaled.
   await expect.poll(async () => (await modal.boundingBox())?.width).toBe(390);
@@ -94,20 +95,40 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   await expect(modal.getByText(finished)).toBeVisible();
   await modal.getByRole("button", { name: "Close" }).click();
   await expect(modal).toBeHidden();
+  await expect(page).not.toHaveURL(/streak=/);
 
-  // Desktop opens the same panel centred over the page.
+  // A wide window with a fine pointer opens the same panel centred; a touch device keeps the whole screen.
   await page.setViewportSize({ width: 1280, height: 820 });
   // The rail's pill, since the card on the page carries the same name.
-  await page
+  const pill = page
     .getByRole("complementary")
-    .getByRole("button", { name: "Streak: 9 days in a row", exact: true })
-    .click();
+    .getByRole("button", { name: "Streak: 9 days in a row", exact: true });
+  await pill.click();
   await expect(modal.getByText(finished)).toBeVisible();
-  await expect.poll(async () => (await modal.boundingBox())?.width).toBe(400);
-  // Shrinking the window with the modal open turns it into the full-screen one, never a hidden modal.
-  await page.setViewportSize({ width: 390, height: 844 });
+  await expect
+    .poll(async () => (await modal.boundingBox())?.width)
+    .toBe(testInfo.project.use.hasTouch ? 1280 : 400);
+  // The streak is a place, so a reload keeps it open and Back closes it.
+  await page.reload();
   await expect(modal.getByText(finished)).toBeVisible();
-  await expect.poll(async () => (await modal.boundingBox())?.width).toBe(390);
-  await page.keyboard.press("Escape");
+  await page.goBack();
   await expect(modal).toBeHidden();
+  await expect(page).not.toHaveURL(/streak=/);
+
+  // Opening and closing change only the overlay, so the page under it keeps its scroll. A touch
+  // drawer locks scroll differently, so the fine pointer proves it.
+  if (!testInfo.project.use.hasTouch) {
+    await page.setViewportSize({ width: 1280, height: 480 });
+    const top = await page.evaluate(() => {
+      window.scrollTo(0, (document.documentElement.scrollHeight - window.innerHeight) / 2);
+      return window.scrollY;
+    });
+    expect(top).toBeGreaterThan(0);
+    await pill.click();
+    await expect(modal.getByText(finished)).toBeVisible();
+    expect(await page.evaluate(() => window.scrollY)).toBe(top);
+    await page.keyboard.press("Escape");
+    await expect(modal).toBeHidden();
+    expect(await page.evaluate(() => window.scrollY)).toBe(top);
+  }
 });

@@ -15,11 +15,11 @@ import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
 import { decksQuery, drawQuery, queueQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import {
-  type DayOutcome,
-  dayOutcome,
+  drawableUpTo,
   EXTRA_ROUND,
   forgottenRound,
-  nextRoundSize,
+  type Offer,
+  reviewEnd,
   streakWith,
 } from "../lib/review-complete";
 import { drawState, type LocalGrade, reviewItem, stateBefore } from "../lib/review-draw";
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/review")({
       ...(round ? { round } : {}),
     };
   },
-  component: Review,
+  component: ReviewPage,
 });
 
 /** Pictures of this many cards after the current one are fetched ahead. */
@@ -52,11 +52,24 @@ const REFRESH_AFTER = 20;
 
 type Pinned = { cardId: string; mode: string };
 
-/** A stretch of one day's review: the draw up to an attempt count, or a fixed forgotten list. */
-type Leg = { date: string; from: number } & (
-  | { kind: "draw"; until: number }
+/**
+ * A stretch of one day's review: the draw to the goal, the draw for another round, or a fixed list,
+ * which is a round from Today or the forgotten cards chosen at an end.
+ */
+type Leg = { date: string; from: number; satisfied: boolean } & (
+  | { kind: "goal" | "more"; until: number }
+  | { kind: "today"; size: number }
   | { kind: "forgotten"; items: Drawn[] }
 );
+
+const gradedKey = (item: Pick<QueueItem, "card" | "mode">) =>
+  drawKey(item.card.id, modeKey(item.mode));
+
+/** A review of another deck starts over, so nothing from this one carries into it. */
+function ReviewPage() {
+  const { deck } = Route.useSearch();
+  return <Review key={deck ?? "all"} />;
+}
 
 function Review() {
   const { t } = useLingui();
@@ -77,7 +90,6 @@ function Review() {
   const [now, setNow] = useState(() => new Date());
   const [revealed, setRevealed] = useState(false);
   const [done, setDone] = useState(0);
-  const [roundGraded, setRoundGraded] = useState<ReadonlySet<string>>(() => new Set());
   const [chosenLeg, setLeg] = useState<Leg | null>(null);
   const [legGraded, setLegGraded] = useState<ReadonlySet<string>>(() => new Set());
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
@@ -97,47 +109,73 @@ function Review() {
     [data, grades, now, deck],
   );
   const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
-  const roundLeft = (roundQueue.data?.items ?? []).filter(
-    (item) => !roundGraded.has(itemKey(item)),
-  );
   const drawn =
     pinnedItem ?? (data && state?.next ? reviewItem(data, state.log, state.next) : null);
 
   // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
   const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
-  // The first leg runs to the goal, or is one more round when the goal was met before this review.
+  // Like the draw, the round's list and the day's streak wait for this mount's fetch, so a leg is sized and judged from now.
+  const roundItems =
+    roundQueue.isFetchedAfterMount || roundQueue.fetchStatus !== "fetching"
+      ? roundQueue.data?.items
+      : undefined;
+  const streakSettled = streak.isFetchedAfterMount || streak.fetchStatus !== "fetching";
+  const today = streak.data?.today;
+  // The first leg is Today's round, or the draw to the goal, or one more round once the goal is met.
   useEffect(() => {
-    if (round || leg || !data || !state) return;
+    if (leg || !data || !state || !streakSettled || (round && !roundItems)) return;
     const { attempts } = state;
-    const until = attempts < data.goal ? data.goal : attempts + EXTRA_ROUND;
+    const base = {
+      date: state.day.date,
+      from: attempts,
+      satisfied:
+        attempts >= data.goal ||
+        (today?.date === state.day.date &&
+          (today.outcome === "goal_met" || today.outcome === "exhausted")),
+    };
     setLegGraded(new Set());
-    setLeg({ kind: "draw", date: state.day.date, from: attempts, until });
-  }, [round, leg, data, state]);
-  const atStop = leg?.kind === "draw" && !!state && state.attempts >= leg.until;
-  const legLeft =
-    leg?.kind === "forgotten" && data && state
-      ? leg.items
-          .filter((d) => !legGraded.has(drawKey(d.cardId, d.mode)))
-          .flatMap((d) => reviewItem(data, state.log, d) ?? [])
-      : [];
-  const current: QueueItem | null = round
-    ? (roundLeft[0] ?? null)
-    : !leg
-      ? null
-      : leg.kind === "forgotten"
-        ? (legLeft[0] ?? null)
-        : atStop
-          ? null
-          : drawn;
+    if (round && roundItems) setLeg({ ...base, kind: "today", size: roundItems.length });
+    else if (attempts < data.goal) setLeg({ ...base, kind: "goal", until: data.goal });
+    else {
+      // Sized by what is left, like the end's offer; an empty draw still stops on its own.
+      const size = drawableUpTo(data, state, deck, EXTRA_ROUND) || EXTRA_ROUND;
+      setLeg({ ...base, kind: "more", until: attempts + size });
+    }
+  }, [round, roundItems, leg, data, state, streakSettled, today, deck]);
+
+  const drawLeg = leg?.kind === "goal" || leg?.kind === "more" ? leg : null;
+  const atStop = !!drawLeg && !!state && state.attempts >= drawLeg.until;
+  const listLeft: QueueItem[] =
+    leg?.kind === "today"
+      ? (roundItems ?? []).filter((item) => !legGraded.has(gradedKey(item)))
+      : leg?.kind === "forgotten" && data && state
+        ? leg.items
+            .filter((d) => !legGraded.has(drawKey(d.cardId, d.mode)))
+            .flatMap((d) => reviewItem(data, state.log, d) ?? [])
+        : [];
+  const current: QueueItem | null = !leg
+    ? null
+    : drawLeg
+      ? atStop
+        ? null
+        : drawn
+      : (listLeft[0] ?? null);
   const currentCardId = current?.card.id;
   const currentItemKey = current ? itemKey(current) : undefined;
   const deckName = deck ? decks.data?.find((d) => d.id === deck)?.name : undefined;
   const currentDeck = current ? decks.data?.find((d) => d.id === current.card.deckId) : undefined;
   const hint = useRevealHint(current ? `${current.stateId}-${done}` : undefined, revealed);
-  usePrefetchPictures(
-    round ? roundLeft : leg?.kind === "forgotten" ? legLeft : (state?.upcoming ?? []),
-    0,
-  );
+  usePrefetchPictures(drawLeg ? (state?.upcoming ?? []) : listLeft, 0);
+
+  // What the header counts: the goal for its own stretch, and a round's own cards otherwise.
+  const legDone = !leg || !state ? 0 : drawLeg ? state.attempts - leg.from : legGraded.size;
+  const legSize = !leg
+    ? 0
+    : leg.kind === "today"
+      ? leg.size
+      : leg.kind === "forgotten"
+        ? leg.items.length
+        : leg.until - leg.from;
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && (!pinned || !pinnedItem);
@@ -178,31 +216,64 @@ function Review() {
   const lastChange = Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime()));
   const exhausted = !!data && !state?.next;
   const unreachable = draw.fetchStatus === "paused" || draw.isError;
-  const confirmedEmpty = exhausted && !!data && data.fetchedAt >= lastChange;
-  const drawing = leg?.kind === "draw" && !atStop;
-  const needsConfirming = !round && drawing && exhausted && !confirmedEmpty && !unreachable;
-  useEffect(() => {
-    if (needsConfirming && !draw.isFetching) void draw.refetch();
-  }, [needsConfirming, draw.isFetching, draw.refetch]);
   // Confirmed stays confirmed through a background refetch, so the end never blinks out and replays.
-  const ranOut =
-    drawing && !current && exhausted && (confirmedEmpty || (unreachable && !draw.isFetching));
-  const goalMet = !!data && !!state && state.attempts >= data.goal;
+  const confirmed = !!data && data.fetchedAt >= lastChange;
+  const stopped = !!leg && !!data && !!state && !current && (!drawLeg || atStop || exhausted);
+  const left = useMemo(
+    () =>
+      stopped && data && state
+        ? drawableUpTo(data, state, deck, Math.max(EXTRA_ROUND, data.goal - state.attempts))
+        : 0,
+    [stopped, data, state, deck],
+  );
+  const forgottenItems = useMemo(
+    () => (stopped && data && state ? forgottenRound(data, state, deck) : []),
+    [stopped, data, state, deck],
+  );
+  // An empty draw waits for a fetch begun after the last grade, so the heading never changes once shown.
+  const checking = stopped && left === 0 && !confirmed && !(unreachable && !draw.isFetching);
+  useEffect(() => {
+    if (checking && !unreachable && !draw.isFetching) void draw.refetch();
+  }, [checking, unreachable, draw.isFetching, draw.refetch]);
+  // A deck's end names the deck and weighs the other decks, so it waits for them while they load.
+  const decksLoading = !!deck && !decks.data && decks.fetchStatus === "fetching";
+  const result = useMemo(
+    () =>
+      stopped && !checking && !decksLoading && leg && data && state
+        ? reviewEnd({
+            stretch: drawLeg ? drawLeg.kind : "list",
+            goal: data.goal,
+            from: leg.from,
+            attempts: state.attempts,
+            satisfiedBefore: leg.satisfied,
+            left,
+            confirmed,
+            scoped: !!deck,
+            forgotten: forgottenItems.length,
+            otherDecks: !deck ? [] : decks.data ? decks.data.filter((d) => d.id !== deck) : null,
+          })
+        : null,
+    [
+      stopped,
+      checking,
+      decksLoading,
+      leg,
+      drawLeg,
+      data,
+      state,
+      left,
+      confirmed,
+      deck,
+      forgottenItems,
+      decks.data,
+    ],
+  );
   // Running out offline, or after a failed refresh, proves nothing about the day unless the goal is met.
-  const unconfirmed = ranOut && !confirmedEmpty && !goalMet;
-  const ended: DayOutcome | "round" | null = round
-    ? roundQueue.data && !current
-      ? "round"
-      : null
-    : data &&
-        state &&
-        (atStop || (leg?.kind === "forgotten" && !current) || (ranOut && !unconfirmed))
-      ? dayOutcome(state.attempts, data.goal)
-      : null;
+  const unconfirmed = result === "unchecked";
+  const end = result === "unchecked" ? null : result;
   const failed = round ? roundQueue.isError && !roundQueue.data : draw.isError && !draw.data;
 
-  // A deck running out below the goal says nothing about the other decks, so the day stays as the server has it.
-  const counts = ended === "goal_met" || (ended === "exhausted" && !deck);
+  const counts = !!end?.satisfied;
   const attempts = state?.attempts;
   const streakNow = useMemo(
     () =>
@@ -224,19 +295,10 @@ function Review() {
     [streak.data, legFrom],
   );
   const [held, setHeld] = useState(before);
-  const frozen = !!ended || atStop || (exhausted && !!held.week);
+  const frozen = stopped || (exhausted && !!held.week);
   useEffect(() => {
     if (!frozen) setHeld(before);
   }, [frozen, before]);
-
-  const forgottenItems = useMemo(
-    () => (ended && !round && data && state ? forgottenRound(data, state, deck) : []),
-    [ended, round, data, state, deck],
-  );
-  const nextRound = useMemo(
-    () => (ended && !round && data && state ? nextRoundSize(data, state, deck) : 0),
-    [ended, round, data, state, deck],
-  );
 
   const startLeg = (next: Leg) => {
     // The pressed button fades out for a moment, and while it holds focus Space would not reach the card.
@@ -251,6 +313,24 @@ function Review() {
     setAnimateNextCard(true);
     setAnimateReveal(true);
     setLeg(next);
+  };
+
+  const onOffer = (offer: Offer) => {
+    if (!data || !state) return;
+    if (offer.kind === "deck") {
+      void navigate({ to: "/review", search: { deck: offer.id } });
+      return;
+    }
+    const base = {
+      date: state.day.date,
+      from: state.attempts,
+      satisfied: !!leg?.satisfied || !!end?.satisfied,
+    };
+    if (offer.kind === "forgotten") startLeg({ ...base, kind: "forgotten", items: forgottenItems });
+    else if (offer.kind === "goal") startLeg({ ...base, kind: "goal", until: data.goal });
+    else startLeg({ ...base, kind: "more", until: state.attempts + offer.count });
+    // Today's round is over, so a reload continues the day rather than walking it again.
+    if (round) void navigate({ to: "/review", search: deck ? { deck } : {}, replace: true });
   };
 
   const stopAudio = useCallback(() => {
@@ -317,10 +397,7 @@ function Review() {
       return { item, recorded };
     },
     onSuccess: ({ item, recorded }) => {
-      if (round) setRoundGraded((keys) => new Set(keys).add(itemKey(item)));
-      if (leg?.kind === "forgotten") {
-        setLegGraded((keys) => new Set(keys).add(drawKey(item.card.id, modeKey(item.mode))));
-      }
+      if (leg && !drawLeg) setLegGraded((keys) => new Set(keys).add(gradedKey(item)));
       setGradeError(null);
       setPendingRating(null);
       setRevealed(false);
@@ -399,12 +476,13 @@ function Review() {
         attempts={state?.attempts ?? 0}
         goal={data?.goal ?? 0}
         animateCount={animateNextCard}
+        round={leg && drawLeg?.kind !== "goal" ? { done: legDone, size: legSize } : undefined}
         streak={streak.data}
-        complete={!!ended}
+        complete={!!end}
         onClose={() => navigate({ to: "/today" })}
       />
 
-      {!current && !ended && !unconfirmed && !failed && <ReviewSkeleton />}
+      {!current && !end && !unconfirmed && !failed && <ReviewSkeleton />}
 
       {failed && (
         <ReviewError
@@ -432,42 +510,26 @@ function Review() {
 
       {/* The card steps back as the end arrives, popped out of the flow so the two overlap. */}
       <AnimatePresence mode="popLayout" initial={false}>
-        {ended && data && state && (
+        {end && data && state && (
           <motion.div
             key="end"
             className="flex min-h-0 flex-1 flex-col"
             exit={{ opacity: 0, transition: { duration: 0.14 } }}
           >
             <ReviewComplete
-              outcome={ended}
+              end={end}
               attempts={state.attempts}
+              goal={data.goal}
               from={leg?.from}
-              reviewed={done}
-              deckName={deck && ended === "exhausted" ? deckName : undefined}
+              roundCount={legDone}
+              deckName={deckName}
               streak={streakNow}
               streakBefore={held.week}
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
-              forgotten={forgottenItems.length}
-              nextRound={nextRound}
               focusOnMount
-              onReviewForgotten={() =>
-                startLeg({
-                  kind: "forgotten",
-                  date: state.day.date,
-                  from: state.attempts,
-                  items: forgottenItems,
-                })
-              }
-              onAnotherRound={() =>
-                startLeg({
-                  kind: "draw",
-                  date: state.day.date,
-                  from: state.attempts,
-                  until: state.attempts + EXTRA_ROUND,
-                })
-              }
+              onOffer={onOffer}
               actions={
-                ended === "nothing_due" ? (
+                end.heading === "nothing_due" ? (
                   <>
                     <Button
                       variant="primary"

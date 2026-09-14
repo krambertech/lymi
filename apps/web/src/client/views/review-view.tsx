@@ -30,13 +30,15 @@ import { lastDays, type StreakSummary } from "../components/streak";
 import type { QueueItem } from "../lib/api";
 import { lanternFor, streakFlameFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
-import type { DayOutcome } from "../lib/review-complete";
+import type { EndScreen, Offer } from "../lib/review-complete";
 import { modeLabel } from "../lib/review-modes";
 
 export interface ReviewHeaderProps {
   /** Today's accepted grades in every scope, Forgot and returns included. */
   attempts: number;
   goal: number;
+  /** A round's own progress, which the track and count show instead of the goal's. */
+  round?: { done: number; size: number } | undefined;
   /** Roll the count when it changes. Off when the grade came from the keyboard. */
   animateCount?: boolean | undefined;
   /** Today's streak, which the lantern shows. Omitted, it is the brand flame. */
@@ -63,6 +65,7 @@ const LANTERN_FLIGHT = { type: "spring", visualDuration: 0.6, bounce: 0 } as con
 export function ReviewHeader({
   attempts,
   goal,
+  round,
   animateCount = true,
   streak,
   complete = false,
@@ -70,6 +73,8 @@ export function ReviewHeader({
 }: ReviewHeaderProps) {
   const { t } = useLingui();
   const reduce = useReducedMotion();
+  const done = round ? round.done : attempts;
+  const size = round ? round.size : goal;
   return (
     <header className="flex min-h-14 shrink-0 items-center gap-3 pt-2 @3xl:pt-4">
       {/* The slot keeps its place while the lantern is away, so the header never shifts. */}
@@ -92,13 +97,13 @@ export function ReviewHeader({
         aria-hidden={complete || undefined}
       >
         <Progress
-          value={goal ? Math.min(1, attempts / goal) : 0}
-          label={t`Daily goal progress`}
+          value={size ? Math.min(1, done / size) : 0}
+          label={round ? t`Round progress` : t`Daily goal progress`}
           className="min-w-0 flex-1"
         />
         <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
           <Trans>
-            <RollingCount value={attempts} animate={animateCount} /> of {goal}
+            <RollingCount value={done} animate={animateCount} /> of {size}
           </Trans>
         </span>
       </motion.span>
@@ -655,15 +660,16 @@ export function GradeBar({
 }
 
 export interface ReviewCompleteProps {
-  /** How the day stands, or `round` for the end of a round from Today. */
-  outcome: DayOutcome | "round";
+  /** What the end says and offers, from `reviewEnd`. */
+  end: EndScreen;
   /** Today's attempts in every scope. */
   attempts: number;
+  goal: number;
   /** Today's attempts when this stretch of the review began, where the count rolls up from. */
   from?: number | undefined;
-  /** Attempts in this review, which a round from Today counts instead of the day. */
-  reviewed?: number | undefined;
-  /** Set when a deck review ran out without finishing the day, so the copy names the deck. */
+  /** Attempts in this stretch, the large number when the end counts the round. */
+  roundCount?: number | undefined;
+  /** The deck a deck review is of, which Nothing left names when the end is about it alone. */
   deckName?: string | undefined;
   /** The streak with this review in it. */
   streak?: StreakSummary | undefined;
@@ -671,12 +677,7 @@ export interface ReviewCompleteProps {
   streakBefore?: StreakSummary | undefined;
   /** The flame the lantern had in the header, so it rises from there rather than from rest. */
   lanternFrom?: number | "out" | "brand" | undefined;
-  /** Cards whose latest grade today is Forgot. Zero hides Review forgotten. */
-  forgotten?: number | undefined;
-  /** Attempts another round holds. Zero hides Review another round. */
-  nextRound?: number | undefined;
-  onReviewForgotten?: (() => void) | undefined;
-  onAnotherRound?: (() => void) | undefined;
+  onOffer?: ((offer: Offer) => void) | undefined;
   /** Done, and for nothing due, Add cards before it. */
   actions?: ReactNode | undefined;
   /** Move focus to the heading, so it is announced and Tab starts at the choices. */
@@ -717,18 +718,16 @@ const EMBERS_END = AT.embers + Math.max(...EMBERS.map((e) => e.at + e.dur));
 
 /** The end of a review, played as one sequence that any tap or key finishes; DESIGN.md, "Motion". */
 export function ReviewComplete({
-  outcome,
+  end: screen,
   attempts,
+  goal,
   from = attempts,
-  reviewed = 0,
+  roundCount = 0,
   deckName,
   streak,
   streakBefore = streak,
   lanternFrom,
-  forgotten = 0,
-  nextRound = 0,
-  onReviewForgotten,
-  onAnotherRound,
+  onOffer,
   actions,
   focusOnMount = false,
 }: ReviewCompleteProps) {
@@ -740,28 +739,34 @@ export function ReviewComplete({
   const [skipped, setSkipped] = useState(false);
   const instant = reduce || skipped;
 
-  const counted = outcome !== "nothing_due";
-  const count = outcome === "round" ? reviewed : attempts;
+  const counted = screen.heading !== "nothing_due";
+  const byRound = screen.count === "round";
+  const count = byRound ? roundCount : attempts;
+  const celebrating = screen.celebration !== "none";
   const week = landed ? streak : streakBefore;
   const days = week ? lastDays(week) : undefined;
   const flame = week ? streakFlameFor(week) : "lit";
   const lit = !!streak && streak.current > 0;
-  const ways = [
-    forgotten > 0 && {
-      key: "forgotten",
-      icon: <StateIcon state="forgot" className="size-4" />,
-      label: t`${plural(forgotten, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`,
-      onClick: onReviewForgotten,
-    },
-    nextRound > 0 && {
-      key: "round",
-      icon: null,
-      label: t`${plural(nextRound, { one: "Review # more card", other: "Review # more cards" })}`,
-      onClick: onAnotherRound,
-    },
-  ].filter((w) => !!w);
+  // Only the goal's own stretch ticks the run; any other end shows the run as it stands.
+  const run = screen.celebration === "full" ? week?.current : (streak ?? week)?.current;
+  const ways = screen.offers.map((offer) => {
+    const n = offer.count;
+    const name = offer.kind === "deck" ? offer.name : "";
+    const label =
+      offer.kind === "forgotten"
+        ? t`${plural(n, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`
+        : offer.kind === "deck"
+          ? t`${plural(n, { one: `Review # card in ${name}`, other: `Review # cards in ${name}` })}`
+          : t`${plural(n, { one: "Review # more card", other: "Review # more cards" })}`;
+    return {
+      key: offer.kind === "deck" ? `deck-${offer.id}` : offer.kind,
+      icon: offer.kind === "forgotten" ? <StateIcon state="forgot" className="size-4" /> : null,
+      label,
+      onClick: () => onOffer?.(offer),
+    };
+  });
   const actionsAt = AT.actions + ways.length * AT.actionStep;
-  const end = Math.max(actionsAt + RISE_MS, counted && lit && !reduce ? EMBERS_END : 0);
+  const end = Math.max(actionsAt + RISE_MS, celebrating && lit && !reduce ? EMBERS_END : 0);
 
   useEffect(() => {
     if (focusOnMount) heading.current?.focus({ preventScroll: true });
@@ -808,7 +813,7 @@ export function ReviewComplete({
               aria-hidden="true"
               className={clsx(
                 "light-pool pointer-events-none absolute -inset-[85%] -z-10 rounded-full",
-                !counted && "opacity-50",
+                !celebrating && "opacity-50",
               )}
               style={at(AT.pool)}
             >
@@ -816,7 +821,7 @@ export function ReviewComplete({
             </div>
           )}
           <Lantern className="size-full" {...lanternFor(streak)} from={lanternFrom} flicker glow />
-          {counted && lit && !reduce && (
+          {celebrating && lit && !reduce && (
             <div aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[52%]">
               {EMBERS.map((e) => (
                 <i
@@ -845,11 +850,17 @@ export function ReviewComplete({
           className="seq text-balance text-3xl font-medium tracking-[-0.02em] outline-none"
           style={at(AT.heading)}
         >
-          {outcome === "goal_met" ? (
+          {screen.heading === "goal_reached" ? (
             <Trans>Daily goal reached</Trans>
-          ) : outcome === "exhausted" ? (
-            <Trans>That’s the lot</Trans>
-          ) : outcome === "nothing_due" ? (
+          ) : screen.heading === "nothing_left" ? (
+            !screen.namesDeck ? (
+              <Trans>Nothing left today</Trans>
+            ) : deckName ? (
+              <Trans>Nothing left in {deckName}</Trans>
+            ) : (
+              <Trans>Nothing left in this deck</Trans>
+            )
+          ) : screen.heading === "nothing_due" ? (
             <Trans>Nothing due</Trans>
           ) : (
             <Trans>Round done</Trans>
@@ -863,14 +874,14 @@ export function ReviewComplete({
               style={at(AT.count)}
             >
               <CountUp
-                from={outcome === "round" ? 0 : from}
+                from={byRound ? 0 : from}
                 to={count}
                 delay={AT.countRoll}
                 instant={instant}
               />
             </span>
             <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
-              {outcome === "round" ? (
+              {byRound ? (
                 <Plural value={count} one="review in this round" other="reviews in this round" />
               ) : (
                 <Plural value={count} one="review today" other="reviews today" />
@@ -892,34 +903,38 @@ export function ReviewComplete({
               dates={days.dates}
               size="lg"
               sequence={AT.lights}
-              flare={landed && !reduce}
+              flare={landed && !reduce && celebrating}
             />
             <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
               <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
               <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
                 <span
-                  key={week.current}
-                  className={clsx("block", landed && !reduce && "streak-tick")}
+                  key={run}
+                  className={clsx(
+                    "block",
+                    landed && !reduce && screen.celebration === "full" && "streak-tick",
+                  )}
                 >
-                  {week.current}
+                  {run}
                 </span>
               </span>
-              <Plural value={week.current} one="day in a row" other="days in a row" />
+              <Plural value={run ?? 0} one="day in a row" other="days in a row" />
             </p>
           </div>
         )}
 
-        {counted && outcome !== "goal_met" && (
+        {/* A round's own count is the large number, so the day it belongs to sits here. */}
+        {counted && byRound && (
           <p
             className="seq mt-4 max-w-[32ch] text-pretty text-sm text-muted"
             style={at(AT.run + 120)}
           >
-            {outcome === "round" ? (
-              <Trans>Today shows what’s left.</Trans>
-            ) : deckName ? (
-              <Trans>Nothing else in {deckName} is ready.</Trans>
+            {attempts >= goal ? (
+              <Plural value={attempts} one="# review today" other="# reviews today" />
             ) : (
-              <Trans>The rest can wait a while.</Trans>
+              <Trans>
+                {attempts} of {goal} reviews today
+              </Trans>
             )}
           </p>
         )}

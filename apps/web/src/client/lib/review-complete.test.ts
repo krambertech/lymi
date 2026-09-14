@@ -3,9 +3,13 @@ import { describe, expect, it } from "vitest";
 import type { Card, Draw } from "./api";
 import {
   dayOutcome,
+  drawableUpTo,
+  type EndInput,
+  type EndScreen,
   EXTRA_ROUND,
   forgottenRound,
-  nextRoundSize,
+  OTHER_DECKS,
+  reviewEnd,
   streakWith,
 } from "./review-complete";
 import { drawState, type LocalGrade } from "./review-draw";
@@ -83,7 +87,7 @@ describe("the day's outcome", () => {
     expect(dayOutcome(12, 5)).toBe("goal_met");
   });
 
-  it("is the lot below the goal, and nothing due with no attempts", () => {
+  it("is exhausted below the goal, and nothing due with no attempts", () => {
     expect(dayOutcome(3, 5)).toBe("exhausted");
     expect(dayOutcome(0, 5)).toBe("nothing_due");
   });
@@ -129,16 +133,235 @@ describe("what the end of a review offers", () => {
     expect(forgottenRound(d, state).map((r) => r.cardId)).toEqual(expected);
   });
 
-  it("another round is ten attempts, or fewer when the draw runs out", () => {
+  it("counts what the draw still holds up to a limit, as another round would", () => {
     const plenty = data(30);
-    expect(nextRoundSize(plenty, play(plenty, 5))).toBe(EXTRA_ROUND);
+    expect(drawableUpTo(plenty, play(plenty, 5), undefined, EXTRA_ROUND)).toBe(EXTRA_ROUND);
+    expect(drawableUpTo(plenty, play(plenty, 5), undefined, 20)).toBe(20);
     const few = data(8);
-    expect(nextRoundSize(few, play(few, 5))).toBe(3);
-    expect(nextRoundSize(few, play(few, 8))).toBe(0);
+    expect(drawableUpTo(few, play(few, 5), undefined, EXTRA_ROUND)).toBe(3);
+    expect(drawableUpTo(few, play(few, 8), undefined, EXTRA_ROUND)).toBe(0);
   });
 
   it("follows the deck the review is in", () => {
     const d = data(12, (i) => (i < 2 ? "b" : "a"));
-    expect(nextRoundSize(d, play(d, 0), "b")).toBe(2);
+    expect(drawableUpTo(d, play(d, 0), "b", EXTRA_ROUND)).toBe(2);
+  });
+});
+
+const GOAL = 10;
+const DECKS = [
+  { id: "d1", name: "Chess", due: 0 },
+  { id: "d2", name: "Spanish", due: 12 },
+  { id: "d3", name: "Maths", due: 3 },
+  { id: "d4", name: "Music", due: 30 },
+  { id: "d5", name: "Art", due: 1 },
+];
+
+const input = (over: Partial<EndInput> = {}): EndInput => ({
+  stretch: "goal",
+  goal: GOAL,
+  from: 0,
+  attempts: 4,
+  satisfiedBefore: false,
+  left: 20,
+  confirmed: true,
+  scoped: false,
+  forgotten: 0,
+  otherDecks: [],
+  ...over,
+});
+
+const screen = (over: Partial<EndInput>): EndScreen => {
+  const end = reviewEnd(input(over));
+  if (end === "unchecked") throw new Error("expected an end screen");
+  return end;
+};
+
+const kinds = (end: EndScreen) => end.offers.map((o) => (o.kind === "deck" ? o.name : o.kind));
+
+describe("the end of a stretch", () => {
+  it("below the goal with cards left, says Round done and offers the rest of the goal", () => {
+    const end = screen({ stretch: "list", from: 2, attempts: 6, forgotten: 2 });
+    expect(end).toMatchObject({ heading: "round_done", celebration: "none", count: "round" });
+    expect(end.offers).toEqual([
+      { kind: "goal", count: 4 },
+      { kind: "forgotten", count: 2 },
+    ]);
+  });
+
+  it("offers only the cards that are left when fewer than the goal needs", () => {
+    expect(screen({ stretch: "list", from: 2, attempts: 6, left: 3 }).offers).toEqual([
+      { kind: "goal", count: 3 },
+    ]);
+  });
+
+  it("at the goal from its own stretch, celebrates in full and offers another round", () => {
+    const end = screen({ from: 3, attempts: 10, left: 20, forgotten: 1 });
+    expect(end).toMatchObject({
+      heading: "goal_reached",
+      celebration: "full",
+      satisfied: true,
+      count: "day",
+    });
+    expect(end.offers).toEqual([
+      { kind: "forgotten", count: 1 },
+      { kind: "more", count: EXTRA_ROUND },
+    ]);
+  });
+
+  it("when another round crosses the goal, says so with the lighter celebration", () => {
+    const end = screen({ stretch: "list", from: 8, attempts: 13 });
+    expect(end).toMatchObject({ heading: "goal_reached", celebration: "light", count: "round" });
+  });
+
+  it("once the goal was met before the stretch, says Round done without a celebration", () => {
+    const end = screen({ stretch: "more", from: 10, attempts: 20, satisfiedBefore: true, left: 4 });
+    expect(end).toMatchObject({ heading: "round_done", celebration: "none", satisfied: true });
+    expect(end.offers).toEqual([{ kind: "more", count: 4 }]);
+  });
+
+  it("when every deck runs out below the goal, the day counts and it says Nothing left", () => {
+    const end = screen({ from: 2, attempts: 7, left: 0 });
+    expect(end).toMatchObject({ heading: "nothing_left", celebration: "full", satisfied: true });
+    expect(end.offers).toEqual([]);
+  });
+
+  it("when one deck runs out below the goal, the day stays open and other decks are offered", () => {
+    const end = screen({ from: 2, attempts: 7, left: 0, scoped: true, otherDecks: DECKS });
+    expect(end).toMatchObject({ heading: "nothing_left", celebration: "none", satisfied: false });
+    expect(end.namesDeck).toBe(true);
+    expect(kinds(end)).toEqual(["Music", "Spanish", "Maths"]);
+  });
+
+  it("when a deck runs out and no other deck has cards, the day counts as Nothing left today", () => {
+    const empty = DECKS.map((d) => ({ ...d, due: 0 }));
+    const end = screen({ from: 2, attempts: 7, left: 0, scoped: true, otherDecks: empty });
+    expect(end).toMatchObject({ heading: "nothing_left", namesDeck: false, satisfied: true });
+    expect(end.offers).toEqual([]);
+    // Until the other decks are known, the deck's end claims nothing about the day.
+    const unknown = screen({ from: 2, attempts: 7, left: 0, scoped: true, otherDecks: null });
+    expect(unknown).toMatchObject({ namesDeck: true, satisfied: false });
+  });
+
+  it("with nothing reviewed and nothing to draw, says Nothing due", () => {
+    expect(screen({ from: 0, attempts: 0, left: 0 }).heading).toBe("nothing_due");
+  });
+
+  it("after the goal, a deck that runs out still offers the other decks", () => {
+    const end = screen({ from: 12, attempts: 15, left: 0, scoped: true, otherDecks: DECKS });
+    expect(end).toMatchObject({ heading: "nothing_left", namesDeck: true, satisfied: true });
+    expect(kinds(end)).toEqual(["Music", "Spanish", "Maths"]);
+  });
+
+  it("a reload after the goal with nothing to draw counts the day, not an empty round", () => {
+    const end = screen({ stretch: "more", from: 12, attempts: 12, left: 0, satisfiedBefore: true });
+    expect(end).toMatchObject({ heading: "nothing_left", count: "day", celebration: "none" });
+  });
+
+  it("a reload onto a finished day tells it again without celebrating", () => {
+    const end = screen({ from: 7, attempts: 7, left: 0, satisfiedBefore: true });
+    expect(end).toMatchObject({ heading: "nothing_left", celebration: "none" });
+    expect(screen({ from: 7, attempts: 7, left: 0 }).celebration).toBe("none");
+  });
+
+  it("claims nothing when the draw ran dry below the goal without a fetch to confirm it", () => {
+    expect(reviewEnd(input({ from: 2, attempts: 7, left: 0, confirmed: false }))).toBe("unchecked");
+    // A finished list is still finished; only what else is left stays unknown.
+    const list = screen({ stretch: "list", from: 2, attempts: 7, left: 0, confirmed: false });
+    expect(list).toMatchObject({ heading: "round_done", satisfied: false, offers: [] });
+    // At the goal the day counts whatever the connection says.
+    expect(screen({ from: 2, attempts: 10, left: 0, confirmed: false }).heading).toBe(
+      "goal_reached",
+    );
+  });
+});
+
+describe("every end, whatever the inputs", () => {
+  const cases: EndInput[] = [];
+  for (const stretch of ["goal", "more", "list"] as const)
+    for (const [from, attempts] of [
+      [0, 0],
+      [0, 4],
+      [0, 10],
+      [4, 4],
+      [4, 9],
+      [4, 12],
+      [10, 10],
+      [10, 15],
+      [14, 30],
+    ] as const)
+      for (const satisfiedBefore of [false, true])
+        for (const left of [0, 3, 25])
+          for (const confirmed of [false, true])
+            for (const scoped of [false, true])
+              for (const forgotten of [0, 2])
+                for (const otherDecks of [null, [], DECKS])
+                  cases.push(
+                    input({
+                      stretch,
+                      from,
+                      attempts,
+                      satisfiedBefore,
+                      left,
+                      confirmed,
+                      scoped,
+                      forgotten,
+                      otherDecks,
+                    }),
+                  );
+
+  function check(c: EndInput) {
+    const met = c.attempts >= GOAL;
+    const end = reviewEnd(c);
+    const dryUnconfirmed = c.left === 0 && !c.confirmed;
+    expect(end === "unchecked").toBe(dryUnconfirmed && !met && c.stretch !== "list");
+    if (end === "unchecked") return;
+
+    // Nothing left or due is only said after a confirmed empty draw.
+    if (end.heading === "nothing_left" || end.heading === "nothing_due") {
+      expect(c.left === 0 && c.confirmed).toBe(true);
+    }
+    if (end.heading === "nothing_due") expect(c.attempts).toBe(0);
+    expect(end.heading === "goal_reached").toBe(met && c.from < GOAL);
+
+    // Below the goal a deck's end counts the day only once every other deck is known to be empty.
+    const elsewhere = c.scoped && (c.otherDecks?.some((d) => d.due > 0) ?? true);
+    if (met) expect(end.satisfied).toBe(true);
+    if (elsewhere && !met) expect(end.satisfied).toBe(false);
+    expect(end.namesDeck).toBe(end.heading === "nothing_left" && elsewhere);
+
+    // Celebrate only when this stretch turned the day, and in full only from the goal's own stretch.
+    const turned = end.satisfied && !c.satisfiedBefore && c.attempts > c.from;
+    expect(end.celebration !== "none").toBe(turned);
+    if (end.celebration === "full") expect(c.stretch).toBe("goal");
+    expect(end.count).toBe(c.stretch === "goal" || c.attempts === c.from ? "day" : "round");
+
+    const offer = (kind: string) => end.offers.filter((o) => o.kind === kind);
+    for (const o of end.offers) expect(o.count).toBeGreaterThan(0);
+    expect(offer("forgotten").length).toBe(c.forgotten > 0 ? 1 : 0);
+    expect(offer("goal").length).toBe(!met && c.left > 0 ? 1 : 0);
+    expect(offer("more").length).toBe(met && c.left > 0 ? 1 : 0);
+    for (const o of offer("goal")) expect(o.count).toBeLessThanOrEqual(GOAL - c.attempts);
+    for (const o of offer("more")) expect(o.count).toBeLessThanOrEqual(EXTRA_ROUND);
+
+    const decks = offer("deck");
+    const shouldList = c.scoped && c.left === 0 && c.confirmed;
+    if (!shouldList) expect(decks).toEqual([]);
+    else {
+      const due = (c.otherDecks ?? []).filter((d) => d.due > 0).map((d) => d.due);
+      expect(decks.length).toBe(Math.min(OTHER_DECKS, due.length));
+      expect(decks.map((d) => d.count)).toEqual([...due].sort((a, b) => b - a).slice(0, 3));
+    }
+  }
+
+  it(`holds the rules across all ${cases.length} combinations`, () => {
+    for (const c of cases) {
+      try {
+        check(c);
+      } catch (error) {
+        const shown = JSON.stringify({ ...c, otherDecks: c.otherDecks?.length ?? null });
+        throw new Error(`${shown}\n${(error as Error).message}`);
+      }
+    }
   });
 });

@@ -38,7 +38,7 @@ export const LIGHT_STEP_MS = 70;
  * Seven days grade; the thirty-day strip in Insights deliberately does not. Over a month,
  * shading by volume makes a habit picture into a scoreboard and rewards one heavy day over a
  * steady stretch. Over a week it is the difference between "I turned up" and "I turned up and
- * did the lot", which is a thing the learner already knows and likes seeing.
+ * reviewed everything", which is a thing the learner already knows and likes seeing.
  */
 function level(
   n: number,

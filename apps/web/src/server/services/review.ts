@@ -134,6 +134,7 @@ export async function reviewDraw(
           const state = states.get(drawKey(card.cardId, mode.mode));
           if (!state) return [];
           const direction = legacyDirection(state.mode);
+          const next = preview(deserializeState(state.fsrs), now);
           return [
             {
               mode: modeOf(state.mode),
@@ -144,6 +145,12 @@ export async function reviewDraw(
               retrievability: mode.retrievability,
               added: mode.added,
               hasCue: mode.hasCue,
+              next: {
+                1: next[1].toISOString(),
+                2: next[2].toISOString(),
+                3: next[3].toISOString(),
+                4: next[4].toISOString(),
+              },
             },
           ];
         });

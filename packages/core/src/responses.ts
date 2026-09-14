@@ -292,6 +292,9 @@ const DrawModeOut = z
     hasCue: z
       .boolean()
       .meta({ description: "False when the card lacks what this direction shows first" }),
+    next: z
+      .object({ 1: Timestamp, 2: Timestamp, 3: Timestamp, 4: Timestamp })
+      .meta({ description: "When each grade would schedule the mode, as of the response" }),
   })
   .meta({ id: "DrawMode" });
 
@@ -349,6 +352,7 @@ export const GradeOut = z
     day: ReviewDayProgress,
   })
   .meta({ id: "GradeResult" });
+export type GradeOut = z.infer<typeof GradeOut>;
 
 export const SettingsOut = z
   .object({

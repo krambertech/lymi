@@ -7,7 +7,9 @@ import type {
   CardPatch,
   DeckInput,
   Direction,
+  DrawOut,
   GradeInput,
+  GradeOut,
   InsightsOut,
   JoinLinkOut,
   JoinOut,
@@ -136,9 +138,14 @@ export type QueueItem = {
   direction?: Direction;
   stateId: string;
   fsrsState: number;
-  next: Record<Rating, string>;
+  /** Absent once a grade since the fetch has moved the schedule. */
+  next?: Record<Rating, string> | undefined;
 };
 export type Queue = { total: number; items: QueueItem[] };
+/** `GET /api/review/draw`, with cards in the shape the rest of the client reads. */
+export type Draw = Omit<DrawOut, "cards"> & {
+  cards: (Omit<DrawOut["cards"][number], "card"> & { card: Card })[];
+};
 export type CardEvent = {
   id: string;
   actor: Card["createdBy"];
@@ -249,6 +256,14 @@ export const api = {
     return request<Queue>(`/api/review/queue${search ? `?${search}` : ""}`);
   },
   rounds: () => request<RoundsOut>(`/api/review/rounds?tz=${encodeURIComponent(deviceTimezone())}`),
+  /** What the review draws from; `tz` only matters until the review zone is known. */
+  draw: (deckId?: string) =>
+    request<Draw>(
+      `/api/review/draw?${new URLSearchParams({
+        tz: deviceTimezone(),
+        ...(deckId ? { deck: deckId } : {}),
+      })}`,
+    ),
   streak: () => request<StreakOut>(`/api/stats/streak?tz=${encodeURIComponent(deviceTimezone())}`),
   /** Settle today: confirms a nothing-due day, or an exhausted one. Send from a visible page. */
   checkToday: () =>
@@ -268,7 +283,7 @@ export const api = {
       )}`,
     ),
   grade: (body: GradeInput) =>
-    request<{ ok: true; due: string }>("/api/review/grade", {
+    request<GradeOut>("/api/review/grade", {
       method: "POST",
       body: JSON.stringify({
         ...body,
@@ -277,59 +292,3 @@ export const api = {
       }),
     }),
 };
-
-/**
- * Grades made offline wait here and replay in order when the connection returns.
- * The server ignores a grade older than the state's last review, so replays are safe.
- */
-const OUTBOX_KEY = "lymi-outbox";
-type Outbox = GradeInput[];
-
-function readOutbox(): Outbox {
-  try {
-    return JSON.parse(localStorage.getItem(OUTBOX_KEY) ?? "[]") as Outbox;
-  } catch {
-    return [];
-  }
-}
-function writeOutbox(items: Outbox) {
-  localStorage.setItem(OUTBOX_KEY, JSON.stringify(items));
-}
-
-/** Grades still waiting to reach the server. */
-export function outboxSize(): number {
-  return readOutbox().length;
-}
-
-export async function gradeWithOutbox(input: GradeInput) {
-  const entry = { ...input, reviewedAt: input.reviewedAt ?? new Date() };
-  try {
-    return await api.grade(entry);
-  } catch (err) {
-    if (err instanceof ApiError && err.status !== 0) throw err;
-    writeOutbox([...readOutbox(), entry]);
-    return { ok: true as const, due: "", queued: true };
-  }
-}
-
-export async function flushOutbox() {
-  const items = readOutbox();
-  if (items.length === 0) return 0;
-  const remaining: Outbox = [];
-  for (const item of items) {
-    try {
-      await api.grade({ ...item, reviewedAt: new Date(item.reviewedAt as unknown as string) });
-    } catch (err) {
-      if (err instanceof ApiError && err.status >= 400 && err.status < 500) continue; // drop bad entries
-      remaining.push(item);
-    }
-  }
-  writeOutbox(remaining);
-  return items.length - remaining.length;
-}
-
-if (typeof window !== "undefined") {
-  window.addEventListener("online", () => {
-    void flushOutbox();
-  });
-}

@@ -1,4 +1,4 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
 import { CircleAlert, Loader2, Pointer, RotateCcw, Volume2, X } from "lucide-react";
@@ -20,8 +20,9 @@ import { intervalLabel } from "../lib/i18n";
 import { modeLabel } from "../lib/review-modes";
 
 export interface ReviewHeaderProps {
-  done: number;
-  total: number;
+  /** Today's accepted grades in every scope, Forgot and returns included. */
+  attempts: number;
+  goal: number;
   /** Roll the count when it changes. Off when the grade came from the keyboard. */
   animateCount?: boolean | undefined;
   /** Today's streak, which the lantern shows. Omitted, it is the brand flame. */
@@ -32,7 +33,7 @@ export interface ReviewHeaderProps {
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 /**
- * The lantern, the session track, the count and the exit, on one line.
+ * The lantern, today's attempts against the goal, and the exit, on one line.
  *
  * The deck name is deliberately absent. It is chosen two taps earlier, it cannot change for the
  * length of the session, and a long one squeezes the track down to nothing — so it moves to the
@@ -43,8 +44,8 @@ const EASE_OUT = [0.22, 1, 0.36, 1] as const;
  * puts the metal, not the box, on the card's outer edge.
  */
 export function ReviewHeader({
-  done,
-  total,
+  attempts,
+  goal,
   animateCount = true,
   streak,
   onClose,
@@ -55,18 +56,18 @@ export function ReviewHeader({
       <Lantern
         className="-ms-[11.5px] -me-2 size-11"
         {...lanternFor(streak)}
-        fed={done}
+        fed={attempts}
         flicker
         glow
       />
       <Progress
-        value={total ? done / total : 0}
-        label={t`Session progress`}
+        value={goal ? Math.min(1, attempts / goal) : 0}
+        label={t`Daily goal progress`}
         className="min-w-0 flex-1"
       />
       <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
         <Trans>
-          <RollingCount value={done} animate={animateCount} /> of {total}
+          <RollingCount value={attempts} animate={animateCount} /> of {goal}
         </Trans>
       </span>
       {/* Quiet but not small: a 40 px circle with a 52 px hit area, pulled out so the X sits on the card edge. */}
@@ -624,7 +625,6 @@ export function GradeBar({
 
 export interface SessionDoneProps {
   done: number;
-  moreDue?: number | undefined;
   /** Named here rather than over every card, because here it is a fact about what was reviewed. */
   deckName?: string | undefined;
   /** A round from Today ended, which says nothing about the rest of the day's cards. */
@@ -634,23 +634,9 @@ export interface SessionDoneProps {
   action?: ReactNode | undefined;
 }
 
-/**
- * The end. The flame rises and the seven lights show the week. Cards counted, never points.
- *
- * A session is one batch of at most fifty, so more can be due when this screen appears. That is a
- * pause with a way on, not a failure to finish: the batch really did end, and the next one is a
- * decision rather than an endless list.
- */
-export function SessionDone({
-  done,
-  moreDue = 0,
-  deckName,
-  round = false,
-  streak,
-  action,
-}: SessionDoneProps) {
+/** The end of a review: nothing left to draw today, or the end of a round from Today. */
+export function SessionDone({ done, deckName, round = false, streak, action }: SessionDoneProps) {
   const lit = done > 0;
-  const paused = lit && moreDue > 0;
   return (
     <section className="flex flex-1 flex-col items-center justify-center gap-2 py-10 text-center">
       <Lantern
@@ -660,9 +646,7 @@ export function SessionDone({
         {...lanternFor(streak)}
       />
       <h2 className="complete-copy text-3xl font-medium">
-        {paused ? (
-          <Trans>A good pause</Trans>
-        ) : round ? (
+        {round ? (
           <Trans>Round done</Trans>
         ) : lit ? (
           <Trans>That’s the lot</Trans>
@@ -671,21 +655,7 @@ export function SessionDone({
         )}
       </h2>
       <p className="complete-copy max-w-[30ch] text-md text-muted">
-        {paused ? (
-          deckName ? (
-            <Plural
-              value={moreDue}
-              one={`${done} reviewed from ${deckName}. # more is ready when you are.`}
-              other={`${done} reviewed from ${deckName}. # more are ready when you are.`}
-            />
-          ) : (
-            <Plural
-              value={moreDue}
-              one={`${done} reviewed. # more is ready when you are.`}
-              other={`${done} reviewed. # more are ready when you are.`}
-            />
-          )
-        ) : round ? (
+        {round ? (
           <Trans>{done} reviewed. Today shows what’s left.</Trans>
         ) : lit ? (
           deckName ? (

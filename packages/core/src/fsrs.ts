@@ -79,7 +79,9 @@ export function schedule(state: FsrsCard, rating: Rating, now: Date = new Date()
 
 /** The four possible outcomes for the grade buttons: "Again 1m · Hard 2d · Good 6d · Easy 15d". */
 export function preview(state: FsrsCard, now: Date = new Date()): Record<Rating, Date> {
-  const all = scheduler.repeat(state, now);
+  // A grade from a device clock ahead of this one would make the elapsed time negative.
+  const at = state.last_review && state.last_review > now ? state.last_review : now;
+  const all = scheduler.repeat(state, at);
   return {
     1: all[FsrsRating.Again].card.due,
     2: all[FsrsRating.Hard].card.due,

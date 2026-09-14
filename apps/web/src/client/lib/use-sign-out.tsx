@@ -11,8 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../components/ui/dialog";
-import { flushOutbox, outboxSize } from "./api";
 import { signOut as endSession } from "./auth";
+import { flushOutbox, outboxSize } from "./grades";
 import { clearPersistedLearnerState } from "./persisted";
 
 interface Ctx {

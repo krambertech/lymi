@@ -228,6 +228,10 @@ describe("a client can draw for itself", () => {
     expect(draw.log.map((e) => e.rating)).toEqual([1, 1, 3, 1, 4]);
     // Every card asked both ways arrives with both directions, so the client can hold one back.
     expect(draw.cards.every((c) => c.modes.length === 2)).toBe(true);
+    // Each mode carries its grade schedule, which the grade buttons announce.
+    expect(draw.cards.every((c) => c.modes.every((m) => Object.keys(m.next).length === 4))).toBe(
+      true,
+    );
   });
 
   it("ignores an offline grade that arrives after a later grade of the same card", async () => {

@@ -5,7 +5,12 @@ export type E2EAccount =
   | "optional-meaning"
   | "archived-deck"
   | "responsive-creation"
-  | "review-batching"
+  | "review-returns"
+  | "review-queued"
+  | "review-offline"
+  | "review-round"
+  | "review-scope"
+  | "review-midnight"
   | "word-detail";
 
 export const e2eAccounts: readonly E2EAccount[];

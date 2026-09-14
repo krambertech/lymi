@@ -54,10 +54,8 @@ const LANTERN_FLIGHT = { type: "spring", visualDuration: 0.6, bounce: 0 } as con
 /**
  * The lantern, today's attempts against the goal, and the exit, on one line.
  *
- * The deck name is deliberately absent. It is chosen two taps earlier, it cannot change for the
- * length of the session, and a long one squeezes the track down to nothing — so it moves to the
- * end screen, where it is a fact about what was reviewed rather than a caption on every card.
- * The lantern stays: every accepted grade, Forgot included, feeds its flame.
+ * The deck name is not here, because a long one squeezes the track down to nothing; each card
+ * names its own deck. The lantern stays: every accepted grade, Forgot included, feeds its flame.
  *
  * The lantern's drawing starts about a quarter of the way into its box, so the negative margin
  * puts the metal, not the box, on the card's outer edge.
@@ -374,12 +372,12 @@ export function ReviewCard({
           <span className="shrink-0">
             {i18n._(modeLabel(mode))}
             {/* The deck implies its language, so the code shows only for a card that differs. */}
-            {card.language && card.language !== deck?.language && (
+            {card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase() && (
               <span> · {card.language.toUpperCase()}</span>
             )}
           </span>
         </span>
-        <StateChip state={item.fsrsState} size="lg" />
+        <StateChip state={item.fsrsState} size="lg" inReview />
       </div>
 
       <div className="flex flex-1 flex-col justify-center gap-5 py-2">

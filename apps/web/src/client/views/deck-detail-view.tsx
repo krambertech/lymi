@@ -10,7 +10,7 @@ import { DueCount } from "../components/due-count";
 import { EmptyState } from "../components/empty-state";
 import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
-import { StateIcon, type StateKey } from "../components/state-mark";
+import { StateIcon, type StateKey, stateMarks } from "../components/state-mark";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -148,10 +148,10 @@ function DuePlate({
   const due = deck.due;
   const next = due === 0 ? nextDueLabel(i18n.locale, cards) : null;
 
-  const split: { key: StateKey; n: number; label: string }[] = [
-    { key: "new", n: counts[0], label: t`New` },
-    { key: "learning", n: counts[1], label: t`Learning` },
-    { key: "known", n: counts[2], label: t`Known` },
+  const split: { key: StateKey; n: number }[] = [
+    { key: "new", n: counts[0] },
+    { key: "learning", n: counts[1] },
+    { key: "known", n: counts[2] },
   ];
 
   return (
@@ -166,9 +166,9 @@ function DuePlate({
         {next && <span className="text-sm text-muted">{t`The next card is back ${next}.`}</span>}
       </h2>
       <dl className="mx-auto mt-6 grid w-full max-w-md grid-cols-3 divide-x divide-edge @3xl:mt-0">
-        {split.map(({ key, n, label }) => (
+        {split.map(({ key, n }) => (
           <div key={key} className="grid justify-items-center gap-0.5 px-2">
-            <dt className="order-last text-sm text-muted">{label}</dt>
+            <dt className="order-last text-sm text-muted">{i18n._(stateMarks[key].label)}</dt>
             <dd
               className={clsx(
                 "flex items-center gap-1.5 text-xl font-semibold tabular-nums",
@@ -396,10 +396,10 @@ export function DeckDetailView({
   );
 
   // The plate above carries the counts, so the filter is names and icons.
-  const filterLabel = (label: string, state?: StateKey) => (
+  const filterLabel = (state?: StateKey) => (
     <span className="inline-flex items-center gap-1.5">
       {state && <StateIcon state={state} className="size-3.5" />}
-      {label}
+      {state ? i18n._(stateMarks[state].label) : t`All`}
     </span>
   );
 
@@ -540,10 +540,10 @@ export function DeckDetailView({
               value={filter}
               onChange={setFilter}
               options={[
-                { value: "all", label: filterLabel(t`All`) },
-                { value: "0", label: filterLabel(t`New`, "new") },
-                { value: "1", label: filterLabel(t`Learning`, "learning") },
-                { value: "2", label: filterLabel(t`Known`, "known") },
+                { value: "all", label: filterLabel() },
+                { value: "0", label: filterLabel("new") },
+                { value: "1", label: filterLabel("learning") },
+                { value: "2", label: filterLabel("known") },
               ]}
             />
             {/* Desktop keeps search beside the filter, where "/" lands; the phone has it up top. */}
@@ -560,8 +560,8 @@ export function DeckDetailView({
                 placeholder={t`Search this deck`}
                 aria-label={t`Search this deck`}
                 autoComplete="off"
-                // The small filter's height; `!` because the input's own height is for a form row.
-                className="h-[34px]! ps-9"
+                inputSize="sm"
+                className="ps-9"
               />
             </div>
           </div>

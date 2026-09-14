@@ -1159,8 +1159,7 @@ msgstr "Keeps slipping"
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Known"
 msgstr "Known"
 
@@ -1178,8 +1177,7 @@ msgstr "Language changed to {0}"
 msgid "Later today"
 msgstr "Later today"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Learning"
 msgstr "Learning"
 
@@ -1325,8 +1323,7 @@ msgstr "Never, whatever you choose"
 msgid "new"
 msgstr "new"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "New"
 msgstr "New"
 

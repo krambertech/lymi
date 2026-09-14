@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type { ReactNode, Ref } from "react";
+import { smallControlHeight } from "./ui/input";
 import { ToggleGroup, ToggleGroupIndicator, ToggleGroupItem } from "./ui/toggle-group";
 
 interface Option<T extends string> {
@@ -55,7 +56,7 @@ export function Segmented<T extends string>({
       className={clsx(
         "gap-0.5 rounded-md bg-plate-2 p-[3px]",
         // Same box as an input, so a segmented control in a form is a row like every other.
-        size === "md" && "h-11 md:h-10",
+        size === "md" ? "h-11 md:h-10" : smallControlHeight,
         className,
       )}
     >

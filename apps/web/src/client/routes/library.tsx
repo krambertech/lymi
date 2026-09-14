@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { useAddCard } from "../lib/add-card";
 import { publicSiteUrl } from "../lib/origins";
-import { decksQuery, meQuery } from "../lib/queries";
+import { deckCardsQuery, decksQuery, meQuery } from "../lib/queries";
 import { Streak } from "../lib/streak";
 import { useSignOut } from "../lib/use-sign-out";
 import { LibraryView } from "../views/library-view";
@@ -23,6 +24,14 @@ function DeckList() {
   const me = useQuery(meQuery);
   const leave = useSignOut();
   const add = useAddCard();
+  const qc = useQueryClient();
+
+  // Fetched here and persisted, so a deck opens offline after a visit to Library.
+  useEffect(() => {
+    for (const d of decks.data ?? []) {
+      void qc.prefetchQuery({ ...deckCardsQuery(d.id), staleTime: 30_000 });
+    }
+  }, [decks.data, qc]);
 
   return (
     <LibraryView

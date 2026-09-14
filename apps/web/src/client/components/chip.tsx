@@ -3,7 +3,7 @@ import type { FieldSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { BookOpen, PencilLine, Sparkle } from "lucide-react";
 import type { ReactNode } from "react";
-import { StateIcon, stateKey } from "./state-mark";
+import { StateIcon, stateKey, stateMarks } from "./state-mark";
 
 export type ChipTone = "default" | "ai" | "danger";
 
@@ -42,17 +42,21 @@ export function Chip({
 
 /**
  * FSRS state as the learner sees it: the state's icon on a plain chip, so the colour is the mark's
- * alone. Relearning says what happened, "Forgot recently", with the Forgot grade's mark.
+ * alone. Under review a relearning card says what happened, "Forgot recently", with the Forgot
+ * grade's mark; elsewhere the lapse may be months old, so it is plain Learning.
  */
 export function StateChip({
   state,
   size,
+  inReview = false,
 }: {
   state: number | null | undefined;
   size?: "sm" | "md" | "lg" | undefined;
+  inReview?: boolean | undefined;
 }) {
+  const { i18n } = useLingui();
   const icon = size === "lg" ? "size-3.5" : "size-3";
-  if (state === 3)
+  if (inReview && state === 3)
     return (
       <Chip size={size}>
         <StateIcon state="forgot" className={icon} />
@@ -63,13 +67,7 @@ export function StateChip({
   return (
     <Chip size={size}>
       <StateIcon state={key} className={icon} />
-      {key === "known" ? (
-        <Trans>Known</Trans>
-      ) : key === "learning" ? (
-        <Trans>Learning</Trans>
-      ) : (
-        <Trans>New</Trans>
-      )}
+      {i18n._(stateMarks[key].label)}
     </Chip>
   );
 }

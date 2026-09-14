@@ -1,3 +1,5 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 import { clsx } from "clsx";
 import {
   CircleCheck,
@@ -17,10 +19,18 @@ export type StateKey = "new" | "learning" | "known";
 
 /** Each card state's one colour and one icon, everywhere a state shows; DESIGN.md, "Colour". */
 export const stateMarks = {
-  new: { Icon: CircleDashed, bg: "bg-state-new", text: "text-state-new" },
-  learning: { Icon: CircleHalf, bg: "bg-state-learning", text: "text-state-learning" },
-  known: { Icon: CircleCheck, bg: "bg-state-known", text: "text-state-known" },
-} as const satisfies Record<StateKey, { Icon: LucideIcon; bg: string; text: string }>;
+  new: { label: msg`New`, Icon: CircleDashed, bg: "bg-state-new", text: "text-state-new" },
+  learning: {
+    label: msg`Learning`,
+    Icon: CircleHalf,
+    bg: "bg-state-learning",
+    text: "text-state-learning",
+  },
+  known: { label: msg`Known`, Icon: CircleCheck, bg: "bg-state-known", text: "text-state-known" },
+} as const satisfies Record<
+  StateKey,
+  { label: MessageDescriptor; Icon: LucideIcon; bg: string; text: string }
+>;
 
 /** FSRS 0 New, 1 Learning, 2 Review, 3 Relearning, as the three states a learner sees. */
 export function stateKey(state: number | null | undefined): StateKey {

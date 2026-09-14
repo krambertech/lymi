@@ -12,18 +12,31 @@ export const controlBase =
 /** The control height and text size; DESIGN.md "Forms" says why they follow the viewport. */
 export const controlSize = "h-11 text-[1rem] md:h-10 md:hoverable:text-base";
 
+/** The small control height, shared with the small Segmented so a search beside one lines up. */
+export const smallControlHeight = "h-[34px]";
+
 /** Text size alone, for a control whose height follows its content. */
 export const controlText = "text-[1rem] md:hoverable:text-base";
 
 // A plain input rather than Base UI's, which validates natively on Enter and would overrule the Field.
-function Input({ className, disabled, ...props }: React.ComponentProps<"input">) {
+function Input({
+  className,
+  disabled,
+  inputSize = "md",
+  ...props
+}: React.ComponentProps<"input"> & { inputSize?: "sm" | "md" | undefined }) {
   const field = useField();
   const control = useFieldControl(props);
   return (
     <input
       data-slot="input"
       disabled={disabled || field?.disabled}
-      className={cn(controlBase, controlSize, "px-3.5", className)}
+      className={cn(
+        controlBase,
+        inputSize === "md" ? controlSize : [smallControlHeight, controlText],
+        "px-3.5",
+        className,
+      )}
       {...props}
       {...control}
     />

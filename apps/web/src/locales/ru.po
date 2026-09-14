@@ -1195,8 +1195,7 @@ msgstr "Постоянно забываются"
 msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Known"
 msgstr "Выученные"
 
@@ -1214,8 +1213,7 @@ msgstr "Новый язык: {0}"
 msgid "Later today"
 msgstr "Позже сегодня"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Learning"
 msgstr "В изучении"
 
@@ -1361,8 +1359,7 @@ msgstr "Никогда, независимо от выбора"
 msgid "new"
 msgstr "новая"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "New"
 msgstr "Новая"
 

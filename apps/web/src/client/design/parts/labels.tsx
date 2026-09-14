@@ -29,8 +29,8 @@ export const labels: Group = {
             },
             {
               label: "Forgot recently",
-              note: "Relearning, said as what happened, with the Forgot grade’s red arrow.",
-              render: () => <StateChip state={3} />,
+              note: "A relearning card under review, said as what happened, with the Forgot grade’s red arrow. Elsewhere it is Learning.",
+              render: () => <StateChip state={3} inReview />,
             },
             {
               label: "Known",

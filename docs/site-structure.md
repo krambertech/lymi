@@ -32,7 +32,9 @@ The public landing page's Open Lymi link always goes to the product root and let
 
 Every public marketing page ships in English, Ukrainian and Russian. English lives at the path, and the other editions live under `/uk/` and `/ru/`, rendered by the same island with the page locale. Privacy, terms, support and the documentation stay in English on purpose.
 
-`apps/site/src/lib/routes.ts` lists the translated pages and the English-only paths. The sitemap, the `hreflang` alternates, the footer language links and the links between pages all read from it. `routes.test.ts` fails when a page in `src/pages` is on neither list, when a translated page lacks a locale, or when the sitemap misses a page, so a new public page needs its `/uk/` and `/ru/` files or a place on the English-only list before `pnpm verify` passes.
+`apps/site/src/lib/routes.ts` lists the translated pages and the English-only paths. The sitemap, the `hreflang` alternates, the footer language links and the links between pages all read from it.
+
+Use case pages sit under one **Use cases** menu in the header rather than as links of their own, so the header stays the same width as pages are added. `apps/site/src/components/landing/site-links.ts` lists them in menu order, with a narrower page such as Estonian under its broader one; the header menu, the phone menu and the footer all read that list. Privacy, terms and support use the same header. `routes.test.ts` fails when a page in `src/pages` is on neither list, when a translated page lacks a locale, or when the sitemap misses a page, so a new public page needs its `/uk/` and `/ru/` files or a place on the English-only list before `pnpm verify` passes.
 
 ## Deployment and PWA boundary
 
@@ -44,18 +46,18 @@ CI's artifact boundary check fails if the public build contains service-worker o
 
 ## Documentation structure
 
-Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search.
+Documentation source lives in `apps/site/src/components/docs`, with one Astro page per public route in `apps/site/src/pages/docs`. The navigation registry drives the sidebar, next-page links and search. The sidebar puts connecting an assistant before the API, because more readers arrive with an assistant than with a script.
 
 | Path | Purpose |
 | --- | --- |
-| `/docs` | What the API is and which way in to choose. |
+| `/docs` | What the docs cover and which way in to choose. |
 | `/docs/quickstart` | Make a key, add a card and see it in the app. |
 | `/docs/authentication` | Keys, scopes, rate limit and error codes. |
 | `/docs/cards` | Card shape, duplicate rules, directions and FSRS states. |
 | `/docs/scheduling` | How FSRS sets intervals and how the draw picks the next card. Tables, the simulated day and interval examples are computed from `packages/core` at build time; the year-long studies come from `packages/core/simulation/results.json`. |
 | `/docs/recipes` | Import a word list, safely re-run a script and back up a deck. |
 | `/docs/api` | Browser-rendered reference loaded from `https://my.lymi.app/api/openapi.json` without credentials. |
-| `/docs/mcp`, `/docs/mcp/claude`, `/docs/mcp/chatgpt` | Connecting an assistant to `https://my.lymi.app/mcp`. |
+| `/docs/mcp`, `/docs/mcp/claude`, `/docs/mcp/chatgpt`, `/docs/mcp/gemini` | Connecting an assistant to `https://my.lymi.app/mcp`. |
 
 The product OpenAPI route permits CORS only for the exact public website origin and does not permit credentials. `my.lymi.app/api/docs` redirects to the public API reference. Privacy, terms and support are top-level public routes so they remain stable for people, connected apps and provider listings.
 

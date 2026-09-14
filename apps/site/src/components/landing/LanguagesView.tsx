@@ -162,7 +162,7 @@ function LanguagePage(props: PageProps) {
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
       <header>
-        <SiteNav openAppUrl={openAppUrl} current="languages" />
+        <SiteNav openAppUrl={openAppUrl} current={props.page} />
         <WordFieldHero frames={props.frames} label={props.heroLabel} lede={props.heroLede} />
       </header>
 
@@ -348,7 +348,7 @@ export function EstonianView() {
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
       <header>
-        <SiteNav openAppUrl={openAppUrl} current="languages" />
+        <SiteNav openAppUrl={openAppUrl} current="estonian" />
         <Hero
           title={<Trans>Keep what you learn in Estonian.</Trans>}
           lede={

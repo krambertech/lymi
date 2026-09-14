@@ -73,7 +73,7 @@ test("each origin exposes only its own route and indexing contract", async ({ pa
   });
 
   await page.goto(`${publicSite}/docs`);
-  await expect(page.getByRole("heading", { name: "Lymi API" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Lymi docs" })).toBeVisible();
   await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
 });
 

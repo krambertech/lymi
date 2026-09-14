@@ -1,15 +1,15 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Braces, Check, LoaderCircle, RotateCcw } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { type ReactNode, useEffect, useState } from "react";
+import { Braces, Check, LoaderCircle } from "lucide-react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { AssistantMark } from "./AssistantMarks";
-import { useInView, usePlayback } from "./playback";
+import { appear, EASE, usePlayback } from "./playback";
+import { ReplayButton } from "./ReplayButton";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
 const WORD_MS = 2200;
 
 /** The headline's last word: every assistant by its mark, then anything built on the API. */
@@ -28,7 +28,8 @@ const WITH: { id: string; name: ReactNode; mark: ReactNode }[] = [
 function Headline() {
   const { t } = useLingui();
   const still = useReducedMotion();
-  const [ref, inView] = useInView<HTMLHeadingElement>();
+  const ref = useRef<HTMLHeadingElement>(null);
+  const inView = useInView(ref);
   const [index, setIndex] = useState(0);
   const current = WITH[index % WITH.length] as (typeof WITH)[number];
 
@@ -69,7 +70,7 @@ function Headline() {
 }
 
 interface Made {
-  kind: MessageDescriptor;
+  label: MessageDescriptor;
   term: string;
   meaning: MessageDescriptor;
 }
@@ -77,25 +78,20 @@ interface Made {
 /** The notes in the photo and the cards they become. The same German cards turn over further down. */
 const NOTES = ["das Mädchen", "aufhören", "Feierabend", "Schnapsidee"];
 const MADE: Made[] = [
-  { kind: msg`noun`, term: "das Mädchen", meaning: msg`The girl` },
-  { kind: msg`verb`, term: "aufhören", meaning: msg`To stop` },
-  { kind: msg`noun`, term: "Feierabend", meaning: msg`The evening after work` },
-  { kind: msg`noun`, term: "Schnapsidee", meaning: msg`A bad idea that seemed good` },
+  { label: msg`Deutsch · noun`, term: "das Mädchen", meaning: msg`The girl` },
+  { label: msg`Deutsch · verb`, term: "aufhören", meaning: msg`To stop` },
+  { label: msg`Deutsch · noun`, term: "Feierabend", meaning: msg`The evening after work` },
+  { label: msg`Deutsch · noun`, term: "Schnapsidee", meaning: msg`A bad idea that seemed good` },
 ];
 
 /** When each beat of the conversation lands, in ms. It plays once; Play again replays it. */
 const BEATS = { photo: 250, ask: 850, calling: 1700, called: 3100, reply: 3500, cards: 4000 };
-const appear = (visible: boolean) => ({
-  opacity: visible ? 1 : 0,
-  y: visible ? 0 : 10,
-  filter: visible ? "blur(0px)" : "blur(6px)",
-});
-
 /** A photo of lesson notes goes to an assistant, it uses Lymi, and the cards land. */
 function Conversation() {
   const { t, i18n } = useLingui();
   const still = useReducedMotion();
-  const [ref, inView] = useInView<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.35 });
   const { at, done, replay } = usePlayback(BEATS, inView, still);
   const move = { duration: still ? 0 : 0.5, ease: EASE };
 
@@ -175,7 +171,7 @@ function Conversation() {
               }
               transition={{ ...move, delay: still || !at("cards") ? 0 : i * 0.12 }}
             >
-              <p className="text-2xs text-muted">Deutsch · {i18n._(card.kind)}</p>
+              <p className="text-2xs text-muted">{i18n._(card.label)}</p>
               <p
                 lang="de"
                 className="mt-0.5 truncate text-md font-medium tracking-[-0.015em] text-text"
@@ -188,21 +184,7 @@ function Conversation() {
         </ul>
       </div>
 
-      {/* Held in place while it plays, so the button appearing never moves the page. */}
-      <button
-        type="button"
-        onClick={replay}
-        aria-hidden={!done || !!still}
-        tabIndex={done && !still ? 0 : -1}
-        className={buttonClass(
-          "ghost",
-          "sm",
-          `self-end transition-opacity duration-300 ${done && !still ? "opacity-100" : "pointer-events-none opacity-0"}`,
-        )}
-      >
-        <RotateCcw aria-hidden="true" />
-        <Trans>Play again</Trans>
-      </button>
+      <ReplayButton shown={done && !still} onReplay={replay} className="self-end" />
     </div>
   );
 }

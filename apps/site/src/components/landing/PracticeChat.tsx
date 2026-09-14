@@ -1,12 +1,11 @@
 import { Trans } from "@lingui/react/macro";
-import { Check, RotateCcw } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
-import { buttonClass } from "../Button";
+import { Check } from "lucide-react";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { type ReactNode, useRef } from "react";
 import { Lantern } from "../Lantern";
-import { useInView, usePlayback } from "./playback";
+import { appear, EASE, usePlayback } from "./playback";
+import { ReplayButton } from "./ReplayButton";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
 const BEATS = { ask: 200, read: 900, question: 1900, answer: 3400, correction: 4900 };
 
 /** A word from the learner's deck, marked the way the cards mark AI text. */
@@ -14,16 +13,11 @@ function Deck({ children }: { children: ReactNode }) {
   return <mark className="rounded-xs bg-amber-soft px-0.5 text-inherit">{children}</mark>;
 }
 
-const appear = (visible: boolean) => ({
-  opacity: visible ? 1 : 0,
-  y: visible ? 0 : 10,
-  filter: visible ? "blur(0px)" : "blur(6px)",
-});
-
 /** The assistant reads the German deck, then holds a short conversation built on its words. */
 export function PracticeChat() {
   const still = useReducedMotion();
-  const [ref, inView] = useInView<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.35 });
   const { at, done, replay } = usePlayback(BEATS, inView, still);
   const move = { duration: still ? 0 : 0.5, ease: EASE };
   const you = "self-end max-w-[85%] bg-text px-3.5 py-2 text-md text-canvas";
@@ -104,20 +98,7 @@ export function PracticeChat() {
           <span aria-hidden="true" className="h-3 w-4 rounded-xs bg-amber-soft" />
           <Trans>Words from your deck</Trans>
         </p>
-        <button
-          type="button"
-          onClick={replay}
-          aria-hidden={!done || !!still}
-          tabIndex={done && !still ? 0 : -1}
-          className={buttonClass(
-            "ghost",
-            "sm",
-            done && !still ? "opacity-100 transition-opacity" : "pointer-events-none opacity-0",
-          )}
-        >
-          <RotateCcw aria-hidden="true" />
-          <Trans>Play again</Trans>
-        </button>
+        <ReplayButton shown={done && !still} onReplay={replay} />
       </div>
     </div>
   );

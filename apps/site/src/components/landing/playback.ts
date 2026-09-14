@@ -1,20 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
-/** Whether an element is on screen, so an animation nobody can see waits. */
-export function useInView<T extends Element>() {
-  const ref = useRef<T>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => setInView(!!entry?.isIntersecting), {
-      threshold: 0.35,
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  return [ref, inView] as const;
-}
+export const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** A demo element's resting state once its beat has come, and before. */
+export const appear = (visible: boolean) => ({
+  opacity: visible ? 1 : 0,
+  y: visible ? 0 : 10,
+  filter: visible ? "blur(0px)" : "blur(6px)",
+});
 
 /**
  * A scripted demo that plays once while on screen, pauses when scrolled away, and replays on
@@ -26,26 +19,37 @@ export function usePlayback<Beat extends string>(
   still: boolean | null,
 ) {
   const end = Math.max(...Object.values<number>(beats));
+  const [reached, setReached] = useState(0);
   const [run, setRun] = useState(0);
-  const [elapsed, setElapsed] = useState(0);
+  // Exact ms played, kept across pauses so a resume waits only for the rest of the current beat.
+  const played = useRef(0);
+  const currentRun = useRef(0);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: resumes from where a pause left `elapsed`; a new `run` replays
   useEffect(() => {
-    if (still || !inView || elapsed >= end) return;
+    if (still || !inView || played.current >= end) return;
+    const thisRun = run;
+    const startedAt = performance.now() - played.current;
     const timers = Object.values<number>(beats)
-      .filter((at) => at > elapsed)
-      .map((at) => window.setTimeout(() => setElapsed((e) => Math.max(e, at)), at - elapsed));
+      .filter((at) => at > played.current)
+      .map((at) =>
+        window.setTimeout(() => setReached((r) => Math.max(r, at)), at - played.current),
+      );
     return () => {
       for (const timer of timers) window.clearTimeout(timer);
+      if (currentRun.current === thisRun) {
+        played.current = Math.min(end, performance.now() - startedAt);
+      }
     };
-  }, [inView, still, run]);
+  }, [beats, end, inView, still, run]);
 
   return {
-    at: (beat: Beat) => !!still || elapsed >= beats[beat],
-    done: !!still || elapsed >= end,
+    at: (beat: Beat) => !!still || reached >= beats[beat],
+    done: !!still || reached >= end,
     replay: () => {
-      setElapsed(0);
-      setRun((r) => r + 1);
+      currentRun.current += 1;
+      played.current = 0;
+      setReached(0);
+      setRun(currentRun.current);
     },
   };
 }

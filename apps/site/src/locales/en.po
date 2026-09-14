@@ -519,10 +519,12 @@ msgstr "Deep, lasting affection"
 msgid "Design"
 msgstr "Design"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/AssistantsView.tsx
 msgid "Deutsch · noun"
 msgstr "Deutsch · noun"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/AssistantsView.tsx
 msgid "Deutsch · verb"
 msgstr "Deutsch · verb"
@@ -589,6 +591,7 @@ msgid "Eesti · adjective"
 msgstr "Eesti · adjective"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Eesti · noun"
 msgstr "Eesti · noun"
 
@@ -641,6 +644,7 @@ msgid "Español · new"
 msgstr "Español · new"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Español · phrase"
 msgstr "Español · phrase"
 
@@ -731,6 +735,7 @@ msgid "Forgot"
 msgstr "Forgot"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Français · phrase"
 msgstr "Français · phrase"
 
@@ -1351,9 +1356,7 @@ msgstr "Notes"
 msgid "Nothing during the private beta."
 msgstr "Nothing during the private beta."
 
-#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "noun"
 msgstr "noun"
 
@@ -1411,7 +1414,6 @@ msgid "Philosophy"
 msgstr "Philosophy"
 
 #: src/components/landing/hand-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "phrase"
 msgstr "phrase"
 
@@ -1424,8 +1426,7 @@ msgstr "Physics"
 msgid "Pick your assistant for its steps."
 msgstr "Pick your assistant for its steps."
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/PracticeChat.tsx
+#: src/components/landing/ReplayButton.tsx
 msgid "Play again"
 msgstr "Play again"
 
@@ -2124,7 +2125,6 @@ msgstr "usually"
 msgid "Usually"
 msgstr "Usually"
 
-#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
 msgid "verb"
 msgstr "verb"
@@ -2319,5 +2319,6 @@ msgid "日本語 · noun"
 msgstr "日本語 · noun"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "日本語 · phrase"
 msgstr "日本語 · phrase"

@@ -14,8 +14,17 @@ type Gradient = {
 /** A solid colour or a linear gradient in the mark's 24-unit box. */
 type Paint = string | Gradient;
 
+/** Typed, so a mark asked for by a name that isn't in the list fails the build. */
+export type AssistantName =
+  | "Claude"
+  | "ChatGPT"
+  | "Claude Code"
+  | "Codex"
+  | "Gemini"
+  | "Other apps";
+
 type Assistant = {
-  name: string;
+  name: AssistantName;
   label?: MessageDescriptor;
   guide: string;
   path: string;
@@ -139,7 +148,7 @@ function Mark({ assistant }: { assistant: Assistant }) {
 }
 
 /** One assistant's mark on its own, by name. */
-export function AssistantMark({ name }: { name: string }) {
+export function AssistantMark({ name }: { name: AssistantName }) {
   const assistant = ASSISTANTS.find((a) => a.name === name);
   return assistant ? <Mark assistant={assistant} /> : null;
 }

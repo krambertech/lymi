@@ -6,7 +6,7 @@ import { publicSiteUrl } from "../lib/origins";
 import { deckCardsQuery, decksQuery, meQuery } from "../lib/queries";
 import { Streak } from "../lib/streak";
 import { useSignOut } from "../lib/use-sign-out";
-import { LibraryView } from "../views/LibraryView";
+import { LibraryView } from "../views/library-view";
 
 export const Route = createFileRoute("/library")({
   component: Library,

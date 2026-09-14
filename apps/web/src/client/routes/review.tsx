@@ -5,8 +5,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { Button, buttonClass } from "../components/Button";
-import { GRADES } from "../components/Grade";
+import { Button, buttonClass } from "../components/button";
+import { GRADES } from "../components/grade";
 import { useAddCard } from "../lib/add-card";
 import { api, deviceTimezone, type QueueItem } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
@@ -31,7 +31,7 @@ import {
   ReviewError,
   ReviewHeader,
   ReviewSkeleton,
-} from "../views/ReviewView";
+} from "../views/review-view";
 
 export const Route = createFileRoute("/review")({
   validateSearch: (s: Record<string, unknown>): { deck?: string; round?: Round } => {

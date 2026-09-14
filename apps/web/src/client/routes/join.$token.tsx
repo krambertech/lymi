@@ -8,7 +8,7 @@ import { ApiError, api } from "../lib/api";
 import { signInWithGoogle } from "../lib/auth";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { joinPreviewQuery } from "../lib/queries";
-import { JoinView } from "../views/JoinView";
+import { JoinView } from "../views/join-view";
 
 const Search = z.object({
   /** Keeps the local email sign-in out of the real join page, as on /login. */

@@ -1,0 +1,349 @@
+import { plural } from "@lingui/core/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import type { InsightsOut } from "@lymi/core";
+import { clsx } from "clsx";
+import { Button } from "../components/button";
+import { Chip } from "../components/chip";
+import { EmptyState } from "../components/empty-state";
+import { MonthBars } from "../components/month-bars";
+import { RunStrip } from "../components/run-strip";
+import { Segmented } from "../components/segmented";
+import { Skeleton } from "../components/skeleton";
+import { StatPlate } from "../components/stat-plate";
+import { TrendLine } from "../components/trend-line";
+import { Page, PageHeader } from "./shell";
+
+export type Period = "30" | "90" | "0";
+
+export interface InsightsProps {
+  data: InsightsOut | undefined;
+  period: Period;
+  onPeriod: (p: Period) => void;
+  /** The request failed and there is nothing cached to fall back on. */
+  failed?: boolean | undefined;
+  /** A refetch is in flight. The previous period stays on screen while it lands. */
+  busy?: boolean | undefined;
+  onRetry?: (() => void) | undefined;
+}
+
+/** Parses a local YYYY-MM-DD without letting the timezone shift it a day. */
+function parseLocal(date: string): Date {
+  const [y, m, d] = date.split("-").map(Number);
+  return new Date(y ?? 1970, (m ?? 1) - 1, d ?? 1);
+}
+
+/**
+ * The one screen where charts belong, and the only one where looking at them is a choice.
+ * Four numbers, each with the sentence that makes it mean something, then the months, then
+ * the cards that keep slipping.
+ *
+ * Every figure draws in ink except the lights, which stay amber because they are the
+ * streak's lights. A chart series in amber would make this the one screen where the accent
+ * means "data" rather than "act".
+ */
+export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: InsightsProps) {
+  const { t, i18n } = useLingui();
+  /* Formatters follow the interface language, which can change while this screen is open. */
+  const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
+
+  // On the Recall plate's label row rather than in the page header: in the header the same
+  // control reads as a filter for the whole screen, and it moves this one figure only.
+  const switcher = (
+    <Segmented
+      size="sm"
+      label={t`How far back the recall figure looks`}
+      value={period}
+      onChange={onPeriod}
+      options={[
+        { value: "30", label: t`30 days` },
+        { value: "90", label: t`90 days` },
+        { value: "0", label: t`All` },
+      ]}
+    />
+  );
+
+  if (failed) {
+    return (
+      <Page>
+        <PageHeader title={t`Insights`} />
+        <EmptyState
+          lantern="still"
+          title={t`Couldn’t load Insights`}
+          body={t`Check your connection and try again.`}
+          action={
+            <Button variant="secondary" onClick={onRetry} loading={busy}>
+              <Trans>Try again</Trans>
+            </Button>
+          }
+          className="flex-1"
+        />
+      </Page>
+    );
+  }
+
+  if (!data) {
+    return (
+      <Page>
+        <PageHeader title={t`Insights`} actions={switcher} />
+        {/* Same heights the plates settle at, so the screen does not jump when they land. */}
+        <div className="grid gap-3 @3xl:grid-cols-2">
+          {[0, 1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-[223px] rounded-xl" />
+          ))}
+        </div>
+        <Skeleton className="mt-3 h-[105px] rounded-xl" />
+      </Page>
+    );
+  }
+
+  const { recall, consistency, months, cards, forecast, leeches } = data;
+  const { litAllTime, daysAllTime } = consistency;
+  const nothingYet = daysAllTime === 0 && cards.total === 0;
+
+  if (nothingYet) {
+    return (
+      <Page>
+        <PageHeader title={t`Insights`} />
+        <EmptyState
+          lantern="still"
+          title={t`Nothing to say yet`}
+          body={t`Reviews per day, how much is sticking, and the cards that keep slipping. This fills in once there is some history behind you.`}
+          className="flex-1"
+        />
+      </Page>
+    );
+  }
+
+  const graded = recall.passed + recall.failed;
+  const monthly = period === "0";
+  const trend = recall.series.map((p) => {
+    const start = parseLocal(monthly ? `${p.at}-01` : p.at);
+    return {
+      at: p.at,
+      t: start.getTime(),
+      value: p.rate,
+      label: monthly
+        ? i18n.date(start, { month: "long" })
+        : t`week of ${i18n.date(start, { day: "numeric", month: "short" })}`,
+    };
+  });
+  const series = trend.map((p) => `${p.label} ${Math.round(p.value * 100)}%`).join(", ");
+  const peak = forecast.reduce(
+    (a, b) => (b.count > a.count ? b : a),
+    forecast[0] ?? {
+      date: "",
+      count: 0,
+    },
+  );
+  const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
+  const maxDue = Math.max(1, ...forecast.map((d) => d.count));
+
+  return (
+    <Page>
+      <PageHeader
+        title={t`Insights`}
+        sub={
+          daysAllTime > 0
+            ? t`${plural(daysAllTime, {
+                one: "# day since your first review",
+                other: "# days since your first review",
+              })}`
+            : undefined
+        }
+      />
+
+      <div
+        className={clsx(
+          "grid gap-3 transition-opacity duration-150 @3xl:grid-cols-2",
+          busy && "opacity-60",
+        )}
+      >
+        <StatPlate
+          label={t`Recall`}
+          control={switcher}
+          value={recall.rate === null ? "—" : `${Math.round(recall.rate * 100)}%`}
+          figure={
+            trend.length > 0 ? (
+              <TrendLine
+                points={trend}
+                target={0.9}
+                targetLabel="90%"
+                label={
+                  monthly
+                    ? t`Recall by month: ${series}. The schedule aims for 90%.`
+                    : t`Recall by week: ${series}. The schedule aims for 90%.`
+                }
+              />
+            ) : undefined
+          }
+          note={
+            recall.rate === null
+              ? t`Nothing has come back for a second look yet, so there is nothing honest to report.`
+              : t`${recall.passed} remembered, ${recall.failed} forgotten.`
+          }
+        />
+
+        <StatPlate
+          label={t`Consistency`}
+          value={consistency.lit}
+          unit={t`/ ${plural(consistency.days.length, { one: "# day", other: "# days" })}`}
+          figure={<RunStrip days={consistency.days} />}
+          note={
+            consistency.days.length === 0
+              ? t`No reviews yet. Each block here will be a day.`
+              : consistency.longestRun > 1
+                ? t`${plural(consistency.longestRun, {
+                    one: "Longest run # day. Unbroken stretches join up.",
+                    other: "Longest run # days. Unbroken stretches join up.",
+                  })}`
+                : t`Each block is a day. They join up when you keep going.`
+          }
+        />
+
+        <StatPlate
+          label={t`Cards`}
+          value={cards.total}
+          unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
+          figure={
+            // The one figure here that carries colour, and it is the state colours every other
+            // stripe, dot and chip in the app uses: grey new, yellow learning, green known.
+            <div
+              className="flex h-3 w-full gap-1"
+              role="img"
+              aria-label={t`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
+            >
+              {cards.new > 0 && (
+                <i className="block rounded-full bg-state-new" style={{ flexGrow: cards.new }} />
+              )}
+              {cards.learning > 0 && (
+                <i
+                  className="block rounded-full bg-state-learning"
+                  style={{ flexGrow: cards.learning }}
+                />
+              )}
+              {cards.known > 0 && (
+                <i
+                  className="block rounded-full bg-state-known"
+                  style={{ flexGrow: cards.known }}
+                />
+              )}
+            </div>
+          }
+          note={
+            <span className="flex flex-wrap gap-1.5">
+              <Chip size="sm" dot tone="new">
+                <Trans>{cards.new} new</Trans>
+              </Chip>
+              <Chip size="sm" dot tone="learning">
+                <Trans>{cards.learning} learning</Trans>
+              </Chip>
+              <Chip size="sm" dot tone="known">
+                <Trans>{cards.known} known</Trans>
+              </Chip>
+            </span>
+          }
+        />
+
+        <StatPlate
+          label={t`Ahead`}
+          value={peak.count}
+          unit={peak.count > 0 ? t`peak, ${weekday(peak.date)}` : t`due this week`}
+          figure={
+            // Bars on a baseline, using the whole figure box. A track behind each one reads
+            // as a second object stacked on the bar rather than as the space it could fill.
+            <div
+              className="flex h-full w-full items-stretch gap-1.5"
+              role="img"
+              aria-label={forecast.map((d) => `${weekday(d.date)} ${d.count}`).join(", ")}
+            >
+              {forecast.map((d) => (
+                <div key={d.date} className="flex flex-1 flex-col gap-1.5">
+                  <div className="flex flex-1 items-end border-b border-edge">
+                    <i
+                      className={clsx(
+                        "block w-full rounded-t-[4px]",
+                        d.count === peak.count && peak.count > 0 ? "bg-amber" : "bg-text/35",
+                      )}
+                      style={{ height: d.count > 0 ? `max(3px, ${(d.count / maxDue) * 100}%)` : 0 }}
+                    />
+                  </div>
+                  <span className="text-center text-2xs text-muted tabular-nums">
+                    {weekday(d.date).slice(0, 2)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          }
+          note={t`${plural(dueSoon, {
+            one: "# card over the next seven days.",
+            other: "# cards over the next seven days.",
+          })}`}
+        />
+      </div>
+
+      {months.length > 0 && (
+        <section className="edge mt-3 flex flex-col gap-4 rounded-xl bg-plate p-5">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
+              <Trans>Month by month</Trans>
+            </h2>
+            <span className="text-xs text-muted tabular-nums">
+              <Plural
+                value={daysAllTime}
+                one={`${litAllTime} of # day`}
+                other={`${litAllTime} of # days`}
+              />
+            </span>
+          </div>
+          <MonthBars months={months} />
+        </section>
+      )}
+
+      {leeches.cards.length > 0 && (
+        <section className="edge mt-3 overflow-hidden rounded-xl bg-plate">
+          <div className="flex items-baseline justify-between gap-3 px-5 pt-5 pb-3">
+            <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
+              <Trans>Keeps slipping</Trans>
+            </h2>
+            <span className="text-xs text-muted">
+              <Trans>Forgotten {leeches.lapses}+ times</Trans>
+            </span>
+          </div>
+          <ul>
+            {leeches.cards.map((c) => (
+              <li
+                key={c.id}
+                className="flex items-center justify-between gap-4 border-t border-edge px-5 py-3"
+              >
+                <span className="min-w-0">
+                  <span className="font-medium text-text" lang={c.language ?? undefined}>
+                    {c.term}
+                  </span>
+                  {c.meaning && <span className="ms-2 text-sm text-muted">{c.meaning}</span>}
+                </span>
+                {/* Both numbers carry their unit: "7 of 12" alone leaves the reader to
+                    guess which is which, even under the heading. */}
+                <span className="shrink-0 text-right text-sm text-muted tabular-nums">
+                  <Trans>
+                    {c.lapses} forgotten <span className="text-muted/60">·</span>{" "}
+                    <Plural value={c.reviews} one="# review" other="# reviews" />
+                  </Trans>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {graded > 0 && graded < 30 && (
+        <p className="mt-5 px-1 text-sm text-muted">
+          <Plural
+            value={graded}
+            one="Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks."
+            other="Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks."
+          />
+        </p>
+      )}
+    </Page>
+  );
+}

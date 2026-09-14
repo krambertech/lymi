@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { GroupPage } from "../design/Pages";
+import { GroupPage } from "../design/pages";
 
 export const Route = createFileRoute("/design/components/$group")({
   component: function DesignGroup() {

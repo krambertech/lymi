@@ -7,8 +7,8 @@ import { useAddCard } from "../lib/add-card";
 import { api, type Card } from "../lib/api";
 import { cardHistoryQuery, deckCardsQuery, decksQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
-import { DeckDetailView } from "../views/DeckDetailView";
-import { describeEvent } from "../views/WordView";
+import { DeckDetailView } from "../views/deck-detail-view";
+import { describeEvent } from "../views/word-view";
 
 export const Route = createFileRoute("/library/$deckId")({
   // The open card lives in the URL, so the phone's back gesture closes it and a link from

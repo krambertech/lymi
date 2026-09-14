@@ -2,7 +2,7 @@ import { Pencil } from "lucide-react";
 import { describe, expect, inject, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import { IconButton } from "../Button";
+import { IconButton } from "../button";
 import { Dialog, DialogContent, DialogTitle } from "./dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 

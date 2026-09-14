@@ -43,6 +43,21 @@
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["apps/web/src/client/**", "!apps/web/src/client/routes/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": { "filenameCases": ["kebab-case"] }
+            }
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
       "quoteStyle": "double",

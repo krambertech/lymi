@@ -1,23 +1,23 @@
 import type { ComponentType } from "react";
-import { Brand } from "./Brand";
-import { Colour } from "./Colour";
-import { FlamePage } from "./Flame";
-import { LanternPage } from "./Lantern";
-import { Motion } from "./Motion";
-import { actions } from "./parts/Actions";
-import { charts, streak } from "./parts/Charts";
-import { feedback } from "./parts/Feedback";
-import { combobox, forms, select } from "./parts/Forms";
-import { labels } from "./parts/Labels";
-import { lists, table } from "./parts/Lists";
-import { navigation } from "./parts/Navigation";
-import { menu, overlays } from "./parts/Overlays";
+import { Brand } from "./brand";
+import { Colour } from "./colour";
+import { FlamePage } from "./flame";
+import { LanternPage } from "./lantern";
+import { Motion } from "./motion";
+import { actions } from "./parts/actions";
+import { charts, streak } from "./parts/charts";
+import { feedback } from "./parts/feedback";
+import { combobox, forms, select } from "./parts/forms";
+import { labels } from "./parts/labels";
+import { lists, table } from "./parts/lists";
+import { navigation } from "./parts/navigation";
+import { menu, overlays } from "./parts/overlays";
 import type { Group } from "./parts/types";
-import { SCREENS } from "./Screens";
-import { Space } from "./Space";
-import { StreakPage } from "./Streak";
-import { Typography } from "./Typography";
-import { Voice } from "./Voice";
+import { SCREENS } from "./screens";
+import { Space } from "./space";
+import { StreakPage } from "./streak";
+import { Typography } from "./typography";
+import { Voice } from "./voice";
 
 export { SCREENS };
 
@@ -30,15 +30,15 @@ export interface Foundation {
 }
 
 export const FOUNDATIONS: Foundation[] = [
-  { slug: "brand", title: "Brand", source: "design/Brand.tsx", Page: Brand },
-  { slug: "lantern", title: "Lantern", source: "design/Lantern.tsx", Page: LanternPage },
-  { slug: "flame", title: "Flame", source: "design/Flame.tsx", Page: FlamePage },
-  { slug: "streak", title: "Streak", source: "design/Streak.tsx", Page: StreakPage },
-  { slug: "colour", title: "Colour", source: "design/Colour.tsx", Page: Colour },
-  { slug: "typography", title: "Typography", source: "design/Typography.tsx", Page: Typography },
-  { slug: "space", title: "Space and shape", source: "design/Space.tsx", Page: Space },
-  { slug: "motion", title: "Motion", source: "design/Motion.tsx", Page: Motion },
-  { slug: "voice", title: "Voice", source: "design/Voice.tsx", Page: Voice },
+  { slug: "brand", title: "Brand", source: "design/brand.tsx", Page: Brand },
+  { slug: "lantern", title: "Lantern", source: "design/lantern.tsx", Page: LanternPage },
+  { slug: "flame", title: "Flame", source: "design/flame.tsx", Page: FlamePage },
+  { slug: "streak", title: "Streak", source: "design/streak.tsx", Page: StreakPage },
+  { slug: "colour", title: "Colour", source: "design/colour.tsx", Page: Colour },
+  { slug: "typography", title: "Typography", source: "design/typography.tsx", Page: Typography },
+  { slug: "space", title: "Space and shape", source: "design/space.tsx", Page: Space },
+  { slug: "motion", title: "Motion", source: "design/motion.tsx", Page: Motion },
+  { slug: "voice", title: "Voice", source: "design/voice.tsx", Page: Voice },
 ];
 
 export const GROUPS: Group[] = [

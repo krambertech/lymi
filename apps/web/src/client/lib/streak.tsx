@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { StreakButton, type StreakButtonProps, type StreakSummary } from "../components/Streak";
+import { StreakButton, type StreakButtonProps, type StreakSummary } from "../components/streak";
 import { api, type Settings } from "./api";
 import { settingsQuery, streakQuery } from "./queries";
 

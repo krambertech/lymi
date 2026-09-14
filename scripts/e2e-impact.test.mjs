@@ -16,10 +16,13 @@ test("requires E2E for production behavior and harness changes", () => {
 
 test("skips E2E for documentation, previews, and unit-test-only changes", () => {
   assert.equal(requiresE2E(["docs/proposals/shared-decks.md"]), false);
-  assert.equal(requiresE2E(["apps/web/src/client/design/Screens.tsx"]), false);
+  assert.equal(requiresE2E(["apps/web/src/client/design/screens.tsx"]), false);
   assert.equal(requiresE2E(["apps/web/src/server/services/cards.test.ts"]), false);
 });
 
 test("runs E2E when a PR mixes documentation with production code", () => {
-  assert.equal(requiresE2E(["README.md", "apps/web/src/client/components/AddCardSheet.tsx"]), true);
+  assert.equal(
+    requiresE2E(["README.md", "apps/web/src/client/components/add-card-sheet.tsx"]),
+    true,
+  );
 });

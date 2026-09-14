@@ -6,12 +6,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { safeProductReturnPath } from "../../shared/origins";
-import { identifyApp } from "../components/AppMark";
-import { Button } from "../components/Button";
+import { identifyApp } from "../components/app-mark";
+import { Button } from "../components/button";
 import { Input } from "../components/ui/input";
 import { authClient, followOAuthRedirect, signInWithGoogle } from "../lib/auth";
 import { clearPersistedLearnerState } from "../lib/persisted";
-import { LoginView } from "../views/LoginView";
+import { LoginView } from "../views/login-view";
 
 /**
  * When an MCP client's authorize request needs a sign-in, the OAuth provider redirects here

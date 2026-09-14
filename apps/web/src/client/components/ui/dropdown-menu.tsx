@@ -4,7 +4,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
-import { FluidHighlight } from "../FluidHighlight";
+import { FluidHighlight } from "../fluid-highlight";
 import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
 
 /*

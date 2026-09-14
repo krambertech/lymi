@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { Button } from "../../components/button";
+import { Volume2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Button, IconButton } from "../../components/button";
 import { EmptyState } from "../../components/empty-state";
+import { ErrorTip } from "../../components/error-tip";
 import { Progress } from "../../components/progress";
 import { Skeleton } from "../../components/skeleton";
 import {
@@ -73,6 +75,23 @@ export const feedback: Group = {
                   title="Couldn’t play the pronunciation. Try again in a moment."
                 />
               ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "error-tip",
+      name: "Error tip",
+      source: "components/error-tip.tsx",
+      note: "What went wrong, over the control it went wrong on, on the shadcn Base UI popover. It flips below when there is no room above, leaves after four seconds or at the next tap, key or scroll, and is announced once. Focus stays on the control.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Try it",
+              note: "The pronunciation button in review, after audio fails.",
+              render: () => <ErrorTipTrigger />,
             },
           ]}
         />
@@ -220,5 +239,29 @@ function ToastTriggers() {
         Four in a row
       </Button>
     </div>
+  );
+}
+
+function ErrorTipTrigger() {
+  const button = useRef<HTMLButtonElement>(null);
+  const [error, setError] = useState<string | null>(null);
+  return (
+    <span className="flex items-center gap-3 text-base">
+      Play the word
+      <IconButton
+        ref={button}
+        label="Play pronunciation"
+        size="sm"
+        variant={error ? "danger" : "secondary"}
+        round
+        onClick={() => {
+          setError(null);
+          window.setTimeout(() => setError("Couldn’t play the pronunciation. Try again."), 300);
+        }}
+      >
+        <Volume2 aria-hidden="true" />
+      </IconButton>
+      <ErrorTip anchor={button} message={error} />
+    </span>
   );
 }

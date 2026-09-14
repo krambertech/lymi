@@ -1,17 +1,18 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { buttonClass } from "../Button";
 import { Lockup } from "../Logo";
-import { homeHref, languagesHref } from "./pages";
+import { assistantsHref, homeHref, languagesHref } from "./pages";
 
 interface Props {
   openAppUrl: string;
-  current?: "languages" | undefined;
+  current?: "languages" | "assistants" | undefined;
 }
 
 /** The marketing pages' top bar. Docs and the use case pages collapse into the footer on a phone. */
 export function SiteNav({ openAppUrl, current }: Props) {
   const { t, i18n } = useLingui();
   const languages = languagesHref(i18n.locale);
+  const assistants = assistantsHref(i18n.locale);
 
   return (
     <nav
@@ -30,6 +31,17 @@ export function SiteNav({ openAppUrl, current }: Props) {
               className={buttonClass("ghost", "sm", "aria-[current=page]:text-text")}
             >
               <Trans>Language learning</Trans>
+            </a>
+          </span>
+        )}
+        {assistants && (
+          <span className="hidden @3xl:contents">
+            <a
+              href={assistants}
+              aria-current={current === "assistants" ? "page" : undefined}
+              className={buttonClass("ghost", "sm", "aria-[current=page]:text-text")}
+            >
+              <Trans>AI assistants</Trans>
             </a>
           </span>
         )}

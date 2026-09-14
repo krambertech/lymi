@@ -58,9 +58,18 @@ msgstr "4 дні"
 msgid "9 days"
 msgstr "9 днів"
 
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/AssistantsView.tsx
+msgid "A bad idea that seemed good"
+msgstr "Погана ідея, що здавалася доброю"
+
 #: src/components/landing/estonian-scenes.ts
 msgid "a bag"
 msgstr "пакет"
+
+#: src/components/landing/SendAnything.tsx
+msgid "A book"
+msgstr "Книжка"
 
 #: src/components/landing/hand-cards.ts
 msgid "A brilliant first round rarely repeats in the second."
@@ -94,6 +103,10 @@ msgstr "Фінське дієслово, шаховий термін, рядок
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "Гладка накладка на дверях підказує «штовхай», ручка — «тягни»."
 
+#: src/components/landing/SendAnything.tsx
+msgid "A lesson transcript"
+msgstr "Розшифровка уроку"
+
 #: src/components/landing/hand-cards.ts
 msgid "A longing for someone or something that is gone"
 msgstr "Туга за кимось або чимось, чого вже немає"
@@ -113,6 +126,14 @@ msgstr "Союз грибів і коренів рослин: вода в обм
 #: src/components/landing/LandingView.tsx
 msgid "A personal interest"
 msgstr "Захоплення"
+
+#: src/components/landing/AssistantHero.tsx
+msgid "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
+msgstr "Фото нотаток з уроку німецької надходить асистентові з проханням «Зроби з цього картки». Він використовує Lymi й додає чотири картки: das Mädchen, aufhören, Feierabend і Schnapsidee."
+
+#: src/components/landing/SendAnything.tsx
+msgid "A photo of the board, your tutor’s message, a lesson transcript, the book on your nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi."
+msgstr "Фото дошки, повідомлення репетитора, розшифровка уроку, книжка на тумбочці. Асистент вибере те, що варто запам’ятати, і додасть це в Lymi."
 
 #: src/components/landing/hero-words.ts
 msgid "A pile of unread books"
@@ -152,9 +173,17 @@ msgstr "Акценти, що припадають між основними до
 msgid "Actually; really"
 msgstr "Власне; насправді"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Add it to your assistant"
+msgstr "Додай її до свого асистента"
+
 #: src/components/landing/LandingView.tsx
 msgid "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
 msgstr "Додай термін з уроку. Lymi доповнить, чого бракує: значення, приклад, вимову й мову, — а твого тексту не торкнеться."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Added 4 cards to your German deck."
+msgstr "Додано 4 картки в колоду з німецької."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
@@ -186,6 +215,8 @@ msgid "AI"
 msgstr "AI"
 
 #: src/components/landing/ApiConnections.tsx
+#: src/components/landing/SiteFooter.tsx
+#: src/components/landing/SiteNav.tsx
 msgid "AI assistants"
 msgstr "AI-асистенти"
 
@@ -204,6 +235,14 @@ msgstr "нормально"
 #: src/components/landing/estonian-scenes.ts
 msgid "All right. Lots of work."
 msgstr "Нормально. Багато роботи."
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Allow"
+msgstr "Дозволити"
+
+#: src/components/landing/PracticeChat.tsx
+msgid "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
+msgstr "Майже! Правильно <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: після «dann» дієслово стоїть на другому місці."
 
 #: src/components/landing/NotesToCards.tsx
 msgid "Already in your deck, so it’s skipped"
@@ -247,11 +286,20 @@ msgstr "Будь-яка мова й будь-яке письмо, яке мож�
 msgid "Any move you make makes your position worse"
 msgstr "Будь-який хід погіршує твою позицію"
 
+#: src/components/landing/AssistantHero.tsx
+msgid "anything"
+msgstr "будь-чим"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
+msgstr "Усе, що пише асистент, позначено на картці як AI, тож ти можеш перевірити це й виправити в Lymi."
+
 #: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "Anyway; long story short"
 msgstr "Коротше; словом"
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LandingView.tsx
 msgid "API reference"
 msgstr "Довідник API"
@@ -299,6 +347,10 @@ msgstr "Біологія"
 #: src/components/landing/language-cards.ts
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Міст, 橋, — теж hashi. Розрізнити їх можна лише за висотою тону."
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Bring your assistant to Lymi."
+msgstr "Під’єднай свого асистента до Lymi."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Bring your favourite AI along."
@@ -373,6 +425,10 @@ msgstr "булочка з корицею"
 msgid "City; town"
 msgstr "Місто"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
+msgstr "Claude, Claude Code, ChatGPT, Codex і Gemini CLI. Підключитися можуть й інші застосунки з підтримкою MCP."
+
 #: src/components/landing/HandOfCards.tsx
 msgid "Click to turn it over"
 msgstr "Натисни, щоб перевернути"
@@ -405,6 +461,10 @@ msgstr "Підключити асистента"
 msgid "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Під’єднай Claude, ChatGPT або Gemini до Lymi один раз. Потім встав розшифровку уроку й попроси виписати нові слова, запитай, що чекає сьогодні, або наведи лад у колоді звичайними словами. Робиш щось своє? Усе це працює й через публічний API."
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Connect in three steps."
+msgstr "Підключи за три кроки."
+
 #: src/components/landing/ConversationScenes.tsx
 msgid "Conversation"
 msgstr "Розмова"
@@ -413,6 +473,18 @@ msgstr "Розмова"
 #: src/components/landing/hand-cards.ts
 msgid "Cooking"
 msgstr "Кулінарія"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Copied"
+msgstr "Скопійовано"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Copy Lymi’s address"
+msgstr "Скопіюй адресу Lymi"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Copy the address"
+msgstr "Скопіювати адресу"
 
 #: src/components/landing/hero-words.ts
 msgid "Cosy"
@@ -447,6 +519,14 @@ msgstr "Глибока, тривала прихильність"
 msgid "Design"
 msgstr "Дизайн"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Deutsch · noun"
+msgstr "Deutsch · іменник"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Deutsch · verb"
+msgstr "Deutsch · дієслово"
+
 #: src/components/landing/language-cards.ts
 msgid "Deutsch · word"
 msgstr "Deutsch · слово"
@@ -471,6 +551,10 @@ msgstr "Чи розрізняє Lymi õ, ä, ö і ü?"
 #: src/components/landing/LanguagesView.tsx
 msgid "Does it work on my phone?"
 msgstr "Чи працює Lymi на телефоні?"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Does Lymi see my chats?"
+msgstr "Чи бачить Lymi мої чати?"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Does the AI write my cards?"
@@ -573,6 +657,10 @@ msgstr "Естонська A2 · вівторки"
 msgid "euros"
 msgstr "євро"
 
+#: src/components/landing/SendAnything.tsx
+msgid "Even to my boss?"
+msgstr "Навіть начальнику?"
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
 msgstr "Кожна картка вимовляє своє слово його мовою. На звороті — рядок, що допомагає запам’ятати: хибний друг, рід, тон, що змінює значення."
@@ -645,11 +733,6 @@ msgstr "Не пам’ятаю"
 #: src/components/landing/language-cards.ts
 msgid "Français · phrase"
 msgstr "Français · фраза"
-
-#: src/components/landing/Hero.tsx
-#: src/components/landing/WordFieldHero.tsx
-msgid "Free during the private beta."
-msgstr "Участь у закритій беті безкоштовна."
 
 #: src/components/landing/language-cards.ts
 msgid "French"
@@ -788,6 +871,10 @@ msgstr "Наскільки ймовірні такі крайні дані, як
 msgid "How many are waiting for me tonight?"
 msgstr "Скільки карток чекає на мене сьогодні?"
 
+#: src/components/landing/AssistantHero.tsx
+msgid "How to connect"
+msgstr "Як підключити"
+
 #: src/components/landing/WhyItWorks.tsx
 msgid "How well-timed reviews change recall"
 msgstr "Як вчасні повторення допомагають пам’ятати"
@@ -812,6 +899,10 @@ msgstr "Я не розумію"
 #: src/components/landing/language-cards.ts
 msgid "I hope so; if only"
 msgstr "Сподіваюся; якби ж то"
+
+#: src/components/landing/SendAnything.tsx
+msgid "I miss it"
+msgstr "Мені цього бракує"
 
 #: src/components/landing/hand-cards.ts
 msgid "Ice, jää, plus edge, äär: four ä in a row."
@@ -1040,6 +1131,14 @@ msgstr "Без повторень"
 msgid "Lesson"
 msgstr "Урок"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Let Claude add cards?"
+msgstr "Дозволити Claude додавати картки?"
+
+#: src/components/landing/PracticeChat.tsx
+msgid "Let’s practise. Use the German words from my deck."
+msgstr "Попрактикуймося. Використовуй німецькі слова з моєї колоди."
+
 #: src/components/landing/hero-words.ts
 msgid "Lingering at the table after a meal"
 msgstr "Засидітися за столом після їжі"
@@ -1063,6 +1162,10 @@ msgstr "Дослівно — «це йде». Так кажуть офіціан
 #: src/components/landing/hero-words.ts
 msgid "Long time no see"
 msgstr "Давно не бачились"
+
+#: src/components/landing/SendAnything.tsx
+msgid "Longing"
+msgstr "Туга"
 
 #: src/components/landing/hero-words.ts
 msgid "Longing for what is gone"
@@ -1096,6 +1199,10 @@ msgstr "Lymi для вивчення мов · Бережи слова з кож
 msgid "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
 msgstr "У Lymi є публічний API, тож застосунки й інструменти, якими ти вже користуєшся, можуть працювати з твоїми картками. Додай слово через швидку команду на телефоні, перенеси урок із таблиці або покажи на своєму сайті, що пора повторити."
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
+msgstr "У Lymi є публічний API. Додай слово через швидку команду на телефоні, перенеси список із таблиці або покажи на своєму сайті, що пора повторити."
+
 #: src/components/AuthFrame.tsx
 #: src/components/landing/SiteNav.tsx
 msgid "Lymi home"
@@ -1105,10 +1212,6 @@ msgstr "Головна сторінка Lymi"
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Поки що в Lymi можна потрапити лише за запрошенням. Залиш електронну адресу — ми напишемо, коли з’явиться місце."
 
-#: src/components/landing/SiteFooter.tsx
-msgid "Lymi is provided by Krambertech OÜ."
-msgstr "Сервіс Lymi надає Krambertech OÜ."
-
 #: src/components/landing/hand-cards.ts
 msgid "Lymi schedules every card around it."
 msgstr "Саме на цьому принципі Lymi будує розклад повторень."
@@ -1117,6 +1220,14 @@ msgstr "Саме на цьому принципі Lymi будує розклад
 msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
 msgstr "Lymi планує повторення за FSRS — цей алгоритм є і в Anki, тож ритм буде знайомим. Змінюється все довкола: картку можна додати за кілька секунд, а асистент додасть цілий урок. Імпорту з Anki поки немає."
 
+#: src/components/landing/AssistantMarks.tsx
+msgid "Lymi with AI assistants"
+msgstr "Lymi з AI-асистентами"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
+msgstr "Власний AI Lymi доповнить картку значенням, прикладом і вимовою. Написане ним позначено, а твій текст він ніколи не перезаписує."
+
 #: src/components/landing/SiteNav.tsx
 msgid "Main navigation"
 msgstr "Основна навігація"
@@ -1124,6 +1235,22 @@ msgstr "Основна навігація"
 #: src/components/landing/LanguagesView.tsx
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Створи колоду для групи й надішли посилання для приєднання. Кожна картка, яку ти додаси після уроку, з’явиться в усіх, хто приєднався, а розклад повторень у кожного свій."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Make cards from this."
+msgstr "Зроби з цього картки."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Make cards with"
+msgstr "Створюй картки з"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Make cards with Claude, ChatGPT or Gemini · Lymi"
+msgstr "Створюй картки з Claude, ChatGPT чи Gemini · Lymi"
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
+msgstr "Створюй картки з Claude, ChatGPT, Gemini, Codex чи будь-чим"
 
 #: src/components/landing/language-cards.ts
 msgid "may I…?"
@@ -1195,6 +1322,10 @@ msgstr "Наступна картка: {0}"
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приємно познайомитися; наперед дякую"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "No chat? Type the word."
+msgstr "Без чату? Введи слово."
+
 #: src/components/landing/estonian-scenes.ts
 msgid "No, I don’t."
 msgstr "Ні, немає."
@@ -1202,6 +1333,10 @@ msgstr "Ні, немає."
 #: src/components/landing/estonian-scenes.ts
 msgid "no; not"
 msgstr "ні; не"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "No. Lymi only gets what your assistant sends it, like the cards it adds. The rest of the conversation stays with your assistant."
+msgstr "Ні. Lymi отримує лише те, що надсилає асистент, наприклад картки, які він додає. Решта розмови залишається в асистента."
 
 #: src/components/landing/language-cards.ts
 msgid "Not “I want well”. It’s how you accept a coffee."
@@ -1211,11 +1346,14 @@ msgstr "Дослівно «хочу добре», а означає «так, з
 msgid "Notes"
 msgstr "Нотатки"
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LanguagesView.tsx
 msgid "Nothing during the private beta."
 msgstr "Під час закритої бети — нічого."
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "noun"
 msgstr "іменник"
 
@@ -1248,6 +1386,10 @@ msgstr "Відкрити Lymi"
 msgid "or"
 msgstr "чи"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Or build your own."
+msgstr "Або зроби щось своє."
+
 #: src/components/landing/estonian-scenes.ts
 msgid "Ordering a coffee to go"
 msgstr "Кава з собою"
@@ -1269,6 +1411,7 @@ msgid "Philosophy"
 msgstr "Філософія"
 
 #: src/components/landing/hand-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "phrase"
 msgstr "фраза"
 
@@ -1276,6 +1419,15 @@ msgstr "фраза"
 #: src/components/landing/hand-cards.ts
 msgid "Physics"
 msgstr "Фізика"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Pick your assistant for its steps."
+msgstr "Обери свого асистента, щоб побачити інструкцію."
+
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/PracticeChat.tsx
+msgid "Play again"
+msgstr "Ще раз"
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Play pronunciation"
@@ -1306,6 +1458,10 @@ msgstr "Будь ласка; ось, тримай; нема за що"
 msgid "Plug Lymi into anything."
 msgstr "Підключай Lymi до чого завгодно."
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Practise with your own words."
+msgstr "Практикуйся зі своїми словами."
+
 #: src/components/landing/hand-cards.ts
 msgid "Prefer the explanation that needs the fewest assumptions"
 msgstr "Віддавай перевагу поясненню з найменшою кількістю припущень"
@@ -1335,6 +1491,10 @@ msgstr "громадський транспорт"
 msgid "Public transport"
 msgstr "Громадський транспорт"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Questions before you connect."
+msgstr "Питання перед підключенням."
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Questions before you start."
 msgstr "Що варто знати на початку."
@@ -1347,6 +1507,10 @@ msgstr "Мати добре нунчі — відчувати настрій, п
 msgid "Raise a glass and it becomes terviseks: to your health."
 msgstr "Підніми келих — і кажуть terviseks: за здоров’я."
 
+#: src/components/landing/PracticeChat.tsx
+msgid "Read your German deck"
+msgstr "Прочитано колоду з німецької"
+
 #: src/components/landing/NotesToCards.tsx
 msgid "Reading your notes…"
 msgstr "Читаємо нотатки…"
@@ -1355,6 +1519,10 @@ msgstr "Читаємо нотатки…"
 #: src/components/landing/LanguagesView.tsx
 msgid "Recall first. Reveal second."
 msgstr "Спочатку згадай. Потім перевір."
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Recall the word before you look, then say how well you knew it. Hard cards come back sooner, easy ones wait."
+msgstr "Згадай слово, перш ніж дивитися, а потім оціни, наскільки добре ти його пам’ятаєш. Складні картки повертаються раніше, легкі чекають."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Remember Estonian vocabulary · Lymi"
@@ -1370,6 +1538,7 @@ msgstr "Послухати ще раз"
 
 #: src/components/BetaSignup.tsx
 #: src/components/JoinView.tsx
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/Hero.tsx
 #: src/components/landing/SiteNav.tsx
 #: src/components/landing/WordFieldHero.tsx
@@ -1448,6 +1617,10 @@ msgstr "Додавай у Lymi слова, терміни й ідеї з уро�
 msgid "Say it"
 msgstr "Вимова"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Say yes in Lymi"
+msgstr "Дай згоду в Lymi"
+
 #: src/components/landing/estonian-scenes.ts
 msgid "Saying hello"
 msgstr "Привітання"
@@ -1456,6 +1629,7 @@ msgstr "Привітання"
 msgid "Schnaps, spirits, plus Idee, idea."
 msgstr "Schnaps — горілка, Idee — ідея."
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LandingView.tsx
 msgid "See how it works"
 msgstr "Як це працює"
@@ -1467,6 +1641,18 @@ msgstr "До зустрічі"
 #: src/components/landing/estonian-scenes.ts
 msgid "see you; literally, we see"
 msgstr "побачимось; дослівно — «бачимо»"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Send Claude, ChatGPT or Gemini a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
+msgstr "Надішли Claude, ChatGPT чи Gemini фото нотаток. Картки з’являться в Lymi, і Lymi поверне кожну якраз перед тим, як ти її забудеш."
+
+#: src/components/landing/SendAnything.tsx
+msgid "Send it anything."
+msgstr "Надсилай асистентові що завгодно."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
+msgstr "Надішли асистентові фото нотаток. Він додасть картки в Lymi, а Lymi поверне кожну якраз перед тим, як ти її забудеш."
 
 #: src/components/landing/AssistantChat.tsx
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
@@ -1491,6 +1677,10 @@ msgstr "пам’ятка (варто побачити)"
 #: src/components/JoinView.tsx
 msgid "Sign in"
 msgstr "Увійти"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Sign in and let it add cards. Then send it your notes."
+msgstr "Увійди й дозволь асистентові додавати картки. Потім надішли йому нотатки."
 
 #: src/components/landing/cards.ts
 msgid "Signals"
@@ -1671,6 +1861,7 @@ msgstr "Дякую"
 
 #: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Thanks for your hard work"
 msgstr "Дякую за роботу"
 
@@ -1723,10 +1914,17 @@ msgstr "Запах дощу, що впав на суху землю"
 msgid "The edge of the ice"
 msgstr "Край криги"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hero-words.ts
 msgid "The evening after work"
 msgstr "Вечір після роботи"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "The free evening after work"
+msgstr "Вільний вечір після роботи"
+
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/language-cards.ts
 msgid "The girl"
 msgstr "Дівчинка"
@@ -1773,6 +1971,10 @@ msgstr "Головне — повторити вчасно."
 msgid "The right to be brought before a judge rather than held without charge"
 msgstr "Право постати перед суддею, а не залишатися під вартою без обвинувачення"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "The same address works everywhere. Nothing to install."
+msgstr "Одна адреса працює скрізь. Нічого не треба встановлювати."
+
 #: src/components/landing/language-cards.ts
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одне слово і для коханої людини, і для ціни, яку не хочеться платити."
@@ -1781,9 +1983,21 @@ msgstr "Одне слово і для коханої людини, і для ц�
 msgid "The steam in a sauna"
 msgstr "Пара в сауні"
 
+#: src/components/landing/SendAnything.tsx
+msgid "The whiteboard"
+msgstr "Дошка"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Then review them in Lymi."
+msgstr "Потім повторюй їх у Lymi."
+
 #: src/components/landing/LandingView.tsx
 msgid "Things worth keeping from books, hobbies, and everyday curiosity."
 msgstr "Цікаве з книжок, захоплень і щоденних відкриттів."
+
+#: src/components/landing/SendAnything.tsx
+msgid "To agree"
+msgstr "Погоджуватися"
 
 #: src/components/landing/cards.ts
 msgid "To belong; to be heard"
@@ -1842,6 +2056,8 @@ msgstr "Ліньки; не хочеться нічого робити"
 msgid "To pull"
 msgstr "Тягнути"
 
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "To stop"
@@ -1892,6 +2108,14 @@ msgstr "Не вдалося надіслати заявку. Перевір ін
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершені справи тримаються в пам’яті краще за завершені"
 
+#: src/components/landing/AssistantHero.tsx
+msgid "Used Lymi"
+msgstr "Використано Lymi"
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Using Lymi"
+msgstr "Використовує Lymi"
+
 #: src/components/landing/language-cards.ts
 msgid "usually"
 msgstr "зазвичай"
@@ -1900,6 +2124,7 @@ msgstr "зазвичай"
 msgid "Usually"
 msgstr "Зазвичай"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
 msgid "verb"
 msgstr "дієслово"
@@ -1932,6 +2157,7 @@ msgstr "що"
 msgid "What an object’s shape tells you to do with it"
 msgstr "Як форма предмета підказує, що з ним робити"
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LanguagesView.tsx
 msgid "What does it cost?"
 msgstr "Скільки це коштує?"
@@ -1940,6 +2166,10 @@ msgstr "Скільки це коштує?"
 msgid "What if I already use Anki?"
 msgstr "А якщо я вже користуюся Anki?"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "What if it gets something wrong?"
+msgstr "А якщо він помилиться?"
+
 #: src/components/landing/hand-cards.ts
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Коли показник стає метою, він перестає бути добрим показником"
@@ -1947,6 +2177,10 @@ msgstr "Коли показник стає метою, він перестає �
 #: src/components/landing/LandingView.tsx
 msgid "When a term comes up while you’re talking with an assistant, ask it to add the card. Keep talking; the card will be waiting in Lymi."
 msgstr "Трапився новий термін у розмові з асистентом? Попроси додати картку й продовжуй розмову. Картка вже буде в Lymi."
+
+#: src/components/landing/SendAnything.tsx
+msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
+msgstr "Коли колеги йдуть із роботи, їм кажуть <0><1>お疲れ様です</1></0>."
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "When recall goes well, the next review can wait longer. In 2013, <0>Dunlosky and colleagues rated practice testing and distributed practice as highly effective techniques</0>."
@@ -1963,6 +2197,10 @@ msgstr "Де можуть з’являтися картки"
 #: src/components/landing/ApiConnections.tsx
 msgid "Where cards come from"
 msgstr "Звідки надходять картки"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Which assistants work?"
+msgstr "Які асистенти підтримуються?"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Which languages can I learn?"
@@ -1987,6 +2225,10 @@ msgstr "слово"
 #: src/components/landing/LandingView.tsx
 msgid "Words and phrases from lessons, conversations, and reading."
 msgstr "Слова й фрази з уроків, розмов і прочитаного."
+
+#: src/components/landing/PracticeChat.tsx
+msgid "Words from your deck"
+msgstr "Слова з твоєї колоди"
 
 #: src/components/landing/estonian-scenes.ts
 msgid "work"
@@ -2024,6 +2266,10 @@ msgstr "Так, будь ласка"
 msgid "Yes, please; I’d be glad to"
 msgstr "Так, будь ласка; залюбки"
 
+#: src/components/landing/SendAnything.tsx
+msgid "Yes, to everyone."
+msgstr "Так, усім."
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 msgstr "Так. Кожна літера лишається такою, як ти її ввів, тож tuli, вогонь, і tüli, сварка, — дві різні картки."
@@ -2044,6 +2290,10 @@ msgstr "Так. Хто робить картки, ділиться посила�
 msgid "you"
 msgstr "ти"
 
+#: src/components/landing/SendAnything.tsx
+msgid "You"
+msgstr "Ти"
+
 #: src/components/landing/hero-words.ts
 msgid "You can do it!"
 msgstr "У тебе вийде!"
@@ -2052,9 +2302,17 @@ msgstr "У тебе вийде!"
 msgid "you have (with “on”)"
 msgstr "у вас (разом з «on» — «у вас є»)"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
+msgstr "Асистент може читати твої колоди. Попроси його про розмову зі словами, які ти вчиш, і він виправлятиме тебе по ходу."
+
 #: src/components/landing/ApiConnections.tsx
 msgid "Your own app"
 msgstr "Власний застосунок"
+
+#: src/components/landing/SendAnything.tsx
+msgid "Your tutor’s message"
+msgstr "Повідомлення репетитора"
 
 #: src/components/landing/cards.ts
 msgid "日本語 · noun"

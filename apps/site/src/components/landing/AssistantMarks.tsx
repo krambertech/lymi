@@ -1,7 +1,9 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { ArrowRight } from "lucide-react";
 import { useId } from "react";
+import { assistantsHref } from "./pages";
 
 type Gradient = {
   from: [x: number, y: number];
@@ -136,6 +138,12 @@ function Mark({ assistant }: { assistant: Assistant }) {
   );
 }
 
+/** One assistant's mark on its own, by name. */
+export function AssistantMark({ name }: { name: string }) {
+  const assistant = ASSISTANTS.find((a) => a.name === name);
+  return assistant ? <Mark assistant={assistant} /> : null;
+}
+
 /** The assistants a visitor can connect from, each opening its setup guide. */
 export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
   const { t, i18n } = useLingui();
@@ -174,5 +182,25 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/** The marks, then a link to the assistants page where the page's locale has one. */
+export function AssistantMarksWithMore() {
+  const { i18n } = useLingui();
+  const more = assistantsHref(i18n.locale);
+  return (
+    <>
+      <AssistantMarks />
+      {more && (
+        <a
+          href={more}
+          className="mt-5 inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
+        >
+          <Trans>Lymi with AI assistants</Trans>
+          <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+        </a>
+      )}
+    </>
   );
 }

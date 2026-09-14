@@ -1,0 +1,32 @@
+---
+import AssistantsPage from "../components/islands/AssistantsPage";
+import { ASSISTANTS_BLURB, ASSISTANTS_TITLE } from "../components/landing/AssistantsView";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { pageI18n } from "../lib/i18n";
+
+const i18n = pageI18n("en");
+const title = i18n._(ASSISTANTS_TITLE);
+const description = i18n._(ASSISTANTS_BLURB);
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Lymi",
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  description,
+  url: "https://lymi.app/ai-assistants",
+  inLanguage: "en",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/ai-assistants">
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
+  />
+  <AssistantsPage client:load />
+</BaseLayout>

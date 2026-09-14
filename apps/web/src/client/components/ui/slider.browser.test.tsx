@@ -35,6 +35,19 @@ test("is a named slider that the arrow keys move in steps", async () => {
   await expect.element(slider).toHaveValue("3");
 });
 
+test("Page Up and Shift with an arrow move a tenth of the range", async () => {
+  await render(
+    <Slider min={1} max={3} step={0.01} defaultValue={1} aria-label="Zoom" className="w-64" />,
+  );
+  const slider = page.getByRole("slider", { name: "Zoom" });
+  (slider.element() as HTMLElement).focus();
+
+  await userEvent.keyboard("{PageUp}");
+  await expect.element(slider).toHaveValue("1.2");
+  await userEvent.keyboard("{Shift>}{ArrowRight}{/Shift}");
+  await expect.element(slider).toHaveValue("1.4");
+});
+
 test("a press on the track moves the thumb there", async () => {
   await render(<Zoom />);
   const track = document.querySelector<HTMLElement>('[data-slot="slider-track"]');

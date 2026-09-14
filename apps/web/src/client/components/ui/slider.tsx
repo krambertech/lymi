@@ -9,6 +9,8 @@ function Slider<Value extends number | readonly number[]>({
   value,
   min = 0,
   max = 100,
+  // Base UI's default of 10 is in value units, which crosses a 1 to 3 zoom in one Page Up.
+  largeStep = (max - min) / 10,
   "aria-label": label,
   ...props
 }: SliderPrimitive.Root.Props<Value>) {
@@ -26,6 +28,7 @@ function Slider<Value extends number | readonly number[]>({
       value={value}
       min={min}
       max={max}
+      largeStep={largeStep}
       thumbAlignment="edge"
       {...props}
     >
@@ -50,7 +53,7 @@ function Slider<Value extends number | readonly number[]>({
             key={index}
             aria-label={label}
             className={cn(
-              "edge-2 relative block size-5 shrink-0 rounded-full bg-plate shadow-sm select-none transition-[scale,box-shadow] duration-150 ease-(--ease-out)",
+              "edge-2 relative block size-5 shrink-0 rounded-full bg-plate select-none transition-[scale] duration-150 ease-(--ease-out)",
               // A 44 px target around a 20 px thumb.
               "after:absolute after:-inset-3 after:content-['']",
               "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring",

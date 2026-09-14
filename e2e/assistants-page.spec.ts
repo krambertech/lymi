@@ -38,7 +38,7 @@ test("someone with an AI assistant can reach the assistants page and see how to 
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Карточки через Claude, ChatGPT, Gemini, Codex или что угодно",
+        name: "Создавай карточки с Claude, ChatGPT, Gemini, Codex или своим кодом",
       }),
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(

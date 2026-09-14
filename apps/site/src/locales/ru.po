@@ -288,7 +288,7 @@ msgstr "Любой ход ухудшает твою позицию"
 
 #: src/components/landing/AssistantHero.tsx
 msgid "anything"
-msgstr "что угодно"
+msgstr "своим кодом"
 
 #: src/components/landing/AssistantsView.tsx
 msgid "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
@@ -1247,15 +1247,15 @@ msgstr "Сделай из этого карточки."
 
 #: src/components/landing/AssistantHero.tsx
 msgid "Make cards with"
-msgstr "Карточки через"
+msgstr "Создавай карточки с"
 
 #: src/components/landing/AssistantsView.tsx
 msgid "Make cards with Claude, ChatGPT or Gemini · Lymi"
-msgstr "Карточки со словами через Claude, ChatGPT или Gemini · Lymi"
+msgstr "Создавай карточки с Claude, ChatGPT или Gemini · Lymi"
 
 #: src/components/landing/AssistantHero.tsx
 msgid "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
-msgstr "Карточки через Claude, ChatGPT, Gemini, Codex или что угодно"
+msgstr "Создавай карточки с Claude, ChatGPT, Gemini, Codex или своим кодом"
 
 #: src/components/landing/language-cards.ts
 msgid "may I…?"
@@ -1461,7 +1461,7 @@ msgstr "Подключай Lymi к чему угодно."
 
 #: src/components/landing/AssistantsView.tsx
 msgid "Practise with your own words."
-msgstr "Практикуйся на своих словах."
+msgstr "Практикуйся со словами, которые учишь."
 
 #: src/components/landing/hand-cards.ts
 msgid "Prefer the explanation that needs the fewest assumptions"

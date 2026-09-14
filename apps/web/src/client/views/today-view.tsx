@@ -91,7 +91,10 @@ export function TodayView({
       <div className="grid gap-8 @3xl:gap-10">
         <section
           aria-label={t`Today`}
-          className={clsx("grid gap-3", !nothingYet && "@3xl:grid-cols-[1.55fr_1fr] @3xl:gap-4")}
+          className={clsx(
+            "grid grid-cols-1 gap-3",
+            !nothingYet && "@3xl:grid-cols-[1.55fr_1fr] @3xl:gap-4",
+          )}
         >
           {loading ? (
             <>

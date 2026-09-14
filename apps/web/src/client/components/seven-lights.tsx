@@ -119,7 +119,12 @@ export function SevenLights({
   return (
     // A span, so the lights can sit inside a button such as the streak card.
     <span
-      className={clsx("inline-flex items-end", large ? "gap-2.5" : "gap-2", className)}
+      className={clsx(
+        "inline-flex items-end",
+        // At most its natural 284px, never spread wider; on a narrow phone the gaps close before the glasses shrink.
+        large ? "w-full max-w-71 justify-between gap-1.5 @sm:gap-2.5" : "gap-2",
+        className,
+      )}
       role="img"
       aria-label={description}
     >
@@ -131,7 +136,7 @@ export function SevenLights({
           <span
             key={day}
             className={clsx(
-              "grid justify-items-center",
+              "flex min-w-0 flex-col items-center",
               large ? "gap-2" : "gap-1.5",
               sequence !== undefined && "light-on",
             )}
@@ -145,10 +150,10 @@ export function SevenLights({
             {/* The glass is always drawn; the light inside it rises with the day. */}
             <i
               className={clsx(
-                "relative block overflow-hidden edge-inset bg-plate-2",
+                "relative block max-w-full overflow-hidden edge-inset bg-plate-2",
                 large
-                  ? "h-11 w-8 rounded-[6px_6px_8px_8px]"
-                  : "h-[18px] w-[13px] rounded-[4px_4px_5px_5px]",
+                  ? "aspect-[8/11] w-8 rounded-[6px_6px_8px_8px]"
+                  : "aspect-[13/18] w-[13px] rounded-[4px_4px_5px_5px]",
                 isToday && l === 0 && "edge-2",
                 isToday && flare && l === 3 && "light-flare",
               )}

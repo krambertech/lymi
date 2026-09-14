@@ -191,7 +191,6 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
         goals={week.goals}
         dates={week.dates}
         size="lg"
-        className="w-full justify-between"
       />
     </>
   );
@@ -449,7 +448,8 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
   const label = t`Streak: ${plural(summary.current, { one: "# day in a row", other: "# days in a row" })}`;
   const face = card
     ? clsx(
-        "edge grid w-full content-between gap-4 rounded-xl bg-plate p-5 text-start text-text transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover",
+        // A wide single-column card puts the week beside the run; the desktop column stacks them again.
+        "edge grid w-full grid-cols-1 content-between @xl:grid-cols-[minmax(0,1fr)_auto] @xl:items-center @xl:gap-x-6 @3xl:grid-cols-none @3xl:items-stretch gap-4 rounded-xl bg-plate p-5 text-start text-text transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover",
         className,
       )
     : clsx(

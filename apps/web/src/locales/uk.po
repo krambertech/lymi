@@ -284,13 +284,6 @@ msgstr "{label}: {lit} з {days, plural, one {# дня} few {# днів} many {#
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: поки що {lit} з {days, plural, one {# дня} few {# днів} many {# днів} other {# дня}}"
 
-#. placeholder {0}: summary.today.goal
-#. placeholder {1}: summary.today.attempts
-#. placeholder {2}: summary.today.attempts
-#: src/client/components/Streak.tsx
-msgid "{label}. Today: {0, plural, one {{1} of # review} other {{2} of # reviews}}"
-msgstr "{label}. Сьогодні: {0, plural, one {{1} з # повторення} few {{2} з # повторень} many {{2} з # повторень} other {{2} з # повторення}}"
-
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Нові люди не можуть приєднатися. Людина, яка вже приєдналася, далі вивчає колоду.} few {Нові люди не можуть приєднатися. # людини, які вже приєдналися, далі вивчають колоду.} many {Нові люди не можуть приєднатися. # людей, які вже приєдналися, далі вивчають колоду.} other {Нові люди не можуть приєднатися. # людини, які вже приєдналися, далі вивчають колоду.}}"
@@ -867,10 +860,6 @@ msgstr "Своя"
 #: src/client/components/Streak.tsx
 msgid "Daily goal"
 msgstr "Денна мета"
-
-#: src/client/components/Streak.tsx
-msgid "Daily goal reached"
-msgstr "Денну мету досягнуто"
 
 #: src/client/components/Streak.tsx
 msgid "Daily goal reached."

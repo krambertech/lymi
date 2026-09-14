@@ -284,13 +284,6 @@ msgstr "{label}: {lit} из {days, plural, one {# дня} few {# дней} many 
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: пока {lit} из {days, plural, one {# дня} few {# дней} many {# дней} other {# дня}}"
 
-#. placeholder {0}: summary.today.goal
-#. placeholder {1}: summary.today.attempts
-#. placeholder {2}: summary.today.attempts
-#: src/client/components/Streak.tsx
-msgid "{label}. Today: {0, plural, one {{1} of # review} other {{2} of # reviews}}"
-msgstr "{label}. Сегодня: {0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
-
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Новые люди не могут присоединиться. Человек, который уже присоединился, продолжает изучать колоду.} few {Новые люди не могут присоединиться. # человека, которые уже присоединились, продолжают изучать колоду.} many {Новые люди не могут присоединиться. # человек, которые уже присоединились, продолжают изучать колоду.} other {Новые люди не могут присоединиться. # человека, которые уже присоединились, продолжают изучать колоду.}}"
@@ -867,10 +860,6 @@ msgstr "Своя"
 #: src/client/components/Streak.tsx
 msgid "Daily goal"
 msgstr "Дневная цель"
-
-#: src/client/components/Streak.tsx
-msgid "Daily goal reached"
-msgstr "Дневная цель достигнута"
 
 #: src/client/components/Streak.tsx
 msgid "Daily goal reached."

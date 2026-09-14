@@ -168,11 +168,10 @@ function GoalTrack({
   );
 }
 
-/** The run, the week's lights and today against the goal: the streak card on Today. */
+/** The run and the week's lights: the streak card on Today. Today's own light shows its progress. */
 function CardFace({ summary }: { summary: StreakSummary }) {
-  const { t } = useLingui();
   const flame = streakFlameFor(summary);
-  const { current, today } = summary;
+  const { current } = summary;
   const week = lastDays(summary);
   return (
     <>
@@ -191,19 +190,6 @@ function CardFace({ summary }: { summary: StreakSummary }) {
         size="lg"
         className="w-full justify-between"
       />
-      <span className="grid gap-2">
-        <span className="flex items-baseline justify-between gap-3 text-sm text-text-2 tabular-nums">
-          <span>{satisfied(today.outcome) ? t`Daily goal reached` : t`Today`}</span>
-          <span className="font-medium text-text">
-            <Plural
-              value={today.goal}
-              one={`${today.attempts} of # review`}
-              other={`${today.attempts} of # reviews`}
-            />
-          </span>
-        </span>
-        <GoalTrack today={today} />
-      </span>
     </>
   );
 }
@@ -456,14 +442,7 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
     <>
       <button
         type="button"
-        aria-label={
-          card
-            ? t`${label}. Today: ${plural(summary.today.goal, {
-                one: `${summary.today.attempts} of # review`,
-                other: `${summary.today.attempts} of # reviews`,
-              })}`
-            : label
-        }
+        aria-label={label}
         aria-haspopup="dialog"
         onClick={() => {
           setOpened((n) => n + 1);

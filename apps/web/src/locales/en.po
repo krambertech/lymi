@@ -248,13 +248,6 @@ msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 
-#. placeholder {0}: summary.today.goal
-#. placeholder {1}: summary.today.attempts
-#. placeholder {2}: summary.today.attempts
-#: src/client/components/Streak.tsx
-msgid "{label}. Today: {0, plural, one {{1} of # review} other {{2} of # reviews}}"
-msgstr "{label}. Today: {0, plural, one {{1} of # review} other {{2} of # reviews}}"
-
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
@@ -831,10 +824,6 @@ msgstr "Custom"
 #: src/client/components/Streak.tsx
 msgid "Daily goal"
 msgstr "Daily goal"
-
-#: src/client/components/Streak.tsx
-msgid "Daily goal reached"
-msgstr "Daily goal reached"
 
 #: src/client/components/Streak.tsx
 msgid "Daily goal reached."

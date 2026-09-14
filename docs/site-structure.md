@@ -10,6 +10,7 @@ Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-sit
 | `lymi.app/languages` | `apps/site` | Prerendered page for anyone learning a language, built from the landing sections with examples across many languages. |
 | `lymi.app/languages/estonian` | `apps/site` | Prerendered page for people learning Estonian, with Estonian cards, notes, conversations and class deck. |
 | `lymi.app/ai-assistants` | `apps/site` | Prerendered page for people who already use an AI assistant: a conversation that turns a photo of notes into cards, what else to send, a review, conversation practice, enrichment, the API and how to connect. |
+| `lymi.app/teachers` | `apps/site` | Prerendered page for tutors and small classes: a class deck, sections that open in order, filling a deck with an assistant, the join link and the deck library. Sections and the library are a painted-door test ahead of #101, #102 and the library plan, disclosed in the join section; signups record the source `teachers`. |
 | `lymi.app/join` | `apps/site` | Public private-beta information and invitation request. |
 | `lymi.app/uk/*`, `lymi.app/ru/*` | `apps/site` | Ukrainian and Russian editions of every public page except privacy, terms, support and documentation. |
 | `lymi.app/privacy`, `/terms`, `/support` | `apps/site` | Public privacy, service terms and support information. |

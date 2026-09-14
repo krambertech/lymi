@@ -8,7 +8,6 @@ import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { AssistantMark } from "./AssistantMarks";
 import { appear, EASE, usePlayback } from "./playback";
-import { ReplayButton } from "./ReplayButton";
 
 const WORD_MS = 2200;
 
@@ -84,7 +83,7 @@ const MADE: Made[] = [
   { label: msg`Deutsch · noun`, term: "Schnapsidee", meaning: msg`A bad idea that seemed good` },
 ];
 
-/** When each beat of the conversation lands, in ms. It plays once; Play again replays it. */
+/** When each beat of the conversation lands, in ms. It plays once. */
 const BEATS = { photo: 250, ask: 850, calling: 1700, called: 3100, reply: 3500, cards: 4000 };
 /** A photo of lesson notes goes to an assistant, it uses Lymi, and the cards land. */
 function Conversation() {
@@ -92,7 +91,7 @@ function Conversation() {
   const still = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.35 });
-  const { at, done, replay } = usePlayback(BEATS, inView, still);
+  const { at } = usePlayback(BEATS, inView, still);
   const move = { duration: still ? 0 : 0.5, ease: EASE };
 
   return (
@@ -183,8 +182,6 @@ function Conversation() {
           ))}
         </ul>
       </div>
-
-      <ReplayButton shown={done && !still} onReplay={replay} className="self-end" />
     </div>
   );
 }

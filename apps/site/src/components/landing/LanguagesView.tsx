@@ -3,10 +3,11 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import type { BetaSource } from "../../lib/api";
 import { productUrl } from "../../lib/origins";
-import type { LocalizedPage } from "../../lib/routes";
+import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
 import { AssistantMarks, AssistantMarksWithMore } from "./AssistantMarks";
 import { ConversationScenes } from "./ConversationScenes";
@@ -97,6 +98,20 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
   );
 }
 
+/** Leads a teacher reading about class decks to the page written for them. */
+function TeachersLink() {
+  const { i18n } = useLingui();
+  return (
+    <a
+      href={localizedPath("teachers", i18n.locale)}
+      className="inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
+    >
+      <Trans>Lymi for teachers</Trans>
+      <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+    </a>
+  );
+}
+
 /** The stack of cards, with a switch between every language and one when the page covers several. */
 function HandSection({
   body,
@@ -184,6 +199,7 @@ function LanguagePage(props: PageProps) {
         <FeatureSection
           demoFirst
           title={<Trans>Share one deck with your class.</Trans>}
+          after={<TeachersLink />}
           body={
             <Trans>
               Make a deck for the class and send its join link. Every card you add after a lesson
@@ -395,6 +411,7 @@ export function EstonianView() {
         <FeatureSection
           demoFirst
           title={<Trans>Share one deck with your class.</Trans>}
+          after={<TeachersLink />}
           body={
             <Trans>
               Make a deck for the class and send its join link. Every card you add after a lesson

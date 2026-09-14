@@ -23,6 +23,11 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     label: msg`AI assistants`,
     blurb: msg`Send your notes to Claude, ChatGPT or Gemini and get cards.`,
   },
+  {
+    page: "teachers",
+    label: msg`Teachers`,
+    blurb: msg`Build a course in sections and share it with your class.`,
+  },
 ];
 
 export const MENU_USE_CASE_LINKS = USE_CASE_LINKS.filter((link) => !link.footerOnly);

@@ -5,6 +5,7 @@ export const localizedPages = {
   languages: "/languages",
   estonian: "/languages/estonian",
   assistants: "/ai-assistants",
+  teachers: "/teachers",
 } as const;
 export type LocalizedPage = keyof typeof localizedPages;
 

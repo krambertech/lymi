@@ -4,7 +4,6 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useRef } from "react";
 import { Lantern } from "../Lantern";
 import { appear, EASE, usePlayback } from "./playback";
-import { ReplayButton } from "./ReplayButton";
 
 const BEATS = { ask: 200, read: 900, question: 1900, answer: 3400, correction: 4900 };
 
@@ -18,7 +17,7 @@ export function PracticeChat() {
   const still = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.35 });
-  const { at, done, replay } = usePlayback(BEATS, inView, still);
+  const { at } = usePlayback(BEATS, inView, still);
   const move = { duration: still ? 0 : 0.5, ease: EASE };
   const you = "self-end max-w-[85%] bg-text px-3.5 py-2 text-md text-canvas";
   const them = "self-start max-w-[88%] bg-plate-2 px-3.5 py-2 text-md text-text";
@@ -93,13 +92,10 @@ export function PracticeChat() {
         </motion.div>
       </div>
 
-      <div className="flex items-center justify-between gap-3">
-        <p className="flex items-center gap-2 text-xs text-muted">
-          <span aria-hidden="true" className="h-3 w-4 rounded-xs bg-amber-soft" />
-          <Trans>Words from your deck</Trans>
-        </p>
-        <ReplayButton shown={done && !still} onReplay={replay} />
-      </div>
+      <p className="flex items-center gap-2 text-xs text-muted">
+        <span aria-hidden="true" className="h-3 w-4 rounded-xs bg-amber-soft" />
+        <Trans>Words from your deck</Trans>
+      </p>
     </div>
   );
 }

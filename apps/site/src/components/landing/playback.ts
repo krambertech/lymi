@@ -10,8 +10,8 @@ export const appear = (visible: boolean) => ({
 });
 
 /**
- * A scripted demo that plays once while on screen, pauses when scrolled away, and replays on
- * request. `beats` are ms from the start; reduced motion shows the last beat at once.
+ * A scripted demo that plays once while on screen and pauses when scrolled away. `beats` are ms
+ * from the start; reduced motion shows the last beat at once.
  */
 export function usePlayback<Beat extends string>(
   beats: Record<Beat, number>,
@@ -20,14 +20,11 @@ export function usePlayback<Beat extends string>(
 ) {
   const end = Math.max(...Object.values<number>(beats));
   const [reached, setReached] = useState(0);
-  const [run, setRun] = useState(0);
   // Exact ms played, kept across pauses so a resume waits only for the rest of the current beat.
   const played = useRef(0);
-  const currentRun = useRef(0);
 
   useEffect(() => {
     if (still || !inView || played.current >= end) return;
-    const thisRun = run;
     const startedAt = performance.now() - played.current;
     const timers = Object.values<number>(beats)
       .filter((at) => at > played.current)
@@ -36,20 +33,11 @@ export function usePlayback<Beat extends string>(
       );
     return () => {
       for (const timer of timers) window.clearTimeout(timer);
-      if (currentRun.current === thisRun) {
-        played.current = Math.min(end, performance.now() - startedAt);
-      }
+      played.current = Math.min(end, performance.now() - startedAt);
     };
-  }, [beats, end, inView, still, run]);
+  }, [beats, end, inView, still]);
 
   return {
     at: (beat: Beat) => !!still || reached >= beats[beat],
-    done: !!still || reached >= end,
-    replay: () => {
-      currentRun.current += 1;
-      played.current = 0;
-      setReached(0);
-      setRun(currentRun.current);
-    },
   };
 }

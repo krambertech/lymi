@@ -171,8 +171,8 @@ function ToastPreview({
   }, [manager, title, action, type]);
   return (
     <ToastProvider toastManager={manager}>
-      {/* A toast stacks at z-index 1000, which would otherwise climb over the page's sticky header. */}
-      <ToastViewport aria-label="Toast preview" className="static isolate mx-0 w-full">
+      {/* The live viewport's toast layer would climb over the page's sticky header. */}
+      <ToastViewport aria-label="Toast preview" className="static isolate z-0 mx-0 w-full">
         <ToastList
           closeLabel="Dismiss"
           className="static h-auto [transform:none] data-expanded:h-auto data-expanded:[transform:none] data-starting-style:[transform:none] [&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:none]"

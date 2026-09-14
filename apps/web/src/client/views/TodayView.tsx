@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { Round, RoundsOut } from "@lymi/core";
+import { type Round, type RoundsOut, SLIPPING_LAPSES } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ChevronRight, Plus } from "lucide-react";
@@ -221,15 +221,11 @@ function DueHeading({
     );
   }
   if (due === 0) {
+    // No "that's the lot": a round below can still have cards to review.
     return (
-      <div className="grid gap-1">
-        <h2 className="text-2xl font-medium leading-tight">
-          <Trans>Nothing due</Trans>
-        </h2>
-        <p className="text-md text-text-2">
-          <Trans>That’s the lot for today.</Trans>
-        </p>
-      </div>
+      <h2 className="text-2xl font-medium leading-tight">
+        <Trans>Nothing due</Trans>
+      </h2>
     );
   }
   const deckName = onlyDeck?.name;
@@ -285,7 +281,7 @@ function Rounds({
       round: "slipping" as const,
       count: rounds.slipping,
       label: t`Keeps slipping`,
-      detail: t`Forgotten 4 or more times`,
+      detail: t`Forgotten ${SLIPPING_LAPSES} or more times`,
       empty: t`No card keeps slipping`,
       action: t`Review slipping`,
     },

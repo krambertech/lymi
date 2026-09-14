@@ -406,9 +406,9 @@ export interface RoundScope extends DrawScope {
 
 /**
  * A round: one Today group in the order it is reviewed, each card once. Forgotten cards come
- * in the mode they were forgotten in, even past their returns. New cards take the next unseen
- * modes oldest first, as the draw introduces them. A slipping card comes in its weakest known
- * mode whether or not it is due, weakest first, and is graded like any review.
+ * in the mode they were forgotten in, even past their returns. New cards are cards never reviewed
+ * in any mode, oldest first, in the mode the draw would introduce. A slipping card comes in its
+ * weakest reviewed mode whether or not it is due, weakest first, and is graded like any review.
  */
 export function roundOrder(
   cards: readonly DrawCard[],
@@ -437,16 +437,26 @@ export function roundOrder(
       }
       break;
     }
-    case "new":
+    case "new": {
+      // A card whose other mode was reviewed is not new to the learner, only that mode is.
+      const untouched = new Set(
+        inScope
+          .filter((card) => card.modes.every((m) => m.state === State.New))
+          .map((card) => card.cardId),
+      );
       for (const c of plan(cards, day, scope, DRAW_POLICY).oldest) {
-        if (!reviewed.has(c.cardId)) push(c.cardId, c.mode.mode, "unseen");
+        if (untouched.has(c.cardId) && !reviewed.has(c.cardId)) {
+          push(c.cardId, c.mode.mode, "unseen");
+        }
       }
       break;
+    }
     case "slipping": {
       const weakest = inScope.flatMap((card) => {
         if (!scope.slipping?.has(card.cardId) || reviewed.has(card.cardId)) return [];
+        // Any mode that has been reviewed, so a card forgotten from New and still learning counts.
         const [mode] = card.modes
-          .filter((m) => m.hasCue && reachedReview(m))
+          .filter((m) => m.hasCue && m.state !== State.New)
           .sort((a, b) => a.retrievability - b.retrievability);
         return mode ? [{ cardId: card.cardId, mode }] : [];
       });

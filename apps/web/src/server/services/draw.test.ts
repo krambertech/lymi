@@ -321,4 +321,30 @@ describe("Today rounds", () => {
     expect(await round("new")).toEqual({ total: 1, ids: [fresh.id] });
     expect(await round("slipping")).toEqual({ total: 1, ids: [slipping.id] });
   });
+
+  it("does not count an undone Forgot toward slipping", async () => {
+    const { ctx, cards } = await setup([{ term: "ettevaatlik", meaning: "careful" }]);
+    const [card] = cards;
+    if (!card) throw new Error("no card");
+    // Six reviews with three Forgots: one short of slipping.
+    const history = [1, 3, 1, 3, 1, 3] as const;
+    for (const [i, rating] of history.entries()) {
+      await gradeCard(ctx, {
+        cardId: card.id,
+        direction: "recognition",
+        rating,
+        reviewedAt: new Date(Date.now() - (12 - i) * DAY),
+      });
+    }
+    const mistake = await gradeCard(ctx, {
+      cardId: card.id,
+      direction: "recognition",
+      rating: 1,
+      reviewedAt: new Date(Date.now() - 5 * DAY),
+    });
+    expect((await reviewRounds(ctx)).slipping).toBe(1);
+    if (!mistake.reviewId) throw new Error("no review");
+    await undoReview(ctx, mistake.reviewId);
+    expect((await reviewRounds(ctx)).slipping).toBe(0);
+  });
 });

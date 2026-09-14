@@ -333,12 +333,6 @@ export const noHistory: number[] = Array(90).fill(0);
 /** Today still open, yesterday reviewed: the streak holds. */
 export const streakDaysOpen: number[] = [...streakDays.slice(0, -1), 0];
 
-/** What Claude added since the last review, as Today groups it. */
-export const arrivals = [
-  { deckId: "d1", deckName: "Italian with Giulia", count: 12, actor: "Claude", when: "Tuesday" },
-  { deckId: "d2", deckName: "Portuguese", count: 3, actor: "You", when: "today" },
-];
-
 export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com" };
 
 /** Insights, at the point where there is enough history for every block to say something. */

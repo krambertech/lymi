@@ -478,6 +478,28 @@ describe("rounds", () => {
     ]);
   });
 
+  it("keeps a slipping card that never reached Review", () => {
+    const cards = [
+      card("learning", [{ mode: "meaning_to_term", state: State.Relearning, retrievability: 0.2 }]),
+      card("unseen", [{ mode: "meaning_to_term", state: State.New }]),
+    ];
+    const slipping = new Set(["learning", "unseen"]);
+    expect(roundOrder(cards, [], day, { round: "slipping", slipping })).toEqual([
+      { cardId: "learning", mode: "meaning_to_term", kind: "review" },
+    ]);
+  });
+
+  it("counts a card as new only when no mode of it was reviewed", () => {
+    const cards = [
+      unseen("fresh", daysAgo(2)),
+      card("half-known", [
+        { mode: "meaning_to_term", state: State.Review },
+        { mode: "term_to_meaning", state: State.New, due: daysAgo(1), added: daysAgo(3) },
+      ]),
+    ];
+    expect(roundOrder(cards, [], day, { round: "new" }).map((d) => d.cardId)).toEqual(["fresh"]);
+  });
+
   it("leaves a slipping card out once it is reviewed today", () => {
     const cards = [review("a", 0.4), review("b", 0.5)];
     const order = roundOrder(cards, [grade("a", 1)], day, {

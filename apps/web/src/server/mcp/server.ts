@@ -15,6 +15,8 @@ import {
   ReviewMode,
   RoundsOut,
   SettingsPatch,
+  SLIPPING_LAPSES,
+  SLIPPING_REVIEWS,
   StreakOut,
 } from "@lymi/core";
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
@@ -163,8 +165,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "due_counts",
     {
       title: "Due counts",
-      description:
-        "How many cards are waiting to be reviewed right now, in total and per deck, and how many are in each Today round: forgotten today, new, and slipping (forgotten at least 4 times in at least 6 reviews). Only the learner can review them, in the app.",
+      description: `How many cards are waiting to be reviewed right now, in total and per deck, and how many are in each Today round: forgotten today, new, and slipping (forgotten at least ${SLIPPING_LAPSES} times in at least ${SLIPPING_REVIEWS} reviews). Only the learner can review them, in the app.`,
       inputSchema: z.object({}),
       outputSchema: DueOut,
       ...readTool,

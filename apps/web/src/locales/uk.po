@@ -1052,8 +1052,8 @@ msgid "Forgotten {0}+ times"
 msgstr "Забуто {0}+ разів"
 
 #: src/client/views/TodayView.tsx
-msgid "Forgotten 4 or more times"
-msgstr "Забуті щонайменше 4 рази"
+msgid "Forgotten {SLIPPING_LAPSES} or more times"
+msgstr "Забуті щонайменше {SLIPPING_LAPSES} рази"
 
 #: src/client/components/Chip.tsx
 #: src/client/views/WordView.tsx
@@ -2123,7 +2123,6 @@ msgid "That’s the lot"
 msgstr "На сьогодні все"
 
 #: src/client/components/Streak.tsx
-#: src/client/views/TodayView.tsx
 msgid "That’s the lot for today."
 msgstr "На сьогодні все."
 

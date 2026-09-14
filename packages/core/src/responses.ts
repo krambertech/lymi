@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SLIPPING_LAPSES, SLIPPING_REVIEWS } from "./slipping";
 import {
   Actor,
   AppLanguage,
@@ -261,11 +262,16 @@ export const RoundsOut = z
       .number()
       .int()
       .meta({ description: "Cards whose latest grade today is Forgot, across every deck" }),
-    new: z.number().int().meta({ description: "Cards not yet reviewed that can start today" }),
-    slipping: z.number().int().meta({
-      description:
-        "Cards forgotten at least 4 times in at least 6 reviews and not reviewed today, due or not",
-    }),
+    new: z
+      .number()
+      .int()
+      .meta({ description: "Cards never reviewed in any mode that can start today" }),
+    slipping: z
+      .number()
+      .int()
+      .meta({
+        description: `Cards forgotten at least ${SLIPPING_LAPSES} times in at least ${SLIPPING_REVIEWS} reviews and not reviewed today, due or not`,
+      }),
   })
   .meta({ id: "ReviewRounds" });
 export type RoundsOut = z.infer<typeof RoundsOut>;

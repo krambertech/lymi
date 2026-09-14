@@ -1,10 +1,11 @@
+import { SLIPPING_LAPSES, SLIPPING_REVIEWS } from "@lymi/core";
 import { and, desc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
 import { memberOf } from "./members";
-import { LEECH_LAPSES, LEECH_REVIEWS, lapsesSql, reviewCountSql } from "./slipping";
+import { lapsesSql, reviewCountSql, slippingHaving, slippingReviewsWhere } from "./slipping";
 
 /**
  * Everything the Insights screen reads. One call, because the screen shows all of it at
@@ -280,16 +281,10 @@ async function leeches({ db, userId }: ServiceContext, limit: number) {
     .from(schema.reviews)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.reviews.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(
-      and(
-        eq(schema.reviews.userId, userId),
-        memberOf(userId),
-        isNull(schema.cards.archivedAt),
-        isNull(schema.decks.archivedAt),
-      ),
-    )
+    .leftJoin(schema.reviewUndos, eq(schema.reviewUndos.reviewId, schema.reviews.id))
+    .where(slippingReviewsWhere(userId))
     .groupBy(schema.cards.id)
-    .having(sql`${lapsesSql} >= ${LEECH_LAPSES} and ${reviewCountSql} >= ${LEECH_REVIEWS}`)
+    .having(slippingHaving)
     .orderBy(desc(lapsesSql))
     .limit(limit);
 }
@@ -339,8 +334,8 @@ export async function insights(
     cards,
     forecast: due,
     leeches: {
-      lapses: LEECH_LAPSES,
-      reviews: LEECH_REVIEWS,
+      lapses: SLIPPING_LAPSES,
+      reviews: SLIPPING_REVIEWS,
       cards: keepsComingBack,
     },
   };

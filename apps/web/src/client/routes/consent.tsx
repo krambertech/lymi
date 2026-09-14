@@ -3,12 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { identifyApp } from "../components/AppMark";
-import { buttonClass } from "../components/Button";
+import { identifyApp } from "../components/app-mark";
+import { buttonClass } from "../components/button";
 import { authClient } from "../lib/auth";
 import { meQuery } from "../lib/queries";
-import { ConnectedView } from "../views/ConnectedView";
-import { ConsentView } from "../views/ConsentView";
+import { ConnectedView } from "../views/connected-view";
+import { ConsentView } from "../views/consent-view";
 
 const Search = z.object({
   client_id: z.string().optional(),

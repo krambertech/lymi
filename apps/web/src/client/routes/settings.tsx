@@ -2,15 +2,15 @@ import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AccountSection } from "../components/AccountSection";
-import { ApiKeysSection } from "../components/ApiKeysSection";
-import { ConnectedAppsSection } from "../components/ConnectedAppsSection";
-import { NotificationsSection } from "../components/NotificationsSection";
+import { AccountSection } from "../components/account-section";
+import { ApiKeysSection } from "../components/api-keys-section";
+import { ConnectedAppsSection } from "../components/connected-apps-section";
+import { NotificationsSection } from "../components/notifications-section";
 import { api, type Settings } from "../lib/api";
 import { activate, pickLocale } from "../lib/i18n";
 import { meQuery, settingsQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
-import { SettingsView } from "../views/SettingsView";
+import { SettingsView } from "../views/settings-view";
 
 export const Route = createFileRoute("/settings")({
   component: SettingsRoute,

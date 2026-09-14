@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { api, errorMessage } from "../lib/api";
 import { deckCardsQuery, decksQuery, joinLinkQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
-import { type DeckSettingsPatch, DeckSettingsView } from "../views/DeckSettingsView";
+import { type DeckSettingsPatch, DeckSettingsView } from "../views/deck-settings-view";
 
 export const Route = createFileRoute("/library/$deckId/settings")({
   component: DeckSettings,

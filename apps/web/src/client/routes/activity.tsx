@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoonView } from "../views/ComingSoonView";
+import { ComingSoonView } from "../views/coming-soon-view";
 
 export const Route = createFileRoute("/activity")({
   component: ActivityRoute,

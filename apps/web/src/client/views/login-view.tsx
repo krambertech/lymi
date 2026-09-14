@@ -1,0 +1,86 @@
+import { Trans } from "@lingui/react/macro";
+import type { ReactNode } from "react";
+import { type AppIdentity, AppMark } from "../components/app-mark";
+import { AuthFrame } from "../components/auth-frame";
+import { AuthNotice } from "../components/auth-notice";
+import { Button } from "../components/button";
+import { publicSiteUrl } from "../lib/origins";
+
+export interface LoginProps {
+  onGoogle?: (() => void | Promise<void>) | undefined;
+  busy?: boolean | undefined;
+  /**
+   * Set when an MCP client sent the learner here from its own sign-in. The door then says
+   * who is waiting on the other side, so the consent screen is not the first mention of it.
+   */
+  app?: AppIdentity | undefined;
+  /** Shown in place of the fine print when sign-in fails. */
+  error?: ReactNode | undefined;
+  /** A valid Google account that simply has no invitation. This is a path, not a failure. */
+  blocked?: boolean | undefined;
+  children?: ReactNode | undefined;
+}
+
+/** The front door. Authentication stays focused; requesting an invitation has its own route. */
+export function LoginView({ onGoogle, busy, app, error, blocked = false, children }: LoginProps) {
+  const appName = app?.name;
+  return (
+    <AuthFrame footer={children} homeHref={publicSiteUrl()}>
+      <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">
+        {app ? (
+          <div className="flex flex-col items-center text-center">
+            <AppMark app={app} className="size-12" />
+            <h1 className="mt-4 text-2xl font-medium tracking-[-0.02em] text-text">
+              <Trans>Continue to {appName}</Trans>
+            </h1>
+            <p className="mt-2 max-w-[36ch] text-md text-text-2">
+              <Trans>Sign in before choosing what it may do.</Trans>
+            </p>
+          </div>
+        ) : (
+          <div className="text-center">
+            <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">
+              <Trans>Sign in to Lymi</Trans>
+            </h1>
+            <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
+              <Trans>Use the Google account that received your invitation.</Trans>
+            </p>
+          </div>
+        )}
+
+        {error && (
+          <AuthNotice
+            role={blocked ? "status" : "alert"}
+            tone={blocked ? "neutral" : "danger"}
+            className="mt-6"
+          >
+            {error}
+          </AuthNotice>
+        )}
+
+        <Button
+          variant="primary"
+          size="lg"
+          loading={busy}
+          onClick={onGoogle}
+          className="mt-7 w-full"
+        >
+          {blocked ? (
+            <Trans>Try another Google account</Trans>
+          ) : (
+            <Trans>Continue with Google</Trans>
+          )}
+        </Button>
+        <p className="mt-6 text-center text-sm text-muted">
+          {blocked ? <Trans>Still need an invitation?</Trans> : <Trans>Need an invitation?</Trans>}{" "}
+          <a
+            href={publicSiteUrl("/join")}
+            className="rounded-sm font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
+          >
+            <Trans>Request an invitation</Trans>
+          </a>
+        </p>
+      </section>
+    </AuthFrame>
+  );
+}

@@ -1,7 +1,7 @@
 import type { InsightsOut } from "@lymi/core";
-import type { StreakSummary } from "../components/Streak";
+import type { StreakSummary } from "../components/streak";
 import type { Card, CardState, DeckSummary, QueueItem, Review } from "../lib/api";
-import type { WordEvent } from "../views/WordView";
+import type { WordEvent } from "../views/word-view";
 
 const now = Date.now();
 const day = 86_400_000;

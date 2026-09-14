@@ -5,7 +5,7 @@ import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, roundsQuery, streakQuery } from "../lib/queries";
 import { Streak } from "../lib/streak";
 import { useSignOut } from "../lib/use-sign-out";
-import { TodayView } from "../views/TodayView";
+import { TodayView } from "../views/today-view";
 
 export const Route = createFileRoute("/today")({
   component: Today,

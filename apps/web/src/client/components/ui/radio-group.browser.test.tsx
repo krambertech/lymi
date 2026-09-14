@@ -2,7 +2,7 @@ import { createRef, useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import { RadioCard } from "../RadioCard";
+import { RadioCard } from "../radio-card";
 import { Field, FieldLabel, FieldLegend, FieldSet } from "./field";
 import { RadioGroup, RadioGroupItem } from "./radio-group";
 

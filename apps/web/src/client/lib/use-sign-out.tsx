@@ -2,7 +2,7 @@ import { Plural, Trans } from "@lingui/react/macro";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { createContext, type ReactNode, useCallback, useContext, useRef, useState } from "react";
-import { Button } from "../components/Button";
+import { Button } from "../components/button";
 import {
   Dialog,
   DialogContent,

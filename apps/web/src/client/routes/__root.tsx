@@ -9,9 +9,9 @@ import {
 } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { AddCardSheet } from "../components/AddCardSheet";
-import { NewDeckSheet } from "../components/NewDeckSheet";
-import { PillNav } from "../components/PillNav";
+import { AddCardSheet } from "../components/add-card-sheet";
+import { NewDeckSheet } from "../components/new-deck-sheet";
+import { PillNav } from "../components/pill-nav";
 import { Toaster } from "../components/ui/toast";
 import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
@@ -30,12 +30,12 @@ import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { Streak, useSettleToday } from "../lib/streak";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
-import { AppShell, Sidebar } from "../views/Shell";
+import { AppShell, Sidebar } from "../views/shell";
 
 // Local and isolated preview builds only. Vite drops the import from production.
 const DevPanel =
   import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW
-    ? lazy(() => import("../dev/DevPanel"))
+    ? lazy(() => import("../dev/dev-panel"))
     : null;
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({

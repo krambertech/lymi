@@ -12,12 +12,26 @@ import {
   isImageMode,
   retrievability,
 } from "@lymi/core";
-import { alias, and, asc, eq, gte, inArray, isNull, lt, ne, or, sql } from "@lymi/core/db";
+import {
+  alias,
+  and,
+  asc,
+  eq,
+  gte,
+  inArray,
+  isNotNull,
+  isNull,
+  lt,
+  ne,
+  or,
+  sql,
+} from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { memberOf } from "./members";
 import { askedSql, stateMode } from "./modes";
+import { slippingCardIds } from "./slipping";
 
 /**
  * What `draw` in core needs, loaded from D1: every mode that could be reviewed today and
@@ -57,6 +71,8 @@ export interface DrawInputs {
   cards: DrawCard[];
   log: DrawLogEntry[];
   states: Map<string, DrawState>;
+  /** Slipping card ids, when the options asked for them. */
+  slipping: Set<string>;
 }
 
 export interface DrawOptions {
@@ -64,6 +80,8 @@ export interface DrawOptions {
   /** The review zone. Callers resolve it, so a count never writes a setting. */
   zone: string;
   deckId?: string | undefined;
+  /** Also load slipping cards whatever their due, for the slipping round. */
+  slipping?: boolean | undefined;
 }
 
 interface ModeRow {
@@ -103,6 +121,8 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
   const now = opts.now ?? new Date();
   const day = dayWindow(now, opts.zone);
   const sibling = alias(schema.cardStates, "sibling");
+  // Joined only for the slipping round, so its whole-history aggregate runs in this one query.
+  const slip = slippingCardIds(ctx).as("slip");
   const modeColumns = {
     id: schema.cardStates.id,
     direction: schema.cardStates.direction,
@@ -128,7 +148,11 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     isNull(schema.cards.archivedAt),
     isNull(schema.decks.archivedAt),
     asked,
-    or(lt(schema.cardStates.due, day.end), gte(schema.cardStates.lastReview, day.start)),
+    or(
+      lt(schema.cardStates.due, day.end),
+      gte(schema.cardStates.lastReview, day.start),
+      opts.slipping ? isNotNull(slip.id) : undefined,
+    ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
   );
   const siblingOn = and(
@@ -138,26 +162,34 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     sql.raw(askedSql("sibling.direction")),
   );
 
+  const candidateRows = db
+    .select({
+      card: {
+        id: schema.cards.id,
+        deckId: schema.cards.deckId,
+        term: schema.cards.term,
+        meaning: schema.cards.meaning,
+        directions: schema.cards.directions,
+        reviewModeKeys: schema.cards.reviewModeKeys,
+      },
+      deckDirections: schema.decks.directions,
+      state: modeColumns,
+      sibling: siblingColumns,
+      slipping: opts.slipping ? slip.id : sql<string | null>`null`,
+    })
+    .from(schema.cardStates)
+    .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .leftJoin(sibling, siblingOn)
+    .$dynamic();
+  const candidatesQuery = (
+    opts.slipping
+      ? candidateRows.leftJoin(slip, eq(slip.id, schema.cardStates.cardId))
+      : candidateRows
+  ).where(where);
+
   const [candidates, log] = await Promise.all([
-    db
-      .select({
-        card: {
-          id: schema.cards.id,
-          deckId: schema.cards.deckId,
-          term: schema.cards.term,
-          meaning: schema.cards.meaning,
-          directions: schema.cards.directions,
-          reviewModeKeys: schema.cards.reviewModeKeys,
-        },
-        deckDirections: schema.decks.directions,
-        state: modeColumns,
-        sibling: siblingColumns,
-      })
-      .from(schema.cardStates)
-      .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
-      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-      .leftJoin(sibling, siblingOn)
-      .where(where),
+    candidatesQuery,
     db
       .select({
         cardId: schema.reviews.cardId,
@@ -232,6 +264,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       at: r.reviewedAt,
     })),
     states,
+    slipping: new Set(candidates.flatMap((row) => (row.slipping ? [row.card.id] : []))),
   };
 }
 

@@ -129,7 +129,7 @@ export function McpOverview() {
           },
           {
             term: <code>due_counts</code>,
-            def: "How many cards are waiting, in total and per deck.",
+            def: "How many cards are waiting, in total and per deck, and how many are in each Today round: forgotten today, new and slipping.",
           },
           {
             term: (

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { Rating } from "@lymi/core";
+import { type Rating, ROUNDS, type Round } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -20,17 +20,22 @@ import {
 } from "../views/ReviewView";
 
 export const Route = createFileRoute("/review")({
-  validateSearch: (s: Record<string, unknown>): { deck?: string } =>
-    typeof s.deck === "string" ? { deck: s.deck } : {},
+  validateSearch: (s: Record<string, unknown>): { deck?: string; round?: Round } => {
+    const round = ROUNDS.find((r) => r === s.round);
+    return {
+      ...(typeof s.deck === "string" ? { deck: s.deck } : {}),
+      ...(round ? { round } : {}),
+    };
+  },
   component: Review,
 });
 
 function Review() {
   const { t } = useLingui();
-  const { deck } = Route.useSearch();
+  const { deck, round } = Route.useSearch();
   const qc = useQueryClient();
   const navigate = useNavigate();
-  const queue = useQuery(queueQuery(deck));
+  const queue = useQuery(queueQuery(deck, round));
   const decks = useQuery(decksQuery);
   const streak = useQuery(streakQuery);
   const [index, setIndex] = useState(0);
@@ -119,6 +124,7 @@ function Review() {
 
   const invalidateReviewData = useCallback(() => {
     qc.invalidateQueries({ queryKey: ["decks"] });
+    qc.invalidateQueries({ queryKey: ["rounds"] });
     qc.invalidateQueries({ queryKey: ["streak"] });
     qc.invalidateQueries({ queryKey: ["insights"] });
   }, [qc]);
@@ -206,6 +212,7 @@ function Review() {
           done={done}
           moreDue={moreDue}
           deckName={deckName}
+          round={!!round}
           streak={streak.data}
           action={
             moreDue > 0 ? (

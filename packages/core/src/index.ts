@@ -5,6 +5,7 @@ export * from "./images";
 export * from "./mcp-clients";
 export * from "./modes";
 export * from "./responses";
+export * from "./slipping";
 export * from "./streak";
 export * from "./terms";
 export * from "./types";

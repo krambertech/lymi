@@ -1,9 +1,11 @@
+import { SLIPPING_LAPSES, SLIPPING_REVIEWS } from "@lymi/core";
 import { and, desc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
 import { memberOf } from "./members";
+import { lapsesSql, reviewCountSql, slippingHaving, slippingReviewsWhere } from "./slipping";
 
 /**
  * Everything the Insights screen reads. One call, because the screen shows all of it at
@@ -260,10 +262,6 @@ async function forecast({ db, userId }: ServiceContext, fmt: LocalDateFormatter)
   return buckets.map((count, i) => ({ date: addDays(today, i), count }));
 }
 
-/** Four lapses is the threshold; six reviews is the guard so a young card cannot qualify. */
-export const LEECH_LAPSES = 4;
-export const LEECH_REVIEWS = 6;
-
 /**
  * Cards that keep coming back. Anki suspends at eight lapses, which is both blunt and late
  * for a deck someone chose word by word. The rule is returned with the list so the screen
@@ -277,25 +275,17 @@ async function leeches({ db, userId }: ServiceContext, limit: number) {
       term: schema.cards.term,
       meaning: schema.cards.meaning,
       language: schema.cards.language,
-      lapses: sql<number>`sum(case when ${schema.reviews.rating} = 1 then 1 else 0 end)`,
-      reviews: sql<number>`count(${schema.reviews.id})`,
+      lapses: lapsesSql,
+      reviews: reviewCountSql,
     })
     .from(schema.reviews)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.reviews.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(
-      and(
-        eq(schema.reviews.userId, userId),
-        memberOf(userId),
-        isNull(schema.cards.archivedAt),
-        isNull(schema.decks.archivedAt),
-      ),
-    )
+    .leftJoin(schema.reviewUndos, eq(schema.reviewUndos.reviewId, schema.reviews.id))
+    .where(slippingReviewsWhere(userId))
     .groupBy(schema.cards.id)
-    .having(
-      sql`sum(case when ${schema.reviews.rating} = 1 then 1 else 0 end) >= ${LEECH_LAPSES} and count(${schema.reviews.id}) >= ${LEECH_REVIEWS}`,
-    )
-    .orderBy(desc(sql`sum(case when ${schema.reviews.rating} = 1 then 1 else 0 end)`))
+    .having(slippingHaving)
+    .orderBy(desc(lapsesSql))
     .limit(limit);
 }
 
@@ -344,8 +334,8 @@ export async function insights(
     cards,
     forecast: due,
     leeches: {
-      lapses: LEECH_LAPSES,
-      reviews: LEECH_REVIEWS,
+      lapses: SLIPPING_LAPSES,
+      reviews: SLIPPING_REVIEWS,
       cards: keepsComingBack,
     },
   };

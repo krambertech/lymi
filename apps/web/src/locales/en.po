@@ -41,6 +41,11 @@ msgstr "{0, plural, one {# review} other {# reviews}}"
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# review} other {# reviews}} since {1}"
 
+#. placeholder {0}: d.due
+#: src/client/views/TodayView.tsx
+msgid "{0, plural, one {card due} other {cards due}}"
+msgstr "{0, plural, one {card due} other {cards due}}"
+
 #. placeholder {0}: cards.total
 #: src/client/views/InsightsView.tsx
 msgid "{0, plural, one {card} other {cards}}"
@@ -200,29 +205,33 @@ msgstr "{done} reviewed from {deckName}. The rest can wait a while."
 msgid "{done} reviewed. The rest can wait a while."
 msgstr "{done} reviewed. The rest can wait a while."
 
+#: src/client/views/ReviewView.tsx
+msgid "{done} reviewed. Today shows what’s left."
+msgstr "{done} reviewed. Today shows what’s left."
+
 #: src/client/components/DeckCard.tsx
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# due today} other {# due today}}"
+
+#: src/client/views/TodayView.tsx
+msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
+msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "{due, plural, one {card due now} other {cards due now}}"
 msgstr "{due, plural, one {card due now} other {cards due now}}"
 
+#: src/client/views/TodayView.tsx
+msgid "{due, plural, one {card due today} other {cards due today}}"
+msgstr "{due, plural, one {card due today} other {cards due today}}"
+
 #: src/server/push-delivery.ts
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 
-#: src/client/views/TodayView.tsx
-msgid "{due} due"
-msgstr "{due} due"
-
 #: src/client/views/InsightsView.tsx
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
-
-#: src/client/views/TodayView.tsx
-msgid "{first} and {second}"
-msgstr "{first} and {second}"
 
 #: src/client/components/StateStripe.tsx
 msgid "{fresh} new, {learning} learning, {known} known"
@@ -244,6 +253,10 @@ msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 
+#: src/client/components/Streak.tsx
+msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
+msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
@@ -255,10 +268,6 @@ msgstr "{months, plural, one {# month} other {# months}}"
 #: src/client/views/WordView.tsx
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {In # month} other {In # months}}"
-
-#: src/client/views/TodayView.tsx
-msgid "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
-msgstr "{more, plural, one {{first}, {second} and # more deck} other {{first}, {second} and # more decks}}"
 
 #: src/client/views/ReviewView.tsx
 msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
@@ -276,10 +285,6 @@ msgstr "{n, plural, one {# review} other {# reviews}}"
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
-
-#: src/client/views/TodayView.tsx
-msgid "{total, plural, one {# card in your decks, all ahead of you.} other {# cards in your decks, all ahead of you.}}"
-msgstr "{total, plural, one {# card in your decks, all ahead of you.} other {# cards in your decks, all ahead of you.}}"
 
 #: src/client/components/DeckCard.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
@@ -381,7 +386,6 @@ msgstr "Account"
 #: src/client/components/LearnerMenu.tsx
 #: src/client/routes/activity.tsx
 #: src/client/views/Shell.tsx
-#: src/client/views/TodayView.tsx
 msgid "Activity"
 msgstr "Activity"
 
@@ -412,6 +416,10 @@ msgstr "Add a sentence it lives in"
 msgid "Add card"
 msgstr "Add card"
 
+#: src/client/views/TodayView.tsx
+msgid "Add cards"
+msgstr "Add cards"
+
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
 msgstr "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
@@ -423,6 +431,10 @@ msgstr "Add Lymi to your Home Screen"
 #: src/client/components/NotificationsSection.tsx
 msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 msgstr "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
+
+#: src/client/views/TodayView.tsx
+msgid "Add some from your next lesson"
+msgstr "Add some from your next lesson"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Add the first card from your lesson. The lantern lights when one is due."
@@ -700,10 +712,6 @@ msgstr "Close"
 msgid "Come back later, or add something new."
 msgstr "Come back later, or add something new."
 
-#: src/client/views/TodayView.tsx
-msgid "Coming up: {forecast}."
-msgstr "Coming up: {forecast}."
-
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "connected {connected}"
 msgstr "connected {connected}"
@@ -859,6 +867,10 @@ msgstr "Deck settings"
 msgid "Decks"
 msgstr "Decks"
 
+#: src/client/views/TodayView.tsx
+msgid "Decks to review"
+msgstr "Decks to review"
+
 #: src/client/views/ConsentView.tsx
 msgid "Deny"
 msgstr "Deny"
@@ -982,6 +994,10 @@ msgstr "Forgot"
 msgid "Forgot recently"
 msgstr "Forgot recently"
 
+#: src/client/views/TodayView.tsx
+msgid "Forgot today"
+msgstr "Forgot today"
+
 #: src/client/components/ShortcutsDialog.tsx
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Forgot, Hard, Good, Easy"
@@ -990,6 +1006,10 @@ msgstr "Forgot, Hard, Good, Easy"
 #: src/client/views/InsightsView.tsx
 msgid "Forgotten {0}+ times"
 msgstr "Forgotten {0}+ times"
+
+#: src/client/views/TodayView.tsx
+msgid "Forgotten {SLIPPING_LAPSES} or more times"
+msgstr "Forgotten {SLIPPING_LAPSES} or more times"
 
 #: src/client/components/Chip.tsx
 #: src/client/views/WordView.tsx
@@ -1011,6 +1031,10 @@ msgstr "Good"
 #: src/client/views/ConsentView.tsx
 msgid "Grade your reviews or change your progress"
 msgstr "Grade your reviews or change your progress"
+
+#: src/client/views/TodayView.tsx
+msgid "Graded Forgot today"
+msgstr "Graded Forgot today"
 
 #: src/client/views/ConsentView.tsx
 msgid "Granting as <0>{email}</0>"
@@ -1139,8 +1163,9 @@ msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
 
 #: src/client/views/InsightsView.tsx
-msgid "Keeps coming back"
-msgstr "Keeps coming back"
+#: src/client/views/TodayView.tsx
+msgid "Keeps slipping"
+msgstr "Keeps slipping"
 
 #: src/client/components/LearnerMenu.tsx
 #: src/client/components/ShortcutsDialog.tsx
@@ -1195,6 +1220,7 @@ msgstr "Let {appName} use your Lymi?"
 #: src/client/views/DeckDetailView.tsx
 #: src/client/views/LibraryView.tsx
 #: src/client/views/Shell.tsx
+#: src/client/views/TodayView.tsx
 msgid "Library"
 msgstr "Library"
 
@@ -1269,6 +1295,10 @@ msgstr "Mode"
 msgid "Month by month"
 msgstr "Month by month"
 
+#: src/client/views/TodayView.tsx
+msgid "More to review"
+msgstr "More to review"
+
 #. placeholder {0}: card.term
 #: src/client/views/WordView.tsx
 msgid "Move “{0}” to"
@@ -1317,6 +1347,10 @@ msgstr "New"
 msgid "New card"
 msgstr "New card"
 
+#: src/client/views/TodayView.tsx
+msgid "New cards"
+msgstr "New cards"
+
 #: src/client/components/AddCardSheet.tsx
 #: src/client/components/AddMenu.tsx
 #: src/client/components/NewDeckSheet.tsx
@@ -1328,10 +1362,6 @@ msgstr "New deck"
 #: src/client/components/ApiKeysSection.tsx
 msgid "New key"
 msgstr "New key"
-
-#: src/client/views/TodayView.tsx
-msgid "New since your last review"
-msgstr "New since your last review"
 
 #: src/client/views/WordView.tsx
 msgid "Next"
@@ -1357,6 +1387,10 @@ msgstr "Next month"
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "No apps connected"
 msgstr "No apps connected"
+
+#: src/client/views/TodayView.tsx
+msgid "No card keeps slipping"
+msgstr "No card keeps slipping"
 
 #: src/client/views/LibraryView.tsx
 msgid "No decks yet"
@@ -1412,6 +1446,10 @@ msgstr "Not asked yet. It joins the next review."
 msgid "Not available on this server yet."
 msgstr "Not available on this server yet."
 
+#: src/client/views/TodayView.tsx
+msgid "Not reviewed yet"
+msgstr "Not reviewed yet"
+
 #: src/client/components/Streak.tsx
 msgid "Not saved. Try again."
 msgstr "Not saved. Try again."
@@ -1440,6 +1478,10 @@ msgstr "Nothing due"
 #: src/client/components/Streak.tsx
 msgid "Nothing due today, so your streak is safe."
 msgstr "Nothing due today, so your streak is safe."
+
+#: src/client/views/TodayView.tsx
+msgid "Nothing forgotten today"
+msgstr "Nothing forgotten today"
 
 #: src/client/views/InsightsView.tsx
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
@@ -1740,9 +1782,21 @@ msgstr "Reveal the card when you have it"
 msgid "Review"
 msgstr "Review"
 
+#: src/client/views/TodayView.tsx
+msgid "Review forgotten"
+msgstr "Review forgotten"
+
+#: src/client/views/TodayView.tsx
+msgid "Review new"
+msgstr "Review new"
+
 #: src/client/views/JoinView.tsx
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Review on your own schedule. New cards appear as they are added."
+
+#: src/client/views/TodayView.tsx
+msgid "Review slipping"
+msgstr "Review slipping"
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
@@ -1761,8 +1815,8 @@ msgid "Reviews a day"
 msgstr "Reviews a day"
 
 #: src/client/views/InsightsView.tsx
-msgid "Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
-msgstr "Reviews per day, how much is sticking, and the cards that keep coming back. This fills in once there is some history behind you."
+msgid "Reviews per day, how much is sticking, and the cards that keep slipping. This fills in once there is some history behind you."
+msgstr "Reviews per day, how much is sticking, and the cards that keep slipping. This fills in once there is some history behind you."
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Revoke"
@@ -1775,6 +1829,10 @@ msgstr "Revoke instead"
 #: src/client/components/ApiKeysSection.tsx
 msgid "Revoke key"
 msgstr "Revoke key"
+
+#: src/client/views/ReviewView.tsx
+msgid "Round done"
+msgstr "Round done"
 
 #: src/client/components/AvatarEditor.tsx
 msgid "Save photo"
@@ -2142,6 +2200,7 @@ msgstr "today"
 #: src/client/components/ReviewTimeline.tsx
 #: src/client/components/Streak.tsx
 #: src/client/views/Shell.tsx
+#: src/client/views/TodayView.tsx
 #: src/client/views/WordView.tsx
 msgid "Today"
 msgstr "Today"

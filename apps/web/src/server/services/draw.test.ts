@@ -5,7 +5,7 @@ import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck, listDecks, updateDeck } from "./decks";
 import { drawableCount } from "./draw";
-import { gradeCard, reviewDraw, reviewQueue } from "./review";
+import { gradeCard, reviewDraw, reviewQueue, reviewRounds } from "./review";
 import { checkToday, setReviewTimezone, undoReview } from "./review-days";
 import { updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
@@ -288,5 +288,63 @@ describe("the day follows the review zone", () => {
     // Seen from a zone still on the earlier date, the grade is in today's log; from Tokyo it is yesterday's.
     const tokyo = await reviewDraw(ctx, {});
     expect(tokyo.day.zone).toBe("Asia/Tokyo");
+  });
+});
+
+describe("Today rounds", () => {
+  it("counts and queues forgotten, new and slipping cards", async () => {
+    const { ctx, cards } = await setup([
+      { term: "tähelepanelik", meaning: "attentive" },
+      { term: "vihmavari", meaning: "umbrella" },
+      { term: "kolima", meaning: "to move house" },
+    ]);
+    const [slipping, forgotten, fresh] = cards;
+    if (!slipping || !forgotten || !fresh) throw new Error("no cards");
+
+    const history = [1, 1, 3, 1, 1, 3] as const;
+    for (const [i, rating] of history.entries()) {
+      await gradeCard(ctx, {
+        cardId: slipping.id,
+        direction: "recognition",
+        rating,
+        reviewedAt: new Date(Date.now() - (12 - i) * DAY),
+      });
+    }
+    await gradeCard(ctx, { cardId: forgotten.id, direction: "recognition", rating: 1 });
+
+    expect(await reviewRounds(ctx)).toEqual({ forgotten: 1, new: 1, slipping: 1 });
+    const round = async (name: "forgotten" | "new" | "slipping") => {
+      const queue = await reviewQueue(ctx, { round: name });
+      return { total: queue.total, ids: queue.items.map((i) => i.card.id) };
+    };
+    expect(await round("forgotten")).toEqual({ total: 1, ids: [forgotten.id] });
+    expect(await round("new")).toEqual({ total: 1, ids: [fresh.id] });
+    expect(await round("slipping")).toEqual({ total: 1, ids: [slipping.id] });
+  });
+
+  it("does not count an undone Forgot toward slipping", async () => {
+    const { ctx, cards } = await setup([{ term: "ettevaatlik", meaning: "careful" }]);
+    const [card] = cards;
+    if (!card) throw new Error("no card");
+    // Six reviews with three Forgots: one short of slipping.
+    const history = [1, 3, 1, 3, 1, 3] as const;
+    for (const [i, rating] of history.entries()) {
+      await gradeCard(ctx, {
+        cardId: card.id,
+        direction: "recognition",
+        rating,
+        reviewedAt: new Date(Date.now() - (12 - i) * DAY),
+      });
+    }
+    const mistake = await gradeCard(ctx, {
+      cardId: card.id,
+      direction: "recognition",
+      rating: 1,
+      reviewedAt: new Date(Date.now() - 5 * DAY),
+    });
+    expect((await reviewRounds(ctx)).slipping).toBe(1);
+    if (!mistake.reviewId) throw new Error("no review");
+    await undoReview(ctx, mistake.reviewId);
+    expect((await reviewRounds(ctx)).slipping).toBe(0);
   });
 });

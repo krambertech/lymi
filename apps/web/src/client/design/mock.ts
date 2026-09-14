@@ -65,6 +65,9 @@ export const decks: DeckSummary[] = [
 
 export const quietDecks: DeckSummary[] = decks.map((d) => ({ ...d, due: 0 }));
 
+/** Today's rounds on a morning with cards due. */
+export const rounds = { forgotten: 3, new: 12, slipping: 5 };
+
 export const history = [4, 12, 0, 9, 15, 7, 11];
 
 /**
@@ -329,12 +332,6 @@ export const noHistory: number[] = Array(90).fill(0);
 
 /** Today still open, yesterday reviewed: the streak holds. */
 export const streakDaysOpen: number[] = [...streakDays.slice(0, -1), 0];
-
-/** What Claude added since the last review, as Today groups it. */
-export const arrivals = [
-  { deckId: "d1", deckName: "Italian with Giulia", count: 12, actor: "Claude", when: "Tuesday" },
-  { deckId: "d2", deckName: "Portuguese", count: 3, actor: "You", when: "today" },
-];
 
 export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com" };
 

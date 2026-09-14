@@ -4,6 +4,8 @@ import {
   GradeOut,
   QueueOut,
   ReviewDayProgress,
+  ROUNDS,
+  RoundsOut,
   UndoInput,
   UndoOut,
 } from "@lymi/core";
@@ -17,6 +19,7 @@ import {
   reviewDraw,
   reviewHistory,
   reviewQueue,
+  reviewRounds,
   undoReview,
 } from "../services";
 
@@ -43,6 +46,10 @@ const HistoryOut = z
 const QueueQuery = z.object({
   deck: z.string().optional().meta({ description: "Limit to one deck" }),
   limit: z.coerce.number().int().min(1).max(200).optional().meta({ description: "Default 50" }),
+  round: z.enum(ROUNDS).optional().meta({
+    description:
+      "Review one Today group instead of the day's draw: cards forgotten today, new cards, or cards that keep slipping. Each card comes once; a slipping card comes whether or not it is due.",
+  }),
 });
 
 review.get(
@@ -57,9 +64,31 @@ review.get(
   }),
   query(QueueQuery, "query"),
   async (c) => {
-    const { deck, limit } = c.req.valid("query");
-    return c.json(await reviewQueue(ctxOf(c), { deckId: deck, limit }));
+    const { deck, limit, round } = c.req.valid("query");
+    return c.json(await reviewQueue(ctxOf(c), { deckId: deck, limit, round }));
   },
+);
+
+const RoundsQuery = z.object({
+  tz: z
+    .string()
+    .max(64)
+    .optional()
+    .meta({ description: "IANA timezone, used only until a review zone is known" }),
+});
+
+review.get(
+  "/rounds",
+  describe({
+    tags: ["Review"],
+    summary: "Cards in each Today round",
+    description:
+      "How many cards each round of `GET /api/review/queue?round=` holds now: forgotten today, new, and slipping.",
+    ok: { schema: RoundsOut, description: "One count per round" },
+    errors: [400],
+  }),
+  query(RoundsQuery, "query"),
+  async (c) => c.json(await reviewRounds(ctxOf(c), { zone: c.req.valid("query").tz })),
 );
 
 const DrawQuery = z.object({

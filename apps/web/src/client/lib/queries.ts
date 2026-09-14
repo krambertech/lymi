@@ -1,3 +1,4 @@
+import type { Round } from "@lymi/core";
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { api } from "./api";
 
@@ -47,15 +48,21 @@ export const cardHistoryQuery = (cardId: string) =>
     queryFn: () => api.cardHistory(cardId),
     staleTime: 0,
   });
-export const queueQuery = (deckId?: string) =>
+export const queueQuery = (deckId?: string, round?: Round) =>
   queryOptions({
-    queryKey: ["queue", deckId ?? "all"],
-    queryFn: () => api.queue(deckId),
+    queryKey: ["queue", deckId ?? "all", round ?? "draw"],
+    queryFn: () => api.queue(deckId, round),
     staleTime: 0,
     // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+/** How many cards each Today round holds. A review invalidates it with the decks. */
+export const roundsQuery = queryOptions({
+  queryKey: ["rounds"],
+  queryFn: api.rounds,
+  staleTime: 0,
+});
 /** The flame in the chrome and the panel behind it. A review invalidates it on the way out. */
 export const streakQuery = queryOptions({
   queryKey: ["streak"],

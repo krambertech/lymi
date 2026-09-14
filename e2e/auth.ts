@@ -35,11 +35,12 @@ export async function signInAsTestLearner(
     .poll(() => `${new URL(page.url()).pathname}${new URL(page.url()).search}`)
     .toBe(returnTo);
   if (returnTo === "/today") {
-    // Today names the state rather than the screen: the heading is the due count on an account
-    // with cards, and the first-run line on a fresh one. Match the hero in either state rather
-    // than pinning one wording, and keep it specific enough that another screen cannot pass.
+    // The due card names the state: the count on an account with cards, nothing due, or the
+    // first-run line on a fresh one. Match it in any state, specific enough that another screen
+    // cannot pass.
+    await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
     await expect(
-      page.getByRole("heading", { level: 1, name: /due|Nothing here yet/ }),
+      page.getByRole("heading", { level: 2, name: /due|Nothing here yet|Nothing due/ }),
     ).toBeVisible();
   }
 }

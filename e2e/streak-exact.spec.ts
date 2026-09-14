@@ -58,9 +58,10 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   await page.goto("/today");
   await page.evaluate(() => localStorage.clear());
   await page.reload();
-  await expect(page.getByRole("button", { name: "Streak: 9 days in a row" })).toBeVisible();
-  const lights = page.getByRole("img", { name: /Reviewed on 7 of the last 7 days: / });
-  await expect(lights).toBeVisible();
+  // On the phone, Today's streak card is the button.
+  const card = page.getByRole("button", { name: /^Streak: 9 days in a row\. / });
+  await expect(card).toBeVisible();
+  await expect(card.getByRole("img", { name: /Reviewed on 7 of the last 7 days: / })).toBeVisible();
 
   const streak = (await (
     await page.request.get(`/api/stats/streak?tz=${encodeURIComponent(zone)}`)
@@ -73,7 +74,7 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   const finished = /Daily goal reached\.|That’s the lot for today\./;
 
   // The phone opens the streak as a full-screen modal.
-  await page.getByRole("button", { name: "Streak: 9 days in a row" }).click();
+  await card.click();
   const modal = page.getByRole("dialog");
   await expect(modal.getByText("Longest streak")).toBeVisible();
   // Measured once the entrance has settled, since it starts slightly scaled.
@@ -96,7 +97,11 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
 
   // Desktop opens the same panel centred over the page.
   await page.setViewportSize({ width: 1280, height: 820 });
-  await page.getByRole("button", { name: "Streak: 9 days in a row" }).click();
+  // The rail's pill, since the card on the page carries the same name.
+  await page
+    .getByRole("complementary")
+    .getByRole("button", { name: "Streak: 9 days in a row", exact: true })
+    .click();
   await expect(modal.getByText(finished)).toBeVisible();
   await expect.poll(async () => (await modal.boundingBox())?.width).toBe(400);
   // Shrinking the window with the modal open turns it into the full-screen one, never a hidden modal.

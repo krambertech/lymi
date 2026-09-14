@@ -42,6 +42,8 @@ A forgotten card returns in the same direction a few cards later, then after lon
 
 The completion state reports the actual number reviewed and confirms that today's streak goal is complete. It offers **Review forgotten** when a card's latest grade today is Forgot, showing each such card once even past its three returns, **Review another round** when more eligible cards are available, and **Done**. Another round contains up to 10 additional attempts, ends earlier when no eligible cards remain, and may be chosen again after it finishes. Continuing is optional and cannot make a completed streak goal incomplete. When zero cards are due, the empty state protects but does not increase the streak and offers **Add cards**; adding alone does not count toward the review goal. Running out of cards while offline or after a failed refresh is not evidence that all useful reviews are finished.
 
+Today also offers three rounds beside the day's draw: **New cards**, which starts unseen cards in the order the draw introduces them; **Forgot today**, the same set as Review forgotten; and **Keeps slipping**, cards forgotten at least 4 times in at least 6 reviews. A slipping card comes whether or not it is due and is graded like any review, so its schedule moves and the attempt counts toward the goal. Each card comes once per round, and a card already reviewed today waits for tomorrow.
+
 ## Brand Personality
 
 Three words: warm, calm, quick.
@@ -61,7 +63,7 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 - **Generic AI apps.** No sparkle icon on every AI feature, no purple-to-blue gradient, no "magic".
 - **Editorial dark mode.** No display serifs, no near-black with a lone neon accent, no landing-page typography inside an app.
 - **Skeuomorphic flashcards.** No paper textures, ruled lines, or drop shadows pretending to be a desk.
-- **The dashboard.** No hero metrics, no charts on the home screen, no gamified progress rings shouting numbers. Charts belong in Insights, on their own screen, where looking at them is a choice.
+- **The dashboard.** No hero metrics, no charts on the home screen, no gamified progress rings shouting numbers. Today's counts are cards to act on, each leading to its review, and its one picture is the streak's run. Charts belong in Insights, on their own screen, where looking at them is a choice.
 
 ## Design Principles
 

@@ -56,6 +56,9 @@ interface PillProps {
   variant: "rail" | "phone";
 }
 
+/** The pill in the chrome, or the card on Today. Every face opens the same panel. */
+export type StreakFace = PillProps["variant"] | "card";
+
 /** The flame and the run, always in the chrome. DESIGN.md, "The streak". */
 function PillFace({ summary, variant }: PillProps) {
   const flame = summary ? streakFlameFor(summary) : "lit";
@@ -131,6 +134,88 @@ export function StreakWeek({
   );
 }
 
+/** Today's attempts against the goal, in amber because it is the flame's own measure. */
+function GoalTrack({
+  today,
+  label,
+  className,
+}: {
+  today: StreakSummary["today"];
+  /** Omit inside a control that already says it, so the track is not announced twice. */
+  label?: string | undefined;
+  className?: string | undefined;
+}) {
+  const done = satisfied(today.outcome);
+  const share = done ? 1 : Math.min(1, today.attempts / today.goal);
+  return (
+    <span
+      {...(label
+        ? {
+            role: "progressbar",
+            "aria-label": label,
+            "aria-valuemin": 0,
+            "aria-valuemax": today.goal,
+            "aria-valuenow": done ? today.goal : Math.min(today.attempts, today.goal),
+          }
+        : { "aria-hidden": true })}
+      className={clsx("block h-2 overflow-hidden rounded-full bg-plate edge-inset", className)}
+    >
+      <i
+        className="streak-fill block h-full origin-left rounded-full bg-amber rtl:origin-right"
+        style={{ transform: `scaleX(${share})` }}
+      />
+    </span>
+  );
+}
+
+/** The run and the week's lights: the streak card on Today. Today's own light shows its progress. */
+function CardFace({ summary, status }: { summary: StreakSummary; status: string }) {
+  const flame = streakFlameFor(summary);
+  const { current } = summary;
+  const week = lastDays(summary);
+  return (
+    <>
+      <span className="grid gap-2">
+        <span className="flex items-center gap-2.5">
+          <Flame className="h-7 w-[22px]" state={flame} flicker={flame === "full"} />
+          <span className="text-3xl font-medium leading-none tabular-nums">{current}</span>
+          <span className="text-md font-medium text-text-2">
+            <Plural value={current} one="day in a row" other="days in a row" />
+          </span>
+        </span>
+        <span className="text-sm text-text-2 tabular-nums">{status}</span>
+      </span>
+      <SevenLights
+        days={week.attempts}
+        satisfied={week.satisfied}
+        goals={week.goals}
+        dates={week.dates}
+        size="lg"
+        className="w-full justify-between"
+      />
+    </>
+  );
+}
+
+/** One line on where today stands against the streak: what is left, or that the day counts. */
+function useCardStatus(summary: StreakSummary | undefined): string {
+  const { t } = useLingui();
+  if (!summary) return "";
+  const { today } = summary;
+  switch (today.outcome) {
+    case "goal_met":
+      return t`Daily goal reached.`;
+    case "exhausted":
+      return t`That’s the lot for today.`;
+    case "nothing_due":
+      return t`Nothing due today, so your streak is safe.`;
+    default: {
+      const left = Math.max(today.goal - today.attempts, 0);
+      return t`${plural(left, { one: "# review", other: "# reviews" })} to today’s goal`;
+    }
+  }
+}
+
 /** One figure in a tile, with its icon and the words for it. */
 function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number; label: string }) {
   return (
@@ -192,7 +277,6 @@ export function StreakPanel({
     return dates;
   }, [byDate, done, today.date]);
   const firstMonth = summary.days[0]?.date.slice(0, 7) ?? today.date.slice(0, 7);
-  const share = done ? 1 : Math.min(1, today.attempts / today.goal);
 
   const firstRender = useRef(true);
   useLayoutEffect(() => {
@@ -305,19 +389,7 @@ export function StreakPanel({
             </IconButton>
           )}
         </div>
-        <div
-          role="progressbar"
-          aria-label={t`Today’s goal`}
-          aria-valuemin={0}
-          aria-valuemax={today.goal}
-          aria-valuenow={done ? today.goal : Math.min(today.attempts, today.goal)}
-          className="h-2 overflow-hidden rounded-full bg-plate edge-inset"
-        >
-          <i
-            className="streak-fill block h-full origin-left rounded-full bg-amber rtl:origin-right"
-            style={{ transform: `scaleX(${share})` }}
-          />
-        </div>
+        <GoalTrack today={today} label={t`Today’s goal`} />
       </div>
 
       <div className="-mt-2.5 grid grid-cols-2 gap-2.5">
@@ -342,8 +414,7 @@ export function StreakPanel({
 
 export interface StreakButtonProps extends Omit<StreakPanelProps, "summary" | "titleId" | "close"> {
   summary: StreakSummary | undefined;
-  /** "rail" sits on the sidebar's first line; "phone" is the plate at the top of the screen. */
-  variant: "rail" | "phone";
+  variant: StreakFace;
   className?: string | undefined;
 }
 
@@ -357,30 +428,44 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const rail = variant === "rail";
+  const card = variant === "card";
+  const status = useCardStatus(summary);
 
   if (!summary) {
     return (
       <Skeleton
-        className={clsx(rail ? "h-8 w-12 rounded-full" : "h-10 w-16 rounded-full", className)}
+        className={clsx(
+          card
+            ? "h-40 w-full rounded-xl"
+            : rail
+              ? "h-8 w-12 rounded-full"
+              : "h-10 w-16 rounded-full",
+          className,
+        )}
       />
     );
   }
 
   const label = t`Streak: ${plural(summary.current, { one: "# day in a row", other: "# days in a row" })}`;
-  const face = clsx(
-    "relative inline-flex shrink-0 items-center rounded-full font-semibold text-text transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.97]",
-    rail
-      ? "h-8 gap-1.5 px-2.5 text-sm before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover"
-      : "h-10 gap-2 bg-plate px-3.5 text-base edge before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-hover",
-    className,
-  );
+  const face = card
+    ? clsx(
+        "edge grid w-full content-between gap-4 rounded-xl bg-plate p-5 text-start text-text transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover",
+        className,
+      )
+    : clsx(
+        "relative inline-flex shrink-0 items-center rounded-full font-semibold text-text transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.97]",
+        rail
+          ? "h-8 gap-1.5 px-2.5 text-sm before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover"
+          : "h-10 gap-2 bg-plate px-3.5 text-base edge before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-hover",
+        className,
+      );
 
   const close = () => dialogRef.current?.close();
   return (
     <>
       <button
         type="button"
-        aria-label={label}
+        aria-label={card ? `${label}. ${status}` : label}
         aria-haspopup="dialog"
         onClick={() => {
           setOpened((n) => n + 1);
@@ -388,7 +473,11 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
         }}
         className={face}
       >
-        <PillFace summary={summary} variant={variant} />
+        {card ? (
+          <CardFace summary={summary} status={status} />
+        ) : (
+          <PillFace summary={summary} variant={variant} />
+        )}
       </button>
       {/* In the body, because a pill inside a hidden rail or header would hide an open modal with it
           when the window crosses the breakpoint, and leave the page inert behind nothing. */}

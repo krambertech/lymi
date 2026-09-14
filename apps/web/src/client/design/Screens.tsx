@@ -136,7 +136,7 @@ export const SCREENS: Entry[] = [
     slug: "today",
     name: "Today",
     source: "views/TodayView.tsx",
-    note: "One question and one action. The lantern glows while the streak is alive and is an ember when it has broken, never dark for nothing due; the count under it is the heading. The decks holding the due cards are named and each name opens that deck. The week and the run sit under the button; the run is also the pill in the chrome. What an integration added since the last review follows.",
+    note: "The due card and the streak card share the top row: the lantern beside how many cards are due, one full-width Review button, and the run with its seven lights. Under them, the rounds as three tiles that keep their place when empty, then the decks with cards due when there is more than one deck. Rows are whole links, and no term appears, so the page never gives an answer away.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
@@ -144,9 +144,8 @@ export const SCREENS: Entry[] = [
             <TodayView
               decks={m.decks}
               streak={m.streak}
-              streakButton={<StreakButton variant="phone" summary={m.streak} />}
-              arrivals={m.arrivals}
-              forecast="31 tomorrow, 9 on Monday"
+              streakCard={<StreakButton variant="card" summary={m.streak} />}
+              rounds={m.rounds}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
               static={{ path: "/" }}
@@ -156,7 +155,13 @@ export const SCREENS: Entry[] = [
             <TodayView
               decks={m.quietDecks}
               streak={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
-              forecast="31 tomorrow, 9 on Monday"
+              streakCard={
+                <StreakButton
+                  variant="card"
+                  summary={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
+                />
+              }
+              rounds={{ forgotten: 9, new: 0, slipping: 0 }}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
               static={{ path: "/" }}
@@ -174,7 +179,7 @@ export const SCREENS: Entry[] = [
         </div>
         <Shot caption="Desktop, Today" initial="light">
           {(t) => (
-            <Desktop theme={t} height={560}>
+            <Desktop theme={t} height={720}>
               <Sidebar
                 decks={m.decks}
                 name={m.me.name}
@@ -187,8 +192,8 @@ export const SCREENS: Entry[] = [
                 <TodayView
                   decks={m.decks}
                   streak={m.streak}
-                  arrivals={m.arrivals}
-                  forecast="31 tomorrow, 9 on Monday"
+                  streakCard={<StreakButton variant="card" summary={m.streak} />}
+                  rounds={m.rounds}
                   name={m.me.name}
                   docsUrl="https://lymi.app/docs"
                   static={{ path: "/" }}

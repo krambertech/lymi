@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useAddCard } from "../lib/add-card";
 import { publicSiteUrl } from "../lib/origins";
-import { decksQuery, meQuery, streakQuery } from "../lib/queries";
+import { decksQuery, meQuery, roundsQuery, streakQuery } from "../lib/queries";
 import { Streak } from "../lib/streak";
 import { useSignOut } from "../lib/use-sign-out";
 import { TodayView } from "../views/TodayView";
@@ -13,8 +13,9 @@ export const Route = createFileRoute("/today")({
 
 function Today() {
   const decks = useQuery(decksQuery);
-  // The same query as the pill, so the flame in the chrome and the week on the page always agree.
+  // The same query as the rail's pill, so the flame in the chrome and the card always agree.
   const streak = useQuery(streakQuery);
+  const rounds = useQuery(roundsQuery);
   const me = useQuery(meQuery);
   const add = useAddCard();
   const leave = useSignOut();
@@ -22,7 +23,8 @@ function Today() {
     <TodayView
       decks={decks.data}
       streak={streak.data}
-      streakButton={<Streak variant="phone" />}
+      streakCard={<Streak variant="card" />}
+      rounds={rounds.data}
       name={me.data?.name}
       email={me.data?.email}
       docsUrl={publicSiteUrl("/docs")}

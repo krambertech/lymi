@@ -102,7 +102,7 @@ function ToastAction({ className, ...props }: ToastPrimitive.Action.Props) {
     <ToastPrimitive.Action
       data-slot="toast-action"
       className={cn(
-        "relative shrink-0 rounded-sm px-2.5 py-1.5 text-sm font-semibold text-toast-action transition-[background-color,scale] duration-150 before:absolute before:-inset-x-1 before:-inset-y-2 before:content-[''] hoverable:hover:bg-canvas/10 active:scale-[0.97]",
+        "relative shrink-0 rounded-sm px-2.5 py-1.5 text-sm font-semibold text-toast-action transition-[background-color,scale] duration-150 before:absolute before:-inset-x-1 before:-inset-y-2 before:content-[''] hoverable:hover:bg-canvas/10 focus-visible:outline-canvas active:scale-[0.97]",
         className,
       )}
       {...props}
@@ -115,7 +115,7 @@ function ToastClose({ className, children, ...props }: ToastPrimitive.Close.Prop
     <ToastPrimitive.Close
       data-slot="toast-close"
       className={cn(
-        "relative grid size-7 shrink-0 place-items-center rounded-sm text-canvas/60 transition-colors duration-150 after:absolute after:-inset-2 after:content-[''] hoverable:hover:bg-canvas/10 hoverable:hover:text-canvas [&_svg]:size-4",
+        "relative grid size-7 shrink-0 place-items-center rounded-sm text-canvas/60 transition-colors duration-150 after:absolute after:-inset-2 after:content-[''] hoverable:hover:bg-canvas/10 hoverable:hover:text-canvas focus-visible:outline-canvas [&_svg]:size-4",
         className,
       )}
       {...props}

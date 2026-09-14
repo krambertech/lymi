@@ -261,7 +261,6 @@ export function ConversationScenes({ title, body, scenes, language }: Props) {
           <ol className="col-start-1 row-start-1 m-0 flex list-none flex-col gap-2 p-0">
             {scene.lines.map((line, i) => {
               const said = i < count;
-              const current = i === count - 1 || done;
               return (
                 <motion.li
                   // biome-ignore lint/suspicious/noArrayIndexKey: lines are said in order and never reorder
@@ -271,7 +270,7 @@ export function ConversationScenes({ title, body, scenes, language }: Props) {
                   initial={false}
                   animate={
                     said
-                      ? { opacity: current ? 1 : 0.55, y: 0, scale: 1, filter: "blur(0px)" }
+                      ? { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }
                       : still
                         ? { opacity: 0 }
                         : { opacity: 0, y: 24, scale: 0.94, filter: "blur(8px)" }

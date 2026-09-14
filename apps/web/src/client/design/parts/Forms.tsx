@@ -7,6 +7,20 @@ import { Field, Input, Textarea } from "../../components/Field";
 import { Segmented } from "../../components/Segmented";
 import { Switch } from "../../components/Switch";
 import {
+  Combobox,
+  ComboboxCollection,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxLabel,
+  ComboboxList,
+  ComboboxSeparator,
+  ComboboxTrigger,
+  ComboboxValue,
+} from "../../components/ui/combobox";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -375,27 +389,86 @@ export const select: Group = {
   ],
 };
 
+const OWN_DECK_GROUP = { value: "own", label: "Your decks", items: OWN_DECKS };
+const SHARED_DECK_GROUP = { value: "shared", label: "Shared with you", items: SHARED_DECKS };
+
+/** Decks to search, grouped the way Library groups them. */
+function DeckCombobox({
+  value,
+  onChange,
+  disabled,
+}: {
+  value: string | null;
+  onChange: (value: string | null) => void;
+  disabled?: boolean;
+}) {
+  const decks = [...OWN_DECKS, ...SHARED_DECKS];
+  return (
+    <Combobox<(typeof decks)[number]>
+      items={[OWN_DECK_GROUP, SHARED_DECK_GROUP]}
+      value={decks.find((d) => d.value === value) ?? null}
+      onValueChange={(next) => onChange(next?.value ?? null)}
+      isItemEqualToValue={(a, b) => a.value === b.value}
+      disabled={disabled}
+    >
+      <ComboboxTrigger>
+        <ComboboxValue placeholder="Choose a deck" />
+      </ComboboxTrigger>
+      <ComboboxContent aria-label="Deck">
+        <ComboboxInput placeholder="Search decks" />
+        <ComboboxEmpty>No deck by that name.</ComboboxEmpty>
+        <ComboboxList>
+          {(group: typeof OWN_DECK_GROUP, index: number) => (
+            <ComboboxGroup key={group.value} items={group.items}>
+              {index > 0 && <ComboboxSeparator />}
+              <ComboboxLabel>{group.label}</ComboboxLabel>
+              <ComboboxCollection>
+                {(deck: (typeof decks)[number]) => (
+                  <ComboboxItem key={deck.value} value={deck}>
+                    <span className="flex-1 truncate">{deck.label}</span>
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxGroup>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  );
+}
+
 export const combobox: Group = {
   slug: "combobox",
   title: "Combobox",
-  lede: "For a list of forty. Closed, it is Select’s box. Open, the panel starts with a search field and the names filter as you type.",
+  lede: "For a list of forty. Closed, it is Select’s box. Open, it takes the machine’s shape the way Select does: a panel under the box on a desktop, a drawer under the thumb on a touch device. The search field leads, the rows filter as you type, and the first match is highlighted so Enter takes it.",
   entries: [
     {
       slug: "combobox",
       name: "Combobox",
-      source: "components/DeckFields.tsx",
+      source: "components/ui/combobox.tsx",
       Demo: function ComboboxDemo() {
         const [lang, setLang] = useState<string | null>("it");
+        const [tag, setTag] = useState<string | null>("eu");
         const [empty, setEmpty] = useState<string | null>(null);
+        const [deck, setDeck] = useState<string | null>("d3");
         return (
           <Variants
             items={[
               {
                 label: "Chosen",
-                note: "A language is set. Open it and the search field takes focus.",
+                note: "A language is set. Open it and the search field takes focus; a name or a tag finds a row.",
                 render: () => (
                   <div className={box}>
                     <LanguageField value={lang} onChange={setLang} />
+                  </div>
+                ),
+              },
+              {
+                label: "A tag the list does not know",
+                note: "Typed in full, a valid tag becomes the only row. Once chosen, it reads by name. Text that is not a tag is never taken.",
+                render: () => (
+                  <div className={box}>
+                    <LanguageField value={tag} onChange={setTag} />
                   </div>
                 ),
               },
@@ -410,6 +483,28 @@ export const combobox: Group = {
                       error="Choose the language this deck’s cards are in."
                     />
                   </div>
+                ),
+              },
+              {
+                label: "Groups",
+                note: "Two kinds of the same thing, each under a small label, with a rule between them. A group with no match leaves with its label.",
+                render: () => (
+                  <Field label="Deck" className={box}>
+                    <DeckCombobox value={deck} onChange={setDeck} />
+                  </Field>
+                ),
+              },
+              {
+                label: "Disabled",
+                note: "Cannot change right now, and the hint says why.",
+                render: () => (
+                  <Field
+                    label="Deck"
+                    hint="Cannot change while a review is running."
+                    className={box}
+                  >
+                    <DeckCombobox value={deck} onChange={setDeck} disabled />
+                  </Field>
                 ),
               },
             ]}

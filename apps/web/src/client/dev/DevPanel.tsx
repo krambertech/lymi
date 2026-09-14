@@ -3,10 +3,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { Wrench, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
-import { Combobox, type ComboboxOption } from "../components/Combobox";
 import { Field } from "../components/Field";
 import { Kbd } from "../components/Kbd";
 import { Segmented } from "../components/Segmented";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxItemHint,
+  ComboboxList,
+  ComboboxTrigger,
+  ComboboxValue,
+} from "../components/ui/combobox";
 import { ApiError, api } from "../lib/api";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
@@ -15,8 +25,8 @@ import { type DevCounts, devApi } from "./dev-api";
 /**
  * Local development and isolated app previews only. One small form: who you are, how many
  * cards are due, what the account holds, the meaning language and the theme. Every row is
- * the app's own Combobox,
- * so a person reads the current value at a glance and an agent changes it with one call.
+ * the app's own Combobox, so a person reads the current value at a glance and an agent changes it
+ * by typing into its search.
  * The panel opens above the button that toggles it, in the bottom-right corner; the
  * backtick key toggles it too. Never bundled: the root route imports it behind
  * a compile-time development or preview branch.
@@ -35,7 +45,13 @@ const THEMES: { value: ThemeChoice; label: string }[] = [
 ];
 /** The resting value of a row that runs an action rather than holding a setting. */
 const NOW = "now";
-const DUE_OPTIONS: ComboboxOption[] = [
+interface Choice {
+  value: string;
+  label: string;
+  hint?: string | undefined;
+}
+
+const DUE_OPTIONS: Choice[] = [
   { value: "0", label: "Make nothing due" },
   { value: "1", label: "Make 1 card due" },
   { value: "5", label: "Make 5 cards due" },
@@ -200,7 +216,7 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
   }, [ref]);
 
   const list = personas.data?.personas ?? [];
-  const personaOptions: ComboboxOption[] = [
+  const personaOptions: Choice[] = [
     ...(signedOut ? [{ value: "out", label: "Signed out" }] : []),
     ...(state.data && !current
       ? [{ value: "real", label: state.data.user.email, hint: "real account" }]
@@ -209,7 +225,7 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
   ];
   const personaValue = current?.id ?? (state.data ? "real" : signedOut ? "out" : null);
 
-  const dataOptions: ComboboxOption[] = state.data
+  const dataOptions: Choice[] = state.data
     ? [
         { value: NOW, label: counts(state.data.counts) },
         { value: "reseed", label: `Reseed ${current?.id ?? "learner"}` },
@@ -239,12 +255,13 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
 
       <div className="grid gap-3.5 overflow-y-auto overscroll-contain px-5 pt-4 pb-5">
         <Row label="Persona" hint={current?.description}>
-          <Combobox
+          <Choices
+            label="Persona"
             value={personaValue}
             options={personaOptions}
             searchLabel="Search personas"
             onChange={(v) => {
-              if (v && v !== "real" && v !== "out") become(v);
+              if (v !== "real" && v !== "out") become(v);
             }}
           />
         </Row>
@@ -252,7 +269,8 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
         {state.data && (
           <>
             <Row label="Due">
-              <Combobox
+              <Choices
+                label="Due"
                 value={NOW}
                 options={[
                   { value: NOW, label: `${state.data.counts.due} due now` },
@@ -260,20 +278,21 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
                 ]}
                 searchLabel="Choose how many are due"
                 onChange={(v) => {
-                  if (v && v !== NOW) due.mutate(v === "all" ? "all" : Number(v));
+                  if (v !== NOW) due.mutate(v === "all" ? "all" : Number(v));
                 }}
               />
             </Row>
 
             <Row label="Data">
-              <Combobox
+              <Choices
+                label="Data"
                 value={NOW}
                 options={dataOptions}
                 searchLabel="Choose what to load"
                 onChange={(v) => {
                   if (v === "empty") reset.mutate();
                   else if (v === "reseed") seed.mutate(current?.id);
-                  else if (v?.startsWith("load:")) seed.mutate(v.slice(5));
+                  else if (v.startsWith("load:")) seed.mutate(v.slice(5));
                 }}
               />
             </Row>
@@ -319,6 +338,48 @@ function Panel({ ref }: { ref: React.RefObject<HTMLElement | null> }) {
         </p>
       </footer>
     </section>
+  );
+}
+
+/** A row's value, or the action it runs, picked from a searchable list. */
+function Choices({
+  label,
+  value,
+  options,
+  searchLabel,
+  onChange,
+}: {
+  label: string;
+  value: string | null;
+  options: Choice[];
+  searchLabel: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <Combobox<Choice>
+      items={options}
+      value={options.find((o) => o.value === value) ?? null}
+      onValueChange={(next) => {
+        if (next) onChange(next.value);
+      }}
+      isItemEqualToValue={(a, b) => a.value === b.value}
+    >
+      <ComboboxTrigger>
+        <ComboboxValue placeholder="Choose one" />
+      </ComboboxTrigger>
+      <ComboboxContent aria-label={label}>
+        <ComboboxInput placeholder={searchLabel} />
+        <ComboboxEmpty>Nothing matches</ComboboxEmpty>
+        <ComboboxList>
+          {(option: Choice) => (
+            <ComboboxItem key={option.value} value={option}>
+              <span className="flex-1 truncate">{option.label}</span>
+              {option.hint && <ComboboxItemHint>{option.hint}</ComboboxItemHint>}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
   );
 }
 

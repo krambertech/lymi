@@ -150,6 +150,7 @@ export default defineConfig({
               "@lingui/core",
               "@lingui/react",
               // Discovered mid-run, a dependency reloads the page and loads a second React.
+              "@base-ui/react/combobox",
               "@base-ui/react/dialog",
               "@base-ui/react/drawer",
               "@base-ui/react/menu",

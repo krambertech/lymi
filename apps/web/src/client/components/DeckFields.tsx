@@ -2,11 +2,22 @@ import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions } from "@lymi/core";
-import { useId } from "react";
-import { Combobox, type ComboboxOption } from "./Combobox";
+import { useId, useState } from "react";
 import { Field } from "./Field";
 import { RadioCard } from "./RadioCard";
 import { Segmented } from "./Segmented";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxItemHint,
+  ComboboxList,
+  ComboboxTrigger,
+  ComboboxValue,
+  useComboboxFilter,
+} from "./ui/combobox";
 
 /**
  * The two settings a deck carries besides its name, shared by the create sheet and the deck
@@ -73,9 +84,17 @@ export function languageName(tag: string, locale: string = globalI18n.locale): s
   }
 }
 
-const optionLists = new Map<string, ComboboxOption[]>();
+interface LanguageOption {
+  /** `null` is the row that clears the language. */
+  value: string | null;
+  label: string;
+  /** The BCP 47 tag, shown at the end of the row. */
+  hint?: string | undefined;
+}
+
+const optionLists = new Map<string, LanguageOption[]>();
 /** The list in the interface language, sorted the way that language sorts. */
-function optionsFor(locale: string): ComboboxOption[] {
+function optionsFor(locale: string): LanguageOption[] {
   let list = optionLists.get(locale);
   if (!list) {
     list = TAGS.map((tag) => ({ value: tag, label: languageName(tag, locale), hint: tag })).sort(
@@ -98,35 +117,71 @@ interface LanguageProps {
 }
 
 /**
- * Forty languages is a list you search, not a list you scroll: the box becomes a search
- * field and the names filter as you type. The tag rides along on each row, because the tag
- * is what tells Portuguese from Brazilian Portuguese and it is what the API stores. A tag
- * the list has never heard of is still reachable — type it and it becomes the last row.
+ * Forty languages is a list you search, not a list you scroll. The tag rides along on each row,
+ * because the tag tells Portuguese from Brazilian Portuguese and it is what the API stores. A valid
+ * tag the list does not hold is still reachable: typed in full, it becomes the last row.
  */
 export function LanguageField({ value, onChange, label, hint, error }: LanguageProps) {
   const { t, i18n } = useLingui();
+  const [query, setQuery] = useState("");
+  const { contains } = useComboboxFilter({ locale: i18n.locale });
+  const none: LanguageOption = { value: null, label: t`No language` };
   const base = optionsFor(i18n.locale);
   // A tag chosen by hand belongs in the list too, so it reads by name and shows as selected.
-  const options =
+  const known =
     value && !TAGS.includes(value)
       ? [...base, { value, label: languageName(value, i18n.locale), hint: value }]
       : base;
+
+  const tag = query.trim();
+  const matches = tag
+    ? known.filter((o) => contains(o.label, tag) || contains(o.hint ?? "", tag))
+    : [none, ...known];
+  // Offered beside partial matches too, since "sw" is inside "Swedish" and would otherwise be unreachable.
+  const custom: LanguageOption | null =
+    TAG_RE.test(tag) && !known.some((o) => o.hint?.toLowerCase() === tag.toLowerCase())
+      ? { value: tag, label: t`Use “${tag}” as the tag` }
+      : null;
+  const shown = custom ? [...matches, custom] : matches;
+
+  const fieldLabel = label ?? t`Language`;
   return (
     <Field
-      label={label ?? t`Language`}
+      label={fieldLabel}
       hint={hint ?? t`The language this deck’s cards are in. It fills in on every new card.`}
       error={error}
     >
-      <Combobox
-        value={value}
-        onChange={onChange}
-        options={options}
-        clearLabel={t`No language`}
-        searchLabel={t`Search languages`}
-        accept={(query) => (TAG_RE.test(query) ? query : null)}
-        acceptLabel={(tag) => t`Use “${tag}” as the tag`}
-        emptyLabel={t`No language by that name. Type its tag to use it anyway.`}
-      />
+      <Combobox<LanguageOption>
+        items={custom ? [none, ...known, custom] : [none, ...known]}
+        filteredItems={shown}
+        value={known.find((o) => o.value === value) ?? none}
+        onValueChange={(next) => onChange(next?.value ?? null)}
+        isItemEqualToValue={(a, b) => a.value === b.value}
+        inputValue={query}
+        onInputValueChange={setQuery}
+        // On opening rather than closing, so the closing list does not flash back to every language.
+        onOpenChange={(open) => {
+          if (open) setQuery("");
+        }}
+      >
+        <ComboboxTrigger>
+          <ComboboxValue />
+        </ComboboxTrigger>
+        <ComboboxContent aria-label={fieldLabel}>
+          <ComboboxInput placeholder={t`Search languages`} />
+          <ComboboxEmpty>
+            <Trans>No language by that name. Type its tag to use it anyway.</Trans>
+          </ComboboxEmpty>
+          <ComboboxList>
+            {(option: LanguageOption) => (
+              <ComboboxItem key={option.value ?? ""} value={option}>
+                <span className="flex-1 truncate">{option.label}</span>
+                {option.hint && <ComboboxItemHint>{option.hint}</ComboboxItemHint>}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
     </Field>
   );
 }

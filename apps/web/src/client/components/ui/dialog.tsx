@@ -90,6 +90,7 @@ function DialogContent({
   initialFocus,
   children,
 }: {
+  /** Dresses the centred dialog, usually its width. The drawer sizes itself, so it ignores this. */
   className?: string | undefined;
   /** Where focus lands on opening, when the first control is not the safe one. */
   initialFocus?: DialogPrimitive.Popup.Props["initialFocus"];
@@ -99,7 +100,11 @@ function DialogContent({
   if (useDialogShape("DialogContent") === "touch") {
     return (
       <DrawerContent {...focus}>
-        <div data-slot="dialog-content" className={cn("grid gap-4 px-4 pt-2 pb-5", className)}>
+        {/* One column that never grows past the drawer, so a long unbroken value truncates instead. */}
+        <div
+          data-slot="dialog-content"
+          className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4 px-4 pt-2 pb-5"
+        >
           {children}
         </div>
       </DrawerContent>

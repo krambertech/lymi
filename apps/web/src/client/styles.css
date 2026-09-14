@@ -609,54 +609,6 @@
   }
 }
 
-/* ---- Picker panel ------------------------------------------------------ */
-
-/*
- * The list under a Select or Combobox. A popover, so it sits in the top layer over the form
- * and escapes the drawer's transform; positioned from the box by the component. It unfolds
- * from its top edge, the way a menu grows from its button, and leaves faster than it came.
- */
-.picker-panel {
-  position: fixed;
-  inset: auto;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  color: inherit;
-  transform-origin: top center;
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 100ms var(--ease-out),
-    transform 100ms var(--ease-out),
-    overlay 100ms allow-discrete,
-    display 100ms allow-discrete;
-  @starting-style {
-    opacity: 0;
-    transform: translateY(-4px) scale(0.98);
-  }
-}
-.picker-panel:popover-open {
-  transition-duration: 140ms;
-}
-.picker-panel[data-flipped] {
-  transform-origin: bottom center;
-}
-.picker-panel[data-flipped]:not(:popover-open) {
-  transform: translateY(4px) scale(0.98);
-}
-.picker-panel:not(:popover-open) {
-  opacity: 0;
-  transform: translateY(-4px) scale(0.98);
-}
-@media (prefers-reduced-motion: reduce) {
-  .picker-panel,
-  .picker-panel:not(:popover-open),
-  .picker-panel[data-flipped]:not(:popover-open) {
-    transform: none;
-  }
-}
-
 /* ---- Error tip --------------------------------------------------------- */
 
 /*

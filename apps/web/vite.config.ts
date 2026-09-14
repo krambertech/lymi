@@ -7,11 +7,13 @@ import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
-import { configDefaults } from "vitest/config";
+import { configDefaults, type TestProjectConfiguration } from "vitest/config";
 import { e2eAllowedEmails } from "../../e2e/settings.mjs";
 
 const isE2E = process.env.LYMI_E2E === "1";
 const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";
+// Workers Builds has no Playwright browsers; GitHub CI runs the component tests before merge.
+const isWorkersBuild = process.env.WORKERS_CI === "1";
 
 /**
  * Stamped into the persisted query cache. Any rebuild discards a cache written by an older
@@ -119,78 +121,80 @@ export default defineConfig({
   optimizeDeps: { include: ["motion/react", "react", "react-dom", "react-dom/client"] },
   server: { port: 5173 },
   test: {
-    projects: [
-      {
-        extends: true,
-        test: { name: "unit", exclude: [...configDefaults.exclude, "**/*.browser.test.tsx"] },
-      },
-      {
-        // The primitives in real browsers, one instance per machine an overlay adapts to. Not the
-        // Worker's config: the Cloudflare plugin cannot run inside a browser session.
-        extends: false,
-        plugins: [
-          react(),
-          lingui({ failOnCompileError: true, failOnMissing: true }),
-          babel({
-            include: [/\/src\/.*\.tsx?(\?.*)?$/],
-            presets: [linguiTransformerBabelPreset()],
-          }),
-          tailwindcss(),
-        ],
-        resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
-        optimizeDeps: {
-          include: [
-            "react",
-            "react-dom",
-            "react-dom/client",
-            "vitest-browser-react",
-            "@lingui/core",
-            "@lingui/react",
-            // Discovered mid-run, a dependency reloads the page and loads a second React.
-            "@base-ui/react/dialog",
-            "@base-ui/react/drawer",
-            "@base-ui/react/menu",
-            "@base-ui/react/merge-props",
-            "@base-ui/react/select",
-            "@base-ui/react/separator",
-            "@base-ui/react/tooltip",
-            "@base-ui/react/use-render",
-          ],
+    projects: (
+      [
+        {
+          extends: true,
+          test: { name: "unit", exclude: [...configDefaults.exclude, "**/*.browser.test.tsx"] },
         },
-        test: {
-          name: "components",
-          include: ["src/client/**/*.browser.test.tsx"],
-          setupFiles: ["src/client/test/browser-setup.ts"],
-          browser: {
-            enabled: true,
-            headless: true,
-            screenshotFailures: false,
-            provider: playwright(),
-            instances: [
-              {
-                name: "desktop",
-                browser: "chromium",
-                viewport: { width: 1280, height: 800 },
-                provide: { machine: "desktop" },
-              },
-              {
-                name: "touch",
-                browser: "chromium",
-                viewport: { width: 390, height: 844 },
-                provider: playwright({ contextOptions: { hasTouch: true, isMobile: true } }),
-                provide: { machine: "touch" },
-              },
-              {
-                name: "touch-webkit",
-                browser: "webkit",
-                viewport: { width: 390, height: 844 },
-                provider: playwright({ contextOptions: { hasTouch: true, isMobile: true } }),
-                provide: { machine: "touch" },
-              },
+        {
+          // The primitives in real browsers, one instance per machine an overlay adapts to. Not the
+          // Worker's config: the Cloudflare plugin cannot run inside a browser session.
+          extends: false,
+          plugins: [
+            react(),
+            lingui({ failOnCompileError: true, failOnMissing: true }),
+            babel({
+              include: [/\/src\/.*\.tsx?(\?.*)?$/],
+              presets: [linguiTransformerBabelPreset()],
+            }),
+            tailwindcss(),
+          ],
+          resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
+          optimizeDeps: {
+            include: [
+              "react",
+              "react-dom",
+              "react-dom/client",
+              "vitest-browser-react",
+              "@lingui/core",
+              "@lingui/react",
+              // Discovered mid-run, a dependency reloads the page and loads a second React.
+              "@base-ui/react/dialog",
+              "@base-ui/react/drawer",
+              "@base-ui/react/menu",
+              "@base-ui/react/merge-props",
+              "@base-ui/react/select",
+              "@base-ui/react/separator",
+              "@base-ui/react/tooltip",
+              "@base-ui/react/use-render",
             ],
           },
+          test: {
+            name: "components",
+            include: ["src/client/**/*.browser.test.tsx"],
+            setupFiles: ["src/client/test/browser-setup.ts"],
+            browser: {
+              enabled: true,
+              headless: true,
+              screenshotFailures: false,
+              provider: playwright(),
+              instances: [
+                {
+                  name: "desktop",
+                  browser: "chromium",
+                  viewport: { width: 1280, height: 800 },
+                  provide: { machine: "desktop" },
+                },
+                {
+                  name: "touch",
+                  browser: "chromium",
+                  viewport: { width: 390, height: 844 },
+                  provider: playwright({ contextOptions: { hasTouch: true, isMobile: true } }),
+                  provide: { machine: "touch" },
+                },
+                {
+                  name: "touch-webkit",
+                  browser: "webkit",
+                  viewport: { width: 390, height: 844 },
+                  provider: playwright({ contextOptions: { hasTouch: true, isMobile: true } }),
+                  provide: { machine: "touch" },
+                },
+              ],
+            },
+          },
         },
-      },
-    ],
+      ] satisfies TestProjectConfiguration[]
+    ).filter((project) => !(isWorkersBuild && project.test.name === "components")),
   },
 });

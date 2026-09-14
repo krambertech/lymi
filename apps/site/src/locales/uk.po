@@ -519,10 +519,12 @@ msgstr "Глибока, тривала прихильність"
 msgid "Design"
 msgstr "Дизайн"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/AssistantsView.tsx
 msgid "Deutsch · noun"
 msgstr "Deutsch · іменник"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/AssistantsView.tsx
 msgid "Deutsch · verb"
 msgstr "Deutsch · дієслово"
@@ -589,6 +591,7 @@ msgid "Eesti · adjective"
 msgstr "Eesti · прикметник"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Eesti · noun"
 msgstr "Eesti · іменник"
 
@@ -641,6 +644,7 @@ msgid "Español · new"
 msgstr "Español · нова"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Español · phrase"
 msgstr "Español · фраза"
 
@@ -731,6 +735,7 @@ msgid "Forgot"
 msgstr "Не пам’ятаю"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Français · phrase"
 msgstr "Français · фраза"
 
@@ -1351,9 +1356,7 @@ msgstr "Нотатки"
 msgid "Nothing during the private beta."
 msgstr "Під час закритої бети — нічого."
 
-#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "noun"
 msgstr "іменник"
 
@@ -1411,7 +1414,6 @@ msgid "Philosophy"
 msgstr "Філософія"
 
 #: src/components/landing/hand-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "phrase"
 msgstr "фраза"
 
@@ -1424,8 +1426,7 @@ msgstr "Фізика"
 msgid "Pick your assistant for its steps."
 msgstr "Обери свого асистента, щоб побачити інструкцію."
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/PracticeChat.tsx
+#: src/components/landing/ReplayButton.tsx
 msgid "Play again"
 msgstr "Ще раз"
 
@@ -2124,7 +2125,6 @@ msgstr "зазвичай"
 msgid "Usually"
 msgstr "Зазвичай"
 
-#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
 msgid "verb"
 msgstr "дієслово"
@@ -2319,5 +2319,6 @@ msgid "日本語 · noun"
 msgstr "日本語 · іменник"
 
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "日本語 · phrase"
 msgstr "日本語 · фраза"

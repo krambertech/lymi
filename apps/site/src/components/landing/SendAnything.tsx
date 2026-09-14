@@ -2,12 +2,11 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { type ReactNode, useRef } from "react";
 import { SectionTitle } from "./FeatureSection";
-import { useInView, usePlayback } from "./playback";
+import { EASE, usePlayback } from "./playback";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
 /** Each source lights its word, then its card slides out from under it, one after another. */
 const STEP_MS = 650;
 const BEATS = {
@@ -37,8 +36,7 @@ interface Source {
   id: string;
   from: MessageDescriptor;
   lang: string;
-  label: string;
-  kind: MessageDescriptor;
+  label: MessageDescriptor;
   term: string;
   meaning: MessageDescriptor;
   render: (picked: boolean) => ReactNode;
@@ -49,8 +47,7 @@ const SOURCES: Source[] = [
     id: "whiteboard",
     from: msg`The whiteboard`,
     lang: "es",
-    label: "Español",
-    kind: msg`phrase`,
+    label: msg`Español · phrase`,
     term: "estar de acuerdo",
     meaning: msg`To agree`,
     render: (picked) => (
@@ -69,8 +66,7 @@ const SOURCES: Source[] = [
     id: "chat",
     from: msg`Your tutor’s message`,
     lang: "fr",
-    label: "Français",
-    kind: msg`phrase`,
+    label: msg`Français · phrase`,
     term: "ça me manque",
     meaning: msg`I miss it`,
     render: (picked) => (
@@ -91,8 +87,7 @@ const SOURCES: Source[] = [
     id: "transcript",
     from: msg`A lesson transcript`,
     lang: "ja",
-    label: "日本語",
-    kind: msg`phrase`,
+    label: msg`日本語 · phrase`,
     term: "お疲れ様です",
     meaning: msg`Thanks for your hard work`,
     render: (picked) => (
@@ -128,8 +123,7 @@ const SOURCES: Source[] = [
     id: "book",
     from: msg`A book`,
     lang: "et",
-    label: "Eesti",
-    kind: msg`noun`,
+    label: msg`Eesti · noun`,
     term: "igatsus",
     meaning: msg`Longing`,
     render: (picked) => (
@@ -147,7 +141,8 @@ const SOURCES: Source[] = [
 export function SendAnything() {
   const { i18n } = useLingui();
   const still = useReducedMotion();
-  const [ref, inView] = useInView<HTMLUListElement>();
+  const ref = useRef<HTMLUListElement>(null);
+  const inView = useInView(ref, { amount: 0.35 });
   const { at } = usePlayback(BEATS, inView, still);
 
   return (
@@ -197,7 +192,7 @@ export function SendAnything() {
                 transition={{ duration: still ? 0 : STEP_MS / 1000, ease: EASE }}
               >
                 <p className="text-2xs tracking-[0.06em] text-muted uppercase">
-                  {source.label} · {i18n._(source.kind)}
+                  {i18n._(source.label)}
                 </p>
                 <p
                   lang={source.lang}

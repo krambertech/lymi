@@ -12,6 +12,8 @@ export interface Bindings extends Env {
   GOOGLE_CLIENT_SECRET: string;
   /** Full service-account JSON, stored as one encrypted Worker secret. */
   GOOGLE_CLOUD_TTS_CREDENTIALS?: string;
+  GEMINI_SPEECH_MODEL?: string;
+  GEMINI_SPEECH_VOICE?: string;
   OPENAI_API_KEY?: string;
   OPENAI_BASE_URL?: string;
   OPENAI_SPEECH_MODEL?: string;

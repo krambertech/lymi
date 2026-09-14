@@ -4,7 +4,7 @@ export type SpeechRequest = {
 };
 
 export interface SpeechProvider {
-  provider: "google-chirp" | "openai";
+  provider: "google-gemini" | "google-chirp" | "openai";
   model: string;
   voice: string;
   /** The exact locale sent upstream. It is part of the cache identity. */

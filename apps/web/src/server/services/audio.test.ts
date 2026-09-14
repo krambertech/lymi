@@ -82,7 +82,11 @@ function provider(
 ): SpeechProvider {
   return {
     provider: name,
-    model: name === "google-chirp" ? "chirp-3-hd" : "gpt-4o-mini-tts",
+    model: {
+      "google-gemini": "gemini-3.1-flash-tts-preview",
+      "google-chirp": "chirp-3-hd",
+      openai: "gpt-4o-mini-tts",
+    }[name],
     voice: "Kore",
     locale: "et-EE",
     contentType: "audio/mpeg",
@@ -257,20 +261,82 @@ describe("pronunciation audio", () => {
     expect(providers).not.toHaveBeenCalled();
   });
 
-  it("reuses the card's remembered object before selecting a provider", async () => {
+  it("reuses remembered audio from the preferred provider without generating", async () => {
+    const objects = new Map<string, R2ObjectBody>();
+    const get = vi.fn(async (key: string) => objects.get(key) ?? null);
+    const put = vi.fn(async (key: string) => {
+      objects.set(key, storedAudio(key));
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get, put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const providers = () => [provider("google-gemini", speech)];
+
+    const first = await pronunciationAudio(context(card()), "card-1", { bucket, providers });
+    get.mockClear();
+    const again = await pronunciationAudio(context(card({ audioKey: first.key })), "card-1", {
+      bucket,
+      providers,
+    });
+
+    expect(again.key).toBe(first.key);
+    expect(speech).toHaveBeenCalledOnce();
+    expect(get).toHaveBeenCalledOnce();
+  });
+
+  it("replaces remembered audio from a provider that is no longer preferred", async () => {
+    const old = storedAudio("cards/card-1/openai.mp3");
+    const objects = new Map<string, R2ObjectBody>([[old.key, old]]);
+    const put = vi.fn(async (key: string) => {
+      objects.set(key, storedAudio(key));
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({ get: vi.fn(async (key: string) => objects.get(key) ?? null), put })[property as "get"],
+    });
+    const gemini = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+
+    const audio = await pronunciationAudio(context(card({ audioKey: old.key })), "card-1", {
+      bucket,
+      providers: () => [provider("google-gemini", gemini)],
+    });
+
+    expect(gemini).toHaveBeenCalledOnce();
+    expect(audio.key).not.toBe(old.key);
+  });
+
+  it("keeps playing remembered audio when every provider fails", async () => {
+    const old = storedAudio("cards/card-1/openai.mp3");
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({ get: vi.fn(async (key: string) => (key === old.key ? old : null)) })[property as "get"],
+    });
+    const gemini = vi.fn(async () => {
+      throw new Error("unavailable");
+    });
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+
+    const audio = await pronunciationAudio(context(card({ audioKey: old.key })), "card-1", {
+      bucket,
+      providers: () => [provider("google-gemini", gemini)],
+    });
+
+    expect(audio.key).toBe(old.key);
+  });
+
+  it("plays remembered audio when no provider is configured", async () => {
     const stored = storedAudio("cards/card-1/existing.mp3");
     const get = vi.fn(async () => stored);
-    const providers = vi.fn();
     const bucket = new Proxy(Object.create(null) as R2Bucket, {
       get: (_target, property) => ({ get })[property as "get"],
     });
 
     await pronunciationAudio(context(card({ audioKey: stored.key })), "card-1", {
       bucket,
-      providers,
+      providers: () => [],
     });
 
     expect(get).toHaveBeenCalledWith(stored.key);
-    expect(providers).not.toHaveBeenCalled();
   });
 });

@@ -25,6 +25,7 @@ describe("OpenAI speech provider", () => {
       input: "bore da",
       response_format: "mp3",
     });
+    expect(JSON.parse(String(call[1]?.body)).instructions).toContain("native Welsh speaker");
   });
 
   it("does not make a request when the key is missing", async () => {

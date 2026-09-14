@@ -11,13 +11,14 @@ const MAX_AUDIO_BYTES = 8_000_000;
 
 interface AudioDependencies {
   bucket: R2Bucket;
-  /** Lazy so remembered audio can play without parsing credentials or reaching a provider. */
+  /** In preference order. Building a provider must not parse credentials or reach the network. */
   providers: (language: string) => SpeechProvider[];
 }
 
 /**
  * Return cached pronunciation audio or generate it on the first play. Card creation and
  * enrichment never call this, and cards without a language never reach R2 or a provider.
+ * Audio remembered from a fallback or a retired provider is replaced once the preferred one works.
  */
 export async function pronunciationAudio(
   ctx: ServiceContext,
@@ -31,13 +32,13 @@ export async function pronunciationAudio(
   }
   if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
 
-  if (card.audioKey) {
+  const providers = deps.providers(language.data);
+  const preferred = providers[0];
+  if (card.audioKey && (!preferred || card.audioKey === (await audioKey(card, preferred)))) {
     const remembered = await deps.bucket.get(card.audioKey);
     if (remembered) return remembered;
   }
-
-  const providers = deps.providers(language.data);
-  if (providers.length === 0) {
+  if (!preferred) {
     throw new ServiceError("unavailable", "Pronunciation audio is not configured");
   }
 
@@ -88,6 +89,10 @@ export async function pronunciationAudio(
     return stored;
   }
 
+  if (card.audioKey) {
+    const remembered = await deps.bucket.get(card.audioKey);
+    if (remembered) return remembered;
+  }
   throw new ServiceError(
     "unavailable",
     "Pronunciation audio is temporarily unavailable",

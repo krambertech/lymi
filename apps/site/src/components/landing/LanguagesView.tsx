@@ -376,29 +376,18 @@ export function EstonianView() {
           <ReviewDemo cards={ESTONIAN_REVIEW} />
         </FeatureSection>
 
-        <section
-          aria-labelledby="scenes-title"
-          className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+        <FeatureSection
+          demoFirst
+          title={<Trans>Estonian the way it’s spoken.</Trans>}
+          body={
+            <Trans>
+              Small conversations from a first week in Estonia. Point at a word to see what it
+              means, or at a line to read it in English.
+            </Trans>
+          }
         >
-          <div className="mx-auto max-w-[1040px]">
-            <div className="mx-auto max-w-[640px] text-center">
-              <div id="scenes-title">
-                <SectionTitle>
-                  <Trans>Estonian the way it’s spoken.</Trans>
-                </SectionTitle>
-              </div>
-              <p className="mx-auto mt-5 max-w-[48ch] text-md text-pretty text-text-2">
-                <Trans>
-                  The small conversations of a first week in Estonia. Point at any word to see what
-                  it means, and keep the ones you want as cards.
-                </Trans>
-              </p>
-            </div>
-            <div className="mt-12">
-              <ConversationScenes scenes={ESTONIAN_SCENES} language="et" />
-            </div>
-          </div>
-        </section>
+          <ConversationScenes scenes={ESTONIAN_SCENES} language="et" />
+        </FeatureSection>
 
         <FeatureSection
           demoFirst

@@ -772,10 +772,6 @@ msgstr "Привет! Как дела?"
 msgid "Hi! What can I get you?"
 msgstr "Здравствуйте! Что для вас?"
 
-#: src/components/landing/ConversationScenes.tsx
-msgid "Hide translations"
-msgstr "Скрыть перевод"
-
 #: src/components/landing/estonian-scenes.ts
 msgid "how"
 msgstr "как"
@@ -1183,10 +1179,6 @@ msgstr "Следующая карточка"
 msgid "Next card: {0}"
 msgstr "Следующая карточка: {0}"
 
-#: src/components/landing/ConversationScenes.tsx
-msgid "Next: {nextTitle}"
-msgstr "Дальше: {nextTitle}"
-
 #: src/components/landing/language-cards.ts
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приятно познакомиться; заранее спасибо"
@@ -1264,10 +1256,6 @@ msgstr "фраза"
 #: src/components/landing/hand-cards.ts
 msgid "Physics"
 msgstr "Физика"
-
-#: src/components/landing/ConversationScenes.tsx
-msgid "Play again"
-msgstr "Ещё раз"
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Play pronunciation"
@@ -1472,10 +1460,6 @@ msgstr "Быстрые команды"
 msgid "Show the meaning"
 msgstr "Показать значение"
 
-#: src/components/landing/ConversationScenes.tsx
-msgid "Show translations"
-msgstr "Показать перевод"
-
 #: src/components/landing/language-cards.ts
 msgid "sight (to see)"
 msgstr "достопримечательность"
@@ -1491,6 +1475,10 @@ msgstr "Обработка сигналов"
 #: src/components/landing/hand-cards.ts
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Досматривать плохой фильм только из-за уже купленного билета."
+
+#: src/components/landing/LanguagesView.tsx
+msgid "Small conversations from a first week in Estonia. Point at a word to see what it means, or at a line to read it in English."
+msgstr "Короткие разговоры первой недели в Эстонии. Наведи на слово, чтобы увидеть значение, или на строку — чтобы прочитать перевод."
 
 #: src/components/landing/hero-words.ts
 msgid "So-so"
@@ -1768,10 +1756,6 @@ msgstr "Право предстать перед судьёй, а не оста�
 #: src/components/landing/language-cards.ts
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одно слово и для любимого человека, и для цены, которую не хочется платить."
-
-#: src/components/landing/LanguagesView.tsx
-msgid "The small conversations of a first week in Estonia. Point at any word to see what it means, and keep the ones you want as cards."
-msgstr "Короткие разговоры первой недели в Эстонии. Наведи на любое слово, чтобы увидеть значение, и сохрани нужные как карточки."
 
 #: src/components/landing/hero-words.ts
 msgid "The steam in a sauna"

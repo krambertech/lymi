@@ -772,10 +772,6 @@ msgstr "Привіт! Як справи?"
 msgid "Hi! What can I get you?"
 msgstr "Добрий день! Що для вас?"
 
-#: src/components/landing/ConversationScenes.tsx
-msgid "Hide translations"
-msgstr "Сховати переклад"
-
 #: src/components/landing/estonian-scenes.ts
 msgid "how"
 msgstr "як"
@@ -1183,10 +1179,6 @@ msgstr "Наступна картка"
 msgid "Next card: {0}"
 msgstr "Наступна картка: {0}"
 
-#: src/components/landing/ConversationScenes.tsx
-msgid "Next: {nextTitle}"
-msgstr "Далі: {nextTitle}"
-
 #: src/components/landing/language-cards.ts
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приємно познайомитися; наперед дякую"
@@ -1264,10 +1256,6 @@ msgstr "фраза"
 #: src/components/landing/hand-cards.ts
 msgid "Physics"
 msgstr "Фізика"
-
-#: src/components/landing/ConversationScenes.tsx
-msgid "Play again"
-msgstr "Ще раз"
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Play pronunciation"
@@ -1472,10 +1460,6 @@ msgstr "Швидкі команди"
 msgid "Show the meaning"
 msgstr "Показати значення"
 
-#: src/components/landing/ConversationScenes.tsx
-msgid "Show translations"
-msgstr "Показати переклад"
-
 #: src/components/landing/language-cards.ts
 msgid "sight (to see)"
 msgstr "пам’ятка (варто побачити)"
@@ -1491,6 +1475,10 @@ msgstr "Обробка сигналів"
 #: src/components/landing/hand-cards.ts
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Додивлятися поганий фільм лише через уже куплений квиток."
+
+#: src/components/landing/LanguagesView.tsx
+msgid "Small conversations from a first week in Estonia. Point at a word to see what it means, or at a line to read it in English."
+msgstr "Короткі розмови з першого тижня в Естонії. Наведи на слово, щоб побачити значення, або на рядок — щоб прочитати переклад."
 
 #: src/components/landing/hero-words.ts
 msgid "So-so"
@@ -1768,10 +1756,6 @@ msgstr "Право постати перед суддею, а не залиша�
 #: src/components/landing/language-cards.ts
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одне слово і для коханої людини, і для ціни, яку не хочеться платити."
-
-#: src/components/landing/LanguagesView.tsx
-msgid "The small conversations of a first week in Estonia. Point at any word to see what it means, and keep the ones you want as cards."
-msgstr "Короткі розмови з першого тижня в Естонії. Наведи на будь-яке слово, щоб побачити значення, і збережи потрібні як картки."
 
 #: src/components/landing/hero-words.ts
 msgid "The steam in a sauna"

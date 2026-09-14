@@ -1,13 +1,11 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Languages, RotateCcw } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useId, useRef, useState } from "react";
-import { Button } from "../Button";
 import type { Scene, SceneLine, Token } from "./estonian-scenes";
 
 /** Time to read a line before the next one is said. */
-const LINE_MS = 1800;
+const LINE_MS = 1700;
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 function Word({ token, language }: { token: Token; language: string }) {
@@ -35,57 +33,36 @@ function Word({ token, language }: { token: Token; language: string }) {
   );
 }
 
-function Line({
-  line,
-  language,
-  translated,
-}: {
-  line: SceneLine;
-  language: string;
-  translated: boolean;
-}) {
+function Line({ line, language }: { line: SceneLine; language: string }) {
   const { i18n } = useLingui();
   return (
-    <div className="grid grid-cols-[44px_minmax(0,1fr)] items-start gap-4 @2xl:grid-cols-[132px_minmax(0,1fr)] @2xl:gap-8">
-      {/* As tall as the line's first row, so the speaker centres on it at any type size. */}
-      <p className="flex h-[1.15em] items-center gap-2.5 text-2xl @2xl:text-4xl">
+    <div className="group/line grid grid-cols-[28px_minmax(0,1fr)] items-start gap-3">
+      {/* As tall as the line's first row, so the speaker centres on it. */}
+      <span className="flex h-[1.3em] items-center text-xl">
         {line.speaker === "you" ? (
-          <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text">
+          <span className="grid size-7 place-items-center rounded-full bg-amber-soft text-[0.5625rem] font-medium text-amber-text">
             <Trans>You</Trans>
           </span>
         ) : (
-          <>
-            <img
-              src={`/avatars/${line.speaker.avatar}.svg`}
-              alt=""
-              width={32}
-              height={32}
-              className="size-8 shrink-0 rounded-full"
-            />
-            <span className="hidden text-sm text-muted @2xl:inline">{line.speaker.name}</span>
-          </>
+          <img
+            src={`/avatars/${line.speaker.avatar}.svg`}
+            alt={line.speaker.name}
+            width={28}
+            height={28}
+            className="size-7 rounded-full"
+          />
         )}
-      </p>
+      </span>
       <div className="min-w-0">
-        <p className="text-2xl leading-[1.15] font-medium tracking-[-0.025em] text-pretty text-text @2xl:text-4xl">
+        <p className="text-xl leading-[1.3] font-medium tracking-[-0.02em] text-pretty text-text">
           {line.tokens.map((token, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: a line's words are fixed, so the index is the identity
             <Word key={i} token={token} language={language} />
           ))}
         </p>
-        <AnimatePresence initial={false}>
-          {translated && (
-            <motion.p
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: EASE }}
-              className="overflow-hidden pt-2 text-md text-muted"
-            >
-              {i18n._(line.translation)}
-            </motion.p>
-          )}
-        </AnimatePresence>
+        <p className="mt-0.5 text-sm text-muted opacity-0 transition-opacity duration-200 group-focus-within/line:opacity-100 hoverable:group-hover/line:opacity-100">
+          {i18n._(line.translation)}
+        </p>
       </div>
     </div>
   );
@@ -98,8 +75,8 @@ interface Props {
 }
 
 /**
- * Short conversations that play out line by line once the block is on screen. Every word can be
- * pointed at or tapped for its meaning, and the whole exchange can be translated at once.
+ * Short conversations that play out line by line once they are on screen. A word shows its meaning
+ * and a line its translation under the pointer or keyboard focus; choosing a scene plays it again.
  */
 export function ConversationScenes({ scenes, language }: Props) {
   const { t, i18n } = useLingui();
@@ -107,9 +84,8 @@ export function ConversationScenes({ scenes, language }: Props) {
   const root = useRef<HTMLDivElement>(null);
   const [sceneId, setSceneId] = useState(scenes[0]?.id);
   const scene = scenes.find((s) => s.id === sceneId) ?? (scenes[0] as Scene);
-  const [shown, setShown] = useState({ id: scene.id, count: 0 });
+  const [shown, setShown] = useState({ id: scene.id, run: 0, count: 0 });
   const [seen, setSeen] = useState(false);
-  const [translated, setTranslated] = useState(false);
   const count = still ? scene.lines.length : shown.id === scene.id ? shown.count : 0;
   const playing = seen && count < scene.lines.length;
   const done = count >= scene.lines.length;
@@ -121,7 +97,7 @@ export function ConversationScenes({ scenes, language }: Props) {
       ([entry]) => {
         if (entry?.isIntersecting) setSeen(true);
       },
-      // Starts once the top of the scene is a third of the way up the screen, however tall it is.
+      // Starts once the card's top is a third of the way up the screen, however tall it is.
       { rootMargin: "0px 0px -33% 0px" },
     );
     observer.observe(el);
@@ -131,98 +107,67 @@ export function ConversationScenes({ scenes, language }: Props) {
   useEffect(() => {
     if (!playing || still) return;
     const next = window.setTimeout(
-      () => setShown((s) => ({ id: scene.id, count: (s.id === scene.id ? s.count : 0) + 1 })),
-      count === 0 ? 500 : LINE_MS,
+      () => setShown((s) => ({ ...s, count: (s.id === scene.id ? s.count : 0) + 1 })),
+      count === 0 ? 450 : LINE_MS,
     );
     return () => window.clearTimeout(next);
   }, [playing, still, count, scene.id]);
 
-  const next = scenes[(scenes.indexOf(scene) + 1) % scenes.length] as Scene;
-  const nextTitle = i18n._(next.title);
+  const play = (id: string) => {
+    setSceneId(id);
+    setShown((s) => ({ id, run: s.run + 1, count: 0 }));
+    setSeen(true);
+  };
 
   return (
-    <div ref={root} className="mx-auto flex max-w-[860px] flex-col gap-10">
-      <fieldset className="m-0 flex min-w-0 flex-wrap justify-center gap-1.5 border-0 p-0">
+    <div ref={root} className="mx-auto w-full max-w-[460px] rounded-xl bg-plate edge">
+      <fieldset className="m-0 flex min-w-0 gap-5 border-0 border-b border-edge px-5 pt-4 @2xl:px-6">
         <legend className="sr-only">{t`Conversation`}</legend>
-        {scenes.map((s) => (
-          <button
-            key={s.id}
-            type="button"
-            aria-pressed={s.id === scene.id}
-            onClick={() => {
-              setSceneId(s.id);
-              setShown({ id: s.id, count: 0 });
-              setSeen(true);
-            }}
-            className={clsx(
-              "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
-              s.id === scene.id
-                ? "bg-text font-medium text-canvas"
-                : "bg-plate text-text-2 edge hoverable:hover:bg-hover hoverable:hover:text-text",
-            )}
-          >
-            {i18n._(s.title)}
-          </button>
-        ))}
+        {scenes.map((s) => {
+          const active = s.id === scene.id;
+          return (
+            <button
+              key={s.id}
+              type="button"
+              aria-pressed={active}
+              onClick={() => play(s.id)}
+              className={clsx(
+                "-mb-px border-b-2 pb-3 text-sm transition-colors duration-150",
+                active
+                  ? "border-text font-medium text-text"
+                  : "border-transparent text-muted hoverable:hover:text-text",
+              )}
+            >
+              {i18n._(s.title)}
+            </button>
+          );
+        })}
       </fieldset>
 
-      {/* Every line is laid out from the start so the scene never jumps; lines not yet said stay hidden. */}
-      <ol className="m-0 flex list-none flex-col gap-7 p-0 @2xl:gap-9">
+      {/* Every line is laid out from the start so the card never changes height. */}
+      <ol className="m-0 flex list-none flex-col gap-3 p-5 @2xl:p-6">
         {scene.lines.map((line, i) => {
           const said = i < count;
           const current = i === count - 1 || done;
           return (
             <motion.li
               // biome-ignore lint/suspicious/noArrayIndexKey: lines are said in order and never reorder
-              key={`${scene.id}-${i}`}
-              className={clsx(
-                "transition-opacity duration-300 hoverable:hover:opacity-100",
-                !said && "invisible",
-              )}
+              key={`${scene.id}-${shown.run}-${i}`}
+              className={clsx(!said && "invisible")}
               aria-hidden={!said || undefined}
               initial={false}
               animate={
                 said
-                  ? { opacity: current ? 1 : 0.4, y: 0, filter: "blur(0px)" }
-                  : { opacity: 0, y: still ? 0 : 18, filter: still ? "blur(0px)" : "blur(8px)" }
+                  ? { opacity: current ? 1 : 0.45, y: 0, filter: "blur(0px)" }
+                  : { opacity: 0, y: still ? 0 : 10, filter: still ? "blur(0px)" : "blur(6px)" }
               }
-              transition={{ duration: still ? 0 : 0.6, ease: EASE }}
+              transition={{ duration: still ? 0 : 0.55, ease: EASE }}
             >
-              <Line line={line} language={language} translated={translated} />
+              <Line line={line} language={language} />
             </motion.li>
           );
         })}
       </ol>
-
-      <div className="flex flex-wrap items-center justify-center gap-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          aria-pressed={translated}
-          onClick={() => setTranslated((v) => !v)}
-        >
-          <Languages aria-hidden="true" />
-          {translated ? <Trans>Hide translations</Trans> : <Trans>Show translations</Trans>}
-        </Button>
-        {done && (
-          <>
-            <Button variant="ghost" size="sm" onClick={() => setShown({ id: scene.id, count: 0 })}>
-              <RotateCcw aria-hidden="true" />
-              <Trans>Play again</Trans>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setSceneId(next.id);
-                setShown({ id: next.id, count: 0 });
-              }}
-            >
-              <Trans>Next: {nextTitle}</Trans>
-            </Button>
-          </>
-        )}
-      </div>
     </div>
   );
 }

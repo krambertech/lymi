@@ -18,6 +18,7 @@ import {
   useComboboxFilter,
 } from "./ui/combobox";
 import { Field, FieldDescription, FieldError, FieldLabel } from "./ui/field";
+import { RadioGroup } from "./ui/radio-group";
 
 /**
  * The two settings a deck carries besides its name, shared by the create sheet and the deck
@@ -239,7 +240,7 @@ interface DirectionProps {
 /** One choice, three rows, each spelling out what the learner will be shown. */
 export function DirectionField({ value, onChange, example, total, disabled }: DirectionProps) {
   const { t, i18n } = useLingui();
-  const name = useId();
+  const noteId = useId();
   const shown = (o: DirectionOption): string => {
     if (!example?.meaning) return i18n._(o.blurb);
     if (o.value === "recognition") return t`See ${example.term} → recall “${example.meaning}”`;
@@ -247,23 +248,19 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
     return t`Both of the above, one card at a time.`;
   };
   return (
-    <fieldset className="grid gap-2" disabled={disabled}>
-      <legend className="sr-only">
-        <Trans>How cards are asked</Trans>
-      </legend>
-      {DIRECTIONS.map((o) => (
-        <RadioCard
-          key={o.value}
-          name={name}
-          value={o.value}
-          checked={o.value === value}
-          onChange={() => onChange(o.value)}
-          title={i18n._(o.label)}
-          description={shown(o)}
-          disabled={disabled}
-        />
-      ))}
-      <p className="pt-1 text-sm text-muted">
+    <div className="grid gap-2">
+      <RadioGroup<Directions>
+        aria-label={t`How cards are asked`}
+        aria-describedby={noteId}
+        value={value}
+        onValueChange={onChange}
+        disabled={disabled}
+      >
+        {DIRECTIONS.map((o) => (
+          <RadioCard key={o.value} value={o.value} title={i18n._(o.label)} description={shown(o)} />
+        ))}
+      </RadioGroup>
+      <p id={noteId} className="pt-1 text-sm text-muted">
         {total ? (
           <Trans>
             Adding a way asks every card in the deck that way, starting now. Taking one away keeps
@@ -273,7 +270,7 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
           <Trans>You can change this later. It applies to every card in the deck.</Trans>
         )}
       </p>
-    </fieldset>
+    </div>
   );
 }
 

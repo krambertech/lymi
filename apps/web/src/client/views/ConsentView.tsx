@@ -7,7 +7,8 @@ import { Button } from "../components/Button";
 import { AppIdentityLine, Connection } from "../components/Connection";
 import { PublicPolicyLinks } from "../components/PublicPolicyLinks";
 import { Skeleton } from "../components/Skeleton";
-import { Switch } from "../components/Switch";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
+import { Switch } from "../components/ui/switch";
 
 export interface ConsentProps {
   app: AppIdentity;
@@ -106,15 +107,28 @@ export function ConsentView({
 
           {writeRequested && (
             <li className="border-t border-edge pt-2">
-              <Switch
-                checked={allowWrite}
-                onChange={onAllowWrite}
+              <Field
+                orientation="horizontal"
                 disabled={deciding}
-                leading={<GrantDot on={allowWrite} />}
-                label={t`Add, edit and archive cards`}
-                description={t`What it adds lands at once and is labelled. You can edit or archive any of it.`}
-                className="gap-3"
-              />
+                className="relative min-h-11 gap-3 py-1"
+              >
+                <GrantDot on={allowWrite} />
+                <FieldContent className="gap-0.5">
+                  {/* Stretched over the row, so a tap on the sentence flips the switch too. */}
+                  <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+                    <Trans>Add, edit and archive cards</Trans>
+                  </FieldLabel>
+                  <FieldDescription>
+                    <Trans>
+                      What it adds lands at once and is labelled. You can edit or archive any of it.
+                    </Trans>
+                  </FieldDescription>
+                </FieldContent>
+                {/* One line tall at the label's size, so the track centres on the label's first line. */}
+                <span className="flex h-lh shrink-0 items-center text-base">
+                  <Switch checked={allowWrite} onCheckedChange={onAllowWrite} />
+                </span>
+              </Field>
             </li>
           )}
         </ul>

@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { chirpLocale, createSpeechProviders, openAiSupportsLanguage } from "./speech";
+import { chirpLocale, createSpeechProviders, geminiLocale, openAiSupportsLanguage } from "./speech";
 
 const env = {
   GOOGLE_CLOUD_TTS_CREDENTIALS: "configured",
   OPENAI_API_KEY: "openai-key",
 };
+
+function names(providers: ReturnType<typeof createSpeechProviders>) {
+  return providers.map((provider) => provider.provider);
+}
 
 describe("speech provider routing", () => {
   it("normalizes Estonian, Ukrainian, and regional Chirp locales", () => {
@@ -19,6 +23,16 @@ describe("speech provider routing", () => {
     expect(chirpLocale("not-a-language")).toBeNull();
   });
 
+  it("keeps a published Gemini region and fills a default for a bare language", () => {
+    expect(geminiLocale("et")).toBe("et-EE");
+    expect(geminiLocale("pt-pt")).toBe("pt-PT");
+    expect(geminiLocale("pt")).toBe("pt-BR");
+    expect(geminiLocale("es-419")).toBe("es-419");
+    expect(geminiLocale("en-NZ")).toBe("en-US");
+    expect(geminiLocale("tl")).toBe("fil-PH");
+    expect(geminiLocale("cy")).toBeNull();
+  });
+
   it("recognizes OpenAI's published languages and common tag aliases", () => {
     expect(openAiSupportsLanguage("et-EE")).toBe(true);
     expect(openAiSupportsLanguage("cy")).toBe(true);
@@ -26,36 +40,29 @@ describe("speech provider routing", () => {
     expect(openAiSupportsLanguage("gu-IN")).toBe(false);
   });
 
-  it("prefers OpenAI and keeps Chirp as its runtime fallback", () => {
-    expect(createSpeechProviders(env, "et").map((provider) => provider.provider)).toEqual([
-      "openai",
+  it("prefers Gemini, then Chirp, then OpenAI", () => {
+    expect(names(createSpeechProviders(env, "et"))).toEqual([
+      "google-gemini",
       "google-chirp",
+      "openai",
     ]);
   });
 
-  it("uses only OpenAI when Chirp is not configured", () => {
+  it("uses only OpenAI when Google is not configured", () => {
     expect(
-      createSpeechProviders({ ...env, GOOGLE_CLOUD_TTS_CREDENTIALS: "" }, "et").map(
-        (provider) => provider.provider,
-      ),
+      names(createSpeechProviders({ ...env, GOOGLE_CLOUD_TTS_CREDENTIALS: "" }, "et")),
     ).toEqual(["openai"]);
   });
 
-  it("uses Chirp for a language outside OpenAI's published list", () => {
-    expect(createSpeechProviders(env, "gu").map((provider) => provider.provider)).toEqual([
-      "google-chirp",
-    ]);
+  it("uses Gemini for a language neither Chirp nor OpenAI covers", () => {
+    expect(names(createSpeechProviders(env, "am"))).toEqual(["google-gemini"]);
   });
 
-  it("uses Chirp when OpenAI is not configured", () => {
-    expect(
-      createSpeechProviders({ ...env, OPENAI_API_KEY: "" }, "et").map(
-        (provider) => provider.provider,
-      ),
-    ).toEqual(["google-chirp"]);
+  it("uses OpenAI for a language outside both Google lists", () => {
+    expect(names(createSpeechProviders(env, "cy"))).toEqual(["openai"]);
   });
 
-  it("returns no provider when neither vendor covers the language", () => {
+  it("returns no provider when no vendor covers the language", () => {
     expect(createSpeechProviders(env, "eo")).toEqual([]);
   });
 });

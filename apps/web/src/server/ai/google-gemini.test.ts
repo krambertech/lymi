@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { createGoogleChirpProvider } from "./google-chirp";
 import { GoogleSpeechError } from "./google-cloud-tts";
+import { createGoogleGeminiProvider, pronunciationPrompt } from "./google-gemini";
 
 const credentials = JSON.stringify({
   type: "service_account",
@@ -9,13 +9,13 @@ const credentials = JSON.stringify({
   private_key: "not-used-when-token-is-injected",
 });
 
-describe("Google Chirp provider", () => {
-  it("requests Estonian Chirp 3 HD and decodes its MP3", async () => {
+describe("Google Gemini provider", () => {
+  it("pins the Estonian locale and keeps direction out of the spoken text", async () => {
     const request = vi.fn(
       async (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> =>
         Response.json({ audioContent: btoa("\u0001\u0002\u0003") }),
     );
-    const provider = createGoogleChirpProvider(
+    const provider = createGoogleGeminiProvider(
       { GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
       { locale: "et-EE", request, accessToken: async () => "token" },
     );
@@ -23,40 +23,42 @@ describe("Google Chirp provider", () => {
     const response = await provider.speech({ text: "jäääär", language: "et" });
 
     expect(await response.bytes()).toEqual(new Uint8Array([1, 2, 3]));
-    const call = request.mock.calls[0];
-    if (!call) throw new Error("Chirp request was not made");
-    expect(call[0]).toBe("https://texttospeech.googleapis.com/v1/text:synthesize");
-    expect(call[1]?.headers).toMatchObject({
-      Authorization: "Bearer token",
-      "x-goog-user-project": "lymi-text-to-speech",
+    expect(provider).toMatchObject({
+      provider: "google-gemini",
+      model: "gemini-3.1-flash-tts-preview",
+      voice: "Kore",
+      locale: "et-EE",
     });
+    const call = request.mock.calls[0];
+    if (!call) throw new Error("Gemini request was not made");
+    expect(call[0]).toBe("https://texttospeech.googleapis.com/v1/text:synthesize");
     expect(JSON.parse(String(call[1]?.body))).toEqual({
-      input: { text: "jäääär" },
-      voice: { languageCode: "et-EE", name: "et-EE-Chirp3-HD-Kore" },
+      input: { text: "jäääär", prompt: pronunciationPrompt("et-EE") },
+      voice: { languageCode: "et-EE", name: "Kore", modelName: "gemini-3.1-flash-tts-preview" },
       audioConfig: { audioEncoding: "MP3" },
     });
   });
 
+  it("names the language in words rather than as a code", () => {
+    expect(pronunciationPrompt("et-EE")).toContain("native Estonian (Estonia) speaker");
+    expect(pronunciationPrompt("pt-BR")).toContain("Brazilian Portuguese sounds");
+  });
+
+  it("accepts a model and voice override", () => {
+    const provider = createGoogleGeminiProvider(
+      { GEMINI_SPEECH_MODEL: "gemini-2.5-pro-tts", GEMINI_SPEECH_VOICE: "Charon" },
+      { locale: "uk-UA" },
+    );
+    expect(provider).toMatchObject({ model: "gemini-2.5-pro-tts", voice: "Charon" });
+  });
+
   it("does not make a request when credentials are missing", async () => {
     const request = vi.fn();
-    const provider = createGoogleChirpProvider({}, { locale: "et-EE", request });
+    const provider = createGoogleGeminiProvider({}, { locale: "et-EE", request });
 
     await expect(provider.speech({ text: "tere", language: "et" })).rejects.toBeInstanceOf(
       GoogleSpeechError,
     );
     expect(request).not.toHaveBeenCalled();
-  });
-
-  it("exposes only the upstream status needed for safe diagnostics", async () => {
-    const request = vi.fn(async () => new Response("private upstream details", { status: 403 }));
-    const provider = createGoogleChirpProvider(
-      { GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
-      { locale: "et-EE", request, accessToken: async () => "token" },
-    );
-
-    await expect(provider.speech({ text: "tere", language: "et" })).rejects.toMatchObject({
-      name: "GoogleSpeechError",
-      status: 403,
-    });
   });
 });

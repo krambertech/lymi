@@ -1,4 +1,7 @@
+// Type imports only: the site's hand:audio script runs this file under plain Node.
 import type { Fetch, SpeechProvider } from "./types";
+
+const languageNames = new Intl.DisplayNames(["en"], { type: "language" });
 
 export type OpenAiSpeechBindings = {
   OPENAI_API_KEY?: string | undefined;
@@ -50,7 +53,7 @@ export function createOpenAiSpeechProvider(
           voice,
           input: input.text,
           instructions:
-            `Pronounce exactly the provided text once, naturally and clearly, as a fluent speaker of ${input.language}. ` +
+            `Pronounce exactly the provided text once, naturally and clearly, as a native ${languageNames.of(input.language) ?? input.language} speaker. ` +
             "Do not translate it, spell it out, add commentary, or make non-speech sounds.",
           response_format: "mp3",
         }),

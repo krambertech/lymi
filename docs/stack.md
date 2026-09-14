@@ -21,7 +21,7 @@ flowchart LR
     Services[Service layer\ndb, userId, actor]
     Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
     MCP[MCP server /mcp\ncreateMcpHandler, stateless]
-    AI[Enrichment + TTS\nOpenAI default + Google coverage]
+    AI[Enrichment + TTS\nOpenAI text, Gemini speech]
   end
   subgraph Core["packages/core"]
     Schema[Drizzle schema + Zod types]
@@ -140,7 +140,7 @@ FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline)
 
 Enrichment runs in the background after any add that leaves fields empty, whether the card came from the web quick-capture sheet or from an integration. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
 
-OpenAI remains the text-enrichment vendor and is also the default speech provider for every language on its published TTS support list. Google Cloud Text-to-Speech Chirp 3 HD covers languages outside that list and becomes the runtime fallback for supported locales when OpenAI is not configured or its request fails. The routing layer is provider-neutral, so an R2 hit does not parse credentials or call either vendor.
+OpenAI remains the text-enrichment vendor. Speech defaults to Gemini-TTS through Google Cloud Text-to-Speech, with Chirp 3 HD and then OpenAI as runtime fallbacks. Both Google models receive the card's locale as `languageCode`, because a single word is too little text to detect a language from; OpenAI has no such parameter and read Estonian terms with an English accent, so it is last. Speech prompts name the language in English ("Estonian"), never as a bare code such as `et`. The routing layer is provider-neutral, so an R2 hit does not parse credentials or call a vendor.
 
 ### MCP: stateless handler in the product Worker
 
@@ -160,7 +160,7 @@ Route logic lives in service functions that take `db`, `userId` and `actor`. Hon
 
 ### Audio: first play, then R2
 
-Pronunciation audio is generated only when the learner first presses play. Cards without a language never show the control and never call a speech provider. The Worker uses OpenAI for its published languages and Chirp 3 HD only for coverage gaps or when OpenAI is not configured, stores the MP3 in R2, and remembers the object on the card. The cache identity includes the term, locale, provider, model and voice, and changing the term or language detaches stale audio.
+Pronunciation audio is generated only when the learner first presses play. Cards without a language never show the control and never call a speech provider. The Worker tries Gemini, Chirp 3 HD and OpenAI in that order for the languages each one publishes, stores the MP3 in R2, and remembers the object on the card. The cache identity includes the term, locale, provider, model and voice, and changing the term or language detaches stale audio. Remembered audio from anything other than the preferred provider is regenerated on the next play, and still plays if every provider fails.
 
 ### Avatars: Images binding, private R2
 
@@ -207,7 +207,7 @@ Local development accepts email and password sign-in so the app is usable before
 - Sign-in: Google only at launch. Apple can be added when React Native arrives.
 - Origins and deployments: `lymi-site` serves the public website and docs on `lymi.app`; `lymi` serves the product, auth, API, MCP and PWA on `my.lymi.app`.
 - Auth: Better Auth from the start, no Cloudflare Access interim.
-- AI: OpenAI for text enrichment and default speech. Google Chirp 3 HD covers languages outside OpenAI's published list and falls back for supported locales when OpenAI fails.
+- AI: OpenAI for text enrichment. Gemini-TTS for speech, with a pinned locale, falling back to Chirp 3 HD and then OpenAI (14 September 2026).
 - Integrations (5 September 2026): MCP clients are Claude Desktop and Codex first, so OAuth from day one via `@better-auth/mcp`. Personal API keys via the `apiKey` plugin. Two scopes, `read` and `write`.
 - Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
 - Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.

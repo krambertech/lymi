@@ -14,6 +14,7 @@ export const e2eAccounts = [
   "review-midnight",
   "review-goal",
   "review-goal-small",
+  "review-goal-midnight",
   "word-detail",
   "language",
   "join-owner",

@@ -52,13 +52,11 @@ const REFRESH_AFTER = 20;
 
 type Pinned = { cardId: string; mode: string };
 
-/**
- * A stretch of the day's review. The draw stops at an attempt count, the goal first and then ten
- * more per round, and Review forgotten walks a list fixed when it was chosen.
- */
-type Leg =
-  | { kind: "draw"; from: number; until: number }
-  | { kind: "forgotten"; from: number; items: Drawn[] };
+/** A stretch of one day's review: the draw up to an attempt count, or a fixed forgotten list. */
+type Leg = { date: string; from: number } & (
+  | { kind: "draw"; until: number }
+  | { kind: "forgotten"; items: Drawn[] }
+);
 
 function Review() {
   const { t } = useLingui();
@@ -80,7 +78,7 @@ function Review() {
   const [revealed, setRevealed] = useState(false);
   const [done, setDone] = useState(0);
   const [roundGraded, setRoundGraded] = useState<ReadonlySet<string>>(() => new Set());
-  const [leg, setLeg] = useState<Leg | null>(null);
+  const [chosenLeg, setLeg] = useState<Leg | null>(null);
   const [legGraded, setLegGraded] = useState<ReadonlySet<string>>(() => new Set());
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
@@ -105,12 +103,15 @@ function Review() {
   const drawn =
     pinnedItem ?? (data && state?.next ? reviewItem(data, state.log, state.next) : null);
 
+  // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
+  const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
   // The first leg runs to the goal, or is one more round when the goal was met before this review.
   useEffect(() => {
     if (round || leg || !data || !state) return;
     const { attempts } = state;
     const until = attempts < data.goal ? data.goal : attempts + EXTRA_ROUND;
-    setLeg({ kind: "draw", from: attempts, until });
+    setLegGraded(new Set());
+    setLeg({ kind: "draw", date: state.day.date, from: attempts, until });
   }, [round, leg, data, state]);
   const atStop = leg?.kind === "draw" && !!state && state.attempts >= leg.until;
   const legLeft =
@@ -209,8 +210,7 @@ function Review() {
         : streak.data,
     [streak.data, attempts, counts],
   );
-  // What the end grows from: the week as this stretch began, and the header's flame as it last stood.
-  // Held while ended, so a refetch confirming the day cannot fill the light before the screen does.
+  // Frozen once the draw runs dry, before the grade's streak refetch can fill the light early.
   const legFrom = leg?.from;
   const before = useMemo(
     () => ({
@@ -223,14 +223,28 @@ function Review() {
     [streak.data, legFrom],
   );
   const [held, setHeld] = useState(before);
+  const frozen = !!ended || atStop || (exhausted && !!held.week);
   useEffect(() => {
-    if (!ended) setHeld(before);
-  }, [ended, before]);
+    if (!frozen) setHeld(before);
+  }, [frozen, before]);
+
+  const forgottenItems = useMemo(
+    () => (ended && !round && data && state ? forgottenRound(data, state, deck) : []),
+    [ended, round, data, state, deck],
+  );
+  const nextRound = useMemo(
+    () => (ended && !round && data && state ? nextRoundSize(data, state, deck) : 0),
+    [ended, round, data, state, deck],
+  );
 
   const startLeg = (next: Leg) => {
-    // The pressed row fades out for a moment, and while it holds focus Space would not reach the card.
+    // The pressed button fades out for a moment, and while it holds focus Space would not reach the card.
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     setLegGraded(new Set());
+    setHeld({
+      week: streak.data && streakWith(streak.data, next.from, false),
+      lantern: lanternFor(streak.data),
+    });
     setPinned(null);
     setRevealed(false);
     setAnimateNextCard(true);
@@ -345,13 +359,15 @@ function Review() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      // A sheet over the review handles its own keys, Escape included.
+      if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented || add.open) return;
       if (e.key === "Escape") {
         navigate({ to: "/today" });
         return;
       }
       const target = e.target as HTMLElement | null;
       if (target?.closest("button, a, input, textarea, select, [contenteditable='true']")) return;
+      if (!current) return;
       if (e.key === " ") {
         e.preventDefault();
         if (!revealed) {
@@ -368,7 +384,7 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, onGrade, navigate]);
+  }, [revealed, onGrade, navigate, add.open, current]);
 
   const doneLink = (variant: "primary" | "secondary") => (
     <Link to="/today" className={buttonClass(variant, "lg", "w-full")}>
@@ -430,18 +446,21 @@ function Review() {
               streak={streakNow}
               streakBefore={held.week}
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
-              forgotten={round ? 0 : forgottenRound(data, state, deck).length}
-              nextRound={round ? 0 : nextRoundSize(data, state, deck)}
+              forgotten={forgottenItems.length}
+              nextRound={nextRound}
+              focusOnMount
               onReviewForgotten={() =>
                 startLeg({
                   kind: "forgotten",
+                  date: state.day.date,
                   from: state.attempts,
-                  items: forgottenRound(data, state, deck),
+                  items: forgottenItems,
                 })
               }
               onAnotherRound={() =>
                 startLeg({
                   kind: "draw",
+                  date: state.day.date,
                   from: state.attempts,
                   until: state.attempts + EXTRA_ROUND,
                 })

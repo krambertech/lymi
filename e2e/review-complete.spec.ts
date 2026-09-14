@@ -61,6 +61,11 @@ test("at the goal a learner can review forgotten cards, take another round, or s
     await grade(page, "Good");
     await grade(page, "Good");
     await expect(heading(page, "Daily goal reached")).toBeVisible();
+    // A tap during the celebration finishes it; it must not also press the still-invisible Done.
+    const done = await page.getByRole("link", { name: "Done", exact: true }).boundingBox();
+    if (done) await page.mouse.click(done.x + done.width / 2, done.y + done.height / 2);
+    await expect(heading(page, "Daily goal reached")).toBeVisible();
+    await expect(page).toHaveURL(/\/review$/);
     await expect(page.getByText(/^3\s*reviews today$/)).toBeVisible();
     await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
   });
@@ -102,7 +107,9 @@ test("the end works from the keyboard and without motion, and a short round ends
     await expect(heading(page, "Nothing due")).toBeVisible();
     await page.getByRole("button", { name: "Add cards", exact: true }).click();
     await expect(page.getByRole("dialog")).toBeVisible();
-    await page.getByRole("button", { name: "Cancel", exact: true }).click();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toBeHidden();
+    await expect(heading(page, "Nothing due")).toBeVisible();
   });
 
   await addCards(page, deckId, "Small", 5);
@@ -136,4 +143,39 @@ test("the end works from the keyboard and without motion, and a short round ends
     await expect(page.getByText(/^5\s*reviews today$/)).toBeVisible();
     await expect(another).toBeHidden();
   });
+});
+
+test("a round left open past midnight gives way to the new day's goal", async ({
+  page,
+  browserName,
+}, testInfo) => {
+  test.skip(browserName !== "chromium", "logic, not rendering");
+  await page.clock.install({ time: new Date() });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await signInAsTestLearner(page, testInfo, "review-goal-midnight");
+  await setGoal(page, 2);
+  await addCards(page, await addDeck(page, "Midnight"), "Midnight", 14);
+  await page.goto("/review");
+  // Keyboard grades do not roll the header count, whose exit would wait on the paused clock.
+  const gradeByKey = async (after: string) => {
+    await expect(page.getByLabel(/ card for /)).toBeVisible();
+    await page.keyboard.press("Space");
+    await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
+    await page.keyboard.press("3");
+    await expect(page.getByText(after, { exact: true })).toBeVisible();
+  };
+
+  await gradeByKey("1 of 2");
+  await gradeByKey("2 of 2");
+  await expect(heading(page, "Daily goal reached")).toBeVisible();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Enter");
+  await gradeByKey("3 of 2");
+
+  await page.clock.fastForward("24:00:00");
+  await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
+  await gradeByKey("1 of 2");
+  await gradeByKey("2 of 2");
+  await expect(heading(page, "Daily goal reached")).toBeVisible();
+  await expect(page.getByText(/^2\s*reviews today$/)).toBeVisible();
 });

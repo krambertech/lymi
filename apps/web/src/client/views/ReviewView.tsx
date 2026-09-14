@@ -13,7 +13,7 @@ import {
   useTransform,
   type Variants,
 } from "motion/react";
-import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { Button, buttonClass, IconButton } from "../components/Button";
 import { CardPicture } from "../components/CardPicture";
 import { Chip, SourceChip, StateChip } from "../components/Chip";
@@ -681,13 +681,11 @@ export interface ReviewCompleteProps {
   onAnotherRound?: (() => void) | undefined;
   /** Done, and for nothing due, Add cards before it. */
   actions?: ReactNode | undefined;
+  /** Move focus to the heading, so it is announced and Tab starts at the choices. */
+  focusOnMount?: boolean | undefined;
 }
 
-/**
- * When each part of the end arrives, in ms after the last grade. The lantern flies first; the
- * room lights, the words and the count follow, the week switches on a day at a time, today's
- * light fills and the run ticks, and the ways on arrive last. DESIGN.md, "Motion".
- */
+/** When each part of the end arrives, in ms after the last grade; DESIGN.md, "Motion". */
 const AT = {
   pool: 280,
   embers: 620,
@@ -715,13 +713,11 @@ const EMBERS = [
 ] as const;
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
+/** The `.seq` rise in `styles.css`. */
+const RISE_MS = 560;
+const EMBERS_END = AT.embers + Math.max(...EMBERS.map((e) => e.at + e.dur));
 
-/**
- * The end of a review, played as one sequence. The lantern the learner has been feeding leaves the
- * header, lights the room around it and rises to full with a few embers; the heading and the count
- * arrive, the week switches on a day at a time until today's light fills, the run ticks, and the
- * ways on come last. Any tap or key finishes the sequence at once.
- */
+/** The end of a review, played as one sequence that any tap or key finishes; DESIGN.md, "Motion". */
 export function ReviewComplete({
   outcome,
   attempts,
@@ -736,39 +732,15 @@ export function ReviewComplete({
   onReviewForgotten,
   onAnotherRound,
   actions,
+  focusOnMount = false,
 }: ReviewCompleteProps) {
   const { t } = useLingui();
   const reduce = !!useReducedMotion();
+  const headingId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const [landed, setLanded] = useState(reduce);
   const [skipped, setSkipped] = useState(false);
   const instant = reduce || skipped;
-
-  // Focus follows the review to its end, so the heading is announced and Tab starts at the choices.
-  useEffect(() => {
-    heading.current?.focus({ preventScroll: true });
-  }, []);
-  useEffect(() => {
-    if (instant) {
-      setLanded(true);
-      return;
-    }
-    const timer = window.setTimeout(() => setLanded(true), AT.land);
-    return () => window.clearTimeout(timer);
-  }, [instant]);
-  // The sequence is a moment, never a wait: the first tap or key finishes it.
-  useEffect(() => {
-    if (instant) return;
-    const skip = () => setSkipped(true);
-    const done = window.setTimeout(skip, AT.actions + 600);
-    window.addEventListener("pointerdown", skip, { once: true });
-    window.addEventListener("keydown", skip, { once: true });
-    return () => {
-      window.clearTimeout(done);
-      window.removeEventListener("pointerdown", skip);
-      window.removeEventListener("keydown", skip);
-    };
-  }, [instant]);
 
   const counted = outcome !== "nothing_due";
   const count = outcome === "round" ? reviewed : attempts;
@@ -788,10 +760,37 @@ export function ReviewComplete({
       onClick: onAnotherRound,
     },
   ].filter((w) => !!w);
+  const actionsAt = AT.actions + ways.length * AT.actionStep;
+  const end = Math.max(actionsAt + RISE_MS, counted && lit && !reduce ? EMBERS_END : 0);
+
+  useEffect(() => {
+    if (focusOnMount) heading.current?.focus({ preventScroll: true });
+  }, [focusOnMount]);
+  useEffect(() => {
+    if (instant) {
+      setLanded(true);
+      return;
+    }
+    const timer = window.setTimeout(() => setLanded(true), AT.land);
+    return () => window.clearTimeout(timer);
+  }, [instant]);
+  // The sequence is a moment, never a wait: the first tap or key finishes it.
+  useEffect(() => {
+    if (instant) return;
+    const skip = () => setSkipped(true);
+    const done = window.setTimeout(skip, end);
+    window.addEventListener("pointerdown", skip, { once: true });
+    window.addEventListener("keydown", skip, { once: true });
+    return () => {
+      window.clearTimeout(done);
+      window.removeEventListener("pointerdown", skip);
+      window.removeEventListener("keydown", skip);
+    };
+  }, [instant, end]);
 
   return (
     <section
-      aria-labelledby="review-complete"
+      aria-labelledby={headingId}
       className={clsx("flex flex-1 flex-col", skipped && "seq-skip")}
     >
       {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
@@ -841,7 +840,7 @@ export function ReviewComplete({
 
         <h2
           ref={heading}
-          id="review-complete"
+          id={headingId}
           tabIndex={-1}
           className="seq text-balance text-3xl font-medium tracking-[-0.02em] outline-none"
           style={at(AT.heading)}
@@ -925,7 +924,10 @@ export function ReviewComplete({
           </p>
         )}
 
-        <div className="mt-6 grid w-full gap-2.5 @3xl:mt-8">
+        {/* Unpressable while still invisible: the tap that finishes the sequence must not also press a hidden button. */}
+        <div
+          className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
+        >
           {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is the amber one. */}
           {ways.map((way, i) => (
             <button
@@ -939,7 +941,7 @@ export function ReviewComplete({
             </button>
           ))}
           {actions && (
-            <div className="seq grid gap-2" style={at(AT.actions + ways.length * AT.actionStep)}>
+            <div className="seq grid gap-2" style={at(actionsAt)}>
               {actions}
             </div>
           )}

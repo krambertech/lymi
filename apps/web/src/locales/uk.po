@@ -455,6 +455,10 @@ msgstr "Додати речення, у якому він живе"
 msgid "Add card"
 msgstr "Додати картку"
 
+#: src/client/views/TodayView.tsx
+msgid "Add cards"
+msgstr "Додати картки"
+
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
 msgstr "Додай Lymi як MCP-сервер у Claude або ChatGPT і увійди, коли він попросить."
@@ -466,6 +470,10 @@ msgstr "Додати Lymi на початковий екран"
 #: src/client/components/NotificationsSection.tsx
 msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 msgstr "Спершу додай Lymi на початковий екран. iPhone та iPad дозволяють нагадування лише звідти."
+
+#: src/client/views/TodayView.tsx
+msgid "Add some from your next lesson"
+msgstr "Додай із наступного уроку"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Add the first card from your lesson. The lantern lights when one is due."
@@ -1331,6 +1339,10 @@ msgstr "Режим"
 msgid "Month by month"
 msgstr "За місяцями"
 
+#: src/client/views/TodayView.tsx
+msgid "More to review"
+msgstr "Ще до повторення"
+
 #. placeholder {0}: card.term
 #: src/client/views/WordView.tsx
 msgid "Move “{0}” to"
@@ -1420,6 +1432,10 @@ msgstr "Наступний місяць"
 msgid "No apps connected"
 msgstr "Немає підключених застосунків"
 
+#: src/client/views/TodayView.tsx
+msgid "No card keeps slipping"
+msgstr "Жодна картка не забувається постійно"
+
 #: src/client/views/LibraryView.tsx
 msgid "No decks yet"
 msgstr "Колода ще не створена"
@@ -1506,6 +1522,10 @@ msgstr "Нічого до повторення"
 #: src/client/components/Streak.tsx
 msgid "Nothing due today, so your streak is safe."
 msgstr "Сьогодні нічого повторювати, тож серія в безпеці."
+
+#: src/client/views/TodayView.tsx
+msgid "Nothing forgotten today"
+msgstr "Сьогодні нічого не забуто"
 
 #: src/client/views/InsightsView.tsx
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
@@ -1810,21 +1830,9 @@ msgstr "Відкрий картку, коли згадаєш"
 msgid "Review"
 msgstr "Повторення"
 
-#: src/client/views/TodayView.tsx
-msgid "Review forgotten"
-msgstr "Повторити забуті"
-
-#: src/client/views/TodayView.tsx
-msgid "Review new"
-msgstr "Повторити нові"
-
 #: src/client/views/JoinView.tsx
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Повторюй у своєму темпі. Нові картки з’являються, щойно їх додають."
-
-#: src/client/views/TodayView.tsx
-msgid "Review slipping"
-msgstr "Повторити складні"
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"

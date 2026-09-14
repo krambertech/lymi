@@ -419,6 +419,10 @@ msgstr "Add a sentence it lives in"
 msgid "Add card"
 msgstr "Add card"
 
+#: src/client/views/TodayView.tsx
+msgid "Add cards"
+msgstr "Add cards"
+
 #: src/client/components/ConnectedAppsSection.tsx
 msgid "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
 msgstr "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
@@ -430,6 +434,10 @@ msgstr "Add Lymi to your Home Screen"
 #: src/client/components/NotificationsSection.tsx
 msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 msgstr "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
+
+#: src/client/views/TodayView.tsx
+msgid "Add some from your next lesson"
+msgstr "Add some from your next lesson"
 
 #: src/client/views/DeckDetailView.tsx
 msgid "Add the first card from your lesson. The lantern lights when one is due."
@@ -1295,6 +1303,10 @@ msgstr "Mode"
 msgid "Month by month"
 msgstr "Month by month"
 
+#: src/client/views/TodayView.tsx
+msgid "More to review"
+msgstr "More to review"
+
 #. placeholder {0}: card.term
 #: src/client/views/WordView.tsx
 msgid "Move “{0}” to"
@@ -1384,6 +1396,10 @@ msgstr "Next month"
 msgid "No apps connected"
 msgstr "No apps connected"
 
+#: src/client/views/TodayView.tsx
+msgid "No card keeps slipping"
+msgstr "No card keeps slipping"
+
 #: src/client/views/LibraryView.tsx
 msgid "No decks yet"
 msgstr "No decks yet"
@@ -1470,6 +1486,10 @@ msgstr "Nothing due"
 #: src/client/components/Streak.tsx
 msgid "Nothing due today, so your streak is safe."
 msgstr "Nothing due today, so your streak is safe."
+
+#: src/client/views/TodayView.tsx
+msgid "Nothing forgotten today"
+msgstr "Nothing forgotten today"
 
 #: src/client/views/InsightsView.tsx
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
@@ -1774,21 +1794,9 @@ msgstr "Reveal the card when you have it"
 msgid "Review"
 msgstr "Review"
 
-#: src/client/views/TodayView.tsx
-msgid "Review forgotten"
-msgstr "Review forgotten"
-
-#: src/client/views/TodayView.tsx
-msgid "Review new"
-msgstr "Review new"
-
 #: src/client/views/JoinView.tsx
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Review on your own schedule. New cards appear as they are added."
-
-#: src/client/views/TodayView.tsx
-msgid "Review slipping"
-msgstr "Review slipping"
 
 #: src/client/components/RunStrip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"

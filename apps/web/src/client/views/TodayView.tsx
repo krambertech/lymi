@@ -2,7 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Round, RoundsOut } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/AddMenu";
 import { Button, buttonClass } from "../components/Button";
@@ -38,8 +38,8 @@ export interface TodayProps {
 type ReviewSearch = { deck?: string; round?: Round };
 
 /**
- * Home. The due card and the streak card share the top row; under them, the decks that have
- * something due and the rounds that can be reviewed on their own. Rows and round cards are
+ * Home. The due card and the streak card share the top row; under them, the rounds that can be
+ * reviewed on their own, then the decks that have something due. Rows and round cards are
  * whole links. Nothing here shows a term, so the page never gives an answer away before the
  * review asks for it.
  */
@@ -150,6 +150,8 @@ export function TodayView({
           )}
         </section>
 
+        {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} st={st} />}
+
         {!loading && decks && decks.length > 1 && dueDecks.length > 0 && (
           <section aria-labelledby="today-decks" className="grid gap-2.5">
             <div className="flex min-h-8 items-center justify-between gap-3 px-1">
@@ -191,8 +193,6 @@ export function TodayView({
             </ul>
           </section>
         )}
-
-        {!loading && rounds && <Rounds rounds={rounds} st={st} />}
       </div>
     </Page>
   );
@@ -250,63 +250,120 @@ function DueHeading({
   );
 }
 
-/** A round's card: how many, what they are, and where the card leads. Hidden when empty. */
-function Rounds({ rounds, st }: { rounds: RoundsOut; st: StaticNav }) {
+/**
+ * The rounds, as rows in one plate. Every row stays, so the list keeps its shape: a round with
+ * cards opens its review, and an empty one says so plainly, or offers to add cards.
+ */
+function Rounds({
+  rounds,
+  onAdd,
+  st,
+}: {
+  rounds: RoundsOut;
+  onAdd: (() => void) | undefined;
+  st: StaticNav;
+}) {
   const { t } = useLingui();
-  const items = [
-    {
-      round: "new" as const,
-      count: rounds.new,
-      label: t`New cards`,
-      detail: t`Not reviewed yet`,
-      action: t`Review new`,
-    },
+  const rows = [
     {
       round: "forgotten" as const,
       count: rounds.forgotten,
       label: t`Forgot today`,
       detail: t`Graded Forgot today`,
-      action: t`Review forgotten`,
+      empty: t`Nothing forgotten today`,
+    },
+    {
+      round: "new" as const,
+      count: rounds.new,
+      label: t`New cards`,
+      detail: t`Not reviewed yet`,
+      empty: t`Add some from your next lesson`,
     },
     {
       round: "slipping" as const,
       count: rounds.slipping,
       label: t`Keeps slipping`,
       detail: t`Forgotten 4 or more times`,
-      action: t`Review slipping`,
+      empty: t`No card keeps slipping`,
     },
-  ].filter((item) => item.count > 0);
-  if (items.length === 0) return null;
+  ];
+  const row = "flex min-h-18 w-full items-center gap-4 py-3 ps-5 pe-4 text-start";
+  const face = (item: (typeof rows)[number], live: boolean) => (
+    <>
+      <span
+        className={clsx(
+          "min-w-9 text-3xl font-medium leading-none tracking-[-0.02em] tabular-nums",
+          !live && "text-muted",
+        )}
+      >
+        {item.count}
+      </span>
+      <span className="grid min-w-0 flex-1 gap-0.5">
+        <span className="truncate text-md font-medium">{item.label}</span>
+        <span className="text-sm text-muted">{live ? item.detail : item.empty}</span>
+      </span>
+    </>
+  );
 
   return (
-    <div className="grid gap-3 @3xl:grid-cols-3 @3xl:gap-4">
-      {items.map((item) => (
-        <To
-          key={item.round}
-          to="/review"
-          search={{ round: item.round }}
-          st={st}
-          className="edge group flex items-center gap-4 rounded-xl bg-plate py-4 ps-5 pe-4 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover @3xl:flex-col @3xl:items-stretch @3xl:gap-0 @3xl:p-0"
-        >
-          <span className="min-w-12 text-4xl font-medium leading-none tracking-[-0.03em] tabular-nums @3xl:px-5 @3xl:pt-5 @3xl:pb-3 @3xl:text-5xl">
-            {item.count}
-          </span>
-          <span className="grid min-w-0 flex-1 gap-0.5 @3xl:px-5 @3xl:pb-4">
-            <span className="text-md font-medium">{item.label}</span>
-            <span className="text-sm text-muted">{item.detail}</span>
-          </span>
-          <Go className="@3xl:justify-between @3xl:border-t @3xl:border-edge @3xl:py-2.5 @3xl:ps-5 @3xl:pe-3">
-            {/* Read on the phone too, where only the arrow shows. */}
-            <span className="sr-only @3xl:not-sr-only">{item.action}</span>
-          </Go>
-        </To>
-      ))}
-    </div>
+    <section aria-labelledby="today-more" className="grid gap-2.5">
+      <h2 id="today-more" className="flex min-h-8 items-center px-1 text-lg font-medium">
+        <Trans>More to review</Trans>
+      </h2>
+      <ul className="edge overflow-hidden rounded-xl bg-plate">
+        {rows.map((item) => (
+          <li key={item.round} className="border-edge not-first:border-t">
+            {item.count > 0 ? (
+              <To
+                to="/review"
+                search={{ round: item.round }}
+                st={st}
+                className={clsx(
+                  row,
+                  "group transition-[background-color] duration-150 hoverable:hover:bg-hover",
+                )}
+              >
+                {face(item, true)}
+                <Go>
+                  <Trans>Review</Trans>
+                </Go>
+              </To>
+            ) : item.round === "new" ? (
+              <button
+                type="button"
+                onClick={onAdd}
+                aria-disabled={!onAdd || undefined}
+                className={clsx(
+                  row,
+                  "group transition-[background-color] duration-150 hoverable:hover:bg-hover",
+                )}
+              >
+                {face(item, false)}
+                <Go icon={<Plus className="size-4" aria-hidden="true" />}>
+                  <Trans>Add cards</Trans>
+                </Go>
+              </button>
+            ) : (
+              <div className={row}>{face(item, false)}</div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
 /** The end of a whole-row link: what it does, then an arrow that strengthens on hover. */
-function Go({ children, className }: { children?: ReactNode; className?: string | undefined }) {
+function Go({
+  children,
+  icon,
+  className,
+}: {
+  children?: ReactNode;
+  /** The glyph in the circle; an arrow unless the row does something other than open. */
+  icon?: ReactNode | undefined;
+  className?: string | undefined;
+}) {
   return (
     <span
       className={clsx(
@@ -314,9 +371,10 @@ function Go({ children, className }: { children?: ReactNode; className?: string 
         className,
       )}
     >
-      {children}
+      {/* The circle alone on a phone, where the label would squeeze the row's text. */}
+      {children && <span className="sr-only @xl:not-sr-only">{children}</span>}
       <span className="edge-inset grid size-8 place-items-center rounded-full bg-plate-2 text-text transition-[background-color,box-shadow] duration-150 group-hover:bg-plate">
-        <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
+        {icon ?? <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />}
       </span>
     </span>
   );

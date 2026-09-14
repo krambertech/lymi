@@ -136,7 +136,7 @@ export const SCREENS: Entry[] = [
     slug: "today",
     name: "Today",
     source: "views/TodayView.tsx",
-    note: "The due card and the streak card share the top row: the lantern beside how many cards are due, one full-width Review button, and the run with its seven lights and today against the goal. Under them, the decks with cards due when there is more than one deck, then the rounds that can be reviewed on their own. Rows and round cards are whole links, and no term appears, so the page never gives an answer away.",
+    note: "The due card and the streak card share the top row: the lantern beside how many cards are due, one full-width Review button, and the run with its seven lights and today against the goal. Under them, the rounds as rows that keep their place when empty, then the decks with cards due when there is more than one deck. Rows are whole links, and no term appears, so the page never gives an answer away.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { offsetOnceChosen, plateOffset } from "../../test/plate";
 import { Segmented } from "../segmented";
 import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
 
@@ -33,16 +34,9 @@ function Theme({ onChange }: { onChange?: (value: string) => void }) {
 const indicator = () =>
   document.querySelector<HTMLElement>('[data-slot="toggle-group-indicator"]') as HTMLElement;
 
-/** Where the plate sits, relative to the item it should cover. */
-function offset(item: Element) {
-  const plate = indicator().getBoundingClientRect();
-  const target = item.getBoundingClientRect();
-  // `|| 0` folds -0 into 0.
-  return {
-    start: Math.round(plate.left - target.left) || 0,
-    width: Math.round(plate.width - target.width) || 0,
-  };
-}
+const offset = (item: Element) => plateOffset(indicator(), item);
+
+const onceChosen = (item: Element) => offsetOnceChosen(indicator, item, "aria-pressed", "true");
 
 test("one option is pressed, and pressing it again keeps it pressed", async () => {
   const onChange = vi.fn();
@@ -85,9 +79,9 @@ test("under reduced motion the plate appears at a pointer's choice and fades in 
     </MotionConfig>,
   );
   const dark = page.getByRole("button", { name: "Dark" });
+  const landed = onceChosen(dark.element());
   await dark.click();
-  await expect.element(dark).toHaveAttribute("aria-pressed", "true");
-  expect(offset(dark.element())).toEqual({ start: 0, width: 0 });
+  expect(await landed).toEqual({ start: 0, width: 0 });
   await expect.poll(() => getComputedStyle(indicator()).opacity).toBe("1");
 });
 
@@ -98,9 +92,9 @@ test("arrow keys walk the options, Enter chooses, and the plate jumps straight t
   await userEvent.keyboard("{ArrowRight}{ArrowRight}");
   const system = page.getByRole("button", { name: "Follow the system" });
   await expect.element(system).toHaveFocus();
+  const landed = onceChosen(system.element());
   await userEvent.keyboard("{Enter}");
-  await expect.element(system).toHaveAttribute("aria-pressed", "true");
-  expect(offset(system.element())).toEqual({ start: 0, width: 0 });
+  expect(await landed).toEqual({ start: 0, width: 0 });
 });
 
 test("a disabled option cannot be chosen, and a disabled group cannot change", async () => {
@@ -193,16 +187,16 @@ test("after a keyboard choice, a change made from outside the group still glides
     );
   }
   await render(<Harness />);
+  const system = page.getByRole("button", { name: "Follow the system" });
+  const jumped = onceChosen(system.element());
   await userEvent.tab();
   await userEvent.keyboard("{ArrowRight}{ArrowRight}{Enter}");
-  const system = page.getByRole("button", { name: "Follow the system" });
-  await expect.element(system).toHaveAttribute("aria-pressed", "true");
-  expect(offset(system.element())).toEqual({ start: 0, width: 0 });
+  expect(await jumped).toEqual({ start: 0, width: 0 });
 
   const light = page.getByRole("button", { name: "Light" });
+  const glided = onceChosen(light.element());
   await page.getByRole("button", { name: "Clear" }).click();
-  await expect.element(light).toHaveAttribute("aria-pressed", "true");
-  expect(offset(light.element())).not.toEqual({ start: 0, width: 0 });
+  expect(await glided).not.toEqual({ start: 0, width: 0 });
   await expect.poll(() => offset(light.element())).toEqual({ start: 0, width: 0 });
 });
 

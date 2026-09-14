@@ -1,3 +1,4 @@
+import { Component, type ReactNode } from "react";
 import { describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -15,6 +16,19 @@ import {
 } from "./dropdown-menu";
 
 const desktop = inject("machine") === "desktop";
+
+class Boundary extends Component<{ onError: (error: unknown) => void; children: ReactNode }> {
+  override state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  override componentDidCatch(error: unknown) {
+    this.props.onError(error);
+  }
+  override render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
 
 /** Opens from the keyboard, so focus has somewhere to return to: WebKit never focuses a tapped button. */
 async function openWithKeyboard(trigger: { element: () => Element }) {
@@ -62,7 +76,9 @@ describe("DropdownMenu", () => {
     await screen.getByRole("button", { name: "Account" }).click();
 
     await expect.element(page.getByRole("menu", { name: "Account" })).toBeVisible();
-    await expect.element(page.getByRole("group")).toBeInTheDocument();
+    await expect
+      .element(page.getByRole("group", { name: "Signed in as Kateryna" }))
+      .toBeInTheDocument();
     await expect.element(page.getByText("Signed in as Kateryna")).toBeVisible();
     await expect
       .element(page.getByRole("menuitem", { name: "Settings" }))
@@ -71,6 +87,33 @@ describe("DropdownMenu", () => {
       .element(page.getByRole("menuitem", { name: "Sign out" }))
       .toHaveAttribute("data-variant", "destructive");
     await expect.element(page.getByRole("separator")).toBeInTheDocument();
+  });
+
+  test("refuses a label outside a group in this shape, as in the other", async () => {
+    const caught: unknown[] = [];
+    const swallow = (event: ErrorEvent) => {
+      caught.push(event.error);
+      event.preventDefault();
+    };
+    window.addEventListener("error", swallow);
+    try {
+      await render(
+        <Boundary onError={(error) => caught.push(error)}>
+          <DropdownMenu defaultOpen>
+            <DropdownMenuTrigger render={<button type="button">Account</button>} />
+            <DropdownMenuContent aria-label="Account">
+              <DropdownMenuLabel>Signed in as Kateryna</DropdownMenuLabel>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </Boundary>,
+      );
+      await expect
+        .poll(() => caught.map((e) => (e instanceof Error ? e.message : String(e))).join(" "))
+        .toMatch(/Group/);
+    } finally {
+      window.removeEventListener("error", swallow);
+    }
   });
 
   test(desktop ? "anchors to its trigger" : "rises as a drawer named by its label", async () => {

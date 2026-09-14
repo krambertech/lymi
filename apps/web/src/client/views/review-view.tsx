@@ -554,9 +554,10 @@ const gradeRise: Variants = {
 };
 
 /**
- * Opens from nothing, which is what shrinks the card above it, and closes back to nothing after a grade so the card grows again. The glide matches the word's inside
- * the card, so the word's two movements land as one. It clips only while opening, so a pressed
- * grade's scale and focus ring are not cut off afterwards; mounting on each reveal resets that.
+ * Opens from nothing, which is what shrinks the card above it, and closes to nothing after a grade,
+ * which grows the card back. The glide matches the word's inside the card, so the word's two
+ * movements land as one. It clips only while opening or closing, so a pressed grade's scale and
+ * focus ring are not cut off in between; mounting on each reveal resets that.
  */
 function OpeningStrip({ animate: wanted, children }: { animate: boolean; children: ReactNode }) {
   // Height is not a transform, so MotionConfig's reduced motion does not stop it; this does.

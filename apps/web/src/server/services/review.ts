@@ -9,7 +9,6 @@ import {
   modeKey,
   modeOf,
   modesFromDirections,
-  newId,
   preview,
   roundOrder,
   schedule,

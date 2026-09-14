@@ -7,6 +7,7 @@ import { NewCardsRow } from "../../components/new-cards-row";
 import { SettingsGroup } from "../../components/settings-group";
 import { Table as DataTable, Td, Th } from "../../components/table";
 import { Field, FieldContent, FieldDescription, FieldLabel } from "../../components/ui/field";
+import { Separator } from "../../components/ui/separator";
 import { Switch } from "../../components/ui/switch";
 import { Variants } from "../frame";
 import { deckCards } from "../mock";
@@ -149,6 +150,38 @@ export const lists: Group = {
           />
         );
       },
+    },
+    {
+      slug: "separator",
+      name: "Separator",
+      source: "components/ui/separator.tsx",
+      note: "A hairline in the edge colour between things that belong to one surface. Menus and lists draw their own rule, so no screen uses this part yet.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Horizontal",
+              render: () => (
+                <div className="grid w-full max-w-sm gap-3 text-base">
+                  <span>Review</span>
+                  <Separator />
+                  <span>Notifications</span>
+                </div>
+              ),
+            },
+            {
+              label: "Vertical",
+              render: () => (
+                <div className="flex h-6 items-center gap-3 text-base">
+                  <span>12 cards</span>
+                  <Separator orientation="vertical" />
+                  <span>3 due</span>
+                </div>
+              ),
+            },
+          ]}
+        />
+      ),
     },
   ],
 };

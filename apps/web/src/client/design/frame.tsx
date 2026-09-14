@@ -233,7 +233,8 @@ export interface Variant {
   label: string;
   /** What this state is for, in one sentence. */
   note?: ReactNode | undefined;
-  render: (theme: FrameTheme) => ReactNode;
+  /** Left out for a state that is described rather than shown, such as one that only exists in motion. */
+  render?: ((theme: FrameTheme) => ReactNode) | undefined;
 }
 
 function subscribeRoot(onChange: () => void) {
@@ -279,29 +280,37 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
           className={clsx(
             "grid",
             i > 0 && "border-t border-edge",
-            !stack && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
+            !stack && v.render && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
           )}
         >
           <div
             className={clsx(
               // Annotations are set in mono so a note about a component never reads as part of it.
               "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
-              stack ? "pb-1" : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
+              !v.render
+                ? "pb-4 @3xl:py-5"
+                : stack
+                  ? "pb-1"
+                  : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
               // The first label shares its corner with the theme switch.
               i === 0 && (stack ? "pe-20" : "pe-20 @3xl:pe-5"),
             )}
           >
             <p className="font-semibold text-text">{v.label}</p>
-            {v.note && <p className="leading-relaxed text-pretty text-muted">{v.note}</p>}
-          </div>
-          <div
-            className={clsx(
-              "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
-              !stack && "@3xl:pe-20",
+            {v.note && (
+              <p className="max-w-[80ch] leading-relaxed text-pretty text-muted">{v.note}</p>
             )}
-          >
-            {v.render(theme)}
           </div>
+          {v.render && (
+            <div
+              className={clsx(
+                "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
+                !stack && "@3xl:pe-20",
+              )}
+            >
+              {v.render(theme)}
+            </div>
+          )}
         </div>
       ))}
     </div>

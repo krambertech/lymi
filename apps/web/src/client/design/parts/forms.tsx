@@ -7,20 +7,6 @@ import { RadioCard } from "../../components/radio-card";
 import { Segmented } from "../../components/segmented";
 import { Checkbox } from "../../components/ui/checkbox";
 import {
-  Combobox,
-  ComboboxCollection,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxGroup,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxLabel,
-  ComboboxList,
-  ComboboxSeparator,
-  ComboboxTrigger,
-  ComboboxValue,
-} from "../../components/ui/combobox";
-import {
   Field,
   FieldContent,
   FieldDescription,
@@ -32,27 +18,14 @@ import {
 } from "../../components/ui/field";
 import { Input } from "../../components/ui/input";
 import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
 import { Slider } from "../../components/ui/slider";
 import { Switch } from "../../components/ui/switch";
 import { Textarea } from "../../components/ui/textarea";
+import { DeviceFrames } from "../device-frame";
+import { Force, ReducedMotion } from "../forced-states";
 import { Variants } from "../frame";
+import { DeckCombobox, DeckSelect } from "../specimens";
 import type { Group } from "./types";
-
-const DECKS = [
-  { value: "d1", label: "Lesson 14" },
-  { value: "d2", label: "Portuguese" },
-  { value: "d3", label: "Українська для Марко" },
-];
 
 const DIRECTIONS = [
   { value: "recognise", label: "IT → EN" },
@@ -219,6 +192,59 @@ export const forms: Group = {
         <Variants
           items={[
             {
+              label: "Default",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Term</FieldLabel>
+                  <Input placeholder="sbrigarsi" />
+                </Field>
+              ),
+            },
+            {
+              label: "Hover",
+              note: "The edge strengthens under a pointer.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Term</FieldLabel>
+                  <Force state="hover" on="input">
+                    <Input defaultValue="sbrigarsi" />
+                  </Force>
+                </Field>
+              ),
+            },
+            {
+              label: "Focus",
+              note: "The edge strengthens and the ring goes around it.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Term</FieldLabel>
+                  <Force state="focus" on="input">
+                    <Input defaultValue="sbrigarsi" />
+                  </Force>
+                </Field>
+              ),
+            },
+            {
+              label: "Invalid",
+              note: "The red edge stays under hover and focus, so the field still says what is wrong while it is being fixed.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Term</FieldLabel>
+                  <Force state="focus" on="input">
+                    <Input defaultValue="" placeholder="sbrigarsi" />
+                  </Force>
+                  <FieldError>Add the term this card is for.</FieldError>
+                </Field>
+              ),
+            },
+            {
+              label: "Disabled",
+              note: "Cannot change right now.",
+              render: () => (
+                <Input disabled defaultValue="Lesson 14" aria-label="Deck name" className={box} />
+              ),
+            },
+            {
               label: "Search",
               note: "The icon sits inside the box. With no field around it, the name comes from aria-label.",
               render: () => (
@@ -229,13 +255,6 @@ export const forms: Group = {
                   />
                   <Input placeholder="Search this deck" aria-label="Search" className="ps-9" />
                 </div>
-              ),
-            },
-            {
-              label: "Disabled",
-              note: "Cannot change right now.",
-              render: () => (
-                <Input disabled defaultValue="Lesson 14" aria-label="Deck name" className={box} />
               ),
             },
           ]}
@@ -266,7 +285,29 @@ export const forms: Group = {
                 ),
               },
               {
-                label: "Error",
+                label: "Hover",
+                render: () => (
+                  <Field className={box}>
+                    <FieldLabel>Notes</FieldLabel>
+                    <Force state="hover" on="textarea">
+                      <Textarea defaultValue="Reflexive: mi sbrigo, ti sbrighi." />
+                    </Force>
+                  </Field>
+                ),
+              },
+              {
+                label: "Focus",
+                render: () => (
+                  <Field className={box}>
+                    <FieldLabel>Notes</FieldLabel>
+                    <Force state="focus" on="textarea">
+                      <Textarea defaultValue="Reflexive: mi sbrigo, ti sbrighi." />
+                    </Force>
+                  </Field>
+                ),
+              },
+              {
+                label: "Invalid",
                 render: () => (
                   <Field className={box}>
                     <FieldLabel>Description</FieldLabel>
@@ -320,6 +361,34 @@ export const forms: Group = {
                 ),
               },
               {
+                label: "Hover",
+                note: "An option’s label darkens to ink under a pointer. The plate stays where the choice is.",
+                render: () => (
+                  <Force state="hover" on="button:not([data-pressed])">
+                    <Segmented
+                      label="Direction"
+                      value={seg}
+                      onChange={setSeg}
+                      options={DIRECTIONS}
+                    />
+                  </Force>
+                ),
+              },
+              {
+                label: "Focus",
+                note: "Tab lands on the chosen option, and the ring goes around it.",
+                render: () => (
+                  <Force state="focus" on="button[data-pressed]">
+                    <Segmented
+                      label="Direction"
+                      value={seg}
+                      onChange={setSeg}
+                      options={DIRECTIONS}
+                    />
+                  </Force>
+                ),
+              },
+              {
                 label: "Disabled option",
                 note: "Read out with the others, and skipped by the arrows.",
                 render: () => (
@@ -341,6 +410,56 @@ export const forms: Group = {
                     onChange={setSeg}
                     options={DIRECTIONS}
                   />
+                ),
+              },
+              {
+                label: "Reduced motion",
+                note: "The plate fades in at the new option instead of travelling to it.",
+                render: () => (
+                  <ReducedMotion>
+                    <Segmented
+                      label="Direction"
+                      value={seg}
+                      onChange={setSeg}
+                      options={DIRECTIONS}
+                    />
+                  </ReducedMotion>
+                ),
+              },
+            ]}
+          />
+        );
+      },
+    },
+    {
+      slug: "sliding-plate",
+      name: "Sliding plate",
+      source: "components/ui/sliding-plate.tsx",
+      note: "The plate under a chosen option, shared by Segmented, through ToggleGroupIndicator, and the phone’s pill nav. Nothing else draws it. It springs to a choice made with a pointer in about 340 ms with a trace of overshoot, and jumps for a key, because a key already moved focus there.",
+      Demo: function SlidingPlateDemo() {
+        const [seg, setSeg] = useState("recognise");
+        return (
+          <Variants
+            items={[
+              {
+                label: "Default",
+                note: "Press another option.",
+                render: () => (
+                  <Segmented label="Direction" value={seg} onChange={setSeg} options={DIRECTIONS} />
+                ),
+              },
+              {
+                label: "Reduced motion",
+                note: "The plate fades in at the new option instead of travelling to it.",
+                render: () => (
+                  <ReducedMotion>
+                    <Segmented
+                      label="Direction"
+                      value={seg}
+                      onChange={setSeg}
+                      options={DIRECTIONS}
+                    />
+                  </ReducedMotion>
                 ),
               },
             ]}
@@ -388,6 +507,34 @@ export const forms: Group = {
                 ),
               },
               {
+                label: "Focus",
+                render: () => (
+                  <Field orientation="horizontal" className={`${box} justify-between gap-4`}>
+                    <FieldLabel className="text-base text-text">Show AI examples</FieldLabel>
+                    <Force state="focus">
+                      <Switch checked={on} onCheckedChange={setOn} />
+                    </Force>
+                  </Field>
+                ),
+              },
+              {
+                label: "Invalid",
+                note: "Rare for a setting that applies at once, but a required switch in a form gets the same red edge as a box.",
+                render: () => (
+                  <Field orientation="horizontal" className={`${box} gap-4`}>
+                    <FieldContent className="gap-0.5">
+                      <FieldLabel className="text-base text-text">
+                        Share this deck with the class
+                      </FieldLabel>
+                      <FieldError>Turn this on to send the invite.</FieldError>
+                    </FieldContent>
+                    <span className="flex h-lh shrink-0 items-center text-base">
+                      <Switch checked={false} />
+                    </span>
+                  </Field>
+                ),
+              },
+              {
                 label: "Disabled",
                 note: "The description stays readable, because it is usually the reason.",
                 render: () => (
@@ -402,6 +549,18 @@ export const forms: Group = {
                       <Switch checked={false} />
                     </span>
                   </Field>
+                ),
+              },
+              {
+                label: "Reduced motion",
+                note: "The thumb takes its new place at once and does not stretch while held.",
+                render: () => (
+                  <ReducedMotion>
+                    <Field orientation="horizontal" className={`${box} justify-between gap-4`}>
+                      <FieldLabel className="text-base text-text">Show AI examples</FieldLabel>
+                      <Switch checked={on} onCheckedChange={setOn} />
+                    </Field>
+                  </ReducedMotion>
                 ),
               },
             ]}
@@ -444,6 +603,22 @@ export const forms: Group = {
                 ),
               },
               {
+                label: "Focus",
+                note: "The ring goes around the thumb. The arrow keys move it one step, and Page Up and Page Down a tenth of the way.",
+                render: () => (
+                  <Force state="focus" on="input">
+                    <Slider
+                      min={1}
+                      max={3}
+                      step={0.01}
+                      defaultValue={2}
+                      aria-label="Zoom"
+                      className={box}
+                    />
+                  </Force>
+                ),
+              },
+              {
                 label: "Disabled",
                 note: "While the photo saves.",
                 render: () => (
@@ -455,6 +630,23 @@ export const forms: Group = {
                     aria-label="Zoom"
                     className={box}
                   />
+                ),
+              },
+              {
+                label: "Reduced motion",
+                note: "The thumb keeps its size while it is held.",
+                render: () => (
+                  <ReducedMotion>
+                    <Slider
+                      min={1}
+                      max={3}
+                      step={0.01}
+                      value={zoom}
+                      onValueChange={setZoom}
+                      aria-label="Zoom"
+                      className={box}
+                    />
+                  </ReducedMotion>
                 ),
               },
             ]}
@@ -495,6 +687,17 @@ export const forms: Group = {
                 ),
               },
               {
+                label: "Focus",
+                render: () => (
+                  <Field orientation="horizontal" className={box}>
+                    <Force state="focus">
+                      <Checkbox checked={on} onCheckedChange={setOn} />
+                    </Force>
+                    <FieldLabel className="text-base text-text">Include AI examples</FieldLabel>
+                  </Field>
+                ),
+              },
+              {
                 label: "Mixed",
                 note: "For a checkbox that stands for several others, some of them on.",
                 render: () => (
@@ -514,7 +717,7 @@ export const forms: Group = {
                 ),
               },
               {
-                label: "Error",
+                label: "Invalid",
                 note: "Required and left empty on submit. The field marks the box, and the message says what to do.",
                 render: () => (
                   <Field orientation="horizontal" className={box}>
@@ -526,6 +729,20 @@ export const forms: Group = {
                       <FieldError>{agreed ? undefined : "Confirm this to upload them."}</FieldError>
                     </FieldContent>
                   </Field>
+                ),
+              },
+              {
+                label: "Reduced motion",
+                note: "The box does not give and the tick fades in where it is, instead of drawing across.",
+                render: () => (
+                  <ReducedMotion>
+                    <Field orientation="horizontal" className={box}>
+                      <Checkbox checked={off} onCheckedChange={setOff} />
+                      <FieldLabel className="text-base text-text">
+                        Also archive its review history
+                      </FieldLabel>
+                    </Field>
+                  </ReducedMotion>
                 ),
               },
             ]}
@@ -594,6 +811,98 @@ export const forms: Group = {
                   </FieldSet>
                 ),
               },
+              {
+                label: "Hover",
+                note: "A row that is not chosen takes the hover fill.",
+                render: () => (
+                  <RadioGroup aria-label="How cards are asked" value="recognition" className={box}>
+                    <RadioCard
+                      value="recognition"
+                      title="Recognition"
+                      description="See the term, recall what it means."
+                    />
+                    <Force state="hover">
+                      <RadioCard
+                        value="production"
+                        title="Production"
+                        description="See the meaning, recall the term."
+                      />
+                    </Force>
+                  </RadioGroup>
+                ),
+              },
+              {
+                label: "Focus",
+                note: "On a row the ring goes around the whole row; on a plain item, around the circle.",
+                render: () => (
+                  <div className={`grid gap-4 ${box}`}>
+                    <RadioGroup aria-label="How cards are asked" value="recognition">
+                      <Force state="focus" on="[data-slot=radio-group-item]">
+                        <RadioCard
+                          value="recognition"
+                          title="Recognition"
+                          description="See the term, recall what it means."
+                        />
+                      </Force>
+                    </RadioGroup>
+                    <RadioGroup aria-label="Sort cards by" value="due">
+                      <Field orientation="horizontal" className="min-h-11">
+                        <Force state="focus">
+                          <RadioGroupItem value="due" />
+                        </Force>
+                        <FieldLabel className="text-base text-text">When they are due</FieldLabel>
+                      </Field>
+                    </RadioGroup>
+                  </div>
+                ),
+              },
+              {
+                label: "Invalid",
+                note: "Submitted with nothing chosen. Every circle takes the red edge, and the message sits under the group.",
+                render: () => (
+                  <FieldSet className={box}>
+                    <FieldLegend variant="label">Level</FieldLegend>
+                    <Field invalid>
+                      <RadioGroup className="gap-0">
+                        {[
+                          ["a1", "Beginner"],
+                          ["b1", "Intermediate"],
+                        ].map(([value, label]) => (
+                          <Field key={value} orientation="horizontal" className="min-h-11">
+                            <RadioGroupItem value={value} />
+                            <FieldLabel className="text-base text-text">{label}</FieldLabel>
+                          </Field>
+                        ))}
+                      </RadioGroup>
+                      <FieldError>Choose the level this deck is for.</FieldError>
+                    </Field>
+                  </FieldSet>
+                ),
+              },
+              {
+                label: "Reduced motion",
+                note: "The dot fades in where it is instead of swelling past its size.",
+                render: () => (
+                  <ReducedMotion>
+                    <RadioGroup
+                      aria-label="Sort cards by"
+                      value={sort}
+                      onValueChange={setSort}
+                      className={`gap-0 ${box}`}
+                    >
+                      {[
+                        ["due", "When they are due"],
+                        ["added", "When they were added"],
+                      ].map(([value, label]) => (
+                        <Field key={value} orientation="horizontal" className="min-h-11">
+                          <RadioGroupItem value={value} />
+                          <FieldLabel className="text-base text-text">{label}</FieldLabel>
+                        </Field>
+                      ))}
+                    </RadioGroup>
+                  </ReducedMotion>
+                ),
+              },
             ]}
           />
         );
@@ -621,38 +930,8 @@ export const forms: Group = {
   ],
 };
 
-const OWN_DECKS = DECKS.slice(0, 2);
-const SHARED_DECKS = [
-  { value: "d3", label: "Українська для Марко" },
-  { value: "d4", label: "Eesti keel, class of 2026" },
-];
-
-function DeckSelect({
-  value,
-  onChange,
-  placeholder,
-  disabled,
-}: {
-  value: string | null;
-  onChange: (value: string | null) => void;
-  placeholder?: string | undefined;
-  disabled?: boolean | undefined;
-}) {
-  return (
-    <Select value={value} onValueChange={onChange} items={DECKS} disabled={disabled}>
-      <SelectTrigger>
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
-      <SelectContent aria-label="Deck">
-        {DECKS.map((d) => (
-          <SelectItem key={d.value} value={d.value}>
-            {d.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-}
+const MOTION_NOTE =
+  "With Reduce motion on in the side rail, the panel fades in place and the drawer crossfades instead of rising. Press the box in either frame above to open it again.";
 
 export const select: Group = {
   slug: "select",
@@ -667,12 +946,11 @@ export const select: Group = {
         const [deck, setDeck] = useState<string | null>("d1");
         const [empty, setEmpty] = useState<string | null>(null);
         const [missing, setMissing] = useState<string | null>(null);
-        const [grouped, setGrouped] = useState<string | null>("d3");
         return (
           <Variants
             items={[
               {
-                label: "Chosen",
+                label: "Default",
                 note: "A value is set. Open it to see the check on that row.",
                 render: () => (
                   <Field className={box}>
@@ -687,17 +965,41 @@ export const select: Group = {
                 render: () => (
                   <Field className={box}>
                     <FieldLabel>Deck</FieldLabel>
-                    <DeckSelect value={empty} onChange={setEmpty} placeholder="Choose a deck" />
+                    <DeckSelect value={empty} onChange={setEmpty} />
                   </Field>
                 ),
               },
               {
-                label: "Error",
-                note: "Submitted without a choice.",
+                label: "Hover",
+                note: "The edge strengthens under a pointer.",
                 render: () => (
                   <Field className={box}>
                     <FieldLabel>Deck</FieldLabel>
-                    <DeckSelect value={missing} onChange={setMissing} placeholder="Choose a deck" />
+                    <Force state="hover" on="[data-slot=select-trigger]">
+                      <DeckSelect value={deck} onChange={setDeck} />
+                    </Force>
+                  </Field>
+                ),
+              },
+              {
+                label: "Focus",
+                note: "The edge strengthens and the ring every control gets goes around it.",
+                render: () => (
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
+                    <Force state="focus" on="[data-slot=select-trigger]">
+                      <DeckSelect value={deck} onChange={setDeck} />
+                    </Force>
+                  </Field>
+                ),
+              },
+              {
+                label: "Invalid",
+                note: "Submitted without a choice. The red edge stays under hover, focus and the open list.",
+                render: () => (
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
+                    <DeckSelect value={missing} onChange={setMissing} />
                     <FieldError>Choose a deck for this card.</FieldError>
                   </Field>
                 ),
@@ -713,98 +1015,37 @@ export const select: Group = {
                   </Field>
                 ),
               },
-              {
-                label: "Groups",
-                note: "Two kinds of the same thing, each under a small label, with a rule between them. The hover fill never crosses the rule.",
-                render: () => (
-                  <Field className={box}>
-                    <FieldLabel>Deck</FieldLabel>
-                    <Select
-                      value={grouped}
-                      onValueChange={setGrouped}
-                      items={[...OWN_DECKS, ...SHARED_DECKS]}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Choose a deck" />
-                      </SelectTrigger>
-                      <SelectContent aria-label="Deck">
-                        <SelectGroup>
-                          <SelectLabel>Your decks</SelectLabel>
-                          {OWN_DECKS.map((d) => (
-                            <SelectItem key={d.value} value={d.value}>
-                              {d.label}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                        <SelectSeparator />
-                        <SelectGroup>
-                          <SelectLabel>Shared with you</SelectLabel>
-                          {SHARED_DECKS.map((d) => (
-                            <SelectItem key={d.value} value={d.value}>
-                              {d.label}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </Field>
-                ),
-              },
             ]}
           />
         );
       },
     },
+    {
+      slug: "select-open",
+      name: "Open",
+      source: "components/ui/select.tsx",
+      note: "Two kinds of the same thing, each under a small label, with a rule between them. The hover fill never crosses the rule.",
+      Demo: () => (
+        <Variants
+          stack
+          items={[
+            {
+              label: "Open",
+              note: "A panel under the box on a desktop. On touch the same rows in a drawer, titled with the field’s name.",
+              render: () => <DeviceFrames specimen="select" />,
+            },
+            {
+              label: "Open in a form",
+              note: "On touch the list’s drawer stacks over the form’s, and the form steps back.",
+              render: () => <DeviceFrames specimen="nested" />,
+            },
+            { label: "Reduced motion", note: MOTION_NOTE },
+          ]}
+        />
+      ),
+    },
   ],
 };
-
-const OWN_DECK_GROUP = { value: "own", label: "Your decks", items: OWN_DECKS };
-const SHARED_DECK_GROUP = { value: "shared", label: "Shared with you", items: SHARED_DECKS };
-
-/** Decks to search, grouped the way Library groups them. */
-function DeckCombobox({
-  value,
-  onChange,
-  disabled,
-}: {
-  value: string | null;
-  onChange: (value: string | null) => void;
-  disabled?: boolean;
-}) {
-  const decks = [...OWN_DECKS, ...SHARED_DECKS];
-  return (
-    <Combobox<(typeof decks)[number]>
-      items={[OWN_DECK_GROUP, SHARED_DECK_GROUP]}
-      value={decks.find((d) => d.value === value) ?? null}
-      onValueChange={(next) => onChange(next?.value ?? null)}
-      isItemEqualToValue={(a, b) => a.value === b.value}
-      disabled={disabled}
-    >
-      <ComboboxTrigger>
-        <ComboboxValue placeholder="Choose a deck" />
-      </ComboboxTrigger>
-      <ComboboxContent aria-label="Deck">
-        <ComboboxInput placeholder="Search decks" />
-        <ComboboxEmpty>No deck by that name.</ComboboxEmpty>
-        <ComboboxList>
-          {(group: typeof OWN_DECK_GROUP, index: number) => (
-            <ComboboxGroup key={group.value} items={group.items}>
-              {index > 0 && <ComboboxSeparator />}
-              <ComboboxLabel>{group.label}</ComboboxLabel>
-              <ComboboxCollection>
-                {(deck: (typeof decks)[number]) => (
-                  <ComboboxItem key={deck.value} value={deck}>
-                    <span className="flex-1 truncate">{deck.label}</span>
-                  </ComboboxItem>
-                )}
-              </ComboboxCollection>
-            </ComboboxGroup>
-          )}
-        </ComboboxList>
-      </ComboboxContent>
-    </Combobox>
-  );
-}
 
 export const combobox: Group = {
   slug: "combobox",
@@ -824,7 +1065,7 @@ export const combobox: Group = {
           <Variants
             items={[
               {
-                label: "Chosen",
+                label: "Default",
                 note: "A language is set. Open it and the search field takes focus; a name or a tag finds a row.",
                 render: () => (
                   <div className={box}>
@@ -842,7 +1083,30 @@ export const combobox: Group = {
                 ),
               },
               {
-                label: "Error",
+                label: "Hover",
+                render: () => (
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
+                    <Force state="hover" on="[data-slot=combobox-trigger]">
+                      <DeckCombobox value={deck} onChange={setDeck} />
+                    </Force>
+                  </Field>
+                ),
+              },
+              {
+                label: "Focus",
+                note: "A letter typed now opens the list with that letter already searched.",
+                render: () => (
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
+                    <Force state="focus" on="[data-slot=combobox-trigger]">
+                      <DeckCombobox value={deck} onChange={setDeck} />
+                    </Force>
+                  </Field>
+                ),
+              },
+              {
+                label: "Invalid",
                 note: "Submitted without a choice.",
                 render: () => (
                   <div className={box}>
@@ -852,16 +1116,6 @@ export const combobox: Group = {
                       error="Choose the language this deck’s cards are in."
                     />
                   </div>
-                ),
-              },
-              {
-                label: "Groups",
-                note: "Two kinds of the same thing, each under a small label, with a rule between them. A group with no match leaves with its label.",
-                render: () => (
-                  <Field className={box}>
-                    <FieldLabel>Deck</FieldLabel>
-                    <DeckCombobox value={deck} onChange={setDeck} />
-                  </Field>
                 ),
               },
               {
@@ -879,6 +1133,25 @@ export const combobox: Group = {
           />
         );
       },
+    },
+    {
+      slug: "combobox-open",
+      name: "Open",
+      source: "components/ui/combobox.tsx",
+      note: "Two kinds of the same thing, each under a small label, with a rule between them. A group with no match leaves with its label.",
+      Demo: () => (
+        <Variants
+          stack
+          items={[
+            {
+              label: "Open",
+              note: "On a desktop the search field leads the panel. On touch it leads a drawer that keeps one height while the rows filter, so the drawer does not jump with each letter.",
+              render: () => <DeviceFrames specimen="combobox" />,
+            },
+            { label: "Reduced motion", note: MOTION_NOTE },
+          ]}
+        />
+      ),
     },
   ],
 };

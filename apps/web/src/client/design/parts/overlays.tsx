@@ -1,26 +1,21 @@
 import { Archive, Download, MoreHorizontal, Pencil, Volume2 } from "lucide-react";
-import { useState } from "react";
+import { useRef } from "react";
 import { Button, IconButton } from "../../components/button";
-import { NewDeckForm } from "../../components/new-deck-sheet";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "../../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
+import { Popover, PopoverContent } from "../../components/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../components/ui/tooltip";
+import { DeviceFrames } from "../device-frame";
 import { Variants } from "../frame";
-import { SheetPreview } from "../sheet-preview";
-import { type Group, noop } from "./types";
+import type { Group } from "./types";
+
+const OVERLAY_MOTION =
+  "Turn on Reduce motion in the side rail, then press the button in either frame to open it again: the dialog fades in place without its rise, and the drawer crossfades instead of rising.";
 
 export const menu: Group = {
   slug: "menu",
@@ -33,10 +28,16 @@ export const menu: Group = {
       source: "components/ui/dropdown-menu.tsx",
       Demo: () => (
         <Variants
+          stack
           items={[
             {
-              label: "Deck options",
-              note: "Items lead with an icon and may show a shortcut. A destructive item goes last, under a rule, in the danger tone.",
+              label: "Open",
+              note: "Rows lead with an icon and may show a shortcut, which the drawer leaves out. A label names a group of rows. A disabled row stays in the list and is read out. A destructive row goes last, under a rule, in the danger tone.",
+              render: () => <DeviceFrames specimen="menu" />,
+            },
+            {
+              label: "Default",
+              note: "The trigger is any button, composed through render. This one opens the shape this window gets.",
               render: () => (
                 <DropdownMenu>
                   <DropdownMenuTrigger
@@ -50,12 +51,11 @@ export const menu: Group = {
                   <DropdownMenuContent aria-label="Deck options" align="start">
                     <DropdownMenuItem>
                       <Pencil />
-                      Rename
+                      Deck settings
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Download />
                       Export as CSV
-                      <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive">
@@ -65,6 +65,10 @@ export const menu: Group = {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ),
+            },
+            {
+              label: "Reduced motion",
+              note: "On a desktop the list fades in place without growing, and the hover fill fades in on the row under the pointer instead of sliding to it. The drawer crossfades. Turn on Reduce motion in the side rail to try it.",
             },
           ]}
         />
@@ -76,7 +80,7 @@ export const menu: Group = {
 export const overlays: Group = {
   slug: "overlays",
   title: "Overlays",
-  lede: "Things that sit over the page. A tooltip names a control. A sheet is a form the learner asked for. A dialog is a question, and Lymi asks one only when there is no way back.",
+  lede: "Things that sit over the page. A tooltip names a control and a popover explains one; both stay anchored on every device. A dialog holds a moment, a form or a question, or a place such as the streak, and takes the machine’s shape: centred on a desktop, a drawer on a touch device.",
   entries: [
     {
       slug: "tooltip",
@@ -86,6 +90,24 @@ export const overlays: Group = {
       Demo: () => (
         <Variants
           items={[
+            {
+              label: "Open",
+              note: "Ink on the room, under the control, 6 px from it. It flips above when there is no room below.",
+              render: () => (
+                <div className="pb-8">
+                  <Tooltip open>
+                    <TooltipTrigger
+                      render={
+                        <Button variant="secondary" aria-label="Play pronunciation">
+                          <Volume2 aria-hidden="true" />
+                        </Button>
+                      }
+                    />
+                    <TooltipContent>Play pronunciation</TooltipContent>
+                  </Tooltip>
+                </div>
+              ),
+            },
             {
               label: "On hover",
               note: "Waits 500 ms under a still pointer, then grows from the side nearest the control.",
@@ -147,109 +169,125 @@ export const overlays: Group = {
                 </DropdownMenu>
               ),
             },
+            {
+              label: "Reduced motion",
+              note: "The name fades in place without growing. Turn on Reduce motion in the side rail and point at a control to try it.",
+            },
           ]}
         />
       ),
     },
     {
-      slug: "sheet",
-      name: "Sheet",
-      source: "components/Dialog.tsx",
-      note: "A form the learner asked for, in a Dialog: a drawer on a touch device, a centred dialog on a desktop, held while open. The form knows nothing about either shape.",
-      Demo: function SheetDemo() {
-        const [open, setOpen] = useState(false);
-        return (
-          <>
-            <Variants
-              stack
-              items={[
-                {
-                  label: "Live",
-                  note: "Opens the shape this window gets.",
-                  render: () => (
-                    <Button size="sm" onClick={() => setOpen(true)}>
-                      Open sheet
-                    </Button>
-                  ),
-                },
-                {
-                  label: "Drawer",
-                  note: "On a touch device. Rises from the bottom edge, under the thumb, and swipes away.",
-                  render: () => (
-                    <SheetPreview shape="drawer" title="New deck">
-                      <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
-                    </SheetPreview>
-                  ),
-                },
-                {
-                  label: "Modal",
-                  note: "On a desktop with a fine pointer. Centred, with the card’s 6 px rise.",
-                  render: () => (
-                    <SheetPreview
-                      shape="dialog"
-                      title="New deck"
-                      className="mx-auto w-full max-w-[440px]"
-                    >
-                      <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />
-                    </SheetPreview>
-                  ),
-                },
-              ]}
-            />
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogContent className="w-[min(92vw,440px)]">
-                <DialogTitle>New deck</DialogTitle>
-                <NewDeckForm onCancel={() => setOpen(false)} onSubmit={() => undefined} static />
-              </DialogContent>
-            </Dialog>
-          </>
-        );
-      },
+      slug: "popover",
+      name: "Popover",
+      source: "components/ui/popover.tsx",
+      note: "A note about a control, anchored to it on every device. It has no drawer shape, so it never holds controls of its own. The error tip on the Feedback page is the one in use.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Open",
+              note: "A plate with the strong edge, over the control, flipping below when there is no room. It grows out of the side nearest the control over 180 ms and shrinks back in 100.",
+              render: () => <PopoverOpen />,
+            },
+            {
+              label: "Reduced motion",
+              note: "It fades in place without growing.",
+            },
+          ]}
+        />
+      ),
     },
     {
-      slug: "dialog",
-      name: "Dialog",
+      slug: "form",
+      name: "Form",
       source: "components/ui/dialog.tsx",
-      note: "For the one action that cannot be undone. Everywhere else, act and offer Undo. Centred on a desktop; on a touch device a drawer with the actions stacked, the primary on top.",
-      Demo: function DialogDemo() {
-        const [open, setOpen] = useState(false);
-        return (
-          <>
-            <Variants
-              items={[
-                {
-                  label: "Delete account",
-                  note: "The safe choice is a ghost button: first in the row on a desktop, under the primary on a touch device.",
-                  render: () => (
-                    <Button size="sm" onClick={() => setOpen(true)}>
-                      Open dialog
-                    </Button>
-                  ),
-                },
-              ]}
-            />
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Delete this account?</DialogTitle>
-                  <DialogDescription>
-                    Every deck, card and review goes with it. This is the one action in Lymi that
-                    cannot be undone.
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <Button variant="ghost" onClick={() => setOpen(false)}>
-                    Keep it
-                  </Button>
-                  <Button variant="danger" onClick={() => setOpen(false)}>
-                    Delete account
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </>
-        );
-      },
+      note: "A form the learner asked for, in a Dialog: a centred dialog on a desktop, a drawer on a touch device, held while open. The form knows nothing about either shape.",
+      Demo: () => (
+        <Variants
+          stack
+          items={[
+            {
+              label: "Open",
+              note: "On touch the drawer keeps the focused field above the software keyboard, and swipes away.",
+              render: () => <DeviceFrames specimen="form" />,
+            },
+            { label: "Reduced motion", note: OVERLAY_MOTION },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "confirmation",
+      name: "Confirmation",
+      source: "components/ui/dialog.tsx",
+      note: "For the one action that cannot be undone. Everywhere else, act and offer Undo.",
+      Demo: () => (
+        <Variants
+          stack
+          items={[
+            {
+              label: "Open",
+              note: "On a desktop the actions sit in a row, the primary last. On touch they stack full width, the primary on top. The safe action names what stays.",
+              render: () => <DeviceFrames specimen="confirmation" />,
+            },
+            { label: "Reduced motion", note: OVERLAY_MOTION },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "place",
+      name: "Place",
+      source: "components/ui/dialog.tsx",
+      note: "Something the learner goes to and reads, such as the streak. Its open state is a search parameter, so Back closes it and a link opens it. It is a Dialog with kind place.",
+      Demo: () => (
+        <Variants
+          stack
+          items={[
+            {
+              label: "Open",
+              note: "Centred on a desktop. On touch a drawer over the whole screen with square corners and a close button; a swipe down closes it too.",
+              render: () => <DeviceFrames specimen="place" />,
+            },
+            { label: "Reduced motion", note: OVERLAY_MOTION },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "drawer",
+      name: "Drawer",
+      source: "components/ui/drawer.tsx",
+      note: "The touch shape of Dialog, DropdownMenu, Select and Combobox. No screen uses it directly: a call site uses those four and never picks a shape. It rises from the bottom edge over 450 ms, follows the finger, and leaves faster the harder it was flicked.",
+      Demo: () => (
+        <Variants
+          stack
+          items={[
+            {
+              label: "Nested",
+              note: "A list opened from a form rises over it. The form keeps its height and steps back, and its handle hides until the list is swiped away.",
+              render: () => <DeviceFrames specimen="nested" />,
+            },
+          ]}
+        />
+      ),
     },
   ],
 };
+
+function PopoverOpen() {
+  const anchor = useRef<HTMLButtonElement>(null);
+  return (
+    <div className="flex w-full justify-center pt-16">
+      <IconButton ref={anchor} label="Play pronunciation" variant="danger" round>
+        <Volume2 aria-hidden="true" />
+      </IconButton>
+      <Popover open>
+        <PopoverContent anchor={anchor} initialFocus={false} finalFocus={false}>
+          Couldn’t play the pronunciation. Try again.
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}

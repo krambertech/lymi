@@ -11,6 +11,7 @@ import {
   ToastViewport,
   toast,
 } from "../../components/ui/toast";
+import { Force } from "../forced-states";
 import { Variants } from "../frame";
 import { type Group, noop } from "./types";
 
@@ -66,6 +67,24 @@ export const feedback: Group = {
               ),
             },
             {
+              label: "Hover",
+              note: "The action and the close button each take a faint fill under a pointer.",
+              render: () => (
+                <Force state="hover" on="[data-slot=toast-action]">
+                  <ToastPreview title="Archived “sbrigarsi”" action="Undo" />
+                </Force>
+              ),
+            },
+            {
+              label: "Focus",
+              note: "Focus inside the stack spreads it open and holds every timer.",
+              render: () => (
+                <Force state="focus" on="[data-slot=toast-close]">
+                  <ToastPreview title="Archived “sbrigarsi”" action="Undo" />
+                </Force>
+              ),
+            },
+            {
               label: "Error",
               note: "Says what failed and what to do, with nothing to press.",
               render: () => (
@@ -74,6 +93,10 @@ export const feedback: Group = {
                   title="Couldn’t play the pronunciation. Try again in a moment."
                 />
               ),
+            },
+            {
+              label: "Reduced motion",
+              note: "A toast fades in and out where it lands instead of rising from below the edge, and the stack restacks without travel. Turn on Reduce motion in the side rail and fire one above.",
             },
           ]}
         />
@@ -91,6 +114,10 @@ export const feedback: Group = {
               label: "Try it",
               note: "The pronunciation button in review, after audio fails.",
               render: () => <ErrorTipTrigger />,
+            },
+            {
+              label: "Reduced motion",
+              note: "The tip fades in place without growing, and the button turns red without shaking.",
             },
           ]}
         />

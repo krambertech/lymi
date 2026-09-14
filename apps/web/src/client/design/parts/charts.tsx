@@ -2,7 +2,6 @@ import { MonthBars } from "../../components/month-bars";
 import { RunStrip } from "../../components/run-strip";
 import { SevenLights } from "../../components/seven-lights";
 import { StatPlate } from "../../components/stat-plate";
-import { StateStripe } from "../../components/state-stripe";
 import { StreakButton, StreakPanel, StreakWeek } from "../../components/streak";
 import { TrendLine } from "../../components/trend-line";
 import { Variants } from "../frame";
@@ -241,36 +240,6 @@ export const charts: Group = {
             {
               label: "The first month",
               render: () => <MonthBars months={thinInsights.months} className="w-full" />,
-            },
-          ]}
-        />
-      ),
-    },
-    {
-      slug: "state-stripe",
-      name: "State stripe",
-      source: "components/state-stripe.tsx",
-      note: "How a deck’s cards split between new, learning and known, in their state colours, filling left to right as cards move along. The deck’s shape, not its score.",
-      Demo: () => (
-        <Variants
-          items={[
-            {
-              label: "With the legend",
-              note: "The counts in words under the stripe.",
-              render: () => <StateStripe known={31} learning={14} total={64} className="w-full" />,
-            },
-            {
-              label: "Without the legend",
-              note: "Where a filter right below already names the states.",
-              render: () => (
-                <StateStripe
-                  known={31}
-                  learning={14}
-                  total={64}
-                  legend={false}
-                  className="w-full"
-                />
-              ),
             },
           ]}
         />

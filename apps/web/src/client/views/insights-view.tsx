@@ -10,6 +10,7 @@ import { RunStrip } from "../components/run-strip";
 import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
 import { StatPlate } from "../components/stat-plate";
+import { StateIcon, stateMarks } from "../components/state-mark";
 import { TrendLine } from "../components/trend-line";
 import { Page, PageHeader } from "./shell";
 
@@ -205,25 +206,27 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
           value={cards.total}
           unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
           figure={
-            // The one figure here that carries colour, and it is the state colours every other
-            // stripe, dot and chip in the app uses: grey new, yellow learning, green known.
+            // The one figure here that carries colour: the state colours every icon in the app uses.
             <div
               className="flex h-3 w-full gap-1"
               role="img"
               aria-label={t`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
             >
               {cards.new > 0 && (
-                <i className="block rounded-full bg-state-new" style={{ flexGrow: cards.new }} />
+                <i
+                  className={clsx("block rounded-full", stateMarks.new.bg)}
+                  style={{ flexGrow: cards.new }}
+                />
               )}
               {cards.learning > 0 && (
                 <i
-                  className="block rounded-full bg-state-learning"
+                  className={clsx("block rounded-full", stateMarks.learning.bg)}
                   style={{ flexGrow: cards.learning }}
                 />
               )}
               {cards.known > 0 && (
                 <i
-                  className="block rounded-full bg-state-known"
+                  className={clsx("block rounded-full", stateMarks.known.bg)}
                   style={{ flexGrow: cards.known }}
                 />
               )}
@@ -231,13 +234,16 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
           }
           note={
             <span className="flex flex-wrap gap-1.5">
-              <Chip size="sm" dot tone="new">
+              <Chip size="sm">
+                <StateIcon state="new" className="size-3" />
                 <Trans>{cards.new} new</Trans>
               </Chip>
-              <Chip size="sm" dot tone="learning">
+              <Chip size="sm">
+                <StateIcon state="learning" className="size-3" />
                 <Trans>{cards.learning} learning</Trans>
               </Chip>
-              <Chip size="sm" dot tone="known">
+              <Chip size="sm">
+                <StateIcon state="known" className="size-3" />
                 <Trans>{cards.known} known</Trans>
               </Chip>
             </span>

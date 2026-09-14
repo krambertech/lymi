@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
-import { CircleAlert, Loader2, Pointer, RotateCcw, Volume2, X } from "lucide-react";
+import { BookMarked, CircleAlert, Loader2, Pointer, Volume2, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -25,6 +25,7 @@ import { Lantern } from "../components/lantern";
 import { Progress } from "../components/progress";
 import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
+import { StateIcon } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import type { QueueItem } from "../lib/api";
 import { lanternFor, streakFlameFor } from "../lib/flame";
@@ -53,10 +54,8 @@ const LANTERN_FLIGHT = { type: "spring", visualDuration: 0.6, bounce: 0 } as con
 /**
  * The lantern, today's attempts against the goal, and the exit, on one line.
  *
- * The deck name is deliberately absent. It is chosen two taps earlier, it cannot change for the
- * length of the session, and a long one squeezes the track down to nothing — so it moves to the
- * end screen, where it is a fact about what was reviewed rather than a caption on every card.
- * The lantern stays: every accepted grade, Forgot included, feeds its flame.
+ * The deck name is not here, because a long one squeezes the track down to nothing; each card
+ * names its own deck. The lantern stays: every accepted grade, Forgot included, feeds its flame.
  *
  * The lantern's drawing starts about a quarter of the way into its box, so the negative margin
  * puts the metal, not the box, on the card's outer edge.
@@ -138,22 +137,6 @@ function RollingCount({ value, animate }: { value: number; animate: boolean }) {
       </AnimatePresence>
     </span>
   );
-}
-
-/**
- * The review card says a lapse in words. "Relearning" is the schedule's name for it; what the
- * learner needs to know is that this one got away recently, since one relearning step means the
- * state only lasts until the next Good.
- */
-function ReviewStateChip({ state }: { state: number }) {
-  if (state === 3)
-    return (
-      <Chip tone="learning" size="lg">
-        <RotateCcw className="size-3.5 text-grade-forgot" aria-hidden="true" strokeWidth={2} />
-        <Trans>Forgot recently</Trans>
-      </Chip>
-    );
-  return <StateChip state={state} size="lg" />;
 }
 
 interface AudioButtonProps {
@@ -297,6 +280,8 @@ const answerLine: Variants = {
 
 export interface ReviewCardProps {
   item: QueueItem;
+  /** The deck the card came from, named first on the card. A review can mix every deck. */
+  deck?: { name: string; language?: string | null | undefined } | undefined;
   revealed: boolean;
   animateReveal?: boolean | undefined;
   /** Show how to reveal: the pointing hand with the words under it. */
@@ -317,6 +302,7 @@ export interface ReviewCardProps {
  */
 export function ReviewCard({
   item,
+  deck,
   revealed,
   animateReveal = true,
   hint = false,
@@ -375,11 +361,23 @@ export function ReviewCard({
         />
       )}
       <div className="flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs">
-        <span>
-          {i18n._(modeLabel(mode))}
-          {card.language && <span> · {card.language.toUpperCase()}</span>}
+        <span className="flex min-w-0 items-center gap-1.5">
+          {deck && (
+            <>
+              <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
+              <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
+              <span aria-hidden="true">·</span>
+            </>
+          )}
+          <span className="shrink-0">
+            {i18n._(modeLabel(mode))}
+            {/* The deck implies its language, so the code shows only for a card that differs. */}
+            {card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase() && (
+              <span> · {card.language.toUpperCase()}</span>
+            )}
+          </span>
         </span>
-        <ReviewStateChip state={item.fsrsState} />
+        <StateChip state={item.fsrsState} size="lg" inReview />
       </div>
 
       <div className="flex flex-1 flex-col justify-center gap-5 py-2">
@@ -751,11 +749,13 @@ export function ReviewComplete({
   const ways = [
     forgotten > 0 && {
       key: "forgotten",
+      icon: <StateIcon state="forgot" className="size-4" />,
       label: t`${plural(forgotten, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`,
       onClick: onReviewForgotten,
     },
     nextRound > 0 && {
       key: "round",
+      icon: null,
       label: t`${plural(nextRound, { one: "Review # more card", other: "Review # more cards" })}`,
       onClick: onAnotherRound,
     },
@@ -937,6 +937,7 @@ export function ReviewComplete({
               className={buttonClass("secondary", "lg", "seq w-full")}
               style={at(AT.actions + i * AT.actionStep)}
             >
+              {way.icon}
               {way.label}
             </button>
           ))}

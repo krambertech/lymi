@@ -132,6 +132,7 @@ function Review() {
   const currentCardId = current?.card.id;
   const currentItemKey = current ? itemKey(current) : undefined;
   const deckName = deck ? decks.data?.find((d) => d.id === deck)?.name : undefined;
+  const currentDeck = current ? decks.data?.find((d) => d.id === current.card.deckId) : undefined;
   const hint = useRevealHint(current ? `${current.stateId}-${done}` : undefined, revealed);
   usePrefetchPictures(
     round ? roundLeft : leg?.kind === "forgotten" ? legLeft : (state?.upcoming ?? []),
@@ -504,6 +505,12 @@ function Review() {
             <ReviewCard
               key={`${itemKey(current)}-${done}`}
               item={current}
+              deck={
+                currentDeck && {
+                  name: currentDeck.name,
+                  language: currentDeck.defaultLanguage ?? null,
+                }
+              }
               revealed={revealed}
               animateReveal={animateReveal}
               hint={hint}

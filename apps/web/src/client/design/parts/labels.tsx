@@ -13,28 +13,28 @@ export const labels: Group = {
       slug: "chip",
       name: "Chip",
       source: "components/chip.tsx",
-      note: "State chips carry a dot and a word.",
+      note: "State chips carry the state’s icon and a word on a plain chip. The colour is the icon’s alone.",
       Demo: () => (
         <Variants
           items={[
             {
               label: "New",
-              note: "Never reviewed. Grey: a state is a fact, not something to press.",
+              note: "Never reviewed. A grey dashed circle: a state is a fact, not something to press.",
               render: () => <StateChip state={0} />,
             },
             {
               label: "Learning",
-              note: "Seen, not settled yet. Mustard, well off amber’s hue.",
+              note: "Seen, not settled yet. A blue half circle, the hue furthest from amber, danger and good.",
               render: () => <StateChip state={1} />,
             },
             {
-              label: "Relearning",
-              note: "Forgotten, and on its way back.",
-              render: () => <StateChip state={3} />,
+              label: "Forgot recently",
+              note: "A relearning card under review, said as what happened, with the Forgot grade’s red arrow. Elsewhere it is Learning.",
+              render: () => <StateChip state={3} inReview />,
             },
             {
               label: "Known",
-              note: "Settled. Green, and it still says so in words.",
+              note: "Settled. A green check circle, and it still says so in words.",
               render: () => <StateChip state={2} />,
             },
             {

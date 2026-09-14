@@ -25,6 +25,8 @@ import type { Entry } from "./parts/types";
 import { SheetPreview } from "./sheet-preview";
 
 const noop = () => {};
+/** The deck `m.queueItem` and its siblings belong to. */
+const reviewDeck = { name: "Italian with Giulia", language: "it" };
 
 function Shot({
   caption,
@@ -182,7 +184,13 @@ function ReviewEndShot({
               }
             />
           ) : (
-            <ReviewCard item={m.queueItem} revealed={false} onReveal={noop} className="mt-4" />
+            <ReviewCard
+              item={m.queueItem}
+              deck={reviewDeck}
+              revealed={false}
+              onReveal={noop}
+              className="mt-4"
+            />
           )}
         </div>
       </LayoutGroup>
@@ -206,6 +214,7 @@ function ReviewPhone({
       <ReviewHeader attempts={4} goal={20} />
       <ReviewCard
         item={item}
+        deck={reviewDeck}
         revealed={revealed}
         hint={!revealed}
         onReveal={() => setRevealed(true)}
@@ -434,15 +443,13 @@ export const SCREENS: Entry[] = [
     slug: "library",
     name: "Library",
     source: "views/library-view.tsx",
-    note: "Library is every deck as a card with a face: its name and language, how its cards split between known, learning and new, and what it asks of you today. A deck is its cards in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list.",
+    note: "Library is every deck as a card: its name, whether it has cards due today, and its language and size. A deck is its cards in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Library" initial="light" path="/library">
             <LibraryView
               decks={m.decks}
-              known={m.known}
-              learning={m.learning}
               next={{ d3: "Monday" }}
               archivedCount={2}
               name={m.me.name}
@@ -489,8 +496,6 @@ export const SCREENS: Entry[] = [
               <main className="@container flex min-w-0 flex-1 flex-col">
                 <LibraryView
                   decks={m.decks}
-                  known={m.known}
-                  learning={m.learning}
                   next={{ d3: "Monday" }}
                   archivedCount={2}
                   static={{ path: "/library" }}

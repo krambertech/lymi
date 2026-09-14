@@ -18,6 +18,8 @@ colors:
   amber-ink: "#331b06"
   amber-text: "#9f4500"
   amber-soft: "#f8ac3d29"
+  amber-tint: "#f8ac3d42"
+  amber-tint-ink: "#331b06"
   flame-core: "#fff4b7"
   glass: "#fae5c9"
   glass-unlit: "#f0ede9"
@@ -26,10 +28,10 @@ colors:
   good: "#006e42"
   good-soft: "#006e421f"
   state-new: "#867f79"
-  state-learning: "#ab8704"
-  state-learning-soft: "#ab870429"
-  state-learning-text: "#6e580f"
-  state-known: "#006e42"
+  state-learning: "#4284c5"
+  state-learning-soft: "#4284c524"
+  state-learning-text: "#23588a"
+  state-known: "#249057"
   danger: "#be241f"
   danger-soft: "#be241f1a"
   ring: "#20130899"
@@ -56,6 +58,8 @@ colors:
   dark-amber-ink: "#2b1401"
   dark-amber-text: "#f9bf60"
   dark-amber-soft: "#fdb44324"
+  dark-amber-tint: "#fdb44329"
+  dark-amber-tint-ink: "#f9bf60"
   dark-flame-core: "#fff4b7"
   dark-glass: "#432c17"
   dark-glass-unlit: "#271f19"
@@ -64,9 +68,9 @@ colors:
   dark-good: "#7bc495"
   dark-good-soft: "#7bc49524"
   dark-state-new: "#83786e"
-  dark-state-learning: "#e1d569"
-  dark-state-learning-soft: "#e1d56924"
-  dark-state-learning-text: "#e4db83"
+  dark-state-learning: "#85b6e9"
+  dark-state-learning-soft: "#85b6e924"
+  dark-state-learning-text: "#a2c8f0"
   dark-state-known: "#7bc495"
   dark-danger: "#fb8274"
   dark-danger-soft: "#fb827424"
@@ -201,21 +205,17 @@ components:
     rounded: "{rounded.pill}"
     height: "26px"
     padding: "0 10px"
-  chip-new:
+  chip-state:
     backgroundColor: "{colors.plate-2}"
     textColor: "{colors.text-2}"
     rounded: "{rounded.pill}"
     height: "26px"
-  chip-learning:
-    backgroundColor: "{colors.state-learning-soft}"
-    textColor: "{colors.state-learning-text}"
+  due-count:
+    backgroundColor: "{colors.amber-tint}"
+    textColor: "{colors.amber-tint-ink}"
     rounded: "{rounded.pill}"
-    height: "26px"
-  chip-known:
-    backgroundColor: "{colors.good-soft}"
-    textColor: "{colors.good}"
-    rounded: "{rounded.pill}"
-    height: "26px"
+    height: "22px"
+    padding: "0 8px"
   card:
     backgroundColor: "{colors.plate}"
     textColor: "{colors.text}"
@@ -249,11 +249,13 @@ The only glow in the interface belongs to the lantern, and inside the lantern on
 
 ## Colour
 
-Warm neutrals, nearly grey. Amber is the only saturated accent, the colour that means act; the three card-state colours below describe and never ask. Amber is: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count in `amber-text` is the fourth allowed use. The fifth is a day the learner reviewed, in the seven lights, the streak modal's month and its goal track, the thirty-day strip and the month bars — the same lit glass at every size, which makes it the flame rather than a sixth thing.
+Warm neutrals, nearly grey. Amber is the only saturated accent, the colour that means act; the three card-state colours below describe and never ask. Amber is: the flame, the one thing to press on the page, and the capture button, which is the app's standing action rather than the page's. A due count is the fourth allowed use, as `DueCount`: the number in ink on `amber-tint`, never amber text, which by day has to darken to brown to be readable. The fifth is a day the learner reviewed, in the seven lights, the streak modal's month and its goal track, the thirty-day strip and the month bars — the same lit glass at every size, which makes it the flame rather than a sixth thing.
 
-Card states have their own three colours, the same everywhere a state shows: grey for New, yellow for Learning, green for Known (`state-new`, `state-learning`, `state-known`, which is `good`). They mark the stripe, the dots in the deck filter and on chips, the icons on the review plate, and the Cards bar on Insights. They are not accents and they are not amber: Each holds 3:1 against the plate and the canvas in both rooms, because a stripe segment or a dot is the state; that makes the yellow a mustard by day. Learning's yellow sits well off amber's hue so a state never reads as something to press, and New was amber once and is grey now for the same reason. Text stays ink; the colour lives on the dot, the bar or the icon, except inside a state chip, which uses `state-learning-text` on its tint.
+Card states have one colour and one icon each, the same everywhere a state shows: a grey dashed circle for New, a blue half circle for Learning, a green check circle for Known (`state-new`, `state-learning`, `state-known`; `stateMarks` and `StateIcon` in `components/state-mark.tsx`). The icon, in that colour, marks the counts on the deck plate, the deck filter, every state chip, the chips under Insights' Cards bar and the New cards tile on Today. That bar is the one place the colour stands alone, because a segment cannot hold an icon and the chips under it name each state. A deck carries no stripe: its split is the counts on its plate. They are not accents and they are not amber: each holds 3:1 against `plate-2`, the lightest ground a mark sits on, in both rooms. By day the marks are lighter than their text colours would be: Known is a brighter green than `good`, which also colours words and has to hold 4.5:1; in the dark room Known is `good`. Learning is blue because it is the hue furthest from amber, `danger` and `good`, so a state never reads as something to press or as an error, and blue and green stay apart for red-green colour blindness; it was mustard once, which sat beside amber and read as dirty orange. New was amber once and is grey now for the same reason. Text stays ink: a state chip is a plain `plate-2` chip, and the colour lives on its icon. `state-learning-soft` and `state-learning-text` exist for the site's scheduling figures only.
 
-Status is never colour alone. New, Learning, Known carry a dot and a word. Errors carry an icon.
+Forgot is a grade, not a state, and its mark is the red turn-back arrow wherever it shows: the Forgot grade, the Forgot today tile, Review forgotten at the end of a review, and the chip on a relearning card under review, which says **Forgot recently** rather than the schedule's name for it. Everywhere else relearning is Learning, because a lapse on a word's schedule table may be months old. The state words live on `stateMarks` beside the icons, so New, Learning and Known are written once.
+
+Status is never colour alone. New, Learning, Known carry an icon and a word. Errors carry an icon.
 
 The twice-per-screen count is about chrome and actions. A status chip in a list repeats once per row, as `StateChip` already does down a deck table and as the due counts do down Library. That is one decision shown many times, not many uses of amber.
 
@@ -367,7 +369,7 @@ On the phone the navigation is a floating pill, two items wide, opaque over the 
 
 On desktop it is the 240 px rail, and the rail is a surface: it runs the full height of the window flush to the left edge, in `rail` with a hairline down its inner side. In it, top to bottom: the app tile beside the wordmark, search and the capture button on that same line, the four destinations, the decks, and the learner at the bottom under a rule — a 34 px avatar, the name, and what the screen behind it holds.
 
-Today is a page of cards, not a single stage. The due card leads: the lantern beside how many cards are due, then one full-width Review button 64 px tall. With a single deck it names the deck. The streak card sits beside it on desktop, in the narrower column, and under it on the phone. Under both, **More to review** shows the rounds as three tiles, always in the same order: **Forgot today**, which is freshest, **New cards**, then **Keeps slipping**. A tile with cards opens its review. An empty tile keeps its place with a muted zero and a plain line, and an empty New cards tile offers Add cards, so no tile is ever left on its own. On desktop the three sit in a row with the action along the foot; on the phone they stack as rows with an arrow. Last, **Decks to review** lists only decks with cards due, each row leading with its due count in `amber-text`,, with a small Library link at the end of its heading, and appears only when the learner has more than one deck; it comes after the rounds because the Review button already covers the same cards. Deck rows and round tiles are whole links that end in a label and an arrow in a circle, never a button inside a row. Today never shows a term, because seeing the answers before a review asks for them spoils the recall.
+Today is a page of cards, not a single stage. The due card leads: the lantern beside how many cards are due, then one full-width Review button 64 px tall. With a single deck it names the deck. The streak card sits beside it on desktop, in the narrower column, and under it on the phone. Under both, **More to review** shows the rounds as three tiles, always in the same order: **Forgot today**, which is freshest, **New cards**, then **Keeps slipping**. Forgot today leads its name with the Forgot mark and New cards with New's; Keeps slipping is not a state and has no mark. A tile with cards opens its review. An empty tile keeps its place with a muted zero and a plain line, and an empty New cards tile offers Add cards, so no tile is ever left on its own. On desktop the three sit in a row with the action along the foot; on the phone they stack as rows with an arrow. Last, **Decks to review** lists only decks with cards due, each row leading with its due count, with a small Library link at the end of its heading, and appears only when the learner has more than one deck; it comes after the rounds because the Review button already covers the same cards. Deck rows and round tiles are whole links that end in a label and an arrow in a circle, never a button inside a row. Today never shows a term, because seeing the answers before a review asks for them spoils the recall.
 
 The rail's first line and the page title beside it sit on the same line, 32 px down. That shared line is what makes the two columns read as one app rather than a menu next to a document.
 
@@ -391,11 +393,11 @@ Consistency and the months answer different questions and neither replaces the o
 
 `components/ui/`: shadcn components on Base UI, one file per primitive, added with `pnpm dlx shadcn@latest add <name>` from `apps/web`. The file is ours once added: keep its export names, parts, data attributes and `render` composition, and rewrite its classes to the tokens on this page; shadcn's own colour variables are never added. The state variants generated classes use, such as `data-open:` and `data-horizontal:`, are copied from `shadcn/tailwind.css` into `styles.css`, because without them those classes match nothing and fail silently. Each matches Base UI's presence attributes, such as an empty `data-selected`, as well as Radix-style values. `pnpm dlx shadcn@latest add <name> --diff` shows what changed upstream, and an update is merged by hand. A primitive that changes shape by device keeps both shapes in its own file, behind shadcn's part names, and tests every part in both. [ADR 0017](docs/adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md).
 
-`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Segmented, RadioCard, Chip with StateChip and SourceChip, Kbd, Progress, Skeleton, EmptyState, SettingsGroup, SevenLights, StreakButton with StreakPanel, StreakCalendar and StreakWeek, GoalPicker, Table, Dialog, AddCardSheet, NewDeckSheet, AddMenu, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, TopBar and BackButton (in `views/shell.tsx`), StateStripe, Flame, AppMark, CardPicture, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
+`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Segmented, RadioCard, Chip with StateChip and SourceChip, Kbd, Progress, Skeleton, EmptyState, SettingsGroup, SevenLights, StreakButton with StreakPanel, StreakCalendar and StreakWeek, GoalPicker, Table, Dialog, AddCardSheet, NewDeckSheet, AddMenu, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, TopBar and BackButton (in `views/shell.tsx`), StateIcon, DueCount, Flame, AppMark, CardPicture, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport. Chrome that follows the rail — page padding, top bars, back rows — queries the whole window's `@3xl/shell`, because the rail appears at a 768 px window while the column beside it is still narrower. The toast renders outside the shell, so its clearance for the pill uses the matching `md` media query.
 
-A deck opens on its plate: the cards due now set large, the whole deck's split between New, Learning and Known beside icons in their state colours, and the Review button. It is the one place a count gets hero size outside Today, because on a deck the number is the size of the thing the button starts, not a score. The three counts are the deck, not today's share of it, so they never read as zero on a quiet day; the stripe under the plate draws the same split, and the filter under the stripe names the states with their dots and no numbers, so no count appears twice. On the phone the plate stacks and the button is full width; on desktop it is one row. With nothing due the plate keeps its shape: a zero, the deck's counts, when the next card is back, and Add card where Review was. On the phone, search sits in the top bar beside back and the deck menu and replaces it while open; on desktop it stays beside the filter, where `/` lands.
+A deck opens on its plate: the cards due now set large, the whole deck's split between New, Learning and Known beside their icons, and the Review button. It is the one place a count gets hero size outside Today, because on a deck the number is the size of the thing the button starts, not a score. The three counts are the deck, not today's share of it, so they never read as zero on a quiet day. There is no stripe under the plate, because it only drew the same split again; the filter under the plate names the states with their icons and no numbers, so no count appears twice. On the phone the plate stacks and the button is full width; on desktop it is one row. With nothing due the plate keeps its shape: a zero, the deck's counts, when the next card is back, and Add card where Review was. On the phone, search sits in the top bar beside back and the deck menu and replaces it while open; on desktop it stays beside the filter, where `/` lands.
 
 Deck actions live behind one menu: Deck settings opens a screen, and the name is changed there rather than inline, Export writes a CSV, Archive leaves the deck list with an Undo toast. Cards archive the same way, from the row.
 
@@ -403,11 +405,13 @@ A deck is a name and two settings, so making one is a sheet and not a wizard. Th
 
 Changing it is a screen, `/library/$deckId/settings`, because on the phone it should push in and the back gesture should work, and because the direction choice needs room to say what it does: three rows, each spelling out what will be shown, using a real card from the deck. Selection is carried by the edge and a filled dot, both ink. Nothing on the screen has a Save button. A choice is made when it is made, a name commits on blur and on the way out, and one quiet "Saved" in the header says so. What changing the direction does to the cards already in the deck is [ADR 0007](docs/adr/0007-a-decks-direction-is-a-filter-not-a-migration.md).
 
+A review card's top line names where the card came from: the deck with its book icon, then the mode, and the state chip at the end. A review can draw from every deck, so the deck is always there; the card's language code follows the mode only when it differs from the deck's.
+
 A card's picture is content, not decoration, so it follows the word's rules. In a picture mode it is the cue, on the start edge like the word, up to 30% of the viewport or 240 px tall, and it keeps that size on reveal while the target and the other text field rise in under the rule. In a text mode the picture joins the context under the target at up to 120 px. The card page shows it at up to 140 px on its own plate, with the description wrapped to the picture's width under it, so the two read as one thing. `CardPicture` holds the picture's own shape from the first frame over a `plate-2` well, fades it in with `enter-fade`, and then drops the well, because a road sign on transparency would otherwise sit in a grey box. When it cannot load it says "Couldn't load the picture" and shows the description in its place, so the card can still be revealed and graded. The card page shows the picture and its description read-only, and says in words when picture review is waiting for a picture or a description.
 
 Pictures are kept for offline review in a Cache Storage bucket per learner, and every other learner's bucket is dropped, so a shared browser never shows one learner's pictures to another. The picture's URL carries its id, so a replaced picture is a new entry, and the server sends `private, no-store`, so the HTTP cache holds nothing. When Cache Storage refuses, the picture still loads, it just is not kept offline.
 
-A deck in Library is a card, not a row: it carries four numbers, and one line makes them a run of digits nobody reads. The name is on the first line, the counts on the second. A row of new cards names its actor, because a card an integration wrote must never look like one the learner typed.
+A deck in Library is a card with two lines, because Library is for choosing a deck to open. The first is the name, with the due count at its end when there is one; the second is the language, the card count, and, with nothing due, when the next card is back. A joined deck adds its owner on a third line. The split between states is the deck's progress, not something to choose by, so it lives on the deck page and the card carries no stripe: due is its only colour, and a page of decks with nothing due stays quiet. A row of new cards names its actor, because a card an integration wrote must never look like one the learner typed.
 
 A question takes the shape of the machine as well. On a desktop it is a centred dialog with its actions in a row, the primary last; on a touch device it is a drawer with the actions stacked full width and the primary on top, in reach of the thumb. `Dialog` in `components/ui` holds both shapes behind its usual parts — header, title, description, footer — and focus lands on the safe action when the first control is not it.
 

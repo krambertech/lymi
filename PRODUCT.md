@@ -82,5 +82,5 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 - Everything works from the keyboard on desktop: grading (1 to 4), reveal (Space), add (N), review (R), search (/).
 - Tap targets are at least 44 px on the phone. Grade buttons are 72 px tall.
 - Inputs are 16 px or larger so iOS does not zoom.
-- Status is never colour alone. "New", "Learning" and "Known" chips carry a label and, where colour is used, a dot.
+- Status is never colour alone. "New", "Learning" and "Known" carry a label and, where colour is used, the state's icon.
 - Audio has a visible control and never autoplays.

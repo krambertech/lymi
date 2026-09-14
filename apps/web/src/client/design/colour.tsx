@@ -41,7 +41,13 @@ const TOKENS: Token[] = [
   },
   { name: "amber-hover", role: "Amber under the pointer.", ink: "amber-ink" },
   { name: "amber-ink", role: "Words and icons on amber." },
-  { name: "amber-text", role: "Amber as text: due counts.", on: "canvas" },
+  {
+    name: "amber-text",
+    role: "Amber that has to hold contrast: the Easy grade, the streak tick, unread dots.",
+    on: "canvas",
+  },
+  { name: "amber-tint", role: "Behind a due count." },
+  { name: "amber-tint-ink", role: "The number on a due count." },
   { name: "amber-soft", role: "Text selection." },
   {
     name: "toast-action",
@@ -49,24 +55,31 @@ const TOKENS: Token[] = [
     on: "text",
   },
   { name: "good", role: "Success and a 2xx. Always with a word or an icon.", on: "canvas" },
-  { name: "good-soft", role: "Tint behind the Known chip and success notices." },
+  { name: "good-soft", role: "Tint behind success notices." },
   {
     name: "state-new",
-    role: "New: the stripe, dots and icons. Never words.",
+    role: "New: its icon and bar segment. Never words.",
     on: "canvas",
     kind: "graphic",
   },
   {
     name: "state-learning",
-    role: "Learning: the stripe, dots and icons. Mustard by day, to hold 3:1.",
+    role: "Learning: its icon and bar segment. Blue, well away from amber, danger and good.",
     on: "canvas",
     kind: "graphic",
   },
-  { name: "state-learning-soft", role: "Tint behind the Learning chip." },
-  { name: "state-learning-text", role: "Words inside the Learning chip.", on: "canvas" },
+  {
+    name: "state-learning-soft",
+    role: "Tint behind a Learning tag in the site’s scheduling figures.",
+  },
+  {
+    name: "state-learning-text",
+    role: "Words and marks on that tint in the site’s scheduling figures.",
+    on: "canvas",
+  },
   {
     name: "state-known",
-    role: "Known: the stripe, dots and icons. The same value as good.",
+    role: "Known: its icon and bar segment. Lighter than good by day; good at night.",
     on: "canvas",
     kind: "graphic",
   },
@@ -162,8 +175,8 @@ export function Colour() {
       <Sub title="Rules">
         <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
           {[
-            "Amber twice per screen at most: the flame and the primary action. A due count in amber-text is the third allowed use.",
-            "Status is never colour alone. New, Learning and Known carry a label and a dot.",
+            "Amber twice per screen at most: the flame and the primary action. A due count, ink on amber-tint, is the third allowed use.",
+            "Status is never colour alone. New, Learning and Known carry a label and their icon.",
             "Depth is one edge. Cards, inputs and rows get --edge; on hover or focus it becomes --edge-2. Nothing casts a shadow.",
             "No gradient on any surface. The app icon is the one exception. If something needs to feel lit, it is the lantern, and it uses --glow.",
             "Text on canvas meets 4.5:1 in both rooms, including --muted. --faint is decorative and never carries words.",

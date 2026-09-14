@@ -271,10 +271,6 @@ msgstr "{dueSoon, plural, one {# картка протягом наступни�
 msgid "{forgotten, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{forgotten, plural, one {Повторити # забуту картку} few {Повторити # забуті картки} many {Повторити # забутих карток} other {Повторити # забутої картки}}"
 
-#: src/client/components/state-stripe.tsx
-msgid "{fresh} new, {learning} learning, {known} known"
-msgstr "Нові: {fresh}, у вивченні: {learning}, засвоєні: {known}"
-
 #: src/client/views/insights-view.tsx
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Показник запам’ятовування базується на # повторенні, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} few {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} many {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} other {Показник запам’ятовування базується на # повторення, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.}}"
@@ -336,18 +332,6 @@ msgstr "/ {0, plural, one {# день} few {# дні} many {# днів} other {#
 #: src/client/views/review-view.tsx
 msgid "<0/> of {goal}"
 msgstr "<0/> із {goal}"
-
-#: src/client/components/state-stripe.tsx
-msgid "<0>{fresh}</0> new"
-msgstr "<0>{fresh}</0> нових"
-
-#: src/client/components/state-stripe.tsx
-msgid "<0>{known}</0> known"
-msgstr "<0>{known}</0> засвоєних"
-
-#: src/client/components/state-stripe.tsx
-msgid "<0>{learning}</0> learning"
-msgstr "<0>{learning}</0> у вивченні"
 
 #: src/client/components/api-keys-section.tsx
 msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
@@ -1033,7 +1017,7 @@ msgstr "Для інтерфейсу та для значень, які пише 
 msgid "Forgot"
 msgstr "Не пам’ятаю"
 
-#: src/client/views/review-view.tsx
+#: src/client/components/chip.tsx
 msgid "Forgot recently"
 msgstr "Нещодавно забуто"
 
@@ -1211,8 +1195,7 @@ msgstr "Постійно забуваються"
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Known"
 msgstr "Засвоєні"
 
@@ -1230,8 +1213,7 @@ msgstr "Нова мова: {0}"
 msgid "Later today"
 msgstr "Пізніше сьогодні"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Learning"
 msgstr "У вивченні"
 
@@ -1377,8 +1359,7 @@ msgstr "Ніколи, незалежно від вибору"
 msgid "new"
 msgstr "нова"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "New"
 msgstr "Нова"
 
@@ -1771,10 +1752,6 @@ msgstr "Розпізнавання"
 #: src/client/views/review-view.tsx
 msgid "Recognition card for {front}"
 msgstr "Картка на розпізнавання для {front}"
-
-#: src/client/components/chip.tsx
-msgid "Relearning"
-msgstr "Повторне вивчення"
 
 #: src/client/components/notifications-section.tsx
 msgid "Reminder off for this device."

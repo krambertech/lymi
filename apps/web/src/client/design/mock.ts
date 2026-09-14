@@ -207,10 +207,6 @@ export const deckCards: { card: Card; state: CardState | null }[] = [
   { card: byId("c7"), state: state("c7", 2, 64 * day, 8) },
 ];
 
-/** How the sample decks split, for the stripe on each card. */
-export const known: Record<string, number> = { d1: 31, d2: 26, d3: 4, d4: 12 };
-export const learning: Record<string, number> = { d1: 14, d2: 9, d3: 2, d4: 9 };
-
 function review(
   id: string,
   daysAgo: number,

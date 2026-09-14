@@ -2,24 +2,15 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { deserializeState } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import {
-  Archive,
-  CircleCheck,
-  Clock,
-  Download,
-  MoreHorizontal,
-  Plus,
-  Search,
-  Settings2,
-  SquarePlus,
-} from "lucide-react";
+import { Archive, Download, MoreHorizontal, Plus, Search, Settings2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
+import { DueCount } from "../components/due-count";
 import { EmptyState } from "../components/empty-state";
 import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
-import { StateStripe, stateDot } from "../components/state-stripe";
+import { StateIcon, type StateKey, stateMarks } from "../components/state-mark";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -157,22 +148,10 @@ function DuePlate({
   const due = deck.due;
   const next = due === 0 ? nextDueLabel(i18n.locale, cards) : null;
 
-  const split = [
-    { key: "new", n: counts[0], label: t`New`, Icon: SquarePlus, tint: "text-state-new" },
-    {
-      key: "learning",
-      n: counts[1],
-      label: t`Learning`,
-      Icon: Clock,
-      tint: "text-state-learning",
-    },
-    {
-      key: "known",
-      n: counts[2],
-      label: t`Known`,
-      Icon: CircleCheck,
-      tint: "text-state-known",
-    },
+  const split: { key: StateKey; n: number }[] = [
+    { key: "new", n: counts[0] },
+    { key: "learning", n: counts[1] },
+    { key: "known", n: counts[2] },
   ];
 
   return (
@@ -187,16 +166,16 @@ function DuePlate({
         {next && <span className="text-sm text-muted">{t`The next card is back ${next}.`}</span>}
       </h2>
       <dl className="mx-auto mt-6 grid w-full max-w-md grid-cols-3 divide-x divide-edge @3xl:mt-0">
-        {split.map(({ key, n, label, Icon, tint }) => (
+        {split.map(({ key, n }) => (
           <div key={key} className="grid justify-items-center gap-0.5 px-2">
-            <dt className="order-last text-sm text-muted">{label}</dt>
+            <dt className="order-last text-sm text-muted">{i18n._(stateMarks[key].label)}</dt>
             <dd
               className={clsx(
                 "flex items-center gap-1.5 text-xl font-semibold tabular-nums",
                 n === 0 && "text-muted",
               )}
             >
-              <Icon className={clsx("size-[18px]", tint)} strokeWidth={2.25} aria-hidden="true" />
+              <StateIcon state={key} className="size-[18px]" />
               {i18n.number(n)}
             </dd>
           </div>
@@ -228,7 +207,7 @@ function DuePlate({
 }
 
 /**
- * One deck: today's review in a plate, the whole deck as a stripe, then its cards. The list is
+ * One deck: today's review and the deck's split in a plate, then its cards. The list is
  * plain: the term, its meaning under it, and on the right when it comes back and how often it
  * has been asked. State is the filter above the list, never a pill on the row. A card opens
  * beside the list on desktop and as its own screen on the phone.
@@ -416,11 +395,11 @@ export function DeckDetailView({
     </DropdownMenu>
   );
 
-  // The plate above carries the counts, so the filter is names and dots.
-  const filterLabel = (label: string, dot?: string) => (
+  // The plate above carries the counts, so the filter is names and icons.
+  const filterLabel = (state?: StateKey) => (
     <span className="inline-flex items-center gap-1.5">
-      {dot && <i className={clsx("size-1.5 rounded-full", dot)} aria-hidden="true" />}
-      {label}
+      {state && <StateIcon state={state} className="size-3.5" />}
+      {state ? i18n._(stateMarks[state].label) : t`All`}
     </span>
   );
 
@@ -539,23 +518,13 @@ export function DeckDetailView({
           }
         />
 
-        {/* While the phone searches, the list is the answer, so the plate and stripe step aside. */}
+        {/* While the phone searches, the list is the answer, so the plate steps aside. */}
         <div className={clsx(searchOpen && "hidden @3xl/shell:block")}>
           {deck === undefined || cards === undefined ? (
             <Skeleton className="h-[260px] rounded-2xl" />
           ) : cards.length > 0 ? (
             <DuePlate deck={deck} cards={cards} counts={counts} onReview={onReview} onAdd={onAdd} />
           ) : null}
-
-          {cards && cards.length > 0 && (
-            <StateStripe
-              known={counts[2]}
-              learning={counts[1]}
-              total={cards.length}
-              legend={false}
-              className="mt-8 @3xl:mt-10"
-            />
-          )}
         </div>
 
         {cards && cards.length > 0 && (
@@ -571,10 +540,10 @@ export function DeckDetailView({
               value={filter}
               onChange={setFilter}
               options={[
-                { value: "all", label: filterLabel(t`All`) },
-                { value: "0", label: filterLabel(t`New`, stateDot.new) },
-                { value: "1", label: filterLabel(t`Learning`, stateDot.learning) },
-                { value: "2", label: filterLabel(t`Known`, stateDot.known) },
+                { value: "all", label: filterLabel() },
+                { value: "0", label: filterLabel("new") },
+                { value: "1", label: filterLabel("learning") },
+                { value: "2", label: filterLabel("known") },
               ]}
             />
             {/* Desktop keeps search beside the filter, where "/" lands; the phone has it up top. */}
@@ -591,6 +560,7 @@ export function DeckDetailView({
                 placeholder={t`Search this deck`}
                 aria-label={t`Search this deck`}
                 autoComplete="off"
+                inputSize="sm"
                 className="ps-9"
               />
             </div>
@@ -653,14 +623,16 @@ export function DeckDetailView({
                           <span
                             className={clsx(
                               "row-span-2 self-start text-end text-sm tabular-nums",
-                              dueNow ? "font-semibold text-amber-text" : "text-muted",
+                              dueNow ? "grid justify-items-end gap-0.5" : "text-muted",
                             )}
                           >
-                            {days === null
-                              ? t`new`
-                              : dueNow
-                                ? t`today`
-                                : intervalLabel(i18n, new Date(0), new Date(days * 86_400_000))}
+                            {days === null ? (
+                              t`new`
+                            ) : dueNow ? (
+                              <DueCount>{t`today`}</DueCount>
+                            ) : (
+                              intervalLabel(i18n, new Date(0), new Date(days * 86_400_000))
+                            )}
                             {n > 0 && (
                               <span className="block text-2xs font-normal text-muted">
                                 <Plural value={n} one="# review" other="# reviews" />

@@ -235,10 +235,6 @@ msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards 
 msgid "{forgotten, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{forgotten, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 
-#: src/client/components/state-stripe.tsx
-msgid "{fresh} new, {learning} learning, {known} known"
-msgstr "{fresh} new, {learning} learning, {known} known"
-
 #: src/client/views/insights-view.tsx
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
@@ -300,18 +296,6 @@ msgstr "/ {0, plural, one {# day} other {# days}}"
 #: src/client/views/review-view.tsx
 msgid "<0/> of {goal}"
 msgstr "<0/> of {goal}"
-
-#: src/client/components/state-stripe.tsx
-msgid "<0>{fresh}</0> new"
-msgstr "<0>{fresh}</0> new"
-
-#: src/client/components/state-stripe.tsx
-msgid "<0>{known}</0> known"
-msgstr "<0>{known}</0> known"
-
-#: src/client/components/state-stripe.tsx
-msgid "<0>{learning}</0> learning"
-msgstr "<0>{learning}</0> learning"
 
 #: src/client/components/api-keys-section.tsx
 msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
@@ -997,7 +981,7 @@ msgstr "For the interface, and for the meanings the AI writes."
 msgid "Forgot"
 msgstr "Forgot"
 
-#: src/client/views/review-view.tsx
+#: src/client/components/chip.tsx
 msgid "Forgot recently"
 msgstr "Forgot recently"
 
@@ -1175,8 +1159,7 @@ msgstr "Keeps slipping"
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Known"
 msgstr "Known"
 
@@ -1194,8 +1177,7 @@ msgstr "Language changed to {0}"
 msgid "Later today"
 msgstr "Later today"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "Learning"
 msgstr "Learning"
 
@@ -1341,8 +1323,7 @@ msgstr "Never, whatever you choose"
 msgid "new"
 msgstr "new"
 
-#: src/client/components/chip.tsx
-#: src/client/views/deck-detail-view.tsx
+#: src/client/components/state-mark.tsx
 msgid "New"
 msgstr "New"
 
@@ -1735,10 +1716,6 @@ msgstr "Recognition"
 #: src/client/views/review-view.tsx
 msgid "Recognition card for {front}"
 msgstr "Recognition card for {front}"
-
-#: src/client/components/chip.tsx
-msgid "Relearning"
-msgstr "Relearning"
 
 #: src/client/components/notifications-section.tsx
 msgid "Reminder off for this device."

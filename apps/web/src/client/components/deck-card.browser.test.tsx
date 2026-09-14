@@ -20,8 +20,6 @@ test("a joined deck names its owner and an owned deck names nobody", async () =>
             language="it"
             due={8}
             total={64}
-            known={31}
-            learning={14}
             st={{ path: "" }}
           />
         </li>
@@ -32,8 +30,6 @@ test("a joined deck names its owner and an owned deck names nobody", async () =>
             language="et"
             due={5}
             total={38}
-            known={12}
-            learning={9}
             owner="Liis"
             st={{ path: "" }}
           />

@@ -174,14 +174,16 @@ export function TodayView({
                     to="/review"
                     search={{ deck: d.id }}
                     st={st}
-                    className="group flex min-h-18 items-center gap-3 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
+                    className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
                   >
+                    {/* The count leads, as on the round tiles: it is what the row is for. */}
+                    <span className="min-w-10 text-3xl font-medium leading-none tracking-[-0.02em] tabular-nums text-amber-text">
+                      {d.due}
+                    </span>
                     <span className="grid min-w-0 flex-1 gap-0.5">
                       <span className="truncate text-md font-medium">{d.name}</span>
-                      <span className="text-sm text-muted tabular-nums">
-                        <Trans>
-                          <span className="font-semibold text-amber-text">{d.due}</span> due
-                        </Trans>
+                      <span className="text-sm text-muted">
+                        <Plural value={d.due} one="card due" other="cards due" />
                       </span>
                     </span>
                     <Go>

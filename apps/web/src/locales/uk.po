@@ -77,6 +77,11 @@ msgstr "{0, plural, one {# повторення} few {# повторення} ma
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}} з {1}"
 
+#. placeholder {0}: d.due
+#: src/client/views/TodayView.tsx
+msgid "{0, plural, one {card due} other {cards due}}"
+msgstr "{0, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
+
 #. placeholder {0}: cards.total
 #: src/client/views/InsightsView.tsx
 msgid "{0, plural, one {card} other {cards}}"
@@ -284,6 +289,10 @@ msgstr "{label}: {lit} з {days, plural, one {# дня} few {# днів} many {#
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: поки що {lit} з {days, plural, one {# дня} few {# днів} many {# днів} other {# дня}}"
 
+#: src/client/components/Streak.tsx
+msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
+msgstr "До сьогоднішньої мети: {left, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Нові люди не можуть приєднатися. Людина, яка вже приєдналася, далі вивчає колоду.} few {Нові люди не можуть приєднатися. # людини, які вже приєдналися, далі вивчають колоду.} many {Нові люди не можуть приєднатися. # людей, які вже приєдналися, далі вивчають колоду.} other {Нові люди не можуть приєднатися. # людини, які вже приєдналися, далі вивчають колоду.}}"
@@ -329,11 +338,6 @@ msgstr "/ {0, plural, one {# день} few {# дні} many {# днів} other {#
 #: src/client/views/ReviewView.tsx
 msgid "<0/> of {total}"
 msgstr "<0/> із {total}"
-
-#. placeholder {0}: d.due
-#: src/client/views/TodayView.tsx
-msgid "<0>{0}</0> due"
-msgstr "<0>{0}</0> до повторення"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"

@@ -41,6 +41,11 @@ msgstr "{0, plural, one {# review} other {# reviews}}"
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# review} other {# reviews}} since {1}"
 
+#. placeholder {0}: d.due
+#: src/client/views/TodayView.tsx
+msgid "{0, plural, one {card due} other {cards due}}"
+msgstr "{0, plural, one {card due} other {cards due}}"
+
 #. placeholder {0}: cards.total
 #: src/client/views/InsightsView.tsx
 msgid "{0, plural, one {card} other {cards}}"
@@ -248,6 +253,10 @@ msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 
+#: src/client/components/Streak.tsx
+msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
+msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
@@ -293,11 +302,6 @@ msgstr "/ {0, plural, one {# day} other {# days}}"
 #: src/client/views/ReviewView.tsx
 msgid "<0/> of {total}"
 msgstr "<0/> of {total}"
-
-#. placeholder {0}: d.due
-#: src/client/views/TodayView.tsx
-msgid "<0>{0}</0> due"
-msgstr "<0>{0}</0> due"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"

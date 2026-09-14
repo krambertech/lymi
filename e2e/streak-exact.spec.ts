@@ -59,7 +59,7 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   await page.evaluate(() => localStorage.clear());
   await page.reload();
   // On the phone, Today's streak card is the button.
-  const card = page.getByRole("button", { name: "Streak: 9 days in a row", exact: true });
+  const card = page.getByRole("button", { name: /^Streak: 9 days in a row\. / });
   await expect(card).toBeVisible();
   await expect(card.getByRole("img", { name: /Reviewed on 7 of the last 7 days: / })).toBeVisible();
 

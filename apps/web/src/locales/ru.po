@@ -77,6 +77,11 @@ msgstr "{0, plural, one {# повторение} few {# повторения} ma
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}} с {1}"
 
+#. placeholder {0}: d.due
+#: src/client/views/TodayView.tsx
+msgid "{0, plural, one {card due} other {cards due}}"
+msgstr "{0, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
+
 #. placeholder {0}: cards.total
 #: src/client/views/InsightsView.tsx
 msgid "{0, plural, one {card} other {cards}}"
@@ -284,6 +289,10 @@ msgstr "{label}: {lit} из {days, plural, one {# дня} few {# дней} many 
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: пока {lit} из {days, plural, one {# дня} few {# дней} many {# дней} other {# дня}}"
 
+#: src/client/components/Streak.tsx
+msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
+msgstr "До сегодняшней цели: {left, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
+
 #: src/client/views/DeckSettingsView.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Новые люди не могут присоединиться. Человек, который уже присоединился, продолжает изучать колоду.} few {Новые люди не могут присоединиться. # человека, которые уже присоединились, продолжают изучать колоду.} many {Новые люди не могут присоединиться. # человек, которые уже присоединились, продолжают изучать колоду.} other {Новые люди не могут присоединиться. # человека, которые уже присоединились, продолжают изучать колоду.}}"
@@ -329,11 +338,6 @@ msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {#
 #: src/client/views/ReviewView.tsx
 msgid "<0/> of {total}"
 msgstr "<0/> из {total}"
-
-#. placeholder {0}: d.due
-#: src/client/views/TodayView.tsx
-msgid "<0>{0}</0> due"
-msgstr "<0>{0}</0> к повторению"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"

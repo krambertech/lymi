@@ -169,18 +169,21 @@ function GoalTrack({
 }
 
 /** The run and the week's lights: the streak card on Today. Today's own light shows its progress. */
-function CardFace({ summary }: { summary: StreakSummary }) {
+function CardFace({ summary, status }: { summary: StreakSummary; status: string }) {
   const flame = streakFlameFor(summary);
   const { current } = summary;
   const week = lastDays(summary);
   return (
     <>
-      <span className="flex items-center gap-2.5">
-        <Flame className="h-7 w-[22px]" state={flame} flicker={flame === "full"} />
-        <span className="text-3xl font-medium leading-none tabular-nums">{current}</span>
-        <span className="text-md font-medium text-text-2">
-          <Plural value={current} one="day in a row" other="days in a row" />
+      <span className="grid gap-2">
+        <span className="flex items-center gap-2.5">
+          <Flame className="h-7 w-[22px]" state={flame} flicker={flame === "full"} />
+          <span className="text-3xl font-medium leading-none tabular-nums">{current}</span>
+          <span className="text-md font-medium text-text-2">
+            <Plural value={current} one="day in a row" other="days in a row" />
+          </span>
         </span>
+        <span className="text-sm text-text-2 tabular-nums">{status}</span>
       </span>
       <SevenLights
         days={week.attempts}
@@ -192,6 +195,25 @@ function CardFace({ summary }: { summary: StreakSummary }) {
       />
     </>
   );
+}
+
+/** One line on where today stands against the streak: what is left, or that the day counts. */
+function useCardStatus(summary: StreakSummary | undefined): string {
+  const { t } = useLingui();
+  if (!summary) return "";
+  const { today } = summary;
+  switch (today.outcome) {
+    case "goal_met":
+      return t`Daily goal reached.`;
+    case "exhausted":
+      return t`That’s the lot for today.`;
+    case "nothing_due":
+      return t`Nothing due today, so your streak is safe.`;
+    default: {
+      const left = Math.max(today.goal - today.attempts, 0);
+      return t`${plural(left, { one: "# review", other: "# reviews" })} to today’s goal`;
+    }
+  }
 }
 
 /** One figure in a tile, with its icon and the words for it. */
@@ -407,6 +429,7 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
   const titleId = useId();
   const rail = variant === "rail";
   const card = variant === "card";
+  const status = useCardStatus(summary);
 
   if (!summary) {
     return (
@@ -442,7 +465,7 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
     <>
       <button
         type="button"
-        aria-label={label}
+        aria-label={card ? `${label}. ${status}` : label}
         aria-haspopup="dialog"
         onClick={() => {
           setOpened((n) => n + 1);
@@ -450,7 +473,11 @@ export function StreakButton({ summary, variant, className, ...panel }: StreakBu
         }}
         className={face}
       >
-        {card ? <CardFace summary={summary} /> : <PillFace summary={summary} variant={variant} />}
+        {card ? (
+          <CardFace summary={summary} status={status} />
+        ) : (
+          <PillFace summary={summary} variant={variant} />
+        )}
       </button>
       {/* In the body, because a pill inside a hidden rail or header would hide an open modal with it
           when the window crosses the breakpoint, and leave the page inert behind nothing. */}

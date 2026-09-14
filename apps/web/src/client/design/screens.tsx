@@ -239,6 +239,7 @@ export const SCREENS: Entry[] = [
               decks={m.decks}
               streak={m.streak}
               streakCard={<StreakButton variant="card" summary={m.streak} />}
+              streakButton={<StreakButton variant="phone" summary={m.streak} />}
               rounds={m.rounds}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
@@ -255,6 +256,12 @@ export const SCREENS: Entry[] = [
                   summary={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
                 />
               }
+              streakButton={
+                <StreakButton
+                  variant="phone"
+                  summary={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
+                />
+              }
               rounds={{ forgotten: 9, new: 0, slipping: 0 }}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
@@ -265,6 +272,7 @@ export const SCREENS: Entry[] = [
             <TodayView
               decks={[]}
               streak={m.streakFrom(m.noHistory)}
+              streakButton={<StreakButton variant="phone" summary={m.streakFrom(m.noHistory)} />}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
               static={{ path: "/" }}
@@ -438,6 +446,7 @@ export const SCREENS: Entry[] = [
               next={{ d3: "Monday" }}
               archivedCount={2}
               name={m.me.name}
+              streakButton={<StreakButton variant="phone" summary={m.streak} />}
               docsUrl="https://lymi.app/docs"
               static={{ path: "/library" }}
             />

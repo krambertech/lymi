@@ -10,7 +10,7 @@ import { EmptyState } from "../components/empty-state";
 import { LearnerMenu } from "../components/learner-menu";
 import { Skeleton } from "../components/skeleton";
 import type { DeckSummary } from "../lib/api";
-import { Page, PageHeader, type StaticNav, TopBar } from "./shell";
+import { Page, PageHeader, type StaticNav, TabLead, TopBar } from "./shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
@@ -82,9 +82,10 @@ export function LibraryView({
   return (
     <Page>
       <TopBar
-        back={streakButton}
+        back={<TabLead />}
         actions={
           <>
+            {streakButton}
             <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
             <LearnerMenu
               variant="phone"

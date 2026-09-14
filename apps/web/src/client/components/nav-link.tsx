@@ -26,6 +26,7 @@ export function NavLink({ to, params, exact, className, st, children }: Props) {
       <a
         href={href}
         className={clsx(className, st.path === href && "active")}
+        aria-current={st.path === href ? "page" : undefined}
         onClick={(e) => e.preventDefault()}
       >
         {children}

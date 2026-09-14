@@ -221,6 +221,19 @@ export function TopBar({
   );
 }
 
+/**
+ * The start of a tab's top bar: the app tile and the wordmark, as they top the rail.
+ * A nested screen puts back here instead.
+ */
+export function TabLead() {
+  return (
+    <div className="flex items-center gap-2.5">
+      <AppTile size={40} className="edge" title="Lymi" />
+      <Wordmark size={22} className="text-text" />
+    </div>
+  );
+}
+
 const backClass =
   "-ms-2.5 inline-flex h-11 min-w-11 max-w-[65%] items-center gap-0.5 rounded-sm pe-2.5 ps-1 text-md text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-2 hoverable:hover:text-text [&_svg]:size-[22px] [&_svg]:shrink-0";
 

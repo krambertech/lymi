@@ -97,6 +97,9 @@
   --amber-ink: oklch(0.25 0.05 60);
   --amber-text: oklch(0.5 0.14 50);
   --amber-soft: oklch(0.8 0.15 72 / 0.16);
+  /* Behind a due count, whose number stays ink. */
+  --amber-tint: oklch(0.8 0.15 72 / 0.26);
+  --amber-tint-ink: var(--amber-ink);
   --flame-core: oklch(0.97 0.08 92);
   /* The lantern's glass. Opaque, so the mark carries its own interior onto any
      surface instead of painting a hole in the room behind it. */
@@ -107,13 +110,14 @@
 
   --good: oklch(0.47 0.12 160);
   --good-soft: oklch(0.47 0.12 160 / 0.12);
-  /* Card states, the same three everywhere: grey not yet asked, yellow on the way, green known.
-     Each holds 3:1 against the plate and the canvas, which by day turns the yellow to mustard. */
+  /* Card states, the same three everywhere: grey not yet asked, blue on the way, green known.
+     Each mark holds 3:1 against plate-2, the lightest ground it sits on; blue sits furthest from
+     amber, danger and good. By day the marks are lighter than good, which is also a text colour. */
   --state-new: oklch(0.6 0.012 60);
-  --state-learning: oklch(0.64 0.13 90);
-  --state-learning-soft: oklch(0.64 0.13 90 / 0.16);
-  --state-learning-text: oklch(0.47 0.09 90);
-  --state-known: var(--good);
+  --state-learning: oklch(0.6 0.12 250);
+  --state-learning-soft: oklch(0.6 0.12 250 / 0.14);
+  --state-learning-text: oklch(0.45 0.1 250);
+  --state-known: oklch(0.58 0.13 155);
   --danger: oklch(0.52 0.19 28);
   --danger-soft: oklch(0.52 0.19 28 / 0.1);
 
@@ -145,6 +149,8 @@
   --amber-ink: oklch(0.22 0.05 60);
   --amber-text: oklch(0.84 0.13 78);
   --amber-soft: oklch(0.82 0.15 74 / 0.14);
+  --amber-tint: oklch(0.82 0.15 74 / 0.16);
+  --amber-tint-ink: var(--amber-text);
   --flame-core: oklch(0.97 0.08 92);
   --glass: oklch(0.315 0.048 62);
   --glass-unlit: oklch(0.245 0.016 55);
@@ -154,9 +160,9 @@
   --good: oklch(0.76 0.1 155);
   --good-soft: oklch(0.76 0.1 155 / 0.14);
   --state-new: oklch(0.58 0.02 65);
-  --state-learning: oklch(0.86 0.13 103);
-  --state-learning-soft: oklch(0.86 0.13 103 / 0.14);
-  --state-learning-text: oklch(0.88 0.11 103);
+  --state-learning: oklch(0.76 0.09 250);
+  --state-learning-soft: oklch(0.76 0.09 250 / 0.14);
+  --state-learning-text: oklch(0.82 0.07 250);
   --state-known: var(--good);
   --danger: oklch(0.74 0.15 28);
   --danger-soft: oklch(0.74 0.15 28 / 0.14);
@@ -196,6 +202,8 @@
   --color-amber-ink: var(--amber-ink);
   --color-amber-text: var(--amber-text);
   --color-amber-soft: var(--amber-soft);
+  --color-amber-tint: var(--amber-tint);
+  --color-amber-tint-ink: var(--amber-tint-ink);
   --color-flame-core: var(--flame-core);
   --color-glass: var(--glass);
   --color-glass-unlit: var(--glass-unlit);

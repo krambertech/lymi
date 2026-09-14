@@ -14,6 +14,7 @@ import {
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/add-menu";
 import { IconButton } from "../components/button";
+import { DueCount } from "../components/due-count";
 import { LearnerMenu } from "../components/learner-menu";
 import { AppTile, Wordmark } from "../components/logo";
 import { NavLink, type StaticNav } from "../components/nav-link";
@@ -130,7 +131,7 @@ export function Sidebar({
             >
               <span className="flex-1 truncate">{d.name}</span>
               <span className="text-xs tabular-nums text-muted">
-                {d.due > 0 ? <b className="font-semibold text-amber-text">{d.due}</b> : d.total}
+                {d.due > 0 ? <DueCount>{d.due}</DueCount> : d.total}
               </span>
             </NavLink>
           ))}

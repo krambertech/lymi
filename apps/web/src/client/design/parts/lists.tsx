@@ -21,13 +21,13 @@ export const lists: Group = {
       slug: "deck-card",
       name: "Deck card",
       source: "components/deck-card.tsx",
-      note: "A deck in Library is a card, not a row, because four numbers on one line become a run of digits nobody reads.",
+      note: "A deck in Library is for choosing one to open: its name, whether it wants you today, its language and size.",
       Demo: () => (
         <Variants
           items={[
             {
               label: "Due today",
-              note: "The due count is the one amber, and it is text.",
+              note: "The due count is the card’s only colour, an amber tint at the end of the name.",
               render: () => (
                 <div className="w-full">
                   <DeckCard
@@ -36,8 +36,6 @@ export const lists: Group = {
                     language="it"
                     due={8}
                     total={64}
-                    known={31}
-                    learning={14}
                     st={{ path: "" }}
                   />
                 </div>
@@ -54,8 +52,6 @@ export const lists: Group = {
                     language="pt-BR"
                     due={0}
                     total={41}
-                    known={26}
-                    learning={9}
                     next="Monday"
                     st={{ path: "" }}
                   />
@@ -64,7 +60,7 @@ export const lists: Group = {
             },
             {
               label: "Shared with you",
-              note: "A joined deck names its owner under the name, the way the join page does.",
+              note: "A joined deck names its owner on its own line, the way the join page does.",
               render: () => (
                 <div className="w-full">
                   <DeckCard
@@ -73,8 +69,6 @@ export const lists: Group = {
                     language="et"
                     due={5}
                     total={38}
-                    known={12}
-                    learning={9}
                     owner="Liis"
                     st={{ path: "" }}
                   />

@@ -3,31 +3,23 @@ import type { FieldSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { BookOpen, PencilLine, Sparkle } from "lucide-react";
 import type { ReactNode } from "react";
-import { stateDot } from "./state-stripe";
+import { StateIcon, stateKey } from "./state-mark";
 
-export type ChipTone = "default" | "new" | "learning" | "known" | "ai" | "danger";
+export type ChipTone = "default" | "ai" | "danger";
 
 const tones: Record<ChipTone, string> = {
   default: "bg-plate-2 text-text-2",
-  new: "bg-plate-2 text-text-2",
-  learning: "bg-state-learning-soft text-state-learning-text",
-  known: "bg-good-soft text-good",
   ai: "border border-dashed border-edge-2 bg-transparent text-muted",
   danger: "bg-danger-soft text-danger",
 };
 
-/** The dot carries the state colour even where the text stays ink. */
-const dots: Partial<Record<ChipTone, string>> = stateDot;
-
 export function Chip({
   tone = "default",
-  dot,
   size = "md",
   children,
   className,
 }: {
   tone?: ChipTone | undefined;
-  dot?: boolean | undefined;
   size?: "sm" | "md" | "lg" | undefined;
   children: ReactNode;
   className?: string | undefined;
@@ -43,22 +35,15 @@ export function Chip({
         className,
       )}
     >
-      {dot && (
-        <i
-          className={clsx(
-            "rounded-full",
-            size === "lg" ? "size-2" : "size-1.5",
-            dots[tone] ?? "bg-current",
-          )}
-          aria-hidden="true"
-        />
-      )}
       {children}
     </span>
   );
 }
 
-/** FSRS state as the learner sees it. 0 New, 1 Learning, 2 Review (Known), 3 Relearning. */
+/**
+ * FSRS state as the learner sees it: the state's icon on a plain chip, so the colour is the mark's
+ * alone. Relearning says what happened, "Forgot recently", with the Forgot grade's mark.
+ */
 export function StateChip({
   state,
   size,
@@ -66,21 +51,25 @@ export function StateChip({
   state: number | null | undefined;
   size?: "sm" | "md" | "lg" | undefined;
 }) {
-  if (state === 2)
+  const icon = size === "lg" ? "size-3.5" : "size-3";
+  if (state === 3)
     return (
-      <Chip tone="known" dot size={size}>
-        <Trans>Known</Trans>
+      <Chip size={size}>
+        <StateIcon state="forgot" className={icon} />
+        <Trans>Forgot recently</Trans>
       </Chip>
     );
-  if (state === 0 || state == null)
-    return (
-      <Chip tone="new" dot size={size}>
-        <Trans>New</Trans>
-      </Chip>
-    );
+  const key = stateKey(state);
   return (
-    <Chip tone="learning" dot size={size}>
-      {state === 3 ? <Trans>Relearning</Trans> : <Trans>Learning</Trans>}
+    <Chip size={size}>
+      <StateIcon state={key} className={icon} />
+      {key === "known" ? (
+        <Trans>Known</Trans>
+      ) : key === "learning" ? (
+        <Trans>Learning</Trans>
+      ) : (
+        <Trans>New</Trans>
+      )}
     </Chip>
   );
 }

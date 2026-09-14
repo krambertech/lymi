@@ -6,10 +6,12 @@ import { ChevronRight, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/add-menu";
 import { Button, buttonClass } from "../components/button";
+import { DueCount } from "../components/due-count";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { LearnerMenu } from "../components/learner-menu";
 import { Skeleton } from "../components/skeleton";
+import { StateIcon } from "../components/state-mark";
 import type { StreakSummary } from "../components/streak";
 import type { DeckSummary } from "../lib/api";
 import { lanternFor } from "../lib/flame";
@@ -185,9 +187,7 @@ export function TodayView({
                     className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
                   >
                     {/* The count leads, as on the round tiles: it is what the row is for. */}
-                    <span className="min-w-10 text-3xl font-medium leading-none tracking-[-0.02em] tabular-nums text-amber-text">
-                      {d.due}
-                    </span>
+                    <DueCount size="lg">{d.due}</DueCount>
                     <span className="grid min-w-0 flex-1 gap-0.5">
                       <span className="truncate text-md font-medium">{d.name}</span>
                       <span className="text-sm text-muted">
@@ -273,6 +273,7 @@ function Rounds({
   const tiles = [
     {
       round: "forgotten" as const,
+      mark: "forgot" as const,
       count: rounds.forgotten,
       label: t`Forgot today`,
       detail: t`Graded Forgot today`,
@@ -281,6 +282,7 @@ function Rounds({
     },
     {
       round: "new" as const,
+      mark: "new" as const,
       count: rounds.new,
       label: t`New cards`,
       detail: t`Not reviewed yet`,
@@ -289,6 +291,7 @@ function Rounds({
     },
     {
       round: "slipping" as const,
+      mark: undefined,
       count: rounds.slipping,
       label: t`Keeps slipping`,
       detail: t`Forgotten ${SLIPPING_LAPSES} or more times`,
@@ -311,7 +314,10 @@ function Rounds({
         {item.count}
       </span>
       <span className="grid min-w-0 flex-1 content-start gap-0.5 @3xl:px-5 @3xl:pb-4">
-        <span className="text-md font-medium">{item.label}</span>
+        <span className="flex items-center gap-1.5 text-md font-medium">
+          {item.mark && <StateIcon state={item.mark} className="size-4" />}
+          {item.label}
+        </span>
         <span className="text-sm text-muted">{live ? item.detail : item.empty}</span>
       </span>
     </>

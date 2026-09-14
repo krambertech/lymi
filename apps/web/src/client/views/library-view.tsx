@@ -14,9 +14,6 @@ import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
-  /** How many cards in each deck FSRS calls known, and how many are on the way, by deck id. */
-  known?: Record<string, number> | undefined;
-  learning?: Record<string, number> | undefined;
   /** When each deck's next card comes back, keyed by deck id. E.g. "Monday". */
   next?: Record<string, string> | undefined;
   archivedCount?: number | undefined;
@@ -35,14 +32,11 @@ export interface LibraryProps {
 }
 
 /**
- * Every deck, as a card with a face: its name and language, how its words are split, and
- * what it asks of you today. Nothing here reviews or searches: Today owns the daily review,
+ * Every deck, as a card: its name, whether it has cards due today, and its language and size. Nothing here reviews or searches: Today owns the daily review,
  * and a deck owns its own. Archived decks are a category of their own under the live ones.
  */
 export function LibraryView({
   decks,
-  known,
-  learning,
   next,
   archivedCount,
   onAdd,
@@ -142,8 +136,6 @@ export function LibraryView({
                 language={d.defaultLanguage}
                 due={d.due}
                 total={d.total}
-                known={known?.[d.id]}
-                learning={learning?.[d.id]}
                 next={next?.[d.id]}
                 owner={d.role === "owner" ? null : d.owner.name}
                 st={st}

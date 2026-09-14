@@ -124,6 +124,8 @@ export function useStreakOpen() {
       to: ".",
       search: (prev) => ({ ...prev, streak: open ? true : undefined }),
       replace: !open,
+      // Only the overlay changes, so the page under it keeps its scroll position.
+      resetScroll: false,
     });
   };
   return [streak === true, setOpen] as const;

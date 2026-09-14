@@ -50,12 +50,23 @@ export const cardHistoryQuery = (cardId: string) =>
   });
 export const queueQuery = (deckId?: string, round?: Round) =>
   queryOptions({
-    queryKey: ["queue", deckId ?? "all", round ?? "draw"],
+    queryKey: ["queue", deckId ?? "all", round ?? "order"],
     queryFn: () => api.queue(deckId, round),
     staleTime: 0,
     // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+  });
+/** What the review draws from, stamped with when the request began so an empty draw can be confirmed. */
+export const drawQuery = (deckId?: string) =>
+  queryOptions({
+    queryKey: ["queue", deckId ?? "all", "draw"],
+    queryFn: async () => {
+      const fetchedAt = Date.now();
+      return { ...(await api.draw(deckId)), fetchedAt };
+    },
+    staleTime: 0,
+    refetchOnWindowFocus: false,
   });
 /** How many cards each Today round holds. A review invalidates it with the decks. */
 export const roundsQuery = queryOptions({

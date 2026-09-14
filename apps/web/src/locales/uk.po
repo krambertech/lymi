@@ -305,14 +305,6 @@ msgstr "{months, plural, one {# місяць} few {# місяці} many {# мі�
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {Через # місяць} few {Через # місяці} many {Через # місяців} other {Через # місяця}}"
 
-#: src/client/views/ReviewView.tsx
-msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
-msgstr "{moreDue, plural, one {{done} повторено з {deckName}. Ще # готова, коли захочеш.} few {{done} повторено з {deckName}. Ще # готові, коли захочеш.} many {{done} повторено з {deckName}. Ще # готові, коли захочеш.} other {{done} повторено з {deckName}. Ще # готової, коли захочеш.}}"
-
-#: src/client/views/ReviewView.tsx
-msgid "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
-msgstr "{moreDue, plural, one {{done} повторено. Ще # готова, коли захочеш.} few {{done} повторено. Ще # готові, коли захочеш.} many {{done} повторено. Ще # готові, коли захочеш.} other {{done} повторено. Ще # готової, коли захочеш.}}"
-
 #: src/client/components/GoalPicker.tsx
 #: src/client/views/DeckDetailView.tsx
 msgid "{n, plural, one {# review} other {# reviews}}"
@@ -336,8 +328,8 @@ msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
 
 #: src/client/views/ReviewView.tsx
-msgid "<0/> of {total}"
-msgstr "<0/> із {total}"
+msgid "<0/> of {goal}"
+msgstr "<0/> із {goal}"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"
@@ -382,10 +374,6 @@ msgstr "Кілька карток готові"
 #: src/client/views/WordView.tsx
 msgid "a field"
 msgstr "поле"
-
-#: src/client/views/ReviewView.tsx
-msgid "A good pause"
-msgstr "Добра пауза"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "A key lets a script or curl read your decks, or add to them."
@@ -864,6 +852,10 @@ msgstr "Своя"
 msgid "Daily goal"
 msgstr "Денна мета"
 
+#: src/client/views/ReviewView.tsx
+msgid "Daily goal progress"
+msgstr "Прогрес денної мети"
+
 #: src/client/components/Streak.tsx
 msgid "Daily goal reached."
 msgstr "Денну мету досягнуто."
@@ -1165,10 +1157,6 @@ msgstr "Приєднатися через Google"
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Завзято"
-
-#: src/client/routes/review.tsx
-msgid "Keep going"
-msgstr "Продовжуй"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Keep key"
@@ -1944,10 +1932,6 @@ msgstr "Переглядати свої колоди й картки"
 #: src/client/components/NotificationsSection.tsx
 msgid "Send a daily reminder"
 msgstr "Надсилати щоденне нагадування"
-
-#: src/client/views/ReviewView.tsx
-msgid "Session progress"
-msgstr "Прогрес повторення"
 
 #: src/client/components/LearnerMenu.tsx
 #: src/client/views/SettingsView.tsx

@@ -109,7 +109,7 @@ function ReviewPhone({
   const item = picture ? m.queueItemPicture : produce ? m.queueItemProduce : m.queueItem;
   return (
     <div className="flex min-h-0 flex-1 flex-col px-4 pb-3">
-      <ReviewHeader done={4} total={11} />
+      <ReviewHeader attempts={4} goal={20} />
       <ReviewCard
         item={item}
         revealed={revealed}
@@ -276,7 +276,7 @@ export const SCREENS: Entry[] = [
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="That’s the lot" initial="dark" path="/review" bare>
             <div className="flex flex-1 flex-col px-4">
-              <ReviewHeader done={11} total={11} />
+              <ReviewHeader attempts={20} goal={20} />
               <SessionDone
                 done={11}
                 deckName="Lesson 14"
@@ -301,7 +301,7 @@ export const SCREENS: Entry[] = [
                 />
                 <main className="@container flex min-w-0 flex-1 flex-col">
                   <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-8 pt-4">
-                    <ReviewHeader done={4} total={11} />
+                    <ReviewHeader attempts={4} goal={20} />
                     <ReviewCard
                       item={m.queueItem}
                       revealed

@@ -305,14 +305,6 @@ msgstr "{months, plural, one {# месяц} few {# месяца} many {# мес�
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {Через # месяц} few {Через # месяца} many {Через # месяцев} other {Через # месяца}}"
 
-#: src/client/views/ReviewView.tsx
-msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
-msgstr "{moreDue, plural, one {{done} повторено из {deckName}. Ещё # готова, когда захочешь.} few {{done} повторено из {deckName}. Ещё # готовы, когда захочешь.} many {{done} повторено из {deckName}. Ещё # готовы, когда захочешь.} other {{done} повторено из {deckName}. Ещё # готовой, когда захочешь.}}"
-
-#: src/client/views/ReviewView.tsx
-msgid "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
-msgstr "{moreDue, plural, one {{done} повторено. Ещё # готова, когда захочешь.} few {{done} повторено. Ещё # готовы, когда захочешь.} many {{done} повторено. Ещё # готовы, когда захочешь.} other {{done} повторено. Ещё # готовой, когда захочешь.}}"
-
 #: src/client/components/GoalPicker.tsx
 #: src/client/views/DeckDetailView.tsx
 msgid "{n, plural, one {# review} other {# reviews}}"
@@ -336,8 +328,8 @@ msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {# дня}}"
 
 #: src/client/views/ReviewView.tsx
-msgid "<0/> of {total}"
-msgstr "<0/> из {total}"
+msgid "<0/> of {goal}"
+msgstr "<0/> из {goal}"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"
@@ -382,10 +374,6 @@ msgstr "Несколько карточек готовы"
 #: src/client/views/WordView.tsx
 msgid "a field"
 msgstr "поле"
-
-#: src/client/views/ReviewView.tsx
-msgid "A good pause"
-msgstr "Хорошая пауза"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "A key lets a script or curl read your decks, or add to them."
@@ -864,6 +852,10 @@ msgstr "Своя"
 msgid "Daily goal"
 msgstr "Дневная цель"
 
+#: src/client/views/ReviewView.tsx
+msgid "Daily goal progress"
+msgstr "Прогресс дневной цели"
+
 #: src/client/components/Streak.tsx
 msgid "Daily goal reached."
 msgstr "Дневная цель достигнута."
@@ -1165,10 +1157,6 @@ msgstr "Присоединиться через Google"
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Усердно"
-
-#: src/client/routes/review.tsx
-msgid "Keep going"
-msgstr "Продолжай"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Keep key"
@@ -1944,10 +1932,6 @@ msgstr "Просматривать свои колоды и карточки"
 #: src/client/components/NotificationsSection.tsx
 msgid "Send a daily reminder"
 msgstr "Присылать ежедневное напоминание"
-
-#: src/client/views/ReviewView.tsx
-msgid "Session progress"
-msgstr "Прогресс повторения"
 
 #: src/client/components/LearnerMenu.tsx
 #: src/client/views/SettingsView.tsx

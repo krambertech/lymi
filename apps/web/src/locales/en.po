@@ -269,14 +269,6 @@ msgstr "{months, plural, one {# month} other {# months}}"
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {In # month} other {In # months}}"
 
-#: src/client/views/ReviewView.tsx
-msgid "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
-msgstr "{moreDue, plural, one {{done} reviewed from {deckName}. # more is ready when you are.} other {{done} reviewed from {deckName}. # more are ready when you are.}}"
-
-#: src/client/views/ReviewView.tsx
-msgid "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
-msgstr "{moreDue, plural, one {{done} reviewed. # more is ready when you are.} other {{done} reviewed. # more are ready when you are.}}"
-
 #: src/client/components/GoalPicker.tsx
 #: src/client/views/DeckDetailView.tsx
 msgid "{n, plural, one {# review} other {# reviews}}"
@@ -300,8 +292,8 @@ msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
 
 #: src/client/views/ReviewView.tsx
-msgid "<0/> of {total}"
-msgstr "<0/> of {total}"
+msgid "<0/> of {goal}"
+msgstr "<0/> of {goal}"
 
 #: src/client/components/StateStripe.tsx
 msgid "<0>{fresh}</0> new"
@@ -346,10 +338,6 @@ msgstr "A few cards are ready"
 #: src/client/views/WordView.tsx
 msgid "a field"
 msgstr "a field"
-
-#: src/client/views/ReviewView.tsx
-msgid "A good pause"
-msgstr "A good pause"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "A key lets a script or curl read your decks, or add to them."
@@ -828,6 +816,10 @@ msgstr "Custom"
 msgid "Daily goal"
 msgstr "Daily goal"
 
+#: src/client/views/ReviewView.tsx
+msgid "Daily goal progress"
+msgstr "Daily goal progress"
+
 #: src/client/components/Streak.tsx
 msgid "Daily goal reached."
 msgstr "Daily goal reached."
@@ -1129,10 +1121,6 @@ msgstr "Join with Google"
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
-
-#: src/client/routes/review.tsx
-msgid "Keep going"
-msgstr "Keep going"
 
 #: src/client/components/ApiKeysSection.tsx
 msgid "Keep key"
@@ -1908,10 +1896,6 @@ msgstr "See your decks and cards"
 #: src/client/components/NotificationsSection.tsx
 msgid "Send a daily reminder"
 msgstr "Send a daily reminder"
-
-#: src/client/views/ReviewView.tsx
-msgid "Session progress"
-msgstr "Session progress"
 
 #: src/client/components/LearnerMenu.tsx
 #: src/client/views/SettingsView.tsx

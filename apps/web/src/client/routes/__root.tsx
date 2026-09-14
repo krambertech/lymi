@@ -15,8 +15,9 @@ import { PillNav } from "../components/PillNav";
 import { Toaster } from "../components/ui/toast";
 import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
-import { ApiError, api, flushOutbox } from "../lib/api";
+import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
+import { flushOutbox } from "../lib/grades";
 import {
   activate,
   bootstrapLanguage,
@@ -126,9 +127,18 @@ function Shell() {
     }
   }, [me.isError, me.error, bare, navigate]);
 
+  // The one place queued grades replay: after sign-in and whenever the connection returns.
   useEffect(() => {
-    if (me.isSuccess) void flushOutbox();
-  }, [me.isSuccess]);
+    if (!me.isSuccess) return;
+    const flush = () => {
+      void flushOutbox().then((sent) => {
+        if (sent > 0) void queryClient.invalidateQueries({ queryKey: ["queue"] });
+      });
+    };
+    flush();
+    window.addEventListener("online", flush);
+    return () => window.removeEventListener("online", flush);
+  }, [me.isSuccess, queryClient]);
 
   // Global shortcuts: N adds, R reviews. Ignored while typing.
   useEffect(() => {

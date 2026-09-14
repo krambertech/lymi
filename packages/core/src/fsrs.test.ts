@@ -25,6 +25,12 @@ describe("fsrs", () => {
     expect(p[3].getTime()).toBeLessThan(p[4].getTime());
   });
 
+  it("previews a mode whose last review is ahead of the clock from that review", () => {
+    const ahead = schedule(emptyState(now), 1, new Date(now.getTime() + 3_600_000)).card;
+    expect(() => preview(ahead, now)).not.toThrow();
+    expect(preview(ahead, now)[3].getTime()).toBeGreaterThan(now.getTime());
+  });
+
   it("schedules Good further out on each successful review", () => {
     let s = emptyState(now);
     let t = now;

@@ -33,9 +33,6 @@ export function SiteFooter({ openAppUrl, translations }: Props) {
       <div className="mx-auto grid max-w-[1040px] gap-10 @xl:grid-cols-[1fr_auto] @4xl:gap-16">
         <div>
           <Lockup size={18} className="text-muted" />
-          <p className="mt-4 text-xs text-muted">
-            <Trans>Lymi is provided by Krambertech OÜ.</Trans>
-          </p>
         </div>
         <div className="grid grid-cols-2 gap-x-12 gap-y-8 @2xl:grid-cols-3 @2xl:gap-x-16">
           {languages && (

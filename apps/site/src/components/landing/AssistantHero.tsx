@@ -226,9 +226,6 @@ export function AssistantHero() {
             <Trans>How to connect</Trans>
           </a>
         </div>
-        <p className="mt-3.5 text-sm text-muted">
-          <Trans>Free during the private beta.</Trans>
-        </p>
       </div>
 
       <Conversation />

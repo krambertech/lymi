@@ -734,12 +734,6 @@ msgstr "Forgot"
 msgid "Français · phrase"
 msgstr "Français · phrase"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/Hero.tsx
-#: src/components/landing/WordFieldHero.tsx
-msgid "Free during the private beta."
-msgstr "Free during the private beta."
-
 #: src/components/landing/language-cards.ts
 msgid "French"
 msgstr "French"
@@ -1217,10 +1211,6 @@ msgstr "Lymi home"
 #: src/components/JoinView.tsx
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Lymi is private for now. Leave your email and we’ll write when a place opens."
-
-#: src/components/landing/SiteFooter.tsx
-msgid "Lymi is provided by Krambertech OÜ."
-msgstr "Lymi is provided by Krambertech OÜ."
 
 #: src/components/landing/hand-cards.ts
 msgid "Lymi schedules every card around it."

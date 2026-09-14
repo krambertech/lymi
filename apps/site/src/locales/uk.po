@@ -734,12 +734,6 @@ msgstr "Не пам’ятаю"
 msgid "Français · phrase"
 msgstr "Français · фраза"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/Hero.tsx
-#: src/components/landing/WordFieldHero.tsx
-msgid "Free during the private beta."
-msgstr "Участь у закритій беті безкоштовна."
-
 #: src/components/landing/language-cards.ts
 msgid "French"
 msgstr "Французька"
@@ -1217,10 +1211,6 @@ msgstr "Головна сторінка Lymi"
 #: src/components/JoinView.tsx
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Поки що в Lymi можна потрапити лише за запрошенням. Залиш електронну адресу — ми напишемо, коли з’явиться місце."
-
-#: src/components/landing/SiteFooter.tsx
-msgid "Lymi is provided by Krambertech OÜ."
-msgstr "Сервіс Lymi надає Krambertech OÜ."
 
 #: src/components/landing/hand-cards.ts
 msgid "Lymi schedules every card around it."

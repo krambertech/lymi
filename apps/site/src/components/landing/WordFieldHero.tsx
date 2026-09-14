@@ -286,9 +286,6 @@ export function WordFieldHero({ frames, label, lede }: Props) {
             <Trans>Request access</Trans>
           </a>
         </div>
-        <p className="mt-3.5 text-sm text-muted">
-          <Trans>Free during the private beta.</Trans>
-        </p>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { Scene, SceneLine, Token } from "./estonian-scenes";
 import { SectionTitle } from "./FeatureSection";
@@ -11,26 +11,66 @@ import { SectionTitle } from "./FeatureSection";
 const LINE_MS = 1900;
 /** How long a finished conversation stays before the next situation begins. */
 const SCENE_REST_MS = 4200;
-const _EASE = [0.22, 1, 0.36, 1] as const;
 
-function Word({ token, language }: { token: Token; language: string }) {
+interface WordProps {
+  token: Token;
+  language: string;
+  open: boolean;
+  /** Where the meaning sits, so a word at a bubble's edge keeps it on screen. */
+  align: "start" | "center" | "end";
+  onToggle: () => void;
+}
+
+function Word({ token, language, open, align, onToggle }: WordProps) {
   const { i18n } = useLingui();
   const id = useId();
+  const tip = useRef<HTMLSpanElement>(null);
+  // Nudges the meaning back inside the screen when a word sits at the start or end of a wrapped row.
+  const keepOnScreen = () => {
+    const el = tip.current;
+    if (!el) return;
+    el.style.marginInlineStart = "0px";
+    const { left, right } = el.getBoundingClientRect();
+    const gutter = 8;
+    const shift =
+      left < gutter ? gutter - left : right > innerWidth - gutter ? innerWidth - gutter - right : 0;
+    el.style.marginInlineStart = `${shift}px`;
+  };
   if (typeof token === "string") return <span lang={language}>{token}</span>;
   return (
     <span className="group/word relative inline-block">
+      {/* Reached by arrow keys from the line's play button, so a line is one tab stop. */}
       <button
         type="button"
+        tabIndex={-1}
+        data-word=""
         lang={language}
         aria-describedby={id}
-        className="cursor-help rounded-xs underline decoration-edge-2 decoration-dotted underline-offset-[5px] transition-colors duration-150 hoverable:hover:bg-amber-soft hoverable:hover:decoration-transparent focus-visible:bg-amber-soft"
+        aria-expanded={open}
+        onPointerEnter={keepOnScreen}
+        onFocus={keepOnScreen}
+        onClick={() => {
+          keepOnScreen();
+          onToggle();
+        }}
+        className={clsx(
+          "cursor-help rounded-xs underline decoration-edge-2 decoration-dotted underline-offset-[5px] transition-colors duration-150 hoverable:hover:bg-amber-soft hoverable:hover:decoration-transparent focus-visible:bg-amber-soft",
+          open && "bg-amber-soft decoration-transparent",
+        )}
       >
         {token.text}
       </button>
       <span
+        ref={tip}
         id={id}
         role="tooltip"
-        className="pointer-events-none absolute bottom-full start-1/2 z-20 mb-2 -translate-x-1/2 translate-y-1 rounded-md bg-text px-3.5 py-2 text-base leading-tight font-normal tracking-normal whitespace-nowrap text-canvas @2xl:text-lg opacity-0 transition-[opacity,translate] duration-150 ease-out group-focus-within/word:translate-y-0 group-focus-within/word:opacity-100 hoverable:group-hover/word:translate-y-0 hoverable:group-hover/word:opacity-100"
+        className={clsx(
+          "pointer-events-none absolute bottom-full z-20 mb-2 translate-y-1 rounded-md bg-text px-3.5 py-2 text-base leading-tight font-normal tracking-normal whitespace-nowrap text-canvas opacity-0 transition-[opacity,translate] duration-150 ease-out group-focus-within/word:translate-y-0 group-focus-within/word:opacity-100 @2xl:text-lg hoverable:group-hover/word:translate-y-0 hoverable:group-hover/word:opacity-100",
+          align === "start" && "-start-1",
+          align === "end" && "-end-1",
+          align === "center" && "start-1/2 -translate-x-1/2",
+          open && "translate-y-0 opacity-100",
+        )}
       >
         {i18n._(token.gloss)}
       </span>
@@ -52,9 +92,41 @@ function Bubble({
   onPlay: () => void;
 }) {
   const { t, i18n } = useLingui();
+  const translationId = useId();
+  const self = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState<number | null>(null);
   const you = line.speaker === "you";
+  const glossed = line.tokens.flatMap((token, i) => (typeof token === "string" ? [] : [i]));
+
+  // A tapped word's meaning stays until the visitor taps elsewhere.
+  useEffect(() => {
+    if (open === null) return;
+    const close = (e: PointerEvent) => {
+      if (!self.current?.contains(e.target as Node)) setOpen(null);
+    };
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [open]);
+
+  const move = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Escape") return setOpen(null);
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const stops = [
+      ...(self.current?.querySelectorAll<HTMLElement>("[data-word], [data-play]") ?? []),
+    ];
+    const at = stops.indexOf(document.activeElement as HTMLElement);
+    if (at < 0) return;
+    e.preventDefault();
+    stops[(at + (e.key === "ArrowRight" ? 1 : -1) + stops.length) % stops.length]?.focus();
+  };
+
   return (
-    <div className={clsx("group/line flex flex-col", you ? "items-end" : "items-start")}>
+    // biome-ignore lint/a11y/noStaticElementInteractions: arrow keys move between the buttons inside
+    <div
+      ref={self}
+      onKeyDown={move}
+      className={clsx("group/line flex flex-col", you ? "items-end" : "items-start")}
+    >
       {/* Each bubble drifts on its own slow loop, so the exchange feels spoken rather than stacked. */}
       <div
         className="scene-bubble flex max-w-[92%] items-center gap-2"
@@ -67,14 +139,23 @@ function Bubble({
           )}
         >
           {line.tokens.map((token, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a line's words are fixed, so the index is the identity
-            <Word key={i} token={token} language={language} />
+            <Word
+              // biome-ignore lint/suspicious/noArrayIndexKey: a line's words are fixed, so the index is the identity
+              key={i}
+              token={token}
+              language={language}
+              open={open === i}
+              align={i === glossed[0] ? "start" : i === glossed.at(-1) ? "end" : "center"}
+              onToggle={() => setOpen((current) => (current === i ? null : i))}
+            />
           ))}
         </p>
         <button
           type="button"
+          data-play=""
           onClick={onPlay}
           aria-label={playing ? t`Replay this line` : t`Hear this line`}
+          aria-describedby={translationId}
           className={clsx(
             "relative grid size-9 shrink-0 place-items-center rounded-full transition-[opacity,background-color,color,scale] duration-150 ease-out active:scale-95 hoverable:hover:bg-hover",
             "before:absolute before:-inset-1 before:content-['']",
@@ -89,8 +170,10 @@ function Bubble({
         </button>
       </div>
       <p
+        id={translationId}
         className={clsx(
           "mt-1 px-2 text-sm text-muted opacity-0 transition-opacity duration-200 group-focus-within/line:opacity-100 hoverable:group-hover/line:opacity-100",
+          open !== null && "opacity-100",
         )}
       >
         {i18n._(line.translation)}

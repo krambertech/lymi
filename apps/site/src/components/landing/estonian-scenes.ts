@@ -6,7 +6,7 @@ export type Token = string | { text: string; gloss: MessageDescriptor };
 
 export interface SceneLine {
   /** Who says it; `you` sits on the right like your own messages. */
-  speaker: "you" | { name: string; avatar: string };
+  speaker: "you" | "them";
   /** The clip's name under `/audio/hand/`; `pnpm --filter @lymi/site hand:audio` renders `say`. */
   audio: string;
   say: string;
@@ -21,10 +21,6 @@ export interface Scene {
   lines: SceneLine[];
 }
 
-const barista = { name: "Jonas", avatar: "jonas" };
-const friend = { name: "Mari", avatar: "mari" };
-const cashier = { name: "Aiko", avatar: "aiko" };
-
 const w = (text: string, gloss: MessageDescriptor): Token => ({ text, gloss });
 
 /** Small conversations from a first week in Estonia, word by word. */
@@ -35,7 +31,7 @@ export const ESTONIAN_SCENES: Scene[] = [
     detail: msg`Catching up with a friend`,
     lines: [
       {
-        speaker: friend,
+        speaker: "them",
         audio: "scene-hello-1",
         say: "Tere! Kuidas läheb?",
         tokens: [
@@ -65,7 +61,7 @@ export const ESTONIAN_SCENES: Scene[] = [
         translation: msg`Good, thanks! And you?`,
       },
       {
-        speaker: friend,
+        speaker: "them",
         audio: "scene-hello-3",
         say: "Normaalselt. Palju tööd.",
         tokens: [
@@ -86,7 +82,7 @@ export const ESTONIAN_SCENES: Scene[] = [
         translation: msg`Hang in there!`,
       },
       {
-        speaker: friend,
+        speaker: "them",
         audio: "scene-hello-5",
         say: "Aitäh! Näeme!",
         tokens: [
@@ -105,7 +101,7 @@ export const ESTONIAN_SCENES: Scene[] = [
     detail: msg`Ordering a coffee to go`,
     lines: [
       {
-        speaker: barista,
+        speaker: "them",
         audio: "scene-cafe-1",
         say: "Tere! Mida teile?",
         tokens: [
@@ -137,7 +133,7 @@ export const ESTONIAN_SCENES: Scene[] = [
         translation: msg`A coffee and a cinnamon bun, please.`,
       },
       {
-        speaker: barista,
+        speaker: "them",
         audio: "scene-cafe-3",
         say: "Siin või kaasa?",
         tokens: [w("Siin", msg`here`), " ", w("või", msg`or`), " ", w("kaasa", msg`to go`), "?"],
@@ -151,7 +147,7 @@ export const ESTONIAN_SCENES: Scene[] = [
         translation: msg`To go, please.`,
       },
       {
-        speaker: barista,
+        speaker: "them",
         audio: "scene-cafe-5",
         say: "Kaardiga või sularahas?",
         tokens: [
@@ -179,7 +175,7 @@ export const ESTONIAN_SCENES: Scene[] = [
     detail: msg`Paying at the checkout`,
     lines: [
       {
-        speaker: cashier,
+        speaker: "them",
         audio: "scene-shop-1",
         say: "Tere! Kas teil on kliendikaart?",
         tokens: [
@@ -204,7 +200,7 @@ export const ESTONIAN_SCENES: Scene[] = [
         translation: msg`No, I don’t.`,
       },
       {
-        speaker: cashier,
+        speaker: "them",
         audio: "scene-shop-3",
         say: "Kas kotti on vaja?",
         tokens: [
@@ -227,7 +223,7 @@ export const ESTONIAN_SCENES: Scene[] = [
         translation: msg`Yes, one, please.`,
       },
       {
-        speaker: cashier,
+        speaker: "them",
         audio: "scene-shop-5",
         say: "Kaks eurot ja kümme senti.",
         tokens: [

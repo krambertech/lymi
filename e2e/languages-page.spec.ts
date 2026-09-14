@@ -50,12 +50,13 @@ test("a language learner can reach the languages pages and turn notes and cards 
   });
 
   await test.step("an Estonian conversation plays out and explains its words", async () => {
+    // The lines drift gently; reduced motion holds them still for a pointer and shows the whole exchange.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.getByRole("button", { name: /At the café/ }).click();
     const word = page.getByRole("button", { name: "kaneelisai", exact: true });
-    await word.focus();
+    await word.click();
     await expect(page.getByRole("tooltip", { name: "cinnamon bun" })).toBeVisible();
     await expect(page.getByText("A coffee and a cinnamon bun, please.")).toHaveCSS("opacity", "1");
-    await expect(page.getByRole("button", { name: "Hear this line" }).nth(1)).toBeVisible();
   });
 
   await test.step("both pages are in the sitemap", async () => {

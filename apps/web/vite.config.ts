@@ -159,6 +159,7 @@ export default defineConfig({
               "@base-ui/react/separator",
               "@base-ui/react/tooltip",
               "@base-ui/react/use-render",
+              "zod",
             ],
           },
           test: {

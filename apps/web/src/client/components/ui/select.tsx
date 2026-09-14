@@ -5,9 +5,10 @@ import { Check, ChevronDown } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
-import { controlBase, controlSize, useControlProps } from "../Field";
 import { FluidHighlight } from "../FluidHighlight";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "./drawer";
+import { useField, useFieldControl } from "./field";
+import { controlBase, controlSize } from "./input";
 
 /*
  * shadcn's Select, in the shape of the machine: a list anchored under its box on a desktop, the
@@ -78,10 +79,12 @@ function Select({
   onOpenChange,
   items,
   name,
-  disabled = false,
+  disabled: disabledProp = false,
   required = false,
   children,
 }: SelectProps) {
+  const field = useField();
+  const disabled = disabledProp || Boolean(field?.disabled);
   const [uncontrolledValue, setUncontrolledValue] = React.useState<Value>(defaultValue);
   const value = controlledValue === undefined ? uncontrolledValue : controlledValue;
   const setValue = React.useCallback(
@@ -145,11 +148,11 @@ interface TriggerProps {
 /** The box. Put a `SelectValue` inside; the chevron is already there. */
 function SelectTrigger({ className, children, ...props }: TriggerProps) {
   const { shape, open, value, disabled, required } = useSelect("SelectTrigger");
-  const a11y = useControlProps(props);
+  const a11y = useFieldControl(props);
   const classes = cn(
     controlBase,
     controlSize,
-    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:edge-2 data-placeholder:text-muted",
+    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-2 data-placeholder:text-muted",
     className,
   );
   const chevron = (

@@ -3,7 +3,6 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions } from "@lymi/core";
 import { useId, useState } from "react";
-import { Field } from "./Field";
 import { RadioCard } from "./RadioCard";
 import { Segmented } from "./Segmented";
 import {
@@ -18,6 +17,7 @@ import {
   ComboboxValue,
   useComboboxFilter,
 } from "./ui/combobox";
+import { Field, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 
 /**
  * The two settings a deck carries besides its name, shared by the create sheet and the deck
@@ -112,7 +112,7 @@ interface LanguageProps {
   value: string | null;
   onChange: (value: string | null) => void;
   label?: string | undefined;
-  hint?: string | undefined;
+  description?: string | undefined;
   error?: string | undefined;
 }
 
@@ -121,7 +121,7 @@ interface LanguageProps {
  * because the tag tells Portuguese from Brazilian Portuguese and it is what the API stores. A valid
  * tag the list does not hold is still reachable: typed in full, it becomes the last row.
  */
-export function LanguageField({ value, onChange, label, hint, error }: LanguageProps) {
+export function LanguageField({ value, onChange, label, description, error }: LanguageProps) {
   const { t, i18n } = useLingui();
   const [query, setQuery] = useState("");
   const { contains } = useComboboxFilter({ locale: i18n.locale });
@@ -146,11 +146,8 @@ export function LanguageField({ value, onChange, label, hint, error }: LanguageP
 
   const fieldLabel = label ?? t`Language`;
   return (
-    <Field
-      label={fieldLabel}
-      hint={hint ?? t`The language this deck’s cards are in. It fills in on every new card.`}
-      error={error}
-    >
+    <Field>
+      <FieldLabel>{fieldLabel}</FieldLabel>
       <Combobox<LanguageOption>
         items={custom ? [none, ...known, custom] : [none, ...known]}
         filteredItems={shown}
@@ -182,6 +179,10 @@ export function LanguageField({ value, onChange, label, hint, error }: LanguageP
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
+      <FieldDescription>
+        {description ?? t`The language this deck’s cards are in. It fills in on every new card.`}
+      </FieldDescription>
+      <FieldError>{error}</FieldError>
     </Field>
   );
 }

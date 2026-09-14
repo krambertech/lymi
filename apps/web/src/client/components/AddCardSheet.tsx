@@ -7,8 +7,9 @@ import { type AddCardOutcome, api, type DeckSummary, errorMessage } from "../lib
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { decksQuery } from "../lib/queries";
 import { Button } from "./Button";
-import { Field, Input } from "./Field";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { Field, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
+import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface Props {
@@ -144,7 +145,8 @@ export function AddCardForm({
         inputRef.current?.focus();
       }}
     >
-      <Field label={t`Term`} error={invalid.term}>
+      <Field>
+        <FieldLabel>{t`Term`}</FieldLabel>
         <Input
           ref={inputRef}
           autoFocus={!st}
@@ -160,13 +162,10 @@ export function AddCardForm({
           spellCheck={false}
           enterKeyHint="done"
         />
+        <FieldError>{invalid.term}</FieldError>
       </Field>
-      <Field
-        label={t`Meaning`}
-        aside={t`Optional`}
-        hint={t`Leave it empty and AI can fill it in later.`}
-        error={invalid.meaning}
-      >
+      <Field>
+        <FieldLabel aside={t`Optional`}>{t`Meaning`}</FieldLabel>
         <Input
           value={meaning}
           onChange={(e) => {
@@ -176,19 +175,23 @@ export function AddCardForm({
           placeholder={t`to hurry up`}
           autoComplete="off"
         />
+        <FieldDescription>{t`Leave it empty and AI can fill it in later.`}</FieldDescription>
+        <FieldError>{invalid.meaning}</FieldError>
       </Field>
       {noDecks ? (
-        <Field
-          label={t`Deck`}
-          hint={t`A card lands in a deck. Create the first one and this card goes in it.`}
-        >
+        <FieldSet className="gap-1.5">
+          <FieldLegend variant="label">{t`Deck`}</FieldLegend>
           <Button onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
             <Plus aria-hidden="true" />
             <Trans>New deck</Trans>
           </Button>
-        </Field>
+          <FieldDescription>
+            {t`A card lands in a deck. Create the first one and this card goes in it.`}
+          </FieldDescription>
+        </FieldSet>
       ) : (
-        <Field label={t`Deck`} error={invalid.deckId}>
+        <Field>
+          <FieldLabel>{t`Deck`}</FieldLabel>
           <Select
             value={deck || null}
             onValueChange={(v) => {
@@ -208,6 +211,7 @@ export function AddCardForm({
               ))}
             </SelectContent>
           </Select>
+          <FieldError>{invalid.deckId}</FieldError>
         </Field>
       )}
       <div className="flex items-center gap-2 pt-1">

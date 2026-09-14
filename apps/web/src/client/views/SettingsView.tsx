@@ -4,10 +4,10 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import type { ReactNode } from "react";
 import { AccountGroup } from "../components/AccountSection";
-import { Field } from "../components/Field";
 import { Segmented } from "../components/Segmented";
 import { SettingsGroup } from "../components/SettingsGroup";
 import { Skeleton } from "../components/Skeleton";
+import { Field, FieldLabel } from "../components/ui/field";
 import {
   Select,
   SelectContent,
@@ -74,7 +74,8 @@ export function SettingsView({
         {language ? (
           // The group's title already says Language; the field's label names the picker for
           // assistive technology without printing it twice.
-          <Field label={t`Language`} className="w-56 [&_label]:sr-only">
+          <Field className="w-56">
+            <FieldLabel className="sr-only">{t`Language`}</FieldLabel>
             <Select
               value={language}
               onValueChange={(v) => {

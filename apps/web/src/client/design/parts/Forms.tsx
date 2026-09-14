@@ -1,9 +1,9 @@
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { useState } from "react";
+import { Button } from "../../components/Button";
 import { Checkbox } from "../../components/Checkbox";
 import { CopyField } from "../../components/CopyField";
 import { LanguageField } from "../../components/DeckFields";
-import { Field, Input, Textarea } from "../../components/Field";
 import { Segmented } from "../../components/Segmented";
 import { Switch } from "../../components/Switch";
 import {
@@ -21,6 +21,17 @@ import {
   ComboboxValue,
 } from "../../components/ui/combobox";
 import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "../../components/ui/field";
+import { Input } from "../../components/ui/input";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -30,6 +41,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
+import { Textarea } from "../../components/ui/textarea";
 import { Variants } from "../Frame";
 import type { Group } from "./types";
 
@@ -54,78 +66,218 @@ export const forms: Group = {
   entries: [
     {
       slug: "field",
-      name: "Field and input",
-      source: "components/Field.tsx",
-      note: "Label above, hint or error below, wired with aria.",
-      Demo: function FieldDemo() {
+      name: "Field",
+      source: "components/ui/field.tsx",
+      note: "The parts of a form row. The label names the control, and the description and error describe it, with no id written by hand.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Label and control",
+              note: "A label above the box, always visible.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Term</FieldLabel>
+                  <Input placeholder="sbrigarsi" defaultValue="la ringhiera" />
+                </Field>
+              ),
+            },
+            {
+              label: "With a description",
+              note: "One sentence on how the field works, read after the label.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Name</FieldLabel>
+                  <Input placeholder="Backup script on the laptop" />
+                  <FieldDescription>So you know which key to revoke later.</FieldDescription>
+                </Field>
+              ),
+            },
+            {
+              label: "Optional",
+              note: "A note at the end of the label row. The description says what happens if it stays empty.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel aside="Optional">Meaning</FieldLabel>
+                  <Input placeholder="to hurry up" />
+                  <FieldDescription>Leave it empty and AI can fill it in later.</FieldDescription>
+                </Field>
+              ),
+            },
+            {
+              label: "Error",
+              note: "After submit. An error with something to say marks the field and its control invalid together, and the caret goes to the first one. Where a field has a description, the error takes its place.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Source</FieldLabel>
+                  <Input defaultValue="Il Gattopardo, chapter two, the long passage about the ballroom and everything Tancredi said" />
+                  <FieldError>Keep it under 200 characters.</FieldError>
+                </Field>
+              ),
+            },
+            {
+              label: "Several errors",
+              note: "Issues from a form library, each message once.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Tag</FieldLabel>
+                  <Input defaultValue="portuguese brazil" />
+                  <FieldError
+                    errors={[
+                      { message: "Use a language tag like ca, pt-BR or zh-Hant." },
+                      { message: "Keep the language tag under 12 characters." },
+                      { message: "Use a language tag like ca, pt-BR or zh-Hant." },
+                    ]}
+                  />
+                </Field>
+              ),
+            },
+            {
+              label: "Disabled",
+              note: "Set on the field, it reaches the control.",
+              render: () => (
+                <Field disabled className={box}>
+                  <FieldLabel>Deck name</FieldLabel>
+                  <Input defaultValue="Lesson 14" />
+                </Field>
+              ),
+            },
+            {
+              label: "Beside its label",
+              note: "For a narrow panel such as the developer tools. The description stays under the control.",
+              render: () => (
+                <Field orientation="horizontal" className={box}>
+                  <FieldLabel className="mt-2.5 w-20 shrink-0">Persona</FieldLabel>
+                  <FieldContent>
+                    <Input defaultValue="Learner" />
+                    <FieldDescription>Forty cards, two decks, a week of reviews.</FieldDescription>
+                  </FieldContent>
+                </Field>
+              ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "field-set",
+      name: "Field set",
+      source: "components/ui/field.tsx",
+      note: "Fields that belong together, named once by a legend.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "A group of fields",
+              note: "The description under the legend describes the whole set.",
+              render: () => (
+                <FieldSet className={box}>
+                  <FieldLegend>Card</FieldLegend>
+                  <FieldDescription>What you type here is what the card shows.</FieldDescription>
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel>Term</FieldLabel>
+                      <Input defaultValue="sbrigarsi" />
+                    </Field>
+                    <Field>
+                      <FieldLabel aside="Optional">Meaning</FieldLabel>
+                      <Input placeholder="to hurry up" />
+                    </Field>
+                  </FieldGroup>
+                </FieldSet>
+              ),
+            },
+            {
+              label: "A legend as a label",
+              note: "For a row whose control is not a box, such as the button that makes the first deck. The legend names the group, and the button keeps its own name.",
+              render: () => (
+                <FieldSet className={`gap-1.5 ${box}`}>
+                  <FieldLegend variant="label">Deck</FieldLegend>
+                  <Button>
+                    <Plus aria-hidden="true" />
+                    New deck
+                  </Button>
+                  <FieldDescription>
+                    A card lands in a deck. Create the first one and this card goes in it.
+                  </FieldDescription>
+                </FieldSet>
+              ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "input",
+      name: "Input",
+      source: "components/ui/input.tsx",
+      note: "One line of text. It takes its name, description and state from the field around it.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Search",
+              note: "The icon sits inside the box. With no field around it, the name comes from aria-label.",
+              render: () => (
+                <div className={`relative ${box}`}>
+                  <Search
+                    className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+                    aria-hidden="true"
+                  />
+                  <Input placeholder="Search this deck" aria-label="Search" className="ps-9" />
+                </div>
+              ),
+            },
+            {
+              label: "Disabled",
+              note: "Cannot change right now.",
+              render: () => (
+                <Input disabled defaultValue="Lesson 14" aria-label="Deck name" className={box} />
+              ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "textarea",
+      name: "Textarea",
+      source: "components/ui/textarea.tsx",
+      note: "More than a line: notes, a mnemonic, where you heard it. It grows by dragging, never on its own.",
+      Demo: function TextareaDemo() {
         const [text, setText] = useState("");
         return (
           <Variants
             items={[
               {
                 label: "Default",
-                note: "A label above the box, always visible.",
                 render: () => (
-                  <Field label="Term" className={box}>
-                    <Input placeholder="sbrigarsi" defaultValue="la ringhiera" />
-                  </Field>
-                ),
-              },
-              {
-                label: "Optional, with a hint",
-                note: "The aside marks it optional. The hint says what happens if it stays empty.",
-                render: () => (
-                  <Field
-                    label="Meaning"
-                    aside="Optional"
-                    hint="Leave it empty and AI can fill it in later."
-                    className={box}
-                  >
-                    <Input placeholder="to hurry up" />
-                  </Field>
-                ),
-              },
-              {
-                label: "Error",
-                note: "After submit. An icon and a sentence that says how to fix it.",
-                render: () => (
-                  <Field label="Source" error="Keep it under 200 characters." className={box}>
-                    <Input defaultValue="Il Gattopardo, chapter two, the long passage about the ballroom and everything Tancredi said" />
-                  </Field>
-                ),
-              },
-              {
-                label: "Disabled",
-                note: "Cannot change right now.",
-                render: () => (
-                  <Field label="Deck name" className={box}>
-                    <Input disabled defaultValue="Lesson 14" />
-                  </Field>
-                ),
-              },
-              {
-                label: "Search",
-                note: "The icon sits inside the box; the name is still there for screen readers.",
-                render: () => (
-                  <div className={`relative ${box}`}>
-                    <Search
-                      className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
-                      aria-hidden="true"
-                    />
-                    <Input placeholder="Search this deck" aria-label="Search" className="ps-9" />
-                  </div>
-                ),
-              },
-              {
-                label: "Textarea",
-                note: "More than a line: notes, a mnemonic, where you heard it.",
-                render: () => (
-                  <Field label="Notes" className={box}>
+                  <Field className={box}>
+                    <FieldLabel>Notes</FieldLabel>
                     <Textarea
                       placeholder="Grammar, a mnemonic, where you heard it"
                       value={text}
                       onChange={(e) => setText(e.target.value)}
                     />
+                  </Field>
+                ),
+              },
+              {
+                label: "Error",
+                render: () => (
+                  <Field className={box}>
+                    <FieldLabel>Description</FieldLabel>
+                    <Textarea defaultValue="Cards from Marco’s Tuesday lessons, and the words from the film club, and everything from the trip to Bologna in March." />
+                    <FieldError>Keep the description under 500 characters.</FieldError>
+                  </Field>
+                ),
+              },
+              {
+                label: "Disabled",
+                render: () => (
+                  <Field disabled className={box}>
+                    <FieldLabel>Notes</FieldLabel>
+                    <Textarea defaultValue="Reflexive: mi sbrigo, ti sbrighi." />
                   </Field>
                 ),
               },
@@ -309,7 +461,8 @@ export const select: Group = {
                 label: "Chosen",
                 note: "A value is set. Open it to see the check on that row.",
                 render: () => (
-                  <Field label="Deck" className={box}>
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
                     <DeckSelect value={deck} onChange={setDeck} />
                   </Field>
                 ),
@@ -318,7 +471,8 @@ export const select: Group = {
                 label: "Nothing chosen",
                 note: "The placeholder names what to pick.",
                 render: () => (
-                  <Field label="Deck" className={box}>
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
                     <DeckSelect value={empty} onChange={setEmpty} placeholder="Choose a deck" />
                   </Field>
                 ),
@@ -327,8 +481,10 @@ export const select: Group = {
                 label: "Error",
                 note: "Submitted without a choice.",
                 render: () => (
-                  <Field label="Deck" error="Choose a deck for this card." className={box}>
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
                     <DeckSelect value={missing} onChange={setMissing} placeholder="Choose a deck" />
+                    <FieldError>Choose a deck for this card.</FieldError>
                   </Field>
                 ),
               },
@@ -336,12 +492,10 @@ export const select: Group = {
                 label: "Disabled",
                 note: "Cannot change right now, and the hint says why.",
                 render: () => (
-                  <Field
-                    label="Deck"
-                    hint="Cannot change while a review is running."
-                    className={box}
-                  >
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
                     <DeckSelect value={deck} onChange={setDeck} disabled />
+                    <FieldDescription>Cannot change while a review is running.</FieldDescription>
                   </Field>
                 ),
               },
@@ -349,7 +503,8 @@ export const select: Group = {
                 label: "Groups",
                 note: "Two kinds of the same thing, each under a small label, with a rule between them. The hover fill never crosses the rule.",
                 render: () => (
-                  <Field label="Deck" className={box}>
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
                     <Select
                       value={grouped}
                       onValueChange={setGrouped}
@@ -489,7 +644,8 @@ export const combobox: Group = {
                 label: "Groups",
                 note: "Two kinds of the same thing, each under a small label, with a rule between them. A group with no match leaves with its label.",
                 render: () => (
-                  <Field label="Deck" className={box}>
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
                     <DeckCombobox value={deck} onChange={setDeck} />
                   </Field>
                 ),
@@ -498,12 +654,10 @@ export const combobox: Group = {
                 label: "Disabled",
                 note: "Cannot change right now, and the hint says why.",
                 render: () => (
-                  <Field
-                    label="Deck"
-                    hint="Cannot change while a review is running."
-                    className={box}
-                  >
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
                     <DeckCombobox value={deck} onChange={setDeck} disabled />
+                    <FieldDescription>Cannot change while a review is running.</FieldDescription>
                   </Field>
                 ),
               },

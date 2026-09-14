@@ -17,7 +17,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/Button";
 import { directionLabel, languageName } from "../components/DeckFields";
 import { EmptyState } from "../components/EmptyState";
-import { Input } from "../components/Field";
 import { Segmented } from "../components/Segmented";
 import { Skeleton } from "../components/Skeleton";
 import { StateStripe, stateDot } from "../components/StateStripe";
@@ -28,6 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
+import { Input } from "../components/ui/input";
 import type { Card, CardState, DeckSummary, Review } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./Shell";

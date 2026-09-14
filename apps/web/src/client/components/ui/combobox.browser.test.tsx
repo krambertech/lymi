@@ -3,7 +3,6 @@ import { describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { DESKTOP_QUERY } from "../../lib/device";
-import { Field } from "../Field";
 import {
   Combobox,
   ComboboxCollection,
@@ -20,6 +19,7 @@ import {
   ComboboxValue,
 } from "./combobox";
 import { Dialog, DialogContent, DialogTitle } from "./dialog";
+import { Field, FieldError, FieldLabel } from "./field";
 
 const desktop = inject("machine") === "desktop";
 
@@ -98,7 +98,8 @@ function Harness({
   // Room around the box, so a press "outside" lands on the page and not on the label.
   return (
     <>
-      <Field label="Language" error={error} className="m-12 w-80">
+      <Field className="m-12 w-80">
+        <FieldLabel>Language</FieldLabel>
         <Combobox
           items={LANGUAGES}
           value={byValue(value)}
@@ -125,6 +126,7 @@ function Harness({
             </ComboboxList>
           </ComboboxContent>
         </Combobox>
+        <FieldError>{error}</FieldError>
       </Field>
       <button type="button">Next field</button>
     </>

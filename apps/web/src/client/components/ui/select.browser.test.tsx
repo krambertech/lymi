@@ -3,8 +3,8 @@ import { describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { DESKTOP_QUERY } from "../../lib/device";
-import { Field } from "../Field";
 import { Dialog, DialogContent, DialogTitle } from "./dialog";
+import { Field, FieldError, FieldLabel } from "./field";
 import {
   Select,
   SelectContent,
@@ -56,7 +56,8 @@ function Harness({
   const [value, setValue] = useState<string | null>(initial);
   // Room around the box, so a press "outside" lands on the page and not on the label.
   return (
-    <Field label="Deck" error={error} className="m-12 w-80">
+    <Field className="m-12 w-80">
+      <FieldLabel>Deck</FieldLabel>
       <Select
         value={value}
         onValueChange={(next) => {
@@ -82,6 +83,7 @@ function Harness({
           </SelectItem>
         </SelectContent>
       </Select>
+      <FieldError>{error}</FieldError>
     </Field>
   );
 }

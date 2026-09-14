@@ -40,8 +40,9 @@ function ToggleGroup<Value extends string>({
       multiple={multiple}
       disabled={disabled}
       onValueChange={(next, details) => {
-        setUncontrolled(next);
         onValueChange?.(next, details);
+        // A change the owner cancelled leaves the old item pressed, so the form keeps the old value too.
+        if (!details.isCanceled) setUncontrolled(next);
       }}
       onFocus={(event) => {
         if (!multiple) focusChosen(event, "[aria-pressed]", PRESSED);
@@ -129,21 +130,20 @@ function ToggleGroupIndicator({ className }: { className?: string | undefined })
     };
 
     place(false);
-    const onKeyDown = () => {
-      keyboard = true;
+    // A click the keyboard made has no pointer detail; the flag lasts only for the change that click causes.
+    const onClick = (event: MouseEvent) => {
+      keyboard = event.detail === 0;
+      setTimeout(() => {
+        keyboard = false;
+      });
     };
-    const onPointerDown = () => {
-      keyboard = false;
-    };
-    group.addEventListener("keydown", onKeyDown, true);
-    group.addEventListener("pointerdown", onPointerDown, true);
+    group.addEventListener("click", onClick, true);
     const pressed = new MutationObserver(() => place(!keyboard));
     pressed.observe(group, { subtree: true, attributeFilter: ["data-pressed"] });
     const resized = new ResizeObserver(() => place(false));
     resized.observe(group);
     return () => {
-      group.removeEventListener("keydown", onKeyDown, true);
-      group.removeEventListener("pointerdown", onPointerDown, true);
+      group.removeEventListener("click", onClick, true);
       pressed.disconnect();
       resized.disconnect();
     };

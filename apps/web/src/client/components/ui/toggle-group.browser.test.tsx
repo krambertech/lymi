@@ -179,3 +179,51 @@ test("a disabled group submits nothing, as a disabled native control would", asy
   const form = page.getByTestId("form").element() as HTMLFormElement;
   expect(new FormData(form).getAll("theme")).toEqual([]);
 });
+
+test("after a keyboard choice, a change made from outside the group still glides", async () => {
+  function Harness() {
+    const [value, setValue] = useState("light");
+    return (
+      <>
+        <Segmented label="Theme" value={value} onChange={setValue} options={OPTIONS} />
+        <button type="button" onClick={() => setValue("light")}>
+          Clear
+        </button>
+      </>
+    );
+  }
+  await render(<Harness />);
+  await userEvent.tab();
+  await userEvent.keyboard("{ArrowRight}{ArrowRight}{Enter}");
+  const system = page.getByRole("button", { name: "Follow the system" });
+  await expect.element(system).toHaveAttribute("aria-pressed", "true");
+  expect(offset(system.element())).toEqual({ start: 0, width: 0 });
+
+  const light = page.getByRole("button", { name: "Light" });
+  await page.getByRole("button", { name: "Clear" }).click();
+  await expect.element(light).toHaveAttribute("aria-pressed", "true");
+  expect(offset(light.element())).not.toEqual({ start: 0, width: 0 });
+  await expect.poll(() => offset(light.element())).toEqual({ start: 0, width: 0 });
+});
+
+test("a change the owner cancels leaves both the pressed item and the submitted value alone", async () => {
+  await render(
+    <form data-testid="form">
+      <ToggleGroup
+        aria-label="Theme"
+        name="theme"
+        defaultValue={["light"]}
+        onValueChange={(_, details) => details.cancel()}
+      >
+        <ToggleGroupItem value="light">Light</ToggleGroupItem>
+        <ToggleGroupItem value="dark">Dark</ToggleGroupItem>
+      </ToggleGroup>
+    </form>,
+  );
+  await page.getByRole("button", { name: "Dark" }).click();
+  await expect
+    .element(page.getByRole("button", { name: "Light" }))
+    .toHaveAttribute("aria-pressed", "true");
+  const form = page.getByTestId("form").element() as HTMLFormElement;
+  expect(new FormData(form).getAll("theme")).toEqual(["light"]);
+});

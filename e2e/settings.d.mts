@@ -11,6 +11,9 @@ export type E2EAccount =
   | "review-round"
   | "review-scope"
   | "review-midnight"
+  | "review-goal"
+  | "review-goal-small"
+  | "review-goal-midnight"
   | "word-detail";
 
 export const e2eAccounts: readonly E2EAccount[];

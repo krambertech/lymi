@@ -103,7 +103,7 @@ test("grades that could not be sent still decide the next card after a reload", 
   });
 });
 
-test("offline, grading still works, the last card ends the review, and it all syncs later", async ({
+test("offline, grading still works, running out claims nothing, and it all syncs later", async ({
   page,
   context,
   browserName,
@@ -119,7 +119,10 @@ test("offline, grading still works, the last card ends the review, and it all sy
     await grade(page, "3", 1);
     await grade(page, "3", 2);
     await grade(page, "3", 3);
-    await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Couldn’t check for more cards" }),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeHidden();
   });
 
   await test.step("the queued grades reach the server once the connection returns", async () => {
@@ -131,6 +134,8 @@ test("offline, grading still works, the last card ends the review, and it all sy
             .attempts,
       )
       .toBe(3);
+    // The paused check resumes with the connection and confirms the day.
+    await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeVisible();
   });
 });
 

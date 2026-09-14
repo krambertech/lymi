@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import type { CSSProperties } from "react";
 
 interface Props {
   /** Seven counts, oldest first. Today last. */
@@ -16,8 +17,15 @@ interface Props {
   satisfied?: boolean[] | undefined;
   /** The learner-local YYYY-MM-DD of each day. Without them the labels count back from the device's today. */
   dates?: string[] | undefined;
+  /** At the end of a review the lights switch on one after another, starting this many ms in. */
+  sequence?: number | undefined;
+  /** Today's light flares once as it fills. */
+  flare?: boolean | undefined;
   className?: string | undefined;
 }
+
+/** How far apart the lights switch on in a sequence. */
+export const LIGHT_STEP_MS = 70;
 
 /**
  * A day's light carries three steps of amber, by how much that day held. A day that counted toward
@@ -72,7 +80,16 @@ const HEIGHT: Record<1 | 2 | 3, string> = { 1: "h-1/3", 2: "h-2/3", 3: "h-full" 
  * One image, one description. The wrapper is atomic to assistive technology, so the per-day
  * counts go into its label rather than into titles nobody can reach from a keyboard.
  */
-export function SevenLights({ days, size = "sm", goals, satisfied, dates, className }: Props) {
+export function SevenLights({
+  days,
+  size = "sm",
+  goals,
+  satisfied,
+  dates,
+  sequence,
+  flare = false,
+  className,
+}: Props) {
   const { t, i18n } = useLingui();
   const today = new Date();
   // A learner-local date is formatted at noon UTC in UTC, so no device zone can move it a day.
@@ -113,7 +130,16 @@ export function SevenLights({ days, size = "sm", goals, satisfied, dates, classN
         return (
           <span
             key={day}
-            className={clsx("grid justify-items-center", large ? "gap-2" : "gap-1.5")}
+            className={clsx(
+              "grid justify-items-center",
+              large ? "gap-2" : "gap-1.5",
+              sequence !== undefined && "light-on",
+            )}
+            style={
+              sequence === undefined
+                ? undefined
+                : ({ "--at": `${sequence + i * LIGHT_STEP_MS}ms` } as CSSProperties)
+            }
             title={t`${day}: ${n} reviewed`}
           >
             {/* The glass is always drawn; the light inside it rises with the day. */}
@@ -124,17 +150,18 @@ export function SevenLights({ days, size = "sm", goals, satisfied, dates, classN
                   ? "h-11 w-8 rounded-[6px_6px_8px_8px]"
                   : "h-[18px] w-[13px] rounded-[4px_4px_5px_5px]",
                 isToday && l === 0 && "edge-2",
+                isToday && flare && l === 3 && "light-flare",
               )}
             >
-              {l !== 0 && (
-                <i
-                  className={clsx(
-                    "absolute inset-x-0 bottom-0 block transition-[height,background-color] duration-300",
-                    HEIGHT[l],
-                    FILL[l],
-                  )}
-                />
-              )}
+              {/* Drawn empty too, so a day that lights up while on screen rises from the bottom. */}
+              <i
+                className={clsx(
+                  "absolute inset-x-0 bottom-0 block transition-[height,background-color]",
+                  flare ? "duration-700 ease-out" : "duration-300",
+                  l === 0 ? "h-0" : HEIGHT[l],
+                  FILL[l === 0 ? 1 : l],
+                )}
+              />
             </i>
             <span
               className={clsx(

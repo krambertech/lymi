@@ -1,11 +1,13 @@
+import { LayoutGroup } from "motion/react";
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { AddCardForm } from "../components/AddCardSheet";
 import { identifyApp } from "../components/AppMark";
 import { Button } from "../components/Button";
 import { NewDeckForm } from "../components/NewDeckSheet";
 import { PillNav } from "../components/PillNav";
 import { StreakButton } from "../components/Streak";
+import { type DayOutcome, streakWith } from "../lib/review-complete";
 import { ConnectedView } from "../views/ConnectedView";
 import { ConsentView } from "../views/ConsentView";
 import { DeckDetailView } from "../views/DeckDetailView";
@@ -13,7 +15,7 @@ import { DeckSettingsView } from "../views/DeckSettingsView";
 import { InsightsView } from "../views/InsightsView";
 import { LibraryView } from "../views/LibraryView";
 import { LoginView } from "../views/LoginView";
-import { GradeBar, ReviewCard, ReviewHeader, SessionDone } from "../views/ReviewView";
+import { GradeBar, ReviewCard, ReviewComplete, ReviewHeader } from "../views/ReviewView";
 import { SettingsView } from "../views/SettingsView";
 import { Sidebar } from "../views/Shell";
 import { TodayView } from "../views/TodayView";
@@ -93,6 +95,98 @@ function ConsentDemo({ app }: { app: typeof CLAUDE }) {
       onAllowWrite={setWrite}
       onDecide={noop}
     />
+  );
+}
+
+/**
+ * The end of a review, replayable: the last card steps back, the lantern leaves the header and
+ * the day lands. Each shot is its own layout group, so lanterns never fly between phones.
+ */
+function ReviewEndShot({
+  caption,
+  initial,
+  outcome,
+  from,
+  attempts,
+  forgotten = 0,
+  nextRound = 0,
+}: {
+  caption: string;
+  initial: "light" | "dark";
+  outcome: DayOutcome;
+  from: number;
+  attempts: number;
+  forgotten?: number | undefined;
+  nextRound?: number | undefined;
+}) {
+  const group = useId();
+  const [ended, setEnded] = useState(true);
+  const [run, setRun] = useState(0);
+  const past = m.history.slice(0, 6);
+  const before = m.streakFrom([...past, outcome === "nothing_due" ? 0 : from]);
+  const after = streakWith(before, attempts, outcome !== "nothing_due");
+  const replay = () => {
+    setEnded(false);
+    window.setTimeout(() => {
+      setRun((n) => n + 1);
+      setEnded(true);
+    }, 900);
+  };
+  return (
+    <PhoneShot
+      caption={
+        <span className="flex items-center gap-3">
+          {caption}
+          <Button size="sm" variant="ghost" onClick={replay}>
+            Replay
+          </Button>
+        </span>
+      }
+      initial={initial}
+      path="/review"
+      bare
+    >
+      <LayoutGroup id={group}>
+        <div className="relative flex min-h-0 flex-1 flex-col px-4 pb-3">
+          <ReviewHeader
+            attempts={ended ? attempts : from}
+            goal={10}
+            streak={ended ? after : before}
+            complete={ended}
+          />
+          {ended ? (
+            <ReviewComplete
+              key={run}
+              outcome={outcome}
+              attempts={attempts}
+              from={from}
+              streak={after}
+              streakBefore={before}
+              forgotten={forgotten}
+              nextRound={nextRound}
+              actions={
+                outcome === "nothing_due" ? (
+                  <>
+                    <Button variant="primary" size="lg" className="w-full">
+                      Add cards
+                    </Button>
+                    <Button variant="secondary" size="lg" className="w-full">
+                      Done
+                    </Button>
+                  </>
+                ) : (
+                  <Button variant="primary" size="lg" className="w-full">
+                    Done
+                  </Button>
+                )
+              }
+            />
+          ) : (
+            <ReviewCard item={m.queueItem} revealed={false} onReveal={noop} className="mt-4" />
+          )}
+        </div>
+      </LayoutGroup>
+    </PhoneShot>
   );
 }
 
@@ -270,25 +364,34 @@ export const SCREENS: Entry[] = [
     slug: "session-done",
     name: "End of session",
     source: "views/ReviewView.tsx",
-    note: "The flame rises to full and stays. Cards counted, not points. The week’s lights show what the day added.",
+    note: "The lantern leaves the header for the middle and rises to full on the way. The count rolls up by what the review added, today’s light fills and the run ticks. Carrying on is offered as two rows that say what they hold; Done is the one primary action.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
-          <PhoneShot caption="That’s the lot" initial="dark" path="/review" bare>
-            <div className="flex flex-1 flex-col px-4">
-              <ReviewHeader attempts={20} goal={20} />
-              <SessionDone
-                done={11}
-                deckName="Lesson 14"
-                streak={m.streakFrom(m.history)}
-                action={
-                  <Button variant="primary" size="lg">
-                    Done
-                  </Button>
-                }
-              />
-            </div>
-          </PhoneShot>
+          <ReviewEndShot
+            caption="Daily goal reached"
+            initial="dark"
+            outcome="goal_met"
+            from={0}
+            attempts={10}
+            forgotten={3}
+            nextRound={10}
+          />
+          <ReviewEndShot
+            caption="That’s the lot"
+            initial="light"
+            outcome="exhausted"
+            from={2}
+            attempts={7}
+            forgotten={1}
+          />
+          <ReviewEndShot
+            caption="Nothing due"
+            initial="light"
+            outcome="nothing_due"
+            from={0}
+            attempts={0}
+          />
           <Shot caption="Desktop, review" initial="light">
             {(t) => (
               <Desktop theme={t} height={620}>

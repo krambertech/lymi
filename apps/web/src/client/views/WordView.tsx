@@ -578,10 +578,7 @@ export function WordView({
       {editing ? (
         <div className="grid gap-4">
           <Field>
-            <div className="flex items-baseline justify-between gap-3">
-              <FieldLabel>{t`Meaning`}</FieldLabel>
-              <span className="text-xs text-muted">{source(card.meaningSource)}</span>
-            </div>
+            <FieldLabel aside={source(card.meaningSource)}>{t`Meaning`}</FieldLabel>
             <Input
               ref={meaningRef}
               key={`m-${card.id}`}
@@ -595,10 +592,7 @@ export function WordView({
             />
           </Field>
           <Field>
-            <div className="flex items-baseline justify-between gap-3">
-              <FieldLabel>{t`Example`}</FieldLabel>
-              <span className="text-xs text-muted">{source(card.exampleSource)}</span>
-            </div>
+            <FieldLabel aside={source(card.exampleSource)}>{t`Example`}</FieldLabel>
             <Textarea
               ref={exampleRef}
               key={`e-${card.id}`}

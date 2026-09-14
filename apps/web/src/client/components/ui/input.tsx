@@ -9,11 +9,7 @@ export const controlBase =
   "disabled:cursor-not-allowed disabled:bg-plate-2 disabled:text-muted " +
   "aria-invalid:shadow-[0_0_0_1px_var(--danger)]";
 
-/**
- * 44 px on the phone and 40 on the desktop, by the viewport because a sheet renders in a portal where
- * a container query never fires. Text stays 16 px on any touch screen, a tablet included, so iOS
- * does not zoom on focus.
- */
+/** The control height and text size; DESIGN.md "Forms" says why they follow the viewport. */
 export const controlSize = "h-11 text-[1rem] md:h-10 md:hoverable:text-base";
 
 /** Text size alone, for a control whose height follows its content. */

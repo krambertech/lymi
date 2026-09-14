@@ -69,11 +69,9 @@ describe("Field", () => {
     const input = page.getByRole("textbox", { name: "Name" });
     await expect.element(input).toHaveAttribute("aria-invalid", "true");
     expect(field().hasAttribute("data-invalid")).toBe(true);
-    // What is wrong comes before how the field works.
-    expect(describedBy(input.element())).toEqual([
-      "Give the deck a name.",
-      "The one field that matters.",
-    ]);
+    // The error takes the description's place, on screen and for a screen reader.
+    expect(describedBy(input.element())).toEqual(["Give the deck a name."]);
+    await expect.element(page.getByText("The one field that matters.")).not.toBeInTheDocument();
     await expect.element(page.getByRole("alert")).toHaveTextContent("Give the deck a name.");
 
     await page.getByRole("button", { name: "Fix" }).click();
@@ -81,6 +79,39 @@ describe("Field", () => {
     await expect.element(input).not.toHaveAttribute("aria-invalid");
     expect(field().hasAttribute("data-invalid")).toBe(false);
     expect(describedBy(input.element())).toEqual(["The one field that matters."]);
+  });
+
+  test("`invalid` alone keeps the description, since no error has taken its place", async () => {
+    await render(
+      <Field invalid>
+        <FieldLabel>Term</FieldLabel>
+        <Input />
+        <FieldDescription>What the card shows.</FieldDescription>
+      </Field>,
+    );
+    expect(describedBy(page.getByRole("textbox", { name: "Term" }).element())).toEqual([
+      "What the card shows.",
+    ]);
+  });
+
+  test("an aside sits at the end of the label row, outside the control's name", async () => {
+    await render(
+      <>
+        <Field>
+          <FieldLabel aside="Optional">Meaning</FieldLabel>
+          <Input />
+        </Field>
+        <Field>
+          <FieldLabel aside={null}>Notes</FieldLabel>
+          <Input />
+        </Field>
+      </>,
+    );
+    await expect
+      .element(page.getByRole("textbox", { name: "Meaning", exact: true }))
+      .toBeInTheDocument();
+    expect(document.querySelectorAll('[data-slot="field-label-aside"]')).toHaveLength(1);
+    expect(document.querySelectorAll('[data-slot="field-label-row"]')).toHaveLength(1);
   });
 
   test("`invalid` marks both without a message, and an empty error changes nothing", async () => {
@@ -349,8 +380,11 @@ describe("controls", () => {
       expect(sizes()).toHaveLength(3);
       for (const size of sizes()) expect(size).toBeGreaterThanOrEqual(16);
       await page.viewport(1024, 768);
-      for (const size of sizes()) expect(size).toBeGreaterThanOrEqual(16);
-      await page.viewport(390, 844);
+      try {
+        for (const size of sizes()) expect(size).toBeGreaterThanOrEqual(16);
+      } finally {
+        await page.viewport(390, 844);
+      }
     },
   );
 });

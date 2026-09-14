@@ -178,10 +178,7 @@ export function DeckSettingsView({
               />
             </Field>
             <Field>
-              <div className="flex items-baseline justify-between gap-3">
-                <FieldLabel>{t`Description`}</FieldLabel>
-                <span className="text-xs text-muted">{t`Optional`}</span>
-              </div>
+              <FieldLabel aside={t`Optional`}>{t`Description`}</FieldLabel>
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}

@@ -179,13 +179,10 @@ export function LanguageField({ value, onChange, label, description, error }: La
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-      {error ? (
-        <FieldError>{error}</FieldError>
-      ) : (
-        <FieldDescription>
-          {description ?? t`The language this deck’s cards are in. It fills in on every new card.`}
-        </FieldDescription>
-      )}
+      <FieldDescription>
+        {description ?? t`The language this deck’s cards are in. It fills in on every new card.`}
+      </FieldDescription>
+      <FieldError>{error}</FieldError>
     </Field>
   );
 }

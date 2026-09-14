@@ -194,11 +194,8 @@ function NewKeyForm({
           autoComplete="off"
           enterKeyHint="done"
         />
-        {invalid.name ? (
-          <FieldError>{invalid.name}</FieldError>
-        ) : (
-          <FieldDescription>{t`So you know which key to revoke later.`}</FieldDescription>
-        )}
+        <FieldDescription>{t`So you know which key to revoke later.`}</FieldDescription>
+        <FieldError>{invalid.name}</FieldError>
       </Field>
       <div className="grid gap-1.5">
         <span className="text-sm font-medium text-text-2">

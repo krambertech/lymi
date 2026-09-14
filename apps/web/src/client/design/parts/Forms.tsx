@@ -98,10 +98,7 @@ export const forms: Group = {
               note: "A note at the end of the label row. The description says what happens if it stays empty.",
               render: () => (
                 <Field className={box}>
-                  <div className="flex items-baseline justify-between gap-3">
-                    <FieldLabel>Meaning</FieldLabel>
-                    <span className="text-xs text-muted">Optional</span>
-                  </div>
+                  <FieldLabel aside="Optional">Meaning</FieldLabel>
                   <Input placeholder="to hurry up" />
                   <FieldDescription>Leave it empty and AI can fill it in later.</FieldDescription>
                 </Field>
@@ -183,10 +180,7 @@ export const forms: Group = {
                       <Input defaultValue="sbrigarsi" />
                     </Field>
                     <Field>
-                      <div className="flex items-baseline justify-between gap-3">
-                        <FieldLabel>Meaning</FieldLabel>
-                        <span className="text-xs text-muted">Optional</span>
-                      </div>
+                      <FieldLabel aside="Optional">Meaning</FieldLabel>
                       <Input placeholder="to hurry up" />
                     </Field>
                   </FieldGroup>

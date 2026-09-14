@@ -165,10 +165,7 @@ export function AddCardForm({
         <FieldError>{invalid.term}</FieldError>
       </Field>
       <Field>
-        <div className="flex items-baseline justify-between gap-3">
-          <FieldLabel>{t`Meaning`}</FieldLabel>
-          <span className="text-xs text-muted">{t`Optional`}</span>
-        </div>
+        <FieldLabel aside={t`Optional`}>{t`Meaning`}</FieldLabel>
         <Input
           value={meaning}
           onChange={(e) => {
@@ -178,11 +175,8 @@ export function AddCardForm({
           placeholder={t`to hurry up`}
           autoComplete="off"
         />
-        {invalid.meaning ? (
-          <FieldError>{invalid.meaning}</FieldError>
-        ) : (
-          <FieldDescription>{t`Leave it empty and AI can fill it in later.`}</FieldDescription>
-        )}
+        <FieldDescription>{t`Leave it empty and AI can fill it in later.`}</FieldDescription>
+        <FieldError>{invalid.meaning}</FieldError>
       </Field>
       {noDecks ? (
         <FieldSet className="gap-1.5">

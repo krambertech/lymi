@@ -2,11 +2,7 @@ import { cn } from "cn";
 import { AlertCircle } from "lucide-react";
 import * as React from "react";
 
-/*
- * shadcn's Field parts, wired by context instead of by hand: the label points at the control, the
- * control is described by whatever description and error are rendered, and an error on screen marks
- * the field and its control invalid together. Validation stays with the caller.
- */
+// shadcn's Field parts, wired by context instead of by hand; DESIGN.md "Forms" has the rules.
 
 type Kind = "description" | "error";
 
@@ -18,6 +14,7 @@ interface FieldContextValue {
   controlId: string;
   describedBy: string | undefined;
   invalid: boolean;
+  hasError: boolean;
   disabled: boolean;
   /** A control that brings its own id; the label follows it. */
   claimId: (id: string) => () => void;
@@ -162,8 +159,15 @@ function Field({
   const { describer, describedBy, hasError } = useDescribers();
   const invalid = invalidProp || hasError;
   const context = React.useMemo(
-    () => ({ controlId: claimedId ?? generatedId, describedBy, invalid, disabled, claimId }),
-    [claimedId, generatedId, describedBy, invalid, disabled, claimId],
+    () => ({
+      controlId: claimedId ?? generatedId,
+      describedBy,
+      invalid,
+      hasError,
+      disabled,
+      claimId,
+    }),
+    [claimedId, generatedId, describedBy, invalid, hasError, disabled, claimId],
   );
   return (
     <DescriberContext.Provider value={describer}>
@@ -200,9 +204,14 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function FieldLabel({ className, htmlFor, ...props }: React.ComponentProps<"label">) {
+interface FieldLabelProps extends React.ComponentProps<"label"> {
+  /** Small text at the end of the label row, such as "Optional". */
+  aside?: React.ReactNode | undefined;
+}
+
+function FieldLabel({ className, htmlFor, aside, ...props }: FieldLabelProps) {
   const field = useField();
-  return (
+  const label = (
     // biome-ignore lint/a11y/noLabelWithoutControl: the Field supplies htmlFor.
     <label
       data-slot="field-label"
@@ -211,12 +220,24 @@ function FieldLabel({ className, htmlFor, ...props }: React.ComponentProps<"labe
       {...props}
     />
   );
+  if (!aside) return label;
+  return (
+    <div data-slot="field-label-row" className="flex items-baseline justify-between gap-3">
+      {label}
+      <span data-slot="field-label-aside" className="text-xs text-muted">
+        {aside}
+      </span>
+    </div>
+  );
 }
 
+/** Steps aside while its field shows an error, so the error takes its place. */
 function FieldDescription({ className, id, ...props }: React.ComponentProps<"p">) {
   const generatedId = React.useId();
   const ownId = id ?? generatedId;
-  useDescribe(ownId, "description");
+  const hidden = Boolean(useField()?.hasError);
+  useDescribe(hidden ? null : ownId, "description");
+  if (hidden) return null;
   return (
     <p
       id={ownId}

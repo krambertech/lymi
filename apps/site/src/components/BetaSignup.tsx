@@ -4,14 +4,14 @@ import { clsx } from "clsx";
 import { Check } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type SyntheticEvent, useEffect, useRef, useState } from "react";
-import { ApiError, joinBeta } from "../lib/api";
+import { ApiError, type BetaSource, joinBeta } from "../lib/api";
 import { AuthNotice } from "./AuthNotice";
 import { Button } from "./Button";
 import { Field, Input } from "./Field";
 
 interface Props {
   /** Kept with the address so we know which front door helped someone join. */
-  source: "landing" | "join";
+  source: BetaSource;
   /** A page gives the form more room than the landing section's compact conversion row. */
   layout?: "inline" | "stacked" | undefined;
   /** A surrounding panel already provides the success state's surface. */

@@ -23,9 +23,11 @@ export interface HandCard {
   note: MessageDescriptor;
 }
 
-const noun = msg`noun`;
-const phrase = msg`phrase`;
-const word = msg`word`;
+export const noun = msg`noun`;
+export const phrase = msg`phrase`;
+export const word = msg`word`;
+export const verb = msg`verb`;
+export const adjective = msg`adjective`;
 const idea = msg`idea`;
 
 export const HAND_CARDS: HandCard[] = [

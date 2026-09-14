@@ -20,6 +20,7 @@ const TOSS_MS = 620;
 /** How long the first card waits, untouched, before it shows how it turns. */
 const HINT_AFTER_MS = 2400;
 const DEALT_KEY = "lymi-hand-dealt";
+const WIDE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu;
 
 interface Dealt {
   key: number;
@@ -40,18 +41,22 @@ function shuffle<T>(list: readonly T[]): T[] {
 }
 
 /**
- * Takes the next card from a shuffled pile: never one already held, never the field just dealt,
- * and never a third language or a third idea in a row, so the hand keeps showing its range.
+ * Takes the next card from a shuffled pile: never one already held, never the field just dealt
+ * when there is another, and, in a mixed hand, never a third language or idea in a row.
  */
 function draw(pile: HandCard[], held: Dealt[], cards: readonly HandCard[]): HandCard {
   const inHand = new Set(held.map((d) => d.card.id));
   const last = held.at(-1)?.card;
   const beforeLast = held.at(-2)?.card;
+  const mixed = cards.some(isLanguage) && !cards.every(isLanguage);
+  const fields = new Set(cards.map(fieldOf)).size;
   const sameRun =
-    last && beforeLast && isLanguage(last) === isLanguage(beforeLast) ? isLanguage(last) : null;
+    mixed && last && beforeLast && isLanguage(last) === isLanguage(beforeLast)
+      ? isLanguage(last)
+      : null;
   const fits = (c: HandCard) =>
     !inHand.has(c.id) &&
-    (!last || fieldOf(c) !== fieldOf(last)) &&
+    (!last || fields < 2 || fieldOf(c) !== fieldOf(last)) &&
     (sameRun === null || isLanguage(c) !== sameRun);
 
   for (const strict of [true, false]) {
@@ -110,9 +115,12 @@ function FanCard({
   const say = (d: MessageDescriptor) => i18n._(d);
   const source = typeof card.source === "string" ? card.source : say(card.source);
   const front = place === "front";
-  const longest = Math.max(...card.term.split(/\s+/).map((w) => w.length));
+  // A CJK character is about two Latin letters wide and has no spaces to wrap at.
+  const longest = Math.max(
+    ...card.term.split(/\s+/).map((w) => w.length + (w.match(WIDE) ?? []).length),
+  );
   // A long single word would otherwise break mid-letter at the card's width.
-  const termSize = longest >= 13 ? 0.115 : longest >= 11 ? 0.13 : 0.155;
+  const termSize = longest >= 13 ? 0.115 : longest >= 10 ? 0.13 : 0.155;
 
   const top = (
     <>
@@ -121,6 +129,7 @@ function FanCard({
       </p>
       <p
         lang={card.language}
+        dir="auto"
         className="mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
         style={{ "--term": termSize } as CSSProperties}
       >
@@ -196,8 +205,10 @@ function FanCard({
 }
 
 interface Props {
-  /** A vertical page can deal from its own field. */
+  /** A vertical page can deal from its own field. Changing them tosses the hand and deals again. */
   cards?: readonly HandCard[] | undefined;
+  /** A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. */
+  layout?: "fan" | "stack" | undefined;
 }
 
 /**
@@ -205,7 +216,7 @@ interface Props {
  * teaches the one move Lymi is built on, looking at a term before its meaning, and shows how
  * much a card can hold. The deal plays once per session; after that the hand is simply there.
  */
-export function HandOfCards({ cards = HAND_CARDS }: Props) {
+export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
   const { t, i18n } = useLingui();
   const [hand, setHand] = useState<Dealt[]>([]);
   const [gone, setGone] = useState<Dealt[]>([]);
@@ -221,6 +232,10 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
   const [hint, setHint] = useState(false);
   const [finePointer, setFinePointer] = useState(true);
   const taught = useRef(false);
+  const held = useRef<Dealt[]>([]);
+  const dealt = useRef(false);
+  const size = Math.min(HAND_SIZE, cards.length);
+  const [dealFrom, setDealFrom] = useState(0);
 
   // The hand is random, so it is dealt after hydration rather than rendered on the server.
   useEffect(() => {
@@ -231,20 +246,32 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
     } catch {}
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+    const redeal = dealt.current;
+    dealt.current = true;
+    pile.current = [];
+    const tossed = held.current;
+    if (redeal && tossed.length > 0) {
+      setGone((g) => [...g, ...tossed]);
+      window.setTimeout(() => setGone((g) => g.filter((d) => !tossed.includes(d))), TOSS_MS);
+    }
+    audio.current?.pause();
+    audio.current = null;
+    setPlaying(null);
+    setDealFrom(nextKey.current);
+    setHint(false);
     const first: Dealt[] = [];
-    for (let i = 0; i < HAND_SIZE; i++) {
+    const count = Math.min(HAND_SIZE, cards.length);
+    for (let i = 0; i < count; i++) {
       first.push({ key: nextKey.current++, card: draw(pile.current, first, cards) });
     }
-    const play = !seen && !still;
+    const play = (redeal || !seen) && !still;
     setIntro(play);
     setHand(first);
-    if (!play) {
-      setPhase("front");
-      return;
-    }
+    setPhase(play ? "dealing" : "front");
+    if (!play) return;
     const settle = window.setTimeout(
       () => setPhase("front"),
-      DEAL_STAGGER_MS * (HAND_SIZE - 1) + DEAL_MS,
+      DEAL_STAGGER_MS * (count - 1) + DEAL_MS,
     );
     return () => window.clearTimeout(settle);
   }, [cards]);
@@ -271,6 +298,10 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
   }, [phase]);
 
   useEffect(() => () => audio.current?.pause(), []);
+
+  useEffect(() => {
+    held.current = hand;
+  }, [hand]);
 
   const stopAudio = useCallback(() => {
     audio.current?.pause();
@@ -319,7 +350,7 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
       aria-label={t`Turn a few cards over`}
       className="hand grid w-full justify-items-center"
     >
-      <div className="hand-stage">
+      <div className="hand-stage" data-layout={layout}>
         {gone.map(({ key, card }) => (
           <FanCard
             key={key}
@@ -337,7 +368,7 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
         ))}
         {hand.map(({ key, card }, k) => {
           const angle = k === 0 ? 0 : behind === 1 ? 1 : (k - 1 - (behind - 1) / 2) * 1.5;
-          const dealing = intro && key < HAND_SIZE;
+          const dealing = intro && key >= dealFrom && key < dealFrom + size;
           return (
             <FanCard
               key={key}
@@ -346,8 +377,8 @@ export function HandOfCards({ cards = HAND_CARDS }: Props) {
               slot={k}
               angle={angle}
               revealed={k === 0 && phase === "back"}
-              enter={dealing || key >= HAND_SIZE}
-              delay={dealing && phase === "dealing" ? DEAL_STAGGER_MS * (HAND_SIZE - 1 - k) : 0}
+              enter={dealing || key >= dealFrom + size}
+              delay={dealing && phase === "dealing" ? DEAL_STAGGER_MS * (size - 1 - k) : 0}
               playing={k === 0 && playing === card.id}
               onPlay={play}
               onPress={press}

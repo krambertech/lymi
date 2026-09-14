@@ -2,21 +2,25 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { SAMPLE_CARDS } from "./cards";
+import { SAMPLE_CARDS, type SampleCard } from "./cards";
 
 /**
  * The four answers, with what each one costs. These intervals are the shape FSRS produces
  * for a card seen a few times. They are here to make the mechanic legible rather than to
  * promise a schedule, so the page claims nothing about them beyond what the buttons show.
  */
-const DECK = [SAMPLE_CARDS[0], SAMPLE_CARDS[3], SAMPLE_CARDS[1], SAMPLE_CARDS[6]].filter(
+const DEFAULT_DECK = [SAMPLE_CARDS[0], SAMPLE_CARDS[3], SAMPLE_CARDS[1], SAMPLE_CARDS[6]].filter(
   (c): c is NonNullable<typeof c> => !!c,
 );
 
 const SPRING = { type: "spring", duration: 0.68, bounce: 0.14 } as const;
 
+interface Props {
+  cards?: readonly SampleCard[] | undefined;
+}
+
 /** One working review that waits on an unturned card until the visitor presses it. */
-export function ReviewDemo() {
+export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
   const { t, i18n } = useLingui();
   const advanceTimer = useRef<number | null>(null);
   const still = useReducedMotion();
@@ -30,7 +34,7 @@ export function ReviewDemo() {
     { name: t`Easy`, when: t`9 days`, announcement: t`Back in 9 days.` },
   ] as const;
 
-  const card = DECK[index % DECK.length];
+  const card = deck[index % deck.length];
   const chosen = answered === null ? null : grades[answered];
   const revealed = revealedFor === index;
 
@@ -61,7 +65,7 @@ export function ReviewDemo() {
           <Trans>Tonight</Trans>
         </span>
         <span className="tabular-nums">
-          <Plural value={DECK.length - (index % DECK.length)} one="# due" other="# due" />
+          <Plural value={deck.length - (index % deck.length)} one="# due" other="# due" />
         </span>
       </div>
 

@@ -1,9 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
-import { SAMPLE_CARDS } from "./cards";
-
-const CARD = SAMPLE_CARDS[0];
+import { SAMPLE_CARDS, type SampleCard } from "./cards";
 
 interface RowProps {
   label: ReactNode;
@@ -30,25 +28,31 @@ function Row({ label, source, children }: RowProps) {
   );
 }
 
+interface Props {
+  card?: SampleCard | undefined;
+}
+
 /** Every field names its source, so AI text is never mistaken for something the lesson said. */
-export function EnrichDemo() {
+export function EnrichDemo({ card = SAMPLE_CARDS[0] }: Props) {
   const { i18n } = useLingui();
-  if (!CARD) return null;
+  if (!card) return null;
 
   return (
     <div className="mx-auto max-w-[420px]">
       <div className="bg-plate px-5 py-3 edge" style={{ borderRadius: 14 }}>
         <Row label={<Trans>Term</Trans>} source="Lesson">
-          <span className="text-xl font-medium tracking-[-0.026em] text-text">{CARD.term}</span>
+          <span lang={card.language} className="text-xl font-medium tracking-[-0.026em] text-text">
+            {card.term}
+          </span>
         </Row>
         <Row label={<Trans>Meaning</Trans>} source="AI">
-          {i18n._(CARD.meaning)}
+          {i18n._(card.meaning)}
         </Row>
         <Row label={<Trans>Example</Trans>} source="AI">
-          {CARD.example}
+          <span lang={card.language}>{card.example}</span>
         </Row>
         <Row label={<Trans>Say it</Trans>} source="AI">
-          {CARD.say}
+          {card.say}
         </Row>
       </div>
     </div>

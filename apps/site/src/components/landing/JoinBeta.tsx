@@ -1,3 +1,4 @@
+import type { BetaSource } from "../../lib/api";
 import { BetaSignup } from "../BetaSignup";
 
 /**
@@ -8,10 +9,10 @@ import { BetaSignup } from "../BetaSignup";
  * On the landing page the field and action sit together on wide screens; the dedicated
  * invitation page gives the same form a roomier stacked layout.
  */
-export function JoinBeta() {
+export function JoinBeta({ source = "landing" }: { source?: BetaSource | undefined }) {
   return (
     <div className="w-full max-w-[480px]">
-      <BetaSignup source="landing" />
+      <BetaSignup source={source} />
     </div>
   );
 }

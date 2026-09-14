@@ -29,6 +29,7 @@ if (leakedPwa) throw new Error(`Public-site build exposes a product PWA asset: $
 
 const publicMarkers = [
   "Lymi · Keep what you learn",
+  "Keep what you learn in any language.",
   "Every route the Lymi API serves, read from the running server.",
   "Bring your next lesson with you.",
 ];

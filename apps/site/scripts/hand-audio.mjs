@@ -1,4 +1,4 @@
-// Generates pronunciation audio for the landing hand with the product's own speech provider.
+// Generates pronunciation audio for the landing and languages hands with the product's own speech provider.
 // Only cards whose term, language, model or voice changed are regenerated.
 // Usage: OPENAI_API_KEY=… pnpm --filter @lymi/site hand:audio
 import {
@@ -14,15 +14,17 @@ import { fileURLToPath } from "node:url";
 import { createOpenAiSpeechProvider } from "../../web/src/server/ai/openai-speech.ts";
 
 const site = join(dirname(fileURLToPath(import.meta.url)), "..");
-const source = readFileSync(join(site, "src/components/landing/hand-cards.ts"), "utf8");
+const source = ["hand-cards.ts", "language-cards.ts"]
+  .map((file) => readFileSync(join(site, "src/components/landing", file), "utf8"))
+  .join("\n");
 const outDir = join(site, "public/audio/hand");
 const manifestPath = join(outDir, "manifest.json");
 
 // The card module uses Lingui macros, so read the three fields audio depends on from its source.
 const cards = [
-  ...source.matchAll(/id: "([^"]+)",[\s\S]*?language: "([^"]+)",\s*term: "([^"]+)",/g),
+  ...source.matchAll(/id: "([^"]+)",\s*source:[\s\S]*?language: "([^"]+)",\s*term: "([^"]+)",/g),
 ].map(([, id, language, term]) => ({ id, language, term }));
-const declared = (source.match(/^\s{4}id: "/gm) ?? []).length;
+const declared = (source.match(/^\s+id: "[^"]+",\s*source:/gm) ?? []).length;
 if (cards.length !== declared || cards.length === 0) {
   throw new Error(
     `Read ${cards.length} of ${declared} cards; keep id, source, kind, language, term in that order.`,

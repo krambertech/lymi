@@ -2,6 +2,8 @@ export const prerender = true;
 
 const paths = [
   "/",
+  "/languages",
+  "/languages/estonian",
   "/join",
   "/privacy",
   "/terms",

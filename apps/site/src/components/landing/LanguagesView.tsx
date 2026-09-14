@@ -7,7 +7,7 @@ import { type ReactNode, useState } from "react";
 import type { BetaSource } from "../../lib/api";
 import { productUrl } from "../../lib/origins";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
-import { AssistantMarks } from "./AssistantMarks";
+import { AssistantMarks, AssistantMarksWithMore } from "./AssistantMarks";
 import { ConversationScenes } from "./ConversationScenes";
 import type { SampleCard } from "./cards";
 import { ESTONIAN_SCENES } from "./estonian-scenes";
@@ -205,7 +205,7 @@ function LanguagePage(props: PageProps) {
               something of your own? The same things work through the public API.
             </Trans>
           }
-          after={<AssistantMarks />}
+          after={<AssistantMarksWithMore />}
         >
           <AssistantChat conversation={props.conversation} />
         </FeatureSection>

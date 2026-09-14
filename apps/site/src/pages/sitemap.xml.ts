@@ -4,6 +4,7 @@ const paths = [
   "/",
   "/languages",
   "/languages/estonian",
+  "/ai-assistants",
   "/join",
   "/privacy",
   "/terms",

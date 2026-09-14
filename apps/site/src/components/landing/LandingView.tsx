@@ -4,7 +4,7 @@ import { productUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { AssistantChat } from "./AssistantChat";
-import { AssistantMarks } from "./AssistantMarks";
+import { AssistantMarksWithMore } from "./AssistantMarks";
 import { USE_CASE_CARDS } from "./cards";
 import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
@@ -118,7 +118,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               Keep talking; the card will be waiting in Lymi.
             </Trans>
           }
-          after={<AssistantMarks />}
+          after={<AssistantMarksWithMore />}
         >
           <AssistantChat />
         </FeatureSection>

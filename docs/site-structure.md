@@ -9,6 +9,7 @@ Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-sit
 | `lymi.app/` | `apps/site` | Prerendered public landing page with interactive React islands. It remains visible whether or not a product session exists. |
 | `lymi.app/languages` | `apps/site` | Prerendered page for anyone learning a language, built from the landing sections with examples across many languages. English only; translated landing pages do not link to it. |
 | `lymi.app/languages/estonian` | `apps/site` | Prerendered page for people learning Estonian, with Estonian cards, notes, conversations and class deck. English only, like `/languages`. |
+| `lymi.app/ai-assistants` | `apps/site` | Prerendered page for people who already use an AI assistant: a conversation that turns a photo of notes into cards, what else to send, a review, conversation practice, enrichment, the API and how to connect. English only. |
 | `lymi.app/join` | `apps/site` | Public private-beta information and invitation request. |
 | `lymi.app/privacy`, `/terms`, `/support` | `apps/site` | Public privacy, service terms and support information. |
 | `lymi.app/docs/*` | `apps/site` | Public documentation, MCP setup and API reference. |

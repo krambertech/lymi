@@ -58,9 +58,18 @@ msgstr "4 days"
 msgid "9 days"
 msgstr "9 days"
 
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/AssistantsView.tsx
+msgid "A bad idea that seemed good"
+msgstr "A bad idea that seemed good"
+
 #: src/components/landing/estonian-scenes.ts
 msgid "a bag"
 msgstr "a bag"
+
+#: src/components/landing/SendAnything.tsx
+msgid "A book"
+msgstr "A book"
 
 #: src/components/landing/hand-cards.ts
 msgid "A brilliant first round rarely repeats in the second."
@@ -94,6 +103,10 @@ msgstr "A Finnish verb, a chess term, a line from a physics paper. Save it once,
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "A flat plate on a door says push; a handle says pull."
 
+#: src/components/landing/SendAnything.tsx
+msgid "A lesson transcript"
+msgstr "A lesson transcript"
+
 #: src/components/landing/hand-cards.ts
 msgid "A longing for someone or something that is gone"
 msgstr "A longing for someone or something that is gone"
@@ -113,6 +126,14 @@ msgstr "A partnership between fungi and plant roots, trading water for sugar"
 #: src/components/landing/LandingView.tsx
 msgid "A personal interest"
 msgstr "A personal interest"
+
+#: src/components/landing/AssistantHero.tsx
+msgid "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
+msgstr "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
+
+#: src/components/landing/SendAnything.tsx
+msgid "A photo of the board, your tutor’s message, a lesson transcript, the book on your nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi."
+msgstr "A photo of the board, your tutor’s message, a lesson transcript, the book on your nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi."
 
 #: src/components/landing/hero-words.ts
 msgid "A pile of unread books"
@@ -152,9 +173,17 @@ msgstr "Accents that land between the beats"
 msgid "Actually; really"
 msgstr "Actually; really"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Add it to your assistant"
+msgstr "Add it to your assistant"
+
 #: src/components/landing/LandingView.tsx
 msgid "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
 msgstr "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Added 4 cards to your German deck."
+msgstr "Added 4 cards to your German deck."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
@@ -186,6 +215,8 @@ msgid "AI"
 msgstr "AI"
 
 #: src/components/landing/ApiConnections.tsx
+#: src/components/landing/SiteFooter.tsx
+#: src/components/landing/SiteNav.tsx
 msgid "AI assistants"
 msgstr "AI assistants"
 
@@ -204,6 +235,14 @@ msgstr "all right"
 #: src/components/landing/estonian-scenes.ts
 msgid "All right. Lots of work."
 msgstr "All right. Lots of work."
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Allow"
+msgstr "Allow"
+
+#: src/components/landing/PracticeChat.tsx
+msgid "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
+msgstr "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
 
 #: src/components/landing/NotesToCards.tsx
 msgid "Already in your deck, so it’s skipped"
@@ -247,11 +286,20 @@ msgstr "Any language you can type, in any script. Lymi can say most widely taugh
 msgid "Any move you make makes your position worse"
 msgstr "Any move you make makes your position worse"
 
+#: src/components/landing/AssistantHero.tsx
+msgid "anything"
+msgstr "anything"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
+msgstr "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
+
 #: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "Anyway; long story short"
 msgstr "Anyway; long story short"
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LandingView.tsx
 msgid "API reference"
 msgstr "API reference"
@@ -299,6 +347,10 @@ msgstr "Biology"
 #: src/components/landing/language-cards.ts
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Bridge, 橋, is also hashi. Only the pitch tells them apart."
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Bring your assistant to Lymi."
+msgstr "Bring your assistant to Lymi."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Bring your favourite AI along."
@@ -373,6 +425,10 @@ msgstr "cinnamon bun"
 msgid "City; town"
 msgstr "City; town"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
+msgstr "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
+
 #: src/components/landing/HandOfCards.tsx
 msgid "Click to turn it over"
 msgstr "Click to turn it over"
@@ -405,6 +461,10 @@ msgstr "Connect an assistant"
 msgid "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Connect in three steps."
+msgstr "Connect in three steps."
+
 #: src/components/landing/ConversationScenes.tsx
 msgid "Conversation"
 msgstr "Conversation"
@@ -413,6 +473,18 @@ msgstr "Conversation"
 #: src/components/landing/hand-cards.ts
 msgid "Cooking"
 msgstr "Cooking"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Copied"
+msgstr "Copied"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Copy Lymi’s address"
+msgstr "Copy Lymi’s address"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Copy the address"
+msgstr "Copy the address"
 
 #: src/components/landing/hero-words.ts
 msgid "Cosy"
@@ -447,6 +519,14 @@ msgstr "Deep, lasting affection"
 msgid "Design"
 msgstr "Design"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Deutsch · noun"
+msgstr "Deutsch · noun"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Deutsch · verb"
+msgstr "Deutsch · verb"
+
 #: src/components/landing/language-cards.ts
 msgid "Deutsch · word"
 msgstr "Deutsch · word"
@@ -471,6 +551,10 @@ msgstr "Does it keep õ, ä, ö and ü apart?"
 #: src/components/landing/LanguagesView.tsx
 msgid "Does it work on my phone?"
 msgstr "Does it work on my phone?"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Does Lymi see my chats?"
+msgstr "Does Lymi see my chats?"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Does the AI write my cards?"
@@ -573,6 +657,10 @@ msgstr "Estonian A2 · Tuesdays"
 msgid "euros"
 msgstr "euros"
 
+#: src/components/landing/SendAnything.tsx
+msgid "Even to my boss?"
+msgstr "Even to my boss?"
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
 msgstr "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
@@ -646,6 +734,7 @@ msgstr "Forgot"
 msgid "Français · phrase"
 msgstr "Français · phrase"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/Hero.tsx
 #: src/components/landing/WordFieldHero.tsx
 msgid "Free during the private beta."
@@ -788,6 +877,10 @@ msgstr "How likely data this extreme would be if nothing were going on"
 msgid "How many are waiting for me tonight?"
 msgstr "How many are waiting for me tonight?"
 
+#: src/components/landing/AssistantHero.tsx
+msgid "How to connect"
+msgstr "How to connect"
+
 #: src/components/landing/WhyItWorks.tsx
 msgid "How well-timed reviews change recall"
 msgstr "How well-timed reviews change recall"
@@ -812,6 +905,10 @@ msgstr "I don’t understand"
 #: src/components/landing/language-cards.ts
 msgid "I hope so; if only"
 msgstr "I hope so; if only"
+
+#: src/components/landing/SendAnything.tsx
+msgid "I miss it"
+msgstr "I miss it"
 
 #: src/components/landing/hand-cards.ts
 msgid "Ice, jää, plus edge, äär: four ä in a row."
@@ -1040,6 +1137,14 @@ msgstr "Learned once, never revisited"
 msgid "Lesson"
 msgstr "Lesson"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Let Claude add cards?"
+msgstr "Let Claude add cards?"
+
+#: src/components/landing/PracticeChat.tsx
+msgid "Let’s practise. Use the German words from my deck."
+msgstr "Let’s practise. Use the German words from my deck."
+
 #: src/components/landing/hero-words.ts
 msgid "Lingering at the table after a meal"
 msgstr "Lingering at the table after a meal"
@@ -1063,6 +1168,10 @@ msgstr "Literally “that walks”. Waiters say it when they take your order."
 #: src/components/landing/hero-words.ts
 msgid "Long time no see"
 msgstr "Long time no see"
+
+#: src/components/landing/SendAnything.tsx
+msgid "Longing"
+msgstr "Longing"
 
 #: src/components/landing/hero-words.ts
 msgid "Longing for what is gone"
@@ -1096,6 +1205,10 @@ msgstr "Lymi for language learning · Keep the words from every lesson"
 msgid "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
 msgstr "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
+msgstr "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
+
 #: src/components/AuthFrame.tsx
 #: src/components/landing/SiteNav.tsx
 msgid "Lymi home"
@@ -1117,6 +1230,14 @@ msgstr "Lymi schedules every card around it."
 msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
 msgstr "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
 
+#: src/components/landing/AssistantMarks.tsx
+msgid "Lymi with AI assistants"
+msgstr "Lymi with AI assistants"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
+msgstr "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
+
 #: src/components/landing/SiteNav.tsx
 msgid "Main navigation"
 msgstr "Main navigation"
@@ -1124,6 +1245,22 @@ msgstr "Main navigation"
 #: src/components/landing/LanguagesView.tsx
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Make cards from this."
+msgstr "Make cards from this."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Make cards with"
+msgstr "Make cards with"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Make cards with Claude, ChatGPT or Gemini · Lymi"
+msgstr "Make cards with Claude, ChatGPT or Gemini · Lymi"
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
+msgstr "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
 
 #: src/components/landing/language-cards.ts
 msgid "may I…?"
@@ -1195,6 +1332,10 @@ msgstr "Next card: {0}"
 msgid "Nice to meet you; thanks in advance"
 msgstr "Nice to meet you; thanks in advance"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "No chat? Type the word."
+msgstr "No chat? Type the word."
+
 #: src/components/landing/estonian-scenes.ts
 msgid "No, I don’t."
 msgstr "No, I don’t."
@@ -1202,6 +1343,10 @@ msgstr "No, I don’t."
 #: src/components/landing/estonian-scenes.ts
 msgid "no; not"
 msgstr "no; not"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "No. Lymi only gets what your assistant sends it, like the cards it adds. The rest of the conversation stays with your assistant."
+msgstr "No. Lymi only gets what your assistant sends it, like the cards it adds. The rest of the conversation stays with your assistant."
 
 #: src/components/landing/language-cards.ts
 msgid "Not “I want well”. It’s how you accept a coffee."
@@ -1211,11 +1356,14 @@ msgstr "Not “I want well”. It’s how you accept a coffee."
 msgid "Notes"
 msgstr "Notes"
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LanguagesView.tsx
 msgid "Nothing during the private beta."
 msgstr "Nothing during the private beta."
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "noun"
 msgstr "noun"
 
@@ -1248,6 +1396,10 @@ msgstr "Open Lymi"
 msgid "or"
 msgstr "or"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Or build your own."
+msgstr "Or build your own."
+
 #: src/components/landing/estonian-scenes.ts
 msgid "Ordering a coffee to go"
 msgstr "Ordering a coffee to go"
@@ -1269,6 +1421,7 @@ msgid "Philosophy"
 msgstr "Philosophy"
 
 #: src/components/landing/hand-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "phrase"
 msgstr "phrase"
 
@@ -1276,6 +1429,15 @@ msgstr "phrase"
 #: src/components/landing/hand-cards.ts
 msgid "Physics"
 msgstr "Physics"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Pick your assistant for its steps."
+msgstr "Pick your assistant for its steps."
+
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/PracticeChat.tsx
+msgid "Play again"
+msgstr "Play again"
 
 #: src/components/landing/HandOfCards.tsx
 msgid "Play pronunciation"
@@ -1306,6 +1468,10 @@ msgstr "Please; here you go; you’re welcome"
 msgid "Plug Lymi into anything."
 msgstr "Plug Lymi into anything."
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Practise with your own words."
+msgstr "Practise with your own words."
+
 #: src/components/landing/hand-cards.ts
 msgid "Prefer the explanation that needs the fewest assumptions"
 msgstr "Prefer the explanation that needs the fewest assumptions"
@@ -1335,6 +1501,10 @@ msgstr "public transport"
 msgid "Public transport"
 msgstr "Public transport"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Questions before you connect."
+msgstr "Questions before you connect."
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Questions before you start."
 msgstr "Questions before you start."
@@ -1347,6 +1517,10 @@ msgstr "Quick nunchi means sensing a mood before anyone says a word."
 msgid "Raise a glass and it becomes terviseks: to your health."
 msgstr "Raise a glass and it becomes terviseks: to your health."
 
+#: src/components/landing/PracticeChat.tsx
+msgid "Read your German deck"
+msgstr "Read your German deck"
+
 #: src/components/landing/NotesToCards.tsx
 msgid "Reading your notes…"
 msgstr "Reading your notes…"
@@ -1355,6 +1529,10 @@ msgstr "Reading your notes…"
 #: src/components/landing/LanguagesView.tsx
 msgid "Recall first. Reveal second."
 msgstr "Recall first. Reveal second."
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Recall the word before you look, then say how well you knew it. Hard cards come back sooner, easy ones wait."
+msgstr "Recall the word before you look, then say how well you knew it. Hard cards come back sooner, easy ones wait."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Remember Estonian vocabulary · Lymi"
@@ -1370,6 +1548,7 @@ msgstr "Replay this line"
 
 #: src/components/BetaSignup.tsx
 #: src/components/JoinView.tsx
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/Hero.tsx
 #: src/components/landing/SiteNav.tsx
 #: src/components/landing/WordFieldHero.tsx
@@ -1448,6 +1627,10 @@ msgstr "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in
 msgid "Say it"
 msgstr "Say it"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "Say yes in Lymi"
+msgstr "Say yes in Lymi"
+
 #: src/components/landing/estonian-scenes.ts
 msgid "Saying hello"
 msgstr "Saying hello"
@@ -1456,6 +1639,7 @@ msgstr "Saying hello"
 msgid "Schnaps, spirits, plus Idee, idea."
 msgstr "Schnaps, spirits, plus Idee, idea."
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LandingView.tsx
 msgid "See how it works"
 msgstr "See how it works"
@@ -1467,6 +1651,18 @@ msgstr "See you soon"
 #: src/components/landing/estonian-scenes.ts
 msgid "see you; literally, we see"
 msgstr "see you; literally, we see"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Send Claude, ChatGPT or Gemini a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
+msgstr "Send Claude, ChatGPT or Gemini a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
+
+#: src/components/landing/SendAnything.tsx
+msgid "Send it anything."
+msgstr "Send it anything."
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
+msgstr "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
 
 #: src/components/landing/AssistantChat.tsx
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
@@ -1491,6 +1687,10 @@ msgstr "sight (to see)"
 #: src/components/JoinView.tsx
 msgid "Sign in"
 msgstr "Sign in"
+
+#: src/components/landing/ConnectSteps.tsx
+msgid "Sign in and let it add cards. Then send it your notes."
+msgstr "Sign in and let it add cards. Then send it your notes."
 
 #: src/components/landing/cards.ts
 msgid "Signals"
@@ -1671,6 +1871,7 @@ msgstr "Thank you"
 
 #: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
+#: src/components/landing/SendAnything.tsx
 msgid "Thanks for your hard work"
 msgstr "Thanks for your hard work"
 
@@ -1723,10 +1924,17 @@ msgstr "The earthy smell of rain on dry ground"
 msgid "The edge of the ice"
 msgstr "The edge of the ice"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hero-words.ts
 msgid "The evening after work"
 msgstr "The evening after work"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "The free evening after work"
+msgstr "The free evening after work"
+
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/language-cards.ts
 msgid "The girl"
 msgstr "The girl"
@@ -1773,6 +1981,10 @@ msgstr "The right moment matters."
 msgid "The right to be brought before a judge rather than held without charge"
 msgstr "The right to be brought before a judge rather than held without charge"
 
+#: src/components/landing/ConnectSteps.tsx
+msgid "The same address works everywhere. Nothing to install."
+msgstr "The same address works everywhere. Nothing to install."
+
 #: src/components/landing/language-cards.ts
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "The same word for someone you love and a price you’d rather not pay."
@@ -1781,9 +1993,21 @@ msgstr "The same word for someone you love and a price you’d rather not pay."
 msgid "The steam in a sauna"
 msgstr "The steam in a sauna"
 
+#: src/components/landing/SendAnything.tsx
+msgid "The whiteboard"
+msgstr "The whiteboard"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Then review them in Lymi."
+msgstr "Then review them in Lymi."
+
 #: src/components/landing/LandingView.tsx
 msgid "Things worth keeping from books, hobbies, and everyday curiosity."
 msgstr "Things worth keeping from books, hobbies, and everyday curiosity."
+
+#: src/components/landing/SendAnything.tsx
+msgid "To agree"
+msgstr "To agree"
 
 #: src/components/landing/cards.ts
 msgid "To belong; to be heard"
@@ -1842,6 +2066,8 @@ msgstr "To not be able to be bothered"
 msgid "To pull"
 msgstr "To pull"
 
+#: src/components/landing/AssistantHero.tsx
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/hero-words.ts
 #: src/components/landing/language-cards.ts
 msgid "To stop"
@@ -1892,6 +2118,14 @@ msgstr "Unable to reach the beta list. Check your connection and try again."
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Unfinished tasks stay on your mind more than finished ones"
 
+#: src/components/landing/AssistantHero.tsx
+msgid "Used Lymi"
+msgstr "Used Lymi"
+
+#: src/components/landing/AssistantHero.tsx
+msgid "Using Lymi"
+msgstr "Using Lymi"
+
 #: src/components/landing/language-cards.ts
 msgid "usually"
 msgstr "usually"
@@ -1900,6 +2134,7 @@ msgstr "usually"
 msgid "Usually"
 msgstr "Usually"
 
+#: src/components/landing/AssistantHero.tsx
 #: src/components/landing/hand-cards.ts
 msgid "verb"
 msgstr "verb"
@@ -1932,6 +2167,7 @@ msgstr "what"
 msgid "What an object’s shape tells you to do with it"
 msgstr "What an object’s shape tells you to do with it"
 
+#: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LanguagesView.tsx
 msgid "What does it cost?"
 msgstr "What does it cost?"
@@ -1940,6 +2176,10 @@ msgstr "What does it cost?"
 msgid "What if I already use Anki?"
 msgstr "What if I already use Anki?"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "What if it gets something wrong?"
+msgstr "What if it gets something wrong?"
+
 #: src/components/landing/hand-cards.ts
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "When a measure becomes a target, it stops being a good measure"
@@ -1947,6 +2187,10 @@ msgstr "When a measure becomes a target, it stops being a good measure"
 #: src/components/landing/LandingView.tsx
 msgid "When a term comes up while you’re talking with an assistant, ask it to add the card. Keep talking; the card will be waiting in Lymi."
 msgstr "When a term comes up while you’re talking with an assistant, ask it to add the card. Keep talking; the card will be waiting in Lymi."
+
+#: src/components/landing/SendAnything.tsx
+msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
+msgstr "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 
 #: src/components/landing/WhyItWorks.tsx
 msgid "When recall goes well, the next review can wait longer. In 2013, <0>Dunlosky and colleagues rated practice testing and distributed practice as highly effective techniques</0>."
@@ -1963,6 +2207,10 @@ msgstr "Where cards can show up"
 #: src/components/landing/ApiConnections.tsx
 msgid "Where cards come from"
 msgstr "Where cards come from"
+
+#: src/components/landing/AssistantsView.tsx
+msgid "Which assistants work?"
+msgstr "Which assistants work?"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Which languages can I learn?"
@@ -1987,6 +2235,10 @@ msgstr "word"
 #: src/components/landing/LandingView.tsx
 msgid "Words and phrases from lessons, conversations, and reading."
 msgstr "Words and phrases from lessons, conversations, and reading."
+
+#: src/components/landing/PracticeChat.tsx
+msgid "Words from your deck"
+msgstr "Words from your deck"
 
 #: src/components/landing/estonian-scenes.ts
 msgid "work"
@@ -2024,6 +2276,10 @@ msgstr "Yes, please"
 msgid "Yes, please; I’d be glad to"
 msgstr "Yes, please; I’d be glad to"
 
+#: src/components/landing/SendAnything.tsx
+msgid "Yes, to everyone."
+msgstr "Yes, to everyone."
+
 #: src/components/landing/LanguagesView.tsx
 msgid "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 msgstr "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
@@ -2044,6 +2300,10 @@ msgstr "Yes. Whoever makes the cards shares the deck’s join link, and everyone
 msgid "you"
 msgstr "you"
 
+#: src/components/landing/SendAnything.tsx
+msgid "You"
+msgstr "You"
+
 #: src/components/landing/hero-words.ts
 msgid "You can do it!"
 msgstr "You can do it!"
@@ -2052,9 +2312,17 @@ msgstr "You can do it!"
 msgid "you have (with “on”)"
 msgstr "you have (with “on”)"
 
+#: src/components/landing/AssistantsView.tsx
+msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
+msgstr "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
+
 #: src/components/landing/ApiConnections.tsx
 msgid "Your own app"
 msgstr "Your own app"
+
+#: src/components/landing/SendAnything.tsx
+msgid "Your tutor’s message"
+msgstr "Your tutor’s message"
 
 #: src/components/landing/cards.ts
 msgid "日本語 · noun"

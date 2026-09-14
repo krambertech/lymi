@@ -1,0 +1,12 @@
+---
+import { schedulingGuide } from "@lymi/core/simulation";
+import DocsSchedulingPage from "../../components/islands/DocsSchedulingPage";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Computed from the rules in packages/core on every build, so the page follows the code.
+const guide = schedulingGuide();
+---
+
+<BaseLayout title="How reviews are scheduled · Lymi docs" description="How Lymi uses FSRS to decide when a card is due, and how it draws the next card in a review." canonicalPath="/docs/scheduling">
+  <DocsSchedulingPage client:load guide={guide} />
+</BaseLayout>

@@ -1,5 +1,6 @@
 import { State } from "ts-fsrs";
 import { describe, expect, it } from "vitest";
+import { collection, rng, type SimMode, toDrawCards } from "../simulation/learner";
 import {
   type DayWindow,
   type DrawCard,
@@ -13,7 +14,7 @@ import {
   returnGap,
   UNSEEN_HALF_LIFE_DAYS,
 } from "./draw";
-import { emptyState, type FsrsCard, retrievability, schedule } from "./fsrs";
+import { emptyState, type FsrsCard, schedule } from "./fsrs";
 import type { Rating } from "./types";
 
 /**
@@ -22,83 +23,6 @@ import type { Rating } from "./types";
  */
 
 const DAY = 86_400_000;
-
-/** A small seeded generator, so a failing day can be replayed by its seed. */
-function rng(seed: number) {
-  let state = seed;
-  return () => {
-    state = (state * 1664525 + 1013904223) % 4294967296;
-    return state / 4294967296;
-  };
-}
-
-interface SimMode {
-  cardId: string;
-  deckId: string;
-  mode: string;
-  card: FsrsCard;
-  added: Date;
-  hasCue: boolean;
-}
-
-/**
- * A learner's collection on the morning of `day`: cards added over the past months and
- * graded on earlier days through the real scheduler, so states, dues and steps are FSRS's
- * own. About one card in five is asked both ways, and some lack a meaning.
- */
-function collection(seed: number, day: DayWindow, size: number): SimMode[] {
-  const random = rng(seed);
-  const modes: SimMode[] = [];
-  for (let i = 0; i < size; i++) {
-    const cardId = `c${i}`;
-    const deckId = `d${i % 3}`;
-    const ageDays = Math.floor(random() * 120);
-    const added = new Date(day.start.getTime() - ageDays * DAY - 9 * 3_600_000);
-    const hasMeaning = random() > 0.1;
-    const both = random() < 0.2;
-    const order = both ? ["meaning_to_term", "term_to_meaning"] : ["term_to_meaning"];
-    for (const mode of order) {
-      let card = emptyState(added);
-      // Some cards were never started; the rest were reviewed on a few earlier days.
-      const reviews = random() < 0.3 ? 0 : 1 + Math.floor(random() * 6);
-      let at = added.getTime();
-      for (let r = 0; r < reviews; r++) {
-        at = Math.max(at + DAY, card.due.getTime()) + Math.floor(random() * 3) * DAY;
-        if (at >= day.start.getTime() - 3_600_000) break;
-        const rating = (
-          random() < 0.15 ? 1 : random() < 0.2 ? 2 : random() < 0.9 ? 3 : 4
-        ) as Rating;
-        card = schedule(card, rating, new Date(at)).card;
-      }
-      modes.push({
-        cardId,
-        deckId,
-        mode,
-        card,
-        added,
-        hasCue: mode === "meaning_to_term" ? hasMeaning : true,
-      });
-    }
-  }
-  return modes;
-}
-
-function toDrawCards(modes: SimMode[], day: DayWindow): DrawCard[] {
-  const byCard = new Map<string, DrawCard>();
-  for (const m of modes) {
-    const card = byCard.get(m.cardId) ?? { cardId: m.cardId, deckId: m.deckId, modes: [] };
-    card.modes.push({
-      mode: m.mode,
-      state: m.card.state,
-      due: m.card.due,
-      retrievability: retrievability(m.card, day.start),
-      added: m.added,
-      hasCue: m.hasCue,
-    });
-    byCard.set(m.cardId, card);
-  }
-  return [...byCard.values()];
-}
 
 interface Attempt extends Drawn {
   rating: Rating;

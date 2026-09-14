@@ -7,11 +7,13 @@
   "exports": {
     ".": "./src/index.ts",
     "./schema": "./src/schema/index.ts",
-    "./db": "./src/db.ts"
+    "./db": "./src/db.ts",
+    "./simulation": "./simulation/index.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "simulate": "tsx simulation/generate.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
@@ -20,6 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
     "typescript": "^5.9.3",
     "vitest": "^5.0.0"
   }

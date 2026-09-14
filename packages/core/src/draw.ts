@@ -160,14 +160,35 @@ export function returnGap(date: string, cardId: string, mode: ModeKey, misses: n
 }
 
 /** Efraimidis–Spirakis: a larger key wins, and a weight of w makes an item w times as likely. */
-function weightedKey(date: string, cardId: string, mode: ModeKey, weight: number): number {
+export function weightedKey(date: string, cardId: string, mode: ModeKey, weight: number): number {
   return Math.log(unit(date, cardId, mode)) / Math.max(MIN_WEIGHT, weight);
 }
 
-interface Candidate {
+export interface Candidate {
   cardId: string;
   mode: DrawMode;
 }
+
+/**
+ * How a group is ordered: a larger key is drawn first. Production always uses `DRAW_POLICY`;
+ * the simulations pass another to compare it with the orders ADR 0019 rejected.
+ */
+export interface DrawPolicy {
+  reviewKey: (c: Candidate, day: DayWindow) => number;
+  unseenKey: (c: Candidate, day: DayWindow) => number;
+  /** Every this many new-card slots takes the oldest unseen card. */
+  oldestSlotEvery: number;
+}
+
+export const DRAW_POLICY: DrawPolicy = {
+  reviewKey: (c, day) =>
+    weightedKey(day.date, c.cardId, c.mode.mode, c.mode.retrievability ** REVIEW_ODDS_POWER),
+  unseenKey: (c, day) => {
+    const ageDays = Math.max(0, day.start.getTime() - c.mode.added.getTime()) / DAY_MS;
+    return weightedKey(day.date, c.cardId, c.mode.mode, 0.5 ** (ageDays / UNSEEN_HALF_LIFE_DAYS));
+  },
+  oldestSlotEvery: OLDEST_UNSEEN_SLOT_EVERY,
+};
 
 const reachedReview = (mode: DrawMode | undefined) =>
   mode !== undefined && (mode.state === State.Review || mode.state === State.Relearning);
@@ -185,6 +206,7 @@ interface Plan {
   /** Unseen modes by weighted key, and by age for the oldest-card slot. */
   recent: Candidate[];
   oldest: Candidate[];
+  oldestSlotEvery: number;
 }
 
 const sortedBy = <T>(items: T[], keyOf: (item: T) => number, descending = false) =>
@@ -193,7 +215,12 @@ const sortedBy = <T>(items: T[], keyOf: (item: T) => number, descending = false)
     .sort((a, b) => (descending ? b.key - a.key : a.key - b.key))
     .map(({ item }) => item);
 
-function plan(cards: readonly DrawCard[], day: DayWindow, scope: DrawScope): Plan {
+function plan(
+  cards: readonly DrawCard[],
+  day: DayWindow,
+  scope: DrawScope,
+  policy: DrawPolicy,
+): Plan {
   const { date } = day;
   const modes = new Map<string, Candidate>();
   const carries: Candidate[] = [];
@@ -220,19 +247,14 @@ function plan(cards: readonly DrawCard[], day: DayWindow, scope: DrawScope): Pla
     a.mode.due.getTime() - b.mode.due.getTime() || tie(a) - tie(b);
   const byAge = (a: Candidate, b: Candidate) =>
     a.mode.added.getTime() - b.mode.added.getTime() || tie(a) - tie(b);
-  const reviewKey = (c: Candidate) =>
-    weightedKey(date, c.cardId, c.mode.mode, c.mode.retrievability ** REVIEW_ODDS_POWER);
-  const recentKey = (c: Candidate) => {
-    const ageDays = Math.max(0, day.start.getTime() - c.mode.added.getTime()) / DAY_MS;
-    return weightedKey(date, c.cardId, c.mode.mode, 0.5 ** (ageDays / UNSEEN_HALF_LIFE_DAYS));
-  };
   return {
     day,
     modes,
     carries: [...carries].sort(byDue),
-    reviews: sortedBy(reviews, reviewKey, true),
-    recent: sortedBy(unseen, recentKey, true),
+    reviews: sortedBy(reviews, (c) => policy.reviewKey(c, day), true),
+    recent: sortedBy(unseen, (c) => policy.unseenKey(c, day), true),
     oldest: [...unseen].sort(byAge),
+    oldestSlotEvery: policy.oldestSlotEvery,
   };
 }
 
@@ -275,7 +297,7 @@ function next(p: Plan, log: readonly DrawLogEntry[]): Drawn | null {
   const kinds = classify(log);
 
   const slots = kinds.filter((k) => k === "unseen").length;
-  const oldestSlot = slots % OLDEST_UNSEEN_SLOT_EVERY === OLDEST_UNSEEN_SLOT_EVERY - 1;
+  const oldestSlot = slots % p.oldestSlotEvery === p.oldestSlotEvery - 1;
   const unseen = (oldestSlot ? p.oldest : p.recent).find(fresh);
 
   if (carry) {
@@ -300,7 +322,21 @@ export function draw(
   day: DayWindow,
   scope: DrawScope = {},
 ): Drawn | null {
-  return next(plan(cards, day, scope), log);
+  return next(plan(cards, day, scope, DRAW_POLICY), log);
+}
+
+/**
+ * `draw` with the day's plan built once, for a caller that draws many times from the same
+ * morning's cards. The simulations use it to play a year, and to swap in a rejected policy.
+ */
+export function drawer(
+  cards: readonly DrawCard[],
+  day: DayWindow,
+  scope: DrawScope = {},
+  policy: DrawPolicy = DRAW_POLICY,
+): (log: readonly DrawLogEntry[]) => Drawn | null {
+  const p = plan(cards, day, scope, policy);
+  return (log) => next(p, log);
 }
 
 /**
@@ -314,7 +350,7 @@ export function drawOrder(
   scope: DrawScope = {},
   limit = Number.POSITIVE_INFINITY,
 ): Drawn[] {
-  const p = plan(cards, day, scope);
+  const p = plan(cards, day, scope, DRAW_POLICY);
   const simulated = [...log];
   const out: Drawn[] = [];
   while (out.length < limit) {
@@ -339,7 +375,7 @@ export function drawableCount(
   day: DayWindow,
   scope: DrawScope = {},
 ): number {
-  const p = plan(cards, day, scope);
+  const p = plan(cards, day, scope, DRAW_POLICY);
   const reviewed = new Set(log.map((entry) => entry.cardId));
   const ids = new Set<string>();
   for (const group of [p.carries, p.reviews, p.recent]) {

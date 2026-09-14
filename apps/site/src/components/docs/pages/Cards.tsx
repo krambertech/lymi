@@ -155,8 +155,10 @@ export function Cards() {
 
       <H2>Reviews are scheduled with FSRS</H2>
       <p>
-        Lymi uses FSRS with learning steps of one minute and ten minutes. A new card state starts at{" "}
-        <code>0</code> and moves through Learning, Review and Relearning as you grade it.
+        Lymi uses FSRS with one learning step of ten minutes. A new card state starts at{" "}
+        <code>0</code> and moves through Learning, Review and Relearning as you grade it.{" "}
+        <a href="/docs/scheduling">How reviews are scheduled</a> explains the intervals and the
+        order cards come up in.
       </p>
       <Table>
         <thead>
@@ -172,7 +174,7 @@ export function Cards() {
           </tr>
           <tr>
             <Td className="font-mono text-sm">1</Td>
-            <Td>Learning. Inside the first steps.</Td>
+            <Td>Learning. Inside its first step.</Td>
           </tr>
           <tr>
             <Td className="font-mono text-sm">2</Td>
@@ -180,14 +182,15 @@ export function Cards() {
           </tr>
           <tr>
             <Td className="font-mono text-sm">3</Td>
-            <Td>Relearning. Forgotten and going through the steps again.</Td>
+            <Td>Relearning. Forgotten and going through the step again.</Td>
           </tr>
         </tbody>
       </Table>
       <p>
-        Reading the queue is open to any key. <code>GET /api/review/queue</code> returns the cards
-        due now, oldest first, and each item carries <code>next</code>: the four dates each grade
-        would schedule. A client can show “Good · 6 d” with no extra round trip.
+        Reading the queue is open to any key. <code>GET /api/review/queue</code> returns today’s
+        cards in the order a review would take them if every grade succeeded, and each item carries{" "}
+        <code>next</code>: the four dates each grade would schedule. A client can show “Good · 6 d”
+        with no extra round trip.
       </p>
       <Note tone="careful" title="Only you can grade">
         <p>
@@ -212,6 +215,11 @@ curl -X POST "$LYMI_URL/api/cards/0mtoyiymrvqpdz02hlv/restore" -H "x-api-key: $L
 
       <NextLinks
         items={[
+          {
+            to: "/docs/scheduling",
+            title: "How reviews are scheduled",
+            blurb: "When a card is due, and which card comes next.",
+          },
           {
             to: "/docs/recipes",
             title: "Recipes",

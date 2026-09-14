@@ -18,17 +18,23 @@ export { State };
  */
 export const LEARNING_STEPS = ["10m"] as const;
 
+/** The recall probability FSRS schedules for: a card falls due when it drops to this. */
+export const DESIRED_RETENTION = 0.9;
+
 /**
- * One scheduler for the whole app. Parameters are the FSRS defaults for now;
+ * One scheduler for the whole app. Weights are the FSRS defaults for now;
  * once there is review history they can be optimised per user.
  */
-const scheduler = fsrs(
+export const SCHEDULER_PARAMETERS = Object.freeze(
   generatorParameters({
+    request_retention: DESIRED_RETENTION,
     enable_fuzz: true,
     learning_steps: LEARNING_STEPS,
     relearning_steps: LEARNING_STEPS,
   }),
 );
+
+const scheduler = fsrs(SCHEDULER_PARAMETERS);
 
 const RATING_MAP: Record<Rating, Grade> = {
   1: FsrsRating.Again,

@@ -25,10 +25,10 @@ importers:
         version: 5.3.1
       '@lingui/core':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4)
+        version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)
       '@lingui/react':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4)(react@19.2.8)
+        version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)(react@19.2.8)
       '@lymi/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -62,7 +62,7 @@ importers:
         version: 7.29.7
       '@lingui/babel-plugin-lingui-macro':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4)
+        version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)
       '@lingui/cli':
         specifier: 6.7.0
         version: 6.7.0(esbuild@0.28.2)(rolldown@1.2.7)
@@ -71,7 +71,7 @@ importers:
         version: 6.7.0
       '@lingui/vite-plugin':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@lingui/babel-plugin-lingui-macro@6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4))(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0)))(esbuild@0.28.2)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))
+        version: 6.7.0(@babel/core@7.29.7)(@lingui/babel-plugin-lingui-macro@6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8))(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0)))(esbuild@0.28.2)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))
       '@rolldown/plugin-babel':
         specifier: 0.2.3
         version: 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))
@@ -131,10 +131,10 @@ importers:
         version: 0.2.3(@standard-schema/spec@1.1.0)(hono@4.13.7)
       '@lingui/core':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)
+        version: 6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4)
       '@lingui/react':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)(react@19.2.8)
+        version: 6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4)(react@19.2.8)
       '@lymi/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -204,7 +204,7 @@ importers:
         version: 1.54.4(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))(wrangler@4.129.0)
       '@lingui/babel-plugin-lingui-macro':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8)
+        version: 6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4)
       '@lingui/cli':
         specifier: 6.7.0
         version: 6.7.0(esbuild@0.28.2)(rolldown@1.2.7)
@@ -213,7 +213,7 @@ importers:
         version: 6.7.0
       '@lingui/vite-plugin':
         specifier: 6.7.0
-        version: 6.7.0(@babel/core@7.29.7)(@lingui/babel-plugin-lingui-macro@6.7.0(@babel/core@7.29.7)(@babel/types@7.29.8))(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0)))(esbuild@0.28.2)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))
+        version: 6.7.0(@babel/core@7.29.7)(@lingui/babel-plugin-lingui-macro@6.7.0(@babel/core@7.29.7)(@babel/types@8.0.4))(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0)))(esbuild@0.28.2)(rolldown@1.2.7)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.13)(yaml@2.9.0))
       '@modelcontextprotocol/client':
         specifier: 2.0.0
         version: 2.0.0
@@ -287,6 +287,9 @@ importers:
       '@types/node':
         specifier: ^26.4.1
         version: 26.4.1
+      tsx:
+        specifier: ^4.23.13
+        version: 4.23.13
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

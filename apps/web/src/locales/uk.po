@@ -88,7 +88,9 @@ msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {картка} few {картки} many {карток} other {картки}}"
 
 #. placeholder {0}: summary.current
+#. placeholder {0}: week.current
 #: src/client/components/Streak.tsx
+#: src/client/views/ReviewView.tsx
 msgid "{0, plural, one {day in a row} other {days in a row}}"
 msgstr "{0, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
@@ -189,6 +191,14 @@ msgstr "{count, plural, one {# нова} few {# нові} many {# нових} ot
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
+#: src/client/views/ReviewView.tsx
+msgid "{count, plural, one {review in this round} other {reviews in this round}}"
+msgstr "{count, plural, one {повторення в цьому раунді} few {повторення в цьому раунді} many {повторень у цьому раунді} other {повторення в цьому раунді}}"
+
+#: src/client/views/ReviewView.tsx
+msgid "{count, plural, one {review today} other {reviews today}}"
+msgstr "{count, plural, one {повторення сьогодні} few {повторення сьогодні} many {повторень сьогодні} other {повторення сьогодні}}"
+
 #: src/client/components/Streak.tsx
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
@@ -233,18 +243,6 @@ msgstr "{daysAllTime, plural, one {{litAllTime} з # дня} few {{litAllTime} �
 msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 msgstr "{daysAllTime, plural, one {# день від першого повторення} few {# дні від першого повторення} many {# днів від першого повторення} other {# дня від першого повторення}}"
 
-#: src/client/views/ReviewView.tsx
-msgid "{done} reviewed from {deckName}. The rest can wait a while."
-msgstr "{done} повторено з {deckName}. Решта може трохи зачекати."
-
-#: src/client/views/ReviewView.tsx
-msgid "{done} reviewed. The rest can wait a while."
-msgstr "{done} повторено. Решта може трохи зачекати."
-
-#: src/client/views/ReviewView.tsx
-msgid "{done} reviewed. Today shows what’s left."
-msgstr "Повторено: {done}. Решта — у «Сьогодні»."
-
 #: src/client/components/DeckCard.tsx
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# на сьогодні} few {# на сьогодні} many {# на сьогодні} other {# на сьогодні}}"
@@ -268,6 +266,10 @@ msgstr "{due, plural, one {# картка чекає, коли матимеш х
 #: src/client/views/InsightsView.tsx
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# картка протягом наступних семи днів.} few {# картки протягом наступних семи днів.} many {# карток протягом наступних семи днів.} other {# картки протягом наступних семи днів.}}"
+
+#: src/client/views/ReviewView.tsx
+msgid "{forgotten, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
+msgstr "{forgotten, plural, one {Повторити # забуту картку} few {Повторити # забуті картки} many {Повторити # забутих карток} other {Повторити # забутої картки}}"
 
 #: src/client/components/StateStripe.tsx
 msgid "{fresh} new, {learning} learning, {known} known"
@@ -309,6 +311,10 @@ msgstr "{months, plural, one {Через # місяць} few {Через # мі�
 #: src/client/views/DeckDetailView.tsx
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
+
+#: src/client/views/ReviewView.tsx
+msgid "{nextRound, plural, one {Review # more card} other {Review # more cards}}"
+msgstr "{nextRound, plural, one {Повторити ще # картку} few {Повторити ще # картки} many {Повторити ще # карток} other {Повторити ще # картки}}"
 
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
@@ -440,6 +446,7 @@ msgstr "Додати речення, у якому він живе"
 msgid "Add card"
 msgstr "Додати картку"
 
+#: src/client/routes/review.tsx
 #: src/client/views/TodayView.tsx
 msgid "Add cards"
 msgstr "Додати картки"
@@ -780,6 +787,10 @@ msgstr "Не вдалося вимкнути посилання для приє�
 msgid "Could not turn on the join link. Try again."
 msgstr "Не вдалося увімкнути посилання для приєднання. Спробуй ще раз."
 
+#: src/client/routes/review.tsx
+msgid "Couldn’t check for more cards"
+msgstr "Не вдалося перевірити, чи є ще картки"
+
 #: src/client/components/NotificationsSection.tsx
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Не вдалося перевірити цей пристрій. Онови сторінку, щоб спробувати ще раз."
@@ -855,6 +866,10 @@ msgstr "Денна мета"
 #: src/client/views/ReviewView.tsx
 msgid "Daily goal progress"
 msgstr "Прогрес денної мети"
+
+#: src/client/views/ReviewView.tsx
+msgid "Daily goal reached"
+msgstr "Денну мету досягнуто"
 
 #: src/client/components/Streak.tsx
 msgid "Daily goal reached."
@@ -1502,6 +1517,10 @@ msgstr "Нічого до повторення"
 #: src/client/components/Streak.tsx
 msgid "Nothing due today, so your streak is safe."
 msgstr "Сьогодні нічого повторювати, тож серія в безпеці."
+
+#: src/client/views/ReviewView.tsx
+msgid "Nothing else in {deckName} is ready."
+msgstr "У «{deckName}» більше нічого не готово."
 
 #: src/client/views/TodayView.tsx
 msgid "Nothing forgotten today"
@@ -2153,6 +2172,10 @@ msgstr "нотатки"
 msgid "the pronunciation"
 msgstr "вимову"
 
+#: src/client/views/ReviewView.tsx
+msgid "The rest can wait a while."
+msgstr "Решта може трохи зачекати."
+
 #: src/client/views/WordView.tsx
 msgid "the tags"
 msgstr "теги"
@@ -2224,6 +2247,10 @@ msgstr "сьогодні"
 #: src/client/views/WordView.tsx
 msgid "Today"
 msgstr "Сьогодні"
+
+#: src/client/views/ReviewView.tsx
+msgid "Today shows what’s left."
+msgstr "Що лишилося — на екрані «Сьогодні»."
 
 #: src/client/components/StreakCalendar.tsx
 msgid "Today, {day}: {reviews}"
@@ -2385,6 +2412,10 @@ msgstr "Твоя колода"
 #: src/client/components/AccountSection.tsx
 msgid "Your Google photo is back"
 msgstr "Знову показуємо фото з Google"
+
+#: src/client/routes/review.tsx
+msgid "Your grades are saved. Check your connection and try again."
+msgstr "Твої оцінки збережено. Перевір з’єднання й повтори спробу."
 
 #: src/client/components/AccountSection.tsx
 msgid "Your photo was changed somewhere else. Check it, then try again."

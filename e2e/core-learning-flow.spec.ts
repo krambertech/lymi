@@ -65,6 +65,7 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
 
     await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeVisible();
     await page.reload();
-    await expect(page.getByRole("heading", { name: "Nothing due" })).toBeVisible();
+    // The day keeps its outcome: the lot was reviewed, which is not the same as nothing due.
+    await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeVisible();
   });
 });

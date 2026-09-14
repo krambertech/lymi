@@ -245,7 +245,7 @@ Three words: warm, calm, quick.
 
 Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of four tones: `canvas` (the room), `rail` (the navigation, one step off the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it. Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour. Nothing lifts, and amber never marks state.
 
-The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it.
+The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it. At the end of a review the same light spills into the room around the lantern, under Motion.
 
 ## Colour
 
@@ -351,6 +351,8 @@ An overlay moves the way its shape does. The drawer rises from the bottom edge o
 
 The auth screens have one moving part: the connection. The app that asked and the lantern sit in matching tiles joined by a rail, dotted while the decision is open. When the grant lands the rail draws across in amber over 420 ms and the flame rises 300 ms in, so the two read as one movement rather than two. A refusal leaves the rail dotted and the flame goes out. Under reduced motion the rail is simply filled. Nothing else on those screens animates.
 
+The end of a review is the other choreographed moment, and the one place the interface celebrates, because it is where the day lands. It plays as one sequence over about two seconds. The last card steps back 8 px, to 0.98, over 200 ms while the lantern leaves the header for the middle of the screen on a 600 ms spring and rises to full on the way. At 280 ms the lantern lights the room: a pool of its own glow blooms behind it over 1.6 s and then breathes on the flicker's loop, and a handful of embers lift off the flame once. The heading rises out of a blur at 640 ms, the count at 820 ms and rolls up from where this stretch of the review began, the seven lights switch on 70 ms apart from 1.18 s, and at 1.78 s today's light fills with a brief flare of the glow and the run ticks. The ways on arrive last, 90 ms apart from 2 s. The first tap or key finishes the sequence at once, so it is never a wait. Choosing Review forgotten or another round carries the lantern back to the header. Under reduced motion the lantern does not travel, there are no embers or breathing, and the screen crossfades with its final numbers in place.
+
 The flame flickers on a 2.6 s loop because a flame does, and three things move on that one loop: the flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both. A flame that changes size under a halo that holds still is the thing that reads as fake. The flicker multiplies whatever size the flame has, so a small flame flickers small.
 
 The flame's own changes are springs from Motion, so a movement that is interrupted keeps its speed instead of starting over. A settle after a review takes 900 ms. A breath goes in over 280 ms and out over 900 ms. The rise at the goal takes 1.4 s with a breath 1.6 times as deep. Catching from out takes 700 ms and is the one movement with a trace of overshoot, bounce 0.12. Going out takes 1.6 s, so it reads as a fire dying down rather than a switch. The values live in `FLAME_MOTION` in `lib/flame.ts`, and the design system reads them from there. Carried, the body rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
@@ -421,6 +423,8 @@ A short list is picked from and a list of forty is searched. `Select` and `Combo
 
 **A button is never taken away for being unable to run yet.** `disabled` drops it out of the tab order and tells a screen reader nothing about what is missing, so a greyed-out submit leaves the learner with no way to ask. Forms stay pressable and validate on submit: the same Zod schema the route parses with, the message under the field with its icon, and the caret moved to the first thing that is wrong. The messages live on the schema in `packages/core`, so what the API says on a 400 is what the field says under the control. `aria-disabled` is for the cases where pressing genuinely cannot do anything — mid-request, or a handler that does not exist — and it keeps the button focusable and announced while swallowing the press.
 
+A review ends on its own screen, not a copy of Today: no plates, the lantern lit large in a pool of its glow, the heading from the day's outcome, today's count as the largest thing on the screen, the week's lights at Today's size with the run under them, then the ways on. Every way on is the same full-width button: Review forgotten and Review another round are secondary and say how many cards they hold in words, “Review 3 forgotten cards” and “Review 10 more cards”, because a number in a pill reads as a keyboard shortcut; each appears only when it holds something. Done is the primary one under them, because stopping is always a fine answer; with nothing due, Add cards takes that place and Done sits under it as a secondary button. Running out of cards offline or after a failed refresh is not an end: the screen says it couldn't check for more and offers Try again.
+
 Rules: one primary per view. Every control has default, hover, focus, active, disabled and, where it applies, loading. A modal that asks a question is a last resort; Undo replaces confirmation. A sheet is not that modal: it is a form the learner asked for.
 
 ## Voice
@@ -446,7 +450,7 @@ Prose is `text-2` at 15.5 px on a 44 rem column; headings and bold are `text`. T
 
 ## Don't
 
-- No gradients on any surface; the app icon and the link preview, which shares its warm centre, are the exception. No drop shadows. No glow on anything but the lantern.
+- No gradients on any surface; the app icon, the link preview, which shares its warm centre, and the lantern's pool of light at the end of a review are the exceptions. No drop shadows. No glow on anything but the lantern, its embers and today's light as it fills.
 - No amber outside the flame, the primary action and a due count. The streak's flame is that same flame, so it counts as one.
 - No grey metal. No second illustration. No outline, rotation or bevel on the mark.
 - No simplified small cut. No amber beyond the flame and the primary action.

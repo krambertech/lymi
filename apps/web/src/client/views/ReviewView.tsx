@@ -1,22 +1,35 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { plural } from "@lingui/core/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
 import { CircleAlert, Loader2, Pointer, RotateCcw, Volume2, X } from "lucide-react";
-import { AnimatePresence, motion, useAnimate, useReducedMotion, type Variants } from "motion/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
-import { Button, IconButton } from "../components/Button";
+import {
+  AnimatePresence,
+  animate as animateValue,
+  motion,
+  useAnimate,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+  type Variants,
+} from "motion/react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
+import { Button, buttonClass, IconButton } from "../components/Button";
 import { CardPicture } from "../components/CardPicture";
 import { Chip, SourceChip, StateChip } from "../components/Chip";
 import { ErrorTip } from "../components/ErrorTip";
+import { Flame } from "../components/Flame";
 import { GRADES } from "../components/Grade";
 import { Kbd } from "../components/Kbd";
 import { Lantern } from "../components/Lantern";
 import { Progress } from "../components/Progress";
+import { SevenLights } from "../components/SevenLights";
 import { Skeleton } from "../components/Skeleton";
-import { type StreakSummary, StreakWeek } from "../components/Streak";
+import { lastDays, type StreakSummary } from "../components/Streak";
 import type { QueueItem } from "../lib/api";
-import { lanternFor } from "../lib/flame";
+import { lanternFor, streakFlameFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
+import type { DayOutcome } from "../lib/review-complete";
 import { modeLabel } from "../lib/review-modes";
 
 export interface ReviewHeaderProps {
@@ -27,10 +40,15 @@ export interface ReviewHeaderProps {
   animateCount?: boolean | undefined;
   /** Today's streak, which the lantern shows. Omitted, it is the brand flame. */
   streak?: StreakSummary | undefined;
+  /** The review has stopped: the lantern has moved to the end screen and the track steps back. */
+  complete?: boolean | undefined;
   onClose?: (() => void) | undefined;
 }
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+/** The lantern is one object carried between the header and the end of a review. */
+const LANTERN_LAYOUT = "review-lantern";
+const LANTERN_FLIGHT = { type: "spring", visualDuration: 0.6, bounce: 0 } as const;
 
 /**
  * The lantern, today's attempts against the goal, and the exit, on one line.
@@ -48,28 +66,43 @@ export function ReviewHeader({
   goal,
   animateCount = true,
   streak,
+  complete = false,
   onClose,
 }: ReviewHeaderProps) {
   const { t } = useLingui();
+  const reduce = useReducedMotion();
   return (
     <header className="flex min-h-14 shrink-0 items-center gap-3 pt-2 @3xl:pt-4">
-      <Lantern
-        className="-ms-[11.5px] -me-2 size-11"
-        {...lanternFor(streak)}
-        fed={attempts}
-        flicker
-        glow
-      />
-      <Progress
-        value={goal ? Math.min(1, attempts / goal) : 0}
-        label={t`Daily goal progress`}
-        className="min-w-0 flex-1"
-      />
-      <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
-        <Trans>
-          <RollingCount value={attempts} animate={animateCount} /> of {goal}
-        </Trans>
+      {/* The slot keeps its place while the lantern is away, so the header never shifts. */}
+      <span className="-ms-[11.5px] -me-2 size-11 shrink-0">
+        {!complete && (
+          <motion.span
+            {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
+            transition={LANTERN_FLIGHT}
+            className="block size-full"
+          >
+            <Lantern className="size-full" {...lanternFor(streak)} fed={attempts} flicker glow />
+          </motion.span>
+        )}
       </span>
+      <motion.span
+        className="flex min-w-0 flex-1 items-center gap-3"
+        initial={false}
+        animate={{ opacity: complete ? 0 : 1 }}
+        transition={{ duration: complete ? 0.16 : 0.24, ease: EASE_OUT }}
+        aria-hidden={complete || undefined}
+      >
+        <Progress
+          value={goal ? Math.min(1, attempts / goal) : 0}
+          label={t`Daily goal progress`}
+          className="min-w-0 flex-1"
+        />
+        <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
+          <Trans>
+            <RollingCount value={attempts} animate={animateCount} /> of {goal}
+          </Trans>
+        </span>
+      </motion.span>
       {/* Quiet but not small: a 40 px circle with a 52 px hit area, pulled out so the X sits on the card edge. */}
       <IconButton
         label={t`Leave review`}
@@ -623,71 +656,356 @@ export function GradeBar({
   );
 }
 
-export interface SessionDoneProps {
-  done: number;
-  /** Named here rather than over every card, because here it is a fact about what was reviewed. */
+export interface ReviewCompleteProps {
+  /** How the day stands, or `round` for the end of a round from Today. */
+  outcome: DayOutcome | "round";
+  /** Today's attempts in every scope. */
+  attempts: number;
+  /** Today's attempts when this stretch of the review began, where the count rolls up from. */
+  from?: number | undefined;
+  /** Attempts in this review, which a round from Today counts instead of the day. */
+  reviewed?: number | undefined;
+  /** Set when a deck review ran out without finishing the day, so the copy names the deck. */
   deckName?: string | undefined;
-  /** A round from Today ended, which says nothing about the rest of the day's cards. */
-  round?: boolean | undefined;
-  /** The week and the run, as Today shows them. */
+  /** The streak with this review in it. */
   streak?: StreakSummary | undefined;
-  action?: ReactNode | undefined;
+  /** The streak as it stood before, so today's light fills and the run ticks on screen. */
+  streakBefore?: StreakSummary | undefined;
+  /** The flame the lantern had in the header, so it rises from there rather than from rest. */
+  lanternFrom?: number | "out" | "brand" | undefined;
+  /** Cards whose latest grade today is Forgot. Zero hides Review forgotten. */
+  forgotten?: number | undefined;
+  /** Attempts another round holds. Zero hides Review another round. */
+  nextRound?: number | undefined;
+  onReviewForgotten?: (() => void) | undefined;
+  onAnotherRound?: (() => void) | undefined;
+  /** Done, and for nothing due, Add cards before it. */
+  actions?: ReactNode | undefined;
 }
 
-/** The end of a review: nothing left to draw today, or the end of a round from Today. */
-export function SessionDone({ done, deckName, round = false, streak, action }: SessionDoneProps) {
-  const lit = done > 0;
+/**
+ * When each part of the end arrives, in ms after the last grade. The lantern flies first; the
+ * room lights, the words and the count follow, the week switches on a day at a time, today's
+ * light fills and the run ticks, and the ways on arrive last. DESIGN.md, "Motion".
+ */
+const AT = {
+  pool: 280,
+  embers: 620,
+  heading: 640,
+  count: 820,
+  countRoll: 960,
+  lights: 1180,
+  run: 1300,
+  land: 1780,
+  actions: 2000,
+  actionStep: 90,
+} as const;
+
+/** Embers off the flame: where each drifts to, when it leaves and how long it lasts. */
+const EMBERS = [
+  { x: -16, y: -118, at: 0, dur: 1500, size: 5 },
+  { x: 12, y: -150, at: 90, dur: 1800, size: 4 },
+  { x: -4, y: -184, at: 200, dur: 2200, size: 3.5 },
+  { x: 24, y: -108, at: 300, dur: 1400, size: 4.5 },
+  { x: -26, y: -150, at: 420, dur: 1800, size: 3 },
+  { x: 6, y: -132, at: 540, dur: 1600, size: 4 },
+  { x: -10, y: -96, at: 680, dur: 1300, size: 3.5 },
+  { x: 18, y: -170, at: 800, dur: 2000, size: 3 },
+  { x: -18, y: -124, at: 950, dur: 1500, size: 4 },
+] as const;
+
+const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
+
+/**
+ * The end of a review, played as one sequence. The lantern the learner has been feeding leaves the
+ * header, lights the room around it and rises to full with a few embers; the heading and the count
+ * arrive, the week switches on a day at a time until today's light fills, the run ticks, and the
+ * ways on come last. Any tap or key finishes the sequence at once.
+ */
+export function ReviewComplete({
+  outcome,
+  attempts,
+  from = attempts,
+  reviewed = 0,
+  deckName,
+  streak,
+  streakBefore = streak,
+  lanternFrom,
+  forgotten = 0,
+  nextRound = 0,
+  onReviewForgotten,
+  onAnotherRound,
+  actions,
+}: ReviewCompleteProps) {
+  const { t } = useLingui();
+  const reduce = !!useReducedMotion();
+  const heading = useRef<HTMLHeadingElement>(null);
+  const [landed, setLanded] = useState(reduce);
+  const [skipped, setSkipped] = useState(false);
+  const instant = reduce || skipped;
+
+  // Focus follows the review to its end, so the heading is announced and Tab starts at the choices.
+  useEffect(() => {
+    heading.current?.focus({ preventScroll: true });
+  }, []);
+  useEffect(() => {
+    if (instant) {
+      setLanded(true);
+      return;
+    }
+    const timer = window.setTimeout(() => setLanded(true), AT.land);
+    return () => window.clearTimeout(timer);
+  }, [instant]);
+  // The sequence is a moment, never a wait: the first tap or key finishes it.
+  useEffect(() => {
+    if (instant) return;
+    const skip = () => setSkipped(true);
+    const done = window.setTimeout(skip, AT.actions + 600);
+    window.addEventListener("pointerdown", skip, { once: true });
+    window.addEventListener("keydown", skip, { once: true });
+    return () => {
+      window.clearTimeout(done);
+      window.removeEventListener("pointerdown", skip);
+      window.removeEventListener("keydown", skip);
+    };
+  }, [instant]);
+
+  const counted = outcome !== "nothing_due";
+  const count = outcome === "round" ? reviewed : attempts;
+  const week = landed ? streak : streakBefore;
+  const days = week ? lastDays(week) : undefined;
+  const flame = week ? streakFlameFor(week) : "lit";
+  const lit = !!streak && streak.current > 0;
+  const ways = [
+    forgotten > 0 && {
+      key: "forgotten",
+      label: t`${plural(forgotten, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`,
+      onClick: onReviewForgotten,
+    },
+    nextRound > 0 && {
+      key: "round",
+      label: t`${plural(nextRound, { one: "Review # more card", other: "Review # more cards" })}`,
+      onClick: onAnotherRound,
+    },
+  ].filter((w) => !!w);
+
   return (
-    <section className="flex flex-1 flex-col items-center justify-center gap-2 py-10 text-center">
-      <Lantern
-        className="complete-lantern mb-4 size-32 @3xl:size-36"
-        flicker
-        glow
-        {...lanternFor(streak)}
-      />
-      <h2 className="complete-copy text-3xl font-medium">
-        {round ? (
-          <Trans>Round done</Trans>
-        ) : lit ? (
-          <Trans>That’s the lot</Trans>
-        ) : (
-          <Trans>Nothing due</Trans>
-        )}
-      </h2>
-      <p className="complete-copy max-w-[30ch] text-md text-muted">
-        {round ? (
-          <Trans>{done} reviewed. Today shows what’s left.</Trans>
-        ) : lit ? (
-          deckName ? (
-            <Trans>
-              {done} reviewed from {deckName}. The rest can wait a while.
-            </Trans>
+    <section
+      aria-labelledby="review-complete"
+      className={clsx("flex flex-1 flex-col", skipped && "seq-skip")}
+    >
+      {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
+      <div className="m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8">
+        <motion.div
+          {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
+          transition={LANTERN_FLIGHT}
+          className={clsx(
+            "relative isolate mb-1 size-32 @3xl:size-44",
+            reduce && "complete-lantern",
+          )}
+        >
+          {lit && (
+            <div
+              aria-hidden="true"
+              className={clsx(
+                "light-pool pointer-events-none absolute -inset-[85%] -z-10 rounded-full",
+                !counted && "opacity-50",
+              )}
+              style={at(AT.pool)}
+            >
+              <div className="light-pool-breath size-full rounded-full" />
+            </div>
+          )}
+          <Lantern className="size-full" {...lanternFor(streak)} from={lanternFrom} flicker glow />
+          {counted && lit && !reduce && (
+            <div aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[52%]">
+              {EMBERS.map((e) => (
+                <i
+                  key={e.at}
+                  className="ember absolute -ms-0.5 -mt-0.5 block rounded-full bg-flame-core shadow-[0_0_4px_1px_var(--amber),0_0_10px_var(--glow)]"
+                  style={
+                    {
+                      width: e.size,
+                      height: e.size,
+                      "--x": `${e.x}px`,
+                      "--y": `${e.y}px`,
+                      "--dur": `${e.dur}ms`,
+                      "--at": `${AT.embers + e.at}ms`,
+                    } as CSSProperties
+                  }
+                />
+              ))}
+            </div>
+          )}
+        </motion.div>
+
+        <h2
+          ref={heading}
+          id="review-complete"
+          tabIndex={-1}
+          className="seq text-balance text-3xl font-medium tracking-[-0.02em] outline-none"
+          style={at(AT.heading)}
+        >
+          {outcome === "goal_met" ? (
+            <Trans>Daily goal reached</Trans>
+          ) : outcome === "exhausted" ? (
+            <Trans>That’s the lot</Trans>
+          ) : outcome === "nothing_due" ? (
+            <Trans>Nothing due</Trans>
           ) : (
-            <Trans>{done} reviewed. The rest can wait a while.</Trans>
-          )
+            <Trans>Round done</Trans>
+          )}
+        </h2>
+
+        {counted ? (
+          <p className="mt-3 grid justify-items-center gap-1 @3xl:mt-4">
+            <span
+              className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-text @3xl:text-7xl"
+              style={at(AT.count)}
+            >
+              <CountUp
+                from={outcome === "round" ? 0 : from}
+                to={count}
+                delay={AT.countRoll}
+                instant={instant}
+              />
+            </span>
+            <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
+              {outcome === "round" ? (
+                <Plural value={count} one="review in this round" other="reviews in this round" />
+              ) : (
+                <Plural value={count} one="review today" other="reviews today" />
+              )}
+            </span>
+          </p>
         ) : (
-          <Trans>Come back later, or add something new.</Trans>
+          <p className="seq mt-2 max-w-[32ch] text-pretty text-md text-text-2" style={at(AT.count)}>
+            <Trans>Come back later, or add something new.</Trans>
+          </p>
         )}
-      </p>
-      {streak && <StreakWeek summary={streak} className="complete-copy mt-6" />}
-      <div className="complete-copy mt-6 flex flex-wrap items-center justify-center gap-2">
-        {action}
+
+        {week && days && (
+          <div className="mt-6 grid justify-items-center gap-3 @3xl:mt-8">
+            <SevenLights
+              days={days.attempts}
+              satisfied={days.satisfied}
+              goals={days.goals}
+              dates={days.dates}
+              size="lg"
+              sequence={AT.lights}
+              flare={landed && !reduce}
+            />
+            <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
+              <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
+              <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
+                <span
+                  key={week.current}
+                  className={clsx("block", landed && !reduce && "streak-tick")}
+                >
+                  {week.current}
+                </span>
+              </span>
+              <Plural value={week.current} one="day in a row" other="days in a row" />
+            </p>
+          </div>
+        )}
+
+        {counted && outcome !== "goal_met" && (
+          <p
+            className="seq mt-4 max-w-[32ch] text-pretty text-sm text-muted"
+            style={at(AT.run + 120)}
+          >
+            {outcome === "round" ? (
+              <Trans>Today shows what’s left.</Trans>
+            ) : deckName ? (
+              <Trans>Nothing else in {deckName} is ready.</Trans>
+            ) : (
+              <Trans>The rest can wait a while.</Trans>
+            )}
+          </p>
+        )}
+
+        <div className="mt-6 grid w-full gap-2.5 @3xl:mt-8">
+          {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is the amber one. */}
+          {ways.map((way, i) => (
+            <button
+              key={way.key}
+              type="button"
+              onClick={way.onClick}
+              className={buttonClass("secondary", "lg", "seq w-full")}
+              style={at(AT.actions + i * AT.actionStep)}
+            >
+              {way.label}
+            </button>
+          ))}
+          {actions && (
+            <div className="seq grid gap-2" style={at(AT.actions + ways.length * AT.actionStep)}>
+              {actions}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
 }
 
-export function ReviewError({ retry, action }: { retry: () => void; action?: ReactNode }) {
+/** Rolls a number up from where this stretch began, so what the review added is seen happen. */
+function CountUp({
+  from,
+  to,
+  delay,
+  instant,
+}: {
+  from: number;
+  to: number;
+  delay: number;
+  instant: boolean;
+}) {
+  const { i18n } = useLingui();
+  const value = useMotionValue(instant ? to : from);
+  const text = useTransform(value, (v) => i18n.number(Math.round(v)));
+  useEffect(() => {
+    if (instant) {
+      value.jump(to);
+      return;
+    }
+    const controls = animateValue(value, to, {
+      delay: delay / 1000,
+      duration: Math.min(1.2, 0.5 + Math.abs(to - value.get()) * 0.02),
+      ease: [0.25, 1, 0.5, 1],
+    });
+    return () => controls.stop();
+  }, [value, to, delay, instant]);
+  // The box holds the final width, so the digits never shift the line while they roll.
+  return (
+    <motion.span
+      className="inline-block text-center tabular-nums"
+      style={{ minWidth: `${i18n.number(to).length * 0.62}em` }}
+    >
+      {text}
+    </motion.span>
+  );
+}
+
+export function ReviewError({
+  retry,
+  action,
+  title,
+  body,
+}: {
+  retry: () => void;
+  action?: ReactNode;
+  title?: ReactNode;
+  body?: ReactNode;
+}) {
   return (
     <section className="flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">
       <span className="mb-5 grid size-12 place-items-center rounded-full bg-danger-soft text-danger">
         <CircleAlert className="size-5" aria-hidden="true" />
       </span>
-      <h2 className="text-2xl font-medium">
-        <Trans>Couldn’t load your cards</Trans>
-      </h2>
+      <h2 className="text-2xl font-medium">{title ?? <Trans>Couldn’t load your cards</Trans>}</h2>
       <p className="mt-2 max-w-[30ch] text-md text-muted">
-        <Trans>Check your connection and try again.</Trans>
+        {body ?? <Trans>Check your connection and try again.</Trans>}
       </p>
       <div className="mt-6 flex items-center gap-2">
         <Button variant="primary" onClick={retry}>

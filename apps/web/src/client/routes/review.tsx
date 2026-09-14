@@ -1,24 +1,36 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
+import { type Drawn, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { buttonClass } from "../components/Button";
+import { Button, buttonClass } from "../components/Button";
 import { GRADES } from "../components/Grade";
+import { useAddCard } from "../lib/add-card";
 import { api, deviceTimezone, type QueueItem } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
+import { lanternFor } from "../lib/flame";
 import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
 import { decksQuery, drawQuery, queueQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
+import {
+  type DayOutcome,
+  dayOutcome,
+  EXTRA_ROUND,
+  forgottenRound,
+  nextRoundSize,
+  streakWith,
+} from "../lib/review-complete";
 import { drawState, type LocalGrade, reviewItem, stateBefore } from "../lib/review-draw";
 import { itemKey } from "../lib/review-modes";
 import {
   GradeBar,
   ReviewCard,
+  ReviewComplete,
   ReviewError,
   ReviewHeader,
   ReviewSkeleton,
-  SessionDone,
 } from "../views/ReviewView";
 
 export const Route = createFileRoute("/review")({
@@ -40,11 +52,21 @@ const REFRESH_AFTER = 20;
 
 type Pinned = { cardId: string; mode: string };
 
+/**
+ * A stretch of the day's review. The draw stops at an attempt count, the goal first and then ten
+ * more per round, and Review forgotten walks a list fixed when it was chosen.
+ */
+type Leg =
+  | { kind: "draw"; from: number; until: number }
+  | { kind: "forgotten"; from: number; items: Drawn[] };
+
 function Review() {
   const { t } = useLingui();
   const { deck, round } = Route.useSearch();
   const qc = useQueryClient();
   const navigate = useNavigate();
+  const add = useAddCard();
+  const reduce = useReducedMotion();
   // The draw also feeds the header's count, so it loads in a round too.
   const draw = useQuery(drawQuery(deck));
   // A round from Today is a fixed list rather than a draw, walked in order.
@@ -58,6 +80,8 @@ function Review() {
   const [revealed, setRevealed] = useState(false);
   const [done, setDone] = useState(0);
   const [roundGraded, setRoundGraded] = useState<ReadonlySet<string>>(() => new Set());
+  const [leg, setLeg] = useState<Leg | null>(null);
+  const [legGraded, setLegGraded] = useState<ReadonlySet<string>>(() => new Set());
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
   const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
@@ -80,12 +104,38 @@ function Review() {
   );
   const drawn =
     pinnedItem ?? (data && state?.next ? reviewItem(data, state.log, state.next) : null);
-  const current: QueueItem | null = round ? (roundLeft[0] ?? null) : drawn;
+
+  // The first leg runs to the goal, or is one more round when the goal was met before this review.
+  useEffect(() => {
+    if (round || leg || !data || !state) return;
+    const { attempts } = state;
+    const until = attempts < data.goal ? data.goal : attempts + EXTRA_ROUND;
+    setLeg({ kind: "draw", from: attempts, until });
+  }, [round, leg, data, state]);
+  const atStop = leg?.kind === "draw" && !!state && state.attempts >= leg.until;
+  const legLeft =
+    leg?.kind === "forgotten" && data && state
+      ? leg.items
+          .filter((d) => !legGraded.has(drawKey(d.cardId, d.mode)))
+          .flatMap((d) => reviewItem(data, state.log, d) ?? [])
+      : [];
+  const current: QueueItem | null = round
+    ? (roundLeft[0] ?? null)
+    : !leg
+      ? null
+      : leg.kind === "forgotten"
+        ? (legLeft[0] ?? null)
+        : atStop
+          ? null
+          : drawn;
   const currentCardId = current?.card.id;
   const currentItemKey = current ? itemKey(current) : undefined;
   const deckName = deck ? decks.data?.find((d) => d.id === deck)?.name : undefined;
   const hint = useRevealHint(current ? `${current.stateId}-${done}` : undefined, revealed);
-  usePrefetchPictures(round ? roundLeft : (state?.upcoming ?? []), 0);
+  usePrefetchPictures(
+    round ? roundLeft : leg?.kind === "forgotten" ? legLeft : (state?.upcoming ?? []),
+    0,
+  );
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && (!pinned || !pinnedItem);
@@ -127,14 +177,66 @@ function Review() {
   const exhausted = !!data && !state?.next;
   const unreachable = draw.fetchStatus === "paused" || draw.isError;
   const confirmedEmpty = exhausted && !!data && data.fetchedAt >= lastChange;
-  const needsConfirming = !round && exhausted && !confirmedEmpty && !unreachable;
+  const drawing = leg?.kind === "draw" && !atStop;
+  const needsConfirming = !round && drawing && exhausted && !confirmedEmpty && !unreachable;
   useEffect(() => {
     if (needsConfirming && !draw.isFetching) void draw.refetch();
   }, [needsConfirming, draw.isFetching, draw.refetch]);
-  const finished = round
-    ? !!roundQueue.data && !current
-    : !current && exhausted && !draw.isFetching && (confirmedEmpty || unreachable);
+  // Confirmed stays confirmed through a background refetch, so the end never blinks out and replays.
+  const ranOut =
+    drawing && !current && exhausted && (confirmedEmpty || (unreachable && !draw.isFetching));
+  const goalMet = !!data && !!state && state.attempts >= data.goal;
+  // Running out offline, or after a failed refresh, proves nothing about the day unless the goal is met.
+  const unconfirmed = ranOut && !confirmedEmpty && !goalMet;
+  const ended: DayOutcome | "round" | null = round
+    ? roundQueue.data && !current
+      ? "round"
+      : null
+    : data &&
+        state &&
+        (atStop || (leg?.kind === "forgotten" && !current) || (ranOut && !unconfirmed))
+      ? dayOutcome(state.attempts, data.goal)
+      : null;
   const failed = round ? roundQueue.isError && !roundQueue.data : draw.isError && !draw.data;
+
+  // A deck running out below the goal says nothing about the other decks, so the day stays as the server has it.
+  const counts = ended === "goal_met" || (ended === "exhausted" && !deck);
+  const attempts = state?.attempts;
+  const streakNow = useMemo(
+    () =>
+      streak.data && attempts !== undefined
+        ? streakWith(streak.data, attempts, counts)
+        : streak.data,
+    [streak.data, attempts, counts],
+  );
+  // What the end grows from: the week as this stretch began, and the header's flame as it last stood.
+  // Held while ended, so a refetch confirming the day cannot fill the light before the screen does.
+  const legFrom = leg?.from;
+  const before = useMemo(
+    () => ({
+      week:
+        streak.data && legFrom !== undefined
+          ? streakWith(streak.data, legFrom, false)
+          : streak.data,
+      lantern: lanternFor(streak.data),
+    }),
+    [streak.data, legFrom],
+  );
+  const [held, setHeld] = useState(before);
+  useEffect(() => {
+    if (!ended) setHeld(before);
+  }, [ended, before]);
+
+  const startLeg = (next: Leg) => {
+    // The pressed row fades out for a moment, and while it holds focus Space would not reach the card.
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    setLegGraded(new Set());
+    setPinned(null);
+    setRevealed(false);
+    setAnimateNextCard(true);
+    setAnimateReveal(true);
+    setLeg(next);
+  };
 
   const stopAudio = useCallback(() => {
     playingAudio.current?.pause();
@@ -201,6 +303,9 @@ function Review() {
     },
     onSuccess: ({ item, recorded }) => {
       if (round) setRoundGraded((keys) => new Set(keys).add(itemKey(item)));
+      if (leg?.kind === "forgotten") {
+        setLegGraded((keys) => new Set(keys).add(drawKey(item.card.id, modeKey(item.mode))));
+      }
       setGradeError(null);
       setPendingRating(null);
       setRevealed(false);
@@ -265,17 +370,24 @@ function Review() {
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, onGrade, navigate]);
 
+  const doneLink = (variant: "primary" | "secondary") => (
+    <Link to="/today" className={buttonClass(variant, "lg", "w-full")}>
+      <Trans>Done</Trans>
+    </Link>
+  );
+
   return (
-    <div className="mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
+    <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
       <ReviewHeader
         attempts={state?.attempts ?? 0}
         goal={data?.goal ?? 0}
         animateCount={animateNextCard}
         streak={streak.data}
+        complete={!!ended}
         onClose={() => navigate({ to: "/today" })}
       />
 
-      {!current && !finished && !failed && <ReviewSkeleton />}
+      {!current && !ended && !unconfirmed && !failed && <ReviewSkeleton />}
 
       {failed && (
         <ReviewError
@@ -288,52 +400,119 @@ function Review() {
         />
       )}
 
-      {finished && (
-        <SessionDone
-          done={done}
-          deckName={deckName}
-          round={!!round}
-          streak={streak.data}
+      {unconfirmed && !failed && (
+        <ReviewError
+          title={<Trans>Couldn’t check for more cards</Trans>}
+          body={<Trans>Your grades are saved. Check your connection and try again.</Trans>}
+          retry={() => draw.refetch()}
           action={
-            <Link to="/today" className={buttonClass("primary", "lg")}>
+            <Link to="/today" className={buttonClass("ghost")}>
               <Trans>Done</Trans>
             </Link>
           }
         />
       )}
 
-      {current && (
-        <>
-          <ReviewCard
-            key={`${itemKey(current)}-${done}`}
-            item={current}
-            revealed={revealed}
-            animateReveal={animateReveal}
-            hint={hint}
-            onReveal={() => {
-              recordReveal();
-              setAnimateReveal(true);
-              setRevealed(true);
-            }}
-            onPlayAudio={current.card.language ? playAudio : undefined}
-            audioState={audioState}
-            audioError={
-              audioError && audioError.item === currentItemKey ? audioError.message : null
+      {/* The card steps back as the end arrives, popped out of the flow so the two overlap. */}
+      <AnimatePresence mode="popLayout" initial={false}>
+        {ended && data && state && (
+          <motion.div
+            key="end"
+            className="flex min-h-0 flex-1 flex-col"
+            exit={{ opacity: 0, transition: { duration: 0.14 } }}
+          >
+            <ReviewComplete
+              outcome={ended}
+              attempts={state.attempts}
+              from={leg?.from}
+              reviewed={done}
+              deckName={deck && ended === "exhausted" ? deckName : undefined}
+              streak={streakNow}
+              streakBefore={held.week}
+              lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
+              forgotten={round ? 0 : forgottenRound(data, state, deck).length}
+              nextRound={round ? 0 : nextRoundSize(data, state, deck)}
+              onReviewForgotten={() =>
+                startLeg({
+                  kind: "forgotten",
+                  from: state.attempts,
+                  items: forgottenRound(data, state, deck),
+                })
+              }
+              onAnotherRound={() =>
+                startLeg({
+                  kind: "draw",
+                  from: state.attempts,
+                  until: state.attempts + EXTRA_ROUND,
+                })
+              }
+              actions={
+                ended === "nothing_due" ? (
+                  <>
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className="w-full"
+                      onClick={() => add.openCard(deck)}
+                    >
+                      <Plus aria-hidden="true" />
+                      <Trans>Add cards</Trans>
+                    </Button>
+                    {doneLink("secondary")}
+                  </>
+                ) : (
+                  doneLink("primary")
+                )
+              }
+            />
+          </motion.div>
+        )}
+        {current && (
+          <motion.div
+            key="cards"
+            className="flex min-h-0 flex-1 flex-col"
+            exit={
+              reduce
+                ? { opacity: 0, transition: { duration: 0.12 } }
+                : {
+                    opacity: 0,
+                    y: 8,
+                    scale: 0.98,
+                    transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
+                  }
             }
-            className={`${animateNextCard ? "enter-card" : ""} mt-4 @3xl:max-h-[600px] @3xl:min-h-[460px]`}
-          />
-          <GradeBar
-            revealed={revealed}
-            animateIn={animateReveal}
-            next={current.next}
-            pending={grade.isPending}
-            pendingRating={pendingRating}
-            error={gradeError}
-            onGrade={(rating) => onGrade(rating, "pointer")}
-            className="pt-3"
-          />
-        </>
-      )}
+          >
+            <ReviewCard
+              key={`${itemKey(current)}-${done}`}
+              item={current}
+              revealed={revealed}
+              animateReveal={animateReveal}
+              hint={hint}
+              onReveal={() => {
+                recordReveal();
+                setAnimateReveal(true);
+                setRevealed(true);
+              }}
+              onPlayAudio={current.card.language ? playAudio : undefined}
+              audioState={audioState}
+              audioError={
+                audioError && audioError.item === currentItemKey ? audioError.message : null
+              }
+              className={`${animateNextCard ? "enter-card" : ""} mt-4 @3xl:max-h-[600px] @3xl:min-h-[460px]`}
+            />
+            <GradeBar
+              revealed={revealed}
+              animateIn={animateReveal}
+              next={current.next}
+              pending={grade.isPending}
+              pendingRating={pendingRating}
+              error={gradeError}
+              onGrade={(rating) => onGrade(rating, "pointer")}
+              className="pt-3"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

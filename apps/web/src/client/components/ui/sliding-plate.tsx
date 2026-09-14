@@ -14,10 +14,7 @@ interface SlidingPlateProps {
   className?: string | undefined;
 }
 
-/**
- * The plate under the chosen item of a horizontal row, first inside its positioned parent. It
- * springs to a pointer's choice and jumps for a key; DESIGN.md "Motion" has its timing.
- */
+/** The plate under the chosen item of a row, first inside its positioned parent; DESIGN.md "Motion" has its timing. */
 export function SlidingPlate({
   chosen,
   attribute,
@@ -68,20 +65,22 @@ export function SlidingPlate({
     };
 
     place(false);
-    // A click the keyboard made has no pointer detail; the flag lasts only for the change that click causes.
-    const onClick = (event: MouseEvent) => {
-      keyboard = event.detail === 0;
-      setTimeout(() => {
-        keyboard = false;
-      });
+    // Held until the next pointer press, because a route commits its choice after the key's click returns.
+    const onKey = () => {
+      keyboard = true;
     };
-    group.addEventListener("click", onClick, true);
+    const onPointer = () => {
+      keyboard = false;
+    };
+    group.addEventListener("keydown", onKey, true);
+    document.addEventListener("pointerdown", onPointer, true);
     const changed = new MutationObserver(() => place(!keyboard));
     changed.observe(group, { subtree: true, attributeFilter: [attribute] });
     const resized = new ResizeObserver(() => place(false));
     resized.observe(group);
     return () => {
-      group.removeEventListener("click", onClick, true);
+      group.removeEventListener("keydown", onKey, true);
+      document.removeEventListener("pointerdown", onPointer, true);
       changed.disconnect();
       resized.disconnect();
     };

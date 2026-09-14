@@ -234,7 +234,7 @@ export const SCREENS: Entry[] = [
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
-          <PhoneShot caption="Cards due" initial="dark" path="/">
+          <PhoneShot caption="Cards due" initial="dark" path="/today">
             <TodayView
               decks={m.decks}
               streak={m.streak}
@@ -243,10 +243,10 @@ export const SCREENS: Entry[] = [
               rounds={m.rounds}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
-              static={{ path: "/" }}
+              static={{ path: "/today" }}
             />
           </PhoneShot>
-          <PhoneShot caption="Nothing due" initial="light" path="/">
+          <PhoneShot caption="Nothing due" initial="light" path="/today">
             <TodayView
               decks={m.quietDecks}
               streak={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
@@ -265,17 +265,17 @@ export const SCREENS: Entry[] = [
               rounds={{ forgotten: 9, new: 0, slipping: 0 }}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
-              static={{ path: "/" }}
+              static={{ path: "/today" }}
             />
           </PhoneShot>
-          <PhoneShot caption="First run" initial="light" path="/">
+          <PhoneShot caption="First run" initial="light" path="/today">
             <TodayView
               decks={[]}
               streak={m.streakFrom(m.noHistory)}
               streakButton={<StreakButton variant="phone" summary={m.streakFrom(m.noHistory)} />}
               name={m.me.name}
               docsUrl="https://lymi.app/docs"
-              static={{ path: "/" }}
+              static={{ path: "/today" }}
             />
           </PhoneShot>
         </div>
@@ -288,7 +288,7 @@ export const SCREENS: Entry[] = [
                 docsUrl="https://lymi.app/docs"
                 onAdd={noop}
                 streak={<StreakButton variant="rail" summary={m.streak} />}
-                static={{ path: "/" }}
+                static={{ path: "/today" }}
               />
               <main className="@container flex min-w-0 flex-1 flex-col">
                 <TodayView
@@ -298,7 +298,7 @@ export const SCREENS: Entry[] = [
                   rounds={m.rounds}
                   name={m.me.name}
                   docsUrl="https://lymi.app/docs"
-                  static={{ path: "/" }}
+                  static={{ path: "/today" }}
                 />
               </main>
             </Desktop>

@@ -13,7 +13,7 @@ import { Skeleton } from "../components/skeleton";
 import type { StreakSummary } from "../components/streak";
 import type { DeckSummary } from "../lib/api";
 import { lanternFor } from "../lib/flame";
-import { Page, PageHeader, type StaticNav, TabLead, TopBar } from "./shell";
+import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
@@ -73,7 +73,7 @@ export function TodayView({
     <Page>
       {/* The rail carries capture and the learner on desktop, so this row is the phone's. */}
       <TopBar
-        back={<TabLead />}
+        back={<TileLockup size="bar" />}
         actions={
           <>
             {streakButton}

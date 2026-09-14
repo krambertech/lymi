@@ -95,10 +95,7 @@ export function Sidebar({
       )}
     >
       <div className="mb-6 mt-8 flex h-10 items-center gap-1 px-2.5">
-        <span className="me-auto flex items-center gap-2.5">
-          <AppTile size={28} title="Lymi" />
-          <Wordmark size={18} className="text-text" />
-        </span>
+        <TileLockup size="rail" className="me-auto" />
         {streak}
         {onSearch && (
           <IconButton label={t`Search`} size="sm" onClick={onSearch}>
@@ -221,16 +218,23 @@ export function TopBar({
   );
 }
 
-/**
- * The start of a tab's top bar: the app tile and the wordmark, as they top the rail.
- * A nested screen puts back here instead.
- */
-export function TabLead() {
+const LOCKUP = { rail: { tile: 28, word: 18 }, bar: { tile: 40, word: 22 } } as const;
+
+/** The app tile and wordmark that open the rail and, in place of back, a tab's top bar. */
+export function TileLockup({
+  size,
+  className,
+}: {
+  size: keyof typeof LOCKUP;
+  className?: string | undefined;
+}) {
+  const { tile, word } = LOCKUP[size];
   return (
-    <div className="flex items-center gap-2.5">
-      <AppTile size={40} className="edge" title="Lymi" />
-      <Wordmark size={22} className="text-text" />
-    </div>
+    <span className={clsx("flex items-center gap-2.5", className)}>
+      {/* On the bar the tile sits on the canvas, which in the dark room is the tile's own colour. */}
+      <AppTile size={tile} title="Lymi" className={size === "bar" ? "edge" : undefined} />
+      <Wordmark size={word} className="text-text" />
+    </span>
   );
 }
 

@@ -276,6 +276,10 @@ msgstr "{months, plural, one {In # month} other {In # months}}"
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
+#: src/client/lib/document-title.ts
+msgid "{name} · Lymi"
+msgstr "{name} · Lymi"
+
 #: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
 msgstr "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
@@ -703,6 +707,10 @@ msgstr "Close"
 msgid "Come back later, or add something new."
 msgstr "Come back later, or add something new."
 
+#: src/client/routes/consent.tsx
+msgid "Connect {appName}"
+msgstr "Connect {appName}"
+
 #: src/client/components/connected-apps-section.tsx
 msgid "connected {connected}"
 msgstr "connected {connected}"
@@ -861,6 +869,7 @@ msgstr "Deck"
 msgid "Deck options"
 msgstr "Deck options"
 
+#: src/client/routes/library.$deckId.settings.tsx
 #: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 msgid "Deck settings"
@@ -1085,6 +1094,7 @@ msgid "Identified by"
 msgstr "Identified by"
 
 #: src/client/components/learner-menu.tsx
+#: src/client/routes/insights.tsx
 #: src/client/views/insights-view.tsx
 #: src/client/views/shell.tsx
 msgid "Insights"
@@ -1214,6 +1224,7 @@ msgid "Let {appName} use your Lymi?"
 msgstr "Let {appName} use your Lymi?"
 
 #: src/client/components/pill-nav.tsx
+#: src/client/routes/library.tsx
 #: src/client/views/deck-detail-view.tsx
 #: src/client/views/library-view.tsx
 #: src/client/views/shell.tsx
@@ -1785,6 +1796,7 @@ msgstr "Reveal the card"
 msgid "Reveal the card when you have it"
 msgstr "Reveal the card when you have it"
 
+#: src/client/routes/review.tsx
 #: src/client/views/deck-detail-view.tsx
 #: src/client/views/today-view.tsx
 msgid "Review"
@@ -1922,6 +1934,7 @@ msgid "Send a daily reminder"
 msgstr "Send a daily reminder"
 
 #: src/client/components/learner-menu.tsx
+#: src/client/routes/settings.tsx
 #: src/client/views/settings-view.tsx
 msgid "Settings"
 msgstr "Settings"
@@ -1950,6 +1963,10 @@ msgstr "Show"
 #: src/client/components/shortcuts-dialog.tsx
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
+
+#: src/client/routes/login.tsx
+msgid "Sign in"
+msgstr "Sign in"
 
 #: src/client/views/consent-view.tsx
 msgid "Sign in as you anywhere else"
@@ -2199,6 +2216,7 @@ msgstr "today"
 #: src/client/components/pill-nav.tsx
 #: src/client/components/review-timeline.tsx
 #: src/client/components/streak.tsx
+#: src/client/routes/today.tsx
 #: src/client/views/shell.tsx
 #: src/client/views/today-view.tsx
 #: src/client/views/word-view.tsx

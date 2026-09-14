@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -7,6 +8,7 @@ import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { NotificationsSection } from "../components/notifications-section";
 import { api, type Settings } from "../lib/api";
+import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
 import { meQuery, settingsQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
@@ -17,6 +19,8 @@ export const Route = createFileRoute("/settings")({
 });
 
 function SettingsRoute() {
+  const { t } = useLingui();
+  useDocumentTitle(t`Settings`);
   const me = useQuery(meQuery);
   const settings = useQuery(settingsQuery);
   const qc = useQueryClient();

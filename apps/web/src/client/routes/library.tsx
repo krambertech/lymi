@@ -1,7 +1,9 @@
+import { useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAddCard } from "../lib/add-card";
+import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import { deckCardsQuery, decksQuery, meQuery } from "../lib/queries";
 import { Streak } from "../lib/streak";
@@ -20,6 +22,8 @@ function Library() {
 }
 
 function DeckList() {
+  const { t } = useLingui();
+  useDocumentTitle(t`Library`);
   const decks = useQuery(decksQuery);
   const me = useQuery(meQuery);
   const leave = useSignOut();

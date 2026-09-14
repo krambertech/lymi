@@ -312,6 +312,10 @@ msgstr "{months, plural, one {Через # месяц} few {Через # мес�
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
+#: src/client/lib/document-title.ts
+msgid "{name} · Lymi"
+msgstr "{name} · Lymi"
+
 #: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
 msgstr "{n, plural, one {Повторить # карточку из колоды {name}} few {Повторить # карточки из колоды {name}} many {Повторить # карточек из колоды {name}} other {Повторить # карточки из колоды {name}}}"
@@ -739,6 +743,10 @@ msgstr "Закрыть"
 msgid "Come back later, or add something new."
 msgstr "Вернись позже или добавь что-нибудь новое."
 
+#: src/client/routes/consent.tsx
+msgid "Connect {appName}"
+msgstr "Подключить {appName}"
+
 #: src/client/components/connected-apps-section.tsx
 msgid "connected {connected}"
 msgstr "подключено {connected}"
@@ -897,6 +905,7 @@ msgstr "Колода"
 msgid "Deck options"
 msgstr "Параметры колоды"
 
+#: src/client/routes/library.$deckId.settings.tsx
 #: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 msgid "Deck settings"
@@ -1121,6 +1130,7 @@ msgid "Identified by"
 msgstr "Определено по адресу"
 
 #: src/client/components/learner-menu.tsx
+#: src/client/routes/insights.tsx
 #: src/client/views/insights-view.tsx
 #: src/client/views/shell.tsx
 msgid "Insights"
@@ -1250,6 +1260,7 @@ msgid "Let {appName} use your Lymi?"
 msgstr "Разрешить {appName} пользоваться твоим Lymi?"
 
 #: src/client/components/pill-nav.tsx
+#: src/client/routes/library.tsx
 #: src/client/views/deck-detail-view.tsx
 #: src/client/views/library-view.tsx
 #: src/client/views/shell.tsx
@@ -1821,6 +1832,7 @@ msgstr "Открыть карточку"
 msgid "Reveal the card when you have it"
 msgstr "Открой карточку, когда вспомнишь"
 
+#: src/client/routes/review.tsx
 #: src/client/views/deck-detail-view.tsx
 #: src/client/views/today-view.tsx
 msgid "Review"
@@ -1958,6 +1970,7 @@ msgid "Send a daily reminder"
 msgstr "Присылать ежедневное напоминание"
 
 #: src/client/components/learner-menu.tsx
+#: src/client/routes/settings.tsx
 #: src/client/views/settings-view.tsx
 msgid "Settings"
 msgstr "Настройки"
@@ -1986,6 +1999,10 @@ msgstr "Показать"
 #: src/client/components/shortcuts-dialog.tsx
 msgid "Show the meaning, then Good"
 msgstr "Показать значение, затем «Хорошо»"
+
+#: src/client/routes/login.tsx
+msgid "Sign in"
+msgstr "Вход"
 
 #: src/client/views/consent-view.tsx
 msgid "Sign in as you anywhere else"
@@ -2235,6 +2252,7 @@ msgstr "сегодня"
 #: src/client/components/pill-nav.tsx
 #: src/client/components/review-timeline.tsx
 #: src/client/components/streak.tsx
+#: src/client/routes/today.tsx
 #: src/client/views/shell.tsx
 #: src/client/views/today-view.tsx
 #: src/client/views/word-view.tsx

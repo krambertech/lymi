@@ -10,6 +10,7 @@ import { GRADES } from "../components/grade";
 import { useAddCard } from "../lib/add-card";
 import { api, deviceTimezone, type QueueItem } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
+import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
 import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
 import { decksQuery, drawQuery, queueQuery, streakQuery } from "../lib/queries";
@@ -73,6 +74,7 @@ function ReviewPage() {
 
 function Review() {
   const { t } = useLingui();
+  useDocumentTitle(t`Review`);
   const { deck, round } = Route.useSearch();
   const qc = useQueryClient();
   const navigate = useNavigate();

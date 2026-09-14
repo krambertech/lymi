@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { createFileRoute } from "@tanstack/react-router";
+import { useDocumentTitle } from "../lib/document-title";
 import { ComingSoonView } from "../views/coming-soon-view";
 
 export const Route = createFileRoute("/activity")({
@@ -8,6 +9,7 @@ export const Route = createFileRoute("/activity")({
 
 function ActivityRoute() {
   const { t } = useLingui();
+  useDocumentTitle(t`Activity`);
   return (
     <ComingSoonView
       title={t`Activity`}

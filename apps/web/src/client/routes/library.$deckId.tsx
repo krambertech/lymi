@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { api, type Card } from "../lib/api";
+import { useDocumentTitle } from "../lib/document-title";
 import { cardHistoryQuery, deckCardsQuery, decksQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { DeckDetailView } from "../views/deck-detail-view";
@@ -37,6 +38,7 @@ function DeckPage() {
   const history = useQuery({ ...cardHistoryQuery(openCardId ?? ""), enabled: !!openCardId });
   const deck = decks.data?.find((d) => d.id === deckId);
   const add = useAddCard();
+  useDocumentTitle(deck?.name);
 
   const events = useMemo(
     () => history.data?.events.map((e) => describeEvent(e, i18n)),

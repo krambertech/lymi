@@ -36,7 +36,7 @@ function Switch({ className, disabled, onPointerDown, ...props }: SwitchPrimitiv
         if (event.button === 0) setHeld(true);
       }}
       className={cn(
-        "group/switch relative inline-flex h-[26px] w-[44px] shrink-0 cursor-pointer rounded-full outline-none",
+        "group/switch relative inline-flex h-[26px] w-[44px] shrink-0 cursor-pointer rounded-full",
         "edge-2 bg-plate-2 transition-[background-color,box-shadow] duration-200 ease-(--ease-out) data-checked:bg-amber data-checked:shadow-none",
         // Carries the touch target to 44 px tall without moving anything around it.
         "after:absolute after:-inset-y-[9px] after:inset-x-0 after:content-['']",

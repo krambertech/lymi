@@ -327,7 +327,7 @@ export const SPECIMENS = {
   menu: { name: "An open menu", height: 360, touchHeight: 520, Scene: MenuScene },
   confirmation: { name: "A confirmation", height: 360, touchHeight: 520, Scene: ConfirmationScene },
   form: { name: "A form", height: 520, touchHeight: 640, Scene: FormScene },
-  nested: { name: "A list over a form", height: 420, touchHeight: 640, Scene: NestedScene },
+  nested: { name: "A list over a form", height: 480, touchHeight: 640, Scene: NestedScene },
   place: { name: "The streak place", height: 760, touchHeight: 844, Scene: PlaceScene },
   select: { name: "An open select", height: 360, touchHeight: 520, Scene: SelectScene },
   combobox: { name: "An open combobox", height: 420, touchHeight: 640, Scene: ComboboxScene },

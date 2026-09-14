@@ -1,5 +1,5 @@
 import { MotionConfig } from "motion/react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useForcedStates } from "./forced-states";
 import { SPECIMENS, type SpecimenId } from "./specimens";
 
@@ -17,29 +17,51 @@ function frameSrc(specimen: SpecimenId) {
   return `/design/frame/${specimen}`;
 }
 
+const FINE_POINTER = "(hover: hover) and (pointer: fine)";
+
+function subscribePointer(onChange: () => void) {
+  const mq = window.matchMedia(FINE_POINTER);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
 /** The same open overlay on a desktop and on a phone, side by side. */
 export function DeviceFrames({ specimen }: { specimen: SpecimenId }) {
   const { name, height, touchHeight = height } = SPECIMENS[specimen];
+  // A frame reads the pointer of the device it is viewed on, so a phone gets two touch shapes.
+  const fine = useSyncExternalStore(
+    subscribePointer,
+    () => window.matchMedia(FINE_POINTER).matches,
+    () => true,
+  );
   return (
-    <div className="grid w-full items-start gap-4 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,300px)]">
-      <figure className="grid min-w-0 gap-2">
-        <ScaledFrame
-          src={frameSrc(specimen)}
-          title={`${name} on a desktop`}
-          width={DESKTOP_WIDTH}
-          height={height}
-        />
-        <figcaption className="font-mono text-xs text-muted">Desktop</figcaption>
-      </figure>
-      <figure className="grid min-w-0 gap-2">
-        <ScaledFrame
-          src={frameSrc(specimen)}
-          title={`${name} on a touch device`}
-          width={TOUCH_WIDTH}
-          height={touchHeight}
-        />
-        <figcaption className="font-mono text-xs text-muted">Touch</figcaption>
-      </figure>
+    <div className="grid w-full gap-3">
+      {!fine && (
+        <p className="font-mono text-xs text-muted">
+          This device has no fine pointer, so both frames take the touch shape. Open this page on a
+          desktop to see the desktop one.
+        </p>
+      )}
+      <div className="grid w-full items-start gap-4 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,300px)]">
+        <figure className="grid min-w-0 gap-2">
+          <figcaption className="font-mono text-xs text-muted">Desktop</figcaption>
+          <ScaledFrame
+            src={frameSrc(specimen)}
+            title={`${name} on a desktop`}
+            width={DESKTOP_WIDTH}
+            height={height}
+          />
+        </figure>
+        <figure className="grid min-w-0 gap-2">
+          <figcaption className="font-mono text-xs text-muted">Touch</figcaption>
+          <ScaledFrame
+            src={frameSrc(specimen)}
+            title={`${name} on a touch device`}
+            width={TOUCH_WIDTH}
+            height={touchHeight}
+          />
+        </figure>
+      </div>
     </div>
   );
 }

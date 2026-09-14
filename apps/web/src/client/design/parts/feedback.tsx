@@ -24,7 +24,7 @@ export const feedback: Group = {
       slug: "progress",
       name: "Progress",
       source: "components/progress.tsx",
-      note: "A 3 px track. How far through a session, never a score.",
+      note: "An 8 px track. How far through a session, never a score.",
       Demo: () => (
         <Variants
           items={[
@@ -171,7 +171,8 @@ function ToastPreview({
   }, [manager, title, action, type]);
   return (
     <ToastProvider toastManager={manager}>
-      <ToastViewport aria-label="Toast preview" className="static mx-0 w-full">
+      {/* A toast stacks at z-index 1000, which would otherwise climb over the page's sticky header. */}
+      <ToastViewport aria-label="Toast preview" className="static isolate mx-0 w-full">
         <ToastList
           closeLabel="Dismiss"
           className="static h-auto [transform:none] data-expanded:h-auto data-expanded:[transform:none] data-starting-style:[transform:none] [&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:none]"

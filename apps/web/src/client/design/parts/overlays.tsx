@@ -94,7 +94,7 @@ export const overlays: Group = {
               label: "Open",
               note: "Ink on the room, under the control, 6 px from it. It flips above when there is no room below.",
               render: () => (
-                <div className="pb-8">
+                <div className="flex w-full justify-center pb-8">
                   <Tooltip open>
                     <TooltipTrigger
                       render={

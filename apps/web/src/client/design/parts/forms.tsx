@@ -1109,13 +1109,11 @@ export const combobox: Group = {
                 label: "Invalid",
                 note: "Submitted without a choice.",
                 render: () => (
-                  <div className={box}>
-                    <LanguageField
-                      value={empty}
-                      onChange={setEmpty}
-                      error="Choose the language this deck’s cards are in."
-                    />
-                  </div>
+                  <Field className={box}>
+                    <FieldLabel>Deck</FieldLabel>
+                    <DeckCombobox value={empty} onChange={setEmpty} />
+                    <FieldError>Choose a deck for this card.</FieldError>
+                  </Field>
                 ),
               },
               {

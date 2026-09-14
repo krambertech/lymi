@@ -42,7 +42,7 @@ function ThemeToggle() {
 }
 
 const navItem =
-  "flex h-8 items-center rounded-xs px-2.5 text-base text-text-2 transition-[background-color,color] duration-150 hoverable:hover:bg-plate-2 hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&.active]:font-medium";
+  "flex h-8 items-center rounded-xs px-2.5 text-base text-text-2 transition-[background-color,color] duration-150 hoverable:hover:bg-plate-2 hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge-inset [&.active]:font-medium";
 
 function SiteNav({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
   return (

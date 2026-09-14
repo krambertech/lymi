@@ -22,6 +22,7 @@ import {
 } from "../lib/avatar-crop";
 import { Button, IconButton } from "./button";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { Slider } from "./ui/slider";
 
 /** A decoded image the learner picked, ready to crop. */
 export interface PickedImage {
@@ -231,16 +232,15 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
         >
           <ZoomOut />
         </IconButton>
-        <input
-          type="range"
+        <Slider
           min={MIN_ZOOM}
           max={MAX_ZOOM}
           step={0.01}
           value={crop.zoom}
           disabled={saving}
-          onChange={(e) => zoomTo(Number(e.target.value))}
+          onValueChange={zoomTo}
           aria-label={t`Zoom`}
-          className="h-11 min-w-0 flex-1 accent-text"
+          className="min-w-0 flex-1"
         />
         <IconButton
           label={t`Zoom in`}

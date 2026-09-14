@@ -98,6 +98,27 @@ describe("LanguageField", () => {
       .toHaveAttribute("aria-selected", "true");
   });
 
+  test("a valid tag stays reachable when its letters are inside a listed name", async () => {
+    const onChange = vi.fn();
+    await render(<Harness initial="it" onChange={onChange} />);
+    await open();
+    await userEvent.keyboard("sw");
+
+    await expect.poll(() => options().at(-1)).toBe("Use “sw” as the tag");
+    expect(options()[0]).toBe("Swedishsv");
+    await page.getByRole("option", { name: "Use “sw” as the tag" }).click();
+    expect(onChange).toHaveBeenCalledExactlyOnceWith("sw");
+  });
+
+  test("a tag the list already holds is not offered twice", async () => {
+    await render(<Harness />);
+    await open();
+    await userEvent.keyboard("IT");
+
+    await expect.poll(options).toContain("Italianit");
+    expect(options()).not.toContain("Use “IT” as the tag");
+  });
+
   test("free text that is not a tag is not accepted", async () => {
     const onChange = vi.fn();
     await render(<Harness initial="it" onChange={onChange} />);
@@ -129,7 +150,8 @@ describe("LanguageField", () => {
   test("the list keeps its filter while it closes, instead of flashing every language", async () => {
     await render(<Harness />);
     await open();
-    await userEvent.keyboard("fin");
+    // Four letters, so no tag row joins the one match.
+    await userEvent.keyboard("finn");
     await expect.poll(options).toEqual(["Finnishfi"]);
 
     const counts: number[] = [];

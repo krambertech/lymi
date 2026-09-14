@@ -365,7 +365,7 @@ function Choices({
       isItemEqualToValue={(a, b) => a.value === b.value}
     >
       <ComboboxTrigger>
-        <ComboboxValue />
+        <ComboboxValue placeholder="Choose one" />
       </ComboboxTrigger>
       <ComboboxContent aria-label={label}>
         <ComboboxInput placeholder={searchLabel} />

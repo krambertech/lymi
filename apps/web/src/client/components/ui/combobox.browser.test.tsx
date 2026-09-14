@@ -410,6 +410,12 @@ describe("Combobox", () => {
     await expect.element(listbox()).not.toBeInTheDocument();
     expect(onValueChange).not.toHaveBeenCalled();
     await expect.poll(() => document.activeElement?.textContent).toBe("Next field");
+
+    // A later close that was not a Tab hands focus back to the box as usual.
+    await openWithKeyboard();
+    await userEvent.keyboard("{Escape}");
+    await expect.element(listbox()).not.toBeInTheDocument();
+    await expect.element(box()).toHaveFocus();
   });
 
   test("opens again with an empty search", async () => {

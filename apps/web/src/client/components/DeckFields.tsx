@@ -90,8 +90,6 @@ interface LanguageOption {
   label: string;
   /** The BCP 47 tag, shown at the end of the row. */
   hint?: string | undefined;
-  /** A tag typed by hand that the list does not know. */
-  custom?: boolean | undefined;
 }
 
 const optionLists = new Map<string, LanguageOption[]>();
@@ -121,7 +119,7 @@ interface LanguageProps {
 /**
  * Forty languages is a list you search, not a list you scroll. The tag rides along on each row,
  * because the tag tells Portuguese from Brazilian Portuguese and it is what the API stores. A valid
- * tag the list has never heard of is still reachable: typed in full, it becomes the only row.
+ * tag the list does not hold is still reachable: typed in full, it becomes the last row.
  */
 export function LanguageField({ value, onChange, label, hint, error }: LanguageProps) {
   const { t, i18n } = useLingui();
@@ -135,16 +133,16 @@ export function LanguageField({ value, onChange, label, hint, error }: LanguageP
       ? [...base, { value, label: languageName(value, i18n.locale), hint: value }]
       : base;
 
-  const needle = query.trim();
-  const matches = needle
-    ? known.filter((o) => contains(o.label, needle) || contains(o.hint ?? "", needle))
+  const tag = query.trim();
+  const matches = tag
+    ? known.filter((o) => contains(o.label, tag) || contains(o.hint ?? "", tag))
     : [none, ...known];
-  const tag = needle;
+  // Offered beside partial matches too, since "sw" is inside "Swedish" and would otherwise be unreachable.
   const custom: LanguageOption | null =
-    tag && matches.length === 0 && TAG_RE.test(tag)
-      ? { value: tag, label: t`Use “${tag}” as the tag`, custom: true }
+    TAG_RE.test(tag) && !known.some((o) => o.hint?.toLowerCase() === tag.toLowerCase())
+      ? { value: tag, label: t`Use “${tag}” as the tag` }
       : null;
-  const shown = custom ? [custom] : matches;
+  const shown = custom ? [...matches, custom] : matches;
 
   const fieldLabel = label ?? t`Language`;
   return (

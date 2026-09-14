@@ -296,22 +296,16 @@ function DrawerSearchContent({ "aria-label": label, className, children }: Conte
   const { input, trigger, setOpen } = useCombobox("ComboboxContent");
   const ref = React.useRef<HTMLDivElement>(null);
   const tabbed = React.useRef<"forward" | "back" | null>(null);
-  React.useEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      ref.current
-        ?.querySelector('[role="option"][aria-selected="true"]')
-        ?.scrollIntoView({ block: "nearest" });
-    });
-    return () => cancelAnimationFrame(frame);
-  }, []);
   return (
     <DrawerContent
       initialFocus={input}
       finalFocus={() => {
         const box = trigger.current;
-        if (!tabbed.current || !box) return true;
+        const direction = tabbed.current;
+        tabbed.current = null;
+        if (!direction || !box) return true;
         const popup = ref.current?.closest('[data-slot="drawer-popup"]') ?? null;
-        return tabNeighbour(box, tabbed.current === "back", popup);
+        return tabNeighbour(box, direction === "back", popup);
       }}
       onKeyDown={(e) => {
         if (e.key !== "Tab") return;

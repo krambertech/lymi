@@ -1,7 +1,7 @@
 import { Doc, Sub } from "./frame";
 
 const PAIRS: [string, string, string][] = [
-  ["End of session", "That’s the lot", "Congratulations! You did it! 🎉"],
+  ["End of session", "Nothing left today", "Congratulations! You did it! 🎉"],
   ["Nothing due", "Nothing due · Coming up: 31 cards tomorrow", "You’re all caught up!"],
   ["Empty deck", "Empty deck. Add the first card from your lesson.", "No cards found."],
   ["Archive", "Archived “sbrigarsi” · Undo", "Are you sure you want to delete this card?"],

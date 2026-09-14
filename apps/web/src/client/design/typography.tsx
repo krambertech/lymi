@@ -30,7 +30,7 @@ const SCALE: {
     size: "30 / 1.15",
     weight: "500",
     use: "The produce-side answer, and the end of a session.",
-    sample: "That\u2019s the lot",
+    sample: "Nothing left today",
   },
   {
     name: "2xl",

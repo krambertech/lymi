@@ -231,7 +231,7 @@ function DueHeading({
     );
   }
   if (due === 0) {
-    // No "that's the lot": a round below can still have cards to review.
+    // Not "Nothing left today": a round below can still have cards to review.
     return (
       <h2 className="text-2xl font-medium leading-tight">
         <Trans>Nothing due</Trans>

@@ -122,7 +122,7 @@ test("offline, grading still works, running out claims nothing, and it all syncs
     await expect(
       page.getByRole("heading", { name: "Couldn’t check for more cards" }),
     ).toBeVisible();
-    await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Nothing left today" })).toBeHidden();
   });
 
   await test.step("the queued grades reach the server once the connection returns", async () => {
@@ -135,7 +135,7 @@ test("offline, grading still works, running out claims nothing, and it all syncs
       )
       .toBe(3);
     // The paused check resumes with the connection and confirms the day.
-    await expect(page.getByRole("heading", { name: "That’s the lot" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Nothing left today" })).toBeVisible();
   });
 });
 
@@ -153,9 +153,11 @@ test("a round from Today walks its own cards and ends with Round done", async ({
 
   await page.goto("/review?round=forgotten");
   await expect(page.getByLabel(forgotten, { exact: true })).toBeVisible();
-  await expect(page.getByText("1 of 50", { exact: true })).toBeVisible();
-  await grade(page, "3", 2);
+  await expect(page.getByText("0 of 1", { exact: true })).toBeVisible();
+  await page.keyboard.press("Space");
+  await page.keyboard.press("3");
   await expect(page.getByRole("heading", { name: "Round done" })).toBeVisible();
+  await expect(page.getByText("2 of 50 reviews today", { exact: true })).toBeVisible();
 });
 
 test("a return missed in a deck review comes up in the all-decks review", async ({

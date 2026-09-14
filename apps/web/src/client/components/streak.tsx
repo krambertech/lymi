@@ -205,7 +205,7 @@ function useCardStatus(summary: StreakSummary | undefined): string {
     case "goal_met":
       return t`Daily goal reached.`;
     case "exhausted":
-      return t`That’s the lot for today.`;
+      return t`Nothing left today.`;
     case "nothing_due":
       return t`Nothing due today, so your streak is safe.`;
     default: {
@@ -331,7 +331,7 @@ export function StreakPanel({
     today.outcome === "goal_met"
       ? t`Daily goal reached.`
       : today.outcome === "exhausted"
-        ? t`That’s the lot for today.`
+        ? t`Nothing left today.`
         : today.outcome === "nothing_due"
           ? t`Nothing due today, so your streak is safe.`
           : current > 0

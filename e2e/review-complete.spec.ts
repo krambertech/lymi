@@ -1,7 +1,7 @@
 import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
 
-/** The end of a review: the goal's heading, and Review forgotten, another round, or Done. PRODUCT.md, "Daily Review Goal". */
+/** The end of a review: what it says and offers depends on where the day stands. PRODUCT.md, "Daily Review Goal". */
 
 async function setGoal(page: Page, goal: number) {
   const settings = await page.request.patch("/api/settings", { data: { dailyGoal: goal } });
@@ -70,19 +70,24 @@ test("at the goal a learner can review forgotten cards, take another round, or s
     await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
   });
 
-  await test.step("Review forgotten shows the forgotten card once", async () => {
+  await test.step("Review forgotten counts its own card and ends as a round", async () => {
     await page.getByRole("button", { name: /Review \d+ forgotten card/ }).click();
     await expect(page.getByLabel(forgotten, { exact: true })).toBeVisible();
+    await expect(page.getByText("0 of 1", { exact: true })).toBeVisible();
     await grade(page, "Good");
-    await expect(heading(page, "Daily goal reached")).toBeVisible();
+    await expect(heading(page, "Round done")).toBeVisible();
+    await expect(page.getByText(/^1\s*review in this round$/)).toBeVisible();
+    await expect(page.getByText("4 reviews today", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: /Review \d+ forgotten card/ })).toBeHidden();
   });
 
-  await test.step("another round stops after ten attempts", async () => {
-    await page.getByRole("button", { name: /Review \d+ more card/ }).click();
+  await test.step("another round counts to ten and stops", async () => {
+    await page.getByRole("button", { name: "Review 10 more cards", exact: true }).click();
+    await expect(page.getByText("0 of 10", { exact: true })).toBeVisible();
     for (let n = 0; n < 10; n++) await grade(page, "Good");
-    await expect(heading(page, "Daily goal reached")).toBeVisible();
-    await expect(page.getByText(/^14\s*reviews today$/)).toBeVisible();
+    await expect(heading(page, "Round done")).toBeVisible();
+    await expect(page.getByText(/^10\s*reviews in this round$/)).toBeVisible();
+    await expect(page.getByText("14 reviews today", { exact: true })).toBeVisible();
     await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
   });
 
@@ -137,10 +142,11 @@ test("the end works from the keyboard and without motion, and a short round ends
       await page.keyboard.press("Space");
       await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
       await page.keyboard.press("3");
-      await expect(page.getByText(`${n + 4} of 3`, { exact: true })).toBeVisible();
+      await expect(page.getByText(`${n + 1} of 2`, { exact: true })).toBeVisible();
     }
-    await expect(heading(page, "Daily goal reached")).toBeVisible();
-    await expect(page.getByText(/^5\s*reviews today$/)).toBeVisible();
+    await expect(heading(page, "Round done")).toBeVisible();
+    await expect(page.getByText(/^2\s*reviews in this round$/)).toBeVisible();
+    await expect(page.getByText("5 reviews today", { exact: true })).toBeVisible();
     await expect(another).toBeHidden();
   });
 });
@@ -170,7 +176,7 @@ test("a round left open past midnight gives way to the new day's goal", async ({
   await expect(heading(page, "Daily goal reached")).toBeVisible();
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
-  await gradeByKey("3 of 2");
+  await gradeByKey("1 of 10");
 
   await page.clock.fastForward("24:00:00");
   await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
@@ -178,4 +184,105 @@ test("a round left open past midnight gives way to the new day's goal", async ({
   await gradeByKey("2 of 2");
   await expect(heading(page, "Daily goal reached")).toBeVisible();
   await expect(page.getByText(/^2\s*reviews today$/)).toBeVisible();
+});
+
+/** Grade the card on screen by keyboard and wait for the header to read `after`. */
+async function gradeWithKey(page: Page, key: "1" | "3", after: string) {
+  await expect(page.getByLabel(/ card for /)).toBeVisible();
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
+  await page.keyboard.press(key);
+  await expect(page.getByText(after, { exact: true })).toBeVisible();
+}
+
+test("a round from Today counts its own cards, and below the goal offers the rest of it", async ({
+  page,
+  browserName,
+}, testInfo) => {
+  test.skip(browserName !== "chromium", "logic, not rendering");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await signInAsTestLearner(page, testInfo, "review-round-below");
+  await setGoal(page, 5);
+  await addCards(page, await addDeck(page, "Below"), "Below", 8);
+
+  await page.goto("/review");
+  await gradeWithKey(page, "1", "1 of 5");
+
+  await test.step("the round's track counts the round, not the goal", async () => {
+    await page.goto("/review?round=forgotten");
+    await expect(page.getByText("0 of 1", { exact: true })).toBeVisible();
+    await gradeWithKey(page, "3", "1 of 1");
+    await expect(heading(page, "Round done")).toBeVisible();
+    await expect(page.getByText(/^1\s*review in this round$/)).toBeVisible();
+    await expect(page.getByText("2 of 5 reviews today", { exact: true })).toBeVisible();
+  });
+
+  await test.step("the rest of the goal picks up the goal's own track", async () => {
+    await page.getByRole("button", { name: "Review 3 more cards", exact: true }).click();
+    await expect(page).toHaveURL(/\/review$/);
+    await expect(page.getByText("2 of 5", { exact: true })).toBeVisible();
+    await gradeWithKey(page, "3", "3 of 5");
+    await gradeWithKey(page, "3", "4 of 5");
+    await page.keyboard.press("Space");
+    await page.keyboard.press("3");
+    await expect(heading(page, "Daily goal reached")).toBeVisible();
+    await expect(page.getByText(/^5\s*reviews today$/)).toBeVisible();
+    await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
+  });
+});
+
+test("a round that crosses the goal keeps going and says the goal is reached", async ({
+  page,
+  browserName,
+}, testInfo) => {
+  test.skip(browserName !== "chromium", "logic, not rendering");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await signInAsTestLearner(page, testInfo, "review-round-crosses");
+  await setGoal(page, 3);
+  await addCards(page, await addDeck(page, "Cross"), "Cross", 8);
+
+  await page.goto("/review");
+  await gradeWithKey(page, "1", "1 of 3");
+  await gradeWithKey(page, "1", "2 of 3");
+
+  await page.goto("/review?round=forgotten");
+  await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
+  await test.step("the goal's attempt lands mid-round without stopping it", async () => {
+    await gradeWithKey(page, "3", "1 of 2");
+    await expect(heading(page, "Daily goal reached")).toBeHidden();
+    await gradeWithKey(page, "3", "2 of 2");
+  });
+  await expect(heading(page, "Daily goal reached")).toBeVisible();
+  await expect(page.getByText(/^2\s*reviews in this round$/)).toBeVisible();
+  await expect(page.getByText("4 reviews today", { exact: true })).toBeVisible();
+  await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
+  await expect(page.getByRole("button", { name: /Review \d+ more card/ })).toBeVisible();
+});
+
+test("a deck that runs out below the goal names itself and offers the other decks", async ({
+  page,
+  browserName,
+}, testInfo) => {
+  test.skip(browserName !== "chromium", "logic, not rendering");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await signInAsTestLearner(page, testInfo, "review-deck-out");
+  await setGoal(page, 10);
+  const first = await addDeck(page, "Spanish");
+  await addCards(page, first, "Spanish", 2);
+  const second = await addDeck(page, "Chess");
+  await addCards(page, second, "Chess", 3);
+  await addDeck(page, "Empty");
+
+  await page.goto(`/review?deck=${first}`);
+  await gradeWithKey(page, "3", "1 of 10");
+  await page.keyboard.press("Space");
+  await page.keyboard.press("3");
+  await expect(heading(page, "Nothing left in Spanish")).toBeVisible();
+  await expect(page.getByText(/^0\s*days in a row$/)).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Review \d+ cards? in Empty$/ })).toBeHidden();
+
+  await page.getByRole("button", { name: "Review 3 cards in Chess", exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`deck=${second}`));
+  await expect(page.getByText("2 of 10", { exact: true })).toBeVisible();
+  expect(await page.getByLabel(/ card for /).getAttribute("aria-label")).toMatch(/card for Chess/);
 });

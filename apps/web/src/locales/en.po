@@ -51,8 +51,8 @@ msgstr "{0, plural, one {card due} other {cards due}}"
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {card} other {cards}}"
 
+#. placeholder {0}: run ?? 0
 #. placeholder {0}: summary.current
-#. placeholder {0}: week.current
 #: src/client/components/streak.tsx
 #: src/client/views/review-view.tsx
 msgid "{0, plural, one {day in a row} other {days in a row}}"
@@ -147,6 +147,14 @@ msgstr "{appName} was not connected"
 msgid "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
 msgstr "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
 
+#: src/client/views/review-view.tsx
+msgid "{attempts, plural, one {# review today} other {# reviews today}}"
+msgstr "{attempts, plural, one {# review today} other {# reviews today}}"
+
+#: src/client/views/review-view.tsx
+msgid "{attempts} of {goal} reviews today"
+msgstr "{attempts} of {goal} reviews today"
+
 #: src/client/components/new-cards-row.tsx
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# new} other {# new}}"
@@ -231,10 +239,6 @@ msgstr "{due, plural, one {One card is waiting when you have a moment.} other {#
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 
-#: src/client/views/review-view.tsx
-msgid "{forgotten, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
-msgstr "{forgotten, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
-
 #: src/client/views/insights-view.tsx
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
@@ -273,8 +277,16 @@ msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
 #: src/client/views/review-view.tsx
-msgid "{nextRound, plural, one {Review # more card} other {Review # more cards}}"
-msgstr "{nextRound, plural, one {Review # more card} other {Review # more cards}}"
+msgid "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
+msgstr "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
+
+#: src/client/views/review-view.tsx
+msgid "{n, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
+msgstr "{n, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
+
+#: src/client/views/review-view.tsx
+msgid "{n, plural, one {Review # more card} other {Review # more cards}}"
+msgstr "{n, plural, one {Review # more card} other {Review # more cards}}"
 
 #: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
@@ -294,8 +306,8 @@ msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
 
 #: src/client/views/review-view.tsx
-msgid "<0/> of {goal}"
-msgstr "<0/> of {goal}"
+msgid "<0/> of {size}"
+msgstr "<0/> of {size}"
 
 #: src/client/components/api-keys-section.tsx
 msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
@@ -1463,10 +1475,6 @@ msgstr "Nothing due"
 msgid "Nothing due today, so your streak is safe."
 msgstr "Nothing due today, so your streak is safe."
 
-#: src/client/views/review-view.tsx
-msgid "Nothing else in {deckName} is ready."
-msgstr "Nothing else in {deckName} is ready."
-
 #: src/client/views/today-view.tsx
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
@@ -1486,6 +1494,18 @@ msgstr "Nothing here yet"
 #: src/client/components/deck-card.tsx
 msgid "Nothing in it yet"
 msgstr "Nothing in it yet"
+
+#: src/client/views/review-view.tsx
+msgid "Nothing left in {deckName}"
+msgstr "Nothing left in {deckName}"
+
+#: src/client/views/review-view.tsx
+msgid "Nothing left today"
+msgstr "Nothing left today"
+
+#: src/client/components/streak.tsx
+msgid "Nothing left today."
+msgstr "Nothing left today."
 
 #: src/client/views/deck-detail-view.tsx
 msgid "Nothing matches “{q}”"
@@ -1818,6 +1838,10 @@ msgstr "Revoke key"
 msgid "Round done"
 msgstr "Round done"
 
+#: src/client/views/review-view.tsx
+msgid "Round progress"
+msgstr "Round progress"
+
 #: src/client/components/avatar-editor.tsx
 msgid "Save photo"
 msgstr "Save photo"
@@ -2049,14 +2073,6 @@ msgstr "That image is too small. Choose one at least 16 pixels wide."
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
 
-#: src/client/views/review-view.tsx
-msgid "That’s the lot"
-msgstr "That’s the lot"
-
-#: src/client/components/streak.tsx
-msgid "That’s the lot for today."
-msgstr "That’s the lot for today."
-
 #: src/client/views/word-view.tsx
 msgid "the AI"
 msgstr "the AI"
@@ -2112,10 +2128,6 @@ msgstr "the notes"
 #: src/client/views/word-view.tsx
 msgid "the pronunciation"
 msgstr "the pronunciation"
-
-#: src/client/views/review-view.tsx
-msgid "The rest can wait a while."
-msgstr "The rest can wait a while."
 
 #: src/client/views/word-view.tsx
 msgid "the tags"
@@ -2188,10 +2200,6 @@ msgstr "today"
 #: src/client/views/word-view.tsx
 msgid "Today"
 msgstr "Today"
-
-#: src/client/views/review-view.tsx
-msgid "Today shows what’s left."
-msgstr "Today shows what’s left."
 
 #: src/client/components/streak-calendar.tsx
 msgid "Today, {day}: {reviews}"

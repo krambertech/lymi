@@ -71,7 +71,7 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   expect(["goal_met", "exhausted"]).toContain(streak.today.outcome);
 
   // Today counted either way: at its goal, or with nothing left to review.
-  const finished = /Daily goal reached\.|That’s the lot for today\./;
+  const finished = /Daily goal reached\.|Nothing left today\./;
 
   // The phone opens the streak as a full-screen modal.
   await card.click();

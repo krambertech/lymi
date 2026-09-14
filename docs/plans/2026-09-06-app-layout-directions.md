@@ -116,7 +116,7 @@ The directions surface features that are not in the integrations plan. This is t
 8. **Activity.** The full record by day, from the integrations plan, reachable from Today's "New" header and from the sidebar.
 9. **Archived.** A view of archived cards and decks with Restore.
 10. **Settings.** Theme, meaning language, keyboard map, API keys, connected MCP clients, account.
-11. **Seven lights and "That's the lot".** Exist. Unchanged.
+11. **Seven lights and "Nothing left today".** Exist. Unchanged.
 
 ## Open questions
 

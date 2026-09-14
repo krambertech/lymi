@@ -59,7 +59,7 @@ The available actions are conditional:
 - **Review another round** appears when more eligible cards are available beyond the completed daily goal and starts up to 10 additional attempts.
 - **Done** always lets the learner leave after completing the goal.
 
-When the available work runs out below the configured goal, the completion heading remains **That’s the lot** rather than claiming that 50 reviews were completed. Finishing everything Lymi could usefully offer still satisfies the streak for that day.
+When the available work runs out below the configured goal, the completion heading remains **Nothing left today** rather than claiming that 50 reviews were completed. Finishing everything Lymi could usefully offer still satisfies the streak for that day.
 
 When zero cards are due, opening Lymi produces a **Nothing due** state that preserves the current streak without extending it and offers **Add cards**. Adding a card does not itself count toward the review goal; any later review attempt follows the ordinary counting rule.
 
@@ -75,7 +75,7 @@ A timezone change affects the current and future day boundaries but does not rew
 
 `PRODUCT.md` defines the daily goal and streak as one mechanic while retaining Lymi's rejection of streak pressure. `DESIGN.md` pairs a plain current-streak number with the seven-day review lights on Today and at review completion while prohibiting an oversized or isolated streak metric.
 
-The intended distinction is a calm commitment chosen by the learner, not XP, leaderboards, escalating pressure, or punishment for a difficult review. Completion says **Daily goal reached** at the chosen target, **That’s the lot** after exhausting a smaller non-empty queue, and **Nothing due** for a confirmed zero-card day.
+The intended distinction is a calm commitment chosen by the learner, not XP, leaderboards, escalating pressure, or punishment for a difficult review. Completion says **Daily goal reached** at the chosen target, **Nothing left today** after exhausting a smaller non-empty queue, and **Nothing due** for a confirmed zero-card day.
 
 ## Possible future streak support
 

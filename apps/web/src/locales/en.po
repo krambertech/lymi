@@ -525,12 +525,12 @@ msgstr "API key for {name}"
 msgid "API keys"
 msgstr "API keys"
 
+#: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 #: src/client/views/word-view.tsx
 msgid "Archive"
 msgstr "Archive"
 
-#: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 msgid "Archive deck"
 msgstr "Archive deck"
@@ -684,8 +684,9 @@ msgid "Choose a whole number from 1 to 200."
 msgstr "Choose a whole number from 1 to 200."
 
 #: src/client/components/account-section.tsx
-msgid "Choose new photo"
-msgstr "Choose new photo"
+msgctxt "photo"
+msgid "Choose new…"
+msgstr "Choose new…"
 
 #: src/client/components/add-card-sheet.tsx
 #: src/client/views/settings-view.tsx
@@ -870,7 +871,6 @@ msgid "Deck options"
 msgstr "Deck options"
 
 #: src/client/routes/library.$deckId.settings.tsx
-#: src/client/views/deck-detail-view.tsx
 #: src/client/views/deck-settings-view.tsx
 msgid "Deck settings"
 msgstr "Deck settings"
@@ -1769,8 +1769,9 @@ msgid "Reminders stay off until notifications are allowed."
 msgstr "Reminders stay off until notifications are allowed."
 
 #: src/client/components/account-section.tsx
-msgid "Remove photo"
-msgstr "Remove photo"
+msgctxt "photo"
+msgid "Remove"
+msgstr "Remove"
 
 #: src/client/views/review-view.tsx
 msgid "Replay pronunciation"
@@ -1935,6 +1936,7 @@ msgstr "Send a daily reminder"
 
 #: src/client/components/learner-menu.tsx
 #: src/client/routes/settings.tsx
+#: src/client/views/deck-detail-view.tsx
 #: src/client/views/settings-view.tsx
 msgid "Settings"
 msgstr "Settings"

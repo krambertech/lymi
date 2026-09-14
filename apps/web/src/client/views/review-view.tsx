@@ -370,11 +370,14 @@ export function ReviewCard({
           {deck && (
             <>
               <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-              <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
+              {/* The deck name keeps its width up to 60%; the mode label truncates first. */}
+              <span className="max-w-[60%] shrink-0 truncate font-medium text-text-2">
+                {deck.name}
+              </span>
               <span aria-hidden="true">·</span>
             </>
           )}
-          <span className="shrink-0">
+          <span className="min-w-0 truncate">
             {i18n._(modeLabel(mode))}
             {/* The deck implies its language, so the code shows only for a card that differs. */}
             {card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase() && (

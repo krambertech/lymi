@@ -131,7 +131,7 @@ function AnchoredContent({
           aria-label={label}
           className={cn(
             // Grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms.
-            "edge-2 relative max-h-(--available-height) w-(--anchor-width) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md bg-plate p-1 text-text outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
+            "edge-2 relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(12rem,var(--anchor-width))] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md bg-plate p-1 text-text outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
             className,
           )}
           // Keyboard moves focus, and focus carries its own fill; two fills would be two cursors.

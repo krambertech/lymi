@@ -373,7 +373,7 @@ export function DeckDetailView({
       <DropdownMenuContent aria-label={t`Deck options`} align="end">
         <DropdownMenuItem onClick={onSettings} disabled={!onSettings}>
           <Settings2 />
-          <Trans>Deck settings</Trans>
+          <Trans>Settings</Trans>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => deck && cards && exportCsv(deck.name, cards)}
@@ -389,7 +389,7 @@ export function DeckDetailView({
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
           <Archive />
-          <Trans>Archive deck</Trans>
+          <Trans>Archive</Trans>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -398,7 +398,8 @@ export function DeckDetailView({
   // The plate above carries the counts, so the filter is names and icons.
   const filterLabel = (state?: StateKey) => (
     <span className="inline-flex items-center gap-1.5">
-      {state && <StateIcon state={state} className="size-3.5" />}
+      {/* A phone drops the icons so a longer translation still fits the row. */}
+      {state && <StateIcon state={state} className="hidden size-3.5 sm:block" />}
       {state ? i18n._(stateMarks[state].label) : t`All`}
     </span>
   );

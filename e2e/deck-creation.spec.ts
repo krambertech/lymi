@@ -196,7 +196,7 @@ test.describe("deck and card creation", () => {
     const deckId = await createDeck(page, `Archived ${testInfo.project.name}`);
 
     await page.getByRole("button", { name: "Deck options", exact: true }).click();
-    await page.getByRole("menuitem", { name: "Archive deck", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Archive", exact: true }).click();
     await expect(page).toHaveURL(/\/library$/);
     await expect(page.getByRole("button", { name: "Undo", exact: true })).toBeVisible();
 

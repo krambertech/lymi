@@ -83,11 +83,11 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
             <DropdownMenuContent aria-label={t`Photo`} align="start">
               <DropdownMenuItem onClick={onChoose}>
                 <ImageUp aria-hidden="true" />
-                {t`Choose new photo`}
+                {t({ message: "Choose new…", context: "photo" })}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onRemove}>
                 <ImageMinus aria-hidden="true" />
-                {t`Remove photo`}
+                {t({ message: "Remove", context: "photo" })}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

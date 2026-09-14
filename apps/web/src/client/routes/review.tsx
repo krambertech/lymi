@@ -1,12 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type Drawn, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Button, buttonClass } from "../components/button";
 import { GRADES } from "../components/grade";
+import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { api, deviceTimezone, type QueueItem } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
@@ -23,7 +24,7 @@ import {
   reviewEnd,
   streakWith,
 } from "../lib/review-complete";
-import { drawState, type LocalGrade, reviewItem, stateBefore } from "../lib/review-draw";
+import { drawState, reviewItem, stateBefore } from "../lib/review-draw";
 import { itemKey } from "../lib/review-modes";
 import {
   GradeBar,
@@ -98,8 +99,6 @@ function Review() {
   // Tied to the queue item, so a failure never carries onto the next card's button.
   const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
   const playingAudio = useRef<HTMLAudioElement | null>(null);
-  const [pendingRating, setPendingRating] = useState<Rating | null>(null);
-  const [gradeError, setGradeError] = useState<string | null>(null);
   const [animateNextCard, setAnimateNextCard] = useState(true);
   const [animateReveal, setAnimateReveal] = useState(true);
 
@@ -111,8 +110,11 @@ function Review() {
     [data, grades, now, deck],
   );
   const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
+  // Past midnight, yesterday's data does not know yesterday's grades moved the schedule, so a new card waits for today's.
+  const staleDay = !!data && !!state && data.day.date !== state.day.date && draw.isFetching;
   const drawn =
-    pinnedItem ?? (data && state?.next ? reviewItem(data, state.log, state.next) : null);
+    pinnedItem ??
+    (data && state?.next && !staleDay ? reviewItem(data, state.log, state.next) : null);
 
   // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
   const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
@@ -180,7 +182,7 @@ function Review() {
         : leg.until - leg.from;
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
-  const repin = !!state?.next && (!pinned || !pinnedItem);
+  const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
   useEffect(() => {
     if (repin && state?.next) setPinned({ cardId: state.next.cardId, mode: state.next.mode });
   }, [repin, state?.next]);
@@ -379,62 +381,46 @@ function Review() {
     qc.invalidateQueries({ queryKey: ["insights"] });
   }, [qc]);
 
-  const grade = useMutation({
-    // Grades work offline through the outbox, so they must not wait for a connection.
-    networkMode: "always",
-    mutationFn: async ({ item, rating }: { item: QueueItem; rating: Rating }) => {
+  const onGrade = useCallback(
+    (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
+      if (!revealed || !current || !data || !state) return;
+      const item = current;
       const key = modeKey(item.mode);
-      const repeat = state?.log.some((e) => e.cardId === item.card.id && e.mode === key);
-      const graded: LocalGrade = {
+      const repeat = state.log.some((e) => e.cardId === item.card.id && e.mode === key);
+      const runningShort = state.upcoming.length <= LOOKAHEAD;
+      const recorded = recordGrade({
         cardId: item.card.id,
         mode: item.mode,
         rating,
         reviewedAt: new Date().toISOString(),
-        stateBefore:
-          data && state && repeat
-            ? stateBefore(data, state.log, item.card.id, item.mode)
-            : item.fsrsState,
-      };
-      const recorded = await recordGrade({ ...graded, timezone: deviceTimezone() });
-      return { item, recorded };
-    },
-    onSuccess: ({ item, recorded }) => {
+        stateBefore: repeat
+          ? stateBefore(data, state.log, item.card.id, item.mode)
+          : item.fsrsState,
+        timezone: deviceTimezone(),
+      });
       if (leg && !drawLeg) setLegGraded((keys) => new Set(keys).add(gradedKey(item)));
-      setGradeError(null);
-      setPendingRating(null);
+      setAnimateNextCard(input !== "keyboard");
       setRevealed(false);
       setNow(new Date());
       setPinned(null);
-      // Another device already graded this mode later, so the fetched data is behind.
-      if (recorded.duplicate) {
-        void qc.invalidateQueries({ queryKey: ["queue"] });
-        return;
-      }
       setDone((n) => n + 1);
-      const behind = gradeStore
-        .snapshot()
-        .filter((g) => new Date(g.reviewedAt).getTime() >= (data?.fetchedAt ?? 0)).length;
-      const runningShort = (state?.upcoming.length ?? 0) <= LOOKAHEAD;
-      if (!recorded.queued && (behind >= REFRESH_AFTER || runningShort)) {
-        void qc.invalidateQueries({ queryKey: ["queue"] });
-      }
-    },
-    onError: () => {
-      setPendingRating(null);
-      setGradeError(t`Couldn’t save that grade. Try again.`);
-    },
-    onSettled: invalidateReviewData,
-  });
 
-  const onGrade = useCallback(
-    (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
-      if (!revealed || grade.isPending || !current) return;
-      setGradeError(null);
-      setPendingRating(rating);
-      setAnimateNextCard(input !== "keyboard");
-      grade.mutate({ item: current, rating });
+      void recorded.then((outcome) => {
+        invalidateReviewData();
+        if (outcome === "queued") return;
+        if (outcome === "refused") {
+          toast.add({ type: "error", title: t`Couldn’t save your last grade.` });
+        }
+        // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
+        const behind = gradeStore
+          .snapshot()
+          .filter((g) => new Date(g.reviewedAt).getTime() >= data.fetchedAt).length;
+        if (outcome !== "sent" || behind >= REFRESH_AFTER || runningShort) {
+          void qc.invalidateQueries({ queryKey: ["queue"] });
+        }
+      });
     },
-    [revealed, grade, current],
+    [revealed, current, data, state, leg, drawLeg, invalidateReviewData, qc, t],
   );
 
   useEffect(() => {
@@ -577,6 +563,7 @@ function Review() {
               }
               revealed={revealed}
               animateReveal={animateReveal}
+              animateIn={animateNextCard}
               hint={hint}
               onReveal={() => {
                 recordReveal();
@@ -588,15 +575,13 @@ function Review() {
               audioError={
                 audioError && audioError.item === currentItemKey ? audioError.message : null
               }
-              className={`${animateNextCard ? "enter-card" : ""} mt-4 @3xl:max-h-[600px] @3xl:min-h-[460px]`}
+              className="mt-4 @3xl:max-h-[600px] @3xl:min-h-[460px]"
             />
             <GradeBar
               revealed={revealed}
               animateIn={animateReveal}
+              animateOut={animateNextCard}
               next={current.next}
-              pending={grade.isPending}
-              pendingRating={pendingRating}
-              error={gradeError}
               onGrade={(rating) => onGrade(rating, "pointer")}
               className="pt-3"
             />

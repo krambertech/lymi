@@ -8,6 +8,7 @@ import {
   animate as animateValue,
   motion,
   useAnimate,
+  useIsPresent,
   useMotionValue,
   useReducedMotion,
   useTransform,
@@ -121,21 +122,29 @@ export function ReviewHeader({
   );
 }
 
+const COUNT_ROLL = {
+  below: { y: "80%", opacity: 0 },
+  shown: { y: 0, opacity: 1 },
+  leave: (animate: boolean) =>
+    animate
+      ? { y: "-80%", opacity: 0, transition: { duration: 0.14, ease: EASE_OUT } }
+      : { opacity: 0, transition: { duration: 0 } },
+};
+
 /** The count rolls up when a card lands, so the change is seen rather than noticed later. */
 function RollingCount({ value, animate }: { value: number; animate: boolean }) {
   return (
     <span className="relative inline-grid overflow-hidden align-bottom">
-      <AnimatePresence initial={false} mode="popLayout">
+      {/* `custom` reaches the leaving digit, whose own props are from before this change. */}
+      <AnimatePresence initial={false} mode="popLayout" custom={animate}>
         <motion.span
           key={value}
           className="inline-block"
-          initial={animate ? { y: "80%", opacity: 0 } : false}
-          animate={{ y: 0, opacity: 1 }}
-          exit={
-            animate
-              ? { y: "-80%", opacity: 0, transition: { duration: 0.14, ease: EASE_OUT } }
-              : { opacity: 0, transition: { duration: 0 } }
-          }
+          custom={animate}
+          variants={COUNT_ROLL}
+          initial={animate ? "below" : false}
+          animate="shown"
+          exit="leave"
           transition={{ duration: 0.22, ease: EASE_OUT }}
         >
           {value}
@@ -290,6 +299,8 @@ export interface ReviewCardProps {
   deck?: { name: string; language?: string | null | undefined } | undefined;
   revealed: boolean;
   animateReveal?: boolean | undefined;
+  /** The words fade in as the card arrives. Off when the grade before it came from the keyboard. */
+  animateIn?: boolean | undefined;
   /** Show how to reveal: the pointing hand with the words under it. */
   hint?: boolean | undefined;
   onReveal: () => void;
@@ -311,6 +322,7 @@ export function ReviewCard({
   deck,
   revealed,
   animateReveal = true,
+  animateIn = false,
   hint = false,
   onReveal,
   onPlayAudio,
@@ -366,7 +378,12 @@ export function ReviewCard({
           className="absolute inset-0 z-10 rounded-xl"
         />
       )}
-      <div className="flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs">
+      <div
+        className={clsx(
+          "flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs",
+          animateIn && "enter-fade",
+        )}
+      >
         <span className="flex min-w-0 items-center gap-1.5">
           {deck && (
             <>
@@ -389,7 +406,12 @@ export function ReviewCard({
         <StateChip state={item.fsrsState} size="lg" inReview />
       </div>
 
-      <div className="flex flex-1 flex-col justify-center gap-5 py-2">
+      <div
+        className={clsx(
+          "flex flex-1 flex-col justify-center gap-5 py-2",
+          animateIn && "enter-fade",
+        )}
+      >
         <motion.div
           layout={animateReveal ? "position" : false}
           transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
@@ -532,7 +554,7 @@ const gradeRise: Variants = {
 };
 
 /**
- * Opens from nothing, which is what shrinks the card above it. The glide matches the word's inside
+ * Opens from nothing, which is what shrinks the card above it, and closes back to nothing after a grade so the card grows again. The glide matches the word's inside
  * the card, so the word's two movements land as one. It clips only while opening, so a pressed
  * grade's scale and focus ring are not cut off afterwards; mounting on each reveal resets that.
  */
@@ -541,18 +563,31 @@ function OpeningStrip({ animate: wanted, children }: { animate: boolean; childre
   const reduce = useReducedMotion();
   const animate = wanted && !reduce;
   const [opened, setOpened] = useState(!animate);
+  // A closing strip is only a picture of the grades: nothing in it can be pressed, focused or read out.
+  const present = useIsPresent();
   return (
     <motion.div
-      className={clsx("shrink-0", !opened && "overflow-hidden")}
+      className={clsx("shrink-0", (!opened || !present) && "overflow-hidden")}
+      variants={{ closed: (animateOut: boolean) => (animateOut && !reduce ? CLOSING : CLOSED) }}
       initial={animate ? { height: 0 } : false}
       animate={{ height: "auto" }}
+      exit="closed"
       transition={{ duration: 0.34, ease: EASE_OUT }}
       onAnimationComplete={() => setOpened(true)}
+      inert={!present}
+      aria-hidden={!present || undefined}
     >
       {children}
     </motion.div>
   );
 }
+
+const CLOSING = {
+  height: 0,
+  opacity: 0,
+  transition: { duration: 0.3, ease: EASE_OUT, opacity: { duration: 0.12 } },
+};
+const CLOSED = { height: 0, opacity: 0, transition: { duration: 0 } };
 
 export interface GradeBarProps {
   id?: string | undefined;
@@ -560,11 +595,10 @@ export interface GradeBarProps {
   revealed: boolean;
   /** The grades rise in one after another. Off when the reveal came from the keyboard. */
   animateIn?: boolean | undefined;
+  /** The strip closes and the card grows back into its room. Off when the grade came from the keyboard. */
+  animateOut?: boolean | undefined;
   /** The four dates FSRS would set, keyed by rating. Announced, not shown. */
   next?: Record<Rating, string> | undefined;
-  pending?: boolean | undefined;
-  pendingRating?: Rating | null | undefined;
-  error?: string | null | undefined;
   onGrade: (r: Rating) => void;
   className?: string | undefined;
 }
@@ -581,85 +615,67 @@ export function GradeBar({
   id,
   revealed,
   animateIn = false,
+  animateOut = false,
   next,
-  pending,
-  pendingRating,
-  error,
   onGrade,
   className,
 }: GradeBarProps) {
   const { t, i18n } = useLingui();
   const now = new Date();
-  if (!revealed) return null;
   return (
-    <OpeningStrip animate={animateIn}>
-      <fieldset id={id} className={clsx("scroll-mt-24", className)}>
-        <legend className="sr-only">
-          <Trans>Choose a recall grade</Trans>
-        </legend>
-        {error && (
-          <p className="mb-2 text-center text-sm text-danger" role="alert">
-            {error}
-          </p>
-        )}
-        <motion.div
-          variants={gradeGroup}
-          initial={animateIn ? "hidden" : false}
-          animate="shown"
-          className="grid grid-cols-4 gap-2"
-        >
-          {GRADES.map((g) => {
-            const saving = pending && pendingRating === g.rating;
-            const GradeIcon = g.icon;
-            const label = i18n._(g.label);
-            const schedules = next ? intervalLabel(i18n, now, new Date(next[g.rating])) : undefined;
-            return (
-              // The rise is on a wrapper so the button's own disabled opacity is not overridden.
-              <motion.div key={g.rating} variants={gradeRise} className="grid min-w-0">
-                <button
-                  type="button"
-                  disabled={pending}
-                  aria-busy={saving || undefined}
-                  aria-label={schedules ? t`${label}, next in ${schedules}` : undefined}
-                  onClick={() => onGrade(g.rating)}
-                  className={clsx(
-                    "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
-                    "transition-[scale,background-color,box-shadow,opacity] duration-150 ease-out @2xl:text-base",
-                    "enabled:hoverable:hover:edge-2 enabled:hoverable:hover:bg-hover enabled:hoverable:hover:text-text active:scale-[0.96] disabled:opacity-55",
-                  )}
-                >
-                  <span
-                    className={clsx(
-                      "mx-auto grid size-5 place-items-center transition-[color,opacity] duration-150",
-                      g.iconClass,
-                      saving && "opacity-0",
-                    )}
-                  >
-                    <GradeIcon className="size-[18px]" aria-hidden="true" strokeWidth={1.75} />
-                  </span>
-                  <span className={clsx("transition-opacity duration-150", saving && "opacity-0")}>
-                    {label}
-                  </span>
-                  <span className="hidden @3xl:contents">
-                    <Kbd
-                      tone="default"
-                      className="absolute end-1.5 top-1.5 h-4 min-w-4 rounded-full px-1.5 text-2xs"
+    // `custom` reaches the closing strip, whose own props are from before the grade.
+    <AnimatePresence initial={false} custom={animateOut}>
+      {revealed && (
+        <OpeningStrip key="strip" animate={animateIn}>
+          <fieldset id={id} className={clsx("scroll-mt-24", className)}>
+            <legend className="sr-only">
+              <Trans>Choose a recall grade</Trans>
+            </legend>
+            <motion.div
+              variants={gradeGroup}
+              initial={animateIn ? "hidden" : false}
+              animate="shown"
+              className="grid grid-cols-4 gap-2"
+            >
+              {GRADES.map((g) => {
+                const GradeIcon = g.icon;
+                const label = i18n._(g.label);
+                const schedules = next
+                  ? intervalLabel(i18n, now, new Date(next[g.rating]))
+                  : undefined;
+                return (
+                  <motion.div key={g.rating} variants={gradeRise} className="grid min-w-0">
+                    <button
+                      type="button"
+                      aria-label={schedules ? t`${label}, next in ${schedules}` : undefined}
+                      onClick={() => onGrade(g.rating)}
+                      className={clsx(
+                        "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
+                        "transition-[scale,background-color,box-shadow] duration-150 ease-out @2xl:text-base",
+                        "hoverable:hover:edge-2 hoverable:hover:bg-hover hoverable:hover:text-text active:scale-[0.96]",
+                      )}
                     >
-                      {g.key}
-                    </Kbd>
-                  </span>
-                  {saving && (
-                    <span className="spinner-enter absolute inset-0 grid place-items-center">
-                      <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-                    </span>
-                  )}
-                </button>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </fieldset>
-    </OpeningStrip>
+                      <span className={clsx("mx-auto grid size-5 place-items-center", g.iconClass)}>
+                        <GradeIcon className="size-[18px]" aria-hidden="true" strokeWidth={1.75} />
+                      </span>
+                      <span>{label}</span>
+                      <span className="hidden @3xl:contents">
+                        <Kbd
+                          tone="default"
+                          className="absolute end-1.5 top-1.5 h-4 min-w-4 rounded-full px-1.5 text-2xs"
+                        >
+                          {g.key}
+                        </Kbd>
+                      </span>
+                    </button>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </fieldset>
+        </OpeningStrip>
+      )}
+    </AnimatePresence>
   );
 }
 

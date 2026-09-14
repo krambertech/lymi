@@ -112,6 +112,20 @@ describe("the daily goal counts attempts", () => {
     expect(replay).toMatchObject({ duplicate: true, reviewId: null, day: { attempts: 1 } });
   });
 
+  it("stores a grade sent twice at once only once", async () => {
+    const { ctx, cards } = await setup(5, ["kaheksa"]);
+    const [a] = cards;
+    if (!a) throw new Error("no cards");
+
+    const at = later(5);
+    const sent = await Promise.all([grade(ctx, a.id, 3, at), grade(ctx, a.id, 3, at)]);
+
+    expect(sent.map((s) => s.duplicate).sort()).toEqual([false, true]);
+    const stored = await db.select().from(schema.reviews).where(eq(schema.reviews.cardId, a.id));
+    expect(stored).toHaveLength(1);
+    expect((await streak(ctx)).today).toMatchObject({ attempts: 1 });
+  });
+
   it("applies a new goal to an open today but never reopens a finished one", async () => {
     const { ctx, cards } = await setup(5, ["viis", "kuus", "seitse"]);
     const [a, b] = cards;

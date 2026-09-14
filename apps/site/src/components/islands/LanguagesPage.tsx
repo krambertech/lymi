@@ -5,11 +5,12 @@ import { Queries } from "./Queries";
 
 interface Props {
   page: "languages" | "estonian";
+  locale?: string | undefined;
 }
 
-export default function LanguagesPage({ page }: Props) {
+export default function LanguagesPage({ page, locale }: Props) {
   return (
-    <I18nProvider i18n={pageI18n("en")}>
+    <I18nProvider i18n={pageI18n(locale)}>
       <Queries>{page === "estonian" ? <EstonianView /> : <LanguagesView />}</Queries>
     </I18nProvider>
   );

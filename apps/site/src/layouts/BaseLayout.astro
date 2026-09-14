@@ -1,13 +1,14 @@
 ---
 import onestLatin from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url";
 import onestCyrillic from "@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url";
+import { type LocalizedPage, localizedPath } from "../lib/routes";
 import "../styles.css";
 
 interface Props {
   title: string;
   description: string;
   canonicalPath: string;
-  localizedPage?: "landing" | "join" | undefined;
+  localizedPage?: LocalizedPage | undefined;
   shareImageAlt?: string | undefined;
 }
 
@@ -17,10 +18,6 @@ const canonical = new URL(canonicalPath, site).toString();
 // Rendered by scripts/icons.sh from the brand geometry.
 const shareImage = new URL("/share.png", site).toString();
 const locale = Astro.currentLocale ?? "en";
-const localizedPath = (language: "en" | "uk" | "ru") => {
-  const page = localizedPage === "join" ? "join" : "";
-  return language === "en" ? `/${page}` : `/${language}/${page}`;
-};
 ---
 
 <!doctype html>
@@ -37,10 +34,10 @@ const localizedPath = (language: "en" | "uk" | "ru") => {
     {
       localizedPage && (
         <>
-          <link rel="alternate" hreflang="en" href={new URL(localizedPath("en"), site)} />
-          <link rel="alternate" hreflang="uk" href={new URL(localizedPath("uk"), site)} />
-          <link rel="alternate" hreflang="ru" href={new URL(localizedPath("ru"), site)} />
-          <link rel="alternate" hreflang="x-default" href={new URL(localizedPath("en"), site)} />
+          <link rel="alternate" hreflang="en" href={new URL(localizedPath(localizedPage, "en"), site)} />
+          <link rel="alternate" hreflang="uk" href={new URL(localizedPath(localizedPage, "uk"), site)} />
+          <link rel="alternate" hreflang="ru" href={new URL(localizedPath(localizedPage, "ru"), site)} />
+          <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(localizedPage, "en"), site)} />
         </>
       )
     }

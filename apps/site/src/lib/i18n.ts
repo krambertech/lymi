@@ -2,9 +2,8 @@ import { type I18n, setupI18n } from "@lingui/core";
 import { messages as en } from "../locales/en.po";
 import { messages as ru } from "../locales/ru.po";
 import { messages as uk } from "../locales/uk.po";
+import { type Locale, locales } from "./routes";
 
-export const locales = ["en", "uk", "ru"] as const;
-export type Locale = (typeof locales)[number];
 const catalogs = { en, uk, ru } as const;
 
 /** One I18n per island render, activated for the page locale Astro resolved. */

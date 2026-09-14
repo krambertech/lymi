@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { productUrl } from "../lib/origins";
+import { localizedPath } from "../lib/routes";
 import { AuthFrame } from "./AuthFrame";
 import { BetaSignup } from "./BetaSignup";
 import { LanguageLinks } from "./LanguageLinks";
@@ -11,7 +12,7 @@ export const JOIN_BLURB = msg`Request access to the Lymi private beta.`;
 /** The access request is its own small sign-up flow, separate from authentication. */
 export function JoinView() {
   const { i18n } = useLingui();
-  const homeHref = i18n.locale === "en" ? "/" : `/${i18n.locale}/`;
+  const homeHref = localizedPath("landing", i18n.locale);
   return (
     <AuthFrame homeHref={homeHref} footer={<LanguageLinks page="join" />}>
       <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">

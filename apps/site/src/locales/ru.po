@@ -187,7 +187,7 @@ msgstr "Добавлено 4 карточки в колоду по немецк�
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
-msgstr "Готово: 8 карточек в колоде «Испанский». «ojalá» у тебя уже есть, поэтому она пропущена."
+msgstr "Добавил 8 карточек в колоду «Испанский». Пропустил «ojalá»: такая карточка у тебя уже есть."
 
 #: src/components/landing/SharedDeckDemo.tsx
 msgid "Added after this week’s lesson"
@@ -278,7 +278,7 @@ msgstr "А что мне повторить сегодня вечером?"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Any language you can type, in any script. Lymi can say most widely taught languages aloud."
-msgstr "Любой язык и любая письменность, которую можно набрать. Большинство популярных у изучающих языков Lymi умеет произносить вслух."
+msgstr "Любой язык и любая письменность, которую можно набрать. Большинство языков, которые часто учат, Lymi умеет произносить вслух."
 
 #: src/components/landing/AssistantChat.tsx
 #: src/components/landing/cards.ts
@@ -288,7 +288,7 @@ msgstr "Любой ход ухудшает твою позицию"
 
 #: src/components/landing/AssistantHero.tsx
 msgid "anything"
-msgstr "чем угодно"
+msgstr "своим кодом"
 
 #: src/components/landing/AssistantsView.tsx
 msgid "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
@@ -354,7 +354,7 @@ msgstr "Подключи своего ассистента к Lymi."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Bring your favourite AI along."
-msgstr "Возьми с собой любимый AI."
+msgstr "Любимый AI тоже пригодится."
 
 #: src/components/landing/SiteFooter.tsx
 msgid "Build"
@@ -667,7 +667,7 @@ msgstr "Даже начальнику?"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
-msgstr "Каждая карточка произносит своё слово на его языке. На обороте — строка, которая помогает запомнить: ложный друг, род, тон, меняющий значение."
+msgstr "Каждая карточка произносит своё слово на языке оригинала. На обороте — строка, которая помогает запомнить: ложный друг, род, тон, меняющий значение."
 
 #: src/components/landing/hand-cards.ts
 msgid "Every detail in a story should earn its place."
@@ -1017,11 +1017,11 @@ msgstr "Ровно столько, сколько нужно: не слишко�
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Keep the Estonian from classes, letters and conversations. Photograph your notes, hear every word said, and review each card right before you’d forget."
-msgstr "Сохраняй эстонский с уроков, из писем и разговоров. Фотографируй заметки, слушай произношение каждого слова и повторяй карточки как раз тогда, когда они начинают забываться."
+msgstr "Сохраняй эстонские слова с уроков, из писем и разговоров. Фотографируй заметки, слушай произношение каждого слова и повторяй карточки как раз тогда, когда они начинают забываться."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Keep the Estonian from your next class."
-msgstr "Сохрани эстонский со следующего урока."
+msgstr "Сохрани эстонские слова со следующего урока."
 
 #: src/components/landing/LandingView.tsx
 msgid "Keep the next thing you learn."
@@ -1033,7 +1033,7 @@ msgstr "Сохрани фразы, которые правда будешь го
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
-msgstr "Сохраняй слова и фразы с уроков, занятий с репетитором и из книг. Сфотографируй заметки, и ассистент сделает из них карточки, которые Lymi вернёт, пока ты не забыл."
+msgstr "Сохраняй слова и фразы с уроков, занятий с репетитором и из книг. Сфотографируй заметки, и ассистент сделает из них карточки, которые Lymi вернёт, прежде чем ты их забудешь."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Keep the words from your next lesson."
@@ -1198,7 +1198,7 @@ msgstr "Lymi для изучения языков"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Lymi for language learning · Keep the words from every lesson"
-msgstr "Lymi для изучения языков · Сохраняй слова с каждого урока"
+msgstr "Lymi для изучения языков · Запоминай слова с каждого урока"
 
 #: src/components/landing/LandingView.tsx
 msgid "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
@@ -1255,7 +1255,7 @@ msgstr "Создавай карточки с Claude, ChatGPT или Gemini · Ly
 
 #: src/components/landing/AssistantHero.tsx
 msgid "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
-msgstr "Создавай карточки с Claude, ChatGPT, Gemini, Codex или чем угодно"
+msgstr "Создавай карточки с Claude, ChatGPT, Gemini, Codex или своим кодом"
 
 #: src/components/landing/language-cards.ts
 msgid "may I…?"
@@ -1461,7 +1461,7 @@ msgstr "Подключай Lymi к чему угодно."
 
 #: src/components/landing/AssistantsView.tsx
 msgid "Practise with your own words."
-msgstr "Практикуйся со своими словами."
+msgstr "Практикуйся со словами, которые учишь."
 
 #: src/components/landing/hand-cards.ts
 msgid "Prefer the explanation that needs the fewest assumptions"
@@ -1506,7 +1506,7 @@ msgstr "Хорошее нунчи — уловить настроение, по�
 
 #: src/components/landing/language-cards.ts
 msgid "Raise a glass and it becomes terviseks: to your health."
-msgstr "Подними бокал — и говорят terviseks: за здоровье."
+msgstr "Когда поднимают бокал, говорят terviseks: за здоровье."
 
 #: src/components/landing/PracticeChat.tsx
 msgid "Read your German deck"
@@ -1645,7 +1645,7 @@ msgstr "увидимся; дословно — «видим»"
 
 #: src/components/landing/AssistantsView.tsx
 msgid "Send Claude, ChatGPT or Gemini a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
-msgstr "Отправь Claude, ChatGPT или Gemini фото заметок. Карточки появятся в Lymi, и Lymi вернёт каждую как раз перед тем, как ты её забудешь."
+msgstr "Отправь фото заметок в Claude, ChatGPT или Gemini. Карточки появятся в Lymi, и Lymi вернёт каждую как раз перед тем, как ты её забудешь."
 
 #: src/components/landing/SendAnything.tsx
 msgid "Send it anything."
@@ -2272,7 +2272,7 @@ msgstr "Да, всем."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
-msgstr "Да. Каждая буква остаётся такой, как ты её ввёл, так что tuli, огонь, и tüli, ссора, — две разные карточки."
+msgstr "Да. Каждая буква остаётся такой, какой её ввели, так что tuli, огонь, и tüli, ссора, — две разные карточки."
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."

@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import { type ReactNode, useState } from "react";
 import type { BetaSource } from "../../lib/api";
 import { productUrl } from "../../lib/origins";
+import type { LocalizedPage } from "../../lib/routes";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
 import { AssistantMarks, AssistantMarksWithMore } from "./AssistantMarks";
 import { ConversationScenes } from "./ConversationScenes";
@@ -47,6 +48,7 @@ const SPANISH_ADDED: SampleCard = {
 };
 
 interface PageProps {
+  page: LocalizedPage;
   frames: WordFrame[];
   heroLabel: string;
   heroLede: ReactNode;
@@ -215,7 +217,7 @@ function LanguagePage(props: PageProps) {
         <JoinSection title={props.joinTitle} source={props.source} />
       </main>
 
-      <SiteFooter openAppUrl={openAppUrl} />
+      <SiteFooter openAppUrl={openAppUrl} page={props.page} />
     </div>
   );
 }
@@ -257,6 +259,7 @@ export function LanguagesView() {
 
   return (
     <LanguagePage
+      page="languages"
       frames={WORD_FRAMES}
       heroLabel={t`Keep what you learn in any language.`}
       heroLede={
@@ -444,7 +447,7 @@ export function EstonianView() {
         />
       </main>
 
-      <SiteFooter openAppUrl={openAppUrl} />
+      <SiteFooter openAppUrl={openAppUrl} page="estonian" />
     </div>
   );
 }

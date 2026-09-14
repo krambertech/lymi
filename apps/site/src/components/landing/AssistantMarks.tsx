@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight } from "lucide-react";
 import { useId } from "react";
-import { assistantsHref } from "./pages";
+import { localizedPath } from "../../lib/routes";
 
 type Gradient = {
   from: [x: number, y: number];
@@ -194,22 +194,19 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
   );
 }
 
-/** The marks, then a link to the assistants page where the page's locale has one. */
+/** The marks, then a link to the assistants page. */
 export function AssistantMarksWithMore() {
   const { i18n } = useLingui();
-  const more = assistantsHref(i18n.locale);
   return (
     <>
       <AssistantMarks />
-      {more && (
-        <a
-          href={more}
-          className="mt-5 inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
-        >
-          <Trans>Lymi with AI assistants</Trans>
-          <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-        </a>
-      )}
+      <a
+        href={localizedPath("assistants", i18n.locale)}
+        className="mt-5 inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
+      >
+        <Trans>Lymi with AI assistants</Trans>
+        <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+      </a>
     </>
   );
 }

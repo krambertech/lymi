@@ -1,36 +1,12 @@
-export const prerender = true;
+import { sitemapPaths } from "../lib/routes";
 
-const paths = [
-  "/",
-  "/languages",
-  "/languages/estonian",
-  "/ai-assistants",
-  "/join",
-  "/privacy",
-  "/terms",
-  "/support",
-  "/uk/",
-  "/uk/join",
-  "/ru/",
-  "/ru/join",
-  "/docs",
-  "/docs/quickstart",
-  "/docs/cards",
-  "/docs/scheduling",
-  "/docs/mcp",
-  "/docs/mcp/claude",
-  "/docs/mcp/chatgpt",
-  "/docs/mcp/gemini",
-  "/docs/authentication",
-  "/docs/api",
-  "/docs/recipes",
-];
+export const prerender = true;
 
 export function GET() {
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    ...paths.map((path) => `  <url><loc>https://lymi.app${path}</loc></url>`),
+    ...sitemapPaths.map((path) => `  <url><loc>https://lymi.app${path}</loc></url>`),
     "</urlset>",
     "",
   ].join("\n");

@@ -8,7 +8,7 @@ export class ApiError extends Error {
 }
 
 /** Which public page someone joined from. */
-export type BetaSource = "landing" | "join" | "languages" | "estonian" | "assistants";
+export type BetaSource = "landing" | "join" | "languages" | "estonian" | "assistants" | "teachers";
 
 export async function joinBeta(
   email: string,

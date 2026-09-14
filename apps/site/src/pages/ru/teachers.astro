@@ -1,0 +1,43 @@
+---
+import TeachersPage from "../../components/islands/TeachersPage";
+import { TEACHERS_BLURB, TEACHERS_TITLE } from "../../components/landing/TeachersView";
+import { SHARE_IMAGE_ALT } from "../../components/landing/LandingView";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { pageI18n } from "../../lib/i18n";
+import { localizedPath } from "../../lib/routes";
+
+const locale = Astro.currentLocale ?? "ru";
+const i18n = pageI18n(locale);
+const title = i18n._(TEACHERS_TITLE);
+const description = i18n._(TEACHERS_BLURB);
+const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
+const path = localizedPath("teachers", locale);
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Lymi",
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  description,
+  url: new URL(path, "https://lymi.app").toString(),
+  inLanguage: locale,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={path}
+  localizedPage="teachers"
+  shareImageAlt={shareImageAlt}
+>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
+  />
+  <TeachersPage client:load locale={locale} />
+</BaseLayout>

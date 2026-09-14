@@ -59,9 +59,40 @@ test("a language learner can reach the languages pages and turn notes and cards 
     await expect(page.getByText("A coffee and a cinnamon bun, please.")).toHaveCSS("opacity", "1");
   });
 
-  await test.step("both pages are in the sitemap", async () => {
+  await test.step("the Ukrainian landing page opens the Ukrainian languages page", async () => {
+    await page.goto(`${publicSite}/uk/`);
+    await page.getByRole("link", { name: "Lymi для вивчення мов", exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/uk/languages/?$`));
+    await expect(page.locator("html")).toHaveAttribute("lang", "uk");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Бережи вивчене будь-якою мовою." }),
+    ).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      "https://lymi.app/uk/languages",
+    );
+  });
+
+  await test.step("the footer's language links switch the page to Russian", async () => {
+    await page
+      .getByRole("navigation", { name: "Мова" })
+      .getByRole("link", { name: "Русский", exact: true })
+      .click();
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/ru/languages/?$`));
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Сохраняй выученное на любом языке." }),
+    ).toBeVisible();
+    await expect(page.locator('link[rel="alternate"][hreflang="uk"]')).toHaveAttribute(
+      "href",
+      "https://lymi.app/uk/languages",
+    );
+  });
+
+  await test.step("every edition of both pages is in the sitemap", async () => {
     const sitemap = await (await request.get(`${publicSite}/sitemap.xml`)).text();
-    expect(sitemap).toContain("<loc>https://lymi.app/languages</loc>");
-    expect(sitemap).toContain("<loc>https://lymi.app/languages/estonian</loc>");
+    for (const prefix of ["", "/uk", "/ru"]) {
+      expect(sitemap).toContain(`<loc>https://lymi.app${prefix}/languages</loc>`);
+      expect(sitemap).toContain(`<loc>https://lymi.app${prefix}/languages/estonian</loc>`);
+    }
   });
 });

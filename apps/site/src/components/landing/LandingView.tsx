@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { productUrl } from "../../lib/origins";
+import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { AssistantChat } from "./AssistantChat";
@@ -10,7 +11,6 @@ import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
 import { Hero } from "./Hero";
 import { JoinSection } from "./JoinSection";
-import { languagesHref } from "./pages";
 import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
 import { SiteFooter } from "./SiteFooter";
@@ -25,16 +25,16 @@ export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the Engli
 export function LandingView({ productOrigin }: { productOrigin?: string | undefined } = {}) {
   const { i18n } = useLingui();
   const openAppUrl = new URL("/", productOrigin ?? productUrl()).toString();
-  const languages = languagesHref(i18n.locale);
   const useCases: UseCase[] = [
     {
       id: "languages",
       title: <Trans>A new language</Trans>,
       body: <Trans>Words and phrases from lessons, conversations, and reading.</Trans>,
       card: USE_CASE_CARDS.languages,
-      link: languages
-        ? { href: languages, label: <Trans>Lymi for language learning</Trans> }
-        : null,
+      link: {
+        href: localizedPath("languages", i18n.locale),
+        label: <Trans>Lymi for language learning</Trans>,
+      },
     },
     {
       id: "courses",
@@ -151,7 +151,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         <JoinSection title={<Trans>Keep the next thing you learn.</Trans>} source="landing" />
       </main>
 
-      <SiteFooter openAppUrl={openAppUrl} translations="landing" />
+      <SiteFooter openAppUrl={openAppUrl} page="landing" />
     </div>
   );
 }

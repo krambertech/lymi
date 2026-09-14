@@ -1,17 +1,17 @@
 ---
-import LanguagesPage from "../components/islands/LanguagesPage";
-import { LANGUAGES_BLURB, LANGUAGES_TITLE } from "../components/landing/LanguagesView";
-import { SHARE_IMAGE_ALT } from "../components/landing/LandingView";
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { pageI18n } from "../lib/i18n";
-import { localizedPath } from "../lib/routes";
+import LanguagesPage from "../../../components/islands/LanguagesPage";
+import { ESTONIAN_BLURB, ESTONIAN_TITLE } from "../../../components/landing/LanguagesView";
+import { SHARE_IMAGE_ALT } from "../../../components/landing/LandingView";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { pageI18n } from "../../../lib/i18n";
+import { localizedPath } from "../../../lib/routes";
 
-const locale = Astro.currentLocale ?? "en";
+const locale = Astro.currentLocale ?? "uk";
 const i18n = pageI18n(locale);
-const title = i18n._(LANGUAGES_TITLE);
-const description = i18n._(LANGUAGES_BLURB);
+const title = i18n._(ESTONIAN_TITLE);
+const description = i18n._(ESTONIAN_BLURB);
 const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
-const path = localizedPath("languages", locale);
+const path = localizedPath("estonian", locale);
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -30,7 +30,7 @@ const structuredData = {
   title={title}
   description={description}
   canonicalPath={path}
-  localizedPage="languages"
+  localizedPage="estonian"
   shareImageAlt={shareImageAlt}
 >
   <script
@@ -39,5 +39,5 @@ const structuredData = {
     type="application/ld+json"
     set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
   />
-  <LanguagesPage client:load page="languages" locale={locale} />
+  <LanguagesPage client:load page="estonian" locale={locale} />
 </BaseLayout>

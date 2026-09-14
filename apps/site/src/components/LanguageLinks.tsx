@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { type LocalizedPage, localizedPath } from "../lib/routes";
 
 const languages = [
   { locale: "en", label: "English" },
@@ -7,13 +8,12 @@ const languages = [
 ] as const;
 
 interface Props {
-  page: "landing" | "join";
+  page: LocalizedPage;
 }
 
 /** Language names stay in their own language so every visitor can find theirs. */
 export function LanguageLinks({ page }: Props) {
   const { t, i18n } = useLingui();
-  const path = page === "landing" ? "" : "join";
 
   return (
     <nav
@@ -21,11 +21,10 @@ export function LanguageLinks({ page }: Props) {
       className="mx-auto mt-6 flex max-w-[1040px] flex-wrap gap-4 text-xs text-muted"
     >
       {languages.map(({ locale, label }) => {
-        const href = locale === "en" ? `/${path}` : `/${locale}/${path}`;
         return (
           <a
             key={locale}
-            href={href}
+            href={localizedPath(page, locale)}
             hrefLang={locale}
             lang={locale}
             aria-current={i18n.locale === locale ? "page" : undefined}

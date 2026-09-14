@@ -182,7 +182,7 @@ export function AssistantsView() {
         <JoinSection title={<Trans>Bring your assistant to Lymi.</Trans>} source="assistants" />
       </main>
 
-      <SiteFooter openAppUrl={openAppUrl} />
+      <SiteFooter openAppUrl={openAppUrl} page="assistants" />
     </div>
   );
 }

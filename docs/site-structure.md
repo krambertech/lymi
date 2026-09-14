@@ -7,10 +7,11 @@ Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-sit
 | Origin and path | Owner | Purpose |
 | --- | --- | --- |
 | `lymi.app/` | `apps/site` | Prerendered public landing page with interactive React islands. It remains visible whether or not a product session exists. |
-| `lymi.app/languages` | `apps/site` | Prerendered page for anyone learning a language, built from the landing sections with examples across many languages. English only; translated landing pages do not link to it. |
-| `lymi.app/languages/estonian` | `apps/site` | Prerendered page for people learning Estonian, with Estonian cards, notes, conversations and class deck. English only, like `/languages`. |
-| `lymi.app/ai-assistants` | `apps/site` | Prerendered page for people who already use an AI assistant: a conversation that turns a photo of notes into cards, what else to send, a review, conversation practice, enrichment, the API and how to connect. English only. |
+| `lymi.app/languages` | `apps/site` | Prerendered page for anyone learning a language, built from the landing sections with examples across many languages. |
+| `lymi.app/languages/estonian` | `apps/site` | Prerendered page for people learning Estonian, with Estonian cards, notes, conversations and class deck. |
+| `lymi.app/ai-assistants` | `apps/site` | Prerendered page for people who already use an AI assistant: a conversation that turns a photo of notes into cards, what else to send, a review, conversation practice, enrichment, the API and how to connect. |
 | `lymi.app/join` | `apps/site` | Public private-beta information and invitation request. |
+| `lymi.app/uk/*`, `lymi.app/ru/*` | `apps/site` | Ukrainian and Russian editions of every public page except privacy, terms, support and documentation. |
 | `lymi.app/privacy`, `/terms`, `/support` | `apps/site` | Public privacy, service terms and support information. |
 | `lymi.app/docs/*` | `apps/site` | Public documentation, MCP setup and API reference. |
 | `lymi.app/api/beta` | `apps/site` Worker | Website-owned beta signup action. |
@@ -26,6 +27,12 @@ The product Worker permanently redirects `/docs`, `/docs/*`, `/join`, `/privacy`
 Having an account is different from being signed in. An existing learner with an expired product session reaches sign-in and returns to the original safe product path after authenticating. Return paths must be internal product routes; protocol-relative, external, malformed, hashed and authentication routes fall back to Today. Joining the beta list does not create an account, and access remains limited to the product's configured email allowlist.
 
 The public landing page's Open Lymi link always goes to the product root and lets that origin resolve session state. The product's You screen links back to the public website. Authentication cookies remain host-only on `my.lymi.app` and are never sent to the website.
+
+## Public page languages
+
+Every public marketing page ships in English, Ukrainian and Russian. English lives at the path, and the other editions live under `/uk/` and `/ru/`, rendered by the same island with the page locale. Privacy, terms, support and the documentation stay in English on purpose.
+
+`apps/site/src/lib/routes.ts` lists the translated pages and the English-only paths. The sitemap, the `hreflang` alternates, the footer language links and the links between pages all read from it. `routes.test.ts` fails when a page in `src/pages` is on neither list, when a translated page lacks a locale, or when the sitemap misses a page, so a new public page needs its `/uk/` and `/ru/` files or a place on the English-only list before `pnpm verify` passes.
 
 ## Deployment and PWA boundary
 

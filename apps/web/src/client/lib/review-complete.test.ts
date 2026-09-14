@@ -229,7 +229,18 @@ describe("the end of a stretch", () => {
   it("when one deck runs out below the goal, the day stays open and other decks are offered", () => {
     const end = screen({ from: 2, attempts: 7, left: 0, scoped: true, otherDecks: DECKS });
     expect(end).toMatchObject({ heading: "nothing_left", celebration: "none", satisfied: false });
+    expect(end.namesDeck).toBe(true);
     expect(kinds(end)).toEqual(["Music", "Spanish", "Maths"]);
+  });
+
+  it("when a deck runs out and no other deck has cards, the day counts as Nothing left today", () => {
+    const empty = DECKS.map((d) => ({ ...d, due: 0 }));
+    const end = screen({ from: 2, attempts: 7, left: 0, scoped: true, otherDecks: empty });
+    expect(end).toMatchObject({ heading: "nothing_left", namesDeck: false, satisfied: true });
+    expect(end.offers).toEqual([]);
+    // Until the other decks are known, the deck's end claims nothing about the day.
+    const unknown = screen({ from: 2, attempts: 7, left: 0, scoped: true, otherDecks: null });
+    expect(unknown).toMatchObject({ namesDeck: true, satisfied: false });
   });
 
   it("with nothing reviewed and nothing to draw, says Nothing due", () => {
@@ -273,7 +284,7 @@ describe("every end, whatever the inputs", () => {
           for (const confirmed of [false, true])
             for (const scoped of [false, true])
               for (const forgotten of [0, 2])
-                for (const otherDecks of [[], DECKS])
+                for (const otherDecks of [null, [], DECKS])
                   cases.push(
                     input({
                       stretch,
@@ -302,9 +313,11 @@ describe("every end, whatever the inputs", () => {
     if (end.heading === "nothing_due") expect(c.attempts).toBe(0);
     expect(end.heading === "goal_reached").toBe(met && c.from < GOAL);
 
-    // A deck's own end never counts the day below the goal; the goal always does.
+    // Below the goal a deck's end counts the day only once every other deck is known to be empty.
+    const elsewhere = c.scoped && (c.otherDecks?.some((d) => d.due > 0) ?? true);
     if (met) expect(end.satisfied).toBe(true);
-    if (c.scoped && !met) expect(end.satisfied).toBe(false);
+    if (elsewhere && !met) expect(end.satisfied).toBe(false);
+    expect(end.namesDeck).toBe(end.heading === "nothing_left" && elsewhere);
 
     // Celebrate only when this stretch turned the day, and in full only from the goal's own stretch.
     const turned = end.satisfied && !c.satisfiedBefore && c.attempts > c.from;
@@ -324,7 +337,7 @@ describe("every end, whatever the inputs", () => {
     const shouldList = c.scoped && c.left === 0 && c.confirmed && !met;
     if (!shouldList) expect(decks).toEqual([]);
     else {
-      const due = c.otherDecks.filter((d) => d.due > 0).map((d) => d.due);
+      const due = (c.otherDecks ?? []).filter((d) => d.due > 0).map((d) => d.due);
       expect(decks.length).toBe(Math.min(OTHER_DECKS, due.length));
       expect(decks.map((d) => d.count)).toEqual([...due].sort((a, b) => b - a).slice(0, 3));
     }
@@ -335,7 +348,7 @@ describe("every end, whatever the inputs", () => {
       try {
         check(c);
       } catch (error) {
-        const shown = JSON.stringify({ ...c, otherDecks: c.otherDecks.length });
+        const shown = JSON.stringify({ ...c, otherDecks: c.otherDecks?.length ?? null });
         throw new Error(`${shown}\n${(error as Error).message}`);
       }
     }

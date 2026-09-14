@@ -90,8 +90,8 @@ export interface EndInput {
   scoped: boolean;
   /** Cards in scope whose latest grade today is Forgot. */
   forgotten: number;
-  /** The learner's other decks with how many cards each has to review. */
-  otherDecks: readonly { id: string; name: string; due: number }[];
+  /** The learner's other decks with how many cards each has to review, or null while unknown. */
+  otherDecks: readonly { id: string; name: string; due: number }[] | null;
 }
 
 export type Offer =
@@ -108,6 +108,8 @@ export interface EndScreen {
   celebration: Celebration;
   /** Today counts for the streak once this stretch is in. */
   satisfied: boolean;
+  /** Nothing left is about the review's deck alone, since other decks still have cards. */
+  namesDeck: boolean;
   /** The large number: today's attempts, or this stretch's. */
   count: "day" | "round";
   /** The ways on, in order. Done is always offered beside them. */
@@ -128,8 +130,9 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
   if (empty && !input.confirmed && !met && stretch !== "list") return "unchecked";
 
   const ranOut = empty && input.confirmed;
-  // A deck running out below the goal says nothing about the other decks.
-  const satisfied = met || (ranOut && !scoped && attempts > 0);
+  // A deck running out is the whole day only once the other decks are known to be empty too.
+  const elsewhere = scoped && (input.otherDecks?.some((d) => d.due > 0) ?? true);
+  const satisfied = met || (ranOut && !elsewhere && attempts > 0);
   const turned = satisfied && !input.satisfiedBefore && attempts > from;
   const heading: EndScreen["heading"] =
     ranOut && attempts === 0
@@ -145,7 +148,7 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
   if (input.forgotten > 0) offers.push({ kind: "forgotten", count: input.forgotten });
   if (met && left > 0) offers.push({ kind: "more", count: Math.min(left, EXTRA_ROUND) });
   if (scoped && ranOut && !met) {
-    const decks = input.otherDecks
+    const decks = (input.otherDecks ?? [])
       .filter((d) => d.due > 0)
       .sort((a, b) => b.due - a.due)
       .slice(0, OTHER_DECKS);
@@ -156,6 +159,7 @@ export function reviewEnd(input: EndInput): EndScreen | "unchecked" {
     heading,
     celebration: turned ? (stretch === "goal" ? "full" : "light") : "none",
     satisfied,
+    namesDeck: heading === "nothing_left" && elsewhere,
     count: stretch === "goal" ? "day" : "round",
     offers,
   };

@@ -245,7 +245,7 @@ function Review() {
             confirmed,
             scoped: !!deck,
             forgotten: forgottenItems.length,
-            otherDecks: deck ? (decks.data ?? []).filter((d) => d.id !== deck) : [],
+            otherDecks: !deck ? [] : decks.data ? decks.data.filter((d) => d.id !== deck) : null,
           })
         : null,
     [
@@ -516,7 +516,7 @@ function Review() {
               goal={data.goal}
               from={leg?.from}
               roundCount={legDone}
-              deckName={deckName}
+              deckName={end.namesDeck ? deckName : undefined}
               streak={streakNow}
               streakBefore={held.week}
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}

@@ -144,7 +144,8 @@ test("the end works from the keyboard and without motion, and a short round ends
       await page.keyboard.press("3");
       await expect(page.getByText(`${n + 1} of 2`, { exact: true })).toBeVisible();
     }
-    await expect(heading(page, "Round done")).toBeVisible();
+    // Those were the last cards, so the end says so rather than Round done.
+    await expect(heading(page, "Nothing left today")).toBeVisible();
     await expect(page.getByText(/^2\s*reviews in this round$/)).toBeVisible();
     await expect(page.getByText("5 reviews today", { exact: true })).toBeVisible();
     await expect(another).toBeHidden();

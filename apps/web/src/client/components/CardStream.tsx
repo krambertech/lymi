@@ -53,7 +53,9 @@ export function CardStream({ cards, language, direction, className }: Props) {
         <li
           key={`${card.term}:${card.meaning ?? ""}`}
           className={clsx(
-            "edge grid shrink-0 content-start gap-1 bg-plate",
+            // The scroller is exactly as tall as a card and an overflowing axis clips the other, so
+            // the hairline sits inside rather than as an outer ring that loses its top and bottom.
+            "edge-inset grid shrink-0 content-start gap-1 bg-plate",
             up
               ? "w-full rounded-lg px-6 py-5 [&:nth-child(4n+1)]:-translate-x-6 [&:nth-child(4n+3)]:translate-x-6"
               : "w-52 snap-start rounded-lg px-4.5 py-4",

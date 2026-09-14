@@ -927,9 +927,9 @@
   pointer-events: none;
 }
 
-/* Lesson notes in a hand: Caveat for Latin and Cyrillic, Klee One's pencil strokes for Japanese. */
+/* Lesson notes in a hand. Caveat covers Latin and Cyrillic; a Japanese notebook would need a face of its own. */
 .notes-hand {
-  font-family: "Caveat", "Klee One", cursive;
+  font-family: "Caveat", cursive;
   font-weight: 500;
 }
 

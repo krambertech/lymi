@@ -1,5 +1,4 @@
 import "@fontsource/caveat/500.css";
-import "@fontsource/klee-one/400.css";
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";

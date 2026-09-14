@@ -149,13 +149,17 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
           )}
         </button>
 
-        <a href="/docs" className="flex items-center gap-2 rounded-xs pr-2">
-          <Wordmark size={17} className="text-text" title="Lymi" />
+        <div className="flex items-center gap-2 pe-2">
+          <a href="/" aria-label="Lymi home" className="rounded-xs">
+            <Wordmark size={17} className="text-text" title="Lymi" />
+          </a>
           <span aria-hidden="true" className="text-lg font-light text-faint">
             /
           </span>
-          <span className="text-base text-text-2">docs</span>
-        </a>
+          <a href="/docs" className="rounded-xs text-base text-text-2 hoverable:hover:text-text">
+            docs
+          </a>
+        </div>
 
         <div className="flex-1" />
 

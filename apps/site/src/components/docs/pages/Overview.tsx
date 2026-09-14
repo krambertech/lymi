@@ -7,9 +7,8 @@ export function Overview() {
   return (
     <div className="doc-prose">
       <Lead>
-        Lymi keeps the cards you are learning and asks you about them again at the right time. This
-        API is the same one the app uses, so anything you can do by hand you can do from a script, a
-        shortcut or an assistant.
+        Lymi keeps the cards you are learning and asks you about them again at the right time. An
+        assistant or a script can do anything you do by hand, over the same API the app uses.
       </Lead>
 
       <div className="mb-10 flex items-center gap-4 rounded-lg bg-plate p-4 edge">
@@ -21,27 +20,27 @@ export function Overview() {
 
       <H2>Two ways in</H2>
       <p>
-        Pick by who is calling. A script you wrote uses an API key. An assistant such as Claude or
-        ChatGPT signs in as you instead, over OAuth, and never sees a key.
+        Pick by who is calling. An assistant such as Claude or ChatGPT signs in as you, over OAuth,
+        and never sees a key. A script you wrote uses an API key.
       </p>
 
       <Defs
         items={[
-          {
-            term: "API key",
-            def: (
-              <>
-                A header on every request, made in Settings. Best for curl, cron jobs, a shortcut on
-                your phone, and anything you run yourself.
-              </>
-            ),
-          },
           {
             term: "MCP",
             def: (
               <>
                 An assistant connects to <code>/mcp</code> and asks you to sign in once. Best for
                 “add these five cards to my Italian deck” in the middle of a conversation.
+              </>
+            ),
+          },
+          {
+            term: "API key",
+            def: (
+              <>
+                A header on every request, made in Settings. Best for curl, cron jobs, a shortcut on
+                your phone, and anything you run yourself.
               </>
             ),
           },
@@ -88,6 +87,11 @@ export function Overview() {
       <NextLinks
         items={[
           {
+            to: "/docs/mcp",
+            title: "Connect an assistant",
+            blurb: "Sign Claude or ChatGPT in to your own decks.",
+          },
+          {
             to: "/docs/quickstart",
             title: "Quickstart",
             blurb: "Make a key and add a card in about two minutes.",
@@ -96,11 +100,6 @@ export function Overview() {
             to: "/docs/cards",
             title: "Decks and cards",
             blurb: "The shape of a card, and what happens when you add one twice.",
-          },
-          {
-            to: "/docs/mcp",
-            title: "Connect an assistant",
-            blurb: "Sign Claude or ChatGPT in to your own decks.",
           },
           {
             to: "/docs/api",

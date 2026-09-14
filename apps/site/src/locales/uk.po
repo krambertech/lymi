@@ -215,8 +215,7 @@ msgid "AI"
 msgstr "AI"
 
 #: src/components/landing/ApiConnections.tsx
-#: src/components/landing/SiteFooter.tsx
-#: src/components/landing/SiteNav.tsx
+#: src/components/landing/site-links.ts
 msgid "AI assistants"
 msgstr "AI-асистенти"
 
@@ -301,6 +300,7 @@ msgstr "Коротше; словом"
 
 #: src/components/landing/AssistantsView.tsx
 #: src/components/landing/LandingView.tsx
+#: src/components/landing/SiteFooter.tsx
 msgid "API reference"
 msgstr "Довідник API"
 
@@ -355,10 +355,6 @@ msgstr "Підключи свого асистента до Lymi."
 #: src/components/landing/LanguagesView.tsx
 msgid "Bring your favourite AI along."
 msgstr "Твій улюблений AI теж знадобиться."
-
-#: src/components/landing/SiteFooter.tsx
-msgid "Build"
-msgstr "Розробникам"
 
 #: src/components/landing/hand-cards.ts
 msgid "Buying books and letting them pile up unread"
@@ -437,6 +433,10 @@ msgstr "Натисни, щоб перевернути"
 msgid "Clocking off, and the free evening that follows"
 msgstr "Кінець робочого дня й вільний вечір після нього"
 
+#: src/components/landing/SiteNav.tsx
+msgid "Close menu"
+msgstr "Закрити меню"
+
 #: src/components/landing/estonian-scenes.ts
 msgid "coffee"
 msgstr "кава"
@@ -454,6 +454,7 @@ msgid "Congratulations"
 msgstr "Вітаю"
 
 #: src/components/landing/AssistantMarks.tsx
+#: src/components/landing/SiteFooter.tsx
 msgid "Connect an assistant"
 msgstr "Підключити асистента"
 
@@ -649,7 +650,7 @@ msgid "Español · phrase"
 msgstr "Español · фраза"
 
 #: src/components/landing/language-cards.ts
-#: src/components/landing/SiteFooter.tsx
+#: src/components/landing/site-links.ts
 msgid "Estonian"
 msgstr "Естонська"
 
@@ -1107,8 +1108,7 @@ msgstr "Запам’ятовуй надовго."
 msgid "Language"
 msgstr "Мова"
 
-#: src/components/landing/SiteFooter.tsx
-#: src/components/landing/SiteNav.tsx
+#: src/components/landing/site-links.ts
 msgid "Language learning"
 msgstr "Вивчення мов"
 
@@ -1119,10 +1119,6 @@ msgstr "Латиною — «ти матимеш тіло»."
 #: src/components/landing/hand-cards.ts
 msgid "Law"
 msgstr "Право"
-
-#: src/components/landing/SiteFooter.tsx
-msgid "Learn"
-msgstr "Навчання"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Learn to speak Estonian."
@@ -1274,6 +1270,10 @@ msgstr "Значення"
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each grade to decide when the card returns."
 msgstr "Пам’ять слабне. Якщо пригадати щось вчасно, воно закріплюється, і наступна перерва може бути довшою. За кожною оцінкою Lymi вирішує, коли повернути картку."
 
+#: src/components/landing/SiteNav.tsx
+msgid "Menu"
+msgstr "Меню"
+
 #: src/components/landing/LanguagesView.tsx
 msgid "More than a translation."
 msgstr "Більше, ніж переклад."
@@ -1385,6 +1385,10 @@ msgstr "Лише коли ти просиш про це асистента. Ус
 msgid "Open Lymi"
 msgstr "Відкрити Lymi"
 
+#: src/components/landing/SiteNav.tsx
+msgid "Open menu"
+msgstr "Відкрити меню"
+
 #: src/components/landing/estonian-scenes.ts
 msgid "or"
 msgstr "чи"
@@ -1400,6 +1404,10 @@ msgstr "Кава з собою"
 #: src/components/landing/AssistantMarks.tsx
 msgid "Other apps"
 msgstr "Інші застосунки"
+
+#: src/components/landing/SiteFooter.tsx
+msgid "Overview"
+msgstr "Вступ"
 
 #: src/components/landing/estonian-scenes.ts
 msgid "Paying at the checkout"
@@ -1654,6 +1662,10 @@ msgstr "Надсилай асистентові що завгодно."
 #: src/components/landing/AssistantHero.tsx
 msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
 msgstr "Надішли асистентові фото нотаток. Він додасть картки в Lymi, а Lymi поверне кожну якраз перед тим, як ти її забудеш."
+
+#: src/components/landing/site-links.ts
+msgid "Send your notes to Claude, ChatGPT or Gemini and get cards."
+msgstr "Надішли нотатки в Claude, ChatGPT чи Gemini — і отримай картки."
 
 #: src/components/landing/AssistantChat.tsx
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
@@ -2109,6 +2121,11 @@ msgstr "Не вдалося надіслати заявку. Перевір ін
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершені справи тримаються в пам’яті краще за завершені"
 
+#: src/components/landing/SiteFooter.tsx
+#: src/components/landing/SiteNav.tsx
+msgid "Use cases"
+msgstr "Для чого"
+
 #: src/components/landing/AssistantHero.tsx
 msgid "Used Lymi"
 msgstr "Використано Lymi"
@@ -2225,6 +2242,10 @@ msgstr "слово"
 #: src/components/landing/LandingView.tsx
 msgid "Words and phrases from lessons, conversations, and reading."
 msgstr "Слова й фрази з уроків, розмов і прочитаного."
+
+#: src/components/landing/site-links.ts
+msgid "Words and phrases from lessons, tutors and reading."
+msgstr "Слова й фрази з уроків, від репетитора і з прочитаного."
 
 #: src/components/landing/PracticeChat.tsx
 msgid "Words from your deck"

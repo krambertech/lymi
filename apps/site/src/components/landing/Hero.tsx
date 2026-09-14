@@ -8,10 +8,11 @@ interface Props {
   title: ReactNode;
   lede: ReactNode;
   cards?: readonly HandCard[] | undefined;
+  layout?: "fan" | "stack" | undefined;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards }: Props) {
+export function Hero({ title, lede, cards, layout }: Props) {
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:min-h-[700px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)] @4xl:gap-14 @4xl:pt-14">
       <div className="min-w-0 max-w-[540px]">
@@ -29,7 +30,7 @@ export function Hero({ title, lede, cards }: Props) {
         </p>
       </div>
 
-      <HandOfCards cards={cards} />
+      <HandOfCards cards={cards} layout={layout} />
     </div>
   );
 }

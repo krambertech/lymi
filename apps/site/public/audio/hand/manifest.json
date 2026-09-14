@@ -346,5 +346,107 @@
     "language": "et",
     "model": "gpt-4o-mini-tts",
     "voice": "marin"
+  },
+  "scene-cafe-1": {
+    "term": "Tere! Mida teile?",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-cafe-2": {
+    "term": "Üks kohv ja kaneelisai, palun.",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-cafe-3": {
+    "term": "Siin või kaasa?",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-cafe-4": {
+    "term": "Kaasa, palun.",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-cafe-5": {
+    "term": "Kaardiga või sularahas?",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-cafe-6": {
+    "term": "Kaardiga. Aitäh!",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-hello-1": {
+    "term": "Tere! Kuidas läheb?",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-hello-2": {
+    "term": "Hästi, aitäh! Ja sul?",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-hello-3": {
+    "term": "Normaalselt. Palju tööd.",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-hello-4": {
+    "term": "Jõudu!",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-hello-5": {
+    "term": "Aitäh! Näeme!",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-shop-1": {
+    "term": "Tere! Kas teil on kliendikaart?",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-shop-2": {
+    "term": "Ei ole.",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-shop-3": {
+    "term": "Kas kotti on vaja?",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-shop-4": {
+    "term": "Jah, üks, palun.",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-shop-5": {
+    "term": "Kaks eurot ja kümme senti.",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
+  },
+  "scene-shop-6": {
+    "term": "Aitäh, head päeva!",
+    "language": "et",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin"
   }
 }

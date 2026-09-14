@@ -173,30 +173,3 @@ export const WORD_FRAMES: WordFrame[] = [
     ],
   },
 ];
-
-/** The Estonian page keeps its headline and turns over three sets of Estonian words instead. */
-export const ESTONIAN_FRAMES: WordFrame[] = [
-  WORD_FRAMES.find((f) => f.language === "et") as WordFrame,
-  {
-    language: "et",
-    words: [
-      { term: "aitäh", meaning: msg`Thank you` },
-      { term: "tervist", meaning: msg`Hello; bless you` },
-      { term: "isikukood", meaning: msg`Personal ID code` },
-      { term: "kõik", meaning: msg`Everything; all` },
-      { term: "ilus", meaning: msg`Beautiful` },
-      { term: "kohv", meaning: msg`Coffee` },
-    ],
-  },
-  {
-    language: "et",
-    words: [
-      { term: "saun", meaning: msg`Sauna` },
-      { term: "jõulud", meaning: msg`Christmas` },
-      { term: "suvi", meaning: msg`Summer` },
-      { term: "raamat", meaning: msg`Book` },
-      { term: "linn", meaning: msg`City; town` },
-      { term: "vabandust", meaning: msg`Sorry; excuse me` },
-    ],
-  },
-];

@@ -360,3 +360,35 @@ export const ESTONIAN_HAND: LanguageCard[] = [
     note: msg`The same word for someone you love and a price you’d rather not pay.`,
   },
 ];
+
+/** Recognition reviews of words an Estonian learner meets in their first weeks. */
+export const ESTONIAN_REVIEW: SampleCard[] = [
+  {
+    label: msg`Eesti · adjective`,
+    term: "kallis",
+    language: "et",
+    meaning: msg`Dear; expensive`,
+    example: "See kohvik on kallis.",
+  },
+  {
+    label: msg`Eesti · noun`,
+    term: "ühistransport",
+    language: "et",
+    meaning: msg`Public transport`,
+    example: "Kasutan iga päev ühistransporti.",
+  },
+  {
+    label: msg`Eesti · word`,
+    term: "vabandust",
+    language: "et",
+    meaning: msg`Sorry; excuse me`,
+    example: "Vabandust, kus on bussipeatus?",
+  },
+  {
+    label: msg`Eesti · verb`,
+    term: "broneerima",
+    language: "et",
+    meaning: msg`To book; to reserve`,
+    example: "Tahan laua broneerida.",
+  },
+];

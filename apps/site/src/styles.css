@@ -933,6 +933,39 @@
   font-weight: 500;
 }
 
+/* The Estonian conversation: bubbles drift a little, and a playing line's speaker pulses. */
+.scene-bubble {
+  animation: bubble-drift 9s ease-in-out infinite;
+}
+/* Holds still under the pointer, so a word or the play button is easy to hit. */
+.scene-bubble:hover,
+.scene-bubble:focus-within {
+  animation-play-state: paused;
+}
+@keyframes bubble-drift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -4px;
+  }
+}
+.scene-playing {
+  animation: scene-playing 700ms ease-in-out infinite alternate;
+}
+@keyframes scene-playing {
+  to {
+    scale: 1.2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-bubble,
+  .scene-playing {
+    animation: none;
+  }
+}
+
 /*
  * Words behind the languages hero. Each is placed by slot, leans away from the pointer by its
  * depth, and wanders on its own slow loop; nearer words are larger, stronger and lean further.

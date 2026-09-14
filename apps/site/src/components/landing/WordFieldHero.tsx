@@ -19,21 +19,21 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 /**
  * Places around the headline, in percent of the hero, listed clockwise so every other slot is an
- * even spread. `x`/`y` are for a wide hero; `mx`/`my` keep a phone's words above and below the copy.
+ * even spread. Depths repeat near, near, far, far, middle, middle, so every other slot mixes all three. `x`/`y` are for a wide hero; `mx`/`my` keep a phone's words above and below the copy.
  */
 const SLOTS = [
-  { x: 20, y: 12, mx: 18, my: 8, size: "text-4xl", depth: 0.55 },
-  { x: 50, y: 7, mx: 50, my: 13, size: "text-xl", depth: 0.28 },
-  { x: 80, y: 13, mx: 80, my: 7, size: "text-3xl", depth: 0.45 },
+  { x: 20, y: 12, mx: 18, my: 8, size: "text-5xl", depth: 0.6 },
+  { x: 50, y: 7, mx: 50, my: 13, size: "text-4xl", depth: 0.55 },
+  { x: 80, y: 13, mx: 80, my: 7, size: "text-xl", depth: 0.28 },
   { x: 93, y: 34, mx: 70, my: 15, size: "text-2xl", depth: 0.32 },
-  { x: 87, y: 57, mx: 82, my: 88, size: "text-5xl", depth: 0.6 },
-  { x: 93, y: 79, mx: 58, my: 94, size: "text-xl", depth: 0.28 },
-  { x: 76, y: 90, mx: 30, my: 90, size: "text-4xl", depth: 0.5 },
-  { x: 50, y: 94, mx: 20, my: 95, size: "text-2xl", depth: 0.32 },
-  { x: 24, y: 89, mx: 45, my: 86, size: "text-3xl", depth: 0.45 },
-  { x: 7, y: 77, mx: 12, my: 91, size: "text-xl", depth: 0.28 },
-  { x: 13, y: 55, mx: 88, my: 93, size: "text-5xl", depth: 0.6 },
-  { x: 7, y: 33, mx: 35, my: 10, size: "text-2xl", depth: 0.32 },
+  { x: 87, y: 57, mx: 82, my: 88, size: "text-3xl", depth: 0.45 },
+  { x: 93, y: 79, mx: 58, my: 94, size: "text-3xl", depth: 0.45 },
+  { x: 76, y: 90, mx: 30, my: 90, size: "text-5xl", depth: 0.6 },
+  { x: 50, y: 94, mx: 20, my: 95, size: "text-4xl", depth: 0.55 },
+  { x: 24, y: 89, mx: 45, my: 86, size: "text-xl", depth: 0.28 },
+  { x: 7, y: 77, mx: 12, my: 91, size: "text-2xl", depth: 0.32 },
+  { x: 13, y: 55, mx: 88, my: 93, size: "text-3xl", depth: 0.45 },
+  { x: 7, y: 33, mx: 35, my: 10, size: "text-3xl", depth: 0.45 },
 ] as const;
 
 /** The headline's language is the one moving part inside it, keyed by the frame's language. */

@@ -247,6 +247,66 @@ const ARCHIVED_CARD: PersonaCard = {
   archived: true,
 };
 
+/** Repeats a sentence to exactly a field's limit, so the longest card the schema allows is seeded. */
+const atLimit = (sentence: string, length: number): string =>
+  sentence
+    .repeat(Math.ceil(length / sentence.length))
+    .slice(0, length)
+    .trim()
+    .padEnd(length, ".");
+
+const LONG_CARDS: PersonaCard[] = [
+  {
+    term: "Da beißt die Maus keinen Faden ab",
+    pronunciation: "da ˈbaɪ̯st diː ˈmaʊ̯s ˈkaɪ̯nən ˈfaːdn̩ ap",
+    meaning:
+      "There is no way around it; that is simply how it is. Said when a fact or decision is final, often with a note of resignation.",
+    example:
+      "Die Frist endet am Freitag, da beißt die Maus keinen Faden ab. Wir müssen den Antrag bis dahin einreichen, auch wenn noch Unterlagen fehlen.",
+    notes:
+      "Colloquial, more common in the south and in Austria.\nFrom a fable where a mouse cannot gnaw through the rope.\nCompare: that's that; no two ways about it.",
+    tags: ["idiom"],
+  },
+  {
+    term: "Wer den Pfennig nicht ehrt, ist des Talers nicht wert.",
+    meaning: "Whoever does not value small amounts does not deserve large ones.",
+    example:
+      "Sie hebt jede Münze auf. Wer den Pfennig nicht ehrt, ist des Talers nicht wert, sagt sie.",
+  },
+  {
+    term: "die Auseinandersetzung",
+    pronunciation: "diː aʊ̯sʔaɪ̯nˈandɐˌzɛt͡sʊŋ",
+    meaning:
+      "1. An argument or dispute between people who disagree, sometimes heated.\n2. A close, critical engagement with a subject, text or idea: working through it rather than just reading it.\n3. In law, the division of shared property, for example after a partnership or an inheritance ends.",
+    example:
+      "Nach einer langen Auseinandersetzung mit dem Vermieter bekamen wir die Kaution zurück. Ihre Auseinandersetzung mit Kafka dauerte das ganze Semester, und am Ende schrieb sie eine Arbeit über seine Briefe.",
+    notes:
+      "Plural: die Auseinandersetzungen.\nsich mit etwas auseinandersetzen: to engage with something.\nNot the same as der Streit, which is always a quarrel; an Auseinandersetzung can be calm and scholarly.\nCommon collocations: eine heftige, sachliche, kritische, juristische Auseinandersetzung.",
+  },
+  {
+    term: atLimit(
+      "Die Wendung beschreibt jemanden, der zu spät handelt und so tut, als wäre alles geplant. ",
+      500,
+    ),
+    meaning: atLimit(
+      "A deliberately long meaning that fills the field to its limit, to see how the card holds it. ",
+      2000,
+    ),
+    pronunciation: atLimit("ˈvɛndʊŋ bəˈʃʁaɪ̯pt ", 200),
+    example: atLimit(
+      "Er kam eine Stunde zu spät und sagte, er habe den Zug absichtlich verpasst. ",
+      2000,
+    ),
+    notes: atLimit("Notes at the field's limit, long enough to scroll on every screen. ", 2000),
+    source: atLimit("Grammatik aktiv, Kapitel 12 ", 200),
+  },
+  {
+    term: "Rechtsschutzversicherungsgesellschaften",
+    meaning: "legal expenses insurance companies",
+  },
+  { term: "der Hund", meaning: "dog", example: "Der Hund schläft." },
+];
+
 const everyDay = (from: number, to: number): number[] =>
   Array.from({ length: from - to + 1 }, (_, i) => to + i);
 
@@ -353,6 +413,24 @@ export const personas: Persona[] = [
         defaultLanguage: "pt-BR",
         introducedDaysAgo: 45,
         cards: PORTUGUESE,
+      },
+    ],
+  },
+  {
+    id: "long",
+    name: "Ingrid",
+    description:
+      "Long cards: sentences as terms, dictionary-length meanings, every field at its limit.",
+    appLanguage: "en",
+    reviewDays: [],
+    dueNow: "all",
+    decks: [
+      {
+        name: "Lange Karten",
+        defaultLanguage: "de",
+        directions: "both",
+        introducedDaysAgo: 3,
+        cards: LONG_CARDS,
       },
     ],
   },

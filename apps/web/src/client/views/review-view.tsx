@@ -14,7 +14,15 @@ import {
   useTransform,
   type Variants,
 } from "motion/react";
-import { type CSSProperties, type ReactNode, useEffect, useId, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type ReactNode,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { buttonClass, IconButton } from "../components/button";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
@@ -311,11 +319,87 @@ export interface ReviewCardProps {
   className?: string | undefined;
 }
 
+/** The grade strip's full height, 72 px grades under a 12 px gap, which the card gives up on reveal. */
+export const GRADE_STRIP_HEIGHT = 84;
+
+/** Text that does not fit steps down the type scale this many times before the card scrolls. */
+const TEXT_STEPS = 2;
+const CUE_SIZE = ["text-4xl @3xl:text-5xl", "text-3xl @3xl:text-4xl", "text-2xl @3xl:text-3xl"];
+const TERM_SIZE = ["text-3xl", "text-2xl", "text-xl"];
+const MEANING_SIZE = ["text-xl", "text-lg", "text-md"];
+const PICTURE_TARGET_SIZE = ["text-2xl", "text-xl", "text-lg"];
+const CONTEXT_SIZE = ["text-xl", "text-lg", "text-md"];
+
+interface Fit {
+  step: number;
+  settled: boolean;
+}
+const UNMEASURED: Fit = { step: 0, settled: false };
+
+const px = (value: string) => Number.parseFloat(value) || 0;
+
+interface FitElements {
+  section: HTMLElement | null;
+  inner: HTMLElement | null;
+  head: HTMLElement | null;
+  column: HTMLElement | null;
+  cue: HTMLElement | null;
+  answer: HTMLElement | null;
+  extras: HTMLElement | null;
+}
+
+/**
+ * Whether the cue fits the card before reveal, and the cue with its target after. Example and notes
+ * never shrink the type; they scroll. Heights come from the stage the card fills rather than the
+ * card, whose own height is still animating while the grade strip opens.
+ */
+function measureFit(els: FitElements) {
+  const { section, inner, head, column, cue, answer, extras } = els;
+  const stage = section?.parentElement;
+  if (!section || !stage || !inner || !head || !column || !cue || !answer) return null;
+  const style = getComputedStyle(section);
+  const stageStyle = getComputedStyle(stage);
+  let siblings = 0;
+  for (const child of stage.children) {
+    if (child === section || !(child instanceof HTMLElement) || "gradeStrip" in child.dataset)
+      continue;
+    siblings += child.offsetHeight;
+  }
+  const room =
+    stage.clientHeight -
+    px(stageStyle.paddingTop) -
+    px(stageStyle.paddingBottom) -
+    siblings -
+    px(style.marginTop) -
+    px(style.marginBottom);
+  const maxHeight = style.maxHeight === "none" ? Number.POSITIVE_INFINITY : px(style.maxHeight);
+  const cardHeight = (height: number) => Math.min(maxHeight, Math.max(px(style.minHeight), height));
+  const innerStyle = getComputedStyle(inner);
+  const columnStyle = getComputedStyle(column);
+  const chrome =
+    px(innerStyle.paddingTop) +
+    px(innerStyle.paddingBottom) +
+    head.offsetHeight +
+    px(columnStyle.paddingTop) +
+    px(columnStyle.paddingBottom);
+  const answerGap = extras?.parentElement ? px(getComputedStyle(extras.parentElement).rowGap) : 0;
+  const must = answer.offsetHeight - (extras ? extras.offsetHeight + answerGap : 0);
+  return {
+    front: cue.offsetHeight,
+    frontRoom: cardHeight(room) - chrome,
+    back: cue.offsetHeight + px(columnStyle.rowGap) + must,
+    backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome,
+  };
+}
+
 /**
  * The card. A flat plate with one hairline edge. Before reveal it is the cue alone, large: the
  * word, the meaning, or the picture. After reveal the cue glides up, the rule draws across, and
  * the target rises in under it with the rest of the card as context, each line labelled with its
  * source. A picture that cannot load gives way to its description, so the card can still be graded.
+ *
+ * A long card keeps its grades in view: its cue and target step down in size, and what still does
+ * not fit scrolls inside the plate.
  */
 export function ReviewCard({
   item,
@@ -336,6 +420,72 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const label =
+    mode.cue === "term"
+      ? t`Recognition card for ${front}`
+      : mode.cue === "meaning"
+        ? t`Production card for ${front}`
+        : t`Picture card`;
+
+  const [fit, setFit] = useState<Fit>(UNMEASURED);
+  const sectionRef = useRef<HTMLElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLDivElement>(null);
+  const columnRef = useRef<HTMLDivElement>(null);
+  const cueRef = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null);
+  const extrasRef = useRef<HTMLDivElement>(null);
+
+  // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
+  useLayoutEffect(() => {
+    if (fit.settled) return;
+    const m = measureFit({
+      section: sectionRef.current,
+      inner: innerRef.current,
+      head: headRef.current,
+      column: columnRef.current,
+      cue: cueRef.current,
+      answer: answerRef.current,
+      extras: extrasRef.current,
+    });
+    if (!m) {
+      setFit({ ...fit, settled: true });
+      return;
+    }
+    const fits = m.front <= m.frontRoom && m.back <= m.backRoom;
+    setFit(
+      !fits && fit.step < TEXT_STEPS ? { ...fit, step: fit.step + 1 } : { ...fit, settled: true },
+    );
+  }, [fit]);
+
+  // A new size, or the font arriving, measures again from the largest step.
+  useEffect(() => {
+    const section = sectionRef.current;
+    const stage = section?.parentElement;
+    if (!section || !stage) return;
+    let last = "";
+    const observer = new ResizeObserver(() => {
+      // Offset width, so a scrollbar appearing is not a new size to measure for.
+      const next = `${section.offsetWidth} ${stage.clientWidth}x${stage.clientHeight}`;
+      if (last && next !== last) setFit(UNMEASURED);
+      last = next;
+    });
+    observer.observe(section);
+    observer.observe(stage);
+    let live = true;
+    if (document.fonts?.status === "loading") {
+      void document.fonts.ready.then(() => live && setFit(UNMEASURED));
+    }
+    return () => {
+      live = false;
+      observer.disconnect();
+    };
+  }, []);
+
+  const step = fit.step;
+  const hasExtras = !!(card.example || card.notes);
+  const chips = !!(card.meaningSource || (card.exampleSource && card.example) || card.source);
+
   const audio = (className?: string) =>
     onPlayAudio && (
       <AudioButton
@@ -345,198 +495,276 @@ export function ReviewCard({
         className={className}
       />
     );
-  const label =
-    mode.cue === "term"
-      ? t`Recognition card for ${front}`
-      : mode.cue === "meaning"
-        ? t`Production card for ${front}`
-        : t`Picture card`;
-  const pronunciation = card.pronunciation && (
-    <motion.p variants={answerLine} className="text-md text-muted">
-      {card.pronunciation}
-    </motion.p>
+  // The measuring copy holds the button's place without a second live button.
+  const audioPlace = () =>
+    onPlayAudio && (
+      <span className="whitespace-nowrap">
+        {"\u2060"}
+        <span className="ms-3 inline-flex h-[1lh] items-center align-top">
+          <span className="size-8" />
+        </span>
+      </span>
+    );
+
+  const extrasLines = (
+    <>
+      {card.example && (
+        <motion.p
+          variants={answerLine}
+          className="whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+          lang={card.language ?? undefined}
+        >
+          {card.example}
+        </motion.p>
+      )}
+      {card.notes && (
+        <motion.p
+          variants={answerLine}
+          className="whitespace-pre-line text-sm text-muted [overflow-wrap:anywhere]"
+        >
+          {card.notes}
+        </motion.p>
+      )}
+    </>
   );
 
-  return (
-    // The whole plate reveals the answer, so the control is a button covering the plate rather than
-    // a caption at its foot: pressing the card is what a card affords, and the most-pressed control
-    // on the screen should not look like a footnote. It sits above the text and below the
-    // pronunciation button, which is the one thing inside the card you can press for another reason.
-    <section
-      aria-label={label}
-      className={clsx(
-        "edge relative flex min-h-0 flex-1 flex-col overflow-y-auto rounded-xl bg-plate p-5 @3xl:p-6",
-        !revealed && "cursor-pointer hoverable:hover:edge-2",
-        className,
-      )}
-    >
-      {!revealed && (
-        <button
-          type="button"
-          onClick={onReveal}
-          aria-label={t`Reveal the card`}
-          className="absolute inset-0 z-10 rounded-xl"
-        />
-      )}
-      <div
-        className={clsx(
-          "flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs",
-          animateIn && "enter-fade",
-        )}
-      >
-        <span className="flex min-w-0 items-center gap-1.5">
-          {deck && (
-            <>
-              <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-              {/* The deck name keeps its width up to 60%; the mode label truncates first. */}
-              <span className="max-w-[60%] shrink-0 truncate font-medium text-text-2">
-                {deck.name}
-              </span>
-              <span aria-hidden="true">·</span>
-            </>
-          )}
-          <span className="min-w-0 truncate">
-            {i18n._(modeLabel(mode))}
-            {/* The deck implies its language, so the code shows only for a card that differs. */}
-            {card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase() && (
-              <span> · {card.language.toUpperCase()}</span>
-            )}
-          </span>
-        </span>
-        <StateChip state={item.fsrsState} size="lg" inReview />
-      </div>
-
-      <div
-        className={clsx(
-          "flex flex-1 flex-col justify-center gap-5 py-2",
-          animateIn && "enter-fade",
-        )}
-      >
+  /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
+  const answer = (measure: boolean) => {
+    const sound = measure ? audioPlace : audio;
+    const pronunciation = card.pronunciation && (
+      <motion.p variants={answerLine} className="text-md text-muted [overflow-wrap:anywhere]">
+        {card.pronunciation}
+      </motion.p>
+    );
+    return (
+      <>
         <motion.div
-          layout={animateReveal ? "position" : false}
-          transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
-          className="grid gap-3"
-        >
-          {mode.cue === "image" ? (
-            card.image ? (
-              // One size before and after reveal, on the start edge like the text under it.
-              <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
-            ) : (
-              // A queue fetched before the picture was archived; the server no longer asks this mode.
-              <p className="text-xl text-muted">
-                <Trans>This card’s picture was removed.</Trans>
-              </p>
-            )
-          ) : (
+          variants={answerRule}
+          aria-hidden="true"
+          className="h-px bg-edge ltr:origin-left rtl:origin-right"
+        />
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-3">
+          {mode.target === "term" ? (
             <>
-              <p
-                lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
-                className="hyphens-auto text-4xl font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere] @3xl:text-5xl"
+              <motion.p
+                variants={answerLine}
+                className={clsx(
+                  "hyphens-auto font-medium leading-[1.2] text-text [overflow-wrap:anywhere]",
+                  TERM_SIZE[step],
+                )}
+                lang={card.language ?? undefined}
               >
-                {front}
-                {mode.cue === "term" && audio("z-20")}
-              </p>
-              {mode.cue === "term" && card.pronunciation && (
-                <p className="text-md text-muted">{card.pronunciation}</p>
+                {card.term}
+                {sound()}
+              </motion.p>
+              {pronunciation}
+              {picture && card.meaning && (
+                <motion.p
+                  variants={answerLine}
+                  className={clsx(
+                    "hyphens-auto whitespace-pre-line leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                    CONTEXT_SIZE[step],
+                  )}
+                >
+                  {card.meaning}
+                </motion.p>
               )}
             </>
-          )}
-        </motion.div>
-
-        {revealed && (
-          <motion.div
-            variants={answerGroup}
-            initial={animateReveal ? "hidden" : false}
-            animate="shown"
-            className="grid gap-5"
-          >
-            <motion.div
-              variants={answerRule}
-              aria-hidden="true"
-              className="h-px bg-edge ltr:origin-left rtl:origin-right"
-            />
-            <div className="grid gap-3">
-              {mode.target === "term" ? (
-                <>
-                  <motion.p
-                    variants={answerLine}
-                    className="hyphens-auto text-3xl font-medium leading-[1.2] text-text [overflow-wrap:anywhere]"
-                    lang={card.language ?? undefined}
-                  >
-                    {card.term}
-                    {audio()}
-                  </motion.p>
-                  {pronunciation}
-                  {picture && card.meaning && (
-                    <motion.p
-                      variants={answerLine}
-                      className="hyphens-auto text-xl leading-[1.35] text-text-2 [overflow-wrap:anywhere]"
-                    >
-                      {card.meaning}
-                    </motion.p>
-                  )}
-                </>
-              ) : (
+          ) : (
+            <>
+              <motion.p
+                variants={answerLine}
+                className={clsx(
+                  "hyphens-auto whitespace-pre-line leading-[1.3] text-text [overflow-wrap:anywhere]",
+                  picture ? ["font-medium", PICTURE_TARGET_SIZE[step]] : MEANING_SIZE[step],
+                )}
+              >
+                {back}
+              </motion.p>
+              {picture && (
                 <>
                   <motion.p
                     variants={answerLine}
                     className={clsx(
-                      "hyphens-auto leading-[1.3] text-text [overflow-wrap:anywhere]",
-                      picture ? "text-2xl font-medium" : "text-xl",
+                      "hyphens-auto leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                      CONTEXT_SIZE[step],
+                    )}
+                    lang={card.language ?? undefined}
+                  >
+                    {card.term}
+                    {sound()}
+                  </motion.p>
+                  {pronunciation}
+                </>
+              )}
+            </>
+          )}
+          {!picture &&
+            card.image &&
+            (measure ? (
+              <div className="py-1">
+                <div
+                  style={{
+                    aspectRatio: `${card.image.width} / ${card.image.height}`,
+                    width: `min(100%, calc(min(16dvh, 120px) * ${(card.image.width / card.image.height).toFixed(4)}))`,
+                  }}
+                />
+              </div>
+            ) : (
+              <motion.div variants={answerLine} className="py-1">
+                <CardPicture
+                  image={card.image}
+                  maxHeight="min(16dvh, 120px)"
+                  fallback="placeholder"
+                />
+              </motion.div>
+            ))}
+          {hasExtras && (
+            <div ref={extrasRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
+              {extrasLines}
+            </div>
+          )}
+          {chips && (
+            <motion.div variants={answerLine} className="mt-1 flex flex-wrap gap-1.5">
+              {card.meaningSource && <SourceChip source={card.meaningSource} field="meaning" />}
+              {card.exampleSource && card.example && (
+                <SourceChip source={card.exampleSource} field="example" />
+              )}
+              {card.source && (
+                <Chip size="sm" className="min-w-0 max-w-full">
+                  <span className="truncate">{card.source}</span>
+                </Chip>
+              )}
+            </motion.div>
+          )}
+        </div>
+      </>
+    );
+  };
+
+  return (
+    // The whole plate reveals the answer, so the control is a button covering the plate rather than
+    // a caption at its foot: pressing the card is what a card affords, and the most-pressed control
+    // on the screen should not look like a footnote. It covers everything that scrolls, so a long
+    // cue can still be scrolled and pressed anywhere.
+    <section
+      ref={sectionRef}
+      aria-label={label}
+      className={clsx(
+        "edge relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl bg-plate",
+        !revealed && "cursor-pointer hoverable:hover:edge-2",
+        className,
+      )}
+    >
+      {/* The fades sit inside the padding, so they only ever soften text that has scrolled under an edge. */}
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [mask-image:linear-gradient(transparent,#000_1rem,#000_calc(100%-1.25rem),transparent)]">
+        <div ref={innerRef} className="relative flex shrink-0 grow flex-col p-5 @3xl:p-6">
+          {!revealed && (
+            <button
+              type="button"
+              onClick={onReveal}
+              aria-label={t`Reveal the card`}
+              className="absolute inset-0 z-10 rounded-xl"
+            />
+          )}
+          <div
+            ref={headRef}
+            className={clsx(
+              "flex items-center justify-between gap-3 text-sm text-muted @3xl:text-xs",
+              animateIn && "enter-fade",
+            )}
+          >
+            <span className="flex min-w-0 items-center gap-1.5">
+              {deck && (
+                <>
+                  <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
+                  {/* The deck name keeps its width up to 60%; the mode label truncates first. */}
+                  <span className="max-w-[60%] shrink-0 truncate font-medium text-text-2">
+                    {deck.name}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                </>
+              )}
+              <span className="min-w-0 truncate">
+                {i18n._(modeLabel(mode))}
+                {/* The deck implies its language, so the code shows only for a card that differs. */}
+                {card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase() && (
+                  <span> · {card.language.toUpperCase()}</span>
+                )}
+              </span>
+            </span>
+            <StateChip state={item.fsrsState} size="lg" inReview />
+          </div>
+
+          <div
+            ref={columnRef}
+            className={clsx(
+              "relative flex flex-1 flex-col justify-center gap-5 py-2",
+              animateIn && "enter-fade",
+            )}
+          >
+            <motion.div
+              ref={cueRef}
+              layout={animateReveal ? "position" : false}
+              transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
+              className="grid gap-3"
+            >
+              {mode.cue === "image" ? (
+                card.image ? (
+                  // One size before and after reveal, on the start edge like the text under it.
+                  <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
+                ) : (
+                  // A queue fetched before the picture was archived; the server no longer asks this mode.
+                  <p className="text-xl text-muted">
+                    <Trans>This card’s picture was removed.</Trans>
+                  </p>
+                )
+              ) : (
+                <>
+                  <p
+                    lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
+                    className={clsx(
+                      "hyphens-auto whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
+                      CUE_SIZE[step],
                     )}
                   >
-                    {back}
-                  </motion.p>
-                  {picture && (
-                    <>
-                      <motion.p
-                        variants={answerLine}
-                        className="hyphens-auto text-xl leading-[1.35] text-text-2 [overflow-wrap:anywhere]"
-                        lang={card.language ?? undefined}
-                      >
-                        {card.term}
-                        {audio()}
-                      </motion.p>
-                      {pronunciation}
-                    </>
+                    {front}
+                    {mode.cue === "term" && audio("z-20")}
+                  </p>
+                  {mode.cue === "term" && card.pronunciation && (
+                    <p className="text-md text-muted [overflow-wrap:anywhere]">
+                      {card.pronunciation}
+                    </p>
                   )}
                 </>
               )}
-              {!picture && card.image && (
-                <motion.div variants={answerLine} className="py-1">
-                  <CardPicture
-                    image={card.image}
-                    maxHeight="min(16dvh, 120px)"
-                    fallback="placeholder"
-                  />
-                </motion.div>
-              )}
-              {card.example && (
-                <motion.p
-                  variants={answerLine}
-                  className="text-md leading-relaxed text-text-2"
-                  lang={card.language ?? undefined}
-                >
-                  {card.example}
-                </motion.p>
-              )}
-              {card.notes && (
-                <motion.p variants={answerLine} className="text-sm text-muted">
-                  {card.notes}
-                </motion.p>
-              )}
-              <motion.div variants={answerLine} className="mt-1 flex flex-wrap gap-1.5">
-                {card.meaningSource && <SourceChip source={card.meaningSource} field="meaning" />}
-                {card.exampleSource && card.example && (
-                  <SourceChip source={card.exampleSource} field="example" />
-                )}
-                {card.source && <Chip size="sm">{card.source}</Chip>}
+            </motion.div>
+
+            {revealed ? (
+              <motion.div
+                ref={answerRef}
+                variants={answerGroup}
+                initial={animateReveal ? "hidden" : false}
+                animate="shown"
+                className="grid grid-cols-[minmax(0,1fr)] gap-5"
+              >
+                {answer(false)}
               </motion.div>
-            </div>
-          </motion.div>
-        )}
+            ) : (
+              <div
+                aria-hidden="true"
+                inert
+                className="pointer-events-none invisible absolute inset-x-0 top-0 h-0 overflow-hidden"
+              >
+                <div ref={answerRef} className="grid grid-cols-[minmax(0,1fr)] gap-5">
+                  {answer(true)}
+                </div>
+              </div>
+            )}
+          </div>
+          <AnimatePresence>{!revealed && hint && <TapHint />}</AnimatePresence>
+        </div>
       </div>
-      <AnimatePresence>{!revealed && hint && <TapHint />}</AnimatePresence>
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {revealed ? t`Answer: ${back}` : ""}
       </p>
@@ -568,6 +796,7 @@ function OpeningStrip({ animate: wanted, children }: { animate: boolean; childre
   const present = useIsPresent();
   return (
     <motion.div
+      data-grade-strip=""
       className={clsx("shrink-0", (!opened || !present) && "overflow-hidden")}
       variants={{ closed: (animateOut: boolean) => (animateOut && !reduce ? CLOSING : CLOSED) }}
       initial={animate ? { height: 0 } : false}
@@ -628,7 +857,7 @@ export function GradeBar({
     <AnimatePresence initial={false} custom={animateOut}>
       {revealed && (
         <OpeningStrip key="strip" animate={animateIn}>
-          <fieldset id={id} className={clsx("scroll-mt-24", className)}>
+          <fieldset id={id} className={clsx("pt-[12px]", className)}>
             <legend className="sr-only">
               <Trans>Choose a recall grade</Trans>
             </legend>

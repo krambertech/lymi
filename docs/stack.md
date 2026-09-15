@@ -160,7 +160,7 @@ Route logic lives in service functions that take `db`, `userId` and `actor`. Hon
 
 ### Audio: first play, then R2
 
-Pronunciation audio is generated only when the learner first presses play. Cards without a language never show the control and never call a speech provider. The Worker tries Gemini, Chirp 3 HD and OpenAI in that order for the languages each one publishes, stores the MP3 in R2, and remembers the object on the card. The cache identity includes the term, locale, provider, model and voice, and changing the term or language detaches stale audio. Remembered audio from anything other than the preferred provider is regenerated on the next play, and still plays if every provider fails.
+Pronunciation audio is generated only when the learner first presses play. Cards without a language, and terms longer than 200 characters, never show the control and never call a speech provider. The Worker tries Gemini, Chirp 3 HD and OpenAI in that order for the languages each one publishes, stores the MP3 in R2, and remembers the object on the card. The cache identity includes the term, locale, provider, model and voice, and changing the term or language detaches stale audio. Remembered audio from anything other than the preferred provider is regenerated on the next play, and still plays if every provider fails.
 
 ### Avatars: Images binding, private R2
 

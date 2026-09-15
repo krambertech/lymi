@@ -264,6 +264,20 @@ describe("pronunciation audio", () => {
     expect(providers).not.toHaveBeenCalled();
   });
 
+  it("never generates speech for a term too long to say", async () => {
+    const get = vi.fn();
+    const providers = vi.fn();
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get })[property as "get"],
+    });
+
+    await expect(
+      pronunciationAudio(context(card({ term: "a".repeat(201) })), "card-1", { bucket, providers }),
+    ).rejects.toThrow("terms of up to 200 characters");
+    expect(get).not.toHaveBeenCalled();
+    expect(providers).not.toHaveBeenCalled();
+  });
+
   it("reuses remembered audio from the preferred provider without generating", async () => {
     const objects = new Map<string, R2ObjectBody>();
     const get = vi.fn(async (key: string) => objects.get(key) ?? null);

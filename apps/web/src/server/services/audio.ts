@@ -1,4 +1,4 @@
-import { LanguageTag } from "@lymi/core";
+import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
@@ -31,6 +31,12 @@ export async function pronunciationAudio(
     throw new ServiceError("invalid", "Pronunciation audio is only available for language cards");
   }
   if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
+  if (!canSpeakTerm(card)) {
+    throw new ServiceError(
+      "invalid",
+      `Pronunciation audio is only available for terms of up to ${SPOKEN_TERM_MAX} characters`,
+    );
+  }
 
   const providers = deps.providers(language.data);
   const preferred = providers[0];

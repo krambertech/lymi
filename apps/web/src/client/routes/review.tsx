@@ -1,5 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type Drawn, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
+import {
+  canSpeakTerm,
+  type Drawn,
+  drawKey,
+  modeKey,
+  type Rating,
+  ROUNDS,
+  type Round,
+} from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
@@ -26,6 +34,7 @@ import {
 } from "../lib/review-complete";
 import { drawState, reviewItem, stateBefore } from "../lib/review-draw";
 import { itemKey } from "../lib/review-modes";
+import { shortQuote } from "../lib/short-quote";
 import {
   GradeBar,
   ReviewCard,
@@ -469,7 +478,7 @@ function Review() {
           if (outcome === "queued") return;
           if (outcome === "refused" || outcome === "gone") {
             const key = gradedKey(item);
-            const term = item.card.term;
+            const term = shortQuote(item.card.term);
             if (listed) {
               setLegCards((c) => ({
                 graded: withoutKey(c.graded, key),
@@ -645,12 +654,12 @@ function Review() {
                 setAnimateReveal(true);
                 setRevealed(true);
               }}
-              onPlayAudio={current.card.language ? playAudio : undefined}
+              onPlayAudio={canSpeakTerm(current.card) ? playAudio : undefined}
               audioState={audioState}
               audioError={
                 audioError && audioError.item === currentItemKey ? audioError.message : null
               }
-              className="mt-4 @3xl:max-h-[600px] @3xl:min-h-[460px]"
+              className="mt-4 @3xl:max-h-[600px] @3xl:[@media(min-height:40rem)]:min-h-[460px]"
             />
             <GradeBar
               revealed={revealed}
@@ -658,7 +667,6 @@ function Review() {
               animateOut={animateNextCard}
               next={current.next}
               onGrade={(rating) => onGrade(rating, "pointer")}
-              className="pt-3"
             />
           </motion.div>
         )}

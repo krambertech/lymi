@@ -1448,14 +1448,14 @@ msgstr "Не вимикати"
 msgid "Keep the description under 300 characters."
 msgstr "Опис має бути коротшим за 300 символів."
 
-msgid "Keep the example under 1000 characters."
-msgstr "Приклад має бути коротшим за 1000 символів."
+msgid "Keep the example under 2000 characters."
+msgstr "Приклад має бути коротшим за 2000 символів."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Мовний тег має бути коротшим за 12 символів."
 
-msgid "Keep the meaning under 1000 characters."
-msgstr "Значення має бути коротшим за 1000 символів."
+msgid "Keep the meaning under 2000 characters."
+msgstr "Значення має бути коротшим за 2000 символів."
 
 msgid "Keep the name under 32 characters."
 msgstr "Назва має бути коротшою за 32 символи."
@@ -1611,7 +1611,7 @@ msgstr "Більше полів"
 msgid "More to review"
 msgstr "Ще до повторення"
 
-#. placeholder {0}: card.term
+#. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
 msgstr "Перемістити «{0}» до"
 

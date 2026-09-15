@@ -90,8 +90,8 @@ const CARD = "card:";
 
 /**
  * The words as a glossary: each row the state's mark, the term with its other forms lighter, and
- * the meaning, which drops under the term when the list is narrow. Text wraps and is never cut,
- * because it is the content. Under the Section sort each section is a heading; a section that is
+ * the meaning, which drops under the term when the list is narrow. Text wraps because it is the
+ * content, up to three lines of term and two of meaning; the open card holds the rest. Under the Section sort each section is a heading; a section that is
  * not open yet still lists its cards, quieter and marked with a lock, so the learner can read
  * what is coming.
  */
@@ -398,15 +398,16 @@ function SectionHeading({
         id={section ? sectionAnchor(section.id) : undefined}
         tabIndex={section ? -1 : undefined}
         className={clsx(
-          "min-w-0 scroll-mt-6 text-md font-medium text-balance focus-visible:outline-offset-4",
+          "flex min-w-0 scroll-mt-6 items-baseline gap-2 text-md font-medium focus-visible:outline-offset-4",
           locked ? "text-text-2" : "text-text",
         )}
       >
-        {label}
+        {/* A lesson named by a long source keeps two lines, so its count stays beside it. */}
+        <span className="line-clamp-2 min-w-0 text-balance [overflow-wrap:anywhere]">{label}</span>
         {locked && <span className="sr-only">{t`, not open yet`}</span>}
         {/* Read as "Lesson 14, 4" rather than "Lesson 144". */}
         <span className="sr-only">, </span>
-        <span className="ms-2 text-sm font-normal text-muted">{i18n.number(count)}</span>
+        <span className="shrink-0 text-sm font-normal text-muted">{i18n.number(count)}</span>
       </h2>
       {here && (
         // Green, not amber: it says where the learner is and asks for nothing.
@@ -555,7 +556,7 @@ function GlossaryRow({
       </span>
       <span
         className={clsx(
-          "col-start-2 row-start-1 text-lg font-medium leading-snug [overflow-wrap:anywhere]",
+          "col-start-2 row-start-1 line-clamp-3 text-lg font-medium leading-snug [overflow-wrap:anywhere]",
           waiting ? "text-text-2" : "text-text",
         )}
         lang={card.language ?? undefined}
@@ -570,7 +571,7 @@ function GlossaryRow({
       </span>
       <span
         className={clsx(
-          "col-start-2 row-start-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
+          "col-start-2 row-start-2 line-clamp-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
           !card.meaning ? "text-faint" : waiting ? "text-muted" : "text-text-2",
         )}
       >

@@ -23,6 +23,7 @@ import {
   seriesQuery,
   streakQuery,
 } from "../lib/queries";
+import { shortQuote } from "../lib/short-quote";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
@@ -121,7 +122,9 @@ function DeckPage() {
   const archive = useMutation({
     mutationFn: (id: string) => api.archiveCard(id),
     onSuccess: (_r, id) => {
-      const archivedTerm = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`Card`;
+      const archivedTerm = shortQuote(
+        cards.data?.find((c) => c.card.id === id)?.card.term ?? t`Card`,
+      );
       invalidate();
       toast.add({
         id: `archive-${id}`,

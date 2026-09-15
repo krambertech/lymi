@@ -292,9 +292,9 @@ export function CardForm({
       : fieldErrors(parsed.error, {
           deckId: t`Choose a deck for it to go in.`,
           term: values.term ? t`Keep the term under 500 characters.` : t`Type the term.`,
-          meaning: t`Keep the meaning under 1000 characters.`,
+          meaning: t`Keep the meaning under 2000 characters.`,
           pronunciation: t`Keep the pronunciation under 200 characters.`,
-          example: t`Keep the example under 1000 characters.`,
+          example: t`Keep the example under 2000 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
           source: t`Keep the source under 200 characters.`,
           tags: t`Use up to 20 tags of 40 characters or fewer.`,
@@ -437,11 +437,20 @@ export function CardForm({
   const meaningField = (
     <Field>
       <FieldLabel aside={t`Optional`}>{t`Meaning`}</FieldLabel>
-      <Input
+      {/* One line to start, like the term; Enter still adds the card and Shift Enter breaks the line. */}
+      <Textarea
         value={meaning}
+        rows={1}
+        className="min-h-11 py-2.5 leading-normal md:min-h-10"
         onChange={(e) => {
           setMeaning(e.target.value);
           clear("meaning");
+        }}
+        onKeyDown={(e) => {
+          if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
+          if (e.metaKey || e.ctrlKey) return;
+          e.preventDefault();
+          e.currentTarget.form?.requestSubmit();
         }}
         autoComplete="off"
       />

@@ -247,7 +247,6 @@ function ReviewPhone({
         animateIn
         next={item.next}
         onGrade={() => setRevealed(false)}
-        className="pt-3"
       />
     </div>
   );
@@ -481,7 +480,7 @@ export const SCREENS: Entry[] = [
                       onPlayAudio={noop}
                       className="mt-5 min-h-[460px] flex-none"
                     />
-                    <GradeBar revealed next={m.queueItem.next} onGrade={noop} className="pt-3" />
+                    <GradeBar revealed next={m.queueItem.next} onGrade={noop} />
                   </div>
                 </main>
               </Desktop>

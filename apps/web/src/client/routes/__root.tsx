@@ -212,6 +212,7 @@ function Shell() {
           )
         }
         nav={onReview ? undefined : <PillNav />}
+        fill={onReview}
       >
         <Outlet />
       </AppShell>

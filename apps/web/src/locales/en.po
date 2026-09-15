@@ -1448,14 +1448,14 @@ msgstr "Keep sharing"
 msgid "Keep the description under 300 characters."
 msgstr "Keep the description under 300 characters."
 
-msgid "Keep the example under 1000 characters."
-msgstr "Keep the example under 1000 characters."
+msgid "Keep the example under 2000 characters."
+msgstr "Keep the example under 2000 characters."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Keep the language tag under 12 characters."
 
-msgid "Keep the meaning under 1000 characters."
-msgstr "Keep the meaning under 1000 characters."
+msgid "Keep the meaning under 2000 characters."
+msgstr "Keep the meaning under 2000 characters."
 
 msgid "Keep the name under 32 characters."
 msgstr "Keep the name under 32 characters."
@@ -1611,7 +1611,7 @@ msgstr "More fields"
 msgid "More to review"
 msgstr "More to review"
 
-#. placeholder {0}: card.term
+#. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
 msgstr "Move “{0}” to"
 

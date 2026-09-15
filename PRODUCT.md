@@ -22,6 +22,18 @@ Success for the private version looks like this: Kateryna reviews in Lymi most d
 
 Within a review, cards are drawn with weighted randomness rather than a strict order, so capture or edit order does not become a memorisation cue and a large deck cannot hide new material.
 
+## Product Position
+
+Lymi is a trusted memory layer for things learned in real life. It starts with adult language learners who collect useful material from lessons, reading, work, and conversations with people or AI.
+
+The narrow promise is to remove the clerical work of making cards without removing learner judgment. Lymi keeps the original term, meaning, source, and context together; AI fills only blank fields, clearly marks what it wrote, and stays easy to correct or undo.
+
+Learning moves from recognising material toward producing it. The review queue is calm and honest: it brings back useful material without streak pressure, invented urgency, or hidden grading by an assistant.
+
+Lymi should remain open to the tools learners already use. The app, API, and MCP surface share the same product rules, while private card content and review evidence stay under the learner's control.
+
+Product success is repeated use of real material and retained recall, not the number of generated cards, public pages, or AI actions.
+
 ## Daily Review Goal
 
 The daily review goal and the streak are one mechanic. The learner chooses how many recall attempts they want to complete per learner-local day. Reaching that number satisfies the day's streak goal; if at least one review is available but fewer than the goal, completing all available reviews also satisfies it without pulling future cards forward.

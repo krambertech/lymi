@@ -16,7 +16,7 @@ English component text is the source. `pnpm i18n:extract` updates the Lingui cat
 
 ## Translation bar
 
-- **Informal address.** Ukrainian says "ти", Russian says "ты". Never "ви" or "вы" in product copy. Decided 12 September 2026; the reasoning is in the [localization plan](../../../docs/plans/2026-09-12-localization.md).
+- **Informal address.** Ukrainian says "ти", Russian says "ты". Never "ви" or "вы" in product copy.
 - **Keep every placeholder.** `{0}`, `{name}`, `{due, plural, ...}` and `#` are code. Move them to where the sentence needs them, never rename or drop them.
 - **Write all plural forms.** Ukrainian and Russian need `one`, `few` and `many`, plus `other` for fractions. `1 картка`, `2 картки`, `5 карток`, `21 картка`. A translation with only `one` and `other` is wrong.
 - **Translate meaning, not English syntax.** Keep the message's function and tone, but use natural Ukrainian or Russian grammar. Do not add claims, urgency or celebration.

@@ -64,4 +64,4 @@ The text and structured result must remain complete when a client cannot render 
 
 Consider accepting this proposal only after #82 and #83 are complete, the plain connector has been tested with public-directory-style accounts, a repeated learner problem has been observed, and a portability spike preserves Lymi's product invariants in both providers.
 
-If accepted, record consequential platform and portability choices in an ADR and create a focused implementation plan. Until then, interactive MCP Apps remain optional future exploration.
+If accepted, record consequential platform and portability choices in an ADR and add a focused delivery section here. Until then, interactive MCP Apps remain optional future exploration.

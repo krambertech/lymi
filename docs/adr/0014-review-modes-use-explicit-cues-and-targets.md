@@ -38,4 +38,4 @@ Adding a future cue or target requires a product decision and a new validated un
 
 The expand-and-contract migration is part of the contract, not optional release choreography. Legacy fields can be removed only after supported clients and offline outboxes no longer depend on them.
 
-The accepted behavior is in [the product proposal](../proposals/card-images-and-visual-review.md), and delivery is in [the implementation plan](../plans/2026-09-13-card-images-and-visual-review.md).
+The accepted behavior and delivery outline are in [the product proposal](../proposals/card-images-and-visual-review.md).

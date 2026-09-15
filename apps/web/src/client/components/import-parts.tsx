@@ -201,7 +201,7 @@ export function CardCheck({
         </h2>
         {noteTypes.length > 1 && (
           <p className="text-sm text-muted tabular-nums">
-            {t`${checked.size} of ${noteTypes.length} checked`}
+            {t`${noteTypes.filter((n) => checked.has(n.key)).length} of ${noteTypes.length} checked`}
           </p>
         )}
       </div>

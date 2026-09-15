@@ -187,7 +187,7 @@ msgstr "{0} new"
 msgid "{0} new, {1} learning, {2} known"
 msgstr "{0} new, {1} learning, {2} known"
 
-#. placeholder {0}: checked.size
+#. placeholder {0}: noteTypes.filter((n) => checked.has(n.key)).length
 #. placeholder {1}: noteTypes.length
 msgid "{0} of {1} checked"
 msgstr "{0} of {1} checked"
@@ -347,6 +347,9 @@ msgstr "{name} · Lymi"
 
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+
+msgid "{restNotes, plural, one {# more note, of a less common kind, comes across as it is.} other {# more notes, of less common kinds, come across as they are.}}"
+msgstr "{restNotes, plural, one {# more note, of a less common kind, comes across as it is.} other {# more notes, of less common kinds, come across as they are.}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
@@ -705,9 +708,8 @@ msgstr "Change photo"
 msgid "Changes discarded"
 msgstr "Changes discarded"
 
-#. placeholder {0}: noteTypes.length - checked.size
-msgid "Check each kind of card first. {0} still to check."
-msgstr "Check each kind of card first. {0} still to check."
+msgid "Check each kind of card first. {unchecked} still to check."
+msgstr "Check each kind of card first. {unchecked} still to check."
 
 msgid "Check that the card looks right first."
 msgstr "Check that the card looks right first."
@@ -717,6 +719,9 @@ msgstr "Check that the whole link was copied, or ask for a new one."
 
 msgid "Check this card, then press Import again."
 msgstr "Check this card, then press Import again."
+
+msgid "Check those too"
+msgstr "Check those too"
 
 msgid "Check your connection and try again."
 msgstr "Check your connection and try again."

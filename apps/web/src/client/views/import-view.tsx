@@ -10,7 +10,7 @@ import {
   Languages as LanguagesIcon,
   RotateCcw,
 } from "lucide-react";
-import { type ReactNode, useId, useRef, useState } from "react";
+import { type ReactNode, useId, useMemo, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { ErrorState } from "../components/empty-state";
 import {
@@ -27,6 +27,7 @@ import {
 import { Progress } from "../components/progress";
 import { Skeleton } from "../components/skeleton";
 import type { Import, ImportPreview } from "../lib/api";
+import { splitNoteTypes } from "../lib/import-note-types";
 import type { UploadState } from "../lib/import-uploads";
 import { Page, PageHeader } from "./shell";
 
@@ -404,7 +405,11 @@ export function ImportPreviewView({
   const [checkError, setCheckError] = useState<string>();
   const [fieldsFor, setFieldsFor] = useState<NoteType>();
   const [languagesOpen, setLanguagesOpen] = useState(false);
-  const noteTypes = summary.noteTypes;
+  const { asked, rest } = useMemo(() => splitNoteTypes(summary.noteTypes), [summary.noteTypes]);
+  const [showRest, setShowRest] = useState(false);
+  const noteTypes = showRest ? [...asked, ...rest] : asked;
+  const restNotes = rest.reduce((sum, type) => sum + type.notes, 0);
+  const unchecked = asked.filter((type) => !checked.has(type.key)).length;
   const missingLanguage = summary.decks.filter(
     (d) => (choices.languages[d.key] ?? null) === null,
   ).length;
@@ -414,7 +419,7 @@ export function ImportPreviewView({
     setChecked((current) => {
       const next = new Set(current);
       next.add(key);
-      if (next.size === noteTypes.length) setCheckError(undefined);
+      if (asked.every((type) => next.has(type.key))) setCheckError(undefined);
       return next;
     });
 
@@ -433,6 +438,20 @@ export function ImportPreviewView({
         onChangeFields={setFieldsFor}
         error={checkError ? t`Check this card, then press Import again.` : undefined}
       />
+
+      {rest.length > 0 && !showRest && (
+        <div className="-mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-text-2">
+          <p className="text-pretty">
+            {plural(restNotes, {
+              one: "# more note, of a less common kind, comes across as it is.",
+              other: "# more notes, of less common kinds, come across as they are.",
+            })}
+          </p>
+          <Button variant="ghost" size="sm" className="-ms-3" onClick={() => setShowRest(true)}>
+            <Trans>Check those too</Trans>
+          </Button>
+        </div>
+      )}
 
       <section aria-labelledby="coming-across" className="grid gap-3">
         <h2 id="coming-across" className="text-md font-medium">
@@ -599,11 +618,11 @@ export function ImportPreviewView({
           loading={confirming}
           aria-disabled={previewLoading && !preview}
           onClick={() => {
-            if (checked.size < noteTypes.length) {
+            if (unchecked > 0) {
               setCheckError(
-                noteTypes.length === 1
+                asked.length === 1
                   ? t`Check that the card looks right first.`
-                  : t`Check each kind of card first. ${noteTypes.length - checked.size} still to check.`,
+                  : t`Check each kind of card first. ${unchecked} still to check.`,
               );
               const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
               document

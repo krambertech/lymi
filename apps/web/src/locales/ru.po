@@ -187,7 +187,7 @@ msgstr "Новые: {0}"
 msgid "{0} new, {1} learning, {2} known"
 msgstr "Новые: {0}, в изучении: {1}, выученные: {2}"
 
-#. placeholder {0}: checked.size
+#. placeholder {0}: noteTypes.filter((n) => checked.has(n.key)).length
 #. placeholder {1}: noteTypes.length
 msgid "{0} of {1} checked"
 msgstr "Проверено {0} из {1}"
@@ -347,6 +347,9 @@ msgstr "{name} · Lymi"
 
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оценка из офлайн-повторения ещё не дошла до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить её.} few {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} many {# оценок из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} other {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.}}"
+
+msgid "{restNotes, plural, one {# more note, of a less common kind, comes across as it is.} other {# more notes, of less common kinds, come across as they are.}}"
+msgstr "{restNotes, plural, one {Ещё # запись более редкого вида перенесётся как есть.} few {Ещё # записи более редких видов перенесутся как есть.} many {Ещё # записей более редких видов перенесутся как есть.} other {Ещё # записи более редких видов перенесутся как есть.}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
@@ -705,9 +708,8 @@ msgstr "Изменить фото"
 msgid "Changes discarded"
 msgstr "Изменения отменены"
 
-#. placeholder {0}: noteTypes.length - checked.size
-msgid "Check each kind of card first. {0} still to check."
-msgstr "Сначала проверь каждый вид карточки. Осталось проверить: {0}."
+msgid "Check each kind of card first. {unchecked} still to check."
+msgstr "Сначала проверь каждый вид карточки. Осталось проверить: {unchecked}."
 
 msgid "Check that the card looks right first."
 msgstr "Сначала проверь, правильно ли выглядит карточка."
@@ -717,6 +719,9 @@ msgstr "Проверь, что ссылка скопирована полнос�
 
 msgid "Check this card, then press Import again."
 msgstr "Проверь эту карточку, потом снова нажми «Импортировать»."
+
+msgid "Check those too"
+msgstr "Проверить и их"
 
 msgid "Check your connection and try again."
 msgstr "Проверь соединение и попробуй снова."

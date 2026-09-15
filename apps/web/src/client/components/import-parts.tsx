@@ -32,7 +32,11 @@ export const ROLE_LABELS: Record<FieldRole, MessageDescriptor> = {
 };
 
 /** The apps an import comes from, by the names they go by everywhere. */
-export const SOURCE_NAMES: Record<ImportSource, string> = { anki: "Anki", mochi: "Mochi" };
+export const SOURCE_NAMES: Record<ImportSource, string> = {
+  anki: "Anki",
+  mochi: "Mochi",
+  lymi: "Lymi",
+};
 
 /** The kinds of Mochi card with no template, named here because the server sends a key. */
 const MOCHI_KINDS: Record<string, MessageDescriptor> = {
@@ -51,6 +55,12 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
   const app = SOURCE_NAMES[source];
   switch (failure) {
     case "unrecognized":
+      if (source === "lymi") {
+        return {
+          title: msg`Lymi couldn’t read this file`,
+          body: msg`Choose the .zip file Lymi exports as a Lymi file, without unzipping it.`,
+        };
+      }
       return source === "mochi"
         ? {
             title: msg`Lymi couldn’t read this file`,
@@ -71,7 +81,9 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
         body:
           source === "mochi"
             ? msg`In Mochi, export one deck at a time instead of everything.`
-            : msg`Export one deck at a time, or export again without media.`,
+            : source === "lymi"
+              ? msg`Export one deck at a time instead of the whole library.`
+              : msg`Export one deck at a time, or export again without media.`,
       };
     case "upload_incomplete":
       return {
@@ -236,7 +248,7 @@ export function CardCheck({
         <div className="flex flex-wrap items-center justify-between gap-2">
           <Chip>
             {noteTypeName(type, i18n)} ·{" "}
-            {source === "mochi"
+            {source !== "anki"
               ? plural(type.notes, { one: "# card", other: "# cards" })
               : plural(type.notes, { one: "# note", other: "# notes" })}
           </Chip>
@@ -334,6 +346,8 @@ export function FieldsDialog({
             <Trans>
               Choose what each Mochi field becomes on a Lymi card. One field is the term.
             </Trans>
+          ) : source === "lymi" ? (
+            <Trans>Choose what each field becomes on the new card. One field is the term.</Trans>
           ) : (
             <Trans>
               Choose what each Anki field becomes on a Lymi card. One field is the term.
@@ -365,9 +379,7 @@ export function FieldsDialog({
                   <p className="text-sm font-medium text-text">{field}</p>
                   <p className="truncate text-sm text-muted">
                     {example[i] ||
-                      (source === "mochi"
-                        ? t`Empty in the first card`
-                        : t`Empty in the first note`)}
+                      (source !== "anki" ? t`Empty in the first card` : t`Empty in the first note`)}
                   </p>
                 </div>
                 <Field>
@@ -500,6 +512,7 @@ export function ImportSources({
   const sources: { source: ImportSource; detail: string }[] = [
     { source: "anki", detail: t`An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile` },
     { source: "mochi", detail: t`A .mochi file from Mochi` },
+    { source: "lymi", detail: t`A Lymi file from another Lymi account` },
   ];
   return (
     <ul aria-label={t`Apps you can import from`} className="edge grid rounded-xl bg-plate">

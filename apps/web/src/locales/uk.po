@@ -37,6 +37,10 @@ msgstr "{0, plural, =1 {{nextName} відкриється, щойно остан
 msgid "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
 msgstr "{0, plural, one {{nextName} відкриється, коли ти засвоїш {needed} з # картки.} few {{nextName} відкриється, коли ти засвоїш {needed} з # карток.} many {{nextName} відкриється, коли ти засвоїш {needed} з # карток.} other {{nextName} відкриється, коли ти засвоїш {needed} з # картки.}}"
 
+#. placeholder {0}: preview.archived
+msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
+msgstr "{0, plural, one {# архівна картка прийде в архів.} few {# архівні картки прийдуть в архів.} many {# архівних карток прийдуть в архів.} other {# архівної картки прийдуть в архів.}}"
+
 #. placeholder {0}: preview.pictures
 msgid "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{0, plural, one {# картка переноситься з картинкою.} few {# картки переносяться з картинками.} many {# карток переносяться з картинками.} other {# картки переносяться з картинками.}}"
@@ -297,6 +301,10 @@ msgstr "{attempts} із {goal} повторень сьогодні"
 msgid "{cards, plural, one {# card joins your reviews.} other {# cards join your reviews.}}"
 msgstr "{cards, plural, one {# картка з’явиться в повтореннях.} few {# картки з’являться в повтореннях.} many {# карток з’явиться в повтореннях.} other {# картки з’явиться в повтореннях.}}"
 
+#. placeholder {0}: fileSize(item.byteSize ?? 0, i18n.locale)
+msgid "{cards, plural, one {# card} other {# cards}} · {0}"
+msgstr "{cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}} · {0}"
+
 msgid "{count, plural, =0 {Choose cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Виберіть картки} one {Вибрано: #} few {Вибрано: #} many {Вибрано: #} other {Вибрано: #}}"
 
@@ -408,6 +416,12 @@ msgstr "{field} стає"
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {заповнено: #} few {заповнено: #} many {заповнено: #} other {заповнено: #}}"
 
+msgid "{format} · {when}"
+msgstr "{format} · {when}"
+
+msgid "{format} · {when} · {cards, plural, one {# card} other {# cards}}"
+msgstr "{format} · {when} · {cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
+
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Показник запам’ятовування базується на # повторенні, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} few {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} many {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} other {Показник запам’ятовування базується на # повторення, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.}}"
 
@@ -512,6 +526,9 @@ msgstr "Файл .mochi з Mochi"
 msgid "A .mochi file, up to 1 GB. You can also drop it here."
 msgstr "Файл .mochi, до 1 ГБ. Можна також перетягнути його сюди."
 
+msgid "A .zip file, up to 1 GB. You can also drop it here."
+msgstr "Файл .zip до 1 ГБ. Можна також перетягнути його сюди."
+
 msgid "a connected app"
 msgstr "підключений застосунок"
 
@@ -532,6 +549,9 @@ msgstr "Ключ ніколи не ставить оцінок за повтор
 
 msgid "A link to a picture online."
 msgstr "Посилання на зображення в мережі."
+
+msgid "A Lymi file from another Lymi account"
+msgstr "Файл Lymi з іншого акаунта Lymi"
 
 msgid "A note to yourself about what is in here."
 msgstr "Нотатка для себе про те, що тут є."
@@ -680,6 +700,9 @@ msgstr "застосунок без адреси"
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Анімовані зображення не підходять. Вибери нерухоме."
 
+msgid "Anki package"
+msgstr "Пакет Anki"
+
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
 
@@ -816,6 +839,9 @@ msgstr "Обидва варіанти, по одній картці за раз.
 msgid "Both ways"
 msgstr "Обидва способи"
 
+msgid "Bring decks from another Lymi account with their pictures, tags and review history. Your cards keep the due dates they had."
+msgstr "Перенеси колоди з іншого акаунта Lymi разом із зображеннями, тегами та історією повторень. Картки збережуть дати повторення, які мали."
+
 msgid "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and {app} stays as it is."
 msgstr "Перенеси колоди з картинками, тегами й історією повторень. Картки збережуть свої дати повторення, а в {app} нічого не зміниться."
 
@@ -880,8 +906,8 @@ msgstr "Картки з цієї колоди"
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Картки збережуть дати повторення, які мали в {app}."
 
-msgid "Cards that came into your decks from outside the app."
-msgstr "Картки, що потрапили у твої колоди ззовні застосунку."
+msgid "Cards that came in from other apps, and files you took out."
+msgstr "Картки, що прийшли з інших застосунків, і твої експорти."
 
 msgid "Change"
 msgstr "Змінити"
@@ -921,6 +947,9 @@ msgstr "Перевір з’єднання й повтори спробу."
 
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Вибери <0>Anki Deck Package</0> і познач <1>Include Scheduling Information</1> та <2>Include Media</2>."
+
+msgid "Choose <0>Lymi file</0>, then download the .zip when it’s ready."
+msgstr "Вибери <0>Файл Lymi</0>, а коли він буде готовий, завантаж .zip."
 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Вибери 00, 15, 30 або 45 хвилин."
@@ -962,6 +991,12 @@ msgstr "Вибери файл .apkg або .colpkg, який експортує 
 msgid "Choose the .mochi file Mochi exports."
 msgstr "Вибери файл .mochi, який експортує Mochi."
 
+msgid "Choose the .zip file Lymi exports as a Lymi file, without unzipping it."
+msgstr "Вибери файл .zip, який Lymi експортує як файл Lymi, не розпаковуючи його."
+
+msgid "Choose the .zip file Lymi exports."
+msgstr "Вибери файл .zip, який експортує Lymi."
+
 msgid "Choose the file again"
 msgstr "Вибрати файл ще раз"
 
@@ -970,6 +1005,9 @@ msgstr "Вибери файл, експортований з {app}"
 
 msgid "Choose what each Anki field becomes on a Lymi card. One field is the term."
 msgstr "Вибери, чим кожне поле Anki стане в картці Lymi. Одне поле — це термін."
+
+msgid "Choose what each field becomes on the new card. One field is the term."
+msgstr "Вибери, чим стане кожне поле нової картки. Одне поле — це термін."
 
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Вибери, чим кожне поле Mochi стане в картці Lymi. Одне поле — це термін."
@@ -1094,6 +1132,9 @@ msgstr "Не вдалося зберегти оцінку для «{term}». Ц�
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Не вдалося зберегти оцінку для «{term}». Ця картка ще повернеться."
 
+msgid "Couldn’t write the file. Try again."
+msgstr "Не вдалося записати файл. Спробуй ще раз."
+
 msgid "Create a deck first. This card goes in it."
 msgstr "Спершу створи колоду. Ця картка потрапить у неї."
 
@@ -1172,6 +1213,9 @@ msgstr "Колоди до повторення"
 msgid "Decks you make can go in a series. Decks you joined stay on their own."
 msgstr "У серію можна додати колоди, які ти створив. Колоди, до яких ти приєднався, лишаються окремо."
 
+msgid "Deleted"
+msgstr "Видалено"
+
 msgid "Deny"
 msgstr "Відхилити"
 
@@ -1195,6 +1239,13 @@ msgstr "Картка виглядає правильно?"
 
 msgid "Done"
 msgstr "Готово"
+
+msgid "Download"
+msgstr "Завантажити"
+
+#. placeholder {0}: item.fileName
+msgid "Download {0}"
+msgstr "Завантажити {0}"
 
 msgid "Drag decks here, or choose which decks this series holds."
 msgstr "Перетягни сюди колоди або вибери, які колоди будуть у серії."
@@ -1262,11 +1313,17 @@ msgstr "Enter після кожного"
 msgid "Every card is asked twice."
 msgstr "Кожну картку запитують двічі."
 
+msgid "Every deck, archived ones included, with your schedule and review history."
+msgstr "Усі колоди, зокрема архівні, з твоїм розкладом та історією повторень."
+
 msgid "Every section is open"
 msgstr "Усі розділи відкриті"
 
 msgid "Every section is open, so any card can come up in review."
 msgstr "Усі розділи відкриті, тож будь-яка картка може з’явитися в повторенні."
+
+msgid "Everything, to import into Lymi again: cards, pictures, schedules and review history. A .zip file."
+msgstr "Усе, щоб знову імпортувати в Lymi: картки, зображення, розклад та історію повторень. Файл .zip."
 
 msgid "Example"
 msgstr "Приклад"
@@ -1280,11 +1337,11 @@ msgstr "Новий приклад: «{value}»"
 msgid "Example from lesson"
 msgstr "Приклад з уроку"
 
-msgid "Export as CSV"
-msgstr "Експортувати як CSV"
+msgid "Export"
+msgstr "Експортувати"
 
-msgid "Export as CSV without pictures"
-msgstr "Експортувати в CSV без зображень"
+msgid "Export {deckName}"
+msgstr "Експорт: {deckName}"
 
 msgid "Export it again from {app}, then choose the new file."
 msgstr "Експортуй його ще раз з {app} і вибери новий файл."
@@ -1295,11 +1352,23 @@ msgstr "Експортуй його ще раз з Anki як Anki Deck Package (
 msgid "Export it again from Mochi as a .mochi file, then choose that file."
 msgstr "Експортуй його ще раз з Mochi як файл .mochi і вибери цей файл."
 
+msgid "Export library"
+msgstr "Експортувати бібліотеку"
+
+msgid "Export one deck at a time instead of the whole library."
+msgstr "Експортуй колоди по одній, а не всю бібліотеку одразу."
+
 msgid "Export one deck at a time, or export again without media."
 msgstr "Експортуй колоди по одній або ще раз без медіа."
 
+msgid "Export your library"
+msgstr "Експорт бібліотеки"
+
 msgid "Exporting from {app}"
 msgstr "Як експортувати з {app}"
+
+msgid "Exports"
+msgstr "Експорти"
 
 msgid "Fewer fields"
 msgstr "Менше полів"
@@ -1310,6 +1379,9 @@ msgstr "Поля «{0}»"
 
 msgid "Filter"
 msgstr "Фільтр"
+
+msgid "For Anki, AnkiDroid and Mochi, with due dates, review history and pictures. An .apkg file."
+msgstr "Для Anki, AnkiDroid і Mochi, з датами повторення, історією повторень і зображеннями. Файл .apkg."
 
 msgid "For scripts and curl. An assistant signs in instead, under Connected apps."
 msgstr "Для скриптів і curl. Асистент натомість входить сам, див. «Підключені застосунки»."
@@ -1335,6 +1407,9 @@ msgstr "Забуто {0}+ разів"
 
 msgid "Forgotten {SLIPPING_LAPSES} or more times"
 msgstr "Забуті щонайменше {SLIPPING_LAPSES} рази"
+
+msgid "Format"
+msgstr "Формат"
 
 #. placeholder {0}: deck.owner.name
 msgid "From {0}"
@@ -1462,6 +1537,9 @@ msgstr "У Mochi експортуй колоди по одній, а не все
 
 msgid "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
 msgstr "У Mochi відкрий колоду, відкрий її меню <0>…</0> і вибери <1>Export deck</1>."
+
+msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
+msgstr "В іншому акаунті відкрий меню колоди й вибери <0>Експортувати</0> або вибери <1>Експортувати бібліотеку</1> в Налаштуваннях."
 
 msgid "Insights"
 msgstr "Огляд"
@@ -1645,6 +1723,9 @@ msgstr "Lymi не зміг прочитати цей файл"
 
 msgid "Lymi does not recognise this app. Check the address is one you meant to use."
 msgstr "Lymi не розпізнає цей застосунок. Перевір, чи це саме та адреса, якою хочеш скористатися."
+
+msgid "Lymi file"
+msgstr "Файл Lymi"
 
 msgid "Lymi home"
 msgstr "Головна Lymi"
@@ -2451,6 +2532,9 @@ msgstr "Увійти як ти в інших місцях"
 msgid "Sign in before choosing what it may do."
 msgstr "Увійди, перш ніж вибирати, що йому дозволено."
 
+msgid "Sign in here and choose that file, without unzipping it."
+msgstr "Увійди тут і вибери цей файл, не розпаковуючи його."
+
 msgid "Sign in required"
 msgstr "Потрібно ввійти"
 
@@ -2493,6 +2577,9 @@ msgstr "Сортування: {0}"
 
 msgid "Source"
 msgstr "Джерело"
+
+msgid "Spreadsheet"
+msgstr "Таблиця"
 
 #. placeholder {0}: section.name
 msgid "Start {0}"
@@ -2557,6 +2644,9 @@ msgstr "«Системна» повторює налаштування прис�
 msgid "Tags"
 msgstr "Теги"
 
+msgid "Take every deck out with its pictures, schedule and review history, as a Lymi file or an Anki package."
+msgstr "Експортуй усі колоди із зображеннями, розкладом та історією повторень як файл Lymi або пакет Anki."
+
 msgid "Take photo"
 msgstr "Сфотографувати"
 
@@ -2574,6 +2664,12 @@ msgstr "Новий термін: «{value}»"
 
 msgid "Terms"
 msgstr "Умови"
+
+msgid "Terms, meanings and due dates in a .csv file, without pictures or review history."
+msgstr "Терміни, значення й дати повторення у файлі .csv, без зображень та історії повторень."
+
+msgid "Terms, meanings and due dates in a .csv file, without review history."
+msgstr "Терміни, значення й дати повторення у файлі .csv, без історії повторень."
 
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не вдалося. Онови сторінку й повтори спробу."
@@ -2702,6 +2798,9 @@ msgstr "Цей файл порожній. Експортуй його ще ра�
 msgid "This file is larger than 1 GB. Export one deck at a time."
 msgstr "Цей файл більший за 1 ГБ. Експортуй колоди по одній."
 
+msgid "This file was deleted a day after it was written. Export again to get a new one."
+msgstr "Цей файл видалено через день після створення. Експортуй ще раз, щоб отримати новий."
+
 msgid "This Google account has not been invited. Request an invitation, or try another account."
 msgstr "Цей обліковий запис Google не запрошено. Попроси запрошення або спробуй інший обліковий запис."
 
@@ -2710,6 +2809,9 @@ msgstr "Цей імпорт архівовано"
 
 msgid "This import was closed"
 msgstr "Цей імпорт закрито"
+
+msgid "This is too much for one file. Export one deck at a time instead."
+msgstr "Це забагато для одного файлу. Експортуй колоди по одній."
 
 msgid "This join link does not work"
 msgstr "Це посилання для приєднання не працює"
@@ -2890,6 +2992,12 @@ msgstr "Дні, коли були повторення"
 msgid "Who can join this deck"
 msgstr "Хто може приєднатися до цієї колоди"
 
+msgid "Writing"
+msgstr "Записується"
+
+msgid "Writing {fileName}. You can close this: the file waits in Activity for a day."
+msgstr "Записуємо {fileName}. Можна закрити це вікно: файл чекатиме в Активності один день."
+
 msgid "Yes, looks right"
 msgstr "Так, правильно"
 
@@ -2920,6 +3028,9 @@ msgstr "Тепер можна закрити Lymi. Імпорт триватим
 msgid "You can close this tab."
 msgstr "Цю вкладку можна закрити."
 
+msgid "You can download it until {until}. Then it’s deleted."
+msgstr "Завантажити його можна до {until}. Потім його буде видалено."
+
 msgid "You can undo the whole import later from Activity."
 msgstr "Увесь імпорт можна потім скасувати в Активності."
 
@@ -2946,6 +3057,9 @@ msgstr "Знову показуємо фото з Google"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твої оцінки збережено. Перевір з’єднання й повтори спробу."
+
+msgid "Your own schedule and review history come with it. The deck stays as it is."
+msgstr "Разом із нею експортуються твій розклад та історія повторень. Колода лишиться як є."
 
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Фото змінилося деінде. Перевір його й спробуй ще раз."

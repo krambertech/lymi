@@ -32,8 +32,16 @@ import { splitNoteTypes } from "../lib/import-note-types";
 import type { UploadState } from "../lib/import-uploads";
 import { Page, PageHeader } from "./shell";
 
-const ACCEPT: Record<ImportSource, string> = { anki: ".apkg,.colpkg", mochi: ".mochi" };
-const FILE_NAME: Record<ImportSource, RegExp> = { anki: /\.(apkg|colpkg)$/i, mochi: /\.mochi$/i };
+const ACCEPT: Record<ImportSource, string> = {
+  anki: ".apkg,.colpkg",
+  mochi: ".mochi",
+  lymi: ".zip",
+};
+const FILE_NAME: Record<ImportSource, RegExp> = {
+  anki: /\.(apkg|colpkg)$/i,
+  mochi: /\.mochi$/i,
+  lymi: /\.zip$/i,
+};
 
 function Shell({
   title,
@@ -83,7 +91,9 @@ export function ImportStartView({
     const problem = !FILE_NAME[source].test(file.name)
       ? source === "mochi"
         ? t`Choose the .mochi file Mochi exports.`
-        : t`Choose the .apkg or .colpkg file Anki exports.`
+        : source === "lymi"
+          ? t`Choose the .zip file Lymi exports.`
+          : t`Choose the .apkg or .colpkg file Anki exports.`
       : file.size > MAX_IMPORT_BYTES
         ? t`This file is larger than 1 GB. Export one deck at a time.`
         : file.size === 0
@@ -97,10 +107,17 @@ export function ImportStartView({
   return (
     <Shell title={t`Import from ${app}`} back={back}>
       <p className="-mt-4 max-w-[60ch] text-md text-text-2 text-pretty">
-        <Trans>
-          Bring your decks across with their pictures, tags and review history. Your cards keep the
-          due dates they had, and {app} stays as it is.
-        </Trans>
+        {source === "lymi" ? (
+          <Trans>
+            Bring decks from another Lymi account with their pictures, tags and review history. Your
+            cards keep the due dates they had.
+          </Trans>
+        ) : (
+          <Trans>
+            Bring your decks across with their pictures, tags and review history. Your cards keep
+            the due dates they had, and {app} stays as it is.
+          </Trans>
+        )}
       </p>
 
       <section
@@ -133,6 +150,8 @@ export function ImportStartView({
           <p id={hintId} className="text-base text-muted">
             {source === "mochi" ? (
               <Trans>A .mochi file, up to 1 GB. You can also drop it here.</Trans>
+            ) : source === "lymi" ? (
+              <Trans>A .zip file, up to 1 GB. You can also drop it here.</Trans>
             ) : (
               <Trans>An .apkg or .colpkg file, up to 1 GB. You can also drop it here.</Trans>
             )}
@@ -170,23 +189,25 @@ export function ImportStartView({
           <Trans>Exporting from {app}</Trans>
         </h2>
         <ol className="grid gap-3 text-base text-text-2">
-          {(source === "mochi" ? MOCHI_STEPS : ANKI_STEPS).map((step, i) => (
-            <li key={step.id} className="grid grid-cols-[26px_1fr] gap-3">
-              <span
-                aria-hidden="true"
-                className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
-              >
-                {i + 1}
-              </span>
-              <span className="pt-0.5 text-pretty">{step.node}</span>
-            </li>
-          ))}
+          {(source === "mochi" ? MOCHI_STEPS : source === "lymi" ? LYMI_STEPS : ANKI_STEPS).map(
+            (step, i) => (
+              <li key={step.id} className="grid grid-cols-[26px_1fr] gap-3">
+                <span
+                  aria-hidden="true"
+                  className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
+                >
+                  {i + 1}
+                </span>
+                <span className="pt-0.5 text-pretty">{step.node}</span>
+              </li>
+            ),
+          )}
         </ol>
         <a
           href={guideUrl}
           className="justify-self-start text-base font-medium text-text underline underline-offset-4"
         >
-          {source === "mochi" ? (
+          {source !== "anki" ? (
             <Trans>Something went wrong? Read the guide</Trans>
           ) : (
             <Trans>On a phone, or something went wrong? Read the guide</Trans>
@@ -241,6 +262,29 @@ const MOCHI_STEPS = [
     ),
   },
   { id: "save", node: <Trans>Save the .mochi file, then choose it here.</Trans> },
+];
+
+const LYMI_STEPS = [
+  {
+    id: "open",
+    node: (
+      <Trans>
+        In the other account, open a deck’s menu and choose{" "}
+        <strong className="font-medium text-text">Export</strong>, or choose{" "}
+        <strong className="font-medium text-text">Export library</strong> in Settings.
+      </Trans>
+    ),
+  },
+  {
+    id: "format",
+    node: (
+      <Trans>
+        Choose <strong className="font-medium text-text">Lymi file</strong>, then download the .zip
+        when it’s ready.
+      </Trans>
+    ),
+  },
+  { id: "save", node: <Trans>Sign in here and choose that file, without unzipping it.</Trans> },
 ];
 
 /** Uploading, reading, importing: a file on its way, with what the learner may do meanwhile. */
@@ -538,7 +582,7 @@ export function ImportPreviewView({
               </>
             ) : summary.reviews > 0 ? null : (
               <Line tone="skip">
-                {item.source === "mochi" ? (
+                {item.source !== "anki" ? (
                   <Trans>This file has no review history, so every card starts as new.</Trans>
                 ) : (
                   <Trans>
@@ -596,15 +640,20 @@ export function ImportPreviewView({
             )}
             {preview.archived > 0 && (
               <Line tone="skip">
-                {item.source === "mochi"
+                {item.source === "lymi"
                   ? plural(preview.archived, {
-                      one: "# card you archived in Mochi arrives archived.",
-                      other: "# cards you archived in Mochi arrive archived.",
+                      one: "# archived card arrives archived.",
+                      other: "# archived cards arrive archived.",
                     })
-                  : plural(preview.archived, {
-                      one: "# suspended card arrives archived.",
-                      other: "# suspended cards arrive archived.",
-                    })}
+                  : item.source === "mochi"
+                    ? plural(preview.archived, {
+                        one: "# card you archived in Mochi arrives archived.",
+                        other: "# cards you archived in Mochi arrive archived.",
+                      })
+                    : plural(preview.archived, {
+                        one: "# suspended card arrives archived.",
+                        other: "# suspended cards arrive archived.",
+                      })}
               </Line>
             )}
             {preview.shortened > 0 && (
@@ -635,7 +684,7 @@ export function ImportPreviewView({
             )}
             {preview.unsupported + preview.skipped > 0 && (
               <Line tone="skip">
-                {item.source === "mochi"
+                {item.source !== "anki"
                   ? plural(preview.skipped, {
                       one: "# card is left out: it has no term.",
                       other: "# cards are left out: they have no term.",

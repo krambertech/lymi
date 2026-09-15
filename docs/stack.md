@@ -186,6 +186,12 @@ The Mochi adapter reads `data.json` from a `.mochi` zip, which is Transit JSON: 
 
 A preview Worker's Workflow is named after the preview, because Workflow names are account-wide and a preview must never register production's.
 
+### Exports: segments in R2, joined by the download route
+
+An export (binding `EXPORT_WORKFLOW`, class `ExportWorkflow`) writes its file to the `EXPORTS` R2 bucket as numbered segments of one zip. The first step reads the learner's cards, schedule and reviews from D1 two hundred cards a query and writes the whole card entry; pictures and generated speech follow fifty per step; the last step writes the zip's central directory. `GET /api/exports/:id/file` streams the segments in order through a `FixedLengthStream`, so no step holds the file and no multipart upload is needed, whose parts R2 requires to be the same size. The cron trigger deletes a file a day after it is written and fails an export that stalled for a day. Without Zip64 records a file stops at 4 GiB and 65,535 entries, and past that the learner exports per deck.
+
+The Anki package is Anki's legacy container, `collection.anki21` with a placeholder `collection.anki2` and a `meta` of version 2, because every Anki version and every app that imports `.apkg` reads it. Its SQLite is written page by page by `exports/sqlite-writer.ts`, the counterpart of the import reader, and checked against `node:sqlite`'s `integrity_check`; `sql.js` would hold the database in its heap and again in its export. A collection past 64 MB fails as too large, matching the import limit. A package written this way was imported into Anki 26.09 with scheduling on 16 September 2026, and each card's due date matched Lymi's. The Lymi file is `lymi.json` for decks, sections and series, `cards.jsonl` with one card per line compressed as it is written, and `media/`; the Lymi source adapter reads it back line by line.
+
 ### Repo: pnpm workspace
 
 ```

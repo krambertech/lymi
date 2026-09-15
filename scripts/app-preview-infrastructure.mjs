@@ -20,7 +20,8 @@ export function previewNames(value) {
     databaseName: `${workerName}-db`,
     namespaceTitle: `${workerName}-sessions`,
     bucketName: `${workerName}-audio`,
-    workflowName: `${workerName}-import`,
+    // One per production workflow, in wrangler.jsonc's order: lymi-import, then lymi-export.
+    workflowNames: [`${workerName}-import`, `${workerName}-export`],
     alias: "preview",
   };
 }
@@ -55,13 +56,17 @@ export function makePreviewConfig(base, { names, previewUrl, databaseId, namespa
       APP_PREVIEW: "true",
     },
     kv_namespaces: [{ binding: "SESSIONS", id: namespaceId }],
-    // Imports share the disposable bucket; their objects are deleted when each import ends.
+    // Imports and exports share the disposable bucket under their own key prefixes.
     r2_buckets: [
       { binding: "AUDIO", bucket_name: names.bucketName },
       { binding: "IMPORTS", bucket_name: names.bucketName },
+      { binding: "EXPORTS", bucket_name: names.bucketName },
     ],
     // Workflow names are account-wide, so a preview must never register production's.
-    workflows: base.workflows?.map((workflow) => ({ ...workflow, name: names.workflowName })),
+    workflows: base.workflows?.map((workflow) => ({
+      ...workflow,
+      name: `${names.workerName}-${workflow.name.replace(/^lymi-/, "")}`,
+    })),
     d1_databases: [
       {
         binding: "DB",
@@ -303,12 +308,14 @@ export async function cleanupPreviewInfrastructure({
     { method: "DELETE" },
     true,
   );
-  await cfRequest(
-    client,
-    `/workflows/${encodeURIComponent(names.workflowName)}`,
-    { method: "DELETE" },
-    true,
-  );
+  for (const workflowName of names.workflowNames) {
+    await cfRequest(
+      client,
+      `/workflows/${encodeURIComponent(workflowName)}`,
+      { method: "DELETE" },
+      true,
+    );
+  }
   if (bucket) {
     await cfRequest(client, `/r2/buckets/${encodeURIComponent(names.bucketName)}`, {
       method: "DELETE",

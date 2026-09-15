@@ -30,6 +30,7 @@ erDiagram
   user ||--|| user_settings : has
   user ||--o| user_avatars : "photo"
   user ||--o{ imports : "brings in"
+  user ||--o{ exports : "takes out"
   imports ||--o{ cards : "added"
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
@@ -94,6 +95,20 @@ erDiagram
     int archived_at "nullable"
     text import_id "nullable, the import that added it"
     text external_id "nullable, the source's id"
+  }
+  exports {
+    text id PK
+    text user_id FK
+    text format "lymi | anki"
+    text deck_id "nullable; null is the whole library"
+    text file_name "private, never logged"
+    text status "exporting | done | failed | expired"
+    text failure "nullable too_large | internal"
+    text object_key "nullable R2 prefix of the segments"
+    int segments "segments that make up the file"
+    int byte_size "nullable until done"
+    json counts "decks, cards, reviews, pictures, sounds"
+    int expires_at "nullable, when the file is deleted"
   }
   imports {
     text id PK
@@ -302,7 +317,13 @@ An import writes ordinary decks, cards, states and reviews, and marks what it ma
 
 Each imported grade replays through the scheduler in order and is stored as a `reviews` row with `source = 'import'`, no `review_day_id` and no `state_before`, so Undo refuses it. The mode's state keeps the replayed memory and takes the source's due date. A mode with a schedule and no log starts from the source's stability and difficulty; a mode the source reset stays new with its log as history. Imported rows light days in Insights and are left out of the streak, today's draw log and the goal.
 
+A Lymi file brings back what other sources cannot: each card's own language where it differs from its deck's, the meaning and example sources it had, its free-text source, its picture description and picture modes, and an archived deck arrives archived. Its imported text keeps those recorded sources rather than `manual`, because Lymi wrote them. Sections and series are in the file but are not restored yet.
+
 Archiving an import stamps its own `archived_at` on every card it added that is still active, and on each deck it made that has no active card left; restore clears exactly the rows carrying that moment, so a card the learner archived or a suspended card that arrived archived stays archived.
+
+### Exports
+
+An export reads the decks the learner can see, archived ones included, or one deck they can see. Cards and pictures are the deck's; states and reviews are the exporting learner's own, and undone reviews are left out. Every export writes a `create` and a `complete` audit row with entity `export`, so Activity lists it. `downloadUrl` is set only while the file exists; object keys never leave the server. `POST /api/exports` takes the read scope, since it reads.
 
 ### Tags and source
 

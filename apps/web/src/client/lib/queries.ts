@@ -149,6 +149,27 @@ export const importsQuery = queryOptions({
   meta: { persist: false },
 });
 
+/** Exports newest first, for Activity. */
+export const exportsQuery = queryOptions({
+  queryKey: ["exports"],
+  queryFn: api.exports,
+  staleTime: 0,
+  refetchInterval: (query) =>
+    query.state.data?.some((item) => item.status === "exporting") ? 3000 : false,
+  // A download link is only good for a day and only online.
+  meta: { persist: false },
+});
+
+/** One export, polled while the server writes its file. */
+export const exportQuery = (id: string) =>
+  queryOptions({
+    queryKey: ["exports", id],
+    queryFn: () => api.export(id),
+    staleTime: 0,
+    refetchInterval: (query) => (query.state.data?.status === "exporting" ? 1500 : false),
+    meta: { persist: false },
+  });
+
 /** Statuses the server is still working through, so the screen keeps asking. */
 const WORKING = new Set(["inspecting", "importing"]);
 

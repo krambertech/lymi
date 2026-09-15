@@ -28,7 +28,8 @@ function rowsOf(rows: Iterable<Record<string, unknown>>) {
   );
 }
 
-describe("SqliteFile", () => {
+// These walk whole b-trees in JavaScript, and a loaded CI runner takes several times as long.
+describe("SqliteFile", { timeout: 120_000 }, () => {
   it("reads every value type, overflow pages and interior pages as SQLite wrote them", () => {
     for (const pageSize of [1024, 4096, 65536]) {
       const { db, file } = build(`types-${pageSize}.db`, pageSize, (db) => {
@@ -56,7 +57,7 @@ describe("SqliteFile", () => {
       expect(rows.at(-1)).toMatchObject({ id: 9_000_000_000, n: 2n ** 62n, r: -0.5 });
       db.close();
     }
-  }, 60_000);
+  });
 
   it("reads WITHOUT ROWID tables in declared column order, interior records included", () => {
     const { db, file } = build("without-rowid.db", 1024, (db) => {

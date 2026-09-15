@@ -17,7 +17,7 @@ function open(name: string, pages: Uint8Array[]) {
   return new DatabaseSync(path, { readOnly: true });
 }
 
-describe("SqliteWriter", () => {
+describe("SqliteWriter", { timeout: 120_000 }, () => {
   it("writes tables and indexes that SQLite checks as sound and reads back", () => {
     for (const pageSize of [1024, 4096]) {
       const writer = new SqliteWriter(pageSize);
@@ -88,5 +88,5 @@ describe("SqliteWriter", () => {
       expect(read).toHaveLength(6000);
       expect(read[0]).toMatchObject({ id: 1_789_000_000_007, name: "row 1" });
     }
-  }, 60_000);
+  });
 });

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { Toaster, toast } from "./toast";
@@ -47,6 +47,33 @@ describe("toast", () => {
       .poll(() => box("sei").top - box("cinque").bottom, settle)
       .toBeGreaterThanOrEqual(6);
   });
+
+  // WebKit's Tab skips buttons, so the keyboard path is proven on the desktop machine only.
+  test.runIf(inject("machine") === "desktop")(
+    "a focused button's ring is the room's colour, so it shows on the ink toast",
+    async () => {
+      await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+      toast.add({ title: "Archived “uno”", actionProps: { children: "Undo" } });
+      const undo = region().getByRole("button", { name: "Undo" });
+      await expect.element(undo).toBeVisible();
+
+      await userEvent.keyboard("{F6}");
+      await userEvent.tab();
+      await userEvent.tab();
+      for (const name of ["Undo", "Dismiss"]) {
+        const button = region().getByRole("button", { name }).element();
+        expect(document.activeElement).toBe(button);
+        const toastElement = button.closest<HTMLElement>('[data-slot="toast"]');
+        if (!toastElement) throw new Error("The button is outside its toast.");
+        expect(getComputedStyle(button).outlineStyle).toBe("solid");
+        // The close button's colour transition carries its outline colour too.
+        await expect
+          .poll(() => getComputedStyle(button).outlineColor)
+          .toBe(getComputedStyle(toastElement).color);
+        await userEvent.tab();
+      }
+    },
+  );
 
   test("its one action runs", async () => {
     const onClick = vi.fn();

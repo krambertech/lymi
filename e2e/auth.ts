@@ -40,7 +40,10 @@ export async function signInAsTestLearner(
     // cannot pass.
     await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
     await expect(
-      page.getByRole("heading", { level: 2, name: /due|Nothing here yet|Nothing due/ }),
+      page.getByRole("heading", {
+        level: 2,
+        name: /due|Getting started|Start with a deck|No cards yet|Nothing due/,
+      }),
     ).toBeVisible();
   }
 }

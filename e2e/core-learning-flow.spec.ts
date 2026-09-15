@@ -36,7 +36,7 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
     deckId = ((await response.json()) as { id: string }).id;
     await page.goto(`/library/${deckId}`);
 
-    await expect(page.getByRole("heading", { name: "Italian lesson" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Italian lesson", exact: true })).toBeVisible();
   });
 
   await test.step("add a complete card", async () => {

@@ -1,7 +1,6 @@
 import { Volume2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../../components/button";
-import { EmptyState } from "../../components/empty-state";
 import { ErrorTip } from "../../components/error-tip";
 import { Progress } from "../../components/progress";
 import { Skeleton } from "../../components/skeleton";
@@ -18,7 +17,7 @@ import { type Group, noop } from "./types";
 export const feedback: Group = {
   slug: "feedback",
   title: "Feedback",
-  lede: "What the app says while something is happening, just after it happened, or when there is nothing to show yet.",
+  lede: "What the app says while something is happening, or just after it happened. When there is nothing to show yet, see Empty states.",
   entries: [
     {
       slug: "progress",
@@ -114,42 +113,6 @@ export const feedback: Group = {
                   <Skeleton className="h-11" />
                   <Skeleton className="h-11" />
                 </div>
-              ),
-            },
-          ]}
-        />
-      ),
-    },
-    {
-      slug: "empty-state",
-      name: "Empty state",
-      source: "components/empty-state.tsx",
-      note: "Teaches rather than apologises: what goes here, and the action that fills it.",
-      Demo: () => (
-        <Variants
-          stack
-          items={[
-            {
-              label: "With an action",
-              note: "Something the learner can do right now fills the screen.",
-              render: () => (
-                <EmptyState
-                  title="Nothing here yet"
-                  body="Create a deck, add a card from your last lesson, and the lantern comes on."
-                  action={<Button variant="primary">New deck</Button>}
-                  className="w-full py-4"
-                />
-              ),
-            },
-            {
-              label: "Waiting",
-              note: "Nothing to do about it yet, so no button.",
-              render: () => (
-                <EmptyState
-                  title="Nothing to say yet"
-                  body="This fills in once there is some history behind you."
-                  className="w-full py-4"
-                />
               ),
             },
           ]}

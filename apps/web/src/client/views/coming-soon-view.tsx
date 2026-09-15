@@ -11,7 +11,7 @@ export function ComingSoonView({ title, body }: { title: string; body: string })
   return (
     <Page>
       <PageHeader title={title} />
-      <EmptyState lantern="still" title={t`Not yet`} body={body} className="flex-1" />
+      <EmptyState title={t`Coming soon`} body={body} className="flex-1" />
     </Page>
   );
 }

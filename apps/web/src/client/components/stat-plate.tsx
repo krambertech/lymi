@@ -13,6 +13,7 @@ export function StatPlate({
   figure,
   control,
   note,
+  ghost,
   className,
 }: {
   label: string;
@@ -28,17 +29,30 @@ export function StatPlate({
    */
   control?: ReactNode | undefined;
   note: ReactNode;
+  /** A dashed outline with a muted number: the plate before there is anything to count. */
+  ghost?: boolean | undefined;
   className?: string | undefined;
 }) {
   return (
-    <section className={clsx("edge flex flex-col gap-3 rounded-xl bg-plate p-5", className)}>
+    <section
+      className={clsx(
+        "flex flex-col gap-3 rounded-xl p-5",
+        ghost ? "border border-dashed border-edge-2" : "edge bg-plate",
+        className,
+      )}
+    >
       {/* 34 px is the segmented control at `sm` plus its track padding. Fixed so a plate
           with a control and one without still line up across the grid. */}
       <div className="flex min-h-[34px] flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <h3 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h3>
         {control}
       </div>
-      <p className="text-3xl font-medium leading-[1.1] tracking-[-0.02em] text-text tabular-nums">
+      <p
+        className={clsx(
+          "text-3xl font-medium leading-[1.1] tracking-[-0.02em] tabular-nums",
+          ghost ? "text-muted" : "text-text",
+        )}
+      >
         {value}
         {unit && <span className="ms-1 text-lg font-normal text-muted">{unit}</span>}
       </p>

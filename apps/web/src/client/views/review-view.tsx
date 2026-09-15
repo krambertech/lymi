@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
-import { BookMarked, CircleAlert, Loader2, Pointer, Volume2, X } from "lucide-react";
+import { BookMarked, Loader2, Pointer, Volume2, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -14,9 +14,10 @@ import {
   type Variants,
 } from "motion/react";
 import { type CSSProperties, type ReactNode, useEffect, useId, useRef, useState } from "react";
-import { Button, buttonClass, IconButton } from "../components/button";
+import { buttonClass, IconButton } from "../components/button";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
+import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
@@ -1020,21 +1021,13 @@ export function ReviewError({
   body?: ReactNode;
 }) {
   return (
-    <section className="flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">
-      <span className="mb-5 grid size-12 place-items-center rounded-full bg-danger-soft text-danger">
-        <CircleAlert className="size-5" aria-hidden="true" />
-      </span>
-      <h2 className="text-2xl font-medium">{title ?? <Trans>Couldn’t load your cards</Trans>}</h2>
-      <p className="mt-2 max-w-[30ch] text-md text-muted">
-        {body ?? <Trans>Check your connection and try again.</Trans>}
-      </p>
-      <div className="mt-6 flex items-center gap-2">
-        <Button variant="primary" onClick={retry}>
-          <Trans>Try again</Trans>
-        </Button>
-        {action}
-      </div>
-    </section>
+    <ErrorState
+      title={title ?? <Trans>Couldn’t load your cards</Trans>}
+      body={body}
+      onRetry={retry}
+      action={action}
+      className="flex-1 px-6 py-12"
+    />
   );
 }
 

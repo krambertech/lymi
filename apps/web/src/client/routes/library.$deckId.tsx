@@ -6,6 +6,7 @@ import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { api, type Card } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
+import { publicSiteUrl } from "../lib/origins";
 import { cardHistoryQuery, deckCardsQuery, decksQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { DeckDetailView } from "../views/deck-detail-view";
@@ -130,6 +131,7 @@ function DeckPage() {
         setOpen(null);
         save.mutate({ id, patch: { deckId: toDeck } });
       }}
+      connectUrl={publicSiteUrl("/docs/mcp")}
     />
   );
 }

@@ -56,6 +56,7 @@ export function ApiKeysSection() {
 
   return (
     <SettingsGroup
+      id="api-keys"
       title={t`API keys`}
       description={t`For scripts and curl. An assistant signs in instead, under Connected apps.`}
     >

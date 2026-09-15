@@ -2,14 +2,25 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { deserializeState } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { Archive, Download, MoreHorizontal, Plus, Search, Settings2 } from "lucide-react";
+import {
+  Archive,
+  Download,
+  KeyRound,
+  MoreHorizontal,
+  Plug,
+  Plus,
+  Search,
+  Settings2,
+} from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { DueCount } from "../components/due-count";
-import { EmptyState } from "../components/empty-state";
+import { NoResults } from "../components/empty-state";
+import { NextStep, NextSteps } from "../components/next-steps";
 import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
+import { StartPanel, StartPanelSection } from "../components/start-panel";
 import { StateIcon, type StateKey, stateMarks } from "../components/state-mark";
 import {
   DropdownMenu,
@@ -47,6 +58,8 @@ export interface DeckDetailProps {
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
   onMove?: ((id: string, deckId: string) => void) | undefined;
+  /** How to connect an assistant, offered while the deck has no cards. */
+  connectUrl?: string | undefined;
   static?: StaticNav;
 }
 
@@ -229,6 +242,7 @@ export function DeckDetailView({
   onSaveCard,
   decks,
   onMove,
+  connectUrl,
   static: st,
 }: DeckDetailProps) {
   const { t, i18n } = useLingui();
@@ -525,7 +539,37 @@ export function DeckDetailView({
             <Skeleton className="h-[260px] rounded-2xl" />
           ) : cards.length > 0 ? (
             <DuePlate deck={deck} cards={cards} counts={counts} onReview={onReview} onAdd={onAdd} />
-          ) : null}
+          ) : (
+            <StartPanel
+              title={<Trans>No cards in {deck.name} yet</Trans>}
+              body={<Trans>Add cards from your last lesson, then review them here.</Trans>}
+              action={
+                <Button variant="primary" className="justify-self-start" onClick={onAdd} kbd="N">
+                  <Trans>Add a card</Trans>
+                </Button>
+              }
+            >
+              <StartPanelSection>
+                <NextSteps label={t`Other ways to add cards`}>
+                  <NextStep
+                    icon={<Plug />}
+                    title={<Trans>Send a lesson from Claude or ChatGPT</Trans>}
+                    detail={<Trans>Connect Lymi, paste the lesson, and ask for the cards</Trans>}
+                    href={connectUrl}
+                    static={st}
+                  />
+                  <NextStep
+                    icon={<KeyRound />}
+                    title={<Trans>Add cards with the API</Trans>}
+                    detail={<Trans>Create a key in Settings</Trans>}
+                    to="/settings"
+                    hash="api-keys"
+                    static={st}
+                  />
+                </NextSteps>
+              </StartPanelSection>
+            </StartPanel>
+          )}
         </div>
 
         {cards && cards.length > 0 && (
@@ -574,20 +618,6 @@ export function DeckDetailView({
             <Skeleton className="h-12" />
             <Skeleton className="h-12" />
           </div>
-        )}
-
-        {cards && cards.length === 0 && (
-          <EmptyState
-            lantern="none"
-            title={t`Empty deck`}
-            body={t`Add the first card from your lesson. The lantern lights when one is due.`}
-            action={
-              <Button variant="primary" onClick={onAdd}>
-                <Trans>Add card</Trans>
-              </Button>
-            }
-            className="py-6"
-          />
         )}
 
         {shown && shown.length > 0 && (
@@ -657,26 +687,32 @@ export function DeckDetailView({
           </div>
         )}
 
+        {/* The search and the filter stay in view, so no match is a line, not a screen. */}
         {shown && shown.length === 0 && cards && cards.length > 0 && (
-          <EmptyState
-            lantern="none"
-            title={q ? t`Nothing matches “${q}”` : t`Nothing here`}
-            body={
-              q
-                ? t`Search looks at the term and its meaning.`
-                : t`Every card in this deck is somewhere else in the schedule.`
+          <NoResults
+            title={
+              q ? (
+                <Trans>Nothing matches “{q}”</Trans>
+              ) : filter === "0" ? (
+                <Trans>No New cards in this deck</Trans>
+              ) : filter === "1" ? (
+                <Trans>No Learning cards in this deck</Trans>
+              ) : (
+                <Trans>No Known cards in this deck</Trans>
+              )
             }
+            detail={q ? <Trans>Search looks at the term and the meaning.</Trans> : undefined}
             action={
               <Button
+                size="sm"
                 onClick={() => {
                   setQ("");
                   setFilter("all");
                 }}
               >
-                <Trans>Clear</Trans>
+                {q ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}
               </Button>
             }
-            className="py-6"
           />
         )}
       </Page>

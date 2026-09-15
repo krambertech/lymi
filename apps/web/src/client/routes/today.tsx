@@ -4,7 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useAddCard } from "../lib/add-card";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
-import { decksQuery, meQuery, roundsQuery, streakQuery } from "../lib/queries";
+import { connectedAppsQuery, decksQuery, meQuery, roundsQuery, streakQuery } from "../lib/queries";
 import { Streak } from "../lib/streak";
 import { useSignOut } from "../lib/use-sign-out";
 import { TodayView } from "../views/today-view";
@@ -21,6 +21,8 @@ function Today() {
   const streak = useQuery(streakQuery);
   const rounds = useQuery(roundsQuery);
   const me = useQuery(meQuery);
+  const firstRun = decks.data?.every((d) => d.total === 0) ?? false;
+  const apps = useQuery({ ...connectedAppsQuery, enabled: firstRun });
   const add = useAddCard();
   const leave = useSignOut();
   return (
@@ -33,6 +35,8 @@ function Today() {
       name={me.data?.name}
       email={me.data?.email}
       docsUrl={publicSiteUrl("/docs")}
+      connectUrl={publicSiteUrl("/docs/mcp")}
+      connected={(apps.data?.length ?? 0) > 0}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
       onSignOut={leave.signOut}

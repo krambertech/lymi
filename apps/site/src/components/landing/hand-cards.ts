@@ -11,16 +11,18 @@ export interface HandCard {
   id: string;
   /** Where the card is from, shown above the term. A language names itself, untranslated. */
   source: string | MessageDescriptor;
-  kind: MessageDescriptor;
+  kind?: MessageDescriptor;
   /** BCP 47 tag of the term, used for `lang` and for the voice. */
-  language: string;
+  language?: string | undefined;
   term: string;
   /** A reading for a term in a script the visitor may not read. */
   reading?: string;
   pronunciation?: string;
-  meaning: MessageDescriptor;
+  meaning: string | MessageDescriptor;
   /** One line that makes the term stick: where it comes from, or when it is said. */
-  note: MessageDescriptor;
+  note?: string | MessageDescriptor;
+  /** Where the pronunciation plays from, or null for a card without one. Defaults to the clip named by `id`. */
+  audio?: string | null;
 }
 
 export const noun = msg`noun`;

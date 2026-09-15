@@ -1,10 +1,8 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckOut } from "@lymi/core/catalog";
-import { clsx } from "clsx";
-import { ChevronDown, Lock, MapPin } from "lucide-react";
-import type { ReactNode } from "react";
-import { languageName, type SectionStep, sectionPath } from "../../lib/deck-page";
+import type { CSSProperties, ReactNode } from "react";
+import { type DeckCard, languageName } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
@@ -19,7 +17,7 @@ interface DeckProps extends LocaleProps {
   deck: PublicDeckOut;
 }
 
-/** Server-rendered parts of the page share one provider each; only the nav and Try it hydrate. */
+/** Server-rendered parts of the page share one provider each; only the nav, sections and stack hydrate. */
 function Localized({ locale, children }: LocaleProps & { children: ReactNode }) {
   return <I18nProvider i18n={pageI18n(locale)}>{children}</I18nProvider>;
 }
@@ -36,16 +34,16 @@ function useDate() {
     );
 }
 
-/** Who made the deck, first thing under its name. A catalog card can show the same line. */
+/** Who made the deck. A catalog card can show the same line. */
 export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   const date = useDate();
   const publisher = deck.publisher;
   const checked = deck.reviewedAt ? date(deck.reviewedAt) : null;
   return (
-    <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-md">
+    <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md">
       <span
         aria-hidden="true"
-        className="grid size-8 shrink-0 place-items-center rounded-full bg-plate text-sm font-semibold text-text edge"
+        className="grid size-7 shrink-0 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
       >
         {publisher.trim().charAt(0).toLocaleUpperCase()}
       </span>
@@ -66,33 +64,20 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const language = languageName(deck.language, i18n.locale, { label: true });
   const meaningLanguage = languageName(deck.meaningLanguage, i18n.locale);
-  const namedSections = deck.sections.filter((section) => section.name !== null).length;
   const level = deck.level;
   const items = [
     language,
     level && <Trans key="level">Level {level}</Trans>,
     <Plural key="cards" value={deck.cardCount} one="# card" other="# cards" />,
-    namedSections > 1 && (
-      <Plural key="sections" value={namedSections} one="# section" other="# sections" />
-    ),
     meaningLanguage && <Trans key="meanings">Meanings in {meaningLanguage}</Trans>,
   ].filter(Boolean);
-  // Each item carries its dot at its start and the list is pulled back by one dot's width, so a
-  // dot that would start a wrapped line is clipped away.
   return (
-    <div className="overflow-hidden">
-      <ul className="-ms-5 flex flex-wrap items-center gap-y-1 text-md text-text-2">
-        {items.map((item, index) => (
-          <li
-            // biome-ignore lint/suspicious/noArrayIndexKey: a fixed list that never reorders.
-            key={index}
-            className="relative ps-5 before:absolute before:start-0 before:w-5 before:text-center before:text-faint before:content-['·']"
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-md text-muted">
+      {items.map((item, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: a fixed list that never reorders.
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
   );
 }
 
@@ -104,72 +89,137 @@ function SignInNote() {
   );
 }
 
-/** The name, who made it, what it is, and the way to add it. Try it sits beside this. */
-export function DeckHeader({ deck, locale }: DeckProps) {
-  const { inOrder } = sectionPath(deck);
+// Each card's height and tilt, by place from the start, for spreads of one to five cards.
+const POSES: [number, number][][] = [
+  [[10, -2]],
+  [
+    [24, -3],
+    [4, 3],
+  ],
+  [
+    [30, -4],
+    [4, 2.5],
+    [26, -2],
+  ],
+  [
+    [40, -4.5],
+    [6, 3],
+    [28, -2],
+    [0, 4],
+  ],
+  [
+    [46, -5],
+    [6, 3],
+    [30, -1.5],
+    [0, 4],
+    [40, -3.5],
+  ],
+];
+
+/** A few of the deck's cards floating apart, so the first thing a visitor sees is what they get. */
+function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] }) {
+  const { t } = useLingui();
+  const poses = POSES[cards.length - 1] ?? [];
+  return (
+    <ul aria-label={t`Cards from this deck`} className="deck-spread">
+      {cards.map((card, index) => {
+        const offset = index - (cards.length - 1) / 2;
+        const [lift, tilt] = poses[index] ?? [0, 0];
+        const style = {
+          "--o": offset,
+          "--a": Math.abs(offset),
+          "--y": `${lift}px`,
+          "--r": `${tilt}deg`,
+          "--dur": `${6.5 + ((index * 7) % 5) * 0.6}s`,
+          "--delay": `${-index * 1.3}s`,
+          "--wob": `${index % 2 ? 0.7 : -0.7}deg`,
+        } as CSSProperties;
+        return (
+          <li
+            // biome-ignore lint/suspicious/noArrayIndexKey: a fixed spread; a term can repeat.
+            key={index}
+            className="deck-spread-card"
+            data-outer={Math.abs(offset) > 1 || undefined}
+            style={style}
+          >
+            <div className="deck-spread-float">
+              <article className="deck-spread-face">
+                {card.section && (
+                  <p lang={deck.meaningLanguage} className="deck-spread-section">
+                    {card.section}
+                  </p>
+                )}
+                <p lang={deck.language ?? undefined} className="deck-spread-term">
+                  {card.term}
+                </p>
+                <p lang={deck.meaningLanguage} className="deck-spread-meaning">
+                  {card.meaning}
+                </p>
+              </article>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/** The name, who made it, what it is, the way to add it, and a few of its cards. */
+export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCard[] }) {
   return (
     <Localized locale={locale}>
-      <div className="min-w-0 max-w-[560px]">
+      <div className="mx-auto max-w-[1120px] px-5 pt-8 text-center @2xl:px-10 @4xl:pt-12">
+        <DeckByline deck={deck} />
         <h1
           lang={deck.meaningLanguage}
-          className="text-5xl font-medium tracking-[-0.038em] text-balance break-words text-text @4xl:text-[4rem] @4xl:leading-[1]"
+          className="mx-auto mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-text @2xl:text-[3.75rem] @4xl:text-[4.5rem]"
         >
           {deck.name}
         </h1>
-        <div className="mt-5">
-          <DeckByline deck={deck} />
-        </div>
         <p
           lang={deck.meaningLanguage}
-          className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl"
+          className="mx-auto mt-5 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl"
         >
           {deck.summary}
         </p>
-        <div className="mt-5">
+        <div className="mt-4">
           <DeckFacts deck={deck} />
         </div>
-        <div className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-3">
+        <div className="mt-7 flex flex-wrap justify-center gap-2">
           <a href={addUrl(deck.slug)} className={buttonClass("primary", "lg")}>
             <Trans>Add to Lymi</Trans>
           </a>
-          <a href="#sections" className={buttonClass("ghost", "lg")}>
-            {inOrder ? <Trans>See the sections</Trans> : <Trans>See every card</Trans>}
+          <a href="#how" className={buttonClass("ghost", "lg")}>
+            <Trans>Try a few cards</Trans>
           </a>
         </div>
         <div className="mt-3">
           <SignInNote />
         </div>
+        {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
       </div>
     </Localized>
   );
 }
 
-/** Three steps from this page to a deck that is learnt, true to how Lymi schedules. */
+/** Three steps from this page to a deck that is learnt, beside a stack of its cards to turn over. */
 export function DeckHowItWorks({ deck, locale }: DeckProps) {
-  const { inOrder, steps } = sectionPath(deck);
-  const first = steps[0]?.name ?? "";
   const items = [
     {
       key: "add",
       title: <Trans>Add the deck</Trans>,
       body: <Trans>Sign in with Google and it joins your Library. Free during the beta.</Trans>,
     },
-    inOrder
-      ? {
-          key: "sections",
-          title: <Trans>Learn one section at a time</Trans>,
-          body: (
-            <Trans>
-              You start with <span lang={deck.meaningLanguage}>{first}</span>. The next section
-              opens as you learn the one before.
-            </Trans>
-          ),
-        }
-      : {
-          key: "new",
-          title: <Trans>New cards come in gradually</Trans>,
-          body: <Trans>Each review mixes a few new cards in with the ones you are learning.</Trans>,
-        },
+    {
+      key: "recall",
+      title: <Trans>Recall, then turn it over</Trans>,
+      body: (
+        <Trans>
+          Try to remember the meaning before you look. Try it on the cards here: they’re from all
+          over the deck.
+        </Trans>
+      ),
+    },
     {
       key: "review",
       title: <Trans>Review a few minutes a day</Trans>,
@@ -182,203 +232,37 @@ export function DeckHowItWorks({ deck, locale }: DeckProps) {
   ];
   return (
     <Localized locale={locale}>
-      <section
-        aria-labelledby="how-title"
-        className="border-t border-edge px-5 py-14 @2xl:px-10 @4xl:py-20"
-      >
-        <div className="mx-auto max-w-[1040px]">
-          <h2
-            id="how-title"
-            className="text-3xl font-medium tracking-[-0.03em] text-balance text-text"
-          >
-            <Trans>How it works</Trans>
-          </h2>
-          <ol className="mt-8 grid gap-6 @3xl:grid-cols-3 @3xl:gap-10">
-            {items.map((item, index) => (
-              <li key={item.key} className="grid content-start gap-2 border-t border-edge pt-5">
-                <span className="text-md text-muted tabular-nums">{index + 1}</span>
-                <h3 className="text-lg font-medium tracking-[-0.02em] text-text">{item.title}</h3>
-                <p className="max-w-[40ch] text-md text-pretty text-text-2">{item.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-    </Localized>
-  );
-}
-
-function StepCards({ step, deck }: { step: SectionStep; deck: PublicDeckOut }) {
-  return (
-    <dl className="grid">
-      {step.cards.map((card, cardIndex) => (
-        <div
-          // biome-ignore lint/suspicious/noArrayIndexKey: terms can repeat across sections; order is fixed.
-          key={cardIndex}
-          className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-x-5 border-t border-edge py-2.5"
+      <div className="min-w-0">
+        <h2
+          id="how-title"
+          className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
         >
-          <dt
-            lang={deck.language ?? undefined}
-            className="text-md font-medium break-words text-text"
-          >
-            {card.term}
-          </dt>
-          <dd lang={deck.meaningLanguage} className="text-md break-words text-text-2">
-            {card.meaning}
-          </dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
-const summaryClass =
-  "flex cursor-pointer list-none items-center gap-4 rounded-md py-3 select-none [&::-webkit-details-marker]:hidden";
-
-function Chevron() {
-  return (
-    <ChevronDown
-      aria-hidden="true"
-      strokeWidth={1.75}
-      className="ms-auto size-5 shrink-0 text-muted transition-transform duration-200 ease-out group-open:rotate-180 motion-reduce:transition-none"
-    />
-  );
-}
-
-/**
- * The deck's structure: its sections as the path a learner walks, first open, the rest waiting.
- * Each step folds its cards away, so every card stays in the HTML without the page becoming a table.
- */
-export function DeckSections({ deck, locale }: DeckProps) {
-  return (
-    <Localized locale={locale}>
-      <DeckSectionsBody deck={deck} />
-    </Localized>
-  );
-}
-
-function DeckSectionsBody({ deck }: { deck: PublicDeckOut }) {
-  const { inOrder, steps } = sectionPath(deck);
-  const first = steps[0]?.name ?? "";
-  const lastNamed = steps.findLastIndex((step) => step.position !== null);
-  const cardCount = deck.cardCount;
-
-  return (
-    <section
-      id="sections"
-      aria-labelledby="sections-title"
-      className="scroll-mt-6 border-t border-edge px-5 py-14 @2xl:px-10 @4xl:py-20"
-    >
-      <div className="mx-auto grid max-w-[1040px] gap-8 @4xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] @4xl:gap-20">
-        <div className="@4xl:sticky @4xl:top-8 @4xl:self-start">
-          <h2
-            id="sections-title"
-            className="text-3xl font-medium tracking-[-0.03em] text-balance text-text"
-          >
-            {inOrder ? <Trans>One section at a time</Trans> : <Trans>Every card in the deck</Trans>}
-          </h2>
-          {inOrder && (
-            <p className="mt-4 max-w-[44ch] text-md text-pretty text-text-2">
-              <Trans>
-                You start with <span lang={deck.meaningLanguage}>{first}</span>. Once every card in
-                a section has come up and you know 80% of them, the next one opens by itself.
-              </Trans>
-            </p>
-          )}
-          <p className="mt-3 text-md text-muted">
-            {inOrder ? (
-              <Trans>Open a section to see its cards.</Trans>
-            ) : (
-              <Trans>Open the list to see every card.</Trans>
-            )}
-          </p>
-        </div>
-
-        {inOrder ? (
-          <ol className="grid">
-            {steps.map((step, index) => {
-              const start = index === 0;
-              const position = step.position;
-              const connected = index < lastNamed;
-              return (
-                <li key={`${step.position ?? "rest"}-${step.name ?? ""}`} className="relative">
-                  {connected && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute start-5 top-14 -bottom-2 w-px -translate-x-1/2 bg-edge-2 rtl:translate-x-1/2"
-                    />
-                  )}
-                  <details className="deck-step group">
-                    <summary className={clsx(summaryClass, "min-h-[4.5rem]")}>
-                      <span
-                        aria-hidden="true"
-                        className={clsx(
-                          "relative grid size-10 shrink-0 place-items-center rounded-full text-md font-medium tabular-nums",
-                          start ? "bg-good text-canvas" : "bg-plate text-text-2 edge",
-                        )}
-                      >
-                        {step.position ?? "·"}
-                      </span>
-                      <span className="grid min-w-0 gap-0.5">
-                        <span className="flex min-w-0 flex-wrap items-baseline gap-x-2">
-                          {step.position !== null && (
-                            <span className="sr-only">
-                              <Trans>Section {position}:</Trans>
-                            </span>
-                          )}
-                          <span
-                            lang={step.name === null ? undefined : deck.meaningLanguage}
-                            className="text-lg font-medium tracking-[-0.02em] break-words text-text"
-                          >
-                            {step.name ?? <Trans>Cards outside a section</Trans>}
-                          </span>
-                        </span>
-                        <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
-                          <span className="tabular-nums">
-                            <Plural value={step.cards.length} one="# card" other="# cards" />
-                          </span>
-                          {start && (
-                            <span className="inline-flex h-6 items-center gap-1 rounded-full bg-good-soft px-2 text-sm font-medium text-good">
-                              <MapPin aria-hidden="true" strokeWidth={2} className="size-3.5" />
-                              <Trans>You start here</Trans>
-                            </span>
-                          )}
-                          {!start && step.position !== null && (
-                            <span className="inline-flex items-center gap-1">
-                              <Lock aria-hidden="true" strokeWidth={1.75} className="size-3.5" />
-                              <Trans>Opens after the one before</Trans>
-                            </span>
-                          )}
-                          {step.position === null && <Trans>In review from the start</Trans>}
-                        </span>
-                      </span>
-                      <Chevron />
-                    </summary>
-                    <div className="deck-step-cards ps-14 pb-4">
-                      <StepCards step={step} deck={deck} />
-                    </div>
-                  </details>
-                </li>
-              );
-            })}
-          </ol>
-        ) : (
-          <details className="deck-step group rounded-lg border-y border-edge">
-            <summary className={summaryClass}>
-              <span className="text-lg font-medium tracking-[-0.02em] text-text">
-                <Plural value={cardCount} one="The one card" other="All # cards" />
+          <Trans>How it works</Trans>
+        </h2>
+        <ol className="mt-8 grid gap-6">
+          {items.map((item, index) => (
+            <li key={item.key} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3">
+              <span
+                aria-hidden="true"
+                className="grid size-8 place-items-center rounded-full bg-plate-2 text-sm font-semibold text-text-2 tabular-nums"
+              >
+                {index + 1}
               </span>
-              <Chevron />
-            </summary>
-            <div className="deck-step-cards pb-4">
-              {steps.map((step) => (
-                <StepCards key="all" step={step} deck={deck} />
-              ))}
-            </div>
-          </details>
-        )}
+              <div className="pt-1">
+                <h3 className="text-lg font-medium tracking-[-0.02em] text-text">{item.title}</h3>
+                <p className="mt-1 max-w-[40ch] text-md text-pretty text-text-2">{item.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <a href={addUrl(deck.slug)} className={buttonClass("primary", "lg")}>
+            <Trans>Add to Lymi</Trans>
+          </a>
+          <SignInNote />
+        </div>
       </div>
-    </section>
+    </Localized>
   );
 }
 
@@ -444,34 +328,6 @@ function DeckAboutBody({ deck }: { deck: PublicDeckOut }) {
         </dl>
       </div>
     </section>
-  );
-}
-
-/** The last word: add the deck. */
-export function DeckClosing({ deck, locale }: DeckProps) {
-  return (
-    <Localized locale={locale}>
-      <section className="px-5 pt-4 pb-20 @2xl:px-10 @4xl:pb-28">
-        <div className="mx-auto grid max-w-[1040px] gap-8 rounded-2xl bg-plate-2 p-7 edge-inset @2xl:p-12 @4xl:grid-cols-[1fr_auto] @4xl:items-end @4xl:gap-16 @4xl:p-16">
-          <div>
-            <h2 className="max-w-[18ch] text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl">
-              <Trans>Keep every card, not just the first few.</Trans>
-            </h2>
-            <p className="mt-5 max-w-[46ch] text-md text-pretty text-text-2">
-              <Trans>
-                Add the deck, and Lymi brings each card back right before you’d forget it.
-              </Trans>
-            </p>
-          </div>
-          <div className="grid gap-3 @4xl:justify-items-end">
-            <a href={addUrl(deck.slug)} className={buttonClass("primary", "lg")}>
-              <Trans>Add to Lymi</Trans>
-            </a>
-            <SignInNote />
-          </div>
-        </div>
-      </section>
-    </Localized>
   );
 }
 

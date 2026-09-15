@@ -8,9 +8,11 @@ import {
   etagMatches,
   jsonForScript,
   languageName,
+  SPREAD_SIZE,
+  STACK_SIZE,
   sectionPath,
-  TRY_LIMIT,
-  tryCards,
+  spreadCards,
+  stackCards,
 } from "./deck-page";
 
 const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
@@ -50,13 +52,73 @@ describe("deck page paths", () => {
   });
 });
 
-describe("tryCards", () => {
-  it("offers the first section's cards that have a meaning, up to the limit", () => {
-    const trial = tryCards(deck());
-    expect(trial.section).toBe("Greetings");
-    expect(trial.cards).toHaveLength(TRY_LIMIT);
-    expect(trial.cards.map((card) => card.term)).not.toContain("term 1");
-    expect(trial.cards[0]).toEqual({ term: "term 0", meaning: "meaning 0" });
+const sections = (count: number) =>
+  Array.from({ length: count }, (_, s) => ({
+    name: `Section ${s}`,
+    cards: Array.from({ length: 3 }, (_, c) => ({
+      term: `s${s} term ${c}`,
+      meaning: `meaning ${c}`,
+    })),
+  }));
+
+describe("spreadCards", () => {
+  it("takes one card from each of sections spread evenly through the deck, in deck order", () => {
+    const spread = spreadCards(deck({ sections: sections(9) }));
+    expect(spread).toHaveLength(SPREAD_SIZE);
+    expect(spread.map((card) => card.section)).toEqual([
+      "Section 0",
+      "Section 2",
+      "Section 4",
+      "Section 6",
+      "Section 8",
+    ]);
+  });
+
+  it("takes more than one card from a section when the deck has few, and skips cards without a meaning", () => {
+    const spread = spreadCards(deck());
+    expect(spread).toHaveLength(SPREAD_SIZE);
+    expect(spread.map((card) => card.term)).not.toContain("term 1");
+    expect(new Set(spread.map((card) => card.term)).size).toBe(SPREAD_SIZE);
+    expect(spread.map((card) => card.section)).toEqual([
+      "Greetings",
+      "Greetings",
+      "Greetings",
+      "Numbers",
+      null,
+    ]);
+  });
+
+  it("stays the same for a revision and prefers cards short enough to read at a glance", () => {
+    const long = deck({
+      sections: [
+        {
+          name: "Mixed",
+          cards: [
+            { term: "a term far too long to read at a glance", meaning: "long" },
+            { term: "lühike", meaning: "short" },
+          ],
+        },
+      ],
+    });
+    expect(spreadCards(long, 1)).toEqual([{ term: "lühike", meaning: "short", section: "Mixed" }]);
+    expect(spreadCards(deck({ sections: sections(9) }))).toEqual(
+      spreadCards(deck({ sections: sections(9) })),
+    );
+  });
+});
+
+describe("stackCards", () => {
+  it("draws distinct cards with a meaning from anywhere in the deck", () => {
+    let seed = 1;
+    const random = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+    const stack = stackCards(deck({ sections: sections(5) }), STACK_SIZE, random);
+    expect(stack).toHaveLength(STACK_SIZE);
+    expect(new Set(stack.map((card) => card.term)).size).toBe(STACK_SIZE);
+    expect(new Set(stack.map((card) => card.section)).size).toBeGreaterThan(1);
+    expect(stackCards(deck()).map((card) => card.term)).not.toContain("term 1");
   });
 });
 

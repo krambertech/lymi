@@ -3,10 +3,12 @@ import { type Locale, locales } from "./routes";
 
 const SITE = "https://lymi.app";
 
-/** The cards a visitor can try on the page: the first section's, up to ten, each with a meaning. */
-export const TRY_LIMIT = 10;
+/** The most cards laid out at the top of the page. */
+export const SPREAD_SIZE = 5;
+/** How many cards the stack under How it works holds. */
+export const STACK_SIZE = 8;
 
-export type TryCard = { term: string; meaning: string };
+export type DeckCard = { term: string; meaning: string; section: string | null };
 
 export function deckPath(slug: string, locale: Locale): string {
   return locale === "en" ? `/decks/${slug}` : `/${locale}/decks/${slug}`;
@@ -19,12 +21,76 @@ export function deckPaths(slug: string): Record<Locale, string> {
   >;
 }
 
-export function tryCards(deck: PublicDeckOut): { section: string | null; cards: TryCard[] } {
-  const first = deck.sections[0];
-  const cards = (first?.cards ?? [])
-    .filter((card): card is TryCard => Boolean(card.meaning))
-    .slice(0, TRY_LIMIT);
-  return { section: first?.name ?? null, cards };
+function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
+  return deck.sections
+    .map((section) =>
+      section.cards.flatMap((card) =>
+        card.meaning ? [{ term: card.term, meaning: card.meaning, section: section.name }] : [],
+      ),
+    )
+    .filter((cards) => cards.length > 0);
+}
+
+/** Distinct cards from anywhere in the deck, in random order. */
+export function stackCards(
+  deck: PublicDeckOut,
+  size = STACK_SIZE,
+  random: () => number = Math.random,
+): DeckCard[] {
+  const cards = sectionsWithMeanings(deck).flat();
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j] as DeckCard, cards[i] as DeckCard];
+  }
+  return cards.slice(0, size);
+}
+
+/** FNV-1a, so the spread stays the same for one revision of a deck. */
+function hash(text: string): number {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return h >>> 0;
+}
+
+/**
+ * The cards laid out at the top of the page, in deck order: one from each of sections spread evenly
+ * through the deck, preferring cards short enough to read at a glance. A deck with fewer sections
+ * than places gives more than one card from a section. The choice changes only with the revision.
+ */
+export function spreadCards(deck: PublicDeckOut, size = SPREAD_SIZE): DeckCard[] {
+  const groups = sectionsWithMeanings(deck);
+  const count = Math.min(
+    size,
+    groups.reduce((sum, cards) => sum + cards.length, 0),
+  );
+  if (count === 0) return [];
+  const perGroup = groups.map(() => 0);
+  if (groups.length >= count) {
+    for (let i = 0; i < count; i++) {
+      const at = count === 1 ? 0 : Math.round((i * (groups.length - 1)) / (count - 1));
+      perGroup[at] = 1;
+    }
+  } else {
+    for (let placed = 0; placed < count; ) {
+      groups.forEach((cards, at) => {
+        if (placed < count && (perGroup[at] ?? 0) < cards.length) {
+          perGroup[at] = (perGroup[at] ?? 0) + 1;
+          placed++;
+        }
+      });
+    }
+  }
+  return groups.flatMap((cards, at) => {
+    const take = perGroup[at] ?? 0;
+    if (take === 0) return [];
+    const glanceable = cards.filter((card) => card.term.length <= 20 && card.meaning.length <= 36);
+    const from = glanceable.length >= take ? glanceable : cards;
+    const start = hash(`${deck.slug}:${deck.revision}:${at}`) % from.length;
+    return Array.from({ length: take }, (_, k) => from[(start + k) % from.length] as DeckCard);
+  });
 }
 
 export interface SectionStep {

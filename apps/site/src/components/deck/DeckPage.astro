@@ -1,12 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { deckPath, deckPaths, deckStructuredData, jsonForScript, tryCards } from "../../lib/deck-page";
+import { deckPath, deckPaths, deckStructuredData, jsonForScript, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import type { DeckPage } from "../../lib/public-deck";
 import PublicNav from "../islands/PublicNav";
-import TryDeck from "../islands/TryDeck";
+import DeckSections from "../islands/DeckSections";
+import DeckStack from "../islands/DeckStack";
 import { deckDescription, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckAbout, DeckClosing, DeckFooter, DeckGone, DeckHeader, DeckHowItWorks, DeckSections } from "./DeckView";
+import { addUrl, DeckAbout, DeckFooter, DeckGone, DeckHero, DeckHowItWorks } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -17,7 +18,9 @@ const { locale } = page;
 const i18n = pageI18n(locale);
 const slug = page.status === 200 ? page.deck.slug : page.slug;
 const paths = deckPaths(slug);
-const trial = page.status === 200 ? tryCards(page.deck) : null;
+const deck = page.status === 200 ? page.deck : null;
+const path = deck ? sectionPath(deck) : null;
+const stack = deck ? stackCards(deck) : [];
 ---
 
 {
@@ -37,27 +40,31 @@ const trial = page.status === 200 ? tryCards(page.deck) : null;
       <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
         <header>
           <PublicNav client:load locale={locale} />
-          <div class="mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-12 pb-16 @2xl:px-10 @4xl:grid-cols-[minmax(0,1fr)_minmax(0,420px)] @4xl:gap-16 @4xl:pt-16 @4xl:pb-24">
-            <DeckHeader deck={page.deck} locale={locale} />
-            {trial && trial.cards.length > 0 && (
-              <TryDeck
-                client:load
-                locale={locale}
-                cards={trial.cards}
-                section={trial.section}
-                termLanguage={page.deck.language}
-                meaningLanguage={page.deck.meaningLanguage}
-                total={page.deck.cardCount}
-                addUrl={addUrl(slug)}
-              />
-            )}
-          </div>
+          <DeckHero deck={page.deck} locale={locale} spread={spreadCards(page.deck)} />
         </header>
         <main>
-          <DeckHowItWorks deck={page.deck} locale={locale} />
-          <DeckSections deck={page.deck} locale={locale} />
+          {path && (
+            <DeckSections
+              client:load
+              locale={locale}
+              name={page.deck.name}
+              termLanguage={page.deck.language}
+              meaningLanguage={page.deck.meaningLanguage}
+              cardCount={page.deck.cardCount}
+              addUrl={addUrl(slug)}
+              inOrder={path.inOrder}
+              steps={path.steps}
+            />
+          )}
+          <section id="how" aria-labelledby="how-title" class="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24">
+            <div class="mx-auto grid max-w-[1040px] items-center gap-12 @4xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] @4xl:gap-20">
+              <DeckHowItWorks deck={page.deck} locale={locale} />
+              {stack.length > 0 && (
+                <DeckStack client:visible locale={locale} cards={stack} termLanguage={page.deck.language} />
+              )}
+            </div>
+          </section>
           <DeckAbout deck={page.deck} locale={locale} />
-          <DeckClosing deck={page.deck} locale={locale} />
         </main>
         <DeckFooter locale={locale} languagePaths={paths} />
       </div>

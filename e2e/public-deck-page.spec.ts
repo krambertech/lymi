@@ -5,7 +5,7 @@ const publicSite = "http://localhost:4174";
 const pagePath = "/decks/evening-estonian";
 const addUrl = "http://localhost:4173/add/evening-estonian";
 
-test("anyone can read a published deck's page, walk its sections and try its first cards", async ({
+test("anyone can read a published deck's page, see its sections and cards, and turn a few over", async ({
   page,
   request,
 }) => {
@@ -61,65 +61,54 @@ test("anyone can read a published deck's page, walk its sections and try its fir
     await expect(page.getByRole("heading", { name: "How it works" })).toBeVisible();
   });
 
-  await test.step("the sections read as a path, and each opens to its cards", async () => {
-    const path = page.getByRole("region", { name: "One section at a time" });
-    const steps = path.getByRole("listitem");
-    await expect(steps).toHaveCount(2);
-    await expect(steps.nth(0)).toContainText("Greetings");
-    await expect(steps.nth(0)).toContainText("3 cards");
-    await expect(steps.nth(0)).toContainText("You start here");
-    await expect(steps.nth(1)).toContainText("In the café");
-    await expect(steps.nth(1)).toContainText("Opens after the one before");
+  await test.step("the sections read in order, and every card opens in its own view", async () => {
+    const sections = page.getByRole("region", { name: "2 sections, in order" });
+    const tiles = sections.getByRole("listitem");
+    await expect(tiles).toHaveCount(2);
+    await expect(tiles.nth(0)).toContainText("Greetings");
+    await expect(tiles.nth(0)).toContainText("3 cards");
+    await expect(tiles.nth(0)).toContainText("Start here");
+    await expect(tiles.nth(1)).toContainText("In the café");
+    await expect(sections.getByText("one coffee, please", { exact: true })).toBeHidden();
 
-    await expect(path.getByText("one coffee, please", { exact: true })).toBeHidden();
-    await steps.nth(1).getByText("In the café").click();
-    await expect(path.getByText("one coffee, please", { exact: true })).toBeVisible();
+    await sections.getByRole("button", { name: "See all 4 cards" }).click();
+    const view = page.getByRole("dialog", { name: "All 4 cards" });
+    await expect(view).toBeVisible();
+    await expect(page).toHaveURL(/#cards$/);
+    await view.getByRole("link", { name: /In the café/ }).click();
+    await expect(view.getByText("one coffee, please", { exact: true })).toBeInViewport();
+    await page.keyboard.press("Escape");
+    await expect(view).toBeHidden();
+    await expect(page).not.toHaveURL(/#cards$/);
+    await expect(sections.getByRole("button", { name: "See all 4 cards" })).toBeFocused();
   });
 
-  await test.step("a visitor tries the first section's cards and sees what Lymi would do", async () => {
-    const trial = page.getByRole("region", { name: "Try the first 3 cards" });
-    await trial.scrollIntoViewIfNeeded();
-    await expect(trial.getByText("1 of 3", { exact: true })).toBeVisible();
-    await expect(trial.getByText("tere päevast", { exact: true })).toBeVisible();
-
-    await trial.getByRole("button", { name: /^Show the meaning/ }).click();
-    await expect(trial.getByText("good afternoon", { exact: true })).toBeVisible();
-    await trial.getByRole("button", { name: /^Forgot/ }).click();
-
-    await expect(trial.getByText("2 of 3", { exact: true })).toBeVisible();
-    await expect(trial.getByText("head õhtut", { exact: true })).toBeVisible();
-    await trial.getByRole("button", { name: /^Show the meaning/ }).click();
-    await trial.getByRole("button", { name: /^Knew it/ }).click();
-
-    await expect(trial.getByText("3 of 3", { exact: true })).toBeVisible();
-    await trial.getByRole("button", { name: /^Show the meaning/ }).click();
-    await trial.getByRole("button", { name: /^Knew it/ }).click();
-
-    await expect(trial.getByRole("heading", { name: "You knew 2 of 3." })).toBeVisible();
-    await expect(trial).toContainText("the one you forgot would come back a few cards later");
-    await expect(trial.getByRole("list", { name: "Cards you forgot" })).toHaveText("tere päevast");
-    await expect(trial.getByRole("link", { name: "Add all 4 cards to Lymi" })).toHaveAttribute(
-      "href",
-      addUrl,
-    );
+  await test.step("a link to #cards opens the view, and Back closes it", async () => {
+    await page.goto(`${publicSite}${pagePath}`);
+    await page.goto(`${publicSite}${pagePath}#cards`);
+    const view = page.getByRole("dialog", { name: "All 4 cards" });
+    await expect(view).toBeVisible();
+    await page.goBack();
+    await expect(view).toBeHidden();
   });
 
-  await test.step("the cards work from the keyboard", async () => {
-    const trial = page.getByRole("region", { name: "Try the first 3 cards" });
-    await trial.getByRole("button", { name: "Start again" }).click();
-    await expect(trial.getByRole("button", { name: /^Show the meaning/ })).toBeFocused();
-    await page.keyboard.press("Space");
-    await expect(trial.getByText("good afternoon", { exact: true })).toBeVisible();
-    await expect(trial.getByRole("button", { name: /^Forgot/ })).toBeFocused();
-    await page.keyboard.press("2");
-    await expect(trial.getByText("2 of 3", { exact: true })).toBeVisible();
-    await expect(trial.getByRole("button", { name: /^Show the meaning/ })).toBeFocused();
+  await test.step("a visitor turns over cards from anywhere in the deck", async () => {
+    const meanings = ["good afternoon", "good evening", "good night", "one coffee, please"];
+    const how = page.locator("#how");
+    await how.scrollIntoViewIfNeeded();
+    const stack = how.getByRole("region", { name: "Turn a few cards over" });
+    await stack.getByRole("button", { name: "Turn it over" }).click();
+    await expect(stack.getByRole("button", { name: "Next card" })).toBeVisible();
+    const shown = await stack.locator(".hand-card[data-place='front'] .hand-back").innerText();
+    expect(meanings.some((meaning) => shown.includes(meaning))).toBe(true);
+    await stack.getByRole("button", { name: "Next card" }).click();
+    await expect(stack.getByRole("button", { name: "Turn it over" })).toBeVisible();
   });
 
   await test.step("the Ukrainian and Russian pages carry their own chrome", async () => {
     await page.goto(`${publicSite}/uk${pagePath}`);
     await expect(page.locator("html")).toHaveAttribute("lang", "uk");
-    await expect(page.getByRole("heading", { name: "Розділ за розділом" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "2 розділи по черзі" })).toBeVisible();
     const ru = await request.get(`${publicSite}/ru${pagePath}`);
     expect(ru.status()).toBe(200);
     expect(ru.headers().etag).toContain("-ru-");
@@ -149,13 +138,16 @@ test("anyone can read a published deck's page, walk its sections and try its fir
   });
 });
 
-test("without JavaScript the first card still reveals its meaning", async ({ browser }) => {
+test("without JavaScript the page still shows the deck and its sections", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(`${publicSite}${pagePath}`);
-  const trial = page.getByRole("region", { name: "Try the first 3 cards" });
-  await expect(trial.getByText("good afternoon", { exact: true })).toBeHidden();
-  await trial.getByText("Show the meaning", { exact: true }).click();
-  await expect(trial.getByText("good afternoon", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Evening Estonian" })).toBeVisible();
+  await expect(page.getByRole("list", { name: "Cards from this deck" })).toContainText(
+    "tere päevast",
+  );
+  await expect(page.getByRole("region", { name: "2 sections, in order" })).toContainText(
+    "In the café",
+  );
   await context.close();
 });

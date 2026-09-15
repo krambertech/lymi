@@ -112,8 +112,9 @@ function FanCard({
     setLanded(true);
   }, [landed]);
 
-  const say = (d: MessageDescriptor) => i18n._(d);
-  const source = typeof card.source === "string" ? card.source : say(card.source);
+  const say = (d: string | MessageDescriptor) => (typeof d === "string" ? d : i18n._(d));
+  const heading = [say(card.source), card.kind && say(card.kind)].filter(Boolean).join(" · ");
+  const audible = card.audio !== null;
   const front = place === "front";
   // A CJK character is about two Latin letters wide and has no spaces to wrap at.
   const longest = Math.max(
@@ -124,9 +125,9 @@ function FanCard({
 
   const top = (
     <>
-      <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">
-        {source} · {say(card.kind)}
-      </p>
+      {heading && (
+        <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">{heading}</p>
+      )}
       <p
         lang={card.language}
         dir="auto"
@@ -140,26 +141,30 @@ function FanCard({
           {card.reading}
         </p>
       )}
-      <p className="mt-2.5 flex min-h-8 items-center gap-2.5 text-md text-muted">
-        {card.pronunciation && <span className="hand-ipa truncate">{card.pronunciation}</span>}
-        <button
-          type="button"
-          aria-label={playing ? t`Replay pronunciation` : t`Play pronunciation`}
-          tabIndex={front ? 0 : -1}
-          onClick={(e) => {
-            e.stopPropagation();
-            onPlay(card);
-          }}
-          className={clsx(
-            "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover",
-            "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
-            playing ? "text-text" : "text-text-2",
-            !front && "invisible",
+      {(card.pronunciation || audible) && (
+        <p className="mt-2.5 flex min-h-8 items-center gap-2.5 text-md text-muted">
+          {card.pronunciation && <span className="hand-ipa truncate">{card.pronunciation}</span>}
+          {audible && (
+            <button
+              type="button"
+              aria-label={playing ? t`Replay pronunciation` : t`Play pronunciation`}
+              tabIndex={front ? 0 : -1}
+              onClick={(e) => {
+                e.stopPropagation();
+                onPlay(card);
+              }}
+              className={clsx(
+                "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover",
+                "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
+                playing ? "text-text" : "text-text-2",
+                !front && "invisible",
+              )}
+            >
+              <Volume2 aria-hidden="true" />
+            </button>
           )}
-        >
-          <Volume2 aria-hidden="true" />
-        </button>
-      </p>
+        </p>
+      )}
     </>
   );
 
@@ -197,7 +202,9 @@ function FanCard({
           <p className="mt-auto border-t border-edge-2 pt-3.5 text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
             {say(card.meaning)}
           </p>
-          <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
+          {card.note && (
+            <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
+          )}
         </div>
       </div>
     </div>
@@ -311,7 +318,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
 
   const play = useCallback((card: HandCard) => {
     audio.current?.pause();
-    const clip = new Audio(`/audio/hand/${card.id}.mp3`);
+    const clip = new Audio(card.audio ?? `/audio/hand/${card.id}.mp3`);
     audio.current = clip;
     setPlaying(card.id);
     const done = () => setPlaying((current) => (current === card.id ? null : current));
@@ -326,7 +333,8 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
     taught.current = true;
     setHint(false);
     setPhase("back");
-    setAnnounce(`${front.card.term}: ${i18n._(front.card.meaning)}`);
+    const meaning = front.card.meaning;
+    setAnnounce(`${front.card.term}: ${typeof meaning === "string" ? meaning : i18n._(meaning)}`);
   }, [hand, phase, i18n]);
 
   const next = useCallback(() => {

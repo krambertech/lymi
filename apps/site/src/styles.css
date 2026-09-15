@@ -722,27 +722,156 @@
 
 /* ---- Published deck ---------------------------------------------------- */
 
-/* A section opening onto its cards. A browser that cannot animate to `auto` opens it at once. */
-@supports (interpolate-size: allow-keywords) {
-  .deck-step {
-    interpolate-size: allow-keywords;
-  }
-  .deck-step::details-content {
-    block-size: 0;
-    overflow: clip;
-    transition:
-      block-size 280ms var(--ease-out),
-      content-visibility 280ms allow-discrete;
-  }
-  .deck-step[open]::details-content {
-    block-size: auto;
+/* The opening spread: a few of the deck's cards floating apart, each at its own height and tilt.
+   A phone keeps the middle three and lets the edge cut the outer two; --cw is a card's width. */
+.deck-spread {
+  --cw: 46cqw;
+  --step: 50cqw;
+  --lift: 0.55;
+  position: relative;
+  height: calc(var(--cw) * 1.12 + 56px);
+  margin-top: 2.25rem;
+}
+@container (min-width: 42rem) {
+  .deck-spread {
+    --cw: 26cqw;
+    --step: 30cqw;
+    --lift: 0.8;
+    height: calc(var(--cw) * 1.12 + 70px);
+    margin-top: 3.25rem;
   }
 }
-.deck-step[open] .deck-step-cards {
-  animation: enter-fade 220ms var(--ease-out) both;
+@container (min-width: 56rem) {
+  .deck-spread {
+    --cw: min(196px, 17cqw);
+    --step: min(222px, 19.4cqw);
+    --lift: 1;
+    height: calc(var(--cw) * 1.12 + 84px);
+  }
 }
+.deck-spread-card {
+  position: absolute;
+  top: 8px;
+  left: calc(50% - var(--cw) / 2);
+  width: var(--cw);
+  transform: translate(calc(var(--o) * var(--step)), calc(var(--y) * var(--lift))) rotate(var(--r));
+  z-index: calc(10 - var(--a) * 2);
+  animation: deck-deal 1100ms var(--ease-out) calc(var(--a) * 90ms + 120ms) both;
+}
+.deck-spread-card[data-outer] {
+  display: none;
+}
+@container (min-width: 56rem) {
+  .deck-spread-card[data-outer] {
+    display: block;
+  }
+}
+/* Only a start is given, so each card deals from the middle into its own place. */
+@keyframes deck-deal {
+  from {
+    transform: translate(0, 34px) rotate(0deg) scale(0.94);
+  }
+}
+.deck-spread-float {
+  animation: deck-float var(--dur) ease-in-out var(--delay) infinite alternate;
+}
+@keyframes deck-float {
+  to {
+    transform: translateY(-8px) rotate(var(--wob));
+  }
+}
+.deck-spread-face {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1 / 1.12;
+  padding: calc(var(--cw) * 0.085);
+  border-radius: calc(var(--cw) * 0.1);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge);
+  text-align: start;
+  transition:
+    transform 380ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .deck-spread-card:hover .deck-spread-face {
+    transform: translateY(-12px) rotate(calc(var(--r) * -1));
+    box-shadow: 0 0 0 1px var(--edge-2);
+  }
+}
+.deck-spread-section {
+  font-size: max(0.65625rem, calc(var(--cw) * 0.054));
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.deck-spread-term {
+  margin-top: calc(var(--cw) * 0.06);
+  font-size: max(1.375rem, calc(var(--cw) * 0.14));
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  color: var(--text);
+}
+.deck-spread-meaning {
+  margin-top: auto;
+  padding-top: calc(var(--cw) * 0.06);
+  border-top: 1px solid var(--edge-2);
+  font-size: max(0.8125rem, calc(var(--cw) * 0.074));
+  line-height: 1.3;
+  color: var(--text-2);
+}
+
+/* Every card, in a view of its own over the page. A phone gets it as a sheet rising from the bottom. */
+.deck-cards {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--canvas);
+  color: var(--text);
+}
+.deck-cards::backdrop {
+  background: transparent;
+}
+.deck-cards[open] {
+  animation: deck-cards-in 340ms var(--ease-out);
+}
+@media (max-width: 40rem) {
+  .deck-cards[open] {
+    animation: deck-cards-up 450ms var(--ease-drawer);
+  }
+}
+@keyframes deck-cards-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+@keyframes deck-cards-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+html:has(.deck-cards[open]) {
+  overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .deck-step::details-content {
+  .deck-spread-card,
+  .deck-spread-float,
+  .deck-cards[open] {
+    animation: none;
+  }
+  .deck-spread-face {
     transition: none;
   }
 }

@@ -190,9 +190,9 @@ function useWidth(ref: RefObject<HTMLElement | null>): number {
 }
 
 /**
- * Two plates. Today's is the one with an action: the cards due now, where today's goal stands, and
- * Review, or with nothing due, when the next card is back and Add card. The deck's is its split
- * between New, Learning and Known, which never reads as zero on a quiet day.
+ * Two stacked plates. Review's is the one with an action: the cards due now, where today's goal
+ * stands, and Review, or with nothing due, when the next card is back and Add card. The deck's is
+ * its total and split between New, Learning and Known, which never read as zero on a quiet day.
  */
 function DeckPlates({
   deck,
@@ -213,22 +213,23 @@ function DeckPlates({
   const status = deck.due > 0 && streak?.today.outcome === "nothing_due" ? "" : summary;
   const due = deck.due;
   const next = due === 0 ? nextDueLabel(i18n.locale, cards) : null;
+  const total = cards.length;
   const counts = { new: 0, learning: 0, known: 0 };
   for (const row of cards) counts[rowState(row)]++;
 
   return (
-    // A container query styles only what is inside the container, so the grid sits one level in.
+    // A container query styles only what is inside the container, so the plates sit one level in.
     <div className="@container/plates">
-      <div className="grid gap-3 @2xl/plates:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+      <div className="grid gap-3">
         <section
           aria-label={t`Today`}
-          className="edge flex flex-wrap items-center gap-x-4 gap-y-4 rounded-xl bg-plate p-5"
+          className="edge flex flex-wrap items-center gap-x-4 gap-y-4 rounded-xl bg-plate p-5 @md/plates:ps-6"
         >
-          <p className="text-4xl font-semibold leading-none tracking-[-0.03em] proportional-nums">
+          <p className="text-4xl font-semibold leading-none tracking-[-0.03em] tabular-nums">
             {i18n.number(due)}
           </p>
           <div className="grid min-w-0 flex-1 gap-0.5">
-            <p className="text-md text-text-2">
+            <p className="text-md text-text">
               <Plural value={due} one="card to review now" other="cards to review now" />
             </p>
             {next ? (
@@ -242,7 +243,7 @@ function DeckPlates({
               variant="primary"
               onClick={onReview}
               aria-disabled={!onReview}
-              className="w-full @md/plates:w-auto @md/plates:px-7"
+              className="w-full @md/plates:w-auto @md/plates:px-8"
             >
               <Trans>Review</Trans>
             </Button>
@@ -253,9 +254,22 @@ function DeckPlates({
             </Button>
           )}
         </section>
-        <dl className="edge grid grid-cols-3 items-center rounded-xl bg-plate py-4 divide-x divide-edge">
+        {/* A narrow plate cannot fit four counts in the hundreds, so the total takes its own row there. */}
+        <dl className="edge grid grid-cols-3 items-center rounded-xl bg-plate py-4 @md/plates:grid-cols-4">
+          <div className="col-span-3 grid justify-items-center gap-0.5 border-b border-edge px-2 pb-3 @md/plates:col-span-1 @md/plates:border-b-0 @md/plates:pb-0">
+            <dt className="order-last text-sm text-muted">
+              <Trans context="cards in this deck">Total</Trans>
+            </dt>
+            <dd className="text-xl font-semibold proportional-nums">{i18n.number(total)}</dd>
+          </div>
           {(["new", "learning", "known"] as const).map((key) => (
-            <div key={key} className="grid justify-items-center gap-0.5 px-2">
+            <div
+              key={key}
+              className={clsx(
+                "grid justify-items-center gap-0.5 border-edge px-2 pt-3 @md/plates:border-s @md/plates:pt-0",
+                key !== "new" && "border-s",
+              )}
+            >
               <dt className="order-last text-sm text-muted">
                 {i18n._(stateMarks[key].groupLabel)}
               </dt>
@@ -891,7 +905,10 @@ export function DeckDetailView({
         {/* While the phone searches, the list is the answer, so the plates step aside. */}
         <div className={clsx(searchOpen && "hidden @3xl/shell:block")}>
           {deck === undefined || cards === undefined ? (
-            <Skeleton className="h-[108px] rounded-xl" />
+            <div className="grid gap-3">
+              <Skeleton className="h-[84px] rounded-xl" />
+              <Skeleton className="h-[84px] rounded-xl" />
+            </div>
           ) : cards.length > 0 ? (
             <DeckPlates
               deck={deck}

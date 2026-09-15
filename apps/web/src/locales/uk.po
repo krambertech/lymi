@@ -1739,6 +1739,10 @@ msgstr "Мета на сьогодні"
 msgid "Tomorrow"
 msgstr "Завтра"
 
+msgctxt "cards in this deck"
+msgid "Total"
+msgstr "Усього"
+
 msgid "Try again"
 msgstr "Спробувати ще раз"
 

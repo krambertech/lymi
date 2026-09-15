@@ -1739,6 +1739,10 @@ msgstr "Today’s goal"
 msgid "Tomorrow"
 msgstr "Tomorrow"
 
+msgctxt "cards in this deck"
+msgid "Total"
+msgstr "Total"
+
 msgid "Try again"
 msgstr "Try again"
 

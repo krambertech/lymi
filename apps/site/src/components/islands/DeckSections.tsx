@@ -48,10 +48,13 @@ type Open = (event: MouseEvent<HTMLButtonElement>) => void;
 function Sections(props: Omit<Props, "locale">) {
   const { cardCount, inOrder, steps } = props;
   const dialog = useRef<HTMLDialogElement>(null);
+  // Safari does not focus a button on click, so the dialog cannot hand focus back on its own.
+  const opener = useRef<HTMLElement | null>(null);
 
-  const open = useCallback<Open>(() => {
+  const open = useCallback<Open>((event) => {
     const view = dialog.current;
     if (!view) return;
+    opener.current = event.currentTarget;
     if (!view.open) view.showModal();
     if (window.location.hash !== HASH) window.history.pushState({ deckCards: true }, "", HASH);
   }, []);
@@ -66,6 +69,8 @@ function Sections(props: Omit<Props, "locale">) {
       if (!wanted && view.open) view.close();
     };
     const closed = () => {
+      opener.current?.focus({ preventScroll: true });
+      opener.current = null;
       if (window.location.hash !== HASH) return;
       if (window.history.state?.deckCards) window.history.back();
       else window.history.replaceState(null, "", window.location.pathname + window.location.search);

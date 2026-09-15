@@ -222,11 +222,11 @@ export function DeckSettingsView({
               {sections.sections.length > 0 && (
                 <Field orientation="horizontal" className="items-start justify-between gap-4">
                   <FieldContent>
-                    <FieldLabel>{t`Open sections in order`}</FieldLabel>
+                    <FieldLabel>{t`Open one section at a time`}</FieldLabel>
                     <FieldDescription>
                       {deck.sectionsInOrder
-                        ? t`Everyone studying this deck starts with the first section. The next one is ready once every card of the current one has come up and 80% are Known. Anyone can start a section early.`
-                        : t`Every section is open, and every card comes up in review. Turning this on again keeps what each person already started.`}
+                        ? t`Cards from the next section come up once you know most of this one. Anyone can start a section early.`
+                        : t`Every section is open, so any card can come up in review.`}
                     </FieldDescription>
                   </FieldContent>
                   {/* One line tall at the label's size, so the track centres on the label's first line. */}

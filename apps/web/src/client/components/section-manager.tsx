@@ -10,6 +10,8 @@ export interface SectionManagerProps {
   onMove: (section: Section, by: -1 | 1) => void;
   onArchive: (section: Section) => void;
   onShowArchived: () => void;
+  /** Archived sections Restore can bring back; the way to them shows only when there are some. */
+  archivedCount: number;
 }
 
 /**
@@ -23,6 +25,7 @@ export function SectionManager({
   onMove,
   onArchive,
   onShowArchived,
+  archivedCount,
 }: SectionManagerProps) {
   const { t } = useLingui();
   return (
@@ -84,10 +87,12 @@ export function SectionManager({
           <Plus aria-hidden="true" />
           <Trans>New section</Trans>
         </Button>
-        <Button size="sm" variant="ghost" onClick={onShowArchived}>
-          <ArchiveRestore aria-hidden="true" />
-          <Trans>Archived sections</Trans>
-        </Button>
+        {archivedCount > 0 && (
+          <Button size="sm" variant="ghost" onClick={onShowArchived}>
+            <ArchiveRestore aria-hidden="true" />
+            <Trans>Archived sections</Trans>
+          </Button>
+        )}
       </div>
     </div>
   );

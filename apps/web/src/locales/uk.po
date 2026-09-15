@@ -828,6 +828,9 @@ msgstr "Архівовані картки й колоди. «Відновити�
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Картки з вівторкових уроків Марко."
 
+msgid "Cards from the next section come up once you know most of this one. Anyone can start a section early."
+msgstr "Картки з наступного розділу з’являються, коли засвоєно більшість поточного. Будь-хто може почати розділ раніше."
+
 msgid "Cards from this deck"
 msgstr "Картки з цієї колоди"
 
@@ -1206,11 +1209,8 @@ msgstr "Кожна зміна від підключеного застосунк
 msgid "Every section is open"
 msgstr "Усі розділи відкриті"
 
-msgid "Every section is open, and every card comes up in review. Turning this on again keeps what each person already started."
-msgstr "Усі розділи відкриті, і всі картки з’являються в повтореннях. Якщо знову це ввімкнути, кожен збереже те, що вже почав."
-
-msgid "Everyone studying this deck starts with the first section. The next one is ready once every card of the current one has come up and 80% are Known. Anyone can start a section early."
-msgstr "Кожен, хто вивчає цю колоду, починає з першого розділу. Наступний можна почати, коли кожна картка поточного вже з’явилася в повтореннях, а 80% із них — «Засвоєні». Будь-хто може почати розділ раніше."
+msgid "Every section is open, so any card can come up in review."
+msgstr "Усі розділи відкриті, тож будь-яка картка може з’явитися в повторенні."
 
 msgid "Example"
 msgstr "Приклад"
@@ -1915,8 +1915,8 @@ msgstr "Відкрий Lymi з нової іконки."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Відкрий Lymi в Safari і торкнись «Поділитися»."
 
-msgid "Open sections in order"
-msgstr "Відкривати розділи по порядку"
+msgid "Open one section at a time"
+msgstr "Відкривати по одному розділу"
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Відкрий меню браузера і вибери «Встановити Lymi». Не кожен браузер це пропонує."

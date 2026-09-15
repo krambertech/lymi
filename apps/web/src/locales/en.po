@@ -828,6 +828,9 @@ msgstr "Cards and decks you archived. Restore puts them back."
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
 
+msgid "Cards from the next section come up once you know most of this one. Anyone can start a section early."
+msgstr "Cards from the next section come up once you know most of this one. Anyone can start a section early."
+
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
 
@@ -1206,11 +1209,8 @@ msgstr "Every change a connected app, an API key or the AI made, by day."
 msgid "Every section is open"
 msgstr "Every section is open"
 
-msgid "Every section is open, and every card comes up in review. Turning this on again keeps what each person already started."
-msgstr "Every section is open, and every card comes up in review. Turning this on again keeps what each person already started."
-
-msgid "Everyone studying this deck starts with the first section. The next one is ready once every card of the current one has come up and 80% are Known. Anyone can start a section early."
-msgstr "Everyone studying this deck starts with the first section. The next one is ready once every card of the current one has come up and 80% are Known. Anyone can start a section early."
+msgid "Every section is open, so any card can come up in review."
+msgstr "Every section is open, so any card can come up in review."
 
 msgid "Example"
 msgstr "Example"
@@ -1915,8 +1915,8 @@ msgstr "Open Lymi from the new icon."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Open Lymi in Safari and tap Share."
 
-msgid "Open sections in order"
-msgstr "Open sections in order"
+msgid "Open one section at a time"
+msgstr "Open one section at a time"
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."

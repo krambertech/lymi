@@ -40,7 +40,8 @@ function DeckSettings() {
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
   const [archiving, setArchiving] = useState<Section | null>(null);
   const [showArchived, setShowArchived] = useState(false);
-  const archived = useQuery({ ...archivedSectionsQuery(deckId), enabled: showArchived });
+  // Fetched up front, so the way to archived sections shows only when there are some.
+  const archived = useQuery({ ...archivedSectionsQuery(deckId), enabled: isOwner });
   const example = cards.data?.filter((c) => c.card.meaning).at(-1)?.card;
 
   const [saved, setSaved] = useState(false);
@@ -113,6 +114,7 @@ function DeckSettings() {
                     ? setArchiving(section)
                     : sectionActions.archive.mutate({ section, cards: "keep" }),
                 onShowArchived: () => setShowArchived(true),
+                archivedCount: archived.data?.sections.length ?? 0,
               }
             : undefined
         }

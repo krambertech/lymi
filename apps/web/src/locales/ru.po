@@ -87,14 +87,17 @@ msgid "{0} is already in {1}"
 msgstr "{0} уже есть в {1}"
 
 #. placeholder {0}: cards.known
+#. placeholder {0}: counts.known
 msgid "{0} known"
 msgstr "Выучено: {0}"
 
 #. placeholder {0}: cards.learning
+#. placeholder {0}: counts.learning
 msgid "{0} learning"
 msgstr "В изучении: {0}"
 
 #. placeholder {0}: cards.new
+#. placeholder {0}: counts.new
 msgid "{0} new"
 msgstr "Новые: {0}"
 
@@ -1735,6 +1738,10 @@ msgstr "Цель на сегодня"
 
 msgid "Tomorrow"
 msgstr "Завтра"
+
+msgctxt "cards in this deck"
+msgid "Total"
+msgstr "Всего"
 
 msgid "Try again"
 msgstr "Попробовать снова"

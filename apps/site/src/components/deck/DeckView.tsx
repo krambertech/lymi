@@ -203,7 +203,7 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
 }
 
 /** Three steps from this page to a deck that is learnt, beside a stack of its cards to turn over. */
-export function DeckHowItWorks({ deck, locale }: DeckProps) {
+export function DeckHowItWorks({ locale }: LocaleProps) {
   const items = [
     {
       key: "add",
@@ -255,12 +255,6 @@ export function DeckHowItWorks({ deck, locale }: DeckProps) {
             </li>
           ))}
         </ol>
-        <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <a href={addUrl(deck.slug)} className={buttonClass("primary", "lg")}>
-            <Trans>Add to Lymi</Trans>
-          </a>
-          <SignInNote />
-        </div>
       </div>
     </Localized>
   );

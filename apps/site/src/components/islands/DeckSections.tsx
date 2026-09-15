@@ -3,6 +3,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
+  type CSSProperties,
   type MouseEvent,
   type RefObject,
   useCallback,
@@ -34,8 +35,8 @@ export default function DeckSections({ locale, ...props }: Props) {
   );
 }
 
-/** A deck with more sections than this shows one fewer, and a last tile for the rest. */
-const MAX_TILES = 8;
+/** A deck with more sections than this lists one fewer, and a last row for the rest. */
+const MAX_ROWS = 16;
 const HASH = "#cards";
 
 type Open = (event: MouseEvent<HTMLButtonElement>) => void;
@@ -94,27 +95,17 @@ function Sections(props: Omit<Props, "locale">) {
       className="scroll-mt-6 px-5 pt-10 pb-16 @2xl:px-10 @4xl:pt-14 @4xl:pb-24"
     >
       <div className="mx-auto max-w-[1040px]">
-        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
-          <div className="min-w-0 max-w-[52ch]">
-            <h2
-              id="sections-title"
-              className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
-            >
-              {inOrder ? (
-                <Plural value={named.length} one="One section" other="# sections, in order" />
-              ) : (
-                <Trans>Every card in the deck</Trans>
-              )}
-            </h2>
-            {inOrder && (
-              <p className="mt-4 text-md text-pretty text-text-2">
-                <Trans>
-                  You start with <span lang={props.meaningLanguage}>{first}</span>. Once every card
-                  in a section has come up and you know 80% of them, the next one opens by itself.
-                </Trans>
-              </p>
+        <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4">
+          <h2
+            id="sections-title"
+            className="min-w-0 text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+          >
+            {inOrder ? (
+              <Plural value={named.length} one="One section" other="# sections, in order" />
+            ) : (
+              <Trans>Every card in the deck</Trans>
             )}
-          </div>
+          </h2>
           <button type="button" onClick={open} className={buttonClass("secondary", "lg")}>
             <Plural value={cardCount} one="See the card" other="See all # cards" />
             <span aria-hidden="true">
@@ -122,43 +113,49 @@ function Sections(props: Omit<Props, "locale">) {
             </span>
           </button>
         </div>
-        {inOrder && <Tiles {...props} onOpen={open} />}
+        {inOrder && (
+          <p className="mt-4 max-w-[62ch] text-md text-pretty text-text-2">
+            <Trans>
+              You start with <span lang={props.meaningLanguage}>{first}</span>. Once every card in a
+              section has come up and you know 80% of them, the next one opens by itself.
+            </Trans>
+          </p>
+        )}
+        {inOrder && <SectionList {...props} onOpen={open} />}
       </div>
       <CardsView {...props} dialogRef={dialog} />
     </section>
   );
 }
 
-function Tiles({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> & { onOpen: Open }) {
-  const shown = steps.length > MAX_TILES ? steps.slice(0, MAX_TILES - 1) : steps;
+/** The sections as a contents list in two columns, read down then across. */
+function SectionList({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> & { onOpen: Open }) {
+  const shown = steps.length > MAX_ROWS ? steps.slice(0, MAX_ROWS - 1) : steps;
   const rest = steps.slice(shown.length);
+  const rows = Math.ceil((shown.length + (rest.length > 0 ? 1 : 0)) / 2);
   return (
-    <ol className="mt-9 grid grid-cols-2 gap-2.5 @4xl:mt-12 @4xl:grid-cols-4 @4xl:gap-3">
+    <ol
+      className="mt-8 grid border-t border-edge @3xl:grid-flow-col @3xl:grid-cols-2 @3xl:grid-rows-(--rows) @3xl:gap-x-12 @4xl:mt-10"
+      style={{ "--rows": `repeat(${rows}, auto)` } as CSSProperties}
+    >
       {shown.map((step, index) => {
         const start = index === 0;
         const position = step.position;
         return (
           <li
             key={`${position ?? "rest"}-${step.name ?? ""}`}
-            className="flex min-w-0 flex-col rounded-lg bg-plate p-4 edge @4xl:p-5"
+            className="flex min-h-16 min-w-0 items-center gap-4 border-b border-edge py-3"
           >
-            <div className="flex items-center justify-between gap-2">
-              <span
-                aria-hidden="true"
-                className={clsx(
-                  "grid size-9 shrink-0 place-items-center rounded-full text-md font-semibold tabular-nums",
-                  start ? "bg-text text-canvas" : "bg-plate-2 text-text-2",
-                )}
-              >
-                {position ?? "·"}
-              </span>
-              {start && (
-                <span className="text-sm font-medium text-good">
-                  <Trans>Start here</Trans>
-                </span>
+            <span
+              aria-hidden="true"
+              className={clsx(
+                "grid size-8 shrink-0 place-items-center rounded-full text-sm font-semibold tabular-nums",
+                start ? "bg-text text-canvas" : "text-text-2 edge-2",
               )}
-            </div>
-            <h3 className="mt-5 text-lg leading-tight font-medium tracking-[-0.012em] break-words text-text">
+            >
+              {position ?? "·"}
+            </span>
+            <h3 className="min-w-0 flex-1 text-lg leading-tight font-medium tracking-[-0.012em] break-words text-text">
               {position !== null && (
                 <span className="sr-only">
                   <Trans>Section {position}:</Trans>{" "}
@@ -168,24 +165,26 @@ function Tiles({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> & { onO
                 {step.name ?? <Trans>Cards outside a section</Trans>}
               </span>
             </h3>
-            <p className="mt-1 text-sm text-muted tabular-nums">
+            {start && (
+              <span className="shrink-0 text-sm font-medium text-good">
+                <Trans>Start here</Trans>
+              </span>
+            )}
+            <span className="shrink-0 text-sm text-muted tabular-nums">
               <Plural value={step.cards.length} one="# card" other="# cards" />
-            </p>
+            </span>
           </li>
         );
       })}
       {rest.length > 0 && (
-        <li className="flex min-w-0 flex-col rounded-lg p-4 outline-1 -outline-offset-1 outline-edge-2 outline-dashed @4xl:p-5">
-          <p className="text-lg leading-tight font-medium tracking-[-0.012em] text-text">
-            <Plural value={rest.length} one="# more section" other="# more sections" />
-          </p>
+        <li className="flex min-h-16 items-center border-b border-edge py-3">
           <button
             type="button"
             onClick={onOpen}
-            className="mt-auto inline-flex items-center gap-0.5 self-start rounded-xs pt-5 text-md font-medium text-text hoverable:hover:underline hoverable:hover:underline-offset-4"
+            className="inline-flex items-center gap-1 rounded-xs text-lg font-medium tracking-[-0.012em] text-text hoverable:hover:underline hoverable:hover:underline-offset-4"
           >
-            <Trans>See every section</Trans>
-            <ChevronRight aria-hidden="true" className="size-4 rtl:rotate-180" />
+            <Plural value={rest.length} one="# more section" other="# more sections" />
+            <ChevronRight aria-hidden="true" className="size-5 rtl:rotate-180" />
           </button>
         </li>
       )}

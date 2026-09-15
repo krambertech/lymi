@@ -63,12 +63,12 @@ test("anyone can read a published deck's page, see its sections and cards, and t
 
   await test.step("the sections read in order, and every card opens in its own view", async () => {
     const sections = page.getByRole("region", { name: "2 sections, in order" });
-    const tiles = sections.getByRole("listitem");
-    await expect(tiles).toHaveCount(2);
-    await expect(tiles.nth(0)).toContainText("Greetings");
-    await expect(tiles.nth(0)).toContainText("3 cards");
-    await expect(tiles.nth(0)).toContainText("Start here");
-    await expect(tiles.nth(1)).toContainText("In the café");
+    const rows = sections.getByRole("listitem");
+    await expect(rows).toHaveCount(2);
+    await expect(rows.nth(0)).toContainText("Greetings");
+    await expect(rows.nth(0)).toContainText("3 cards");
+    await expect(rows.nth(0)).toContainText("Start here");
+    await expect(rows.nth(1)).toContainText("In the café");
     await expect(sections.getByText("one coffee, please", { exact: true })).toBeHidden();
 
     await sections.getByRole("button", { name: "See all 4 cards" }).click();
@@ -92,16 +92,20 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     await expect(view).toBeHidden();
   });
 
-  await test.step("a visitor turns over cards from anywhere in the deck", async () => {
+  await test.step("a visitor turns over each card once, then is asked to keep going in Lymi", async () => {
     const meanings = ["good afternoon", "good evening", "good night", "one coffee, please"];
     const how = page.locator("#how");
     await how.scrollIntoViewIfNeeded();
     const stack = how.getByRole("region", { name: "Turn a few cards over" });
-    await stack.getByRole("button", { name: "Turn it over" }).click();
-    await expect(stack.getByRole("button", { name: "Next card" })).toBeVisible();
-    const shown = await stack.locator(".hand-card[data-place='front'] .hand-back").innerText();
-    expect(meanings.some((meaning) => shown.includes(meaning))).toBe(true);
-    await stack.getByRole("button", { name: "Next card" }).click();
+    for (let turned = 0; turned < meanings.length; turned++) {
+      await stack.getByRole("button", { name: "Turn it over" }).click();
+      const shown = await stack.locator(".hand-card[data-place='front'] .hand-back").innerText();
+      expect(meanings.some((meaning) => shown.includes(meaning))).toBe(true);
+      await stack.getByRole("button", { name: "Next card" }).click();
+    }
+    await expect(stack.getByText("Keep going in Lymi", { exact: true })).toBeVisible();
+    await expect(stack.getByRole("link", { name: "Add to Lymi" })).toHaveAttribute("href", addUrl);
+    await stack.getByRole("button", { name: "Turn them again" }).click();
     await expect(stack.getByRole("button", { name: "Turn it over" })).toBeVisible();
   });
 

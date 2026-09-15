@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import {
   type CSSProperties,
+  type ReactNode,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -216,6 +217,8 @@ interface Props {
   cards?: readonly HandCard[] | undefined;
   /** A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. */
   layout?: "fan" | "stack" | undefined;
+  /** Deal each card once; after the last, this takes the hand's place and can deal them again. */
+  finale?: ((again: () => void) => ReactNode) | undefined;
 }
 
 /**
@@ -223,11 +226,13 @@ interface Props {
  * teaches the one move Lymi is built on, looking at a term before its meaning, and shows how
  * much a card can hold. The deal plays once per session; after that the hand is simply there.
  */
-export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
+export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Props) {
   const { t, i18n } = useLingui();
   const [hand, setHand] = useState<Dealt[]>([]);
   const [gone, setGone] = useState<Dealt[]>([]);
-  const [phase, setPhase] = useState<"dealing" | "front" | "back">("dealing");
+  const [phase, setPhase] = useState<"dealing" | "front" | "back" | "done">("dealing");
+  const [round, setRound] = useState(0);
+  const once = Boolean(finale);
   const [intro, setIntro] = useState(false);
   const [turned, setTurned] = useState(0);
   const [playing, setPlaying] = useState<string | null>(null);
@@ -245,6 +250,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
   const [dealFrom, setDealFrom] = useState(0);
 
   // The hand is random, so it is dealt after hydration rather than rendered on the server.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new round deals the same cards again.
   useEffect(() => {
     let seen = false;
     try {
@@ -255,7 +261,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
     setFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     const redeal = dealt.current;
     dealt.current = true;
-    pile.current = [];
+    pile.current = once ? shuffle(cards) : [];
     const tossed = held.current;
     if (redeal && tossed.length > 0) {
       setGone((g) => [...g, ...tossed]);
@@ -269,7 +275,8 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
     const first: Dealt[] = [];
     const count = Math.min(HAND_SIZE, cards.length);
     for (let i = 0; i < count; i++) {
-      first.push({ key: nextKey.current++, card: draw(pile.current, first, cards) });
+      const card = once ? (pile.current.shift() as HandCard) : draw(pile.current, first, cards);
+      first.push({ key: nextKey.current++, card });
     }
     const play = (redeal || !seen) && !still;
     setIntro(play);
@@ -281,7 +288,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
       DEAL_STAGGER_MS * (count - 1) + DEAL_MS,
     );
     return () => window.clearTimeout(settle);
-  }, [cards]);
+  }, [cards, once, round]);
 
   // A visitor who has not turned the first card after a moment is shown how: the card is pressed
   // and lifts at one edge as if turning, and a line says what to do. Anyone who already knows
@@ -341,14 +348,19 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
     const [front, ...rest] = hand;
     if (phase !== "back" || !front) return;
     stopAudio();
-    const dealt = { key: nextKey.current++, card: draw(pile.current, rest, cards) };
+    const card = once ? pile.current.shift() : draw(pile.current, rest, cards);
     setGone((g) => [...g, front]);
     window.setTimeout(() => setGone((g) => g.filter((d) => d.key !== front.key)), TOSS_MS);
-    setHand([...rest, dealt]);
+    setHand(card ? [...rest, { key: nextKey.current++, card }] : rest);
     setTurned((n) => n + 1);
-    setPhase("front");
+    setPhase(rest.length === 0 && !card ? "done" : "front");
     if (rest[0]) setAnnounce(t`Next card: ${rest[0].card.term}`);
-  }, [hand, phase, cards, stopAudio, t]);
+  }, [hand, phase, cards, once, stopAudio, t]);
+
+  const again = useCallback(() => {
+    setTurned(0);
+    setRound((n) => n + 1);
+  }, []);
 
   const press = phase === "back" ? next : reveal;
   const behind = hand.length - 1;
@@ -374,6 +386,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
             onPress={press}
           />
         ))}
+        {phase === "done" && finale && <div className="hand-finale">{finale(again)}</div>}
         {hand.map(({ key, card }, k) => {
           const angle = k === 0 ? 0 : behind === 1 ? 1 : (k - 1 - (behind - 1) / 2) * 1.5;
           const dealing = intro && key >= dealFrom && key < dealFrom + size;
@@ -410,7 +423,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
       </div>
 
       <div className="mt-4 flex min-h-10 items-center gap-3">
-        {hand.length > 0 && (
+        {hand.length > 0 && phase !== "done" && (
           <button
             type="button"
             onClick={press}
@@ -424,7 +437,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
             {phase === "back" ? <Trans>Next card</Trans> : <Trans>Turn it over</Trans>}
           </button>
         )}
-        {turned > 0 && (
+        {turned > 0 && phase !== "done" && (
           <p className="text-xs text-muted tabular-nums" aria-hidden="true">
             <Plural value={turned} one="# turned" other="# turned" />
           </p>

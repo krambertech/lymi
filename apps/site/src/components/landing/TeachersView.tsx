@@ -16,7 +16,7 @@ import { SiteNav } from "./SiteNav";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const TEACHERS_TITLE = msg`Lymi for teachers · One deck for your whole class`;
-export const TEACHERS_BLURB = msg`Build a course in sections, share it with one link, and add what you taught after every lesson. Each student reviews on their own schedule.`;
+export const TEACHERS_BLURB = msg`Build a course in sections, share it with one link, and add what you taught after every lesson. Each learner reviews on their own schedule.`;
 
 /** The page for tutors and small classes: build the course, share it, keep adding to it. */
 export function TeachersView() {
@@ -36,7 +36,7 @@ export function TeachersView() {
     {
       id: "medicine",
       title: <Trans>Medicine and nursing</Trans>,
-      body: <Trans>Anatomy, drugs and the terms students meet on the ward.</Trans>,
+      body: <Trans>Anatomy, drugs and the terms learners meet on the ward.</Trans>,
       card: {
         label: msg`Anatomy`,
         term: "brachial plexus",
@@ -81,7 +81,7 @@ export function TeachersView() {
           title={<Trans>Build the course in order.</Trans>}
           body={
             <Trans>
-              Split a deck into sections, one per unit. Students start with the first, and the next
+              Split a deck into sections, one per unit. Learners start with the first, and the next
               opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can
               start the next section early.
             </Trans>
@@ -108,7 +108,7 @@ export function TeachersView() {
           body={
             <Trans>
               Memory fades. Recalling something at the right time strengthens it and lets the next
-              gap grow. Lymi uses each student’s grades to decide when every card comes back.
+              gap grow. Lymi uses each learner’s grades to decide when every card comes back.
             </Trans>
           }
         />
@@ -155,20 +155,20 @@ export function TeachersView() {
           items={[
             {
               id: "edit",
-              question: <Trans>Can students change the deck?</Trans>,
+              question: <Trans>Can learners change the deck?</Trans>,
               answer: (
                 <Trans>
-                  No. Only you add and edit cards. Students review them, and each keeps their own
+                  No. Only you add and edit cards. Learners review them, and each keeps their own
                   schedule and history.
                 </Trans>
               ),
             },
             {
               id: "progress",
-              question: <Trans>Can I see how each student is doing?</Trans>,
+              question: <Trans>Can I see how each learner is doing?</Trans>,
               answer: (
                 <Trans>
-                  No. Each student’s reviews stay private to them. Lymi is a place to practise, not
+                  No. Each learner’s reviews stay private to them. Lymi is a place to practise, not
                   to be graded.
                 </Trans>
               ),

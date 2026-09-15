@@ -2,6 +2,7 @@ import { Plural, Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Link2 } from "lucide-react";
 import { useId, useState } from "react";
+import { CLASS_LEARNERS } from "./ClassHero";
 
 /** A deck's sharing settings: one join link, and a switch that stops new people joining. */
 export function JoinLinkDemo() {
@@ -66,7 +67,7 @@ export function JoinLinkDemo() {
 
       <div className="mt-6 border-t border-edge pt-4">
         <p className="text-sm text-text-2 tabular-nums">
-          <Plural value={12} one="# learner joined" other="# learners joined" />
+          <Plural value={CLASS_LEARNERS} one="# learner joined" other="# learners joined" />
         </p>
       </div>
     </div>

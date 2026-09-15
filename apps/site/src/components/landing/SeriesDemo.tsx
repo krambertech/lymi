@@ -19,7 +19,7 @@ const SECTIONS: { name: MessageDescriptor; cards: number }[] = [
   { name: msg`Getting around`, cards: 32 },
 ];
 
-/** A deck in sections, as one student sees it: the active one fills up and the next one opens. */
+/** A deck in sections, as one learner sees it: the active one fills up and the next one opens. */
 export function SeriesDemo() {
   const { t, i18n } = useLingui();
   const still = useReducedMotion();

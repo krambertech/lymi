@@ -16,7 +16,7 @@ import {
 } from "@dnd-kit/core";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Check, Lock, MoreHorizontal, PencilLine, Plus, Settings2 } from "lucide-react";
+import { Check, Lock, MapPin, MoreHorizontal, PencilLine, Plus, Settings2 } from "lucide-react";
 import { type ButtonHTMLAttributes, type ReactNode, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/button";
 import { StateIcon, stateMarks } from "../components/state-mark";
@@ -409,7 +409,9 @@ function SectionHeading({
         <span className="ms-2 text-sm font-normal text-muted">{i18n.number(count)}</span>
       </h2>
       {here && (
-        <span className="rounded-full bg-plate-2 px-2 py-px text-sm font-medium text-text-2">
+        // Ink on the room, not amber: it says where the learner is and asks for nothing.
+        <span className="inline-flex h-6 items-center gap-1 rounded-full bg-text ps-1.5 pe-2.5 text-sm font-medium text-canvas">
+          <MapPin className="size-3.5" aria-hidden="true" />
           <Trans>You are here</Trans>
         </span>
       )}

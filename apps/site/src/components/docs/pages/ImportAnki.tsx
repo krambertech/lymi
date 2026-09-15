@@ -116,7 +116,7 @@ export function ImportAnki() {
           },
           {
             term: "Suspended cards",
-            def: "They arrive archived. Restore one from Archived to start reviewing it.",
+            def: "They arrive archived, the way a card you archive in Lymi is kept out of reviews.",
           },
         ]}
       />

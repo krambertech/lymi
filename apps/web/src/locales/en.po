@@ -13,12 +13,33 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: counts?.decks ?? 0
+msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
+msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
+
 #. placeholder {0}: today.goal
 #. placeholder {1}: today.attempts
 #. placeholder {2}: today.attempts
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
+#. placeholder {0}: preview.pictures
+msgid "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
+msgstr "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
+
+#. placeholder {0}: preview.existing
+msgid "{0, plural, one {# card came across in an earlier import. It isn’t added again; only its empty fields are filled.} other {# cards came across in an earlier import. They aren’t added again; only their empty fields are filled.}}"
+msgstr "{0, plural, one {# card came across in an earlier import. It isn’t added again; only its empty fields are filled.} other {# cards came across in an earlier import. They aren’t added again; only their empty fields are filled.}}"
+
+#. placeholder {0}: counts.existing
+msgid "{0, plural, one {# card from an earlier import was updated.} other {# cards from an earlier import were updated.}}"
+msgstr "{0, plural, one {# card from an earlier import was updated.} other {# cards from an earlier import were updated.}}"
+
+#. placeholder {0}: preview.shortened
+msgid "{0, plural, one {# card has text that’s too long, so part of it moves to notes or is cut.} other {# cards have text that’s too long, so part of it moves to notes or is cut.}}"
+msgstr "{0, plural, one {# card has text that’s too long, so part of it moves to notes or is cut.} other {# cards have text that’s too long, so part of it moves to notes or is cut.}}"
+
+#. placeholder {0}: deck.cards
 #. placeholder {0}: deck.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
@@ -26,6 +47,26 @@ msgstr "{0, plural, one {# card} other {# cards}}"
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
+
+#. placeholder {0}: preview.unsupported + preview.skipped
+msgid "{0, plural, one {# note is left out: it’s image occlusion or has no term.} other {# notes are left out: they’re image occlusion or have no term.}}"
+msgstr "{0, plural, one {# note is left out: it’s image occlusion or has no term.} other {# notes are left out: they’re image occlusion or have no term.}}"
+
+#. placeholder {0}: type.notes
+msgid "{0, plural, one {# note} other {# notes}}"
+msgstr "{0, plural, one {# note} other {# notes}}"
+
+#. placeholder {0}: counts.reviews
+msgid "{0, plural, one {# past review came across.} other {# past reviews came across.}}"
+msgstr "{0, plural, one {# past review came across.} other {# past reviews came across.}}"
+
+#. placeholder {0}: counts.pictures
+msgid "{0, plural, one {# picture came across.} other {# pictures came across.}}"
+msgstr "{0, plural, one {# picture came across.} other {# pictures came across.}}"
+
+#. placeholder {0}: counts.picturesSkipped
+msgid "{0, plural, one {# picture couldn’t be read and was left out.} other {# pictures couldn’t be read and were left out.}}"
+msgstr "{0, plural, one {# picture couldn’t be read and was left out.} other {# pictures couldn’t be read and were left out.}}"
 
 #. placeholder {0}: today.attempts
 msgid "{0, plural, one {# review} other {# reviews}}"
@@ -35,6 +76,26 @@ msgstr "{0, plural, one {# review} other {# reviews}}"
 #. placeholder {1}: day(start)
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# review} other {# reviews}} since {1}"
+
+#. placeholder {0}: preview.audio
+msgid "{0, plural, one {# sound is left out. Lymi says words out loud itself.} other {# sounds are left out. Lymi says words out loud itself.}}"
+msgstr "{0, plural, one {# sound is left out. Lymi says words out loud itself.} other {# sounds are left out. Lymi says words out loud itself.}}"
+
+#. placeholder {0}: preview.archived
+msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
+msgstr "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
+
+#. placeholder {0}: preview.duplicates
+msgid "{0, plural, one {# term is already in Lymi, so it’s skipped.} other {# terms are already in Lymi, so they’re skipped.}}"
+msgstr "{0, plural, one {# term is already in Lymi, so it’s skipped.} other {# terms are already in Lymi, so they’re skipped.}}"
+
+#. placeholder {0}: counts.duplicates
+msgid "{0, plural, one {# term was already in Lymi and was skipped.} other {# terms were already in Lymi and were skipped.}}"
+msgstr "{0, plural, one {# term was already in Lymi and was skipped.} other {# terms were already in Lymi and were skipped.}}"
+
+#. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
+msgid "{0, plural, one {and # more} other {and # more}}"
+msgstr "{0, plural, one {and # more} other {and # more}}"
 
 #. placeholder {0}: d.due
 msgid "{0, plural, one {card due} other {cards due}}"
@@ -54,6 +115,14 @@ msgstr "{0, plural, one {day in a row} other {days in a row}}"
 msgid "{0, plural, one {Forgot once} other {Forgot # times}}"
 msgstr "{0, plural, one {Forgot once} other {Forgot # times}}"
 
+#. placeholder {0}: counts?.added ?? 0
+msgid "{0, plural, one {Imported # card} other {Imported # cards}}"
+msgstr "{0, plural, one {Imported # card} other {Imported # cards}}"
+
+#. placeholder {0}: summary.decks.length
+msgid "{0, plural, one {Language of # deck} other {Languages of # decks}}"
+msgstr "{0, plural, one {Language of # deck} other {Languages of # decks}}"
+
 #. placeholder {0}: consistency.longestRun
 msgid "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {Longest run # days. Unbroken stretches join up.}}"
 msgstr "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {Longest run # days. Unbroken stretches join up.}}"
@@ -66,10 +135,20 @@ msgstr "{0, plural, one {review} other {reviews}}"
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 
+#. placeholder {0}: preview.existing
+msgid "{0, plural, one {Update # card} other {Update # cards}}"
+msgstr "{0, plural, one {Update # card} other {Update # cards}}"
+
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
+#. placeholder {0}: item.fileName
+#. placeholder {1}: fileSize(item.byteSize, i18n.locale)
 #. placeholder {1}: item.next
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
+
+#. placeholder {0}: item.fileName
+msgid "{0} · {date}"
+msgstr "{0} · {date}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
@@ -108,6 +187,16 @@ msgstr "{0} new"
 msgid "{0} new, {1} learning, {2} known"
 msgstr "{0} new, {1} learning, {2} known"
 
+#. placeholder {0}: checked.size
+#. placeholder {1}: noteTypes.length
+msgid "{0} of {1} checked"
+msgstr "{0} of {1} checked"
+
+#. placeholder {0}: fileSize(upload.sent, i18n.locale)
+#. placeholder {1}: fileSize(upload.total, i18n.locale)
+msgid "{0} of {1}. Keep Lymi open until the upload finishes."
+msgstr "{0} of {1}. Keep Lymi open until the upload finishes."
+
 #. placeholder {0}: recall.passed
 #. placeholder {1}: recall.failed
 msgid "{0} remembered, {1} forgotten."
@@ -116,6 +205,16 @@ msgstr "{0} remembered, {1} forgotten."
 #. placeholder {0}: deck.owner.name
 msgid "{0} shared a deck"
 msgstr "{0} shared a deck"
+
+#. placeholder {0}: Math.round((item.upload.received / item.upload.parts) * 100)
+msgid "{0}% of the file arrived. Choose the same file to send the rest."
+msgstr "{0}% of the file arrived. Choose the same file to send the rest."
+
+msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
+msgstr "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
+
+msgid "{added, plural, one {Import # card} other {Import # cards}}"
+msgstr "{added, plural, one {Import # card} other {Import # cards}}"
 
 msgid "{appName} is connected"
 msgstr "{appName} is connected"
@@ -198,6 +297,9 @@ msgstr "{due, plural, one {One card is waiting when you have a moment.} other {#
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 
+msgid "{field} becomes"
+msgstr "{field} becomes"
+
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {# filled} other {# filled}}"
 
@@ -218,6 +320,9 @@ msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
+
+msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
+msgstr "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# month} other {# months}}"
@@ -256,6 +361,11 @@ msgstr "/ {0, plural, one {# day} other {# days}}"
 
 msgid "<0/> of {size}"
 msgstr "<0/> of {size}"
+
+#. placeholder {0}: d.term
+#. placeholder {1}: d.deckName
+msgid "<0>{0}</0> in {1}"
+msgstr "<0>{0}</0> in {1}"
 
 msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
 msgstr "<0>{name}</0> is ready. Copy it now. It is not shown again."
@@ -401,6 +511,9 @@ msgstr "Also adds, edits and archives them."
 msgid "Always"
 msgstr "Always"
 
+msgid "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
+msgstr "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
+
 msgid "An app"
 msgstr "An app"
 
@@ -409,6 +522,18 @@ msgstr "an app with no address"
 
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Animated images can’t be used. Choose a still image."
+
+#. placeholder {0}: date.format(new Date(item.createdAt))
+msgid "Anki · {0}"
+msgstr "Anki · {0}"
+
+#. placeholder {0}: date.format(new Date(item.createdAt))
+#. placeholder {1}: item.counts?.added ?? 0
+msgid "Anki · {0} · {1, plural, one {# card added} other {# cards added}}"
+msgstr "Anki · {0} · {1, plural, one {# card added} other {# cards added}}"
+
+msgid "Anki doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
+msgstr "Anki doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
 
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
@@ -434,8 +559,14 @@ msgstr "Archive"
 msgid "Archive deck"
 msgstr "Archive deck"
 
+msgid "Archive import"
+msgstr "Archive import"
+
 msgid "Archive the picture"
 msgstr "Archive the picture"
+
+msgid "Archive them"
+msgstr "Archive them"
 
 msgid "Archived"
 msgstr "Archived"
@@ -446,8 +577,14 @@ msgstr "Archived “{archivedTerm}”"
 msgid "Archived “{deckName}”"
 msgstr "Archived “{deckName}”"
 
+msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
+msgstr "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
+
 msgid "Ask the person who shared it for a new link."
 msgstr "Ask the person who shared it for a new link."
+
+msgid "Asked both ways: from the term, and from the meaning."
+msgstr "Asked both ways: from the term, and from the meaning."
 
 #. placeholder {0}: listOf( schedules.map((x) => i18n._(modeLabel(x.st.mode)).toLocaleLowerCase(i18n.locale)), i18n.locale, )
 msgid "asked by {0}"
@@ -489,6 +626,15 @@ msgstr "Both of the above, one card at a time."
 msgid "Both ways"
 msgstr "Both ways"
 
+msgid "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and Anki stays as it is."
+msgstr "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and Anki stays as it is."
+
+msgid "Bring your decks with their pictures and review history."
+msgstr "Bring your decks with their pictures and review history."
+
+msgid "Brings back every card this import added and the decks it made."
+msgstr "Brings back every card this import added and the decks it made."
+
 msgid "by {who}"
 msgstr "by {who}"
 
@@ -499,8 +645,14 @@ msgstr "calls itself “{0}”"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Cancel import"
+msgstr "Cancel import"
+
 msgid "Cancel the link"
 msgstr "Cancel the link"
+
+msgid "Cancelled"
+msgstr "Cancelled"
 
 msgid "Card"
 msgstr "Card"
@@ -532,8 +684,20 @@ msgstr "Cards from Marco’s Tuesday lessons."
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
 
+msgid "Cards keep the due dates they had in Anki."
+msgstr "Cards keep the due dates they had in Anki."
+
+msgid "Cards that came into your decks from outside the app."
+msgstr "Cards that came into your decks from outside the app."
+
+msgid "Change"
+msgstr "Change"
+
 msgid "Change daily goal"
 msgstr "Change daily goal"
+
+msgid "Change fields"
+msgstr "Change fields"
 
 msgid "Change photo"
 msgstr "Change photo"
@@ -541,11 +705,24 @@ msgstr "Change photo"
 msgid "Changes discarded"
 msgstr "Changes discarded"
 
+#. placeholder {0}: noteTypes.length - checked.size
+msgid "Check each kind of card first. {0} still to check."
+msgstr "Check each kind of card first. {0} still to check."
+
+msgid "Check that the card looks right first."
+msgstr "Check that the card looks right first."
+
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Check that the whole link was copied, or ask for a new one."
 
+msgid "Check this card, then press Import again."
+msgstr "Check this card, then press Import again."
+
 msgid "Check your connection and try again."
 msgstr "Check your connection and try again."
+
+msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
+msgstr "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Choose 00, 15, 30 or 45 minutes."
@@ -559,8 +736,14 @@ msgstr "Choose a recall grade"
 msgid "Choose a whole number from 1 to 200."
 msgstr "Choose a whole number from 1 to 200."
 
+msgid "Choose another file"
+msgstr "Choose another file"
+
 msgid "Choose at least one way to be asked."
 msgstr "Choose at least one way to be asked."
+
+msgid "Choose exactly one field as the term."
+msgstr "Choose exactly one field as the term."
 
 msgid "Choose file"
 msgstr "Choose file"
@@ -571,6 +754,21 @@ msgstr "Choose new…"
 
 msgid "Choose one"
 msgstr "Choose one"
+
+msgid "Choose the .apkg or .colpkg file Anki exports."
+msgstr "Choose the .apkg or .colpkg file Anki exports."
+
+msgid "Choose the file again"
+msgstr "Choose the file again"
+
+msgid "Choose the file you exported from Anki"
+msgstr "Choose the file you exported from Anki"
+
+msgid "Choose what each Anki field becomes on a Lymi card. One field is the term."
+msgstr "Choose what each Anki field becomes on a Lymi card. One field is the term."
+
+msgid "Choose your Anki file"
+msgstr "Choose your Anki file"
 
 msgid "Clear filters"
 msgstr "Clear filters"
@@ -638,11 +836,17 @@ msgstr "Couldn’t check for more cards"
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Couldn’t check this device. Reload to try again."
 
+msgid "Couldn’t load Activity"
+msgstr "Couldn’t load Activity"
+
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
 
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
+
+msgid "Couldn’t load this import"
+msgstr "Couldn’t load this import"
 
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
@@ -731,6 +935,9 @@ msgstr "Deck options"
 msgid "Deck settings"
 msgstr "Deck settings"
 
+msgid "decks"
+msgstr "decks"
+
 msgid "Decks"
 msgstr "Decks"
 
@@ -754,6 +961,9 @@ msgstr "Dismiss"
 
 msgid "Docs"
 msgstr "Docs"
+
+msgid "Does this card look right?"
+msgstr "Does this card look right?"
 
 msgid "Done"
 msgstr "Done"
@@ -794,6 +1004,9 @@ msgstr "Edit card"
 msgid "Edited {list}"
 msgstr "Edited {list}"
 
+msgid "Empty in the first note"
+msgstr "Empty in the first note"
+
 msgid "Enriched {list}"
 msgstr "Enriched {list}"
 
@@ -802,9 +1015,6 @@ msgstr "Enter after each"
 
 msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
-
-msgid "Every change a connected app, an API key or the AI made, by day."
-msgstr "Every change a connected app, an API key or the AI made, by day."
 
 msgid "Example"
 msgstr "Example"
@@ -824,8 +1034,24 @@ msgstr "Export as CSV"
 msgid "Export as CSV without pictures"
 msgstr "Export as CSV without pictures"
 
+msgid "Export it again from Anki as an Anki Deck Package (.apkg), then choose that file."
+msgstr "Export it again from Anki as an Anki Deck Package (.apkg), then choose that file."
+
+msgid "Export it again from Anki, then choose the new file."
+msgstr "Export it again from Anki, then choose the new file."
+
+msgid "Export one deck at a time, or export again without media."
+msgstr "Export one deck at a time, or export again without media."
+
+msgid "Exporting from Anki"
+msgstr "Exporting from Anki"
+
 msgid "Fewer fields"
 msgstr "Fewer fields"
+
+#. placeholder {0}: type.name
+msgid "Fields of {0}"
+msgstr "Fields of {0}"
 
 msgid "Filter"
 msgstr "Filter"
@@ -858,6 +1084,9 @@ msgstr "Forgotten {SLIPPING_LAPSES} or more times"
 msgid "From the lesson"
 msgstr "From the lesson"
 
+msgid "Getting a card ready…"
+msgstr "Getting a card ready…"
+
 msgid "Getting started"
 msgstr "Getting started"
 
@@ -881,6 +1110,9 @@ msgstr "Granting as <0>{email}</0>"
 
 msgid "Hard"
 msgstr "Hard"
+
+msgid "Has a picture"
+msgstr "Has a picture"
 
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
@@ -918,6 +1150,30 @@ msgstr "How you are asked"
 msgid "Identified by"
 msgstr "Identified by"
 
+msgid "Import archived"
+msgstr "Import archived"
+
+msgid "Import cancelled"
+msgstr "Import cancelled"
+
+msgid "Import from Anki"
+msgstr "Import from Anki"
+
+msgid "Importing"
+msgstr "Importing"
+
+msgid "Importing your cards"
+msgstr "Importing your cards"
+
+msgid "Imports"
+msgstr "Imports"
+
+msgid "Imports from Anki appear here, with what each one added."
+msgstr "Imports from Anki appear here, with what each one added."
+
+msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
+msgstr "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
+
 msgid "Insights"
 msgstr "Insights"
 
@@ -942,6 +1198,12 @@ msgstr "It can read your cards, and add, edit and archive them."
 
 msgid "It can read your decks and cards. It cannot change anything."
 msgstr "It can read your decks and cards. It cannot change anything."
+
+msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
+msgstr "It waited three days without being confirmed, so its file was deleted. Start it again."
+
+msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
+msgstr "Its cards and the decks it made are hidden. Restore brings them back with their history."
 
 msgid "Join"
 msgstr "Join"
@@ -1018,6 +1280,9 @@ msgstr "Language"
 msgid "Language changed to {0}"
 msgstr "Language changed to {0}"
 
+msgid "Languages"
+msgstr "Languages"
+
 msgid "Later"
 msgstr "Later"
 
@@ -1030,6 +1295,9 @@ msgstr "Learning"
 msgctxt "cards in this state"
 msgid "Learning"
 msgstr "Learning"
+
+msgid "Leave out"
+msgstr "Leave out"
 
 msgid "Leave review"
 msgstr "Leave review"
@@ -1071,8 +1339,14 @@ msgstr "Lists and searches decks and cards."
 msgid "Longest streak"
 msgstr "Longest streak"
 
+msgid "Looks right"
+msgstr "Looks right"
+
 msgid "Lymi"
 msgstr "Lymi"
+
+msgid "Lymi couldn’t read this file"
+msgstr "Lymi couldn’t read this file"
 
 msgid "Lymi does not recognise this app. Check the address is one you meant to use."
 msgstr "Lymi does not recognise this app. Check the address is one you meant to use."
@@ -1154,6 +1428,9 @@ msgstr "New"
 msgid "New card"
 msgstr "New card"
 
+msgid "new cards"
+msgstr "new cards"
+
 msgid "New cards"
 msgstr "New cards"
 
@@ -1176,6 +1453,9 @@ msgstr "Next card"
 msgid "next in {0}"
 msgstr "next in {0}"
 
+msgid "Next kind of card"
+msgstr "Next kind of card"
+
 msgid "Next month"
 msgstr "Next month"
 
@@ -1184,6 +1464,9 @@ msgstr "No apps connected"
 
 msgid "No card keeps slipping"
 msgstr "No card keeps slipping"
+
+msgid "No card of this kind has a term."
+msgstr "No card of this kind has a term."
 
 #. placeholder {0}: deck.name
 msgid "No cards in {0} yet"
@@ -1218,6 +1501,9 @@ msgstr "No language by that name. Type its tag to use it anyway."
 
 msgid "No lesson"
 msgstr "No lesson"
+
+msgid "No meaning"
+msgstr "No meaning"
 
 msgid "No meaning yet"
 msgstr "No meaning yet"
@@ -1261,6 +1547,9 @@ msgstr "Nothing forgotten today"
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
 msgstr "Nothing has come back for a second look yet, so there is nothing honest to report."
 
+msgid "Nothing has come in yet"
+msgstr "Nothing has come in yet"
+
 msgid "Nothing in it yet"
 msgstr "Nothing in it yet"
 
@@ -1279,6 +1568,9 @@ msgstr "Nothing left today."
 msgid "Nothing matches “{query}”"
 msgstr "Nothing matches “{query}”"
 
+msgid "Nothing was added, and the file was deleted."
+msgstr "Nothing was added, and the file was deleted."
+
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Nothing was shared. You can start again from {appName} whenever you like."
 
@@ -1293,6 +1585,9 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Notifications are blocked. Allow them in your browser or device settings."
+
+msgid "On a phone, or something went wrong? Read the guide"
+msgstr "On a phone, or something went wrong? Read the guide"
 
 msgid "One card is ready"
 msgstr "One card is ready"
@@ -1312,6 +1607,9 @@ msgstr "Only your name is shared, never your progress."
 msgid "Open deck"
 msgstr "Open deck"
 
+msgid "Open Library"
+msgstr "Open Library"
+
 msgid "Open Lymi from the new icon."
 msgstr "Open Lymi from the new icon."
 
@@ -1329,6 +1627,12 @@ msgstr "Other ways to add cards"
 
 msgid "own review"
 msgstr "own review"
+
+msgid "past reviews"
+msgstr "past reviews"
+
+msgid "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
+msgstr "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
 
 msgid "Paste a link"
 msgstr "Paste a link"
@@ -1391,8 +1695,14 @@ msgstr "Position your photo"
 msgid "Press Enter after each tag."
 msgstr "Press Enter after each tag."
 
+msgid "Press Export, save the file, then choose it here."
+msgstr "Press Export, save the file, then choose it here."
+
 msgid "Previous card"
 msgstr "Previous card"
+
+msgid "Previous kind of card"
+msgstr "Previous kind of card"
 
 msgid "Previous month"
 msgstr "Previous month"
@@ -1436,8 +1746,17 @@ msgstr "Read lists decks and cards. Read and write also adds, edits and archives
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 
+msgid "Read the guide"
+msgstr "Read the guide"
+
 msgid "Read the quickstart"
 msgstr "Read the quickstart"
+
+msgid "Reading"
+msgstr "Reading"
+
+msgid "Reading your file"
+msgstr "Reading your file"
 
 msgid "Recall"
 msgstr "Recall"
@@ -1490,6 +1809,12 @@ msgstr "Replay pronunciation"
 
 msgid "Request an invitation"
 msgstr "Request an invitation"
+
+msgid "Restore"
+msgstr "Restore"
+
+msgid "Restore import"
+msgstr "Restore import"
 
 msgid "Restored"
 msgstr "Restored"
@@ -1652,6 +1977,9 @@ msgstr "Show"
 msgid "Show all"
 msgstr "Show all"
 
+msgid "Show another"
+msgstr "Show another"
+
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
 
@@ -1688,6 +2016,9 @@ msgstr "So you know which key to revoke later."
 msgid "Some grades haven’t synced"
 msgstr "Some grades haven’t synced"
 
+msgid "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
+msgstr "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
+
 msgid "Something went wrong. Try again from the app."
 msgstr "Something went wrong. Try again from the app."
 
@@ -1722,6 +2053,9 @@ msgstr "Steady"
 
 msgid "Still need an invitation?"
 msgstr "Still need an invitation?"
+
+msgid "Stopped"
+msgstr "Stopped"
 
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
@@ -1772,6 +2106,10 @@ msgstr "That image is too large. Choose one under 25 MB."
 msgid "That image is too small. Choose one at least 16 pixels wide."
 msgstr "That image is too small. Choose one at least 16 pixels wide."
 
+#. placeholder {0}: item.fileName
+msgid "That isn’t the same file. Choose {0}."
+msgstr "That isn’t the same file. Choose {0}."
+
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
 
@@ -1792,6 +2130,9 @@ msgstr "The deck leaves Library and its cards stop coming up. Nothing is deleted
 
 msgid "the example"
 msgstr "the example"
+
+msgid "The import stopped"
+msgstr "The import stopped"
 
 msgid "the language"
 msgstr "the language"
@@ -1826,6 +2167,12 @@ msgstr "the tags"
 msgid "the term"
 msgstr "the term"
 
+msgid "The upload didn’t finish"
+msgstr "The upload didn’t finish"
+
+msgid "The upload stopped part way"
+msgstr "The upload stopped part way"
+
 msgid "Theme"
 msgstr "Theme"
 
@@ -1838,11 +2185,32 @@ msgstr "This card has no picture yet, so it is asked without one."
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
 
+msgid "This collection is too large to import at once"
+msgstr "This collection is too large to import at once"
+
 msgid "This deck is archived"
 msgstr "This deck is archived"
 
+msgid "This file has no review history, so every card starts as new. To keep your progress, export again with Include Scheduling Information ticked."
+msgstr "This file has no review history, so every card starts as new. To keep your progress, export again with Include Scheduling Information ticked."
+
+msgid "This file is damaged"
+msgstr "This file is damaged"
+
+msgid "This file is empty. Export it again from Anki."
+msgstr "This file is empty. Export it again from Anki."
+
+msgid "This file is larger than 1 GB. Export one deck at a time."
+msgstr "This file is larger than 1 GB. Export one deck at a time."
+
 msgid "This Google account has not been invited. Request an invitation, or try another account."
 msgstr "This Google account has not been invited. Request an invitation, or try another account."
+
+msgid "This import is archived"
+msgstr "This import is archived"
+
+msgid "This import was closed"
+msgstr "This import was closed"
 
 msgid "This join link does not work"
 msgstr "This join link does not work"
@@ -1855,6 +2223,9 @@ msgstr "This join link stopped working. Ask for a new one."
 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
+
+msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
+msgstr "This takes a few seconds for most files. Nothing is added to your decks yet."
 
 msgid "This week"
 msgstr "This week"
@@ -1890,6 +2261,9 @@ msgstr "Total"
 msgid "Try again"
 msgstr "Try again"
 
+msgid "Try again on a steadier connection, and keep Lymi open until the upload is done."
+msgstr "Try again on a steadier connection, and keep Lymi open until the upload is done."
+
 msgid "Try another Google account"
 msgstr "Try another Google account"
 
@@ -1908,11 +2282,17 @@ msgstr "Type the term."
 msgid "Undo"
 msgstr "Undo"
 
+msgid "Undo this import"
+msgstr "Undo this import"
+
 msgid "Untitled key"
 msgstr "Untitled key"
 
 msgid "Updated {lastAdded}"
 msgstr "Updated {lastAdded}"
+
+msgid "Uploading"
+msgstr "Uploading"
 
 msgid "Use “{tag}” as the tag"
 msgstr "Use “{tag}” as the tag"
@@ -1935,6 +2315,12 @@ msgstr "Use the deck’s"
 msgid "Use the Google account that received your invitation."
 msgstr "Use the Google account that received your invitation."
 
+msgid "Use these fields"
+msgstr "Use these fields"
+
+msgid "Use these languages"
+msgstr "Use these languages"
+
 msgid "Use up to 20 tags of 40 characters or fewer."
 msgstr "Use up to 20 tags of 40 characters or fewer."
 
@@ -1953,9 +2339,15 @@ msgstr "used {m} min ago"
 msgid "used just now"
 msgstr "used just now"
 
+msgid "Waiting for you"
+msgstr "Waiting for you"
+
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
 msgid "week of {0}"
 msgstr "week of {0}"
+
+msgid "What comes across"
+msgstr "What comes across"
 
 msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
 msgstr "What it adds lands at once and is labelled. You can edit or archive any of it."
@@ -1971,6 +2363,9 @@ msgstr "Which days you reviewed"
 
 msgid "Who can join this deck"
 msgstr "Who can join this deck"
+
+msgid "Yes, looks right"
+msgstr "Yes, looks right"
 
 msgid "Yesterday"
 msgstr "Yesterday"
@@ -1990,8 +2385,14 @@ msgstr "You are still in the deck."
 msgid "You can change this later. It applies to every card in the deck."
 msgstr "You can change this later. It applies to every card in the deck."
 
+msgid "You can close Lymi now. The import keeps going, and your decks appear in Library when it’s done."
+msgstr "You can close Lymi now. The import keeps going, and your decks appear in Library when it’s done."
+
 msgid "You can close this tab."
 msgstr "You can close this tab."
+
+msgid "You can undo the whole import later from Activity."
+msgstr "You can undo the whole import later from Activity."
 
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."

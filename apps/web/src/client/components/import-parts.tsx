@@ -143,6 +143,11 @@ export function SampleCard({ sample, loading }: { sample: Sample | undefined; lo
           )}
         </dl>
       )}
+      {sample.modes.length > 1 && (
+        <p className="text-sm text-muted">
+          <Trans>Asked both ways: from the term, and from the meaning.</Trans>
+        </p>
+      )}
       {sample.tags.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {sample.tags.map((tag) => (

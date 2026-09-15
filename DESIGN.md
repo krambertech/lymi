@@ -377,7 +377,7 @@ The rail's first line and the page title beside it sit on the same line, 32 px d
 
 The column of content is capped at `--column` (880 px) and centres in whatever the rail leaves. It never stretches: a vocabulary app is one column, and a wider one is a worse read. On a 2560 px screen the rail fills the left edge and the column sits in the middle of the rest, so a big window gets the same read as a laptop instead of a stripe of content in a field of empty room. Reading screens narrow further to 672.
 
-Capture is one plus for both things a learner adds, a word or a deck. It is round and amber, because it is the app's standing action and the only control on every screen; the menu under it names the two things with an icon each. It sits in the rail beside the mark on desktop and in the top bar on the phone, and `N` opens it from anywhere.
+Capture is one plus for everything a learner adds: a word, a deck, or an import from Anki. It is round and amber, because it is the app's standing action and the only control on every screen; the menu under it names each with an icon. It sits in the rail beside the mark on desktop and in the top bar on the phone, and `N` opens it from anywhere.
 
 On the phone every screen starts with the same top bar, `TopBar` in `views/shell.tsx`: 56 px, back on the start side, the screen's own controls on the end, and the title under it in the same place on every screen. A tab has nowhere to go back to, so Today and Library put `TileLockup` there instead: the app tile at 40 px, the height of every control in the bar, with a hairline edge so it holds its shape on the dark canvas, and the wordmark beside it, as they top the rail. The end of a tab's bar reads streak, capture, avatar: the status leads, the two round buttons stay a pair, and the account keeps the outer corner. Back is `BackButton`, a 44 px target with a 22 px chevron and the name of the screen it returns to, so a card says which deck. The controls are square ghost icon buttons at 40 px. Capture keeps its round amber shape and goes first among the buttons, so it never sits between two squares; the avatar, also round, follows it. On desktop the rail does this job and the bar goes, except on a screen nested under another one, such as deck settings, which keeps it for its way back.
 
@@ -390,6 +390,16 @@ Four plates in a 2x2 grid — Recall, Consistency, Cards, Ahead — each carryin
 Consistency and the months answer different questions and neither replaces the other. The thirty-day strip is texture: which days, and how long the runs were. The month bars are trend: whether the habit is holding across seasons. Both draw a day as lit or unlit and never grade it by how many cards it held, because grading turns a habit picture into a scoreboard and makes a heavy Tuesday look better than a steady one.
 
 `RunStrip` joins consecutive lit days into one capsule. That is the whole idea: a row of separate marks has to be counted, where an unbroken capsule is a run whose length you can see.
+
+## Imports
+
+An import is one screen whose body follows the import's state, not a wizard: choose a file, the file on its way, the preview, the cards being written, and the end. The address holds the import, so leaving and coming back finds it where it was, and Activity lists every import and opens the same screen.
+
+The preview leads with one of the learner's own cards, drawn the way the card page draws a card, under the question **Does this card look right?** A file holds one or more kinds of note, and each gets its card and its own **Yes, looks right**; Import checks that every kind was confirmed and says what is left, beside the button and under the card, rather than being taken away. Changing fields confirms that kind. The question is the one decision a learner cannot fix afterwards without archiving the import, so it is asked where the answer is visible.
+
+Under the card, three figures in one plate with hairlines between (new cards, past reviews, decks), then plain lines that each start with a mark: a green check for what is kept (due dates, pictures, cards an earlier import brought) and a muted minus for what is skipped or left out (terms already in Lymi, suspended cards, long text, sounds, notes Lymi cannot ask). Status is never colour alone. Languages are already answered, so they are one row with the current answer and Change; a deck with no language says so in the row. The primary is **Import N cards**, with a line under it that the whole import can be undone from Activity, and Cancel import under that.
+
+While a file uploads the screen says to keep Lymi open; once it is reading or writing it says the app can be closed. A known amount of work is the `Progress` track; reading, whose length is not known, sweeps a third of the track and holds still under reduced motion. The end names the count, offers Open Library, and keeps Archive import beside a sentence saying exactly what it hides, with Undo in the toast.
 
 ## Empty states
 

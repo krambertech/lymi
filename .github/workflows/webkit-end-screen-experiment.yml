@@ -15,7 +15,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        variant: [control, no-blur, no-glow, no-effects]
+        include:
+          - variant: fix-test
+            target: e2e/review-complete.spec.ts:49
+            repeat: 8
+          - variant: fix-spec
+            target: e2e/review-complete.spec.ts
+            repeat: 3
     steps:
       - uses: actions/checkout@v5
 
@@ -30,26 +36,8 @@ jobs:
 
       - run: pnpm exec playwright install --with-deps --only-shell webkit
 
-      - name: Remove the blur from the sequence
-        if: matrix.variant == 'no-blur' || matrix.variant == 'no-effects'
-        run: |
-          cat >> apps/web/src/client/styles.css <<'EOF'
-          .seq { animation-name: x-seq-rise; }
-          .seq-count { animation-name: x-seq-count; }
-          @keyframes x-seq-rise { from { opacity: 0; transform: translateY(14px); } }
-          @keyframes x-seq-count { from { opacity: 0; transform: translateY(10px) scale(0.86); } }
-          EOF
-
-      - name: Remove the lantern glow and light pool
-        if: matrix.variant == 'no-glow' || matrix.variant == 'no-effects'
-        run: |
-          cat >> apps/web/src/client/styles.css <<'EOF'
-          .glow .lantern-light { filter: none !important; }
-          .lantern-flicker.glow, .light-pool, .light-pool-breath { animation: none !important; }
-          EOF
-
-      - name: Run the end-screen test repeatedly
-        run: pnpm exec playwright test e2e/review-complete.spec.ts:49 --project=webkit --repeat-each=8 --retries=0 --trace=retain-on-failure --reporter=list,html
+      - name: Run with the shared test's blur override
+        run: pnpm exec playwright test ${{ matrix.target }} --project=webkit --repeat-each=${{ matrix.repeat }} --retries=0 --trace=retain-on-failure --reporter=list,html
 
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}

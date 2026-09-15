@@ -207,12 +207,20 @@ async function library(ctx: ServiceContext) {
         { cue: "image", target: "meaning" },
       ],
     },
+    {
+      deckId: signs.id,
+      term: "semaforo",
+      meaning: "traffic light",
+      reviewModes: [{ cue: "image", target: "term" }],
+    },
+    { deckId: italian.id, term: "boh" },
   ]);
   const cards = outcomes.map((outcome) => {
     if (outcome.status !== "added") throw new Error("card not added");
     return outcome.card;
   });
-  const [gatto, casa, , stop] = cards as [
+  const [gatto, casa, , stop, semaforo] = cards as [
+    (typeof cards)[0],
     (typeof cards)[0],
     (typeof cards)[0],
     (typeof cards)[0],
@@ -231,6 +239,13 @@ async function library(ctx: ServiceContext) {
     stop.id,
     png(30, 30),
     { version: null, description: "A red octagon" },
+    pictures,
+  );
+  await uploadCardImage(
+    ctx,
+    semaforo.id,
+    png(24, 36),
+    { version: null, description: "Three stacked lamps" },
     pictures,
   );
   const now = Date.now();
@@ -259,11 +274,17 @@ async function library(ctx: ServiceContext) {
     rating: 3,
     reviewedAt: new Date(now - 2 * DAY),
   });
+  await gradeCard(ctx, {
+    cardId: semaforo.id,
+    mode: { cue: "image", target: "term" },
+    rating: 4,
+    reviewedAt: new Date(now - 4 * DAY),
+  });
   await archiveCard(ctx, casa.id);
   const old = await createDeck(ctx, { name: "Old list", defaultLanguage: "it" });
   await addCards(ctx, [{ deckId: old.id, term: "vecchio", meaning: "old" }]);
   await archiveDeck(ctx, old.id);
-  return { italian, signs, gatto, casa, stop };
+  return { italian, signs, gatto, casa, stop, semaforo };
 }
 
 async function entries(bytes: Uint8Array) {
@@ -354,7 +375,7 @@ describe("exporting the library as a Lymi zip", () => {
       format: "lymi",
       deckId: null,
       downloadUrl: `/api/exports/${view.id}/file`,
-      counts: { decks: 3, cards: 5, reviews: 6, pictures: 2, sounds: 0 },
+      counts: { decks: 3, cards: 7, reviews: 7, pictures: 3, sounds: 0 },
     });
     expect(view.fileName).toMatch(/^lymi-library-\d{4}-\d{2}-\d{2}\.zip$/);
 
@@ -363,7 +384,7 @@ describe("exporting the library as a Lymi zip", () => {
       "cards.jsonl",
       "lymi.json",
     ]);
-    expect(zip.names.filter((name) => name.startsWith("media/"))).toHaveLength(2);
+    expect(zip.names.filter((name) => name.startsWith("media/"))).toHaveLength(3);
     const manifest = LymiFileManifest.parse(
       JSON.parse(new TextDecoder().decode(await zip.read("lymi.json"))),
     );
@@ -377,13 +398,13 @@ describe("exporting the library as a Lymi zip", () => {
     const { preview, result } = await runImport(copy, "lymi-library.zip", bytes);
     expect(result).toMatchObject({ source: "lymi", status: "done" });
     expect(preview).toMatchObject({
-      added: 5,
+      added: 7,
       archived: 1,
-      reviews: 6,
-      pictures: 2,
+      reviews: 7,
+      pictures: 3,
       duplicates: 0,
     });
-    expect(result.counts).toMatchObject({ added: 5, pictures: 2, picturesSkipped: 0, decks: 3 });
+    expect(result.counts).toMatchObject({ added: 7, pictures: 3, picturesSkipped: 0, decks: 3 });
 
     const before = await snapshot(owner);
     const after = await snapshot(copy);
@@ -424,13 +445,14 @@ describe("exporting the library as a Lymi zip", () => {
     expect(view).toMatchObject({
       fileName: "italian.zip",
       deckId: italian.id,
-      counts: { decks: 1, cards: 3, pictures: 1 },
+      counts: { decks: 1, cards: 4, pictures: 1 },
     });
     const lines = new TextDecoder()
       .decode(await (await entries(bytes)).read("cards.jsonl"))
       .trim()
       .split("\n");
     expect(lines.map((line) => JSON.parse(line).term).sort()).toEqual([
+      "boh",
       "hello",
       "il gatto",
       "la casa",
@@ -440,15 +462,23 @@ describe("exporting the library as a Lymi zip", () => {
 
 describe("exporting an Anki package", () => {
   it("writes a sound legacy collection that the Anki importer reads back with its schedule", async () => {
-    const { owner, gatto } = await shared();
+    const { owner, gatto, semaforo } = await shared();
     const { bytes, view } = await runExport(owner, { format: "anki" });
     expect(view).toMatchObject({
       fileName: expect.stringMatching(/\.apkg$/),
-      counts: { cards: 5, reviews: 5, pictures: 2 },
+      counts: { cards: 7, reviews: 7, pictures: 3 },
     });
 
     const zip = await entries(bytes);
-    expect(zip.names).toEqual(["0", "1", "collection.anki2", "collection.anki21", "media", "meta"]);
+    expect(zip.names).toEqual([
+      "0",
+      "1",
+      "2",
+      "collection.anki2",
+      "collection.anki21",
+      "media",
+      "meta",
+    ]);
     const media = JSON.parse(new TextDecoder().decode(await zip.read("media")));
     expect(Object.values(media).sort()).toEqual(expect.arrayContaining([`lymi-${gatto.id}.webp`]));
 
@@ -470,7 +500,22 @@ describe("exporting an Anki package", () => {
       "Il gatto dorme.",
       "Masculine.<br>Plural: i gatti",
     ]);
-    expect(sqlite.prepare("select count(*) as n from revlog").get()?.n).toBe(5);
+    // A card asked both ways with no meaning yet gets no second card, which Anki would call empty.
+    const noMeaning = sqlite
+      .prepare(
+        "select count(c.id) as cards from notes n join cards c on c.nid = n.id where n.sfld = 'boh'",
+      )
+      .get();
+    expect(noMeaning?.cards).toBe(1);
+    // A card asked only by its picture keeps its schedule on the text template that stands in for it.
+    const picture = sqlite
+      .prepare(
+        "select c.type, c.data, (select count(*) from revlog r where r.cid = c.id) as logs from notes n join cards c on c.nid = n.id where n.guid = ?",
+      )
+      .get(`lymi:${semaforo.id}`);
+    expect(picture).toMatchObject({ type: 2, logs: 1 });
+    expect(JSON.parse(String(picture?.data)).s).toBeGreaterThan(0);
+    expect(sqlite.prepare("select count(*) as n from revlog").get()?.n).toBe(7);
     // The archived card is asked both ways and the archived deck's card once: three suspended.
     expect(sqlite.prepare("select count(*) as n from cards where queue = -1").get()?.n).toBe(3);
     sqlite.close();
@@ -479,9 +524,11 @@ describe("exporting an Anki package", () => {
     const { summary, notes } = await anki.inspect(bytesSource(bytes));
     const cards = [...notes].flatMap((n) => anki.cards(n, summary, { languages: {}, roles: {} }));
     expect(cards.map((card) => card.fields.term).sort()).toEqual([
+      "boh",
       "hello",
       "il gatto",
       "la casa",
+      "semaforo",
       "stop",
       "vecchio",
     ]);
@@ -517,7 +564,7 @@ describe("a shared deck's export", () => {
     });
 
     const { bytes, view } = await runExport(member, { format: "lymi", deckId: italian.id });
-    expect(view.counts).toMatchObject({ cards: 3, reviews: 1 });
+    expect(view.counts).toMatchObject({ cards: 4, reviews: 1 });
     const lines = new TextDecoder()
       .decode(await (await entries(bytes)).read("cards.jsonl"))
       .trim()
@@ -548,13 +595,62 @@ describe("who can reach an export", () => {
     const expiresAt = new Date(view.expiresAt as Date);
     await expect(exportFile(owner, id, env.EXPORTS, expiresAt)).rejects.toThrow(/not found/i);
     const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
-    const prefix = row?.objectKey as string;
+    if (!row?.objectKey || !row.expiresAt) throw new Error("the export kept no file");
+    const prefix = row.objectKey;
     expect((await env.EXPORTS.list({ prefix })).objects.length).toBeGreaterThan(0);
     expect((await env.EXPORTS.list({ prefix: `${prefix}.records/` })).objects).toHaveLength(0);
 
     await expireExports(db, env.EXPORTS, new Date(expiresAt.getTime() + 1));
     expect((await env.EXPORTS.list({ prefix })).objects).toHaveLength(0);
     expect(await getExport(owner, id)).toMatchObject({ status: "expired", downloadUrl: null });
+  }, 60_000);
+
+  it("frees the deck and format when its Workflow never starts", async () => {
+    const { owner, italian } = await shared();
+    await expect(
+      startExport(owner, { format: "anki", deckId: italian.id }, async () => {
+        throw new Error("no Workflow here");
+      }),
+    ).rejects.toThrow(/no Workflow/);
+    // The next request writes its own export rather than finding the first one still claiming it.
+    const { view } = await runExport(owner, { format: "anki", deckId: italian.id });
+    expect(view.status).toBe("done");
+    const rows = await db
+      .select()
+      .from(schema.exportFiles)
+      .where(
+        and(
+          eq(schema.exportFiles.userId, owner.userId),
+          eq(schema.exportFiles.deckId, italian.id),
+          eq(schema.exportFiles.format, "anki"),
+          eq(schema.exportFiles.status, "failed"),
+        ),
+      );
+    expect(rows.map((row) => [row.failure, row.objectKey])).toEqual([["internal", null]]);
+  }, 60_000);
+
+  it("keeps an export's key until its files are really deleted", async () => {
+    const { owner } = await shared();
+    const { id } = await runExport(owner, { format: "lymi" });
+    const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
+    if (!row?.objectKey || !row.expiresAt) throw new Error("the export kept no file");
+    const prefix = row.objectKey;
+    const refusing = {
+      ...env.EXPORTS,
+      list: (options?: R2ListOptions) => env.EXPORTS.list(options),
+      delete: async () => {
+        throw new Error("R2 is unavailable");
+      },
+    } as unknown as R2Bucket;
+    const past = new Date(row.expiresAt.getTime() + 1);
+
+    await expireExports(db, refusing, past);
+    expect(await getExport(owner, id)).toMatchObject({ status: "done" });
+    expect((await env.EXPORTS.list({ prefix })).objects.length).toBeGreaterThan(0);
+
+    await expireExports(db, env.EXPORTS, past);
+    expect(await getExport(owner, id)).toMatchObject({ status: "expired" });
+    expect((await env.EXPORTS.list({ prefix })).objects).toHaveLength(0);
   }, 60_000);
 
   it("gives up on an export that stalled and deletes what it wrote", async () => {

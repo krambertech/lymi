@@ -1,5 +1,7 @@
 import {
   directionsFromModes,
+  fallbackMode,
+  isImageMode,
   type LymiFileCard,
   type LymiFileState,
   modesFromDirections,
@@ -58,6 +60,22 @@ const TEMPLATES = {
   term_to_meaning: { name: "Term → Meaning", qfmt: "{{Term}}", afmt: BACK("Meaning"), field: 0 },
   meaning_to_term: { name: "Meaning → Term", qfmt: "{{Meaning}}", afmt: BACK("Term"), field: 1 },
 } as const;
+
+/**
+ * The card's schedule for a template. A picture mode has no Anki template of its own, so it goes on
+ * the text template that stands in for it, and the started schedule wins: a card asked only by its
+ * picture also carries an untouched text state, which would otherwise export as a new card.
+ */
+function stateForTemplate(card: LymiFileCard, mode: ReviewModeKey): LymiFileState | undefined {
+  const exact = card.states.find((state) => state.mode === mode);
+  const standIn = card.states.find(
+    (state) => isImageMode(state.mode) && fallbackMode(state.mode) === mode,
+  );
+  const started = (state: LymiFileState | undefined) =>
+    state && (state.state !== 0 || state.reviews.length > 0);
+  if (started(exact)) return exact;
+  return started(standIn) ? standIn : (exact ?? standIn);
+}
 
 const CSS = `.card {
   font-family: system-ui, sans-serif;
@@ -268,6 +286,11 @@ const index = (name: string, table: string, columns: string, positions: number[]
 class RevlogBuffer {
   private data = new Float64Array(8 * 1024);
   length = 0;
+
+  get byteLength() {
+    return this.length * 8;
+  }
+
   push(
     id: number,
     cid: number,
@@ -357,7 +380,8 @@ export class AnkiCollection {
   }
 
   get byteLength() {
-    return this.db.byteLength;
+    // The grades are still in their buffer until `finish`, and they are most of a large collection.
+    return this.db.byteLength + this.revlog.byteLength;
   }
 
   async add({ card, modes, picture, sound }: AnkiCardInput) {
@@ -390,7 +414,10 @@ export class AnkiCollection {
     ]);
     const suspended = card.archivedAt !== null || deck.archived;
     (model.modes as readonly ReviewModeKey[]).forEach((mode, ord) => {
-      const state = card.states.find((s) => s.mode === mode);
+      // Anki drops a card whose question field is empty, so one is never written; a note keeps its
+      // first card either way, because a note with no cards is not imported at all.
+      if (ord > 0 && !fields[TEMPLATES[mode as keyof typeof TEMPLATES].field]) return;
+      const state = stateForTemplate(card, mode);
       const schedule = ankiSchedule(state, this.position++);
       const cardId = this.cardIds.next(card.createdAt);
       const reviews = state?.reviews ?? [];

@@ -158,6 +158,7 @@ export const lymi: SourceAdapter<LymiNote> = {
         description: deck.description,
         cards: counts.get(deck.id) ?? 0,
         archived: deck.archivedAt !== null,
+        reviewModes: deck.reviewModes,
       }));
 
     function* notes(): Generator<LymiNote> {

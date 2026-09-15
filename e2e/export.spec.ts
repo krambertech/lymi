@@ -74,5 +74,7 @@ test("a learner exports a deck and the library, and finds the files in Activity"
     await expect(
       page.getByRole("link", { name: /^Download lymi-library-.*\.apkg$/ }),
     ).toBeVisible();
+    // A learner who has only exported still finds the way to import.
+    await expect(page.getByRole("link", { name: "Import cards", exact: true })).toBeVisible();
   });
 });

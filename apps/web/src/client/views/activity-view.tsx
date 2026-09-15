@@ -107,13 +107,6 @@ export function ActivityView({
           <Skeleton className="h-[72px] rounded-lg" />
           <Skeleton className="h-[72px] rounded-lg" />
         </div>
-      ) : imports.length === 0 && exports.length === 0 ? (
-        <EmptySection
-          icon={<FileUp />}
-          title={t`Nothing has come in yet`}
-          body={t`Imports from Anki and Mochi appear here, with what each one added.`}
-          action={startLink(buttonClass("secondary"), t`Import cards`)}
-        />
       ) : (
         <>
           {exports.length > 0 && (
@@ -130,7 +123,15 @@ export function ActivityView({
               </ul>
             </section>
           )}
-          {imports.length > 0 && (
+          {imports.length === 0 ? (
+            // Importing stays offered here even for a learner who has only ever exported.
+            <EmptySection
+              icon={<FileUp />}
+              title={t`Nothing has come in yet`}
+              body={t`Imports from Anki and Mochi appear here, with what each one added.`}
+              action={startLink(buttonClass("secondary"), t`Import cards`)}
+            />
+          ) : (
             <section aria-labelledby="imports-heading" className="grid gap-2">
               <div className="flex items-center justify-between gap-3">
                 <h2 id="imports-heading" className="text-md font-medium">

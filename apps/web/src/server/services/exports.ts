@@ -18,7 +18,7 @@ import {
   newId,
   type Rating,
 } from "@lymi/core";
-import { and, asc, desc, eq, getTableColumns, lt, sql } from "@lymi/core/db";
+import { and, asc, desc, eq, getTableColumns, isNotNull, lt, sql } from "@lymi/core/db";
 import type { Card, CardImage, Deck, Export } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
@@ -176,7 +176,23 @@ export async function startExport(
       payload: { format: input.format, deckId: deck?.id ?? null },
     }),
   ]);
-  await start({ exportId: id, userId, actor });
+  try {
+    await start({ exportId: id, userId, actor });
+  } catch (err) {
+    // Without a run nothing would ever move the row on, and it would refuse every later request.
+    const at = new Date();
+    await db
+      .update(schema.exportFiles)
+      .set({
+        status: "failed",
+        failure: "internal",
+        objectKey: null,
+        finishedAt: at,
+        updatedAt: at,
+      })
+      .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
+    throw err;
+  }
   return getExport(ctx, id);
 }
 
@@ -633,11 +649,18 @@ export async function failExport(db: Db, id: string, failure: ExportFailure, buc
   const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
   if (row?.status !== "exporting") return;
   const now = new Date();
+  const deleted = await deleteFiles(bucket, row);
   await db
     .update(schema.exportFiles)
-    .set({ status: "failed", failure, objectKey: null, finishedAt: now, updatedAt: now })
+    .set({
+      status: "failed",
+      failure,
+      // The key is kept while its segments are, so the sweep can try the delete again.
+      ...(deleted ? { objectKey: null } : {}),
+      finishedAt: now,
+      updatedAt: now,
+    })
     .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
-  await deleteFiles(bucket, row);
 }
 
 async function deleteObjects(bucket: R2Bucket, prefix: string) {
@@ -650,14 +673,17 @@ async function deleteObjects(bucket: R2Bucket, prefix: string) {
   } while (cursor);
 }
 
-async function deleteFiles(bucket: R2Bucket, row: Export) {
-  if (!row.objectKey) return;
+/** Deletes an export's segments. False when R2 refused, so the caller keeps the key for the sweep. */
+async function deleteFiles(bucket: R2Bucket, row: Export): Promise<boolean> {
+  if (!row.objectKey) return true;
   try {
     await deleteObjects(bucket, `${row.objectKey}/`);
     await deleteObjects(bucket, `${row.objectKey}.records/`);
+    return true;
   } catch {
-    // The sweep tries again; the key itself is never logged.
+    // The key itself is never logged.
     console.error("Deleting an export's files failed");
+    return false;
   }
 }
 
@@ -669,7 +695,8 @@ export async function expireExports(db: Db, bucket: R2Bucket, now = new Date()) 
     .where(and(eq(schema.exportFiles.status, "done"), lt(schema.exportFiles.expiresAt, now)))
     .limit(50);
   for (const row of expired) {
-    await deleteFiles(bucket, row);
+    // A row whose delete failed stays done and past its window, so the next sweep finds it again.
+    if (!(await deleteFiles(bucket, row))) continue;
     await db
       .update(schema.exportFiles)
       .set({ status: "expired", objectKey: null, updatedAt: now })
@@ -686,6 +713,19 @@ export async function expireExports(db: Db, bucket: R2Bucket, now = new Date()) 
     )
     .limit(50);
   for (const row of stalled) await failExport(db, row.id, "internal", bucket);
+  // Files a failed export could not delete at the time.
+  const left = await db
+    .select()
+    .from(schema.exportFiles)
+    .where(and(eq(schema.exportFiles.status, "failed"), isNotNull(schema.exportFiles.objectKey)))
+    .limit(50);
+  for (const row of left) {
+    if (!(await deleteFiles(bucket, row))) continue;
+    await db
+      .update(schema.exportFiles)
+      .set({ objectKey: null, updatedAt: now })
+      .where(eq(schema.exportFiles.id, row.id));
+  }
   return expired.length + stalled.length;
 }
 

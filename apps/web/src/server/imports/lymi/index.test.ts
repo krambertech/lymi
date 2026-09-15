@@ -113,7 +113,14 @@ describe("lymi adapter", () => {
     const { summary, notes } = await lymi.inspect(file);
     expect(summary).toMatchObject({ notes: 2, reviews: 1, pictures: 1, languages: { d1: "it" } });
     expect(summary.decks).toEqual([
-      { key: "d1", name: "Italian", description: null, cards: 2, archived: false },
+      {
+        key: "d1",
+        name: "Italian",
+        description: null,
+        cards: 2,
+        archived: false,
+        reviewModes: ["term_to_meaning", "meaning_to_term"],
+      },
     ]);
     const cards = [...notes].flatMap((note) =>
       lymi.cards(note, summary, { languages: {}, roles: {} }),

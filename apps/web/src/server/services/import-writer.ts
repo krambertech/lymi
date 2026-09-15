@@ -346,7 +346,10 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
   for (const deck of work.summary.decks) {
     const tallyByDeck = modes.get(deck.key);
     if (!tallyByDeck || existing.get(deck.key)) continue;
-    const directions = [...tallyByDeck].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "recognition";
+    // A source that records how the deck itself is asked keeps that; otherwise its cards decide.
+    const directions = deck.reviewModes
+      ? directionsFromModes(deck.reviewModes)
+      : ([...tallyByDeck].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "recognition");
     const id = newId();
     const externalId = deckExternalId(work.row.source, deck.key, deck.name);
     const description = deck.description

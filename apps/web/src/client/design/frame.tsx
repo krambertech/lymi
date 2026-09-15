@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Moon, Pause, Play, Sun } from "lucide-react";
+import { Moon, Pause, Sun } from "lucide-react";
 import { MotionConfig } from "motion/react";
 import {
   createContext,
@@ -10,10 +10,11 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+import { IconButton } from "../components/button";
 import { Segmented } from "../components/segmented";
 import { EditLink } from "./edit-link";
 import { useSystemReducedMotion } from "./forced-states";
-import { type IconOption, IconToggle } from "./icon-toggle";
+import type { IconOption } from "./icon-toggle";
 
 export type FrameTheme = "light" | "dark";
 
@@ -263,29 +264,35 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
   const page = usePageTheme();
   const [picked, setPicked] = useState<FrameTheme | null>(null);
   const theme = picked ?? page;
-  const systemMotion: CanvasMotion = useSystemReducedMotion() ? "reduced" : "full";
-  const [pickedMotion, setPickedMotion] = useState<CanvasMotion | null>(null);
-  const motion = pickedMotion ?? systemMotion;
+  const systemReduced = useSystemReducedMotion();
+  const [pickedReduced, setPickedReduced] = useState<boolean | null>(null);
+  const reduced = pickedReduced ?? systemReduced;
   return (
     <div
       data-theme={theme}
-      data-motion={motion === "reduced" ? "reduce" : undefined}
+      data-motion={reduced ? "reduce" : undefined}
       className="edge relative overflow-hidden rounded-lg bg-canvas text-text"
     >
-      <MotionConfig reducedMotion={motion === "reduced" ? "always" : "user"}>
-        <div className="absolute end-3 top-3 z-10 flex gap-1.5">
-          <IconToggle
-            label="Canvas motion"
-            value={motion}
-            onChange={(m) => setPickedMotion(m === systemMotion ? null : m)}
-            options={CANVAS_MOTION}
-          />
-          <IconToggle
-            label="Canvas theme"
-            value={theme}
-            onChange={(t) => setPicked(t === page ? null : t)}
-            options={ROOM_THEMES}
-          />
+      <MotionConfig reducedMotion={reduced ? "always" : "user"}>
+        {/* Reduced motion reaches what renders inside the canvas and its frames; a portal follows the system. */}
+        <div className="absolute end-3 top-3 z-10 flex gap-1">
+          <CanvasSwitch
+            label="Reduce motion"
+            pressed={reduced}
+            onPressedChange={(next) => setPickedReduced(next === systemReduced ? null : next)}
+          >
+            <Pause />
+          </CanvasSwitch>
+          <CanvasSwitch
+            label="Dark theme"
+            pressed={theme === "dark"}
+            onPressedChange={(dark) => {
+              const next = dark ? "dark" : "light";
+              setPicked(next === page ? null : next);
+            }}
+          >
+            <Moon />
+          </CanvasSwitch>
         </div>
         {items.map((v, i) => (
           <div
@@ -306,7 +313,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
                     ? "pb-1"
                     : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
                 // The first label shares its corner with the canvas switches.
-                i === 0 && (stack ? "pe-36" : "pe-36 @3xl:pe-5"),
+                i === 0 && (stack ? "pe-24" : "pe-24 @3xl:pe-5"),
               )}
             >
               <p className="font-semibold text-text">{v.label}</p>
@@ -318,7 +325,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
               <div
                 className={clsx(
                   "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
-                  !stack && "@3xl:pe-36",
+                  !stack && "@3xl:pe-24",
                 )}
               >
                 {v.render(theme)}
@@ -331,13 +338,30 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
   );
 }
 
-type CanvasMotion = "full" | "reduced";
-
-/** Reduced motion reaches what renders inside the canvas and its frames; a portal follows the system. */
-const CANVAS_MOTION: IconOption<CanvasMotion>[] = [
-  { value: "full", label: "Motion", Icon: Play },
-  { value: "reduced", label: "Reduced motion", Icon: Pause },
-];
+/** An on or off setting for one canvas: its icon stays put and a fill says it is on. */
+function CanvasSwitch({
+  label,
+  pressed,
+  onPressedChange,
+  children,
+}: {
+  label: string;
+  pressed: boolean;
+  onPressedChange: (pressed: boolean) => void;
+  children: ReactNode;
+}) {
+  return (
+    <IconButton
+      label={label}
+      size="sm"
+      aria-pressed={pressed}
+      onClick={() => onPressedChange(!pressed)}
+      className="aria-pressed:bg-hover aria-pressed:text-text"
+    >
+      {children}
+    </IconButton>
+  );
+}
 
 export const ROOM_THEMES: IconOption<FrameTheme>[] = [
   { value: "light", label: "Light", Icon: Sun },

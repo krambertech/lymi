@@ -11,6 +11,7 @@ import {
   ToastViewport,
   toast,
 } from "../../components/ui/toast";
+import { Force } from "../forced-states";
 import { Variants } from "../frame";
 import { type Group, noop } from "./types";
 
@@ -23,7 +24,7 @@ export const feedback: Group = {
       slug: "progress",
       name: "Progress",
       source: "components/progress.tsx",
-      note: "A 3 px track. How far through a session, never a score.",
+      note: "An 8 px track. How far through a session, never a score.",
       Demo: () => (
         <Variants
           items={[
@@ -63,6 +64,24 @@ export const feedback: Group = {
                   title="Couldn’t save “sbrigarsi”. Check your connection and try again."
                   action="Retry"
                 />
+              ),
+            },
+            {
+              label: "Hover",
+              note: "The action and the close button each take a faint fill under a pointer.",
+              render: () => (
+                <Force state="hover" on="[data-slot=toast-action]">
+                  <ToastPreview title="Archived “sbrigarsi”" action="Undo" />
+                </Force>
+              ),
+            },
+            {
+              label: "Focus",
+              note: "Focus inside the stack spreads it open and holds every timer.",
+              render: () => (
+                <Force state="focus" on="[data-slot=toast-close]">
+                  <ToastPreview title="Archived “sbrigarsi”" action="Undo" />
+                </Force>
               ),
             },
             {
@@ -144,7 +163,8 @@ function ToastPreview({
   }, [manager, title, action, type]);
   return (
     <ToastProvider toastManager={manager}>
-      <ToastViewport aria-label="Toast preview" className="static mx-0 w-full">
+      {/* The live viewport's toast layer would climb over the page's sticky header. */}
+      <ToastViewport aria-label="Toast preview" className="static isolate z-0 mx-0 w-full">
         <ToastList
           closeLabel="Dismiss"
           className="static h-auto [transform:none] data-expanded:h-auto data-expanded:[transform:none] data-starting-style:[transform:none] [&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:none]"

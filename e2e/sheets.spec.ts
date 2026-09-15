@@ -20,8 +20,8 @@ async function dragGrabber(page: Page, drawer: Locator, distance: number) {
 }
 
 test("a sheet swipes away, and a short drag springs back", async ({ page }) => {
-  await page.goto("/design/components/overlays");
-  await page.getByRole("button", { name: "Open sheet", exact: true }).click();
+  // The design system's form specimen opens the real New deck sheet as it loads, without signing in.
+  await page.goto("/design/frame/form");
   const sheet = page.getByRole("dialog", { name: "New deck" });
   await expect(sheet).toBeVisible();
 

@@ -7,6 +7,7 @@ import { AppTile, Wordmark } from "../components/logo";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import { setTheme } from "../lib/theme";
 import { DocLink } from "./doc-link";
+import { useForcedStates, useSystemMotion } from "./forced-states";
 import { ROOM_THEMES, usePageTheme } from "./frame";
 import { IconToggle } from "./icon-toggle";
 import { type DocRef, FOUNDATIONS, GROUPS, SCREENS } from "./registry";
@@ -20,6 +21,8 @@ export function DesignLayout() {
   const [menu, setMenu] = useState(false);
   // The page shows the room it is in; picking one stores it, so System is left to Settings.
   const theme = usePageTheme();
+  useForcedStates();
+  useSystemMotion();
 
   useEffect(() => {
     const initial = document.title;

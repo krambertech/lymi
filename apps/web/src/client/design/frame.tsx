@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Moon, Pause, Sun } from "lucide-react";
+import { Moon, Pause, Play, Sun } from "lucide-react";
 import { MotionConfig } from "motion/react";
 import {
   createContext,
@@ -281,7 +281,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
             pressed={reduced}
             onPressedChange={(next) => setPickedReduced(next === systemReduced ? null : next)}
           >
-            <Pause />
+            {reduced ? <Pause /> : <Play />}
           </CanvasSwitch>
           <CanvasSwitch
             label="Dark theme"
@@ -291,7 +291,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
               setPicked(next === page ? null : next);
             }}
           >
-            <Moon />
+            {theme === "dark" ? <Moon /> : <Sun />}
           </CanvasSwitch>
         </div>
         {items.map((v, i) => (
@@ -338,7 +338,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
   );
 }
 
-/** An on or off setting for one canvas: its icon stays put and a fill says it is on. */
+/** An on or off setting for one canvas. The icon shows the state it is in; the label names the setting. */
 function CanvasSwitch({
   label,
   pressed,
@@ -356,7 +356,6 @@ function CanvasSwitch({
       size="sm"
       aria-pressed={pressed}
       onClick={() => onPressedChange(!pressed)}
-      className="aria-pressed:bg-hover aria-pressed:text-text"
     >
       {children}
     </IconButton>

@@ -32,6 +32,7 @@ export type E2EAccount =
   | "anki-import"
   | "sections"
   | "mochi-import"
+  | "export"
   | "publisher";
 
 export const e2eAccounts: readonly E2EAccount[];

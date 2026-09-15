@@ -2,8 +2,10 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage, ImportSource } from "@lymi/core";
+import { Download } from "lucide-react";
 import type { ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
+import { Button } from "../components/button";
 import { ImportSources } from "../components/import-parts";
 import { Segmented } from "../components/segmented";
 import { SettingsGroup } from "../components/settings-group";
@@ -34,6 +36,8 @@ export interface SettingsProps {
   children?: ReactNode | undefined;
   /** A link to one app's import page. */
   importLink: (source: ImportSource, className: string, children: ReactNode) => ReactNode;
+  /** Opens the sheet that exports the whole library. */
+  onExportLibrary?: (() => void) | undefined;
 }
 
 /** Each language in its own name, so a learner can find theirs whatever is active. */
@@ -63,6 +67,7 @@ export function SettingsView({
   account,
   children,
   importLink,
+  onExportLibrary,
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
@@ -119,6 +124,22 @@ export function SettingsView({
       </SettingsGroup>
 
       {children}
+
+      <SettingsGroup
+        id="export"
+        title={t`Export`}
+        description={t`Take every deck out with its pictures, schedule and review history, as a Lymi file or an Anki package.`}
+      >
+        <Button
+          variant="secondary"
+          className="justify-self-start"
+          onClick={onExportLibrary}
+          aria-disabled={!onExportLibrary}
+        >
+          <Download aria-hidden="true" />
+          <Trans>Export library</Trans>
+        </Button>
+      </SettingsGroup>
 
       <SettingsGroup
         id="import"

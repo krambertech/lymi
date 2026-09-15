@@ -26,6 +26,7 @@ import {
   zstdDecompressBytes,
 } from "../files";
 import { SqliteFile, type SqlRow, type SqlValue } from "../sqlite";
+import { ANKI_DAY_SECONDS, ANKI_SEPARATOR, ankiDueMoment } from "./model";
 import {
   clozeAnswer,
   clozeNumbers,
@@ -66,9 +67,6 @@ export type AnkiNote = {
 };
 
 const COLLECTIONS = ["collection.anki21b", "collection.anki21", "collection.anki2"];
-const DAY_SECONDS = 86_400;
-/** Anki joins note fields, and schema 18 joins deck path parts, with the unit separator. */
-const SEPARATOR = String.fromCharCode(0x1f);
 
 const text = (value: SqlValue | undefined) => (typeof value === "string" ? value : "");
 const int = (value: SqlValue | undefined) => Number(value ?? 0);
@@ -127,7 +125,7 @@ function readModels(db: SqliteFile) {
     for (const row of db.rows("decks")) {
       const normal = proto.message(decodeProto(blob(row.kind)), 1);
       decks.set(String(row.id), {
-        name: text(row.name).split(SEPARATOR).join("::"),
+        name: text(row.name).split(ANKI_SEPARATOR).join("::"),
         description: normal ? (proto.text(normal, 4) ?? null) : null,
       });
     }
@@ -164,11 +162,8 @@ function readModels(db: SqliteFile) {
 
 /** A card's due date in ms from Anki's mix of day numbers and timestamps. */
 function dueOf(row: SqlRow, crt: number): number | null {
-  if (int(row.type) === 0) return null;
   // A card in a filtered deck keeps its home deck's due date in `odue`.
-  const raw = int(row.odid) ? int(row.odue) : int(row.due);
-  // Learning steps store a Unix time in seconds; review days count from the collection's start.
-  return raw > 1_000_000_000 ? raw * 1000 : (crt + raw * DAY_SECONDS) * 1000;
+  return ankiDueMoment(int(row.type), int(row.odid) ? int(row.odue) : int(row.due), crt);
 }
 
 function memoryOf(row: SqlRow, due: number | null, reviews: number[]) {
@@ -183,7 +178,7 @@ function memoryOf(row: SqlRow, due: number | null, reviews: number[]) {
     ? data.lrt * 1000
     : reviews.length >= 2
       ? (reviews[reviews.length - 2] as number)
-      : (due ?? 0) - interval * DAY_SECONDS * 1000;
+      : (due ?? 0) - interval * ANKI_DAY_SECONDS * 1000;
   // A collection scheduled without FSRS has no memory state; its interval is the closest stand-in.
   return { stability: data.s ?? interval, difficulty: data.d ?? 5, lastReview };
 }
@@ -332,7 +327,7 @@ export const anki: SourceAdapter<AnkiNote> = {
         continue;
       }
       const { model, cards } = found;
-      const fields = text(row.flds).split(SEPARATOR);
+      const fields = text(row.flds).split(ANKI_SEPARATOR);
       let type = noteTypes.get(typeKey);
       if (!type) {
         type = {
@@ -371,7 +366,7 @@ export const anki: SourceAdapter<AnkiNote> = {
         yield {
           guid: text(row.guid),
           type: String(row.mid),
-          fields: text(row.flds).split(SEPARATOR),
+          fields: text(row.flds).split(ANKI_SEPARATOR),
           tags: text(row.tags).split(/\s+/).filter(Boolean),
           cards: found.cards,
         };

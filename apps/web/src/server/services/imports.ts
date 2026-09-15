@@ -17,6 +17,7 @@ import { type Db, schema } from "../db";
 import type { ImportChoices, SourceAdapter } from "../imports/adapter";
 import { anki } from "../imports/anki";
 import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
+import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
 import type { CardImageStorage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -34,7 +35,7 @@ import {
 export { archiveImport, ownedImport, restoreImport } from "./import-writer";
 
 /** Every source Lymi can import, tried in order. */
-const ADAPTERS = [anki, mochi] as SourceAdapter<unknown>[];
+const ADAPTERS = [anki, mochi, lymi] as SourceAdapter<unknown>[];
 
 /** Notes per stored chunk: one chunk is one Workflow step and one D1 batch. */
 export const NOTES_PER_CHUNK = 500;
@@ -276,7 +277,12 @@ export async function inspectImport(ctx: ServiceContext, id: string, uploads: R2
   const stored: StoredSummary = {
     ...summary,
     languages: Object.fromEntries(
-      summary.decks.map((d) => [d.key, guessLanguage(d.name) ?? fallback]),
+      summary.decks.map((d) => [
+        d.key,
+        summary.languages?.[d.key] !== undefined
+          ? (summary.languages[d.key] ?? null)
+          : (guessLanguage(d.name) ?? fallback),
+      ]),
     ),
   };
   await ctx.db

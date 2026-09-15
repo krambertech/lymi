@@ -308,7 +308,7 @@ It moves on the lantern's springs from `FLAME_MOTION`: out to full is the catch,
 - [Insights](docs/design/insights.md)
 - [Library, decks and cards](docs/design/library-decks-and-cards.md)
 - [Review completion](docs/design/review-completion.md)
-- [Imports](docs/design/imports.md)
+- [Imports and exports](docs/design/imports.md)
 
 ## Wordmark and lockups
 

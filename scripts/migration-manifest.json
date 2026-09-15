@@ -71,6 +71,10 @@
     {
       "name": "0017_deck_publications.sql",
       "sha256": "30f95a61ad791ee1c8ee2a31571a4fee8515d7c38128f3c5dd006053c2b2d504"
+    },
+    {
+      "name": "0018_exports.sql",
+      "sha256": "4aff264c10bf1efc79bccabaaa300994fcd1b9488fd668930de24aaedde459ef"
     }
   ]
 }

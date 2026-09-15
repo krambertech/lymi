@@ -11,6 +11,8 @@ import type {
   DeckInput,
   Direction,
   DrawOut,
+  ExportOut,
+  ExportStartInput,
   GradeInput,
   GradeOut,
   ImportChoicesInput,
@@ -222,6 +224,7 @@ export type ConnectedApp = {
 };
 
 export type Import = ImportOut;
+export type Export = ExportOut;
 export type ImportPreview = ImportPreviewOut;
 
 export type PushSubscriptionStatus = {
@@ -262,6 +265,10 @@ export const api = {
   cancelImport: (id: string) => request<Import>(`/api/imports/${id}/cancel`, { method: "POST" }),
   archiveImport: (id: string) => request<Import>(`/api/imports/${id}/archive`, { method: "POST" }),
   restoreImport: (id: string) => request<Import>(`/api/imports/${id}/restore`, { method: "POST" }),
+  exports: () => request<Export[]>("/api/exports"),
+  export: (id: string) => request<Export>(`/api/exports/${id}`),
+  startExport: (body: ExportStartInput) =>
+    request<Export>("/api/exports", { method: "POST", body: JSON.stringify(body) }),
   settings: () => request<Settings>("/api/settings"),
   updateSettings: (body: SettingsPatch) =>
     request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),

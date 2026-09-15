@@ -187,7 +187,7 @@ function MenuScene() {
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Download />
-            Export as CSV
+            Export
             <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem disabled>

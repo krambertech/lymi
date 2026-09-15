@@ -7,6 +7,8 @@ export type SourceDeck = {
   name: string;
   description: string | null;
   cards: number;
+  /** The source had the deck archived, so it arrives archived with its cards. */
+  archived?: boolean | undefined;
 };
 
 /** A kind of note the file holds, with the fields the learner maps in the preview. */
@@ -34,6 +36,8 @@ export type SourceSummary = {
   audio: number;
   /** Notes of a kind Lymi cannot ask, such as image occlusion, which are left out. */
   unsupported: number;
+  /** Each deck's language, when the file records it; otherwise the server guesses from names. */
+  languages?: Record<string, string | null> | undefined;
 };
 
 /** What the learner decided in the preview. */

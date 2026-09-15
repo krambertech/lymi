@@ -75,6 +75,18 @@ const TERMS: Record<string, string[]> = {
     "attachments",
     "reverse",
   ],
+  "/docs/export": [
+    "export",
+    "download",
+    "backup",
+    "apkg",
+    "anki",
+    "mochi",
+    "zip",
+    "csv",
+    "leave",
+    "move",
+  ],
   "/docs/scheduling": [
     "fsrs",
     "spaced repetition",

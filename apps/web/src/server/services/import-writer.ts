@@ -1,20 +1,21 @@
 import {
   type Directions,
+  directionsFromModes,
   emptyImportCounts,
   IMAGE_LIMITS,
   IMPORT_LIMITS,
   type ImportCounts,
   type ImportedCard,
   type ImportPreviewOut,
+  isImageMode,
   newId,
   normaliseTerm,
-  type ReviewModeKey,
   replayProgress,
   serializeState,
   stateDirection,
   TEXT_MODES,
 } from "@lymi/core";
-import { and, eq, inArray, isNotNull, isNull, sql } from "@lymi/core/db";
+import { and, eq, inArray, isNotNull, isNull, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
 import { type BatchStatement, batchStatements } from "../batch";
@@ -72,12 +73,6 @@ export function deckName(path: string): string {
 
 function deckExternalId(source: string, key: string, name: string) {
   return `${source}:deck:${key}:${name}`;
-}
-
-function directionsOf(modes: readonly ReviewModeKey[]): Directions {
-  const recognition = modes.includes("term_to_meaning");
-  const production = modes.includes("meaning_to_term");
-  return recognition && production ? "both" : production ? "production" : "recognition";
 }
 
 type Lookup = {
@@ -183,7 +178,8 @@ function classify(
   return cards.map((card) => {
     const existing = found.byExternal.get(card.externalId);
     if (existing) return { kind: "existing", card, id: existing.id };
-    const language = languages[card.deckKey] ?? null;
+    const language =
+      card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
     const key = dupKey(language, card.fields.term);
     const held = found.active.get(key) ?? seen.get(key);
     if (held !== undefined) return { kind: "duplicate", card, deckName: held };
@@ -246,7 +242,8 @@ async function importedDecks(ctx: ServiceContext, row: Import, summary: StoredSu
       .where(
         and(
           eq(schema.decks.userId, ctx.userId),
-          isNull(schema.decks.archivedAt),
+          // A deck this import made archived is still its own, so a retried step finds it.
+          or(isNull(schema.decks.archivedAt), eq(schema.decks.importId, row.id)),
           inArray(schema.decks.externalId, slice),
         ),
       ),
@@ -338,7 +335,7 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
     for (const item of classified) {
       if (item.kind !== "added") continue;
       const tallyByDeck = modes.get(item.card.deckKey) ?? new Map<Directions, number>();
-      const directions = directionsOf(item.card.modes);
+      const directions = directionsFromModes(item.card.modes);
       tallyByDeck.set(directions, (tallyByDeck.get(directions) ?? 0) + 1);
       modes.set(item.card.deckKey, tallyByDeck);
     }
@@ -357,11 +354,13 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
       : null;
     // Inserted only while no active deck holds the external id, so a retried step makes no second deck.
     statements.push(
-      sql`insert into decks (id, user_id, name, description, default_language, directions, position, import_id, external_id)
+      sql`insert into decks (id, user_id, name, description, default_language, directions, position, import_id, external_id, archived_at)
         select ${id}, ${userId}, ${names.get(deck.key) ?? deck.name}, ${description},
-          ${work.choices.languages[deck.key] ?? null}, ${directions}, 0, ${work.row.id}, ${externalId}
+          ${work.choices.languages[deck.key] ?? null}, ${directions}, 0, ${work.row.id}, ${externalId},
+          ${deck.archived ? Date.now() : null}
         where not exists (
-          select 1 from decks where user_id = ${userId} and external_id = ${externalId} and archived_at is null
+          select 1 from decks where user_id = ${userId} and external_id = ${externalId}
+            and (archived_at is null or import_id = ${work.row.id})
         )`,
       sql`insert into audit_log (id, user_id, actor, action, entity, entity_id, payload)
         select ${newId()}, ${userId}, ${actor}, 'create', 'deck', ${id}, ${JSON.stringify({ importId: work.row.id })}
@@ -416,7 +415,7 @@ async function reviewId(stateId: string, at: Date): Promise<string> {
   return at.getTime().toString(36).padStart(9, "0") + hash;
 }
 
-export type PendingPicture = { cardId: string; name: string };
+export type PendingPicture = { cardId: string; name: string; description?: string | undefined };
 
 /**
  * Writes one stored chunk as one D1 batch. Every statement runs only while the import's
@@ -489,8 +488,10 @@ export async function writeChunk<Note>(
     if (!deckId) continue;
     added.push(item);
     const id = newId();
-    const directions = directionsOf(item.card.modes);
-    const followsDeck = deckDirections.get(deckId) === directions;
+    const directions = directionsFromModes(item.card.modes);
+    // A card with picture modes keeps its own list, since a deck's modes are text modes only.
+    const followsDeck =
+      deckDirections.get(deckId) === directions && !item.card.modes.some(isImageMode);
     const { fields } = item.card;
     cardRows.push({
       id,
@@ -505,13 +506,20 @@ export async function writeChunk<Note>(
       tags: JSON.stringify(item.card.tags),
       directions: followsDeck ? null : directions,
       reviewModes: followsDeck ? null : JSON.stringify(item.card.modes),
-      meaningSource: fields.meaning ? "manual" : null,
-      exampleSource: fields.example ? "manual" : null,
+      meaningSource: fields.meaning ? (item.card.fieldSources?.meaning ?? "manual") : null,
+      exampleSource: fields.example ? (item.card.fieldSources?.example ?? "manual") : null,
+      source: item.card.origin ?? null,
       archivedAt: item.card.archived ? now.getTime() : null,
       externalId: item.card.externalId,
     });
     auditRows.push({ id: newId(), entityId: id });
-    if (item.card.picture) pictures.push({ cardId: id, name: item.card.picture });
+    if (item.card.picture) {
+      pictures.push({
+        cardId: id,
+        name: item.card.picture,
+        ...(item.card.pictureDescription ? { description: item.card.pictureDescription } : {}),
+      });
+    }
 
     for (const progress of item.card.progress) {
       const stateId = newId();
@@ -574,11 +582,11 @@ export async function writeChunk<Note>(
   for (const part of jsonParts(cardRows)) {
     statements.push(
       sql`insert into cards (id, user_id, deck_id, term, normalized_term, meaning, pronunciation, example, notes,
-          language, tags, directions, review_modes, meaning_source, example_source, created_by, archived_at,
+          language, tags, directions, review_modes, meaning_source, example_source, source, created_by, archived_at,
           import_id, external_id, created_at, updated_at)
         select ${j("id")}, ${userId}, ${j("deckId")}, ${j("term")}, ${j("normalizedTerm")}, ${j("meaning")},
           ${j("pronunciation")}, ${j("example")}, ${j("notes")}, ${j("language")}, ${j("tags")}, ${j("directions")},
-          ${j("reviewModes")}, ${j("meaningSource")}, ${j("exampleSource")}, ${actor}, ${j("archivedAt")},
+          ${j("reviewModes")}, ${j("meaningSource")}, ${j("exampleSource")}, ${j("source")}, ${actor}, ${j("archivedAt")},
           ${row.id}, ${j("externalId")}, ${now.getTime()}, ${now.getTime()}
         from json_each(${part}) where ${guard}`,
     );
@@ -654,7 +662,20 @@ export async function attachPictures<Note>(
         skipped++;
         continue;
       }
-      await uploadCardImage(ctx, picture.cardId, bytes, { version: null }, storage);
+      try {
+        await uploadCardImage(
+          ctx,
+          picture.cardId,
+          bytes,
+          { version: null, description: picture.description },
+          storage,
+        );
+      } catch (err) {
+        // A description that names the answer is refused; the picture still comes across without it.
+        if (!(picture.description && err instanceof ServiceError && err.code === "invalid"))
+          throw err;
+        await uploadCardImage(ctx, picture.cardId, bytes, { version: null }, storage);
+      }
       stored++;
     } catch (err) {
       if (!(err instanceof ServiceError)) throw err;

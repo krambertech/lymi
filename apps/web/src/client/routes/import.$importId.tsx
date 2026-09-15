@@ -118,10 +118,7 @@ function ImportRoute() {
   }
 
   const restart = (
-    <Link
-      to={item.source === "mochi" ? "/import/mochi" : "/import/anki"}
-      className={buttonClass("primary")}
-    >
+    <Link to={`/import/${item.source}`} className={buttonClass("primary")}>
       {t`Choose another file`}
     </Link>
   );

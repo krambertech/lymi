@@ -11,6 +11,8 @@ export type TestBindings = {
   PRIVATE_IMAGES: R2Bucket;
   IMAGES: ImagesBinding;
   IMPORTS: R2Bucket;
+  EXPORTS: R2Bucket;
+  AUDIO: R2Bucket;
 };
 
 const appDir = fileURLToPath(new URL("../../../", import.meta.url));

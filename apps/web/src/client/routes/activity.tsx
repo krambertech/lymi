@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDocumentTitle } from "../lib/document-title";
-import { importsQuery } from "../lib/queries";
+import { exportsQuery, importsQuery } from "../lib/queries";
 import { ActivityView } from "../views/activity-view";
 
 export const Route = createFileRoute("/activity")({
@@ -13,9 +13,11 @@ function ActivityRoute() {
   const { t } = useLingui();
   useDocumentTitle(t`Activity`);
   const imports = useQuery(importsQuery);
+  const exports = useQuery(exportsQuery);
   return (
     <ActivityView
       imports={imports.data}
+      exports={exports.data}
       error={imports.isError}
       onRetry={() => void imports.refetch()}
       retrying={imports.isFetching}

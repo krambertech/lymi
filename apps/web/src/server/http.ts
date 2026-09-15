@@ -70,7 +70,8 @@ type Ok = { status?: number; schema: ZodType; description: string };
  * Access: a GET or HEAD needs any credential; anything else needs the write scope;
  * `learnerOnly` routes need the learner's own session, whatever a key's scope. The learner
  * check runs first so a read key on a learner-only route is not told a write key would help.
- * `open` routes are for callers with no credential at all. They are mounted above
+ * `readScope` routes take any credential whatever their method, for a request that only reads the
+ * learner's data, such as asking for an export. `open` routes are for callers with no credential at all. They are mounted above
  * `authenticate`, so they carry no scope to check and must say so here rather than silently
  * failing the write guard.
  *
@@ -83,11 +84,13 @@ export function describe(
     ok?: Ok | Ok[] | undefined;
     errors?: (400 | 404 | 409 | 503)[] | undefined;
     learnerOnly?: boolean | undefined;
+    /** A non-GET route that the read scope may call. */
+    readScope?: boolean | undefined;
     /** Callable with no session, key or token. Mount these above `authenticate`. */
     open?: boolean | undefined;
   },
 ) {
-  const { ok, errors = [], learnerOnly = false, open = false, ...rest } = spec;
+  const { ok, errors = [], learnerOnly = false, readScope = false, open = false, ...rest } = spec;
   const responses: Responses = {};
   const successes = ok === undefined ? [] : Array.isArray(ok) ? ok : [ok];
   for (const success of successes) {
@@ -110,7 +113,8 @@ export function describe(
   // A fresh function per route: the spec is attached to it, so sharing one would share specs.
   const guarded: MiddlewareHandler<AppEnv> = (c, next) => {
     if (open) return next();
-    return learnerOnly ? requireLearner(c, next) : requireScopeForWrites(c, next);
+    if (learnerOnly) return requireLearner(c, next);
+    return readScope ? next() : requireScopeForWrites(c, next);
   };
   return Object.assign(guarded, { [uniqueSymbol]: specOf(documented) });
 }

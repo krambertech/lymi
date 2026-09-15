@@ -32,6 +32,7 @@ export const e2eAccounts = [
   "anki-import",
   "sections",
   "mochi-import",
+  "export",
   "publisher",
 ];
 

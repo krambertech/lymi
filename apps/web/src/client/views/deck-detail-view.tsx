@@ -89,6 +89,8 @@ export interface DeckDetailProps {
   onReview?: (() => void) | undefined;
   onSettings?: (() => void) | undefined;
   onArchiveDeck?: (() => void) | undefined;
+  /** Opens the export sheet for this deck. */
+  onExport?: (() => void) | undefined;
   /** Opens the series picker. Absent for a member, whose deck belongs to someone else's Library. */
   onMoveToSeries?: (() => void) | undefined;
   /** The owner's series the deck is in, named under the title. */
@@ -597,6 +599,7 @@ export function DeckDetailView({
   onReview,
   onSettings,
   onArchiveDeck,
+  onExport,
   onMoveToSeries,
   seriesName,
   openCardId,
@@ -853,16 +856,9 @@ export function DeckDetailView({
             </DropdownMenuItem>
           </>
         )}
-        <DropdownMenuItem
-          onClick={() => deck && cards && exportCsv(deck.name, cards)}
-          disabled={!deck || !cards?.length}
-        >
+        <DropdownMenuItem onClick={onExport} disabled={!deck || !onExport}>
           <Download />
-          {cards?.some((row) => row.card.image) ? (
-            <Trans>Export as CSV without pictures</Trans>
-          ) : (
-            <Trans>Export as CSV</Trans>
-          )}
+          <Trans>Export</Trans>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>

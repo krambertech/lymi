@@ -20,6 +20,7 @@ import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
+import { exports as exportRoutes } from "./routes/exports";
 import { images } from "./routes/images";
 import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
@@ -30,6 +31,7 @@ import { deckSections, sections } from "./routes/sections";
 import { series } from "./routes/series";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
+import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 
 export type AppEnv = {
@@ -179,6 +181,7 @@ app.route("/api/push", push);
 app.route("/api/audio", audio);
 app.route("/api/avatar", avatar);
 app.route("/api/imports", imports);
+app.route("/api/exports", exportRoutes);
 
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
@@ -206,7 +209,11 @@ export default {
     executionCtx.waitUntil(
       expireImports(createDb(env.DB), env.IMPORTS, new Date(controller.scheduledTime)),
     );
+    executionCtx.waitUntil(
+      expireExports(createDb(env.DB), env.EXPORTS, new Date(controller.scheduledTime)),
+    );
   },
 } satisfies ExportedHandler<Bindings>;
 
+export { ExportWorkflow } from "./exports/workflow";
 export { ImportWorkflow } from "./imports/workflow";

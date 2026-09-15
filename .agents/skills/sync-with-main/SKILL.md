@@ -51,6 +51,16 @@ pnpm --filter @lymi/web build
 git add apps/web/src/client/routeTree.gen.ts
 ```
 
+**`apps/*/src/locales/*.po`** — Lingui catalogs. Never edit conflict markers in a `.po` file; a hand merge duplicates headers and drops translations. Take `main`'s catalogs, regenerate them from the rebased code, then fill the branch's empty `uk` and `ru` entries with the [translate skill](../translate/SKILL.md):
+
+```bash
+git checkout --ours -- 'apps/*/src/locales/*.po'
+pnpm i18n:extract
+git add 'apps/*/src/locales/*.po'
+```
+
+Run extraction after the conflicting source files are resolved, so the catalogs match the code being replayed.
+
 **`apps/web/migrations/meta/_journal.json`** — two branches each added a migration. Keep both entries, in timestamp order, and check that the two migration files have distinct numeric prefixes. If they collide, renumber yours to follow main's and update the journal entry to match. Then run `pnpm db:migrate` against the local D1 and confirm it applies cleanly.
 
 ## What stops for a person

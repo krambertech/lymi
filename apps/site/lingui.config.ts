@@ -11,5 +11,5 @@ export default defineConfig({
       exclude: ["**/*.test.ts", "**/locales/**"],
     },
   ],
-  format: formatter({ lineNumbers: false }),
+  format: formatter({ lineNumbers: false, origins: false }),
 });

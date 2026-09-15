@@ -11,5 +11,5 @@ export default defineConfig({
       exclude: ["**/*.test.ts", "**/routeTree.gen.ts", "**/client/design/**", "**/routes/design.*"],
     },
   ],
-  format: formatter({ lineNumbers: false }),
+  format: formatter({ lineNumbers: false, origins: false }),
 });

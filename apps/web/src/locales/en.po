@@ -16,2468 +16,1794 @@ msgstr ""
 #. placeholder {0}: today.goal
 #. placeholder {1}: today.attempts
 #. placeholder {2}: today.attempts
-#: src/client/components/streak.tsx
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
 #. placeholder {0}: deck.total
-#: src/client/views/join-view.tsx
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
 
 #. placeholder {0}: decks.length
-#: src/client/views/library-view.tsx
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 
 #. placeholder {0}: today.attempts
-#: src/client/components/streak.tsx
 msgid "{0, plural, one {# review} other {# reviews}}"
 msgstr "{0, plural, one {# review} other {# reviews}}"
 
 #. placeholder {0}: reviews.length
 #. placeholder {1}: day(start)
-#: src/client/components/review-timeline.tsx
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# review} other {# reviews}} since {1}"
 
 #. placeholder {0}: d.due
-#: src/client/views/today-view.tsx
 msgid "{0, plural, one {card due} other {cards due}}"
 msgstr "{0, plural, one {card due} other {cards due}}"
 
 #. placeholder {0}: 0
 #. placeholder {0}: cards.total
-#: src/client/views/insights-view.tsx
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {card} other {cards}}"
 
 #. placeholder {0}: run ?? 0
 #. placeholder {0}: summary.current
-#: src/client/components/streak.tsx
-#: src/client/views/review-view.tsx
 msgid "{0, plural, one {day in a row} other {days in a row}}"
 msgstr "{0, plural, one {day in a row} other {days in a row}}"
 
 #. placeholder {0}: fsrs.lapses
-#: src/client/views/word-view.tsx
 msgid "{0, plural, one {Forgot once} other {Forgot # times}}"
 msgstr "{0, plural, one {Forgot once} other {Forgot # times}}"
 
 #. placeholder {0}: consistency.longestRun
-#: src/client/views/insights-view.tsx
 msgid "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {Longest run # days. Unbroken stretches join up.}}"
 msgstr "{0, plural, one {Longest run # day. Unbroken stretches join up.} other {Longest run # days. Unbroken stretches join up.}}"
 
 #. placeholder {0}: Number(draft) || 0
-#: src/client/components/goal-picker.tsx
 msgid "{0, plural, one {review} other {reviews}}"
 msgstr "{0, plural, one {review} other {reviews}}"
 
 #. placeholder {0}: history.length - HISTORY_ROWS
-#: src/client/views/word-view.tsx
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {1}: item.next
-#: src/client/views/word-view.tsx
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
 
 #. placeholder {0}: lastUsed(i18n, item.lastRequest)
 #. placeholder {1}: shortDate(i18n, item.createdAt)
-#: src/client/components/api-keys-section.tsx
 msgid "{0} · created {1}"
 msgstr "{0} · created {1}"
 
 #. placeholder {0}: c.lapses
 #. placeholder {1}: c.reviews
-#: src/client/views/insights-view.tsx
 msgid "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 msgstr "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 
 #. placeholder {0}: outcome.existing.term
 #. placeholder {1}: outcome.deckName
-#: src/client/components/add-card-sheet.tsx
 msgid "{0} is already in {1}"
 msgstr "{0} is already in {1}"
 
 #. placeholder {0}: cards.known
-#: src/client/views/insights-view.tsx
 msgid "{0} known"
 msgstr "{0} known"
 
 #. placeholder {0}: cards.learning
-#: src/client/views/insights-view.tsx
 msgid "{0} learning"
 msgstr "{0} learning"
 
 #. placeholder {0}: cards.new
-#: src/client/views/insights-view.tsx
 msgid "{0} new"
 msgstr "{0} new"
 
 #. placeholder {0}: cards.new
 #. placeholder {1}: cards.learning
 #. placeholder {2}: cards.known
-#: src/client/views/insights-view.tsx
 msgid "{0} new, {1} learning, {2} known"
 msgstr "{0} new, {1} learning, {2} known"
 
 #. placeholder {0}: recall.passed
 #. placeholder {1}: recall.failed
-#: src/client/views/insights-view.tsx
 msgid "{0} remembered, {1} forgotten."
 msgstr "{0} remembered, {1} forgotten."
 
 #. placeholder {0}: deck.owner.name
-#: src/client/views/join-view.tsx
 msgid "{0} shared a deck"
 msgstr "{0} shared a deck"
 
-#: src/client/views/connected-view.tsx
 msgid "{appName} is connected"
 msgstr "{appName} is connected"
 
-#: src/client/views/connected-view.tsx
 msgid "{appName} was not connected"
 msgstr "{appName} was not connected"
 
-#: src/client/views/library-view.tsx
 msgid "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
 msgstr "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
 
-#: src/client/views/review-view.tsx
 msgid "{attempts, plural, one {# review today} other {# reviews today}}"
 msgstr "{attempts, plural, one {# review today} other {# reviews today}}"
 
-#: src/client/views/review-view.tsx
 msgid "{attempts} of {goal} reviews today"
 msgstr "{attempts} of {goal} reviews today"
 
-#: src/client/components/new-cards-row.tsx
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# new} other {# new}}"
 
-#: src/client/components/streak-calendar.tsx
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
 
-#: src/client/views/review-view.tsx
 msgid "{count, plural, one {review in this round} other {reviews in this round}}"
 msgstr "{count, plural, one {review in this round} other {reviews in this round}}"
 
-#: src/client/views/review-view.tsx
 msgid "{count, plural, one {review today} other {reviews today}}"
 msgstr "{count, plural, one {review today} other {reviews today}}"
 
-#: src/client/components/streak.tsx
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {day in a row} other {days in a row}}"
 
-#: src/client/components/start-guide.tsx
 msgid "{current} of 3 done"
 msgstr "{current} of 3 done"
 
-#: src/client/components/seven-lights.tsx
 msgid "{day} none"
 msgstr "{day} none"
 
-#: src/client/components/seven-lights.tsx
 msgid "{day}: {n} reviewed"
 msgstr "{day}: {n} reviewed"
 
-#: src/client/components/streak-calendar.tsx
 msgid "{day}: {reviews}, goal missed"
 msgstr "{day}: {reviews}, goal missed"
 
-#: src/client/components/streak-calendar.tsx
 msgid "{day}: goal reached, {reviews}"
 msgstr "{day}: goal reached, {reviews}"
 
-#: src/client/components/streak-calendar.tsx
 msgid "{day}: no reviews"
 msgstr "{day}: no reviews"
 
-#: src/client/components/streak-calendar.tsx
 msgid "{day}: nothing due"
 msgstr "{day}: nothing due"
 
-#: src/client/views/word-view.tsx
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# day} other {# days}}"
 
-#: src/client/views/word-view.tsx
 msgid "{days, plural, one {In # day} other {In # days}}"
 msgstr "{days, plural, one {In # day} other {In # days}}"
 
-#: src/client/views/insights-view.tsx
 msgid "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
 msgstr "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
 
-#: src/client/views/insights-view.tsx
 msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 msgstr "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 
-#: src/client/components/deck-card.tsx
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# due today} other {# due today}}"
 
-#: src/client/views/today-view.tsx
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "{due, plural, one {card due now} other {cards due now}}"
 msgstr "{due, plural, one {card due now} other {cards due now}}"
 
-#: src/client/views/today-view.tsx
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {card due today} other {cards due today}}"
 
-#: src/server/push-delivery.ts
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 
-#: src/client/views/insights-view.tsx
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 
-#: src/client/views/insights-view.tsx
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 
-#: src/client/views/review-view.tsx
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
 
-#: src/client/components/month-bars.tsx
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}}"
 msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
 
-#: src/client/components/month-bars.tsx
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 
-#: src/client/components/streak.tsx
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 msgstr "{members, plural, one {Nobody new can join. The one person who joined keeps studying.} other {Nobody new can join. The # people who joined keep studying.}}"
 
-#: src/client/views/word-view.tsx
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# month} other {# months}}"
 
-#: src/client/views/word-view.tsx
 msgid "{months, plural, one {In # month} other {In # months}}"
 msgstr "{months, plural, one {In # month} other {In # months}}"
 
-#: src/client/components/goal-picker.tsx
-#: src/client/views/deck-detail-view.tsx
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
-#: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
 msgstr "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
 
-#: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{n, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 
-#: src/client/views/review-view.tsx
 msgid "{n, plural, one {Review # more card} other {Review # more cards}}"
 msgstr "{n, plural, one {Review # more card} other {Review # more cards}}"
 
-#: src/client/lib/document-title.ts
 msgid "{name} · Lymi"
 msgstr "{name} · Lymi"
 
-#: src/client/lib/use-sign-out.tsx
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 
-#: src/client/components/deck-card.tsx
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
-#: src/server/join-page.ts
 msgid "{total, plural, one {# card} other {# cards}} from {owner}. Join to review them on your own schedule."
 msgstr "{total, plural, one {# card} other {# cards}} from {owner}. Join to review them on your own schedule."
 
 #. placeholder {0}: 30
 #. placeholder {0}: consistency.days.length
-#: src/client/views/insights-view.tsx
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
 
-#: src/client/views/review-view.tsx
 msgid "<0/> of {size}"
 msgstr "<0/> of {size}"
 
-#: src/client/components/api-keys-section.tsx
 msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
 msgstr "<0>{name}</0> is ready. Copy it now. It is not shown again."
 
-#: src/client/views/insights-view.tsx
 msgid "30 days"
 msgstr "30 days"
 
-#: src/client/views/insights-view.tsx
 msgid "90 days"
 msgstr "90 days"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "A card lands in a deck. Create the first one and this card goes in it."
 msgstr "A card lands in a deck. Create the first one and this card goes in it."
 
-#: src/client/views/word-view.tsx
 msgid "a connected app"
 msgstr "a connected app"
 
-#: src/client/views/word-view.tsx
 msgid "a day"
 msgstr "a day"
 
-#: src/server/push-delivery.ts
 msgid "A few cards are ready"
 msgstr "A few cards are ready"
 
-#: src/client/views/word-view.tsx
 msgid "a field"
 msgstr "a field"
 
-#: src/client/components/api-keys-section.tsx
 msgid "A key lets a script or curl read your decks, or add to them."
 msgstr "A key lets a script or curl read your decks, or add to them."
 
-#: src/client/components/api-keys-section.tsx
 msgid "A key never grades reviews."
 msgstr "A key never grades reviews."
 
-#: src/client/views/deck-settings-view.tsx
 msgid "A note to yourself about what is in here."
 msgstr "A note to yourself about what is in here."
 
-#: src/client/components/notifications-section.tsx
 msgid "A notification on this device when cards are due."
 msgstr "A notification on this device when cards are due."
 
-#: src/client/views/word-view.tsx
 msgid "A sentence it lives in"
 msgstr "A sentence it lives in"
 
-#: src/client/views/join-view.tsx
 msgid "About this deck"
 msgstr "About this deck"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Access"
 msgstr "Access"
 
-#: src/client/components/account-section.tsx
 msgid "Account"
 msgstr "Account"
 
-#: src/client/components/learner-menu.tsx
-#: src/client/routes/activity.tsx
-#: src/client/views/shell.tsx
 msgid "Activity"
 msgstr "Activity"
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/components/add-menu.tsx
 msgid "Add"
 msgstr "Add"
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/components/shortcuts-dialog.tsx
-#: src/client/components/start-guide.tsx
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/insights-view.tsx
-#: src/client/views/today-view.tsx
 msgid "Add a card"
 msgstr "Add a card"
 
-#: src/client/views/word-view.tsx
 msgid "Add a meaning"
 msgstr "Add a meaning"
 
-#: src/client/views/word-view.tsx
 msgid "Add a sentence it lives in"
 msgstr "Add a sentence it lives in"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Add card"
 msgstr "Add card"
 
-#: src/client/routes/review.tsx
-#: src/client/views/today-view.tsx
 msgid "Add cards"
 msgstr "Add cards"
 
-#: src/client/views/insights-view.tsx
 msgid "Add cards and review them, and these fill in."
 msgstr "Add cards and review them, and these fill in."
 
-#: src/client/components/start-guide.tsx
 msgid "Add cards from your last lesson"
 msgstr "Add cards from your last lesson"
 
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/today-view.tsx
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Add cards from your last lesson, then review them here."
 
-#: src/client/components/start-guide.tsx
-#: src/client/views/deck-detail-view.tsx
 msgid "Add cards with the API"
 msgstr "Add cards with the API"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
 msgstr "Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks."
 
-#: src/client/components/install-dialog.tsx
 msgid "Add Lymi to your Home Screen"
 msgstr "Add Lymi to your Home Screen"
 
-#: src/client/components/notifications-section.tsx
 msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 msgstr "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 
-#: src/client/views/today-view.tsx
 msgid "Add some from your next lesson"
 msgstr "Add some from your next lesson"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Add to {deckName}"
 msgstr "Add to {deckName}"
 
-#: src/client/views/consent-view.tsx
 msgid "Add, edit and archive cards"
 msgstr "Add, edit and archive cards"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Added “{added}”"
 msgstr "Added “{added}”"
 
-#: src/client/components/review-timeline.tsx
 msgid "Added today"
 msgstr "Added today"
 
-#: src/client/components/deck-fields.tsx
 msgid "Adding a way asks every card in the deck that way, starting now. Taking one away keeps its progress; it just stops being asked."
 msgstr "Adding a way asks every card in the deck that way, starting now. Taking one away keeps its progress; it just stops being asked."
 
-#: src/client/views/insights-view.tsx
 msgid "Ahead"
 msgstr "Ahead"
 
-#: src/client/components/chip.tsx
 msgid "AI example"
 msgstr "AI example"
 
-#: src/client/components/chip.tsx
 msgid "AI meaning"
 msgstr "AI meaning"
 
-#: src/client/components/chip.tsx
-#: src/client/views/word-view.tsx
 msgid "AI wrote this"
 msgstr "AI wrote this"
 
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/insights-view.tsx
 msgid "All"
 msgstr "All"
 
-#: src/client/views/consent-view.tsx
 msgid "Allow"
 msgstr "Allow"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
 
-#: src/client/views/consent-view.tsx
 msgid "Always"
 msgstr "Always"
 
-#: src/client/components/app-mark.tsx
 msgid "An app"
 msgstr "An app"
 
-#: src/client/components/connection.tsx
 msgid "an app with no address"
 msgstr "an app with no address"
 
-#: src/client/components/account-section.tsx
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Animated images can’t be used. Choose a still image."
 
-#: src/client/views/review-view.tsx
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 msgstr "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 
-#: src/client/views/join-view.tsx
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
 
-#: src/client/views/word-view.tsx
 msgid "Anything to remember it by"
 msgstr "Anything to remember it by"
 
-#: src/client/components/api-keys-section.tsx
 msgid "API key for {name}"
 msgstr "API key for {name}"
 
-#: src/client/components/api-keys-section.tsx
 msgid "API keys"
 msgstr "API keys"
 
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/deck-settings-view.tsx
-#: src/client/views/word-view.tsx
 msgid "Archive"
 msgstr "Archive"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Archive deck"
 msgstr "Archive deck"
 
-#: src/client/components/learner-menu.tsx
-#: src/client/routes/archived.tsx
-#: src/client/views/library-view.tsx
-#: src/client/views/word-view.tsx
 msgid "Archived"
 msgstr "Archived"
 
-#: src/client/routes/library.$deckId.tsx
 msgid "Archived “{archivedTerm}”"
 msgstr "Archived “{archivedTerm}”"
 
-#: src/client/lib/use-archive-deck.ts
 msgid "Archived “{deckName}”"
 msgstr "Archived “{deckName}”"
 
-#: src/client/views/join-view.tsx
-#: src/server/join-page.ts
 msgid "Ask the person who shared it for a new link."
 msgstr "Ask the person who shared it for a new link."
 
 #. placeholder {0}: listOf( schedules.map((x) => i18n._(modeLabel(x.st.mode)).toLocaleLowerCase(i18n.locale)), i18n.locale, )
-#: src/client/views/word-view.tsx
 msgid "asked by {0}"
 msgstr "asked by {0}"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "Assistants that signed in to Lymi, such as Claude or ChatGPT."
 msgstr "Assistants that signed in to Lymi, such as Claude or ChatGPT."
 
-#: src/client/components/notifications-section.tsx
 msgid "At {savedTime}, {zone} time, only on days with cards due."
 msgstr "At {savedTime}, {zone} time, only on days with cards due."
 
-#: src/client/routes/review.tsx
 msgid "Back"
 msgstr "Back"
 
-#: src/client/views/word-view.tsx
 msgid "back later today"
 msgstr "back later today"
 
-#: src/client/views/word-view.tsx
 msgid "back the same day"
 msgstr "back the same day"
 
-#: src/client/components/streak.tsx
 msgid "Back to streak"
 msgstr "Back to streak"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Backup script on the laptop"
 msgstr "Backup script on the laptop"
 
-#: src/client/components/deck-fields.tsx
 msgid "Both"
 msgstr "Both"
 
-#: src/client/components/deck-fields.tsx
 msgid "Both of the above, one card at a time."
 msgstr "Both of the above, one card at a time."
 
-#: src/client/components/deck-fields.tsx
 msgid "Both ways"
 msgstr "Both ways"
 
-#: src/client/views/word-view.tsx
 msgid "by {who}"
 msgstr "by {who}"
 
 #. placeholder {0}: app.claimed
-#: src/client/components/connected-apps-section.tsx
 msgid "calls itself “{0}”"
 msgstr "calls itself “{0}”"
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/components/api-keys-section.tsx
-#: src/client/components/avatar-editor.tsx
-#: src/client/components/new-deck-sheet.tsx
-#: src/client/views/deck-detail-view.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/client/routes/library.$deckId.tsx
 msgid "Card"
 msgstr "Card"
 
-#: src/client/views/word-view.tsx
 msgid "Card added"
 msgstr "Card added"
 
-#: src/client/views/word-view.tsx
 msgid "Card added, meaning from the lesson"
 msgstr "Card added, meaning from the lesson"
 
-#: src/client/views/word-view.tsx
 msgid "Card options"
 msgstr "Card options"
 
-#: src/client/views/insights-view.tsx
 msgid "Cards"
 msgstr "Cards"
 
-#: src/client/routes/archived.tsx
 msgid "Cards and decks you archived. Restore puts them back."
 msgstr "Cards and decks you archived. Restore puts them back."
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
 
-#: src/client/components/card-stream.tsx
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
 
-#: src/client/components/streak.tsx
 msgid "Change daily goal"
 msgstr "Change daily goal"
 
-#: src/client/components/account-section.tsx
 msgid "Change photo"
 msgstr "Change photo"
 
-#: src/client/views/join-view.tsx
-#: src/server/join-page.ts
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Check that the whole link was copied, or ask for a new one."
 
-#: src/client/components/empty-state.tsx
 msgid "Check your connection and try again."
 msgstr "Check your connection and try again."
 
-#: src/client/components/notifications-section.tsx
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Choose 00, 15, 30 or 45 minutes."
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Choose a deck for it to go in."
 msgstr "Choose a deck for it to go in."
 
-#: src/client/views/review-view.tsx
 msgid "Choose a recall grade"
 msgstr "Choose a recall grade"
 
-#: src/client/components/goal-picker.tsx
 msgid "Choose a whole number from 1 to 200."
 msgstr "Choose a whole number from 1 to 200."
 
-#: src/client/components/account-section.tsx
 msgctxt "photo"
 msgid "Choose new…"
 msgstr "Choose new…"
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/views/settings-view.tsx
 msgid "Choose one"
 msgstr "Choose one"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Clear search"
 msgstr "Clear search"
 
-#: src/client/components/install-dialog.tsx
-#: src/client/components/shortcuts-dialog.tsx
-#: src/client/components/streak.tsx
-#: src/client/views/word-view.tsx
 msgid "Close"
 msgstr "Close"
 
-#: src/client/views/review-view.tsx
 msgid "Come back later, or add something new."
 msgstr "Come back later, or add something new."
 
-#: src/client/views/coming-soon-view.tsx
 msgid "Coming soon"
 msgstr "Coming soon"
 
-#: src/client/routes/consent.tsx
 msgid "Connect {appName}"
 msgstr "Connect {appName}"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Connect Lymi, paste the lesson, and ask for the cards"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "connected {connected}"
 msgstr "connected {connected}"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "Connected apps"
 msgstr "Connected apps"
 
-#: src/client/views/insights-view.tsx
 msgid "Consistency"
 msgstr "Consistency"
 
-#: src/client/views/login-view.tsx
 msgid "Continue to {appName}"
 msgstr "Continue to {appName}"
 
-#: src/client/views/login-view.tsx
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
-#: src/client/components/copy-field.tsx
 msgid "Copied"
 msgstr "Copied"
 
-#: src/client/components/copy-field.tsx
 msgid "Copy"
 msgstr "Copy"
 
-#: src/client/routes/join.$token.tsx
 msgid "Could not join. Check your connection and try again."
 msgstr "Could not join. Check your connection and try again."
 
-#: src/client/routes/library.$deckId.settings.tsx
 msgid "Could not load the join link."
 msgstr "Could not load the join link."
 
-#: src/client/routes/library.$deckId.settings.tsx
 msgid "Could not turn off the join link. Try again."
 msgstr "Could not turn off the join link. Try again."
 
-#: src/client/routes/library.$deckId.settings.tsx
 msgid "Could not turn on the join link. Try again."
 msgstr "Could not turn on the join link. Try again."
 
-#: src/client/routes/review.tsx
 msgid "Couldn’t check for more cards"
 msgstr "Couldn’t check for more cards"
 
-#: src/client/components/notifications-section.tsx
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Couldn’t check this device. Reload to try again."
 
-#: src/client/views/insights-view.tsx
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
 
-#: src/client/components/card-picture.tsx
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
 
-#: src/client/views/review-view.tsx
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
 
-#: src/client/routes/library.$deckId.tsx
-#: src/client/routes/review.tsx
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Couldn’t play the pronunciation. Try again in a moment."
 
-#: src/client/components/account-section.tsx
-#: src/client/lib/api.ts
-#: src/client/routes/consent.tsx
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Couldn’t reach Lymi. Check your connection and try again."
 
-#: src/client/routes/login.tsx
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
 
-#: src/client/routes/library.$deckId.tsx
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
 
-#: src/client/routes/review.tsx
 msgid "Couldn’t save that grade. Try again."
 msgstr "Couldn’t save that grade. Try again."
 
-#: src/client/views/settings-view.tsx
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
 
-#: src/client/components/account-section.tsx
 msgid "Couldn’t save the photo. Try again."
 msgstr "Couldn’t save the photo. Try again."
 
-#: src/client/components/notifications-section.tsx
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Couldn’t save the reminder. Check your connection and try again."
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Create a key in Settings"
 msgstr "Create a key in Settings"
 
-#: src/client/components/new-deck-sheet.tsx
 msgid "Create deck"
 msgstr "Create deck"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Create key"
 msgstr "Create key"
 
-#: src/client/views/consent-view.tsx
 msgid "Create or read API keys"
 msgstr "Create or read API keys"
 
-#: src/client/components/goal-picker.tsx
 msgid "Custom"
 msgstr "Custom"
 
-#: src/client/components/goal-picker.tsx
-#: src/client/components/streak.tsx
 msgid "Daily goal"
 msgstr "Daily goal"
 
-#: src/client/views/review-view.tsx
 msgid "Daily goal progress"
 msgstr "Daily goal progress"
 
-#: src/client/views/review-view.tsx
 msgid "Daily goal reached"
 msgstr "Daily goal reached"
 
-#: src/client/components/streak.tsx
 msgid "Daily goal reached."
 msgstr "Daily goal reached."
 
-#: src/client/components/notifications-section.tsx
 msgid "Daily reminder"
 msgstr "Daily reminder"
 
-#: src/client/views/settings-view.tsx
 msgid "Dark"
 msgstr "Dark"
 
-#: src/client/components/streak.tsx
 msgid "Days reviewed"
 msgstr "Days reviewed"
 
-#: src/client/components/month-bars.tsx
 msgid "Days reviewed each month"
 msgstr "Days reviewed each month"
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/lib/use-archive-deck.ts
-#: src/client/views/deck-settings-view.tsx
 msgid "Deck"
 msgstr "Deck"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Deck options"
 msgstr "Deck options"
 
-#: src/client/routes/library.$deckId.settings.tsx
-#: src/client/views/deck-settings-view.tsx
 msgid "Deck settings"
 msgstr "Deck settings"
 
-#: src/client/views/shell.tsx
 msgid "Decks"
 msgstr "Decks"
 
-#: src/client/views/today-view.tsx
 msgid "Decks to review"
 msgstr "Decks to review"
 
-#: src/client/views/consent-view.tsx
 msgid "Deny"
 msgstr "Deny"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Description"
 msgstr "Description"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "Disconnect"
 msgstr "Disconnect"
 
-#: src/client/routes/__root.tsx
 msgid "Dismiss"
 msgstr "Dismiss"
 
-#: src/client/components/learner-menu.tsx
 msgid "Docs"
 msgstr "Docs"
 
-#: src/client/components/api-keys-section.tsx
-#: src/client/components/start-guide.tsx
-#: src/client/routes/review.tsx
-#: src/client/views/word-view.tsx
 msgid "Done"
 msgstr "Done"
 
-#: src/client/components/avatar-editor.tsx
 msgid "Drag or use the arrow keys to move the photo."
 msgstr "Drag or use the arrow keys to move the photo."
 
-#: src/client/components/avatar-editor.tsx
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Drag to move the photo. Pinch or use the slider to zoom."
 
-#: src/client/views/word-view.tsx
 msgid "Due now"
 msgstr "Due now"
 
-#: src/client/views/insights-view.tsx
 msgid "due this week"
 msgstr "due this week"
 
-#: src/client/views/insights-view.tsx
 msgid "Each block is a day. They join up when you keep going."
 msgstr "Each block is a day. They join up when you keep going."
 
-#: src/client/components/grade.tsx
 msgid "Easy"
 msgstr "Easy"
 
-#: src/client/views/word-view.tsx
 msgid "Edit"
 msgstr "Edit"
 
 #. placeholder {0}: label.toLocaleLowerCase(i18n.locale)
-#: src/client/views/word-view.tsx
 msgid "Edit {0}"
 msgstr "Edit {0}"
 
-#: src/client/views/word-view.tsx
 msgid "Edited {list}"
 msgstr "Edited {list}"
 
-#: src/client/views/word-view.tsx
 msgid "Enriched {list}"
 msgstr "Enriched {list}"
 
-#: src/client/components/deck-fields.tsx
 msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
 
-#: src/client/routes/activity.tsx
 msgid "Every change a connected app, an API key or the AI made, by day."
 msgstr "Every change a connected app, an API key or the AI made, by day."
 
-#: src/client/views/word-view.tsx
 msgid "Example"
 msgstr "Example"
 
-#: src/client/components/chip.tsx
 msgid "Example by you"
 msgstr "Example by you"
 
-#: src/client/views/word-view.tsx
 msgid "Example changed to “{value}”"
 msgstr "Example changed to “{value}”"
 
-#: src/client/components/chip.tsx
 msgid "Example from lesson"
 msgstr "Example from lesson"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Export as CSV"
 msgstr "Export as CSV"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Export as CSV without pictures"
 msgstr "Export as CSV without pictures"
 
-#: src/client/components/api-keys-section.tsx
 msgid "For scripts and curl. An assistant signs in instead, under Connected apps."
 msgstr "For scripts and curl. An assistant signs in instead, under Connected apps."
 
-#: src/client/views/settings-view.tsx
 msgid "For the interface, and for the meanings the AI writes."
 msgstr "For the interface, and for the meanings the AI writes."
 
-#: src/client/components/grade.tsx
 msgid "Forgot"
 msgstr "Forgot"
 
-#: src/client/components/chip.tsx
 msgid "Forgot recently"
 msgstr "Forgot recently"
 
-#: src/client/views/today-view.tsx
 msgid "Forgot today"
 msgstr "Forgot today"
 
-#: src/client/components/shortcuts-dialog.tsx
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Forgot, Hard, Good, Easy"
 
 #. placeholder {0}: leeches.lapses
-#: src/client/views/insights-view.tsx
 msgid "Forgotten {0}+ times"
 msgstr "Forgotten {0}+ times"
 
-#: src/client/views/today-view.tsx
 msgid "Forgotten {SLIPPING_LAPSES} or more times"
 msgstr "Forgotten {SLIPPING_LAPSES} or more times"
 
-#: src/client/components/chip.tsx
-#: src/client/views/word-view.tsx
 msgid "From the lesson"
 msgstr "From the lesson"
 
-#: src/client/components/start-guide.tsx
 msgid "Getting started"
 msgstr "Getting started"
 
-#: src/client/components/new-deck-sheet.tsx
 msgid "Give the deck a name."
 msgstr "Give the deck a name."
 
-#: src/client/views/join-view.tsx
 msgid "Go to Lymi"
 msgstr "Go to Lymi"
 
-#: src/client/components/grade.tsx
 msgid "Good"
 msgstr "Good"
 
-#: src/client/views/consent-view.tsx
 msgid "Grade your reviews or change your progress"
 msgstr "Grade your reviews or change your progress"
 
-#: src/client/views/today-view.tsx
 msgid "Graded Forgot today"
 msgstr "Graded Forgot today"
 
-#: src/client/views/consent-view.tsx
 msgid "Granting as <0>{email}</0>"
 msgstr "Granting as <0>{email}</0>"
 
-#: src/client/components/grade.tsx
 msgid "Hard"
 msgstr "Hard"
 
-#: src/client/views/connected-view.tsx
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
 
-#: src/client/views/word-view.tsx
 msgid "History"
 msgstr "History"
 
-#: src/client/components/deck-fields.tsx
 msgid "How cards are asked"
 msgstr "How cards are asked"
 
-#: src/client/views/insights-view.tsx
 msgid "How far back the recall figure looks"
 msgstr "How far back the recall figure looks"
 
-#: src/client/views/word-view.tsx
 msgid "how it is asked"
 msgstr "how it is asked"
 
-#: src/client/views/insights-view.tsx
 msgid "How many cards come back this week"
 msgstr "How many cards come back this week"
 
-#: src/client/components/streak.tsx
 msgid "How many reviews keep your streak each day. Every grade counts, including Forgot and a card you see again."
 msgstr "How many reviews keep your streak each day. Every grade counts, including Forgot and a card you see again."
 
-#: src/client/views/insights-view.tsx
 msgid "How often you remember a card when it comes back"
 msgstr "How often you remember a card when it comes back"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "How to connect"
 msgstr "How to connect"
 
-#: src/client/components/deck-fields.tsx
-#: src/client/views/deck-settings-view.tsx
 msgid "How you are asked"
 msgstr "How you are asked"
 
-#: src/client/components/connection.tsx
 msgid "Identified by"
 msgstr "Identified by"
 
-#: src/client/components/learner-menu.tsx
-#: src/client/routes/insights.tsx
-#: src/client/views/insights-view.tsx
-#: src/client/views/shell.tsx
 msgid "Insights"
 msgstr "Insights"
 
-#: src/client/components/start-guide.tsx
 msgid "Insights fill in from your first review."
 msgstr "Insights fill in from your first review."
 
-#: src/client/views/insights-view.tsx
 msgid "Insights start after your first review"
 msgstr "Insights start after your first review"
 
-#: src/client/components/install-dialog.tsx
-#: src/client/components/learner-menu.tsx
 msgid "Install Lymi"
 msgstr "Install Lymi"
 
-#: src/client/components/goal-picker.tsx
 msgctxt "daily goal"
 msgid "Intense"
 msgstr "Intense"
 
-#: src/client/views/consent-view.tsx
 msgid "It calls itself “{claimed}”. Lymi cannot check that. The address above is the part that is checked."
 msgstr "It calls itself “{claimed}”. Lymi cannot check that. The address above is the part that is checked."
 
-#: src/client/views/connected-view.tsx
 msgid "It can read your cards, and add, edit and archive them."
 msgstr "It can read your cards, and add, edit and archive them."
 
-#: src/client/views/connected-view.tsx
 msgid "It can read your decks and cards. It cannot change anything."
 msgstr "It can read your decks and cards. It cannot change anything."
 
-#: src/client/views/join-view.tsx
 msgid "Join"
 msgstr "Join"
 
-#: src/server/join-page.ts
 msgid "Join {name} on Lymi"
 msgstr "Join {name} on Lymi"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Join link"
 msgstr "Join link"
 
-#: src/client/views/join-view.tsx
 msgid "Join with Google"
 msgstr "Join with Google"
 
-#: src/client/components/goal-picker.tsx
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Keep key"
 msgstr "Keep key"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Keep sharing"
 msgstr "Keep sharing"
 
-#: src/client/components/new-deck-sheet.tsx
 msgid "Keep the language tag under 12 characters."
 msgstr "Keep the language tag under 12 characters."
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Keep the meaning under 1000 characters."
 msgstr "Keep the meaning under 1000 characters."
 
-#: src/client/components/api-keys-section.tsx
 msgid "Keep the name under 32 characters."
 msgstr "Keep the name under 32 characters."
 
-#: src/client/components/new-deck-sheet.tsx
 msgid "Keep the name under 80 characters."
 msgstr "Keep the name under 80 characters."
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
 
-#: src/client/views/insights-view.tsx
-#: src/client/views/today-view.tsx
 msgid "Keeps slipping"
 msgstr "Keeps slipping"
 
-#: src/client/components/learner-menu.tsx
-#: src/client/components/shortcuts-dialog.tsx
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
-#: src/client/components/state-mark.tsx
 msgid "Known"
 msgstr "Known"
 
-#: src/client/components/deck-fields.tsx
-#: src/client/views/settings-view.tsx
 msgid "Language"
 msgstr "Language"
 
 #. placeholder {0}: languageName(next, i18n.locale)
-#: src/client/views/word-view.tsx
 msgid "Language changed to {0}"
 msgstr "Language changed to {0}"
 
-#: src/client/views/word-view.tsx
 msgid "Later today"
 msgstr "Later today"
 
-#: src/client/components/state-mark.tsx
 msgid "Learning"
 msgstr "Learning"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Leave it empty and AI can fill it in later."
 msgstr "Leave it empty and AI can fill it in later."
 
-#: src/client/views/review-view.tsx
 msgid "Leave review"
 msgstr "Leave review"
 
-#: src/client/components/shortcuts-dialog.tsx
 msgid "Leave review or close a sheet"
 msgstr "Leave review or close a sheet"
 
-#: src/client/components/new-deck-sheet.tsx
 msgid "Lesson 15"
 msgstr "Lesson 15"
 
-#: src/client/views/consent-view.tsx
 msgid "Let {appName} use your Lymi?"
 msgstr "Let {appName} use your Lymi?"
 
-#: src/client/components/pill-nav.tsx
-#: src/client/routes/library.tsx
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/library-view.tsx
-#: src/client/views/shell.tsx
-#: src/client/views/today-view.tsx
 msgid "Library"
 msgstr "Library"
 
-#: src/client/views/settings-view.tsx
 msgid "Light"
 msgstr "Light"
 
-#: src/client/components/goal-picker.tsx
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Light"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Link off"
 msgstr "Link off"
 
-#: src/client/views/consent-view.tsx
 msgid "List, search and read them. Any connector needs this."
 msgstr "List, search and read them. Any connector needs this."
 
-#: src/client/components/api-keys-section.tsx
 msgid "Lists and searches decks and cards."
 msgstr "Lists and searches decks and cards."
 
-#: src/client/components/streak.tsx
 msgid "Longest streak"
 msgstr "Longest streak"
 
-#: src/client/views/word-view.tsx
 msgid "Lymi"
 msgstr "Lymi"
 
-#: src/client/views/consent-view.tsx
 msgid "Lymi does not recognise this app. Check the address is one you meant to use."
 msgstr "Lymi does not recognise this app. Check the address is one you meant to use."
 
-#: src/client/components/auth-frame.tsx
-#: src/client/views/join-view.tsx
 msgid "Lymi home"
 msgstr "Lymi home"
 
-#: src/client/components/pill-nav.tsx
 msgid "Main"
 msgstr "Main"
 
-#: src/client/components/start-guide.tsx
 msgid "Make a deck"
 msgstr "Make a deck"
 
-#: src/client/components/start-guide.tsx
-#: src/client/views/library-view.tsx
-#: src/client/views/today-view.tsx
 msgid "Make one for each course or topic. Every card goes in a deck."
 msgstr "Make one for each course or topic. Every card goes in a deck."
 
-#: src/client/routes/consent.tsx
 msgid "Manage connected apps"
 msgstr "Manage connected apps"
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/views/word-view.tsx
 msgid "Meaning"
 msgstr "Meaning"
 
-#: src/client/components/chip.tsx
 msgid "Meaning by you"
 msgstr "Meaning by you"
 
-#: src/client/views/word-view.tsx
 msgid "Meaning changed to “{value}”"
 msgstr "Meaning changed to “{value}”"
 
-#: src/client/components/chip.tsx
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
 
-#: src/client/views/word-view.tsx
 msgid "Mode"
 msgstr "Mode"
 
-#: src/client/views/insights-view.tsx
 msgid "Month by month"
 msgstr "Month by month"
 
-#: src/client/views/today-view.tsx
 msgid "More to review"
 msgstr "More to review"
 
 #. placeholder {0}: card.term
-#: src/client/views/word-view.tsx
 msgid "Move “{0}” to"
 msgstr "Move “{0}” to"
 
-#: src/client/views/word-view.tsx
 msgid "Move to…"
 msgstr "Move to…"
 
-#: src/client/views/word-view.tsx
 msgid "Moved to another deck"
 msgstr "Moved to another deck"
 
-#: src/client/components/api-keys-section.tsx
-#: src/client/components/new-deck-sheet.tsx
-#: src/client/views/deck-settings-view.tsx
 msgid "Name"
 msgstr "Name"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Name the key, so you know which one to revoke later."
 
-#: src/client/views/login-view.tsx
 msgid "Need an invitation?"
 msgstr "Need an invitation?"
 
-#: src/client/components/api-keys-section.tsx
 msgid "never used"
 msgstr "never used"
 
-#: src/client/views/consent-view.tsx
 msgid "Never, whatever you choose"
 msgstr "Never, whatever you choose"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "new"
 msgstr "new"
 
-#: src/client/components/state-mark.tsx
 msgid "New"
 msgstr "New"
 
-#: src/client/components/add-menu.tsx
 msgid "New card"
 msgstr "New card"
 
-#: src/client/views/today-view.tsx
 msgid "New cards"
 msgstr "New cards"
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/components/add-menu.tsx
-#: src/client/components/new-deck-sheet.tsx
-#: src/client/components/start-guide.tsx
-#: src/client/views/library-view.tsx
-#: src/client/views/today-view.tsx
 msgid "New deck"
 msgstr "New deck"
 
-#: src/client/components/api-keys-section.tsx
 msgid "New key"
 msgstr "New key"
 
-#: src/client/views/word-view.tsx
 msgid "Next"
 msgstr "Next"
 
-#: src/client/components/deck-card.tsx
 msgid "Next {next}"
 msgstr "Next {next}"
 
-#: src/client/views/word-view.tsx
 msgid "Next card"
 msgstr "Next card"
 
 #. placeholder {0}: spanLabel(i18n, r.scheduledDays)
-#: src/client/views/word-view.tsx
 msgid "next in {0}"
 msgstr "next in {0}"
 
-#: src/client/components/streak-calendar.tsx
 msgid "Next month"
 msgstr "Next month"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "No apps connected"
 msgstr "No apps connected"
 
-#: src/client/views/today-view.tsx
 msgid "No card keeps slipping"
 msgstr "No card keeps slipping"
 
 #. placeholder {0}: deck.name
-#: src/client/views/deck-detail-view.tsx
 msgid "No cards in {0} yet"
 msgstr "No cards in {0} yet"
 
-#: src/client/views/today-view.tsx
 msgid "No cards yet"
 msgstr "No cards yet"
 
-#: src/client/views/library-view.tsx
 msgid "No decks yet"
 msgstr "No decks yet"
 
-#: src/client/views/word-view.tsx
 msgid "No description yet."
 msgstr "No description yet."
 
-#: src/client/views/word-view.tsx
 msgid "No description yet. Picture review waits for one, so this card is asked in its other modes."
 msgstr "No description yet. Picture review waits for one, so this card is asked in its other modes."
 
-#: src/client/views/word-view.tsx
 msgid "No description yet. Picture review waits for one, so this card is asked without its picture."
 msgstr "No description yet. Picture review waits for one, so this card is asked without its picture."
 
-#: src/client/components/api-keys-section.tsx
 msgid "No keys yet"
 msgstr "No keys yet"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "No Known cards in this deck"
 msgstr "No Known cards in this deck"
 
-#: src/client/components/deck-fields.tsx
 msgid "No language"
 msgstr "No language"
 
-#: src/client/components/deck-fields.tsx
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "No language by that name. Type its tag to use it anyway."
 
-#: src/client/views/deck-detail-view.tsx
 msgid "No Learning cards in this deck"
 msgstr "No Learning cards in this deck"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "No lesson"
 msgstr "No lesson"
 
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/review-view.tsx
 msgid "No meaning yet"
 msgstr "No meaning yet"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "No New cards in this deck"
 msgstr "No New cards in this deck"
 
-#: src/client/views/insights-view.tsx
 msgid "No reviews yet. Each block here will be a day."
 msgstr "No reviews yet. Each block here will be a day."
 
-#: src/client/views/join-view.tsx
-#: src/server/join-page.ts
 msgid "Nobody can join it while it is archived."
 msgstr "Nobody can join it while it is archived."
 
-#: src/client/views/word-view.tsx
 msgid "Not asked yet. It joins the next review."
 msgstr "Not asked yet. It joins the next review."
 
-#: src/client/components/notifications-section.tsx
 msgid "Not available on this server yet."
 msgstr "Not available on this server yet."
 
-#: src/client/views/today-view.tsx
 msgid "Not reviewed yet"
 msgstr "Not reviewed yet"
 
-#: src/client/components/streak.tsx
 msgid "Not saved. Try again."
 msgstr "Not saved. Try again."
 
-#: src/client/views/word-view.tsx
 msgid "Not started"
 msgstr "Not started"
 
-#: src/client/views/word-view.tsx
 msgid "Notes"
 msgstr "Notes"
 
-#: src/client/views/word-view.tsx
 msgid "Notes changed to “{value}”"
 msgstr "Notes changed to “{value}”"
 
-#: src/client/views/review-view.tsx
-#: src/client/views/today-view.tsx
 msgid "Nothing due"
 msgstr "Nothing due"
 
-#: src/client/components/streak.tsx
 msgid "Nothing due today, so your streak is safe."
 msgstr "Nothing due today, so your streak is safe."
 
-#: src/client/views/today-view.tsx
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
 
-#: src/client/views/insights-view.tsx
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
 msgstr "Nothing has come back for a second look yet, so there is nothing honest to report."
 
-#: src/client/components/deck-card.tsx
 msgid "Nothing in it yet"
 msgstr "Nothing in it yet"
 
-#: src/client/views/review-view.tsx
 msgid "Nothing left in {deckName}"
 msgstr "Nothing left in {deckName}"
 
-#: src/client/views/review-view.tsx
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
 
-#: src/client/views/review-view.tsx
 msgid "Nothing left today"
 msgstr "Nothing left today"
 
-#: src/client/components/streak.tsx
 msgid "Nothing left today."
 msgstr "Nothing left today."
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Nothing matches “{q}”"
 msgstr "Nothing matches “{q}”"
 
-#: src/client/views/connected-view.tsx
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Nothing was shared. You can start again from {appName} whenever you like."
 
-#: src/client/views/word-view.tsx
 msgid "Nothing yet."
 msgstr "Nothing yet."
 
-#: src/client/routes/__root.tsx
 msgid "Notifications"
 msgstr "Notifications"
 
-#: src/client/components/notifications-section.tsx
 msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
 msgstr "Notifications are blocked. Allow them in your browser or device settings, then try again."
 
-#: src/client/components/notifications-section.tsx
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Notifications are blocked. Allow them in your browser or device settings."
 
-#: src/server/push-delivery.ts
 msgid "One card is ready"
 msgstr "One card is ready"
 
-#: src/client/components/notifications-section.tsx
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
 
-#: src/client/lib/api.ts
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Only you study this deck."
 msgstr "Only you study this deck."
 
-#: src/client/views/join-view.tsx
 msgid "Only your name is shared, never your progress."
 msgstr "Only your name is shared, never your progress."
 
-#: src/client/views/join-view.tsx
 msgid "Open deck"
 msgstr "Open deck"
 
-#: src/client/components/install-dialog.tsx
 msgid "Open Lymi from the new icon."
 msgstr "Open Lymi from the new icon."
 
-#: src/client/components/install-dialog.tsx
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Open Lymi in Safari and tap Share."
 
-#: src/client/components/install-dialog.tsx
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
 
-#: src/client/components/add-card-sheet.tsx
-#: src/client/views/deck-settings-view.tsx
 msgid "Optional"
 msgstr "Optional"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Other ways to add cards"
 msgstr "Other ways to add cards"
 
-#: src/client/components/card-stream.tsx
 msgid "Pause the cards"
 msgstr "Pause the cards"
 
 #. placeholder {0}: weekday(peak.date)
-#: src/client/views/insights-view.tsx
 msgid "peak, {0}"
 msgstr "peak, {0}"
 
-#: src/client/components/account-section.tsx
 msgid "Photo"
 msgstr "Photo"
 
-#: src/client/components/avatar-editor.tsx
 msgid "Photo position"
 msgstr "Photo position"
 
-#: src/client/components/account-section.tsx
 msgid "Photo removed"
 msgstr "Photo removed"
 
-#: src/client/views/word-view.tsx
 msgid "Picture"
 msgstr "Picture"
 
-#: src/client/lib/review-modes.ts
 msgid "Picture → meaning"
 msgstr "Picture → meaning"
 
-#: src/client/lib/review-modes.ts
 msgid "Picture → term"
 msgstr "Picture → term"
 
-#: src/client/views/word-view.tsx
 msgid "Picture archived"
 msgstr "Picture archived"
 
-#: src/client/views/review-view.tsx
 msgid "Picture card"
 msgstr "Picture card"
 
-#: src/client/views/word-view.tsx
 msgid "Picture described"
 msgstr "Picture described"
 
-#: src/client/views/word-view.tsx
 msgid "Picture description removed"
 msgstr "Picture description removed"
 
-#: src/client/views/word-view.tsx
 msgid "Picture restored"
 msgstr "Picture restored"
 
-#: src/client/views/word-view.tsx
 msgid "Picture review is on, but this card has no picture. It is asked in its other modes."
 msgstr "Picture review is on, but this card has no picture. It is asked in its other modes."
 
-#: src/client/views/word-view.tsx
 msgid "Picture set"
 msgstr "Picture set"
 
-#: src/client/views/review-view.tsx
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
-#: src/client/components/avatar-editor.tsx
 msgid "Position your photo"
 msgstr "Position your photo"
 
-#: src/client/views/word-view.tsx
 msgid "Previous card"
 msgstr "Previous card"
 
-#: src/client/components/streak-calendar.tsx
 msgid "Previous month"
 msgstr "Previous month"
 
-#: src/client/components/public-policy-links.tsx
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Private"
 msgstr "Private"
 
-#: src/client/components/deck-fields.tsx
-#: src/client/lib/review-modes.ts
 msgid "Production"
 msgstr "Production"
 
-#: src/client/views/review-view.tsx
 msgid "Production card for {front}"
 msgstr "Production card for {front}"
 
-#: src/client/views/word-view.tsx
 msgid "Pronunciation changed to “{value}”"
 msgstr "Pronunciation changed to “{value}”"
 
-#: src/client/components/streak.tsx
 msgid "Reach today’s goal to keep it going."
 msgstr "Reach today’s goal to keep it going."
 
-#: src/client/components/streak.tsx
 msgid "Reach today’s goal to start a streak."
 msgstr "Reach today’s goal to start a streak."
 
-#: src/client/components/api-keys-section.tsx
-#: src/client/components/connected-apps-section.tsx
 msgid "Read"
 msgstr "Read"
 
-#: src/client/components/api-keys-section.tsx
-#: src/client/components/connected-apps-section.tsx
 msgid "Read and write"
 msgstr "Read and write"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
 msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
 msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. Access is chosen when the app signs in; disconnect and sign in again to change it."
 
-#: src/client/components/connected-apps-section.tsx
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 
-#: src/client/components/api-keys-section.tsx
 msgid "Read the quickstart"
 msgstr "Read the quickstart"
 
-#: src/client/views/insights-view.tsx
 msgid "Recall"
 msgstr "Recall"
 
-#: src/client/views/insights-view.tsx
 msgid "Recall by month: {series}. The schedule aims for 90%."
 msgstr "Recall by month: {series}. The schedule aims for 90%."
 
-#: src/client/views/insights-view.tsx
 msgid "Recall by week: {series}. The schedule aims for 90%."
 msgstr "Recall by week: {series}. The schedule aims for 90%."
 
-#: src/client/components/connection.tsx
 msgid "Recognised app at"
 msgstr "Recognised app at"
 
-#: src/client/components/deck-fields.tsx
-#: src/client/lib/review-modes.ts
 msgid "Recognition"
 msgstr "Recognition"
 
-#: src/client/views/review-view.tsx
 msgid "Recognition card for {front}"
 msgstr "Recognition card for {front}"
 
-#: src/client/components/notifications-section.tsx
 msgid "Reminder off for this device."
 msgstr "Reminder off for this device."
 
-#: src/client/components/notifications-section.tsx
 msgid "Reminder on for this device."
 msgstr "Reminder on for this device."
 
-#: src/client/components/notifications-section.tsx
 msgid "Reminder time saved."
 msgstr "Reminder time saved."
 
-#: src/client/components/notifications-section.tsx
 msgid "Reminders stay off until notifications are allowed."
 msgstr "Reminders stay off until notifications are allowed."
 
-#: src/client/components/account-section.tsx
 msgctxt "photo"
 msgid "Remove"
 msgstr "Remove"
 
-#: src/client/views/review-view.tsx
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
-#: src/client/views/login-view.tsx
 msgid "Request an invitation"
 msgstr "Request an invitation"
 
-#: src/client/views/word-view.tsx
 msgid "Restored"
 msgstr "Restored"
 
-#: src/client/routes/library.$deckId.tsx
 msgid "Retry"
 msgstr "Retry"
 
-#: src/client/views/review-view.tsx
 msgid "Reveal the card"
 msgstr "Reveal the card"
 
-#: src/client/views/review-view.tsx
 msgid "Reveal the card when you have it"
 msgstr "Reveal the card when you have it"
 
-#: src/client/components/start-guide.tsx
-#: src/client/routes/review.tsx
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/today-view.tsx
 msgid "Review"
 msgstr "Review"
 
-#: src/client/views/today-view.tsx
 msgid "Review forgotten"
 msgstr "Review forgotten"
 
-#: src/client/views/today-view.tsx
 msgid "Review new"
 msgstr "Review new"
 
-#: src/client/views/join-view.tsx
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Review on your own schedule. New cards appear as they are added."
 
-#: src/client/views/today-view.tsx
 msgid "Review slipping"
 msgstr "Review slipping"
 
-#: src/client/components/start-guide.tsx
 msgid "Review them"
 msgstr "Review them"
 
-#: src/client/components/run-strip.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
 msgstr "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
 
-#: src/client/components/seven-lights.tsx
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}: {perDay}."
 msgstr "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}: {perDay}."
 
-#: src/client/views/word-view.tsx
 msgid "Reviews"
 msgstr "Reviews"
 
-#: src/client/components/goal-picker.tsx
 msgid "Reviews a day"
 msgstr "Reviews a day"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Revoke"
 msgstr "Revoke"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Revoke instead"
 msgstr "Revoke instead"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Revoke key"
 msgstr "Revoke key"
 
-#: src/client/views/review-view.tsx
 msgid "Round done"
 msgstr "Round done"
 
-#: src/client/views/review-view.tsx
 msgid "Round progress"
 msgstr "Round progress"
 
-#: src/client/components/avatar-editor.tsx
 msgid "Save photo"
 msgstr "Save photo"
 
-#: src/client/components/notifications-section.tsx
 msgid "Save time"
 msgstr "Save time"
 
-#: src/client/components/streak.tsx
-#: src/client/views/deck-settings-view.tsx
 msgid "Saved"
 msgstr "Saved"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Saving…"
 msgstr "Saving…"
 
 #. placeholder {0}: card.term
-#: src/client/views/word-view.tsx
 msgid "Say {0}"
 msgstr "Say {0}"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "sbrigarsi"
 msgstr "sbrigarsi"
 
-#: src/client/views/word-view.tsx
 msgid "Schedule"
 msgstr "Schedule"
 
-#: src/client/components/shortcuts-dialog.tsx
-#: src/client/views/shell.tsx
 msgid "Search"
 msgstr "Search"
 
-#: src/client/components/deck-fields.tsx
 msgid "Search languages"
 msgstr "Search languages"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Search looks at the term and the meaning."
 msgstr "Search looks at the term and the meaning."
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Search this deck"
 msgstr "Search this deck"
 
 #. placeholder {0}: example.meaning
 #. placeholder {1}: example.term
-#: src/client/components/deck-fields.tsx
 msgid "See “{0}” → recall {1}"
 msgstr "See “{0}” → recall {1}"
 
 #. placeholder {0}: example.term
 #. placeholder {1}: example.meaning
-#: src/client/components/deck-fields.tsx
 msgid "See {0} → recall “{1}”"
 msgstr "See {0} → recall “{1}”"
 
-#: src/client/components/deck-fields.tsx
 msgid "See the meaning, recall the term."
 msgstr "See the meaning, recall the term."
 
-#: src/client/components/deck-fields.tsx
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
 
-#: src/client/views/consent-view.tsx
 msgid "See your decks and cards"
 msgstr "See your decks and cards"
 
-#: src/client/components/notifications-section.tsx
 msgid "Send a daily reminder"
 msgstr "Send a daily reminder"
 
-#: src/client/components/start-guide.tsx
-#: src/client/views/deck-detail-view.tsx
 msgid "Send a lesson from Claude or ChatGPT"
 msgstr "Send a lesson from Claude or ChatGPT"
 
-#: src/client/components/learner-menu.tsx
-#: src/client/routes/settings.tsx
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/settings-view.tsx
 msgid "Settings"
 msgstr "Settings"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Share link"
 msgstr "Share link"
 
-#: src/client/components/deck-card.tsx
 msgid "Shared by {owner}"
 msgstr "Shared by {owner}"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Shared by link"
 msgstr "Shared by link"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Sharing"
 msgstr "Sharing"
 
-#: src/client/views/deck-detail-view.tsx
-#: src/client/views/library-view.tsx
 msgid "Show"
 msgstr "Show"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "Show all"
 msgstr "Show all"
 
-#: src/client/components/shortcuts-dialog.tsx
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
 
-#: src/client/routes/login.tsx
 msgid "Sign in"
 msgstr "Sign in"
 
-#: src/client/views/consent-view.tsx
 msgid "Sign in as you anywhere else"
 msgstr "Sign in as you anywhere else"
 
-#: src/client/views/login-view.tsx
 msgid "Sign in before choosing what it may do."
 msgstr "Sign in before choosing what it may do."
 
-#: src/client/lib/api.ts
 msgid "Sign in required"
 msgstr "Sign in required"
 
-#: src/client/views/login-view.tsx
 msgid "Sign in to Lymi"
 msgstr "Sign in to Lymi"
 
-#: src/client/components/learner-menu.tsx
 msgid "Sign out"
 msgstr "Sign out"
 
-#: src/client/lib/use-sign-out.tsx
 msgid "Sign out and lose them"
 msgstr "Sign out and lose them"
 
-#: src/client/routes/login.tsx
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
 
-#: src/client/routes/login.tsx
 msgid "Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation."
 msgstr "Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation."
 
-#: src/client/components/api-keys-section.tsx
 msgid "So you know which key to revoke later."
 msgstr "So you know which key to revoke later."
 
-#: src/client/lib/use-sign-out.tsx
 msgid "Some grades haven’t synced"
 msgstr "Some grades haven’t synced"
 
-#: src/client/routes/consent.tsx
 msgid "Something went wrong. Try again from the app."
 msgstr "Something went wrong. Try again from the app."
 
-#: src/client/components/shortcuts-dialog.tsx
 msgid "Start review"
 msgstr "Start review"
 
-#: src/client/views/today-view.tsx
 msgid "Start with a deck"
 msgstr "Start with a deck"
 
-#: src/client/components/connected-apps-section.tsx
 msgid "Stay connected"
 msgstr "Stay connected"
 
-#: src/client/lib/use-sign-out.tsx
 msgid "Stay signed in"
 msgstr "Stay signed in"
 
-#: src/client/components/goal-picker.tsx
 msgctxt "daily goal"
 msgid "Steady"
 msgstr "Steady"
 
-#: src/client/views/login-view.tsx
 msgid "Still need an invitation?"
 msgstr "Still need an invitation?"
 
 #. placeholder {0}: summary.current
-#: src/client/components/streak.tsx
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 
-#: src/client/components/public-policy-links.tsx
 msgid "Support"
 msgstr "Support"
 
-#: src/client/views/settings-view.tsx
 msgid "System"
 msgstr "System"
 
-#: src/client/views/settings-view.tsx
 msgid "System follows your device."
 msgstr "System follows your device."
 
-#: src/client/components/install-dialog.tsx
 msgid "Tap Add to Home Screen."
 msgstr "Tap Add to Home Screen."
 
-#: src/client/views/review-view.tsx
 msgid "Tap the card when you have it"
 msgstr "Tap the card when you have it"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Term"
 msgstr "Term"
 
-#: src/client/views/word-view.tsx
 msgid "Term changed to “{value}”"
 msgstr "Term changed to “{value}”"
 
-#: src/client/components/public-policy-links.tsx
 msgid "Terms"
 msgstr "Terms"
 
-#: src/client/lib/api.ts
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
 
-#: src/client/components/account-section.tsx
 msgid "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
 msgstr "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
 
-#: src/client/components/account-section.tsx
 msgid "That image couldn’t be used. Choose a still JPEG, PNG or WebP image."
 msgstr "That image couldn’t be used. Choose a still JPEG, PNG or WebP image."
 
-#: src/client/components/account-section.tsx
 msgid "That image is too large. Choose one under 25 MB."
 msgstr "That image is too large. Choose one under 25 MB."
 
-#: src/client/components/account-section.tsx
 msgid "That image is too small. Choose one at least 16 pixels wide."
 msgstr "That image is too small. Choose one at least 16 pixels wide."
 
-#: src/client/lib/api.ts
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
 
-#: src/client/views/word-view.tsx
 msgid "the AI"
 msgstr "the AI"
 
-#: src/client/views/word-view.tsx
 msgid "the API"
 msgstr "the API"
 
-#: src/client/routes/consent.tsx
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "The app did not say where to go next. Try again from the app."
 
-#: src/client/routes/library.$deckId.tsx
 msgid "the card"
 msgstr "the card"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
 msgstr "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
 
-#: src/client/views/word-view.tsx
 msgid "the example"
 msgstr "the example"
 
-#: src/client/views/word-view.tsx
 msgid "the language"
 msgstr "the language"
 
-#: src/client/components/deck-fields.tsx
 msgid "The language this deck’s cards are in. It fills in on every new card."
 msgstr "The language this deck’s cards are in. It fills in on every new card."
 
-#: src/client/views/deck-settings-view.tsx
 msgid "The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
 msgstr "The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
 
-#: src/client/views/deck-settings-view.tsx
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 
-#: src/client/views/word-view.tsx
 msgid "the meaning"
 msgstr "the meaning"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "The next card is back {next}."
 msgstr "The next card is back {next}."
 
-#: src/client/views/word-view.tsx
 msgid "the notes"
 msgstr "the notes"
 
-#: src/client/views/word-view.tsx
 msgid "the pronunciation"
 msgstr "the pronunciation"
 
-#: src/client/views/word-view.tsx
 msgid "the tags"
 msgstr "the tags"
 
-#: src/client/views/word-view.tsx
 msgid "the term"
 msgstr "the term"
 
-#: src/client/views/settings-view.tsx
 msgid "Theme"
 msgstr "Theme"
 
-#: src/client/components/notifications-section.tsx
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
 
-#: src/client/views/word-view.tsx
 msgid "This card has no picture yet, so it is asked without one."
 msgstr "This card has no picture yet, so it is asked without one."
 
-#: src/client/views/review-view.tsx
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
 
-#: src/client/views/join-view.tsx
-#: src/server/join-page.ts
 msgid "This deck is archived"
 msgstr "This deck is archived"
 
-#: src/client/routes/login.tsx
 msgid "This Google account has not been invited. Request an invitation, or try another account."
 msgstr "This Google account has not been invited. Request an invitation, or try another account."
 
-#: src/client/views/join-view.tsx
-#: src/server/join-page.ts
 msgid "This join link does not work"
 msgstr "This join link does not work"
 
-#: src/client/views/join-view.tsx
-#: src/server/join-page.ts
 msgid "This join link is turned off"
 msgstr "This join link is turned off"
 
-#: src/client/routes/join.$token.tsx
 msgid "This join link stopped working. Ask for a new one."
 msgstr "This join link stopped working. Ask for a new one."
 
-#: src/client/routes/consent.tsx
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
 
-#: src/client/components/notifications-section.tsx
 msgid "Time"
 msgstr "Time"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "to hurry up"
 msgstr "to hurry up"
 
-#: src/client/views/deck-detail-view.tsx
 msgid "today"
 msgstr "today"
 
-#: src/client/components/pill-nav.tsx
-#: src/client/components/review-timeline.tsx
-#: src/client/components/streak.tsx
-#: src/client/routes/today.tsx
-#: src/client/views/shell.tsx
-#: src/client/views/today-view.tsx
-#: src/client/views/word-view.tsx
 msgid "Today"
 msgstr "Today"
 
-#: src/client/components/streak-calendar.tsx
 msgid "Today, {day}: {reviews}"
 msgstr "Today, {day}: {reviews}"
 
-#: src/client/components/streak-calendar.tsx
 msgid "Today, {day}: goal reached, {reviews}"
 msgstr "Today, {day}: goal reached, {reviews}"
 
-#: src/client/components/streak-calendar.tsx
 msgid "Today, {day}: no reviews yet"
 msgstr "Today, {day}: no reviews yet"
 
-#: src/client/components/streak-calendar.tsx
 msgid "Today, {day}: nothing due"
 msgstr "Today, {day}: nothing due"
 
-#: src/client/components/streak.tsx
 msgid "Today’s goal"
 msgstr "Today’s goal"
 
-#: src/client/views/word-view.tsx
 msgid "Tomorrow"
 msgstr "Tomorrow"
 
-#: src/client/components/empty-state.tsx
 msgid "Try again"
 msgstr "Try again"
 
-#: src/client/views/login-view.tsx
 msgid "Try another Google account"
 msgstr "Try another Google account"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Turn off link"
 msgstr "Turn off link"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Turn off the join link"
 msgstr "Turn off the join link"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
 
-#: src/client/components/add-card-sheet.tsx
 msgid "Type the term."
 msgstr "Type the term."
 
-#: src/client/components/account-section.tsx
-#: src/client/lib/use-archive-deck.ts
-#: src/client/routes/library.$deckId.tsx
 msgid "Undo"
 msgstr "Undo"
 
-#: src/client/components/api-keys-section.tsx
 msgid "Untitled key"
 msgstr "Untitled key"
 
-#: src/client/views/join-view.tsx
 msgid "Updated {lastAdded}"
 msgstr "Updated {lastAdded}"
 
-#: src/client/components/deck-fields.tsx
 msgid "Use “{tag}” as the tag"
 msgstr "Use “{tag}” as the tag"
 
-#: src/client/components/new-deck-sheet.tsx
 msgid "Use a language tag like ca, pt-BR or zh-Hant."
 msgstr "Use a language tag like ca, pt-BR or zh-Hant."
 
-#: src/client/views/login-view.tsx
 msgid "Use the Google account that received your invitation."
 msgstr "Use the Google account that received your invitation."
 
-#: src/client/components/api-keys-section.tsx
 msgid "used {d} d ago"
 msgstr "used {d} d ago"
 
-#: src/client/components/api-keys-section.tsx
 msgid "used {date}"
 msgstr "used {date}"
 
-#: src/client/components/api-keys-section.tsx
 msgid "used {h} h ago"
 msgstr "used {h} h ago"
 
-#: src/client/components/api-keys-section.tsx
 msgid "used {m} min ago"
 msgstr "used {m} min ago"
 
-#: src/client/components/api-keys-section.tsx
 msgid "used just now"
 msgstr "used just now"
 
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
-#: src/client/views/insights-view.tsx
 msgid "week of {0}"
 msgstr "week of {0}"
 
-#: src/client/views/consent-view.tsx
 msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
 msgstr "What it adds lands at once and is labelled. You can edit or archive any of it."
 
-#: src/client/views/word-view.tsx
 msgid "What it means"
 msgstr "What it means"
 
-#: src/client/views/insights-view.tsx
 msgid "Which days you reviewed"
 msgstr "Which days you reviewed"
 
-#: src/client/views/deck-settings-view.tsx
 msgid "Who can join this deck"
 msgstr "Who can join this deck"
 
-#: src/client/views/word-view.tsx
 msgid "Yesterday"
 msgstr "Yesterday"
 
-#: src/client/views/word-view.tsx
 msgid "you"
 msgstr "you"
 
-#: src/client/components/learner-menu.tsx
 msgid "You"
 msgstr "You"
 
-#: src/client/views/join-view.tsx
 msgid "You are already in this deck."
 msgstr "You are already in this deck."
 
-#: src/client/views/join-view.tsx
 msgid "You are still in the deck."
 msgstr "You are still in the deck."
 
-#: src/client/components/deck-fields.tsx
 msgid "You can change this later. It applies to every card in the deck."
 msgstr "You can change this later. It applies to every card in the deck."
 
-#: src/client/views/connected-view.tsx
 msgid "You can close this tab."
 msgstr "You can close this tab."
 
-#: src/client/routes/join.$token.tsx
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."
 
-#: src/client/views/join-view.tsx
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 
-#: src/client/components/chip.tsx
-#: src/client/views/word-view.tsx
 msgid "You wrote this"
 msgstr "You wrote this"
 
-#: src/client/views/join-view.tsx
 msgid "Your deck"
 msgstr "Your deck"
 
-#: src/client/components/account-section.tsx
 msgid "Your Google photo is back"
 msgstr "Your Google photo is back"
 
-#: src/client/routes/review.tsx
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
 
-#: src/client/components/account-section.tsx
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Your photo was changed somewhere else. Check it, then try again."
 
-#: src/client/components/avatar-editor.tsx
 msgid "Zoom"
 msgstr "Zoom"
 
-#: src/client/components/avatar-editor.tsx
 msgid "Zoom in"
 msgstr "Zoom in"
 
-#: src/client/components/avatar-editor.tsx
 msgid "Zoom out"
 msgstr "Zoom out"

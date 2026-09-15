@@ -87,12 +87,13 @@ describe("anki adapter", () => {
     expect(byTerm(cards, "ciao").fields.meaning).toBe("hello & goodbye");
   });
 
-  it("archives a suspended card and moves a long meaning into notes", async () => {
+  it("archives a suspended card and keeps a long meaning that fits", async () => {
     const { cards } = await read("current.apkg");
     expect(byTerm(cards, "la casa").archived).toBe(true);
+    // Overflow into notes is `fitFields`' rule, tested in core against the limits themselves.
     const long = byTerm(cards, "sbrigarsi");
-    expect(long.shortened).toBe(true);
-    expect(long.fields.notes?.startsWith("to hurry up; to get a move on")).toBe(true);
+    expect(long.shortened).toBe(false);
+    expect(long.fields.meaning?.startsWith("to hurry up; to get a move on")).toBe(true);
   });
 
   it("makes one card of a reversed note, asked both ways with each side's own log", async () => {

@@ -87,9 +87,9 @@ export type ImportedCard = {
 /** The longest text each imported field keeps, from `CardInput` and `DeckInput`. */
 export const IMPORT_LIMITS = {
   term: 500,
-  meaning: 1000,
+  meaning: 2000,
   pronunciation: 200,
-  example: 1000,
+  example: 2000,
   notes: 2000,
   tags: 20,
   tag: 40,

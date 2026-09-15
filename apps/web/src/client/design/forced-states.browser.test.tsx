@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { expect, inject, test } from "vitest";
 import { render } from "vitest-browser-react";
-import { Force, ReducedMotion, useForcedStates } from "./forced-states";
+import { Force, useForcedStates } from "./forced-states";
 
 // Hover rules sit under the fine-pointer query, as in the product, so they apply on the desktop machine only.
 const desktop = inject("machine") === "desktop";
@@ -64,13 +64,13 @@ test.runIf(desktop)("Force holds an element in hover or focus, and only that ele
   expect(page.style("plain").backgroundColor).toBe("rgb(0, 255, 0)");
 });
 
-test("ReducedMotion stands in for the reduced-motion query inside it", async () => {
+test("data-motion stands in for the reduced-motion query inside it", async () => {
   using page = await setUp(
     <>
       <span data-testid="full" className="glide" />
-      <ReducedMotion>
+      <div data-motion="reduce">
         <span data-testid="reduced" className="glide" />
-      </ReducedMotion>
+      </div>
     </>,
   );
   await expect.poll(() => page.style("reduced").transitionDuration).toBe("0s");

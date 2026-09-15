@@ -15,7 +15,7 @@ import { Variants } from "../frame";
 import type { Group } from "./types";
 
 const OVERLAY_MOTION =
-  "Turn on Reduce motion in the side rail, then press the button in either frame to open it again: the dialog fades in place without its rise, and the drawer crossfades instead of rising.";
+  "Switch this canvas to reduced motion, then press the button in either frame to open it again: the dialog fades in place without its rise, and the drawer crossfades instead of rising.";
 
 export const menu: Group = {
   slug: "menu",
@@ -68,7 +68,7 @@ export const menu: Group = {
             },
             {
               label: "Reduced motion",
-              note: "On a desktop the list fades in place without growing, and the hover fill fades in on the row under the pointer instead of sliding to it. The drawer crossfades. Turn on Reduce motion in the side rail to try it.",
+              note: "On a desktop the list fades in place without growing, and the hover fill fades in on the row under the pointer instead of sliding to it. The drawer crossfades. Switch this canvas to reduced motion and open the frames again to try it.",
             },
           ]}
         />
@@ -171,7 +171,7 @@ export const overlays: Group = {
             },
             {
               label: "Reduced motion",
-              note: "The name fades in place without growing. Turn on Reduce motion in the side rail and point at a control to try it.",
+              note: "The name fades in place without growing. A tooltip renders outside the canvas, so it follows the system setting rather than this canvas.",
             },
           ]}
         />

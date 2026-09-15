@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Pause, Play, Sun } from "lucide-react";
+import { MotionConfig } from "motion/react";
 import {
   createContext,
   type ReactNode,
@@ -11,6 +12,7 @@ import {
 } from "react";
 import { Segmented } from "../components/segmented";
 import { EditLink } from "./edit-link";
+import { useSystemReducedMotion } from "./forced-states";
 import { type IconOption, IconToggle } from "./icon-toggle";
 
 export type FrameTheme = "light" | "dark";
@@ -261,61 +263,81 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
   const page = usePageTheme();
   const [picked, setPicked] = useState<FrameTheme | null>(null);
   const theme = picked ?? page;
+  const systemMotion: CanvasMotion = useSystemReducedMotion() ? "reduced" : "full";
+  const [pickedMotion, setPickedMotion] = useState<CanvasMotion | null>(null);
+  const motion = pickedMotion ?? systemMotion;
   return (
     <div
       data-theme={theme}
+      data-motion={motion === "reduced" ? "reduce" : undefined}
       className="edge relative overflow-hidden rounded-lg bg-canvas text-text"
     >
-      <div className="absolute end-3 top-3 z-10">
-        <IconToggle
-          label="Canvas theme"
-          value={theme}
-          onChange={(t) => setPicked(t === page ? null : t)}
-          options={ROOM_THEMES}
-        />
-      </div>
-      {items.map((v, i) => (
-        <div
-          key={v.label}
-          className={clsx(
-            "grid",
-            i > 0 && "border-t border-edge",
-            !stack && v.render && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
-          )}
-        >
+      <MotionConfig reducedMotion={motion === "reduced" ? "always" : "user"}>
+        <div className="absolute end-3 top-3 z-10 flex gap-1.5">
+          <IconToggle
+            label="Canvas motion"
+            value={motion}
+            onChange={(m) => setPickedMotion(m === systemMotion ? null : m)}
+            options={CANVAS_MOTION}
+          />
+          <IconToggle
+            label="Canvas theme"
+            value={theme}
+            onChange={(t) => setPicked(t === page ? null : t)}
+            options={ROOM_THEMES}
+          />
+        </div>
+        {items.map((v, i) => (
           <div
+            key={v.label}
             className={clsx(
-              // Annotations are set in mono so a note about a component never reads as part of it.
-              "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
-              !v.render
-                ? "pb-4 @3xl:py-5"
-                : stack
-                  ? "pb-1"
-                  : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
-              // The first label shares its corner with the theme switch.
-              i === 0 && (stack ? "pe-20" : "pe-20 @3xl:pe-5"),
+              "grid",
+              i > 0 && "border-t border-edge",
+              !stack && v.render && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
             )}
           >
-            <p className="font-semibold text-text">{v.label}</p>
-            {v.note && (
-              <p className="max-w-[80ch] leading-relaxed text-pretty text-muted">{v.note}</p>
-            )}
-          </div>
-          {v.render && (
             <div
               className={clsx(
-                "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
-                !stack && "@3xl:pe-20",
+                // Annotations are set in mono so a note about a component never reads as part of it.
+                "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
+                !v.render
+                  ? "pb-4 @3xl:py-5"
+                  : stack
+                    ? "pb-1"
+                    : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
+                // The first label shares its corner with the canvas switches.
+                i === 0 && (stack ? "pe-36" : "pe-36 @3xl:pe-5"),
               )}
             >
-              {v.render(theme)}
+              <p className="font-semibold text-text">{v.label}</p>
+              {v.note && (
+                <p className="max-w-[80ch] leading-relaxed text-pretty text-muted">{v.note}</p>
+              )}
             </div>
-          )}
-        </div>
-      ))}
+            {v.render && (
+              <div
+                className={clsx(
+                  "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
+                  !stack && "@3xl:pe-36",
+                )}
+              >
+                {v.render(theme)}
+              </div>
+            )}
+          </div>
+        ))}
+      </MotionConfig>
     </div>
   );
 }
+
+type CanvasMotion = "full" | "reduced";
+
+/** Reduced motion reaches what renders inside the canvas and its frames; a portal follows the system. */
+const CANVAS_MOTION: IconOption<CanvasMotion>[] = [
+  { value: "full", label: "Motion", Icon: Play },
+  { value: "reduced", label: "Reduced motion", Icon: Pause },
+];
 
 export const ROOM_THEMES: IconOption<FrameTheme>[] = [
   { value: "light", label: "Light", Icon: Sun },

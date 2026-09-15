@@ -22,7 +22,7 @@ import { Slider } from "../../components/ui/slider";
 import { Switch } from "../../components/ui/switch";
 import { Textarea } from "../../components/ui/textarea";
 import { DeviceFrames } from "../device-frame";
-import { Force, ReducedMotion } from "../forced-states";
+import { Force } from "../forced-states";
 import { Variants } from "../frame";
 import { DeckCombobox, DeckSelect } from "../specimens";
 import type { Group } from "./types";
@@ -414,17 +414,7 @@ export const forms: Group = {
               },
               {
                 label: "Reduced motion",
-                note: "The plate fades in at the new option instead of travelling to it.",
-                render: () => (
-                  <ReducedMotion>
-                    <Segmented
-                      label="Direction"
-                      value={seg}
-                      onChange={setSeg}
-                      options={DIRECTIONS}
-                    />
-                  </ReducedMotion>
-                ),
+                note: "The plate fades in at the new option instead of travelling to it. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -450,17 +440,7 @@ export const forms: Group = {
               },
               {
                 label: "Reduced motion",
-                note: "The plate fades in at the new option instead of travelling to it.",
-                render: () => (
-                  <ReducedMotion>
-                    <Segmented
-                      label="Direction"
-                      value={seg}
-                      onChange={setSeg}
-                      options={DIRECTIONS}
-                    />
-                  </ReducedMotion>
-                ),
+                note: "The plate fades in at the new option instead of travelling to it. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -553,15 +533,7 @@ export const forms: Group = {
               },
               {
                 label: "Reduced motion",
-                note: "The thumb takes its new place at once and does not stretch while held.",
-                render: () => (
-                  <ReducedMotion>
-                    <Field orientation="horizontal" className={`${box} justify-between gap-4`}>
-                      <FieldLabel className="text-base text-text">Show AI examples</FieldLabel>
-                      <Switch checked={on} onCheckedChange={setOn} />
-                    </Field>
-                  </ReducedMotion>
-                ),
+                note: "The thumb takes its new place at once and does not stretch while held. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -634,20 +606,7 @@ export const forms: Group = {
               },
               {
                 label: "Reduced motion",
-                note: "The thumb keeps its size while it is held.",
-                render: () => (
-                  <ReducedMotion>
-                    <Slider
-                      min={1}
-                      max={3}
-                      step={0.01}
-                      value={zoom}
-                      onValueChange={setZoom}
-                      aria-label="Zoom"
-                      className={box}
-                    />
-                  </ReducedMotion>
-                ),
+                note: "The thumb keeps its size while it is held. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -733,17 +692,7 @@ export const forms: Group = {
               },
               {
                 label: "Reduced motion",
-                note: "The box does not give and the tick fades in where it is, instead of drawing across.",
-                render: () => (
-                  <ReducedMotion>
-                    <Field orientation="horizontal" className={box}>
-                      <Checkbox checked={off} onCheckedChange={setOff} />
-                      <FieldLabel className="text-base text-text">
-                        Also archive its review history
-                      </FieldLabel>
-                    </Field>
-                  </ReducedMotion>
-                ),
+                note: "The box does not give and the tick fades in where it is, instead of drawing across. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -881,27 +830,7 @@ export const forms: Group = {
               },
               {
                 label: "Reduced motion",
-                note: "The dot fades in where it is instead of swelling past its size.",
-                render: () => (
-                  <ReducedMotion>
-                    <RadioGroup
-                      aria-label="Sort cards by"
-                      value={sort}
-                      onValueChange={setSort}
-                      className={`gap-0 ${box}`}
-                    >
-                      {[
-                        ["due", "When they are due"],
-                        ["added", "When they were added"],
-                      ].map(([value, label]) => (
-                        <Field key={value} orientation="horizontal" className="min-h-11">
-                          <RadioGroupItem value={value} />
-                          <FieldLabel className="text-base text-text">{label}</FieldLabel>
-                        </Field>
-                      ))}
-                    </RadioGroup>
-                  </ReducedMotion>
-                ),
+                note: "The dot fades in where it is instead of swelling past its size. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -931,7 +860,7 @@ export const forms: Group = {
 };
 
 const MOTION_NOTE =
-  "With Reduce motion on in the side rail, the panel fades in place and the drawer crossfades instead of rising. Press the box in either frame above to open it again.";
+  "Switch this canvas to reduced motion, then press the box in either frame to open it again: the panel fades in place and the drawer crossfades instead of rising.";
 
 export const select: Group = {
   slug: "select",

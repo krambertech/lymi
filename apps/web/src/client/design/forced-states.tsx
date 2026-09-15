@@ -1,4 +1,3 @@
-import { MotionConfig } from "motion/react";
 import { type ReactNode, useEffect, useRef, useSyncExternalStore } from "react";
 
 /*
@@ -8,7 +7,8 @@ import { type ReactNode, useEffect, useRef, useSyncExternalStore } from "react";
  * - `data-force="hover"`, `"focus"` or `"active"`, set by `Force`, holds an element in `:hover`,
  *   `:focus-visible` or `:active`, as if the pointer, the keyboard or a press were on it.
  * - `data-motion="reduce"` on an element stands in for `prefers-reduced-motion: reduce` inside it,
- *   and on the root for the whole page. Rules for `no-preference` follow the root alone.
+ *   such as one canvas, and `useSystemMotion` puts it on the root when the system asks for it.
+ *   Rules for `no-preference` follow the root alone, so a canvas cannot turn motion back on.
  *
  * The rewrite cannot be undone, so after leaving the design pages a reload restores the media query.
  */
@@ -137,6 +137,36 @@ export function useFinePointer() {
   );
 }
 
+const REDUCE_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeMotion(onChange: () => void) {
+  const mq = window.matchMedia(REDUCE_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+/** Whether the system asks for reduced motion. */
+export function useSystemReducedMotion() {
+  return useSyncExternalStore(
+    subscribeMotion,
+    () => window.matchMedia(REDUCE_QUERY).matches,
+    () => false,
+  );
+}
+
+/** Carries the system setting onto the root for the rewritten sheet to read. Call it once, for the page. */
+export function useSystemMotion() {
+  const reduced = useSystemReducedMotion();
+  useEffect(() => {
+    if (!reduced) return;
+    const root = document.documentElement;
+    root.dataset.motion = "reduce";
+    return () => {
+      delete root.dataset.motion;
+    };
+  }, [reduced]);
+}
+
 /** Rewrites the document's stylesheets now and again whenever the dev server swaps one. */
 export function useForcedStates(doc: Document = document) {
   useEffect(() => {
@@ -187,14 +217,5 @@ export function Force({
         </span>
       )}
     </span>
-  );
-}
-
-/** Its children move as they would under `prefers-reduced-motion: reduce`. Portals escape it. */
-export function ReducedMotion({ children }: { children: ReactNode }) {
-  return (
-    <div data-motion="reduce" className="contents">
-      <MotionConfig reducedMotion="always">{children}</MotionConfig>
-    </div>
   );
 }

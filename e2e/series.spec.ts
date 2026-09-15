@@ -7,13 +7,15 @@ async function addDeck(page: Page, name: string, terms: number) {
   const deck = await page.request.post("/api/decks", { data: { name, defaultLanguage: "it" } });
   expect(deck.ok()).toBeTruthy();
   const deckId = ((await deck.json()) as { id: string }).id;
+  const cardIds: string[] = [];
   for (let i = 0; i < terms; i++) {
     const card = await page.request.post("/api/cards", {
       data: { deckId, term: `${name} ${i}`, meaning: `meaning ${i}`, language: "it" },
     });
-    expect(card.ok()).toBeTruthy();
+    expect(card.status()).toBe(201);
+    cardIds.push(((await card.json()) as { card: { id: string } }).card.id);
   }
-  return deckId;
+  return { deckId, cardIds };
 }
 
 function dialog(page: Page, title: string | RegExp): Locator {
@@ -51,7 +53,12 @@ test("a learner gathers decks into a series and reviews them together", async ({
   const outside = `Outside ${tag}`;
   await addDeck(page, verbs, 2);
   await addDeck(page, nouns, 1);
-  await addDeck(page, outside, 3);
+  const { cardIds } = await addDeck(page, outside, 3);
+  // Today is the getting started guide until a first review, so one card outside the series is graded.
+  const graded = await page.request.post("/api/review/grade", {
+    data: { cardId: cardIds[0], mode: { cue: "term", target: "meaning" }, rating: 3 },
+  });
+  expect(graded.ok()).toBeTruthy();
 
   await test.step("Library looks as it always did before a series exists", async () => {
     await openLibrary(page);
@@ -127,7 +134,7 @@ test("archiving a series asks about its decks, and Restore brings them back", as
   const series = `Estonian ${tag}`;
   const first = `A1 ${tag}`;
   const second = `A2 ${tag}`;
-  const deckIds = [await addDeck(page, first, 1), await addDeck(page, second, 1)];
+  const deckIds = [(await addDeck(page, first, 1)).deckId, (await addDeck(page, second, 1)).deckId];
   const created = await page.request.post("/api/series", { data: { name: series, deckIds } });
   expect(created.status()).toBe(201);
 
@@ -179,7 +186,7 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
   const series = `Drag ${tag}`;
   const inside = `Inside ${tag}`;
   const loose = `Loose ${tag}`;
-  const insideId = await addDeck(page, inside, 1);
+  const { deckId: insideId } = await addDeck(page, inside, 1);
   await addDeck(page, loose, 1);
   const created = await page.request.post("/api/series", {
     data: { name: series, deckIds: [insideId] },
@@ -231,8 +238,11 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
     await expect(
       page.getByText(new RegExp(`^(Picked up ${inside}\\.|${inside} is over ${series}\\.)$`)),
     ).toBeAttached();
-    await page.keyboard.press("ArrowUp");
-    await expect(page.getByText(`${inside} is over Library.`)).toBeAttached();
+    // dnd-kit listens for arrows a tick after the pickup, so a press that lands first is retried; Library is the top, so extras stay there.
+    await expect(async () => {
+      await page.keyboard.press("ArrowUp");
+      await expect(page.getByText(`${inside} is over Library.`)).toBeAttached({ timeout: 1_000 });
+    }).toPass();
     await page.keyboard.press("Space");
     await expect(deckLink(region, inside)).toHaveCount(0);
     // The drop animation still shows a copy of the deck, so the landing is checked after a reload.

@@ -741,9 +741,9 @@
 .doc-prose > :last-child {
   margin-bottom: 0;
 }
+/* Lists marked list-none are components with their own layout, so prose list styles skip them. */
 .doc-prose p,
-.doc-prose ul,
-.doc-prose ol {
+.doc-prose :is(ul, ol):not(.list-none) {
   margin-block: 0 1rem;
 }
 .doc-prose h2 {
@@ -772,17 +772,16 @@
 .doc-prose :is(h2, h3, h4) {
   scroll-margin-top: 5.5rem;
 }
-.doc-prose ul,
-.doc-prose ol {
-  padding-left: 1.35em;
+.doc-prose :is(ul, ol):not(.list-none) {
+  padding-inline-start: 1.35em;
 }
-.doc-prose ul {
+.doc-prose ul:not(.list-none) {
   list-style: disc;
 }
-.doc-prose ol {
+.doc-prose ol:not(.list-none) {
   list-style: decimal;
 }
-.doc-prose li {
+.doc-prose :is(ul, ol):not(.list-none) > li {
   margin-block: 0.35rem;
 }
 .doc-prose li::marker {

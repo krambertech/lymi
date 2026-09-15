@@ -19,6 +19,7 @@ export const englishOnlyPaths = [
   "/support",
   "/docs",
   "/docs/quickstart",
+  "/docs/mobile",
   "/docs/cards",
   "/docs/import-from-anki",
   "/docs/scheduling",

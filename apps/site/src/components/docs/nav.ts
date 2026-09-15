@@ -7,6 +7,7 @@ export type DocPath =
   | "/docs"
   | "/docs/quickstart"
   | "/docs/authentication"
+  | "/docs/mobile"
   | "/docs/cards"
   | "/docs/import-from-anki"
   | "/docs/scheduling"
@@ -63,6 +64,14 @@ export const PAGES: DocPage[] = [
     title: "Gemini CLI",
     blurb: "Connect Lymi to Gemini CLI, with the client ID Lymi publishes for it.",
     section: "Assistants",
+  },
+  {
+    to: "/docs/mobile",
+    nav: "Lymi on your phone",
+    title: "Lymi on your phone",
+    blurb:
+      "Add Lymi to the home screen of an iPhone or Android phone until the mobile app arrives.",
+    section: "Guides",
   },
   {
     to: "/docs/cards",

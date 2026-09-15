@@ -13,8 +13,8 @@ export function Th({ className, align, ...p }: ThHTMLAttributes<HTMLTableCellEle
   return (
     <th
       className={clsx(
-        "border-b border-edge px-3 py-2 text-left text-xs font-medium text-muted",
-        align === "right" && "text-right",
+        "border-b border-edge px-3 py-2 text-start align-bottom text-xs font-medium text-muted",
+        align === "right" && "text-end",
         className,
       )}
       {...p}
@@ -25,8 +25,9 @@ export function Td({ className, align, ...p }: TdHTMLAttributes<HTMLTableCellEle
   return (
     <td
       className={clsx(
-        "border-b border-edge px-3 py-2.5 align-middle",
-        align === "right" && "text-right tabular-nums",
+        // Baseline, so a code cell sits level with the first line of a wrapped note.
+        "border-b border-edge px-3 py-2.5 align-baseline",
+        align === "right" && "text-end tabular-nums",
         className,
       )}
       {...p}

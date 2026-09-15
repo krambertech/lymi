@@ -126,17 +126,17 @@ export function StepTitle({ children }: { children: ReactNode }) {
   return <p className="mb-1.5 font-medium text-text">{children}</p>;
 }
 
-/** A row of terms and their meanings. Reads better than a two-column table on a phone. */
+/** Terms and meanings on shared columns, so every meaning starts at the same edge. */
 export function Defs({ items }: { items: { term: ReactNode; def: ReactNode }[] }) {
   return (
-    <dl className="my-5 grid gap-0 rounded-md bg-plate edge">
+    <dl className="my-5 grid rounded-md bg-plate edge sm:grid-cols-[fit-content(16rem)_1fr]">
       {items.map((it, i) => (
         <div
           // biome-ignore lint/suspicious/noArrayIndexKey: a static list
           key={i}
-          className="grid gap-1 border-edge px-3.5 py-3 sm:grid-cols-[minmax(9rem,auto)_1fr] sm:gap-4 [&:not(:first-child)]:border-t"
+          className="grid gap-y-1 border-edge px-3.5 py-3 sm:col-span-2 sm:grid-cols-subgrid sm:gap-x-6 [&:not(:first-child)]:border-t"
         >
-          <dt className="font-medium text-text">{it.term}</dt>
+          <dt className="text-base font-medium text-text">{it.term}</dt>
           <dd className="text-base text-text-2">{it.def}</dd>
         </div>
       ))}

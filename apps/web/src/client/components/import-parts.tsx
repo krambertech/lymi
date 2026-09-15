@@ -1,14 +1,15 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { FieldRole, ImportFailure } from "@lymi/core";
+import type { FieldRole, ImportFailure, ImportSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { Check, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import type { Import, ImportPreview } from "../lib/api";
 import { Button, IconButton } from "./button";
 import { Chip } from "./chip";
 import { LanguageField, languageName } from "./deck-fields";
+import { Go } from "./next-steps";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
 import { Field, FieldLabel } from "./ui/field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
@@ -30,23 +31,47 @@ export const ROLE_LABELS: Record<FieldRole, MessageDescriptor> = {
   skip: msg`Leave out`,
 };
 
+/** The apps an import comes from, by the names they go by everywhere. */
+export const SOURCE_NAMES: Record<ImportSource, string> = { anki: "Anki", mochi: "Mochi" };
+
+/** The kinds of Mochi card with no template, named here because the server sends a key. */
+const MOCHI_KINDS: Record<string, MessageDescriptor> = {
+  "content:two": msg`Front and back`,
+  "content:one": msg`One side only`,
+};
+
+/** A kind of card as the learner knows it: the source's own name, or Lymi's for Mochi's plain cards. */
+export function noteTypeName(type: NoteType, i18n: { _: (m: MessageDescriptor) => string }) {
+  const kind = MOCHI_KINDS[type.key];
+  return kind ? i18n._(kind) : type.name;
+}
+
 /** What went wrong, and what the learner can do about it. */
-export function failureCopy(failure: ImportFailure | null) {
+export function failureCopy(failure: ImportFailure | null, source: ImportSource) {
+  const app = SOURCE_NAMES[source];
   switch (failure) {
     case "unrecognized":
-      return {
-        title: msg`Lymi couldn’t read this file`,
-        body: msg`Export it again from Anki as an Anki Deck Package (.apkg), then choose that file.`,
-      };
+      return source === "mochi"
+        ? {
+            title: msg`Lymi couldn’t read this file`,
+            body: msg`Export it again from Mochi as a .mochi file, then choose that file.`,
+          }
+        : {
+            title: msg`Lymi couldn’t read this file`,
+            body: msg`Export it again from Anki as an Anki Deck Package (.apkg), then choose that file.`,
+          };
     case "damaged":
       return {
         title: msg`This file is damaged`,
-        body: msg`Export it again from Anki, then choose the new file.`,
+        body: msg`Export it again from ${app}, then choose the new file.`,
       };
     case "too_large":
       return {
         title: msg`This collection is too large to import at once`,
-        body: msg`Export one deck at a time, or export again without media.`,
+        body:
+          source === "mochi"
+            ? msg`In Mochi, export one deck at a time instead of everything.`
+            : msg`Export one deck at a time, or export again without media.`,
       };
     case "upload_incomplete":
       return {
@@ -171,6 +196,7 @@ export function CardCheck({
   onChecked,
   onChangeFields,
   error,
+  source,
 }: {
   noteTypes: NoteType[];
   samples: ImportPreview["samples"] | undefined;
@@ -179,8 +205,9 @@ export function CardCheck({
   onChecked: (key: string) => void;
   onChangeFields: (type: NoteType) => void;
   error?: string | undefined;
+  source: ImportSource;
 }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const [index, setIndex] = useState(0);
   const [sampleIndex, setSampleIndex] = useState(0);
   const type = noteTypes[Math.min(index, noteTypes.length - 1)];
@@ -208,7 +235,10 @@ export function CardCheck({
       <div className="edge grid gap-4 rounded-xl bg-plate p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <Chip>
-            {type.name} · {plural(type.notes, { one: "# note", other: "# notes" })}
+            {noteTypeName(type, i18n)} ·{" "}
+            {source === "mochi"
+              ? plural(type.notes, { one: "# card", other: "# cards" })
+              : plural(type.notes, { one: "# note", other: "# notes" })}
           </Chip>
           {list.length > 1 && (
             <button
@@ -277,12 +307,14 @@ export function FieldsDialog({
   open,
   onOpenChange,
   onSave,
+  source,
 }: {
   type: NoteType | undefined;
   roles: FieldRole[] | undefined;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: (roles: FieldRole[]) => void;
+  source: ImportSource;
 }) {
   const { t, i18n } = useLingui();
   const [draft, setDraft] = useState<FieldRole[]>(roles ?? []);
@@ -296,9 +328,17 @@ export function FieldsDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[min(92vw,520px)]">
-        <DialogTitle>{t`Fields of ${type.name}`}</DialogTitle>
+        <DialogTitle>{t`Fields of ${noteTypeName(type, i18n)}`}</DialogTitle>
         <DialogDescription>
-          <Trans>Choose what each Anki field becomes on a Lymi card. One field is the term.</Trans>
+          {source === "mochi" ? (
+            <Trans>
+              Choose what each Mochi field becomes on a Lymi card. One field is the term.
+            </Trans>
+          ) : (
+            <Trans>
+              Choose what each Anki field becomes on a Lymi card. One field is the term.
+            </Trans>
+          )}
         </DialogDescription>
         <form
           key={open ? "open" : "closed"}
@@ -324,7 +364,10 @@ export function FieldsDialog({
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-text">{field}</p>
                   <p className="truncate text-sm text-muted">
-                    {example[i] || t`Empty in the first note`}
+                    {example[i] ||
+                      (source === "mochi"
+                        ? t`Empty in the first card`
+                        : t`Empty in the first note`)}
                   </p>
                 </div>
                 <Field>
@@ -378,22 +421,25 @@ export function LanguagesDialog({
   open,
   onOpenChange,
   onSave,
+  source,
 }: {
   decks: Summary["decks"];
   languages: Record<string, string | null>;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: (languages: Record<string, string | null>) => void;
+  source: ImportSource;
 }) {
   const { t } = useLingui();
   const [draft, setDraft] = useState(languages);
+  const app = SOURCE_NAMES[source];
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[min(92vw,480px)]">
         <DialogTitle>{t`Languages`}</DialogTitle>
         <DialogDescription>
           <Trans>
-            Anki doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to
+            {app} doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to
             find words you already have and to say words out loud.
           </Trans>
         </DialogDescription>
@@ -442,4 +488,36 @@ export function languagesLine(
     tag ? languageName(tag, locale) : none,
   );
   return new Intl.ListFormat(locale, { type: "conjunction" }).format(names);
+}
+
+/** The apps Lymi imports from, one row each, leading to that app's import page. */
+export function ImportSources({
+  sourceLink,
+}: {
+  sourceLink: (source: ImportSource, className: string, children: ReactNode) => ReactNode;
+}) {
+  const { t } = useLingui();
+  const sources: { source: ImportSource; detail: string }[] = [
+    { source: "anki", detail: t`An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile` },
+    { source: "mochi", detail: t`A .mochi file from Mochi` },
+  ];
+  return (
+    <ul aria-label={t`Apps you can import from`} className="edge grid rounded-xl bg-plate">
+      {sources.map(({ source, detail }) => (
+        <li key={source} className="group/row border-edge [&:not(:first-child)]:border-t">
+          {sourceLink(
+            source,
+            "group flex min-h-16 items-center gap-4 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:bg-hover group-first/row:rounded-t-xl group-last/row:rounded-b-xl",
+            <>
+              <span className="grid min-w-0 flex-1 gap-0.5">
+                <span className="text-md font-medium">{SOURCE_NAMES[source]}</span>
+                <span className="text-sm text-muted text-pretty">{detail}</span>
+              </span>
+              <Go />
+            </>,
+          )}
+        </li>
+      ))}
+    </ul>
+  );
 }

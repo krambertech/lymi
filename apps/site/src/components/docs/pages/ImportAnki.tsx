@@ -29,9 +29,10 @@ export function ImportAnki() {
         <div>
           <StepTitle>Open the import in Lymi</StepTitle>
           <p>
-            In Lymi, press the round <strong>+</strong> button and choose{" "}
-            <strong>Import from Anki</strong>. Choose the file, or drop it on the page. Keep Lymi
-            open while the file uploads; a large file on a slow connection can take a few minutes.
+            In Lymi, open <strong>Settings</strong> from the menu under your name, and under{" "}
+            <strong>Import</strong> choose
+            <strong>Anki</strong>. Choose the file, or drop it on the page. Keep Lymi open while the
+            file uploads; a large file on a slow connection can take a few minutes.
           </p>
         </div>
         <div>

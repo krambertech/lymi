@@ -25,7 +25,7 @@ function ActivityRoute() {
         </Link>
       )}
       startLink={(className, children) => (
-        <Link to="/import" className={className}>
+        <Link to="/settings" hash="import" className={className}>
           {children}
         </Link>
       )}

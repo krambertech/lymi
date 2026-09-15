@@ -57,6 +57,14 @@ msgstr "{0, plural, one {Оновлено # картку з попередньо
 msgid "{0, plural, one {# card has text that’s too long, so part of it moves to notes or is cut.} other {# cards have text that’s too long, so part of it moves to notes or is cut.}}"
 msgstr "{0, plural, one {У # картці задовгий текст, тож частина переїде в нотатки або буде обрізана.} few {У # картках задовгий текст, тож частина переїде в нотатки або буде обрізана.} many {У # картках задовгий текст, тож частина переїде в нотатки або буде обрізана.} other {У # картки задовгий текст, тож частина переїде в нотатки або буде обрізана.}}"
 
+#. placeholder {0}: preview.skipped
+msgid "{0, plural, one {# card is left out: it has no term.} other {# cards are left out: they have no term.}}"
+msgstr "{0, plural, one {# картку пропущено: у ній немає терміна.} few {# картки пропущено: у них немає терміна.} many {# карток пропущено: у них немає терміна.} other {# картки пропущено: у них немає терміна.}}"
+
+#. placeholder {0}: preview.archived
+msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
+msgstr "{0, plural, one {# картка з архіву Mochi прийде в архів.} few {# картки з архіву Mochi прийдуть в архів.} many {# карток з архіву Mochi прийдуть в архів.} other {# картки з архіву Mochi прийдуть в архів.}}"
+
 #. placeholder {0}: deck.cards
 #. placeholder {0}: deck.total
 #. placeholder {0}: s.total
@@ -183,12 +191,20 @@ msgstr "{0, plural, one {Засвоєно {known} з # картки в «{curren
 msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 msgstr "{0, plural, one {Засвоєно {known} з # картки в «{currentName}».} few {Засвоєно {known} з # карток у «{currentName}».} many {Засвоєно {known} з # карток у «{currentName}».} other {Засвоєно {known} з # картки в «{currentName}».}}"
 
+#. placeholder {0}: SOURCE_NAMES[item.source]
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: item.fileName
+#. placeholder {1}: date.format(new Date(item.createdAt))
 #. placeholder {1}: fileSize(item.byteSize, i18n.locale)
 #. placeholder {1}: item.next
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
+
+#. placeholder {0}: SOURCE_NAMES[item.source]
+#. placeholder {1}: date.format(new Date(item.createdAt))
+#. placeholder {2}: item.counts?.added ?? 0
+msgid "{0} · {1} · {2, plural, one {# card added} other {# cards added}}"
+msgstr "{0} · {1} · {2, plural, one {додано # картку} few {додано # картки} many {додано # карток} other {додано # картки}}"
 
 #. placeholder {0}: item.fileName
 msgid "{0} · {date}"
@@ -259,6 +275,9 @@ msgstr "{added, plural, one {До зупинки імпорту додано # �
 
 msgid "{added, plural, one {Import # card} other {Import # cards}}"
 msgstr "{added, plural, one {Імпортувати # картку} few {Імпортувати # картки} many {Імпортувати # карток} other {Імпортувати # картки}}"
+
+msgid "{app} doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
+msgstr "{app} не зберігає мову, тож Lymi вгадав її з назви кожної колоди. Мова потрібна, щоб знаходити слова, які в тебе вже є, і вимовляти їх."
 
 msgid "{appName} is connected"
 msgstr "Застосунок {appName} підключено"
@@ -440,6 +459,9 @@ msgstr "{name} над «{where}»."
 msgid "{nextName} is ready"
 msgstr "Можна починати {nextName}"
 
+msgid "{oneSided, plural, one {# card has no --- line, so it comes across with a term and no meaning.} other {# cards have no --- line, so they come across with a term and no meaning.}}"
+msgstr "{oneSided, plural, one {У # картці немає рядка ---, тож вона прийде з терміном і без значення.} few {У # картках немає рядка ---, тож вони прийдуть з терміном і без значення.} many {У # картках немає рядка ---, тож вони прийдуть з терміном і без значення.} other {У # картки немає рядка ---, тож вони прийдуть з терміном і без значення.}}"
+
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {Попередній розділ теж почнеться, щоб розділи йшли по порядку.} few {# попередні розділи теж почнуться, щоб розділи йшли по порядку.} many {# попередніх розділів теж почнуться, щоб розділи йшли по порядку.} other {# попереднього розділу теж почнуться, щоб розділи йшли по порядку.}}"
 
@@ -480,6 +502,12 @@ msgstr "30 днів"
 
 msgid "90 days"
 msgstr "90 днів"
+
+msgid "A .mochi file from Mochi"
+msgstr "Файл .mochi з Mochi"
+
+msgid "A .mochi file, up to 1 GB. You can also drop it here."
+msgstr "Файл .mochi, до 1 ГБ. Можна також перетягнути його сюди."
 
 msgid "a connected app"
 msgstr "підключений застосунок"
@@ -625,6 +653,9 @@ msgstr "Також додає, редагує й архівує їх."
 msgid "Always"
 msgstr "Завжди"
 
+msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
+msgstr "Файл .apkg або .colpkg з Anki, AnkiDroid чи AnkiMobile"
+
 msgid "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
 msgstr "Файл .apkg або .colpkg, до 1 ГБ. Можна також перетягнути його сюди."
 
@@ -636,18 +667,6 @@ msgstr "застосунок без адреси"
 
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Анімовані зображення не підходять. Вибери нерухоме."
-
-#. placeholder {0}: date.format(new Date(item.createdAt))
-msgid "Anki · {0}"
-msgstr "Anki · {0}"
-
-#. placeholder {0}: date.format(new Date(item.createdAt))
-#. placeholder {1}: item.counts?.added ?? 0
-msgid "Anki · {0} · {1, plural, one {# card added} other {# cards added}}"
-msgstr "Anki · {0} · {1, plural, one {додано # картку} few {додано # картки} many {додано # карток} other {додано # картки}}"
-
-msgid "Anki doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
-msgstr "Anki не зберігає мову, тож Lymi вгадав її з назви кожної колоди. Мова потрібна, щоб знаходити слова, які в тебе вже є, і вимовляти їх."
 
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
@@ -669,6 +688,9 @@ msgstr "Ключ API для {name}"
 
 msgid "API keys"
 msgstr "Ключі API"
+
+msgid "Apps you can import from"
+msgstr "Застосунки, з яких можна імпортувати"
 
 msgid "Archive"
 msgstr "Архівувати"
@@ -779,11 +801,14 @@ msgstr "Обидва варіанти, по одній картці за раз.
 msgid "Both ways"
 msgstr "Обидва способи"
 
-msgid "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and Anki stays as it is."
-msgstr "Перенеси колоди з картинками, тегами й історією повторень. Картки збережуть свої дати повторення, а в Anki нічого не зміниться."
+msgid "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and {app} stays as it is."
+msgstr "Перенеси колоди з картинками, тегами й історією повторень. Картки збережуть свої дати повторення, а в {app} нічого не зміниться."
 
-msgid "Bring your decks with their pictures and review history."
-msgstr "Перенеси колоди з картинками та історією повторень."
+msgid "Bring your decks from Anki or Mochi with their review history."
+msgstr "Перенеси колоди з Anki чи Mochi разом з історією повторень."
+
+msgid "Bring your decks from another app with their pictures, tags and review history. The other app stays as it is."
+msgstr "Перенеси колоди з іншого застосунку з картинками, тегами й історією повторень. У тому застосунку нічого не зміниться."
 
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Повертає кожну картку, яку додав цей імпорт, і створені ним колоди."
@@ -837,8 +862,8 @@ msgstr "Картки з вівторкових уроків Марко."
 msgid "Cards from this deck"
 msgstr "Картки з цієї колоди"
 
-msgid "Cards keep the due dates they had in Anki."
-msgstr "Картки збережуть дати повторення, які мали в Anki."
+msgid "Cards keep the due dates they had in {app}."
+msgstr "Картки збережуть дати повторення, які мали в {app}."
 
 msgid "Cards that came into your decks from outside the app."
 msgstr "Картки, що потрапили у твої колоди ззовні застосунку."
@@ -916,17 +941,23 @@ msgstr "Вибери один варіант"
 msgid "Choose the .apkg or .colpkg file Anki exports."
 msgstr "Вибери файл .apkg або .colpkg, який експортує Anki."
 
+msgid "Choose the .mochi file Mochi exports."
+msgstr "Вибери файл .mochi, який експортує Mochi."
+
 msgid "Choose the file again"
 msgstr "Вибрати файл ще раз"
 
-msgid "Choose the file you exported from Anki"
-msgstr "Вибери файл, експортований з Anki"
+msgid "Choose the file you exported from {app}"
+msgstr "Вибери файл, експортований з {app}"
 
 msgid "Choose what each Anki field becomes on a Lymi card. One field is the term."
 msgstr "Вибери, чим кожне поле Anki стане в картці Lymi. Одне поле — це термін."
 
-msgid "Choose your Anki file"
-msgstr "Вибір файлу Anki"
+msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
+msgstr "Вибери, чим кожне поле Mochi стане в картці Lymi. Одне поле — це термін."
+
+msgid "Choose your {app} file"
+msgstr "Вибір файлу {app}"
 
 msgid "Clear"
 msgstr "Скинути"
@@ -1195,6 +1226,9 @@ msgstr "Змінити серію"
 msgid "Edited {list}"
 msgstr "Змінено {list}"
 
+msgid "Empty in the first card"
+msgstr "Порожнє в першій картці"
+
 msgid "Empty in the first note"
 msgstr "Порожнє в першому записі"
 
@@ -1231,22 +1265,25 @@ msgstr "Експортувати як CSV"
 msgid "Export as CSV without pictures"
 msgstr "Експортувати в CSV без зображень"
 
+msgid "Export it again from {app}, then choose the new file."
+msgstr "Експортуй його ще раз з {app} і вибери новий файл."
+
 msgid "Export it again from Anki as an Anki Deck Package (.apkg), then choose that file."
 msgstr "Експортуй його ще раз з Anki як Anki Deck Package (.apkg) і вибери цей файл."
 
-msgid "Export it again from Anki, then choose the new file."
-msgstr "Експортуй його ще раз з Anki і вибери новий файл."
+msgid "Export it again from Mochi as a .mochi file, then choose that file."
+msgstr "Експортуй його ще раз з Mochi як файл .mochi і вибери цей файл."
 
 msgid "Export one deck at a time, or export again without media."
 msgstr "Експортуй колоди по одній або ще раз без медіа."
 
-msgid "Exporting from Anki"
-msgstr "Як експортувати з Anki"
+msgid "Exporting from {app}"
+msgstr "Як експортувати з {app}"
 
 msgid "Fewer fields"
 msgstr "Менше полів"
 
-#. placeholder {0}: type.name
+#. placeholder {0}: noteTypeName(type, i18n)
 msgid "Fields of {0}"
 msgstr "Поля «{0}»"
 
@@ -1280,6 +1317,9 @@ msgstr "Забуті щонайменше {SLIPPING_LAPSES} рази"
 
 msgid "From the lesson"
 msgstr "З уроку"
+
+msgid "Front and back"
+msgstr "Лицевий і зворотний бік"
 
 msgid "Getting a card ready…"
 msgstr "Готуємо картку…"
@@ -1362,14 +1402,20 @@ msgstr "Як тебе запитувати"
 msgid "Identified by"
 msgstr "Ідентифіковано за адресою"
 
+msgid "Import"
+msgstr "Імпорт"
+
 msgid "Import archived"
 msgstr "Імпорт архівовано"
 
 msgid "Import cancelled"
 msgstr "Імпорт скасовано"
 
-msgid "Import from Anki"
-msgstr "Імпорт з Anki"
+msgid "Import cards"
+msgstr "Імпортувати картки"
+
+msgid "Import from {app}"
+msgstr "Імпорт з {app}"
 
 msgid "Importing"
 msgstr "Імпортується"
@@ -1380,11 +1426,17 @@ msgstr "Імпортуємо твої картки"
 msgid "Imports"
 msgstr "Імпорти"
 
-msgid "Imports from Anki appear here, with what each one added."
-msgstr "Тут з’являться імпорти з Anki і те, що кожен із них додав."
+msgid "Imports from Anki and Mochi appear here, with what each one added."
+msgstr "Тут з’являться імпорти з Anki і Mochi та те, що кожен із них додав."
 
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "В Anki на комп’ютері вибери <0>File</0>, потім <1>Export</1>."
+
+msgid "In Mochi, export one deck at a time instead of everything."
+msgstr "У Mochi експортуй колоди по одній, а не все одразу."
+
+msgid "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
+msgstr "У Mochi відкрий колоду, відкрий її меню <0>…</0> і вибери <1>Export deck</1>."
 
 msgid "Insights"
 msgstr "Огляд"
@@ -1899,6 +1951,9 @@ msgstr "По черзі, коли ти їх почнеш"
 msgid "One card is ready"
 msgstr "Одна картка готова"
 
+msgid "One side only"
+msgstr "Лише один бік"
+
 msgid "Only on days with cards due."
 msgstr "Лише в дні, коли є картки до повторення."
 
@@ -2231,6 +2286,9 @@ msgstr "Зберегти фото"
 msgid "Save series"
 msgstr "Зберегти серію"
 
+msgid "Save the .mochi file, then choose it here."
+msgstr "Збережи файл .mochi і вибери його тут."
+
 msgid "Save time"
 msgstr "Зберегти час"
 
@@ -2385,6 +2443,9 @@ msgstr "Деякі оцінки ще не синхронізовано"
 
 msgid "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
 msgstr "На боці Lymi щось пішло не так. Картки, додані до зупинки, уже у твоїх колодах."
+
+msgid "Something went wrong? Read the guide"
+msgstr "Щось пішло не так? Прочитай посібник"
 
 msgid "Something went wrong. Try again from the app."
 msgstr "Щось пішло не так. Спробуй ще раз із застосунку."
@@ -2580,14 +2641,17 @@ msgstr "Ця колекція завелика, щоб імпортувати ї
 msgid "This deck is archived"
 msgstr "Ця колода в архіві"
 
+msgid "This file has no review history, so every card starts as new."
+msgstr "У цьому файлі немає історії повторень, тож кожна картка почнеться як нова."
+
 msgid "This file has no review history, so every card starts as new. To keep your progress, export again with Include Scheduling Information ticked."
 msgstr "У цьому файлі немає історії повторень, тож кожна картка почнеться як нова. Щоб зберегти прогрес, експортуй ще раз з позначкою Include Scheduling Information."
 
 msgid "This file is damaged"
 msgstr "Цей файл пошкоджено"
 
-msgid "This file is empty. Export it again from Anki."
-msgstr "Цей файл порожній. Експортуй його ще раз з Anki."
+msgid "This file is empty. Export it again from {app}."
+msgstr "Цей файл порожній. Експортуй його ще раз з {app}."
 
 msgid "This file is larger than 1 GB. Export one deck at a time."
 msgstr "Цей файл більший за 1 ГБ. Експортуй колоди по одній."
@@ -2621,6 +2685,9 @@ msgstr "Цього тижня"
 
 msgid "Time"
 msgstr "Час"
+
+msgid "To bring every deck at once, open <0>Settings</0> and choose <1>Export everything</1> instead."
+msgstr "Щоб перенести всі колоди одразу, відкрий <0>Settings</0> і вибери <1>Export everything</1>."
 
 msgid "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
 msgstr "Щоб перенести колоду в серію чи з неї, натисни пробіл, пересунь її стрілками й натисни пробіл ще раз."

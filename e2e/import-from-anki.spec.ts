@@ -5,9 +5,9 @@ import { signInAsTestLearner } from "./auth";
 /** A real export from Anki 26.09, made by `fixtures/generate.py`: 10 cards, 3 decks, 11 reviews. */
 const ANKI_FILE = join(process.cwd(), "apps/web/src/server/imports/anki/fixtures/current.apkg");
 
-/** Capture lives in the rail on a desktop and in the top bar on a phone; the one on screen is it. */
-function addMenu(page: Page) {
-  return page.getByRole("button", { name: "Add", exact: true }).filter({ visible: true });
+/** The learner menu sits in the rail on a desktop and in the top bar on a phone; the one on screen is it. */
+function learnerMenu(page: Page) {
+  return page.getByRole("button", { name: "Dev", exact: true }).filter({ visible: true });
 }
 
 async function chooseFile(page: Page) {
@@ -31,9 +31,10 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
   test.setTimeout(120_000);
   await signInAsTestLearner(page, testInfo, "anki-import");
 
-  await test.step("open the import from the plus", async () => {
-    await addMenu(page).click();
-    await page.getByRole("menuitem", { name: "Import from Anki", exact: true }).click();
+  await test.step("open the Anki import from Settings", async () => {
+    await learnerMenu(page).click();
+    await page.getByRole("menuitem", { name: "Settings", exact: true }).click();
+    await page.getByRole("link", { name: /^Anki\b/ }).click();
     await expect(
       page.getByRole("heading", { name: "Import from Anki", exact: true }),
     ).toBeVisible();
@@ -99,7 +100,7 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
   });
 
   await test.step("the same file again adds nothing twice", async () => {
-    await page.goto("/import");
+    await page.goto("/import/anki");
     await chooseFile(page);
     await expect(
       page.getByText(

@@ -63,6 +63,18 @@ const TERMS: Record<string, string[]> = {
     "cloze",
     "furigana",
   ],
+  "/docs/import-from-mochi": [
+    "mochi",
+    "export",
+    "import",
+    "migrate",
+    "move",
+    "switch",
+    "markdown",
+    "template",
+    "attachments",
+    "reverse",
+  ],
   "/docs/scheduling": [
     "fsrs",
     "spaced repetition",

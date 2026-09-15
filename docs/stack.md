@@ -176,6 +176,8 @@ An import's file goes to the `IMPORTS` R2 bucket in 10 MB parts through R2 multi
 
 A source is one adapter in `apps/web/src/server/imports`: detect, inspect into a summary and notes, and turn a note into the common imported card. The Anki adapter reads the zip's central directory by ranges, decompresses zstd with `fzstd`, decodes Anki's protobuf itself, and reads the collection's SQLite pages with a small reader in `sqlite.ts`. The proposal named `sql.js`, but a WASM SQLite copies the database into its own heap, which doubles an 80 MB collection past a Worker's 128 MB; the reader walks b-trees over the one copy and is tested against `node:sqlite`. A 50 MB collection of 40,000 notes and 480,000 reviews read in about a second and held its 50 MB plus 38 MB of cards and logs, so the limit is 64 MB rather than the proposal's 80. Fixtures are exported by Anki's own library from `fixtures/generate.py`.
 
+The Mochi adapter reads `data.json` from a `.mochi` zip, which is Transit JSON: keywords as `~:` strings, lists and sets as `~#` tags and review dates as `~t` milliseconds, confirmed against a real 6 MB export on 15 September 2026. Its tags are `:tags`, not the API's `manual-tags`. It skips `component-cache`, where Mochi keeps generated speech and AI text, and a 6 MB export peaked at about 23 MB while parsing, so `data.json` is limited to 20 MB. Mochi dates a review by its day, so grades on one day are kept a minute apart for the replay. Its fixture is written in the real export's shape by `fixtures/generate.py`.
+
 A preview Worker's Workflow is named after the preview, because Workflow names are account-wide and a preview must never register production's.
 
 ### Repo: pnpm workspace

@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { buttonClass } from "../components/button";
 import { Chip } from "../components/chip";
 import { EmptySection, ErrorState } from "../components/empty-state";
+import { SOURCE_NAMES } from "../components/import-parts";
 import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
 import type { Import } from "../lib/api";
@@ -70,8 +71,8 @@ export function ActivityView({
         <EmptySection
           icon={<FileUp />}
           title={t`Nothing has come in yet`}
-          body={t`Imports from Anki appear here, with what each one added.`}
-          action={startLink(buttonClass("secondary"), t`Import from Anki`)}
+          body={t`Imports from Anki and Mochi appear here, with what each one added.`}
+          action={startLink(buttonClass("secondary"), t`Import cards`)}
         />
       ) : (
         <section aria-labelledby="imports-heading" className="grid gap-2">
@@ -79,7 +80,7 @@ export function ActivityView({
             <h2 id="imports-heading" className="text-md font-medium">
               <Trans>Imports</Trans>
             </h2>
-            {startLink(buttonClass("ghost", "sm"), t`Import from Anki`)}
+            {startLink(buttonClass("ghost", "sm"), t`Import cards`)}
           </div>
           <ul className="edge grid rounded-xl bg-plate">
             {imports.map((item) => (
@@ -96,8 +97,8 @@ export function ActivityView({
                       <span className="text-sm text-muted tabular-nums">
                         {item.status === "done" ||
                         (item.status === "failed" && (item.counts?.added ?? 0) > 0)
-                          ? t`Anki · ${date.format(new Date(item.createdAt))} · ${plural(item.counts?.added ?? 0, { one: "# card added", other: "# cards added" })}`
-                          : t`Anki · ${date.format(new Date(item.createdAt))}`}
+                          ? t`${SOURCE_NAMES[item.source]} · ${date.format(new Date(item.createdAt))} · ${plural(item.counts?.added ?? 0, { one: "# card added", other: "# cards added" })}`
+                          : t`${SOURCE_NAMES[item.source]} · ${date.format(new Date(item.createdAt))}`}
                       </span>
                     </span>
                     <Go />

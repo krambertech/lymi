@@ -263,12 +263,7 @@ export function LibraryView({
         actions={
           <>
             {streakButton}
-            <AddMenu
-              onAddCard={onAdd ?? (() => {})}
-              onCreateDeck={onCreateDeck}
-              onImport={onImport}
-              align="end"
-            />
+            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
             <LearnerMenu
               variant="phone"
               name={name}
@@ -332,10 +327,10 @@ export function LibraryView({
                 </span>
                 <span className="grid min-w-0 flex-1 gap-0.5">
                   <span className="text-md font-medium">
-                    <Trans>Import from Anki</Trans>
+                    <Trans>Import cards</Trans>
                   </span>
                   <span className="text-sm text-muted">
-                    <Trans>Bring your decks with their pictures and review history.</Trans>
+                    <Trans>Bring your decks from Anki or Mochi with their review history.</Trans>
                   </span>
                 </span>
                 <Go />

@@ -25,6 +25,11 @@ import * as m from "./mock";
 import type { Entry } from "./parts/types";
 import { SheetPreview } from "./sheet-preview";
 
+/** The import rows drawn in place, since the design page never leaves itself. */
+const staticImportLink = (_source: string, className: string, children: ReactNode) => (
+  <span className={className}>{children}</span>
+);
+
 const noop = () => {};
 /** The deck `m.queueItem` and its siblings belong to. */
 const reviewDeck = { name: "Italian with Giulia", language: "it" };
@@ -755,7 +760,14 @@ export const SCREENS: Entry[] = [
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="On the phone" initial="dark" path="/settings">
-            <SettingsView me={m.me} language="en" onLanguage={noop} theme="system" onTheme={noop} />
+            <SettingsView
+              me={m.me}
+              language="en"
+              onLanguage={noop}
+              theme="system"
+              onTheme={noop}
+              importLink={staticImportLink}
+            />
           </PhoneShot>
         </div>
         <Shot caption="Desktop, Settings" initial="light">
@@ -775,6 +787,7 @@ export const SCREENS: Entry[] = [
                   onLanguage={noop}
                   theme="system"
                   onTheme={noop}
+                  importLink={staticImportLink}
                 />
               </main>
             </Desktop>

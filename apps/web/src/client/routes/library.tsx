@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArchivedSeriesDialog,
@@ -43,6 +43,7 @@ function DeckList() {
   const me = useQuery(meQuery);
   const leave = useSignOut();
   const add = useAddCard();
+  const navigate = useNavigate();
   const qc = useQueryClient();
   const actions = useSeriesActions();
   // `null` is the new-series sheet; a series is that series' edit sheet.
@@ -68,7 +69,7 @@ function DeckList() {
         series={series.data}
         onAdd={() => add.openCard()}
         onCreateDeck={add.openDeck}
-        onImport={add.openImport}
+        onImport={() => void navigate({ to: "/settings", hash: "import" })}
         onNewSeries={() => setEditing(null)}
         onEditSeries={setEditing}
         onArchiveSeries={(s) =>

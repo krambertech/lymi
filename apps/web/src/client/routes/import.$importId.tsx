@@ -4,12 +4,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { buttonClass } from "../components/button";
 import { ErrorState } from "../components/empty-state";
-import type { Choices } from "../components/import-parts";
+import { type Choices, SOURCE_NAMES } from "../components/import-parts";
 import { toast } from "../components/ui/toast";
 import { api, errorMessage, type Import } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
+import { importGuideUrl } from "../lib/import-guides";
 import { resumeUpload, retryUpload, stopUpload, uploading, useUpload } from "../lib/import-uploads";
-import { publicSiteUrl } from "../lib/origins";
 import { importQuery } from "../lib/queries";
 import {
   ImportDoneView,
@@ -23,16 +23,15 @@ export const Route = createFileRoute("/import/$importId")({
   component: ImportRoute,
 });
 
-const GUIDE = publicSiteUrl("/docs/import-from-anki");
-
 function ImportRoute() {
   const { t } = useLingui();
   const { importId } = Route.useParams();
-  useDocumentTitle(t`Import from Anki`);
   const qc = useQueryClient();
   const query = useQuery(importQuery(importId));
   const upload = useUpload(importId);
   const item = query.data;
+  const app = SOURCE_NAMES[item?.source ?? "anki"];
+  useDocumentTitle(item ? t`Import from ${app}` : t`Import`);
 
   // Leaving the page mid-upload loses the file, so the browser asks first.
   useEffect(() => {
@@ -119,7 +118,10 @@ function ImportRoute() {
   }
 
   const restart = (
-    <Link to="/import" className={buttonClass("primary")}>
+    <Link
+      to={item.source === "mochi" ? "/import/mochi" : "/import/anki"}
+      className={buttonClass("primary")}
+    >
       {t`Choose another file`}
     </Link>
   );
@@ -177,7 +179,7 @@ function ImportRoute() {
           item={item}
           back={back}
           restart={restart}
-          guideUrl={GUIDE}
+          guideUrl={importGuideUrl(item.source)}
           onArchive={() => archive.mutate()}
           archiving={archive.isPending}
         />

@@ -49,7 +49,14 @@ beforeAll(async () => {
 afterAll(async () => dispose());
 
 const fixture = (name: string) =>
-  new Uint8Array(readFileSync(new URL(`../imports/anki/fixtures/${name}`, import.meta.url)));
+  new Uint8Array(
+    readFileSync(
+      new URL(
+        `../imports/${name.endsWith(".mochi") ? "mochi" : "anki"}/fixtures/${name}`,
+        import.meta.url,
+      ),
+    ),
+  );
 const DAY = 86_400_000;
 const CREATED = Date.UTC(2026, 0, 1, 4);
 let learners = 0;
@@ -129,6 +136,63 @@ async function reviewsOf(cardId: string) {
 async function objectsUnder(prefix: string) {
   return (await env.IMPORTS.list({ prefix })).objects.length;
 }
+
+describe("importing a Mochi export", () => {
+  it("writes nested decks, cards, reviews and pictures through the same writer", async () => {
+    const ctx = await fresh();
+    const { id, preview, result } = await runImport(ctx, "export.mochi");
+    expect(preview).toMatchObject({
+      added: 11,
+      skipped: 0,
+      archived: 1,
+      reviews: 12,
+      pictures: 2,
+      audio: 1,
+    });
+    expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([
+      ["Italian / Lesson 1", 6],
+      ["Italian / Lesson 1 / Verbs", 1],
+      ["Japanese", 4],
+    ]);
+    expect(result).toMatchObject({ source: "mochi", status: "done", failure: null });
+    expect(result.counts).toMatchObject({ added: 11, reviews: 12, pictures: 2, decks: 3 });
+
+    const gatto = await card(ctx, "il gatto");
+    expect(gatto).toMatchObject({ meaning: "the cat", language: "it", importId: id });
+    expect(gatto.tags).toEqual(["animals", "lesson one"]);
+    expect((await reviewsOf(gatto.id)).map((r) => [r.rating, r.source, r.reviewDayId])).toEqual([
+      [3, "import", null],
+      [1, "import", null],
+      [3, "import", null],
+      [3, "import", null],
+    ]);
+    const [state] = await statesOf(gatto.id);
+    expect(state?.due.getTime()).toBe(CREATED + 9 * DAY);
+    expect((await card(ctx, "la casa")).meaning).toBeNull();
+    expect((await card(ctx, "ciao")).directions).toBe("both");
+
+    const view = await insights(ctx, { period: 0, zone: "UTC" });
+    // Grades on 1, 2, 3, 4 and 5 January light those five days.
+    expect(view.months.find((m) => m.month === "2026-01")?.lit).toBe(5);
+  });
+
+  it("adds nothing twice, leaves today alone, and archives exactly what it added", async () => {
+    const ctx = await fresh();
+    const before = await streak(ctx);
+    const first = await runImport(ctx, "export.mochi");
+    const after = await streak(ctx);
+    expect(after.today).toEqual(before.today);
+    expect(after.current).toBe(before.current);
+    expect((await reviewDraw(ctx, {})).attempts).toBe(0);
+
+    const second = await runImport(ctx, "export.mochi");
+    expect(second.preview).toMatchObject({ added: 0, existing: 11, duplicates: 0 });
+    expect(await cardsOf(ctx)).toHaveLength(11);
+
+    await archiveImport(ctx, first.id);
+    expect((await cardsOf(ctx)).filter((c) => c.archivedAt === null)).toHaveLength(0);
+  });
+});
 
 describe("importing an Anki package", () => {
   it("writes decks, cards, states, reviews and pictures, and deletes the file", async () => {

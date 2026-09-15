@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AccountSection } from "../components/account-section";
 import { ApiKeysSection } from "../components/api-keys-section";
@@ -55,6 +55,11 @@ function SettingsRoute() {
       onLanguage={language.mutate}
       languageError={language.isError}
       account={<AccountSection name={me.data?.name} email={me.data?.email} />}
+      importLink={(source, className, children) => (
+        <Link to={source === "mochi" ? "/import/mochi" : "/import/anki"} className={className}>
+          {children}
+        </Link>
+      )}
       theme={theme}
       onTheme={(t) => {
         setTheme(t);

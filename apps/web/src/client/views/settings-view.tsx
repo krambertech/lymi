@@ -1,9 +1,10 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { AppLanguage } from "@lymi/core";
+import type { AppLanguage, ImportSource } from "@lymi/core";
 import type { ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
+import { ImportSources } from "../components/import-parts";
 import { Segmented } from "../components/segmented";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
@@ -31,6 +32,8 @@ export interface SettingsProps {
   account?: ReactNode | undefined;
   /** The groups that need the network: reminders, connected apps, API keys. */
   children?: ReactNode | undefined;
+  /** A link to one app's import page. */
+  importLink: (source: ImportSource, className: string, children: ReactNode) => ReactNode;
 }
 
 /** Each language in its own name, so a learner can find theirs whatever is active. */
@@ -47,8 +50,8 @@ const THEMES: { value: ThemeChoice; label: MessageDescriptor }[] = [
 ];
 
 /**
- * Every setting, and nothing else. Where to go and how to leave live in the learner menu,
- * so this screen is only things with a value that can be changed.
+ * Every setting, and the ways to bring cards in from another app. Where to go and how to leave
+ * live in the learner menu.
  */
 export function SettingsView({
   me,
@@ -59,6 +62,7 @@ export function SettingsView({
   onTheme,
   account,
   children,
+  importLink,
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
@@ -115,6 +119,14 @@ export function SettingsView({
       </SettingsGroup>
 
       {children}
+
+      <SettingsGroup
+        id="import"
+        title={t`Import`}
+        description={t`Bring your decks from another app with their pictures, tags and review history. The other app stays as it is.`}
+      >
+        <ImportSources sourceLink={importLink} />
+      </SettingsGroup>
     </Page>
   );
 }

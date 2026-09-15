@@ -168,7 +168,8 @@ function DeckPage() {
     <>
       <DeckDetailView
         deck={deck}
-        cards={cards.data}
+        // Held until the sections arrive, so a sectioned deck never flashes in another order.
+        cards={sections.isPending ? undefined : cards.data}
         streak={streak.data}
         onAdd={() => add.openCard(deckId)}
         onArchive={(id) => archive.mutate(id)}

@@ -63,4 +63,4 @@ All numbers are named constants in core.
 - Crossing local midnight starts a new day. Order, slots, and the header count reset.
 - Cards on the old 1-minute and 10-minute steps need a tested mapping.
 
-Delivery is in [the review draw plan](../plans/2026-09-13-review-draw.md).
+The product rationale is summarized in [the implemented proposal](../proposals/daily-review-goal-and-rolling-queue.md).

@@ -47,4 +47,4 @@ The adaptation lives inside the shadcn component itself: `DropdownMenu` and `Dia
 
 `@base-ui/react` and `cn` join the stack, vaul leaves it once the last sheet moves, and components gain real-browser tests in Vitest browser mode on desktop Chromium and touch Chromium and WebKit. Each primitive needs a restyle pass before use; `shadcn add --diff` still shows upstream changes, though our classes will always differ.
 
-Delivery follows [the implementation plan](../plans/2026-09-13-shadcn-base-ui-design-system.md), starting with issues #119 to #122.
+The implemented direction is summarized in [the proposal](../proposals/shadcn-base-ui-design-system.md).

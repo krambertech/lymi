@@ -19,6 +19,6 @@ The agent working on a pull request drafts the Ukrainian and Russian from a `tra
 ## Consequences
 
 - Both apps carry `@lingui/babel-plugin-lingui-macro` through `@vitejs/plugin-react` and `@lingui/vite-plugin`. Two Lingui configs, one per app, with separate catalogs.
-- `.po` files live in git. `lineNumbers` is off so extraction does not churn the diff.
+- `.po` files live in git. `lineNumbers` and `origins` are off, so moving a string between files does not churn the diff or conflict with another branch.
 - The product Worker uses `@lingui/core` with the same catalogs for push copy. Everything else server-side stays English, because the API's other callers are scripts and MCP clients.
 - Biome cannot flag a hardcoded string. Review has to.

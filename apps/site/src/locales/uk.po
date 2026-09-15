@@ -13,2652 +13,1941 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/landing/hand-cards.ts
 msgid "“J’ai la flemme” is the whole excuse."
 msgstr "«J’ai la flemme» — і жодних інших пояснень."
 
-#: src/components/landing/hand-cards.ts
 msgid "“May it come easy”, said to someone at work"
 msgstr "«Хай буде легко» — кажуть тому, хто працює"
 
-#: src/components/landing/hand-cards.ts
 msgid "“Schönen Feierabend!” wishes someone a good evening off."
 msgstr "«Schönen Feierabend!» — побажання добре відпочити після роботи."
 
 #. placeholder {0}: deck.cards
 #. placeholder {0}: section.cards
-#: src/components/landing/LibraryDemo.tsx
-#: src/components/landing/SeriesDemo.tsx
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
 #. placeholder {0}: deck.length - (index % deck.length)
-#: src/components/landing/ReviewDemo.tsx
 msgid "{0, plural, one {# due} other {# due}}"
 msgstr "{0, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
 #. placeholder {0}: SECTIONS.length
 #. placeholder {0}: deck.sections
-#: src/components/landing/LibraryDemo.tsx
-#: src/components/landing/SeriesDemo.tsx
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# розділ} few {# розділи} many {# розділів} other {# розділу}}"
 
-#: src/components/landing/NotesToCards.tsx
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
 
-#: src/components/landing/JoinLinkDemo.tsx
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {Приєднався # учень} few {Приєдналися # учні} many {Приєдналося # учнів} other {Приєдналося # учня}}"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "{known}% known"
 msgstr "Засвоєно {known}%"
 
-#: src/components/landing/ClassHero.tsx
-#: src/components/landing/SharedDeckDemo.tsx
 msgid "{learners, plural, one {# learner} other {# learners}}"
 msgstr "{learners, plural, one {# учень} few {# учні} many {# учнів} other {# учня}}"
 
-#: src/components/landing/ClassHero.tsx
 msgid "{learners, plural, one {Reached # learner} other {Reached all # learners}}"
 msgstr "{learners, plural, one {Доставлено # учню} few {Доставлено всім # учням} many {Доставлено всім # учням} other {Доставлено всім # учням}}"
 
-#: src/components/landing/HandOfCards.tsx
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "10 min"
 msgstr "10 хв"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "2 days"
 msgstr "2 дні"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "4 days"
 msgstr "4 дні"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "9 days"
 msgstr "9 днів"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/AssistantsView.tsx
 msgid "A bad idea that seemed good"
 msgstr "Погана ідея, що здавалася доброю"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "a bag"
 msgstr "пакет"
 
-#: src/components/landing/SendAnything.tsx
 msgid "A book"
 msgstr "Книжка"
 
-#: src/components/landing/hand-cards.ts
 msgid "A brilliant first round rarely repeats in the second."
 msgstr "Блискучий перший раунд рідко вдається повторити в другому."
 
-#: src/components/landing/hand-cards.ts
 msgid "A café, an evening or a person can all be gezellig."
 msgstr "Gezellig буває і кафе, і вечір, і людина."
 
-#: src/components/landing/ClassHero.tsx
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "Після сьогоднішнього уроку в колоді групи «Естонська A2 · щовівторка» з’являються три нові картки: kohtuma, broneerima та ilm. Їх отримують усі {learners} учнів."
 
-#: src/components/landing/hand-cards.ts
 msgid "A clever fix made from whatever is at hand"
 msgstr "Кмітливе рішення з підручних засобів"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "A coffee and a cinnamon bun, please."
 msgstr "Каву й булочку з корицею, будь ласка."
 
-#: src/components/landing/LandingView.tsx
 msgid "A course or lesson"
 msgstr "Курси й заняття"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "A deck in four sections. Greetings is done, Numbers and time is 82% known, so Food and drink opens next. Getting around stays locked."
 msgstr "Колода з чотирьох розділів. Розділ «Привітання» пройдено, «Числа й час» засвоєно на 82%, тож наступним відкривається «Їжа й напої». «Як дістатися» поки закрито."
 
-#: src/components/landing/language-cards.ts
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "Не плутай з англійським embarrassed: «збентежений» — це avergonzado."
 
-#: src/components/landing/LandingView.tsx
 msgid "A Finnish verb, a chess term, a line from a physics paper. Save it once, hear how it’s said, and Lymi brings it back right before you’d forget."
 msgstr "Фінське дієслово, шаховий термін, рядок зі статті з фізики. Збережи один раз, послухай вимову — і Lymi нагадає про це якраз перед тим, як забудеться."
 
-#: src/components/landing/hand-cards.ts
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "Гладка накладка на дверях підказує «штовхай», ручка — «тягни»."
 
-#: src/components/landing/TeachersView.tsx
 msgid "A language class"
 msgstr "Мовна група"
 
-#: src/components/landing/SendAnything.tsx
 msgid "A lesson transcript"
 msgstr "Розшифровка уроку"
 
-#: src/components/landing/hand-cards.ts
 msgid "A longing for someone or something that is gone"
 msgstr "Туга за кимось або чимось, чого вже немає"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "a lot of"
 msgstr "багато"
 
-#: src/components/landing/TeachersView.tsx
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "Мажорний акорд із малою септимою, побудований на п’ятому ступені тональності"
 
-#: src/components/landing/LandingView.tsx
 msgid "A new language"
 msgstr "Іноземна мова"
 
-#: src/components/landing/hand-cards.ts
 msgid "A partnership between fungi and plant roots, trading water for sugar"
 msgstr "Союз грибів і коренів рослин: вода в обмін на цукор"
 
-#: src/components/landing/LandingView.tsx
 msgid "A personal interest"
 msgstr "Захоплення"
 
-#: src/components/landing/AssistantHero.tsx
 msgid "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
 msgstr "Фото нотаток з уроку німецької надходить асистентові з проханням «Зроби з цього картки». Він використовує Lymi й додає чотири картки: das Mädchen, aufhören, Feierabend і Schnapsidee."
 
-#: src/components/landing/SendAnything.tsx
 msgid "A photo of the board, your tutor’s message, a lesson transcript, the book on your nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi."
 msgstr "Фото дошки, повідомлення репетитора, розшифровка уроку, книжка на тумбочці. Асистент вибере те, що варто запам’ятати, і додасть це в Lymi."
 
-#: src/components/landing/hero-words.ts
 msgid "A pile of unread books"
 msgstr "Стос непрочитаних книжок"
 
-#: src/components/landing/LandingView.tsx
 msgid "A professional field"
 msgstr "Робота"
 
-#: src/components/landing/hand-cards.ts
 msgid "A pun on tsunde oku, to leave piled, and doku, reading."
 msgstr "Гра слів: tsunde oku — «залишити лежати стосом» і doku — «читання»."
 
-#: src/components/landing/hand-cards.ts
 msgid "A thank-you to everyone who brought the food to the table."
 msgstr "Подяка всім, завдяки кому їжа з’явилася на столі."
 
-#: src/components/landing/hand-cards.ts
 msgid "A thermostat that turns on at 19° and off at 21°."
 msgstr "Термостат, що вмикається за 19°, а вимикається за 21°."
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "A thing; a whatsit"
 msgstr "Штука; штуковина"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "a word that makes a question"
 msgstr "слово, що робить речення питанням"
 
-#: src/components/landing/hand-cards.ts
 msgid "Accents that land between the beats"
 msgstr "Акценти, що припадають між основними долями"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "Actually; really"
 msgstr "Власне; насправді"
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Add"
 msgstr "Додати"
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Add {title}"
 msgstr "Додати «{title}»"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Add it to your assistant"
 msgstr "Додай її до свого асистента"
 
-#: src/components/landing/LandingView.tsx
 msgid "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
 msgstr "Додай термін з уроку. Lymi доповнить, чого бракує: значення, приклад, вимову й мову, — а твого тексту не торкнеться."
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Added"
 msgstr "Додано"
 
-#: src/components/landing/AssistantHero.tsx
 msgid "Added 4 cards to your German deck."
 msgstr "Додано 4 картки в колоду з німецької."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Додав 8 карток у колоду «Іспанська». Пропустив «ojalá»: така картка в тебе вже є."
 
-#: src/components/landing/SharedDeckDemo.tsx
 msgid "Added after this week’s lesson"
 msgstr "Додано після уроку цього тижня"
 
-#: src/components/landing/AssistantChat.tsx
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Готово: картка в колоді «Шахи», зі значенням і прикладом."
 
-#: src/components/landing/hand-cards.ts
 msgid "adjective"
 msgstr "прикметник"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "After the first recall"
 msgstr "Після першого повторення"
 
-#: src/components/landing/ClassHero.tsx
 msgid "After today’s lesson"
 msgstr "Після сьогоднішнього уроку"
 
-#: src/components/landing/hand-cards.ts
 msgid "After you learn something new, you start noticing it everywhere"
 msgstr "Коли дізнаєшся щось нове, починаєш помічати це всюди"
 
-#: src/components/landing/EnrichDemo.tsx
-#: src/components/landing/NotesToCards.tsx
 msgid "AI"
 msgstr "AI"
 
-#: src/components/landing/ApiConnections.tsx
-#: src/components/landing/site-links.ts
 msgid "AI assistants"
 msgstr "AI-асистенти"
 
-#: src/components/landing/language-cards.ts
 msgid "Al que madruga, Dios lo ayuda: the early bird catches the worm."
 msgstr "Al que madruga, Dios lo ayuda: хто рано встає, тому Бог дає."
 
-#: src/components/landing/hero-words.ts
 msgid "All good?"
 msgstr "Усе добре?"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "All known"
 msgstr "Усе засвоєно"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "all right"
 msgstr "нормально"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "All right. Lots of work."
 msgstr "Нормально. Багато роботи."
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Allow"
 msgstr "Дозволити"
 
-#: src/components/landing/PracticeChat.tsx
 msgid "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
 msgstr "Майже! Правильно <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: після «dann» дієслово стоїть на другому місці."
 
-#: src/components/landing/NotesToCards.tsx
 msgid "Already in your deck, so it’s skipped"
 msgstr "Уже є в колоді, тому пропущено"
 
-#: src/components/JoinView.tsx
 msgid "Already invited?"
 msgstr "Уже є запрошення?"
 
-#: src/components/landing/hand-cards.ts
 msgid "Also called the frequency illusion."
 msgstr "Ще одна назва — ілюзія частотності."
 
-#: src/components/landing/hand-cards.ts
 msgid "An extreme result is usually followed by a more ordinary one"
 msgstr "Після виняткового результату зазвичай буває скромніший"
 
-#: src/components/landing/hand-cards.ts
 msgid "An idea that only sounds brilliant after a few drinks"
 msgstr "Ідея, що здається геніальною лише після кількох чарок"
 
-#: src/components/landing/hero-words.ts
 msgid "An idea that only sounds good after a few drinks"
 msgstr "Ідея, яка здається геніальною лише після кількох чарок"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Anatomy"
 msgstr "Анатомія"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Anatomy, drugs and the terms learners meet on the ward."
 msgstr "Анатомія, препарати й терміни, які учні чують у відділенні."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "and"
 msgstr "і"
 
-#: src/components/landing/AssistantChat.tsx
 msgid "And what am I due to review tonight?"
 msgstr "А що мені сьогодні ввечері повторити?"
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Anna Kask, language school"
 msgstr "Anna Kask, мовна школа"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Any language you can type, in any script. Lymi can say most widely taught languages aloud."
 msgstr "Будь-яка мова й будь-яке письмо, яке можна набрати. Більшість мов, які часто вчать, Lymi вміє вимовити вголос."
 
-#: src/components/landing/AssistantChat.tsx
-#: src/components/landing/cards.ts
-#: src/components/landing/hand-cards.ts
 msgid "Any move you make makes your position worse"
 msgstr "Будь-який хід погіршує твою позицію"
 
-#: src/components/landing/JoinLinkDemo.tsx
 msgid "Anyone with the link can join this deck."
 msgstr "Приєднатися до колоди може кожен, у кого є посилання."
 
-#: src/components/landing/AssistantHero.tsx
 msgid "anything"
 msgstr "своїм кодом"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
 msgstr "Усе, що пише асистент, позначено на картці як AI, тож ти можеш перевірити це й виправити в Lymi."
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "Anyway; long story short"
 msgstr "Коротше; словом"
 
-#: src/components/landing/AssistantsView.tsx
-#: src/components/landing/LandingView.tsx
-#: src/components/landing/SiteFooter.tsx
-#: src/components/landing/TeachersView.tsx
 msgid "API reference"
 msgstr "Довідник API"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "As the gaps widen"
 msgstr "Коли перерви довшають"
 
-#: src/components/landing/hand-cards.ts
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "На запитання «Хочеш виграти в лотерею?» — «Magari!»"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "At the café"
 msgstr "У кав’ярні"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "At the shop"
 msgstr "У магазині"
 
-#: src/components/landing/hand-cards.ts
 msgid "Auditors use it to spot figures that were made up."
 msgstr "За ним аудитори виявляють вигадані цифри."
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Back in 10 minutes."
 msgstr "Повернеться через 10 хвилин."
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Back in 2 days."
 msgstr "Повернеться через 2 дні."
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Back in 4 days."
 msgstr "Повернеться через 4 дні."
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Back in 9 days."
 msgstr "Повернеться через 9 днів."
 
-#: src/components/landing/hand-cards.ts
 msgid "Biology"
 msgstr "Біологія"
 
-#: src/components/landing/language-cards.ts
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Міст, 橋, — теж hashi. Розрізнити їх можна лише за висотою тону."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Bring Lymi to your next class."
 msgstr "Спробуй Lymi на наступному уроці."
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Bring your assistant to Lymi."
 msgstr "Підключи свого асистента до Lymi."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Bring your favourite AI along."
 msgstr "Твій улюблений AI теж знадобиться."
 
-#: src/components/landing/site-links.ts
 msgid "Build a course in sections and share it with your class."
 msgstr "Збери курс із розділів і поділися ним із групою."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Build a course in sections, share it with one link, and add what you taught after every lesson. Each learner reviews on their own schedule."
 msgstr "Створи курс із розділів, поділися ним через одне посилання й додавай вивчене після кожного уроку. Кожен учень повторює у своєму темпі."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Build the course in order."
 msgstr "Вибудуй курс крок за кроком."
 
-#: src/components/landing/ClassHero.tsx
 msgid "Build the course in sections, share one link, and add what you taught after every lesson. Each learner reviews on their own schedule."
 msgstr "Збери курс із розділів, поділися одним посиланням і додавай вивчене після кожного уроку. Кожен учень повторює у своєму темпі."
 
-#: src/components/landing/hand-cards.ts
 msgid "Buying books and letting them pile up unread"
 msgstr "Купувати книжки й складати їх непрочитаними"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "by card"
 msgstr "карткою"
 
-#: src/components/landing/language-cards.ts
 msgid "Can I get a coffee?"
 msgstr "Можна мені каву?"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Can I see how each learner is doing?"
 msgstr "Чи можна побачити, як іде навчання в кожного учня?"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Can learners change the deck?"
 msgstr "Чи можуть учні змінювати колоду?"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Can Lymi say Estonian words aloud?"
 msgstr "Чи вміє Lymi вимовляти естонські слова?"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Can my class use it together?"
 msgstr "Чи може моя група вчитися разом?"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Card or cash?"
 msgstr "Карткою чи готівкою?"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Card. Thanks!"
 msgstr "Карткою. Дякую!"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Cards in"
 msgstr "Мова карток"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Catching up with a friend"
 msgstr "Коротка розмова з подругою"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "cents"
 msgstr "центів"
 
-#: src/components/landing/cards.ts
-#: src/components/landing/hand-cards.ts
 msgid "Chess"
 msgstr "Шахи"
 
-#: src/components/landing/AssistantChat.tsx
 msgid "Chess · new"
 msgstr "Шахи · нова"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Choose a grade to move to the next card."
 msgstr "Обери оцінку, щоб перейти до наступної картки."
 
-#: src/components/landing/language-cards.ts
 msgid "Chopsticks"
 msgstr "Палички для їжі"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Chords, scales and the theory behind the pieces you play."
 msgstr "Акорди, гами й теорія до творів, які грають на уроках."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "cinnamon bun"
 msgstr "булочка з корицею"
 
-#: src/components/landing/language-cards.ts
 msgid "City; town"
 msgstr "Місто"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
 msgstr "Claude, Claude Code, ChatGPT, Codex і Gemini CLI. Підключити можна й інші застосунки з підтримкою MCP."
 
-#: src/components/landing/HandOfCards.tsx
 msgid "Click to turn it over"
 msgstr "Натисни, щоб перевернути"
 
-#: src/components/landing/hand-cards.ts
 msgid "Clocking off, and the free evening that follows"
 msgstr "Кінець робочого дня й вільний вечір після нього"
 
-#: src/components/landing/SiteNav.tsx
 msgid "Close menu"
 msgstr "Закрити меню"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "coffee"
 msgstr "кава"
 
-#: src/components/landing/language-cards.ts
 msgid "Colleagues say it in the corridor, in emails and at the end of the day."
 msgstr "Колеги кажуть це в коридорі, у листах і наприкінці дня."
 
-#: src/components/landing/hero-words.ts
 msgid "Come on; let’s go"
 msgstr "Давай; ходімо"
 
-#: src/components/landing/hero-words.ts
 msgid "Congratulations"
 msgstr "Вітаю"
 
-#: src/components/landing/AssistantMarks.tsx
-#: src/components/landing/SiteFooter.tsx
 msgid "Connect an assistant"
 msgstr "Підключити асистента"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Підключи Claude, ChatGPT або Gemini до Lymi один раз. Потім встав розшифровку уроку й попроси виписати нові слова, запитай, що чекає сьогодні, або наведи лад у колоді звичайними словами. Робиш щось своє? Усе це працює й через публічний API."
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Connect in three steps."
 msgstr "Підключи за три кроки."
 
-#: src/components/landing/ConversationScenes.tsx
 msgid "Conversation"
 msgstr "Розмова"
 
-#: src/components/landing/cards.ts
-#: src/components/landing/hand-cards.ts
 msgid "Cooking"
 msgstr "Кулінарія"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Copied"
 msgstr "Скопійовано"
 
-#: src/components/landing/JoinLinkDemo.tsx
 msgid "Copy"
 msgstr "Копіювати"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Copy Lymi’s address"
 msgstr "Скопіюй адресу Lymi"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Copy the address"
 msgstr "Скопіювати адресу"
 
-#: src/components/landing/hero-words.ts
 msgid "Cosy"
 msgstr "Затишний"
 
-#: src/components/landing/hand-cards.ts
 msgid "Cosy and convivial; good company"
 msgstr "Затишний і душевний; у доброму товаристві"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Dates, definitions and formulas to know on the day."
 msgstr "Дати, визначення й формули, які треба знати на іспиті."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "day"
 msgstr "день"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "DAY 0"
 msgstr "ДЕНЬ 0"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "DAY 30"
 msgstr "ДЕНЬ 30"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "Dear; expensive"
 msgstr "Любий; дорогий"
 
-#: src/components/landing/hero-words.ts
 msgid "Deep, lasting affection"
 msgstr "Глибока, тривала прихильність"
 
-#: src/components/landing/hand-cards.ts
 msgid "Design"
 msgstr "Дизайн"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/AssistantsView.tsx
 msgid "Deutsch · noun"
 msgstr "Deutsch · іменник"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/AssistantsView.tsx
 msgid "Deutsch · verb"
 msgstr "Deutsch · дієслово"
 
-#: src/components/landing/language-cards.ts
 msgid "Deutsch · word"
 msgstr "Deutsch · слово"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Do you need a bag?"
 msgstr "Пакет потрібен?"
 
-#: src/components/landing/SiteFooter.tsx
-#: src/components/landing/SiteNav.tsx
 msgid "Docs"
 msgstr "Документація"
 
-#: src/components/landing/language-cards.ts
 msgid "Doctors, banks and the library all ask for it."
 msgstr "Його питають і лікар, і банк, і бібліотека."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Does it keep õ, ä, ö and ü apart?"
 msgstr "Чи розрізняє Lymi õ, ä, ö і ü?"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Does it work on my phone?"
 msgstr "Чи працює Lymi на телефоні?"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Does Lymi see my chats?"
 msgstr "Чи бачить Lymi мої чати?"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Does the AI write my cards?"
 msgstr "Картки за мене пише AI?"
 
-#: src/components/landing/cards.ts
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Зробити двічі — те саме, що зробити один раз"
 
-#: src/components/landing/hand-cards.ts
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
 
-#: src/components/landing/hero-words.ts
 msgid "Drinking at home in your underwear"
 msgstr "Випивати вдома в спідньому"
 
-#: src/components/landing/hand-cards.ts
 msgid "Drinking at home, alone, in your underwear"
 msgstr "Пити вдома на самоті в самих трусах"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Easy"
 msgstr "Легко"
 
-#: src/components/landing/hand-cards.ts
 msgid "Economics"
 msgstr "Економіка"
 
-#: src/components/landing/language-cards.ts
 msgid "Eesti · adjective"
 msgstr "Eesti · прикметник"
 
-#: src/components/landing/language-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "Eesti · noun"
 msgstr "Eesti · іменник"
 
-#: src/components/landing/language-cards.ts
 msgid "Eesti · phrase"
 msgstr "Eesti · фраза"
 
-#: src/components/landing/language-cards.ts
-#: src/components/landing/TeachersView.tsx
 msgid "Eesti · verb"
 msgstr "Eesti · дієслово"
 
-#: src/components/landing/language-cards.ts
 msgid "Eesti · word"
 msgstr "Eesti · слово"
 
-#: src/components/landing/hero-words.ts
 msgid "Effortless grace"
 msgstr "Невимушена грація"
 
-#: src/components/BetaSignup.tsx
 msgid "Email address"
 msgstr "Електронна адреса"
 
-#: src/components/landing/language-cards.ts
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ немає ні в англійській, ні в українській. Скажи «о», але не округлюй губи."
 
-#: src/components/landing/hero-words.ts
 msgid "Enjoy your meal"
 msgstr "Смачного"
 
-#: src/components/landing/hand-cards.ts
 msgid "Enjoy your meal!"
 msgstr "Приємного апетиту!"
 
-#: src/components/landing/hero-words.ts
 msgid "Enjoying the moment"
 msgstr "Насолода моментом"
 
-#: src/components/BetaSignup.tsx
 msgid "Enter an email address like you@example.com."
 msgstr "Введи електронну адресу на кшталт you@example.com."
 
-#: src/components/landing/cards.ts
 msgid "Español"
 msgstr "Español"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Español · new"
 msgstr "Español · нова"
 
-#: src/components/landing/language-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "Español · phrase"
 msgstr "Español · фраза"
 
-#: src/components/landing/language-cards.ts
-#: src/components/landing/site-links.ts
 msgid "Estonian"
 msgstr "Естонська"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "Estonian A1 · Autumn course"
 msgstr "Естонська A1 · осінній курс"
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Estonian A1: first steps"
 msgstr "Естонська A1: перші кроки"
 
-#: src/components/landing/ClassHero.tsx
-#: src/components/landing/language-cards.ts
 msgid "Estonian A2 · Tuesdays"
 msgstr "Естонська A2 · щовівторка"
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Estonian for work"
 msgstr "Естонська для роботи"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "euros"
 msgstr "євро"
 
-#: src/components/landing/SendAnything.tsx
 msgid "Even to my boss?"
 msgstr "Навіть начальнику?"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
 msgstr "Кожна картка вимовляє своє слово мовою оригіналу. На звороті — рядок, що допомагає запам’ятати: хибний друг, рід, тон, що змінює значення."
 
-#: src/components/landing/hand-cards.ts
 msgid "Every detail in a story should earn its place."
 msgstr "У сюжеті не має бути зайвих деталей."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Every language"
 msgstr "Усі мови"
 
-#: src/components/landing/cards.ts
-#: src/components/landing/hand-cards.ts
 msgid "Everything prepped and to hand before you start"
 msgstr "Усе готове й під рукою, перш ніж почати"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Exam preparation"
 msgstr "Підготовка до іспитів"
 
-#: src/components/landing/EnrichDemo.tsx
 msgid "Example"
 msgstr "Приклад"
 
-#: src/components/landing/hero-words.ts
 msgid "Excuse me"
 msgstr "Перепрошую"
 
-#: src/components/landing/language-cards.ts
 msgid "Expensive; also dear"
 msgstr "Дорогий; а ще любий"
 
-#: src/components/landing/hand-cards.ts
 msgid "Explaining your code aloud, line by line, until the bug shows itself"
 msgstr "Пояснювати код уголос рядок за рядком, доки помилка не знайдеться"
 
-#: src/components/landing/hand-cards.ts
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "На цьому почутті тримається фаду — тужлива португальська пісня."
 
-#: src/components/landing/cards.ts
 msgid "Feeling low; in a slump"
 msgstr "Кепський настрій; занепад сил"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Fill decks from the tools you already use."
 msgstr "Наповнюй колоди з інструментів, якими вже користуєшся."
 
-#: src/components/landing/hand-cards.ts
 msgid "Finnish has a word for a night with no plans to go out."
 msgstr "У фінській є окреме слово для вечора, коли нікуди не збираєшся."
 
-#: src/components/landing/hand-cards.ts
 msgid "Finns often name it as part of the national character."
 msgstr "Фіни часто називають це рисою національного характеру."
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "Food and drink"
 msgstr "Їжа й напої"
 
-#: src/components/landing/hand-cards.ts
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "Так кажуть касиру, будівельнику чи другові, який навчається."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "For here or to go?"
 msgstr "Тут чи з собою?"
 
-#: src/components/landing/LandingView.tsx
 msgid "For whatever you’re learning."
 msgstr "Для всього, що хочеться запам’ятати."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "for you"
 msgstr "вам"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Forgot"
 msgstr "Не пам’ятаю"
 
-#: src/components/landing/language-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "Français · phrase"
 msgstr "Français · фраза"
 
-#: src/components/landing/language-cards.ts
 msgid "French"
 msgstr "Французька"
 
-#: src/components/landing/language-cards.ts
 msgid "French A2 · Wednesdays"
 msgstr "Французька A2 · щосереди"
 
-#: src/components/landing/hand-cards.ts
 msgid "French for “putting in place”."
 msgstr "Французькою — «розкласти все по місцях»."
 
-#: src/components/landing/language-cards.ts
 msgid "From Arabic law šāʼ Allāh, “if God wills”."
 msgstr "Від арабського law šāʼ Allāh — «якщо Бог захоче»."
 
-#: src/components/landing/hand-cards.ts
 msgid "From G. K. Chesterton’s 1929 book The Thing."
 msgstr "З книжки Ґ. К. Честертона «The Thing» 1929 року."
 
-#: src/components/landing/language-cards.ts
 msgid "German"
 msgstr "Німецька"
 
-#: src/components/landing/language-cards.ts
 msgid "German A2 · Tuesdays"
 msgstr "Німецька A2 · щовівторка"
 
-#: src/components/landing/language-cards.ts
 msgid "get up early"
 msgstr "рано вставати"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "Getting around"
 msgstr "Як дістатися"
 
-#: src/components/landing/hero-words.ts
 msgid "Gladly"
 msgstr "Охоче"
 
-#: src/components/landing/hero-words.ts
 msgid "God willing"
 msgstr "Дасть Бог"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "good"
 msgstr "добрий"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Good"
 msgstr "Добре"
 
-#: src/components/landing/hero-words.ts
 msgid "Good luck!"
 msgstr "Щасти!"
 
-#: src/components/landing/cards.ts
 msgid "Good luck! Literally, “into the wolf’s mouth”"
 msgstr "Щасти! Дослівно — «у вовчу пащу»"
 
-#: src/components/landing/hero-words.ts
 msgid "Good morning"
 msgstr "Доброго ранку"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Good, thanks! And you?"
 msgstr "Добре, дякую! А в тебе?"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "Goodbye"
 msgstr "До побачення"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "Greetings"
 msgstr "Привітання"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Hang in there!"
 msgstr "Тримайся!"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Hard"
 msgstr "Важко"
 
-#: src/components/landing/hero-words.ts
 msgid "Have you eaten? A way to say hello"
 msgstr "Ти вже поїв? Так вітаються"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "have; am"
 msgstr "мати; бути"
 
-#: src/components/landing/ConversationScenes.tsx
 msgid "Hear this line"
 msgstr "Послухати рядок"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "hello"
 msgstr "привіт"
 
-#: src/components/landing/hero-words.ts
 msgid "Hello"
 msgstr "Привіт"
 
-#: src/components/landing/language-cards.ts
 msgid "Hello; bless you"
 msgstr "Привіт; будь здоровий"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "here"
 msgstr "тут"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Here are my notes from today’s Spanish lesson. Add the new words to my deck."
 msgstr "Ось нотатки з сьогоднішнього уроку іспанської. Додай нові слова в мою колоду."
 
-#: src/components/landing/hero-words.ts
 msgid "Hi"
 msgstr "Привіт"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Hi! Do you have a loyalty card?"
 msgstr "Добрий день! У вас є картка покупця?"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Hi! How’s it going?"
 msgstr "Привіт! Як справи?"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Hi! What can I get you?"
 msgstr "Добрий день! Що для вас?"
 
-#: src/components/landing/TeachersView.tsx
 msgid "History"
 msgstr "Історія"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "how"
 msgstr "як"
 
-#: src/components/landing/cards.ts
 msgid "How likely data this extreme would be if nothing were going on"
 msgstr "Наскільки ймовірні такі крайні дані, якби насправді нічого не відбувалося"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "How many are waiting for me tonight?"
 msgstr "Скільки карток чекає на мене сьогодні?"
 
-#: src/components/landing/ClassHero.tsx
 msgid "How sections work"
 msgstr "Як працюють розділи"
 
-#: src/components/landing/AssistantHero.tsx
 msgid "How to connect"
 msgstr "Як підключити"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "How well-timed reviews change recall"
 msgstr "Як вчасні повторення допомагають пам’ятати"
 
-#: src/components/landing/hero-words.ts
 msgid "How’s it going?"
 msgstr "Як справи?"
 
-#: src/components/landing/hero-words.ts
 msgid "Hugs"
 msgstr "Обійми"
 
-#: src/components/landing/hero-words.ts
 msgid "I don’t mind"
 msgstr "Мені однаково"
 
-#: src/components/landing/language-cards.ts
 msgid "I don’t understand"
 msgstr "Я не розумію"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "I hope so; if only"
 msgstr "Сподіваюся; якби ж то"
 
-#: src/components/landing/SendAnything.tsx
 msgid "I miss it"
 msgstr "Мені цього бракує"
 
-#: src/components/landing/hand-cards.ts
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Лід — jää, край — äär: чотири ä поспіль."
 
-#: src/components/landing/hand-cards.ts
 msgid "idea"
 msgstr "ідея"
 
-#: src/components/landing/LandingView.tsx
 msgid "Ideas from classes, workshops, and exam preparation."
 msgstr "Важливе із занять, воркшопів і підготовки до іспитів."
 
 #. placeholder {0}: email.trim()
-#: src/components/BetaSignup.tsx
 msgid "If a place opens, we’ll email <0>{0}</0>. Nothing to do until then."
 msgstr "Коли з’явиться місце, ми напишемо на <0>{0}</0>. Поки що нічого робити не потрібно."
 
-#: src/components/landing/hand-cards.ts
 msgid "If a story shows a gun early on, it should go off later"
 msgstr "Якщо на початку історії з’являється рушниця, згодом вона має вистрілити"
 
-#: src/components/landing/hero-words.ts
 msgid "If only"
 msgstr "Якби ж то"
 
-#: src/components/landing/hand-cards.ts
 msgid "If only; maybe; I wish"
 msgstr "Якби ж то; можливо; от би"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Умовний графік пам’яті за тридцять днів. Без повторень знання поступово згасає. Після повторень на 3-й, 8-й і 19-й день воно відновлюється, а з довшими перервами згасає повільніше."
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "Illustration only. Your review timing adapts to what you remember."
 msgstr "Це умовна схема. Lymi підбирає час для кожної картки за твоїми відповідями."
 
-#: src/components/landing/language-cards.ts
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В іспанському барі каву просять «поставити»."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "in cash"
 msgstr "готівкою"
 
-#: src/components/landing/hand-cards.ts
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "У багатьох реальних наборах даних близько 30% чисел починаються з 1"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "is"
 msgstr "є"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Is it for schools?"
 msgstr "Це для шкіл?"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Is it only for languages?"
 msgstr "Це лише для мов?"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "is; have"
 msgstr "є; мати"
 
-#: src/components/landing/language-cards.ts
 msgid "It depends"
 msgstr "Залежить від обставин"
 
-#: src/components/landing/hero-words.ts
 msgid "It doesn’t matter"
 msgstr "Нічого страшного"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "it goes"
 msgstr "іде"
 
-#: src/components/landing/language-cards.ts
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "Дієслово розпадається: в «Ich höre jetzt auf» auf іде в кінець."
 
-#: src/components/landing/hand-cards.ts
 msgid "It will all work out"
 msgstr "Усе владнається"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "It’s fine; I’m OK"
 msgstr "Усе гаразд; зі мною все добре"
 
-#: src/components/landing/TeachersView.tsx
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "Lymi зроблено для репетиторів і невеликих груп. Тут немає журналів, завдань чи оцінок."
 
-#: src/components/landing/hero-words.ts
 msgid "It’s okay"
 msgstr "Усе гаразд"
 
-#: src/components/landing/hand-cards.ts
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "Ось чому недочитаний розділ не дає спокою."
 
-#: src/components/landing/cards.ts
 msgid "Italiano · phrase"
 msgstr "Italiano · фраза"
 
-#: src/components/landing/language-cards.ts
 msgid "Japanese"
 msgstr "Японська"
 
-#: src/components/landing/language-cards.ts
 msgid "Japanese 1 · Mondays"
 msgstr "Японська 1 · щопонеділка"
 
-#: src/components/landing/JoinLinkDemo.tsx
 msgid "Join link"
 msgstr "Посилання для приєднання"
 
-#: src/components/landing/hand-cards.ts
 msgid "Just the right amount: not too much, not too little"
 msgstr "Саме стільки, скільки треба: не забагато й не замало"
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Kadri Tamm, tutor"
 msgstr "Kadri Tamm, репетиторка"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Keep the Estonian from classes, letters and conversations. Photograph your notes, hear every word said, and review each card right before you’d forget."
 msgstr "Зберігай естонські слова з уроків, листів і розмов. Фотографуй нотатки, слухай вимову кожного слова й повторюй картки саме тоді, коли вони починають забуватися."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Keep the Estonian from your next class."
 msgstr "Збережи естонські слова з наступного уроку."
 
-#: src/components/landing/LandingView.tsx
 msgid "Keep the next thing you learn."
 msgstr "Хай нове не забувається."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Keep the phrases you’ll actually say. Every card plays aloud, and Lymi asks both ways: what a phrase means, and how to say it from the meaning."
 msgstr "Збережи фрази, які справді казатимеш. Кожна картка звучить уголос, а Lymi питає в обидва боки: що фраза означає і як сказати її за значенням."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget."
 msgstr "Зберігай слова й фрази з уроків, занять із репетитором і книжок. Сфотографуй нотатки, і асистент зробить із них картки, які Lymi поверне, перш ніж ти їх забудеш."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Keep the words from your next lesson."
 msgstr "Збережи слова з наступного уроку."
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Arabic.</0>"
 msgstr "Бережи свою <0>арабську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Chinese.</0>"
 msgstr "Бережи свою <0>китайську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Estonian.</0>"
 msgstr "Бережи свою <0>естонську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Finnish.</0>"
 msgstr "Бережи свою <0>фінську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>French.</0>"
 msgstr "Бережи свою <0>французьку.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>German.</0>"
 msgstr "Бережи свою <0>німецьку.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Italian.</0>"
 msgstr "Бережи свою <0>італійську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Japanese.</0>"
 msgstr "Бережи свою <0>японську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Korean.</0>"
 msgstr "Бережи свою <0>корейську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Portuguese.</0>"
 msgstr "Бережи свою <0>португальську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Spanish.</0>"
 msgstr "Бережи свою <0>іспанську.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Turkish.</0>"
 msgstr "Бережи свою <0>турецьку.</0>"
 
-#: src/components/landing/WordFieldHero.tsx
 msgid "Keep what you learn in <0>Ukrainian.</0>"
 msgstr "Бережи свою <0>українську.</0>"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Keep what you learn in any language."
 msgstr "Бережи вивчене будь-якою мовою."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Keep what you learn in Estonian."
 msgstr "Бережи свою естонську."
 
-#: src/components/landing/LandingView.tsx
 msgid "Keep what you learn."
 msgstr "Запам’ятовуй надовго."
 
-#: src/components/LanguageLinks.tsx
 msgid "Language"
 msgstr "Мова"
 
-#: src/components/landing/site-links.ts
 msgid "Language learning"
 msgstr "Вивчення мов"
 
-#: src/components/landing/hand-cards.ts
 msgid "Latin for “you shall have the body”."
 msgstr "Латиною — «ти матимеш тіло»."
 
-#: src/components/landing/hand-cards.ts
 msgid "Law"
 msgstr "Право"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Learn to speak Estonian."
 msgstr "Заговори естонською."
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "Learned once, never revisited"
 msgstr "Без повторень"
 
-#: src/components/landing/EnrichDemo.tsx
 msgid "Lesson"
 msgstr "Урок"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Let Claude add cards?"
 msgstr "Дозволити Claude додавати картки?"
 
-#: src/components/landing/PracticeChat.tsx
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Попрактикуймося. Використовуй німецькі слова з моєї колоди."
 
-#: src/components/landing/hero-words.ts
 msgid "Lingering at the table after a meal"
 msgstr "Засидітися за столом після їжі"
 
-#: src/components/landing/language-cards.ts
 msgid "Linna can mean “of the city” or “into the city”. Only how long you hold the n tells them apart."
 msgstr "Linna може означати «міста» або «в місто». Розрізняє їх лише те, як довго тягнеш n."
 
-#: src/components/landing/language-cards.ts
 msgid "Literally “good time”."
 msgstr "Дослівно — «добрий час»."
 
-#: src/components/landing/hand-cards.ts
 msgid "Literally “horse horse tiger tiger”."
 msgstr "Буквально — «кінь кінь тигр тигр»."
 
-#: src/components/landing/language-cards.ts
 msgid "Literally “that walks”. Waiters say it when they take your order."
 msgstr "Дослівно — «це йде». Так кажуть офіціанти, приймаючи замовлення."
 
-#: src/components/landing/hero-words.ts
 msgid "Long time no see"
 msgstr "Давно не бачились"
 
-#: src/components/landing/SendAnything.tsx
 msgid "Longing"
 msgstr "Туга"
 
-#: src/components/landing/hero-words.ts
 msgid "Longing for what is gone"
 msgstr "Туга за тим, чого вже немає"
 
-#: src/components/landing/language-cards.ts
 msgid "look forward to"
 msgstr "чекати з нетерпінням"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "loyalty card"
 msgstr "картка покупця"
 
-#: src/components/landing/LandingView.tsx
 msgid "Lymi · Keep what you learn"
 msgstr "Lymi · Запам’ятовуй надовго"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "Lymi asks before it shows. Trying to retrieve an idea strengthens later recall more than simply reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 msgstr "Lymi спершу питає, а вже потім показує. Спроба пригадати зміцнює пам’ять більше, ніж просте перечитування, — це показали <0>Редіґер і Карпіке у 2006 році</0>."
 
-#: src/components/landing/LandingView.tsx
 msgid "Lymi for language learning"
 msgstr "Lymi для вивчення мов"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Lymi for language learning · Keep the words from every lesson"
 msgstr "Lymi для вивчення мов · Запам’ятовуй слова з кожного уроку"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Lymi for teachers"
 msgstr "Lymi для викладачів"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Lymi for teachers · One deck for your whole class"
 msgstr "Lymi для викладачів · Одна колода на всю групу"
 
-#: src/components/landing/LandingView.tsx
 msgid "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
 msgstr "У Lymi є публічний API, тож застосунки й інструменти, якими ти вже користуєшся, можуть працювати з твоїми картками. Додай слово через швидку команду на телефоні, перенеси урок із таблиці або покажи на своєму сайті, що пора повторити."
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 msgstr "У Lymi є публічний API. Додай слово через швидку команду на телефоні, перенеси список із таблиці або покажи на своєму сайті, що пора повторити."
 
-#: src/components/AuthFrame.tsx
-#: src/components/landing/SiteNav.tsx
 msgid "Lymi home"
 msgstr "Головна сторінка Lymi"
 
-#: src/components/JoinView.tsx
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Поки що в Lymi можна потрапити лише за запрошенням. Залиш електронну адресу — ми напишемо, коли з’явиться місце."
 
-#: src/components/landing/hand-cards.ts
 msgid "Lymi schedules every card around it."
 msgstr "Саме на цьому принципі Lymi будує розклад повторень."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
 msgstr "Lymi планує повторення за FSRS — цей алгоритм є і в Anki, тож ритм буде знайомим. Змінюється все довкола: картку можна додати за кілька секунд, а асистент додасть цілий урок. Імпорту з Anki поки немає."
 
-#: src/components/landing/AssistantMarks.tsx
 msgid "Lymi with AI assistants"
 msgstr "Lymi з AI-асистентами"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
 msgstr "Власний AI Lymi доповнить картку значенням, прикладом і вимовою. Написане ним позначено, а твій текст він ніколи не перезаписує."
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Made by Lymi"
 msgstr "Від Lymi"
 
-#: src/components/landing/SiteNav.tsx
 msgid "Main navigation"
 msgstr "Основна навігація"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Створи колоду для групи й надішли посилання для приєднання. Кожна картка, яку ти додаси після уроку, з’явиться в усіх, хто приєднався, а розклад повторень у кожного свій."
 
-#: src/components/landing/AssistantHero.tsx
 msgid "Make cards from this."
 msgstr "Зроби з цього картки."
 
-#: src/components/landing/AssistantHero.tsx
 msgid "Make cards with"
 msgstr "Створюй картки з"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Make cards with Claude, ChatGPT or Gemini · Lymi"
 msgstr "Створюй картки з Claude, ChatGPT чи Gemini · Lymi"
 
-#: src/components/landing/AssistantHero.tsx
 msgid "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
 msgstr "Створюй картки з Claude, ChatGPT, Gemini, Codex чи своїм кодом"
 
-#: src/components/landing/language-cards.ts
 msgid "may I…?"
 msgstr "можна…?"
 
-#: src/components/landing/hero-words.ts
 msgid "May it come easy"
 msgstr "Хай буде легко"
 
-#: src/components/landing/EnrichDemo.tsx
 msgid "Meaning"
 msgstr "Значення"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Medicine and nursing"
 msgstr "Медицина й догляд за пацієнтами"
 
-#: src/components/landing/LandingView.tsx
-#: src/components/landing/LanguagesView.tsx
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each grade to decide when the card returns."
 msgstr "Пам’ять слабне. Якщо пригадати щось вчасно, воно закріплюється, і наступна перерва може бути довшою. За кожною оцінкою Lymi вирішує, коли повернути картку."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each learner’s grades to decide when every card comes back."
 msgstr "Пам’ять згасає. Якщо згадати щось вчасно, спогад міцнішає, а наступна перерва може бути довшою. Lymi за оцінками кожного учня вирішує, коли повернути кожну картку."
 
-#: src/components/landing/SiteNav.tsx
 msgid "Menu"
 msgstr "Меню"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "More than a translation."
 msgstr "Більше, ніж переклад."
 
-#: src/components/landing/hand-cards.ts
 msgid "Most land plants have one."
 msgstr "Вона є в більшості наземних рослин."
 
-#: src/components/landing/hand-cards.ts
 msgid "Music"
 msgstr "Музика"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Music lessons"
 msgstr "Уроки музики"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Music theory"
 msgstr "Теорія музики"
 
-#: src/components/landing/hero-words.ts
 msgid "My dear"
 msgstr "Мій любий"
 
-#: src/components/landing/hand-cards.ts
 msgid "Named after William of Ockham, a 14th-century friar."
 msgstr "Названа на честь Вільяма Оккама, монаха XIV століття."
 
-#: src/components/landing/hand-cards.ts
 msgid "Named by two Australian scientists in 1964."
 msgstr "Назву запропонували двоє австралійських науковців у 1964 році."
 
-#: src/components/landing/hand-cards.ts
 msgid "Nature"
 msgstr "Природа"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "needed"
 msgstr "потрібно"
 
-#: src/components/landing/language-cards.ts
 msgid "Neuter, not feminine: every noun ending in -chen takes das."
 msgstr "Середній рід, а не жіночий: усі іменники на -chen мають артикль das."
 
-#: src/components/landing/ClassHero.tsx
-#: src/components/landing/SharedDeckDemo.tsx
 msgid "New"
 msgstr "Нова"
 
-#: src/components/landing/HandOfCards.tsx
 msgid "Next card"
 msgstr "Наступна картка"
 
 #. placeholder {0}: rest[0].card.term
-#: src/components/landing/HandOfCards.tsx
 msgid "Next card: {0}"
 msgstr "Наступна картка: {0}"
 
-#: src/components/landing/language-cards.ts
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приємно познайомитися; наперед дякую"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "No chat? Type the word."
 msgstr "Без чату? Введи слово."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "No, I don’t."
 msgstr "Ні, немає."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "no; not"
 msgstr "ні; не"
 
-#: src/components/landing/TeachersView.tsx
 msgid "No. A card can hold anything worth remembering: a term, a date, a formula, a chord. Language cards can also be said aloud."
 msgstr "Ні. На картці може бути будь-що, що варто запам’ятати: термін, дата, формула, акорд. Мовні картки ще й можна прослухати."
 
-#: src/components/landing/TeachersView.tsx
 msgid "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 msgstr "Ні. Повторення кожного учня бачить лише сам учень. Lymi — місце для практики, а не для оцінок."
 
-#: src/components/landing/AssistantsView.tsx
 msgid "No. Lymi only gets what your assistant sends it, like the cards it adds. The rest of the conversation stays with your assistant."
 msgstr "Ні. Lymi отримує лише те, що надсилає асистент, наприклад картки, які він додає. Решта розмови залишається в асистента."
 
-#: src/components/landing/TeachersView.tsx
 msgid "No. Only you add and edit cards. Learners review them, and each keeps their own schedule and history."
 msgstr "Ні. Додавати й редагувати картки можеш лише ти. Учні їх повторюють, і в кожного власний розклад та історія."
 
-#: src/components/landing/language-cards.ts
 msgid "Not “I want well”. It’s how you accept a coffee."
 msgstr "Дослівно «хочу добре», а означає «так, залюбки» — наприклад, у відповідь на каву."
 
-#: src/components/landing/NotesToCards.tsx
 msgid "Notes"
 msgstr "Нотатки"
 
-#: src/components/landing/AssistantsView.tsx
-#: src/components/landing/LanguagesView.tsx
 msgid "Nothing during the private beta."
 msgstr "Під час закритої бети — нічого."
 
-#: src/components/landing/hand-cards.ts
 msgid "noun"
 msgstr "іменник"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "Numbers and time"
 msgstr "Числа й час"
 
-#: src/components/landing/hand-cards.ts
 msgid "Often called Iceland’s unofficial motto."
 msgstr "Її часто називають неофіційним девізом Ісландії."
 
-#: src/components/landing/hero-words.ts
 msgid "Okay"
 msgstr "Гаразд"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "one"
 msgstr "один"
 
-#: src/components/landing/ClassHero.tsx
 msgid "One deck for your whole class."
 msgstr "Одна колода для всієї групи."
 
-#: src/components/landing/language-cards.ts
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "Одне слово, щоб попросити, щось подати й відповісти на подяку."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Only when you ask your assistant to. Anything it writes on a card is marked AI, so you can always tell it from your own notes."
 msgstr "Лише коли ти просиш про це асистента. Усе, що він пише в картці, позначено як AI, тож ти завжди відрізниш це від своїх нотаток."
 
-#: src/components/landing/SiteFooter.tsx
-#: src/components/landing/SiteNav.tsx
 msgid "Open Lymi"
 msgstr "Відкрити Lymi"
 
-#: src/components/landing/SiteNav.tsx
 msgid "Open menu"
 msgstr "Відкрити меню"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "or"
 msgstr "чи"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Or build your own."
 msgstr "Або зроби щось своє."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Ordering a coffee to go"
 msgstr "Кава з собою"
 
-#: src/components/landing/AssistantMarks.tsx
 msgid "Other apps"
 msgstr "Інші застосунки"
 
-#: src/components/landing/SiteFooter.tsx
 msgid "Overview"
 msgstr "Вступ"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Paying at the checkout"
 msgstr "Оплата на касі"
 
-#: src/components/landing/language-cards.ts
 msgid "Personal ID code"
 msgstr "Особистий код"
 
-#: src/components/landing/hand-cards.ts
 msgid "Philosophy"
 msgstr "Філософія"
 
-#: src/components/landing/hand-cards.ts
 msgid "phrase"
 msgstr "фраза"
 
-#: src/components/landing/cards.ts
-#: src/components/landing/hand-cards.ts
 msgid "Physics"
 msgstr "Фізика"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 msgstr "Обери курс у бібліотеці колод, додай його своїй групі й доповнюй по ходу. А свій поширюй, коли він буде готовий."
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Pick your assistant for its steps."
 msgstr "Обери свого асистента, щоб побачити інструкцію."
 
-#: src/components/landing/HandOfCards.tsx
 msgid "Play pronunciation"
 msgstr "Послухати вимову"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "Pleasant; cosy"
 msgstr "Приємний; затишний"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "please"
 msgstr "будь ласка"
 
-#: src/components/landing/hero-words.ts
 msgid "Please"
 msgstr "Будь ласка"
 
-#: src/components/landing/hero-words.ts
 msgid "Please; here you go"
 msgstr "Будь ласка; ось, тримай"
 
-#: src/components/landing/language-cards.ts
 msgid "Please; here you go; you’re welcome"
 msgstr "Будь ласка; ось, тримай; нема за що"
 
-#: src/components/landing/LandingView.tsx
 msgid "Plug Lymi into anything."
 msgstr "Підключай Lymi до чого завгодно."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Надішли посилання для приєднання в чат групи. Кожен, хто приєднається, отримує нову картку, щойно ти її додаси, а розклад повторень у кожного свій. Коли групу набрано, вимкни посилання."
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Practise with your own words."
 msgstr "Практикуйся зі словами, які вчиш."
 
-#: src/components/landing/hand-cards.ts
 msgid "Prefer the explanation that needs the fewest assumptions"
 msgstr "Віддавай перевагу поясненню з найменшою кількістю припущень"
 
-#: src/components/landing/language-cards.ts
 msgid "Pregnant"
 msgstr "Вагітна"
 
-#: src/components/landing/SiteFooter.tsx
 msgid "Privacy"
 msgstr "Конфіденційність"
 
-#: src/components/landing/cards.ts
-#: src/components/landing/hand-cards.ts
 msgid "Programming"
 msgstr "Програмування"
 
-#: src/components/landing/hand-cards.ts
 msgid "Psychology"
 msgstr "Психологія"
 
-#: src/components/landing/language-cards.ts
 msgid "public transport"
 msgstr "громадський транспорт"
 
-#: src/components/landing/language-cards.ts
 msgid "Public transport"
 msgstr "Громадський транспорт"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Questions before you connect."
 msgstr "Питання перед підключенням."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Questions before you start."
 msgstr "Що варто знати на початку."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Questions from teachers."
 msgstr "Питання викладачів."
 
-#: src/components/landing/hand-cards.ts
 msgid "Quick nunchi means sensing a mood before anyone says a word."
 msgstr "Мати добре нунчі — відчувати настрій, поки ніхто ще нічого не сказав."
 
-#: src/components/landing/language-cards.ts
 msgid "Raise a glass and it becomes terviseks: to your health."
 msgstr "Коли піднімають келих, кажуть terviseks: за здоров’я."
 
-#: src/components/landing/PracticeChat.tsx
 msgid "Read your German deck"
 msgstr "Прочитано колоду з німецької"
 
-#: src/components/landing/NotesToCards.tsx
 msgid "Reading your notes…"
 msgstr "Читаємо нотатки…"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "Ready to start"
 msgstr "Можна починати"
 
-#: src/components/landing/LandingView.tsx
-#: src/components/landing/LanguagesView.tsx
 msgid "Recall first. Reveal second."
 msgstr "Спочатку згадай. Потім перевір."
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Recall the word before you look, then say how well you knew it. Hard cards come back sooner, easy ones wait."
 msgstr "Згадай слово, перш ніж дивитися, а потім оціни, наскільки добре ти його пам’ятаєш. Складні картки повертаються раніше, легкі чекають."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Remember Estonian vocabulary · Lymi"
 msgstr "Запам’ятовуй естонські слова · Lymi"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Repetition that works."
 msgstr "Повторення, яке працює."
 
-#: src/components/landing/HandOfCards.tsx
 msgid "Replay pronunciation"
 msgstr "Послухати ще раз"
 
-#: src/components/landing/ConversationScenes.tsx
 msgid "Replay this line"
 msgstr "Послухати ще раз"
 
-#: src/components/BetaSignup.tsx
-#: src/components/JoinView.tsx
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/ClassHero.tsx
-#: src/components/landing/Hero.tsx
-#: src/components/landing/SiteNav.tsx
-#: src/components/landing/WordFieldHero.tsx
 msgid "Request access"
 msgstr "Подати заявку"
 
-#: src/components/JoinView.tsx
 msgid "Request access · Lymi"
 msgstr "Доступ до Lymi"
 
-#: src/components/JoinView.tsx
 msgid "Request access to the Lymi private beta."
 msgstr "Подай заявку на закрите бета-тестування Lymi."
 
-#: src/components/BetaSignup.tsx
 msgid "Request received."
 msgstr "Заявку прийнято."
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "Retrieving strengthens memory"
 msgstr "Спроба пригадати зміцнює пам’ять"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Reveal the meaning, then grade the recall."
 msgstr "Відкрий значення й оціни, наскільки добре його пам’ятаєш."
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "Reviewed with Lymi"
 msgstr "З повтореннями в Lymi"
 
-#: src/components/landing/hand-cards.ts
 msgid "Reviews spread over days stick better than the same reviews crammed together"
 msgstr "Кілька повторень у різні дні працюють краще, ніж стільки ж за один раз"
 
-#: src/components/landing/hand-cards.ts
 msgid "Reward lines of code, and the code gets longer."
 msgstr "Винагороджуй за кількість рядків — і код ставатиме довшим."
 
-#: src/components/landing/hero-words.ts
 msgid "Running your fingers through someone’s hair"
 msgstr "Перебирати комусь волосся пальцями"
 
-#: src/components/landing/hero-words.ts
 msgid "Said before a meal"
 msgstr "Кажуть перед їжею"
 
-#: src/components/landing/hero-words.ts
 msgid "Said before eating"
 msgstr "Кажуть перед їжею"
 
-#: src/components/landing/hand-cards.ts
 msgid "Said before eating: “I humbly receive”"
 msgstr "Кажуть перед їжею: «Смиренно приймаю»"
 
-#: src/components/landing/hero-words.ts
 msgid "Said to admire something"
 msgstr "Кажуть, милуючись чимось"
 
-#: src/components/landing/hand-cards.ts
 msgid "Said to anyone about to eat, the way French says bon appétit."
 msgstr "Кажуть кожному, хто сідає їсти, — як французьке bon appétit."
 
-#: src/components/landing/language-cards.ts
 msgid "Said to cut a rambling story down to its point."
 msgstr "Так кажуть, щоб звести довгу історію до суті."
 
-#: src/components/landing/cards.ts
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизуй із частотою, удвічі вищою за максимальну"
 
-#: src/components/landing/LandingView.tsx
 msgid "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in what’s missing, says it aloud, and brings the card back before you forget. Free during the private beta."
 msgstr "Додавай у Lymi слова, терміни й ідеї з уроків, розмов або статей. Lymi доповнить картки, озвучить їх і нагадає повторити вчасно. Участь у закритій беті безкоштовна."
 
-#: src/components/landing/EnrichDemo.tsx
 msgid "Say it"
 msgstr "Вимова"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Say yes in Lymi"
 msgstr "Дай згоду в Lymi"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Saying hello"
 msgstr "Привітання"
 
-#: src/components/landing/hand-cards.ts
 msgid "Schnaps, spirits, plus Idee, idea."
 msgstr "Schnaps — горілка, Idee — ідея."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Sections and the deck library are rolling out during the beta. We’ll tell you when your account has them."
 msgstr "Розділи й бібліотека колод з’являються поступово під час бети. Ми повідомимо, коли вони будуть у твоєму обліковому записі."
 
-#: src/components/landing/AssistantsView.tsx
-#: src/components/landing/LandingView.tsx
-#: src/components/landing/TeachersView.tsx
 msgid "See how it works"
 msgstr "Як це працює"
 
-#: src/components/landing/hero-words.ts
 msgid "See you soon"
 msgstr "До зустрічі"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "see you; literally, we see"
 msgstr "побачимось; дослівно — «бачимо»"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Send a lesson plan to Claude or ChatGPT and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
 msgstr "Надішли план уроку в Claude чи ChatGPT, і асистент додасть картки за тебе. У Lymi також є відкритий API: можна перенести список із таблиці, додавати картки зі своєї навчальної платформи чи показувати на сайті групи, що пора повторити."
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Send Claude, ChatGPT or Gemini a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
 msgstr "Надішли фото нотаток у Claude, ChatGPT чи Gemini. Картки з’являться в Lymi, і Lymi поверне кожну якраз перед тим, як ти її забудеш."
 
-#: src/components/landing/SendAnything.tsx
 msgid "Send it anything."
 msgstr "Надсилай асистентові що завгодно."
 
-#: src/components/landing/AssistantHero.tsx
 msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
 msgstr "Надішли асистентові фото нотаток. Він додасть картки в Lymi, а Lymi поверне кожну якраз перед тим, як ти її забудеш."
 
-#: src/components/landing/site-links.ts
 msgid "Send your notes to Claude, ChatGPT or Gemini and get cards."
 msgstr "Надішли нотатки в Claude, ChatGPT чи Gemini — і отримай картки."
 
-#: src/components/landing/AssistantChat.tsx
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Сім карток: чотири з фінської, дві шахові й одна з тієї статті про обробку сигналів."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Share one deck with your class."
 msgstr "Одна колода на всю групу."
 
-#: src/components/landing/TeachersView.tsx
 msgid "Share one link."
 msgstr "Одне посилання для всіх."
 
-#: src/components/landing/ApiConnections.tsx
 msgid "Shortcuts"
 msgstr "Швидкі команди"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Show the meaning"
 msgstr "Показати значення"
 
-#: src/components/landing/language-cards.ts
 msgid "sight (to see)"
 msgstr "визначна пам’ятка"
 
-#: src/components/JoinView.tsx
 msgid "Sign in"
 msgstr "Увійти"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Увійди й дозволь асистентові додавати картки. Потім надішли йому нотатки."
 
-#: src/components/landing/cards.ts
 msgid "Signals"
 msgstr "Обробка сигналів"
 
-#: src/components/landing/hand-cards.ts
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Додивлятися поганий фільм лише через уже куплений квиток."
 
-#: src/components/landing/hero-words.ts
 msgid "So-so"
 msgstr "Так собі"
 
-#: src/components/landing/hand-cards.ts
 msgid "So-so; careless"
 msgstr "Так собі; недбало"
 
-#: src/components/landing/hero-words.ts
 msgid "So; well then"
 msgstr "Отже; ну що ж"
 
-#: src/components/landing/hand-cards.ts
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стіл». Буває, що вона триває довше за саму їжу."
 
-#: src/components/landing/language-cards.ts
 msgid "Sorry; excuse me"
 msgstr "Вибач; перепрошую"
 
-#: src/components/landing/hero-words.ts
 msgid "Sounds good"
 msgstr "Домовились"
 
-#: src/components/landing/language-cards.ts
 msgid "Sounds good; that works"
 msgstr "Домовились; підходить"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Радянська Росія визнала незалежність Естонії"
 
-#: src/components/landing/language-cards.ts
 msgid "Spanish"
 msgstr "Іспанська"
 
-#: src/components/landing/language-cards.ts
 msgid "Spanish B1 · Thursdays"
 msgstr "Іспанська B1 · щочетверга"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 msgstr "Поділи колоду на розділи, по одному на тему. Учні починають із першого, а наступний відкривається, коли вони засвоять більшу частину попереднього, тож шоста тема нікого не застане в перший день. Хто йде швидше, може почати наступний розділ раніше."
 
-#: src/components/landing/ApiConnections.tsx
 msgid "Spreadsheets"
 msgstr "Таблиці"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "Start"
 msgstr "Почати"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Start with a ready-made course."
 msgstr "Почни з готового курсу."
 
-#: src/components/landing/LandingView.tsx
 msgid "Start with the term. Keep control of the rest."
 msgstr "Ти додаєш термін, решта на Lymi."
 
-#: src/components/landing/language-cards.ts
 msgid "station"
 msgstr "станція"
 
-#: src/components/landing/hero-words.ts
 msgid "Station"
 msgstr "Станція"
 
-#: src/components/landing/cards.ts
-#: src/components/landing/hand-cards.ts
 msgid "Statistics"
 msgstr "Статистика"
 
-#: src/components/landing/LandingView.tsx
 msgid "Stay in the conversation."
 msgstr "Додавай картки, не виходячи з розмови."
 
-#: src/components/landing/hand-cards.ts
 msgid "Staying at the table to talk after a meal"
 msgstr "Залишатися за столом і розмовляти після їжі"
 
-#: src/components/landing/hand-cards.ts
 msgid "Sticking with something because of what you have already put in"
 msgstr "Триматися за щось лише через уже вкладені ресурси"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "strength; hang in there"
 msgstr "сили; тримайся"
 
-#: src/components/landing/hero-words.ts
 msgid "Stubborn grit"
 msgstr "Уперта витримка"
 
-#: src/components/landing/cards.ts
 msgid "Stubborn grit; carrying on anyway"
 msgstr "Уперта витривалість; не здаватися попри все"
 
-#: src/components/landing/hand-cards.ts
 msgid "Stubborn grit; carrying on when it gets hard"
 msgstr "Уперта витривалість; не здаватися, коли важко"
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "Successful reviews buy time"
 msgstr "Що краще пам’ятаєш, то рідше повторюєш"
 
-#: src/components/landing/hand-cards.ts
 msgid "Sugars and amino acids reacting in the heat."
 msgstr "Цукри й амінокислоти реагують під дією тепла."
 
-#: src/components/landing/cards.ts
 msgid "Sunlight coming through leaves"
 msgstr "Сонячне світло, що пробивається крізь листя"
 
-#: src/components/landing/hand-cards.ts
 msgid "Sunlight filtering through leaves"
 msgstr "Сонячне світло, що пробивається крізь листя"
 
-#: src/components/landing/hero-words.ts
 msgid "Sunlight through leaves"
 msgstr "Сонце крізь листя"
 
-#: src/components/landing/cards.ts
 msgid "Suomi · noun"
 msgstr "Suomi · іменник"
 
-#: src/components/landing/cards.ts
 msgid "Suomi · verb"
 msgstr "Suomi · дієслово"
 
-#: src/components/landing/SiteFooter.tsx
 msgid "Support"
 msgstr "Підтримка"
 
-#: src/components/landing/hand-cards.ts
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
 
-#: src/components/landing/NotesToCards.tsx
 msgid "Take a photo"
 msgstr "Сфотографувати"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Take a photo of your notebook or the whiteboard and send it to your assistant. It reads the handwriting, adds the new words to your deck and leaves out the ones you already have."
 msgstr "Сфотографуй зошит чи дошку й надішли фото асистентові. Він розбере почерк, додасть нові слова в колоду й пропустить ті, що вже є."
 
-#: src/components/landing/NotesToCards.tsx
 msgid "Take it again"
 msgstr "Сфотографувати ще раз"
 
-#: src/components/landing/HandOfCards.tsx
 msgid "Tap to turn it over"
 msgstr "Торкнися, щоб перевернути"
 
-#: src/components/landing/hand-cards.ts
 msgid "Tape, a spare part and some nerve."
 msgstr "Скотч, запасна деталь і трохи сміливості."
 
-#: src/components/landing/hero-words.ts
 msgid "Tea"
 msgstr "Чай"
 
-#: src/components/landing/TeachersView.tsx
 msgid "Teach anything worth remembering."
 msgstr "Навчай усього, що варто запам’ятати."
 
-#: src/components/landing/site-links.ts
 msgid "Teachers"
 msgstr "Викладачам"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "ten"
 msgstr "десять"
 
-#: src/components/landing/EnrichDemo.tsx
 msgid "Term"
 msgstr "Термін"
 
-#: src/components/landing/SiteFooter.tsx
 msgid "Terms"
 msgstr "Умови"
 
-#: src/components/landing/LandingView.tsx
 msgid "Terms and concepts from a new role, project, or technical field."
 msgstr "Терміни й поняття для нової посади, проєкту чи технічної сфери."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "thank you"
 msgstr "дякую"
 
-#: src/components/landing/hero-words.ts
 msgid "Thank you"
 msgstr "Дякую"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "Thanks for your hard work"
 msgstr "Дякую за роботу"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Thanks, have a good day!"
 msgstr "Дякую, гарного дня!"
 
-#: src/components/landing/hero-words.ts
 msgid "Thanks; cheers"
 msgstr "Дякую; дякую, друже"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Thanks! See you!"
 msgstr "Дякую! Побачимось!"
 
-#: src/components/landing/AssistantChat.tsx
 msgid "That chess term you just used, add it to my deck."
 msgstr "Додай у мою колоду цей шаховий термін."
 
-#: src/components/BetaSignup.tsx
 msgid "The beta list is temporarily unavailable. Your email was not saved. Try again later."
 msgstr "Список заявок тимчасово недоступний. Твою адресу не збережено. Спробуй пізніше."
 
-#: src/components/landing/hand-cards.ts
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "Підрум’янювання, що надає смаку смаженому, печеному й тостам"
 
-#: src/components/landing/NotesToCards.tsx
 msgid "The cards from this page will land here."
 msgstr "Картки з цієї сторінки з’являться тут."
 
-#: src/components/landing/language-cards.ts
 msgid "the day before"
 msgstr "напередодні"
 
-#: src/components/landing/hero-words.ts
 msgid "The day before"
 msgstr "Напередодні"
 
-#: src/components/landing/hand-cards.ts
 msgid "The duck never answers. It doesn’t need to."
 msgstr "Качка ніколи не відповідає. Та їй і не треба."
 
-#: src/components/landing/hand-cards.ts
 msgid "The earthy smell of rain on dry ground"
 msgstr "Запах дощу, що впав на суху землю"
 
-#: src/components/landing/hand-cards.ts
-#: src/components/landing/hero-words.ts
 msgid "The edge of the ice"
 msgstr "Край криги"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/hero-words.ts
 msgid "The evening after work"
 msgstr "Вечір після роботи"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "The free evening after work"
 msgstr "Вільний вечір після роботи"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/AssistantsView.tsx
-#: src/components/landing/language-cards.ts
 msgid "The girl"
 msgstr "Дівчинка"
 
-#: src/components/landing/hand-cards.ts
-#: src/components/landing/hero-words.ts
 msgid "The knack of reading the room"
 msgstr "Уміння відчувати настрій людей довкола"
 
-#: src/components/landing/JoinLinkDemo.tsx
 msgid "The link is off. Nobody new can join."
 msgstr "Посилання вимкнено. Більше ніхто не зможе приєднатися."
 
-#: src/components/landing/LandingView.tsx
 msgid "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 msgstr "Ліхтар і логотип Lymi над англійським написом «Keep what you learn»."
 
-#: src/components/landing/TeachersView.tsx
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "Сплетення нервів, що йде від шиї до руки"
 
-#: src/components/landing/SeriesDemo.tsx
 msgid "The next section opens at 80% known"
 msgstr "Наступний розділ відкривається, коли засвоєно 80%"
 
-#: src/components/landing/cards.ts
 msgid "The output depends on the history of the input"
 msgstr "Результат залежить від того, що було на вході раніше"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "The phrase from Tuesday’s class, the word on a letter from the tax office, the thing the cashier said twice. Save it in a few seconds, hear it said, and Lymi brings it back right before you’d forget."
 msgstr "Фраза з вівторкового уроку, слово з листа податкової, те, що касирка повторила двічі. Збережи за кілька секунд, послухай вимову, і Lymi поверне це саме тоді, коли воно почне забуватися."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget."
 msgstr "Фраза, яку репетитор написав у чаті, слово з роману, яке довелося шукати двічі. Збережи його за кілька секунд, послухай вимову, і Lymi поверне його саме тоді, коли воно почне забуватися."
 
-#: src/components/landing/hand-cards.ts
 msgid "The player would pass, if chess allowed it."
 msgstr "Гравець пропустив би хід, якби шахи це дозволяли."
 
-#: src/components/landing/JoinSection.tsx
 msgid "The private beta is free. Leave your email and we’ll write when a place opens."
 msgstr "Участь у закритій беті безкоштовна. Залиш електронну адресу — ми напишемо, щойно з’явиться місце."
 
-#: src/components/landing/hand-cards.ts
 msgid "The push behind ragtime, funk and reggae."
 msgstr "Саме вона дає драйв регтайму, фанку й реґі."
 
-#: src/components/landing/LandingView.tsx
-#: src/components/landing/LanguagesView.tsx
 msgid "The right moment matters."
 msgstr "Головне — повторити вчасно."
 
-#: src/components/landing/hand-cards.ts
 msgid "The right to be brought before a judge rather than held without charge"
 msgstr "Право постати перед суддею, а не залишатися під вартою без обвинувачення"
 
-#: src/components/landing/ConnectSteps.tsx
 msgid "The same address works everywhere. Nothing to install."
 msgstr "Одна адреса працює скрізь. Нічого не треба встановлювати."
 
-#: src/components/landing/language-cards.ts
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одне слово і для коханої людини, і для ціни, яку не хочеться платити."
 
-#: src/components/landing/hero-words.ts
 msgid "The steam in a sauna"
 msgstr "Пара в сауні"
 
-#: src/components/landing/SendAnything.tsx
 msgid "The whiteboard"
 msgstr "Дошка"
 
-#: src/components/landing/TeachersView.tsx
 msgid "The words and phrases from each unit of the course."
 msgstr "Слова й фрази з кожної теми курсу."
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Then review them in Lymi."
 msgstr "Потім повторюй їх у Lymi."
 
-#: src/components/landing/LandingView.tsx
 msgid "Things worth keeping from books, hobbies, and everyday curiosity."
 msgstr "Цікаве з книжок, захоплень і щоденних відкриттів."
 
-#: src/components/landing/SendAnything.tsx
 msgid "To agree"
 msgstr "Погоджуватися"
 
-#: src/components/landing/cards.ts
 msgid "To belong; to be heard"
 msgstr "Належати; бути чутним"
 
-#: src/components/landing/language-cards.ts
 msgid "to book"
 msgstr "бронювати"
 
-#: src/components/landing/ClassHero.tsx
-#: src/components/landing/language-cards.ts
 msgid "To book; to reserve"
 msgstr "Бронювати"
 
-#: src/components/landing/hero-words.ts
 msgid "To buy"
 msgstr "Купувати"
 
-#: src/components/landing/language-cards.ts
 msgid "To feel like; to look forward to"
 msgstr "Хотіти; чекати з нетерпінням"
 
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "To get up early"
 msgstr "Рано вставати"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "to go"
 msgstr "з собою"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "To go, please."
 msgstr "З собою, будь ласка."
 
-#: src/components/landing/ClassHero.tsx
-#: src/components/landing/TeachersView.tsx
 msgid "To meet"
 msgstr "Зустрічатися"
 
-#: src/components/landing/hero-words.ts
 msgid "To meet up"
 msgstr "Зустрітися"
 
-#: src/components/landing/language-cards.ts
 msgid "To meet up; to arrange to meet"
 msgstr "Зустрітися; домовитися про зустріч"
 
-#: src/components/landing/language-cards.ts
 msgid "to miss (someone)"
 msgstr "сумувати (за кимось)"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "To miss someone or something"
 msgstr "Сумувати за кимось чи чимось"
 
-#: src/components/landing/hand-cards.ts
 msgid "To not be able to be bothered"
 msgstr "Ліньки; не хочеться нічого робити"
 
-#: src/components/landing/hero-words.ts
 msgid "To pull"
 msgstr "Тягнути"
 
-#: src/components/landing/AssistantHero.tsx
-#: src/components/landing/AssistantsView.tsx
-#: src/components/landing/hero-words.ts
-#: src/components/landing/language-cards.ts
 msgid "To stop"
 msgstr "Припиняти; зупинятися"
 
-#: src/components/landing/ReviewDemo.tsx
 msgid "Tonight"
 msgstr "Сьогодні ввечері"
 
-#: src/components/BetaSignup.tsx
 msgid "Too many attempts. Wait a minute, then try again."
 msgstr "Забагато спроб. Зачекай хвилину й повтори."
 
-#: src/components/landing/LandingView.tsx
-#: src/components/landing/LanguagesView.tsx
 msgid "Try to recall the meaning before Lymi shows it. Then grade how well you remembered. Difficult cards return sooner; easy ones wait."
 msgstr "Спробуй згадати значення, перш ніж Lymi його покаже. Потім оціни, наскільки добре вдалося. Складні картки повернуться раніше, легкі почекають."
 
-#: src/components/landing/HandOfCards.tsx
 msgid "Turn a few cards over"
 msgstr "Переверни кілька карток"
 
-#: src/components/landing/HandOfCards.tsx
 msgid "Turn it over"
 msgstr "Перевернути"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Turn your notes into cards."
 msgstr "Зроби з нотаток картки."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Twelve. Today’s new words will start coming up a few at a time."
 msgstr "Дванадцять. Нові слова з сьогоднішнього уроку з’являтимуться по кілька за раз."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "two"
 msgstr "два"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Two euros ten."
 msgstr "Два євро десять центів."
 
-#: src/components/BetaSignup.tsx
 msgid "Unable to reach the beta list. Check your connection and try again."
 msgstr "Не вдалося надіслати заявку. Перевір інтернет-з’єднання й спробуй ще раз."
 
-#: src/components/landing/hand-cards.ts
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершені справи тримаються в пам’яті краще за завершені"
 
-#: src/components/landing/SiteFooter.tsx
-#: src/components/landing/SiteNav.tsx
 msgid "Use cases"
 msgstr "Для чого"
 
-#: src/components/landing/AssistantHero.tsx
 msgid "Used Lymi"
 msgstr "Використано Lymi"
 
-#: src/components/landing/AssistantHero.tsx
 msgid "Using Lymi"
 msgstr "Використовує Lymi"
 
-#: src/components/landing/language-cards.ts
 msgid "usually"
 msgstr "зазвичай"
 
-#: src/components/landing/hero-words.ts
 msgid "Usually"
 msgstr "Зазвичай"
 
-#: src/components/landing/hand-cards.ts
 msgid "verb"
 msgstr "дієслово"
 
-#: src/components/landing/NotesToCards.tsx
 msgid "Waiting for your notes"
 msgstr "Чекаємо на нотатки"
 
-#: src/components/BetaSignup.tsx
 msgid "We already have your request."
 msgstr "Ти вже у списку."
 
-#: src/components/BetaSignup.tsx
 msgid "We use your email only for this access request. It does not create an account. Read the <0>privacy policy</0>."
 msgstr "Електронна адреса потрібна лише для цієї заявки. Обліковий запис не створюється. Докладніше — у <0>політиці конфіденційності</0>."
 
-#: src/components/landing/ClassHero.tsx
 msgid "Weather"
 msgstr "Погода"
 
-#: src/components/landing/ApiConnections.tsx
 msgid "Websites"
 msgstr "Сайти"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "well"
 msgstr "добре"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "what"
 msgstr "що"
 
-#: src/components/landing/hand-cards.ts
 msgid "What an object’s shape tells you to do with it"
 msgstr "Як форма предмета підказує, що з ним робити"
 
-#: src/components/landing/AssistantsView.tsx
-#: src/components/landing/LanguagesView.tsx
 msgid "What does it cost?"
 msgstr "Скільки це коштує?"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "What if I already use Anki?"
 msgstr "А якщо я вже користуюся Anki?"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "What if it gets something wrong?"
 msgstr "А якщо він помилиться?"
 
-#: src/components/landing/hand-cards.ts
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Коли показник стає метою, він перестає бути добрим показником"
 
-#: src/components/landing/LandingView.tsx
 msgid "When a term comes up while you’re talking with an assistant, ask it to add the card. Keep talking; the card will be waiting in Lymi."
 msgstr "Трапився новий термін у розмові з асистентом? Попроси додати картку й продовжуй розмову. Картка вже буде в Lymi."
 
-#: src/components/landing/SendAnything.tsx
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Коли колеги йдуть із роботи, їм кажуть <0><1>お疲れ様です</1></0>."
 
-#: src/components/landing/WhyItWorks.tsx
 msgid "When recall goes well, the next review can wait longer. In 2013, <0>Dunlosky and colleagues rated practice testing and distributed practice as highly effective techniques</0>."
 msgstr "Якщо картка згадується легко, до неї можна повернутися пізніше. <0>У 2013 році Данлоскі з колегами назвали самоперевірку й розподілену практику одними з найефективніших методів навчання</0>."
 
-#: src/components/landing/hand-cards.ts
 msgid "When the output depends on the history of the input"
 msgstr "Коли результат залежить від того, що було на вході раніше"
 
-#: src/components/landing/ApiConnections.tsx
 msgid "Where cards can show up"
 msgstr "Де можуть з’являтися картки"
 
-#: src/components/landing/ApiConnections.tsx
 msgid "Where cards come from"
 msgstr "Звідки надходять картки"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Which assistants work?"
 msgstr "Які асистенти підтримуються?"
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Which languages can I learn?"
 msgstr "Які мови можна вчити?"
 
-#: src/components/landing/hero-words.ts
 msgid "Who knows?"
 msgstr "Хто його знає?"
 
-#: src/components/landing/NotesToCards.tsx
 msgid "Whose notes"
 msgstr "Чиї нотатки"
 
-#: src/components/landing/ApiConnections.tsx
 msgid "Widgets"
 msgstr "Віджети"
 
-#: src/components/landing/hand-cards.ts
 msgid "word"
 msgstr "слово"
 
-#: src/components/landing/LandingView.tsx
 msgid "Words and phrases from lessons, conversations, and reading."
 msgstr "Слова й фрази з уроків, розмов і прочитаного."
 
-#: src/components/landing/site-links.ts
 msgid "Words and phrases from lessons, tutors and reading."
 msgstr "Слова й фрази з уроків, від репетитора і з прочитаного."
 
-#: src/components/landing/LibraryDemo.tsx
 msgid "Words for the citizenship exam"
 msgstr "Слова до іспиту на громадянство"
 
-#: src/components/landing/PracticeChat.tsx
 msgid "Words from your deck"
 msgstr "Слова з твоєї колоди"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "work"
 msgstr "робота"
 
-#: src/components/landing/hand-cards.ts
 msgid "Writing"
 msgstr "Письмо"
 
-#: src/components/landing/hand-cards.ts
 msgid "Written with the characters for tree, leak and sun."
 msgstr "Записується ієрогліфами «дерево», «просочуватися» і «сонце»."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "yes"
 msgstr "так"
 
-#: src/components/landing/hero-words.ts
 msgid "Yes, actually"
 msgstr "Та ні, таки так"
 
-#: src/components/landing/language-cards.ts
 msgid "Yes, actually: to contradict a no"
 msgstr "Та ні, таки так: у відповідь на «ні»"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "Yes, one, please."
 msgstr "Так, один, будь ласка."
 
-#: src/components/landing/hero-words.ts
 msgid "Yes, please"
 msgstr "Так, будь ласка"
 
-#: src/components/landing/language-cards.ts
 msgid "Yes, please; I’d be glad to"
 msgstr "Так, будь ласка; залюбки"
 
-#: src/components/landing/SendAnything.tsx
 msgid "Yes, to everyone."
 msgstr "Так, усім."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 msgstr "Так. Кожна літера лишається такою, як її введено, тож tuli, вогонь, і tüli, сварка, — дві різні картки."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
 msgstr "Так. Lymi працює в браузері на телефоні й комп’ютері, його можна додати на головний екран. Картки й прогрес на обох однакові."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Yes. Press play on any card to hear it in Estonian."
 msgstr "Так. Натисни «відтворити» на будь-якій картці, щоб почути її естонською."
 
-#: src/components/landing/LanguagesView.tsx
 msgid "Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added."
 msgstr "Так. Хто робить картки, ділиться посиланням для приєднання, і кожен, хто приєднався, отримує нові картки одразу, як їх додають."
 
-#: src/components/landing/estonian-scenes.ts
 msgid "you"
 msgstr "ти"
 
-#: src/components/landing/SendAnything.tsx
 msgid "You"
 msgstr "Ти"
 
-#: src/components/landing/hero-words.ts
 msgid "You can do it!"
 msgstr "У тебе вийде!"
 
-#: src/components/landing/estonian-scenes.ts
 msgid "you have (with “on”)"
 msgstr "у вас (разом з «on» — «у вас є»)"
 
-#: src/components/landing/ClassHero.tsx
 msgid "You own this deck"
 msgstr "Твоя колода"
 
-#: src/components/landing/AssistantsView.tsx
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Асистент може читати твої колоди. Попроси його про розмову зі словами, які ти вчиш, і він виправлятиме тебе по ходу."
 
-#: src/components/landing/ApiConnections.tsx
 msgid "Your own app"
 msgstr "Власний застосунок"
 
-#: src/components/landing/SendAnything.tsx
 msgid "Your tutor’s message"
 msgstr "Повідомлення репетитора"
 
-#: src/components/landing/cards.ts
 msgid "日本語 · noun"
 msgstr "日本語 · іменник"
 
-#: src/components/landing/language-cards.ts
-#: src/components/landing/SendAnything.tsx
 msgid "日本語 · phrase"
 msgstr "日本語 · фраза"

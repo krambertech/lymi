@@ -35,7 +35,7 @@ export { archiveImport, ownedImport, restoreImport } from "./import-writer";
 const ADAPTERS: SourceAdapter<unknown>[] = [anki as SourceAdapter<unknown>];
 
 /** Notes per stored chunk: one chunk is one Workflow step and one D1 batch. */
-export const NOTES_PER_CHUNK = 200;
+export const NOTES_PER_CHUNK = 500;
 
 /** An import still waiting on the learner, or on a step, past this is given up and its file deleted. */
 export const IMPORT_EXPIRY_MS = 3 * 24 * 60 * 60 * 1000;

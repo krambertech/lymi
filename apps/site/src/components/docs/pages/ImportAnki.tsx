@@ -174,9 +174,9 @@ export function ImportAnki() {
       <H2>If something goes wrong</H2>
       <H3>The file is too large</H3>
       <p>
-        Lymi imports files up to 1 GB, with up to 80 MB of cards and history. Pictures and audio
-        make a file large, so export again without <strong>Include Media</strong>, or export one
-        deck at a time by choosing it in <strong>Include</strong>.
+        Lymi imports files up to 1 GB, with up to 64 MB of cards and review history. Pictures and
+        audio make a file large, so export again without <strong>Include Media</strong>, or export
+        one deck at a time by choosing it in <strong>Include</strong>.
       </p>
       <H3>Lymi can’t read the file</H3>
       <p>

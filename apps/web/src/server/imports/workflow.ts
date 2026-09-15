@@ -21,7 +21,7 @@ const STEP = {
   retries: { limit: 3, delay: "10 seconds", backoff: "exponential" },
   timeout: "10 minutes",
 } as const;
-const PICTURES_PER_STEP = 20;
+const PICTURES_PER_STEP = 50;
 
 /** A file error is the file's fault, so retrying cannot help. */
 async function fileErrorsStop<T>(work: () => Promise<T>): Promise<T> {

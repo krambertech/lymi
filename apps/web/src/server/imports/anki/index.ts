@@ -37,8 +37,11 @@ import {
   revealCloze,
 } from "./text";
 
-/** The largest collection database a Worker can hold beside its own work. */
-export const MAX_COLLECTION_BYTES = 80 * 1024 * 1024;
+/**
+ * The largest collection database a Worker can hold beside its own work. A 50 MB collection with
+ * 480,000 reviews held its bytes plus 38 MB of cards and logs, so 64 MB stays under 128 MB.
+ */
+export const MAX_COLLECTION_BYTES = 64 * 1024 * 1024;
 
 /** One Anki card of a note, as the server stores it between steps. */
 export type AnkiCard = {
@@ -272,21 +275,22 @@ export const anki: SourceAdapter<AnkiNote> = {
     const { models, decks } = readModels(db);
     const crt = int([...db.rows("col")][0]?.crt);
 
-    const reviewsByCard = new Map<string, [number, number][]>();
+    // Revlog ids are millisecond timestamps and its rows come in rowid order, so each card's
+    // grades arrive oldest first and are kept as flat pairs without a per-review allocation.
+    const reviewsByCard = new Map<string, number[]>();
     for (const row of db.rows("revlog")) {
       const ease = int(row.ease);
       // Ease 0 and types past 3 are manual reschedules, not recalls.
       if (ease < 1 || ease > 4 || int(row.type) > 3) continue;
       const key = String(row.cid);
-      const list = reviewsByCard.get(key) ?? [];
-      list.push([int(row.id), ease]);
-      reviewsByCard.set(key, list);
+      const list = reviewsByCard.get(key);
+      if (list) list.push(int(row.id), ease);
+      else reviewsByCard.set(key, [int(row.id), ease]);
     }
 
     const cardsByNote = new Map<string, AnkiCard[]>();
     for (const row of db.rows("cards")) {
-      const pairs = (reviewsByCard.get(String(row.id)) ?? []).sort((a, b) => a[0] - b[0]);
-      const reviews = pairs.flat();
+      const reviews = reviewsByCard.get(String(row.id)) ?? [];
       const due = dueOf(row, crt);
       const list = cardsByNote.get(String(row.nid)) ?? [];
       list.push({

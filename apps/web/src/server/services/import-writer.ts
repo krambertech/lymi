@@ -14,7 +14,7 @@ import {
   stateDirection,
   TEXT_MODES,
 } from "@lymi/core";
-import { and, eq, inArray, isNull, sql } from "@lymi/core/db";
+import { and, eq, inArray, isNotNull, isNull, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
 import { type BatchStatement, batchStatements } from "../batch";
@@ -124,6 +124,41 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[]) {
           ),
         ),
     ),
+  ]);
+  const result: Lookup = { byExternal: new Map(), active: new Map() };
+  for (const row of external) {
+    if (row.externalId) result.byExternal.set(row.externalId, { id: row.id, deckId: row.deckId });
+  }
+  for (const row of active) {
+    result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
+  }
+  return result;
+}
+
+/**
+ * Every card of the learner an import could meet, read once. A preview reads every chunk, and a
+ * query per chunk would be thousands of queries for a large collection.
+ */
+async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
+  const { db, userId } = ctx;
+  const [external, active] = await Promise.all([
+    db
+      .select({
+        id: schema.cards.id,
+        deckId: schema.cards.deckId,
+        externalId: schema.cards.externalId,
+      })
+      .from(schema.cards)
+      .where(and(eq(schema.cards.userId, userId), isNotNull(schema.cards.externalId))),
+    db
+      .select({
+        language: schema.cards.language,
+        normalizedTerm: schema.cards.normalizedTerm,
+        deckName: schema.decks.name,
+      })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(and(eq(schema.cards.userId, userId), isNull(schema.cards.archivedAt))),
   ]);
   const result: Lookup = { byExternal: new Map(), active: new Map() };
   for (const row of external) {
@@ -246,6 +281,7 @@ export async function previewImport<Note>(
   const tags = new Set<string>();
   const seen = new Map<string, string>();
   const samples: ImportPreviewOut["samples"] = {};
+  const found = await lookupAll(ctx);
   for await (const { cards, skipped } of importedCards(work)) {
     counts.skipped += skipped;
     for (const card of cards) {
@@ -263,13 +299,7 @@ export async function previewImport<Note>(
         picture: Boolean(card.picture),
       });
     }
-    const classified = classify(
-      cards,
-      await lookup(ctx, cards),
-      work.choices.languages,
-      names,
-      seen,
-    );
+    const classified = classify(cards, found, work.choices.languages, names, seen);
     tally(counts, classified, { pictures: true });
     for (const item of classified) {
       if (item.kind !== "added") continue;
@@ -305,14 +335,9 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
   const names = new Map(work.summary.decks.map((d) => [d.key, deckName(d.name)]));
   const modes = new Map<string, Map<Directions, number>>();
   const seen = new Map<string, string>();
+  const found = await lookupAll(ctx);
   for await (const { cards } of importedCards(work)) {
-    const classified = classify(
-      cards,
-      await lookup(ctx, cards),
-      work.choices.languages,
-      names,
-      seen,
-    );
+    const classified = classify(cards, found, work.choices.languages, names, seen);
     for (const item of classified) {
       if (item.kind !== "added") continue;
       const tallyByDeck = modes.get(item.card.deckKey) ?? new Map<Directions, number>();
@@ -445,23 +470,19 @@ export async function writeChunk<Note>(
   const pictures: PendingPicture[] = [];
   const statements: Statement[] = [];
   const added: Classified[] = [];
+  const existingRows: unknown[] = [];
 
   for (const item of classified) {
     if (item.kind === "existing") {
       const { fields, tags } = item.card;
-      // Only blank fields are filled: whatever the learner wrote since the first import stays.
-      statements.push(
-        sql`update cards set
-            meaning = coalesce(meaning, ${fields.meaning ?? null}),
-            meaning_source = case when meaning is null and ${fields.meaning ?? null} is not null then 'manual' else meaning_source end,
-            pronunciation = coalesce(pronunciation, ${fields.pronunciation ?? null}),
-            example = coalesce(example, ${fields.example ?? null}),
-            example_source = case when example is null and ${fields.example ?? null} is not null then 'manual' else example_source end,
-            notes = coalesce(notes, ${fields.notes ?? null}),
-            tags = case when tags = '[]' then ${JSON.stringify(tags)} else tags end,
-            updated_at = ${now.getTime()}
-          where id = ${item.id} and user_id = ${userId} and ${guard}`,
-      );
+      existingRows.push({
+        id: item.id,
+        meaning: fields.meaning ?? null,
+        pronunciation: fields.pronunciation ?? null,
+        example: fields.example ?? null,
+        notes: fields.notes ?? null,
+        tags: JSON.stringify(tags),
+      });
       continue;
     }
     if (item.kind !== "added") continue;
@@ -527,6 +548,26 @@ export async function writeChunk<Note>(
   tally(counts, classified, { pictures: false });
 
   const j = (path: string) => sql.raw(`json_extract(value, '$.${path}')`);
+  for (const part of jsonParts(existingRows)) {
+    // Only blank fields are filled: whatever the learner wrote since the first import stays.
+    const rows = sql`(select json_extract(value, '$.id') as id, json_extract(value, '$.meaning') as meaning,
+        json_extract(value, '$.pronunciation') as pronunciation, json_extract(value, '$.example') as example,
+        json_extract(value, '$.notes') as notes, json_extract(value, '$.tags') as tags
+      from json_each(${part}))`;
+    statements.push(
+      sql`update cards set
+          meaning_source = case when cards.meaning is null and incoming.meaning is not null then 'manual' else cards.meaning_source end,
+          example_source = case when cards.example is null and incoming.example is not null then 'manual' else cards.example_source end,
+          meaning = coalesce(cards.meaning, incoming.meaning),
+          pronunciation = coalesce(cards.pronunciation, incoming.pronunciation),
+          example = coalesce(cards.example, incoming.example),
+          notes = coalesce(cards.notes, incoming.notes),
+          tags = case when cards.tags = '[]' then incoming.tags else cards.tags end,
+          updated_at = ${now.getTime()}
+        from ${rows} as incoming
+        where cards.id = incoming.id and cards.user_id = ${userId} and ${guard}`,
+    );
+  }
   for (const part of jsonParts(cardRows)) {
     statements.push(
       sql`insert into cards (id, user_id, deck_id, term, normalized_term, meaning, pronunciation, example, notes,

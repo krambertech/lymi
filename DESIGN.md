@@ -233,7 +233,7 @@ components:
 
 # Lymi design system
 
-The live version of this document is the `/design` route in local development. It renders every token, component and screen below with the real code, and every part in `components/ui` in each state it has: hover and focus held still, an overlay open in a desktop frame beside a touch frame, and reduced motion behind a switch on each canvas, beside its theme. This file is the same system for tools that read files.
+The live version of this document is the `/design` route in local development. It renders every token, component and screen below with the real code, and every part in `components/ui` in each state it has: hover and focus held still, an overlay open in a desktop frame beside a touch frame, and reduced motion behind a button on each canvas, beside its theme. This file is the same system for tools that read files.
 
 ## The idea
 

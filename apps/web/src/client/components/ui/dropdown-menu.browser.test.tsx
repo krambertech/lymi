@@ -1,15 +1,18 @@
-import { Component, type ReactNode } from "react";
+import { Component, type ReactNode, useState } from "react";
 import { describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { DESKTOP_QUERY } from "../../lib/device";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuLinkItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -51,6 +54,52 @@ function Harness({ onEdit = () => {} }: { onEdit?: () => void }) {
         <DropdownMenuItem variant="destructive">Archive</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function ChoiceHarness({ onSort = () => {} }: { onSort?: (value: string) => void }) {
+  const [states, setStates] = useState<string[]>(["Known"]);
+  const [sort, setSort] = useState("lesson");
+  const toggle = (name: string) => (on: boolean) =>
+    setStates((list) => (on ? [...list, name] : list.filter((x) => x !== name)));
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger render={<button type="button">Filter</button>} />
+        <DropdownMenuContent aria-label="Filter">
+          <DropdownMenuCheckboxItem
+            checked={states.includes("New")}
+            onCheckedChange={toggle("New")}
+          >
+            New
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            checked={states.includes("Known")}
+            onCheckedChange={toggle("Known")}
+          >
+            Known
+          </DropdownMenuCheckboxItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DropdownMenu>
+        <DropdownMenuTrigger render={<button type="button">Sort</button>} />
+        <DropdownMenuContent aria-label="Sort">
+          <DropdownMenuRadioGroup
+            value={sort}
+            onValueChange={(value) => {
+              setSort(value);
+              onSort(value);
+            }}
+          >
+            <DropdownMenuRadioItem value="lesson">Lesson</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="az">A–Z</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="added" closeOnClick={false}>
+              Recently added
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }
 
@@ -233,5 +282,56 @@ describe("DropdownMenu", () => {
     } finally {
       spy.mockRestore();
     }
+  });
+
+  test("a checkbox row toggles and keeps the menu open for the next choice", async () => {
+    const screen = await render(<ChoiceHarness />);
+    await openWithKeyboard(screen.getByRole("button", { name: "Filter" }));
+    const known = page.getByRole("menuitemcheckbox", { name: "Known" });
+    const fresh = page.getByRole("menuitemcheckbox", { name: "New" });
+    await expect.element(known).toHaveAttribute("aria-checked", "true");
+    await expect.element(fresh).toHaveAttribute("aria-checked", "false");
+
+    await fresh.click();
+    await expect.element(fresh).toHaveAttribute("aria-checked", "true");
+    await known.click();
+    await expect.element(known).toHaveAttribute("aria-checked", "false");
+    await expect.element(page.getByRole("menu", { name: "Filter" })).toBeVisible();
+  });
+
+  test("the arrow keys walk checkbox rows like any other row", async () => {
+    const screen = await render(<ChoiceHarness />);
+    await openWithKeyboard(screen.getByRole("button", { name: "Filter" }));
+    await expect.element(page.getByRole("menuitemcheckbox", { name: "New" })).toHaveFocus();
+    await userEvent.keyboard("{ArrowDown}");
+    await expect.element(page.getByRole("menuitemcheckbox", { name: "Known" })).toHaveFocus();
+  });
+
+  test("a radio row chooses one, closes the menu, and shows the choice next time", async () => {
+    const onSort = vi.fn();
+    const screen = await render(<ChoiceHarness onSort={onSort} />);
+    const trigger = screen.getByRole("button", { name: "Sort" });
+    await openWithKeyboard(trigger);
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "Lesson" }))
+      .toHaveAttribute("aria-checked", "true");
+    await page.getByRole("menuitemradio", { name: "A–Z" }).click();
+
+    expect(onSort).toHaveBeenCalledWith("az");
+    await expect.element(page.getByRole("menu", { name: "Sort" })).not.toBeInTheDocument();
+    await openWithKeyboard(trigger);
+    await expect
+      .element(page.getByRole("menuitemradio", { name: "A–Z" }))
+      .toHaveAttribute("aria-checked", "true");
+  });
+
+  test("a radio row that does not close on click keeps the menu open for the next choice", async () => {
+    const screen = await render(<ChoiceHarness />);
+    await openWithKeyboard(screen.getByRole("button", { name: "Sort" }));
+    const added = page.getByRole("menuitemradio", { name: "Recently added" });
+    await added.click();
+
+    await expect.element(added).toHaveAttribute("aria-checked", "true");
+    await expect.element(page.getByRole("menu", { name: "Sort" })).toBeVisible();
   });
 });

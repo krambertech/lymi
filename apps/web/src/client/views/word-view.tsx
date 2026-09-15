@@ -20,7 +20,7 @@ import {
   Volume2,
   X,
 } from "lucide-react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../components/button";
 import { CardPicture } from "../components/card-picture";
 import { StateChip } from "../components/chip";
@@ -39,8 +39,9 @@ import { Field, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import type { Card, CardEvent, CardState, Review } from "../lib/api";
+import { splitForms } from "../lib/deck-list";
+import { useDesktop } from "../lib/device";
 import { modeLabel } from "../lib/review-modes";
-import { BackButton, TopBar } from "./shell";
 
 /** A write in the word's history, not a review: what changed, and who changed it. */
 export interface WordEvent {
@@ -188,9 +189,6 @@ export interface WordProps {
   hasNext?: boolean | undefined;
   onPrev?: (() => void) | undefined;
   onNext?: (() => void) | undefined;
-  /** The phone's back link, to the deck. */
-  onBack?: (() => void) | undefined;
-  /** The desktop panel's close. */
   onClose?: (() => void) | undefined;
   /** Only the field that changed. Absent, the fields are read-only. */
   onSave?: ((patch: WordPatch) => void) | undefined;
@@ -199,8 +197,10 @@ export interface WordProps {
   decks?: { id: string; name: string }[] | undefined;
   onMove?: ((deckId: string) => void) | undefined;
   onPlayAudio?: (() => void) | undefined;
-  /** A screen of its own on the phone, or the panel beside the list on desktop. */
-  variant: "page" | "panel";
+  /** The term heading's id, so a sheet or drawer holding the word can take its name. */
+  titleId?: string | undefined;
+  /** True while a field is being edited or the Move sheet is open, so the holder does not remount it. */
+  onBusyChange?: ((busy: boolean) => void) | undefined;
 }
 
 /** The FSRS memory model, or null for a state that has none yet. */
@@ -359,14 +359,14 @@ export function WordView({
   hasNext,
   onPrev,
   onNext,
-  onBack,
   onClose,
   onSave,
   onArchive,
   decks,
   onMove,
   onPlayAudio,
-  variant,
+  titleId,
+  onBusyChange,
 }: WordProps) {
   const { t, i18n } = useLingui();
   const now = new Date();
@@ -428,6 +428,11 @@ export function WordView({
   // At rest the word reads as a page. Editing is asked for, one field or all of them.
   const [editing, setEditing] = useState(false);
   const [moving, setMoving] = useState(false);
+  const forms = splitForms(card.term);
+  useEffect(() => {
+    onBusyChange?.(editing || moving);
+    return () => onBusyChange?.(false);
+  }, [editing, moving, onBusyChange]);
   const focusRef = useRef<EditableField | null>(null);
   const meaningRef = useRef<HTMLInputElement>(null);
   const exampleRef = useRef<HTMLTextAreaElement>(null);
@@ -458,6 +463,14 @@ export function WordView({
     onSave?.(patch);
   };
 
+  // Escape ends the edit the way Done does, saving through blur, and a sheet holding the word stays open.
+  const endOnEscape = (e: KeyboardEvent<HTMLElement>) => {
+    if (e.key !== "Escape") return;
+    e.stopPropagation();
+    e.currentTarget.blur();
+    setEditing(false);
+  };
+
   const source = (s: Card["meaningSource"]) =>
     s === "ai"
       ? t`AI wrote this`
@@ -469,8 +482,8 @@ export function WordView({
 
   const ai = (s: Card["meaningSource"]) => (s === "ai" ? "border-dashed border-edge-2" : "");
 
-  // The phone's page takes the shared top bar's full-size buttons; the desktop panel stays compact.
-  const size = variant === "page" ? "md" : "sm";
+  // A touch screen gets full-size targets; a pointer keeps the header compact.
+  const size = useDesktop() ? "sm" : "md";
   const controls = (
     <>
       <IconButton label={t`Previous card`} size={size} onClick={onPrev} aria-disabled={!hasPrev}>
@@ -506,8 +519,8 @@ export function WordView({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {variant === "panel" && (
-        <IconButton label={t`Close`} size="sm" onClick={onClose}>
+      {onClose && (
+        <IconButton label={t`Close`} size={size} onClick={onClose}>
           <X />
         </IconButton>
       )}
@@ -515,34 +528,27 @@ export function WordView({
   );
 
   return (
-    <article
-      className={clsx(
-        "@container flex min-w-0 flex-col gap-6",
-        variant === "page"
-          ? "px-5 pb-safe-nav pt-5 @3xl/shell:px-8 @3xl/shell:pb-12 @3xl/shell:pt-8"
-          : "",
-      )}
-    >
-      {variant === "page" ? (
-        // The article's gap would push the term further from the bar than a page title sits.
-        // The page variant is only drawn where the column is narrow, so the bar always shows with it.
-        <TopBar
-          nested
-          className="-mb-4"
-          back={<BackButton label={deckName} onClick={onBack} />}
-          actions={controls}
-        />
-      ) : (
-        <div className="flex min-h-10 items-center justify-between gap-2">
-          <span className="truncate text-sm text-muted">{deckName}</span>
-          <div className="flex items-center gap-1">{controls}</div>
-        </div>
-      )}
+    <article className="@container flex min-w-0 flex-col gap-6">
+      <div className="flex min-h-10 items-center justify-between gap-2">
+        <span className="truncate text-sm text-muted">{deckName}</span>
+        <div className="flex items-center gap-1">{controls}</div>
+      </div>
 
       <header className="grid gap-1.5">
-        <h1 className="flex min-w-0 items-center gap-3 text-3xl font-medium leading-[1.05] tracking-[-0.03em]">
+        <h1
+          id={titleId}
+          // Takes focus when a sheet or drawer opens on it, so the first stop is the word, not a control.
+          tabIndex={titleId ? -1 : undefined}
+          className="flex min-w-0 items-center gap-3 text-3xl font-medium leading-[1.05] tracking-[-0.03em] outline-none"
+        >
           <span className="min-w-0 break-words" lang={card.language ?? undefined}>
-            {card.term}
+            {forms.word}
+            {forms.forms && (
+              <span className="font-normal text-text-2">
+                {" · "}
+                {forms.forms}
+              </span>
+            )}
           </span>
           {onPlayAudio && card.language && (
             <IconButton
@@ -584,9 +590,7 @@ export function WordView({
               key={`m-${card.id}`}
               defaultValue={card.meaning ?? ""}
               onBlur={(e) => commit("meaning", card.meaning)(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Escape") setEditing(false);
-              }}
+              onKeyDown={endOnEscape}
               className={ai(card.meaningSource)}
               placeholder={t`What it means`}
             />
@@ -598,6 +602,7 @@ export function WordView({
               key={`e-${card.id}`}
               defaultValue={card.example ?? ""}
               onBlur={(e) => commit("example", card.example)(e.target.value)}
+              onKeyDown={endOnEscape}
               className={clsx("min-h-[68px]", ai(card.exampleSource))}
               placeholder={t`A sentence it lives in`}
               rows={2}
@@ -610,6 +615,7 @@ export function WordView({
               key={`n-${card.id}`}
               defaultValue={card.notes ?? ""}
               onBlur={(e) => commit("notes", card.notes)(e.target.value)}
+              onKeyDown={endOnEscape}
               placeholder={t`Anything to remember it by`}
               rows={2}
             />

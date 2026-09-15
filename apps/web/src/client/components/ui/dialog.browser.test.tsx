@@ -154,6 +154,36 @@ describe("Dialog", () => {
     },
   );
 
+  test(
+    desktop
+      ? "as a place at the end edge, is a full-height side sheet"
+      : "as a place at the end edge, still rises over the whole screen",
+    async () => {
+      await render(
+        <Dialog kind="place" defaultOpen>
+          <DialogContent placement="end" aria-labelledby="sheet-title">
+            <h2 id="sheet-title">sbrigarsi</h2>
+          </DialogContent>
+        </Dialog>,
+      );
+      const place = page.getByRole("dialog", { name: "sbrigarsi" });
+      await expect.element(place).toBeVisible();
+      const popup = place.element() as HTMLElement;
+      if (desktop) {
+        expect(popup.dataset.placement).toBe("end");
+        await expect
+          .poll(() => popup.getBoundingClientRect().right, { timeout: 5000 })
+          .toBeCloseTo(window.innerWidth, 0);
+        const box = popup.getBoundingClientRect();
+        expect(box.width).toBeCloseTo(400, 0);
+        expect(box.height).toBeCloseTo(window.innerHeight, 0);
+      } else {
+        expect(popup.dataset.slot).toBe("drawer-popup");
+        expect(popup.dataset.placement).toBeUndefined();
+      }
+    },
+  );
+
   test("is named by its title and described by its description", async () => {
     const screen = await render(<Harness />);
     await screen.getByRole("button", { name: "Sign out" }).click();

@@ -17,7 +17,8 @@ import {
 /*
  * shadcn's Dialog, in the shape of the machine: centred on a desktop, a drawer from the bottom edge
  * on a touch device, for a form and a question alike. A place, such as the streak, rises over the
- * whole screen on touch instead. Every part below renders both shapes, so a call site never
+ * whole screen on touch instead, and may stand at the end edge on a desktop as a side sheet. Every
+ * part below renders both shapes, so a call site never
  * asks which machine it is on. Lymi drops the generated corner close button: its dialogs end in
  * explicit actions. ADR 0017.
  */
@@ -103,8 +104,11 @@ function DialogContent({
   className,
   initialFocus,
   "aria-labelledby": labelledBy,
+  placement = "center",
   children,
 }: {
+  /** Where the desktop shape stands: centred, or a full-height sheet at the end edge for a place read beside the page. */
+  placement?: "center" | "end" | undefined;
   /** Dresses the centred dialog, usually its width. The drawer sizes itself, so it ignores this. */
   className?: string | undefined;
   /** Where focus lands on opening, when the first control is not the safe one. */
@@ -147,12 +151,34 @@ function DialogContent({
       </DrawerContent>
     );
   }
+  const backdrop = (
+    <DialogPrimitive.Backdrop
+      data-slot="dialog-overlay"
+      className="fixed inset-0 isolate z-(--z-backdrop) bg-scrim transition-opacity duration-200 ease-(--ease-out) data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-140"
+    />
+  );
+  if (placement === "end") {
+    return (
+      <DialogPrimitive.Portal data-slot="dialog-portal">
+        {backdrop}
+        <DialogPrimitive.Popup
+          data-slot="dialog-content"
+          data-placement="end"
+          {...focus}
+          className={cn(
+            // Slides in from the end edge over 260 ms and out in 200; under reduced motion it fades.
+            "fixed inset-y-0 end-0 z-(--z-sheet) flex w-[min(92vw,400px)] flex-col overflow-y-auto overscroll-contain bg-plate text-text shadow-[-1px_0_0_var(--edge-2)] outline-none transition-[opacity,translate] duration-260 ease-(--ease-out) rtl:shadow-[1px_0_0_var(--edge-2)] data-starting-style:translate-x-full data-ending-style:translate-x-full data-ending-style:duration-200 rtl:data-starting-style:-translate-x-full rtl:data-ending-style:-translate-x-full motion-reduce:data-starting-style:translate-x-0 motion-reduce:data-starting-style:opacity-0 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-ending-style:opacity-0",
+            className,
+          )}
+        >
+          {children}
+        </DialogPrimitive.Popup>
+      </DialogPrimitive.Portal>
+    );
+  }
   return (
     <DialogPrimitive.Portal data-slot="dialog-portal">
-      <DialogPrimitive.Backdrop
-        data-slot="dialog-overlay"
-        className="fixed inset-0 isolate z-(--z-backdrop) bg-scrim transition-opacity duration-200 ease-(--ease-out) data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-140"
-      />
+      {backdrop}
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         {...focus}

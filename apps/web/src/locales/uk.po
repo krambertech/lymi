@@ -182,11 +182,11 @@ msgstr "{due, plural, one {# на сьогодні} few {# на сьогодні
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {картка до повторення в колоді {deckName}} few {картки до повторення в колоді {deckName}} many {карток до повторення в колоді {deckName}} other {картки до повторення в колоді {deckName}}}"
 
-msgid "{due, plural, one {card due now} other {cards due now}}"
-msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
-
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {картка до повторення сьогодні} few {картки до повторення сьогодні} many {карток до повторення сьогодні} other {картки до повторення сьогодні}}"
+
+msgid "{due, plural, one {card to review now} other {cards to review now}}"
+msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {# картка чекає, коли матимеш хвилинку.} few {# картки чекають, коли матимеш хвилинку.} many {# карток чекають, коли матимеш хвилинку.} other {# картки чекає, коли матимеш хвилинку.}}"
@@ -288,6 +288,9 @@ msgstr "Сповіщення на цьому пристрої, коли є ка�
 
 msgid "A sentence it lives in"
 msgstr "Речення, у якому він живе"
+
+msgid "A–Z"
+msgstr "А–Я"
 
 msgid "About this deck"
 msgstr "Про колоду"
@@ -393,6 +396,9 @@ msgstr "Анімовані зображення не підходять. Виб�
 
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
+
+msgid "Any time"
+msgstr "Будь-коли"
 
 msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 msgstr "Будь-хто з посиланням може приєднатися й повторювати твої картки у своєму темпі. Вони не можуть змінювати картки, а ти не бачиш їхнього прогресу."
@@ -525,6 +531,9 @@ msgstr "Вибрати нове…"
 
 msgid "Choose one"
 msgstr "Вибери один варіант"
+
+msgid "Clear filters"
+msgstr "Скинути фільтри"
 
 msgid "Clear search"
 msgstr "Очистити пошук"
@@ -694,11 +703,20 @@ msgstr "Перетягни фото або рухай його клавішам�
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Перетягни, щоб посунути фото. Щоб змінити масштаб, зведи або розведи пальці чи скористайся повзунком."
 
+msgid "Due"
+msgstr "Коли повторювати"
+
 msgid "Due now"
 msgstr "Час повторити"
 
 msgid "due this week"
 msgstr "до повторення цього тижня"
+
+msgid "Due this week"
+msgstr "Повторити цього тижня"
+
+msgid "Due today"
+msgstr "Повторити сьогодні"
 
 msgid "Each block is a day. They join up when you keep going."
 msgstr "Кожен блок — один день. Якщо продовжуєш, вони з’єднуються."
@@ -742,6 +760,9 @@ msgstr "Експортувати як CSV"
 
 msgid "Export as CSV without pictures"
 msgstr "Експортувати в CSV без зображень"
+
+msgid "Filter"
+msgstr "Фільтр"
 
 msgid "For scripts and curl. An assistant signs in instead, under Connected apps."
 msgstr "Для скриптів і curl. Асистент натомість входить сам, див. «Підключені застосунки»."
@@ -897,6 +918,10 @@ msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
 msgid "Known"
+msgstr "Засвоєна"
+
+msgctxt "cards in this state"
+msgid "Known"
 msgstr "Засвоєні"
 
 msgid "Language"
@@ -906,9 +931,16 @@ msgstr "Мова"
 msgid "Language changed to {0}"
 msgstr "Нова мова: {0}"
 
+msgid "Later"
+msgstr "Пізніше"
+
 msgid "Later today"
 msgstr "Пізніше сьогодні"
 
+msgid "Learning"
+msgstr "У вивченні"
+
+msgctxt "cards in this state"
 msgid "Learning"
 msgstr "У вивченні"
 
@@ -920,6 +952,9 @@ msgstr "Вийти з повторення"
 
 msgid "Leave review or close a sheet"
 msgstr "Вийти з повторення або закрити панель"
+
+msgid "Lesson"
+msgstr "Урок"
 
 msgid "Lesson 15"
 msgstr "Урок 15"
@@ -1016,11 +1051,12 @@ msgstr "ще не використовувався"
 msgid "Never, whatever you choose"
 msgstr "Ніколи, незалежно від вибору"
 
-msgid "new"
-msgstr "нова"
-
 msgid "New"
 msgstr "Нова"
+
+msgctxt "cards in this state"
+msgid "New"
+msgstr "Нові"
 
 msgid "New card"
 msgstr "Нова картка"
@@ -1060,6 +1096,9 @@ msgstr "Жодна картка не забувається постійно"
 msgid "No cards in {0} yet"
 msgstr "У колоді {0} ще немає карток"
 
+msgid "No cards match these filters"
+msgstr "Жодна картка не підходить під ці фільтри"
+
 msgid "No cards yet"
 msgstr "Карток ще немає"
 
@@ -1078,26 +1117,17 @@ msgstr "Опису ще немає. Повторення за зображенн
 msgid "No keys yet"
 msgstr "Ключів ще немає"
 
-msgid "No Known cards in this deck"
-msgstr "У цій колоді немає засвоєних карток"
-
 msgid "No language"
 msgstr "Без мови"
 
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "Мови з такою назвою немає. Введи її тег, щоб усе одно використати."
 
-msgid "No Learning cards in this deck"
-msgstr "У цій колоді немає карток у вивченні"
-
 msgid "No lesson"
 msgstr "Без уроку"
 
 msgid "No meaning yet"
 msgstr "Значення поки немає"
-
-msgid "No New cards in this deck"
-msgstr "У цій колоді немає нових карток"
 
 msgid "No reviews yet. Each block here will be a day."
 msgstr "Повторень поки немає. Кожен блок тут позначатиме один день."
@@ -1153,8 +1183,8 @@ msgstr "На сьогодні більше нічого"
 msgid "Nothing left today."
 msgstr "На сьогодні більше нічого."
 
-msgid "Nothing matches “{q}”"
-msgstr "Нічого не знайдено за запитом «{q}»"
+msgid "Nothing matches “{query}”"
+msgstr "Нічого не знайдено за запитом «{query}»"
 
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Нічого не надано. Можеш будь-коли почати знову в {appName}."
@@ -1310,6 +1340,9 @@ msgstr "Запам’ятовування за місяцями: {series}. Ці�
 msgid "Recall by week: {series}. The schedule aims for 90%."
 msgstr "Запам’ятовування за тижнями: {series}. Ціль розкладу — 90%."
 
+msgid "Recently added"
+msgstr "Нещодавно додані"
+
 msgid "Recognised app at"
 msgstr "Розпізнаний застосунок за адресою"
 
@@ -1334,6 +1367,9 @@ msgstr "Нагадування вимкнені, доки не дозволиш 
 msgctxt "photo"
 msgid "Remove"
 msgstr "Прибрати"
+
+msgid "Remove filter: {label}"
+msgstr "Прибрати фільтр: {label}"
 
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
@@ -1517,11 +1553,21 @@ msgstr "Деякі оцінки ще не синхронізовано"
 msgid "Something went wrong. Try again from the app."
 msgstr "Щось пішло не так. Спробуй ще раз із застосунку."
 
+msgid "Sort"
+msgstr "Сортування"
+
+#. placeholder {0}: sortName[sort]
+msgid "Sort: {0}"
+msgstr "Сортування: {0}"
+
 msgid "Start review"
 msgstr "Почати повторення"
 
 msgid "Start with a deck"
 msgstr "Почни з колоди"
+
+msgid "State"
+msgstr "Стан"
 
 msgid "Stay connected"
 msgstr "Залишити підключення"
@@ -1660,14 +1706,14 @@ msgstr "Це посилання перестало працювати. Попр�
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "У цьому посиланні немає застосунку, який надіслав запит. Почни знову із застосунку."
 
+msgid "This week"
+msgstr "Цього тижня"
+
 msgid "Time"
 msgstr "Час"
 
 msgid "to hurry up"
 msgstr "поспішати"
-
-msgid "today"
-msgstr "сьогодні"
 
 msgid "Today"
 msgstr "Сьогодні"
@@ -1750,6 +1796,9 @@ msgstr "Усе додане з’являється одразу й має по�
 
 msgid "What it means"
 msgstr "Що це означає"
+
+msgid "When it’s back"
+msgstr "Коли повернеться"
 
 msgid "Which days you reviewed"
 msgstr "Дні, коли були повторення"

@@ -182,11 +182,11 @@ msgstr "{due, plural, one {# на сегодня} few {# на сегодня} ma
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {карточка к повторению в колоде {deckName}} few {карточки к повторению в колоде {deckName}} many {карточек к повторению в колоде {deckName}} other {карточки к повторению в колоде {deckName}}}"
 
-msgid "{due, plural, one {card due now} other {cards due now}}"
-msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
-
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {карточка к повторению сегодня} few {карточки к повторению сегодня} many {карточек к повторению сегодня} other {карточки к повторению сегодня}}"
+
+msgid "{due, plural, one {card to review now} other {cards to review now}}"
+msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {# карточка ждёт, когда у тебя будет минутка.} few {# карточки ждут, когда у тебя будет минутка.} many {# карточек ждут, когда у тебя будет минутка.} other {# карточки ждёт, когда у тебя будет минутка.}}"
@@ -288,6 +288,9 @@ msgstr "Уведомление на этом устройстве, когда е
 
 msgid "A sentence it lives in"
 msgstr "Предложение, в котором он живёт"
+
+msgid "A–Z"
+msgstr "А–Я"
 
 msgid "About this deck"
 msgstr "О колоде"
@@ -393,6 +396,9 @@ msgstr "Анимированные изображения не подходят.
 
 msgid "Answer: {back}"
 msgstr "Ответ: {back}"
+
+msgid "Any time"
+msgstr "В любое время"
 
 msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 msgstr "Любой, у кого есть ссылка, может присоединиться и повторять твои карточки в своём темпе. Они не могут менять карточки, а ты не видишь их прогресса."
@@ -525,6 +531,9 @@ msgstr "Выбрать новое…"
 
 msgid "Choose one"
 msgstr "Выбери один вариант"
+
+msgid "Clear filters"
+msgstr "Сбросить фильтры"
 
 msgid "Clear search"
 msgstr "Очистить поиск"
@@ -694,11 +703,20 @@ msgstr "Перетащи фото или двигай его клавишами 
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Перетащи, чтобы подвинуть фото. Чтобы изменить масштаб, сведи или разведи пальцы или используй ползунок."
 
+msgid "Due"
+msgstr "Когда повторять"
+
 msgid "Due now"
 msgstr "Пора повторить"
 
 msgid "due this week"
 msgstr "к повторению на этой неделе"
+
+msgid "Due this week"
+msgstr "Повторить на этой неделе"
+
+msgid "Due today"
+msgstr "Повторить сегодня"
 
 msgid "Each block is a day. They join up when you keep going."
 msgstr "Каждый блок — один день. Если продолжаешь, они соединяются."
@@ -742,6 +760,9 @@ msgstr "Экспортировать как CSV"
 
 msgid "Export as CSV without pictures"
 msgstr "Экспортировать в CSV без изображений"
+
+msgid "Filter"
+msgstr "Фильтр"
 
 msgid "For scripts and curl. An assistant signs in instead, under Connected apps."
 msgstr "Для скриптов и curl. Ассистент вместо этого входит сам, см. «Подключённые приложения»."
@@ -897,6 +918,10 @@ msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
 
 msgid "Known"
+msgstr "Выученная"
+
+msgctxt "cards in this state"
+msgid "Known"
 msgstr "Выученные"
 
 msgid "Language"
@@ -906,9 +931,16 @@ msgstr "Язык"
 msgid "Language changed to {0}"
 msgstr "Новый язык: {0}"
 
+msgid "Later"
+msgstr "Позже"
+
 msgid "Later today"
 msgstr "Позже сегодня"
 
+msgid "Learning"
+msgstr "В изучении"
+
+msgctxt "cards in this state"
 msgid "Learning"
 msgstr "В изучении"
 
@@ -920,6 +952,9 @@ msgstr "Выйти из повторения"
 
 msgid "Leave review or close a sheet"
 msgstr "Выйти из повторения или закрыть панель"
+
+msgid "Lesson"
+msgstr "Урок"
 
 msgid "Lesson 15"
 msgstr "Урок 15"
@@ -1016,11 +1051,12 @@ msgstr "ещё не использовался"
 msgid "Never, whatever you choose"
 msgstr "Никогда, независимо от выбора"
 
-msgid "new"
-msgstr "новая"
-
 msgid "New"
 msgstr "Новая"
+
+msgctxt "cards in this state"
+msgid "New"
+msgstr "Новые"
 
 msgid "New card"
 msgstr "Новая карточка"
@@ -1060,6 +1096,9 @@ msgstr "Ни одна карточка не забывается постоян�
 msgid "No cards in {0} yet"
 msgstr "В колоде {0} ещё нет карточек"
 
+msgid "No cards match these filters"
+msgstr "Ни одна карточка не подходит под эти фильтры"
+
 msgid "No cards yet"
 msgstr "Карточек ещё нет"
 
@@ -1078,26 +1117,17 @@ msgstr "Описания пока нет. Повторение по изобра
 msgid "No keys yet"
 msgstr "Ключей пока нет"
 
-msgid "No Known cards in this deck"
-msgstr "В этой колоде нет выученных карточек"
-
 msgid "No language"
 msgstr "Без языка"
 
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "Языка с таким названием нет. Введи его тег, чтобы всё равно использовать."
 
-msgid "No Learning cards in this deck"
-msgstr "В этой колоде нет карточек в изучении"
-
 msgid "No lesson"
 msgstr "Без урока"
 
 msgid "No meaning yet"
 msgstr "Значения пока нет"
-
-msgid "No New cards in this deck"
-msgstr "В этой колоде нет новых карточек"
 
 msgid "No reviews yet. Each block here will be a day."
 msgstr "Повторений пока нет. Каждый блок здесь будет обозначать один день."
@@ -1153,8 +1183,8 @@ msgstr "На сегодня больше ничего"
 msgid "Nothing left today."
 msgstr "На сегодня больше ничего."
 
-msgid "Nothing matches “{q}”"
-msgstr "Ничего не найдено по запросу «{q}»"
+msgid "Nothing matches “{query}”"
+msgstr "Ничего не найдено по запросу «{query}»"
 
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Ничего не было предоставлено. Можешь в любое время начать заново в {appName}."
@@ -1310,6 +1340,9 @@ msgstr "Запоминание по месяцам: {series}. Цель расп�
 msgid "Recall by week: {series}. The schedule aims for 90%."
 msgstr "Запоминание по неделям: {series}. Цель расписания — 90%."
 
+msgid "Recently added"
+msgstr "Недавно добавленные"
+
 msgid "Recognised app at"
 msgstr "Распознанное приложение по адресу"
 
@@ -1334,6 +1367,9 @@ msgstr "Напоминания выключены, пока не разреши�
 msgctxt "photo"
 msgid "Remove"
 msgstr "Убрать"
+
+msgid "Remove filter: {label}"
+msgstr "Убрать фильтр: {label}"
 
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
@@ -1517,11 +1553,21 @@ msgstr "Некоторые оценки ещё не синхронизирова
 msgid "Something went wrong. Try again from the app."
 msgstr "Что-то пошло не так. Попробуй снова из приложения."
 
+msgid "Sort"
+msgstr "Сортировка"
+
+#. placeholder {0}: sortName[sort]
+msgid "Sort: {0}"
+msgstr "Сортировка: {0}"
+
 msgid "Start review"
 msgstr "Начать повторение"
 
 msgid "Start with a deck"
 msgstr "Начни с колоды"
+
+msgid "State"
+msgstr "Состояние"
 
 msgid "Stay connected"
 msgstr "Оставить подключение"
@@ -1660,14 +1706,14 @@ msgstr "Эта ссылка перестала работать. Попроси 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "В этой ссылке нет приложения, которое отправило запрос. Начни снова из приложения."
 
+msgid "This week"
+msgstr "На этой неделе"
+
 msgid "Time"
 msgstr "Время"
 
 msgid "to hurry up"
 msgstr "торопиться"
-
-msgid "today"
-msgstr "сегодня"
 
 msgid "Today"
 msgstr "Сегодня"
@@ -1750,6 +1796,9 @@ msgstr "Всё добавленное появляется сразу и с по
 
 msgid "What it means"
 msgstr "Что это значит"
+
+msgid "When it’s back"
+msgstr "Когда вернётся"
 
 msgid "Which days you reviewed"
 msgstr "Дни, когда были повторения"

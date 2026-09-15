@@ -7,7 +7,13 @@ import { useAddCard } from "../lib/add-card";
 import { api, type Card } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
-import { cardHistoryQuery, connectedAppsQuery, deckCardsQuery, decksQuery } from "../lib/queries";
+import {
+  cardHistoryQuery,
+  connectedAppsQuery,
+  deckCardsQuery,
+  decksQuery,
+  streakQuery,
+} from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { DeckDetailView } from "../views/deck-detail-view";
 import { describeEvent } from "../views/word-view";
@@ -36,6 +42,7 @@ function DeckPage() {
   const navigate = useNavigate();
   const decks = useQuery(decksQuery);
   const cards = useQuery(deckCardsQuery(deckId));
+  const streak = useQuery(streakQuery);
   const apps = useQuery({ ...connectedAppsQuery, enabled: cards.data?.length === 0 });
   const history = useQuery({ ...cardHistoryQuery(openCardId ?? ""), enabled: !!openCardId });
   const deck = decks.data?.find((d) => d.id === deckId);
@@ -115,6 +122,7 @@ function DeckPage() {
     <DeckDetailView
       deck={deck}
       cards={cards.data}
+      streak={streak.data}
       onAdd={() => add.openCard(deckId)}
       onArchive={(id) => archive.mutate(id)}
       onReview={() => navigate({ to: "/review", search: { deck: deckId } })}

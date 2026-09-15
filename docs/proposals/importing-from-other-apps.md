@@ -1,66 +1,52 @@
 ---
-status: exploration
+status: accepted
 date: 2026-09-15
-decision: none
+decision: "issues [#227](https://github.com/krambertech/lymi/issues/227), [#228](https://github.com/krambertech/lymi/issues/228), [#229](https://github.com/krambertech/lymi/issues/229)"
 ---
 
-# Importing from Anki, Mochi and spreadsheets
+# Import from Anki and Mochi, and export
 
-A learner who already keeps vocabulary in Anki, Mochi, Quizlet or a spreadsheet should be able to bring it into Lymi without losing cards, organisation, pictures or years of review history. This explores what a genuinely good import takes. It does not decide which sources ship first, where parsing runs, or whether imported history counts toward the streak. The format facts are in [docs/import-formats.md](../import-formats.md).
+A learner brings their Anki or Mochi collection into Lymi by handing over the file their app exports, and takes everything out again in a form Anki and Mochi can read. Cards, decks, tags, pictures and review history survive the move. The first importer also lays the foundation every later source reuses, so adding one is one adapter and one guide, not another pipeline.
 
-## Why it matters
+## Decisions
 
-Import is the first thing a switcher does, and [the market proposal](market-differentiation-and-go-to-market.md) lists it as required. Every competitor imports text; only Mochi, RemNote and Noji carry review history across, and none into a calm, fixed-field card. Progress is the one thing a learner cannot rebuild by hand, so it is where Lymi can be visibly better.
+- **The server does the work.** The file goes to R2, a Cloudflare Workflow parses it and writes in chunks, and the app shows progress by polling the import. Big files exceed the request limit, so the app sends them in parts. This is a plan-level cost, and it is accepted. A Worker still has 128 MB of memory, so the collection's SQLite is held in memory while media streams from the zip; a collection past roughly 80 MB is asked to come back exported per deck.
+- **Accept whatever the app exports.** Anki `.apkg` and `.colpkg` in both container formats, Mochi `.mochi`. The learner picks or drops the file in the app; the API takes the same upload for scripts. Nothing is converted by hand first.
+- **An import is one thing.** It has a row with source, file name, status, counts and warnings, appears in Activity, and archiving it archives every card it added. Each imported card keeps its external id, so a second import of the same file updates instead of duplicating.
+- **One card shape for every source.** A source adapter detects its file, inspects it into a preview, and reads it into the common imported-card shape. One writer maps that shape onto cards, states, reviews and pictures with the duplicate rule of ADR 0004. Mochi, and later spreadsheets or a Lymi zip, add an adapter and nothing below it.
+- **Progress replays.** Each grade in the source's log runs through Lymi's scheduler, so every review row carries Lymi's memory state and there is one scheduler. Imported reviews are `source: import` with no review day: they show in Insights and light past days, and never count toward today's goal. Exported stability and difficulty are used only for a card with state but no log.
+- **Language is chosen per import**, overridable per deck in the preview. Anki has no language; Lymi needs one for duplicates, audio and enrichment.
+- **The preview tells the truth first.** Before anything is written: cards, decks, tags, pictures and reviews coming across; duplicates; what is dropped or shortened. Imported text is labelled `manual`, never `lesson` or `ai`.
+- **Export is complete.** A Lymi zip with JSON and media that Lymi itself can import back, and a legacy Anki `.apkg` with scheduling and media that Anki, Mochi, RemNote and Noji read. CSV stays for spreadsheets. Files download only through an authenticated route.
+- **Each source ships with a guide** in the public docs: how to export from that app, what carries over, what does not.
 
-## What "really good" means
+## What each source exports
 
-- **Cards look like Lymi cards.** Term, meaning, example, pronunciation and notes land in the right fields: HTML reduced to text, furigana as pronunciation, a cloze sentence as term plus example. Imported text is labelled `manual`, never `lesson` or `ai`.
-- **Nothing silently disappears.** Before anything is written, a preview counts the cards, decks, tags, pictures and reviews coming across, names what will be dropped, and lists the duplicates (ADR 0004).
-- **Progress carries.** Each Anki card's review log replays into Lymi's scheduler, so due dates and Insights match what the learner had. Mochi's remembered-or-forgot log replays as Good and Again.
-- **One import is one thing.** It has a name, a date and a count in Activity, and archiving it takes every card it brought.
-- **It runs on a phone with a 200 MB file**, with no memory or time limit surprising the learner halfway through.
+| Source | File | Content | Progress | Media |
+| --- | --- | --- | --- | --- |
+| Anki, legacy | Zip, `collection.anki21` plain SQLite, schema 11 with JSON note types; what AnkiWeb and most generators write | `notes.flds` HTML joined by `\x1f`, `tags`, `guid`; one card per template or cloze number | `revlog` per grade (ms, ease 1–4 as Lymi's grades, type) and FSRS `s`, `d` in `cards.data`, only when "Include scheduling information" was ticked | Numbered files with a JSON index |
+| Anki, current | Zip, `collection.anki21b` zstd SQLite, schema 18 with protobuf note types; Anki's default since 23.10 | Same tables | Same | zstd files with a protobuf index |
+| Mochi | Zip, `data.json` version 2 plus `attachments/` | Markdown `content` split by `---`, `fields`, `manual-tags`, nested decks by `parent-id`, `review-reverse?` | `reviews` of `date`, `due`, `interval`, `remembered?` | Attachments folder |
 
-## Confirmed facts
+Anki was not renamed. Noji is the former AnkiPro, an unrelated app whose CSV is a plain spreadsheet and whose `.ofc` is proprietary. RemNote and Language Reactor export `.apkg`, so the Anki importer receives them. Quizlet exports pasted text only, and Memrise, Knowt and Reword export nothing usable; text sources are a later adapter. No JavaScript package reads the current Anki container, so the adapter is built on `sql.js` and `fzstd` with a small protobuf decoder. Sources were read on 15 September 2026 from the Anki source tree, the AnkiDroid database wiki and Mochi's format reference.
 
-- Anki exports two containers, a legacy zip of SQLite and the zstd `anki21b` form written by default since 23.10. No npm package reads the current form in a browser; `sql.js` and `fzstd` plus a small protobuf decoder do.
-- Anki's `revlog` has Lymi's four grades with a millisecond timestamp each, and `cards.data` holds FSRS stability and difficulty, both only when the learner ticked "Include scheduling information".
-- Mochi's `.mochi` export is JSON with Markdown cards, nested decks and a per-card review list. Quizlet exports only pasted text with a chosen separator. Memrise, Knowt and Reword export nothing usable.
-- Lymi's add path batches 200 cards a call and skips duplicates. Nothing writes `reviews` but a grade, and `reviews.source` has no import value.
-- ts-fsrs `reschedule` replays a history into a card, and the dev persona seeder already writes this shape. A Worker has 128 MB of memory and a 100 MB request body.
+## Mapping
 
-## Hypotheses
+| Source | Lymi |
+| --- | --- |
+| Anki deck `Parent::Child`, Mochi nested deck | One deck per deck that holds cards, named by its path; description and chosen language on the deck |
+| Basic note | Term from the word field, meaning from the meaning field; fields matched by name pattern, corrected in the preview |
+| Reversed note types, Mochi `review-reverse?` | One card asked in both text modes; each side's log replays into its mode |
+| Cloze `{{c1::word}}` in a sentence | Term is the cloze text, example the sentence, meaning the extra field; one card per cloze number |
+| Furigana `漢字[かんじ]`, a reading field | Pronunciation |
+| HTML, Markdown | Plain text with line breaks; CSS, templates and scripts dropped |
+| First `<img>` or attachment | The card's picture, without a description, so picture modes wait for one |
+| `[sound:]`, audio attachments | Dropped and counted in the preview; Lymi generates speech. A learner-audio path is a separate proposal |
+| Tags, including `a::b` | Tags, at most 20 of 40 characters; `marked` and `leech` dropped |
+| Suspended card | Archived card; buried and filtered-deck cards are active |
+| Text past a field limit | Meaning overflow moves to notes; notes are cut and counted as shortened |
+| `remembered?` true or false | Good or Again |
 
-- Field mapping by name pattern gets the common language decks right, and the preview catches the rest.
-- Replaying history through Lymi's default parameters lands due dates within a day of Anki's for most cards; a card with hundreds of reviews may drift, and that is acceptable.
-- One "paste or drop a list" importer with separator detection covers Quizlet, Brainscape, Noji, Duocards, Lingvist and Sheets without code of their own.
+## Out of scope
 
-## Options for where the work runs
-
-| | Client parses, server stores | Worker parses | Client parses, Worker imports through a job |
-| --- | --- | --- | --- |
-| Fits | ADR 0002: extraction on the client, the server validates and persists | Would let API and MCP clients upload a file | Same as the first, plus resumable large imports |
-| Cost | WebAssembly SQLite in a lazy route chunk; the phone holds the file | Memory and CPU ceilings; R2 staging and a Workflow for anything large | An `imports` row with progress and a chunked history endpoint |
-| Loses | File upload through the API | Large collections | Nothing but the extra table |
-
-Lean: the third. A ten-year collection is hundreds of thousands of review rows, so the write must be chunked and restartable whatever parses the file, and the import row that makes it restartable also makes "archive this import" possible.
-
-## Sources in order of value
-
-1. **Anki `.apkg`**, both forms, with history and pictures. Also receives RemNote, Language Reactor and Migaku exports.
-2. **Pasted or dropped text**, CSV and TSV with header mapping. Covers Quizlet and the spreadsheet apps.
-3. **Mochi `.mochi`**, with its review list. The audience closest to Lymi's.
-
-## Smallest useful slice
-
-Anki content only: read both containers on the client, map Basic, reversed and cloze note types into cards, choose one language per import, show the preview, write through the existing add path with an import row for provenance and undo. History, pictures and the text importer follow as separate slices; pictures reuse the upload route and wait for a description before any picture mode is asked.
-
-## Open questions
-
-1. Does imported history count toward the streak, or only toward scheduling and Insights? Reviews before daily goals already count as reviewed days, so a continuous Anki habit would extend the flame. Lean: yes, recorded with `source: import`.
-2. Replay the review log through Lymi's scheduler, or trust Anki's exported stability and difficulty? Lean: replay, so every review row carries Lymi's own memory state and the scheduler stays one; use the exported state only for a card with state but no log.
-3. What happens to the native-speaker audio in decks like Kaishi? Lymi generates speech and has no learner-audio path. Lean: drop it in the first version and say so in the preview; a learner-audio path is its own proposal.
-4. Field limits: Anki fields exceed 1000 characters routinely. Truncate with a warning, or raise the meaning and notes limits?
-
-## To proceed
-
-Export one real Anki collection in both forms and one `.mochi` file, then confirm that a phone can open them and that a replayed history lands within a day of Anki's due dates. With that evidence, decide questions 1 and 2, record the schema additions (`imports`, `cards.import_id`, `reviews.source = import`) in an ADR if they prove hard to reverse, and write the plan.
+Pasted lists and spreadsheets, Noji's `.ofc`, keeping imported audio, AnkiWeb sync, and importing into a shared deck one does not own. Each is a later adapter or proposal, not a change to the foundation.

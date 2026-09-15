@@ -1,5 +1,7 @@
 # Imports
 
+Import starts from the Import group at the end of Settings, one plate with a row per app Lymi reads; `/import` redirects there. Each app has its own page, `/import/anki` and `/import/mochi`, with that app's file, export steps and guide, because the steps differ and a later source adds a row rather than another menu item. From then on every screen names the app the file came from.
+
 An import is one screen whose body follows the import's state, not a wizard: choose a file, the file on its way, the preview, the cards being written, and the end. The address holds the import, so leaving and coming back finds it where it was, and Activity lists every import and opens the same screen.
 
 The preview leads with one of the learner's own cards, drawn the way the card page draws a card, under the question **Does this card look right?** A file holds one or more kinds of note, biggest first. The kinds that together hold 95% of the notes each get their card and their own **Yes, looks right**, and a tail of two or more rare kinds folds into one line that can be opened, so a collection of many small note types asks a few questions rather than fifteen; Import checks that every kind was confirmed and says what is left, beside the button and under the card, rather than being taken away. Changing fields confirms that kind. The question is the one decision a learner cannot fix afterwards without archiving the import, so it is asked where the answer is visible.

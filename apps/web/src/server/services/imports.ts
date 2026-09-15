@@ -8,6 +8,7 @@ import {
   type ImportFailure,
   type ImportStartInput,
   newId,
+  sourceOfFileName,
 } from "@lymi/core";
 import { and, desc, eq, inArray, isNull, lt, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
@@ -16,6 +17,7 @@ import { type Db, schema } from "../db";
 import type { ImportChoices, SourceAdapter } from "../imports/adapter";
 import { anki } from "../imports/anki";
 import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
+import { mochi } from "../imports/mochi";
 import type { CardImageStorage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import {
@@ -32,7 +34,7 @@ import {
 export { archiveImport, ownedImport, restoreImport } from "./import-writer";
 
 /** Every source Lymi can import, tried in order. */
-const ADAPTERS: SourceAdapter<unknown>[] = [anki as SourceAdapter<unknown>];
+const ADAPTERS = [anki, mochi] as SourceAdapter<unknown>[];
 
 /** Notes per stored chunk: one chunk is one Workflow step and one D1 batch. */
 export const NOTES_PER_CHUNK = 500;
@@ -140,7 +142,7 @@ export async function startImport(ctx: ServiceContext, input: ImportStartInput, 
     db.insert(schema.imports).values({
       id,
       userId,
-      source: "anki",
+      source: sourceOfFileName(input.fileName),
       fileName: input.fileName,
       byteSize: input.byteSize,
       objectKey,

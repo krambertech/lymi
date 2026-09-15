@@ -10,6 +10,7 @@ export type DocPath =
   | "/docs/mobile"
   | "/docs/cards"
   | "/docs/import-from-anki"
+  | "/docs/import-from-mochi"
   | "/docs/scheduling"
   | "/docs/recipes"
   | "/docs/api"
@@ -85,6 +86,13 @@ export const PAGES: DocPage[] = [
     nav: "Import from Anki",
     title: "Import from Anki",
     blurb: "Bring your Anki decks across with their pictures, tags and review history.",
+    section: "Guides",
+  },
+  {
+    to: "/docs/import-from-mochi",
+    nav: "Import from Mochi",
+    title: "Import from Mochi",
+    blurb: "Bring your Mochi decks across with their pictures, tags and review history.",
     section: "Guides",
   },
   {

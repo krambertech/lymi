@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { BookMarked, FileUp, PenLine, Plus } from "lucide-react";
+import { BookMarked, PenLine, Plus } from "lucide-react";
 import { IconButton } from "./button";
 import {
   DropdownMenu,
@@ -17,15 +17,12 @@ import {
 export function AddMenu({
   onAddCard,
   onCreateDeck,
-  onImport,
   size = "md",
   align = "start",
   variant = "primary",
 }: {
   onAddCard: () => void;
   onCreateDeck?: (() => void) | undefined;
-  /** Opens the import screen. */
-  onImport?: (() => void) | undefined;
   size?: "sm" | "md" | undefined;
   align?: "start" | "end" | undefined;
   variant?: "primary" | "secondary" | undefined;
@@ -49,10 +46,6 @@ export function AddMenu({
         <DropdownMenuItem onClick={onCreateDeck} disabled={!onCreateDeck}>
           <BookMarked aria-hidden="true" />
           <Trans>New deck</Trans>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={onImport} disabled={!onImport}>
-          <FileUp aria-hidden="true" />
-          <Trans>Import from Anki</Trans>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

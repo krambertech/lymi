@@ -97,7 +97,7 @@ erDiagram
   imports {
     text id PK
     text user_id FK
-    text source "anki"
+    text source "anki | mochi"
     text file_name "private, never logged"
     int byte_size
     text status "uploading | inspecting | ready | importing | done | failed | cancelled"
@@ -280,7 +280,7 @@ A card has at most one active `card_images` row; a replaced picture keeps its ro
 
 ### Imports
 
-An import writes ordinary decks, cards, states and reviews, and marks what it made with `import_id` and the source's `external_id`: an Anki note's guid for a basic or reversed note, and the guid with the cloze number for each cloze card. A card whose external id the learner already has is not added again; a later import fills only its empty fields and tags and adds none of its newer log, because replaying Anki grades between the learner's Lymi grades would give one schedule two histories. A term already active in the same language is skipped under ADR 0004.
+An import writes ordinary decks, cards, states and reviews, and marks what it made with `import_id` and the source's `external_id`: an Anki note's guid for a basic or reversed note, the guid with the cloze number for each cloze card, and a Mochi card's id. A card whose external id the learner already has is not added again; a later import fills only its empty fields and tags and adds none of its newer log, because replaying a source's grades between the learner's Lymi grades would give one schedule two histories. A term already active in the same language is skipped under ADR 0004.
 
 Each imported grade replays through the scheduler in order and is stored as a `reviews` row with `source = 'import'`, no `review_day_id` and no `state_before`, so Undo refuses it. The mode's state keeps the replayed memory and takes the source's due date. A mode with a schedule and no log starts from the source's stability and difficulty; a mode the source reset stays new with its log as history. Imported rows light days in Insights and are left out of the streak, today's draw log and the goal.
 

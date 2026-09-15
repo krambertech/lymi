@@ -2,7 +2,7 @@ import { z } from "zod";
 import { LanguageTag, type Rating, ReviewModeKey } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
-export const ImportSource = z.enum(["anki"]);
+export const ImportSource = z.enum(["anki", "mochi"]);
 export type ImportSource = z.infer<typeof ImportSource>;
 
 /**
@@ -265,6 +265,13 @@ const TERM_PATTERN =
   /\b(front|word|term|expression|vocab(ulary)?|kanji|question|target|phrase)\b|単語/i;
 const SKIP_PATTERN = /\b(audio|sound|image|picture|photo|add reverse)\b/i;
 
+/** The role a field's name alone names, if any. */
+export function namedFieldRole(name: string): FieldRole | undefined {
+  if (SKIP_PATTERN.test(name)) return "skip";
+  if (TERM_PATTERN.test(name)) return "term";
+  return ROLE_PATTERNS.find(([, pattern]) => pattern.test(name))?.[0];
+}
+
 /**
  * A first guess at what each field is, by its name. A named term field wins; otherwise the
  * first field is the term. A named meaning field wins; otherwise the first unclaimed field
@@ -272,11 +279,7 @@ const SKIP_PATTERN = /\b(audio|sound|image|picture|photo|add reverse)\b/i;
  * learner corrects this in the preview.
  */
 export function guessFieldRoles(names: readonly string[]): FieldRole[] {
-  const roles: (FieldRole | undefined)[] = names.map((name) => {
-    if (SKIP_PATTERN.test(name)) return "skip";
-    if (TERM_PATTERN.test(name)) return "term";
-    return ROLE_PATTERNS.find(([, pattern]) => pattern.test(name))?.[0];
-  });
+  const roles = names.map(namedFieldRole);
   const claim = (role: FieldRole) => {
     let found = false;
     for (let i = 0; i < roles.length; i++) {
@@ -319,6 +322,14 @@ export function fieldsFromRoles(
   return fields;
 }
 
+/** The file names an import accepts: Anki's packages and Mochi's export. */
+export const IMPORT_FILE_NAME = /\.(apkg|colpkg|mochi)$/i;
+
+/** The source a file name suggests before the file is read; inspection decides. */
+export function sourceOfFileName(fileName: string): ImportSource {
+  return /\.mochi$/i.test(fileName) ? "mochi" : "anki";
+}
+
 /** The largest file an import accepts. A collection past the database limit is refused on inspection. */
 export const MAX_IMPORT_BYTES = 1024 * 1024 * 1024;
 
@@ -331,7 +342,7 @@ export const ImportStartInput = z.object({
     .trim()
     .min(1)
     .max(255)
-    .regex(/\.(apkg|colpkg)$/i, "Choose the .apkg or .colpkg file Anki exports."),
+    .regex(IMPORT_FILE_NAME, "Choose the .apkg, .colpkg or .mochi file Anki or Mochi exports."),
   byteSize: z
     .number()
     .int()
@@ -468,6 +479,9 @@ export const ImportPreviewOut = ImportCounts.extend({
     )
     .meta({ description: "Up to three cards per note type key, as they would arrive" }),
   tags: z.number().int().meta({ description: "Distinct tags on the new cards" }),
+  addedByNoteType: z
+    .record(z.string(), z.number().int())
+    .meta({ description: "New cards per note type key" }),
   audio: z.number().int(),
   unsupported: z.number().int(),
 }).meta({ id: "ImportPreview" });

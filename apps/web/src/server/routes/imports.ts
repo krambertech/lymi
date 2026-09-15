@@ -61,7 +61,7 @@ imports.post(
   describe({
     tags: ["Imports"],
     summary: "Start an import",
-    description: `Needs the write scope. Accepts the .apkg or .colpkg file Anki exports, up to ${MAX_IMPORT_BYTES / 1024 / 1024} MB. ${FLOW}`,
+    description: `Needs the write scope. Accepts the .apkg or .colpkg file Anki exports or the .mochi file Mochi exports, up to ${MAX_IMPORT_BYTES / 1024 / 1024} MB. ${FLOW}`,
     ok: { status: 201, schema: ImportOut, description: "The import, waiting for its file" },
     errors: [400],
   }),

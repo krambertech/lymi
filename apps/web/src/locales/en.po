@@ -57,6 +57,14 @@ msgstr "{0, plural, one {# card from an earlier import was updated.} other {# ca
 msgid "{0, plural, one {# card has text that’s too long, so part of it moves to notes or is cut.} other {# cards have text that’s too long, so part of it moves to notes or is cut.}}"
 msgstr "{0, plural, one {# card has text that’s too long, so part of it moves to notes or is cut.} other {# cards have text that’s too long, so part of it moves to notes or is cut.}}"
 
+#. placeholder {0}: preview.skipped
+msgid "{0, plural, one {# card is left out: it has no term.} other {# cards are left out: they have no term.}}"
+msgstr "{0, plural, one {# card is left out: it has no term.} other {# cards are left out: they have no term.}}"
+
+#. placeholder {0}: preview.archived
+msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
+msgstr "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
+
 #. placeholder {0}: deck.cards
 #. placeholder {0}: deck.total
 #. placeholder {0}: s.total
@@ -183,12 +191,20 @@ msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last s
 msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 
+#. placeholder {0}: SOURCE_NAMES[item.source]
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: item.fileName
+#. placeholder {1}: date.format(new Date(item.createdAt))
 #. placeholder {1}: fileSize(item.byteSize, i18n.locale)
 #. placeholder {1}: item.next
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
+
+#. placeholder {0}: SOURCE_NAMES[item.source]
+#. placeholder {1}: date.format(new Date(item.createdAt))
+#. placeholder {2}: item.counts?.added ?? 0
+msgid "{0} · {1} · {2, plural, one {# card added} other {# cards added}}"
+msgstr "{0} · {1} · {2, plural, one {# card added} other {# cards added}}"
 
 #. placeholder {0}: item.fileName
 msgid "{0} · {date}"
@@ -259,6 +275,9 @@ msgstr "{added, plural, one {# card was added before the import stopped.} other 
 
 msgid "{added, plural, one {Import # card} other {Import # cards}}"
 msgstr "{added, plural, one {Import # card} other {Import # cards}}"
+
+msgid "{app} doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
+msgstr "{app} doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
 
 msgid "{appName} is connected"
 msgstr "{appName} is connected"
@@ -440,6 +459,9 @@ msgstr "{name} is over {where}."
 msgid "{nextName} is ready"
 msgstr "{nextName} is ready"
 
+msgid "{oneSided, plural, one {# card has no --- line, so it comes across with a term and no meaning.} other {# cards have no --- line, so they come across with a term and no meaning.}}"
+msgstr "{oneSided, plural, one {# card has no --- line, so it comes across with a term and no meaning.} other {# cards have no --- line, so they come across with a term and no meaning.}}"
+
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 
@@ -480,6 +502,12 @@ msgstr "30 days"
 
 msgid "90 days"
 msgstr "90 days"
+
+msgid "A .mochi file from Mochi"
+msgstr "A .mochi file from Mochi"
+
+msgid "A .mochi file, up to 1 GB. You can also drop it here."
+msgstr "A .mochi file, up to 1 GB. You can also drop it here."
 
 msgid "a connected app"
 msgstr "a connected app"
@@ -625,6 +653,9 @@ msgstr "Also adds, edits and archives them."
 msgid "Always"
 msgstr "Always"
 
+msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
+msgstr "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
+
 msgid "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
 msgstr "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
 
@@ -636,18 +667,6 @@ msgstr "an app with no address"
 
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Animated images can’t be used. Choose a still image."
-
-#. placeholder {0}: date.format(new Date(item.createdAt))
-msgid "Anki · {0}"
-msgstr "Anki · {0}"
-
-#. placeholder {0}: date.format(new Date(item.createdAt))
-#. placeholder {1}: item.counts?.added ?? 0
-msgid "Anki · {0} · {1, plural, one {# card added} other {# cards added}}"
-msgstr "Anki · {0} · {1, plural, one {# card added} other {# cards added}}"
-
-msgid "Anki doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
-msgstr "Anki doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to find words you already have and to say words out loud."
 
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
@@ -669,6 +688,9 @@ msgstr "API key for {name}"
 
 msgid "API keys"
 msgstr "API keys"
+
+msgid "Apps you can import from"
+msgstr "Apps you can import from"
 
 msgid "Archive"
 msgstr "Archive"
@@ -779,11 +801,14 @@ msgstr "Both of the above, one card at a time."
 msgid "Both ways"
 msgstr "Both ways"
 
-msgid "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and Anki stays as it is."
-msgstr "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and Anki stays as it is."
+msgid "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and {app} stays as it is."
+msgstr "Bring your decks across with their pictures, tags and review history. Your cards keep the due dates they had, and {app} stays as it is."
 
-msgid "Bring your decks with their pictures and review history."
-msgstr "Bring your decks with their pictures and review history."
+msgid "Bring your decks from Anki or Mochi with their review history."
+msgstr "Bring your decks from Anki or Mochi with their review history."
+
+msgid "Bring your decks from another app with their pictures, tags and review history. The other app stays as it is."
+msgstr "Bring your decks from another app with their pictures, tags and review history. The other app stays as it is."
 
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Brings back every card this import added and the decks it made."
@@ -837,8 +862,8 @@ msgstr "Cards from Marco’s Tuesday lessons."
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
 
-msgid "Cards keep the due dates they had in Anki."
-msgstr "Cards keep the due dates they had in Anki."
+msgid "Cards keep the due dates they had in {app}."
+msgstr "Cards keep the due dates they had in {app}."
 
 msgid "Cards that came into your decks from outside the app."
 msgstr "Cards that came into your decks from outside the app."
@@ -916,17 +941,23 @@ msgstr "Choose one"
 msgid "Choose the .apkg or .colpkg file Anki exports."
 msgstr "Choose the .apkg or .colpkg file Anki exports."
 
+msgid "Choose the .mochi file Mochi exports."
+msgstr "Choose the .mochi file Mochi exports."
+
 msgid "Choose the file again"
 msgstr "Choose the file again"
 
-msgid "Choose the file you exported from Anki"
-msgstr "Choose the file you exported from Anki"
+msgid "Choose the file you exported from {app}"
+msgstr "Choose the file you exported from {app}"
 
 msgid "Choose what each Anki field becomes on a Lymi card. One field is the term."
 msgstr "Choose what each Anki field becomes on a Lymi card. One field is the term."
 
-msgid "Choose your Anki file"
-msgstr "Choose your Anki file"
+msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
+msgstr "Choose what each Mochi field becomes on a Lymi card. One field is the term."
+
+msgid "Choose your {app} file"
+msgstr "Choose your {app} file"
 
 msgid "Clear"
 msgstr "Clear"
@@ -1195,6 +1226,9 @@ msgstr "Edit series"
 msgid "Edited {list}"
 msgstr "Edited {list}"
 
+msgid "Empty in the first card"
+msgstr "Empty in the first card"
+
 msgid "Empty in the first note"
 msgstr "Empty in the first note"
 
@@ -1231,22 +1265,25 @@ msgstr "Export as CSV"
 msgid "Export as CSV without pictures"
 msgstr "Export as CSV without pictures"
 
+msgid "Export it again from {app}, then choose the new file."
+msgstr "Export it again from {app}, then choose the new file."
+
 msgid "Export it again from Anki as an Anki Deck Package (.apkg), then choose that file."
 msgstr "Export it again from Anki as an Anki Deck Package (.apkg), then choose that file."
 
-msgid "Export it again from Anki, then choose the new file."
-msgstr "Export it again from Anki, then choose the new file."
+msgid "Export it again from Mochi as a .mochi file, then choose that file."
+msgstr "Export it again from Mochi as a .mochi file, then choose that file."
 
 msgid "Export one deck at a time, or export again without media."
 msgstr "Export one deck at a time, or export again without media."
 
-msgid "Exporting from Anki"
-msgstr "Exporting from Anki"
+msgid "Exporting from {app}"
+msgstr "Exporting from {app}"
 
 msgid "Fewer fields"
 msgstr "Fewer fields"
 
-#. placeholder {0}: type.name
+#. placeholder {0}: noteTypeName(type, i18n)
 msgid "Fields of {0}"
 msgstr "Fields of {0}"
 
@@ -1280,6 +1317,9 @@ msgstr "Forgotten {SLIPPING_LAPSES} or more times"
 
 msgid "From the lesson"
 msgstr "From the lesson"
+
+msgid "Front and back"
+msgstr "Front and back"
 
 msgid "Getting a card ready…"
 msgstr "Getting a card ready…"
@@ -1362,14 +1402,20 @@ msgstr "How you are asked"
 msgid "Identified by"
 msgstr "Identified by"
 
+msgid "Import"
+msgstr "Import"
+
 msgid "Import archived"
 msgstr "Import archived"
 
 msgid "Import cancelled"
 msgstr "Import cancelled"
 
-msgid "Import from Anki"
-msgstr "Import from Anki"
+msgid "Import cards"
+msgstr "Import cards"
+
+msgid "Import from {app}"
+msgstr "Import from {app}"
 
 msgid "Importing"
 msgstr "Importing"
@@ -1380,11 +1426,17 @@ msgstr "Importing your cards"
 msgid "Imports"
 msgstr "Imports"
 
-msgid "Imports from Anki appear here, with what each one added."
-msgstr "Imports from Anki appear here, with what each one added."
+msgid "Imports from Anki and Mochi appear here, with what each one added."
+msgstr "Imports from Anki and Mochi appear here, with what each one added."
 
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
+
+msgid "In Mochi, export one deck at a time instead of everything."
+msgstr "In Mochi, export one deck at a time instead of everything."
+
+msgid "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
+msgstr "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
 
 msgid "Insights"
 msgstr "Insights"
@@ -1899,6 +1951,9 @@ msgstr "One after another, when you start them"
 msgid "One card is ready"
 msgstr "One card is ready"
 
+msgid "One side only"
+msgstr "One side only"
+
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
 
@@ -2231,6 +2286,9 @@ msgstr "Save photo"
 msgid "Save series"
 msgstr "Save series"
 
+msgid "Save the .mochi file, then choose it here."
+msgstr "Save the .mochi file, then choose it here."
+
 msgid "Save time"
 msgstr "Save time"
 
@@ -2385,6 +2443,9 @@ msgstr "Some grades haven’t synced"
 
 msgid "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
 msgstr "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
+
+msgid "Something went wrong? Read the guide"
+msgstr "Something went wrong? Read the guide"
 
 msgid "Something went wrong. Try again from the app."
 msgstr "Something went wrong. Try again from the app."
@@ -2580,14 +2641,17 @@ msgstr "This collection is too large to import at once"
 msgid "This deck is archived"
 msgstr "This deck is archived"
 
+msgid "This file has no review history, so every card starts as new."
+msgstr "This file has no review history, so every card starts as new."
+
 msgid "This file has no review history, so every card starts as new. To keep your progress, export again with Include Scheduling Information ticked."
 msgstr "This file has no review history, so every card starts as new. To keep your progress, export again with Include Scheduling Information ticked."
 
 msgid "This file is damaged"
 msgstr "This file is damaged"
 
-msgid "This file is empty. Export it again from Anki."
-msgstr "This file is empty. Export it again from Anki."
+msgid "This file is empty. Export it again from {app}."
+msgstr "This file is empty. Export it again from {app}."
 
 msgid "This file is larger than 1 GB. Export one deck at a time."
 msgstr "This file is larger than 1 GB. Export one deck at a time."
@@ -2621,6 +2685,9 @@ msgstr "This week"
 
 msgid "Time"
 msgstr "Time"
+
+msgid "To bring every deck at once, open <0>Settings</0> and choose <1>Export everything</1> instead."
+msgstr "To bring every deck at once, open <0>Settings</0> and choose <1>Export everything</1> instead."
 
 msgid "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
 msgstr "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."

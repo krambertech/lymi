@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import { createContext, type ReactNode, useContext, useMemo, useState } from "react";
 
 interface AddCard {
@@ -6,8 +5,6 @@ interface AddCard {
   openCard: (deckId?: string, opts?: { sectionId?: string | undefined }) => void;
   /** Open the new-deck field. */
   openDeck: () => void;
-  /** Go to the import screen, the third thing the plus adds. */
-  openImport: () => void;
   close: (expected?: "card" | "deck") => void;
   /** What is open: nothing, the capture sheet, or the new-deck field. */
   open: "card" | "deck" | null;
@@ -25,7 +22,6 @@ const Ctx = createContext<AddCard | null>(null);
 export function AddCardProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState<"card" | "deck" | null>(null);
   const [deckId, setDeckId] = useState<string | undefined>(undefined);
-  const navigate = useNavigate();
   const [sectionId, setSectionId] = useState<string | undefined>(undefined);
 
   const value = useMemo<AddCard>(
@@ -43,14 +39,10 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
         setSectionId(undefined);
         setOpen("deck");
       },
-      openImport: () => {
-        setOpen(null);
-        void navigate({ to: "/import" });
-      },
       close: (expected) =>
         setOpen((current) => (expected && current !== expected ? current : null)),
     }),
-    [open, deckId, sectionId, navigate],
+    [open, deckId, sectionId],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

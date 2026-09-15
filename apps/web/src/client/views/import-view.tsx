@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { MAX_IMPORT_BYTES } from "@lymi/core";
+import { type ImportSource, MAX_IMPORT_BYTES } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -22,6 +22,7 @@ import {
   LanguagesDialog,
   languagesLine,
   type NoteType,
+  SOURCE_NAMES,
   type Summary,
 } from "../components/import-parts";
 import { Progress } from "../components/progress";
@@ -31,7 +32,8 @@ import { splitNoteTypes } from "../lib/import-note-types";
 import type { UploadState } from "../lib/import-uploads";
 import { Page, PageHeader } from "./shell";
 
-const ACCEPT = ".apkg,.colpkg";
+const ACCEPT: Record<ImportSource, string> = { anki: ".apkg,.colpkg", mochi: ".mochi" };
+const FILE_NAME: Record<ImportSource, RegExp> = { anki: /\.(apkg|colpkg)$/i, mochi: /\.mochi$/i };
 
 function Shell({
   title,
@@ -53,14 +55,16 @@ function Shell({
   );
 }
 
-/** Where an import starts: one file, and how to get it out of Anki. */
+/** Where an import from one app starts: the file, and how to get it out of that app. */
 export function ImportStartView({
+  source,
   onFile,
   pending,
   error,
   guideUrl,
   back,
 }: {
+  source: ImportSource;
   onFile: (file: File) => void;
   pending?: boolean | undefined;
   error?: string | undefined;
@@ -72,15 +76,18 @@ export function ImportStartView({
   const [over, setOver] = useState(false);
   const [refused, setRefused] = useState<string | null>(null);
   const hintId = useId();
+  const app = SOURCE_NAMES[source];
   const choose = (file: File | undefined) => {
     if (!file) return;
     // Checked before anything is sent, with the same limits the server applies.
-    const problem = !/\.(apkg|colpkg)$/i.test(file.name)
-      ? t`Choose the .apkg or .colpkg file Anki exports.`
+    const problem = !FILE_NAME[source].test(file.name)
+      ? source === "mochi"
+        ? t`Choose the .mochi file Mochi exports.`
+        : t`Choose the .apkg or .colpkg file Anki exports.`
       : file.size > MAX_IMPORT_BYTES
         ? t`This file is larger than 1 GB. Export one deck at a time.`
         : file.size === 0
-          ? t`This file is empty. Export it again from Anki.`
+          ? t`This file is empty. Export it again from ${app}.`
           : null;
     setRefused(problem);
     if (!problem) onFile(file);
@@ -88,16 +95,16 @@ export function ImportStartView({
   const message = refused ?? error;
 
   return (
-    <Shell title={t`Import from Anki`} back={back}>
+    <Shell title={t`Import from ${app}`} back={back}>
       <p className="-mt-4 max-w-[60ch] text-md text-text-2 text-pretty">
         <Trans>
           Bring your decks across with their pictures, tags and review history. Your cards keep the
-          due dates they had, and Anki stays as it is.
+          due dates they had, and {app} stays as it is.
         </Trans>
       </p>
 
       <section
-        aria-label={t`Choose your Anki file`}
+        aria-label={t`Choose your ${app} file`}
         onDragOver={(e) => {
           e.preventDefault();
           setOver(true);
@@ -121,16 +128,20 @@ export function ImportStartView({
         </span>
         <div className="grid gap-0.5">
           <h2 className="text-lg font-medium text-balance">
-            <Trans>Choose the file you exported from Anki</Trans>
+            <Trans>Choose the file you exported from {app}</Trans>
           </h2>
           <p id={hintId} className="text-base text-muted">
-            <Trans>An .apkg or .colpkg file, up to 1 GB. You can also drop it here.</Trans>
+            {source === "mochi" ? (
+              <Trans>A .mochi file, up to 1 GB. You can also drop it here.</Trans>
+            ) : (
+              <Trans>An .apkg or .colpkg file, up to 1 GB. You can also drop it here.</Trans>
+            )}
           </p>
         </div>
         <input
           ref={input}
           type="file"
-          accept={ACCEPT}
+          accept={ACCEPT[source]}
           className="sr-only"
           tabIndex={-1}
           aria-hidden="true"
@@ -156,29 +167,18 @@ export function ImportStartView({
 
       <section aria-labelledby="export-steps" className="grid gap-3">
         <h2 id="export-steps" className="text-md font-medium">
-          <Trans>Exporting from Anki</Trans>
+          <Trans>Exporting from {app}</Trans>
         </h2>
         <ol className="grid gap-3 text-base text-text-2">
-          {[
-            <Trans key="1">
-              In Anki on a computer, choose <strong className="font-medium text-text">File</strong>,
-              then <strong className="font-medium text-text">Export</strong>.
-            </Trans>,
-            <Trans key="2">
-              Choose <strong className="font-medium text-text">Anki Deck Package</strong>, and tick{" "}
-              <strong className="font-medium text-text">Include Scheduling Information</strong> and{" "}
-              <strong className="font-medium text-text">Include Media</strong>.
-            </Trans>,
-            <Trans key="3">Press Export, save the file, then choose it here.</Trans>,
-          ].map((step, i) => (
-            <li key={step.key} className="grid grid-cols-[26px_1fr] gap-3">
+          {(source === "mochi" ? MOCHI_STEPS : ANKI_STEPS).map((step, i) => (
+            <li key={step.id} className="grid grid-cols-[26px_1fr] gap-3">
               <span
                 aria-hidden="true"
                 className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
               >
                 {i + 1}
               </span>
-              <span className="pt-0.5 text-pretty">{step}</span>
+              <span className="pt-0.5 text-pretty">{step.node}</span>
             </li>
           ))}
         </ol>
@@ -186,12 +186,62 @@ export function ImportStartView({
           href={guideUrl}
           className="justify-self-start text-base font-medium text-text underline underline-offset-4"
         >
-          <Trans>On a phone, or something went wrong? Read the guide</Trans>
+          {source === "mochi" ? (
+            <Trans>Something went wrong? Read the guide</Trans>
+          ) : (
+            <Trans>On a phone, or something went wrong? Read the guide</Trans>
+          )}
         </a>
       </section>
     </Shell>
   );
 }
+
+const ANKI_STEPS = [
+  {
+    id: "menu",
+    node: (
+      <Trans>
+        In Anki on a computer, choose <strong className="font-medium text-text">File</strong>, then{" "}
+        <strong className="font-medium text-text">Export</strong>.
+      </Trans>
+    ),
+  },
+  {
+    id: "options",
+    node: (
+      <Trans>
+        Choose <strong className="font-medium text-text">Anki Deck Package</strong>, and tick{" "}
+        <strong className="font-medium text-text">Include Scheduling Information</strong> and{" "}
+        <strong className="font-medium text-text">Include Media</strong>.
+      </Trans>
+    ),
+  },
+  { id: "save", node: <Trans>Press Export, save the file, then choose it here.</Trans> },
+];
+
+const MOCHI_STEPS = [
+  {
+    id: "deck",
+    node: (
+      <Trans>
+        In Mochi, open a deck, open its <strong className="font-medium text-text">…</strong> menu
+        and choose <strong className="font-medium text-text">Export deck</strong>.
+      </Trans>
+    ),
+  },
+  {
+    id: "everything",
+    node: (
+      <Trans>
+        To bring every deck at once, open{" "}
+        <strong className="font-medium text-text">Settings</strong> and choose{" "}
+        <strong className="font-medium text-text">Export everything</strong> instead.
+      </Trans>
+    ),
+  },
+  { id: "save", node: <Trans>Save the .mochi file, then choose it here.</Trans> },
+];
 
 /** Uploading, reading, importing: a file on its way, with what the learner may do meanwhile. */
 export function ImportWorkingView({
@@ -215,10 +265,11 @@ export function ImportWorkingView({
   const input = useRef<HTMLInputElement>(null);
   const [refused, setRefused] = useState<string | null>(null);
   const sub = t`${item.fileName} · ${fileSize(item.byteSize, i18n.locale)}`;
+  const app = SOURCE_NAMES[item.source];
 
   if (item.status === "uploading" && !upload) {
     return (
-      <Shell title={t`Import from Anki`} sub={sub} back={back}>
+      <Shell title={t`Import from ${app}`} sub={sub} back={back}>
         <section className="edge grid gap-3 rounded-xl bg-plate p-5">
           <h2 className="text-lg font-medium">
             <Trans>The upload stopped part way</Trans>
@@ -229,7 +280,7 @@ export function ImportWorkingView({
           <input
             ref={input}
             type="file"
-            accept={ACCEPT}
+            accept={ACCEPT[item.source]}
             className="sr-only"
             tabIndex={-1}
             aria-hidden="true"
@@ -285,7 +336,7 @@ export function ImportWorkingView({
         : t`This takes a few seconds for most files. Nothing is added to your decks yet.`;
 
   return (
-    <Shell title={t`Import from Anki`} sub={sub} back={back}>
+    <Shell title={t`Import from ${app}`} sub={sub} back={back}>
       <section className="edge grid gap-3 rounded-xl bg-plate p-5" aria-live="polite">
         <h2 className="text-lg font-medium">{heading}</h2>
         {value === null ? (
@@ -414,6 +465,9 @@ export function ImportPreviewView({
     (d) => (choices.languages[d.key] ?? null) === null,
   ).length;
   const added = preview?.added ?? 0;
+  const app = SOURCE_NAMES[item.source];
+  // New Mochi cards with no side break; the adapter names their kind by this key.
+  const oneSided = preview?.addedByNoteType["content:one"] ?? 0;
 
   const check = (key: string) =>
     setChecked((current) => {
@@ -425,11 +479,12 @@ export function ImportPreviewView({
 
   return (
     <Shell
-      title={t`Import from Anki`}
+      title={t`Import from ${app}`}
       sub={t`${item.fileName} · ${fileSize(item.byteSize, i18n.locale)}`}
       back={back}
     >
       <CardCheck
+        source={item.source}
         noteTypes={noteTypes}
         samples={preview?.samples}
         loading={previewLoading}
@@ -472,7 +527,7 @@ export function ImportPreviewView({
             {preview.reviews > 0 ? (
               <>
                 <Line tone="good">
-                  <Trans>Cards keep the due dates they had in Anki.</Trans>
+                  <Trans>Cards keep the due dates they had in {app}.</Trans>
                 </Line>
                 <Line tone="good">
                   <Trans>
@@ -481,12 +536,16 @@ export function ImportPreviewView({
                   </Trans>
                 </Line>
               </>
-            ) : (
+            ) : summary.reviews > 0 ? null : (
               <Line tone="skip">
-                <Trans>
-                  This file has no review history, so every card starts as new. To keep your
-                  progress, export again with Include Scheduling Information ticked.
-                </Trans>
+                {item.source === "mochi" ? (
+                  <Trans>This file has no review history, so every card starts as new.</Trans>
+                ) : (
+                  <Trans>
+                    This file has no review history, so every card starts as new. To keep your
+                    progress, export again with Include Scheduling Information ticked.
+                  </Trans>
+                )}
               </Line>
             )}
             {preview.pictures > 0 && (
@@ -537,10 +596,15 @@ export function ImportPreviewView({
             )}
             {preview.archived > 0 && (
               <Line tone="skip">
-                {plural(preview.archived, {
-                  one: "# suspended card arrives archived.",
-                  other: "# suspended cards arrive archived.",
-                })}
+                {item.source === "mochi"
+                  ? plural(preview.archived, {
+                      one: "# card you archived in Mochi arrives archived.",
+                      other: "# cards you archived in Mochi arrive archived.",
+                    })
+                  : plural(preview.archived, {
+                      one: "# suspended card arrives archived.",
+                      other: "# suspended cards arrive archived.",
+                    })}
               </Line>
             )}
             {preview.shortened > 0 && (
@@ -560,12 +624,26 @@ export function ImportPreviewView({
                 })}
               </Line>
             )}
+            {oneSided > 0 && (
+              <Line tone="skip">
+                {plural(oneSided, {
+                  one: "# card has no --- line, so it comes across with a term and no meaning.",
+                  other:
+                    "# cards have no --- line, so they come across with a term and no meaning.",
+                })}
+              </Line>
+            )}
             {preview.unsupported + preview.skipped > 0 && (
               <Line tone="skip">
-                {plural(preview.unsupported + preview.skipped, {
-                  one: "# note is left out: it’s image occlusion or has no term.",
-                  other: "# notes are left out: they’re image occlusion or have no term.",
-                })}
+                {item.source === "mochi"
+                  ? plural(preview.skipped, {
+                      one: "# card is left out: it has no term.",
+                      other: "# cards are left out: they have no term.",
+                    })
+                  : plural(preview.unsupported + preview.skipped, {
+                      one: "# note is left out: it’s image occlusion or has no term.",
+                      other: "# notes are left out: they’re image occlusion or have no term.",
+                    })}
               </Line>
             )}
           </ul>
@@ -651,6 +729,7 @@ export function ImportPreviewView({
       </div>
 
       <FieldsDialog
+        source={item.source}
         key={fieldsFor ? `fields-${fieldsFor.key}` : "fields"}
         type={fieldsFor}
         roles={fieldsFor ? (choices.roles[fieldsFor.key] ?? fieldsFor.roles) : undefined}
@@ -663,6 +742,7 @@ export function ImportPreviewView({
         }}
       />
       <LanguagesDialog
+        source={item.source}
         key={languagesOpen ? "languages-open" : "languages"}
         decks={summary.decks}
         languages={choices.languages}
@@ -701,8 +781,9 @@ export function ImportDoneView({
     timeStyle: "short",
   }).format(new Date(item.finishedAt ?? item.updatedAt));
   const archived = !!item.archivedAt;
+  const app = SOURCE_NAMES[item.source];
   return (
-    <Shell title={t`Import from Anki`} sub={t`${item.fileName} · ${date}`} back={back}>
+    <Shell title={t`Import from ${app}`} sub={t`${item.fileName} · ${date}`} back={back}>
       <section className="edge grid gap-4 rounded-xl bg-plate p-5">
         <div className="grid gap-1">
           <h2 className="text-xl font-medium text-balance">
@@ -834,9 +915,10 @@ export function ImportStoppedView({
 }) {
   const { t, i18n } = useLingui();
   const added = item.counts?.added ?? 0;
-  const copy = failureCopy(item.failure);
+  const copy = failureCopy(item.failure, item.source);
+  const app = SOURCE_NAMES[item.source];
   return (
-    <Shell title={t`Import from Anki`} sub={item.fileName} back={back}>
+    <Shell title={t`Import from ${app}`} sub={item.fileName} back={back}>
       {item.status === "cancelled" ? (
         <ErrorState
           title={t`Import cancelled`}

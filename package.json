@@ -2,7 +2,7 @@
   "name": "lymi",
   "private": true,
   "version": "0.0.1",
-  "license": "FSL-1.1-MIT",
+  "license": "AGPL-3.0-only",
   "description": "Vocabulary app with a storm lantern.",
   "packageManager": "pnpm@10.16.1",
   "engines": {

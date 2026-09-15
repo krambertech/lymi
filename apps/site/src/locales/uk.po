@@ -39,8 +39,14 @@ msgstr "{0, plural, one {# розділ} few {# розділи} many {# розд
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
 
+msgid "{cards, plural, one {card} other {cards}}"
+msgstr "{cards, plural, one {картка} few {картки} many {карток} other {картки}}"
+
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {Приєднався # учень} few {Приєдналися # учні} many {Приєдналося # учнів} other {Приєдналося # учня}}"
+
+msgid "{decks, plural, one {deck} other {decks}}"
+msgstr "{decks, plural, one {колода} few {колоди} many {колод} other {колоди}}"
 
 msgid "{known}% known"
 msgstr "Засвоєно {known}%"
@@ -50,6 +56,12 @@ msgstr "{learners, plural, one {# учень} few {# учні} many {# учні�
 
 msgid "{learners, plural, one {Reached # learner} other {Reached all # learners}}"
 msgstr "{learners, plural, one {Доставлено # учню} few {Доставлено всім # учням} many {Доставлено всім # учням} other {Доставлено всім # учням}}"
+
+msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
+msgstr "{pictures, plural, one {# картка переноситься з картинкою.} few {# картки переносяться з картинками.} many {# карток переносяться з картинками.} other {# картки переносяться з картинками.}}"
+
+msgid "{reviews, plural, one {past review} other {past reviews}}"
+msgstr "{reviews, plural, one {минуле повторення} few {минулі повторення} many {минулих повторень} other {минулого повторення}}"
 
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
@@ -360,6 +372,9 @@ msgstr "Карткою. Дякую!"
 msgid "Cards in"
 msgstr "Мова карток"
 
+msgid "Cards keep the due dates they had in {app}."
+msgstr "Картки збережуть дати повторення, які мали в {app}."
+
 msgid "Catching up with a friend"
 msgstr "Коротка розмова з подругою"
 
@@ -500,6 +515,9 @@ msgstr "Картки за мене пише AI?"
 
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Зробити двічі — те саме, що зробити один раз"
+
+msgid "Don’t start from scratch."
+msgstr "Не починай з нуля."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
@@ -811,6 +829,12 @@ msgstr "Умовний графік пам’яті за тридцять дні
 msgid "Illustration only. Your review timing adapts to what you remember."
 msgstr "Це умовна схема. Lymi підбирає час для кожної картки за твоїми відповідями."
 
+msgid "Import"
+msgstr "Імпорт"
+
+msgid "Import your flashcards from Anki or Mochi. Decks, pictures and review history come too, so nothing you’ve learned starts over."
+msgstr "Імпортуй свої флеш-картки з Anki чи Mochi. Колоди, картинки й історія повторень перенесуться теж, тож вивчене не доведеться починати спочатку."
+
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В іспанському барі каву просять «поставити»."
 
@@ -1024,14 +1048,14 @@ msgstr "Lymi для викладачів · Одна колода на всю г
 msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 msgstr "У Lymi є публічний API. Додай слово через швидку команду на телефоні, перенеси список із таблиці або покажи на своєму сайті, що пора повторити."
 
-msgid "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
-msgstr "У Lymi є публічний API. Додавай картки через швидку команду на телефоні чи з таблиці або показуй на своєму сайті, що пора повторити."
-
 msgid "Lymi home"
 msgstr "Головна сторінка Lymi"
 
-msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
-msgstr "Lymi — застосунок із флеш-картками та інтервальним повторенням. Додай слово чи термін, AI допише значення, а картка повернеться, перш ніж ти забудеш. Безкоштовно в беті."
+msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
+msgstr "Lymi — застосунок із флеш-картками та інтервальним повторенням, з відкритим кодом. Додай слово чи термін, AI допише значення, а картка повернеться, перш ніж ти забудеш. Безкоштовно в беті."
+
+msgid "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
+msgstr "У Lymi відкритий код і публічний API. Додавай картки через швидку команду на телефоні чи з таблиці або показуй на своєму сайті, що пора повторити."
 
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Поки що в Lymi можна потрапити лише за запрошенням. Залиш електронну адресу — ми напишемо, коли з’явиться місце."
@@ -1098,6 +1122,12 @@ msgstr "Більше, ніж переклад."
 
 msgid "Most land plants have one."
 msgstr "Вона є в більшості наземних рослин."
+
+msgid "Moving from Anki"
+msgstr "Переїзд з Anki"
+
+msgid "Moving from Mochi"
+msgstr "Переїзд з Mochi"
 
 msgid "Music"
 msgstr "Музика"
@@ -1385,8 +1415,8 @@ msgstr "Так кажуть, щоб звести довгу історію до 
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизуй із частотою, удвічі вищою за максимальну"
 
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free during the beta."
-msgstr "Збережи слово, термін чи ідею як флеш-картку. Lymi покаже її знову якраз перед тим, як ти забудеш. Поки триває бета, безкоштовно."
+msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free during the beta."
+msgstr "Збережи слово, термін чи ідею як флеш-картку. Lymi покаже її знову якраз перед тим, як ти забудеш. Код відкритий, а поки триває бета — безкоштовно."
 
 msgid "Say it"
 msgstr "Вимова"
@@ -1477,6 +1507,9 @@ msgstr "Домовились"
 
 msgid "Sounds good; that works"
 msgstr "Домовились; підходить"
+
+msgid "Source code"
+msgstr "Вихідний код"
 
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Радянська Росія визнала незалежність Естонії"
@@ -1834,6 +1867,9 @@ msgstr "що"
 
 msgid "What an object’s shape tells you to do with it"
 msgstr "Як форма предмета підказує, що з ним робити"
+
+msgid "What comes across"
+msgstr "Що перенесеться"
 
 msgid "What does it cost?"
 msgstr "Скільки це коштує?"

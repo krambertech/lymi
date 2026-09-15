@@ -1,16 +1,16 @@
 ---
 status: exploration
 date: 2026-09-15
-decision: decide whether public source should become true open source and a supported self-hosting product
+decision: open source under AGPL-3.0-only (15 September 2026); self-hosting support not decided
 ---
 
 # Open source and self-hosting
 
 ## Current position
 
-Lymi's repository is public under FSL-1.1-MIT. People may inspect, run, and change the code, but may not offer a competing product until each release converts to MIT after two years. This is source-available software, not open source under the Open Source Definition.
+Lymi is open source under AGPL-3.0-only since 15 September 2026, replacing FSL-1.1-MIT. Anyone may run, change and share the code; whoever runs a changed copy as a network service must offer its users the source. Lymi can still charge for a hosted service or extras, and someone else's hosted copy has to stay open. MIT was the simpler alternative and was rejected because it lets anyone run a closed paid copy.
 
-The remaining question is whether Lymi should adopt an open-source license, support self-hosting as a product promise, or keep the current boundary.
+The remaining question is whether self-hosting becomes a supported product promise.
 
 ## Why change it
 
@@ -20,9 +20,9 @@ Those benefits are hypotheses. Public code already creates maintenance, security
 
 ## Options
 
-1. Keep FSL and offer no self-hosting promise. The code stays inspectable while the hosted service remains the product.
-2. Keep FSL but document a best-effort self-hosting path. This improves continuity but may confuse users about support and commercial rights.
-3. Adopt an OSI-approved license and support self-hosting explicitly. This gives the clearest openness but requires a deliberate commercial, trademark, contribution, and support model.
+1. Offer no self-hosting promise. The code stays open while the hosted service remains the product.
+2. Document a best-effort self-hosting path. This improves continuity but may confuse users about support.
+3. Support self-hosting explicitly. This gives the clearest continuity but requires a deliberate commercial, trademark, contribution, and support model.
 
 ## Boundaries
 
@@ -36,12 +36,11 @@ A supported self-hosted release needs safe example configuration, dependency and
 - Integration authors or contributors have specific work they want to maintain.
 - The hosted service remains clearly easier than self-hosting.
 - Maintainer capacity exists for issues, reviews, releases, and security response.
-- The preferred license fits the intended commercial and contribution model.
 
 ## Open questions
 
-- Is source visibility enough, or is self-hosting part of the product promise?
+- Is self-hosting part of the product promise?
+- Should outside contributions require a contributor agreement, so the code can still be relicensed or dual-licensed later?
 - Is the primary goal trust, continuity, contributions, or developer distribution?
-- Should the complete app be open source, and under which license?
 - What support can self-hosters and contributors reasonably expect?
 - Which product and strategy documents belong in the public repository?

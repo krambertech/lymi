@@ -88,4 +88,4 @@ See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cu
 
 ## License
 
-[FSL-1.1-MIT](LICENSE.md). You can read, run, and change the code for any purpose except offering a competing product. Each version becomes MIT two years after its release. The license grants no rights to the Lymi name or the lantern mark.
+[AGPL-3.0-only](LICENSE). You can read, run, change, and share the code for any purpose. If you run a changed copy as a service others use, you must offer them its source under the same license. The license grants no rights to the Lymi name or the lantern mark.

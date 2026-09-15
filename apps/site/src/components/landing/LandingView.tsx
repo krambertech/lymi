@@ -10,15 +10,17 @@ import { USE_CASE_CARDS } from "./cards";
 import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
 import { Hero } from "./Hero";
+import { ImportDemo } from "./ImportDemo";
 import { JoinSection } from "./JoinSection";
 import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
+import { SOURCE_CODE_URL } from "./site-links";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const LANDING_TITLE = msg`Lymi · Flashcard app with spaced repetition`;
-export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta.`;
+export const LANDING_BLURB = msg`Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta.`;
 export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the English line “Keep what you learn.”`;
 
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
@@ -65,7 +67,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           lede={
             <Trans>
               Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d
-              forget. Free during the beta.
+              forget. Open source, and free during the beta.
             </Trans>
           }
         />
@@ -129,8 +131,8 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           title={<Trans>Connect your own tools.</Trans>}
           body={
             <Trans>
-              Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show
-              what’s due on your own site.
+              Lymi is open source and has a public API. Add cards from a phone shortcut or a
+              spreadsheet, or show what’s due on your own site.
             </Trans>
           }
           after={
@@ -141,10 +143,35 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
               <a href="/docs/api" className={buttonClass("ghost")}>
                 <Trans>API reference</Trans>
               </a>
+              <a href={SOURCE_CODE_URL} className={buttonClass("ghost")}>
+                <Trans>Source code</Trans>
+              </a>
             </div>
           }
         >
           <ApiConnections />
+        </FeatureSection>
+
+        <FeatureSection
+          title={<Trans>Don’t start from scratch.</Trans>}
+          body={
+            <Trans>
+              Import your flashcards from Anki or Mochi. Decks, pictures and review history come
+              too, so nothing you’ve learned starts over.
+            </Trans>
+          }
+          after={
+            <div className="flex flex-wrap gap-2">
+              <a href="/docs/import-from-anki" className={buttonClass("secondary")}>
+                <Trans>Moving from Anki</Trans>
+              </a>
+              <a href="/docs/import-from-mochi" className={buttonClass("secondary")}>
+                <Trans>Moving from Mochi</Trans>
+              </a>
+            </div>
+          }
+        >
+          <ImportDemo />
         </FeatureSection>
 
         <JoinSection title={<Trans>Join the free beta.</Trans>} source="landing" />

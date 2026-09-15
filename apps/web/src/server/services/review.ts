@@ -15,7 +15,7 @@ import {
   serializeState,
   stateDirection,
 } from "@lymi/core";
-import { and, eq, gte } from "@lymi/core/db";
+import { and, eq, gte, ne } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { presentCards } from "./card-view";
@@ -364,7 +364,14 @@ export async function reviewHistory(
   const rows = await db
     .select({ reviewedAt: schema.reviews.reviewedAt })
     .from(schema.reviews)
-    .where(and(eq(schema.reviews.userId, userId), gte(schema.reviews.reviewedAt, start)));
+    .where(
+      and(
+        eq(schema.reviews.userId, userId),
+        gte(schema.reviews.reviewedAt, start),
+        // The lights sit beside the goal streak, which an imported recall never counts toward.
+        ne(schema.reviews.source, "import"),
+      ),
+    );
 
   const counts = new Array<number>(days).fill(0);
   for (const r of rows) {

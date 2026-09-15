@@ -47,7 +47,8 @@ describe("anki adapter", () => {
     expect(summary.reviews).toBe(11);
     expect(summary.decks.map((d) => [d.name, d.cards])).toEqual([
       ["Italian::Grammar", 2],
-      ["Italian::Lesson 1", 7],
+      // Six notes; the reversed one is one Lymi card although Anki has two.
+      ["Italian::Lesson 1", 6],
       ["Japanese", 2],
     ]);
     expect(summary.decks.find((d) => d.name === "Italian::Lesson 1")?.description).toBe(

@@ -350,9 +350,13 @@ export const anki: SourceAdapter<AnkiNote> = {
       type.notes++;
       if (type.samples.length < 3) type.samples.push(fields.map(htmlToText));
       summary.notes++;
-      for (const card of cards) {
-        summary.reviews += card.reviews.length / 2;
-        deckCounts.set(card.deck, (deckCounts.get(card.deck) ?? 0) + 1);
+      for (const card of cards) summary.reviews += card.reviews.length / 2;
+      // A deck counts Lymi cards: one per cloze number, otherwise one per note in its first card's deck.
+      if (model.cloze) {
+        for (const card of cards) deckCounts.set(card.deck, (deckCounts.get(card.deck) ?? 0) + 1);
+      } else {
+        const deck = (cards[0] as AnkiCard).deck;
+        deckCounts.set(deck, (deckCounts.get(deck) ?? 0) + 1);
       }
       if (fields.some((field) => imageSources(field).some((src) => media.has(src)))) {
         summary.pictures++;

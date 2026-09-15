@@ -26,6 +26,7 @@ import {
   inspectImport,
   listImports,
   NOTES_PER_CHUNK,
+  nextWriteStep,
   prepareImportDecks,
   previewImportChoices,
   restoreImport,
@@ -33,7 +34,7 @@ import {
   uploadImportPart,
   writeImportChunk,
 } from "./imports";
-import { reviewDraw } from "./review";
+import { reviewDraw, reviewHistory } from "./review";
 import { streak } from "./review-days";
 import { insights } from "./stats";
 import { learner, type TestBindings, testDb } from "./test-db";
@@ -359,6 +360,8 @@ describe("importing an Anki package", () => {
     const draw = await reviewDraw(ctx, {});
     expect(draw.attempts).toBe(0);
     expect(draw.log).toEqual([]);
+    // The seven lights sit beside the streak, so they leave imported recalls out too.
+    expect((await reviewHistory(ctx, { days: 7 })).days).toEqual([0, 0, 0, 0, 0, 0, 0]);
   });
 
   it("archives exactly the cards it added, and restore brings back exactly those", async () => {
@@ -439,6 +442,48 @@ describe("importing an Anki package", () => {
     expect((await cardsOf(ctx)).length).toBe(10);
     expect(((await getImport(ctx, id)).counts as ImportCounts).added).toBe(10);
     expect(NOTES_PER_CHUNK).toBeGreaterThan(9);
+  });
+});
+
+describe("counting what was written", () => {
+  it("counts a card with no deck to go into as not added, and every picture as stored or skipped", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    const { summary } = await getImport(ctx, id);
+    const japanese = summary?.decks.find((d) => d.name === "Japanese")?.key as string;
+    // As if the Japanese deck had gone between making the decks and writing the cards.
+    const { [japanese]: _gone, ...rest } = decks;
+    const { pictures } = await writeImportChunk(ctx, id, 0, rest, env.IMPORTS);
+    expect((await cardsOf(ctx)).length).toBe(8);
+    expect(((await getImport(ctx, id)).counts as ImportCounts).added).toBe(8);
+
+    const totals = await attachImportPictures(
+      ctx,
+      id,
+      [...pictures, { cardId: "not-a-card-of-this-import", name: "gatto.png" }],
+      env.IMPORTS,
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+    );
+    expect(totals.stored + totals.skipped).toBe(pictures.length + 1);
+    expect(totals.skipped).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("nextWriteStep", () => {
+  it("writes chunks, stores their pictures, then finishes", () => {
+    expect(nextWriteStep({ chunk: 0, chunks: 2, pending: 0, steps: 2 })).toBe("cards");
+    expect(nextWriteStep({ chunk: 1, chunks: 2, pending: 120, steps: 3 })).toBe("pictures");
+    expect(nextWriteStep({ chunk: 2, chunks: 2, pending: 20, steps: 9 })).toBe("pictures");
+    expect(nextWriteStep({ chunk: 2, chunks: 2, pending: 0, steps: 10 })).toBe("finish");
+  });
+  it("hands over to a new run before the step budget runs out", () => {
+    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 0, steps: 897 }, 900)).toBe("cards");
+    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 0, steps: 898 }, 900)).toBe("hand over");
+    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 40, steps: 898 }, 900)).toBe("hand over");
+    expect(nextWriteStep({ chunk: 90, chunks: 90, pending: 0, steps: 899 }, 900)).toBe("finish");
   });
 });
 

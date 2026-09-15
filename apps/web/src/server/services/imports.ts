@@ -47,7 +47,36 @@ export type ImportRunParams = {
   userId: string;
   actor: Actor;
   phase: "inspect" | "write";
+  /** A write run that carries on from an earlier one: the next chunk, its pictures and totals. */
+  resume?: ImportResume | undefined;
 };
+
+export type ImportResume = {
+  chunk: number;
+  pending: PendingPicture[];
+  pictures: { stored: number; skipped: number };
+};
+
+/** Pictures stored per Workflow step. */
+export const PICTURES_PER_STEP = 50;
+
+/**
+ * Steps one write run takes before it hands over to a new run. Lymi is on Cloudflare's paid
+ * plan, which caps an instance at 10,000 steps; a collection with many pictures can pass that,
+ * so a run stops short and the next run starts where it stopped.
+ */
+export const STEPS_PER_RUN = 9000;
+
+/** What a write run does next, from where it is and how many steps it has taken. */
+export function nextWriteStep(
+  state: { chunk: number; chunks: number; pending: number; steps: number },
+  budget = STEPS_PER_RUN,
+): "pictures" | "cards" | "finish" | "hand over" {
+  if (state.pending === 0 && state.chunk >= state.chunks) return "finish";
+  // Room is kept for the hand-over itself and for a failure step.
+  if (state.steps + 2 >= budget) return "hand over";
+  return state.pending > 0 ? "pictures" : "cards";
+}
 
 function adapterFor(source: string): SourceAdapter<unknown> {
   const adapter = ADAPTERS.find((a) => a.source === source);

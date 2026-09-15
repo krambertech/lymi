@@ -487,6 +487,8 @@ export async function writeChunk<Note>(
     }
     if (item.kind !== "added") continue;
     const deckId = decks[item.card.deckKey];
+    // No deck was made for it, which only happens when the learner's cards changed during the
+    // run; it is left out of the counts rather than reported as added.
     if (!deckId) continue;
     added.push(item);
     const id = newId();
@@ -545,7 +547,11 @@ export async function writeChunk<Note>(
       }
     }
   }
-  tally(counts, classified, { pictures: false });
+  tally(
+    counts,
+    classified.filter((item) => item.kind !== "added" || added.includes(item)),
+    { pictures: false },
+  );
 
   const j = (path: string) => sql.raw(`json_extract(value, '$.${path}')`);
   for (const part of jsonParts(existingRows)) {
@@ -637,7 +643,10 @@ export async function attachPictures<Note>(
       .select({ imageVersion: schema.cards.imageVersion })
       .from(schema.cards)
       .where(and(eq(schema.cards.id, picture.cardId), eq(schema.cards.importId, work.row.id)));
-    if (!card) continue;
+    if (!card) {
+      skipped++;
+      continue;
+    }
     if (card.imageVersion) {
       stored++;
       continue;

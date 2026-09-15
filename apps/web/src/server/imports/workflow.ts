@@ -10,7 +10,9 @@ import {
   finishImport,
   type ImportRunParams,
   inspectImport,
+  nextWriteStep,
   ownedImport,
+  PICTURES_PER_STEP,
   prepareImportDecks,
   runContext,
   writeImportChunk,
@@ -21,7 +23,6 @@ const STEP = {
   retries: { limit: 3, delay: "10 seconds", backoff: "exponential" },
   timeout: "10 minutes",
 } as const;
-const PICTURES_PER_STEP = 50;
 
 /** A file error is the file's fault, so retrying cannot help. */
 async function fileErrorsStop<T>(work: () => Promise<T>): Promise<T> {
@@ -50,28 +51,59 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         await step.do("inspect", STEP, () => fileErrorsStop(() => inspectImport(ctx, id, uploads)));
         return;
       }
-      const decks = await step.do("decks", STEP, () => prepareImportDecks(ctx, id, uploads));
-      const chunks = await step.do("chunks", STEP, async () => (await ownedImport(ctx, id)).chunks);
-      const pictures = { stored: 0, skipped: 0 };
-      for (let chunk = 0; chunk < chunks; chunk++) {
-        const { pictures: pending } = await step.do(`cards ${chunk}`, STEP, () =>
-          writeImportChunk(ctx, id, chunk, decks, uploads),
-        );
-        // A preview Worker has no pictures bucket; its imports keep their cards and skip pictures.
-        if (!this.env.PRIVATE_IMAGES || !this.env.IMAGES) {
-          pictures.skipped += pending.length;
-          continue;
+      let steps = 0;
+      const counted = <T>(name: string, work: () => Promise<T>) => {
+        steps++;
+        return step.do(name, STEP, work as () => Promise<never>) as Promise<T>;
+      };
+      const decks = await counted("decks", () => prepareImportDecks(ctx, id, uploads));
+      const chunks = await counted("chunks", async () => (await ownedImport(ctx, id)).chunks);
+      const pictures = { ...(params.resume?.pictures ?? { stored: 0, skipped: 0 }) };
+      let chunk = params.resume?.chunk ?? 0;
+      let pending = params.resume?.pending ?? [];
+      const storage =
+        this.env.PRIVATE_IMAGES && this.env.IMAGES
+          ? { bucket: this.env.PRIVATE_IMAGES, images: this.env.IMAGES }
+          : null;
+
+      for (;;) {
+        const next = nextWriteStep({ chunk, chunks, pending: pending.length, steps });
+        if (next === "finish") break;
+        if (next === "hand over") {
+          const resume = { chunk, pending, pictures };
+          await counted("hand over", async () => {
+            try {
+              await this.env.IMPORT_WORKFLOW.create({
+                id: `${id}-write-${chunk}-${pending.length}`,
+                params: { ...params, resume },
+              });
+            } catch (err) {
+              if (!(err instanceof Error && /already exists/i.test(err.message))) throw err;
+            }
+          });
+          return;
         }
-        for (let i = 0; i < pending.length; i += PICTURES_PER_STEP) {
-          const done = await step.do(`pictures ${chunk} ${i}`, STEP, () =>
-            attachImportPictures(ctx, id, pending.slice(i, i + PICTURES_PER_STEP), uploads, {
-              bucket: this.env.PRIVATE_IMAGES,
-              images: this.env.IMAGES,
-            }),
+        if (next === "pictures") {
+          // A preview Worker has no pictures bucket; its imports keep their cards and skip pictures.
+          if (!storage) {
+            pictures.skipped += pending.length;
+            pending = [];
+            continue;
+          }
+          const batch = pending.slice(0, PICTURES_PER_STEP);
+          const done = await counted(`pictures ${chunk} ${pending.length}`, () =>
+            attachImportPictures(ctx, id, batch, uploads, storage),
           );
           pictures.stored += done.stored;
           pictures.skipped += done.skipped;
+          pending = pending.slice(PICTURES_PER_STEP);
+          continue;
         }
+        const written = await counted(`cards ${chunk}`, () =>
+          writeImportChunk(ctx, id, chunk, decks, uploads),
+        );
+        pending = written.pictures;
+        chunk++;
       }
       await step.do("finish", STEP, () => finishImport(ctx, id, pictures, uploads));
     } catch (err) {

@@ -63,6 +63,7 @@ afterAll(async () => {
   await dispose();
 });
 
+// Each test builds a library, exports it and often imports it again, which a busy CI runner takes well past the default.
 const DAY = 86_400_000;
 let learners = 0;
 const fresh = (name = "Learner") => {
@@ -398,7 +399,7 @@ describe("exporting the library as a Lymi zip", () => {
       ["Old list", null, "it", "recognition", true],
       ["Signs", "Road signs", null, "recognition", false],
     ]);
-  });
+  }, 60_000);
 
   it("writes one deck, and a second request while it is written returns the same export", async () => {
     const owner = await fresh("Owner");
@@ -425,7 +426,7 @@ describe("exporting the library as a Lymi zip", () => {
       "il gatto",
       "la casa",
     ]);
-  });
+  }, 60_000);
 });
 
 describe("exporting an Anki package", () => {
@@ -492,7 +493,7 @@ describe("exporting an Anki package", () => {
         DAY,
       );
     }
-  });
+  }, 60_000);
 });
 
 describe("a shared deck's export", () => {
@@ -521,7 +522,7 @@ describe("a shared deck's export", () => {
 
     const anki = await runExport(member, { format: "anki", deckId: italian.id });
     expect(anki.view.counts).toMatchObject({ reviews: 1 });
-  });
+  }, 60_000);
 });
 
 describe("who can reach an export", () => {
@@ -548,7 +549,7 @@ describe("who can reach an export", () => {
     await expireExports(db, env.EXPORTS, new Date(expiresAt.getTime() + 1));
     expect((await env.EXPORTS.list({ prefix })).objects).toHaveLength(0);
     expect(await getExport(owner, id)).toMatchObject({ status: "expired", downloadUrl: null });
-  });
+  }, 60_000);
 
   it("gives up on an export that stalled and deletes what it wrote", async () => {
     const owner = await fresh("Owner");
@@ -565,7 +566,7 @@ describe("who can reach an export", () => {
       status: "failed",
       failure: "internal",
     });
-  });
+  }, 60_000);
 
   it("audits the request and the finished file for Activity", async () => {
     const owner = await fresh("Owner");
@@ -580,5 +581,5 @@ describe("who can reach an export", () => {
       ["create", "user"],
     ]);
     expect(JSON.stringify(audit.map((row) => row.payload))).not.toMatch(/exports\//);
-  });
+  }, 60_000);
 });

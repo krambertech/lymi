@@ -278,8 +278,8 @@ msgstr "{attempts} of {goal} reviews today"
 msgid "{cards, plural, one {# card joins your reviews.} other {# cards join your reviews.}}"
 msgstr "{cards, plural, one {# card joins your reviews.} other {# cards join your reviews.}}"
 
-msgid "{count, plural, =0 {Choose cards to move} one {# card selected} other {# cards selected}}"
-msgstr "{count, plural, =0 {Choose cards to move} one {# card selected} other {# cards selected}}"
+msgid "{count, plural, =0 {Choose cards} one {# selected} other {# selected}}"
+msgstr "{count, plural, =0 {Choose cards} one {# selected} other {# selected}}"
 
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# new} other {# new}}"
@@ -907,6 +907,7 @@ msgstr "Choose new…"
 msgid "Choose one"
 msgstr "Choose one"
 
+<<<<<<< HEAD
 msgid "Choose the .apkg or .colpkg file Anki exports."
 msgstr "Choose the .apkg or .colpkg file Anki exports."
 
@@ -921,6 +922,10 @@ msgstr "Choose what each Anki field becomes on a Lymi card. One field is the ter
 
 msgid "Choose your Anki file"
 msgstr "Choose your Anki file"
+=======
+msgid "Clear"
+msgstr "Clear"
+>>>>>>> a58588c (feat(web): put the selection toolbar in place of Filter and Sort)
 
 msgid "Clear filters"
 msgstr "Clear filters"
@@ -1636,6 +1641,9 @@ msgstr "Move to…"
 
 msgid "Move up"
 msgstr "Move up"
+
+msgid "Move…"
+msgstr "Move…"
 
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "Moved “{deckName}” to {seriesName}"
@@ -2428,8 +2436,13 @@ msgstr "Steady"
 msgid "Still need an invitation?"
 msgstr "Still need an invitation?"
 
+<<<<<<< HEAD
 msgid "Stopped"
 msgstr "Stopped"
+=======
+msgid "Stop selecting"
+msgstr "Stop selecting"
+>>>>>>> a58588c (feat(web): put the selection toolbar in place of Filter and Sort)
 
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"

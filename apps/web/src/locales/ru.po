@@ -278,8 +278,8 @@ msgstr "{attempts} из {goal} повторений сегодня"
 msgid "{cards, plural, one {# card joins your reviews.} other {# cards join your reviews.}}"
 msgstr "{cards, plural, one {# карточка появится в повторениях.} few {# карточки появятся в повторениях.} many {# карточек появится в повторениях.} other {# карточки появится в повторениях.}}"
 
-msgid "{count, plural, =0 {Choose cards to move} one {# card selected} other {# cards selected}}"
-msgstr "{count, plural, =0 {Выбери карточки для перемещения} one {Выбрана # карточка} few {Выбраны # карточки} many {Выбрано # карточек} other {Выбрано # карточки}}"
+msgid "{count, plural, =0 {Choose cards} one {# selected} other {# selected}}"
+msgstr "{count, plural, =0 {Выберите карточки} one {Выбрано: #} few {Выбрано: #} many {Выбрано: #} other {Выбрано: #}}"
 
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# новая} few {# новые} many {# новых} other {# новой}}"
@@ -907,6 +907,7 @@ msgstr "Выбрать новое…"
 msgid "Choose one"
 msgstr "Выбери один вариант"
 
+<<<<<<< HEAD
 msgid "Choose the .apkg or .colpkg file Anki exports."
 msgstr "Выбери файл .apkg или .colpkg, который экспортирует Anki."
 
@@ -921,6 +922,10 @@ msgstr "Выбери, чем каждое поле Anki станет в карт
 
 msgid "Choose your Anki file"
 msgstr "Выбор файла Anki"
+=======
+msgid "Clear"
+msgstr "Сбросить"
+>>>>>>> a58588c (feat(web): put the selection toolbar in place of Filter and Sort)
 
 msgid "Clear filters"
 msgstr "Сбросить фильтры"
@@ -1636,6 +1641,9 @@ msgstr "Переместить в…"
 
 msgid "Move up"
 msgstr "Выше"
+
+msgid "Move…"
+msgstr "Переместить…"
 
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "«{deckName}» перенесена в «{seriesName}»"
@@ -2428,8 +2436,13 @@ msgstr "Ровно"
 msgid "Still need an invitation?"
 msgstr "Всё ещё нужно приглашение?"
 
+<<<<<<< HEAD
 msgid "Stopped"
 msgstr "Остановлен"
+=======
+msgid "Stop selecting"
+msgstr "Завершить выбор"
+>>>>>>> a58588c (feat(web): put the selection toolbar in place of Filter and Sort)
 
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"

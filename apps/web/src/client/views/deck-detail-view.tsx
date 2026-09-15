@@ -526,53 +526,59 @@ function ListTools({
   );
 }
 
-/** Pinned to the foot of the list while cards are being chosen, so the action stays in reach. */
-function SelectionBar({
+/**
+ * While cards are being chosen, this takes the place of Filter and Sort and sticks to the top of
+ * the page, so the count and the action stay where the eye already is and cover nothing.
+ */
+function SelectionToolbar({
   count,
   total,
   onAll,
+  onClear,
   onMove,
   onDone,
 }: {
   count: number;
   total: number;
   onAll: () => void;
+  onClear: () => void;
   onMove: () => void;
   onDone: () => void;
 }) {
   const { t } = useLingui();
+  const all = count > 0 && count === total;
   return (
-    <div className="sticky bottom-4 z-10 mt-6 flex justify-center pb-[env(safe-area-inset-bottom)]">
-      <section
-        aria-label={t`Selected cards`}
-        className="edge-2 flex max-w-full flex-wrap items-center gap-2 rounded-xl bg-plate py-2 ps-4 pe-2 shadow-lg"
+    <section
+      aria-label={t`Selected cards`}
+      className="@container/tools edge-2 flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5"
+    >
+      <IconButton size="sm" label={t`Stop selecting`} onClick={onDone}>
+        <X />
+      </IconButton>
+      <p
+        className="me-auto min-w-0 truncate ps-1 text-base font-medium tabular-nums"
+        aria-live="polite"
       >
-        <p className="me-2 text-base font-medium tabular-nums" aria-live="polite">
-          <Plural
-            value={count}
-            _0="Choose cards to move"
-            one="# card selected"
-            other="# cards selected"
-          />
-        </p>
-        {count < total && (
-          <Button size="sm" variant="ghost" onClick={onAll}>
-            <Trans>Select all</Trans>
-          </Button>
-        )}
-        <Button size="sm" variant="ghost" onClick={onDone}>
-          <Trans>Done</Trans>
-        </Button>
-        <Button
-          size="sm"
-          variant="primary"
-          aria-disabled={count === 0}
-          onClick={() => count > 0 && onMove()}
-        >
+        <Plural value={count} _0="Choose cards" one="# selected" other="# selected" />
+      </p>
+      <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
+        {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
+      </Button>
+      <Button
+        size="sm"
+        variant="primary"
+        aria-disabled={count === 0}
+        aria-label={t`Move to section…`}
+        onClick={() => count > 0 && onMove()}
+      >
+        <span className="@md/tools:hidden">
+          <Trans>Move…</Trans>
+        </span>
+        <span className="hidden @md/tools:inline">
           <Trans>Move to section…</Trans>
-        </Button>
-      </section>
-    </div>
+        </span>
+      </Button>
+    </section>
   );
 }
 
@@ -702,8 +708,9 @@ export function DeckDetailView({
   useEffect(() => {
     if (!selected) return;
     const onKey = (e: KeyboardEvent) => {
-      const inside = (e.target as Element | null)?.closest?.("[role='dialog'], [role='menu']");
-      if (e.key === "Escape" && !e.defaultPrevented && !inside) stopSelecting();
+      // A menu or dialog open over the list takes this Escape for itself.
+      const overlay = document.querySelector("[role='menu'], [role='dialog']");
+      if (e.key === "Escape" && !e.defaultPrevented && !overlay) stopSelecting();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -1018,17 +1025,35 @@ export function DeckDetailView({
         </div>
 
         {cards && cards.length > 0 && (
-          <div className={clsx(searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6")}>
-            <ListTools
-              sections={sections}
-              filters={filters}
-              setFilters={setFilters}
-              sort={sort}
-              setSort={setSort}
-              query={q}
-              setQuery={setQ}
-              searchRef={searchRef}
-            />
+          <div
+            className={clsx(
+              searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6",
+              // Pinned over a strip of the page's own ground, so rows never show beside it.
+              selected &&
+                "sticky top-0 z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
+            )}
+          >
+            {selected && sectionActions ? (
+              <SelectionToolbar
+                count={selected.size}
+                total={ordered.length}
+                onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
+                onClear={() => setSelected(new Set())}
+                onMove={() => sectionActions.onPickSection([...selected], stopSelecting)}
+                onDone={stopSelecting}
+              />
+            ) : (
+              <ListTools
+                sections={sections}
+                filters={filters}
+                setFilters={setFilters}
+                sort={sort}
+                setSort={setSort}
+                query={q}
+                setQuery={setQ}
+                searchRef={searchRef}
+              />
+            )}
           </div>
         )}
 
@@ -1074,15 +1099,6 @@ export function DeckDetailView({
                 </Button>
               ) : undefined
             }
-          />
-        )}
-        {selected && sectionActions && (
-          <SelectionBar
-            count={selected.size}
-            total={ordered.length}
-            onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
-            onMove={() => sectionActions.onPickSection([...selected], stopSelecting)}
-            onDone={stopSelecting}
           />
         )}
       </Page>

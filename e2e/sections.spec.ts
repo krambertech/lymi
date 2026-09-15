@@ -110,7 +110,7 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
     await row("tere").click();
     await row("leib").click();
     const bar = page.getByRole("region", { name: "Selected cards", exact: true });
-    await expect(bar).toContainText("2 cards selected");
+    await expect(bar).toContainText("2 selected");
     await bar.getByRole("button", { name: "Move to section…", exact: true }).click();
     const picker = dialog(page, "Move 2 cards to");
     await picker.getByRole("button", { name: "Review", exact: true }).click();

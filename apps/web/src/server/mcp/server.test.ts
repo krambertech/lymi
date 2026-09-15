@@ -552,6 +552,36 @@ describe("Lymi MCP server", () => {
     expect(services.addCards).not.toHaveBeenCalled();
   });
 
+  it("describes notes as the Markdown subset and passes the source through unchanged", async () => {
+    const notes = "**hea aeg** → *head aega*\n\n- hea → head\n- aeg → aega";
+    services.addCards.mockResolvedValue([{ status: "added", card: { ...card, notes } }]);
+    services.updateCard.mockResolvedValue({ ...card, notes });
+    const client = await connect("write");
+
+    const { tools } = await client.listTools();
+    for (const name of ["add_cards", "update_card"]) {
+      const schema = JSON.stringify(tools.find((t) => t.name === name)?.inputSchema);
+      expect(schema, name).toContain("**bold**, *italic*");
+    }
+
+    const add = await client.callTool({
+      name: "add_cards",
+      arguments: { cards: [{ deckId: "deck-1", term: "Head aega!", notes }] },
+    });
+    expect(add.isError).toBeFalsy();
+    expect(services.addCards).toHaveBeenCalledWith(expect.anything(), [
+      { deckId: "deck-1", term: "Head aega!", notes },
+    ]);
+
+    const edit = await client.callTool({
+      name: "update_card",
+      arguments: { cardId: "card-1", notes },
+    });
+    expect(edit.isError).toBeFalsy();
+    expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", { notes });
+    expect((edit.structuredContent as { notes: string }).notes).toBe(notes);
+  });
+
   it("turns a service error into a tool error instead of a crash", async () => {
     services.getDeck.mockRejectedValue(new ServiceError("not_found", "Deck not found"));
     services.listDeckCards.mockResolvedValue([]);

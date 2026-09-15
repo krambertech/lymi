@@ -2765,6 +2765,9 @@ msgstr "Завантаження"
 msgid "Use “{tag}” as the tag"
 msgstr "Використати «{tag}» як тег"
 
+msgid "Use **bold** and *italic*. Start a line with - or 1. for a list."
+msgstr "Використовуй **жирний** і *курсив*. Для списку почни рядок з - або 1."
+
 msgid "Use a JPEG, PNG, WebP or still GIF under 10 MB."
 msgstr "Використай JPEG, PNG, WebP або статичний GIF до 10 МБ."
 

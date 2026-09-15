@@ -584,6 +584,7 @@ export function CardForm({
           clear("notes");
         }}
       />
+      <FieldDescription>{t`Use **bold** and *italic*. Start a line with - or 1. for a list.`}</FieldDescription>
       <FieldError>{invalid.notes}</FieldError>
     </Field>
   );

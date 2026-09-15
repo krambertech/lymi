@@ -197,7 +197,7 @@ export const CardOut = z
     meaning: z.string().nullable(),
     pronunciation: z.string().nullable(),
     example: z.string().nullable(),
-    notes: z.string().nullable(),
+    notes: z.string().nullable().meta({ description: "Markdown source in the notes subset" }),
     language: z.string().nullable().meta({ description: "BCP 47 tag, or null" }),
     tags: z.array(z.string()),
     source: z.string().nullable().meta({ description: "Free text: where the card came from" }),

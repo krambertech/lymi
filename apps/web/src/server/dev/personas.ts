@@ -280,8 +280,9 @@ const LONG_CARDS: PersonaCard[] = [
       "1. An argument or dispute between people who disagree, sometimes heated.\n2. A close, critical engagement with a subject, text or idea: working through it rather than just reading it.\n3. In law, the division of shared property, for example after a partnership or an inheritance ends.",
     example:
       "Nach einer langen Auseinandersetzung mit dem Vermieter bekamen wir die Kaution zurück. Ihre Auseinandersetzung mit Kafka dauerte das ganze Semester, und am Ende schrieb sie eine Arbeit über seine Briefe.",
+    // Markdown notes, so the formatted rendering is reachable locally.
     notes:
-      "Plural: die Auseinandersetzungen.\nsich mit etwas auseinandersetzen: to engage with something.\nNot the same as der Streit, which is always a quarrel; an Auseinandersetzung can be calm and scholarly.\nCommon collocations: eine heftige, sachliche, kritische, juristische Auseinandersetzung.",
+      "**Plural:** die Auseinandersetzungen\n*sich mit etwas auseinandersetzen*: to engage with something.\n\nNot the same as **der Streit**, which is always a quarrel; an *Auseinandersetzung* can be calm and scholarly.\n\nBuilt from:\n1. **aus**, out\n2. **einander**, each other\n3. **setzen**, to set\n\nCommon collocations:\n- eine *heftige* Auseinandersetzung\n- eine *sachliche* Auseinandersetzung\n- eine *juristische* Auseinandersetzung\n\nNot formatting: <b>tags</b>, # headings and [links](https://example.com) stay as typed.",
   },
   {
     term: atLimit(

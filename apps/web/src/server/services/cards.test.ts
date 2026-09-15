@@ -1,5 +1,9 @@
-import { describe, expect, it } from "vitest";
-import { foldForSearch, matchesSearch } from "./cards";
+import { CardInput, CardPatch } from "@lymi/core";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import type { Db } from "../db";
+import { addCards, foldForSearch, matchesSearch, searchCards, showCard, updateCard } from "./cards";
+import { createDeck } from "./decks";
+import { learner, testDb } from "./test-db";
 
 const card = (fields: Partial<Parameters<typeof matchesSearch>[0]>) => ({
   normalizedTerm: "",
@@ -28,5 +32,46 @@ describe("matchesSearch", () => {
     expect(matchesSearch(card({ normalizedTerm: "sbrigarsi" }), foldForSearch("magari"))).toBe(
       false,
     );
+  });
+
+  it("matches a note's words across its Markdown, never its syntax", () => {
+    const formatted = card({ notes: "**hea** aeg → *head aega*\n\n- one\n- two" });
+    expect(matchesSearch(formatted, foldForSearch("hea aeg"))).toBe(true);
+    expect(matchesSearch(formatted, foldForSearch("head aega"))).toBe(true);
+    expect(matchesSearch(formatted, foldForSearch("**"))).toBe(false);
+    expect(matchesSearch(formatted, foldForSearch("- one"))).toBe(false);
+  });
+});
+
+describe("Markdown notes", () => {
+  let db: Db;
+  let dispose: () => Promise<void>;
+
+  beforeAll(async () => {
+    ({ db, dispose } = await testDb());
+  }, 60_000);
+
+  afterAll(async () => {
+    await dispose();
+  });
+
+  it("stores and returns the source exactly as the API and MCP send it", async () => {
+    const ctx = await learner(db, "notes-1", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Everyday Estonian", defaultLanguage: "et" });
+    const notes =
+      "**hea aeg** → *head aega*\nPartitive after *soovin*.\n\n- hea → head\n- aeg → aega";
+    const [added] = await addCards(ctx, [
+      CardInput.parse({ deckId: deck.id, term: "Head aega!", notes }),
+    ]);
+    if (added?.status !== "added") throw new Error("not added");
+    expect((await showCard(ctx, added.card.id)).notes).toBe(notes);
+
+    const html = '<script>alert(1)</script>\n<img src=x onerror="alert(1)">';
+    await updateCard(ctx, added.card.id, CardPatch.parse({ notes: html }));
+    expect((await showCard(ctx, added.card.id)).notes).toBe(html);
+
+    await updateCard(ctx, added.card.id, CardPatch.parse({ notes }));
+    const found = await searchCards(ctx, { query: "hea aeg → head aega" });
+    expect(found.map((row) => row.card.id)).toEqual([added.card.id]);
   });
 });

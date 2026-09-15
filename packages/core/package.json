@@ -8,6 +8,7 @@
     ".": "./src/index.ts",
     "./schema": "./src/schema/index.ts",
     "./db": "./src/db.ts",
+    "./notes": "./src/notes.ts",
     "./simulation": "./simulation/index.ts"
   },
   "scripts": {
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
+    "markdown-it": "^15.0.2",
     "ts-fsrs": "^5.4.2",
     "zod": "^4.5.4"
   },

@@ -1,0 +1,534 @@
+{
+  "deck": {
+    "name": "Everyday Estonian",
+    "description": "Words and phrases for your first weeks in Estonia: saying hello, shops and cafés, getting around, and the doctor.",
+    "defaultLanguage": "et",
+    "reviewModes": [
+      {
+        "cue": "term",
+        "target": "meaning"
+      },
+      {
+        "cue": "meaning",
+        "target": "term"
+      }
+    ],
+    "sectionProgression": "automatic"
+  },
+  "publication": {
+    "slug": "everyday-estonian",
+    "summary": "Words and phrases for your first weeks in Estonia: saying hello, shops and cafés, getting around, and the doctor.",
+    "level": "A1",
+    "meaningLanguage": "en",
+    "publisher": "Lymi",
+    "sources": [
+      {
+        "title": "Written for Lymi and checked against the Institute of the Estonian Language A1 vocabulary list",
+        "url": "https://arhiiv.eki.ee/litsents/idkaart/A1A2B1/A1.pdf"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "name": "Hello and goodbye",
+      "cards": [
+        {
+          "term": "Tere!",
+          "meaning": "Hello!",
+          "notes": "Works any time of day, with anyone."
+        },
+        {
+          "term": "Tere hommikust!",
+          "meaning": "Good morning!",
+          "notes": "Friends often shorten it to *Hommikust!*"
+        },
+        {
+          "term": "Tere päevast!",
+          "meaning": "Good afternoon!",
+          "notes": "A little formal. *Tere!* covers most of the day."
+        },
+        {
+          "term": "Tere õhtust!",
+          "meaning": "Good evening!"
+        },
+        {
+          "term": "Head aega!",
+          "meaning": "Goodbye!",
+          "notes": "Literally \"good time\". Wishes put both words in the partitive: *hea aeg* → *head aega*."
+        },
+        {
+          "term": "Nägemist!",
+          "meaning": "Bye!",
+          "notes": "From *nägema*, \"to see\"."
+        },
+        {
+          "term": "Head päeva!",
+          "meaning": "Have a nice day!",
+          "notes": "Often said as you leave a shop. Same pattern as *Head aega!*"
+        },
+        {
+          "term": "Head õhtut!",
+          "meaning": "Have a good evening!"
+        },
+        {
+          "term": "Head ööd!",
+          "meaning": "Good night!",
+          "notes": "*öö* (night) → *ööd*"
+        },
+        {
+          "term": "Tšau!",
+          "meaning": "Hi! / Bye!",
+          "notes": "Casual, for friends. Works both ways."
+        },
+        {
+          "term": "Aitäh!",
+          "meaning": "Thank you!",
+          "notes": "*Suur aitäh!* is \"thank you very much\"."
+        },
+        {
+          "term": "Palun.",
+          "meaning": "Please. / You're welcome. / Here you are.",
+          "notes": "One word for all three."
+        },
+        {
+          "term": "Vabandust!",
+          "meaning": "Sorry! / Excuse me!",
+          "notes": "Also used to get someone's attention."
+        },
+        {
+          "term": "Pole tänu väärt.",
+          "meaning": "Don't mention it.",
+          "notes": "Literally \"not worth thanks\". *pole* is short for *ei ole*, \"is not\"."
+        }
+      ]
+    },
+    {
+      "name": "Yes, no and how are you",
+      "cards": [
+        {
+          "term": "Jah.",
+          "meaning": "Yes.",
+          "notes": "Casual *jaa* sounds a little softer."
+        },
+        {
+          "term": "Ei.",
+          "meaning": "No.",
+          "notes": "Also makes a verb negative: *ma ei tea*."
+        },
+        {
+          "term": "Kuidas läheb?",
+          "meaning": "How's it going?",
+          "notes": "Literally \"how does it go\"."
+        },
+        {
+          "term": "Hästi.",
+          "meaning": "Good. / Fine."
+        },
+        {
+          "term": "Normaalselt.",
+          "meaning": "All right.",
+          "notes": "A neutral answer, neither good nor bad."
+        },
+        {
+          "term": "Pole viga.",
+          "meaning": "Not bad. / It's fine.",
+          "notes": "Literally \"no fault\"."
+        },
+        {
+          "term": "Aga sina?",
+          "meaning": "And you?",
+          "notes": "To someone you know. To a stranger: *Aga teie?*"
+        },
+        {
+          "term": "Ma ei tea.",
+          "meaning": "I don't know.",
+          "notes": "After *ei*, the verb loses its ending: *ma tean* → *ma ei tea*."
+        },
+        {
+          "term": "Selge.",
+          "meaning": "Got it.",
+          "notes": "Literally \"clear\"."
+        },
+        {
+          "term": "Muidugi.",
+          "meaning": "Of course."
+        },
+        {
+          "term": "Võib-olla.",
+          "meaning": "Maybe.",
+          "notes": "Literally \"may be\"."
+        },
+        {
+          "term": "Olgu.",
+          "meaning": "OK. / Fine.",
+          "notes": "For agreeing to a plan."
+        }
+      ]
+    },
+    {
+      "name": "Meeting someone",
+      "cards": [
+        {
+          "term": "Mina olen …",
+          "meaning": "I'm …",
+          "notes": "The simplest way to introduce yourself."
+        },
+        {
+          "term": "Minu nimi on …",
+          "meaning": "My name is …"
+        },
+        {
+          "term": "Mis su nimi on?",
+          "meaning": "What's your name?",
+          "notes": "Informal. Formal: *Mis teie nimi on?*"
+        },
+        {
+          "term": "Väga meeldiv!",
+          "meaning": "Nice to meet you!",
+          "notes": "Literally \"very pleasant\"."
+        },
+        {
+          "term": "Kust sa pärit oled?",
+          "meaning": "Where are you from?",
+          "notes": "Formal: *Kust te pärit olete?*"
+        },
+        {
+          "term": "Ma olen pärit Ukrainast.",
+          "meaning": "I'm from Ukraine.",
+          "notes": "*-st* means \"from\": *Ukraina* → *Ukrainast*, *Eesti* → *Eestist*."
+        },
+        {
+          "term": "Ma elan Tallinnas.",
+          "meaning": "I live in Tallinn.",
+          "notes": "*-s* means \"in\": *Tallinn* → *Tallinnas*."
+        },
+        {
+          "term": "Ma õpin eesti keelt.",
+          "meaning": "I'm learning Estonian.",
+          "notes": "*keel* (language) becomes *keelt* after verbs like \"learn\" and \"speak\"."
+        },
+        {
+          "term": "sina",
+          "meaning": "you (one person, informal)",
+          "notes": "For friends, family and children. Short form: *sa*."
+        },
+        {
+          "term": "teie",
+          "meaning": "you (formal, or more than one person)",
+          "notes": "For strangers, older people and service staff. Short form: *te*."
+        },
+        {
+          "term": "Tore!",
+          "meaning": "Nice! / Great!"
+        }
+      ]
+    },
+    {
+      "name": "When you don't understand",
+      "cards": [
+        {
+          "term": "Ma ei saa aru.",
+          "meaning": "I don't understand.",
+          "notes": "*aru saama* means \"to understand\". After *ei*, the verb loses its ending: *ma saan aru* → *ma ei saa aru*."
+        },
+        {
+          "term": "Kas sa saad aru?",
+          "meaning": "Do you understand?",
+          "notes": "*Kas* at the start turns a sentence into a yes-or-no question."
+        },
+        {
+          "term": "Kuidas palun?",
+          "meaning": "Sorry? / Pardon?",
+          "notes": "When you didn't catch something. Literally \"how, please?\""
+        },
+        {
+          "term": "Palun korrake.",
+          "meaning": "Please say that again.",
+          "notes": "Formal. To a friend: *Korda palun.*"
+        },
+        {
+          "term": "Palun rääkige aeglasemalt.",
+          "meaning": "Please speak more slowly.",
+          "notes": "*aeglane* (slow) → *aeglaselt* (slowly) → *aeglasemalt* (more slowly)."
+        },
+        {
+          "term": "Ma räägin natuke eesti keelt.",
+          "meaning": "I speak a little Estonian."
+        },
+        {
+          "term": "Ma ei räägi eesti keelt.",
+          "meaning": "I don't speak Estonian."
+        },
+        {
+          "term": "Kas te räägite inglise keelt?",
+          "meaning": "Do you speak English?",
+          "notes": "Swap in *ukraina keelt* or *vene keelt*."
+        },
+        {
+          "term": "Mida see tähendab?",
+          "meaning": "What does this mean?"
+        },
+        {
+          "term": "Kuidas on eesti keeles …?",
+          "meaning": "How do you say … in Estonian?",
+          "notes": "*eesti keeles* means \"in Estonian\"."
+        }
+      ]
+    },
+    {
+      "name": "Numbers and time",
+      "cards": [
+        {
+          "term": "üks",
+          "meaning": "one"
+        },
+        {
+          "term": "kaks",
+          "meaning": "two"
+        },
+        {
+          "term": "kolm",
+          "meaning": "three"
+        },
+        {
+          "term": "neli",
+          "meaning": "four"
+        },
+        {
+          "term": "viis",
+          "meaning": "five"
+        },
+        {
+          "term": "kuus",
+          "meaning": "six",
+          "notes": "Also means \"per month\": *500 eurot kuus*."
+        },
+        {
+          "term": "seitse",
+          "meaning": "seven"
+        },
+        {
+          "term": "kaheksa",
+          "meaning": "eight"
+        },
+        {
+          "term": "üheksa",
+          "meaning": "nine"
+        },
+        {
+          "term": "kümme",
+          "meaning": "ten",
+          "notes": "11 to 19 add *-teist*: *üksteist*, *kaksteist*."
+        },
+        {
+          "term": "Mis kell on?",
+          "meaning": "What time is it?",
+          "notes": "Literally \"what is the clock\"."
+        },
+        {
+          "term": "Kell on kolm.",
+          "meaning": "It's three o'clock."
+        },
+        {
+          "term": "pool kolm",
+          "meaning": "half past two",
+          "notes": "Estonian counts toward the next hour, so literally \"half three\"."
+        },
+        {
+          "term": "täna",
+          "meaning": "today"
+        },
+        {
+          "term": "homme",
+          "meaning": "tomorrow"
+        },
+        {
+          "term": "eile",
+          "meaning": "yesterday"
+        }
+      ]
+    },
+    {
+      "name": "Shop and café",
+      "cards": [
+        {
+          "term": "Üks kohv, palun.",
+          "meaning": "A coffee, please.",
+          "notes": "Swap in *tee* for tea."
+        },
+        {
+          "term": "Kas teil on …?",
+          "meaning": "Do you have …?"
+        },
+        {
+          "term": "Kui palju see maksab?",
+          "meaning": "How much does this cost?"
+        },
+        {
+          "term": "Kas see on kõik?",
+          "meaning": "Is that all?",
+          "notes": "A cashier's question. Answer: *Jah, aitäh.*"
+        },
+        {
+          "term": "Kas teil on kliendikaart?",
+          "meaning": "Do you have a loyalty card?",
+          "notes": "Many shops ask this at the till."
+        },
+        {
+          "term": "Kas kotti soovite?",
+          "meaning": "Would you like a bag?",
+          "notes": "*Ei, aitäh* if you brought your own."
+        },
+        {
+          "term": "Kuidas maksate?",
+          "meaning": "How will you pay?"
+        },
+        {
+          "term": "Kaardiga.",
+          "meaning": "By card."
+        },
+        {
+          "term": "sularahas",
+          "meaning": "in cash"
+        },
+        {
+          "term": "Arve, palun.",
+          "meaning": "The bill, please.",
+          "notes": "In a café or restaurant."
+        },
+        {
+          "term": "Head isu!",
+          "meaning": "Enjoy your meal!",
+          "notes": "Same wish pattern as *Head aega!*"
+        },
+        {
+          "term": "Mulle meeldib.",
+          "meaning": "I like it.",
+          "notes": "Literally \"to me it is pleasing\". The person who likes takes *-le*: *mulle*, *sulle*."
+        }
+      ]
+    },
+    {
+      "name": "Getting around",
+      "cards": [
+        {
+          "term": "Kus on …?",
+          "meaning": "Where is …?"
+        },
+        {
+          "term": "Vabandage, kus on bussipeatus?",
+          "meaning": "Excuse me, where is the bus stop?",
+          "notes": "*Vabandage* is the formal \"excuse me\"."
+        },
+        {
+          "term": "bussipeatus",
+          "meaning": "bus stop",
+          "notes": "*buss* + *peatus* (stop)."
+        },
+        {
+          "term": "rongijaam",
+          "meaning": "train station",
+          "notes": "*rong* (train) + *jaam* (station)."
+        },
+        {
+          "term": "kesklinn",
+          "meaning": "city centre",
+          "notes": "*kesk* (middle) + *linn* (city)."
+        },
+        {
+          "term": "Kuidas ma saan kesklinna?",
+          "meaning": "How do I get to the city centre?",
+          "notes": "*kesklinna* here means \"to the centre\"."
+        },
+        {
+          "term": "Kas see buss läheb kesklinna?",
+          "meaning": "Does this bus go to the centre?"
+        },
+        {
+          "term": "paremale",
+          "meaning": "to the right"
+        },
+        {
+          "term": "vasakule",
+          "meaning": "to the left"
+        },
+        {
+          "term": "otse",
+          "meaning": "straight on"
+        },
+        {
+          "term": "lähedal",
+          "meaning": "nearby",
+          "notes": "The opposite is *kaugel*, \"far away\"."
+        },
+        {
+          "term": "pilet",
+          "meaning": "ticket"
+        },
+        {
+          "term": "Järgmine peatus …",
+          "meaning": "Next stop …",
+          "notes": "You hear it on buses and trams."
+        }
+      ]
+    },
+    {
+      "name": "Pharmacy and doctor",
+      "cards": [
+        {
+          "term": "apteek",
+          "meaning": "pharmacy"
+        },
+        {
+          "term": "perearst",
+          "meaning": "family doctor, GP",
+          "notes": "*pere* (family) + *arst* (doctor)."
+        },
+        {
+          "term": "Ma olen haige.",
+          "meaning": "I'm ill."
+        },
+        {
+          "term": "Mul on paha olla.",
+          "meaning": "I feel sick.",
+          "notes": "Literally \"to me it is bad to be\"."
+        },
+        {
+          "term": "Mul valutab pea.",
+          "meaning": "I have a headache.",
+          "notes": "Literally \"to me the head aches\". Swap *pea* for *kõht* (stomach) or *kurk* (throat)."
+        },
+        {
+          "term": "Mul on palavik.",
+          "meaning": "I have a fever.",
+          "notes": "*Mul on* means \"I have\", literally \"at me is\"."
+        },
+        {
+          "term": "Mul on vaja arsti.",
+          "meaning": "I need a doctor.",
+          "notes": "*vaja* means \"needed\"."
+        },
+        {
+          "term": "Ma sooviksin aega perearsti juurde.",
+          "meaning": "I'd like an appointment with my GP.",
+          "notes": "*aeg* (time) also means \"appointment\"."
+        },
+        {
+          "term": "Kutsuge kiirabi!",
+          "meaning": "Call an ambulance!",
+          "notes": "*kiirabi* is *kiir* (quick) + *abi* (help). The emergency number is 112."
+        },
+        {
+          "term": "retsept",
+          "meaning": "prescription",
+          "notes": "Also means \"recipe\"."
+        },
+        {
+          "term": "valuvaigisti",
+          "meaning": "painkiller",
+          "notes": "*valu* (pain) + *vaigisti* (something that calms)."
+        }
+      ]
+    }
+  ]
+}

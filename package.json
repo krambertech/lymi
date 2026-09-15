@@ -36,7 +36,8 @@
     "icons": "sh scripts/icons.sh",
     "i18n:extract": "pnpm -r --filter @lymi/web --filter @lymi/site i18n:extract",
     "i18n:check": "pnpm i18n:extract && git diff --exit-code --stat -- 'apps/*/src/locales/*.po'",
-    "local": "node scripts/local.mjs"
+    "local": "node scripts/local.mjs",
+    "load-deck": "node scripts/load-deck.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",

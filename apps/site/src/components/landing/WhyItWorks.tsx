@@ -88,15 +88,15 @@ export function WhyItWorks() {
       <div className="mx-auto mt-8 grid max-w-[860px] gap-8 @2xl:grid-cols-2 @2xl:gap-12">
         <div className="border-t border-edge pt-5">
           <p className="text-xs text-amber-text">
-            <Trans>After the first recall</Trans>
+            <Trans>Recall</Trans>
           </p>
           <h3 className="mt-2 text-lg font-medium text-text">
-            <Trans>Retrieving strengthens memory</Trans>
+            <Trans>Recalling beats rereading</Trans>
           </h3>
           <p className="mt-2 text-base text-text-2">
             <Trans>
-              Lymi asks before it shows. Trying to retrieve an idea strengthens later recall more
-              than simply reading it again, as{" "}
+              Lymi asks before it shows the answer. Trying to remember something makes it stick
+              better than reading it again, as{" "}
               <a
                 href="https://pubmed.ncbi.nlm.nih.gov/16507066/"
                 className="underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
@@ -109,20 +109,20 @@ export function WhyItWorks() {
         </div>
         <div className="border-t border-edge pt-5">
           <p className="text-xs text-amber-text">
-            <Trans>As the gaps widen</Trans>
+            <Trans>Spacing</Trans>
           </p>
           <h3 className="mt-2 text-lg font-medium text-text">
-            <Trans>Successful reviews buy time</Trans>
+            <Trans>Longer gaps, longer memory</Trans>
           </h3>
           <p className="mt-2 text-base text-text-2">
             <Trans>
-              When recall goes well, the next review can wait longer. In 2013,{" "}
+              Spreading reviews out helps you remember for longer. In 2013,{" "}
               <a
                 href="https://www.psychologicalscience.org/publications/journals/pspi/learning-techniques.html"
                 className="underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
               >
-                Dunlosky and colleagues rated practice testing and distributed practice as highly
-                effective techniques
+                Dunlosky and colleagues rated testing yourself and spacing out practice as highly
+                effective
               </a>
               .
             </Trans>

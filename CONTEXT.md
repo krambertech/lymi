@@ -6,7 +6,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 ### Content
 
-**Card**: One thing worth remembering: a term and whatever context it has. It may hold a word, a phrase or anything else, so the interface counts and names cards, never words. A card added by an integration is an ordinary card from the moment it lands. _Avoid_: Word, flashcard, entry, proposal, draft, suggestion
+**Card**: One thing worth remembering: a term and whatever context it has. It may hold a word, a phrase or anything else, so the interface counts and names cards, never words. A card added by an integration is an ordinary card from the moment it lands. The public site may say "flashcard" to name the category for people searching for one. _Avoid_: Word, flashcard, entry, proposal, draft, suggestion
 
 **Term**: What the card asks about, in the language being learned: a word, a phrase or anything else worth remembering. _Avoid_: Word, front
 

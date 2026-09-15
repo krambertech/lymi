@@ -358,7 +358,11 @@ export async function reorderSections(
  * Put cards of one deck in a section, or take them out of theirs. Schedules and history stay.
  * Cards already where they are asked to go change nothing and add nothing to Activity.
  */
-export async function setCardsSection(ctx: ServiceContext, deckId: string, input: CardSectionInput) {
+export async function setCardsSection(
+  ctx: ServiceContext,
+  deckId: string,
+  input: CardSectionInput,
+) {
   const { db, userId, actor } = ctx;
   await ownedDeck(ctx, deckId);
   if (input.sectionId) await activeSectionOf(ctx, deckId, input.sectionId);
@@ -459,10 +463,7 @@ export async function restoreSection(ctx: ServiceContext, id: string) {
       schema.sections,
       stillArchived,
     ),
-    db
-      .update(schema.sections)
-      .set({ archivedAt: null, updatedAt: now })
-      .where(stillArchived),
+    db.update(schema.sections).set({ archivedAt: null, updatedAt: now }).where(stillArchived),
   ]);
   return { ok: true as const };
 }

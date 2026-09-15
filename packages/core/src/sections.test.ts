@@ -56,16 +56,13 @@ describe("deckProgress", () => {
   });
 
   it("opens every section up to the last one started, with no gaps", () => {
-    expect(statuses([section("a"), section("b"), section("c", { opened: true }), section("d")])).toEqual(
-      ["open", "open", "open", "locked"],
-    );
+    expect(
+      statuses([section("a"), section("b"), section("c", { opened: true }), section("d")]),
+    ).toEqual(["open", "open", "open", "locked"]);
   });
 
   it("opens up to the last section with a studied card, so converted lessons keep their place", () => {
-    const progress = deckProgress(
-      [section("a"), section("b", { started: 1 }), section("c")],
-      true,
-    );
+    const progress = deckProgress([section("a"), section("b", { started: 1 }), section("c")], true);
     expect(progress.sections.map((s) => s.status)).toEqual(["open", "open", "locked"]);
     expect(progress.currentId).toBe("b");
   });
@@ -93,7 +90,7 @@ describe("deckProgress", () => {
       true,
     );
     expect(progress).toMatchObject({ currentId: "a", nextId: "b", ready: true });
-    expect(progress.sections.map((s) => s.status)).toEqual(["open", "open", "locked", "ready"]);
+    expect(progress.sections.map((s) => s.status)).toEqual(["open", "open", "open", "ready"]);
   });
 
   it("has no current or next once every section is open", () => {
@@ -116,10 +113,7 @@ describe("deckProgress", () => {
 });
 
 describe("sectionsToStart", () => {
-  const progress = deckProgress(
-    [section("a"), section("b"), section("c"), section("d")],
-    true,
-  );
+  const progress = deckProgress([section("a"), section("b"), section("c"), section("d")], true);
 
   it("opens the target and every locked section before it", () => {
     expect(sectionsToStart(progress, "c")).toEqual(["b", "c"]);

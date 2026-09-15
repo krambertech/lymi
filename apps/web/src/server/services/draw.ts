@@ -30,8 +30,8 @@ import type { Card } from "@lymi/core/schema";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { memberOf } from "./members";
-import { lockedSectionIds } from "./sections";
 import { askedSql, stateMode } from "./modes";
+import { lockedSectionIds } from "./sections";
 import { slippingCardIds } from "./slipping";
 
 /**

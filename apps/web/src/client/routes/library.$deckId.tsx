@@ -3,21 +3,31 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
+import {
+  ArchivedSectionsDialog,
+  ArchiveSectionDialog,
+  MoveToSectionDialog,
+  SectionNameDialog,
+  StartEarlyDialog,
+} from "../components/section-dialogs";
 import { MoveToSeriesDialog } from "../components/series-dialogs";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, type Card, errorMessage } from "../lib/api";
+import { api, type Card, errorMessage, type Section } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import {
+  archivedSectionsQuery,
   cardHistoryQuery,
   connectedAppsQuery,
   deckCardsQuery,
   decksQuery,
+  sectionsQuery,
   seriesQuery,
   streakQuery,
 } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
+import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
 import { DeckDetailView } from "../views/deck-detail-view";
 import { describeEvent } from "../views/word-view";
@@ -54,6 +64,28 @@ function DeckPage() {
   const series = useQuery({ ...seriesQuery, enabled: isOwner });
   const seriesActions = useSeriesActions();
   const [movingToSeries, setMovingToSeries] = useState(false);
+  const sections = useQuery(sectionsQuery(deckId));
+  const sectionActions = useSectionActions(deckId);
+  const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
+  const [archivingSection, setArchivingSection] = useState<Section | null>(null);
+  const [showArchived, setShowArchived] = useState(false);
+  const archivedSections = useQuery({ ...archivedSectionsQuery(deckId), enabled: showArchived });
+  const [picking, setPicking] = useState<{ cardIds: string[]; after: () => void } | null>(null);
+  const [startingEarly, setStartingEarly] = useState<{
+    section: Section;
+    opening: Section[];
+  } | null>(null);
+  const sectionList = sections.data?.sections ?? [];
+
+  /** Start a section; one with locked sections before it asks first, since they start too. */
+  const startSection = (section: Section) => {
+    const at = sectionList.findIndex((s) => s.id === section.id);
+    const opening = sectionList
+      .slice(0, at + 1)
+      .filter((s) => s.status !== "open" && (s.total > 0 || s.id === section.id));
+    if (opening.length > 1) setStartingEarly({ section, opening });
+    else sectionActions.start.mutate({ section, opening: 1 });
+  };
   const add = useAddCard();
   useDocumentTitle(deck?.name);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -153,6 +185,45 @@ function DeckPage() {
           setOpen(null);
           save.mutate({ id, patch: { deckId: toDeck } });
         }}
+        sections={sectionList}
+        progress={deck?.sectionsInOrder === false ? null : sections.data?.progress}
+        onStartSection={startSection}
+        startingSection={sectionActions.start.isPending}
+        sectionActions={
+          isOwner
+            ? {
+                onCreate: () => setNaming({}),
+                onShowArchived: () => setShowArchived(true),
+                onRename: (section) => setNaming({ section }),
+                onArchive: (section) =>
+                  section.total > 0
+                    ? setArchivingSection(section)
+                    : sectionActions.archive.mutate({ section, cards: "keep" }),
+                onAddCard: (section) => add.openCard(deckId, { sectionId: section.id }),
+                onMove: (section, by) => {
+                  const ids = sectionList.map((s) => s.id);
+                  const from = ids.indexOf(section.id);
+                  const to = from + by;
+                  if (from < 0 || to < 0 || to >= ids.length) return;
+                  ids.splice(from, 1);
+                  ids.splice(to, 0, section.id);
+                  sectionActions.reorder.mutate(ids);
+                },
+                onReorder: (ids) => sectionActions.reorder.mutate(ids),
+                onPickSection: (cardIds, after) => setPicking({ cardIds, after }),
+                onMoveCards: (cardIds, section) =>
+                  sectionActions.moveCards.mutate({
+                    cardIds,
+                    sectionId: section?.id ?? null,
+                    sectionName: section?.name ?? "",
+                    term:
+                      cardIds.length === 1
+                        ? cards.data?.find((row) => row.card.id === cardIds[0])?.card.term
+                        : undefined,
+                  }),
+              }
+            : undefined
+        }
         connectUrl={publicSiteUrl("/docs/mcp")}
         connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       />
@@ -163,6 +234,121 @@ function DeckPage() {
         onReopen={(card) => setEditingId(card.id)}
         // A card that moved is no longer in this deck's list, so it closes with the sheet.
         onSaved={(_card, movedFrom) => movedFrom && setOpen(null)}
+      />
+      {isOwner && (
+        <>
+          <SectionNameDialog
+            open={!!naming}
+            onOpenChange={(open) => {
+              if (open) return;
+              setNaming(null);
+              sectionActions.create.reset();
+              sectionActions.rename.reset();
+            }}
+            section={naming?.section}
+            pending={sectionActions.create.isPending || sectionActions.rename.isPending}
+            error={
+              sectionActions.create.isError
+                ? errorMessage(sectionActions.create.error)
+                : sectionActions.rename.isError
+                  ? errorMessage(sectionActions.rename.error)
+                  : undefined
+            }
+            onSubmit={async (name) => {
+              const renaming = naming?.section;
+              if (renaming) await sectionActions.rename.mutateAsync({ id: renaming.id, name });
+              else await sectionActions.create.mutateAsync({ name });
+              setNaming(null);
+            }}
+          />
+          <ArchiveSectionDialog
+            section={archivingSection}
+            onOpenChange={(open) => !open && setArchivingSection(null)}
+            onArchive={(choice) => {
+              if (archivingSection) {
+                sectionActions.archive.mutate({ section: archivingSection, cards: choice });
+              }
+              setArchivingSection(null);
+            }}
+          />
+          <ArchivedSectionsDialog
+            open={showArchived}
+            onOpenChange={setShowArchived}
+            sections={archivedSections.data?.sections}
+            onRestore={(section) => sectionActions.restore.mutate(section)}
+            restoring={
+              sectionActions.restore.isPending ? sectionActions.restore.variables?.id : undefined
+            }
+            error={archivedSections.isError ? errorMessage(archivedSections.error) : undefined}
+          />
+          <MoveToSectionDialog
+            open={!!picking}
+            onOpenChange={(open) => {
+              if (open) return;
+              setPicking(null);
+              sectionActions.create.reset();
+            }}
+            count={picking?.cardIds.length ?? 0}
+            term={
+              picking?.cardIds.length === 1
+                ? cards.data?.find((row) => row.card.id === picking.cardIds[0])?.card.term
+                : undefined
+            }
+            current={(() => {
+              const rows = cards.data?.filter((row) => picking?.cardIds.includes(row.card.id));
+              const first = rows?.[0]?.card.sectionId ?? null;
+              return rows?.every((row) => row.card.sectionId === first) ? first : undefined;
+            })()}
+            sections={sectionList}
+            onMove={(section) => {
+              if (!picking) return;
+              sectionActions.moveCards.mutate({
+                cardIds: picking.cardIds,
+                sectionId: section?.id ?? null,
+                sectionName: section?.name ?? "",
+                term:
+                  picking.cardIds.length === 1
+                    ? cards.data?.find((row) => row.card.id === picking.cardIds[0])?.card.term
+                    : undefined,
+              });
+              picking.after();
+              setPicking(null);
+            }}
+            creating={sectionActions.create.isPending}
+            error={
+              sectionActions.create.isError ? errorMessage(sectionActions.create.error) : undefined
+            }
+            onCreate={async (name) => {
+              if (!picking) return;
+              // One write, so a failure never leaves an empty section behind.
+              const created = await sectionActions.create.mutateAsync({
+                name,
+                cardIds: picking.cardIds,
+              });
+              const sectionName = created.name;
+              toast.add({
+                id: `move-cards-${deckId}`,
+                title: t`Moved to ${sectionName}`,
+              });
+              picking.after();
+              setPicking(null);
+              sectionActions.create.reset();
+            }}
+          />
+        </>
+      )}
+      <StartEarlyDialog
+        target={startingEarly}
+        onOpenChange={(open) => !open && setStartingEarly(null)}
+        onStart={() => {
+          if (startingEarly) {
+            sectionActions.start.mutate({
+              section: startingEarly.section,
+              opening: startingEarly.opening.length,
+            });
+          }
+          setStartingEarly(null);
+        }}
       />
       {deck && isOwner && (
         <MoveToSeriesDialog

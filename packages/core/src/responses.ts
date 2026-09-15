@@ -205,10 +205,9 @@ export const CardOut = z
     language: z.string().nullable().meta({ description: "BCP 47 tag, or null" }),
     tags: z.array(z.string()),
     source: z.string().nullable().meta({ description: "Free text: where the card came from" }),
-    sectionId: z
-      .string()
-      .nullable()
-      .meta({ description: "The card's active section. Null without one, and while it is archived." }),
+    sectionId: z.string().nullable().meta({
+      description: "The card's active section. Null without one, and while it is archived.",
+    }),
     directions: Directions.nullable().meta({
       description: "Legacy form of `reviewModes`. Overrides the deck when set.",
     }),

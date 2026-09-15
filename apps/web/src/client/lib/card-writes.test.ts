@@ -18,6 +18,7 @@ const values = (p: Partial<CardFormValues> = {}): CardFormValues => ({
   reviewModes: null,
   picture: { kind: "none" },
   description: "",
+  sectionId: null,
   ...p,
 });
 

@@ -199,11 +199,9 @@ export type SectionArchiveInput = z.infer<typeof SectionArchiveInput>;
 /** Put many cards of one deck in a section, or take them out of theirs. */
 export const CardSectionInput = z.object({
   cardIds: CardIds.min(1, "Choose at least one card."),
-  sectionId: z
-    .string()
-    .min(1)
-    .nullable()
-    .meta({ description: "An active section of the same deck. Null takes the cards out of theirs." }),
+  sectionId: z.string().min(1).nullable().meta({
+    description: "An active section of the same deck. Null takes the cards out of theirs.",
+  }),
 });
 export type CardSectionInput = z.infer<typeof CardSectionInput>;
 

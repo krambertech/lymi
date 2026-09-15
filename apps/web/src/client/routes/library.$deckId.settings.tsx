@@ -4,7 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { api, errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { deckCardsQuery, decksQuery, joinLinkQuery } from "../lib/queries";
+import { deckCardsQuery, decksQuery, joinLinkQuery, sectionsQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/deck-settings-view";
 
@@ -23,6 +23,7 @@ function DeckSettings() {
   // The oldest card with a meaning, so the direction rows read the same way twice running.
   const isOwner = deck?.role === "owner";
   const joinLink = useQuery({ ...joinLinkQuery(deckId), enabled: isOwner });
+  const sections = useQuery({ ...sectionsQuery(deckId), enabled: isOwner });
   const example = cards.data?.filter((c) => c.card.meaning).at(-1)?.card;
 
   const [saved, setSaved] = useState(false);
@@ -74,6 +75,7 @@ function DeckSettings() {
       saved={saved}
       error={save.isError ? errorMessage(save.error) : undefined}
       onArchive={() => archive.mutate()}
+      sectionCount={sections.data?.sections.length}
       sharing={
         isOwner
           ? {

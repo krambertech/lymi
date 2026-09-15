@@ -10,9 +10,10 @@ import { type DirectionExample, DirectionField, LanguageField } from "../compone
 import { RadioCard } from "../components/radio-card";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
-import { Field, FieldDescription, FieldLabel } from "../components/ui/field";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
+import { Switch } from "../components/ui/switch";
 import { Textarea } from "../components/ui/textarea";
 import type { DeckSummary } from "../lib/api";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
@@ -23,6 +24,7 @@ export interface DeckSettingsPatch {
   description?: string | null;
   defaultLanguage?: string | null;
   directions?: Directions;
+  sectionsInOrder?: boolean;
 }
 
 export interface DeckSettingsProps {
@@ -35,6 +37,8 @@ export interface DeckSettingsProps {
   saved?: boolean | undefined;
   error?: string | undefined;
   onArchive?: (() => void) | undefined;
+  /** How many active sections the deck has; the setting that orders them shows only with some. */
+  sectionCount?: number | undefined;
   /** The owner's join-link controls. Absent for a member, who cannot share the deck. */
   sharing?: SharingProps | undefined;
   static?: StaticNav;
@@ -66,6 +70,7 @@ export function DeckSettingsView({
   saved,
   error,
   onArchive,
+  sectionCount = 0,
   sharing,
   static: st,
 }: DeckSettingsProps) {
@@ -205,6 +210,28 @@ export function DeckSettingsView({
               total={deck.total}
             />
           </SettingsGroup>
+
+          {sectionCount > 0 && (
+            <SettingsGroup title={t`Sections`}>
+              <Field orientation="horizontal" className="items-start justify-between gap-4">
+                <FieldContent>
+                  <FieldLabel>{t`Open sections in order`}</FieldLabel>
+                  <FieldDescription>
+                    {deck.sectionsInOrder
+                      ? t`Everyone studying this deck starts with the first section. The next one is ready once every card of the current one has come up and 80% are Known. Anyone can start a section early.`
+                      : t`Every section is open, and every card comes up in review. Turning this on again keeps what each person already started.`}
+                  </FieldDescription>
+                </FieldContent>
+                {/* One line tall at the label's size, so the track centres on the label's first line. */}
+                <span className="flex h-lh shrink-0 items-center text-base">
+                  <Switch
+                    checked={deck.sectionsInOrder}
+                    onCheckedChange={(sectionsInOrder) => onSave({ sectionsInOrder })}
+                  />
+                </span>
+              </Field>
+            </SettingsGroup>
+          )}
 
           {sharing && <SharingGroup {...sharing} />}
 

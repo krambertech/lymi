@@ -1,27 +1,19 @@
 import { describe, expect, it } from "vitest";
-import type { Card, CardState } from "./api";
-import {
-  type DeckRow,
-  dueBucket,
-  filterRows,
-  groupRows,
-  lessonsOf,
-  noFilters,
-  splitForms,
-} from "./deck-list";
+import type { Card, CardState, Section } from "./api";
+import { type DeckRow, dueBucket, filterRows, groupRows, noFilters, splitForms } from "./deck-list";
 
 const day = 86_400_000;
 const now = new Date(2026, 8, 15, 10, 0).getTime();
 
 function row(
   id: string,
-  opts: { term?: string; source?: string | null; added?: number; state?: number; due?: number },
+  opts: { term?: string; section?: string | null; added?: number; state?: number; due?: number },
 ): DeckRow {
   const card = {
     id,
     term: opts.term ?? id,
     meaning: `meaning of ${id}`,
-    source: opts.source ?? null,
+    sectionId: opts.section ?? null,
     createdAt: new Date(now - (opts.added ?? 0) * day),
   } as unknown as Card;
   const state =
@@ -32,13 +24,16 @@ function row(
 }
 
 const rows = [
-  row("dueNow", { source: "Lesson 5", added: 1, state: 1, due: -0.1 }),
-  row("dueLaterToday", { source: "Lesson 5", added: 2, state: 2, due: 0.3 }),
-  row("dueInFive", { source: "Lesson 4", added: 9, state: 2, due: 5 }),
-  row("dueInForty", { source: "Lesson 4", added: 10, state: 2, due: 40 }),
-  row("fresh", { source: null, added: 0, state: 0 }),
-  row("unstarted", { source: "Lesson 5", added: 3 }),
+  row("dueNow", { section: "s5", added: 1, state: 1, due: -0.1 }),
+  row("dueLaterToday", { section: "s5", added: 2, state: 2, due: 0.3 }),
+  row("dueInFive", { section: "s4", added: 9, state: 2, due: 5 }),
+  row("dueInForty", { section: "s4", added: 10, state: 2, due: 40 }),
+  row("fresh", { section: null, added: 0, state: 0 }),
+  row("unstarted", { section: "s5", added: 3 }),
 ];
+
+const section = (id: string) => ({ id, name: id }) as Section;
+const sections = [section("s4"), section("s5"), section("s6")];
 
 describe("dueBucket", () => {
   it("puts a relearning card that is due in Due now and a new one in Not started", () => {
@@ -64,13 +59,14 @@ describe("filterRows", () => {
   it("combines states within a filter and filters with each other", () => {
     const known = filterRows(rows, { ...noFilters, states: ["known"] }, "", now);
     expect(ids(known)).toEqual(["dueLaterToday", "dueInFive", "dueInForty"]);
-    const knownInLesson4 = filterRows(
+    const knownInS4 = filterRows(
       rows,
-      { ...noFilters, states: ["known", "new"], lessons: ["Lesson 4", ""] },
+      { ...noFilters, states: ["known", "new"], sections: ["s4", ""] },
       "",
       now,
+      sections,
     );
-    expect(ids(knownInLesson4)).toEqual(["dueInFive", "dueInForty", "fresh"]);
+    expect(ids(knownInS4)).toEqual(["dueInFive", "dueInForty", "fresh"]);
   });
 
   it("takes today as the rest of the local day and never counts a new card as due", () => {
@@ -90,13 +86,36 @@ describe("groupRows", () => {
   const shape = (sort: Parameters<typeof groupRows>[1]) =>
     groupRows(rows, sort, now, "en").map((g) => [g.key, g.rows.map((r) => r.card.id)]);
 
-  it("groups by lesson, newest lesson first and no lesson last", () => {
-    expect(lessonsOf(rows)).toEqual(["Lesson 5", "Lesson 4", ""]);
-    expect(shape("lesson")).toEqual([
-      ["lesson:Lesson 5", ["dueNow", "dueLaterToday", "unstarted"]],
-      ["lesson:Lesson 4", ["dueInFive", "dueInForty"]],
-      ["lesson:", ["fresh"]],
+  it("groups by section in section order, oldest card first, with no section last", () => {
+    const groups = groupRows(rows, "section", now, "en", sections);
+    expect(groups.map((g) => [g.key, g.rows.map((r) => r.card.id)])).toEqual([
+      ["section:s4", ["dueInForty", "dueInFive"]],
+      ["section:s5", ["unstarted", "dueLaterToday", "dueNow"]],
+      ["section:", ["fresh"]],
     ]);
+  });
+
+  it("keeps an empty section only when asked, so the owner can drop cards in it", () => {
+    const keys = (withEmpty: boolean) =>
+      groupRows(rows, "section", now, "en", sections, withEmpty).map((g) => g.key);
+    expect(keys(false)).not.toContain("section:s6");
+    expect(keys(true)).toEqual(["section:s4", "section:s5", "section:s6", "section:"]);
+  });
+
+  it("treats a card in a section that is not listed as having none", () => {
+    const groups = groupRows(rows, "section", now, "en", [section("s4")]);
+    expect(groups.at(-1)?.rows.map((r) => r.card.id)).toEqual([
+      "unstarted",
+      "dueLaterToday",
+      "dueNow",
+      "fresh",
+    ]);
+  });
+
+  it("shows a deck without sections as one list, newest first", () => {
+    const groups = groupRows(rows, "section", now, "en", []);
+    expect(groups.map((g) => g.key)).toEqual(["all"]);
+    expect(groups[0]?.rows[0]?.card.id).toBe("fresh");
   });
 
   it("groups by when a card is back and leaves out empty groups", () => {

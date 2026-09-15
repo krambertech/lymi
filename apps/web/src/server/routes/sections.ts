@@ -44,8 +44,7 @@ deckSections.get(
     errors: [400, 404],
   }),
   query(ListQuery, "query"),
-  async (c) =>
-    c.json(await listSections(ctxOf(c), c.req.param("id"), c.req.valid("query"))),
+  async (c) => c.json(await listSections(ctxOf(c), c.req.param("id"), c.req.valid("query"))),
 );
 
 deckSections.post(
@@ -59,8 +58,7 @@ deckSections.post(
     errors: [400, 404],
   }),
   body(SectionInput, "section"),
-  async (c) =>
-    c.json(await createSection(ctxOf(c), c.req.param("id"), c.req.valid("json")), 201),
+  async (c) => c.json(await createSection(ctxOf(c), c.req.param("id"), c.req.valid("json")), 201),
 );
 
 deckSections.put(
@@ -74,8 +72,7 @@ deckSections.put(
     errors: [400, 404, 409],
   }),
   body(SectionOrderInput, "order"),
-  async (c) =>
-    c.json(await reorderSections(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+  async (c) => c.json(await reorderSections(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
 );
 
 deckSections.put(
@@ -89,8 +86,7 @@ deckSections.put(
     errors: [400, 404],
   }),
   body(CardSectionInput, "move"),
-  async (c) =>
-    c.json(await setCardsSection(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+  async (c) => c.json(await setCardsSection(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
 );
 
 /** Routes on one section: `/api/sections/:id`. */
@@ -106,8 +102,7 @@ sections.patch(
     errors: [400, 404],
   }),
   body(SectionPatch, "section"),
-  async (c) =>
-    c.json(await renameSection(ctxOf(c), c.req.param("id"), c.req.valid("json").name)),
+  async (c) => c.json(await renameSection(ctxOf(c), c.req.param("id"), c.req.valid("json").name)),
 );
 
 sections.post(
@@ -121,8 +116,7 @@ sections.post(
     errors: [400, 404],
   }),
   body(SectionArchiveInput, "archive"),
-  async (c) =>
-    c.json(await archiveSection(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+  async (c) => c.json(await archiveSection(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
 );
 
 sections.post(

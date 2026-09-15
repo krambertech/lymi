@@ -506,7 +506,9 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       ...readTool,
     },
     ({ deckId, archived }) =>
-      run("list_sections", async () => sectionsResult(await listSections(ctx, deckId, { archived }))),
+      run("list_sections", async () =>
+        sectionsResult(await listSections(ctx, deckId, { archived })),
+      ),
   );
 
   server.registerTool(
@@ -1164,7 +1166,9 @@ const SectionListOut = z.object({
       ready: z.boolean(),
     })
     .nullable()
-    .describe("Where the learner is. Null when the deck has no sections with cards or does not open them in order."),
+    .describe(
+      "Where the learner is. Null when the deck has no sections with cards or does not open them in order.",
+    ),
 });
 
 type SectionList = Awaited<ReturnType<typeof listSections>>;

@@ -68,14 +68,19 @@ export async function presentCards(db: Db, cards: readonly Card[]): Promise<Card
       );
     for (const row of rows) images.set(row.cardId, row);
   }
-  const sectionIds = [...new Set(cards.flatMap((card) => (card.sectionId ? [card.sectionId] : [])))];
+  const sectionIds = [
+    ...new Set(cards.flatMap((card) => (card.sectionId ? [card.sectionId] : []))),
+  ];
   const activeSections = new Set<string>();
   for (let i = 0; i < sectionIds.length; i += 90) {
     const rows = await db
       .select({ id: schema.sections.id })
       .from(schema.sections)
       .where(
-        and(inArray(schema.sections.id, sectionIds.slice(i, i + 90)), isNull(schema.sections.archivedAt)),
+        and(
+          inArray(schema.sections.id, sectionIds.slice(i, i + 90)),
+          isNull(schema.sections.archivedAt),
+        ),
       );
     for (const row of rows) activeSections.add(row.id);
   }

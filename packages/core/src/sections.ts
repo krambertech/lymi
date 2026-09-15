@@ -88,7 +88,11 @@ export function deckProgress(sections: SectionStanding[], inOrder: boolean): Dec
 
   return {
     sections: sections.map((s, i) =>
-      base(s, i <= lastOpen ? "open" : i === nextIndex && ready ? "ready" : "locked"),
+      // A section without cards has nothing to wait for, so it never shows as locked.
+      base(
+        s,
+        i <= lastOpen || s.total === 0 ? "open" : i === nextIndex && ready ? "ready" : "locked",
+      ),
     ),
     currentId: current?.id ?? null,
     nextId: nextIndex === -1 ? null : (sections[nextIndex]?.id ?? null),

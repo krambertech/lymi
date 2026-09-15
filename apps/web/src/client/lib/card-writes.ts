@@ -16,6 +16,7 @@ export function addInput(values: CardFormValues): CardInput {
     ...(values.source ? { source: values.source } : {}),
     ...(values.tags.length ? { tags: values.tags } : {}),
     ...(values.reviewModes ? { reviewModes: values.reviewModes.map(modeOf) } : {}),
+    ...(values.sectionId ? { sectionId: values.sectionId } : {}),
   };
 }
 
@@ -40,6 +41,7 @@ export function cardPatch(card: Card, values: CardFormValues): CardPatch {
   if (values.notes !== (card.notes ?? "")) patch.notes = values.notes;
   if (values.source !== (card.source ?? "")) patch.source = values.source;
   if (values.language !== card.language) patch.language = values.language;
+  if (values.sectionId !== card.sectionId) patch.sectionId = values.sectionId;
   if (!same(values.tags, card.tags)) patch.tags = values.tags;
   const current = card.reviewModes?.map(modeKey) ?? null;
   if (!same(values.reviewModes, current)) {

@@ -3,7 +3,7 @@
 A private-first vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, and remember them with spaced repetition.
 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
-- [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts
+- [DESIGN.md](DESIGN.md): system-wide tokens, components and interaction rules, with links to feature design in `docs/design`
 - `/design` on the local dev server: the design system rendered with the real components (local only)
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`

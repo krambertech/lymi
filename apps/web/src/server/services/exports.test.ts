@@ -334,10 +334,20 @@ async function snapshot(ctx: ServiceContext) {
   );
 }
 
+let library$: ReturnType<typeof buildShared> | undefined;
+async function buildShared() {
+  const owner = await fresh("Owner");
+  return { owner, ...(await library(owner)) };
+}
+/** One owner's library, built once: storing its pictures is the slow part, and each test only reads it. */
+const shared = () => {
+  library$ ??= buildShared();
+  return library$;
+};
+
 describe("exporting the library as a Lymi zip", () => {
   it("imports into an empty account with every deck, card, tag, picture, mode, due date and review", async () => {
-    const owner = await fresh("Owner");
-    await library(owner);
+    const { owner } = await shared();
     const { bytes, view } = await runExport(owner, { format: "lymi" });
     expect(view).toMatchObject({
       status: "done",
@@ -402,8 +412,7 @@ describe("exporting the library as a Lymi zip", () => {
   }, 60_000);
 
   it("writes one deck, and a second request while it is written returns the same export", async () => {
-    const owner = await fresh("Owner");
-    const { italian } = await library(owner);
+    const { owner, italian } = await shared();
     const first = await startExport(owner, { format: "lymi", deckId: italian.id }, async () => {});
     const again = await startExport(owner, { format: "lymi", deckId: italian.id }, async () => {
       throw new Error("no second run");
@@ -431,8 +440,7 @@ describe("exporting the library as a Lymi zip", () => {
 
 describe("exporting an Anki package", () => {
   it("writes a sound legacy collection that the Anki importer reads back with its schedule", async () => {
-    const owner = await fresh("Owner");
-    const { gatto } = await library(owner);
+    const { owner, gatto } = await shared();
     const { bytes, view } = await runExport(owner, { format: "anki" });
     expect(view).toMatchObject({
       fileName: expect.stringMatching(/\.apkg$/),
@@ -498,8 +506,7 @@ describe("exporting an Anki package", () => {
 
 describe("a shared deck's export", () => {
   it("holds the deck's cards and only the member's own history", async () => {
-    const owner = await fresh("Owner");
-    const { italian, gatto } = await library(owner);
+    const { italian, gatto } = await shared();
     const member = await fresh("Member");
     await join(member, italian.id);
     await gradeCard(member, {
@@ -527,8 +534,7 @@ describe("a shared deck's export", () => {
 
 describe("who can reach an export", () => {
   it("is the learner who asked, until the window ends, and the files are then deleted", async () => {
-    const owner = await fresh("Owner");
-    const { italian } = await library(owner);
+    const { owner, italian } = await shared();
     const stranger = await fresh("Stranger");
     await expect(
       startExport(stranger, { format: "anki", deckId: italian.id }, async () => {}),
@@ -552,8 +558,7 @@ describe("who can reach an export", () => {
   }, 60_000);
 
   it("gives up on an export that stalled and deletes what it wrote", async () => {
-    const owner = await fresh("Owner");
-    await library(owner);
+    const { owner } = await shared();
     const started = await startExport(owner, { format: "lymi" }, async () => {});
     await writeExportData(owner, started.id, storage());
     const [row] = await db
@@ -569,8 +574,7 @@ describe("who can reach an export", () => {
   }, 60_000);
 
   it("audits the request and the finished file for Activity", async () => {
-    const owner = await fresh("Owner");
-    await library(owner);
+    const { owner } = await shared();
     const { id } = await runExport(owner, { format: "anki" });
     const audit = await db
       .select()

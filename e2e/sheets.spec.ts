@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page, test } from "@playwright/test";
+import { expect, type Locator, type Page, test } from "./test";
 
 /**
  * A form sheet on a touch device is a drawer, put away with the thumb. The rest of its behavior is

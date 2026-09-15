@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./test";
 
 /**
  * A menu on a touch device is a drawer, and a drawer is put away with the thumb. The rest of the

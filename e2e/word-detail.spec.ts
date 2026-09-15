@@ -1,5 +1,5 @@
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 async function createDeck(page: Page, name: string): Promise<string> {
   const res = await page.request.post("/api/decks", {

@@ -1,6 +1,6 @@
 import { crc32, deflateSync } from "node:zlib";
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 /** A solid PNG with a lighter square in it, so a crop has something to move. */
 function png(width: number, height: number): Buffer {

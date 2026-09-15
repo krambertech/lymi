@@ -23,6 +23,8 @@ pnpm exec playwright install chromium webkit
 
 `scripts/e2e-server.mjs` clears only its three isolated Wrangler state directories, applies every D1 migration, builds both applications, starts the site Worker on port 4174, starts the production-built product package on port 4175 for PWA installation and offline-shell coverage, and starts the product through Vite on port 4173 for the interactive journeys. Its short-lived variable files contain local-only credentials. It never overwrites a pre-existing developer file, removes the files it creates on exit, and does not touch normal Wrangler state, a developer's `.dev.vars`, or any remote Cloudflare binding.
 
+Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test.
+
 ## Component tests in real browsers
 
 Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components` project in `apps/web/vite.config.ts`. Each test runs three times: desktop Chromium at 1280 px with a fine pointer, and Chromium and WebKit as a 390 px touch device. A test reads `inject("machine")` to know which shape to expect, so one file proves both shapes of an adaptive component. `pnpm test` runs them after the unit tests, so the browsers must be installed. Workers Builds sets `WORKERS_CI=1` and has no browsers, so the production build skips this project and relies on GitHub CI, which runs it before merge:

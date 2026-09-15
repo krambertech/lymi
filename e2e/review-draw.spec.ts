@@ -1,5 +1,5 @@
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 /** A forgotten card returns within the review, and the same log gives the same next card anywhere, ADR 0019. */
 

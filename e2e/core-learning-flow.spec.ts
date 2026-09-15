@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, test } from "./test";
 
 test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
   await page.goto("/library?from=reminder&deck=italian");

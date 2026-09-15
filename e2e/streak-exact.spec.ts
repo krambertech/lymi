@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, test } from "./test";
 
 /**
  * Nine consecutive backdated days, each meeting a goal of one review. A run counted from a

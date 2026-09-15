@@ -1,5 +1,5 @@
-import { expect, type Locator, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Locator, type Page, test } from "./test";
 
 /** Series are optional: decks gather into one, review together, and leave or come back whole. */
 

@@ -1,5 +1,5 @@
-import { expect, type Page, type TestInfo } from "@playwright/test";
 import { type E2EAccount, e2eEmail } from "./settings.mjs";
+import { expect, type Page, type TestInfo } from "./test";
 
 const password = "lymi-e2e-password";
 

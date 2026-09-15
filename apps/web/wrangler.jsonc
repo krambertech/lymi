@@ -29,6 +29,8 @@
     "PRODUCT_URL": "https://my.lymi.app",
     // Comma-separated. Only these Google accounts can sign in while the app is private.
     "ALLOWED_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com",
+    // Comma-separated. Accounts that may exercise operational capabilities.
+    "OPERATOR_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com",
     // Comma-separated. Accounts that may publish decks they own to the public catalog. ADR 0020.
     "PUBLISHER_EMAILS": ""
   },
@@ -55,6 +57,12 @@
   ],
   // Decodes, resizes and re-encodes uploads; WebP output carries no metadata.
   "images": { "binding": "IMAGES" },
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "allowed_sender_addresses": ["notifications@lymi.app"]
+    }
+  ],
   "kv_namespaces": [
     {
       "binding": "SESSIONS",

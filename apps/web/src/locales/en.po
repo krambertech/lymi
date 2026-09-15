@@ -1466,6 +1466,9 @@ msgstr "Has a picture"
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
 
+msgid "Hello,"
+msgstr "Hello,"
+
 msgid "History"
 msgstr "History"
 
@@ -2671,6 +2674,9 @@ msgstr "Terms, meanings and due dates in a .csv file, without pictures or review
 msgid "Terms, meanings and due dates in a .csv file, without review history."
 msgstr "Terms, meanings and due dates in a .csv file, without review history."
 
+msgid "Test email from Lymi"
+msgstr "Test email from Lymi"
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
 
@@ -2827,6 +2833,9 @@ msgstr "This link is missing the app that asked. Start again from the app."
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "This takes a few seconds for most files. Nothing is added to your decks yet."
+
+msgid "This test confirms that Lymi can send account emails."
+msgstr "This test confirms that Lymi can send account emails."
 
 msgid "This week"
 msgstr "This week"
@@ -3039,6 +3048,9 @@ msgstr "You cannot add this deck."
 
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."
+
+msgid "You don’t need to do anything."
+msgstr "You don’t need to do anything."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "You were removed from this deck, so this link cannot add you back. Your reviews are kept."

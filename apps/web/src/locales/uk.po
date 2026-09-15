@@ -1466,6 +1466,9 @@ msgstr "Є картинка"
 msgid "Head back to the app. You can close this tab."
 msgstr "Повернися до застосунку. Цю вкладку можна закрити."
 
+msgid "Hello,"
+msgstr "Вітаємо,"
+
 msgid "History"
 msgstr "Історія"
 
@@ -2671,6 +2674,9 @@ msgstr "Терміни, значення й дати повторення у ф�
 msgid "Terms, meanings and due dates in a .csv file, without review history."
 msgstr "Терміни, значення й дати повторення у файлі .csv, без історії повторень."
 
+msgid "Test email from Lymi"
+msgstr "Тестовий лист від Lymi"
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не вдалося. Онови сторінку й повтори спробу."
 
@@ -2827,6 +2833,9 @@ msgstr "У цьому посиланні немає застосунку, яки
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "Для більшості файлів це займає кілька секунд. У колоди поки нічого не додано."
+
+msgid "This test confirms that Lymi can send account emails."
+msgstr "Цей тест підтверджує, що Lymi може надсилати листи про обліковий запис."
 
 msgid "This week"
 msgstr "Цього тижня"
@@ -3039,6 +3048,9 @@ msgstr "Ти не можеш додати цю колоду."
 
 msgid "You cannot join this deck through this link."
 msgstr "Через це посилання не можна приєднатися до цієї колоди."
+
+msgid "You don’t need to do anything."
+msgstr "Нічого робити не потрібно."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "Тебе прибрали з цієї колоди, тому це посилання не додасть тебе знову. Твої повторення збережено."

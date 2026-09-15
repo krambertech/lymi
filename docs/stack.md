@@ -130,6 +130,12 @@ Claude Desktop and Codex both require OAuth for remote MCP servers, which is why
 
 Every key and every OAuth grant carries one scope, `read` or `write`. Write allows creating, editing and archiving decks and cards. Nothing an integration holds can grade a review.
 
+### Transactional email: Cloudflare Email Service from the product Worker
+
+The product Worker sends account email through a restricted Cloudflare Email Service binding from `notifications@lymi.app`, with replies going to `hello@lymi.app`. Services name the message kind, recipient and app language; the email boundary renders both plain text and simple HTML from the same English-source Lingui catalog as the product. Loopback development writes to an in-memory outbox instead of contacting Cloudflare, and browser tests read that outbox through a development-only route. The hidden production smoke test is learner-session only and further restricted by `OPERATOR_EMAILS`; every successful send records its kind and delivery path in the audit trail without the recipient or body.
+
+Cloudflare Email Service won over Resend because it is a native Worker binding with no additional secret or data processor, sends to arbitrary recipients after the domain is onboarded, and includes 3,000 outbound emails per month on Workers Paid before usage pricing. Resend remains the fallback if production inbox tests fail or Cloudflare's account-specific daily quota does not cover public sign-up volume. The domain must be onboarded and its generated SPF, DKIM and DMARC records published before the binding is deployed; the exact record values come from `wrangler email sending dns get lymi.app` after onboarding.
+
 ### Spaced repetition: ts-fsrs
 
 FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline) and the server (to validate and persist). Grades and intervals are the algorithm's, not invented. One 10-minute learning step sets FSRS state only; which card comes next, and when a missed card returns, is the weighted draw in `packages/core/src/draw.ts` ([ADR 0019](adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md)).

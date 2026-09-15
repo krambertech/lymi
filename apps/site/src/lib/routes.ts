@@ -6,15 +6,15 @@ export const localizedPages = {
   estonian: "/languages/estonian",
   assistants: "/ai-assistants",
   teachers: "/teachers",
+  privacy: "/privacy",
 } as const;
 export type LocalizedPage = keyof typeof localizedPages;
 
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];
 
-/** Legal text and developer documentation stay in English on purpose. */
+/** Terms, support and developer documentation stay in English on purpose. */
 export const englishOnlyPaths = [
-  "/privacy",
   "/terms",
   "/support",
   "/docs",

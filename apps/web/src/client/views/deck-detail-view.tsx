@@ -25,7 +25,6 @@ import {
   useState,
 } from "react";
 import { Button, IconButton } from "../components/button";
-import { Chip } from "../components/chip";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { NoResults } from "../components/empty-state";
 import { NextStep, NextSteps } from "../components/next-steps";
@@ -255,35 +254,22 @@ function DeckPlates({
             </Button>
           )}
         </section>
-        {/* Four columns hold a count in the hundreds only on a wide plate; a narrow one stacks the total over chips. */}
-        <div className="edge grid gap-3 rounded-xl bg-plate p-5 @md/plates:hidden">
-          <p className="text-xl font-semibold proportional-nums">
-            <Plural value={total} one="# card" other="# cards" />
-          </p>
-          <div className="flex flex-wrap gap-1.5">
-            <Chip className={clsx("proportional-nums!", counts.new === 0 && "text-muted")}>
-              <StateIcon state="new" className="size-3" />
-              <Trans>{counts.new} new</Trans>
-            </Chip>
-            <Chip className={clsx("proportional-nums!", counts.learning === 0 && "text-muted")}>
-              <StateIcon state="learning" className="size-3" />
-              <Trans>{counts.learning} learning</Trans>
-            </Chip>
-            <Chip className={clsx("proportional-nums!", counts.known === 0 && "text-muted")}>
-              <StateIcon state="known" className="size-3" />
-              <Trans>{counts.known} known</Trans>
-            </Chip>
-          </div>
-        </div>
-        <dl className="edge hidden grid-cols-4 items-center rounded-xl bg-plate py-4 divide-x divide-edge @md/plates:grid">
-          <div className="grid justify-items-center gap-0.5 px-2">
+        {/* A narrow plate cannot fit four counts in the hundreds, so the total takes its own row there. */}
+        <dl className="edge grid grid-cols-3 items-center rounded-xl bg-plate py-4 @md/plates:grid-cols-4">
+          <div className="col-span-3 grid justify-items-center gap-0.5 border-b border-edge px-2 pb-3 @md/plates:col-span-1 @md/plates:border-b-0 @md/plates:pb-0">
             <dt className="order-last text-sm text-muted">
               <Trans context="cards in this deck">Total</Trans>
             </dt>
             <dd className="text-xl font-semibold proportional-nums">{i18n.number(total)}</dd>
           </div>
           {(["new", "learning", "known"] as const).map((key) => (
-            <div key={key} className="grid justify-items-center gap-0.5 px-2">
+            <div
+              key={key}
+              className={clsx(
+                "grid justify-items-center gap-0.5 border-edge px-2 pt-3 @md/plates:border-s @md/plates:pt-0",
+                key !== "new" && "border-s",
+              )}
+            >
               <dt className="order-last text-sm text-muted">
                 {i18n._(stateMarks[key].groupLabel)}
               </dt>

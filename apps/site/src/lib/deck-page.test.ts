@@ -114,7 +114,7 @@ describe("stackCards", () => {
       seed = (seed * 16807) % 2147483647;
       return (seed - 1) / 2147483646;
     };
-    const stack = stackCards(deck({ sections: sections(5) }), STACK_SIZE, random);
+    const stack = stackCards(deck({ sections: sections(4) }), STACK_SIZE, random);
     expect(stack).toHaveLength(STACK_SIZE);
     expect(new Set(stack.map((card) => card.term)).size).toBe(STACK_SIZE);
     expect(new Set(stack.map((card) => card.section)).size).toBeGreaterThan(1);

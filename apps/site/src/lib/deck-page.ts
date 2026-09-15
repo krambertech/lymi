@@ -6,7 +6,7 @@ const SITE = "https://lymi.app";
 /** The most cards laid out at the top of the page. */
 export const SPREAD_SIZE = 5;
 /** How many cards the stack under How it works holds. */
-export const STACK_SIZE = 8;
+export const STACK_SIZE = 5;
 
 export type DeckCard = { term: string; meaning: string; section: string | null };
 

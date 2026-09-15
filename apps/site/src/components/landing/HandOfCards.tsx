@@ -218,7 +218,7 @@ interface Props {
   /** A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. */
   layout?: "fan" | "stack" | undefined;
   /** Deal each card once; after the last, this takes the hand's place and can deal them again. */
-  finale?: ((again: () => void) => ReactNode) | undefined;
+  finale?: ((again: () => void, turned: readonly HandCard[]) => ReactNode) | undefined;
 }
 
 /**
@@ -235,6 +235,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
   const once = Boolean(finale);
   const [intro, setIntro] = useState(false);
   const [turned, setTurned] = useState(0);
+  const [turnedCards, setTurnedCards] = useState<HandCard[]>([]);
   const [playing, setPlaying] = useState<string | null>(null);
   const [announce, setAnnounce] = useState("");
   const pile = useRef<HandCard[]>([]);
@@ -353,12 +354,14 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
     window.setTimeout(() => setGone((g) => g.filter((d) => d.key !== front.key)), TOSS_MS);
     setHand(card ? [...rest, { key: nextKey.current++, card }] : rest);
     setTurned((n) => n + 1);
+    if (once) setTurnedCards((list) => [...list, front.card]);
     setPhase(rest.length === 0 && !card ? "done" : "front");
     if (rest[0]) setAnnounce(t`Next card: ${rest[0].card.term}`);
   }, [hand, phase, cards, once, stopAudio, t]);
 
   const again = useCallback(() => {
     setTurned(0);
+    setTurnedCards([]);
     setRound((n) => n + 1);
   }, []);
 
@@ -386,7 +389,9 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
             onPress={press}
           />
         ))}
-        {phase === "done" && finale && <div className="hand-finale">{finale(again)}</div>}
+        {phase === "done" && finale && (
+          <div className="hand-finale">{finale(again, turnedCards)}</div>
+        )}
         {hand.map(({ key, card }, k) => {
           const angle = k === 0 ? 0 : behind === 1 ? 1 : (k - 1 - (behind - 1) / 2) * 1.5;
           const dealing = intro && key >= dealFrom && key < dealFrom + size;

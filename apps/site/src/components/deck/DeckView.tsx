@@ -168,7 +168,7 @@ function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] })
 export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCard[] }) {
   return (
     <Localized locale={locale}>
-      <div className="mx-auto max-w-[1120px] px-5 pt-8 text-center @2xl:px-10 @4xl:pt-12">
+      <div className="mx-auto max-w-[1120px] px-5 pt-8 pb-10 text-center @2xl:px-10 @4xl:pt-12 @4xl:pb-16">
         <DeckByline deck={deck} />
         <h1
           lang={deck.meaningLanguage}

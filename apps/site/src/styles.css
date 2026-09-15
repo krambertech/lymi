@@ -825,6 +825,113 @@
   color: var(--text-2);
 }
 
+/* The end of the deck page's hand, borrowed from the end of a review: the lantern lights the room
+   with a pool of its own glow that blooms and then breathes, embers lift off the flame once, and the
+   words just turned and the way on rise after it. */
+.deck-finale {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 30rem);
+  text-align: center;
+}
+.deck-finale-light {
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+}
+.deck-finale-pool {
+  position: absolute;
+  z-index: -1;
+  top: 55%;
+  left: 50%;
+  width: 28rem;
+  height: 28rem;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+.deck-finale-pool > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--glow),
+    color-mix(in oklab, var(--glow) 40%, transparent) 45%,
+    transparent
+  );
+  animation:
+    deck-finale-bloom 1600ms var(--ease-out) 120ms both,
+    deck-finale-breath 2.6s ease-in-out 1720ms infinite;
+}
+@keyframes deck-finale-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+}
+@keyframes deck-finale-breath {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  30% {
+    transform: scale(1.07);
+    opacity: 1;
+  }
+  62% {
+    transform: scale(0.96);
+    opacity: 0.8;
+  }
+}
+.deck-finale-ember {
+  position: absolute;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--flame-core);
+  box-shadow:
+    0 0 4px 1px var(--amber),
+    0 0 10px var(--glow);
+  opacity: 0;
+  animation: deck-finale-ember var(--dur) cubic-bezier(0.2, 0.7, 0.3, 1) var(--delay) both;
+}
+@keyframes deck-finale-ember {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(0.3);
+  }
+}
+.deck-finale-rise {
+  animation: deck-finale-rise 560ms var(--ease-out) var(--delay, 0ms) both;
+}
+@keyframes deck-finale-rise {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+    filter: blur(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck-finale-pool > span,
+  .deck-finale-rise {
+    animation: none;
+  }
+  .deck-finale-ember {
+    display: none;
+  }
+}
+
 /* Every card, in a view of its own over the page. A phone gets it as a sheet rising from the bottom. */
 .deck-cards {
   width: 100%;
@@ -1224,25 +1331,16 @@ html:has(.deck-cards[open]) {
   transform: none;
 }
 
-/* What the hand leaves after its last card, where the front card stood. */
+/* What the hand leaves after its last card. It also covers the button row under the stage, which
+   keeps its height, so the finale sits in the middle of the whole hand and nothing below moves. */
 .hand-finale {
   position: absolute;
-  top: 0;
-  left: calc(50% - var(--cw) / 2);
-  width: var(--cw);
-  height: var(--ch);
-  transform: translateY(calc(var(--cw) * 0.08));
-  animation: hand-finale-in 420ms var(--ease-out) both;
+  inset: 0 0 -3.5rem;
+  display: grid;
+  place-items: center;
 }
-.hand-stage[data-layout="stack"] .hand-finale {
-  transform: none;
-}
-@keyframes hand-finale-in {
-  from {
-    opacity: 0;
-    translate: 0 12px;
-    scale: 0.97;
-  }
+.hand-stage:has(.hand-finale) {
+  clip-path: none;
 }
 
 .hand-flip {
@@ -1305,8 +1403,5 @@ html:has(.deck-cards[open]) {
   }
   .hand-hint {
     translate: none;
-  }
-  .hand-finale {
-    animation: none;
   }
 }

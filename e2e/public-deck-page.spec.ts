@@ -62,7 +62,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
   });
 
   await test.step("the sections read in order, and every card opens in its own view", async () => {
-    const sections = page.getByRole("region", { name: "2 sections, in order" });
+    const sections = page.getByRole("region", { name: "What’s inside" });
     const rows = sections.getByRole("listitem");
     await expect(rows).toHaveCount(2);
     await expect(rows.nth(0)).toContainText("Greetings");
@@ -104,15 +104,18 @@ test("anyone can read a published deck's page, see its sections and cards, and t
       await stack.getByRole("button", { name: "Next card" }).click();
     }
     await expect(stack.getByText("Keep going in Lymi", { exact: true })).toBeVisible();
+    await expect(
+      stack.getByRole("list", { name: "Cards you turned" }).getByRole("listitem"),
+    ).toHaveCount(meanings.length);
     await expect(stack.getByRole("link", { name: "Add to Lymi" })).toHaveAttribute("href", addUrl);
-    await stack.getByRole("button", { name: "Turn them again" }).click();
+    await stack.getByRole("button", { name: "Try again" }).click();
     await expect(stack.getByRole("button", { name: "Turn it over" })).toBeVisible();
   });
 
   await test.step("the Ukrainian and Russian pages carry their own chrome", async () => {
     await page.goto(`${publicSite}/uk${pagePath}`);
     await expect(page.locator("html")).toHaveAttribute("lang", "uk");
-    await expect(page.getByRole("heading", { name: "2 розділи по черзі" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Що всередині" })).toBeVisible();
     const ru = await request.get(`${publicSite}/ru${pagePath}`);
     expect(ru.status()).toBe(200);
     expect(ru.headers().etag).toContain("-ru-");
@@ -150,8 +153,6 @@ test("without JavaScript the page still shows the deck and its sections", async 
   await expect(page.getByRole("list", { name: "Cards from this deck" })).toContainText(
     "tere päevast",
   );
-  await expect(page.getByRole("region", { name: "2 sections, in order" })).toContainText(
-    "In the café",
-  );
+  await expect(page.getByRole("region", { name: "What’s inside" })).toContainText("In the café");
   await context.close();
 });

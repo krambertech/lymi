@@ -92,7 +92,7 @@ function Sections(props: Omit<Props, "locale">) {
     <section
       id="sections"
       aria-labelledby="sections-title"
-      className="scroll-mt-6 px-5 pt-10 pb-16 @2xl:px-10 @4xl:pt-14 @4xl:pb-24"
+      className="scroll-mt-6 border-t border-edge px-5 pt-14 pb-16 @2xl:px-10 @4xl:pt-20 @4xl:pb-24"
     >
       <div className="mx-auto max-w-[1040px]">
         <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4">
@@ -100,11 +100,7 @@ function Sections(props: Omit<Props, "locale">) {
             id="sections-title"
             className="min-w-0 text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
           >
-            {inOrder ? (
-              <Plural value={named.length} one="One section" other="# sections, in order" />
-            ) : (
-              <Trans>Every card in the deck</Trans>
-            )}
+            {inOrder ? <Trans>What’s inside</Trans> : <Trans>Every card in the deck</Trans>}
           </h2>
           <button type="button" onClick={open} className={buttonClass("secondary", "lg")}>
             <Plural value={cardCount} one="See the card" other="See all # cards" />

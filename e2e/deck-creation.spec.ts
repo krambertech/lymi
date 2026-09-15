@@ -63,7 +63,7 @@ test.describe("deck and card creation", () => {
     await page.goto("/library");
     await waitForLibrary(page);
 
-    // Nothing here yet, so the empty state is the way in.
+    // No decks yet, so the empty state is the way in.
     await page.locator("main").getByRole("button", { name: "New deck", exact: true }).click();
     await expect(sheet(page, "New deck")).toBeVisible();
     await sheet(page, "New deck").getByRole("button", { name: "Cancel", exact: true }).click();
@@ -98,7 +98,9 @@ test.describe("deck and card creation", () => {
     await dialog.getByRole("button", { name: "Create deck", exact: true }).click();
     await expect(page).toHaveURL(/\/library\/[^/]+$/);
     await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Empty deck", exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: `No cards in ${name} yet`, exact: true }),
+    ).toBeVisible();
 
     await page.goto("/library");
     await waitForLibrary(page);
@@ -166,7 +168,9 @@ test.describe("deck and card creation", () => {
     await dialog.getByRole("button", { name: `Add to ${firstName}`, exact: true }).click();
     await expect(dialog.getByRole("status")).toHaveText(`${term} is already in ${secondName}`);
     await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
-    await expect(page.getByRole("heading", { name: "Empty deck", exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: `No cards in ${firstName} yet`, exact: true }),
+    ).toBeVisible();
   });
 
   test("adds a card when the optional meaning is blank", async ({ page }, testInfo) => {

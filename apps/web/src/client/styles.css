@@ -895,10 +895,15 @@
   }
 }
 
-/* Skeleton: holds the shape, shimmers only if motion is welcome. */
+/* Skeleton: holds the shape, shimmers only if motion is welcome. The radius sits in a layer so a
+   `rounded-*` utility can give the loaded shape. */
+@layer components {
+  .skeleton {
+    border-radius: var(--radius-xs);
+  }
+}
 .skeleton {
   background: var(--plate-2);
-  border-radius: var(--radius-xs);
   position: relative;
   overflow: hidden;
 }

@@ -1,17 +1,20 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { InsightsOut } from "@lymi/core";
+import { type InsightsOut, localDate } from "@lymi/core";
 import { clsx } from "clsx";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
-import { EmptyState } from "../components/empty-state";
+import { ErrorState } from "../components/empty-state";
 import { MonthBars } from "../components/month-bars";
 import { RunStrip } from "../components/run-strip";
 import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
+import { StartPanel } from "../components/start-panel";
 import { StatPlate } from "../components/stat-plate";
 import { StateIcon, stateMarks } from "../components/state-mark";
+import { addDays } from "../components/streak-calendar";
 import { TrendLine } from "../components/trend-line";
+import { deviceTimezone } from "../lib/api";
 import { Page, PageHeader } from "./shell";
 
 export type Period = "30" | "90" | "0";
@@ -25,7 +28,12 @@ export interface InsightsProps {
   /** A refetch is in flight. The previous period stays on screen while it lands. */
   busy?: boolean | undefined;
   onRetry?: (() => void) | undefined;
+  /** Opens capture, offered while there are no cards to have insights about. */
+  onAdd?: (() => void) | undefined;
 }
+
+/** A stat plate's settled size, so loading does not jump when the plates land. */
+const PLATE_SLOT = "h-[223px] rounded-xl";
 
 /** Parses a local YYYY-MM-DD without letting the timezone shift it a day. */
 function parseLocal(date: string): Date {
@@ -42,7 +50,15 @@ function parseLocal(date: string): Date {
  * streak's lights. A chart series in amber would make this the one screen where the accent
  * means "data" rather than "act".
  */
-export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: InsightsProps) {
+export function InsightsView({
+  data,
+  period,
+  onPeriod,
+  failed,
+  busy,
+  onRetry,
+  onAdd,
+}: InsightsProps) {
   const { t, i18n } = useLingui();
   /* Formatters follow the interface language, which can change while this screen is open. */
   const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
@@ -67,15 +83,10 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
     return (
       <Page>
         <PageHeader title={t`Insights`} />
-        <EmptyState
-          lantern="still"
+        <ErrorState
           title={t`Couldn’t load Insights`}
-          body={t`Check your connection and try again.`}
-          action={
-            <Button variant="secondary" onClick={onRetry} loading={busy}>
-              <Trans>Try again</Trans>
-            </Button>
-          }
+          onRetry={onRetry}
+          retrying={busy}
           className="flex-1"
         />
       </Page>
@@ -89,7 +100,7 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         {/* Same heights the plates settle at, so the screen does not jump when they land. */}
         <div className="grid gap-3 @3xl:grid-cols-2">
           {[0, 1, 2, 3].map((i) => (
-            <Skeleton key={i} className="h-[223px] rounded-xl" />
+            <Skeleton key={i} className={PLATE_SLOT} />
           ))}
         </div>
         <Skeleton className="mt-3 h-[105px] rounded-xl" />
@@ -102,15 +113,69 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
   const nothingYet = daysAllTime === 0 && cards.total === 0;
 
   if (nothingYet) {
+    const empty = { total: 0, new: 0, learning: 0, known: 0 };
+    const today = localDate(new Date(), deviceTimezone());
+    const week = Array.from({ length: 7 }, (_, i) => ({ date: addDays(today, i), count: 0 }));
     return (
       <Page>
         <PageHeader title={t`Insights`} />
-        <EmptyState
-          lantern="still"
-          title={t`Nothing to say yet`}
-          body={t`Reviews per day, how much is sticking, and the cards that keep slipping. This fills in once there is some history behind you.`}
-          className="flex-1"
+        <StartPanel
+          className="mb-3"
+          title={<Trans>Insights start after your first review</Trans>}
+          body={<Trans>Add cards and review them, and these fill in.</Trans>}
+          action={
+            onAdd && (
+              <Button variant="primary" onClick={onAdd} kbd="N" className="justify-self-start">
+                <Trans>Add a card</Trans>
+              </Button>
+            )
+          }
         />
+        {/* The real plates, outlined and at zero, so the screen shows what will fill it. */}
+        <div className="grid gap-3 @3xl:grid-cols-2" aria-hidden="true">
+          <StatPlate
+            ghost
+            label={t`Recall`}
+            value="—"
+            figure={
+              <div className="relative h-full w-full">
+                <div className="absolute inset-x-0 top-1/3 border-t border-dashed border-edge-2" />
+                <span className="absolute end-0 top-1/3 -translate-y-full pb-1 text-2xs text-muted tabular-nums">
+                  90%
+                </span>
+              </div>
+            }
+            note={t`How often you remember a card when it comes back`}
+          />
+          <StatPlate
+            ghost
+            label={t`Consistency`}
+            value={0}
+            unit={t`/ ${plural(30, { one: "# day", other: "# days" })}`}
+            figure={
+              <RunStrip
+                days={Array.from({ length: 30 }, (_, i) => ({ date: String(i), lit: false }))}
+              />
+            }
+            note={t`Which days you reviewed`}
+          />
+          <StatPlate
+            ghost
+            label={t`Cards`}
+            value={0}
+            unit={t`${plural(0, { one: "card", other: "cards" })}`}
+            figure={<CardSplit cards={empty} />}
+            note={<CardChips cards={empty} />}
+          />
+          <StatPlate
+            ghost
+            label={t`Ahead`}
+            value={0}
+            unit={t`due this week`}
+            figure={<ForecastBars forecast={week} />}
+            note={t`How many cards come back this week`}
+          />
+        </div>
       </Page>
     );
   }
@@ -137,7 +202,6 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
     },
   );
   const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
-  const maxDue = Math.max(1, ...forecast.map((d) => d.count));
 
   return (
     <Page>
@@ -205,81 +269,15 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
           label={t`Cards`}
           value={cards.total}
           unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
-          figure={
-            // The one figure here that carries colour: the state colours every icon in the app uses.
-            <div
-              className="flex h-3 w-full gap-1"
-              role="img"
-              aria-label={t`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
-            >
-              {cards.new > 0 && (
-                <i
-                  className={clsx("block rounded-full", stateMarks.new.bg)}
-                  style={{ flexGrow: cards.new }}
-                />
-              )}
-              {cards.learning > 0 && (
-                <i
-                  className={clsx("block rounded-full", stateMarks.learning.bg)}
-                  style={{ flexGrow: cards.learning }}
-                />
-              )}
-              {cards.known > 0 && (
-                <i
-                  className={clsx("block rounded-full", stateMarks.known.bg)}
-                  style={{ flexGrow: cards.known }}
-                />
-              )}
-            </div>
-          }
-          note={
-            <span className="flex flex-wrap gap-1.5">
-              <Chip size="sm">
-                <StateIcon state="new" className="size-3" />
-                <Trans>{cards.new} new</Trans>
-              </Chip>
-              <Chip size="sm">
-                <StateIcon state="learning" className="size-3" />
-                <Trans>{cards.learning} learning</Trans>
-              </Chip>
-              <Chip size="sm">
-                <StateIcon state="known" className="size-3" />
-                <Trans>{cards.known} known</Trans>
-              </Chip>
-            </span>
-          }
+          figure={<CardSplit cards={cards} />}
+          note={<CardChips cards={cards} />}
         />
 
         <StatPlate
           label={t`Ahead`}
           value={peak.count}
           unit={peak.count > 0 ? t`peak, ${weekday(peak.date)}` : t`due this week`}
-          figure={
-            // Bars on a baseline, using the whole figure box. A track behind each one reads
-            // as a second object stacked on the bar rather than as the space it could fill.
-            <div
-              className="flex h-full w-full items-stretch gap-1.5"
-              role="img"
-              aria-label={forecast.map((d) => `${weekday(d.date)} ${d.count}`).join(", ")}
-            >
-              {forecast.map((d) => (
-                <div key={d.date} className="flex flex-1 flex-col gap-1.5">
-                  <div className="flex flex-1 items-end border-b border-edge">
-                    <i
-                      className={clsx(
-                        "block w-full rounded-t-[4px]",
-                        d.count === peak.count && peak.count > 0 ? "bg-amber" : "bg-text/35",
-                      )}
-                      style={{ height: d.count > 0 ? `max(3px, ${(d.count / maxDue) * 100}%)` : 0 }}
-                    />
-                  </div>
-                  <span className="text-center text-2xs text-muted tabular-nums">
-                    {weekday(d.date).slice(0, 2)}
-                  </span>
-                </div>
-              ))}
-            </div>
-          }
+          figure={<ForecastBars forecast={forecast} />}
           note={t`${plural(dueSoon, {
             one: "# card over the next seven days.",
             other: "# cards over the next seven days.",
@@ -351,5 +349,91 @@ export function InsightsView({ data, period, onPeriod, failed, busy, onRetry }: 
         </p>
       )}
     </Page>
+  );
+}
+
+interface CardCountsProps {
+  cards: InsightsOut["cards"];
+}
+
+/** The one figure on Insights that carries colour: the state colours every icon in the app uses. */
+function CardSplit({ cards }: CardCountsProps) {
+  const { t } = useLingui();
+  const parts = (["new", "learning", "known"] as const).filter((k) => cards[k] > 0);
+  return (
+    <div
+      className={clsx(
+        "flex h-3 w-full gap-1",
+        parts.length === 0 && "rounded-full border border-dashed border-edge-2",
+      )}
+      role="img"
+      aria-label={t`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
+    >
+      {parts.map((k) => (
+        <i
+          key={k}
+          className={clsx("block rounded-full", stateMarks[k].bg)}
+          style={{ flexGrow: cards[k] }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function CardChips({ cards }: CardCountsProps) {
+  return (
+    <span className="flex flex-wrap gap-1.5">
+      <Chip size="sm">
+        <StateIcon state="new" className="size-3" />
+        <Trans>{cards.new} new</Trans>
+      </Chip>
+      <Chip size="sm">
+        <StateIcon state="learning" className="size-3" />
+        <Trans>{cards.learning} learning</Trans>
+      </Chip>
+      <Chip size="sm">
+        <StateIcon state="known" className="size-3" />
+        <Trans>{cards.known} known</Trans>
+      </Chip>
+    </span>
+  );
+}
+
+interface ForecastBarsProps {
+  forecast: InsightsOut["forecast"];
+}
+
+/**
+ * Bars on a baseline, using the whole figure box. A track behind each one reads as a second
+ * object stacked on the bar rather than as the space it could fill.
+ */
+function ForecastBars({ forecast }: ForecastBarsProps) {
+  const { i18n } = useLingui();
+  const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
+  const peak = Math.max(0, ...forecast.map((d) => d.count));
+  const maxDue = Math.max(1, peak);
+  return (
+    <div
+      className="flex h-full w-full items-stretch gap-1.5"
+      role="img"
+      aria-label={forecast.map((d) => `${weekday(d.date)} ${d.count}`).join(", ")}
+    >
+      {forecast.map((d) => (
+        <div key={d.date} className="flex flex-1 flex-col gap-1.5">
+          <div className="flex flex-1 items-end border-b border-edge">
+            <i
+              className={clsx(
+                "block w-full rounded-t-[4px]",
+                d.count === peak && peak > 0 ? "bg-amber" : "bg-text/35",
+              )}
+              style={{ height: d.count > 0 ? `max(3px, ${(d.count / maxDue) * 100}%)` : 0 }}
+            />
+          </div>
+          <span className="text-center text-2xs text-muted tabular-nums">
+            {weekday(d.date).slice(0, 2)}
+          </span>
+        </div>
+      ))}
+    </div>
   );
 }

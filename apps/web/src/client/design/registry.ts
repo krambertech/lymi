@@ -6,6 +6,7 @@ import { LanternPage } from "./lantern";
 import { Motion } from "./motion";
 import { actions } from "./parts/actions";
 import { charts, streak } from "./parts/charts";
+import { empty } from "./parts/empty";
 import { feedback } from "./parts/feedback";
 import { combobox, forms, select } from "./parts/forms";
 import { labels } from "./parts/labels";
@@ -48,6 +49,7 @@ export const GROUPS: Group[] = [
   combobox,
   labels,
   feedback,
+  empty,
   menu,
   overlays,
   lists,

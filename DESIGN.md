@@ -281,7 +281,7 @@ The flame starts each day at 0.72× the brand flame and grows with progress to 1
 
 Every accepted review feeds the flame, and Forgot feeds it exactly as Easy does. A feed is a breath: the flame draws up and thin and the halo swells, then both settle at the new size. Reviews close together flow into one long breath, because each breath starts from wherever the last one is rather than from rest.
 
-The brand lantern, on login, the app icon and public pages, omits `progress` and shows the one canonical flame. It never shows a learner's state. Empty and error screens use it too, because an empty screen says nothing about the streak.
+The brand lantern, on login, the app icon and public pages, omits `progress` and shows the one canonical flame. It never shows a learner's state. Empty screens use it too, because an empty screen says nothing about the streak. An error never does: a calm lit lantern cannot say that something failed.
 
 Carried, the body swings from the bail. App launch and pull to refresh.
 
@@ -371,6 +371,8 @@ On desktop it is the 240 px rail, and the rail is a surface: it runs the full he
 
 Today is a page of cards, not a single stage. The due card leads: the lantern beside how many cards are due, then one full-width Review button 64 px tall. With a single deck it names the deck. The streak card sits beside it on desktop, in the narrower column, and under it on the phone. Under both, **More to review** shows the rounds as three tiles, always in the same order: **Forgot today**, which is freshest, **New cards**, then **Keeps slipping**. Forgot today leads its name with the Forgot mark and New cards with New's; Keeps slipping is not a state and has no mark. A tile with cards opens its review. An empty tile keeps its place with a muted zero and a plain line, and an empty New cards tile offers Add cards, so no tile is ever left on its own. On desktop the three sit in a row with the action along the foot; on the phone they stack as rows with an arrow. Last, **Decks to review** lists only decks with cards due, each row leading with its due count, with a small Library link at the end of its heading, and appears only when the learner has more than one deck; it comes after the rounds because the Review button already covers the same cards. Deck rows and round tiles are whole links that end in a label and an arrow in a circle, never a button inside a row. Today never shows a term, because seeing the answers before a review asks for them spoils the recall.
 
+Until the first review, Today is the getting started guide, described under Empty states.
+
 The rail's first line and the page title beside it sit on the same line, 32 px down. That shared line is what makes the two columns read as one app rather than a menu next to a document.
 
 The column of content is capped at `--column` (880 px) and centres in whatever the rail leaves. It never stretches: a vocabulary app is one column, and a wider one is a worse read. On a 2560 px screen the rail fills the left edge and the column sits in the middle of the rest, so a big window gets the same read as a laptop instead of a stripe of content in a field of empty room. Reading screens narrow further to 672.
@@ -389,11 +391,33 @@ Consistency and the months answer different questions and neither replaces the o
 
 `RunStrip` joins consecutive lit days into one capsule. That is the whole idea: a row of separate marks has to be counted, where an unbroken capsule is a run whose length you can see.
 
+## Empty states
+
+An empty state shows the learner how to fill what is empty, and it looks temporary, so it is never mistaken for content. The shape follows what is empty. The live versions are the Empty states page of `/design`.
+
+- **Today before the first review is the getting started guide.** `StartGuide` in `components/start-guide.tsx` is one plate headed **Getting started**, with a count ("1 of 3 done") and a three-part track, then three steps in order: **Make a deck**, **Add cards from your last lesson**, **Review them**. Each step is done by the learner's own data, never by a dismissal. A done step shows a green check and a struck-through title, the current step holds its action, and a later step stays muted. After the first review the usual Today takes over.
+- **A screen with nothing in it yet has a start panel.** `StartPanel` in `components/start-panel.tsx` serves Library with no decks, a deck with no cards, and Insights with no history. It is a 1.5 px dashed `edge-2` outline on the bare canvas, never a plate, because dashed is New's own mark for "not here yet". Inside sit a `text-lg` title, one sentence in `text-2`, one primary button at its normal size, and optionally a `StartPanelSection` under a dashed rule holding `NextSteps` rows for the other ways in.
+- **A screen whose layout is worth previewing shows its real components at zero.** Insights draws its four `StatPlate`s with `ghost`, dashed and muted with their figures drawn empty, under its start panel. The preview uses the real component, so it moves when the layout does; a second drawing of the same shape is not allowed.
+- **An empty group inside a screen is an empty section.** `EmptySection`, such as API keys or Connected apps in Settings: an icon in a `plate-2` circle, a short title, one line of why, and the action that fills it.
+- **A search or filter with no match is one line.** `NoResults` sits under the controls that caused it, names the query or the filter, and offers Clear search or Show all.
+- **A whole screen with nothing to outline uses `EmptyState`**, centred with the still brand lantern: Coming soon.
+- **A screen that failed to load uses `ErrorState`**, centred with the alert icon on `danger-soft`, never the lantern. The title says what failed, the line says the fix, and Try again retries.
+
+Every empty state is quieter than the page: its title sits below the page title, `text-xl` for the getting started guide, which is the whole of Today, and `text-lg` or smaller everywhere else. Its button is a normal button, never the 64 px Review button.
+
+A start panel has one primary action. The other ways in are `NextSteps` rows: an outlined icon, a title, one line of detail and the arrow, separated by a gap rather than rules so the hover fill never meets a line. Each row opens where the work happens, such as a Settings group by its anchor or the public docs. Connecting Claude or ChatGPT is offered only while no app is connected.
+
+An empty state holds no examples or sample content. They crowd the action and can be mistaken for the learner's own data.
+
+The copy names what is missing and how to fill it: "No cards in Estonian A2 yet", not "Nothing here". It never promises what the product does not do yet, such as AI filling in meanings, and never ties the lantern to anything but the streak.
+
+Loading is a `Skeleton` at the loaded size, never an empty state.
+
 ## Components
 
 `components/ui/`: shadcn components on Base UI, one file per primitive, added with `pnpm dlx shadcn@latest add <name>` from `apps/web`. The file is ours once added: keep its export names, parts, data attributes and `render` composition, and rewrite its classes to the tokens on this page; shadcn's own colour variables are never added. The state variants generated classes use, such as `data-open:` and `data-horizontal:`, are copied from `shadcn/tailwind.css` into `styles.css`, because without them those classes match nothing and fail silently. Each matches Base UI's presence attributes, such as an empty `data-selected`, as well as Radix-style values. `pnpm dlx shadcn@latest add <name> --diff` shows what changed upstream, and an update is merged by hand. A primitive that changes shape by device keeps both shapes in its own file, behind shadcn's part names, and tests every part in both. [ADR 0017](docs/adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md).
 
-`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Segmented, RadioCard, Chip with StateChip and SourceChip, Kbd, Progress, Skeleton, EmptyState, SettingsGroup, SevenLights, StreakButton with StreakPanel, StreakCalendar and StreakWeek, GoalPicker, Table, Dialog, AddCardSheet, NewDeckSheet, AddMenu, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, TopBar and BackButton (in `views/shell.tsx`), StateIcon, DueCount, Flame, AppMark, CardPicture, Connection, Lantern, Wordmark, Lockup, StatPlate, RunStrip, MonthBars.
+`components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Segmented, RadioCard, Chip with StateChip and SourceChip, Kbd, Progress, Skeleton, EmptyState with ErrorState, EmptySection and NoResults, StartGuide, StartPanel with StartPanelSection, NextSteps with NextStep and Go, SettingsGroup, SevenLights, StreakButton with StreakPanel, StreakCalendar and StreakWeek, GoalPicker, Table, Dialog, AddCardSheet, NewDeckSheet, AddMenu, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, TopBar and BackButton (in `views/shell.tsx`), StateIcon, DueCount, Flame, AppMark, CardPicture, Connection, Lantern, Wordmark, Lockup, StatPlate (and its ghost), RunStrip, MonthBars.
 
 `views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport. Chrome that follows the rail — page padding, top bars, back rows — queries the whole window's `@3xl/shell`, because the rail appears at a 768 px window while the column beside it is still narrower. The toast renders outside the shell, so its clearance for the pill uses the matching `md` media query.
 

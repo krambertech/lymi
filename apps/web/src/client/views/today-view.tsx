@@ -10,7 +10,9 @@ import { DueCount } from "../components/due-count";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { LearnerMenu } from "../components/learner-menu";
+import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
+import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
 import type { StreakSummary } from "../components/streak";
 import type { DeckSummary } from "../lib/api";
@@ -32,6 +34,10 @@ export interface TodayProps {
   /** Something an integration wrote is unseen. Marks Activity in the phone's menu. */
   unseen?: boolean | undefined;
   docsUrl?: string | undefined;
+  /** How to connect an assistant, offered until the learner has cards. */
+  connectUrl?: string | undefined;
+  /** An assistant is already connected, so the first run does not offer to connect one. */
+  connected?: boolean | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
@@ -57,6 +63,8 @@ export function TodayView({
   email,
   unseen,
   docsUrl,
+  connectUrl,
+  connected,
   onAdd,
   onCreateDeck,
   onSignOut,
@@ -69,6 +77,9 @@ export function TodayView({
   const dueDecks = decks?.filter((d) => d.due > 0) ?? [];
   const loading = decks === undefined || streak === undefined;
   const nothingYet = !loading && total === 0;
+  const noDecks = nothingYet && decks?.length === 0;
+  // Until the first review, Today is the getting started guide.
+  const guiding = !!streak && !!decks && streak.reviewedDays === 0 && streak.today.attempts === 0;
   const [onlyDeck] = decks?.length === 1 ? decks : [];
 
   return (
@@ -95,115 +106,132 @@ export function TodayView({
       />
       <PageHeader title={<Trans>Today</Trans>} className="pb-4 @3xl:pb-6" />
 
-      <div className="grid gap-8 @3xl:gap-10">
-        <section
-          aria-label={t`Today`}
-          className={clsx(
-            "grid grid-cols-1 gap-3",
-            !nothingYet && "@3xl:grid-cols-[1.55fr_1fr] @3xl:gap-4",
-          )}
-        >
-          {loading ? (
-            <>
-              <Skeleton className="h-52 w-full rounded-xl" />
-              <Skeleton className="h-40 w-full rounded-xl @3xl:h-52" />
-            </>
-          ) : (
-            <>
-              <div className="edge grid content-between gap-5 rounded-xl bg-plate p-5 @3xl:p-6">
-                <div className="flex items-center gap-4">
-                  <Lantern
-                    className="-my-3 -ms-3 size-24 @3xl:size-28"
-                    {...lanternFor(streak)}
-                    flicker={!!streak?.current}
-                    glow={!!streak?.current}
-                  />
-                  <DueHeading due={due} nothingYet={nothingYet} onlyDeck={onlyDeck} />
-                </div>
-                {due > 0 ? (
-                  <To
-                    to="/review"
-                    st={st}
-                    className={buttonClass("primary", "lg", "h-16 w-full rounded-lg text-lg")}
-                  >
-                    <Trans>Review</Trans>
-                    <span className="hidden @2xl:contents">
-                      <Kbd tone="on-primary">R</Kbd>
-                    </span>
-                  </To>
-                ) : nothingYet ? (
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="h-16 w-full rounded-lg text-lg"
-                    onClick={onCreateDeck}
-                    aria-disabled={!onCreateDeck}
-                  >
-                    <Trans>New deck</Trans>
-                  </Button>
-                ) : (
-                  // Nothing due is not nothing to do: capture is the standing action.
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="h-16 w-full rounded-lg text-lg"
-                    onClick={onAdd}
-                    aria-disabled={!onAdd}
-                    kbd="N"
-                  >
-                    <Trans>Add a card</Trans>
-                  </Button>
-                )}
-              </div>
-              {!nothingYet && streakCard}
-            </>
-          )}
-        </section>
-
-        {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} st={st} />}
-
-        {!loading && decks && decks.length > 1 && dueDecks.length > 0 && (
-          <section aria-labelledby="today-decks" className="grid gap-2.5">
-            <div className="flex min-h-8 items-center justify-between gap-3 px-1">
-              <h2 id="today-decks" className="text-lg font-medium">
-                <Trans>Decks to review</Trans>
-              </h2>
-              <To
-                to="/library"
-                st={st}
-                className="relative -me-1 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-2 before:content-[''] hoverable:hover:text-text"
-              >
-                <Trans>Library</Trans>
-                <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
-              </To>
-            </div>
-            <ul className="edge overflow-hidden rounded-xl bg-plate">
-              {dueDecks.map((d) => (
-                <li key={d.id} className="border-edge not-first:border-t">
-                  <To
-                    to="/review"
-                    search={{ deck: d.id }}
-                    st={st}
-                    className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
-                  >
-                    {/* The count leads, as on the round tiles: it is what the row is for. */}
-                    <DueCount size="lg">{d.due}</DueCount>
-                    <span className="grid min-w-0 flex-1 gap-0.5">
-                      <span className="truncate text-md font-medium">{d.name}</span>
-                      <span className="text-sm text-muted">
-                        <Plural value={d.due} one="card due" other="cards due" />
-                      </span>
-                    </span>
-                    <Go>
+      {guiding ? (
+        <StartGuide
+          decks={decks.length}
+          cards={total}
+          connected={connected}
+          connectUrl={connectUrl}
+          onAdd={onAdd}
+          onCreateDeck={onCreateDeck}
+          st={st}
+        />
+      ) : (
+        <div className="grid gap-8 @3xl:gap-10">
+          <section
+            aria-label={t`Today`}
+            className={clsx(
+              "grid grid-cols-1 gap-3",
+              !nothingYet && "@3xl:grid-cols-[1.55fr_1fr] @3xl:gap-4",
+            )}
+          >
+            {loading ? (
+              <>
+                <Skeleton className="h-52 w-full rounded-xl" />
+                <Skeleton className="h-40 w-full rounded-xl @3xl:h-52" />
+              </>
+            ) : (
+              <>
+                <div className="edge grid content-between gap-5 rounded-xl bg-plate p-5 @3xl:p-6">
+                  <div className="flex items-center gap-4">
+                    <Lantern
+                      className="-my-3 -ms-3 size-24 @3xl:size-28"
+                      {...lanternFor(streak)}
+                      flicker={!!streak?.current}
+                      glow={!!streak?.current}
+                    />
+                    <DueHeading
+                      due={due}
+                      nothingYet={nothingYet}
+                      noDecks={noDecks}
+                      onlyDeck={onlyDeck}
+                    />
+                  </div>
+                  {due > 0 ? (
+                    <To
+                      to="/review"
+                      st={st}
+                      className={buttonClass("primary", "lg", "h-16 w-full rounded-lg text-lg")}
+                    >
                       <Trans>Review</Trans>
-                    </Go>
-                  </To>
-                </li>
-              ))}
-            </ul>
+                      <span className="hidden @2xl:contents">
+                        <Kbd tone="on-primary">R</Kbd>
+                      </span>
+                    </To>
+                  ) : noDecks ? (
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className="h-16 w-full rounded-lg text-lg"
+                      onClick={onCreateDeck}
+                      aria-disabled={!onCreateDeck}
+                    >
+                      <Trans>New deck</Trans>
+                    </Button>
+                  ) : (
+                    // Nothing due is not nothing to do: capture is the standing action.
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className="h-16 w-full rounded-lg text-lg"
+                      onClick={onAdd}
+                      aria-disabled={!onAdd}
+                      kbd="N"
+                    >
+                      <Trans>Add a card</Trans>
+                    </Button>
+                  )}
+                </div>
+                {!nothingYet && streakCard}
+              </>
+            )}
           </section>
-        )}
-      </div>
+
+          {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} st={st} />}
+
+          {!loading && decks && decks.length > 1 && dueDecks.length > 0 && (
+            <section aria-labelledby="today-decks" className="grid gap-2.5">
+              <div className="flex min-h-8 items-center justify-between gap-3 px-1">
+                <h2 id="today-decks" className="text-lg font-medium">
+                  <Trans>Decks to review</Trans>
+                </h2>
+                <To
+                  to="/library"
+                  st={st}
+                  className="relative -me-1 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-2 before:content-[''] hoverable:hover:text-text"
+                >
+                  <Trans>Library</Trans>
+                  <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
+                </To>
+              </div>
+              <ul className="edge overflow-hidden rounded-xl bg-plate">
+                {dueDecks.map((d) => (
+                  <li key={d.id} className="border-edge not-first:border-t">
+                    <To
+                      to="/review"
+                      search={{ deck: d.id }}
+                      st={st}
+                      className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
+                    >
+                      {/* The count leads, as on the round tiles: it is what the row is for. */}
+                      <DueCount size="lg">{d.due}</DueCount>
+                      <span className="grid min-w-0 flex-1 gap-0.5">
+                        <span className="truncate text-md font-medium">{d.name}</span>
+                        <span className="text-sm text-muted">
+                          <Plural value={d.due} one="card due" other="cards due" />
+                        </span>
+                      </span>
+                      <Go>
+                        <Trans>Review</Trans>
+                      </Go>
+                    </To>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
+      )}
     </Page>
   );
 }
@@ -212,20 +240,26 @@ export function TodayView({
 function DueHeading({
   due,
   nothingYet,
+  noDecks,
   onlyDeck,
 }: {
   due: number;
   nothingYet: boolean;
+  noDecks: boolean;
   onlyDeck: DeckSummary | undefined;
 }) {
   if (nothingYet) {
     return (
       <div className="grid gap-1">
         <h2 className="text-2xl font-medium leading-tight">
-          <Trans>Nothing here yet</Trans>
+          {noDecks ? <Trans>Start with a deck</Trans> : <Trans>No cards yet</Trans>}
         </h2>
         <p className="text-md text-text-2">
-          <Trans>Add a card from your last lesson and the lantern comes on.</Trans>
+          {noDecks ? (
+            <Trans>Make one for each course or topic. Every card goes in a deck.</Trans>
+          ) : (
+            <Trans>Add cards from your last lesson, then review them here.</Trans>
+          )}
         </p>
       </div>
     );
@@ -362,33 +396,6 @@ function Rounds({
         ))}
       </ul>
     </section>
-  );
-}
-
-/** The end of a whole-row link: what it does, then an arrow that strengthens on hover. */
-function Go({
-  children,
-  icon,
-  className,
-}: {
-  children?: ReactNode;
-  /** The glyph in the circle; an arrow unless the row does something other than open. */
-  icon?: ReactNode | undefined;
-  className?: string | undefined;
-}) {
-  return (
-    <span
-      className={clsx(
-        "flex shrink-0 items-center gap-2 text-base font-medium text-text-2",
-        className,
-      )}
-    >
-      {/* The circle alone on a phone, where the label would squeeze the text beside it. */}
-      {children && <span className="sr-only @3xl:not-sr-only">{children}</span>}
-      <span className="edge-inset grid size-8 place-items-center rounded-full bg-plate-2 text-text transition-[background-color,box-shadow] duration-150 group-hover:bg-plate">
-        {icon ?? <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />}
-      </span>
-    </span>
   );
 }
 

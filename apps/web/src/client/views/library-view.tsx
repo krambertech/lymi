@@ -6,9 +6,9 @@ import type { ReactNode } from "react";
 import { AddMenu } from "../components/add-menu";
 import { Button } from "../components/button";
 import { DeckCard } from "../components/deck-card";
-import { EmptyState } from "../components/empty-state";
 import { LearnerMenu } from "../components/learner-menu";
 import { Skeleton } from "../components/skeleton";
+import { StartPanel } from "../components/start-panel";
 import type { DeckSummary } from "../lib/api";
 import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
@@ -112,17 +112,20 @@ export function LibraryView({
       )}
 
       {decks && decks.length === 0 && (
-        <EmptyState
-          lantern="none"
-          title={t`No decks yet`}
-          body={t`One per course works well, or one per topic. Cards remember which lesson they came from.`}
+        <StartPanel
+          title={<Trans>No decks yet</Trans>}
+          body={<Trans>Make one for each course or topic. Every card goes in a deck.</Trans>}
           action={
-            <Button variant="primary" onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
+            <Button
+              variant="primary"
+              className="justify-self-start"
+              onClick={onCreateDeck}
+              aria-disabled={!onCreateDeck}
+            >
               <Plus aria-hidden="true" />
               <Trans>New deck</Trans>
             </Button>
           }
-          className="py-6"
         />
       )}
 

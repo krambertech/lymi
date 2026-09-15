@@ -13,7 +13,7 @@ function ActivityRoute() {
   return (
     <ComingSoonView
       title={t`Activity`}
-      body={t`Every change a connected app, an API key or the AI made, by day. Inspect, edit or archive any card from here.`}
+      body={t`Every change a connected app, an API key or the AI made, by day.`}
     />
   );
 }

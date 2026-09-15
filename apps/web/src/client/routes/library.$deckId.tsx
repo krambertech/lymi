@@ -6,7 +6,8 @@ import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { api, type Card } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { cardHistoryQuery, deckCardsQuery, decksQuery } from "../lib/queries";
+import { publicSiteUrl } from "../lib/origins";
+import { cardHistoryQuery, connectedAppsQuery, deckCardsQuery, decksQuery } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { DeckDetailView } from "../views/deck-detail-view";
 import { describeEvent } from "../views/word-view";
@@ -35,6 +36,7 @@ function DeckPage() {
   const navigate = useNavigate();
   const decks = useQuery(decksQuery);
   const cards = useQuery(deckCardsQuery(deckId));
+  const apps = useQuery({ ...connectedAppsQuery, enabled: cards.data?.length === 0 });
   const history = useQuery({ ...cardHistoryQuery(openCardId ?? ""), enabled: !!openCardId });
   const deck = decks.data?.find((d) => d.id === deckId);
   const add = useAddCard();
@@ -130,6 +132,8 @@ function DeckPage() {
         setOpen(null);
         save.mutate({ id, patch: { deckId: toDeck } });
       }}
+      connectUrl={publicSiteUrl("/docs/mcp")}
+      connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
     />
   );
 }

@@ -157,13 +157,14 @@ test("a round left open past midnight gives way to the new day's goal", async ({
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
-  await page.clock.install({ time: new Date() });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await signInAsTestLearner(page, testInfo, "review-goal-midnight");
   await setGoal(page, 2);
   await addCards(page, await addDeck(page, "Midnight"), "Midnight", 14);
+  // Motion starts native animations at the faked performance.now(), so time faked before this page loads delays every exit by that much.
+  await page.clock.install({ time: new Date() });
   await page.goto("/review");
-  // Keyboard grades do not roll the header count, whose exit would wait on the paused clock.
+  // After the jump past midnight a rolled count would never leave, and keyboard grades do not roll it.
   const gradeByKey = async (after: string) => {
     await expect(page.getByLabel(/ card for /)).toBeVisible();
     await page.keyboard.press("Space");

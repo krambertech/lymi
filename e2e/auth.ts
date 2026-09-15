@@ -10,7 +10,7 @@ export async function signInAsTestLearner(
   account: E2EAccount,
   returnTo = "/today",
 ) {
-  const email = e2eEmail(account, testInfo.project.name, testInfo.retry);
+  const email = e2eEmail(account, testInfo.project.name, testInfo.retry, testInfo.repeatEachIndex);
 
   await page.goto(`/login?${new URLSearchParams({ dev: "1", returnTo })}`);
   await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();

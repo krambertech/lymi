@@ -36,14 +36,21 @@ export const e2eAccounts = [
 
 export const e2eProjects = ["chromium", "webkit"];
 export const e2eRetries = [0, 1];
+// Up to `--repeat-each=10`, so a repeat starts from an empty account like a retry does.
+export const e2eRepeats = Array.from({ length: 10 }, (_, i) => i);
 
-export function e2eEmail(account, project, retry) {
+export function e2eEmail(account, project, retry, repeat) {
   if (!e2eAccounts.includes(account)) throw new Error(`Unknown E2E account: ${account}`);
   if (!e2eProjects.includes(project)) throw new Error(`Unknown E2E project: ${project}`);
   if (!e2eRetries.includes(retry)) throw new Error(`Unsupported E2E retry: ${retry}`);
-  return `e2e-${account}-${project}-r${retry}@lymi.local`;
+  if (!e2eRepeats.includes(repeat)) throw new Error(`Unsupported E2E repeat: ${repeat}`);
+  return `e2e-${account}-${project}-r${retry}-p${repeat}@lymi.local`;
 }
 
 export const e2eAllowedEmails = e2eAccounts.flatMap((account) =>
-  e2eProjects.flatMap((project) => e2eRetries.map((retry) => e2eEmail(account, project, retry))),
+  e2eProjects.flatMap((project) =>
+    e2eRetries.flatMap((retry) =>
+      e2eRepeats.map((repeat) => e2eEmail(account, project, retry, repeat)),
+    ),
+  ),
 );

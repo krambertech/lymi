@@ -135,6 +135,9 @@ msgstr "Мажорний акорд із малою септимою, побуд
 msgid "A new language"
 msgstr "Іноземна мова"
 
+msgid "A page that isn’t where the link says it is"
+msgstr "Сторінка, якої немає там, куди веде посилання"
+
 msgid "A partnership between fungi and plant roots, trading water for sugar"
 msgstr "Союз грибів і коренів рослин: вода в обмін на цукор"
 
@@ -693,6 +696,9 @@ msgstr "Як дістатися"
 msgid "Gladly"
 msgstr "Охоче"
 
+msgid "Go home"
+msgstr "На головну"
+
 msgid "God willing"
 msgstr "Дасть Бог"
 
@@ -1243,6 +1249,12 @@ msgstr "Інші застосунки"
 
 msgid "Overview"
 msgstr "Вступ"
+
+msgid "Page not found"
+msgstr "Сторінку не знайдено"
+
+msgid "Page not found · Lymi"
+msgstr "Сторінку не знайдено · Lymi"
 
 msgid "Paying at the checkout"
 msgstr "Оплата на касі"
@@ -1805,6 +1817,12 @@ msgstr "Переверни кілька карток"
 msgid "Turn it over"
 msgstr "Перевернути"
 
+msgid "Turn the card back"
+msgstr "Перевернути картку назад"
+
+msgid "Turn the card over"
+msgstr "Перевернути картку"
+
 msgid "Turn your notes into cards."
 msgstr "Зроби з нотаток картки."
 
@@ -1984,6 +2002,9 @@ msgstr "У тебе вийде!"
 
 msgid "you have (with “on”)"
 msgstr "у вас (разом з «on» — «у вас є»)"
+
+msgid "You learned this one in context."
+msgstr "Вивчено в контексті."
 
 msgid "You own this deck"
 msgstr "Твоя колода"

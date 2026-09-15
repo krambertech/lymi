@@ -135,6 +135,9 @@ msgstr "A major chord with a minor seventh, built on the fifth note of the key"
 msgid "A new language"
 msgstr "A new language"
 
+msgid "A page that isn’t where the link says it is"
+msgstr "A page that isn’t where the link says it is"
+
 msgid "A partnership between fungi and plant roots, trading water for sugar"
 msgstr "A partnership between fungi and plant roots, trading water for sugar"
 
@@ -693,6 +696,9 @@ msgstr "Getting around"
 msgid "Gladly"
 msgstr "Gladly"
 
+msgid "Go home"
+msgstr "Go home"
+
 msgid "God willing"
 msgstr "God willing"
 
@@ -1243,6 +1249,12 @@ msgstr "Other apps"
 
 msgid "Overview"
 msgstr "Overview"
+
+msgid "Page not found"
+msgstr "Page not found"
+
+msgid "Page not found · Lymi"
+msgstr "Page not found · Lymi"
 
 msgid "Paying at the checkout"
 msgstr "Paying at the checkout"
@@ -1805,6 +1817,12 @@ msgstr "Turn a few cards over"
 msgid "Turn it over"
 msgstr "Turn it over"
 
+msgid "Turn the card back"
+msgstr "Turn the card back"
+
+msgid "Turn the card over"
+msgstr "Turn the card over"
+
 msgid "Turn your notes into cards."
 msgstr "Turn your notes into cards."
 
@@ -1984,6 +2002,9 @@ msgstr "You can do it!"
 
 msgid "you have (with “on”)"
 msgstr "you have (with “on”)"
+
+msgid "You learned this one in context."
+msgstr "You learned this one in context."
 
 msgid "You own this deck"
 msgstr "You own this deck"

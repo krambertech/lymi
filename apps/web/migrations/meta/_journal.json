@@ -99,6 +99,13 @@
       "when": 1789327962945,
       "tag": "0013_card_images",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "6",
+      "when": 1789420661565,
+      "tag": "0014_series",
+      "breakpoints": true
     }
   ]
 }

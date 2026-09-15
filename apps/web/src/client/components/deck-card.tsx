@@ -14,6 +14,8 @@ export interface DeckCardProps {
   next?: string | null | undefined;
   /** The owner's name on a deck the learner joined. An owned deck names nobody. */
   owner?: string | null | undefined;
+  /** Instructions a screen reader reads with the link, such as how to drag the deck. */
+  describedBy?: string | undefined;
   st?: StaticNav;
 }
 
@@ -22,13 +24,24 @@ export interface DeckCardProps {
  * and how big it is. The split between states lives on the deck page. Due is the card's only
  * colour, so a page of decks with nothing due stays quiet.
  */
-export function DeckCard({ id, name, language, due, total, next, owner, st }: DeckCardProps) {
+export function DeckCard({
+  id,
+  name,
+  language,
+  due,
+  total,
+  next,
+  owner,
+  describedBy,
+  st,
+}: DeckCardProps) {
   const lang = language ? languageName(language) : null;
   return (
     <NavLink
       to="/library/$deckId"
       params={{ deckId: id }}
       st={st}
+      describedBy={describedBy}
       className="edge group grid w-full min-w-0 content-start gap-1 rounded-lg bg-plate px-4 py-3.5 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
       <span className="flex min-h-[26px] min-w-0 items-center justify-between gap-3">

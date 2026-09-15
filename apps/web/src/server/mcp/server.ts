@@ -14,6 +14,9 @@ import {
   InsightsOut,
   ReviewMode,
   RoundsOut,
+  SeriesArchiveInput,
+  SeriesInput,
+  SeriesOrderInput,
   SettingsPatch,
   SLIPPING_LAPSES,
   SLIPPING_REVIEWS,
@@ -26,21 +29,29 @@ import {
   archiveCard,
   archiveCardImage,
   archiveDeck,
+  archiveSeries,
   type CardView,
   createDeck,
+  createSeries,
   describeCardImage,
   getDeck,
+  getSeries,
   getSettings,
   importCardImage,
   insights,
   listDeckCards,
   listDecks,
+  listSeries,
+  renameSeries,
+  reorderSeries,
   restoreCard,
   restoreCardImage,
   restoreDeck,
+  restoreSeries,
   reviewRounds,
   ServiceError,
   searchCards,
+  setSeriesDecks,
   showCard,
   streak,
   updateCard,
@@ -73,6 +84,8 @@ When the learner shares a lesson, transcript or text, you do the extraction: pic
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
 
 A card may have one picture, set with set_card_image from a public link or base64 bytes. Give it a description of what the picture shows that never names the term or meaning: it is what a screen reader says and what review shows if the picture cannot load. Picture review modes (cue "image") are set on each card with update_card or add_cards, never on a deck, and ask only while the card has a described picture. A road sign would be reviewModes [{ "cue": "image", "target": "meaning" }]; until it has a described picture, a card of picture modes only is asked in the text mode with the same target instead.
+
+A series is an optional, ordered group of the learner's own decks that they review together. Put a deck in one with update_deck and seriesId, or set a series' whole deck list with update_series. Decks the learner joined from someone else never belong to their series.
 
 Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 
@@ -165,18 +178,23 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "due_counts",
     {
       title: "Due counts",
-      description: `How many cards are waiting to be reviewed right now, in total and per deck, and how many are in each Today round: forgotten today, new, and slipping (forgotten at least ${SLIPPING_LAPSES} times in at least ${SLIPPING_REVIEWS} reviews). Only the learner can review them, in the app.`,
+      description: `How many cards are waiting to be reviewed right now, in total, per deck and per series, and how many are in each Today round: forgotten today, new, and slipping (forgotten at least ${SLIPPING_LAPSES} times in at least ${SLIPPING_REVIEWS} reviews). Only the learner can review them, in the app.`,
       inputSchema: z.object({}),
       outputSchema: DueOut,
       ...readTool,
     },
     () =>
       run("due_counts", async () => {
-        const [decks, rounds] = await Promise.all([listDecks(ctx), reviewRounds(ctx)]);
+        const [decks, series, rounds] = await Promise.all([
+          listDecks(ctx),
+          listSeries(ctx),
+          reviewRounds(ctx),
+        ]);
         return result({
           dueNow: decks.reduce((sum, d) => sum + d.due, 0),
           total: decks.reduce((sum, d) => sum + d.total, 0),
           decks: decks.map((d) => ({ id: d.id, name: d.name, due: d.due, total: d.total })),
+          series: series.map((s) => ({ id: s.id, name: s.name, due: s.due, total: s.total })),
           rounds,
         });
       }),
@@ -293,7 +311,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Edit a deck",
       description:
-        "Rename a deck, or change its description, default language or review modes. Send only what changes. Needs write.",
+        "Rename a deck, change its description, default language or review modes, or move it into or out of a series with seriesId. Send only what changes. Needs write.",
       inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckInput.partial().shape),
       outputSchema: DeckOut,
       ...writeTool({ idempotent: false, overwrites: true }),
@@ -336,6 +354,128 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       run("restore_deck", async () => {
         denyReads(principal);
         await restoreDeck(ctx, deckId);
+        return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
+    "list_series",
+    {
+      title: "List series",
+      description:
+        "The learner's series in order, each with its decks in order and their card and due counts. Set archived to true for archived series, for example to find one to restore.",
+      inputSchema: z.object({
+        archived: z.boolean().optional().describe("Archived series instead of active ones"),
+      }),
+      outputSchema: SeriesListOut,
+      ...readTool,
+    },
+    ({ archived }) =>
+      run("list_series", async () =>
+        result({ series: (await listSeries(ctx, { archived })).map(seriesOut) }),
+      ),
+  );
+
+  server.registerTool(
+    "create_series",
+    {
+      title: "Create a series",
+      description:
+        "Make a series, last in the learner's order, and optionally move their decks into it in the order given. Check list_series first: one may exist. Needs write.",
+      inputSchema: SeriesInput,
+      outputSchema: SeriesItemOut,
+      ...writeTool({ idempotent: false }),
+    },
+    (input) =>
+      run("create_series", async () => {
+        denyReads(principal);
+        return result(seriesOut(await createSeries(ctx, input)));
+      }),
+  );
+
+  server.registerTool(
+    "update_series",
+    {
+      title: "Edit a series",
+      description:
+        "Rename a series, or set every deck it holds in order. A deck listed from elsewhere moves in; one left out goes back to the learner's other decks. Sending the same list again changes nothing. Needs write.",
+      inputSchema: z.object({
+        seriesId: z.string().min(1),
+        name: SeriesInput.shape.name.optional(),
+        deckIds: z
+          .array(z.string().min(1))
+          .max(200)
+          .optional()
+          .describe("Every deck the series should hold, in order"),
+      }),
+      outputSchema: SeriesItemOut,
+      ...writeTool({ idempotent: true, overwrites: true }),
+    },
+    ({ seriesId, name, deckIds }) =>
+      run("update_series", async () => {
+        denyReads(principal);
+        if (name === undefined && deckIds === undefined) {
+          throw new ServiceError("invalid", "Send a name, deckIds, or both.");
+        }
+        // Decks first: they are the part that can be refused, so a refusal never leaves a rename behind.
+        if (deckIds) await setSeriesDecks(ctx, seriesId, { deckIds });
+        const updated =
+          name !== undefined
+            ? await renameSeries(ctx, seriesId, name)
+            : await getSeries(ctx, seriesId);
+        return result(seriesOut(updated));
+      }),
+  );
+
+  server.registerTool(
+    "reorder_series",
+    {
+      title: "Reorder series",
+      description:
+        "Put the learner's active series in a new order. List every one of them once; a list that no longer matches fails, so call list_series again. Needs write.",
+      inputSchema: SeriesOrderInput,
+      outputSchema: SeriesListOut,
+      ...writeTool({ idempotent: true }),
+    },
+    (input) =>
+      run("reorder_series", async () => {
+        denyReads(principal);
+        return result({ series: (await reorderSeries(ctx, input)).map(seriesOut) });
+      }),
+  );
+
+  server.registerTool(
+    "archive_series",
+    {
+      title: "Archive a series",
+      description:
+        'Hide a series. With decks "archive" its decks leave Library and review with it; with "keep" they stay, without a series. Ask the learner which they want. restore_series undoes either. Needs write.',
+      inputSchema: z.object({ seriesId: z.string().min(1) }).extend(SeriesArchiveInput.shape),
+      outputSchema: OkOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ seriesId, decks }) =>
+      run("archive_series", async () => {
+        denyReads(principal);
+        await archiveSeries(ctx, seriesId, { decks });
+        return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
+    "restore_series",
+    {
+      title: "Restore a series",
+      description:
+        "Bring an archived series back, with the decks archived alongside it. Find archived series with list_series and archived set to true. Needs write.",
+      inputSchema: z.object({ seriesId: z.string().min(1) }),
+      outputSchema: OkOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ seriesId }) =>
+      run("restore_series", async () => {
+        denyReads(principal);
+        await restoreSeries(ctx, seriesId);
         return result({ ok: true });
       }),
   );
@@ -738,6 +878,7 @@ const DeckOut = z.object({
   defaultLanguage: z.string().nullable(),
   directions: Directions,
   reviewModes: z.array(ReviewMode),
+  seriesId: z.string().nullable().describe("The learner's series the deck is in"),
   archivedAt: Timestamp.nullable(),
   createdAt: Timestamp,
 });
@@ -751,6 +892,7 @@ function deckOut(deck: Awaited<ReturnType<typeof getDeck>>): DeckOut {
     defaultLanguage: deck.defaultLanguage,
     directions: deck.directions,
     reviewModes: deck.reviewModes,
+    seriesId: deck.seriesId,
     archivedAt: deck.archivedAt ? deck.archivedAt.toISOString() : null,
     createdAt: deck.createdAt.toISOString(),
   };
@@ -784,6 +926,7 @@ const DeckSummaryOut = z.object({
   defaultLanguage: z.string().nullable(),
   directions: Directions,
   reviewModes: z.array(ReviewMode),
+  seriesId: z.string().nullable().describe("The learner's series the deck is in"),
   total: z.number().int(),
   due: z.number().int(),
 });
@@ -796,6 +939,7 @@ function deckSummary(deck: Awaited<ReturnType<typeof listDecks>>[number]) {
     defaultLanguage: deck.defaultLanguage,
     directions: deck.directions,
     reviewModes: deck.reviewModes,
+    seriesId: deck.seriesId,
     total: deck.total,
     due: deck.due,
   };
@@ -821,6 +965,9 @@ const DueOut = z.object({
   decks: z.array(
     z.object({ id: z.string(), name: z.string(), due: z.number().int(), total: z.number().int() }),
   ),
+  series: z.array(
+    z.object({ id: z.string(), name: z.string(), due: z.number().int(), total: z.number().int() }),
+  ),
   rounds: z.object(RoundsOut.shape),
 });
 
@@ -840,3 +987,29 @@ const AddCardsOut = z.object({
 });
 
 const OkOut = z.object({ ok: z.literal(true) });
+
+const SeriesItemOut = z.object({
+  id: z.string(),
+  name: z.string(),
+  deckIds: z.array(z.string()).describe("Its decks in order. Empty while archived."),
+  total: z.number().int(),
+  due: z.number().int(),
+  archivedDecks: z.number().int().describe("Decks restore_series brings back with it"),
+  archivedAt: Timestamp.nullable(),
+  createdAt: Timestamp,
+});
+
+const SeriesListOut = z.object({ series: z.array(SeriesItemOut) });
+
+function seriesOut(series: Awaited<ReturnType<typeof listSeries>>[number]) {
+  return {
+    id: series.id,
+    name: series.name,
+    deckIds: series.deckIds,
+    total: series.total,
+    due: series.due,
+    archivedDecks: series.archivedDecks,
+    archivedAt: series.archivedAt ? series.archivedAt.toISOString() : null,
+    createdAt: series.createdAt.toISOString(),
+  };
+}

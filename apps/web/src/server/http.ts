@@ -127,7 +127,7 @@ const ERRORS = {
   401: "No session, API key or token, or one that is not valid.",
   403: "The caller may not do this: a read key on a write, or a key or token on a learner-only route.",
   404: "Not found, or not yours.",
-  409: "The change would collide with another card.",
+  409: "The change collides with a newer change, or with another card.",
   429: "The key is over its rate limit.",
   503: "This capability is not configured or temporarily unavailable.",
 } as const;

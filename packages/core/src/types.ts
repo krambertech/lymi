@@ -94,8 +94,62 @@ export const DeckInput = z.object({
   reviewModes: ReviewModes.optional().meta({
     description: "Text modes only. Picture modes are set on each card.",
   }),
+  seriesId: z.string().min(1).nullable().optional().meta({
+    description:
+      "One of the owner's active series; the deck goes last in it. Null takes the deck out of its series.",
+  }),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
+
+const SeriesName = z
+  .string()
+  .trim()
+  .min(1, "Give the series a name.")
+  .max(80, "Keep the name under 80 characters.");
+
+/** Deck ids in the order they should run. Each deck once. */
+const DeckIds = z
+  .array(z.string().min(1))
+  .max(200)
+  .refine((ids) => new Set(ids).size === ids.length, "List each deck once.");
+
+export const SeriesInput = z.object({
+  name: SeriesName,
+  deckIds: DeckIds.optional().meta({
+    description: "The owner's decks to move into the new series, in order",
+  }),
+});
+export type SeriesInput = z.infer<typeof SeriesInput>;
+
+export const SeriesPatch = z.object({ name: SeriesName });
+export type SeriesPatch = z.infer<typeof SeriesPatch>;
+
+/** The series' active decks, all of them, in their new order. A full list, so a retry lands the same. */
+export const SeriesDecksInput = z.object({
+  deckIds: DeckIds.meta({
+    description:
+      "Every active deck the series should hold, in order. A deck listed from elsewhere moves in; one left out leaves the series.",
+  }),
+});
+export type SeriesDecksInput = z.infer<typeof SeriesDecksInput>;
+
+export const SeriesOrderInput = z.object({
+  seriesIds: z
+    .array(z.string().min(1))
+    .max(200)
+    .refine((ids) => new Set(ids).size === ids.length, "List each series once.")
+    .meta({ description: "Every active series, in their new order" }),
+});
+export type SeriesOrderInput = z.infer<typeof SeriesOrderInput>;
+
+/** What happens to a series' active decks when it is archived. */
+export const SeriesArchiveInput = z.object({
+  decks: z.enum(["archive", "keep"]).meta({
+    description:
+      "archive: the decks leave Library and review with the series. keep: they stay, without a series.",
+  }),
+});
+export type SeriesArchiveInput = z.infer<typeof SeriesArchiveInput>;
 
 export const CardInput = z.object({
   deckId: z.string().min(1, "Choose a deck for it to go in."),

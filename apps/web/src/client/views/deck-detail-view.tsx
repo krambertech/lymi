@@ -6,6 +6,7 @@ import {
   ArrowUpDown,
   Download,
   KeyRound,
+  Layers,
   ListFilter,
   MoreHorizontal,
   Plug,
@@ -15,6 +16,8 @@ import {
   X,
 } from "lucide-react";
 import {
+  Fragment,
+  type ReactNode,
   type RefObject,
   useCallback,
   useEffect,
@@ -86,6 +89,10 @@ export interface DeckDetailProps {
   onReview?: (() => void) | undefined;
   onSettings?: (() => void) | undefined;
   onArchiveDeck?: (() => void) | undefined;
+  /** Opens the series picker. Absent for a member, whose deck belongs to someone else's Library. */
+  onMoveToSeries?: (() => void) | undefined;
+  /** The owner's series the deck is in, named under the title. */
+  seriesName?: string | undefined;
   /** The word that is open, if one is. The view owns it when the route does not. */
   openCardId?: string | null | undefined;
   onOpen?: ((id: string | null) => void) | undefined;
@@ -151,6 +158,24 @@ const startOfDay = (at: number) => {
   const d = new Date(at);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 };
+
+/** The parts under a deck's title, dot-separated, or nothing when there are none. */
+function subline(...parts: ReactNode[]) {
+  const shown = parts.filter(Boolean);
+  if (shown.length === 0) return undefined;
+  // One centred row, so a part that carries an icon sits on the same line as the text beside it.
+  return (
+    <span className="flex flex-wrap items-center gap-x-1.5">
+      {shown.map((part, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: the parts have a fixed order
+        <Fragment key={index}>
+          {index > 0 && <span aria-hidden="true">·</span>}
+          <span className="inline-flex items-center gap-1">{part}</span>
+        </Fragment>
+      ))}
+    </span>
+  );
+}
 
 /** "tomorrow", "in 3 days": when the deck's next card comes back, in the interface language. */
 function nextDueLabel(locale: string, cards: DeckRow[], now = Date.now()): string | null {
@@ -637,6 +662,8 @@ export function DeckDetailView({
   onReview,
   onSettings,
   onArchiveDeck,
+  onMoveToSeries,
+  seriesName,
   openCardId,
   onOpen,
   states,
@@ -802,6 +829,12 @@ export function DeckDetailView({
           <Settings2 />
           <Trans>Settings</Trans>
         </DropdownMenuItem>
+        {onMoveToSeries && (
+          <DropdownMenuItem onClick={onMoveToSeries}>
+            <Layers />
+            <Trans>Move to series</Trans>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem
           onClick={() => deck && cards && exportCsv(deck.name, cards)}
           disabled={!deck || !cards?.length}
@@ -888,12 +921,18 @@ export function DeckDetailView({
           title={deck ? deck.name : <Skeleton className="h-8 w-40" />}
           sub={
             deck
-              ? [
+              ? subline(
+                  seriesName && (
+                    // Marked, so a series named after the deck's language never reads as the language twice.
+                    <>
+                      <Layers className="size-3.5 shrink-0" aria-hidden="true" />
+                      <span className="sr-only">{t`Series`}</span>
+                      <span>{seriesName}</span>
+                    </>
+                  ),
                   deck.defaultLanguage ? languageName(deck.defaultLanguage) : null,
                   deck.directions !== "recognition" ? directionLabel(deck.directions) : null,
-                ]
-                  .filter(Boolean)
-                  .join(" · ") || undefined
+                )
               : undefined
           }
           actions={

@@ -1,12 +1,16 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { eq } from "@lymi/core/db";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { type Db, schema } from "../db";
 import type { Bindings } from "../env";
-import { ServiceError } from "./context";
+import { type ServiceContext, ServiceError } from "./context";
 import {
   clearLocalEmailOutbox,
   latestLocalEmail,
   renderTransactionalEmail,
+  sendOperatorTestEmail,
   sendTransactionalEmail,
 } from "./email";
+import { learner, testDb } from "./test-db";
 
 function fakeEnv(productUrl: string, send = vi.fn().mockResolvedValue({ messageId: "message-1" })) {
   return {
@@ -14,6 +18,29 @@ function fakeEnv(productUrl: string, send = vi.fn().mockResolvedValue({ messageI
     send,
   };
 }
+
+let db: Db;
+let dispose: () => Promise<void>;
+let nextLearner = 0;
+
+beforeAll(async () => {
+  ({ db, dispose } = await testDb());
+}, 60_000);
+
+afterAll(async () => {
+  await dispose();
+});
+
+async function person(name: string): Promise<ServiceContext> {
+  nextLearner += 1;
+  return learner(db, `email-${name.toLowerCase()}-${nextLearner}`, name);
+}
+
+const sentAudits = (ctx: ServiceContext) =>
+  db
+    .select({ action: schema.auditLog.action, payload: schema.auditLog.payload })
+    .from(schema.auditLog)
+    .where(eq(schema.auditLog.userId, ctx.userId));
 
 describe("transactional email", () => {
   afterEach(() => {
@@ -41,9 +68,7 @@ describe("transactional email", () => {
       const message = await renderTransactionalEmail("test", language);
       expect(message).toMatchObject({ kind: "test", language, subject, text });
       expect(message.html).toContain(`<html lang="${language}">`);
-      expect(message.html).toContain(
-        `<p>${subject === "Test email from Lymi" ? "Hello," : text.split("\n")[0]}</p>`,
-      );
+      expect(message.html).toContain(`<p>${text.split("\n")[0]}</p>`);
     }
   });
 
@@ -55,9 +80,14 @@ describe("transactional email", () => {
   });
 
   it("writes loopback sends to the outbox without touching the provider", async () => {
+    const ctx = await person("Loopback");
     const { env, send } = fakeEnv("http://127.0.0.1:4173");
     await expect(
-      sendTransactionalEmail(env, { kind: "test", to: "Learner@Example.com", language: "uk" }),
+      sendTransactionalEmail(ctx, env, {
+        kind: "test",
+        to: "Learner@Example.com",
+        language: "uk",
+      }),
     ).resolves.toEqual({ delivery: "outbox" });
 
     expect(send).not.toHaveBeenCalled();
@@ -67,12 +97,23 @@ describe("transactional email", () => {
       to: "learner@example.com",
       subject: "Тестовий лист від Lymi",
     });
+    await expect(sentAudits(ctx)).resolves.toEqual([
+      {
+        action: "send_transactional_email",
+        payload: { kind: "test", delivery: "outbox" },
+      },
+    ]);
   });
 
   it("sends both bodies through the production binding with replies going to hello", async () => {
+    const ctx = await person("Provider");
     const { env, send } = fakeEnv("https://my.lymi.app");
     await expect(
-      sendTransactionalEmail(env, { kind: "test", to: "learner@example.com", language: "en" }),
+      sendTransactionalEmail(ctx, env, {
+        kind: "test",
+        to: "learner@example.com",
+        language: "en",
+      }),
     ).resolves.toEqual({ delivery: "provider" });
 
     expect(send).toHaveBeenCalledWith(
@@ -85,9 +126,29 @@ describe("transactional email", () => {
         html: expect.stringContaining("<p>Lymi</p>"),
       }),
     );
+    const audits = await sentAudits(ctx);
+    expect(audits).toEqual([
+      {
+        action: "send_transactional_email",
+        payload: { kind: "test", delivery: "provider" },
+      },
+    ]);
+    expect(JSON.stringify(audits)).not.toContain("learner@example.com");
+  });
+
+  it("refuses a signed-in learner outside the operator capability list", async () => {
+    const ctx = await person("Learner");
+    const { env, send } = fakeEnv("http://127.0.0.1:4173");
+
+    await expect(
+      sendOperatorTestEmail(ctx, env, { to: "learner@example.com", language: "en" }, new Set()),
+    ).rejects.toEqual(new ServiceError("forbidden", "Only a Lymi operator can send a test email."));
+    expect(send).not.toHaveBeenCalled();
+    await expect(sentAudits(ctx)).resolves.toEqual([]);
   });
 
   it("returns a safe error and logs only the kind and error class", async () => {
+    const ctx = await person("Failure");
     const providerError = Object.assign(
       new Error("Could not deliver private body to learner@example.com"),
       { code: "E_DELIVERY_FAILED" },
@@ -96,9 +157,13 @@ describe("transactional email", () => {
     const log = vi.spyOn(console, "error").mockImplementation(() => {});
 
     await expect(
-      sendTransactionalEmail(env, { kind: "test", to: "learner@example.com", language: "en" }),
+      sendTransactionalEmail(ctx, env, {
+        kind: "test",
+        to: "learner@example.com",
+        language: "en",
+      }),
     ).rejects.toEqual(
-      new ServiceError("unavailable", "Couldn't send the email. Try again in a moment."),
+      new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment."),
     );
     expect(log).toHaveBeenCalledWith(
       JSON.stringify({
@@ -110,5 +175,31 @@ describe("transactional email", () => {
     const logged = JSON.stringify(log.mock.calls);
     expect(logged).not.toContain("learner@example.com");
     expect(logged).not.toContain("private body");
+    await expect(sentAudits(ctx)).resolves.toEqual([]);
+  });
+
+  it("keeps an unmapped provider code without logging the provider message", async () => {
+    const ctx = await person("ProviderCode");
+    const providerError = Object.assign(new Error("Private provider detail"), {
+      code: "E_PROVIDER_NEW_FAILURE",
+    });
+    const { env } = fakeEnv("https://my.lymi.app", vi.fn().mockRejectedValue(providerError));
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(
+      sendTransactionalEmail(ctx, env, {
+        kind: "test",
+        to: "learner@example.com",
+        language: "en",
+      }),
+    ).rejects.toMatchObject({ code: "unavailable" });
+    expect(log).toHaveBeenCalledWith(
+      JSON.stringify({
+        event: "transactional_email_failed",
+        kind: "test",
+        errorClass: "E_PROVIDER_NEW_FAILURE",
+      }),
+    );
+    expect(JSON.stringify(log.mock.calls)).not.toContain("Private provider detail");
   });
 });

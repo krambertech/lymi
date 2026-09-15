@@ -5,7 +5,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { e2eAllowedEmails } from "../e2e/settings.mjs";
+import { e2eAllowedEmails, e2eOperatorEmails } from "../e2e/settings.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const web = resolve(root, "apps/web");
@@ -46,6 +46,7 @@ const testVars = [
   "PUBLIC_SITE_URL=http://localhost:4174",
   "PRODUCT_URL=http://localhost:4173",
   `ALLOWED_EMAILS=${e2eAllowedEmails.join(",")}`,
+  `OPERATOR_EMAILS=${e2eOperatorEmails.join(",")}`,
   "BETTER_AUTH_SECRET=lymi-e2e-secret-at-least-thirty-two-characters",
   "GOOGLE_CLIENT_ID=e2e-client-id",
   "GOOGLE_CLIENT_SECRET=e2e-client-secret",
@@ -168,6 +169,7 @@ generatedProductConfig.vars = {
   PUBLIC_SITE_URL: "http://localhost:4174",
   PRODUCT_URL: "http://localhost:4175",
   ALLOWED_EMAILS: e2eAllowedEmails.join(","),
+  OPERATOR_EMAILS: e2eOperatorEmails.join(","),
 };
 generatedProductConfig.routes = [];
 writeFileSync(productPackageConfig, JSON.stringify(generatedProductConfig));
@@ -177,6 +179,7 @@ writeFileSync(
     "PUBLIC_SITE_URL=http://localhost:4174",
     "PRODUCT_URL=http://localhost:4175",
     `ALLOWED_EMAILS=${e2eAllowedEmails.join(",")}`,
+    `OPERATOR_EMAILS=${e2eOperatorEmails.join(",")}`,
     "BETTER_AUTH_SECRET=lymi-e2e-secret-at-least-thirty-two-characters",
     "GOOGLE_CLIENT_ID=e2e-client-id",
     "GOOGLE_CLIENT_SECRET=e2e-client-secret",

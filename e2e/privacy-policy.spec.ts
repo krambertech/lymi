@@ -35,3 +35,20 @@ test("the privacy policy names email delivery in every supported language", asyn
     expect(html).toContain('rel="alternate" hreflang="ru" href="https://lymi.app/ru/privacy"');
   }
 });
+
+test("localized signup notices open the matching privacy policy", async ({ page }) => {
+  const pages = [
+    { path: "/uk/", privacy: "/uk/privacy" },
+    { path: "/ru/", privacy: "/ru/privacy" },
+    { path: "/uk/join", privacy: "/uk/privacy" },
+    { path: "/ru/join", privacy: "/ru/privacy" },
+  ] as const;
+
+  for (const entry of pages) {
+    await page.goto(`${publicSite}${entry.path}`);
+    const link = page.locator(`form a[href="${entry.privacy}"]`);
+    await expect(link).toBeVisible();
+    await link.click();
+    await expect(page).toHaveURL(`${publicSite}${entry.privacy}/`);
+  }
+});

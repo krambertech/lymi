@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type SyntheticEvent, useEffect, useRef, useState } from "react";
 import { ApiError, type BetaSource, joinBeta } from "../lib/api";
+import { localizedPath } from "../lib/routes";
 import { AuthNotice } from "./AuthNotice";
 import { Button } from "./Button";
 import { Field, Input } from "./Field";
@@ -25,7 +26,7 @@ const enter = { duration: 0.2, ease: [0.22, 1, 0.36, 1] } as const;
  * interest only: no account is created and no access is granted.
  */
 export function BetaSignup({ source, layout = "inline", compact = false }: Props) {
-  const { t } = useLingui();
+  const { i18n, t } = useLingui();
   const still = useReducedMotion();
   const [email, setEmail] = useState("");
   const success = useRef<HTMLDivElement>(null);
@@ -141,7 +142,7 @@ export function BetaSignup({ source, layout = "inline", compact = false }: Props
                 We use your email only for this access request. It does not create an account. Read
                 the{" "}
                 <a
-                  href="/privacy"
+                  href={localizedPath("privacy", i18n.locale)}
                   className="rounded-xs text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current"
                 >
                   privacy policy

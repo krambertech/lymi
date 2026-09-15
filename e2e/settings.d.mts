@@ -32,7 +32,9 @@ export type E2EAccount =
   | "anki-import"
   | "sections"
   | "mochi-import"
-  | "publisher";
+  | "publisher"
+  | "email-outbox"
+  | "email-non-operator";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];
@@ -45,4 +47,5 @@ export function e2eEmail(
   repeat: number,
 ): string;
 export const e2eAllowedEmails: readonly string[];
+export const e2eOperatorEmails: readonly string[];
 export const e2ePublisherEmails: readonly string[];

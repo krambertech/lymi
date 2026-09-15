@@ -1,10 +1,10 @@
 import { OkOut } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
-import { allowedEmails } from "../env";
-import { body, describe } from "../http";
+import { operatorEmails } from "../env";
+import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
-import { ServiceError, sendTransactionalEmail } from "../services";
+import { sendOperatorTestEmail } from "../services";
 
 export const email = new Hono<AppEnv>();
 
@@ -24,15 +24,8 @@ email.post(
   }),
   body(TestEmailBody, "test email"),
   async (c) => {
-    if (!allowedEmails(c.env).has(c.get("user").email.toLowerCase())) {
-      throw new ServiceError("forbidden", "Only a Lymi operator can send a test email.");
-    }
     const input = c.req.valid("json");
-    await sendTransactionalEmail(c.env, {
-      kind: "test",
-      to: input.to,
-      language: input.language,
-    });
+    await sendOperatorTestEmail(ctxOf(c), c.env, input, operatorEmails(c.env));
     return c.json({ ok: true });
   },
 );

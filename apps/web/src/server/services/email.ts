@@ -1,8 +1,11 @@
 import { msg } from "@lingui/core/macro";
+import { eq } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
+import { audit } from "../audit";
+import { schema } from "../db";
 import type { Bindings } from "../env";
 import { serverI18n } from "../i18n";
-import { ServiceError } from "./context";
+import { type ServiceContext, ServiceError } from "./context";
 
 export type TransactionalEmailKind = "test";
 export type TransactionalEmailLanguage = "en" | "uk" | "ru";
@@ -106,7 +109,7 @@ function providerErrorClass(error: unknown): string {
     case "E_HEADERS_TOO_MANY":
       return "request_configuration";
     default:
-      return "unknown";
+      return typeof code === "string" ? code : "unknown";
   }
 }
 
@@ -124,35 +127,64 @@ function writeLocalEmail(message: RenderedEmail, to: string): LocalEmail {
 
 /** Send through Cloudflare in production and keep all loopback delivery inside the local Worker. */
 export async function sendTransactionalEmail(
+  ctx: ServiceContext,
   env: Pick<Bindings, "PRODUCT_URL" | "EMAIL">,
   input: TransactionalEmailInput,
 ): Promise<{ delivery: "provider" | "outbox" }> {
   const message = await renderTransactionalEmail(input.kind, input.language);
+  let delivery: "provider" | "outbox";
   if (isLoopbackUrl(env.PRODUCT_URL)) {
     writeLocalEmail(message, input.to);
-    return { delivery: "outbox" };
+    delivery = "outbox";
+  } else {
+    try {
+      await env.EMAIL.send({
+        to: input.to,
+        from: FROM,
+        replyTo: REPLY_TO,
+        subject: message.subject,
+        text: message.text,
+        html: message.html,
+      });
+      delivery = "provider";
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          event: "transactional_email_failed",
+          kind: input.kind,
+          errorClass: providerErrorClass(error),
+        }),
+      );
+      throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
+    }
   }
 
-  try {
-    await env.EMAIL.send({
-      to: input.to,
-      from: FROM,
-      replyTo: REPLY_TO,
-      subject: message.subject,
-      text: message.text,
-      html: message.html,
-    });
-    return { delivery: "provider" };
-  } catch (error) {
-    console.error(
-      JSON.stringify({
-        event: "transactional_email_failed",
-        kind: input.kind,
-        errorClass: providerErrorClass(error),
-      }),
-    );
-    throw new ServiceError("unavailable", "Couldn't send the email. Try again in a moment.");
+  await audit(ctx.db, {
+    userId: ctx.userId,
+    actor: ctx.actor,
+    action: "send_transactional_email",
+    entity: "account",
+    entityId: ctx.userId,
+    payload: { kind: input.kind, delivery },
+  });
+  return { delivery };
+}
+
+/** Send the operational smoke-test message only for accounts on the dedicated capability list. */
+export async function sendOperatorTestEmail(
+  ctx: ServiceContext,
+  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL">,
+  input: Omit<TransactionalEmailInput, "kind">,
+  operators: Set<string>,
+) {
+  const [account] = await ctx.db
+    .select({ email: schema.user.email })
+    .from(schema.user)
+    .where(eq(schema.user.id, ctx.userId));
+  if (!account || !operators.has(account.email.toLowerCase())) {
+    throw new ServiceError("forbidden", "Only a Lymi operator can send a test email.");
   }
+  return sendTransactionalEmail(ctx, env, { ...input, kind: "test" });
 }
 
 export function latestLocalEmail(to: string): LocalEmail | null {

@@ -28,3 +28,13 @@ test("a local account email stays in the outbox and can be read by address", asy
     },
   });
 });
+
+test("a signed-in non-operator cannot send an account email", async ({ page }, testInfo) => {
+  await signInAsTestLearner(page, testInfo, "email-non-operator");
+
+  const response = await page.request.post("/api/email/test", {
+    data: { to: "learner@example.com", language: "en" },
+  });
+
+  expect(response.status()).toBe(403);
+});

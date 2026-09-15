@@ -60,6 +60,8 @@ export interface DeckDetailProps {
   onMove?: ((id: string, deckId: string) => void) | undefined;
   /** How to connect an assistant, offered while the deck has no cards. */
   connectUrl?: string | undefined;
+  /** Whether an assistant is connected; undefined while unknown, so its row does not flash. */
+  connected?: boolean | undefined;
   static?: StaticNav;
 }
 
@@ -243,6 +245,7 @@ export function DeckDetailView({
   decks,
   onMove,
   connectUrl,
+  connected,
   static: st,
 }: DeckDetailProps) {
   const { t, i18n } = useLingui();
@@ -551,13 +554,15 @@ export function DeckDetailView({
             >
               <StartPanelSection>
                 <NextSteps label={t`Other ways to add cards`}>
-                  <NextStep
-                    icon={<Plug />}
-                    title={<Trans>Send a lesson from Claude or ChatGPT</Trans>}
-                    detail={<Trans>Connect Lymi, paste the lesson, and ask for the cards</Trans>}
-                    href={connectUrl}
-                    static={st}
-                  />
+                  {connected === false && connectUrl && (
+                    <NextStep
+                      icon={<Plug />}
+                      title={<Trans>Send a lesson from Claude or ChatGPT</Trans>}
+                      detail={<Trans>Connect Lymi, paste the lesson, and ask for the cards</Trans>}
+                      href={connectUrl}
+                      static={st}
+                    />
+                  )}
                   <NextStep
                     icon={<KeyRound />}
                     title={<Trans>Add cards with the API</Trans>}
@@ -703,13 +708,7 @@ export function DeckDetailView({
             }
             detail={q ? <Trans>Search looks at the term and the meaning.</Trans> : undefined}
             action={
-              <Button
-                size="sm"
-                onClick={() => {
-                  setQ("");
-                  setFilter("all");
-                }}
-              >
+              <Button size="sm" onClick={() => (q ? setQ("") : setFilter("all"))}>
                 {q ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}
               </Button>
             }

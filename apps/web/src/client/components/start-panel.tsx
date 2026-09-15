@@ -1,18 +1,7 @@
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
 
-/**
- * Where an empty screen says how to fill it. Dashed, like New's mark, and on the bare canvas, so
- * it reads as a temporary panel rather than a plate of content. DESIGN.md, "Empty states".
- */
-export function StartPanel({
-  title,
-  body,
-  lead,
-  action,
-  children,
-  className,
-}: {
+interface StartPanelProps {
   title: ReactNode;
   body?: ReactNode | undefined;
   /** Beside the title, e.g. the lantern. */
@@ -22,7 +11,13 @@ export function StartPanel({
   /** Further sections, each under a dashed rule, such as the other ways in. */
   children?: ReactNode;
   className?: string | undefined;
-}) {
+}
+
+/**
+ * Where an empty screen says how to fill it. Dashed, like New's mark, and on the bare canvas, so
+ * it reads as a temporary panel rather than a plate of content. DESIGN.md, "Empty states".
+ */
+export function StartPanel({ title, body, lead, action, children, className }: StartPanelProps) {
   return (
     <section
       className={clsx(
@@ -43,7 +38,11 @@ export function StartPanel({
   );
 }
 
+interface StartPanelSectionProps {
+  children: ReactNode;
+}
+
 /** A section of a start panel, under a dashed rule. */
-export function StartPanelSection({ children }: { children: ReactNode }) {
+export function StartPanelSection({ children }: StartPanelSectionProps) {
   return <div className="border-t border-dashed border-edge-2 pt-3">{children}</div>;
 }

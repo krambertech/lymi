@@ -403,7 +403,7 @@ An empty state shows the learner how to fill what is empty, and it looks tempora
 - **A whole screen with nothing to outline uses `EmptyState`**, centred with the still brand lantern: Coming soon.
 - **A screen that failed to load uses `ErrorState`**, centred with the alert icon on `danger-soft`, never the lantern. The title says what failed, the line says the fix, and Try again retries.
 
-Every empty state is quieter than the page: its title is `text-lg` or smaller, below the page title, and its button is a normal button, never the 64 px Review button.
+Every empty state is quieter than the page: its title sits below the page title, `text-xl` for the getting started guide, which is the whole of Today, and `text-lg` or smaller everywhere else. Its button is a normal button, never the 64 px Review button.
 
 A start panel has one primary action. The other ways in are `NextSteps` rows: an outlined icon, a title, one line of detail and the arrow, separated by a gap rather than rules so the hover fill never meets a line. Each row opens where the work happens, such as a Settings group by its anchor or the public docs. Connecting Claude or ChatGPT is offered only while no app is connected.
 

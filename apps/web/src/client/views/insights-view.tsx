@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { InsightsOut } from "@lymi/core";
+import { type InsightsOut, localDate } from "@lymi/core";
 import { clsx } from "clsx";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
@@ -12,7 +12,9 @@ import { Skeleton } from "../components/skeleton";
 import { StartPanel } from "../components/start-panel";
 import { StatPlate } from "../components/stat-plate";
 import { StateIcon, stateMarks } from "../components/state-mark";
+import { addDays } from "../components/streak-calendar";
 import { TrendLine } from "../components/trend-line";
+import { deviceTimezone } from "../lib/api";
 import { Page, PageHeader } from "./shell";
 
 export type Period = "30" | "90" | "0";
@@ -30,13 +32,8 @@ export interface InsightsProps {
   onAdd?: (() => void) | undefined;
 }
 
-/** A stat plate's settled size, shared by loading and by the outlines of an empty Insights. */
+/** A stat plate's settled size, so loading does not jump when the plates land. */
 const PLATE_SLOT = "h-[223px] rounded-xl";
-
-/** A local YYYY-MM-DD, the shape the server reports days in. */
-function localDate(d: Date): string {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
 
 /** Parses a local YYYY-MM-DD without letting the timezone shift it a day. */
 function parseLocal(date: string): Date {
@@ -117,11 +114,8 @@ export function InsightsView({
 
   if (nothingYet) {
     const empty = { total: 0, new: 0, learning: 0, known: 0 };
-    const week = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date();
-      d.setDate(d.getDate() + i);
-      return { date: localDate(d), count: 0 };
-    });
+    const today = localDate(new Date(), deviceTimezone());
+    const week = Array.from({ length: 7 }, (_, i) => ({ date: addDays(today, i), count: 0 }));
     return (
       <Page>
         <PageHeader title={t`Insights`} />
@@ -358,10 +352,12 @@ export function InsightsView({
   );
 }
 
-type CardCounts = InsightsOut["cards"];
+interface CardCountsProps {
+  cards: InsightsOut["cards"];
+}
 
 /** The one figure on Insights that carries colour: the state colours every icon in the app uses. */
-function CardSplit({ cards }: { cards: CardCounts }) {
+function CardSplit({ cards }: CardCountsProps) {
   const { t } = useLingui();
   const parts = (["new", "learning", "known"] as const).filter((k) => cards[k] > 0);
   return (
@@ -384,7 +380,7 @@ function CardSplit({ cards }: { cards: CardCounts }) {
   );
 }
 
-function CardChips({ cards }: { cards: CardCounts }) {
+function CardChips({ cards }: CardCountsProps) {
   return (
     <span className="flex flex-wrap gap-1.5">
       <Chip size="sm">
@@ -403,11 +399,15 @@ function CardChips({ cards }: { cards: CardCounts }) {
   );
 }
 
+interface ForecastBarsProps {
+  forecast: InsightsOut["forecast"];
+}
+
 /**
  * Bars on a baseline, using the whole figure box. A track behind each one reads as a second
  * object stacked on the bar rather than as the space it could fill.
  */
-function ForecastBars({ forecast }: { forecast: InsightsOut["forecast"] }) {
+function ForecastBars({ forecast }: ForecastBarsProps) {
   const { i18n } = useLingui();
   const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
   const peak = Math.max(0, ...forecast.map((d) => d.count));

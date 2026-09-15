@@ -8,9 +8,20 @@ import { Kbd } from "./kbd";
 import { Lantern } from "./lantern";
 import type { StaticNav } from "./nav-link";
 
+interface StartGuideProps {
+  decks: number;
+  cards: number;
+  /** Whether an assistant is connected; undefined while unknown, so its link does not flash. */
+  connected: boolean | undefined;
+  connectUrl: string | undefined;
+  onAdd: (() => void) | undefined;
+  onCreateDeck: (() => void) | undefined;
+  st: StaticNav;
+}
+
 /**
- * Today before the first review: three steps in order, each done by the learner's own data. The current step holds
- * its action; the guide gives way to the usual Today after the first review.
+ * Today before the first review: three steps in order, each done by the learner's own data. The
+ * current step holds its action; the guide gives way to the usual Today after the first review.
  */
 export function StartGuide({
   decks,
@@ -20,15 +31,7 @@ export function StartGuide({
   onAdd,
   onCreateDeck,
   st,
-}: {
-  decks: number;
-  cards: number;
-  connected: boolean | undefined;
-  connectUrl: string | undefined;
-  onAdd: (() => void) | undefined;
-  onCreateDeck: (() => void) | undefined;
-  st: StaticNav;
-}) {
+}: StartGuideProps) {
   const current = decks === 0 ? 0 : cards === 0 ? 1 : 2;
   const link =
     "text-base font-medium text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:text-text hoverable:hover:decoration-text";
@@ -68,12 +71,15 @@ export function StartGuide({
             <Trans>Add a card</Trans>
           </Button>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {!connected && (
-              <a href={connectUrl} className={link}>
+            {connected === false && connectUrl && (
+              <a
+                href={connectUrl}
+                onClick={st ? (e) => e.preventDefault() : undefined}
+                className={link}
+              >
                 <Trans>Send a lesson from Claude or ChatGPT</Trans>
               </a>
             )}
-            {/* Disabled on the design page, which draws Today without leaving it. */}
             <Link to="/settings" hash="api-keys" disabled={!!st} className={link}>
               <Trans>Add cards with the API</Trans>
             </Link>

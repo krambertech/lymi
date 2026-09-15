@@ -4,17 +4,22 @@ import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import type { StaticNav } from "./nav-link";
 
-/** The end of a whole-row link: what it does, then an arrow that strengthens on hover. */
-export function Go({
-  children,
-  icon,
-  className,
-}: {
+interface GoProps {
   children?: ReactNode;
   /** The glyph in the circle; an arrow unless the row does something other than open. */
   icon?: ReactNode | undefined;
   className?: string | undefined;
-}) {
+}
+
+interface GoProps {
+  children?: ReactNode;
+  /** The glyph in the circle; an arrow unless the row does something other than open. */
+  icon?: ReactNode | undefined;
+  className?: string | undefined;
+}
+
+/** The end of a whole-row link: what it does, then an arrow that strengthens on hover. */
+export function Go({ children, icon, className }: GoProps) {
   return (
     <span
       className={clsx(
@@ -31,8 +36,13 @@ export function Go({
   );
 }
 
+interface NextStepsProps {
+  label: string;
+  children: ReactNode;
+}
+
 /** The other ways to fill an empty screen, inside its start panel under the primary action. */
-export function NextSteps({ label, children }: { label: string; children: ReactNode }) {
+export function NextSteps({ label, children }: NextStepsProps) {
   return (
     <ul aria-label={label} className="grid gap-1">
       {children}
@@ -40,20 +50,27 @@ export function NextSteps({ label, children }: { label: string; children: ReactN
   );
 }
 
-interface StepProps {
+interface NextStepBase {
   icon: ReactNode;
   title: ReactNode;
   detail: ReactNode;
-  /** A page on the public site. */
-  href?: string | undefined;
-  /** A screen in the app. */
-  to?: "/settings" | undefined;
-  /** A group on that screen, e.g. "api-keys". */
-  hash?: string | undefined;
   static?: StaticNav;
 }
 
-export function NextStep({ icon, title, detail, href, to, hash, static: st }: StepProps) {
+type NextStepProps = NextStepBase &
+  (
+    | { /** A page on the public site. */ href: string; to?: never; hash?: never }
+    | {
+        /** A screen in the app. */
+        to: "/settings";
+        /** A group on that screen, e.g. "api-keys". */
+        hash?: string | undefined;
+        href?: never;
+      }
+  );
+
+export function NextStep(props: NextStepProps) {
+  const { icon, title, detail, static: st } = props;
   const className =
     "group -mx-2 flex min-h-16 items-center gap-4 rounded-lg px-2 py-2.5 transition-[background-color] duration-150 hoverable:hover:bg-hover";
   const face = (
@@ -71,15 +88,21 @@ export function NextStep({ icon, title, detail, href, to, hash, static: st }: St
       <Go />
     </>
   );
+  // Inert on the design page, which draws these rows without leaving it.
   return (
     <li>
-      {to && !st ? (
-        <Link to={to} {...(hash ? { hash } : {})} className={className}>
+      {props.to ? (
+        <Link
+          to={props.to}
+          {...(props.hash ? { hash: props.hash } : {})}
+          disabled={!!st}
+          className={className}
+        >
           {face}
         </Link>
       ) : (
         <a
-          href={href ?? (to && hash ? `${to}#${hash}` : to)}
+          href={props.href}
           onClick={st ? (e) => e.preventDefault() : undefined}
           className={className}
         >

@@ -36,7 +36,7 @@ function Today() {
       email={me.data?.email}
       docsUrl={publicSiteUrl("/docs")}
       connectUrl={publicSiteUrl("/docs/mcp")}
-      connected={(apps.data?.length ?? 0) > 0}
+      connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
       onSignOut={leave.signOut}

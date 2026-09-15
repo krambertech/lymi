@@ -124,6 +124,8 @@ export const importsQuery = queryOptions({
   queryKey: ["imports"],
   queryFn: api.imports,
   staleTime: 0,
+  // File names are the learner's own and Activity has no reason to open offline.
+  meta: { persist: false },
 });
 
 /** Statuses the server is still working through, so the screen keeps asking. */

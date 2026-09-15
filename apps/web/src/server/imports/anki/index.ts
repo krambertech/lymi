@@ -313,15 +313,21 @@ export const anki: SourceAdapter<AnkiNote> = {
       audio: 0,
       unsupported: 0,
     };
-    const notes: AnkiNote[] = [];
+    const supported = (row: SqlRow) => {
+      const model = models.get(String(row.mid));
+      const cards = cardsByNote.get(String(row.id));
+      return model && cards && cards.length > 0 && !model.templates.some(isImageOcclusion)
+        ? { model, cards: cards.sort((a, b) => a.ord - b.ord) }
+        : null;
+    };
     for (const row of db.rows("notes")) {
       const typeKey = String(row.mid);
-      const model = models.get(typeKey);
-      const cards = (cardsByNote.get(String(row.id)) ?? []).sort((a, b) => a.ord - b.ord);
-      if (!model || cards.length === 0 || model.templates.some(isImageOcclusion)) {
+      const found = supported(row);
+      if (!found) {
         summary.unsupported++;
         continue;
       }
+      const { model, cards } = found;
       const fields = text(row.flds).split(SEPARATOR);
       let type = noteTypes.get(typeKey);
       if (!type) {
@@ -348,13 +354,20 @@ export const anki: SourceAdapter<AnkiNote> = {
         summary.pictures++;
       }
       summary.audio += fields.reduce((sum, field) => sum + soundCount(field), 0);
-      notes.push({
-        guid: text(row.guid),
-        type: typeKey,
-        fields,
-        tags: text(row.tags).split(/\s+/).filter(Boolean),
-        cards,
-      });
+    }
+    // A second pass hands notes out one at a time, so the collection is never held twice.
+    function* notes(): Generator<AnkiNote> {
+      for (const row of db.rows("notes")) {
+        const found = supported(row);
+        if (!found) continue;
+        yield {
+          guid: text(row.guid),
+          type: String(row.mid),
+          fields: text(row.flds).split(SEPARATOR),
+          tags: text(row.tags).split(/\s+/).filter(Boolean),
+          cards: found.cards,
+        };
+      }
     }
     if (summary.notes === 0) {
       throw new ImportFileError("unrecognized", "The collection holds no cards Lymi can import");
@@ -372,7 +385,7 @@ export const anki: SourceAdapter<AnkiNote> = {
         };
       })
       .sort((a, b) => a.name.localeCompare(b.name));
-    return { summary, notes };
+    return { summary, notes: notes() };
   },
 
   cards(note, summary, choices) {

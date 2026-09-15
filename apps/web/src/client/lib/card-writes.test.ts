@@ -38,6 +38,8 @@ const card: Card = {
   reviewModes: null,
   image: null,
   imageVersion: null,
+  importId: null,
+  externalId: null,
   meaningSource: "ai",
   exampleSource: null,
   audioKey: null,

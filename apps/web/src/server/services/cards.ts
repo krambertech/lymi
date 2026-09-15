@@ -116,6 +116,8 @@ export async function addCards(
       directions: modes?.directions ?? null,
       reviewModeKeys: modes?.reviewModeKeys ?? null,
       imageVersion: null,
+      importId: null,
+      externalId: null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       audioKey: null,

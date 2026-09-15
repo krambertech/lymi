@@ -1,6 +1,6 @@
 import type { DeviceTimezoneInput, ReviewTimezoneInput } from "@lymi/core";
 import { newId } from "@lymi/core";
-import { and, eq, isNotNull, isNull, sql } from "@lymi/core/db";
+import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { audit } from "../audit";
 import { schema } from "../db";
@@ -403,7 +403,14 @@ export async function streak(ctx: ServiceContext, opts: { zone?: string | undefi
         n: sql<number>`count(*)`,
       })
       .from(schema.reviews)
-      .where(and(eq(schema.reviews.userId, ctx.userId), isNull(schema.reviews.reviewDayId)))
+      .where(
+        and(
+          eq(schema.reviews.userId, ctx.userId),
+          isNull(schema.reviews.reviewDayId),
+          // An imported recall has no day either, but it was never measured against a goal.
+          ne(schema.reviews.source, "import"),
+        ),
+      )
       .groupBy(sql`${schema.reviews.reviewedAt} / 900000`),
   ]);
 

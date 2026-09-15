@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { Rating, ReviewModeKey } from "./types";
+import { LanguageTag } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
 export const ImportSource = z.enum(["anki"]);
@@ -316,3 +317,177 @@ export function fieldsFromRoles(
   if (notes.length > 0) fields.notes = notes.join("\n\n");
   return fields;
 }
+
+/** The largest file an import accepts. A collection past the database limit is refused on inspection. */
+export const MAX_IMPORT_BYTES = 1024 * 1024 * 1024;
+
+/** Every part of an upload but the last is exactly this size, as R2 multipart uploads require. */
+export const IMPORT_PART_BYTES = 10 * 1024 * 1024;
+
+export const ImportStartInput = z.object({
+  fileName: z
+    .string()
+    .trim()
+    .min(1)
+    .max(255)
+    .regex(/\.(apkg|colpkg)$/i, "Choose the .apkg or .colpkg file Anki exports."),
+  byteSize: z
+    .number()
+    .int()
+    .positive()
+    .max(MAX_IMPORT_BYTES, "The file is larger than 1 GB. Export one deck at a time instead."),
+});
+export type ImportStartInput = z.infer<typeof ImportStartInput>;
+
+export const ImportChoicesInput = z.object({
+  languages: z
+    .record(z.string(), LanguageTag.nullable())
+    .meta({ description: "Language per deck key from the summary; null is a deck of no language" }),
+  roles: z
+    .record(z.string(), z.array(FieldRole).max(64))
+    .meta({ description: "What each field becomes, per note type key from the summary" }),
+});
+export type ImportChoicesInput = z.infer<typeof ImportChoicesInput>;
+
+export const ImportDuplicate = z.object({
+  term: z.string(),
+  deckName: z.string().meta({ description: "The deck that already holds the term" }),
+});
+
+/** What an import will write, or wrote. */
+export const ImportCounts = z
+  .object({
+    added: z.number().int().meta({ description: "New cards" }),
+    existing: z.number().int().meta({
+      description: "Cards an earlier import of the same file added; blank fields are filled in",
+    }),
+    duplicates: z
+      .number()
+      .int()
+      .meta({ description: "Cards skipped because the term is already in Lymi in that language" }),
+    duplicateExamples: z.array(ImportDuplicate).max(20),
+    skipped: z.number().int().meta({ description: "Notes with no text for the term" }),
+    archived: z
+      .number()
+      .int()
+      .meta({ description: "New cards that arrive archived, from suspended cards" }),
+    shortened: z.number().int().meta({ description: "New cards with text cut or moved to fit" }),
+    reviews: z
+      .number()
+      .int()
+      .meta({ description: "Past recalls brought across with the new cards" }),
+    pictures: z.number().int(),
+    picturesSkipped: z
+      .number()
+      .int()
+      .meta({ description: "Pictures that could not be read or stored" }),
+    decks: z.number().int().meta({ description: "Decks created" }),
+  })
+  .meta({ id: "ImportCounts" });
+export type ImportCounts = z.infer<typeof ImportCounts>;
+
+export const emptyImportCounts = (): ImportCounts => ({
+  added: 0,
+  existing: 0,
+  duplicates: 0,
+  duplicateExamples: [],
+  skipped: 0,
+  archived: 0,
+  shortened: 0,
+  reviews: 0,
+  pictures: 0,
+  picturesSkipped: 0,
+  decks: 0,
+});
+
+export const ImportSummaryOut = z
+  .object({
+    decks: z.array(
+      z.object({
+        key: z.string(),
+        name: z.string(),
+        description: z.string().nullable(),
+        cards: z.number().int(),
+      }),
+    ),
+    noteTypes: z.array(
+      z.object({
+        key: z.string(),
+        name: z.string(),
+        kind: z.enum(["basic", "cloze"]),
+        fields: z.array(z.string()),
+        roles: z.array(FieldRole),
+        questions: z.array(z.number().int().nullable()),
+        notes: z.number().int(),
+        samples: z.array(z.array(z.string())),
+      }),
+    ),
+    notes: z.number().int(),
+    reviews: z.number().int(),
+    pictures: z.number().int(),
+    audio: z.number().int().meta({ description: "Sound references, which are not imported" }),
+    unsupported: z
+      .number()
+      .int()
+      .meta({ description: "Notes of a kind Lymi cannot ask, left out" }),
+    languages: z
+      .record(z.string(), z.string().nullable())
+      .meta({ description: "A first guess at each deck's language" }),
+  })
+  .meta({ id: "ImportSummary" });
+export type ImportSummaryOut = z.infer<typeof ImportSummaryOut>;
+
+export const ImportPreviewOut = ImportCounts.extend({
+  decks: z.array(
+    z.object({
+      key: z.string(),
+      name: z.string().meta({ description: "The Lymi deck's name" }),
+      cards: z.number().int().meta({ description: "New cards going into it" }),
+      existingDeckId: z
+        .string()
+        .nullable()
+        .meta({ description: "The deck an earlier import made, which new cards join" }),
+    }),
+  ),
+  tags: z.number().int().meta({ description: "Distinct tags on the new cards" }),
+  audio: z.number().int(),
+  unsupported: z.number().int(),
+}).meta({ id: "ImportPreview" });
+export type ImportPreviewOut = z.infer<typeof ImportPreviewOut>;
+
+const Timestamp = z.iso.datetime().meta({ description: "ISO 8601 timestamp" });
+
+export const ImportOut = z
+  .object({
+    id: z.string(),
+    source: ImportSource,
+    fileName: z.string(),
+    byteSize: z.number().int(),
+    status: ImportStatus,
+    failure: ImportFailure.nullable(),
+    summary: ImportSummaryOut.nullable().meta({
+      description: "What the file holds, once it has been read",
+    }),
+    choices: ImportChoicesInput.nullable().meta({
+      description: "The choices the import was confirmed with",
+    }),
+    counts: ImportCounts.nullable().meta({
+      description: "What was written, while importing and after",
+    }),
+    progress: z.object({
+      written: z.number().int().meta({ description: "Chunks written" }),
+      chunks: z.number().int().meta({ description: "Chunks to write" }),
+    }),
+    upload: z.object({
+      partBytes: z.number().int().meta({ description: "Size of every part but the last" }),
+      parts: z.number().int().meta({ description: "How many parts the file is sent in" }),
+      received: z.number().int(),
+    }),
+    createdBy: z.enum(["user", "api", "mcp", "ai", "system"]),
+    createdAt: Timestamp,
+    updatedAt: Timestamp,
+    finishedAt: Timestamp.nullable(),
+    archivedAt: Timestamp.nullable(),
+  })
+  .meta({ id: "Import" });
+export type ImportOut = z.infer<typeof ImportOut>;

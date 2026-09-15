@@ -27,6 +27,7 @@ test("names every resource from a validated pull request number", () => {
     databaseName: "lymi-app-pr-105-db",
     namespaceTitle: "lymi-app-pr-105-sessions",
     bucketName: "lymi-app-pr-105-audio",
+    workflowName: "lymi-app-pr-105-import",
     alias: "preview",
   });
   assert.throws(() => previewNames("../production"), /positive integer/);
@@ -49,6 +50,9 @@ test("rewrites every production boundary to isolated preview resources", () => {
       triggers: { crons: ["*/15 * * * *"] },
       vars: { PRODUCT_URL: "https://my.lymi.app" },
       d1_databases: [{ binding: "DB", migrations_dir: "../../migrations" }],
+      workflows: [
+        { name: "lymi-import", binding: "IMPORT_WORKFLOW", class_name: "ImportWorkflow" },
+      ],
     },
     {
       names,
@@ -66,6 +70,13 @@ test("rewrites every production boundary to isolated preview resources", () => {
   assert.equal(config.d1_databases[0].database_id, "preview-db-id");
   assert.equal(config.kv_namespaces[0].id, "preview-kv-id");
   assert.equal(config.r2_buckets[0].bucket_name, names.bucketName);
+  assert.deepEqual(
+    config.r2_buckets.map((bucket) => bucket.binding),
+    ["AUDIO", "IMPORTS"],
+  );
+  assert.deepEqual(config.workflows, [
+    { name: "lymi-app-pr-105-import", binding: "IMPORT_WORKFLOW", class_name: "ImportWorkflow" },
+  ]);
 });
 
 test("reuses exact existing preview resources", async () => {
@@ -145,6 +156,7 @@ test("cleanup deletes only the exact pull request resources", async () => {
   await cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
   assert.deepEqual(deleted, [
     `${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`,
+    `${apiRoot()}/workflows/lymi-app-pr-105-import`,
     `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio`,
     `${apiRoot()}/storage/kv/namespaces/kv-id`,
     `${apiRoot()}/d1/database/db-id`,
@@ -309,7 +321,10 @@ test("cleanup succeeds for a pull request that never deployed a preview", async 
   };
 
   await cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
-  assert.deepEqual(deleted, [`${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`]);
+  assert.deepEqual(deleted, [
+    `${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`,
+    `${apiRoot()}/workflows/lymi-app-pr-105-import`,
+  ]);
 });
 
 function apiRoot() {

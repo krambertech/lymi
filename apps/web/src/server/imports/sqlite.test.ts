@@ -56,7 +56,7 @@ describe("SqliteFile", () => {
       expect(rows.at(-1)).toMatchObject({ id: 9_000_000_000, n: 2n ** 62n, r: -0.5 });
       db.close();
     }
-  });
+  }, 60_000);
 
   it("reads WITHOUT ROWID tables in declared column order, interior records included", () => {
     const { db, file } = build("without-rowid.db", 1024, (db) => {

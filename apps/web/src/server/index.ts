@@ -20,12 +20,14 @@ import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
 import { images } from "./routes/images";
+import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
 import { push } from "./routes/push";
 import { review } from "./routes/review";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
+import { expireImports } from "./services/imports";
 
 export type AppEnv = {
   Bindings: Bindings;
@@ -166,6 +168,7 @@ app.route("/api/connected-apps", connectedApps);
 app.route("/api/push", push);
 app.route("/api/audio", audio);
 app.route("/api/avatar", avatar);
+app.route("/api/imports", imports);
 
 app.notFound((c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
@@ -190,5 +193,10 @@ export default {
         if (result.failed > 0) throw new Error(`${result.failed} review reminder sends failed`);
       }),
     );
+    executionCtx.waitUntil(
+      expireImports(createDb(env.DB), env.IMPORTS, new Date(controller.scheduledTime)),
+    );
   },
 } satisfies ExportedHandler<Bindings>;
+
+export { ImportWorkflow } from "./imports/workflow";

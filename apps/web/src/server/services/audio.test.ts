@@ -25,6 +25,8 @@ function card(patch: Partial<Card> = {}): Card {
     directions: null,
     reviewModeKeys: null,
     imageVersion: null,
+    importId: null,
+    externalId: null,
     meaningSource: "manual",
     exampleSource: null,
     audioKey: null,

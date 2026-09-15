@@ -30,8 +30,15 @@ export const decks = sqliteTable(
     position: integer("position").notNull().default(0),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
+    /** The import that created the deck, if one did. */
+    importId: text("import_id"),
+    /** The source's own key for the deck, so a later import of the same file reuses it. */
+    externalId: text("external_id"),
   },
-  (t) => [index("decks_user_idx").on(t.userId, t.archivedAt, t.position)],
+  (t) => [
+    index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
+    index("decks_user_external_idx").on(t.userId, t.externalId),
+  ],
 );
 
 /**
@@ -76,9 +83,15 @@ export const cards = sqliteTable(
     reviewModeKeys: text("review_modes", { mode: "json" }).$type<ReviewModeKey[]>(),
     /** Opaque token of the last picture change, so a slow write cannot overwrite a newer one. */
     imageVersion: text("image_version"),
+    /** The import that added the card. A later import that updates it leaves this alone. */
+    importId: text("import_id"),
+    /** The source's own id for the card, so importing the same file again updates it. */
+    externalId: text("external_id"),
   },
   (t) => [
     index("cards_deck_idx").on(t.deckId, t.archivedAt),
+    index("cards_user_external_idx").on(t.userId, t.externalId),
+    index("cards_import_idx").on(t.importId, t.archivedAt),
     index("cards_user_term_idx").on(t.userId, t.term),
     index("cards_user_lang_norm_idx").on(t.userId, t.language, t.normalizedTerm),
   ],
@@ -271,7 +284,8 @@ export const reviews = sqliteTable(
     stabilityAfter: real("stability_after").notNull(),
     difficultyAfter: real("difficulty_after").notNull(),
     reviewedAt: integer("reviewed_at", { mode: "timestamp_ms" }).notNull(),
-    source: text("source", { enum: ["web", "api", "mcp"] })
+    /** `import` is a recall from another app's log: it has no review day and never counts toward a goal. */
+    source: text("source", { enum: ["web", "api", "mcp", "import"] })
       .notNull()
       .default("web"),
     /** The learner-local day this attempt counts toward, fixed when it lands. Null before goals. */
@@ -359,6 +373,63 @@ export const cardImages = sqliteTable(
   ],
 );
 
+/**
+ * One file brought in from another app. The row carries the preview and the result; the
+ * file itself lives in R2 only until the import finishes or fails. Archiving the import
+ * archives every card it added, stamped with the import's own `archived_at` so restore
+ * brings back exactly those.
+ */
+export const imports = sqliteTable(
+  "imports",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    source: text("source", { enum: ["anki"] }).notNull(),
+    /** The learner's file name. Private: never logged, audited or put in an error. */
+    fileName: text("file_name").notNull(),
+    byteSize: integer("byte_size").notNull(),
+    status: text("status", {
+      enum: ["uploading", "inspecting", "ready", "importing", "done", "failed", "cancelled"],
+    })
+      .notNull()
+      .default("uploading"),
+    failure: text("failure", {
+      enum: [
+        "unrecognized",
+        "damaged",
+        "too_large",
+        "empty",
+        "upload_incomplete",
+        "expired",
+        "internal",
+      ],
+    }),
+    /** R2 key of the upload; null once the object is deleted. */
+    objectKey: text("object_key"),
+    /** R2 multipart upload id while parts are arriving. */
+    uploadId: text("upload_id"),
+    /** Parts that have landed, as `{ partNumber, etag }` JSON. */
+    parts: text("parts", { mode: "json" }).$type<{ partNumber: number; etag: string }[]>(),
+    /** What the file holds, from the adapter. */
+    summary: text("summary", { mode: "json" }).$type<unknown>(),
+    /** How many stored note chunks the inspection wrote to R2. */
+    chunks: integer("chunks").notNull().default(0),
+    /** The learner's language and field choices. */
+    choices: text("choices", { mode: "json" }).$type<unknown>(),
+    /** Counts of what was written, shown in Activity. */
+    counts: text("counts", { mode: "json" }).$type<unknown>(),
+    /** Chunks written so far, for progress. */
+    written: integer("written").notNull().default(0),
+    createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] }).notNull(),
+    finishedAt: integer("finished_at", { mode: "timestamp_ms" }),
+    archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
+    ...timestamps,
+  },
+  (t) => [index("imports_user_idx").on(t.userId, t.createdAt)],
+);
+
 /** Every write, by whoever made it. This is what makes API and MCP changes visible in the product. */
 export const auditLog = sqliteTable(
   "audit_log",
@@ -391,6 +462,7 @@ export type UserAvatar = typeof userAvatars.$inferSelect;
 export type ReviewDay = typeof reviewDays.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type AuditEntry = typeof auditLog.$inferSelect;
+export type Import = typeof imports.$inferSelect;
 
 /**
  * Someone who asked to be told when Lymi opens up. Deliberately unconnected to `user`:

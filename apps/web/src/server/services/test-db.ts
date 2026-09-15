@@ -10,6 +10,7 @@ export type TestBindings = {
   SESSIONS: KVNamespace;
   PRIVATE_IMAGES: R2Bucket;
   IMAGES: ImagesBinding;
+  IMPORTS: R2Bucket;
 };
 
 const appDir = fileURLToPath(new URL("../../../", import.meta.url));
@@ -24,6 +25,8 @@ export async function testDb(opts: { before?: string } = {}): Promise<{
   env: TestBindings;
   raw: D1Database;
   migrate: (file: string) => Promise<void>;
+  /** Applies every migration from `first` on, in order. */
+  migrateFrom: (first: string) => Promise<void>;
   dispose: () => Promise<void>;
 }> {
   const proxy = await getPlatformProxy<TestBindings>({
@@ -52,6 +55,9 @@ export async function testDb(opts: { before?: string } = {}): Promise<{
     env: proxy.env,
     raw: proxy.env.DB,
     migrate,
+    migrateFrom: async (first) => {
+      for (const file of migrations.filter((name) => name >= first)) await migrate(file);
+    },
     dispose: () => proxy.dispose(),
   };
 }

@@ -98,6 +98,8 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     reviewModes: null,
     image: null,
     imageVersion: null,
+    importId: null,
+    externalId: null,
     meaningSource: "lesson",
     exampleSource: null,
     audioKey: null,

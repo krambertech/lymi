@@ -97,6 +97,28 @@ export function stateStatementsForCard(
   );
 }
 
+/**
+ * Missing states for many cards at once, for everyone who studies their decks. `cardIds` is a
+ * JSON array bound as one parameter, so a large import stays within D1's parameter limit.
+ */
+export function stateStatementsForCards(
+  db: Db,
+  cardIds: string,
+  now = new Date(),
+  keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
+): Statement[] {
+  const decks = sql`(select distinct deck_id from cards where id in (select value from json_each(${cardIds})))`;
+  return stateInserts(
+    db,
+    sql`cards.id in (select value from json_each(${cardIds}))`,
+    sql`select id as deck_id, user_id from decks where id in ${decks}
+      union all
+      select deck_id, user_id from deck_members where deck_id in ${decks} and removed_at is null`,
+    now,
+    keys,
+  );
+}
+
 /** States for every card that follows the deck, after the deck's modes change. */
 export function stateStatementsForDeck(db: Db, deckId: string, now = new Date()): Statement[] {
   return stateInserts(

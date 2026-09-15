@@ -37,11 +37,6 @@ msgstr "{0, plural, one {# карточка} few {# карточки} many {# к
 msgid "{0, plural, one {# due} other {# due}}"
 msgstr "{0, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
-#. placeholder {0}: 12
-#: src/components/landing/JoinLinkDemo.tsx
-msgid "{0, plural, one {# learner joined} other {# learners joined}}"
-msgstr "{0, plural, one {Присоединился # ученик} few {Присоединились # ученика} many {Присоединились # учеников} other {Присоединились # ученика}}"
-
 #. placeholder {0}: SECTIONS.length
 #. placeholder {0}: deck.sections
 #: src/components/landing/LibraryDemo.tsx
@@ -52,6 +47,10 @@ msgstr "{0, plural, one {# раздел} few {# раздела} many {# разд
 #: src/components/landing/NotesToCards.tsx
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
+
+#: src/components/landing/JoinLinkDemo.tsx
+msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
+msgstr "{CLASS_LEARNERS, plural, one {Присоединился # ученик} few {Присоединились # ученика} many {Присоединились # учеников} other {Присоединились # ученика}}"
 
 #: src/components/landing/SeriesDemo.tsx
 msgid "{known}% known"
@@ -108,8 +107,8 @@ msgid "A café, an evening or a person can all be gezellig."
 msgstr "Gezellig бывает и кафе, и вечер, и человек."
 
 #: src/components/landing/ClassHero.tsx
-msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all 12 learners."
-msgstr "После сегодняшнего урока в колоде группы «Эстонский A2 · по вторникам» появляются три новые карточки: kohtuma, broneerima и ilm. Их получают все 12 учеников."
+msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
+msgstr "После сегодняшнего урока в колоде группы «Эстонский A2 · по вторникам» появляются три новые карточки: kohtuma, broneerima и ilm. Их получают все {learners} учеников."
 
 #: src/components/landing/hand-cards.ts
 msgid "A clever fix made from whatever is at hand"
@@ -237,10 +236,6 @@ msgstr "Добавь термин с урока. Lymi дополнит недо�
 msgid "Added"
 msgstr "Добавлено"
 
-#: src/components/landing/LibraryDemo.tsx
-msgid "Added {title}"
-msgstr "Добавлено: «{title}»"
-
 #: src/components/landing/AssistantHero.tsx
 msgid "Added 4 cards to your German deck."
 msgstr "Добавлено 4 карточки в колоду по немецкому."
@@ -340,7 +335,7 @@ msgid "Anatomy"
 msgstr "Анатомия"
 
 #: src/components/landing/TeachersView.tsx
-msgid "Anatomy, drugs and the terms students meet on the ward."
+msgid "Anatomy, drugs and the terms learners meet on the ward."
 msgstr "Анатомия, препараты и термины, которые ученики слышат в отделении."
 
 #: src/components/landing/estonian-scenes.ts
@@ -450,7 +445,7 @@ msgid "Build a course in sections and share it with your class."
 msgstr "Собери курс из разделов и поделись им с группой."
 
 #: src/components/landing/TeachersView.tsx
-msgid "Build a course in sections, share it with one link, and add what you taught after every lesson. Each student reviews on their own schedule."
+msgid "Build a course in sections, share it with one link, and add what you taught after every lesson. Each learner reviews on their own schedule."
 msgstr "Создай курс из разделов, поделись им по одной ссылке и добавляй пройденное после каждого урока. Каждый ученик повторяет в своём темпе."
 
 #: src/components/landing/TeachersView.tsx
@@ -458,7 +453,7 @@ msgid "Build the course in order."
 msgstr "Выстрой курс шаг за шагом."
 
 #: src/components/landing/ClassHero.tsx
-msgid "Build the course in sections, share one link, and add what you taught after every lesson. Each student reviews on their own schedule."
+msgid "Build the course in sections, share one link, and add what you taught after every lesson. Each learner reviews on their own schedule."
 msgstr "Собери курс из разделов, поделись одной ссылкой и добавляй пройденное после каждого урока. Каждый ученик повторяет в своём темпе."
 
 #: src/components/landing/hand-cards.ts
@@ -474,8 +469,12 @@ msgid "Can I get a coffee?"
 msgstr "Можно мне кофе?"
 
 #: src/components/landing/TeachersView.tsx
-msgid "Can I see how each student is doing?"
+msgid "Can I see how each learner is doing?"
 msgstr "Можно ли увидеть, как идут дела у каждого ученика?"
+
+#: src/components/landing/TeachersView.tsx
+msgid "Can learners change the deck?"
+msgstr "Могут ли ученики менять колоду?"
 
 #: src/components/landing/LanguagesView.tsx
 msgid "Can Lymi say Estonian words aloud?"
@@ -484,10 +483,6 @@ msgstr "Умеет ли Lymi произносить эстонские слов�
 #: src/components/landing/LanguagesView.tsx
 msgid "Can my class use it together?"
 msgstr "Может ли моя группа учиться вместе?"
-
-#: src/components/landing/TeachersView.tsx
-msgid "Can students change the deck?"
-msgstr "Могут ли ученики менять колоду?"
 
 #: src/components/landing/estonian-scenes.ts
 msgid "Card or cash?"
@@ -1040,6 +1035,10 @@ msgstr "Насколько вероятны такие крайние данны
 msgid "How many are waiting for me tonight?"
 msgstr "Сколько карточек ждёт меня сегодня?"
 
+#: src/components/landing/ClassHero.tsx
+msgid "How sections work"
+msgstr "Как работают разделы"
+
 #: src/components/landing/AssistantHero.tsx
 msgid "How to connect"
 msgstr "Как подключить"
@@ -1470,7 +1469,7 @@ msgid "Memory fades. Recalling something at the right time strengthens it and le
 msgstr "Память слабеет. Если вспомнить что-то вовремя, оно закрепляется, и следующий перерыв может быть длиннее. По каждой оценке Lymi решает, когда вернуть карточку."
 
 #: src/components/landing/TeachersView.tsx
-msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each student’s grades to decide when every card comes back."
+msgid "Memory fades. Recalling something at the right time strengthens it and lets the next gap grow. Lymi uses each learner’s grades to decide when every card comes back."
 msgstr "Память угасает. Если вспомнить что-то вовремя, воспоминание крепнет, а следующий перерыв может быть длиннее. Lymi по оценкам каждого ученика решает, когда вернуть каждую карточку."
 
 #: src/components/landing/SiteNav.tsx
@@ -1556,7 +1555,7 @@ msgid "No. A card can hold anything worth remembering: a term, a date, a formula
 msgstr "Нет. На карточке может быть что угодно, что стоит запомнить: термин, дата, формула, аккорд. Языковые карточки ещё и можно прослушать."
 
 #: src/components/landing/TeachersView.tsx
-msgid "No. Each student’s reviews stay private to them. Lymi is a place to practise, not to be graded."
+msgid "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 msgstr "Нет. Повторения каждого ученика видит только сам ученик. Lymi — место для практики, а не для оценок."
 
 #: src/components/landing/AssistantsView.tsx
@@ -1564,7 +1563,7 @@ msgid "No. Lymi only gets what your assistant sends it, like the cards it adds. 
 msgstr "Нет. Lymi получает только то, что отправляет ассистент, например карточки, которые он добавляет. Остальная переписка остаётся у ассистента."
 
 #: src/components/landing/TeachersView.tsx
-msgid "No. Only you add and edit cards. Students review them, and each keeps their own schedule and history."
+msgid "No. Only you add and edit cards. Learners review them, and each keeps their own schedule and history."
 msgstr "Нет. Добавлять и редактировать карточки можешь только ты. Ученики их повторяют, и у каждого своё расписание и история."
 
 #: src/components/landing/language-cards.ts
@@ -1892,7 +1891,6 @@ msgid "Sections and the deck library are rolling out during the beta. We’ll te
 msgstr "Разделы и библиотека колод появляются постепенно во время беты. Мы сообщим, когда они будут в твоём аккаунте."
 
 #: src/components/landing/AssistantsView.tsx
-#: src/components/landing/ClassHero.tsx
 #: src/components/landing/LandingView.tsx
 #: src/components/landing/TeachersView.tsx
 msgid "See how it works"
@@ -2007,7 +2005,7 @@ msgid "Spanish B1 · Thursdays"
 msgstr "Испанский B1 · по четвергам"
 
 #: src/components/landing/TeachersView.tsx
-msgid "Split a deck into sections, one per unit. Students start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
+msgid "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 msgstr "Раздели колоду на разделы, по одному на тему. Ученики начинают с первого, а следующий открывается, когда они выучат бо́льшую часть предыдущего, так что шестая тема никого не застанет в первый же день. Кто идёт быстрее, может начать следующий раздел раньше."
 
 #: src/components/landing/ApiConnections.tsx

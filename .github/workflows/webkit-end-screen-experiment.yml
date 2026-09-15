@@ -1,0 +1,62 @@
+# Do not merge. Finds which end-of-review effect stalls WebKit on Linux CI.
+name: WebKit end screen experiment
+
+on:
+  push:
+    branches: [kateryna/do-not-merge-webkit-end-screen-experiment]
+
+jobs:
+  webkit:
+    name: webkit (${{ matrix.variant }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [control, no-blur, no-glow, no-effects]
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm exec playwright install --with-deps --only-shell webkit
+
+      - name: Remove the blur from the sequence
+        if: matrix.variant == 'no-blur' || matrix.variant == 'no-effects'
+        run: |
+          cat >> apps/web/src/client/styles.css <<'EOF'
+          .seq { animation-name: x-seq-rise; }
+          .seq-count { animation-name: x-seq-count; }
+          @keyframes x-seq-rise { from { opacity: 0; transform: translateY(14px); } }
+          @keyframes x-seq-count { from { opacity: 0; transform: translateY(10px) scale(0.86); } }
+          EOF
+
+      - name: Remove the lantern glow and light pool
+        if: matrix.variant == 'no-glow' || matrix.variant == 'no-effects'
+        run: |
+          cat >> apps/web/src/client/styles.css <<'EOF'
+          .glow .lantern-light { filter: none !important; }
+          .lantern-flicker.glow, .light-pool, .light-pool-breath { animation: none !important; }
+          EOF
+
+      - name: Run the end-screen test repeatedly
+        run: pnpm exec playwright test e2e/review-complete.spec.ts:49 --project=webkit --repeat-each=8 --retries=0 --trace=retain-on-failure --reporter=list,html
+
+      - uses: actions/upload-artifact@v6
+        if: ${{ !cancelled() }}
+        with:
+          name: report-${{ matrix.variant }}
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 3

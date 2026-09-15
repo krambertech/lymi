@@ -63,6 +63,20 @@ describe("transit", () => {
     });
   });
 
+  it("keeps the cache in step when a skipped value holds cached strings", () => {
+    const compact = [
+      "^ ",
+      "~:cards",
+      ["^ ", "~:component-cache", ["^ ", "~:speech", "~:voiceone"], "~:first", "One"],
+      "~:second",
+      ["^ ", "~:name", "Three", "~:parent-id", "^3"],
+    ];
+    expect(decodeTransit(compact, new Set(["component-cache"]))).toEqual({
+      cards: { first: "One" },
+      second: { name: "Three", "parent-id": "voiceone" },
+    });
+  });
+
   it("reads the compact form with cached keys", () => {
     const compact = [
       "^ ",

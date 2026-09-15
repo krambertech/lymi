@@ -466,8 +466,8 @@ export function ImportPreviewView({
   ).length;
   const added = preview?.added ?? 0;
   const app = SOURCE_NAMES[item.source];
-  // Mochi cards with no side break; the adapter names their kind by this key.
-  const oneSided = summary.noteTypes.find((type) => type.key === "content:one")?.notes ?? 0;
+  // New Mochi cards with no side break; the adapter names their kind by this key.
+  const oneSided = preview?.addedByNoteType["content:one"] ?? 0;
 
   const check = (key: string) =>
     setChecked((current) => {

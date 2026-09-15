@@ -2,7 +2,7 @@ import { join } from "node:path";
 import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
 
-/** The Mochi fixture made by `fixtures/generate.py`: 11 cards in 3 decks, 12 reviews, 2 pictures. */
+/** The Mochi fixture made by `fixtures/generate.py`: 13 cards in 3 decks, 12 reviews, 4 pictures; one card has no term. */
 const MOCHI_FILE = join(process.cwd(), "apps/web/src/server/imports/mochi/fixtures/export.mochi");
 
 /** The learner menu sits in the rail on a desktop and in the top bar on a phone; the one on screen is it. */
@@ -45,8 +45,8 @@ test("a learner imports a Mochi export and finds it in Activity", async ({ page 
     while (!(await checked.isVisible())) {
       await yes.click();
     }
-    await page.getByRole("button", { name: "Import 11 cards", exact: true }).click();
-    await expect(page.getByRole("heading", { name: "Imported 11 cards", exact: true })).toBeVisible(
+    await page.getByRole("button", { name: "Import 12 cards", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "Imported 12 cards", exact: true })).toBeVisible(
       { timeout: 60_000 },
     );
     await expect(page.getByText("12 past reviews came across.")).toBeVisible();

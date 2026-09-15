@@ -24,7 +24,10 @@ function instant(text: string): number | null {
   return Number.isNaN(ms) ? null : ms;
 }
 
-/** Decodes a parsed `data.json`. `skip` names map keys whose values are dropped unread. */
+/**
+ * Decodes a parsed `data.json`. `skip` names map keys whose values are dropped; they are still
+ * walked, because the compact form's cache counts every string in document order.
+ */
 export function decodeTransit(raw: unknown, skip: ReadonlySet<string> = new Set()): TransitValue {
   const cache: string[] = [];
 
@@ -100,8 +103,8 @@ export function decodeTransit(raw: unknown, skip: ReadonlySet<string> = new Set(
     const out: Record<string, TransitValue> = {};
     for (const [rawKey, value] of entries) {
       const name = key(rawKey);
-      if (skip.has(name)) continue;
-      out[name] = decode(value);
+      const decoded = decode(value);
+      if (!skip.has(name)) out[name] = decoded;
     }
     return out;
   };
@@ -132,7 +135,8 @@ export function decodeTransit(raw: unknown, skip: ReadonlySet<string> = new Set(
       if (head.startsWith("~#")) return tagged(head.slice(2), first[1]);
       const name = scalar(head);
       const key = typeof name === "string" ? name : String(name);
-      return skip.has(key) ? {} : { [key]: decode(first[1]) };
+      const decoded = decode(first[1]);
+      return skip.has(key) ? {} : { [key]: decoded };
     }
     return map(entries);
   }

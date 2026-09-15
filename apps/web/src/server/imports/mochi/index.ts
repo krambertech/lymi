@@ -158,6 +158,8 @@ function guessRoles(names: string[], question: number | null): FieldRole[] {
   order.forEach((field, at) => {
     roles[field] = guessed[at] ?? "notes";
   });
+  // The preview requires one term; a template of only media fields gets one, and its cards are left out.
+  if (roles.length > 0 && !roles.includes("term")) roles[question ?? 0] = "term";
   return roles;
 }
 
@@ -191,7 +193,7 @@ function readDecks(root: TransitMap) {
       name: text(deck.name) || "Mochi",
       parent: text(deck["parent-id"]) || null,
       trashed: flag(deck["trashed?"]),
-      archived: deck["archived?"] === true,
+      archived: flag(deck["archived?"]),
     });
     for (const card of list(deck.cards).filter(isMap)) cards.push({ card, deck: id });
   }
@@ -256,7 +258,8 @@ export const mochi: SourceAdapter<MochiNote> = {
       return isMap(field) ? text(field.value) : "";
     };
 
-    // A template field no card fills, such as one Mochi generates, is left out of the preview.
+    // A template field no card fills, such as one Mochi generates, is left out of the preview; a
+    // field holding only a picture is filled.
     const filled = new Map<string, Set<string>>();
     for (const { card } of live) {
       const template = templateOf(card);
@@ -264,7 +267,9 @@ export const mochi: SourceAdapter<MochiNote> = {
       const key = text(card["template-id"]);
       const set = filled.get(key) ?? new Set<string>();
       for (const field of template.fields) {
-        if (!set.has(field.id) && markdownToText(fieldValue(card, field.id))) set.add(field.id);
+        if (set.has(field.id)) continue;
+        const value = fieldValue(card, field.id);
+        if (markdownToText(value) || attachments(value).length > 0) set.add(field.id);
       }
       filled.set(key, set);
     }
@@ -274,9 +279,10 @@ export const mochi: SourceAdapter<MochiNote> = {
     const noteTypes = new Map<string, SourceNoteType>();
     const typeFor = (card: TransitMap): { key: string; values: string[] } => {
       const template = templateOf(card);
-      if (template) {
+      const fields = template ? fieldsOf(text(card["template-id"]), template) : [];
+      // A template no card fills reads like a card without one, so the preview never offers no fields.
+      if (template && fields.length > 0) {
         const key = `template:${text(card["template-id"])}`;
-        const fields = fieldsOf(text(card["template-id"]), template);
         if (!noteTypes.has(key)) {
           const names = fields.map((field) => field.name);
           const question = template.question ? names.indexOf(template.question) : -1;
@@ -345,7 +351,7 @@ export const mochi: SourceAdapter<MochiNote> = {
         type: key,
         fields: values,
         tags: [...list(card.tags), ...list(card["manual-tags"])].map(text).filter(Boolean),
-        archived: card["archived?"] === true || pathOf(deck).archived,
+        archived: flag(card["archived?"]) || pathOf(deck).archived,
         reverse,
         reviews: log.reviews,
         due: log.due,

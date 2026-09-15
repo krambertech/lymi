@@ -142,20 +142,21 @@ describe("importing a Mochi export", () => {
     const ctx = await fresh();
     const { id, preview, result } = await runImport(ctx, "export.mochi");
     expect(preview).toMatchObject({
-      added: 11,
-      skipped: 0,
+      added: 12,
+      skipped: 1,
       archived: 1,
       reviews: 12,
-      pictures: 2,
+      pictures: 3,
       audio: 1,
     });
+    expect(preview.addedByNoteType["content:one"]).toBe(1);
     expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([
       ["Italian / Lesson 1", 6],
       ["Italian / Lesson 1 / Verbs", 1],
-      ["Japanese", 4],
+      ["Japanese", 5],
     ]);
     expect(result).toMatchObject({ source: "mochi", status: "done", failure: null });
-    expect(result.counts).toMatchObject({ added: 11, reviews: 12, pictures: 2, decks: 3 });
+    expect(result.counts).toMatchObject({ added: 12, reviews: 12, pictures: 3, decks: 3 });
 
     const gatto = await card(ctx, "il gatto");
     expect(gatto).toMatchObject({ meaning: "the cat", language: "it", importId: id });
@@ -186,8 +187,10 @@ describe("importing a Mochi export", () => {
     expect((await reviewDraw(ctx, {})).attempts).toBe(0);
 
     const second = await runImport(ctx, "export.mochi");
-    expect(second.preview).toMatchObject({ added: 0, existing: 11, duplicates: 0 });
-    expect(await cardsOf(ctx)).toHaveLength(11);
+    expect(second.preview).toMatchObject({ added: 0, existing: 12, duplicates: 0 });
+    // Nothing new has a single side, so the preview does not say one does.
+    expect(second.preview.addedByNoteType).toEqual({});
+    expect(await cardsOf(ctx)).toHaveLength(12);
 
     await archiveImport(ctx, first.id);
     expect((await cardsOf(ctx)).filter((c) => c.archivedAt === null)).toHaveLength(0);

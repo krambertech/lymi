@@ -479,6 +479,9 @@ export const ImportPreviewOut = ImportCounts.extend({
     )
     .meta({ description: "Up to three cards per note type key, as they would arrive" }),
   tags: z.number().int().meta({ description: "Distinct tags on the new cards" }),
+  addedByNoteType: z
+    .record(z.string(), z.number().int())
+    .meta({ description: "New cards per note type key" }),
   audio: z.number().int(),
   unsupported: z.number().int(),
 }).meta({ id: "ImportPreview" });

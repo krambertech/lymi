@@ -28,9 +28,8 @@ export function ImportMochi() {
           <StepTitle>Open the import in Lymi</StepTitle>
           <p>
             In Lymi, open <strong>Settings</strong> from the menu under your name, and under{" "}
-            <strong>Import</strong> choose
-            <strong>Mochi</strong>. Choose the file, or drop it on the page. Keep Lymi open while
-            the file uploads.
+            <strong>Import</strong> choose <strong>Mochi</strong>. Choose the file, or drop it on
+            the page. Keep Lymi open while the file uploads.
           </p>
         </div>
         <div>

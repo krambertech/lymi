@@ -39,12 +39,12 @@ describe("mochi adapter", () => {
 
   it("summarises nested decks, kinds of card, history, pictures and sounds", async () => {
     const { summary } = await read();
-    expect(summary).toMatchObject({ notes: 11, reviews: 12, pictures: 2, audio: 1 });
+    expect(summary).toMatchObject({ notes: 13, reviews: 12, pictures: 4, audio: 1 });
     // A trashed card and a trashed deck's card are left out; an empty parent deck is not listed.
     expect(summary.decks.map((d) => [d.name, d.cards])).toEqual([
       ["Italian::Lesson 1", 6],
       ["Italian::Lesson 1::Verbs", 1],
-      ["Japanese", 4],
+      ["Japanese", 6],
     ]);
     const types = Object.fromEntries(summary.noteTypes.map((t) => [t.key, t]));
     expect(types[TWO_SIDED]).toMatchObject({ roles: ["term", "meaning"], notes: 6 });
@@ -58,6 +58,12 @@ describe("mochi adapter", () => {
       notes: 3,
     });
     expect(types["template:VocabTpl1"]?.samples[0]).toEqual(["猫", "ねこ", "cat"]);
+    // A field holding only a picture is a field; a template of only that still offers a term.
+    expect(types["template:PictureTp"]).toMatchObject({
+      fields: ["Word", "Picture"],
+      roles: ["term", "skip"],
+    });
+    expect(types["template:OnlyPicTp"]).toMatchObject({ fields: ["Picture"], roles: ["term"] });
     // The first side shows the translation, so the other field is the term.
     expect(types["template:ReverseTp"]).toMatchObject({
       fields: ["Translation", "Japanese"],
@@ -103,6 +109,8 @@ describe("mochi adapter", () => {
       pronunciation: "おもいで",
       meaning: "memory",
     });
+    expect(byTerm(cards, "鳥").picture).toBe("neko.png");
+    expect(cards.some((c) => c.noteTypeKey === "template:OnlyPicTp")).toBe(false);
     expect(byTerm(cards, "水")).toMatchObject({
       fields: { meaning: "water" },
       modes: ["meaning_to_term"],

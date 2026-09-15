@@ -272,6 +272,7 @@ export async function previewImport<Note>(
   const names = new Map(work.summary.decks.map((d) => [d.key, deckName(d.name)]));
   const existingDecks = await importedDecks(ctx, work.row, work.summary);
   const perDeck = new Map<string, number>();
+  const addedByNoteType: Record<string, number> = {};
   const tags = new Set<string>();
   const seen = new Map<string, string>();
   const samples: ImportPreviewOut["samples"] = {};
@@ -298,6 +299,7 @@ export async function previewImport<Note>(
     for (const item of classified) {
       if (item.kind !== "added") continue;
       perDeck.set(item.card.deckKey, (perDeck.get(item.card.deckKey) ?? 0) + 1);
+      addedByNoteType[item.card.noteTypeKey] = (addedByNoteType[item.card.noteTypeKey] ?? 0) + 1;
       for (const tag of item.card.tags) tags.add(tag.toLowerCase());
     }
   }
@@ -315,6 +317,7 @@ export async function previewImport<Note>(
     decks,
     samples,
     tags: tags.size,
+    addedByNoteType,
     audio: work.summary.audio,
     unsupported: work.summary.unsupported,
   };

@@ -96,6 +96,25 @@ templates = [
         },
     },
     {
+        "id": kw("PictureTp"),
+        "name": "With picture",
+        "content": "<< Word >>\n---\n<< Picture >>",
+        "pos": "R",
+        "fields": {
+            kw("name"): {"id": kw("name"), "name": "Word", "pos": "a"},
+            kw("PicFld001"): {"id": kw("PicFld001"), "name": "Picture", "pos": "b"},
+        },
+    },
+    {
+        "id": kw("OnlyPicTp"),
+        "name": "Picture only",
+        "content": "<< Picture >>",
+        "pos": "S",
+        "fields": {
+            kw("PicFld002"): {"id": kw("PicFld002"), "name": "Picture", "pos": "a"},
+        },
+    },
+    {
         "id": kw("ReverseTp"),
         "name": "From English",
         "content": "<< Translation >>\n---\n<< Japanese >>",
@@ -167,6 +186,22 @@ japanese = [
         "",
         fields=fields(WordFld01="思(おも)い出(で)", **{"name": "memory"}),
         **{"template-id": kw("VocabTpl1")},
+    ),
+    # A picture in a field of its own.
+    card(
+        "ToriCard1",
+        "Japanese1",
+        "",
+        fields=fields(PicFld001="![](@media/neko.png)", **{"name": "鳥"}),
+        **{"template-id": kw("PictureTp")},
+    ),
+    # A template whose only filled field is a picture: its card has no term and is left out.
+    card(
+        "OnlyPic01",
+        "Japanese1",
+        "",
+        fields=fields(PicFld002="![](@media/gatto.png)"),
+        **{"template-id": kw("OnlyPicTp")},
     ),
     card(
         "MizuCard1",

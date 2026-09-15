@@ -12,6 +12,8 @@ test("requires E2E for production behavior and harness changes", () => {
   assert.equal(requiresE2E(["scripts/check-deployment.mjs"]), true);
   assert.equal(requiresE2E(["scripts/check-migrations.mjs"]), true);
   assert.equal(requiresE2E(["scripts/check-schema-drift.mjs"]), true);
+  assert.equal(requiresE2E(["apps/web/src/client/design/specimens.tsx"]), true);
+  assert.equal(requiresE2E(["apps/web/src/client/routes/design_.frame.$specimen.tsx"]), true);
 });
 
 test("skips E2E for documentation, previews, and unit-test-only changes", () => {

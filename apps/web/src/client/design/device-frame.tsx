@@ -1,6 +1,6 @@
 import { MotionConfig } from "motion/react";
-import { useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
-import { useForcedStates } from "./forced-states";
+import { useLayoutEffect, useRef, useState } from "react";
+import { useFinePointer, useForcedStates } from "./forced-states";
 import { SPECIMENS, type SpecimenId } from "./specimens";
 
 /*
@@ -17,23 +17,11 @@ function frameSrc(specimen: SpecimenId) {
   return `/design/frame/${specimen}`;
 }
 
-const FINE_POINTER = "(hover: hover) and (pointer: fine)";
-
-function subscribePointer(onChange: () => void) {
-  const mq = window.matchMedia(FINE_POINTER);
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}
-
 /** The same open overlay on a desktop and on a phone, side by side. */
 export function DeviceFrames({ specimen }: { specimen: SpecimenId }) {
   const { name, height, touchHeight = height } = SPECIMENS[specimen];
   // A frame reads the pointer of the device it is viewed on, so a phone gets two touch shapes.
-  const fine = useSyncExternalStore(
-    subscribePointer,
-    () => window.matchMedia(FINE_POINTER).matches,
-    () => true,
-  );
+  const fine = useFinePointer();
   return (
     <div className="grid w-full gap-3">
       {!fine && (
@@ -139,14 +127,15 @@ let focusPatched = false;
 
 /**
  * An opening overlay focuses a row and scrolls the chosen one into view, and both scroll the page
- * around an iframe too; a design page with several open frames would jump to the last one.
+ * around an iframe too; a design page with several open frames would jump to the last one. With no
+ * press before it, the browser would also take that focus for the keyboard's and draw the ring.
  */
 function keepPageStill() {
   if (focusPatched || window.parent === window) return;
   focusPatched = true;
   const focus = HTMLElement.prototype.focus;
   HTMLElement.prototype.focus = function (options) {
-    focus.call(this, { ...options, preventScroll: true });
+    focus.call(this, { focusVisible: false, ...options, preventScroll: true });
   };
   Element.prototype.scrollIntoView = () => {};
 }

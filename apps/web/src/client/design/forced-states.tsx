@@ -1,5 +1,5 @@
 import { MotionConfig } from "motion/react";
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef, useSyncExternalStore } from "react";
 
 /*
  * Interaction states a specimen can hold still, for the design system only. The dev stylesheet is
@@ -9,6 +9,8 @@ import { type ReactNode, useEffect, useRef } from "react";
  *   `:focus-visible` or `:active`, as if the pointer, the keyboard or a press were on it.
  * - `data-motion="reduce"` on an element stands in for `prefers-reduced-motion: reduce` inside it,
  *   and on the root for the whole page. Rules for `no-preference` follow the root alone.
+ *
+ * The rewrite cannot be undone, so after leaving the design pages a reload restores the media query.
  */
 
 export type ForcedState = "hover" | "focus" | "active";
@@ -110,10 +112,29 @@ function rewriteSheets(doc: Document) {
     done.add(sheet);
     try {
       rewrite(sheet);
-    } catch {
-      // A cross-origin sheet cannot be read, and holds none of Lymi's rules.
+    } catch (error) {
+      // A cross-origin sheet cannot be read, and holds none of Lymi's rules; any other failure is a bug.
+      if (sheet.href && new URL(sheet.href).origin !== doc.location.origin) continue;
+      throw error;
     }
   }
+}
+
+const FINE_POINTER = "(hover: hover) and (pointer: fine)";
+
+function subscribePointer(onChange: () => void) {
+  const mq = window.matchMedia(FINE_POINTER);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+/** Whether this device has a pointer that hovers, which is when the product's hover styles apply. */
+export function useFinePointer() {
+  return useSyncExternalStore(
+    subscribePointer,
+    () => window.matchMedia(FINE_POINTER).matches,
+    () => true,
+  );
 }
 
 /** Rewrites the document's stylesheets now and again whenever the dev server swaps one. */
@@ -128,7 +149,8 @@ export function useForcedStates(doc: Document = document) {
 
 /**
  * Holds one element inside it in an interaction state: its first element, or the first match for
- * `on`, such as one option of a group or the input inside a slider's thumb.
+ * `on`, such as one option of a group or the input inside a slider's thumb. Hover rules sit under
+ * the fine-pointer query, so on a touch device the row says why it looks like the default.
  */
 export function Force({
   state,
@@ -140,6 +162,7 @@ export function Force({
   children: ReactNode;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
+  const fine = useFinePointer();
   useEffect(() => {
     const scope = ref.current;
     if (!scope) return;
@@ -158,6 +181,11 @@ export function Force({
   return (
     <span ref={ref} className="contents">
       {children}
+      {state === "hover" && !fine && (
+        <span className="block basis-full font-mono text-xs text-muted">
+          Hover shows only with a pointer that hovers, so on this device it looks like the default.
+        </span>
+      )}
     </span>
   );
 }

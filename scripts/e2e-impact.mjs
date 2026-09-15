@@ -23,6 +23,10 @@ const productionFiles = new Set([
   "apps/web/package.json",
   "apps/web/vite.config.ts",
   "apps/web/wrangler.jsonc",
+  // The sheet spec opens a design system frame, so these design files are part of its harness.
+  "apps/web/src/client/design/device-frame.tsx",
+  "apps/web/src/client/design/forced-states.tsx",
+  "apps/web/src/client/design/specimens.tsx",
   "package.json",
   "playwright.config.ts",
   "pnpm-lock.yaml",

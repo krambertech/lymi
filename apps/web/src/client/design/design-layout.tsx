@@ -98,9 +98,12 @@ function usePageMotion() {
   const [picked, setPicked] = useState<boolean | null>(null);
   const reduced = picked ?? system;
   useEffect(() => {
+    if (!reduced) return;
     const root = document.documentElement;
-    if (reduced) root.dataset.motion = "reduce";
-    else delete root.dataset.motion;
+    root.dataset.motion = "reduce";
+    return () => {
+      delete root.dataset.motion;
+    };
   }, [reduced]);
   return { reduced, setReduced: (next: boolean) => setPicked(next === system ? null : next) };
 }

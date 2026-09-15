@@ -147,7 +147,8 @@ export function CardForm({
 
   const [term, setTerm] = useState(draft?.term ?? card?.term ?? "");
   const [meaning, setMeaning] = useState(draft?.meaning ?? card?.meaning ?? "");
-  const [deck, setDeck] = useState(draft?.deckId ?? card?.deckId ?? deckId ?? "");
+  // A draft kept while its deck was being made carries no deck, so the sheet's own one wins.
+  const [deck, setDeck] = useState(draft?.deckId || card?.deckId || deckId || "");
   const [pronunciation, setPronunciation] = useState(
     draft?.pronunciation ?? card?.pronunciation ?? "",
   );

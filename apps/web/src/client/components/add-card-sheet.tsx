@@ -48,6 +48,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
   const close = (keepWork: boolean) => {
     const work = draft.current;
     draft.current = null;
+    // A restored draft is spent once its sheet closes; without this every later sheet reopens it.
+    setRestored(null);
     onOpenChange(false);
     if (!keepWork || !hasWork(work) || !work) return;
     toast.add({
@@ -139,7 +141,12 @@ export function AddCardSheet({ open, onOpenChange, deckId, onCreateDeck }: Props
             onCreateDeck={
               onCreateDeck &&
               (() => {
-                close(false);
+                // The deck is being made for this card, so the card waits for it rather than
+                // being discarded: the sheet comes back with the new deck and what was typed.
+                const work = draft.current;
+                draft.current = null;
+                setRestored(hasWork(work) && work ? { draft: work, key: Date.now() } : null);
+                onOpenChange(false);
                 onCreateDeck();
               })
             }

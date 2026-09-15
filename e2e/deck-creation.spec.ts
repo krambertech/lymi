@@ -295,6 +295,69 @@ test.describe("deck and card creation", () => {
     );
   });
 
+  test("keeps the first card while its deck is made", async ({ page }, testInfo) => {
+    await signInAsTestLearner(page, testInfo, "first-card");
+    await page.goto("/library");
+    await waitForLibrary(page);
+
+    // With no deck to land in, the form offers to make one, and the card waits for it.
+    await addMenu(page).click();
+    // The desktop menu row carries its keyboard hint, so the name is matched from the start.
+    await page.getByRole("menuitem", { name: /^New card/ }).click();
+    const card = sheet(page, "Add a card");
+    await card.getByRole("textbox", { name: "Term", exact: true }).fill("la fermata");
+    await card.getByRole("button", { name: "New deck", exact: true }).click();
+
+    const name = `First deck ${testInfo.project.name}`;
+    const deck = sheet(page, "New deck");
+    await expect(deck).toBeVisible();
+    await deck.getByRole("textbox", { name: "Name", exact: true }).fill(name);
+    await deck.getByRole("button", { name: "Create deck", exact: true }).click();
+
+    // The sheet comes back with what was typed, and the deck it was made for already chosen.
+    await expect(card).toBeVisible();
+    await expect(card.getByRole("textbox", { name: "Term", exact: true })).toHaveValue(
+      "la fermata",
+    );
+    await card.getByRole("button", { name: `Add to ${name}`, exact: true }).click();
+    await expect(card).toBeHidden();
+    await expect(page.getByRole("region", { name: "Notifications" })).toContainText(
+      "Added “la fermata”",
+    );
+    await expect(page.getByText("la fermata", { exact: true })).toBeVisible();
+  });
+
+  test("does not carry a brought-back card into the next one", async ({ page }, testInfo) => {
+    await signInAsTestLearner(page, testInfo, "first-card");
+    const name = `Next card ${testInfo.project.name}`;
+    await createDeck(page, name);
+
+    const open = async () => {
+      await addMenu(page).click();
+      await page.getByRole("menuitem", { name: /^New card/ }).click();
+      return sheet(page, "Add a card");
+    };
+
+    let card = await open();
+    await card.getByRole("textbox", { name: "Term", exact: true }).fill("la scadenza");
+    await page.keyboard.press("Escape");
+    await expect(card).toBeHidden();
+    await page
+      .getByRole("region", { name: "Notifications" })
+      .getByRole("button", { name: "Undo", exact: true })
+      .click();
+    card = sheet(page, "Add a card");
+    await expect(card.getByRole("textbox", { name: "Term", exact: true })).toHaveValue(
+      "la scadenza",
+    );
+
+    // A draft is spent once its sheet closes, so the next card starts empty rather than on the last.
+    await page.keyboard.press("Escape");
+    await expect(card).toBeHidden();
+    card = await open();
+    await expect(card.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("");
+  });
+
   test("offers the picture again when it did not go through", async ({ page }, testInfo) => {
     await signInAsTestLearner(page, testInfo, "more-fields");
     await createDeck(page, `Picture retry ${testInfo.project.name}`);

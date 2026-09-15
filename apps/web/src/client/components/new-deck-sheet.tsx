@@ -15,6 +15,8 @@ import { Input } from "./ui/input";
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** The deck landed, so a capture sheet that asked for it can come back with it chosen. */
+  onCreated?: ((deckId: string) => void) | undefined;
 }
 
 /**
@@ -22,7 +24,7 @@ interface Props {
  * field that matters and the rest already has an answer. Creating it lands the learner in the
  * empty deck, which is where the words go next.
  */
-export function NewDeckSheet({ open, onOpenChange }: Props) {
+export function NewDeckSheet({ open, onOpenChange, onCreated }: Props) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -30,6 +32,8 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
     mutationFn: (input: DeckInput) => api.createDeck(input),
     onSuccess: (deck) => {
       qc.invalidateQueries({ queryKey: ["decks"] });
+      // Before the close, so a capture sheet waiting on this deck takes the sheet back over.
+      onCreated?.(deck.id);
       onOpenChange(false);
       navigate({ to: "/library/$deckId", params: { deckId: deck.id } });
     },

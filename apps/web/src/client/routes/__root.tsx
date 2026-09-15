@@ -216,11 +216,12 @@ function Shell() {
         open={add.open === "card"}
         onOpenChange={(v) => (v ? add.openCard() : add.close("card"))}
         deckId={add.deckId}
-        onCreateDeck={add.openDeck}
+        onCreateDeck={() => add.openDeck({ resumeCard: true })}
       />
       <NewDeckSheet
         open={add.open === "deck"}
         onOpenChange={(v) => (v ? add.openDeck() : add.close("deck"))}
+        onCreated={add.deckCreated}
       />
       {me.isSuccess && <StreakPlace />}
     </LearnerAvatarProvider>

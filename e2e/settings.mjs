@@ -5,6 +5,7 @@ export const e2eAccounts = [
   "card-selection",
   "optional-meaning",
   "more-fields",
+  "first-card",
   "archived-deck",
   "responsive-creation",
   "review-returns",

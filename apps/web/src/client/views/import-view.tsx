@@ -3,6 +3,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { MAX_IMPORT_BYTES } from "@lymi/core";
 import { clsx } from "clsx";
 import {
+  Archive,
   CircleCheck,
   CircleMinus,
   FileUp,
@@ -782,11 +783,12 @@ export function ImportDoneView({
           </Button>
         ) : (
           <Button
-            variant="secondary"
+            variant="danger"
             className="justify-self-start"
             onClick={onArchive}
             loading={archiving}
           >
+            <Archive aria-hidden="true" />
             <Trans>Archive import</Trans>
           </Button>
         )}
@@ -848,11 +850,12 @@ export function ImportStoppedView({
             })}
           </p>
           <Button
-            variant="secondary"
+            variant="danger"
             className="justify-self-start"
             onClick={onArchive}
             loading={archiving}
           >
+            <Archive aria-hidden="true" />
             <Trans>Archive them</Trans>
           </Button>
         </section>

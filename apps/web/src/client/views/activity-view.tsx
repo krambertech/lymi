@@ -83,10 +83,10 @@ export function ActivityView({
           </div>
           <ul className="edge grid rounded-xl bg-plate">
             {imports.map((item) => (
-              <li key={item.id} className="border-edge [&:not(:first-child)]:border-t">
+              <li key={item.id} className="group/row border-edge [&:not(:first-child)]:border-t">
                 {importLink(
                   item,
-                  "group flex min-h-[72px] items-center gap-3 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:bg-hover first:rounded-t-xl last:rounded-b-xl",
+                  "group flex min-h-[72px] items-center gap-3 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:bg-hover group-first/row:rounded-t-xl group-last/row:rounded-b-xl",
                   <>
                     <span className="grid min-w-0 flex-1 gap-0.5">
                       <span className="flex min-w-0 items-center gap-2">

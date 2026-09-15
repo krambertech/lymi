@@ -7,6 +7,7 @@ export * from "./connected-apps";
 export * from "./context";
 export * from "./decks";
 export * from "./draw";
+export * from "./email";
 export * from "./imports";
 export * from "./invitations";
 export * from "./members";

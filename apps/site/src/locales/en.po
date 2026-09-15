@@ -66,8 +66,26 @@ msgstr "{reviews, plural, one {past review} other {past reviews}}"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
 
+msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, operational logs and transactional email delivery."
+msgstr "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, operational logs and transactional email delivery."
+
+msgid "<0>Google</0> provides Google sign-in and may provide speech generation when configured as the fallback provider."
+msgstr "<0>Google</0> provides Google sign-in and may provide speech generation when configured as the fallback provider."
+
+msgid "<0>OpenAI</0> may provide speech generation. A configured Cloudflare AI Gateway may relay that request."
+msgstr "<0>OpenAI</0> may provide speech generation. A configured Cloudflare AI Gateway may relay that request."
+
+msgid "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
+msgstr "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
+
+msgid "<0>Your connected apps</0> receive only the data allowed by the permissions you approve. Disconnecting an app stops future access but does not erase data the app already received."
+msgstr "<0>Your connected apps</0> receive only the data allowed by the permissions you approve. Disconnecting an app stops future access but does not erase data the app already received."
+
 msgid "10 min"
 msgstr "10 min"
+
+msgid "16 September 2026"
+msgstr "16 September 2026"
 
 msgid "2 days"
 msgstr "2 days"
@@ -101,6 +119,9 @@ msgstr "A clever fix made from whatever is at hand"
 
 msgid "A coffee and a cinnamon bun, please."
 msgstr "A coffee and a cinnamon bun, please."
+
+msgid "A connected assistant may read lesson material in the conversation where you use it. Lymi does not receive that raw lesson material unless the assistant sends it in a card field such as the term, meaning, example, notes or source. The assistant provider handles the conversation under its own terms and privacy policy."
+msgstr "A connected assistant may read lesson material in the conversation where you use it. Lymi does not receive that raw lesson material unless the assistant sends it in a card field such as the term, meaning, example, notes or source. The assistant provider handles the conversation under its own terms and privacy policy."
 
 msgid "A course or lesson"
 msgstr "A course or lesson"
@@ -167,6 +188,15 @@ msgstr "a word that makes a question"
 
 msgid "Accents that land between the beats"
 msgstr "Accents that land between the beats"
+
+msgid "Account and learning data stay while your account is active and are removed when we complete an account-deletion request, except where law requires a longer period."
+msgstr "Account and learning data stay while your account is active and are removed when we complete an account-deletion request, except where law requires a longer period."
+
+msgid "Account and sign-in data"
+msgstr "Account and sign-in data"
+
+msgid "Account-wide access, export, correction and deletion are not self-service yet. Email <0>hello@lymi.app</0> from your account address and describe what you need. We may ask you to verify your identity before acting. We will respond as required by applicable data-protection law. You may also complain to the Estonian Data Protection Inspectorate or your local supervisory authority."
+msgstr "Account-wide access, export, correction and deletion are not self-service yet. Email <0>hello@lymi.app</0> from your account address and describe what you need. We may ask you to verify your identity before acting. We will respond as required by applicable data-protection law. You may also complain to the Estonian Data Protection Inspectorate or your local supervisory authority."
 
 msgid "Actually; really"
 msgstr "Actually; really"
@@ -288,6 +318,12 @@ msgstr "Anything your assistant writes is marked AI on the card, so you can chec
 msgid "Anyway; long story short"
 msgstr "Anyway; long story short"
 
+msgid "API and connected-app data"
+msgstr "API and connected-app data"
+
+msgid "API keys stay until you revoke them or they expire. Connected-app tokens and consent stay until expiry, revocation, disconnection or account deletion."
+msgstr "API keys stay until you revoke them or they expire. Connected-app tokens and consent stay until expiry, revocation, disconnection or account deletion."
+
 msgid "API reference"
 msgstr "API reference"
 
@@ -303,6 +339,9 @@ msgstr "At the café"
 msgid "At the shop"
 msgstr "At the shop"
 
+msgid "Audio, reminders and account email"
+msgstr "Audio, reminders and account email"
+
 msgid "Auditors use it to spot figures that were made up."
 msgstr "Auditors use it to spot figures that were made up."
 
@@ -317,6 +356,12 @@ msgstr "Back in 4 days."
 
 msgid "Back in 9 days."
 msgstr "Back in 9 days."
+
+msgid "Beta access requests"
+msgstr "Beta access requests"
+
+msgid "Beta access requests stay until you ask us to remove them or the beta list is retired."
+msgstr "Beta access requests stay until you ask us to remove them or the beta list is retired."
 
 msgid "Biology"
 msgstr "Biology"
@@ -384,6 +429,9 @@ msgstr "Catching up with a friend"
 msgid "cents"
 msgstr "cents"
 
+msgid "Changes and contact"
+msgstr "Changes and contact"
+
 msgid "Chess"
 msgstr "Chess"
 
@@ -417,6 +465,9 @@ msgstr "Clocking off, and the free evening that follows"
 msgid "Close menu"
 msgstr "Close menu"
 
+msgid "Cloudflare keeps operational and email-delivery logs under the active service configuration. Lymi does not maintain a separate long-term copy of those logs."
+msgstr "Cloudflare keeps operational and email-delivery logs under the active service configuration. Lymi does not maintain a separate long-term copy of those logs."
+
 msgid "coffee"
 msgstr "coffee"
 
@@ -444,6 +495,9 @@ msgstr "Connect your own tools."
 msgid "Conversation"
 msgstr "Conversation"
 
+msgid "Cookies and local storage"
+msgstr "Cookies and local storage"
+
 msgid "Cooking"
 msgstr "Cooking"
 
@@ -465,6 +519,9 @@ msgstr "Cosy"
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
+msgid "Data Lymi receives"
+msgstr "Data Lymi receives"
+
 msgid "Dates, definitions and formulas to know on the day."
 msgstr "Dates, definitions and formulas to know on the day."
 
@@ -482,6 +539,9 @@ msgstr "Dear; expensive"
 
 msgid "Deep, lasting affection"
 msgstr "Deep, lasting affection"
+
+msgid "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security and service reliability, or to meet a legal obligation. You can withdraw optional consent, such as reminders, at any time."
+msgstr "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security and service reliability, or to meet a legal obligation. You can withdraw optional consent, such as reminders, at any time."
 
 msgid "Design"
 msgstr "Design"
@@ -681,6 +741,9 @@ msgstr "From Arabic law šāʼ Allāh, “if God wills”."
 msgid "From G. K. Chesterton’s 1929 book The Thing."
 msgstr "From G. K. Chesterton’s 1929 book The Thing."
 
+msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
+msgstr "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
+
 msgid "German"
 msgstr "German"
 
@@ -722,6 +785,9 @@ msgstr "Good, thanks! And you?"
 
 msgid "Goodbye"
 msgstr "Goodbye"
+
+msgid "Google sign-in gives Lymi your name, email address, profile image if available, and identifiers needed to connect the Google account to Lymi. We also keep session records, which can include an IP address, browser information and sign-in tokens."
+msgstr "Google sign-in gives Lymi your name, email address, profile image if available, and identifiers needed to connect the Google account to Lymi. We also keep session records, which can include an IP address, browser information and sign-in tokens."
 
 msgid "Greetings"
 msgstr "Greetings"
@@ -777,6 +843,12 @@ msgstr "how"
 msgid "How likely data this extreme would be if nothing were going on"
 msgstr "How likely data this extreme would be if nothing were going on"
 
+msgid "How long we keep data"
+msgstr "How long we keep data"
+
+msgid "How Lymi handles account, learning, integration and service data."
+msgstr "How Lymi handles account, learning, integration and service data."
+
 msgid "How many are waiting for me tonight?"
 msgstr "How many are waiting for me tonight?"
 
@@ -828,6 +900,15 @@ msgstr "If only"
 
 msgid "If only; maybe; I wish"
 msgstr "If only; maybe; I wish"
+
+msgid "If you create an API key, we store the key record, its name, permissions, usage counters and dates. If you connect an app through MCP, we store the app identity, the permissions you grant, consent records and access or refresh tokens. Lymi records whether a change came from you, an API key, a connected app, AI or the system."
+msgstr "If you create an API key, we store the key record, its name, permissions, usage counters and dates. If you connect an app through MCP, we store the app identity, the permissions you grant, consent records and access or refresh tokens. Lymi records whether a change came from you, an API key, a connected app, AI or the system."
+
+msgid "If you enable review reminders, we store a push endpoint, browser-generated encryption keys, your reminder time and time zone, and delivery state. Reminder notifications contain a due-card count, not card text."
+msgstr "If you enable review reminders, we store a push endpoint, browser-generated encryption keys, your reminder time and time zone, and delivery state. Reminder notifications contain a due-card count, not card text."
+
+msgid "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
+msgstr "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
 
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
@@ -979,6 +1060,9 @@ msgstr "Language"
 msgid "Language learning"
 msgstr "Language learning"
 
+msgid "Last updated"
+msgstr "Last updated"
+
 msgid "Latin for “you shall have the body”."
 msgstr "Latin for “you shall have the body”."
 
@@ -990,6 +1074,9 @@ msgstr "Learn to speak Estonian."
 
 msgid "Learned once, never revisited"
 msgstr "Learned once, never revisited"
+
+msgid "Learning data"
+msgstr "Learning data"
 
 msgid "Lesson"
 msgstr "Lesson"
@@ -1066,11 +1153,17 @@ msgstr "Lymi is open source and has a public API. Add cards from a phone shortcu
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Lymi is private for now. Leave your email and we’ll write when a place opens."
 
+msgid "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
+msgstr "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
+
 msgid "Lymi schedules every card around it."
 msgstr "Lymi schedules every card around it."
 
 msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
 msgstr "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
+
+msgid "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
+msgstr "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
 
 msgid "Lymi with AI assistants"
 msgstr "Lymi with AI assistants"
@@ -1247,6 +1340,9 @@ msgstr "Ordering a coffee to go"
 msgid "Other apps"
 msgstr "Other apps"
 
+msgid "Our hosting provider processes request metadata, security signals, timings and error logs needed to operate and protect Lymi. Query strings are redacted from Worker logs. We avoid putting card content, email addresses, access tokens and other private content in logs."
+msgstr "Our hosting provider processes request metadata, security signals, timings and error logs needed to operate and protect Lymi. Query strings are redacted from Worker logs. We avoid putting card content, email addresses, access tokens and other private content in logs."
+
 msgid "Overview"
 msgstr "Overview"
 
@@ -1295,6 +1391,9 @@ msgstr "Please; here you go"
 msgid "Please; here you go; you’re welcome"
 msgstr "Please; here you go; you’re welcome"
 
+msgid "Policies"
+msgstr "Policies"
+
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 
@@ -1310,6 +1409,12 @@ msgstr "Pregnant"
 msgid "Privacy"
 msgstr "Privacy"
 
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
+msgid "Privacy policy · Lymi"
+msgstr "Privacy policy · Lymi"
+
 msgid "Programming"
 msgstr "Programming"
 
@@ -1321,6 +1426,9 @@ msgstr "public transport"
 
 msgid "Public transport"
 msgstr "Public transport"
+
+msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
+msgstr "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 
 msgid "Questions before you connect."
 msgstr "Questions before you connect."
@@ -1394,6 +1502,9 @@ msgstr "Request received."
 msgid "Reveal the meaning, then grade the recall."
 msgstr "Reveal the meaning, then grade the recall."
 
+msgid "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
+msgstr "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
+
 msgid "Reviewed with Lymi"
 msgstr "Reviewed with Lymi"
 
@@ -1445,6 +1556,9 @@ msgstr "Schnaps, spirits, plus Idee, idea."
 msgid "Sections and the deck library are rolling out during the beta. We’ll tell you when your account has them."
 msgstr "Sections and the deck library are rolling out during the beta. We’ll tell you when your account has them."
 
+msgid "Security and children"
+msgstr "Security and children"
+
 msgid "See how it works"
 msgstr "See how it works"
 
@@ -1468,6 +1582,15 @@ msgstr "Send your assistant a photo of your notes. It adds the cards to Lymi, an
 
 msgid "Send your notes to Claude, ChatGPT or Gemini and get cards."
 msgstr "Send your notes to Claude, ChatGPT or Gemini and get cards."
+
+msgid "Service data"
+msgstr "Service data"
+
+msgid "Service providers and other recipients"
+msgstr "Service providers and other recipients"
+
+msgid "Sessions normally expire after 30 days and may be refreshed while you remain active."
+msgstr "Sessions normally expire after 30 days and may be refreshed while you remain active."
 
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
@@ -1498,6 +1621,9 @@ msgstr "Signals"
 
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Sitting through a bad film because you paid for the ticket."
+
+msgid "Skip to the document"
+msgstr "Skip to the document"
 
 msgid "So-so"
 msgstr "So-so"
@@ -1748,8 +1874,20 @@ msgstr "The words and phrases from each unit of the course."
 msgid "Then review them in Lymi."
 msgstr "Then review them in Lymi."
 
+msgid "These providers may process data in countries outside Estonia or the European Economic Area. Where required, we rely on the transfer safeguards made available for the relevant service."
+msgstr "These providers may process data in countries outside Estonia or the European Economic Area. Where required, we rely on the transfer safeguards made available for the relevant service."
+
+msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
+msgstr "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
+
 msgid "To agree"
 msgstr "To agree"
+
+msgid "To answer support requests and act on privacy requests."
+msgstr "To answer support requests and act on privacy requests."
+
+msgid "To authenticate requests, enforce permissions, prevent abuse and investigate failures."
+msgstr "To authenticate requests, enforce permissions, prevent abuse and investigate failures."
 
 msgid "To belong; to be heard"
 msgstr "To belong; to be heard"
@@ -1775,8 +1913,14 @@ msgstr "to go"
 msgid "To go, please."
 msgstr "To go, please."
 
+msgid "To manage private-beta access and email people who asked to hear when a place opens."
+msgstr "To manage private-beta access and email people who asked to hear when a place opens."
+
 msgid "To meet"
 msgstr "To meet"
+
+msgid "To meet legal obligations and protect the rights and safety of Lymi and its users."
+msgstr "To meet legal obligations and protect the rights and safety of Lymi and its users."
 
 msgid "To meet up"
 msgstr "To meet up"
@@ -1792,6 +1936,9 @@ msgstr "To miss someone or something"
 
 msgid "To not be able to be bothered"
 msgstr "To not be able to be bothered"
+
+msgid "To provide accounts, decks, cards, review scheduling, audio, reminders, account email, API access and connected apps."
+msgstr "To provide accounts, decks, cards, review scheduling, audio, reminders, account email, API access and connected apps."
 
 msgid "To pull"
 msgstr "To pull"
@@ -1868,6 +2015,15 @@ msgstr "Waiting for your notes"
 msgid "We already have your request."
 msgstr "We already have your request."
 
+msgid "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
+msgstr "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
+
+msgid "We store the decks and cards you create or join. A card can include a term, meaning, pronunciation, example, notes, tags, language, source, learning direction and generated audio. We also store archive state, review history, scheduling state, goals, streaks, time zone, preferences and an activity record of changes."
+msgstr "We store the decks and cards you create or join. A card can include a term, meaning, pronunciation, example, notes, tags, language, source, learning direction and generated audio. We also store archive state, review history, scheduling state, goals, streaks, time zone, preferences and an activity record of changes."
+
+msgid "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
+msgstr "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
+
 msgid "We use your email only for this access request. It does not create an account. Read the <0>privacy policy</0>."
 msgstr "We use your email only for this access request. It does not create an account. Read the <0>privacy policy</0>."
 
@@ -1907,6 +2063,12 @@ msgstr "When a measure becomes a target, it stops being a good measure"
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 
+msgid "When Lymi sends an account email, Cloudflare Email Service receives the recipient address, sender, subject and message body. Cloudflare handles delivery, bounces and suppression of addresses that should not receive another message."
+msgstr "When Lymi sends an account email, Cloudflare Email Service receives the recipient address, sender, subject and message body. Cloudflare handles delivery, bounces and suppression of addresses that should not receive another message."
+
+msgid "When pronunciation audio is first requested, Lymi sends the card term and language to a speech provider. It stores the resulting audio so it can be reused. We do not send the rest of the card for speech generation."
+msgstr "When pronunciation audio is first requested, Lymi sends the card term and language to a speech provider. It stores the resulting audio so it can be reused. We do not send the rest of the card for speech generation."
+
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"
 
@@ -1922,11 +2084,17 @@ msgstr "Which assistants work?"
 msgid "Which languages can I learn?"
 msgstr "Which languages can I learn?"
 
+msgid "Who is responsible"
+msgstr "Who is responsible"
+
 msgid "Who knows?"
 msgstr "Who knows?"
 
 msgid "Whose notes"
 msgstr "Whose notes"
+
+msgid "Why we use data"
+msgstr "Why we use data"
 
 msgid "Widgets"
 msgstr "Widgets"
@@ -2000,6 +2168,9 @@ msgstr "You"
 msgid "You can do it!"
 msgstr "You can do it!"
 
+msgid "You can edit card content and settings, archive and restore cards or decks, revoke API keys, disconnect apps, and turn reminders off in Lymi. Archive is reversible and is not deletion."
+msgstr "You can edit card content and settings, archive and restore cards or decks, revoke API keys, disconnect apps, and turn reminders off in Lymi. Archive is reversible and is not deletion."
+
 msgid "you have (with “on”)"
 msgstr "you have (with “on”)"
 
@@ -2011,6 +2182,9 @@ msgstr "You own this deck"
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
+
+msgid "Your choices and rights"
+msgstr "Your choices and rights"
 
 msgid "Your own app"
 msgstr "Your own app"

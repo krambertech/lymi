@@ -1,5 +1,16 @@
 ---
 import SiteHeader from "../components/islands/SiteHeader";
+import { LocalizedLanguageLinks } from "../components/LanguageLinks";
+import {
+  DOCUMENT_POLICIES,
+  DOCUMENT_PRIVACY,
+  DOCUMENT_SKIP,
+  DOCUMENT_SUPPORT,
+  DOCUMENT_TERMS,
+  DOCUMENT_UPDATED,
+} from "../components/public-document-copy";
+import { pageI18n } from "../lib/i18n";
+import { type LocalizedPage, localizedPath } from "../lib/routes";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
@@ -9,29 +20,40 @@ interface Props {
   heading: string;
   lead: string;
   updated: string;
+  localizedPage?: LocalizedPage | undefined;
 }
 
-const { title, description, canonicalPath, heading, lead, updated } = Astro.props;
+const { title, description, canonicalPath, heading, lead, updated, localizedPage } = Astro.props;
+const locale = Astro.currentLocale ?? "en";
+const i18n = pageI18n(locale);
+const labels = {
+  skip: i18n._(DOCUMENT_SKIP),
+  updated: i18n._(DOCUMENT_UPDATED),
+  policies: i18n._(DOCUMENT_POLICIES),
+  privacy: i18n._(DOCUMENT_PRIVACY),
+  terms: i18n._(DOCUMENT_TERMS),
+  support: i18n._(DOCUMENT_SUPPORT),
+};
 ---
 
-<BaseLayout title={title} description={description} canonicalPath={canonicalPath}>
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath} localizedPage={localizedPage}>
   <div class="min-h-dvh bg-canvas text-text">
     <a
       href="#document-content"
       class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-text edge focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-(--z-tooltip)"
     >
-      Skip to the document
+      {labels.skip}
     </a>
 
     <header>
-      <SiteHeader client:load />
+      <SiteHeader client:load locale={locale} />
     </header>
 
     <main id="document-content" class="mx-auto max-w-[44rem] px-5 py-12 @2xl:px-10 @2xl:py-16">
       <header class="mb-10 border-b border-edge pb-8">
         <h1 class="text-4xl font-medium tracking-[-0.03em] text-text @2xl:text-5xl">{heading}</h1>
         <p class="mt-5 text-lg text-text-2">{lead}</p>
-        <p class="mt-4 text-sm text-muted">Last updated {updated}</p>
+        <p class="mt-4 text-sm text-muted">{labels.updated} {updated}</p>
       </header>
       <article class="doc-prose">
         <slot />
@@ -41,12 +63,13 @@ const { title, description, canonicalPath, heading, lead, updated } = Astro.prop
     <footer class="border-t border-edge px-5 py-8 @2xl:px-10">
       <div class="mx-auto flex max-w-[1040px] flex-wrap items-center justify-between gap-4 text-sm text-muted">
         <p>© 2026 Krambertech OÜ</p>
-        <nav aria-label="Policies" class="flex flex-wrap gap-5">
-          <a href="/privacy" class="rounded-xs hoverable:hover:text-text">Privacy</a>
-          <a href="/terms" class="rounded-xs hoverable:hover:text-text">Terms</a>
-          <a href="/support" class="rounded-xs hoverable:hover:text-text">Support</a>
+        <nav aria-label={labels.policies} class="flex flex-wrap gap-5">
+          <a href={localizedPath("privacy", locale)} class="rounded-xs hoverable:hover:text-text">{labels.privacy}</a>
+          <a href="/terms" class="rounded-xs hoverable:hover:text-text">{labels.terms}</a>
+          <a href="/support" class="rounded-xs hoverable:hover:text-text">{labels.support}</a>
         </nav>
       </div>
+      {localizedPage && <LocalizedLanguageLinks page={localizedPage} locale={locale} />}
     </footer>
   </div>
 </BaseLayout>

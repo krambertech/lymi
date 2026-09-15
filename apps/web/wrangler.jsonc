@@ -52,6 +52,12 @@
   ],
   // Decodes, resizes and re-encodes uploads; WebP output carries no metadata.
   "images": { "binding": "IMAGES" },
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "allowed_sender_addresses": ["notifications@lymi.app"]
+    }
+  ],
   "kv_namespaces": [
     {
       "binding": "SESSIONS",

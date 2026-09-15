@@ -8,6 +8,7 @@ import { devToolsEnabled } from "../env";
 import { body, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import { devCounts, resetAccount, seedPersona, setDue } from "../services/dev";
+import { latestLocalEmail } from "../services/email";
 import { getSettings } from "../services/settings";
 
 /**
@@ -38,6 +39,20 @@ const summary = (p: Persona) => ({
 
 dev.get("/personas", describe({ hide: true, open: true }), (c) =>
   c.json({ personas: personas.map(summary), signInUrl: "/api/dev/sign-in?as=<id>" }),
+);
+
+const OutboxBody = z.object({
+  to: z.string().trim().toLowerCase().email().max(254),
+});
+
+dev.post(
+  "/outbox",
+  describe({ hide: true, open: true }),
+  body(OutboxBody, "outbox request"),
+  (c) => {
+    const message = latestLocalEmail(c.req.valid("json").to);
+    return message ? c.json({ message }) : c.json({ error: "Email not found" }, 404);
+  },
 );
 
 const SignInQuery = z.object({

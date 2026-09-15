@@ -1,4 +1,6 @@
+import { I18nProvider } from "@lingui/react";
 import { useLingui } from "@lingui/react/macro";
+import { pageI18n } from "../lib/i18n";
 import { type LocalizedPage, localizedPath } from "../lib/routes";
 
 const languages = [
@@ -35,5 +37,13 @@ export function LanguageLinks({ page }: Props) {
         );
       })}
     </nav>
+  );
+}
+
+export function LocalizedLanguageLinks({ page, locale }: Props & { locale: string }) {
+  return (
+    <I18nProvider i18n={pageI18n(locale)}>
+      <LanguageLinks page={page} />
+    </I18nProvider>
   );
 }

@@ -75,7 +75,7 @@ export function SiteFooter({ openAppUrl, page }: Props) {
               </a>
             </li>
             <li>
-              <a href="/privacy" className={linkClass}>
+              <a href={localizedPath("privacy", i18n.locale)} className={linkClass}>
                 <Trans>Privacy</Trans>
               </a>
             </li>

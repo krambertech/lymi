@@ -33,6 +33,7 @@ export const e2eAccounts = [
   "sections",
   "mochi-import",
   "publisher",
+  "email-outbox",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

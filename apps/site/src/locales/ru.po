@@ -66,8 +66,26 @@ msgstr "{reviews, plural, one {прошлое повторение} few {про�
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# карточка перевёрнута} few {# карточки перевёрнуты} many {# карточек перевёрнуто} other {# карточки перевёрнуто}}"
 
+msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, operational logs and transactional email delivery."
+msgstr "<0>Cloudflare</0> предоставляет сайт, приложение, базу данных, хранилище объектов, хранилище сессий, защиту сети, рабочие журналы и доставку транзакционных писем."
+
+msgid "<0>Google</0> provides Google sign-in and may provide speech generation when configured as the fallback provider."
+msgstr "<0>Google</0> предоставляет вход через Google и может создавать озвучивание, если настроен как резервный поставщик."
+
+msgid "<0>OpenAI</0> may provide speech generation. A configured Cloudflare AI Gateway may relay that request."
+msgstr "<0>OpenAI</0> может создавать озвучивание. Настроенный Cloudflare AI Gateway может передавать этот запрос."
+
+msgid "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
+msgstr "<0>Служба push-уведомлений твоего браузера</0> получает зашифрованное напоминание, когда ты включаешь уведомления."
+
+msgid "<0>Your connected apps</0> receive only the data allowed by the permissions you approve. Disconnecting an app stops future access but does not erase data the app already received."
+msgstr "<0>Подключённые приложения</0> получают только те данные, к которым ты одобряешь доступ. Отключение приложения прекращает будущий доступ, но не стирает уже полученные им данные."
+
 msgid "10 min"
 msgstr "10 мин"
+
+msgid "16 September 2026"
+msgstr "16 сентября 2026 года"
 
 msgid "2 days"
 msgstr "2 дня"
@@ -101,6 +119,9 @@ msgstr "Смекалистое решение из подручных средс
 
 msgid "A coffee and a cinnamon bun, please."
 msgstr "Кофе и булочку с корицей, пожалуйста."
+
+msgid "A connected assistant may read lesson material in the conversation where you use it. Lymi does not receive that raw lesson material unless the assistant sends it in a card field such as the term, meaning, example, notes or source. The assistant provider handles the conversation under its own terms and privacy policy."
+msgstr "Подключённый ассистент может читать материалы урока в разговоре, где ты им пользуешься. Lymi не получает эти исходные материалы, если ассистент не отправляет их в поле карточки, например в термине, значении, примере, заметках или источнике. Поставщик ассистента обрабатывает разговор по своим условиям и политике конфиденциальности."
 
 msgid "A course or lesson"
 msgstr "Курсы и занятия"
@@ -167,6 +188,15 @@ msgstr "слово, которое делает предложение вопр�
 
 msgid "Accents that land between the beats"
 msgstr "Акценты, которые приходятся между основными долями"
+
+msgid "Account and learning data stay while your account is active and are removed when we complete an account-deletion request, except where law requires a longer period."
+msgstr "Данные аккаунта и обучения хранятся, пока аккаунт активен, и удаляются после выполнения запроса на удаление аккаунта, кроме случаев, когда закон требует более долгого хранения."
+
+msgid "Account and sign-in data"
+msgstr "Данные аккаунта и входа"
+
+msgid "Account-wide access, export, correction and deletion are not self-service yet. Email <0>hello@lymi.app</0> from your account address and describe what you need. We may ask you to verify your identity before acting. We will respond as required by applicable data-protection law. You may also complain to the Estonian Data Protection Inspectorate or your local supervisory authority."
+msgstr "Самостоятельный доступ ко всем данным аккаунта, их экспорт, исправление и удаление пока недоступны. Напиши на <0>hello@lymi.app</0> с адреса своего аккаунта и расскажи, что тебе нужно. Перед выполнением запроса мы можем попросить подтвердить личность. Мы ответим в соответствии с применимым законодательством о защите данных. Также можно подать жалобу в Инспекцию по защите данных Эстонии или местный надзорный орган."
 
 msgid "Actually; really"
 msgstr "Вообще-то; на самом деле"
@@ -288,6 +318,12 @@ msgstr "Всё, что пишет ассистент, помечено на ка
 msgid "Anyway; long story short"
 msgstr "Короче; в общем"
 
+msgid "API and connected-app data"
+msgstr "Данные API и подключённых приложений"
+
+msgid "API keys stay until you revoke them or they expire. Connected-app tokens and consent stay until expiry, revocation, disconnection or account deletion."
+msgstr "Ключи API хранятся, пока ты их не отзовёшь или пока не закончится их срок действия. Токены подключённых приложений и согласие хранятся до окончания срока действия, отзыва, отключения или удаления аккаунта."
+
 msgid "API reference"
 msgstr "Справочник API"
 
@@ -303,6 +339,9 @@ msgstr "В кафе"
 msgid "At the shop"
 msgstr "В магазине"
 
+msgid "Audio, reminders and account email"
+msgstr "Озвучивание, напоминания и письма об аккаунте"
+
 msgid "Auditors use it to spot figures that were made up."
 msgstr "С его помощью аудиторы находят выдуманные цифры."
 
@@ -317,6 +356,12 @@ msgstr "Вернётся через 4 дня."
 
 msgid "Back in 9 days."
 msgstr "Вернётся через 9 дней."
+
+msgid "Beta access requests"
+msgstr "Запросы на доступ к бета-версии"
+
+msgid "Beta access requests stay until you ask us to remove them or the beta list is retired."
+msgstr "Запросы на доступ к бета-версии хранятся, пока ты не попросишь их удалить или пока список бета-доступа не будет закрыт."
 
 msgid "Biology"
 msgstr "Биология"
@@ -384,6 +429,9 @@ msgstr "Разговор с подругой"
 msgid "cents"
 msgstr "центов"
 
+msgid "Changes and contact"
+msgstr "Изменения и контакты"
+
 msgid "Chess"
 msgstr "Шахматы"
 
@@ -417,6 +465,9 @@ msgstr "Конец рабочего дня и свободный вечер по
 msgid "Close menu"
 msgstr "Закрыть меню"
 
+msgid "Cloudflare keeps operational and email-delivery logs under the active service configuration. Lymi does not maintain a separate long-term copy of those logs."
+msgstr "Cloudflare хранит рабочие журналы и журналы доставки писем в соответствии с активными настройками сервиса. Lymi не хранит отдельную долгосрочную копию этих журналов."
+
 msgid "coffee"
 msgstr "кофе"
 
@@ -444,6 +495,9 @@ msgstr "Подключай свои инструменты."
 msgid "Conversation"
 msgstr "Разговор"
 
+msgid "Cookies and local storage"
+msgstr "Файлы cookie и локальное хранилище"
+
 msgid "Cooking"
 msgstr "Кулинария"
 
@@ -465,6 +519,9 @@ msgstr "Уютный"
 msgid "Cosy and convivial; good company"
 msgstr "Уютный и душевный; в хорошей компании"
 
+msgid "Data Lymi receives"
+msgstr "Данные, которые получает Lymi"
+
 msgid "Dates, definitions and formulas to know on the day."
 msgstr "Даты, определения и формулы, которые нужно знать на экзамене."
 
@@ -482,6 +539,9 @@ msgstr "Милый; дорогой"
 
 msgid "Deep, lasting affection"
 msgstr "Глубокая, долгая привязанность"
+
+msgid "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security and service reliability, or to meet a legal obligation. You can withdraw optional consent, such as reminders, at any time."
+msgstr "В зависимости от действия и применимого законодательства мы обрабатываем данные, чтобы выполнять наше соглашение с тобой, с твоего согласия, в законных интересах, например ради безопасности и надёжности сервиса, или для выполнения юридической обязанности. Необязательное согласие, например на напоминания, можно отозвать в любое время."
 
 msgid "Design"
 msgstr "Дизайн"
@@ -681,6 +741,9 @@ msgstr "От арабского law šāʼ Allāh — «если Бог захо
 msgid "From G. K. Chesterton’s 1929 book The Thing."
 msgstr "Из книги Г. К. Честертона «The Thing» 1929 года."
 
+msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
+msgstr "Созданное озвучивание хранится вместе с соответствующей карточкой или аккаунтом, пока не будет удалено по правилам жизненного цикла хранилища сервиса."
+
 msgid "German"
 msgstr "Немецкий"
 
@@ -722,6 +785,9 @@ msgstr "Хорошо, спасибо! А у тебя?"
 
 msgid "Goodbye"
 msgstr "До свидания"
+
+msgid "Google sign-in gives Lymi your name, email address, profile image if available, and identifiers needed to connect the Google account to Lymi. We also keep session records, which can include an IP address, browser information and sign-in tokens."
+msgstr "При входе через Google Lymi получает твоё имя, адрес электронной почты, изображение профиля, если оно есть, и идентификаторы, необходимые для подключения аккаунта Google к Lymi. Мы также храним записи сессий, которые могут включать IP-адрес, сведения о браузере и токены входа."
 
 msgid "Greetings"
 msgstr "Приветствия"
@@ -777,6 +843,12 @@ msgstr "как"
 msgid "How likely data this extreme would be if nothing were going on"
 msgstr "Насколько вероятны такие крайние данные, если на самом деле ничего не происходит"
 
+msgid "How long we keep data"
+msgstr "Как долго мы храним данные"
+
+msgid "How Lymi handles account, learning, integration and service data."
+msgstr "Как Lymi обрабатывает данные аккаунта, обучения, интеграций и сервиса."
+
 msgid "How many are waiting for me tonight?"
 msgstr "Сколько карточек ждёт меня сегодня?"
 
@@ -828,6 +900,15 @@ msgstr "Если бы"
 
 msgid "If only; maybe; I wish"
 msgstr "Если бы; может быть; вот бы"
+
+msgid "If you create an API key, we store the key record, its name, permissions, usage counters and dates. If you connect an app through MCP, we store the app identity, the permissions you grant, consent records and access or refresh tokens. Lymi records whether a change came from you, an API key, a connected app, AI or the system."
+msgstr "Если ты создаёшь ключ API, мы храним запись ключа, его название, права доступа, счётчики использования и даты. Если ты подключаешь приложение через MCP, мы храним идентификатор приложения, выданные тобой права, записи согласия и токены доступа или обновления. Lymi записывает, кем внесено изменение: тобой, ключом API, подключённым приложением, AI или системой."
+
+msgid "If you enable review reminders, we store a push endpoint, browser-generated encryption keys, your reminder time and time zone, and delivery state. Reminder notifications contain a due-card count, not card text."
+msgstr "Если ты включаешь напоминания о повторении, мы храним адрес push-сервиса, созданные браузером ключи шифрования, время напоминания, часовой пояс и состояние доставки. Напоминания содержат количество карточек для повторения, а не текст карточек."
+
+msgid "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
+msgstr "Если ты запрашиваешь доступ, мы храним твой адрес электронной почты, место на сайте и время отправки запроса. Запрос доступа не создаёт аккаунт."
 
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Условный график памяти за тридцать дней. Без повторений знание постепенно угасает. После повторений на 3-й, 8-й и 19-й день оно восстанавливается, а с более длинными перерывами угасает медленнее."
@@ -979,6 +1060,9 @@ msgstr "Язык"
 msgid "Language learning"
 msgstr "Изучение языков"
 
+msgid "Last updated"
+msgstr "Обновлено"
+
 msgid "Latin for “you shall have the body”."
 msgstr "По-латыни — «ты должен иметь тело»."
 
@@ -990,6 +1074,9 @@ msgstr "Заговори по-эстонски."
 
 msgid "Learned once, never revisited"
 msgstr "Без повторений"
+
+msgid "Learning data"
+msgstr "Данные обучения"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -1066,11 +1153,17 @@ msgstr "У Lymi открытый код и публичный API. Добавл�
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Пока в Lymi можно попасть только по приглашению. Оставь электронную почту — мы напишем, когда появится место."
 
+msgid "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
+msgstr "Lymi предоставляет Krambertech OÜ, эстонское частное общество с ограниченной ответственностью. В этой политике «Lymi», «мы» и «нас» означают Krambertech OÜ. Связаться с нами можно по адресу <0>hello@lymi.app</0>."
+
 msgid "Lymi schedules every card around it."
 msgstr "На этом принципе Lymi строит расписание повторений."
 
 msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
 msgstr "Lymi планирует повторения по FSRS — этот алгоритм есть и в Anki, так что ритм будет знакомым. Меняется всё вокруг: карточку можно добавить за несколько секунд, а ассистент добавит целый урок. Импорта из Anki пока нет."
+
+msgid "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
+msgstr "Lymi использует файл cookie аутентификации, чтобы сохранять вход в систему. Публичный сайт и приложение также используют локальное хранилище браузера для настроек и работы без сети. Мы не используем рекламные файлы cookie."
 
 msgid "Lymi with AI assistants"
 msgstr "Lymi с AI-ассистентами"
@@ -1247,6 +1340,9 @@ msgstr "Кофе с собой"
 msgid "Other apps"
 msgstr "Другие приложения"
 
+msgid "Our hosting provider processes request metadata, security signals, timings and error logs needed to operate and protect Lymi. Query strings are redacted from Worker logs. We avoid putting card content, email addresses, access tokens and other private content in logs."
+msgstr "Наш поставщик хостинга обрабатывает метаданные запросов, сигналы безопасности, временные показатели и журналы ошибок, необходимые для работы и защиты Lymi. Строки запросов скрываются в журналах Worker. Мы не добавляем в журналы содержимое карточек, адреса электронной почты, токены доступа и другой приватный контент."
+
 msgid "Overview"
 msgstr "Введение"
 
@@ -1295,6 +1391,9 @@ msgstr "Пожалуйста; вот, держи"
 msgid "Please; here you go; you’re welcome"
 msgstr "Пожалуйста; вот, держи; не за что"
 
+msgid "Policies"
+msgstr "Правила"
+
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Отправь ссылку для присоединения в чат группы. Каждый, кто присоединится, получает новую карточку, как только ты её добавишь, а расписание повторений у каждого своё. Когда группа набрана, выключи ссылку."
 
@@ -1310,6 +1409,12 @@ msgstr "Беременная"
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"
+
+msgid "Privacy policy · Lymi"
+msgstr "Политика конфиденциальности · Lymi"
+
 msgid "Programming"
 msgstr "Программирование"
 
@@ -1321,6 +1426,9 @@ msgstr "общественный транспорт"
 
 msgid "Public transport"
 msgstr "Общественный транспорт"
+
+msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
+msgstr "Push-подписки хранятся, пока ты не отключишь напоминания, push-сервис не сообщит об окончании подписки или аккаунт не будет удалён."
 
 msgid "Questions before you connect."
 msgstr "Вопросы перед подключением."
@@ -1394,6 +1502,9 @@ msgstr "Заявка принята."
 msgid "Reveal the meaning, then grade the recall."
 msgstr "Открой значение и оцени, насколько хорошо ты его помнишь."
 
+msgid "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
+msgstr "Пока существует аккаунт, история повторений только дополняется, чтобы расписание и запись обучения оставались точными. Отмена создаёт отдельную запись, а не переписывает исходное повторение."
+
 msgid "Reviewed with Lymi"
 msgstr "С повторениями в Lymi"
 
@@ -1445,6 +1556,9 @@ msgstr "Schnaps — водка, Idee — идея."
 msgid "Sections and the deck library are rolling out during the beta. We’ll tell you when your account has them."
 msgstr "Разделы и библиотека колод появляются постепенно во время беты. Мы сообщим, когда они будут в твоём аккаунте."
 
+msgid "Security and children"
+msgstr "Безопасность и дети"
+
 msgid "See how it works"
 msgstr "Как это работает"
 
@@ -1468,6 +1582,15 @@ msgstr "Отправь ассистенту фото заметок. Он доб
 
 msgid "Send your notes to Claude, ChatGPT or Gemini and get cards."
 msgstr "Отправь заметки в Claude, ChatGPT или Gemini — и получи карточки."
+
+msgid "Service data"
+msgstr "Сервисные данные"
+
+msgid "Service providers and other recipients"
+msgstr "Поставщики услуг и другие получатели"
+
+msgid "Sessions normally expire after 30 days and may be refreshed while you remain active."
+msgstr "Сессии обычно заканчиваются через 30 дней и могут обновляться, пока ты пользуешься Lymi."
 
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Семь карточек: четыре по финскому, две шахматные и одна из той статьи об обработке сигналов."
@@ -1498,6 +1621,9 @@ msgstr "Обработка сигналов"
 
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Досматривать плохой фильм только из-за уже купленного билета."
+
+msgid "Skip to the document"
+msgstr "Перейти к документу"
 
 msgid "So-so"
 msgstr "Так себе"
@@ -1748,8 +1874,20 @@ msgstr "Слова и фразы из каждой темы курса."
 msgid "Then review them in Lymi."
 msgstr "Потом повторяй их в Lymi."
 
+msgid "These providers may process data in countries outside Estonia or the European Economic Area. Where required, we rely on the transfer safeguards made available for the relevant service."
+msgstr "Эти поставщики могут обрабатывать данные в странах за пределами Эстонии или Европейской экономической зоны. Когда это необходимо, мы полагаемся на гарантии передачи данных, доступные для соответствующего сервиса."
+
+msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
+msgstr "Эта политика объясняет, какие данные получает Lymi, зачем их использует, кто помогает предоставлять сервис и какой выбор есть у тебя."
+
 msgid "To agree"
 msgstr "Соглашаться"
+
+msgid "To answer support requests and act on privacy requests."
+msgstr "Чтобы отвечать на обращения в поддержку и выполнять запросы о конфиденциальности."
+
+msgid "To authenticate requests, enforce permissions, prevent abuse and investigate failures."
+msgstr "Чтобы аутентифицировать запросы, контролировать права доступа, предотвращать злоупотребления и расследовать сбои."
 
 msgid "To belong; to be heard"
 msgstr "Принадлежать; быть слышным"
@@ -1775,8 +1913,14 @@ msgstr "с собой"
 msgid "To go, please."
 msgstr "С собой, пожалуйста."
 
+msgid "To manage private-beta access and email people who asked to hear when a place opens."
+msgstr "Чтобы управлять доступом к закрытой бета-версии и писать людям, которые попросили сообщить о свободном месте."
+
 msgid "To meet"
 msgstr "Встречаться"
+
+msgid "To meet legal obligations and protect the rights and safety of Lymi and its users."
+msgstr "Чтобы выполнять юридические обязанности и защищать права и безопасность Lymi и его пользователей."
 
 msgid "To meet up"
 msgstr "Встретиться"
@@ -1792,6 +1936,9 @@ msgstr "Скучать по кому-то или чему-то"
 
 msgid "To not be able to be bothered"
 msgstr "Лень; неохота ничего делать"
+
+msgid "To provide accounts, decks, cards, review scheduling, audio, reminders, account email, API access and connected apps."
+msgstr "Чтобы предоставлять аккаунты, колоды, карточки, расписание повторений, озвучивание, напоминания, письма об аккаунте, доступ к API и подключённые приложения."
 
 msgid "To pull"
 msgstr "Тянуть"
@@ -1868,6 +2015,15 @@ msgstr "Ждём заметки"
 msgid "We already have your request."
 msgstr "Ты уже в списке."
 
+msgid "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
+msgstr "Мы можем обновлять эту политику, когда меняется Lymi или закон. Мы обновим дату выше и дополнительно сообщим, если изменение существенно повлияет на твои права. Вопросы и запросы о конфиденциальности можно отправлять на <0>hello@lymi.app</0>."
+
+msgid "We store the decks and cards you create or join. A card can include a term, meaning, pronunciation, example, notes, tags, language, source, learning direction and generated audio. We also store archive state, review history, scheduling state, goals, streaks, time zone, preferences and an activity record of changes."
+msgstr "Мы храним колоды и карточки, которые ты создаёшь или к которым присоединяешься. Карточка может содержать термин, значение, произношение, пример, заметки, теги, язык, источник, направление обучения и созданное озвучивание. Мы также храним состояние архива, историю повторений, состояние расписания, цели, дни подряд, часовой пояс, настройки и журнал изменений."
+
+msgid "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
+msgstr "Для защиты данных мы используем контроль доступа, зашифрованную передачу и средства безопасности поставщиков, но ни один онлайн-сервис не может гарантировать абсолютную безопасность. Не передавай другим ключи API, токены подключения и другие учётные данные. Lymi не предназначен для детей, которые не могут законно согласиться на такую обработку."
+
 msgid "We use your email only for this access request. It does not create an account. Read the <0>privacy policy</0>."
 msgstr "Электронный адрес нужен только для этой заявки. Учётная запись не создаётся. Подробнее — в <0>политике конфиденциальности</0>."
 
@@ -1907,6 +2063,12 @@ msgstr "Когда показатель становится целью, он п
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Когда коллеги уходят с работы, им говорят <0><1>お疲れ様です</1></0>."
 
+msgid "When Lymi sends an account email, Cloudflare Email Service receives the recipient address, sender, subject and message body. Cloudflare handles delivery, bounces and suppression of addresses that should not receive another message."
+msgstr "Когда Lymi отправляет письмо об аккаунте, Cloudflare Email Service получает адрес получателя, отправителя, тему и текст письма. Cloudflare обрабатывает доставку, возвраты писем и блокировку адресов, на которые больше не следует отправлять сообщения."
+
+msgid "When pronunciation audio is first requested, Lymi sends the card term and language to a speech provider. It stores the resulting audio so it can be reused. We do not send the rest of the card for speech generation."
+msgstr "Когда ты впервые запрашиваешь озвучивание произношения, Lymi отправляет поставщику синтеза речи термин карточки и язык. Полученное аудио хранится для повторного использования. Остальную часть карточки мы не отправляем для создания озвучивания."
+
 msgid "When the output depends on the history of the input"
 msgstr "Когда результат зависит от того, что было на входе раньше"
 
@@ -1922,11 +2084,17 @@ msgstr "Какие ассистенты поддерживаются?"
 msgid "Which languages can I learn?"
 msgstr "Какие языки можно учить?"
 
+msgid "Who is responsible"
+msgstr "Кто отвечает за данные"
+
 msgid "Who knows?"
 msgstr "Кто его знает?"
 
 msgid "Whose notes"
 msgstr "Чьи заметки"
+
+msgid "Why we use data"
+msgstr "Зачем мы используем данные"
 
 msgid "Widgets"
 msgstr "Виджеты"
@@ -2000,6 +2168,9 @@ msgstr "Ты"
 msgid "You can do it!"
 msgstr "У тебя получится!"
 
+msgid "You can edit card content and settings, archive and restore cards or decks, revoke API keys, disconnect apps, and turn reminders off in Lymi. Archive is reversible and is not deletion."
+msgstr "В Lymi можно редактировать содержимое карточек и настройки, архивировать и восстанавливать карточки и колоды, отзывать ключи API, отключать приложения и выключать напоминания. Архивирование можно отменить — это не удаление."
+
 msgid "you have (with “on”)"
 msgstr "у вас (вместе с «on» — «у вас есть»)"
 
@@ -2011,6 +2182,9 @@ msgstr "Твоя колода"
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Ассистент может читать твои колоды. Попроси его о разговоре со словами, которые ты учишь, и он будет поправлять тебя по ходу."
+
+msgid "Your choices and rights"
+msgstr "Твой выбор и права"
 
 msgid "Your own app"
 msgstr "Своё приложение"

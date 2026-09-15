@@ -20,6 +20,7 @@ import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
+import { email } from "./routes/email";
 import { images } from "./routes/images";
 import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
@@ -163,6 +164,7 @@ app.get(
 );
 
 app.route("/api/decks", decks);
+app.route("/api/email", email);
 app.route("/api/series", series);
 app.route("/api/decks", deckSections);
 app.route("/api/sections", sections);

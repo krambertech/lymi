@@ -39,7 +39,7 @@ export default function DeckSections({ locale, ...props }: Props) {
 const MAX_ROWS = 16;
 const HASH = "#cards";
 
-type Open = (event: MouseEvent<HTMLButtonElement>) => void;
+type Open = (event: MouseEvent<HTMLElement>) => void;
 
 /**
  * The deck's sections as tiles in the order a learner meets them, and every card in a view of its
@@ -102,18 +102,25 @@ function Sections(props: Omit<Props, "locale">) {
           >
             {inOrder ? <Trans>What’s inside</Trans> : <Trans>Every card in the deck</Trans>}
           </h2>
-          <button type="button" onClick={open} className={buttonClass("secondary", "lg")}>
+          <a
+            href={HASH}
+            onClick={(event) => {
+              event.preventDefault();
+              open(event);
+            }}
+            className={buttonClass("secondary", "lg")}
+          >
             <Plural value={cardCount} one="See the card" other="See all # cards" />
             <span aria-hidden="true">
               <ChevronRight className="rtl:rotate-180" />
             </span>
-          </button>
+          </a>
         </div>
         {inOrder && (
           <p className="mt-4 max-w-[62ch] text-md text-pretty text-text-2">
             <Trans>
-              You start with <span lang={props.meaningLanguage}>{first}</span>. Once every card in a
-              section has come up and you know 80% of them, the next one opens by itself.
+              You start with <span lang={props.meaningLanguage}>{first}</span>, and the next section
+              opens as you learn the one before it.
             </Trans>
           </p>
         )}
@@ -140,7 +147,7 @@ function SectionList({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> &
         return (
           <li
             key={`${position ?? "rest"}-${step.name ?? ""}`}
-            className="flex min-h-16 min-w-0 items-center gap-4 border-b border-edge py-3"
+            className="flex min-h-16 min-w-0 flex-wrap items-center gap-x-4 gap-y-1 border-b border-edge py-3"
           >
             <span
               aria-hidden="true"
@@ -151,7 +158,7 @@ function SectionList({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> &
             >
               {position ?? "·"}
             </span>
-            <h3 className="min-w-0 flex-1 text-lg leading-tight font-medium tracking-[-0.012em] break-words text-text">
+            <h3 className="min-w-[8rem] flex-1 text-lg leading-tight font-medium tracking-[-0.012em] text-pretty text-text">
               {position !== null && (
                 <span className="sr-only">
                   <Trans>Section {position}:</Trans>{" "}
@@ -174,14 +181,17 @@ function SectionList({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> &
       })}
       {rest.length > 0 && (
         <li className="flex min-h-16 items-center border-b border-edge py-3">
-          <button
-            type="button"
-            onClick={onOpen}
+          <a
+            href={HASH}
+            onClick={(event) => {
+              event.preventDefault();
+              onOpen(event);
+            }}
             className="inline-flex items-center gap-1 rounded-xs text-lg font-medium tracking-[-0.012em] text-text hoverable:hover:underline hoverable:hover:underline-offset-4"
           >
             <Plural value={rest.length} one="# more section" other="# more sections" />
             <ChevronRight aria-hidden="true" className="size-5 rtl:rotate-180" />
-          </button>
+          </a>
         </li>
       )}
     </ol>
@@ -240,6 +250,9 @@ function CardsView({
     jumping.current = Date.now() + 700;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     target.scrollIntoView({ block: "start", behavior: still ? "auto" : "smooth" });
+    // Reading moves with the view, so a screen reader continues at the section rather than the list.
+    target.tabIndex = -1;
+    target.focus({ preventScroll: true });
   };
 
   const sectionId = (i: number) => `${id}-section-${i}`;
@@ -262,14 +275,21 @@ function CardsView({
               type="button"
               aria-label={t`Back to ${name}`}
               onClick={() => dialogRef.current?.close()}
-              className="-ms-1.5 inline-flex h-10 min-w-0 items-center gap-1.5 rounded-sm ps-1 pe-3 text-md text-text-2 transition-colors duration-150 hoverable:hover:bg-plate-2 hoverable:hover:text-text"
+              className="relative -ms-1.5 inline-flex h-10 min-w-0 items-center gap-1.5 rounded-sm ps-1 pe-3 text-md text-text-2 transition-colors duration-150 before:absolute before:-inset-y-1 before:content-[''] hoverable:hover:bg-plate-2 hoverable:hover:text-text"
             >
               <ChevronLeft aria-hidden="true" className="size-[22px] shrink-0 rtl:rotate-180" />
               <span lang={meaningLanguage} className="truncate">
                 {name}
               </span>
             </button>
-            <a href={addUrl} className={buttonClass("primary", "md")}>
+            <a
+              href={addUrl}
+              className={buttonClass(
+                "primary",
+                "md",
+                "before:absolute before:-inset-y-1 before:content-['']",
+              )}
+            >
               <Trans>Add to Lymi</Trans>
             </a>
           </div>
@@ -286,13 +306,13 @@ function CardsView({
                 {steps.map((step, i) => (
                   <li
                     key={sectionId(i)}
-                    className="relative @4xl:before:absolute @4xl:before:start-[15px] @4xl:before:top-9 @4xl:before:-bottom-1 @4xl:before:w-px @4xl:before:bg-edge-2 @4xl:last:before:hidden"
+                    className="@4xl:relative @4xl:before:absolute @4xl:before:start-[15px] @4xl:before:top-9 @4xl:before:-bottom-1 @4xl:before:w-px @4xl:before:bg-edge-2 @4xl:last:before:hidden"
                   >
                     <a
                       href={`#${sectionId(i)}`}
                       onClick={(event) => jump(event, i)}
                       aria-current={active === i ? "true" : undefined}
-                      className="group inline-flex h-8 items-center rounded-full bg-plate-2 px-3 text-sm whitespace-nowrap text-text-2 transition-colors duration-150 aria-[current=true]:bg-text aria-[current=true]:text-canvas @4xl:grid @4xl:h-auto @4xl:grid-cols-[2rem_minmax(0,1fr)] @4xl:gap-3 @4xl:rounded-none @4xl:bg-transparent @4xl:px-0 @4xl:pb-3 @4xl:whitespace-normal @4xl:aria-[current=true]:bg-transparent @4xl:aria-[current=true]:text-text hoverable:@4xl:hover:text-text"
+                      className="group relative inline-flex h-8 items-center rounded-full bg-plate-2 px-3 text-sm whitespace-nowrap text-text-2 transition-[background-color,color] duration-150 before:absolute before:-inset-y-1.5 before:content-[''] aria-[current=true]:bg-text aria-[current=true]:text-canvas @4xl:grid @4xl:h-auto @4xl:grid-cols-[2rem_minmax(0,1fr)] @4xl:gap-3 @4xl:rounded-none @4xl:bg-transparent @4xl:px-0 @4xl:pb-3 @4xl:whitespace-normal @4xl:aria-[current=true]:bg-transparent @4xl:aria-[current=true]:text-text hoverable:@4xl:hover:text-text"
                     >
                       <span
                         aria-hidden="true"

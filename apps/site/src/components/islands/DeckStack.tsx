@@ -56,79 +56,82 @@ export default function DeckStack({ locale, cards, termLanguage, total, addUrl }
 function Hand({ hand, total, addUrl }: { hand: HandCard[]; total: number; addUrl: string }) {
   const { t } = useLingui();
   return (
-    <HandOfCards
-      cards={hand}
-      finale={(again, turned) => (
-        <div className="deck-finale">
-          <div className="deck-finale-light">
-            <span aria-hidden="true" className="deck-finale-pool">
-              <span />
-            </span>
-            <Lantern glow flicker catchLight className="size-full" />
-            <span aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[56%]">
-              {EMBERS.map((ember) => (
-                <i
-                  key={ember.at}
-                  className="deck-finale-ember"
-                  style={
-                    {
-                      width: ember.size,
-                      height: ember.size,
-                      "--x": `${ember.x}px`,
-                      "--y": `${ember.y}px`,
-                      "--dur": `${ember.dur}ms`,
-                      "--delay": `${EMBERS_AT + ember.at}ms`,
-                    } as CSSProperties
-                  }
-                />
+    <div className="deck-hand">
+      <HandOfCards
+        cards={hand}
+        dealt={hand}
+        finale={(again, turned) => (
+          <div className="deck-finale">
+            <div className="deck-finale-light">
+              <span aria-hidden="true" className="deck-finale-pool">
+                <span />
+              </span>
+              <Lantern glow flicker catchLight className="size-full" />
+              <span aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[56%]">
+                {EMBERS.map((ember) => (
+                  <i
+                    key={ember.at}
+                    className="deck-finale-ember"
+                    style={
+                      {
+                        width: ember.size,
+                        height: ember.size,
+                        "--x": `${ember.x}px`,
+                        "--y": `${ember.y}px`,
+                        "--dur": `${ember.dur}ms`,
+                        "--delay": `${EMBERS_AT + ember.at}ms`,
+                      } as CSSProperties
+                    }
+                  />
+                ))}
+              </span>
+            </div>
+            <p
+              className="deck-finale-rise mt-6 text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+              style={delay(640)}
+            >
+              <Trans>Keep going in Lymi</Trans>
+            </p>
+            <p
+              className="deck-finale-rise mt-3 max-w-[36ch] text-lg text-pretty text-text-2"
+              style={delay(800)}
+            >
+              <Plural
+                value={Math.max(total - turned.length, 0)}
+                one="One more card is waiting. Add the deck, and Lymi chooses when to bring each one back."
+                other="Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back."
+              />
+            </p>
+            <ul
+              aria-label={t`Cards you turned`}
+              className="mt-5 flex flex-wrap justify-center gap-x-3 gap-y-1 text-md font-medium text-text"
+            >
+              {turned.map((card, index) => (
+                <li
+                  // biome-ignore lint/suspicious/noArrayIndexKey: the order they were turned; a term can repeat.
+                  key={index}
+                  lang={card.language}
+                  className="deck-finale-rise"
+                  style={delay(960 + index * 70)}
+                >
+                  {card.term}
+                </li>
               ))}
-            </span>
+            </ul>
+            <div
+              className="deck-finale-rise mt-8 flex flex-wrap justify-center gap-2"
+              style={delay(1000 + turned.length * 70)}
+            >
+              <a href={addUrl} className={buttonClass("primary", "lg")}>
+                <Trans>Add to Lymi</Trans>
+              </a>
+              <button type="button" onClick={again} className={buttonClass("ghost", "lg")}>
+                <Trans>Try again</Trans>
+              </button>
+            </div>
           </div>
-          <p
-            className="deck-finale-rise mt-6 text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
-            style={delay(640)}
-          >
-            <Trans>Keep going in Lymi</Trans>
-          </p>
-          <p
-            className="deck-finale-rise mt-3 max-w-[36ch] text-lg text-pretty text-text-2"
-            style={delay(800)}
-          >
-            <Plural
-              value={total}
-              one="Add the deck, and Lymi brings its card back right before you’d forget it."
-              other="Add all # cards, and Lymi brings each one back right before you’d forget it."
-            />
-          </p>
-          <ul
-            aria-label={t`Cards you turned`}
-            className="mt-5 flex flex-wrap justify-center gap-x-3 gap-y-1 text-md font-medium text-text"
-          >
-            {turned.map((card, index) => (
-              <li
-                // biome-ignore lint/suspicious/noArrayIndexKey: the order they were turned; a term can repeat.
-                key={index}
-                lang={card.language}
-                className="deck-finale-rise"
-                style={delay(960 + index * 70)}
-              >
-                {card.term}
-              </li>
-            ))}
-          </ul>
-          <div
-            className="deck-finale-rise mt-8 flex flex-wrap justify-center gap-2"
-            style={delay(1000 + turned.length * 70)}
-          >
-            <a href={addUrl} className={buttonClass("primary", "lg")}>
-              <Trans>Add to Lymi</Trans>
-            </a>
-            <button type="button" onClick={again} className={buttonClass("ghost", "lg")}>
-              <Trans>Try again</Trans>
-            </button>
-          </div>
-        </div>
-      )}
-    />
+        )}
+      />
+    </div>
   );
 }

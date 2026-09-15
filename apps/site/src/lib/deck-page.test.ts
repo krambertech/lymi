@@ -108,16 +108,13 @@ describe("spreadCards", () => {
 });
 
 describe("stackCards", () => {
-  it("draws distinct cards with a meaning from anywhere in the deck", () => {
-    let seed = 1;
-    const random = () => {
-      seed = (seed * 16807) % 2147483647;
-      return (seed - 1) / 2147483646;
-    };
-    const stack = stackCards(deck({ sections: sections(4) }), STACK_SIZE, random);
+  it("draws distinct cards with a meaning from anywhere in the deck, the same for one revision", () => {
+    const stack = stackCards(deck({ sections: sections(4) }));
     expect(stack).toHaveLength(STACK_SIZE);
     expect(new Set(stack.map((card) => card.term)).size).toBe(STACK_SIZE);
     expect(new Set(stack.map((card) => card.section)).size).toBeGreaterThan(1);
+    expect(stackCards(deck({ sections: sections(4) }))).toEqual(stack);
+    expect(stackCards(deck())).not.toEqual(stackCards(deck({ revision: 3 })));
     expect(stackCards(deck()).map((card) => card.term)).not.toContain("term 1");
   });
 });

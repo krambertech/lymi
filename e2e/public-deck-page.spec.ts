@@ -71,7 +71,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     await expect(rows.nth(1)).toContainText("In the café");
     await expect(sections.getByText("one coffee, please", { exact: true })).toBeHidden();
 
-    await sections.getByRole("button", { name: "See all 4 cards" }).click();
+    await sections.getByRole("link", { name: "See all 4 cards" }).click();
     const view = page.getByRole("dialog", { name: "All 4 cards" });
     await expect(view).toBeVisible();
     await expect(page).toHaveURL(/#cards$/);
@@ -80,7 +80,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     await page.keyboard.press("Escape");
     await expect(view).toBeHidden();
     await expect(page).not.toHaveURL(/#cards$/);
-    await expect(sections.getByRole("button", { name: "See all 4 cards" })).toBeFocused();
+    await expect(sections.getByRole("link", { name: "See all 4 cards" })).toBeFocused();
   });
 
   await test.step("a link to #cards opens the view, and Back closes it", async () => {
@@ -152,6 +152,12 @@ test("without JavaScript the page still shows the deck and its sections", async 
   await expect(page.getByRole("heading", { level: 1, name: "Evening Estonian" })).toBeVisible();
   await expect(page.getByRole("list", { name: "Cards from this deck" })).toContainText(
     "tere päevast",
+  );
+  // The hand is dealt by the server, so its cards and the way into every card need no script.
+  await expect(page.locator("#how .hand-card")).toHaveCount(4);
+  await expect(page.getByRole("link", { name: "See all 4 cards" })).toHaveAttribute(
+    "href",
+    "#cards",
   );
   await expect(page.getByRole("region", { name: "What’s inside" })).toContainText("In the café");
   await context.close();

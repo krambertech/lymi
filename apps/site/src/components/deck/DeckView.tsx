@@ -84,7 +84,7 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
 function SignInNote() {
   return (
     <p className="text-sm text-muted">
-      <Trans>You’ll sign in with Google to add it.</Trans>
+      <Trans>Free during the beta. You’ll sign in with Google to add it.</Trans>
     </p>
   );
 }
@@ -185,6 +185,11 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
         <div className="mt-4">
           <DeckFacts deck={deck} />
         </div>
+        <p className="mx-auto mt-6 max-w-[42ch] text-md text-pretty text-text-2">
+          <Trans>
+            Lymi is a vocabulary app: it brings each card back right before you’d forget it.
+          </Trans>
+        </p>
         <div className="mt-7 flex flex-wrap justify-center gap-2">
           <a href={addUrl(deck.slug)} className={buttonClass("primary", "lg")}>
             <Trans>Add to Lymi</Trans>

@@ -61,7 +61,7 @@ const stack = deck ? stackCards(deck) : [];
               <DeckHowItWorks locale={locale} />
               {stack.length > 0 && (
                 <DeckStack
-                  client:visible
+                  client:load
                   locale={locale}
                   cards={stack}
                   termLanguage={page.deck.language}

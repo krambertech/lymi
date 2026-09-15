@@ -31,20 +31,6 @@ function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
     .filter((cards) => cards.length > 0);
 }
 
-/** Distinct cards from anywhere in the deck, in random order. */
-export function stackCards(
-  deck: PublicDeckOut,
-  size = STACK_SIZE,
-  random: () => number = Math.random,
-): DeckCard[] {
-  const cards = sectionsWithMeanings(deck).flat();
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [cards[i], cards[j]] = [cards[j] as DeckCard, cards[i] as DeckCard];
-  }
-  return cards.slice(0, size);
-}
-
 /** FNV-1a, so the spread stays the same for one revision of a deck. */
 function hash(text: string): number {
   let h = 0x811c9dc5;
@@ -53,6 +39,21 @@ function hash(text: string): number {
     h = Math.imul(h, 0x01000193);
   }
   return h >>> 0;
+}
+
+/**
+ * Distinct cards from anywhere in the deck, shuffled from the deck own revision rather than at
+ * random, so everyone who loads one revision is served the same page and its ETag stays honest.
+ */
+export function stackCards(deck: PublicDeckOut, size = STACK_SIZE): DeckCard[] {
+  const cards = sectionsWithMeanings(deck).flat();
+  let seed = hash(`${deck.slug}:${deck.revision}:stack`);
+  for (let i = cards.length - 1; i > 0; i--) {
+    seed = (seed * 1103515245 + 12345) >>> 0;
+    const j = seed % (i + 1);
+    [cards[i], cards[j]] = [cards[j] as DeckCard, cards[i] as DeckCard];
+  }
+  return cards.slice(0, size);
 }
 
 /**

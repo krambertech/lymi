@@ -217,6 +217,8 @@ interface Props {
   cards?: readonly HandCard[] | undefined;
   /** A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. */
   layout?: "fan" | "stack" | undefined;
+  /** Hold these from the first render, so the hand is in the server's HTML and needs no script to be there. */
+  dealt?: readonly HandCard[] | undefined;
   /** Deal each card once; after the last, this takes the hand's place and can deal them again. */
   finale?: ((again: () => void, turned: readonly HandCard[]) => ReactNode) | undefined;
 }
@@ -226,33 +228,45 @@ interface Props {
  * teaches the one move Lymi is built on, looking at a term before its meaning, and shows how
  * much a card can hold. The deal plays once per session; after that the hand is simply there.
  */
-export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Props) {
+export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, finale }: Props) {
   const { t, i18n } = useLingui();
-  const [hand, setHand] = useState<Dealt[]>([]);
+  const [hand, setHand] = useState<Dealt[]>(() =>
+    (given ?? []).map((card, key) => ({ key, card })),
+  );
   const [gone, setGone] = useState<Dealt[]>([]);
-  const [phase, setPhase] = useState<"dealing" | "front" | "back" | "done">("dealing");
+  const [phase, setPhase] = useState<"dealing" | "front" | "back" | "done">(
+    given ? "front" : "dealing",
+  );
   const [round, setRound] = useState(0);
   const once = Boolean(finale);
   const [intro, setIntro] = useState(false);
   const [turned, setTurned] = useState(0);
   const [turnedCards, setTurnedCards] = useState<HandCard[]>([]);
   const [playing, setPlaying] = useState<string | null>(null);
-  const [announce, setAnnounce] = useState("");
+  const [announce, setAnnounce] = useState<ReactNode>(null);
   const pile = useRef<HandCard[]>([]);
   const nextKey = useRef(0);
+  const started = useRef(false);
   const audio = useRef<HTMLAudioElement | null>(null);
   const frontFlip = useRef<HTMLDivElement | null>(null);
   const [hint, setHint] = useState(false);
   const [finePointer, setFinePointer] = useState(true);
   const taught = useRef(false);
   const held = useRef<Dealt[]>([]);
-  const dealt = useRef(false);
+  const dealt = useRef(Boolean(given));
   const size = Math.min(HAND_SIZE, cards.length);
   const [dealFrom, setDealFrom] = useState(0);
 
   // The hand is random, so it is dealt after hydration rather than rendered on the server.
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new round deals the same cards again.
   useEffect(() => {
+    // A hand the server dealt is already held; keep it rather than dealing over it.
+    if (given && !started.current) {
+      started.current = true;
+      nextKey.current = given.length;
+      pile.current = cards.filter((card) => !given.includes(card));
+      return;
+    }
     let seen = false;
     try {
       seen = sessionStorage.getItem(DEALT_KEY) === "1";
@@ -289,7 +303,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
       DEAL_STAGGER_MS * (count - 1) + DEAL_MS,
     );
     return () => window.clearTimeout(settle);
-  }, [cards, once, round]);
+  }, [cards, given, once, round]);
 
   // A visitor who has not turned the first card after a moment is shown how: the card is pressed
   // and lifts at one edge as if turning, and a line says what to do. Anyone who already knows
@@ -342,7 +356,12 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
     setHint(false);
     setPhase("back");
     const meaning = front.card.meaning;
-    setAnnounce(`${front.card.term}: ${typeof meaning === "string" ? meaning : i18n._(meaning)}`);
+    setAnnounce(
+      <>
+        <span lang={front.card.language}>{front.card.term}</span>:{" "}
+        {typeof meaning === "string" ? meaning : i18n._(meaning)}
+      </>,
+    );
   }, [hand, phase, i18n]);
 
   const next = useCallback(() => {
@@ -356,14 +375,30 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
     setTurned((n) => n + 1);
     if (once) setTurnedCards((list) => [...list, front.card]);
     setPhase(rest.length === 0 && !card ? "done" : "front");
-    if (rest[0]) setAnnounce(t`Next card: ${rest[0].card.term}`);
+    const next = rest[0];
+    if (next) {
+      setAnnounce(
+        <>
+          {t`Next card:`} <span lang={next.card.language}>{next.card.term}</span>
+        </>,
+      );
+    }
   }, [hand, phase, cards, once, stopAudio, t]);
 
+  const finale_ = useRef<HTMLDivElement>(null);
+  const pressed = useRef(false);
+
   const again = useCallback(() => {
+    pressed.current = true;
     setTurned(0);
     setTurnedCards([]);
     setRound((n) => n + 1);
   }, []);
+
+  // The turn button goes with the last card, so the finale takes the focus it left behind.
+  useEffect(() => {
+    if (phase === "done" && pressed.current) finale_.current?.focus({ preventScroll: true });
+  }, [phase]);
 
   const press = phase === "back" ? next : reveal;
   const behind = hand.length - 1;
@@ -390,7 +425,9 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
           />
         ))}
         {phase === "done" && finale && (
-          <div className="hand-finale">{finale(again, turnedCards)}</div>
+          <div ref={finale_} tabIndex={-1} className="hand-finale">
+            {finale(again, turnedCards)}
+          </div>
         )}
         {hand.map(({ key, card }, k) => {
           const angle = k === 0 ? 0 : behind === 1 ? 1 : (k - 1 - (behind - 1) / 2) * 1.5;
@@ -431,12 +468,15 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", finale }: Prop
         {hand.length > 0 && phase !== "done" && (
           <button
             type="button"
-            onClick={press}
+            onClick={() => {
+              pressed.current = true;
+              press();
+            }}
             aria-disabled={phase === "dealing" || undefined}
             className={buttonClass(
               "ghost",
               "sm",
-              "font-normal text-muted hoverable:hover:bg-transparent hoverable:hover:text-text-2",
+              "font-normal text-muted before:absolute before:-inset-2 before:content-[''] hoverable:hover:bg-transparent hoverable:hover:text-text-2",
             )}
           >
             {phase === "back" ? <Trans>Next card</Trans> : <Trans>Turn it over</Trans>}

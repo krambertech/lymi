@@ -1197,6 +1197,33 @@ html:has(.deck-cards[open]) {
   pointer-events: none;
 }
 
+/* The deck page's hand spreads less than the landing page's, because one deck's cards are one
+   language and a wide fan puts a term the visitor has not been asked next to the one they have.
+   A phone squares them up: at that width a fanned card bleeds off the screen. */
+.deck-hand .hand-stage {
+  --spread: 6deg;
+}
+@media (max-width: 40rem) {
+  .deck-hand .hand-stage {
+    height: calc(var(--ch) + var(--cw) * 0.24);
+  }
+  .deck-hand .hand-card {
+    transform-origin: 50% 100%;
+  }
+  .deck-hand .hand-card[data-place="deck"] {
+    transform: translateX(calc(var(--cw) * 0.3)) rotate(4deg) scale(0.96);
+  }
+  .deck-hand .hand-card[data-place="front"] {
+    transform: none;
+  }
+  .deck-hand .hand-card[data-place="fan"] {
+    transform: translateY(calc(var(--slot) * var(--cw) * 0.05)) scale(calc(1 - var(--slot) * 0.05));
+  }
+  .deck-hand .hand-card[data-place="gone"] {
+    transform: translate(calc(var(--cw) * -0.3), calc(var(--cw) * 0.04)) rotate(-5deg) scale(0.96);
+  }
+}
+
 /* Lesson notes in a hand. Caveat covers Latin and Cyrillic; a Japanese notebook would need a face of its own. */
 .notes-hand {
   font-family: "Caveat", cursive;

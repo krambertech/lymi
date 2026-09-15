@@ -1,6 +1,6 @@
 import { join } from "node:path";
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 /** A real export from Anki 26.09, made by `fixtures/generate.py`: 10 cards, 3 decks, 11 reviews. */
 const ANKI_FILE = join(process.cwd(), "apps/web/src/server/imports/anki/fixtures/current.apkg");

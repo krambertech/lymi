@@ -1,5 +1,5 @@
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 /** A card at every field limit stays readable and gradable on a small phone and a wide desktop. */
 

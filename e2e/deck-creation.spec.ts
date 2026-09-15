@@ -1,5 +1,5 @@
-import { expect, type Locator, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Locator, type Page, test } from "./test";
 
 function sheet(page: Page, title: string): Locator {
   return page.locator('[role="dialog"], dialog').filter({

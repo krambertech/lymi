@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, test } from "./test";
 
 test("a learner can switch the app language and keep it after reload", async ({
   page,

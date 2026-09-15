@@ -1,5 +1,5 @@
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 /** The end of a review: what it says and offers depends on where the day stands. PRODUCT.md, "Daily Review Goal". */
 

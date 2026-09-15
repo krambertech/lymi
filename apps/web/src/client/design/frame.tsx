@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Moon, Pause, Play, Sun } from "lucide-react";
+import { Activity, Minus, Moon, Sun } from "lucide-react";
 import { MotionConfig } from "motion/react";
 import {
   createContext,
@@ -281,7 +281,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
             pressed={reduced}
             onPressedChange={(next) => setPickedReduced(next === systemReduced ? null : next)}
           >
-            {reduced ? <Pause /> : <Play />}
+            {reduced ? <Minus /> : <Activity />}
           </CanvasSwitch>
           <CanvasSwitch
             label="Dark theme"

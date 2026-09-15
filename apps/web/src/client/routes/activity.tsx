@@ -1,7 +1,9 @@
 import { useLingui } from "@lingui/react/macro";
-import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDocumentTitle } from "../lib/document-title";
-import { ComingSoonView } from "../views/coming-soon-view";
+import { importsQuery } from "../lib/queries";
+import { ActivityView } from "../views/activity-view";
 
 export const Route = createFileRoute("/activity")({
   component: ActivityRoute,
@@ -10,10 +12,23 @@ export const Route = createFileRoute("/activity")({
 function ActivityRoute() {
   const { t } = useLingui();
   useDocumentTitle(t`Activity`);
+  const imports = useQuery(importsQuery);
   return (
-    <ComingSoonView
-      title={t`Activity`}
-      body={t`Every change a connected app, an API key or the AI made, by day.`}
+    <ActivityView
+      imports={imports.data}
+      error={imports.isError}
+      onRetry={() => void imports.refetch()}
+      retrying={imports.isFetching}
+      importLink={(item, className, children) => (
+        <Link to="/import/$importId" params={{ importId: item.id }} className={className}>
+          {children}
+        </Link>
+      )}
+      startLink={(className, children) => (
+        <Link to="/import" className={className}>
+          {children}
+        </Link>
+      )}
     />
   );
 }

@@ -39,6 +39,7 @@ function Today() {
       connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
+      onImport={add.openImport}
       onSignOut={leave.signOut}
       signingOut={leave.busy}
     />

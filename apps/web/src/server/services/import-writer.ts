@@ -245,8 +245,24 @@ export async function previewImport<Note>(
   const perDeck = new Map<string, number>();
   const tags = new Set<string>();
   const seen = new Map<string, string>();
+  const samples: ImportPreviewOut["samples"] = {};
   for await (const { cards, skipped } of importedCards(work)) {
     counts.skipped += skipped;
+    for (const card of cards) {
+      const list = samples[card.noteTypeKey] ?? [];
+      samples[card.noteTypeKey] = list;
+      if (list.length >= 3) continue;
+      list.push({
+        term: card.fields.term,
+        meaning: card.fields.meaning ?? null,
+        pronunciation: card.fields.pronunciation ?? null,
+        example: card.fields.example ?? null,
+        notes: card.fields.notes ?? null,
+        tags: card.tags,
+        modes: card.modes,
+        picture: Boolean(card.picture),
+      });
+    }
     const classified = classify(
       cards,
       await lookup(ctx, cards),
@@ -273,6 +289,7 @@ export async function previewImport<Note>(
   return {
     ...counts,
     decks,
+    samples,
     tags: tags.size,
     audio: work.summary.audio,
     unsupported: work.summary.unsupported,

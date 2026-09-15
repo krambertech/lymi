@@ -1,6 +1,5 @@
 import { z } from "zod";
-import type { Rating, ReviewModeKey } from "./types";
-import { LanguageTag } from "./types";
+import { LanguageTag, type Rating, ReviewModeKey } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
 export const ImportSource = z.enum(["anki"]);
@@ -70,6 +69,8 @@ export type ImportedCard = {
   externalId: string;
   /** The adapter's key for the deck, as listed in the preview. */
   deckKey: string;
+  /** The adapter's key for the kind of note it came from, as listed in the preview. */
+  noteTypeKey: string;
   fields: ImportedFields;
   tags: string[];
   /** Text modes the source asked, in the order the source introduced them. */
@@ -449,6 +450,23 @@ export const ImportPreviewOut = ImportCounts.extend({
         .meta({ description: "The deck an earlier import made, which new cards join" }),
     }),
   ),
+  samples: z
+    .record(
+      z.string(),
+      z.array(
+        z.object({
+          term: z.string(),
+          meaning: z.string().nullable(),
+          pronunciation: z.string().nullable(),
+          example: z.string().nullable(),
+          notes: z.string().nullable(),
+          tags: z.array(z.string()),
+          modes: z.array(ReviewModeKey),
+          picture: z.boolean(),
+        }),
+      ),
+    )
+    .meta({ description: "Up to three cards per note type key, as they would arrive" }),
   tags: z.number().int().meta({ description: "Distinct tags on the new cards" }),
   audio: z.number().int(),
   unsupported: z.number().int(),

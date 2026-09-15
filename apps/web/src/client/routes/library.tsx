@@ -42,6 +42,7 @@ function DeckList() {
       decks={decks.data}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
+      onImport={add.openImport}
       name={me.data?.name}
       email={me.data?.email}
       docsUrl={publicSiteUrl("/docs")}

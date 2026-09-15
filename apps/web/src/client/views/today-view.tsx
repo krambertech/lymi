@@ -40,6 +40,7 @@ export interface TodayProps {
   connected?: boolean | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
+  onImport?: (() => void) | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
   static?: StaticNav;
@@ -67,6 +68,7 @@ export function TodayView({
   connected,
   onAdd,
   onCreateDeck,
+  onImport,
   onSignOut,
   signingOut,
   static: st,
@@ -90,7 +92,12 @@ export function TodayView({
         actions={
           <>
             {streakButton}
-            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+            <AddMenu
+              onAddCard={onAdd ?? (() => {})}
+              onCreateDeck={onCreateDeck}
+              onImport={onImport}
+              align="end"
+            />
             <LearnerMenu
               variant="phone"
               name={name}

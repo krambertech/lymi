@@ -106,3 +106,24 @@ export const connectedAppsQuery = queryOptions({
   queryFn: api.connectedApps,
   staleTime: 0,
 });
+
+/** Imports newest first, for Activity. */
+export const importsQuery = queryOptions({
+  queryKey: ["imports"],
+  queryFn: api.imports,
+  staleTime: 0,
+});
+
+/** Statuses the server is still working through, so the screen keeps asking. */
+const WORKING = new Set(["inspecting", "importing"]);
+
+/** One import, polled while the server reads or writes it. */
+export const importQuery = (id: string) =>
+  queryOptions({
+    queryKey: ["imports", id],
+    queryFn: () => api.import(id),
+    staleTime: 0,
+    refetchInterval: (query) => (WORKING.has(query.state.data?.status ?? "") ? 1500 : false),
+    // A file name and a preview are the learner's own, and there is no reason to keep them offline.
+    meta: { persist: false },
+  });

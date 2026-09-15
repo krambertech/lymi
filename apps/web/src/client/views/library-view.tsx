@@ -1,14 +1,15 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "@tanstack/react-router";
-import { ChevronRight, Plus } from "lucide-react";
+import { ChevronRight, FileUp, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { AddMenu } from "../components/add-menu";
 import { Button } from "../components/button";
 import { DeckCard } from "../components/deck-card";
 import { LearnerMenu } from "../components/learner-menu";
+import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
-import { StartPanel } from "../components/start-panel";
+import { StartPanel, StartPanelSection } from "../components/start-panel";
 import type { DeckSummary } from "../lib/api";
 import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
@@ -19,6 +20,7 @@ export interface LibraryProps {
   archivedCount?: number | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
+  onImport?: (() => void) | undefined;
   /** The learner, for the avatar that opens their menu on the phone. */
   name?: string | undefined;
   email?: string | undefined;
@@ -41,6 +43,7 @@ export function LibraryView({
   archivedCount,
   onAdd,
   onCreateDeck,
+  onImport,
   name,
   email,
   unseen,
@@ -80,7 +83,12 @@ export function LibraryView({
         actions={
           <>
             {streakButton}
-            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
+            <AddMenu
+              onAddCard={onAdd ?? (() => {})}
+              onCreateDeck={onCreateDeck}
+              onImport={onImport}
+              align="end"
+            />
             <LearnerMenu
               variant="phone"
               name={name}
@@ -126,7 +134,33 @@ export function LibraryView({
               <Trans>New deck</Trans>
             </Button>
           }
-        />
+        >
+          {onImport && (
+            <StartPanelSection>
+              <button
+                type="button"
+                onClick={onImport}
+                className="group -mx-2 flex min-h-16 w-[calc(100%+1rem)] items-center gap-4 rounded-lg px-2 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover"
+              >
+                <span
+                  className="edge-inset grid size-10 shrink-0 place-items-center rounded-full text-text-2 [&_svg]:size-[18px]"
+                  aria-hidden="true"
+                >
+                  <FileUp />
+                </span>
+                <span className="grid min-w-0 flex-1 gap-0.5">
+                  <span className="text-md font-medium">
+                    <Trans>Import from Anki</Trans>
+                  </span>
+                  <span className="text-sm text-muted">
+                    <Trans>Bring your decks with their pictures and review history.</Trans>
+                  </span>
+                </span>
+                <Go />
+              </button>
+            </StartPanelSection>
+          )}
+        </StartPanel>
       )}
 
       {decks && decks.length > 0 && (

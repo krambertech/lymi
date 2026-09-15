@@ -12,6 +12,7 @@ const PRODUCT_PATHS = [
   "/activity",
   "/archived",
   "/insights",
+  "/import",
   "/login",
   "/consent",
   // The live design system. Its route redirects home outside local development.
@@ -40,7 +41,7 @@ export function isJoinPagePath(pathname: string): boolean {
 
 /** Routes a signed-out learner may safely resume after authentication. */
 function isProtectedProductPath(pathname: string): boolean {
-  return PRODUCT_PATHS.slice(0, 9).some(
+  return PRODUCT_PATHS.slice(0, 10).some(
     (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
 }

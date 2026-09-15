@@ -201,6 +201,7 @@ function Shell() {
               docsUrl={publicSiteUrl("/docs")}
               onAdd={() => add.openCard()}
               onCreateDeck={add.openDeck}
+              onImport={add.openImport}
               onSignOut={leave.signOut}
               signingOut={leave.busy}
               streak={me.isSuccess ? <Streak variant="rail" /> : undefined}

@@ -423,6 +423,7 @@ export const anki: SourceAdapter<AnkiNote> = {
         {
           externalId,
           deckKey: (cards[0] as AnkiCard).deck,
+          noteTypeKey: type.key,
           fields: fitted.fields,
           tags: tags.tags,
           modes: [...progress.keys()],

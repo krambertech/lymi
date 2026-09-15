@@ -1,5 +1,5 @@
 import { I18nProvider } from "@lingui/react";
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Plural, Trans } from "@lingui/react/macro";
 import { type CSSProperties, useMemo } from "react";
 import type { DeckCard } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
@@ -54,13 +54,14 @@ export default function DeckStack({ locale, cards, termLanguage, total, addUrl }
 }
 
 function Hand({ hand, total, addUrl }: { hand: HandCard[]; total: number; addUrl: string }) {
-  const { t } = useLingui();
+  // What the deck still holds after this hand, which for a deck of five or fewer is nothing.
+  const left = Math.max(total - hand.length, 0);
   return (
     <div className="deck-hand">
       <HandOfCards
         cards={hand}
         dealt={hand}
-        finale={(again, turned) => (
+        finale={(again) => (
           <div className="deck-finale">
             <div className="deck-finale-light">
               <span aria-hidden="true" className="deck-finale-pool">
@@ -97,30 +98,15 @@ function Hand({ hand, total, addUrl }: { hand: HandCard[]; total: number; addUrl
               style={delay(800)}
             >
               <Plural
-                value={Math.max(total - turned.length, 0)}
+                value={left}
+                _0="That’s the whole deck. Add it, and Lymi chooses when to bring each card back."
                 one="One more card is waiting. Add the deck, and Lymi chooses when to bring each one back."
                 other="Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back."
               />
             </p>
-            <ul
-              aria-label={t`Cards you turned`}
-              className="mt-5 flex flex-wrap justify-center gap-x-3 gap-y-1 text-md font-medium text-text"
-            >
-              {turned.map((card, index) => (
-                <li
-                  // biome-ignore lint/suspicious/noArrayIndexKey: the order they were turned; a term can repeat.
-                  key={index}
-                  lang={card.language}
-                  className="deck-finale-rise"
-                  style={delay(960 + index * 70)}
-                >
-                  {card.term}
-                </li>
-              ))}
-            </ul>
             <div
               className="deck-finale-rise mt-8 flex flex-wrap justify-center gap-2"
-              style={delay(1000 + turned.length * 70)}
+              style={delay(960)}
             >
               <a href={addUrl} className={buttonClass("primary", "lg")}>
                 <Trans>Add to Lymi</Trans>

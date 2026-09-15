@@ -104,9 +104,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
       await stack.getByRole("button", { name: "Next card" }).click();
     }
     await expect(stack.getByText("Keep going in Lymi", { exact: true })).toBeVisible();
-    await expect(
-      stack.getByRole("list", { name: "Cards you turned" }).getByRole("listitem"),
-    ).toHaveCount(meanings.length);
+    await expect(stack.getByText("That’s the whole deck.", { exact: false })).toBeVisible();
     await expect(stack.getByRole("link", { name: "Add to Lymi" })).toHaveAttribute("href", addUrl);
     await stack.getByRole("button", { name: "Try again" }).click();
     await expect(stack.getByRole("button", { name: "Turn it over" })).toBeVisible();

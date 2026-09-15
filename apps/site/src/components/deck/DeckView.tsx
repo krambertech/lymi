@@ -7,6 +7,7 @@ import { pageI18n } from "../../lib/i18n";
 import { productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { AppTile } from "../Logo";
 import { SiteFooter } from "../landing/SiteFooter";
 
 interface LocaleProps {
@@ -41,12 +42,16 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   const checked = deck.reviewedAt ? date(deck.reviewedAt) : null;
   return (
     <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md">
-      <span
-        aria-hidden="true"
-        className="grid size-7 shrink-0 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
-      >
-        {publisher.trim().charAt(0).toLocaleUpperCase()}
-      </span>
+      {publisher.trim().toLowerCase() === "lymi" ? (
+        <AppTile size={28} />
+      ) : (
+        <span
+          aria-hidden="true"
+          className="grid size-7 shrink-0 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
+        >
+          {publisher.trim().charAt(0).toLocaleUpperCase()}
+        </span>
+      )}
       <span className="font-medium text-text">
         <Trans>By {publisher}</Trans>
       </span>
@@ -81,10 +86,10 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   );
 }
 
-function SignInNote() {
+function BetaNote() {
   return (
     <p className="text-sm text-muted">
-      <Trans>Free during the beta. You’ll sign in with Google to add it.</Trans>
+      <Trans>Free during the beta.</Trans>
     </p>
   );
 }
@@ -199,7 +204,7 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
           </a>
         </div>
         <div className="mt-3">
-          <SignInNote />
+          <BetaNote />
         </div>
         {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
       </div>

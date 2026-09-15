@@ -47,10 +47,13 @@
     // Avatars now, card images later. Never public: images leave only through authenticated routes.
     { "binding": "PRIVATE_IMAGES", "bucket_name": "lymi-private-images" },
     // Import uploads and their stored notes, deleted when an import finishes, fails or expires.
-    { "binding": "IMPORTS", "bucket_name": "lymi-imports" }
+    { "binding": "IMPORTS", "bucket_name": "lymi-imports" },
+    // Export files, downloadable through an authenticated route and deleted a day after they are written.
+    { "binding": "EXPORTS", "bucket_name": "lymi-exports" }
   ],
   "workflows": [
-    { "name": "lymi-import", "binding": "IMPORT_WORKFLOW", "class_name": "ImportWorkflow" }
+    { "name": "lymi-import", "binding": "IMPORT_WORKFLOW", "class_name": "ImportWorkflow" },
+    { "name": "lymi-export", "binding": "EXPORT_WORKFLOW", "class_name": "ExportWorkflow" }
   ],
   // Decodes, resizes and re-encodes uploads; WebP output carries no metadata.
   "images": { "binding": "IMAGES" },

@@ -52,7 +52,7 @@ export const menu: Group = {
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Download />
-                      Export as CSV
+                      Export
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive">
@@ -118,7 +118,7 @@ export const overlays: Group = {
                   <IconButton label="Rename" size="sm">
                     <Pencil />
                   </IconButton>
-                  <IconButton label="Export as CSV" size="sm">
+                  <IconButton label="Export" size="sm">
                     <Download />
                   </IconButton>
                   <IconButton label="Archive deck" size="sm">

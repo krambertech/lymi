@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { LanguageTag, type Rating, ReviewModeKey } from "./types";
+import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
-export const ImportSource = z.enum(["anki", "mochi"]);
+export const ImportSource = z.enum(["anki", "mochi", "lymi"]);
 export type ImportSource = z.infer<typeof ImportSource>;
 
 /**
@@ -73,7 +73,7 @@ export type ImportedCard = {
   noteTypeKey: string;
   fields: ImportedFields;
   tags: string[];
-  /** Text modes the source asked, in the order the source introduced them. */
+  /** Modes the source asked, in the order the source introduced them. */
   modes: ReviewModeKey[];
   /** A suspended card arrives archived. */
   archived: boolean;
@@ -82,6 +82,14 @@ export type ImportedCard = {
   progress: ImportedProgress[];
   /** Fields cut or moved to fit Lymi's limits, for the preview's count. */
   shortened: boolean;
+  /** The card's own language, where the source records one apart from its deck's. */
+  language?: string | null | undefined;
+  /** Where the meaning and example came from, from a Lymi zip; other sources' text is manual. */
+  fieldSources?: { meaning: FieldSource | null; example: FieldSource | null } | undefined;
+  /** Where the learner found the word, such as "Lesson 14". */
+  origin?: string | undefined;
+  /** What the picture shows, so picture modes are asked from the start. */
+  pictureDescription?: string | undefined;
 };
 
 /** The longest text each imported field keeps, from `CardInput` and `DeckInput`. */
@@ -322,12 +330,13 @@ export function fieldsFromRoles(
   return fields;
 }
 
-/** The file names an import accepts: Anki's packages and Mochi's export. */
-export const IMPORT_FILE_NAME = /\.(apkg|colpkg|mochi)$/i;
+/** The file names an import accepts: Anki's packages, Mochi's export and Lymi's own zip. */
+export const IMPORT_FILE_NAME = /\.(apkg|colpkg|mochi|zip)$/i;
 
 /** The source a file name suggests before the file is read; inspection decides. */
 export function sourceOfFileName(fileName: string): ImportSource {
-  return /\.mochi$/i.test(fileName) ? "mochi" : "anki";
+  if (/\.mochi$/i.test(fileName)) return "mochi";
+  return /\.zip$/i.test(fileName) ? "lymi" : "anki";
 }
 
 /** The largest file an import accepts. A collection past the database limit is refused on inspection. */
@@ -342,7 +351,10 @@ export const ImportStartInput = z.object({
     .trim()
     .min(1)
     .max(255)
-    .regex(IMPORT_FILE_NAME, "Choose the .apkg, .colpkg or .mochi file Anki or Mochi exports."),
+    .regex(
+      IMPORT_FILE_NAME,
+      "Choose the .apkg, .colpkg, .mochi or .zip file Anki, Mochi or Lymi exports.",
+    ),
   byteSize: z
     .number()
     .int()

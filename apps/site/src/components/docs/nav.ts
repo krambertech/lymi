@@ -11,6 +11,7 @@ export type DocPath =
   | "/docs/cards"
   | "/docs/import-from-anki"
   | "/docs/import-from-mochi"
+  | "/docs/export"
   | "/docs/scheduling"
   | "/docs/recipes"
   | "/docs/api"
@@ -93,6 +94,13 @@ export const PAGES: DocPage[] = [
     nav: "Import from Mochi",
     title: "Import from Mochi",
     blurb: "Bring your Mochi decks across with their pictures, tags and review history.",
+    section: "Guides",
+  },
+  {
+    to: "/docs/export",
+    nav: "Export",
+    title: "Export your decks",
+    blurb: "Take a deck or your library out as an Anki package or a Lymi file.",
     section: "Guides",
   },
   {

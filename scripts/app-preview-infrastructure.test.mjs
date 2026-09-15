@@ -27,7 +27,7 @@ test("names every resource from a validated pull request number", () => {
     databaseName: "lymi-app-pr-105-db",
     namespaceTitle: "lymi-app-pr-105-sessions",
     bucketName: "lymi-app-pr-105-audio",
-    workflowName: "lymi-app-pr-105-import",
+    workflowNames: ["lymi-app-pr-105-import", "lymi-app-pr-105-export"],
     alias: "preview",
   });
   assert.throws(() => previewNames("../production"), /positive integer/);
@@ -52,6 +52,7 @@ test("rewrites every production boundary to isolated preview resources", () => {
       d1_databases: [{ binding: "DB", migrations_dir: "../../migrations" }],
       workflows: [
         { name: "lymi-import", binding: "IMPORT_WORKFLOW", class_name: "ImportWorkflow" },
+        { name: "lymi-export", binding: "EXPORT_WORKFLOW", class_name: "ExportWorkflow" },
       ],
     },
     {
@@ -72,10 +73,11 @@ test("rewrites every production boundary to isolated preview resources", () => {
   assert.equal(config.r2_buckets[0].bucket_name, names.bucketName);
   assert.deepEqual(
     config.r2_buckets.map((bucket) => bucket.binding),
-    ["AUDIO", "IMPORTS"],
+    ["AUDIO", "IMPORTS", "EXPORTS"],
   );
   assert.deepEqual(config.workflows, [
     { name: "lymi-app-pr-105-import", binding: "IMPORT_WORKFLOW", class_name: "ImportWorkflow" },
+    { name: "lymi-app-pr-105-export", binding: "EXPORT_WORKFLOW", class_name: "ExportWorkflow" },
   ]);
 });
 
@@ -157,6 +159,7 @@ test("cleanup deletes only the exact pull request resources", async () => {
   assert.deepEqual(deleted, [
     `${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`,
     `${apiRoot()}/workflows/lymi-app-pr-105-import`,
+    `${apiRoot()}/workflows/lymi-app-pr-105-export`,
     `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio`,
     `${apiRoot()}/storage/kv/namespaces/kv-id`,
     `${apiRoot()}/d1/database/db-id`,
@@ -324,6 +327,7 @@ test("cleanup succeeds for a pull request that never deployed a preview", async 
   assert.deepEqual(deleted, [
     `${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`,
     `${apiRoot()}/workflows/lymi-app-pr-105-import`,
+    `${apiRoot()}/workflows/lymi-app-pr-105-export`,
   ]);
 });
 

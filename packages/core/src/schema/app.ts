@@ -497,7 +497,7 @@ export const imports = sqliteTable(
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    source: text("source", { enum: ["anki", "mochi"] }).notNull(),
+    source: text("source", { enum: ["anki", "mochi", "lymi"] }).notNull(),
     /** The learner's file name. Private: never logged, audited or put in an error. */
     fileName: text("file_name").notNull(),
     byteSize: integer("byte_size").notNull(),
@@ -541,6 +541,43 @@ export const imports = sqliteTable(
   (t) => [index("imports_user_idx").on(t.userId, t.createdAt)],
 );
 
+/**
+ * One file written for the learner to take out: a deck or the whole library. The file lives in
+ * R2 as numbered segments that the download route joins, and is deleted when its window ends.
+ */
+export const exportFiles = sqliteTable(
+  "exports",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    format: text("format", { enum: ["lymi", "anki"] }).notNull(),
+    /** The deck exported, or null for the library. Not a foreign key, so the row outlives the deck. */
+    deckId: text("deck_id"),
+    /** The name the file downloads as, from the deck's name. Never logged. */
+    fileName: text("file_name").notNull(),
+    status: text("status", { enum: ["exporting", "done", "failed", "expired"] })
+      .notNull()
+      .default("exporting"),
+    failure: text("failure", { enum: ["too_large", "internal"] }),
+    /** R2 key prefix of the file's segments; null once they are deleted. */
+    objectKey: text("object_key"),
+    /** How many segments make up the file, in order. */
+    segments: integer("segments").notNull().default(0),
+    byteSize: integer("byte_size"),
+    counts: text("counts", { mode: "json" }).$type<unknown>(),
+    createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] }).notNull(),
+    finishedAt: integer("finished_at", { mode: "timestamp_ms" }),
+    expiresAt: integer("expires_at", { mode: "timestamp_ms" }),
+    ...timestamps,
+  },
+  (t) => [
+    index("exports_user_idx").on(t.userId, t.createdAt),
+    index("exports_status_idx").on(t.status, t.updatedAt),
+  ],
+);
+
 /** Every write, by whoever made it. This is what makes API and MCP changes visible in the product. */
 export const auditLog = sqliteTable(
   "audit_log",
@@ -578,6 +615,7 @@ export type ReviewDay = typeof reviewDays.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type AuditEntry = typeof auditLog.$inferSelect;
 export type Import = typeof imports.$inferSelect;
+export type Export = typeof exportFiles.$inferSelect;
 
 /**
  * Someone who asked to be told when Lymi opens up. Deliberately unconnected to `user`:

@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
+import { ExportSheet } from "../components/export-sheet";
 import {
   MoveToSectionDialog,
   SectionNameDialog,
@@ -27,7 +28,7 @@ import { shortQuote } from "../lib/short-quote";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
-import { DeckDetailView } from "../views/deck-detail-view";
+import { DeckDetailView, exportCsv } from "../views/deck-detail-view";
 import { describeEvent } from "../views/word-view";
 
 export const Route = createFileRoute("/library/$deckId")({
@@ -62,6 +63,7 @@ function DeckPage() {
   const series = useQuery({ ...seriesQuery, enabled: isOwner });
   const seriesActions = useSeriesActions();
   const [movingToSeries, setMovingToSeries] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const sections = useQuery(sectionsQuery(deckId));
   const sectionActions = useSectionActions(deckId);
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
@@ -173,6 +175,7 @@ function DeckPage() {
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
         onArchiveDeck={() => archiveDeck.mutate()}
+        onExport={() => setExporting(true)}
         onMoveToSeries={isOwner ? () => setMovingToSeries(true) : undefined}
         seriesName={series.data?.find((s) => s.id === deck?.seriesId)?.name}
         openCardId={openCardId ?? null}
@@ -323,6 +326,19 @@ function DeckPage() {
           setStartingEarly(null);
         }}
       />
+      {deck && (
+        <ExportSheet
+          open={exporting}
+          onOpenChange={setExporting}
+          scope={{
+            kind: "deck",
+            deckId: deck.id,
+            deckName: deck.name,
+            onCsv: () => cards.data && exportCsv(deck.name, cards.data),
+            csvLeavesPictures: cards.data?.some((row) => row.card.image) ?? false,
+          }}
+        />
+      )}
       {deck && isOwner && (
         <MoveToSeriesDialog
           open={movingToSeries}

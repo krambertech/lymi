@@ -1,4 +1,4 @@
-import type { FieldRole, ImportedCard, ImportSource } from "@lymi/core";
+import type { FieldRole, ImportedCard, ImportSource, ReviewModeKey } from "@lymi/core";
 import type { RandomAccess } from "./files";
 
 /** A deck the file holds cards in, as the preview lists it. */
@@ -7,6 +7,10 @@ export type SourceDeck = {
   name: string;
   description: string | null;
   cards: number;
+  /** The source had the deck archived, so it arrives archived with its cards. */
+  archived?: boolean | undefined;
+  /** How the source asked the deck's own cards, where it records that; otherwise its cards decide. */
+  reviewModes?: ReviewModeKey[] | undefined;
 };
 
 /** A kind of note the file holds, with the fields the learner maps in the preview. */
@@ -34,6 +38,8 @@ export type SourceSummary = {
   audio: number;
   /** Notes of a kind Lymi cannot ask, such as image occlusion, which are left out. */
   unsupported: number;
+  /** Each deck's language, when the file records it; otherwise the server guesses from names. */
+  languages?: Record<string, string | null> | undefined;
 };
 
 /** What the learner decided in the preview. */

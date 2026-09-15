@@ -118,4 +118,6 @@ Keep this path real. Use accessible roles and labels, do not mock Lymi's own API
 
 `e2e/import-from-mochi.spec.ts` owns the Mochi page: the fixture beside the Mochi adapter uploads from Import in Settings, the preview counts cards with no side break, and the import lands in Library and Activity. Re-import, archive and today's goal for Mochi are covered by the service tests.
 
+`e2e/export.spec.ts` owns exporting: a deck's menu and Export library in Settings open the export sheet, the Workflow writes the file, the sheet offers the download, the download route returns the zip, and Activity lists the export. Round trips, the Anki collection, a member's history, expiry and audit are service tests in `services/exports.test.ts`; the SQLite writer is checked against `node:sqlite`.
+
 `e2e/origin-boundary.spec.ts` proves that each local Worker exposes only its own routes, metadata and beta boundary, and documents the one-time stale-site-data recovery. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.

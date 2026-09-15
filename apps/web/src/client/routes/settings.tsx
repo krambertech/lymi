@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AccountSection } from "../components/account-section";
 import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
+import { ExportSheet } from "../components/export-sheet";
 import { NotificationsSection } from "../components/notifications-section";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
@@ -47,6 +48,7 @@ function SettingsRoute() {
     onSuccess: (value) => qc.setQueryData(settingsQuery.queryKey, value),
   });
   const [theme, setThemeState] = useState<ThemeChoice>(getTheme());
+  const [exporting, setExporting] = useState(false);
   return (
     <SettingsView
       me={me.data}
@@ -55,8 +57,9 @@ function SettingsRoute() {
       onLanguage={language.mutate}
       languageError={language.isError}
       account={<AccountSection name={me.data?.name} email={me.data?.email} />}
+      onExportLibrary={() => setExporting(true)}
       importLink={(source, className, children) => (
-        <Link to={source === "mochi" ? "/import/mochi" : "/import/anki"} className={className}>
+        <Link to={`/import/${source}`} className={className}>
           {children}
         </Link>
       )}
@@ -69,6 +72,7 @@ function SettingsRoute() {
       <NotificationsSection />
       <ConnectedAppsSection />
       <ApiKeysSection />
+      <ExportSheet open={exporting} onOpenChange={setExporting} scope={{ kind: "library" }} />
     </SettingsView>
   );
 }

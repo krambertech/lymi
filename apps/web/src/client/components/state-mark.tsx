@@ -17,19 +17,41 @@ const CircleHalf = createLucideIcon("circle-half", [
 
 export type StateKey = "new" | "learning" | "known";
 
-/** Each card state's one colour and one icon, everywhere a state shows; DESIGN.md, "Colour". */
+/**
+ * Each card state's one colour and one icon, everywhere a state shows; DESIGN.md, "Colour". `label`
+ * names one card's state and `groupLabel` a set of cards in it, which Ukrainian and Russian inflect.
+ */
 export const stateMarks = {
-  new: { label: msg`New`, Icon: CircleDashed, bg: "bg-state-new", text: "text-state-new" },
+  new: {
+    label: msg`New`,
+    groupLabel: msg({ message: "New", context: "cards in this state" }),
+    Icon: CircleDashed,
+    bg: "bg-state-new",
+    text: "text-state-new",
+  },
   learning: {
     label: msg`Learning`,
+    groupLabel: msg({ message: "Learning", context: "cards in this state" }),
     Icon: CircleHalf,
     bg: "bg-state-learning",
     text: "text-state-learning",
   },
-  known: { label: msg`Known`, Icon: CircleCheck, bg: "bg-state-known", text: "text-state-known" },
+  known: {
+    label: msg`Known`,
+    groupLabel: msg({ message: "Known", context: "cards in this state" }),
+    Icon: CircleCheck,
+    bg: "bg-state-known",
+    text: "text-state-known",
+  },
 } as const satisfies Record<
   StateKey,
-  { label: MessageDescriptor; Icon: LucideIcon; bg: string; text: string }
+  {
+    label: MessageDescriptor;
+    groupLabel: MessageDescriptor;
+    Icon: LucideIcon;
+    bg: string;
+    text: string;
+  }
 >;
 
 /** FSRS 0 New, 1 Learning, 2 Review, 3 Relearning, as the three states a learner sees. */

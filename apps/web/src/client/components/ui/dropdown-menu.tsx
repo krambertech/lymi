@@ -1,6 +1,7 @@
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { useRender } from "@base-ui/react/use-render";
 import { cn } from "cn";
+import { Check } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
@@ -12,8 +13,8 @@ import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
  * drawer with the same rows and menu semantics on a touch device. Every part below renders both
  * shapes, so a call site never asks which machine it is on. ADR 0017.
  *
- * Checkbox, radio and submenu parts are left out until a screen needs one: each must bring its
- * drawer shape and its tests with it.
+ * A submenu part is left out until a screen needs one: it must bring its drawer shape and its tests
+ * with it.
  */
 
 type Shape = "desktop" | "touch";
@@ -29,7 +30,7 @@ function useDropdownMenu(part: string) {
   return context;
 }
 
-const ITEM = '[role="menuitem"]';
+const ITEM = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
 const itemClassName =
   "group/dropdown-menu-item relative flex h-11 w-full cursor-default items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-base text-text outline-none select-none transition-colors md:h-10 focus-visible:bg-hover data-highlighted:bg-hover data-inset:ps-9 data-[variant=destructive]:text-danger data-disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:text-muted data-[variant=destructive]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4";
@@ -120,7 +121,8 @@ function AnchoredContent({
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
-        className="isolate z-(--z-dropdown) outline-none"
+        // A popup, not a dropdown layer: a menu can open from inside a sheet, such as a card's options.
+        className="isolate z-(--z-popup) outline-none"
         align={align}
         side={side}
         sideOffset={sideOffset}
@@ -337,6 +339,148 @@ function DrawerMenuItem({
   });
 }
 
+interface CheckboxItemProps {
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
+  disabled?: boolean | undefined;
+  className?: string | undefined;
+  children: React.ReactNode;
+}
+
+/** A tick in the start slot every row keeps, so checked and unchecked rows line up. */
+function ItemCheck({ checked }: { checked: boolean }) {
+  return (
+    <span className="pointer-events-none absolute start-2.5 flex size-4 items-center justify-center">
+      {checked && <Check className="text-text!" strokeWidth={2.5} aria-hidden="true" />}
+    </span>
+  );
+}
+
+/** A row that turns something on or off and leaves the menu open, so several can be chosen. */
+function DropdownMenuCheckboxItem(props: CheckboxItemProps) {
+  const { shape } = useDropdownMenu("DropdownMenuCheckboxItem");
+  const { checked, onCheckedChange, disabled, className, children } = props;
+  if (shape === "desktop") {
+    return (
+      <MenuPrimitive.CheckboxItem
+        data-slot="dropdown-menu-checkbox-item"
+        checked={checked}
+        onCheckedChange={(next) => onCheckedChange(next)}
+        disabled={disabled}
+        closeOnClick={false}
+        className={cn(itemClassName, "ps-9", className)}
+      >
+        <ItemCheck checked={checked} />
+        {children}
+      </MenuPrimitive.CheckboxItem>
+    );
+  }
+  return (
+    <button
+      type="button"
+      role="menuitemcheckbox"
+      aria-checked={checked}
+      tabIndex={-1}
+      data-slot="dropdown-menu-checkbox-item"
+      aria-disabled={disabled || undefined}
+      data-disabled={disabled ? "" : undefined}
+      className={cn(itemClassName, touchItemClassName, "ps-9", className)}
+      onClick={() => {
+        if (!disabled) onCheckedChange(!checked);
+      }}
+    >
+      <ItemCheck checked={checked} />
+      {children}
+    </button>
+  );
+}
+
+const RadioGroupContext = React.createContext<{
+  value: string;
+  onValueChange: (value: string) => void;
+} | null>(null);
+
+function DropdownMenuRadioGroup({
+  value,
+  onValueChange,
+  children,
+}: {
+  value: string;
+  onValueChange: (value: string) => void;
+  children: React.ReactNode;
+}) {
+  const { shape } = useDropdownMenu("DropdownMenuRadioGroup");
+  const context = React.useMemo(() => ({ value, onValueChange }), [value, onValueChange]);
+  return (
+    <RadioGroupContext.Provider value={context}>
+      {shape === "desktop" ? (
+        <MenuPrimitive.RadioGroup
+          data-slot="dropdown-menu-radio-group"
+          value={value}
+          onValueChange={(next: string) => onValueChange(next)}
+        >
+          {children}
+        </MenuPrimitive.RadioGroup>
+      ) : (
+        // biome-ignore lint/a11y/useSemanticElements: a group of menu items, which a fieldset is not
+        <div role="group" data-slot="dropdown-menu-radio-group">
+          {children}
+        </div>
+      )}
+    </RadioGroupContext.Provider>
+  );
+}
+
+/** One of a set. Choosing it closes the menu, unless the set sits among other choices. */
+function DropdownMenuRadioItem({
+  value,
+  closeOnClick = true,
+  className,
+  children,
+}: {
+  value: string;
+  /** False when the menu holds more to choose, such as a filter menu. */
+  closeOnClick?: boolean | undefined;
+  className?: string | undefined;
+  children: React.ReactNode;
+}) {
+  const { shape, setOpen } = useDropdownMenu("DropdownMenuRadioItem");
+  const group = React.useContext(RadioGroupContext);
+  if (!group)
+    throw new Error("DropdownMenuRadioItem must be used within a DropdownMenuRadioGroup.");
+  const checked = group.value === value;
+  if (shape === "desktop") {
+    return (
+      <MenuPrimitive.RadioItem
+        data-slot="dropdown-menu-radio-item"
+        value={value}
+        closeOnClick={closeOnClick}
+        className={cn(itemClassName, "ps-9", className)}
+      >
+        <ItemCheck checked={checked} />
+        {children}
+      </MenuPrimitive.RadioItem>
+    );
+  }
+  return (
+    <button
+      type="button"
+      role="menuitemradio"
+      aria-checked={checked}
+      tabIndex={-1}
+      data-slot="dropdown-menu-radio-item"
+      className={cn(itemClassName, touchItemClassName, "ps-9", className)}
+      onClick={() => {
+        if (closeOnClick) setOpen(false);
+        group.onValueChange(value);
+      }}
+    >
+      <ItemCheck checked={checked} />
+      {children}
+    </button>
+  );
+}
+
 interface LinkItemProps {
   /** The anchor: a router `Link`, or a plain `<a href>`. */
   render: React.ReactElement;
@@ -410,11 +554,14 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"spa
 
 export {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuLinkItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,

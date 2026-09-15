@@ -19,6 +19,7 @@ import { GradeBar, ReviewCard, ReviewComplete, ReviewHeader } from "../views/rev
 import { SettingsView } from "../views/settings-view";
 import { Sidebar } from "../views/shell";
 import { TodayView } from "../views/today-view";
+import { WordView } from "../views/word-view";
 import { Desktop, type FrameTheme, Phone, useFrameTheme } from "./frame";
 import * as m from "./mock";
 import type { Entry } from "./parts/types";
@@ -481,7 +482,7 @@ export const SCREENS: Entry[] = [
     slug: "library",
     name: "Library",
     source: "views/library-view.tsx",
-    note: "Library is every deck as a card: its name, whether it has cards due today, and its language and size. A deck is its cards in a plain list, with state as the filter above it rather than a pill on the row. A word is a page with everything Lymi knows about it and its whole history; on desktop the same page sits beside the list.",
+    note: "Library is every deck as a card: its name, whether it has cards due today, and its language and size. A deck is two plates, today's and the deck's split, over its words as a glossary under Filter and Sort. A word opens with everything Lymi knows about it and its whole history: beside the list when both fit, otherwise as a side sheet on desktop and a drawer on a phone.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
@@ -500,6 +501,7 @@ export const SCREENS: Entry[] = [
             <DeckDetailView
               deck={m.decks[0]}
               cards={m.deckCards}
+              streak={m.streak}
               onAdd={noop}
               onArchive={noop}
               openCardId={null}
@@ -507,18 +509,19 @@ export const SCREENS: Entry[] = [
             />
           </PhoneShot>
           <PhoneShot caption="A card" initial="light" path="/library">
-            <DeckDetailView
-              deck={m.decks[0]}
-              cards={m.deckCards}
-              onAdd={noop}
-              onArchive={noop}
-              openCardId="c6"
-              reviews={m.wordReviews}
-              events={m.wordEvents}
-              onSaveCard={noop}
-              decks={m.decks}
-              static={{ path: "/library/d1" }}
-            />
+            <div className="px-5 pt-5">
+              <WordView
+                card={m.deckCards[2]?.card ?? m.queueItem.card}
+                state={m.deckCards[2]?.state ?? null}
+                deckName={m.decks[0]?.name ?? ""}
+                reviews={m.wordReviews}
+                events={m.wordEvents}
+                onSave={noop}
+                onClose={noop}
+                decks={m.decks}
+                hasNext
+              />
+            </div>
           </PhoneShot>
         </div>
         <Shot caption="Desktop, Library" initial="dark">
@@ -558,11 +561,13 @@ export const SCREENS: Entry[] = [
                   cards={m.deckCards}
                   onAdd={noop}
                   onArchive={noop}
+                  streak={m.streak}
                   openCardId="c6"
                   reviews={m.wordReviews}
                   events={m.wordEvents}
                   onSaveCard={noop}
                   decks={m.decks}
+                  cardBeside
                   static={{ path: "/library/d1" }}
                 />
               </main>

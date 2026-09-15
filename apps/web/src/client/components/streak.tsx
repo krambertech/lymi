@@ -197,7 +197,7 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
 }
 
 /** One line on where today stands against the streak: what is left, or that the day counts. */
-function useCardStatus(summary: StreakSummary | undefined): string {
+export function useTodayStatus(summary: StreakSummary | undefined): string {
   const { t } = useLingui();
   if (!summary) return "";
   const { today } = summary;
@@ -428,7 +428,7 @@ export function StreakButton({ summary, variant, className, onOpen }: StreakButt
   const [ownOpen, setOwnOpen] = useState(false);
   const rail = variant === "rail";
   const card = variant === "card";
-  const status = useCardStatus(summary);
+  const status = useTodayStatus(summary);
 
   if (!summary) {
     return (

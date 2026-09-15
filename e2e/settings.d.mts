@@ -1,4 +1,5 @@
 export type E2EAccount =
+  | "deep-link"
   | "core-learning"
   | "deck-validation"
   | "card-selection"
@@ -17,7 +18,12 @@ export type E2EAccount =
   | "review-round-below"
   | "review-round-crosses"
   | "review-deck-out"
-  | "word-detail";
+  | "word-detail"
+  | "language"
+  | "join-owner"
+  | "avatar"
+  | "avatar-other"
+  | "deck-page";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];

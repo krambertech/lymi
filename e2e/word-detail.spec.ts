@@ -10,14 +10,13 @@ async function createDeck(page: Page, name: string): Promise<string> {
 }
 
 /**
- * A word opens from its deck as a page beside the list: read first, edited on request, with
+ * A word opens from its deck over the page or beside the list: read first, edited on request, with
  * its history underneath and its actions in one menu. This walks that life once: open, edit
  * a field and see the source become the learner's, move it to another deck, and archive it.
  */
 test("a word opens, edits, moves and archives from its deck", async ({ page }, testInfo) => {
   await signInAsTestLearner(page, testInfo, "word-detail");
-  // The word renders once for the phone and once for the panel; only one is on screen, and
-  // the list beside it repeats the meaning, so checks are scoped to the visible article.
+  // The list under the word repeats the meaning, so checks are scoped to the visible article.
   const word = page.locator("article").filter({ visible: true });
   const shown = (text: string) => word.getByText(text, { exact: true });
   const first = await createDeck(page, "Word detail first");

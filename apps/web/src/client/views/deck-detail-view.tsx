@@ -1,45 +1,86 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { deserializeState } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
   Archive,
+  ArrowUpDown,
   Download,
   KeyRound,
+  ListFilter,
   MoreHorizontal,
   Plug,
   Plus,
   Search,
   Settings2,
+  X,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Button, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
-import { DueCount } from "../components/due-count";
 import { NoResults } from "../components/empty-state";
 import { NextStep, NextSteps } from "../components/next-steps";
-import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
-import { StateIcon, type StateKey, stateMarks } from "../components/state-mark";
+import { StateIcon, stateMarks } from "../components/state-mark";
+import { type StreakSummary, useTodayStatus } from "../components/streak";
+import { Dialog, DialogContent } from "../components/ui/dialog";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
-import type { Card, CardState, DeckSummary, Review } from "../lib/api";
-import { intervalLabel } from "../lib/i18n";
+import type { CardState, DeckSummary, Review } from "../lib/api";
+import {
+  activeFilterCount,
+  type DeckFilters,
+  type DeckGroup,
+  type DeckRow,
+  type DeckSort,
+  dueBucket,
+  filterRows,
+  groupRows,
+  lessonsOf,
+  noFilters,
+  rowState,
+  splitForms,
+} from "../lib/deck-list";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
 import { type WordEvent, type WordPatch, WordView } from "./word-view";
 
-type Row = { card: Card; state: CardState | null };
+/** A menu row greys its icons, so a state's mark takes its own colour back. */
+const menuMarkColour = {
+  new: "text-state-new!",
+  learning: "text-state-learning!",
+  known: "text-state-known!",
+} as const;
+
+/** The narrowest list that still keeps meanings beside words; narrower than it and a card, the card is a sheet. */
+const LIST_PX = 640;
+const CARD_PX = 400;
+const DAY = 86_400_000;
 
 export interface DeckDetailProps {
   deck: DeckSummary | undefined;
-  cards: Row[] | undefined;
+  cards: DeckRow[] | undefined;
+  /** Where today's goal stands, for the line under the due count. */
+  streak?: StreakSummary | undefined;
   onAdd: () => void;
   onArchive: (id: string) => void;
   onReview?: (() => void) | undefined;
@@ -53,7 +94,7 @@ export interface DeckDetailProps {
   reviews?: Review[] | undefined;
   events?: WordEvent[] | undefined;
   /** Play the word's pronunciation. Absent, the Say button is not drawn. */
-  onPlayAudio?: ((card: Card) => void) | undefined;
+  onPlayAudio?: ((card: DeckRow["card"]) => void) | undefined;
   onSaveCard?: ((id: string, patch: WordPatch) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
@@ -62,11 +103,13 @@ export interface DeckDetailProps {
   connectUrl?: string | undefined;
   /** Whether an assistant is connected; undefined while unknown, so its row does not flash. */
   connected?: boolean | undefined;
+  /** Draw an open card beside the list at any width, for the design system's narrower frames. */
+  cardBeside?: boolean | undefined;
   static?: StaticNav;
 }
 
 /** Word, meaning, status and next review as a CSV file the browser saves. */
-export function exportCsv(deckName: string, rows: Row[]) {
+export function exportCsv(deckName: string, rows: DeckRow[]) {
   const esc = (v: string | null | undefined) => `"${(v ?? "").replace(/"/g, '""')}"`;
   const lines = [
     [
@@ -103,133 +146,477 @@ export function exportCsv(deckName: string, rows: Row[]) {
   URL.revokeObjectURL(url);
 }
 
-/** Whole days until the card is due; 0 when it is due now or later today. */
-function daysUntil(due: Date, now = Date.now()): number {
-  if (due.getTime() <= now) return 0;
-  return Math.max(0, Math.round((due.getTime() - now) / 86_400_000));
-}
-
-/** FSRS state as a filter bucket: 0 new, 1 and 3 learning, 2 known. */
-const bucket = (s: number | null | undefined): 0 | 1 | 2 =>
-  s === 2 ? 2 : s === 0 || s == null ? 0 : 1;
-
-function reps(state: CardState | null): number {
-  if (!state) return 0;
-  try {
-    const r = deserializeState(state.fsrs).reps;
-    return typeof r === "number" ? r : 0;
-  } catch {
-    return 0;
-  }
-}
-
-type Filter = "all" | "0" | "1" | "2";
+const startOfDay = (at: number) => {
+  const d = new Date(at);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+};
 
 /** "tomorrow", "in 3 days": when the deck's next card comes back, in the interface language. */
-function nextDueLabel(locale: string, cards: Row[], now = Date.now()): string | null {
+function nextDueLabel(locale: string, cards: DeckRow[], now = Date.now()): string | null {
   let next = Number.POSITIVE_INFINITY;
   for (const { state } of cards) {
     const at = state ? new Date(state.due).getTime() : Number.NaN;
     if (at > now && at < next) next = at;
   }
   if (!Number.isFinite(next)) return null;
-  const days = Math.round((next - now) / 86_400_000);
+  const days = Math.round((next - now) / DAY);
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
   if (days < 1) return rtf.format(Math.max(1, Math.round((next - now) / 3_600_000)), "hour");
   if (days < 30) return rtf.format(days, "day");
   return rtf.format(Math.round(days / 30), "month");
 }
 
+/** When one card is back, by calendar day: "later today", "tomorrow", "in 12 days". */
+function backLabel(locale: string, due: number, now: number): string {
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  const days = Math.round((startOfDay(due) - startOfDay(now)) / DAY);
+  if (days < 30) return rtf.format(Math.max(days, 0), "day");
+  return rtf.format(Math.round(days / 30), "month");
+}
+
+function useWidth(ref: RefObject<HTMLElement | null>): number {
+  const [width, setWidth] = useState(0);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    setWidth(el.getBoundingClientRect().width);
+    const ro = new ResizeObserver(([entry]) => {
+      if (entry) setWidth(entry.contentRect.width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ref]);
+  return width;
+}
+
 /**
- * The deck at a glance and the button that starts its review: how many cards are due today, how
- * the whole deck splits between new, learning and known, and Review. With nothing due the plate
- * keeps its shape at zero, says when the next card is back, and offers capture where Review was.
+ * Two plates. Today's is the one with an action: the cards due now, where today's goal stands, and
+ * Review, or with nothing due, when the next card is back and Add card. The deck's is its split
+ * between New, Learning and Known, which never reads as zero on a quiet day.
  */
-function DuePlate({
+function DeckPlates({
   deck,
   cards,
-  counts,
+  streak,
   onReview,
   onAdd,
 }: {
   deck: DeckSummary;
-  cards: Row[];
-  /** The whole deck by state: new, learning, known. */
-  counts: Record<0 | 1 | 2, number>;
+  cards: DeckRow[];
+  streak?: StreakSummary | undefined;
   onReview?: (() => void) | undefined;
   onAdd: () => void;
 }) {
   const { t, i18n } = useLingui();
+  const summary = useTodayStatus(streak);
+  // A summary fetched before these cards arrived would say nothing is due beside a count that is not zero.
+  const status = deck.due > 0 && streak?.today.outcome === "nothing_due" ? "" : summary;
   const due = deck.due;
   const next = due === 0 ? nextDueLabel(i18n.locale, cards) : null;
+  const counts = { new: 0, learning: 0, known: 0 };
+  for (const row of cards) counts[rowState(row)]++;
 
-  const split: { key: StateKey; n: number }[] = [
-    { key: "new", n: counts[0] },
-    { key: "learning", n: counts[1] },
-    { key: "known", n: counts[2] },
+  return (
+    // A container query styles only what is inside the container, so the grid sits one level in.
+    <div className="@container/plates">
+      <div className="grid gap-3 @2xl/plates:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+        <section
+          aria-label={t`Today`}
+          className="edge flex flex-wrap items-center gap-x-4 gap-y-4 rounded-xl bg-plate p-5"
+        >
+          <p className="text-4xl font-semibold leading-none tracking-[-0.03em] proportional-nums">
+            {i18n.number(due)}
+          </p>
+          <div className="grid min-w-0 flex-1 gap-0.5">
+            <p className="text-md text-text-2">
+              <Plural value={due} one="card to review now" other="cards to review now" />
+            </p>
+            {next ? (
+              <p className="text-sm text-muted">{t`The next card is back ${next}.`}</p>
+            ) : (
+              status && <p className="text-sm text-muted">{status}</p>
+            )}
+          </div>
+          {due > 0 ? (
+            <Button
+              variant="primary"
+              onClick={onReview}
+              aria-disabled={!onReview}
+              className="w-full @md/plates:w-auto @md/plates:px-7"
+            >
+              <Trans>Review</Trans>
+            </Button>
+          ) : (
+            <Button onClick={onAdd} kbd="N" className="w-full @md/plates:w-auto">
+              <Plus aria-hidden="true" />
+              <Trans>Add card</Trans>
+            </Button>
+          )}
+        </section>
+        <dl className="edge grid grid-cols-3 items-center rounded-xl bg-plate py-4 divide-x divide-edge">
+          {(["new", "learning", "known"] as const).map((key) => (
+            <div key={key} className="grid justify-items-center gap-0.5 px-2">
+              <dt className="order-last text-sm text-muted">
+                {i18n._(stateMarks[key].groupLabel)}
+              </dt>
+              <dd
+                className={clsx(
+                  "flex items-center gap-1.5 text-xl font-semibold proportional-nums",
+                  counts[key] === 0 && "text-muted",
+                )}
+              >
+                <StateIcon state={key} className="size-[18px]" />
+                {i18n.number(counts[key])}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  );
+}
+
+/** A filter that is on, with the press that turns it off. */
+function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }) {
+  const { t } = useLingui();
+  return (
+    <button
+      type="button"
+      onClick={onRemove}
+      aria-label={t`Remove filter: ${label}`}
+      className="inline-flex h-8 items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text"
+    >
+      {label}
+      <X className="size-3.5 text-muted" aria-hidden="true" />
+    </button>
+  );
+}
+
+function ListTools({
+  cards,
+  filters,
+  setFilters,
+  sort,
+  setSort,
+  query,
+  setQuery,
+  searchRef,
+}: {
+  cards: DeckRow[];
+  filters: DeckFilters;
+  setFilters: (next: DeckFilters) => void;
+  sort: DeckSort;
+  setSort: (next: DeckSort) => void;
+  query: string;
+  setQuery: (next: string) => void;
+  searchRef: RefObject<HTMLInputElement | null>;
+}) {
+  const { t, i18n } = useLingui();
+  const lessons = useMemo(() => lessonsOf(cards), [cards]);
+  const lessonName = (lesson: string) => lesson || t`No lesson`;
+  const dueName = { today: t`Due today`, week: t`Due this week` };
+  const sortName: Record<DeckSort, string> = {
+    lesson: t`Lesson`,
+    due: t`When it’s back`,
+    added: t`Recently added`,
+    az: t`A–Z`,
+  };
+  const toggle = <T,>(list: T[], item: T, on: boolean) =>
+    on ? [...list, item] : list.filter((x) => x !== item);
+
+  const chips = [
+    ...filters.states.map((state) => ({
+      key: `state:${state}`,
+      label: i18n._(stateMarks[state].groupLabel),
+      remove: () => setFilters({ ...filters, states: toggle(filters.states, state, false) }),
+    })),
+    ...(filters.due
+      ? [
+          {
+            key: "due",
+            label: dueName[filters.due],
+            remove: () => setFilters({ ...filters, due: null }),
+          },
+        ]
+      : []),
+    ...filters.lessons.map((lesson) => ({
+      key: `lesson:${lesson}`,
+      label: lessonName(lesson),
+      remove: () => setFilters({ ...filters, lessons: toggle(filters.lessons, lesson, false) }),
+    })),
   ];
 
   return (
-    <section className="edge grid rounded-2xl bg-plate px-5 pt-7 pb-5 text-center @3xl:grid-cols-[auto_minmax(0,1fr)_auto] @3xl:items-center @3xl:gap-8 @3xl:px-8 @3xl:py-7 @3xl:text-start">
-      <h2 className="grid justify-items-center gap-1.5 @3xl:justify-items-start">
-        <span className="text-5xl font-semibold tracking-[-0.03em] tabular-nums">
-          {i18n.number(due)}
-        </span>
-        <span className="text-md text-text-2">
-          <Plural value={due} one="card due now" other="cards due now" />
-        </span>
-        {next && <span className="text-sm text-muted">{t`The next card is back ${next}.`}</span>}
-      </h2>
-      <dl className="mx-auto mt-6 grid w-full max-w-md grid-cols-3 divide-x divide-edge @3xl:mt-0">
-        {split.map(({ key, n }) => (
-          <div key={key} className="grid justify-items-center gap-0.5 px-2">
-            <dt className="order-last text-sm text-muted">{i18n._(stateMarks[key].label)}</dt>
-            <dd
-              className={clsx(
-                "flex items-center gap-1.5 text-xl font-semibold tabular-nums",
-                n === 0 && "text-muted",
-              )}
-            >
-              <StateIcon state={key} className="size-[18px]" />
-              {i18n.number(n)}
-            </dd>
-          </div>
-        ))}
-      </dl>
-      {due > 0 ? (
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={onReview}
-          aria-disabled={!onReview}
-          className="mt-7 w-full @3xl:mt-0 @3xl:w-auto @3xl:px-10"
-        >
-          <Trans>Review</Trans>
-        </Button>
-      ) : (
-        <Button
-          size="lg"
-          onClick={onAdd}
-          kbd="N"
-          className="mt-7 w-full @3xl:mt-0 @3xl:w-auto @3xl:px-8"
-        >
-          <Plus aria-hidden="true" />
-          <Trans>Add card</Trans>
-        </Button>
+    <div className="grid gap-2.5">
+      <div className="flex items-center gap-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button size="sm">
+                <ListFilter aria-hidden="true" />
+                <Trans>Filter</Trans>
+              </Button>
+            }
+          />
+          <DropdownMenuContent
+            aria-label={t`Filter`}
+            className="max-w-[min(20rem,var(--available-width))]"
+          >
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                <Trans>State</Trans>
+              </DropdownMenuLabel>
+              {(["new", "learning", "known"] as const).map((state) => (
+                <DropdownMenuCheckboxItem
+                  key={state}
+                  checked={filters.states.includes(state)}
+                  onCheckedChange={(on) =>
+                    setFilters({ ...filters, states: toggle(filters.states, state, on) })
+                  }
+                >
+                  <StateIcon state={state} className={menuMarkColour[state]} />
+                  {i18n._(stateMarks[state].groupLabel)}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                <Trans>Due</Trans>
+              </DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={filters.due ?? "any"}
+                onValueChange={(v) =>
+                  setFilters({ ...filters, due: v === "any" ? null : (v as "today" | "week") })
+                }
+              >
+                <DropdownMenuRadioItem value="any" closeOnClick={false}>
+                  <Trans>Any time</Trans>
+                </DropdownMenuRadioItem>
+                {(["today", "week"] as const).map((due) => (
+                  <DropdownMenuRadioItem key={due} value={due} closeOnClick={false}>
+                    {dueName[due]}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuGroup>
+            {lessons.length > 1 && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>
+                    <Trans>Lesson</Trans>
+                  </DropdownMenuLabel>
+                  {lessons.map((lesson) => (
+                    <DropdownMenuCheckboxItem
+                      key={lesson || "none"}
+                      checked={filters.lessons.includes(lesson)}
+                      onCheckedChange={(on) =>
+                        setFilters({ ...filters, lessons: toggle(filters.lessons, lesson, on) })
+                      }
+                    >
+                      <span className="truncate">{lessonName(lesson)}</span>
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuGroup>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button size="sm" variant="ghost" aria-label={t`Sort: ${sortName[sort]}`}>
+                <ArrowUpDown aria-hidden="true" />
+                {sortName[sort]}
+              </Button>
+            }
+          />
+          <DropdownMenuContent aria-label={t`Sort`}>
+            <DropdownMenuRadioGroup value={sort} onValueChange={(v) => setSort(v as DeckSort)}>
+              {(["lesson", "due", "added", "az"] as const).map((key) => (
+                <DropdownMenuRadioItem key={key} value={key}>
+                  {sortName[key]}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {/* Desktop keeps search beside the tools, where "/" lands; the phone has it up top. */}
+        <div className="relative ms-auto hidden w-56 min-w-0 @3xl/shell:block">
+          <Search
+            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+            aria-hidden="true"
+          />
+          <Input
+            ref={searchRef}
+            enterKeyHint="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t`Search this deck`}
+            aria-label={t`Search this deck`}
+            autoComplete="off"
+            inputSize="sm"
+            className="ps-9"
+          />
+        </div>
+      </div>
+      {chips.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2">
+          {chips.map((chip) => (
+            <FilterChip key={chip.key} label={chip.label} onRemove={chip.remove} />
+          ))}
+          {chips.length > 1 && (
+            <Button size="sm" variant="ghost" onClick={() => setFilters(noFilters)}>
+              <Trans>Clear filters</Trans>
+            </Button>
+          )}
+        </div>
       )}
-    </section>
+    </div>
   );
 }
 
 /**
- * One deck: today's review and the deck's split in a plate, then its cards. The list is
- * plain: the term, its meaning under it, and on the right when it comes back and how often it
- * has been asked. State is the filter above the list, never a pill on the row. A card opens
- * beside the list on desktop and as its own screen on the phone.
+ * The words as a glossary: each row the state's mark, the term with its other forms lighter, and
+ * the meaning, which drops under the term when the list is narrow. Text wraps and is never cut,
+ * because it is the content. A date shows only under the When it's back sort.
+ */
+function Glossary({
+  groups,
+  sort,
+  openId,
+  onOpen,
+  now,
+}: {
+  groups: DeckGroup[];
+  sort: DeckSort;
+  openId: string | null;
+  onOpen: (id: string | null) => void;
+  now: number;
+}) {
+  const { t, i18n } = useLingui();
+  const heading = (group: DeckGroup): string | null => {
+    switch (group.kind) {
+      case "all":
+        return null;
+      case "lesson":
+        return group.lesson || t`No lesson`;
+      case "due":
+        return {
+          now: t`Due now`,
+          week: t`This week`,
+          later: t`Later`,
+          new: t`Not started`,
+        }[group.bucket];
+      case "day": {
+        const days = Math.round((startOfDay(now) - group.day.getTime()) / DAY);
+        if (days === 0) return t`Today`;
+        if (days === 1) return t`Yesterday`;
+        const sameYear = group.day.getFullYear() === new Date(now).getFullYear();
+        return i18n.date(group.day, {
+          day: "numeric",
+          month: "long",
+          ...(sameYear ? {} : { year: "numeric" }),
+        });
+      }
+    }
+  };
+
+  return (
+    <div className="@container/list grid">
+      {groups.map((group) => {
+        const label = heading(group);
+        return (
+          <section key={group.key} className="grid" aria-label={label ?? undefined}>
+            {label && (
+              <h2 className="px-1 pt-7 pb-2.5 text-md font-medium text-balance text-text">
+                {label}
+                {/* Read as "Lesson 14, 4" rather than "Lesson 144". */}
+                <span className="sr-only">, </span>
+                <span className="ms-2 text-sm font-normal text-muted">
+                  {i18n.number(group.rows.length)}
+                </span>
+              </h2>
+            )}
+            <ul className="edge divide-y divide-edge overflow-hidden rounded-lg bg-plate">
+              {group.rows.map((row) => {
+                const { card, state } = row;
+                const { word, forms } = splitForms(card.term);
+                const bucket = sort === "due" ? dueBucket(row, now) : null;
+                const date =
+                  state && (bucket === "week" || bucket === "later")
+                    ? backLabel(i18n.locale, new Date(state.due).getTime(), now)
+                    : null;
+                const key = rowState(row);
+                const isOpen = card.id === openId;
+                return (
+                  <li key={card.id}>
+                    <button
+                      type="button"
+                      data-card-row={card.id}
+                      onClick={() => onOpen(isOpen ? null : card.id)}
+                      aria-current={isOpen || undefined}
+                      className={clsx(
+                        "grid w-full items-start gap-x-3 gap-y-0.5 px-4 py-3 text-start transition-colors duration-150 focus-visible:outline-offset-[-2px] @xl/list:items-baseline @xl/list:gap-x-5 @xl/list:px-5",
+                        // Every row under this sort keeps the date's column, so meanings line up across groups.
+                        sort === "due"
+                          ? "grid-cols-[15px_minmax(0,1fr)_auto] @xl/list:grid-cols-[15px_minmax(0,1fr)_minmax(0,1.15fr)_8rem]"
+                          : "grid-cols-[15px_minmax(0,1fr)] @xl/list:grid-cols-[15px_minmax(0,1fr)_minmax(0,1.15fr)]",
+                        isOpen ? "bg-hover" : "hoverable:hover:bg-plate-2",
+                      )}
+                    >
+                      <span className="row-span-2 mt-[3px] self-start @xl/list:row-span-1">
+                        <StateIcon state={key} className="size-[15px]" />
+                        <span className="sr-only">{i18n._(stateMarks[key].label)}</span>
+                      </span>
+                      <span
+                        className="col-start-2 row-start-1 text-lg font-medium leading-snug text-text [overflow-wrap:anywhere]"
+                        lang={card.language ?? undefined}
+                      >
+                        {word}
+                        {forms && (
+                          <span className="font-normal text-text-2">
+                            {" · "}
+                            {forms}
+                          </span>
+                        )}
+                      </span>
+                      <span
+                        className={clsx(
+                          "col-start-2 row-start-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
+                          card.meaning ? "text-text-2" : "text-faint",
+                        )}
+                      >
+                        {card.meaning ?? <Trans>No meaning yet</Trans>}
+                      </span>
+                      {date && (
+                        <span className="col-start-3 row-start-1 whitespace-nowrap text-end text-sm text-muted @xl/list:col-start-4">
+                          {date}
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * One deck: two plates, then its words as a glossary under a filter, a sort and search. A card
+ * opens beside the list when both fit, and otherwise as a sheet over the page on a
+ * desktop or a drawer on touch. The deck page is for reading; writing a card happens in capture,
+ * an integration or the open card.
  */
 export function DeckDetailView({
   deck,
   cards,
+  streak,
   onAdd,
   onArchive,
   onReview,
@@ -244,13 +631,15 @@ export function DeckDetailView({
   onSaveCard,
   decks,
   onMove,
+  cardBeside,
   connectUrl,
   connected,
   static: st,
 }: DeckDetailProps) {
   const { t, i18n } = useLingui();
   const [q, setQ] = useState("");
-  const [filter, setFilter] = useState<Filter>("all");
+  const [filters, setFilters] = useState<DeckFilters>(noFilters);
+  const [sort, setSort] = useState<DeckSort>("lesson");
   const [localOpen, setLocalOpen] = useState<string | null>(null);
   const openId = openCardId === undefined ? localOpen : openCardId;
   const setOpen = useCallback(
@@ -265,6 +654,10 @@ export function DeckDetailView({
   const closeSearch = () => {
     setQ("");
     setSearchOpen(false);
+  };
+  const clearAll = () => {
+    setQ("");
+    setFilters(noFilters);
   };
 
   // "/" puts the caret in the deck's own search, the shortcut PRODUCT.md promises.
@@ -282,93 +675,94 @@ export function DeckDetailView({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const counts = useMemo(() => {
-    const c = { 0: 0, 1: 0, 2: 0 };
-    for (const r of cards ?? []) c[bucket(r.state?.state)]++;
-    return c;
-  }, [cards]);
+  // The list's clock, refreshed with the cards rather than every render, so headings hold still.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the cards are the reason to look again
+  const now = useMemo(() => Date.now(), [cards]);
+  const shown = useMemo(
+    () => (cards ? filterRows(cards, filters, q, now) : undefined),
+    [cards, filters, q, now],
+  );
+  const groups = useMemo(
+    () => (shown ? groupRows(shown, sort, now, i18n.locale) : []),
+    [shown, sort, now, i18n.locale],
+  );
+  const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
 
-  const shown = useMemo(() => {
-    if (!cards) return cards;
-    const needle = q.trim().toLowerCase();
-    let rows = cards;
-    if (needle) {
-      rows = rows.filter(
-        ({ card }) =>
-          card.term.toLowerCase().includes(needle) || card.meaning?.toLowerCase().includes(needle),
-      );
-    }
-    if (filter !== "all") rows = rows.filter((r) => bucket(r.state?.state) === Number(filter));
-    return rows;
-  }, [cards, q, filter]);
+  const openIndex = ordered.findIndex((r) => r.card.id === openId);
+  const open = openIndex >= 0 ? ordered[openIndex] : cards?.find((r) => r.card.id === openId);
 
-  // Words keep the lesson they came from. When a deck holds more than one, the list says so.
-  const groups = useMemo(() => {
-    if (!shown) return [];
-    const order: string[] = [];
-    const by = new Map<string, Row[]>();
-    for (const r of shown) {
-      const k = r.card.source ?? "";
-      if (!by.has(k)) {
-        by.set(k, []);
-        order.push(k);
-      }
-      by.get(k)?.push(r);
-    }
-    return order.map((k) => ({ key: k, rows: by.get(k) ?? [] }));
-  }, [shown]);
-  const grouped = groups.length > 1;
+  const rootRef = useRef<HTMLDivElement>(null);
+  const width = useWidth(rootRef);
+  const fits = cardBeside || width >= LIST_PX + CARD_PX;
+  // A resize moves an open card between beside and sheet, but waits while an edit or the Move sheet is open.
+  const [busy, setBusy] = useState(false);
+  const [held, setHeld] = useState<boolean | null>(null);
+  if (busy && held === null) setHeld(fits);
+  if (!busy && held !== null) setHeld(null);
+  const beside = held ?? fits;
+  const measuring = !!open && !cardBeside && width === 0;
 
-  const openIndex = shown?.findIndex((r) => r.card.id === openId) ?? -1;
-  const open = openIndex >= 0 ? shown?.[openIndex] : undefined;
+  // The sheet keeps drawing the last word while it slides away.
+  const lastOpen = useRef(open);
+  if (open) lastOpen.current = open;
+  const shownWord = open ?? lastOpen.current;
 
   // Walking the list with a word open, the way a mail client does.
   useEffect(() => {
-    if (!open || !shown) return;
+    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement | null;
       if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === "Escape") setOpen(null);
+      // The sheet closes itself on Escape; beside the list, the page does.
+      if (e.key === "Escape" && beside) setOpen(null);
       const step = e.key === "j" ? 1 : e.key === "k" ? -1 : 0;
-      const next = step ? shown[openIndex + step] : undefined;
+      const next = step && openIndex >= 0 ? ordered[openIndex + step] : undefined;
       if (next) setOpen(next.card.id);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, shown, openIndex, setOpen]);
+  }, [open, ordered, openIndex, beside, setOpen]);
 
-  const word = open && deck && (
+  const titleId = useId();
+  const word = shownWord && deck && (
     <WordView
-      key={open.card.id}
-      card={open.card}
-      state={open.state}
+      key={shownWord.card.id}
+      card={shownWord.card}
+      state={shownWord.state}
       deckName={deck.name}
-      modes={open.card.reviewModes ?? deck.reviewModes}
+      modes={shownWord.card.reviewModes ?? deck.reviewModes}
       states={states}
       reviews={reviews}
       events={events}
-      onPlayAudio={onPlayAudio ? () => onPlayAudio(open.card) : undefined}
+      onPlayAudio={onPlayAudio ? () => onPlayAudio(shownWord.card) : undefined}
       hasPrev={openIndex > 0}
-      hasNext={!!shown && openIndex < shown.length - 1}
+      hasNext={openIndex >= 0 && openIndex < ordered.length - 1}
       onPrev={() => {
-        const prev = shown?.[openIndex - 1];
+        const prev = ordered[openIndex - 1];
         if (prev) setOpen(prev.card.id);
       }}
       onNext={() => {
-        const next = shown?.[openIndex + 1];
+        const next = ordered[openIndex + 1];
         if (next) setOpen(next.card.id);
       }}
-      onBack={() => setOpen(null)}
-      onClose={() => setOpen(null)}
-      onSave={onSaveCard ? (patch) => onSaveCard(open.card.id, patch) : undefined}
+      onClose={() => {
+        const id = shownWord.card.id;
+        setOpen(null);
+        // Beside the list nothing hands focus back, so the row that opened the card takes it.
+        requestAnimationFrame(() =>
+          document.querySelector<HTMLElement>(`[data-card-row="${CSS.escape(id)}"]`)?.focus(),
+        );
+      }}
+      onSave={onSaveCard ? (patch) => onSaveCard(shownWord.card.id, patch) : undefined}
       onArchive={() => {
         setOpen(null);
-        onArchive(open.card.id);
+        onArchive(shownWord.card.id);
       }}
       decks={decks}
-      onMove={onMove ? (deckId) => onMove(open.card.id, deckId) : undefined}
-      variant="panel"
+      onMove={onMove ? (deckId) => onMove(shownWord.card.id, deckId) : undefined}
+      titleId={titleId}
+      onBusyChange={setBusy}
     />
   );
 
@@ -412,55 +806,13 @@ export function DeckDetailView({
     </DropdownMenu>
   );
 
-  // The plate above carries the counts, so the filter is names and icons.
-  const filterLabel = (state?: StateKey) => (
-    <span className="inline-flex items-center gap-1.5">
-      {/* A phone drops the icons so a longer translation still fits the row. */}
-      {state && <StateIcon state={state} className="hidden size-3.5 sm:block" />}
-      {state ? i18n._(stateMarks[state].label) : t`All`}
-    </span>
-  );
+  const query = q.trim();
+  const filtered = query !== "" || activeFilterCount(filters) > 0;
 
   return (
-    <div className="flex min-h-0 flex-1">
-      {/* On the phone the open card replaces the list, so it is a screen with a back link. */}
-      {open && deck ? (
-        <div className="mx-auto w-full max-w-(--column) @3xl:hidden">
-          <WordView
-            key={`page-${open.card.id}`}
-            card={open.card}
-            state={open.state}
-            deckName={deck.name}
-            modes={open.card.reviewModes ?? deck.reviewModes}
-            states={states}
-            reviews={reviews}
-            events={events}
-            onPlayAudio={onPlayAudio ? () => onPlayAudio(open.card) : undefined}
-            hasPrev={openIndex > 0}
-            hasNext={!!shown && openIndex < shown.length - 1}
-            onPrev={() => {
-              const prev = shown?.[openIndex - 1];
-              if (prev) setOpen(prev.card.id);
-            }}
-            onNext={() => {
-              const next = shown?.[openIndex + 1];
-              if (next) setOpen(next.card.id);
-            }}
-            onBack={() => setOpen(null)}
-            onSave={onSaveCard ? (patch) => onSaveCard(open.card.id, patch) : undefined}
-            onArchive={() => {
-              setOpen(null);
-              onArchive(open.card.id);
-            }}
-            decks={decks}
-            onMove={onMove ? (deckId) => onMove(open.card.id, deckId) : undefined}
-            variant="page"
-          />
-        </div>
-      ) : null}
-
-      <Page className={clsx(open && "hidden @3xl:flex", open && "@3xl:me-0 @3xl:max-w-none")}>
-        {/* Search opens in place of the bar on the phone; desktop keeps it beside the filter. */}
+    <div ref={rootRef} className="flex min-h-0 flex-1">
+      <Page>
+        {/* Search opens in place of the bar on the phone; desktop keeps it beside the tools. */}
         {searchOpen ? (
           <header className="-mt-2 mb-2 flex h-14 items-center gap-2 @3xl/shell:hidden">
             <div className="relative min-w-0 flex-1">
@@ -536,12 +888,18 @@ export function DeckDetailView({
           }
         />
 
-        {/* While the phone searches, the list is the answer, so the plate steps aside. */}
+        {/* While the phone searches, the list is the answer, so the plates step aside. */}
         <div className={clsx(searchOpen && "hidden @3xl/shell:block")}>
           {deck === undefined || cards === undefined ? (
-            <Skeleton className="h-[260px] rounded-2xl" />
+            <Skeleton className="h-[108px] rounded-xl" />
           ) : cards.length > 0 ? (
-            <DuePlate deck={deck} cards={cards} counts={counts} onReview={onReview} onAdd={onAdd} />
+            <DeckPlates
+              deck={deck}
+              cards={cards}
+              streak={streak}
+              onReview={onReview}
+              onAdd={onAdd}
+            />
           ) : (
             <StartPanel
               title={<Trans>No cards in {deck.name} yet</Trans>}
@@ -578,150 +936,76 @@ export function DeckDetailView({
         </div>
 
         {cards && cards.length > 0 && (
-          <div
-            className={clsx(
-              "mb-2 flex flex-wrap items-center gap-x-3 gap-y-2",
-              searchOpen ? "mt-2 @3xl/shell:mt-4" : "mt-4",
-            )}
-          >
-            <Segmented
-              size="sm"
-              label={t`Show`}
-              value={filter}
-              onChange={setFilter}
-              options={[
-                { value: "all", label: filterLabel() },
-                { value: "0", label: filterLabel("new") },
-                { value: "1", label: filterLabel("learning") },
-                { value: "2", label: filterLabel("known") },
-              ]}
+          <div className={clsx(searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6")}>
+            <ListTools
+              cards={cards}
+              filters={filters}
+              setFilters={setFilters}
+              sort={sort}
+              setSort={setSort}
+              query={q}
+              setQuery={setQ}
+              searchRef={searchRef}
             />
-            {/* Desktop keeps search beside the filter, where "/" lands; the phone has it up top. */}
-            <div className="relative ms-auto hidden w-52 min-w-0 @3xl/shell:block">
-              <Search
-                className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
-                aria-hidden="true"
-              />
-              <Input
-                ref={searchRef}
-                enterKeyHint="search"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder={t`Search this deck`}
-                aria-label={t`Search this deck`}
-                autoComplete="off"
-                inputSize="sm"
-                className="ps-9"
-              />
-            </div>
           </div>
         )}
 
         {cards === undefined && (
-          <div className="grid gap-2 pt-2">
+          <div className="grid gap-2 pt-6">
             <Skeleton className="h-12" />
             <Skeleton className="h-12" />
             <Skeleton className="h-12" />
           </div>
         )}
 
-        {shown && shown.length > 0 && (
-          <div className="grid">
-            {groups.map((g) => (
-              <section key={g.key} className="grid">
-                {grouped && (
-                  <h2 className="px-1 pb-1.5 pt-5 text-xs font-medium uppercase tracking-[0.06em] text-muted first:pt-2">
-                    {g.key || t`No lesson`}
-                  </h2>
-                )}
-                <ul className="grid gap-px">
-                  {g.rows.map(({ card, state }) => {
-                    const isOpen = card.id === openId;
-                    const days = state ? daysUntil(new Date(state.due)) : null;
-                    const dueNow = days !== null && days < 1;
-                    const n = reps(state);
-                    return (
-                      <li key={card.id}>
-                        <button
-                          type="button"
-                          onClick={() => setOpen(isOpen ? null : card.id)}
-                          aria-current={isOpen || undefined}
-                          className={clsx(
-                            "-mx-3 grid w-[calc(100%+1.5rem)] grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 rounded-md px-3 py-2.5 text-start transition-[background-color,box-shadow] duration-150",
-                            isOpen
-                              ? "edge-2 bg-plate"
-                              : "hoverable:hover:edge hoverable:hover:bg-plate",
-                          )}
-                        >
-                          <span className="min-w-0 text-lg font-medium leading-[1.3] tracking-[-0.01em]">
-                            <span lang={card.language ?? undefined}>{card.term}</span>
-                          </span>
-                          <span
-                            className={clsx(
-                              "row-span-2 self-start text-end text-sm tabular-nums",
-                              dueNow ? "grid justify-items-end gap-0.5" : "text-muted",
-                            )}
-                          >
-                            {days === null ? (
-                              t`new`
-                            ) : dueNow ? (
-                              <DueCount>{t`today`}</DueCount>
-                            ) : (
-                              intervalLabel(i18n, new Date(0), new Date(days * 86_400_000))
-                            )}
-                            {n > 0 && (
-                              <span className="block text-2xs font-normal text-muted">
-                                <Plural value={n} one="# review" other="# reviews" />
-                              </span>
-                            )}
-                          </span>
-                          <span className="min-w-0 truncate text-base text-text-2">
-                            {card.meaning ?? (
-                              <span className="text-faint">
-                                <Trans>No meaning yet</Trans>
-                              </span>
-                            )}
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            ))}
+        {groups.length > 0 && (
+          <div className={clsx(sort === "az" && "pt-4")}>
+            <Glossary groups={groups} sort={sort} openId={openId} onOpen={setOpen} now={now} />
           </div>
         )}
 
         {/* The search and the filter stay in view, so no match is a line, not a screen. */}
         {shown && shown.length === 0 && cards && cards.length > 0 && (
           <NoResults
-            title={
-              q ? (
-                <Trans>Nothing matches “{q}”</Trans>
-              ) : filter === "0" ? (
-                <Trans>No New cards in this deck</Trans>
-              ) : filter === "1" ? (
-                <Trans>No Learning cards in this deck</Trans>
-              ) : (
-                <Trans>No Known cards in this deck</Trans>
-              )
-            }
-            detail={q ? <Trans>Search looks at the term and the meaning.</Trans> : undefined}
+            title={query ? t`Nothing matches “${query}”` : t`No cards match these filters`}
+            detail={query ? <Trans>Search looks at the term and the meaning.</Trans> : undefined}
             action={
-              <Button size="sm" onClick={() => (q ? setQ("") : setFilter("all"))}>
-                {q ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}
-              </Button>
+              filtered ? (
+                <Button size="sm" onClick={clearAll}>
+                  {query ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}
+                </Button>
+              ) : undefined
             }
           />
         )}
       </Page>
 
-      {/* Desktop: the card beside the list. Sticky, with its own scroll, so J and K walk the
-          list while the page follows. */}
-      {word && (
-        <aside className="sticky top-0 hidden max-h-dvh w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-canvas px-7 pb-10 pt-6 @3xl:block">
+      {/* Beside the list: sticky, with its own scroll, so J and K walk the list while the page follows. */}
+      {open && beside && (
+        <aside className="sticky top-0 max-h-dvh w-[400px] shrink-0 overflow-y-auto border-s border-edge bg-plate px-7 pt-6 pb-10">
           {word}
         </aside>
+      )}
+      {!beside && !st && (
+        <Dialog
+          kind="place"
+          open={!!open && !measuring}
+          onOpenChange={(next) => {
+            if (next) return;
+            // A field being edited saves on blur, which removing the sheet would skip.
+            (document.activeElement as HTMLElement | null)?.blur();
+            setOpen(null);
+          }}
+        >
+          <DialogContent
+            placement="end"
+            aria-labelledby={titleId}
+            initialFocus={() => document.getElementById(titleId)}
+            className="px-7 pt-6 pb-10"
+          >
+            {word}
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );

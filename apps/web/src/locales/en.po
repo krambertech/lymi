@@ -182,11 +182,11 @@ msgstr "{due, plural, one {# due today} other {# due today}}"
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 
-msgid "{due, plural, one {card due now} other {cards due now}}"
-msgstr "{due, plural, one {card due now} other {cards due now}}"
-
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {card due today} other {cards due today}}"
+
+msgid "{due, plural, one {card to review now} other {cards to review now}}"
+msgstr "{due, plural, one {card to review now} other {cards to review now}}"
 
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
@@ -288,6 +288,9 @@ msgstr "A notification on this device when cards are due."
 
 msgid "A sentence it lives in"
 msgstr "A sentence it lives in"
+
+msgid "A–Z"
+msgstr "A–Z"
 
 msgid "About this deck"
 msgstr "About this deck"
@@ -393,6 +396,9 @@ msgstr "Animated images can’t be used. Choose a still image."
 
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
+
+msgid "Any time"
+msgstr "Any time"
 
 msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 msgstr "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
@@ -525,6 +531,9 @@ msgstr "Choose new…"
 
 msgid "Choose one"
 msgstr "Choose one"
+
+msgid "Clear filters"
+msgstr "Clear filters"
 
 msgid "Clear search"
 msgstr "Clear search"
@@ -694,11 +703,20 @@ msgstr "Drag or use the arrow keys to move the photo."
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Drag to move the photo. Pinch or use the slider to zoom."
 
+msgid "Due"
+msgstr "Due"
+
 msgid "Due now"
 msgstr "Due now"
 
 msgid "due this week"
 msgstr "due this week"
+
+msgid "Due this week"
+msgstr "Due this week"
+
+msgid "Due today"
+msgstr "Due today"
 
 msgid "Each block is a day. They join up when you keep going."
 msgstr "Each block is a day. They join up when you keep going."
@@ -742,6 +760,9 @@ msgstr "Export as CSV"
 
 msgid "Export as CSV without pictures"
 msgstr "Export as CSV without pictures"
+
+msgid "Filter"
+msgstr "Filter"
 
 msgid "For scripts and curl. An assistant signs in instead, under Connected apps."
 msgstr "For scripts and curl. An assistant signs in instead, under Connected apps."
@@ -899,6 +920,10 @@ msgstr "Keyboard shortcuts"
 msgid "Known"
 msgstr "Known"
 
+msgctxt "cards in this state"
+msgid "Known"
+msgstr "Known"
+
 msgid "Language"
 msgstr "Language"
 
@@ -906,9 +931,16 @@ msgstr "Language"
 msgid "Language changed to {0}"
 msgstr "Language changed to {0}"
 
+msgid "Later"
+msgstr "Later"
+
 msgid "Later today"
 msgstr "Later today"
 
+msgid "Learning"
+msgstr "Learning"
+
+msgctxt "cards in this state"
 msgid "Learning"
 msgstr "Learning"
 
@@ -920,6 +952,9 @@ msgstr "Leave review"
 
 msgid "Leave review or close a sheet"
 msgstr "Leave review or close a sheet"
+
+msgid "Lesson"
+msgstr "Lesson"
 
 msgid "Lesson 15"
 msgstr "Lesson 15"
@@ -1016,9 +1051,10 @@ msgstr "never used"
 msgid "Never, whatever you choose"
 msgstr "Never, whatever you choose"
 
-msgid "new"
-msgstr "new"
+msgid "New"
+msgstr "New"
 
+msgctxt "cards in this state"
 msgid "New"
 msgstr "New"
 
@@ -1060,6 +1096,9 @@ msgstr "No card keeps slipping"
 msgid "No cards in {0} yet"
 msgstr "No cards in {0} yet"
 
+msgid "No cards match these filters"
+msgstr "No cards match these filters"
+
 msgid "No cards yet"
 msgstr "No cards yet"
 
@@ -1078,26 +1117,17 @@ msgstr "No description yet. Picture review waits for one, so this card is asked 
 msgid "No keys yet"
 msgstr "No keys yet"
 
-msgid "No Known cards in this deck"
-msgstr "No Known cards in this deck"
-
 msgid "No language"
 msgstr "No language"
 
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "No language by that name. Type its tag to use it anyway."
 
-msgid "No Learning cards in this deck"
-msgstr "No Learning cards in this deck"
-
 msgid "No lesson"
 msgstr "No lesson"
 
 msgid "No meaning yet"
 msgstr "No meaning yet"
-
-msgid "No New cards in this deck"
-msgstr "No New cards in this deck"
 
 msgid "No reviews yet. Each block here will be a day."
 msgstr "No reviews yet. Each block here will be a day."
@@ -1153,8 +1183,8 @@ msgstr "Nothing left today"
 msgid "Nothing left today."
 msgstr "Nothing left today."
 
-msgid "Nothing matches “{q}”"
-msgstr "Nothing matches “{q}”"
+msgid "Nothing matches “{query}”"
+msgstr "Nothing matches “{query}”"
 
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Nothing was shared. You can start again from {appName} whenever you like."
@@ -1310,6 +1340,9 @@ msgstr "Recall by month: {series}. The schedule aims for 90%."
 msgid "Recall by week: {series}. The schedule aims for 90%."
 msgstr "Recall by week: {series}. The schedule aims for 90%."
 
+msgid "Recently added"
+msgstr "Recently added"
+
 msgid "Recognised app at"
 msgstr "Recognised app at"
 
@@ -1334,6 +1367,9 @@ msgstr "Reminders stay off until notifications are allowed."
 msgctxt "photo"
 msgid "Remove"
 msgstr "Remove"
+
+msgid "Remove filter: {label}"
+msgstr "Remove filter: {label}"
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
@@ -1517,11 +1553,21 @@ msgstr "Some grades haven’t synced"
 msgid "Something went wrong. Try again from the app."
 msgstr "Something went wrong. Try again from the app."
 
+msgid "Sort"
+msgstr "Sort"
+
+#. placeholder {0}: sortName[sort]
+msgid "Sort: {0}"
+msgstr "Sort: {0}"
+
 msgid "Start review"
 msgstr "Start review"
 
 msgid "Start with a deck"
 msgstr "Start with a deck"
+
+msgid "State"
+msgstr "State"
 
 msgid "Stay connected"
 msgstr "Stay connected"
@@ -1660,14 +1706,14 @@ msgstr "This join link stopped working. Ask for a new one."
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
 
+msgid "This week"
+msgstr "This week"
+
 msgid "Time"
 msgstr "Time"
 
 msgid "to hurry up"
 msgstr "to hurry up"
-
-msgid "today"
-msgstr "today"
 
 msgid "Today"
 msgstr "Today"
@@ -1750,6 +1796,9 @@ msgstr "What it adds lands at once and is labelled. You can edit or archive any 
 
 msgid "What it means"
 msgstr "What it means"
+
+msgid "When it’s back"
+msgstr "When it’s back"
 
 msgid "Which days you reviewed"
 msgstr "Which days you reviewed"

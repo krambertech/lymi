@@ -180,13 +180,27 @@ export async function readZipEntry(
   if (entry.size > limit) throw new ImportFileError("too_large", "An entry is too large");
   const out = new Uint8Array(entry.size);
   let filled = 0;
-  for await (const chunk of await zipEntryStream(file, entry)) {
+  for await (const chunk of chunks(await zipEntryStream(file, entry))) {
     if (filled + chunk.length > out.length) throw damaged("entry");
     out.set(chunk, filled);
     filled += chunk.length;
   }
   if (filled !== out.length) throw damaged("entry");
   return out;
+}
+
+/** A stream's chunks, read without relying on the stream being async iterable. */
+async function* chunks(stream: ReadableStream<Uint8Array>) {
+  const reader = stream.getReader();
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) return;
+      yield value;
+    }
+  } finally {
+    reader.releaseLock();
+  }
 }
 
 /** Whether bytes start a zstd frame. */
@@ -224,7 +238,7 @@ export async function zstdDecompress(
 
 async function pump(stream: ReadableStream<Uint8Array>, decompress: Decompress) {
   try {
-    for await (const chunk of stream) decompress.push(chunk);
+    for await (const chunk of chunks(stream)) decompress.push(chunk);
     decompress.push(new Uint8Array(), true);
   } catch (err) {
     if (err instanceof ImportFileError) throw err;

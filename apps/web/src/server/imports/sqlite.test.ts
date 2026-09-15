@@ -117,6 +117,15 @@ describe("parseCreateTable", () => {
       order: [0],
     });
   });
+  it("finds the rowid alias when constraints come before PRIMARY KEY", () => {
+    expect(
+      parseCreateTable("create table notetypes (id integer not null primary key, name text)", 4)
+        .order,
+    ).toEqual([0]);
+    expect(parseCreateTable("create table t (id int primary key, name text)", 4).order).toEqual([
+      -1,
+    ]);
+  });
   it("orders a WITHOUT ROWID table's key columns first", () => {
     expect(
       parseCreateTable(

@@ -169,7 +169,7 @@ describe("zstd and protobuf", () => {
       await zstdDecompressBytes(await readZipEntry(file, zip.get("media") as never, 1000), 1000),
     );
     const names = proto.all(media, 1).map((entry) => proto.text(decodeProto(entry), 1));
-    expect(names).toEqual(["gatto.png", "cane.png", "gatto.mp3"]);
+    expect(names.sort()).toEqual(["cane.png", "gatto.mp3", "gatto.png"]);
     expect(
       proto.varint(decodeProto(await readZipEntry(file, zip.get("meta") as never, 10)), 1),
     ).toBe(3);

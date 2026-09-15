@@ -257,7 +257,10 @@ export function parseCreateTable(sql: string, rootPage: number): TableInfo {
     columns.push(name);
     if (/\bprimary\s+key\b/i.test(part)) {
       primary.push(name);
-      if (/^\S+\s+integer\s+primary\s+key\b/i.test(part)) aliasColumn = columns.length - 1;
+      // SQLite makes a column the rowid when its declared type is exactly INTEGER.
+      if (/^\S+\s+integer(\s|$)/i.test(part) && !/\bdesc\b/i.test(part)) {
+        aliasColumn = columns.length - 1;
+      }
     }
   }
   const withoutRowid = /\)\s*without\s+rowid\s*$/i.test(text.trim());

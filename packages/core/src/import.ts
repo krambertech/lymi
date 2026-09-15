@@ -53,6 +53,8 @@ export type ImportedReview = { at: Date; rating: Rating };
 export type ImportedProgress = {
   mode: ReviewModeKey;
   reviews: ImportedReview[];
+  /** The source treats the mode as not started, as after a reset; its log is history only. */
+  unstarted?: boolean | undefined;
   /** The due date the source had. Kept so the learner's schedule does not move on import. */
   due?: Date | undefined;
   /** The source's memory state, used only when the mode has a schedule and no log. */

@@ -76,7 +76,7 @@ def build(path):
     long_meaning = add(
         "Basic",
         lesson,
-        {"Front": "sbrigarsi", "Back": "to hurry up; " + "to get a move on, " * 40},
+        {"Front": "sbrigarsi", "Back": "to hurry up; " + "to get a move on, " * 70},
     )
     reversed_note = add(
         "Basic (and reversed card)", lesson, {"Front": "grazie", "Back": "thank you"}, ["phrases"]

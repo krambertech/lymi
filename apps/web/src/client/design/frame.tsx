@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Activity, Minus, Moon, Sun } from "lucide-react";
+import { Moon, Rabbit, Sun, Turtle } from "lucide-react";
 import { MotionConfig } from "motion/react";
 import {
   createContext,
@@ -236,8 +236,7 @@ export interface Variant {
   label: string;
   /** What this state is for, in one sentence. */
   note?: ReactNode | undefined;
-  /** Left out for a state that is described rather than shown, such as one that only exists in motion. */
-  render?: ((theme: FrameTheme) => ReactNode) | undefined;
+  render: (theme: FrameTheme) => ReactNode;
 }
 
 function subscribeRoot(onChange: () => void) {
@@ -281,7 +280,7 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
             pressed={reduced}
             onPressedChange={(next) => setPickedReduced(next === systemReduced ? null : next)}
           >
-            {reduced ? <Minus /> : <Activity />}
+            {reduced ? <Turtle /> : <Rabbit />}
           </CanvasSwitch>
           <CanvasSwitch
             label="Dark theme"
@@ -300,18 +299,14 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
             className={clsx(
               "grid",
               i > 0 && "border-t border-edge",
-              !stack && v.render && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
+              !stack && "@3xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]",
             )}
           >
             <div
               className={clsx(
                 // Annotations are set in mono so a note about a component never reads as part of it.
                 "grid content-start gap-1.5 px-5 pt-4 font-mono text-xs",
-                !v.render
-                  ? "pb-4 @3xl:py-5"
-                  : stack
-                    ? "pb-1"
-                    : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
+                stack ? "pb-1" : "pb-1 @3xl:border-e @3xl:border-edge @3xl:py-5",
                 // The first label shares its corner with the canvas switches.
                 i === 0 && (stack ? "pe-24" : "pe-24 @3xl:pe-5"),
               )}
@@ -321,16 +316,14 @@ export function Variants({ items, stack }: { items: Variant[]; stack?: boolean |
                 <p className="max-w-[80ch] leading-relaxed text-pretty text-muted">{v.note}</p>
               )}
             </div>
-            {v.render && (
-              <div
-                className={clsx(
-                  "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
-                  !stack && "@3xl:pe-24",
-                )}
-              >
-                {v.render(theme)}
-              </div>
-            )}
+            <div
+              className={clsx(
+                "@container flex min-w-0 flex-wrap items-center gap-3 p-5",
+                !stack && "@3xl:pe-24",
+              )}
+            >
+              {v.render(theme)}
+            </div>
           </div>
         ))}
       </MotionConfig>

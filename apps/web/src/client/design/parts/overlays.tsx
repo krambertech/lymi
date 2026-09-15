@@ -14,9 +14,6 @@ import { DeviceFrames } from "../device-frame";
 import { Variants } from "../frame";
 import type { Group } from "./types";
 
-const OVERLAY_MOTION =
-  "Switch this canvas to reduced motion, then press the button in either frame to open it again: the dialog fades in place without its rise, and the drawer crossfades instead of rising.";
-
 export const menu: Group = {
   slug: "menu",
   title: "Menu",
@@ -65,10 +62,6 @@ export const menu: Group = {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ),
-            },
-            {
-              label: "Reduced motion",
-              note: "On a desktop the list fades in place without growing, and the hover fill fades in on the row under the pointer instead of sliding to it. The drawer crossfades. Switch this canvas to reduced motion and open the frames again to try it.",
             },
           ]}
         />
@@ -169,10 +162,6 @@ export const overlays: Group = {
                 </DropdownMenu>
               ),
             },
-            {
-              label: "Reduced motion",
-              note: "The name fades in place without growing. A tooltip renders outside the canvas, so it follows the system setting rather than this canvas.",
-            },
           ]}
         />
       ),
@@ -189,10 +178,6 @@ export const overlays: Group = {
               label: "Open",
               note: "A plate with the strong edge, over the control, flipping below when there is no room. It grows out of the side nearest the control over 180 ms and shrinks back in 100.",
               render: () => <PopoverOpen />,
-            },
-            {
-              label: "Reduced motion",
-              note: "It fades in place without growing.",
             },
           ]}
         />
@@ -212,7 +197,6 @@ export const overlays: Group = {
               note: "On touch the drawer keeps the focused field above the software keyboard, and swipes away.",
               render: () => <DeviceFrames specimen="form" />,
             },
-            { label: "Reduced motion", note: OVERLAY_MOTION },
           ]}
         />
       ),
@@ -231,7 +215,6 @@ export const overlays: Group = {
               note: "On a desktop the actions sit in a row, the primary last. On touch they stack full width, the primary on top. The safe action names what stays.",
               render: () => <DeviceFrames specimen="confirmation" />,
             },
-            { label: "Reduced motion", note: OVERLAY_MOTION },
           ]}
         />
       ),
@@ -250,7 +233,6 @@ export const overlays: Group = {
               note: "Centred on a desktop. On touch a drawer over the whole screen with square corners and a close button; a swipe down closes it too.",
               render: () => <DeviceFrames specimen="place" />,
             },
-            { label: "Reduced motion", note: OVERLAY_MOTION },
           ]}
         />
       ),

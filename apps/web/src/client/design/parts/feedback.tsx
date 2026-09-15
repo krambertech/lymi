@@ -94,10 +94,6 @@ export const feedback: Group = {
                 />
               ),
             },
-            {
-              label: "Reduced motion",
-              note: "A toast fades in and out where it lands instead of rising from below the edge, and the stack restacks without travel. The app’s toast renders outside the canvas, so it follows the system setting rather than this canvas.",
-            },
           ]}
         />
       ),
@@ -114,10 +110,6 @@ export const feedback: Group = {
               label: "Try it",
               note: "The pronunciation button in review, after audio fails.",
               render: () => <ErrorTipTrigger />,
-            },
-            {
-              label: "Reduced motion",
-              note: "The tip fades in place without growing, and the button turns red without shaking.",
             },
           ]}
         />

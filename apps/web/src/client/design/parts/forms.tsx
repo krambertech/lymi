@@ -412,10 +412,6 @@ export const forms: Group = {
                   />
                 ),
               },
-              {
-                label: "Reduced motion",
-                note: "The plate fades in at the new option instead of travelling to it. Switch this canvas to reduced motion to try it.",
-              },
             ]}
           />
         );
@@ -437,10 +433,6 @@ export const forms: Group = {
                 render: () => (
                   <Segmented label="Direction" value={seg} onChange={setSeg} options={DIRECTIONS} />
                 ),
-              },
-              {
-                label: "Reduced motion",
-                note: "The plate fades in at the new option instead of travelling to it. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -531,10 +523,6 @@ export const forms: Group = {
                   </Field>
                 ),
               },
-              {
-                label: "Reduced motion",
-                note: "The thumb takes its new place at once and does not stretch while held. Switch this canvas to reduced motion to try it.",
-              },
             ]}
           />
         );
@@ -603,10 +591,6 @@ export const forms: Group = {
                     className={box}
                   />
                 ),
-              },
-              {
-                label: "Reduced motion",
-                note: "The thumb keeps its size while it is held. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -689,10 +673,6 @@ export const forms: Group = {
                     </FieldContent>
                   </Field>
                 ),
-              },
-              {
-                label: "Reduced motion",
-                note: "The box does not give and the tick fades in where it is, instead of drawing across. Switch this canvas to reduced motion to try it.",
               },
             ]}
           />
@@ -828,10 +808,6 @@ export const forms: Group = {
                   </FieldSet>
                 ),
               },
-              {
-                label: "Reduced motion",
-                note: "The dot fades in where it is instead of swelling past its size. Switch this canvas to reduced motion to try it.",
-              },
             ]}
           />
         );
@@ -858,9 +834,6 @@ export const forms: Group = {
     },
   ],
 };
-
-const MOTION_NOTE =
-  "Switch this canvas to reduced motion, then press the box in either frame to open it again: the panel fades in place and the drawer crossfades instead of rising.";
 
 export const select: Group = {
   slug: "select",
@@ -968,7 +941,6 @@ export const select: Group = {
               note: "On touch the list’s drawer stacks over the form’s, and the form steps back.",
               render: () => <DeviceFrames specimen="nested" />,
             },
-            { label: "Reduced motion", note: MOTION_NOTE },
           ]}
         />
       ),
@@ -1075,7 +1047,6 @@ export const combobox: Group = {
               note: "On a desktop the search field leads the panel. On touch it leads a drawer that keeps one height while the rows filter, so the drawer does not jump with each letter.",
               render: () => <DeviceFrames specimen="combobox" />,
             },
-            { label: "Reduced motion", note: MOTION_NOTE },
           ]}
         />
       ),

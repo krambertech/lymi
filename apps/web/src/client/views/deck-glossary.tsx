@@ -409,8 +409,8 @@ function SectionHeading({
         <span className="ms-2 text-sm font-normal text-muted">{i18n.number(count)}</span>
       </h2>
       {here && (
-        // Ink on the room, not amber: it says where the learner is and asks for nothing.
-        <span className="inline-flex h-6 items-center gap-1 rounded-full bg-text ps-1.5 pe-2.5 text-sm font-medium text-canvas">
+        // Green, not amber: it says where the learner is and asks for nothing.
+        <span className="inline-flex h-6 items-center gap-1 rounded-full bg-good ps-1.5 pe-2.5 text-sm font-medium text-canvas">
           <MapPin className="size-3.5" aria-hidden="true" />
           <Trans>You are here</Trans>
         </span>

@@ -28,7 +28,9 @@
     "PUBLIC_SITE_URL": "https://lymi.app",
     "PRODUCT_URL": "https://my.lymi.app",
     // Comma-separated. Only these Google accounts can sign in while the app is private.
-    "ALLOWED_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com"
+    "ALLOWED_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com",
+    // Comma-separated. Accounts that may publish decks they own to the public catalog. ADR 0020.
+    "PUBLISHER_EMAILS": ""
   },
   "d1_databases": [
     {

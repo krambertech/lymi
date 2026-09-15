@@ -11,6 +11,7 @@ export * from "./imports";
 export * from "./invitations";
 export * from "./members";
 export * from "./modes";
+export * from "./publications";
 export * from "./push";
 export * from "./review";
 export * from "./review-days";

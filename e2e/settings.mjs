@@ -32,6 +32,7 @@ export const e2eAccounts = [
   "anki-import",
   "sections",
   "mochi-import",
+  "publisher",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];
@@ -46,6 +47,13 @@ export function e2eEmail(account, project, retry, repeat) {
   if (!e2eRepeats.includes(repeat)) throw new Error(`Unsupported E2E repeat: ${repeat}`);
   return `e2e-${account}-${project}-r${retry}-p${repeat}@lymi.local`;
 }
+
+/** Accounts that may publish, so the published-deck journey can publish its own deck. */
+export const e2ePublisherEmails = e2eProjects.flatMap((project) =>
+  e2eRetries.flatMap((retry) =>
+    e2eRepeats.map((repeat) => e2eEmail("publisher", project, retry, repeat)),
+  ),
+);
 
 export const e2eAllowedEmails = e2eAccounts.flatMap((account) =>
   e2eProjects.flatMap((project) =>

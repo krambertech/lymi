@@ -303,6 +303,41 @@ export const deckInvitations = sqliteTable(
 );
 
 /**
+ * A deck anyone can add from its public page. The deck stays one live deck with many learners;
+ * this row holds only what the public page may show. Withdrawing keeps members studying. ADR 0015.
+ */
+export const deckPublications = sqliteTable(
+  "deck_publications",
+  {
+    id: text("id").primaryKey(),
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    /** The public URL part: `lymi.app/decks/<slug>` and `my.lymi.app/add/<slug>`. */
+    slug: text("slug").notNull(),
+    status: text("status", { enum: ["published", "withdrawn"] }).notNull(),
+    summary: text("summary").notNull(),
+    /** A CEFR level such as A1, or null when the deck has none. */
+    level: text("level"),
+    meaningLanguage: text("meaning_language").notNull(),
+    publisher: text("publisher").notNull(),
+    sources: text("sources", { mode: "json" })
+      .$type<{ title: string; url?: string | undefined }[]>()
+      .notNull(),
+    reviewedAt: integer("reviewed_at", { mode: "timestamp_ms" }),
+    /** Goes up on every publish, so public caches key on it. */
+    revision: integer("revision").notNull().default(1),
+    publishedAt: integer("published_at", { mode: "timestamp_ms" }).notNull(),
+    withdrawnAt: integer("withdrawn_at", { mode: "timestamp_ms" }),
+    ...timestamps,
+  },
+  (t) => [
+    uniqueIndex("deck_publications_deck_idx").on(t.deckId),
+    uniqueIndex("deck_publications_slug_idx").on(t.slug),
+  ],
+);
+
+/**
  * FSRS state per learner per card per direction. The full ts-fsrs Card lives in `fsrs` as
  * JSON so the library can evolve without a migration; `due` and `state` are copied out for
  * queries. A shared deck's card has one row per member, so progress is never shared.
@@ -533,6 +568,7 @@ export type SectionStart = typeof sectionStarts.$inferSelect;
 export type Card = typeof cards.$inferSelect;
 export type DeckMember = typeof deckMembers.$inferSelect;
 export type DeckInvitation = typeof deckInvitations.$inferSelect;
+export type DeckPublication = typeof deckPublications.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type CardImage = typeof cardImages.$inferSelect;
 export type Review = typeof reviews.$inferSelect;

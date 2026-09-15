@@ -12,7 +12,7 @@ import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
 import { allowedEmails, type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
-import { attributes, cookieName, joinTokenFrom } from "./join-cookie";
+import { type Admission, admissionFrom, attributes, cookieName } from "./join-cookie";
 import {
   avatarRow,
   hasGoogleAvatar,
@@ -21,6 +21,7 @@ import {
 } from "./services/avatars";
 import { ServiceError } from "./services/context";
 import { joinLinkAdmits, joinThroughLink } from "./services/invitations";
+import { addPublishedDeck, publicationAdmits } from "./services/publications";
 
 /**
  * Better Auth must be created per request on Workers because D1 and KV bindings are
@@ -135,15 +136,15 @@ export function createAuth(
     databaseHooks: {
       user: {
         create: {
-          // The allowlist. While the app is private, only these accounts, or someone who
-          // arrived through a working join link, can create a user. ADR 0011.
+          // The allowlist. Only these accounts, or someone who arrived through a working join
+          // link or a published deck, can create a user. ADR 0011 and ADR 0020.
           before: async (user, context) => {
             const email = user.email.toLowerCase();
             // Persona accounts need no entry in .dev.vars; they cannot exist outside a local D1.
             const persona = dev && email.endsWith(DEV_EMAIL_DOMAIN);
             if (allowed.has(email) || persona) return { data: user };
-            const token = joinTokenFrom(env.PRODUCT_URL, headersOf(context));
-            if (token && (await joinLinkAdmits(db, token))) return { data: user };
+            const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
+            if (admission && (await admits(db, admission))) return { data: user };
             throw new APIError("FORBIDDEN", {
               message: "This is a private app. Your account is not on the list.",
             });
@@ -152,16 +153,18 @@ export function createAuth(
       },
       session: {
         create: {
-          // Finish a join that sign-in interrupted. A refused join still signs the learner
-          // in; the join page then says why.
+          // Finish a join or an add that sign-in interrupted. A refused one still signs the
+          // learner in; the join or add page then says why.
           after: async (session, context) => {
             if (isGoogleCallback(context)) {
               await syncGoogleAvatar(env, db, session.userId, waitUntil);
             }
-            const token = joinTokenFrom(env.PRODUCT_URL, headersOf(context));
-            if (!token) return;
+            const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
+            if (!admission) return;
+            const ctx = { db, userId: session.userId, actor: "user" as const };
             try {
-              await joinThroughLink({ db, userId: session.userId, actor: "user" }, token);
+              if (admission.kind === "link") await joinThroughLink(ctx, admission.token);
+              else await addPublishedDeck(ctx, admission.slug);
             } catch (err) {
               if (!(err instanceof ServiceError)) console.error("Joining after sign-in failed");
             }
@@ -233,6 +236,12 @@ async function googlePictureOf(db: Db, userId: string): Promise<string | null> {
     .from(schema.account)
     .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "google")));
   return account?.idToken ? pictureFromIdToken(account.idToken) : null;
+}
+
+function admits(db: Db, admission: Admission): Promise<boolean> {
+  return admission.kind === "link"
+    ? joinLinkAdmits(db, admission.token)
+    : publicationAdmits(db, admission.slug);
 }
 
 function headersOf(context: GenericEndpointContext | null): Headers | undefined {

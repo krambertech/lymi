@@ -111,6 +111,38 @@ export const DeckInput = z.object({
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
+/** Lower-case words joined by hyphens, as in `everyday-estonian`. */
+export const PUBLICATION_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export const PublicationInput = z
+  .object({
+    slug: z
+      .string()
+      .min(3)
+      .max(80)
+      .regex(PUBLICATION_SLUG, "Use lower-case words joined by hyphens, like everyday-estonian.")
+      .meta({ description: "The public URL part. Changing it breaks links already shared." }),
+    summary: z.string().trim().min(1).max(500).meta({ description: "One or two plain sentences" }),
+    level: z
+      .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
+      .nullable()
+      .optional()
+      .meta({ description: "CEFR level" }),
+    meaningLanguage: LanguageTag.meta({ description: "The language the meanings are written in" }),
+    publisher: z.string().trim().min(1).max(80),
+    sources: z
+      .array(z.object({ title: z.string().trim().min(1).max(200), url: z.url().optional() }))
+      .max(20)
+      .default([]),
+    reviewedAt: z.iso
+      .date()
+      .nullable()
+      .optional()
+      .meta({ description: "When a person last checked the whole deck" }),
+  })
+  .meta({ id: "PublicationInput" });
+export type PublicationInput = z.infer<typeof PublicationInput>;
+
 const SeriesName = z
   .string()
   .trim()

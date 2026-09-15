@@ -24,7 +24,7 @@ People can discover a useful public deck on `lymi.app`, choose its meaning langu
 - Public pages show useful, crawlable information, representative previews, sources, publisher, language pair, scope, and editorial status without exposing learner data.
 - Adding crosses from the public origin to the product origin, survives sign-in, and is idempotent.
 
-The first content proof is one compact essential-language series with a few sections and at least two human-reviewed meaning-language editions. Ukrainian driving material follows only when image support, authoritative sources, redistribution rights, jurisdiction, and editorial ownership are clear.
+The first content proof is Everyday Estonian: one A1 deck in eight sections, published with English meanings by a separate Lymi publisher account, with its full card list on the public page. A second meaning-language edition follows once editions exist. Adding a published deck admits sign-up ([ADR 0020](../adr/0020-a-published-deck-admits-anyone-who-adds-it.md)). Ukrainian driving material follows only when image support, authoritative sources, redistribution rights, jurisdiction, and editorial ownership are clear.
 
 Community publishing, ranking, comments, collaborative editing, classes, assignments, creator payments, and automatic AI publication remain later directions.
 

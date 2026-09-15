@@ -15,6 +15,8 @@ import { publicSiteUrl } from "../lib/origins";
 
 export interface JoinProps {
   preview: JoinPreviewOut | undefined;
+  /** A join link someone shared, or a published deck added from its public page. */
+  kind?: "link" | "publication" | undefined;
   /** Signed out: carry the link through Google sign-in. */
   onJoinWithGoogle?: (() => void) | undefined;
   /** Signed in and not yet a member. */
@@ -29,7 +31,15 @@ export interface JoinProps {
  * A deck's join page. A classmate arrives from a chat on their phone, often signed out, so it
  * says whose deck it is, lets a few of its cards drift past, and offers one button. ADR 0011.
  */
-export function JoinView({ preview, onJoinWithGoogle, onJoin, busy, error, devSignIn }: JoinProps) {
+export function JoinView({
+  preview,
+  kind = "link",
+  onJoinWithGoogle,
+  onJoin,
+  busy,
+  error,
+  devSignIn,
+}: JoinProps) {
   const { t } = useLingui();
   return (
     <div className="@container min-h-dvh flex-1 bg-canvas text-text">
@@ -55,6 +65,7 @@ export function JoinView({ preview, onJoinWithGoogle, onJoin, busy, error, devSi
           ) : preview.status === "live" && preview.deck ? (
             <LiveLink
               preview={preview}
+              kind={kind}
               deck={preview.deck}
               onJoinWithGoogle={onJoinWithGoogle}
               onJoin={onJoin}
@@ -62,7 +73,7 @@ export function JoinView({ preview, onJoinWithGoogle, onJoin, busy, error, devSi
               error={error}
             />
           ) : (
-            <DeadLink preview={preview} />
+            <DeadLink preview={preview} kind={kind} />
           )}
         </main>
 
@@ -77,6 +88,7 @@ export function JoinView({ preview, onJoinWithGoogle, onJoin, busy, error, devSi
 
 function LiveLink({
   preview,
+  kind,
   deck,
   onJoinWithGoogle,
   onJoin,
@@ -92,6 +104,7 @@ function LiveLink({
   const [samples] = useState(deck.samples);
   const lastAdded = deck.lastAddedAt ? sinceLabel(i18n.locale, new Date(deck.lastAddedAt)) : null;
   const newcomer = viewer === "signed-out" || viewer === "visitor";
+  const published = kind === "publication";
 
   return (
     <div className="mx-auto grid w-full max-w-[26rem] grid-cols-[minmax(0,1fr)] @4xl:max-w-none @4xl:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] @4xl:grid-rows-[auto_auto] @4xl:gap-x-20">
@@ -100,6 +113,8 @@ function LiveLink({
           <Avatar name={deck.owner.name} size={24} />
           {viewer === "owner" ? (
             <Trans>Your deck</Trans>
+          ) : published ? (
+            <Trans>From {deck.owner.name}</Trans>
           ) : (
             <Trans>{deck.owner.name} shared a deck</Trans>
           )}
@@ -170,20 +185,34 @@ function LiveLink({
         )}
         {viewer === "owner" && (
           <AuthNotice tone="neutral" role="status" className="mt-9 @4xl:mt-8">
-            <Trans>Anyone with this link can join and review these cards.</Trans>
+            {published ? (
+              <Trans>Anyone can add this deck from its public page.</Trans>
+            ) : (
+              <Trans>Anyone with this link can join and review these cards.</Trans>
+            )}
           </AuthNotice>
         )}
         {viewer === "member" && (
           <AuthNotice tone="success" role="status" className="mt-9 @4xl:mt-8">
-            <Trans>You are already in this deck.</Trans>
+            {published ? (
+              <Trans>This deck is already in your Library.</Trans>
+            ) : (
+              <Trans>You are already in this deck.</Trans>
+            )}
           </AuthNotice>
         )}
         {viewer === "removed" && (
           <AuthNotice tone="neutral" role="status" className="mt-9 @4xl:mt-8">
-            <Trans>
-              You were removed from this deck, so this link cannot add you back. Your reviews are
-              kept.
-            </Trans>
+            {published ? (
+              <Trans>
+                You were removed from this deck, so you cannot add it again. Your reviews are kept.
+              </Trans>
+            ) : (
+              <Trans>
+                You were removed from this deck, so this link cannot add you back. Your reviews are
+                kept.
+              </Trans>
+            )}
           </AuthNotice>
         )}
 
@@ -210,7 +239,7 @@ function LiveLink({
             aria-disabled={!onJoinWithGoogle}
             className="mt-7 w-full"
           >
-            <Trans>Join with Google</Trans>
+            {published ? <Trans>Add with Google</Trans> : <Trans>Join with Google</Trans>}
           </Button>
         ) : viewer === "visitor" ? (
           <Button
@@ -221,7 +250,7 @@ function LiveLink({
             aria-disabled={!onJoin}
             className="mt-7 w-full"
           >
-            <Trans>Join</Trans>
+            {published ? <Trans>Add to Lymi</Trans> : <Trans>Join</Trans>}
           </Button>
         ) : (
           <a href="/" className={buttonClass("secondary", "lg", "mt-7 w-full")}>
@@ -233,12 +262,27 @@ function LiveLink({
   );
 }
 
-function DeadLink({ preview }: { preview: JoinPreviewOut }) {
+function DeadLink({
+  preview,
+  kind,
+}: {
+  preview: JoinPreviewOut;
+  kind: NonNullable<JoinProps["kind"]>;
+}) {
   const { deckId } = preview;
+  const published = kind === "publication";
   return (
     <div className="mx-auto w-full max-w-[26rem] text-center">
       <h1 className="text-balance text-2xl font-medium tracking-[-0.02em] text-text">
-        {preview.status === "off" ? (
+        {published ? (
+          preview.status === "off" ? (
+            <Trans>This deck is no longer published</Trans>
+          ) : preview.status === "archived" ? (
+            <Trans>This deck is archived</Trans>
+          ) : (
+            <Trans>There is no deck at this address</Trans>
+          )
+        ) : preview.status === "off" ? (
           <Trans>This join link is turned off</Trans>
         ) : preview.status === "archived" ? (
           <Trans>This deck is archived</Trans>
@@ -247,7 +291,15 @@ function DeadLink({ preview }: { preview: JoinPreviewOut }) {
         )}
       </h1>
       <p className="mx-auto mt-2 max-w-[40ch] text-pretty text-md text-text-2">
-        {preview.status === "off" ? (
+        {published ? (
+          preview.status === "off" ? (
+            <Trans>Nobody new can add it.</Trans>
+          ) : preview.status === "archived" ? (
+            <Trans>Nobody can add it while it is archived.</Trans>
+          ) : (
+            <Trans>Check that the whole link was copied.</Trans>
+          )
+        ) : preview.status === "off" ? (
           <Trans>Ask the person who shared it for a new link.</Trans>
         ) : preview.status === "archived" ? (
           <Trans>Nobody can join it while it is archived.</Trans>

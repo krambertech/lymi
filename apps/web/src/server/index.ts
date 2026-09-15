@@ -6,7 +6,7 @@ import { createDb, type Db } from "./db";
 import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
 import { describe, handleError } from "./http";
-import { joinPage } from "./join-page";
+import { addPage, joinPage } from "./join-page";
 import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
@@ -14,6 +14,7 @@ import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
+import { add, addOpen } from "./routes/add";
 import { audio } from "./routes/audio";
 import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
@@ -97,6 +98,9 @@ app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
 // authentication and renders its own state. ADR 0011.
 app.get("/join/:token", joinPage);
 app.route("/api/join", joinOpen);
+// Where "Add to Lymi" on a published deck's public page lands. ADR 0020.
+app.get("/add/:slug", addPage);
+app.route("/api/add", addOpen);
 
 // OAuth discovery lives at the site root by RFC 8414 and RFC 9728. Better Auth answers these
 // from its request hooks, so they are forwarded as they are.
@@ -163,6 +167,7 @@ app.route("/api/series", series);
 app.route("/api/decks", deckSections);
 app.route("/api/sections", sections);
 app.route("/api/join", join);
+app.route("/api/add", add);
 app.route("/api/cards", cards);
 app.route("/api/cards", images);
 app.route("/api/review", review);

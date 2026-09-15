@@ -4,6 +4,8 @@ PUBLIC_SITE_URL=http://localhost:5173
 PRODUCT_URL=http://localhost:5173
 # Local dev accepts email + password sign-in. Add the address you will use here.
 ALLOWED_EMAILS=kateryna@buffer.com,dev@lymi.local
+# Accounts that may publish decks they own. ADR 0020.
+PUBLISHER_EMAILS=dev@lymi.local
 BETTER_AUTH_SECRET=change-me-to-32-random-chars
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=

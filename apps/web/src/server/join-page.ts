@@ -6,7 +6,7 @@ import { configureHtml } from "./html";
 import { serverI18n } from "./i18n";
 import type { AppEnv } from "./index";
 import { clearedJoinCookie } from "./join-cookie";
-import { previewJoin } from "./services";
+import { previewJoin, previewPublication } from "./services";
 
 /** The element the client reads the preview from, so the page paints without a second request. */
 export const JOIN_PREVIEW_ELEMENT_ID = "lymi-join-preview";
@@ -18,17 +18,40 @@ const STATUS = { live: 200, invalid: 404, off: 410, archived: 410 } as const;
  * title and Open Graph tags a chat preview reads; the product shell renders the page. ADR 0011.
  */
 export async function joinPage(c: Context<AppEnv>) {
-  const token = c.req.param("token") ?? "";
   const session = await c.get("auth").api.getSession({ headers: c.req.raw.headers });
-  const preview = await previewJoin(c.get("db"), token, session?.user.id ?? null);
+  const preview = await previewJoin(
+    c.get("db"),
+    c.req.param("token") ?? "",
+    session?.user.id ?? null,
+  );
+  return doorPage(c, preview, session !== null, "link");
+}
+
+/** `/add/<slug>`: where "Add to Lymi" on a published deck's public page lands. ADR 0020. */
+export async function addPage(c: Context<AppEnv>) {
+  const session = await c.get("auth").api.getSession({ headers: c.req.raw.headers });
+  const preview = await previewPublication(
+    c.get("db"),
+    c.req.param("slug") ?? "",
+    session?.user.id ?? null,
+  );
+  return doorPage(c, preview, session !== null, "publication");
+}
+
+async function doorPage(
+  c: Context<AppEnv>,
+  preview: JoinPreviewOut,
+  signedIn: boolean,
+  kind: DoorKind,
+) {
   const headers = new Headers({
     "cache-control": "private, no-store",
-    // The token is in the path; no request from this page may carry it elsewhere.
+    // A join token is in the path; no request from this page may carry it elsewhere.
     "referrer-policy": "same-origin",
   });
 
-  // Back from sign-in: the session hook has joined, so go straight to the deck.
-  if (c.req.query("continue") === "1" && session) {
+  // Back from sign-in: the session hook has joined or added, so go straight to the deck.
+  if (c.req.query("continue") === "1" && signedIn) {
     headers.append("set-cookie", clearedJoinCookie(c.env.PRODUCT_URL));
     if (preview.deckId) {
       headers.set("location", `/library/${preview.deckId}`);
@@ -39,7 +62,7 @@ export async function joinPage(c: Context<AppEnv>) {
   const i18n = await serverI18n(negotiate(c.req.header("accept-language")));
   const shell = await c.env.ASSETS.fetch(new Request(new URL("/index.html", c.req.url)));
   const page = configureHtml(
-    withJoinMetadata(shell, preview, i18n, new URL(c.req.path, c.env.PRODUCT_URL)),
+    withJoinMetadata(shell, preview, i18n, new URL(c.req.path, c.env.PRODUCT_URL), kind),
     c.env,
   );
   for (const [key, value] of page.headers) {
@@ -48,8 +71,16 @@ export async function joinPage(c: Context<AppEnv>) {
   return new Response(page.body, { status: STATUS[preview.status], headers });
 }
 
-function withJoinMetadata(shell: Response, preview: JoinPreviewOut, i18n: I18n, url: URL) {
-  const { title, description } = describePreview(preview, i18n);
+type DoorKind = "link" | "publication";
+
+function withJoinMetadata(
+  shell: Response,
+  preview: JoinPreviewOut,
+  i18n: I18n,
+  url: URL,
+  kind: DoorKind,
+) {
+  const { title, description } = describePreview(preview, i18n, kind);
   const image = new URL("/icons/icon-512.png", url).toString();
   const meta = [
     ["property", "og:type", "website"],
@@ -95,7 +126,8 @@ function withJoinMetadata(shell: Response, preview: JoinPreviewOut, i18n: I18n, 
     .transform(shell);
 }
 
-export function describePreview(preview: JoinPreviewOut, i18n: I18n) {
+export function describePreview(preview: JoinPreviewOut, i18n: I18n, kind: DoorKind = "link") {
+  if (kind === "publication") return describePublication(preview, i18n);
   switch (preview.status) {
     case "live": {
       const deck = preview.deck;
@@ -123,6 +155,36 @@ export function describePreview(preview: JoinPreviewOut, i18n: I18n) {
       return {
         title: i18n._(msg`This join link does not work`),
         description: i18n._(msg`Check that the whole link was copied, or ask for a new one.`),
+      };
+  }
+}
+
+function describePublication(preview: JoinPreviewOut, i18n: I18n) {
+  switch (preview.status) {
+    case "live": {
+      const name = preview.deck?.name ?? "";
+      const total = preview.deck?.total ?? 0;
+      return {
+        title: i18n._(msg`Add ${name} to Lymi`),
+        description: i18n._(
+          msg`${plural(total, { one: "# card", other: "# cards" })}. Add the deck to review them on your own schedule.`,
+        ),
+      };
+    }
+    case "off":
+      return {
+        title: i18n._(msg`This deck is no longer published`),
+        description: i18n._(msg`People who added it keep studying it, but nobody new can add it.`),
+      };
+    case "archived":
+      return {
+        title: i18n._(msg`This deck is archived`),
+        description: i18n._(msg`Nobody can add it while it is archived.`),
+      };
+    case "invalid":
+      return {
+        title: i18n._(msg`There is no deck at this address`),
+        description: i18n._(msg`Check that the whole link was copied.`),
       };
   }
 }

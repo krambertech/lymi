@@ -68,6 +68,14 @@ export const joinPreviewQuery = (token: string) =>
     retry: false,
     meta: { persist: false },
   });
+export const addPreviewQuery = (slug: string) =>
+  queryOptions({
+    queryKey: ["add", slug],
+    queryFn: () => api.addPreview(slug),
+    staleTime: 0,
+    retry: false,
+    meta: { persist: false },
+  });
 export const cardHistoryQuery = (cardId: string) =>
   queryOptions({
     queryKey: ["cards", cardId, "history"],

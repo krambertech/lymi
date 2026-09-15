@@ -477,6 +477,9 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 msgid "{total, plural, one {# card} other {# cards}} from {owner}. Join to review them on your own schedule."
 msgstr "{total, plural, one {# card} other {# cards}} from {owner}. Join to review them on your own schedule."
 
+msgid "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
+msgstr "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
+
 #. placeholder {0}: 30
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
@@ -557,6 +560,9 @@ msgstr "Activity"
 msgid "Add"
 msgstr "Add"
 
+msgid "Add {name} to Lymi"
+msgstr "Add {name} to Lymi"
+
 msgid "Add a card"
 msgstr "Add a card"
 
@@ -601,6 +607,12 @@ msgstr "Add some from your next lesson"
 
 msgid "Add to {deckName}"
 msgstr "Add to {deckName}"
+
+msgid "Add to Lymi"
+msgstr "Add to Lymi"
+
+msgid "Add with Google"
+msgstr "Add with Google"
 
 msgid "Add, edit and archive cards"
 msgstr "Add, edit and archive cards"
@@ -673,6 +685,9 @@ msgstr "Answer: {back}"
 
 msgid "Any time"
 msgstr "Any time"
+
+msgid "Anyone can add this deck from its public page."
+msgstr "Anyone can add this deck from its public page."
 
 msgid "Anyone studying the deck can start a later section early."
 msgstr "Anyone studying the deck can start a later section early."
@@ -892,6 +907,9 @@ msgstr "Check that the card looks right first."
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Check that the whole link was copied, or ask for a new one."
 
+msgid "Check that the whole link was copied."
+msgstr "Check that the whole link was copied."
+
 msgid "Check this card, then press Import again."
 msgstr "Check this card, then press Import again."
 
@@ -1009,6 +1027,9 @@ msgstr "Copied with the card"
 
 msgid "Copy"
 msgstr "Copy"
+
+msgid "Could not add the deck. Check your connection and try again."
+msgstr "Could not add the deck. Check your connection and try again."
 
 msgid "Could not join. Check your connection and try again."
 msgstr "Could not join. Check your connection and try again."
@@ -1314,6 +1335,10 @@ msgstr "Forgotten {0}+ times"
 
 msgid "Forgotten {SLIPPING_LAPSES} or more times"
 msgstr "Forgotten {SLIPPING_LAPSES} or more times"
+
+#. placeholder {0}: deck.owner.name
+msgid "From {0}"
+msgstr "From {0}"
 
 msgid "From the lesson"
 msgstr "From the lesson"
@@ -1852,8 +1877,14 @@ msgstr "No section"
 msgid "No series"
 msgstr "No series"
 
+msgid "Nobody can add it while it is archived."
+msgstr "Nobody can add it while it is archived."
+
 msgid "Nobody can join it while it is archived."
 msgstr "Nobody can join it while it is archived."
+
+msgid "Nobody new can add it."
+msgstr "Nobody new can add it."
 
 msgid "Not asked yet. It joins the next review."
 msgstr "Not asked yet. It joins the next review."
@@ -2017,6 +2048,9 @@ msgstr "Pause the cards"
 #. placeholder {0}: weekday(peak.date)
 msgid "peak, {0}"
 msgstr "peak, {0}"
+
+msgid "People who added it keep studying it, but nobody new can add it."
+msgstr "People who added it keep studying it, but nobody new can add it."
 
 msgid "Photo"
 msgstr "Photo"
@@ -2626,6 +2660,9 @@ msgstr "The upload stopped part way"
 msgid "Theme"
 msgstr "Theme"
 
+msgid "There is no deck at this address"
+msgstr "There is no deck at this address"
+
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
 
@@ -2638,8 +2675,17 @@ msgstr "This card’s picture was removed."
 msgid "This collection is too large to import at once"
 msgstr "This collection is too large to import at once"
 
+msgid "This deck is already in your Library."
+msgstr "This deck is already in your Library."
+
 msgid "This deck is archived"
 msgstr "This deck is archived"
+
+msgid "This deck is no longer published"
+msgstr "This deck is no longer published"
+
+msgid "This deck is no longer published."
+msgstr "This deck is no longer published."
 
 msgid "This file has no review history, so every card starts as new."
 msgstr "This file has no review history, so every card starts as new."
@@ -2877,11 +2923,17 @@ msgstr "You can close this tab."
 msgid "You can undo the whole import later from Activity."
 msgstr "You can undo the whole import later from Activity."
 
+msgid "You cannot add this deck."
+msgstr "You cannot add this deck."
+
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
+
+msgid "You were removed from this deck, so you cannot add it again. Your reviews are kept."
+msgstr "You were removed from this deck, so you cannot add it again. Your reviews are kept."
 
 msgid "You wrote this"
 msgstr "You wrote this"

@@ -63,9 +63,9 @@ export function LibraryDemo() {
             >
               <div className="min-w-0 flex-1">
                 <p className="truncate text-md font-medium text-text">{title}</p>
-                <p className="mt-0.5 flex items-center gap-1.5 truncate text-xs text-muted">
-                  {deck.firstParty && <Lantern className="size-3.5" />}
-                  {i18n._(deck.by)}
+                <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-muted">
+                  {deck.firstParty && <Lantern className="size-3.5 shrink-0" />}
+                  <span className="min-w-0 truncate">{i18n._(deck.by)}</span>
                 </p>
                 <p className="mt-1 text-xs text-muted tabular-nums">
                   <Plural value={deck.sections} one="# section" other="# sections" /> ·{" "}
@@ -75,7 +75,7 @@ export function LibraryDemo() {
               <button
                 type="button"
                 aria-pressed={isAdded}
-                aria-label={isAdded ? t`Added ${title}` : t`Add ${title}`}
+                aria-label={t`Add ${title}`}
                 onClick={() =>
                   setAdded((list) =>
                     isAdded ? list.filter((id) => id !== deck.id) : [...list, deck.id],

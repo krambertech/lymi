@@ -6,7 +6,7 @@ import type { DeckPage } from "../../lib/public-deck";
 import PublicNav from "../islands/PublicNav";
 import TryDeck from "../islands/TryDeck";
 import { deckDescription, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckAbout, DeckClosing, DeckContents, DeckFooter, DeckGone, DeckHeader } from "./DeckView";
+import { addUrl, DeckAbout, DeckClosing, DeckFooter, DeckGone, DeckHeader, DeckHowItWorks, DeckSections } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -41,7 +41,7 @@ const trial = page.status === 200 ? tryCards(page.deck) : null;
             <DeckHeader deck={page.deck} locale={locale} />
             {trial && trial.cards.length > 0 && (
               <TryDeck
-                client:visible
+                client:load
                 locale={locale}
                 cards={trial.cards}
                 section={trial.section}
@@ -54,7 +54,8 @@ const trial = page.status === 200 ? tryCards(page.deck) : null;
           </div>
         </header>
         <main>
-          <DeckContents deck={page.deck} locale={locale} />
+          <DeckHowItWorks deck={page.deck} locale={locale} />
+          <DeckSections deck={page.deck} locale={locale} />
           <DeckAbout deck={page.deck} locale={locale} />
           <DeckClosing deck={page.deck} locale={locale} />
         </main>

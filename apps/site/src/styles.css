@@ -720,6 +720,33 @@
   padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
 }
 
+/* ---- Published deck ---------------------------------------------------- */
+
+/* A section opening onto its cards. A browser that cannot animate to `auto` opens it at once. */
+@supports (interpolate-size: allow-keywords) {
+  .deck-step {
+    interpolate-size: allow-keywords;
+  }
+  .deck-step::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 280ms var(--ease-out),
+      content-visibility 280ms allow-discrete;
+  }
+  .deck-step[open]::details-content {
+    block-size: auto;
+  }
+}
+.deck-step[open] .deck-step-cards {
+  animation: enter-fade 220ms var(--ease-out) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck-step::details-content {
+    transition: none;
+  }
+}
+
 /* ---- Docs -------------------------------------------------------------- */
 
 /*

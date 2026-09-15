@@ -27,6 +27,27 @@ export function tryCards(deck: PublicDeckOut): { section: string | null; cards: 
   return { section: first?.name ?? null, cards };
 }
 
+export interface SectionStep {
+  /** 1-based place in the deck's order, or null for cards outside any section. */
+  position: number | null;
+  name: string | null;
+  cards: PublicDeckOut["sections"][number]["cards"];
+}
+
+/**
+ * The deck as the path a learner walks: named sections in order, then any cards outside one.
+ * `inOrder` is false for a deck with no sections, whose cards are one open group.
+ */
+export function sectionPath(deck: PublicDeckOut): { inOrder: boolean; steps: SectionStep[] } {
+  let position = 0;
+  const steps = deck.sections.map((section) => ({
+    position: section.name === null ? null : ++position,
+    name: section.name,
+    cards: section.cards,
+  }));
+  return { inOrder: position > 0, steps };
+}
+
 /**
  * A language tag's name in the page's language. Ukrainian and Russian write it lower-case inside
  * a sentence, so `label` capitalises it only where it starts a label on its own.

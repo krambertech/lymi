@@ -8,6 +8,7 @@ import {
   etagMatches,
   jsonForScript,
   languageName,
+  sectionPath,
   TRY_LIMIT,
   tryCards,
 } from "./deck-page";
@@ -56,6 +57,28 @@ describe("tryCards", () => {
     expect(trial.cards).toHaveLength(TRY_LIMIT);
     expect(trial.cards.map((card) => card.term)).not.toContain("term 1");
     expect(trial.cards[0]).toEqual({ term: "term 0", meaning: "meaning 0" });
+  });
+});
+
+describe("sectionPath", () => {
+  it("numbers named sections in order and leaves cards outside a section unnumbered", () => {
+    const { inOrder, steps } = sectionPath(deck());
+    expect(inOrder).toBe(true);
+    expect(steps.map((step) => [step.position, step.name, step.cards.length])).toEqual([
+      [1, "Greetings", 12],
+      [2, "Numbers", 1],
+      [null, null, 1],
+    ]);
+  });
+
+  it("treats a deck without sections as one open group", () => {
+    const { inOrder, steps } = sectionPath(
+      deck({ sections: [{ name: null, cards: [{ term: "jah", meaning: "yes" }] }] }),
+    );
+    expect(inOrder).toBe(false);
+    expect(steps).toEqual([
+      { position: null, name: null, cards: [{ term: "jah", meaning: "yes" }] },
+    ]);
   });
 });
 

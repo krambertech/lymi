@@ -3,24 +3,13 @@ import { expect, test } from "@playwright/test";
 /** The site reads `e2e/fixtures/published-decks.sql`; publishing itself is covered by the add spec. */
 const publicSite = "http://localhost:4174";
 const pagePath = "/decks/evening-estonian";
+const addUrl = "http://localhost:4173/add/evening-estonian";
 
-const sections = [
-  {
-    name: "Greetings",
-    cards: [
-      ["tere päevast", "good afternoon"],
-      ["head õhtut", "good evening"],
-      ["head ööd", "good night"],
-    ],
-  },
-  { name: "In the café", cards: [["üks kohv, palun", "one coffee, please"]] },
-] as const;
-
-test("anyone can read a published deck's public page, try its first cards and find the way to add it", async ({
+test("anyone can read a published deck's page, walk its sections and try its first cards", async ({
   page,
   request,
 }) => {
-  await test.step("the page is public HTML with its metadata, and nothing private", async () => {
+  await test.step("the page is public HTML with its metadata, every card, and nothing private", async () => {
     const response = await request.get(`${publicSite}${pagePath}`);
     expect(response.status()).toBe(200);
     expect(response.headers()["cache-control"]).toBe("public, max-age=300");
@@ -49,6 +38,10 @@ test("anyone can read a published deck's public page, try its first cards and fi
       educationalLevel: { name: "A1" },
       teaches: "Estonian vocabulary",
     });
+    // Folded away on the page, but in the HTML for search.
+    for (const text of ["head ööd", "good night", "üks kohv, palun", "one coffee, please"]) {
+      expect(html).toContain(text);
+    }
     expect(html).not.toContain("PRIVATE");
     expect(html).not.toContain("e2e-deck-evening");
 
@@ -58,46 +51,75 @@ test("anyone can read a published deck's public page, try its first cards and fi
     expect(again.status()).toBe(304);
   });
 
-  await test.step("a visitor sees every card in order and the way to add the deck", async () => {
+  await test.step("a visitor sees who made the deck and the way to add it", async () => {
     await page.goto(`${publicSite}${pagePath}`);
     await expect(page.getByRole("heading", { level: 1, name: "Evening Estonian" })).toBeVisible();
-    const list = page.getByRole("region", { name: "Every card in the deck" });
-    const headings = list.getByRole("heading", { level: 3 });
-    await expect(headings).toHaveText([/Greetings$/, /In the café$/]);
-    for (const section of sections) {
-      for (const [term, meaning] of section.cards) {
-        await expect(list.getByText(term, { exact: true })).toBeVisible();
-        await expect(list.getByText(meaning, { exact: true })).toBeVisible();
-      }
-    }
+    await expect(page.getByText("By Lymi", { exact: true })).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Add to Lymi", exact: true }).first(),
-    ).toHaveAttribute("href", "http://localhost:4173/add/evening-estonian");
+    ).toHaveAttribute("href", addUrl);
+    await expect(page.getByRole("heading", { name: "How it works" })).toBeVisible();
   });
 
-  await test.step("a visitor tries the first section's cards without saving anything", async () => {
+  await test.step("the sections read as a path, and each opens to its cards", async () => {
+    const path = page.getByRole("region", { name: "One section at a time" });
+    const steps = path.getByRole("listitem");
+    await expect(steps).toHaveCount(2);
+    await expect(steps.nth(0)).toContainText("Greetings");
+    await expect(steps.nth(0)).toContainText("3 cards");
+    await expect(steps.nth(0)).toContainText("You start here");
+    await expect(steps.nth(1)).toContainText("In the café");
+    await expect(steps.nth(1)).toContainText("Opens after the one before");
+
+    await expect(path.getByText("one coffee, please", { exact: true })).toBeHidden();
+    await steps.nth(1).getByText("In the café").click();
+    await expect(path.getByText("one coffee, please", { exact: true })).toBeVisible();
+  });
+
+  await test.step("a visitor tries the first section's cards and sees what Lymi would do", async () => {
     const trial = page.getByRole("region", { name: "Try the first 3 cards" });
+    await trial.scrollIntoViewIfNeeded();
     await expect(trial.getByText("1 of 3", { exact: true })).toBeVisible();
     await expect(trial.getByText("tere päevast", { exact: true })).toBeVisible();
-    await trial.getByText("Show the meaning", { exact: true }).click();
+
+    await trial.getByRole("button", { name: /^Show the meaning/ }).click();
     await expect(trial.getByText("good afternoon", { exact: true })).toBeVisible();
-    await trial.getByRole("button", { name: "Next card" }).click();
+    await trial.getByRole("button", { name: /^Forgot/ }).click();
+
     await expect(trial.getByText("2 of 3", { exact: true })).toBeVisible();
-    await trial.getByText("Show the meaning", { exact: true }).click();
-    await trial.getByRole("button", { name: "Next card" }).click();
-    await trial.getByText("Show the meaning", { exact: true }).click();
-    await trial.getByRole("button", { name: "Done" }).click();
-    await expect(trial.getByRole("heading", { name: "That was the first 3 cards." })).toBeVisible();
-    await expect(trial.getByRole("link", { name: "Add to Lymi" })).toHaveAttribute(
+    await expect(trial.getByText("head õhtut", { exact: true })).toBeVisible();
+    await trial.getByRole("button", { name: /^Show the meaning/ }).click();
+    await trial.getByRole("button", { name: /^Knew it/ }).click();
+
+    await expect(trial.getByText("3 of 3", { exact: true })).toBeVisible();
+    await trial.getByRole("button", { name: /^Show the meaning/ }).click();
+    await trial.getByRole("button", { name: /^Knew it/ }).click();
+
+    await expect(trial.getByRole("heading", { name: "You knew 2 of 3." })).toBeVisible();
+    await expect(trial).toContainText("the one you forgot would come back a few cards later");
+    await expect(trial.getByRole("list", { name: "Cards you forgot" })).toHaveText("tere päevast");
+    await expect(trial.getByRole("link", { name: "Add all 4 cards to Lymi" })).toHaveAttribute(
       "href",
-      "http://localhost:4173/add/evening-estonian",
+      addUrl,
     );
+  });
+
+  await test.step("the cards work from the keyboard", async () => {
+    const trial = page.getByRole("region", { name: "Try the first 3 cards" });
+    await trial.getByRole("button", { name: "Start again" }).click();
+    await expect(trial.getByRole("button", { name: /^Show the meaning/ })).toBeFocused();
+    await page.keyboard.press("Space");
+    await expect(trial.getByText("good afternoon", { exact: true })).toBeVisible();
+    await expect(trial.getByRole("button", { name: /^Forgot/ })).toBeFocused();
+    await page.keyboard.press("2");
+    await expect(trial.getByText("2 of 3", { exact: true })).toBeVisible();
+    await expect(trial.getByRole("button", { name: /^Show the meaning/ })).toBeFocused();
   });
 
   await test.step("the Ukrainian and Russian pages carry their own chrome", async () => {
     await page.goto(`${publicSite}/uk${pagePath}`);
     await expect(page.locator("html")).toHaveAttribute("lang", "uk");
-    await expect(page.getByRole("heading", { name: "Усі картки колоди" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Розділ за розділом" })).toBeVisible();
     const ru = await request.get(`${publicSite}/ru${pagePath}`);
     expect(ru.status()).toBe(200);
     expect(ru.headers().etag).toContain("-ru-");
@@ -125,4 +147,15 @@ test("anyone can read a published deck's public page, try its first cards and fi
     expect(sitemap).not.toContain("withdrawn-estonian");
     expect(sitemap).not.toContain("archived-estonian");
   });
+});
+
+test("without JavaScript the first card still reveals its meaning", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(`${publicSite}${pagePath}`);
+  const trial = page.getByRole("region", { name: "Try the first 3 cards" });
+  await expect(trial.getByText("good afternoon", { exact: true })).toBeHidden();
+  await trial.getByText("Show the meaning", { exact: true }).click();
+  await expect(trial.getByText("good afternoon", { exact: true })).toBeVisible();
+  await context.close();
 });

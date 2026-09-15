@@ -25,6 +25,7 @@ export const e2eAccounts = [
   "join-owner",
   "avatar",
   "avatar-other",
+  "anki-import",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

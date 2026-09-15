@@ -202,18 +202,34 @@ function DrawerMenuContent({ "aria-label": label, className, children }: Content
   );
 }
 
+/** The drawer's group, named by its label the way Base UI names the anchored one. */
+const DrawerMenuGroupContext = React.createContext<{
+  labelId: string;
+  setLabelled: (labelled: boolean) => void;
+} | null>(null);
+
 function DropdownMenuGroup({ children }: { children: React.ReactNode }) {
   const { shape } = useDropdownMenu("DropdownMenuGroup");
+  const labelId = React.useId();
+  const [labelled, setLabelled] = React.useState(false);
+  const group = React.useMemo(() => ({ labelId, setLabelled }), [labelId]);
   return shape === "desktop" ? (
     <MenuPrimitive.Group data-slot="dropdown-menu-group">{children}</MenuPrimitive.Group>
   ) : (
-    // biome-ignore lint/a11y/useSemanticElements: a group of menu items, which a fieldset is not
-    <div role="group" data-slot="dropdown-menu-group">
-      {children}
-    </div>
+    <DrawerMenuGroupContext.Provider value={group}>
+      {/* biome-ignore lint/a11y/useSemanticElements: a group of menu items, which a fieldset is not */}
+      <div
+        role="group"
+        data-slot="dropdown-menu-group"
+        aria-labelledby={labelled ? labelId : undefined}
+      >
+        {children}
+      </div>
+    </DrawerMenuGroupContext.Provider>
   );
 }
 
+/** Names the `DropdownMenuGroup` it sits in, which it needs in both shapes, as Base UI's does. */
 function DropdownMenuLabel({
   className,
   inset,
@@ -234,7 +250,30 @@ function DropdownMenuLabel({
       {children}
     </MenuPrimitive.GroupLabel>
   ) : (
-    <div data-slot="dropdown-menu-label" data-inset={inset} className={classes}>
+    <DrawerMenuLabel inset={inset} className={classes}>
+      {children}
+    </DrawerMenuLabel>
+  );
+}
+
+function DrawerMenuLabel({
+  inset,
+  className,
+  children,
+}: {
+  inset?: boolean | undefined;
+  className: string;
+  children: React.ReactNode;
+}) {
+  const group = React.useContext(DrawerMenuGroupContext);
+  if (!group) throw new Error("DropdownMenuLabel must be used within a DropdownMenuGroup.");
+  const { labelId, setLabelled } = group;
+  React.useLayoutEffect(() => {
+    setLabelled(true);
+    return () => setLabelled(false);
+  }, [setLabelled]);
+  return (
+    <div id={labelId} data-slot="dropdown-menu-label" data-inset={inset} className={className}>
       {children}
     </div>
   );

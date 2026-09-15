@@ -12,6 +12,7 @@ export function useArchiveDeck(deckId: string, name: string | undefined) {
   const toastId = `archive-deck-${deckId}`;
   const invalidate = () => {
     qc.invalidateQueries({ queryKey: ["decks"] });
+    qc.invalidateQueries({ queryKey: ["series"] });
     qc.invalidateQueries({ queryKey: ["queue"] });
   };
   // The toast outlives the deck screen, and a mutation's own callbacks still run after unmount.

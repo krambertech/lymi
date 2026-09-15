@@ -46,6 +46,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | example | приклад | пример |
 | deck | колода | колода |
 | Library (screen) | Бібліотека | Библиотека |
+| series (group of decks) | серія | серия |
 | Today (screen) | Сьогодні | Сегодня |
 | You (screen) | Ти | Ты |
 | Insights (screen) | Огляд | Обзор |
@@ -59,7 +60,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | app language | мова застосунку | язык приложения |
 | meaning language | мова значень | язык значений |
 | reminder | нагадування | напоминание |
-| streak / run | серія | серия |
+| streak / run | дні поспіль (лік днів поспіль) | дни подряд (счёт дней подряд) |
 | daily goal | денна мета | дневная цель |
 | AI | AI (never ШІ) | AI (never ИИ) |
 

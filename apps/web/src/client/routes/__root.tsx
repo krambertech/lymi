@@ -28,7 +28,7 @@ import {
   readStoredLanguage,
 } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
-import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
+import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/shell";
@@ -96,6 +96,7 @@ function Shell() {
   const onReview = location.pathname.startsWith("/review");
   const me = useQuery({ ...meQuery, enabled: !bare });
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
+  const series = useQuery({ ...seriesQuery, enabled: !bare && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
   const leave = useSignOut();
   useSettleToday(!bare && me.isSuccess);
@@ -196,6 +197,7 @@ function Shell() {
           onReview ? undefined : (
             <Sidebar
               decks={decks.data}
+              series={series.data}
               name={me.data?.name}
               email={me.data?.email}
               docsUrl={publicSiteUrl("/docs")}

@@ -18,11 +18,13 @@ Existing flat personal and shared decks must retain their current behavior when 
 
 Add the vocabulary, schema, services, API contracts, and owner interface for ordered series, decks within a series, sections within a deck, and cards without a section. Archive and restore remain reversible and audited; existing flat decks need no migration-time setup or new interface step.
 
+Series and sections ship as two pull requests: series with series review and Today's series rows ([#101](https://github.com/krambertech/lymi/issues/101)), then sections ([#206](https://github.com/krambertech/lymi/issues/206)). Series stay the owner's until publication; a member of a shared deck sees the deck without its series.
+
 Complete when an owner can create and reorder the hierarchy on phone and desktop, app, API, and MCP enforce ownership consistently, and fresh plus existing disposable databases pass generated-migration verification.
 
 ### 2. Gate learning by section and review by series
 
-Make the first section active and the next ready after every current card was introduced and at least 80 percent are Known. Add **Start next section** and **Start anyway**, never relock a started section, and let series review mix all eligible cards through the existing queue.
+Make the first section active and the next ready after every current card was introduced and at least 80 percent are Known. Add **Start next section** and **Start anyway**, and never relock a started section. Series review already mixes a series' eligible cards through the existing queue (slice 1); this slice keeps locked cards out of it.
 
 Complete when locked cards stay out of Today, scoped review, refill, reminders, and offline manifests; readiness agrees across devices; and urgency, new-card pacing, durable review, and sibling-mode exclusion remain intact.
 

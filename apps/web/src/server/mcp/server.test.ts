@@ -18,6 +18,14 @@ vi.mock("../services", async () => {
     updateDeck: vi.fn(),
     archiveDeck: vi.fn(),
     restoreDeck: vi.fn(),
+    listSeries: vi.fn(),
+    getSeries: vi.fn(),
+    createSeries: vi.fn(),
+    renameSeries: vi.fn(),
+    setSeriesDecks: vi.fn(),
+    reorderSeries: vi.fn(),
+    archiveSeries: vi.fn(),
+    restoreSeries: vi.fn(),
     searchCards: vi.fn(),
     showCard: vi.fn(),
     addCards: vi.fn(),
@@ -46,6 +54,7 @@ const deck: Awaited<ReturnType<typeof getDeck>> = {
   directions: "recognition",
   reviewModes: [{ cue: "term", target: "meaning" }],
   position: 0,
+  seriesId: null,
   archivedAt: null,
   createdAt: now,
   updatedAt: now,
@@ -106,7 +115,9 @@ describe("Lymi MCP server", () => {
       "archive_card",
       "archive_card_image",
       "archive_deck",
+      "archive_series",
       "create_deck",
+      "create_series",
       "describe_card_image",
       "due_counts",
       "get_card",
@@ -115,13 +126,17 @@ describe("Lymi MCP server", () => {
       "get_settings",
       "get_streak",
       "list_decks",
+      "list_series",
+      "reorder_series",
       "restore_card",
       "restore_card_image",
       "restore_deck",
+      "restore_series",
       "search_cards",
       "set_card_image",
       "update_card",
       "update_deck",
+      "update_series",
       "update_settings",
     ]);
     expect(byName.get("list_decks")?.annotations?.readOnlyHint).toBe(true);
@@ -174,6 +189,7 @@ describe("Lymi MCP server", () => {
         directions: "recognition",
         reviewModes: [{ cue: "term", target: "meaning" }],
         position: 0,
+        seriesId: "series-1",
         total: 12,
         due: 3,
         ...owned,
@@ -206,6 +222,7 @@ describe("Lymi MCP server", () => {
           defaultLanguage: "it",
           directions: "recognition",
           reviewModes: [{ cue: "term", target: "meaning" }],
+          seriesId: "series-1",
           total: 12,
           due: 3,
         },
@@ -261,6 +278,11 @@ describe("Lymi MCP server", () => {
       ["update_deck", { deckId: "deck-1", name: "Italiano" }],
       ["archive_deck", { deckId: "deck-1" }],
       ["restore_deck", { deckId: "deck-1" }],
+      ["create_series", { name: "Estonian" }],
+      ["update_series", { seriesId: "series-1", name: "Eesti" }],
+      ["reorder_series", { seriesIds: ["series-1"] }],
+      ["archive_series", { seriesId: "series-1", decks: "keep" }],
+      ["restore_series", { seriesId: "series-1" }],
       ["update_settings", { appLanguage: "uk" }],
     ] as const) {
       const res = await client.callTool({ name, arguments: args });
@@ -281,7 +303,77 @@ describe("Lymi MCP server", () => {
     expect(services.updateDeck).not.toHaveBeenCalled();
     expect(services.archiveDeck).not.toHaveBeenCalled();
     expect(services.restoreDeck).not.toHaveBeenCalled();
+    expect(services.createSeries).not.toHaveBeenCalled();
+    expect(services.renameSeries).not.toHaveBeenCalled();
+    expect(services.reorderSeries).not.toHaveBeenCalled();
+    expect(services.archiveSeries).not.toHaveBeenCalled();
+    expect(services.restoreSeries).not.toHaveBeenCalled();
     expect(services.updateSettings).not.toHaveBeenCalled();
+  });
+
+  it("renames a series and sets its decks in one call, through the same services as the API", async () => {
+    const estonian = {
+      id: "series-1",
+      name: "Eesti",
+      position: 0,
+      deckIds: ["deck-2", "deck-1"],
+      total: 30,
+      due: 4,
+      archivedDecks: 0,
+      archivedAt: null,
+      createdAt: now,
+      updatedAt: now,
+    };
+    services.renameSeries.mockResolvedValue(estonian);
+    services.setSeriesDecks.mockResolvedValue(estonian);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "update_series",
+      arguments: { seriesId: "series-1", name: "Eesti", deckIds: ["deck-2", "deck-1"] },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.renameSeries).toHaveBeenCalledWith(expect.anything(), "series-1", "Eesti");
+    expect(services.setSeriesDecks).toHaveBeenCalledWith(expect.anything(), "series-1", {
+      deckIds: ["deck-2", "deck-1"],
+    });
+    expect(res.structuredContent).toEqual({
+      id: "series-1",
+      name: "Eesti",
+      deckIds: ["deck-2", "deck-1"],
+      total: 30,
+      due: 4,
+      archivedDecks: 0,
+      archivedAt: null,
+      createdAt: now.toISOString(),
+    });
+
+    const empty = await client.callTool({
+      name: "update_series",
+      arguments: { seriesId: "series-1" },
+    });
+    expect(empty.isError).toBe(true);
+  });
+
+  it("archives a series only with an explicit choice about its decks", async () => {
+    services.archiveSeries.mockResolvedValue({ ok: true });
+    const client = await connect("write");
+
+    const missing = await client.callTool({
+      name: "archive_series",
+      arguments: { seriesId: "series-1" },
+    });
+    expect(missing.isError).toBe(true);
+
+    const res = await client.callTool({
+      name: "archive_series",
+      arguments: { seriesId: "series-1", decks: "archive" },
+    });
+    expect(res.isError).toBeFalsy();
+    expect(services.archiveSeries).toHaveBeenCalledWith(expect.anything(), "series-1", {
+      decks: "archive",
+    });
   });
 
   it("edits a deck with only the fields sent", async () => {

@@ -9,12 +9,12 @@ import { Button, buttonClass } from "../components/button";
 import { GRADES } from "../components/grade";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, deviceTimezone, type QueueItem } from "../lib/api";
+import { api, deviceTimezone, type QueueItem, scopeKey } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
 import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
-import { decksQuery, drawQuery, queueQuery, streakQuery } from "../lib/queries";
+import { decksQuery, drawQuery, queueQuery, seriesQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import {
   drawableUpTo,
@@ -36,10 +36,14 @@ import {
 } from "../views/review-view";
 
 export const Route = createFileRoute("/review")({
-  validateSearch: (s: Record<string, unknown>): { deck?: string; round?: Round } => {
+  validateSearch: (
+    s: Record<string, unknown>,
+  ): { deck?: string; series?: string; round?: Round } => {
     const round = ROUNDS.find((r) => r === s.round);
     return {
       ...(typeof s.deck === "string" ? { deck: s.deck } : {}),
+      // One scope at a time: a deck wins over a series.
+      ...(typeof s.series === "string" && typeof s.deck !== "string" ? { series: s.series } : {}),
       ...(round ? { round } : {}),
     };
   },
@@ -93,25 +97,27 @@ function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => st
   ];
 }
 
-/** A review of another deck starts over, so nothing from this one carries into it. */
+/** A review of another deck or series starts over, so nothing from this one carries into it. */
 function ReviewPage() {
-  const { deck } = Route.useSearch();
-  return <Review key={deck ?? "all"} />;
+  const { deck, series } = Route.useSearch();
+  return <Review key={scopeKey({ deck, series })} />;
 }
 
 function Review() {
   const { t } = useLingui();
   useDocumentTitle(t`Review`);
-  const { deck, round } = Route.useSearch();
+  const { deck, series, round } = Route.useSearch();
+  const scope = useMemo(() => ({ deck, series }), [deck, series]);
   const qc = useQueryClient();
   const navigate = useNavigate();
   const add = useAddCard();
   const reduce = useReducedMotion();
   // The draw also feeds the header's count, so it loads in a round too.
-  const draw = useQuery(drawQuery(deck));
+  const draw = useQuery(drawQuery(scope));
   // A round from Today is a fixed list rather than a draw, walked in order.
-  const roundQueue = useQuery({ ...queueQuery(deck, round), enabled: !!round });
+  const roundQueue = useQuery({ ...queueQuery(scope, round), enabled: !!round });
   const decks = useQuery(decksQuery);
+  const seriesList = useQuery({ ...seriesQuery, enabled: !!series });
   const streak = useQuery(streakQuery);
   const grades = useSyncExternalStore(gradeStore.subscribe, gradeStore.snapshot, () => NO_GRADES);
   // The card on screen stays put while a refetch lands; only a grade moves it.
@@ -194,7 +200,11 @@ function Review() {
       : (listLeft[0] ?? null);
   const currentCardId = current?.card.id;
   const currentItemKey = current ? itemKey(current) : undefined;
-  const deckName = deck ? decks.data?.find((d) => d.id === deck)?.name : undefined;
+  const scopeName = deck
+    ? decks.data?.find((d) => d.id === deck)?.name
+    : series
+      ? seriesList.data?.find((s) => s.id === series)?.name
+      : undefined;
   const currentDeck = current ? decks.data?.find((d) => d.id === current.card.deckId) : undefined;
   const hint = useRevealHint(current ? `${current.stateId}-${done}` : undefined, revealed);
   usePrefetchPictures(drawLeg ? (state?.upcoming ?? []) : listLeft, 0);
@@ -269,8 +279,11 @@ function Review() {
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
   // The end waits for the last grades to land, so a refusal never takes back an end already shown.
   const landing = sending > 0 && !unreachable;
-  // A deck's end names the deck and weighs the other decks, so it waits for them while they load.
-  const decksLoading = !!deck && !decks.data && decks.fetchStatus === "fetching";
+  // A scoped end names its deck or series and weighs the decks outside it, so it waits for them.
+  const scoped = !!deck || !!series;
+  const decksLoading =
+    (scoped && !decks.data && decks.fetchStatus === "fetching") ||
+    (!!series && !seriesList.data && seriesList.fetchStatus === "fetching");
   const result = useMemo(
     () =>
       stopped && !checking && !landing && !decksLoading && leg && data && state
@@ -282,9 +295,13 @@ function Review() {
             satisfiedBefore: leg.satisfied,
             left,
             confirmed,
-            scoped: !!deck,
+            scoped,
             forgotten: forgottenItems.length,
-            otherDecks: !deck ? [] : decks.data ? decks.data.filter((d) => d.id !== deck) : null,
+            otherDecks: !scoped
+              ? []
+              : decks.data
+                ? decks.data.filter((d) => (series ? d.seriesId !== series : d.id !== deck))
+                : null,
           })
         : null,
     [
@@ -298,6 +315,8 @@ function Review() {
       state,
       left,
       confirmed,
+      scoped,
+      series,
       deck,
       forgottenItems,
       decks.data,
@@ -365,7 +384,13 @@ function Review() {
     else if (offer.kind === "goal") startLeg({ ...base, kind: "goal", until: data.goal });
     else startLeg({ ...base, kind: "more", until: state.attempts + offer.count });
     // Today's round is over, so a reload continues the day rather than walking it again.
-    if (round) void navigate({ to: "/review", search: deck ? { deck } : {}, replace: true });
+    if (round) {
+      void navigate({
+        to: "/review",
+        search: { ...(deck ? { deck } : {}), ...(series ? { series } : {}) },
+        replace: true,
+      });
+    }
   };
 
   const stopAudio = useCallback(() => {
@@ -560,7 +585,7 @@ function Review() {
               goal={data.goal}
               from={leg?.from}
               roundCount={legDone}
-              deckName={deckName}
+              scopeName={scopeName}
               streak={streakNow}
               streakBefore={held.week}
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}

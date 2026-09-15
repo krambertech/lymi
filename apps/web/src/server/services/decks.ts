@@ -14,6 +14,7 @@ import {
   resolveDeckDirections,
   stateStatementsForDeck,
 } from "./modes";
+import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
 import { getSettings } from "./settings";
 
 /** Whether a state is asked now; a mode turned off keeps its states uncounted (ADR 0007, ADR 0014). */
@@ -31,7 +32,8 @@ export async function listDecks(ctx: ServiceContext) {
       description: schema.decks.description,
       defaultLanguage: schema.decks.defaultLanguage,
       directions: schema.decks.directions,
-      position: schema.decks.position,
+      position: deckOrder(userId),
+      seriesId: effectiveSeriesId(userId),
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
       ownerId: schema.decks.userId,
       ownerName: schema.user.name,
@@ -48,7 +50,7 @@ export async function listDecks(ctx: ServiceContext) {
       ),
     )
     .where(and(memberOf(userId), isNull(schema.decks.archivedAt)))
-    .orderBy(asc(schema.decks.position), asc(schema.decks.createdAt));
+    .orderBy(deckOrder(userId), asc(schema.decks.createdAt));
   return rows.map(({ ownerId, ownerName, memberRole, ...deck }) => ({
     ...deck,
     reviewModes: deckModes(deck.directions),
@@ -61,6 +63,8 @@ export async function listDecks(ctx: ServiceContext) {
 
 export async function createDeck(ctx: ServiceContext, input: DeckInput) {
   const { db, userId, actor } = ctx;
+  const seriesId = input.seriesId ?? null;
+  if (seriesId) await activeSeries(ctx, seriesId);
   const id = newId();
   await db.insert(schema.decks).values({
     id,
@@ -69,6 +73,9 @@ export async function createDeck(ctx: ServiceContext, input: DeckInput) {
     description: input.description ?? null,
     defaultLanguage: input.defaultLanguage ?? null,
     directions: resolveDeckDirections(input) ?? "recognition",
+    seriesId,
+    // A deck without a series keeps the default, so Library still orders new decks by date.
+    ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
   await audit(db, {
     userId,
@@ -129,12 +136,31 @@ export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 
 export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPatch) {
   const { db, userId, actor } = ctx;
-  await ownedDeck(ctx, id);
-  const { reviewModes, ...fields } = patch;
+  const deck = await ownedDeck(ctx, id);
+  const { reviewModes, seriesId, ...fields } = patch;
   const directions = resolveDeckDirections(patch);
+  // Compared with the stored series, so clearing one that is archived still takes the deck out of it.
+  const [stored] = await db
+    .select({ seriesId: schema.decks.seriesId })
+    .from(schema.decks)
+    .where(eq(schema.decks.id, deck.id));
+  // A series to move into must be active, even the one the deck is already in.
+  if (seriesId) await activeSeries(ctx, seriesId);
+  // A deck joins the end of its new series; out of one, it returns to its place by creation date.
+  const placement =
+    seriesId === undefined || seriesId === stored?.seriesId
+      ? {}
+      : seriesId === null
+        ? { seriesId: null, position: 0 }
+        : { seriesId, position: await nextDeckPosition(ctx, seriesId) };
   const result = await db
     .update(schema.decks)
-    .set({ ...fields, ...(directions ? { directions } : {}), updatedAt: new Date() })
+    .set({
+      ...fields,
+      ...placement,
+      ...(directions ? { directions } : {}),
+      updatedAt: new Date(),
+    })
     .where(eq(schema.decks.id, id))
     .returning({ id: schema.decks.id });
   if (result.length === 0) throw notFound("Deck");

@@ -1,6 +1,6 @@
 import type { Round } from "@lymi/core";
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
-import { api } from "./api";
+import { api, type ReviewScope, scopeKey } from "./api";
 import { flushOutbox } from "./grades";
 
 export const meQuery = queryOptions({
@@ -27,6 +27,18 @@ export const deckCardsQuery = (deckId: string) =>
     queryFn: () => api.deckCards(deckId),
     staleTime: 0,
   });
+// Series counts move with every review, like the decks they add up from.
+export const seriesQuery = queryOptions({
+  queryKey: ["series"],
+  queryFn: api.series,
+  staleTime: 0,
+  refetchOnWindowFocus: true,
+});
+export const archivedSeriesQuery = queryOptions({
+  queryKey: ["series", "archived"],
+  queryFn: api.archivedSeries,
+  staleTime: 0,
+});
 /** Join links are capabilities, so neither query is written to the persisted cache. */
 export const joinLinkQuery = (deckId: string) =>
   queryOptions({
@@ -49,13 +61,13 @@ export const cardHistoryQuery = (cardId: string) =>
     queryFn: () => api.cardHistory(cardId),
     staleTime: 0,
   });
-export const queueQuery = (deckId?: string, round?: Round) =>
+export const queueQuery = (scope: ReviewScope, round?: Round) =>
   queryOptions({
-    queryKey: ["queue", deckId ?? "all", round ?? "order"],
+    queryKey: ["queue", scopeKey(scope), round ?? "order"],
     // The server chooses a round's cards, so grades still on their way land first.
     queryFn: async () => {
       await flushOutbox();
-      return api.queue(deckId, round);
+      return api.queue(scope, round);
     },
     staleTime: 0,
     // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
@@ -63,12 +75,12 @@ export const queueQuery = (deckId?: string, round?: Round) =>
     refetchOnReconnect: false,
   });
 /** What the review draws from, stamped with when the request began so an empty draw can be confirmed. */
-export const drawQuery = (deckId?: string) =>
+export const drawQuery = (scope: ReviewScope) =>
   queryOptions({
-    queryKey: ["queue", deckId ?? "all", "draw"],
+    queryKey: ["queue", scopeKey(scope), "draw"],
     queryFn: async () => {
       const fetchedAt = Date.now();
-      return { ...(await api.draw(deckId)), fetchedAt };
+      return { ...(await api.draw(scope)), fetchedAt };
     },
     staleTime: 0,
     refetchOnWindowFocus: false,

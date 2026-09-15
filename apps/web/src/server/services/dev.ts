@@ -49,6 +49,7 @@ export async function resetAccount({ db, userId }: ServiceContext): Promise<void
     db.delete(schema.cardStates).where(eq(schema.cardStates.userId, userId)),
     db.delete(schema.cards).where(eq(schema.cards.userId, userId)),
     db.delete(schema.decks).where(eq(schema.decks.userId, userId)),
+    db.delete(schema.series).where(eq(schema.series.userId, userId)),
     db.delete(schema.auditLog).where(eq(schema.auditLog.userId, userId)),
     db.delete(schema.userSettings).where(eq(schema.userSettings.userId, userId)),
   ]);

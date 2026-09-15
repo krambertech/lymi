@@ -5,6 +5,7 @@ import { audit } from "../audit";
 import { type Db, schema } from "../db";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { deckModes, stateStatementsForLearner } from "./modes";
+import { deckOrder, effectiveSeriesId } from "./series-access";
 
 /**
  * Decks the learner may see: their own, plus every deck they are an active member of.
@@ -36,6 +37,8 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
       deck: schema.decks,
       ownerName: schema.user.name,
       memberRole: schema.deckMembers.role,
+      seriesId: effectiveSeriesId(userId),
+      position: deckOrder(userId),
     })
     .from(schema.decks)
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
@@ -52,6 +55,8 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
   const role: MemberRole = row.deck.userId === userId ? "owner" : (row.memberRole ?? "learner");
   return {
     ...row.deck,
+    seriesId: row.seriesId,
+    position: row.position,
     reviewModes: deckModes(row.deck.directions),
     role,
     owner: { id: row.deck.userId, name: row.ownerName },

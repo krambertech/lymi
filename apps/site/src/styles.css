@@ -1060,6 +1060,14 @@
   transition-duration: 380ms;
 }
 
+/* The 404's one card, with no fan behind it. */
+.hand-stage[data-layout="single"] {
+  height: calc(var(--ch) + var(--cw) * 0.04);
+}
+.hand-stage[data-layout="single"] .hand-card[data-place="front"] {
+  transform: none;
+}
+
 .hand-flip {
   position: absolute;
   inset: 0;

@@ -118,6 +118,7 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     language: "it",
     tags: [],
     source: "Lesson 14",
+    sectionId: null,
     directions: null,
     reviewModes: null,
     image: null,

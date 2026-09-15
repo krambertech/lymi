@@ -14,6 +14,7 @@ export * from "./modes";
 export * from "./push";
 export * from "./review";
 export * from "./review-days";
+export * from "./sections";
 export * from "./series";
 export * from "./series-access";
 export * from "./settings";

@@ -30,6 +30,7 @@ import type { Card } from "@lymi/core/schema";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { memberOf } from "./members";
+import { lockedSectionIds } from "./sections";
 import { askedSql, stateMode } from "./modes";
 import { slippingCardIds } from "./slipping";
 
@@ -153,6 +154,16 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     createdAt: sibling.createdAt,
   };
 
+  // A locked section's cards wait, except one the learner already started: progress never hides.
+  const locked = await lockedSectionIds(ctx, opts.deckId);
+  const waiting = locked.length
+    ? sql`coalesce(${schema.cards.sectionId}, '') in (select value from json_each(${JSON.stringify(locked)}))
+        and not exists (
+          select 1 from card_states as begun
+          where begun.card_id = cards.id and begun.user_id = ${userId} and begun.state != 0
+        )`
+    : undefined;
+
   const where = and(
     eq(schema.cardStates.userId, userId),
     memberOf(userId),
@@ -166,6 +177,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
     opts.seriesId ? inSeries(userId, opts.seriesId) : undefined,
+    waiting ? sql`not (${waiting})` : undefined,
   );
   const siblingOn = and(
     eq(sibling.cardId, schema.cardStates.cardId),

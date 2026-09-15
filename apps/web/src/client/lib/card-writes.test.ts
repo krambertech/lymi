@@ -34,6 +34,7 @@ const card: Card = {
   language: "it",
   tags: ["verbs"],
   source: "Lesson 14",
+  sectionId: null,
   directions: null,
   reviewModes: null,
   image: null,

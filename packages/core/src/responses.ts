@@ -47,6 +47,11 @@ const SeriesId = z.string().nullable().meta({
     "The owner's active series the deck is in. Always null for a member, and while the series is archived.",
 });
 
+const SectionsInOrder = z.boolean().meta({
+  description:
+    "Each learner opens the deck's sections in order. Off, or with no sections, every card is open.",
+});
+
 export const DeckOut = z
   .object({
     id: z.string(),
@@ -60,6 +65,7 @@ export const DeckOut = z
       .meta({ description: "How cards that follow the deck are asked" }),
     position: z.number().int(),
     seriesId: SeriesId,
+    sectionsInOrder: SectionsInOrder,
     archivedAt: Timestamp.nullable(),
     importId: z
       .string()
@@ -82,6 +88,7 @@ export const DeckSummaryOut = z
     reviewModes: z.array(ReviewMode),
     position: z.number().int(),
     seriesId: SeriesId,
+    sectionsInOrder: SectionsInOrder,
     total: z.number().int().meta({ description: "Active cards in the deck" }),
     due: z.number().int().meta({ description: "Cards with a direction due now for the caller" }),
     ...Membership,
@@ -111,6 +118,52 @@ export const SeriesOut = z
   })
   .meta({ id: "Series" });
 export type SeriesOut = z.infer<typeof SeriesOut>;
+
+export const SectionStatusOut = z.enum(["open", "ready", "locked"]).meta({
+  description:
+    "For the caller. open: its cards are reviewed. ready: the next section, which Start opens. locked: waits, though a card the caller already started stays in review.",
+});
+
+export const SectionOut = z
+  .object({
+    id: z.string(),
+    deckId: z.string(),
+    name: z.string(),
+    position: z.number().int(),
+    total: z.number().int().meta({ description: "Active cards in the section" }),
+    known: z.number().int().meta({ description: "Cards the caller knows" }),
+    notStarted: z.number().int().meta({ description: "Cards the caller has not reviewed yet" }),
+    knownNeeded: z.number().int().meta({
+      description: "Known cards this section needs before the next one is ready: 80%, rounded up",
+    }),
+    status: SectionStatusOut,
+    archivedCards: z.number().int().meta({
+      description: "Cards archived with the section, which Restore brings back. 0 while active.",
+    }),
+    archivedAt: Timestamp.nullable(),
+    createdAt: Timestamp,
+    updatedAt: Timestamp,
+  })
+  .meta({ id: "Section" });
+export type SectionOut = z.infer<typeof SectionOut>;
+
+export const SectionsOut = z
+  .object({
+    sections: z.array(SectionOut),
+    progress: z
+      .object({
+        currentId: z.string().nullable().meta({ description: "The section the caller is on" }),
+        nextId: z
+          .string()
+          .nullable()
+          .meta({ description: "The section after the open ones. Null when all are open." }),
+        ready: z.boolean().meta({ description: "The next section can be started now" }),
+      })
+      .nullable()
+      .meta({ description: "Null when the deck has no sections with cards or does not gate" }),
+  })
+  .meta({ id: "Sections" });
+export type SectionsOut = z.infer<typeof SectionsOut>;
 
 export const CardImageOut = z
   .object({
@@ -152,6 +205,10 @@ export const CardOut = z
     language: z.string().nullable().meta({ description: "BCP 47 tag, or null" }),
     tags: z.array(z.string()),
     source: z.string().nullable().meta({ description: "Free text: where the card came from" }),
+    sectionId: z
+      .string()
+      .nullable()
+      .meta({ description: "The card's active section. Null without one, and while it is archived." }),
     directions: Directions.nullable().meta({
       description: "Legacy form of `reviewModes`. Overrides the deck when set.",
     }),

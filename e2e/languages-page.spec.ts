@@ -89,7 +89,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
   });
 
   await test.step("every edition of both pages is in the sitemap", async () => {
-    const sitemap = await (await request.get(`${publicSite}/sitemap.xml`)).text();
+    const sitemap = await (await request.get(`${publicSite}/sitemap-pages.xml`)).text();
     for (const prefix of ["", "/uk", "/ru"]) {
       expect(sitemap).toContain(`<loc>https://lymi.app${prefix}/languages</loc>`);
       expect(sitemap).toContain(`<loc>https://lymi.app${prefix}/languages/estonian</loc>`);

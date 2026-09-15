@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { deckPath, deckPaths, deckStructuredData, jsonForScript, tryCards } from "../../lib/deck-page";
+import { pageI18n } from "../../lib/i18n";
+import type { DeckPage } from "../../lib/public-deck";
+import PublicNav from "../islands/PublicNav";
+import TryDeck from "../islands/TryDeck";
+import { deckDescription, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
+import { addUrl, DeckAbout, DeckClosing, DeckContents, DeckFooter, DeckGone, DeckHeader } from "./DeckView";
+
+interface Props {
+  page: DeckPage;
+}
+
+const { page } = Astro.props;
+const { locale } = page;
+const i18n = pageI18n(locale);
+const slug = page.status === 200 ? page.deck.slug : page.slug;
+const paths = deckPaths(slug);
+const trial = page.status === 200 ? tryCards(page.deck) : null;
+---
+
+{
+  page.status === 200 ? (
+    <BaseLayout
+      title={deckTitle(i18n, page.deck)}
+      description={deckDescription(i18n, page.deck)}
+      canonicalPath={deckPath(slug, locale)}
+      alternatePaths={paths}
+    >
+      <script
+        slot="head"
+        is:inline
+        type="application/ld+json"
+        set:html={jsonForScript(deckStructuredData(page.deck, locale))}
+      />
+      <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+        <header>
+          <PublicNav client:load locale={locale} />
+          <div class="mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-12 pb-16 @2xl:px-10 @4xl:grid-cols-[minmax(0,1fr)_minmax(0,420px)] @4xl:gap-16 @4xl:pt-16 @4xl:pb-24">
+            <DeckHeader deck={page.deck} locale={locale} />
+            {trial && trial.cards.length > 0 && (
+              <TryDeck
+                client:visible
+                locale={locale}
+                cards={trial.cards}
+                section={trial.section}
+                termLanguage={page.deck.language}
+                meaningLanguage={page.deck.meaningLanguage}
+                total={page.deck.cardCount}
+                addUrl={addUrl(slug)}
+              />
+            )}
+          </div>
+        </header>
+        <main>
+          <DeckContents deck={page.deck} locale={locale} />
+          <DeckAbout deck={page.deck} locale={locale} />
+          <DeckClosing deck={page.deck} locale={locale} />
+        </main>
+        <DeckFooter locale={locale} languagePaths={paths} />
+      </div>
+    </BaseLayout>
+  ) : (
+    <BaseLayout
+      title={i18n._(page.status === 410 ? UNAVAILABLE_TITLE : MISSING_TITLE)}
+      description={i18n._(page.status === 410 ? UNAVAILABLE_BLURB : MISSING_BLURB)}
+      canonicalPath={deckPath(slug, locale)}
+    >
+      <meta slot="head" name="robots" content="noindex" />
+      <div class="@container flex min-h-dvh flex-col overflow-x-clip bg-canvas text-text">
+        <header>
+          <PublicNav client:load locale={locale} />
+        </header>
+        <div class="flex flex-1 flex-col justify-center">
+          <DeckGone status={page.status} locale={locale} />
+        </div>
+        <DeckFooter locale={locale} languagePaths={paths} />
+      </div>
+    </BaseLayout>
+  )
+}

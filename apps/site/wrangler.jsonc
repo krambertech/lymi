@@ -15,8 +15,7 @@
   "preview_urls": true,
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist",
-    "not_found_handling": "404-page",
+    "directory": "./dist/client",
     "run_worker_first": ["/api/*"]
   },
   "d1_databases": [

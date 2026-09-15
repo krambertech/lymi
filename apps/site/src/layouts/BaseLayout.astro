@@ -1,7 +1,7 @@
 ---
 import onestLatin from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url";
 import onestCyrillic from "@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url";
-import { type LocalizedPage, localizedPath } from "../lib/routes";
+import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
 import "../styles.css";
 
 interface Props {
@@ -9,10 +9,19 @@ interface Props {
   description: string;
   canonicalPath: string;
   localizedPage?: LocalizedPage | undefined;
+  /** The same page in each locale, for a page rendered per request rather than a fixed route. */
+  alternatePaths?: Record<Locale, string> | undefined;
   shareImageAlt?: string | undefined;
 }
 
-const { title, description, canonicalPath, localizedPage, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
+const { title, description, canonicalPath, localizedPage, alternatePaths, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
+const alternates: Record<Locale, string> | undefined =
+  alternatePaths ??
+  (localizedPage && {
+    en: localizedPath(localizedPage, "en"),
+    uk: localizedPath(localizedPage, "uk"),
+    ru: localizedPath(localizedPage, "ru"),
+  });
 const site = Astro.site ?? "https://lymi.app";
 const canonical = new URL(canonicalPath, site).toString();
 // Rendered by scripts/icons.sh from the brand geometry.
@@ -32,12 +41,12 @@ const locale = Astro.currentLocale ?? "en";
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {
-      localizedPage && (
+      alternates && (
         <>
-          <link rel="alternate" hreflang="en" href={new URL(localizedPath(localizedPage, "en"), site)} />
-          <link rel="alternate" hreflang="uk" href={new URL(localizedPath(localizedPage, "uk"), site)} />
-          <link rel="alternate" hreflang="ru" href={new URL(localizedPath(localizedPage, "ru"), site)} />
-          <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(localizedPage, "en"), site)} />
+          <link rel="alternate" hreflang="en" href={new URL(alternates.en, site)} />
+          <link rel="alternate" hreflang="uk" href={new URL(alternates.uk, site)} />
+          <link rel="alternate" hreflang="ru" href={new URL(alternates.ru, site)} />
+          <link rel="alternate" hreflang="x-default" href={new URL(alternates.en, site)} />
         </>
       )
     }

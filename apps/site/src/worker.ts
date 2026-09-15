@@ -1,5 +1,6 @@
 /// <reference path="../worker-configuration.d.ts" />
 
+import { handle } from "@astrojs/cloudflare/handler";
 import { BetaSignupInput } from "@lymi/core";
 import { createDb } from "./db";
 import { BetaSignupUnavailable, joinBeta } from "./services/beta";
@@ -34,7 +35,7 @@ async function joinBetaRequest(request: Request, env: Env): Promise<Response> {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/health" && request.method === "GET") {
@@ -55,6 +56,6 @@ export default {
     }
 
     if (url.pathname.startsWith("/api/")) return json({ error: "Not found" }, 404);
-    return env.ASSETS.fetch(request);
+    return handle(request, env, ctx);
   },
 } satisfies ExportedHandler<Env>;

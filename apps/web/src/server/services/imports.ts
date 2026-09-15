@@ -177,13 +177,19 @@ export async function completeImportUpload(
       ),
     });
   }
-  try {
-    await uploads.resumeMultipartUpload(row.objectKey, row.uploadId).complete(parts);
-  } catch {
+  const joined = await uploads
+    .resumeMultipartUpload(row.objectKey, row.uploadId)
+    .complete(parts)
+    .then(
+      () => true,
+      () => false,
+    );
+  // A second request can find the parts already joined by the first, which is not a failure.
+  const head = await uploads.head(row.objectKey);
+  if (!joined && !head) {
     await failImport(ctx.db, id, "upload_incomplete", uploads);
     return getImport(ctx, id);
   }
-  const head = await uploads.head(row.objectKey);
   if (head?.size !== row.byteSize) {
     await failImport(ctx.db, id, "upload_incomplete", uploads);
     return getImport(ctx, id);

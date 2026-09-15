@@ -457,6 +457,21 @@ describe("the upload", () => {
     expect(stored[IMPORT_PART_BYTES * 2 + 1000]).toBe(bytes[IMPORT_PART_BYTES * 2 + 1000]);
   });
 
+  it("treats a second complete as the same upload", async () => {
+    const ctx = await fresh();
+    const bytes = fixture("current.apkg");
+    const { id } = await upload(ctx, "current.apkg", bytes);
+    await db.update(schema.imports).set({ status: "uploading" }).where(eq(schema.imports.id, id));
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
+    await db
+      .update(schema.imports)
+      .set({ uploadId: "gone", parts: [{ partNumber: 1, etag: "x" }] })
+      .where(eq(schema.imports.id, id));
+    expect(row?.objectKey).toBeTruthy();
+    const again = await completeImportUpload(ctx, id, env.IMPORTS, async () => {});
+    expect(again.status).toBe("inspecting");
+  });
+
   it("refuses a part of the wrong size and a file with parts missing", async () => {
     const ctx = await fresh();
     const started = await startImport(

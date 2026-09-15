@@ -57,6 +57,11 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         const { pictures: pending } = await step.do(`cards ${chunk}`, STEP, () =>
           writeImportChunk(ctx, id, chunk, decks, uploads),
         );
+        // A preview Worker has no pictures bucket; its imports keep their cards and skip pictures.
+        if (!this.env.PRIVATE_IMAGES || !this.env.IMAGES) {
+          pictures.skipped += pending.length;
+          continue;
+        }
         for (let i = 0; i < pending.length; i += PICTURES_PER_STEP) {
           const done = await step.do(`pictures ${chunk} ${i}`, STEP, () =>
             attachImportPictures(ctx, id, pending.slice(i, i + PICTURES_PER_STEP), uploads, {

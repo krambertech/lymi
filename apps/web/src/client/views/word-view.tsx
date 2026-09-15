@@ -1,14 +1,13 @@
 import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { type CardPatch, deserializeState, type FsrsCard, type ReviewMode } from "@lymi/core";
+import { deserializeState, type FsrsCard, type ReviewMode } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
   ArchiveRestore,
   ArrowDown,
   ArrowUp,
-  Check,
   ChevronRight,
   FolderInput,
   Image as ImageIcon,
@@ -20,10 +19,10 @@ import {
   Volume2,
   X,
 } from "lucide-react";
-import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
-import { Button, IconButton } from "../components/button";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { IconButton } from "../components/button";
 import { CardPicture } from "../components/card-picture";
-import { StateChip } from "../components/chip";
+import { Chip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { ReviewTimeline } from "../components/review-timeline";
@@ -35,9 +34,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
-import { Field, FieldLabel } from "../components/ui/field";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
 import type { Card, CardEvent, CardState, Review } from "../lib/api";
 import { splitForms } from "../lib/deck-list";
 import { useDesktop } from "../lib/device";
@@ -55,12 +51,6 @@ export interface WordEvent {
   actor: string;
 }
 
-export type WordPatch = Pick<
-  CardPatch,
-  "meaning" | "example" | "notes" | "meaningSource" | "exampleSource"
->;
-type EditableField = "meaning" | "example" | "notes";
-
 const actorName: Record<CardEvent["actor"], MessageDescriptor> = {
   user: msg`you`,
   api: msg`the API`,
@@ -75,6 +65,7 @@ const fieldName: Record<string, MessageDescriptor> = {
   pronunciation: msg`the pronunciation`,
   example: msg`the example`,
   notes: msg`the notes`,
+  source: msg`the source`,
   language: msg`the language`,
   tags: msg`the tags`,
   directions: msg`how it is asked`,
@@ -190,8 +181,8 @@ export interface WordProps {
   onPrev?: (() => void) | undefined;
   onNext?: (() => void) | undefined;
   onClose?: (() => void) | undefined;
-  /** Only the field that changed. Absent, the fields are read-only. */
-  onSave?: ((patch: WordPatch) => void) | undefined;
+  /** Opens the card's form. Absent, the card cannot be changed from here. */
+  onEdit?: (() => void) | undefined;
   onArchive?: (() => void) | undefined;
   /** Every deck the word could move to. The menu lists them by name. */
   decks?: { id: string; name: string }[] | undefined;
@@ -245,48 +236,37 @@ function spanLabel(i18n: I18n, days: number): string {
 /** How many History rows show before "Show older". */
 const HISTORY_ROWS = 8;
 
-/** A field at rest: its label, where it came from, and the text. Press it to edit. */
+/** A field at rest: its label, where its text came from, and the text. */
 function ReadField({
   label,
   aside,
   value,
-  placeholder,
-  onEdit,
+  empty,
 }: {
   label: string;
   aside?: ReactNode | undefined;
-  value: string | null;
-  placeholder: string;
-  onEdit?: (() => void) | undefined;
+  value: string;
+  empty?: boolean | undefined;
 }) {
-  const { t, i18n } = useLingui();
   return (
     <div className="grid gap-1">
       <div className="flex items-baseline justify-between gap-3">
         <span className="text-sm font-medium text-text-2">{label}</span>
         {aside && <span className="text-xs text-muted">{aside}</span>}
       </div>
-      <button
-        type="button"
-        onClick={onEdit}
-        aria-disabled={!onEdit}
-        aria-label={t`Edit ${label.toLocaleLowerCase(i18n.locale)}`}
+      <p
         className={clsx(
-          "-mx-2 flex min-h-11 items-center rounded-sm px-2 py-1 text-left text-md leading-relaxed transition-colors",
-          onEdit && "hoverable:hover:bg-plate-2",
-          value ? "text-text" : "text-faint",
+          "whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
+          empty ? "text-muted" : "text-text",
         )}
       >
-        {value ?? placeholder}
-      </button>
+        {value}
+      </p>
     </div>
   );
 }
 
-/**
- * The card's picture and its description. Pictures and picture modes arrive through the API and
- * connected apps, so the page shows them and says what picture review is waiting for.
- */
+/** The card's picture and its description, and what picture review is waiting for when it waits. */
 function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | undefined }) {
   const pictureReview = modes?.some((mode) => mode.cue === "image") ?? false;
   const pictureOnly = pictureReview && (modes?.every((mode) => mode.cue === "image") ?? false);
@@ -360,7 +340,7 @@ export function WordView({
   onPrev,
   onNext,
   onClose,
-  onSave,
+  onEdit,
   onArchive,
   decks,
   onMove,
@@ -374,7 +354,6 @@ export function WordView({
     st,
     fsrs: readFsrs(st),
   }));
-  const readOnly = !onSave;
   const [olderShown, setOlderShown] = useState(false);
   const firstOlderRef = useRef<HTMLLIElement>(null);
   const focusOlderRef = useRef(false);
@@ -425,51 +404,12 @@ export function WordView({
   }));
   const started = schedules.filter(({ st }) => st.state !== 0);
   const elsewhere = (decks ?? []).filter((d) => d.id !== card.deckId);
-  // At rest the word reads as a page. Editing is asked for, one field or all of them.
-  const [editing, setEditing] = useState(false);
   const [moving, setMoving] = useState(false);
   const forms = splitForms(card.term);
   useEffect(() => {
-    onBusyChange?.(editing || moving);
+    onBusyChange?.(moving);
     return () => onBusyChange?.(false);
-  }, [editing, moving, onBusyChange]);
-  const focusRef = useRef<EditableField | null>(null);
-  const meaningRef = useRef<HTMLInputElement>(null);
-  const exampleRef = useRef<HTMLTextAreaElement>(null);
-  const notesRef = useRef<HTMLTextAreaElement>(null);
-  const startEditing = (field: EditableField = "meaning") => {
-    if (readOnly) return;
-    focusRef.current = field;
-    setEditing(true);
-  };
-  useEffect(() => {
-    if (!editing || !focusRef.current) return;
-    const refs = { meaning: meaningRef, example: exampleRef, notes: notesRef };
-    const el = refs[focusRef.current].current;
-    el?.focus();
-    if (el) {
-      const n = el.value.length;
-      el.setSelectionRange(n, n);
-    }
-    focusRef.current = null;
-  }, [editing]);
-  // A field the learner changes is theirs from then on, whatever wrote it before.
-  const commit = (key: EditableField, before: string | null) => (v: string) => {
-    const next = v.trim();
-    if (next === (before ?? "")) return;
-    const patch: WordPatch = { [key]: next };
-    if (key === "meaning") patch.meaningSource = "manual";
-    if (key === "example") patch.exampleSource = "manual";
-    onSave?.(patch);
-  };
-
-  // Escape ends the edit the way Done does, saving through blur, and a sheet holding the word stays open.
-  const endOnEscape = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key !== "Escape") return;
-    e.stopPropagation();
-    e.currentTarget.blur();
-    setEditing(false);
-  };
+  }, [moving, onBusyChange]);
 
   const source = (s: Card["meaningSource"]) =>
     s === "ai"
@@ -480,12 +420,15 @@ export function WordView({
           ? t`From the lesson`
           : undefined;
 
-  const ai = (s: Card["meaningSource"]) => (s === "ai" ? "border-dashed border-edge-2" : "");
-
   // A touch screen gets full-size targets; a pointer keeps the header compact.
   const size = useDesktop() ? "sm" : "md";
   const controls = (
     <>
+      {onEdit && (
+        <IconButton label={t`Edit card`} size={size} onClick={onEdit}>
+          <Pencil />
+        </IconButton>
+      )}
       <IconButton label={t`Previous card`} size={size} onClick={onPrev} aria-disabled={!hasPrev}>
         <ArrowUp />
       </IconButton>
@@ -501,10 +444,6 @@ export function WordView({
           }
         />
         <DropdownMenuContent aria-label={t`Card options`} align="end">
-          <DropdownMenuItem onClick={() => startEditing()} disabled={readOnly}>
-            <Pencil />
-            <Trans>Edit</Trans>
-          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setMoving(true)}
             disabled={!onMove || elsewhere.length === 0}
@@ -577,80 +516,31 @@ export function WordView({
             .filter(Boolean)
             .join(" · ")}
         </p>
+        {card.tags.length > 0 && (
+          <ul className="flex flex-wrap gap-1.5 pt-1" aria-label={t`Tags`}>
+            {card.tags.map((tag) => (
+              <li key={tag}>
+                <Chip>{tag}</Chip>
+              </li>
+            ))}
+          </ul>
+        )}
       </header>
 
       <PictureSection card={card} modes={modes} />
 
-      {editing ? (
-        <div className="grid gap-4">
-          <Field>
-            <FieldLabel aside={source(card.meaningSource)}>{t`Meaning`}</FieldLabel>
-            <Input
-              ref={meaningRef}
-              key={`m-${card.id}`}
-              defaultValue={card.meaning ?? ""}
-              onBlur={(e) => commit("meaning", card.meaning)(e.target.value)}
-              onKeyDown={endOnEscape}
-              className={ai(card.meaningSource)}
-              placeholder={t`What it means`}
-            />
-          </Field>
-          <Field>
-            <FieldLabel aside={source(card.exampleSource)}>{t`Example`}</FieldLabel>
-            <Textarea
-              ref={exampleRef}
-              key={`e-${card.id}`}
-              defaultValue={card.example ?? ""}
-              onBlur={(e) => commit("example", card.example)(e.target.value)}
-              onKeyDown={endOnEscape}
-              className={clsx("min-h-[68px]", ai(card.exampleSource))}
-              placeholder={t`A sentence it lives in`}
-              rows={2}
-            />
-          </Field>
-          <Field>
-            <FieldLabel>{t`Notes`}</FieldLabel>
-            <Textarea
-              ref={notesRef}
-              key={`n-${card.id}`}
-              defaultValue={card.notes ?? ""}
-              onBlur={(e) => commit("notes", card.notes)(e.target.value)}
-              onKeyDown={endOnEscape}
-              placeholder={t`Anything to remember it by`}
-              rows={2}
-            />
-          </Field>
-          <div className="flex justify-end">
-            <Button size="sm" onClick={() => setEditing(false)}>
-              <Check aria-hidden="true" />
-              <Trans>Done</Trans>
-            </Button>
-          </div>
-        </div>
-      ) : (
-        <div className="grid gap-4">
-          <ReadField
-            label={t`Meaning`}
-            aside={source(card.meaningSource)}
-            value={card.meaning}
-            placeholder={t`Add a meaning`}
-            onEdit={readOnly ? undefined : () => startEditing("meaning")}
-          />
-          <ReadField
-            label={t`Example`}
-            aside={source(card.exampleSource)}
-            value={card.example}
-            placeholder={t`Add a sentence it lives in`}
-            onEdit={readOnly ? undefined : () => startEditing("example")}
-          />
-          <ReadField
-            label={t`Notes`}
-            value={card.notes}
-            placeholder={t`Anything to remember it by`}
-            onEdit={readOnly ? undefined : () => startEditing("notes")}
-          />
-        </div>
-      )}
+      <div className="grid gap-4">
+        <ReadField
+          label={t`Meaning`}
+          aside={card.meaning ? source(card.meaningSource) : undefined}
+          value={card.meaning || t`No meaning yet`}
+          empty={!card.meaning}
+        />
+        {card.example && (
+          <ReadField label={t`Example`} aside={source(card.exampleSource)} value={card.example} />
+        )}
+        {card.notes && <ReadField label={t`Notes`} value={card.notes} />}
+      </div>
 
       <Dialog open={moving} onOpenChange={setMoving}>
         <DialogContent className="w-[min(92vw,440px)]">

@@ -2,7 +2,9 @@ import { t } from "@lingui/core/macro";
 import type {
   ApiKeyInput,
   AppLanguage,
+  CardImageImportInput,
   CardImageOut,
+  CardImagePatch,
   CardInput,
   CardPatch,
   DeckInput,
@@ -69,7 +71,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   try {
     res = await fetch(path, {
       ...init,
-      headers: { "content-type": "application/json", ...(init?.headers ?? {}) },
+      // A form body sets its own multipart boundary.
+      headers: {
+        ...(init?.body instanceof FormData ? {} : { "content-type": "application/json" }),
+        ...(init?.headers ?? {}),
+      },
       credentials: "include",
     });
   } catch {
@@ -221,6 +227,23 @@ export const api = {
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   audioUrl: (cardId: string) => `/api/audio/${encodeURIComponent(cardId)}`,
+  /** `version` is the card's `imageVersion` as last read; null expects a card with no picture yet. */
+  uploadCardImage: (id: string, file: Blob, version: string | null, description?: string) => {
+    const form = new FormData();
+    form.set("file", file);
+    form.set("version", version ?? "");
+    if (description) form.set("description", description);
+    return request<Card>(`/api/cards/${id}/image`, { method: "PUT", body: form });
+  },
+  importCardImage: (id: string, body: CardImageImportInput) =>
+    request<Card>(`/api/cards/${id}/image/import`, { method: "POST", body: JSON.stringify(body) }),
+  describeCardImage: (id: string, body: CardImagePatch) =>
+    request<Card>(`/api/cards/${id}/image`, { method: "PATCH", body: JSON.stringify(body) }),
+  archiveCardImage: (id: string, version: string | null) =>
+    request<Card>(`/api/cards/${id}/image/archive`, {
+      method: "POST",
+      body: JSON.stringify({ version }),
+    }),
   archiveCard: (id: string) =>
     request<{ ok: true }>(`/api/cards/${id}/archive`, { method: "POST" }),
   restoreCard: (id: string) =>

@@ -173,9 +173,7 @@ export const forms: Group = {
                     <Plus aria-hidden="true" />
                     New deck
                   </Button>
-                  <FieldDescription>
-                    A card lands in a deck. Create the first one and this card goes in it.
-                  </FieldDescription>
+                  <FieldDescription>Create a deck first. This card goes in it.</FieldDescription>
                 </FieldSet>
               ),
             },

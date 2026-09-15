@@ -10,7 +10,7 @@ async function createDeck(page: Page, name: string): Promise<string> {
 }
 
 /**
- * A word opens from its deck over the page or beside the list: read first, edited on request, with
+ * A word opens from its deck over the page or beside the list: read first, edited in the card form on request, with
  * its history underneath and its actions in one menu. This walks that life once: open, edit
  * a field and see the source become the learner's, move it to another deck, and archive it.
  */
@@ -43,12 +43,24 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
   });
 
   await test.step("edit the meaning and watch the source become yours", async () => {
-    await page.getByRole("button", { name: "Edit meaning", exact: true }).click();
-    const meaning = page.getByRole("textbox", { name: "Meaning", exact: true });
-    await expect(meaning).toBeFocused();
+    await word.getByRole("button", { name: "Edit card", exact: true }).click();
+    const sheet = page.locator('[role="dialog"], dialog').filter({
+      has: page.getByRole("heading", { name: "Edit card", exact: true }),
+    });
+    await expect(sheet).toBeVisible();
+    const meaning = sheet.getByRole("textbox", { name: "Meaning", exact: true });
+    await expect(meaning).toHaveValue("to hurry");
     await meaning.fill("to hurry up, to get a move on");
-    await meaning.press("Tab");
-    await page.getByRole("button", { name: "Done", exact: true }).click();
+    // Closed by mistake, the edit comes back with Undo.
+    await page.keyboard.press("Escape");
+    await expect(sheet).toBeHidden();
+    await page
+      .getByRole("region", { name: "Notifications" })
+      .getByRole("button", { name: "Undo", exact: true })
+      .click();
+    await expect(meaning).toHaveValue("to hurry up, to get a move on");
+    await sheet.getByRole("button", { name: "Save", exact: true }).click();
+    await expect(sheet).toBeHidden();
     await expect(shown("to hurry up, to get a move on")).toBeVisible();
     await expect(shown("You wrote this")).toBeVisible();
     await expect(shown("Meaning changed to “to hurry up, to get a move on”")).toBeVisible();

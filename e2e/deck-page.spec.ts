@@ -102,10 +102,12 @@ test("a learner can filter, sort and open the words in a deck", async ({
       await expect(word).toBeVisible();
       await expect(page.getByRole("heading", { level: 1, name: "piim" })).toBeFocused();
 
-      // Escape in a field cancels the edit and leaves the card open.
-      await word.getByRole("button", { name: "Edit meaning", exact: true }).click();
-      await word.getByRole("textbox", { name: "Meaning", exact: true }).fill("draft");
+      // Escape closes the card form and leaves the card open under it.
+      await word.getByRole("button", { name: "Edit card", exact: true }).click();
+      const edit = page.getByRole("dialog", { name: "Edit card", exact: true });
+      await edit.getByRole("textbox", { name: "Meaning", exact: true }).fill("draft");
       await page.keyboard.press("Escape");
+      await expect(edit).toBeHidden();
       await expect(word).toBeVisible();
       await expect(page).toHaveURL(/\?card=/);
 
@@ -118,7 +120,7 @@ test("a learner can filter, sort and open the words in a deck", async ({
       await row("piim").click();
       await expect(page.getByRole("dialog", { name: "piim" })).toBeVisible();
       await page.setViewportSize({ width: 1280, height: 800 });
-      await expect(page.getByRole("dialog")).toHaveCount(0);
+      await expect(page.getByRole("dialog", { name: "piim" })).toHaveCount(0);
       await expect(page.getByRole("heading", { level: 1, name: "piim" })).toBeVisible();
       await page.setViewportSize({ width: 1100, height: 800 });
       await expect(page.getByRole("dialog", { name: "piim" })).toBeVisible();

@@ -1,9 +1,9 @@
 import { LayoutGroup } from "motion/react";
 import type { ReactNode } from "react";
 import { useId, useState } from "react";
-import { AddCardForm } from "../components/add-card-sheet";
 import { identifyApp } from "../components/app-mark";
 import { Button } from "../components/button";
+import { CardForm } from "../components/card-form";
 import { NewDeckForm } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
 import { StreakButton } from "../components/streak";
@@ -516,7 +516,7 @@ export const SCREENS: Entry[] = [
                 deckName={m.decks[0]?.name ?? ""}
                 reviews={m.wordReviews}
                 events={m.wordEvents}
-                onSave={noop}
+                onEdit={noop}
                 onClose={noop}
                 decks={m.decks}
                 hasNext
@@ -565,7 +565,7 @@ export const SCREENS: Entry[] = [
                   openCardId="c6"
                   reviews={m.wordReviews}
                   events={m.wordEvents}
-                  onSaveCard={noop}
+                  onEditCard={noop}
                   decks={m.decks}
                   cardBeside
                   static={{ path: "/library/d1" }}
@@ -578,7 +578,9 @@ export const SCREENS: Entry[] = [
           <PhoneShot caption="Add a card" initial="dark" path="/library" bare>
             <div className="flex flex-1 flex-col justify-end bg-scrim">
               <SheetPreview shape="drawer" title="Add a card">
-                <AddCardForm
+                <CardForm
+                  mode="add"
+                  layout="chips"
                   decks={m.decks}
                   deckId="d1"
                   onCancel={noop}

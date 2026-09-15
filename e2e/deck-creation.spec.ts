@@ -72,7 +72,7 @@ test.describe("deck and card creation", () => {
     await page.keyboard.press("n");
     const addCard = sheet(page, "Add a card");
     await expect(addCard).toBeVisible();
-    await expect(addCard.getByText("A card lands in a deck.", { exact: false })).toBeVisible();
+    await expect(addCard.getByText("Create a deck first.", { exact: false })).toBeVisible();
     await addCard.getByRole("button", { name: "New deck", exact: true }).click();
 
     let dialog = sheet(page, "New deck");
@@ -138,8 +138,11 @@ test.describe("deck and card creation", () => {
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill(term);
     await dialog.getByRole("textbox", { name: "Meaning", exact: true }).fill("to hurry up");
     await dialog.getByRole("button", { name: `Add to ${secondName}`, exact: true }).click();
-    await expect(dialog.getByRole("status")).toHaveText(`Added “${term}”`);
-    await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+    // Without Create more, adding closes the sheet and says so in a toast.
+    await expect(dialog).toBeHidden();
+    await expect(page.getByRole("region", { name: "Notifications" })).toContainText(
+      `Added “${term}”`,
+    );
 
     await expect(page.getByText(term, { exact: true })).toBeVisible();
     await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
@@ -167,7 +170,8 @@ test.describe("deck and card creation", () => {
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill(term);
     await dialog.getByRole("button", { name: `Add to ${firstName}`, exact: true }).click();
     await expect(dialog.getByRole("status")).toHaveText(`${term} is already in ${secondName}`);
-    await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+    // A drawer has no Cancel; Escape closes the sheet on both machines.
+    await page.keyboard.press("Escape");
     await expect(
       page.getByRole("heading", { name: `No cards in ${firstName} yet`, exact: true }),
     ).toBeVisible();
@@ -185,14 +189,155 @@ test.describe("deck and card creation", () => {
     const dialog = sheet(page, "Add a card");
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("pazienza");
     await dialog.getByRole("button", { name: `Add to ${name}`, exact: true }).click();
-    await expect(dialog.getByRole("status")).toHaveText("Added “pazienza”");
-    await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+    await expect(dialog).toBeHidden();
+    await expect(page.getByRole("region", { name: "Notifications" })).toContainText(
+      "Added “pazienza”",
+    );
 
     const cardRow = page.getByRole("button").filter({
       has: page.getByText("pazienza", { exact: true }),
     });
     await expect(cardRow).toBeVisible();
     await expect(cardRow).toContainText("No meaning yet");
+  });
+
+  test("adds a card with its optional fields and keeps the lesson's for the next one", async ({
+    page,
+  }, testInfo) => {
+    await signInAsTestLearner(page, testInfo, "more-fields");
+    const name = `More fields ${testInfo.project.name}`;
+    await createDeck(page, name);
+
+    await page
+      .locator("header")
+      .getByRole("button", { name: /^Add card/ })
+      .click();
+    const dialog = sheet(page, "Add a card");
+    await dialog.getByRole("checkbox", { name: "Create more", exact: true }).check();
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("fermata");
+    // A desktop unfolds the rest under More fields; a phone opens each one from its chip, in a drawer.
+    const phone = testInfo.project.name === "webkit";
+    if (!phone) await dialog.getByRole("button", { name: "More fields", exact: true }).click();
+    const fill = async (field: string, value: string) => {
+      if (!phone) {
+        await dialog.getByRole("textbox", { name: field, exact: true }).fill(value);
+        return;
+      }
+      await dialog.getByRole("button", { name: field, exact: true }).click();
+      const panel = page.getByRole("dialog", { name: field, exact: true });
+      await panel.getByRole("textbox", { name: field, exact: true }).fill(value);
+      if (field === "Tags")
+        await panel.getByRole("textbox", { name: field, exact: true }).press("Enter");
+      await panel.getByRole("button", { name: "Done", exact: true }).click();
+    };
+    await fill("Example", "Scendo alla fermata.");
+    await fill("Source", "Lesson 14");
+    await fill("Tags", "streets");
+    if (!phone) await dialog.getByRole("textbox", { name: "Tags", exact: true }).press("Enter");
+    if (phone) {
+      await expect(
+        dialog.getByRole("button", { name: "Source: Lesson 14", exact: true }),
+      ).toBeVisible();
+    }
+
+    await dialog.getByRole("button", { name: `Add to ${name}`, exact: true }).click();
+    await expect(dialog.getByRole("status")).toHaveText("Added “fermata”");
+    await expect(dialog.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("");
+    if (phone) {
+      await expect(dialog.getByRole("button", { name: "Example", exact: true })).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Source: Lesson 14", exact: true }),
+      ).toBeVisible();
+      await expect(
+        dialog.getByRole("button", { name: "Tags: streets", exact: true }),
+      ).toBeVisible();
+    } else {
+      await expect(dialog.getByRole("textbox", { name: "Example", exact: true })).toHaveValue("");
+      await expect(dialog.getByRole("textbox", { name: "Source", exact: true })).toHaveValue(
+        "Lesson 14",
+      );
+      await expect(
+        dialog.getByRole("button", { name: "Remove the tag streets", exact: true }),
+      ).toBeVisible();
+    }
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+
+    await page
+      .getByRole("button")
+      .filter({ has: page.getByText("fermata", { exact: true }) })
+      .click();
+    const word = page.locator("article").filter({ visible: true });
+    await expect(word.getByText("Scendo alla fermata.", { exact: true })).toBeVisible();
+    await expect(word.getByRole("list", { name: "Tags", exact: true })).toContainText("streets");
+  });
+
+  test("brings back a card closed by mistake", async ({ page }, testInfo) => {
+    await signInAsTestLearner(page, testInfo, "more-fields");
+    await createDeck(page, `Undo close ${testInfo.project.name}`);
+
+    await page
+      .locator("header")
+      .getByRole("button", { name: /^Add card/ })
+      .click();
+    let dialog = sheet(page, "Add a card");
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("la fermata");
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+
+    await page
+      .getByRole("region", { name: "Notifications" })
+      .getByRole("button", { name: "Undo", exact: true })
+      .click();
+    dialog = sheet(page, "Add a card");
+    await expect(dialog.getByRole("textbox", { name: "Term", exact: true })).toHaveValue(
+      "la fermata",
+    );
+  });
+
+  test("offers the picture again when it did not go through", async ({ page }, testInfo) => {
+    await signInAsTestLearner(page, testInfo, "more-fields");
+    await createDeck(page, `Picture retry ${testInfo.project.name}`);
+
+    await page
+      .locator("header")
+      .getByRole("button", { name: /^Add card/ })
+      .click();
+    const dialog = sheet(page, "Add a card");
+    await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("strisce");
+    const phone = testInfo.project.name === "webkit";
+    await dialog
+      .getByRole("button", { name: phone ? "Picture" : "More fields", exact: true })
+      .click();
+    // The type passes the form's check; the bytes are what the server refuses.
+    await page
+      .locator("input[type=file]:not([capture])")
+      .last()
+      .setInputFiles({
+        name: "sign.png",
+        mimeType: "image/png",
+        buffer: Buffer.from("not a picture"),
+      });
+    if (phone) {
+      await page
+        .getByRole("dialog", { name: "Picture", exact: true })
+        .getByRole("button", { name: "Done", exact: true })
+        .click();
+    }
+    await dialog.getByRole("button", { name: /^Add to/ }).click();
+    await expect(dialog).toBeHidden();
+
+    await page
+      .getByRole("region", { name: "Notifications" })
+      .getByRole("button", { name: "Add picture", exact: true })
+      .click();
+    if (phone) {
+      await expect(page.getByRole("dialog", { name: "Picture", exact: true })).toBeVisible();
+    } else {
+      const edit = sheet(page, "Edit card");
+      await expect(edit.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("strisce");
+      await expect(edit.getByRole("button", { name: "Choose file", exact: true })).toBeFocused();
+    }
   });
 
   test("rejects card creation into an archived deck", async ({ page }, testInfo) => {
@@ -257,7 +402,9 @@ test.describe("deck and card creation", () => {
       const addCard = sheet(page, "Add a card");
       await expect(addCard).toBeVisible();
       const term = addCard.getByRole("textbox", { name: "Term", exact: true });
-      await expect(addCard.getByRole("button", { name: "Cancel", exact: true })).toBeVisible();
+      await expect(
+        addCard.getByRole("checkbox", { name: "Create more", exact: true }),
+      ).toBeVisible();
       await expect(
         addCard.getByRole("button", { name: `Add to ${name}`, exact: true }),
       ).toBeVisible();

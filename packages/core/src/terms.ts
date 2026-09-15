@@ -17,3 +17,14 @@ export function revealsAnswer(
     .map((field) => normaliseTerm(field ?? ""))
     .some((answer) => answer.length >= 3 && text.includes(answer));
 }
+
+/** Pronunciation is generated for a term up to this long; a longer one is a passage, not a word to say. */
+export const SPOKEN_TERM_MAX = 200;
+
+/** Whether a card's term can be spoken: it has a language and is short enough. */
+export function canSpeakTerm(card: {
+  term: string;
+  language?: string | null | undefined;
+}): boolean {
+  return !!card.language && Array.from(card.term).length <= SPOKEN_TERM_MAX;
+}

@@ -31,6 +31,7 @@ No password is typed anywhere. The server creates the account on first use, seed
 | `learner` | Kateryna | Three weeks in: three decks, 43 cards, 9 due, a 4-day streak, three cards an assistant added today, one archived deck and one archived card. |
 | `streak` | Sanna | Fourteen days running and nothing due. The flame is lit, small and still. |
 | `backlog` | Marco | A month away: four decks, 60 cards, all due. |
+| `long` | Ingrid | Six German cards asked both ways, all due: a sentence as the term, a dictionary-length meaning, and a card with every field at its limit. |
 | `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |
 
 The accounts are `<id>@lymi.local`. They pass the invitation allowlist only on a loopback origin, so `.dev.vars` needs no entry for them. `pnpm local personas` prints the same table from the running server.

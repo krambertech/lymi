@@ -24,7 +24,8 @@ export type E2EAccount =
   | "join-owner"
   | "avatar"
   | "avatar-other"
-  | "deck-page";
+  | "deck-page"
+  | "long-cards";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];

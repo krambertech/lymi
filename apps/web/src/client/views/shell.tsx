@@ -189,19 +189,34 @@ export function Sidebar({
 export function AppShell({
   sidebar,
   nav,
+  fill = false,
   children,
 }: {
   sidebar?: ReactNode | undefined;
   /** The phone pill. Floats over the content, centred above the home indicator. */
   nav?: ReactNode | undefined;
+  /** Hold the screen to the viewport, so a review's grades never scroll away under its card. */
+  fill?: boolean | undefined;
   children: ReactNode;
 }) {
   return (
-    <div className="@container/shell flex min-h-dvh w-full bg-canvas">
+    <div
+      className={clsx(
+        "@container/shell flex w-full bg-canvas",
+        fill ? "h-dvh overflow-hidden" : "min-h-dvh",
+      )}
+    >
       {/* The rail is pinned to the viewport rather than stretched down the document: as a plain
           flex child it grew with a long page and scrolled away with it. */}
       {sidebar && <div className="sticky top-0 h-dvh shrink-0 self-start">{sidebar}</div>}
-      <main className="@container flex min-w-0 flex-1 flex-col pt-safe">{children}</main>
+      <main
+        className={clsx(
+          "@container flex min-w-0 flex-1 flex-col pt-safe",
+          fill && "min-h-0 overflow-y-auto",
+        )}
+      >
+        {children}
+      </main>
       {nav && (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-(--z-sticky) flex justify-center pb-safe @3xl/shell:hidden">
           <div className="mb-6">{nav}</div>

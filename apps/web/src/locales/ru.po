@@ -1448,14 +1448,14 @@ msgstr "Не выключать"
 msgid "Keep the description under 300 characters."
 msgstr "Описание должно быть короче 300 символов."
 
-msgid "Keep the example under 1000 characters."
-msgstr "Пример должен быть короче 1000 символов."
+msgid "Keep the example under 2000 characters."
+msgstr "Пример должен быть короче 2000 символов."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Языковой тег должен быть короче 12 символов."
 
-msgid "Keep the meaning under 1000 characters."
-msgstr "Значение должно быть короче 1000 символов."
+msgid "Keep the meaning under 2000 characters."
+msgstr "Значение должно быть короче 2000 символов."
 
 msgid "Keep the name under 32 characters."
 msgstr "Название должно быть короче 32 символов."
@@ -1611,7 +1611,7 @@ msgstr "Больше полей"
 msgid "More to review"
 msgstr "Ещё к повторению"
 
-#. placeholder {0}: card.term
+#. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
 msgstr "Переместить «{0}» в"
 

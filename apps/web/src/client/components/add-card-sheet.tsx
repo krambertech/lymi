@@ -6,6 +6,7 @@ import { addInput, refreshAfterCardWrite, savePicture } from "../lib/card-writes
 import { useOverlayShape } from "../lib/device";
 import { createMoreChosen, rememberCreateMore, rememberDeck } from "../lib/last-deck";
 import { decksQuery } from "../lib/queries";
+import { shortQuote } from "../lib/short-quote";
 import {
   CardForm,
   type CardFormDraft,
@@ -71,7 +72,11 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDe
     try {
       const outcome = await api.addCard(addInput(values));
       if (outcome.status === "skipped") {
-        return { status: "skipped", term: outcome.existing.term, deckName: outcome.deckName };
+        return {
+          status: "skipped",
+          term: shortQuote(outcome.existing.term),
+          deckName: outcome.deckName,
+        };
       }
       rememberDeck(values.deckId);
       // The card is in either way; a refused picture is said beside it, not instead of it.
@@ -80,7 +85,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDe
         pictureError = errorMessage(e);
       });
       await refreshAfterCardWrite(qc);
-      const term = outcome.card.term;
+      const term = shortQuote(outcome.card.term);
       setPictureMissing(pictureError ? outcome.card : null);
       if (createMore) return { status: "added", term, pictureError };
       close(false);

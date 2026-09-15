@@ -1,7 +1,7 @@
 import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { deserializeState, type FsrsCard, type ReviewMode } from "@lymi/core";
+import { canSpeakTerm, deserializeState, type FsrsCard, type ReviewMode } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -39,6 +39,7 @@ import type { Card, CardEvent, CardState, Review } from "../lib/api";
 import { splitForms } from "../lib/deck-list";
 import { useDesktop } from "../lib/device";
 import { modeLabel } from "../lib/review-modes";
+import { QUOTE_MAX, shortQuote } from "../lib/short-quote";
 
 /** A write in the word's history, not a review: what changed, and who changed it. */
 export interface WordEvent {
@@ -88,7 +89,6 @@ const changedTo: Record<string, (value: string) => MessageDescriptor> = {
   example: (value) => msg`Example changed to “${value}”`,
   notes: (value) => msg`Notes changed to “${value}”`,
 };
-const QUOTED_MAX = 60;
 
 const eventIcon: Record<WordEvent["kind"], LucideIcon> = {
   added: Plus,
@@ -160,7 +160,7 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
       return { ...base, kind: "edited", text, actor: by };
     }
     const message = changedTo[only];
-    if (message && next.length <= QUOTED_MAX)
+    if (message && next.length <= QUOTE_MAX)
       return { ...base, kind: "edited", text: i18n._(message(next)), actor: by };
   }
   return { ...base, kind: "edited", text: i18n._(msg`Edited ${list}`), actor: by };
@@ -499,7 +499,7 @@ export function WordView({
               </span>
             )}
           </span>
-          {onPlayAudio && card.language && (
+          {onPlayAudio && canSpeakTerm(card) && (
             <IconButton
               label={t`Say ${card.term}`}
               variant="secondary"
@@ -554,7 +554,7 @@ export function WordView({
 
       <Dialog open={moving} onOpenChange={setMoving}>
         <DialogContent className="w-[min(92vw,440px)]">
-          <DialogTitle>{t`Move “${card.term}” to`}</DialogTitle>
+          <DialogTitle>{t`Move “${shortQuote(card.term)}” to`}</DialogTitle>
           <ul className="grid gap-1">
             {elsewhere.map((d) => (
               <li key={d.id}>

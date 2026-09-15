@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normaliseTerm, revealsAnswer } from "./terms";
+import { canSpeakTerm, normaliseTerm, revealsAnswer, SPOKEN_TERM_MAX } from "./terms";
 
 describe("normaliseTerm", () => {
   it("trims, collapses whitespace and case-folds", () => {
@@ -30,5 +30,15 @@ describe("revealsAnswer", () => {
   });
   it("ignores answers too short to mean anything", () => {
     expect(revealsAnswer({ term: "ja", meaning: null }, "a jar of jam")).toBe(false);
+  });
+});
+
+describe("canSpeakTerm", () => {
+  it("speaks a language card's term up to the limit", () => {
+    expect(canSpeakTerm({ term: "a".repeat(SPOKEN_TERM_MAX), language: "de" })).toBe(true);
+    expect(canSpeakTerm({ term: "a".repeat(SPOKEN_TERM_MAX + 1), language: "de" })).toBe(false);
+  });
+  it("never speaks a card without a language", () => {
+    expect(canSpeakTerm({ term: "Hund", language: null })).toBe(false);
   });
 });

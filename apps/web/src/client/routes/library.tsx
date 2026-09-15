@@ -68,6 +68,7 @@ function DeckList() {
         series={series.data}
         onAdd={() => add.openCard()}
         onCreateDeck={add.openDeck}
+        onImport={add.openImport}
         onNewSeries={() => setEditing(null)}
         onEditSeries={setEditing}
         onArchiveSeries={(s) =>

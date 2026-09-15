@@ -28,6 +28,7 @@ export const e2eAccounts = [
   "series",
   "series-archive",
   "series-drag",
+  "anki-import",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

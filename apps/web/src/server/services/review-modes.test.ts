@@ -29,10 +29,11 @@ describe("review mode backfill", () => {
   let db: Db;
   let raw: D1Database;
   let migrate: (file: string) => Promise<void>;
+  let migrateFrom: (first: string) => Promise<void>;
   let dispose: () => Promise<void>;
 
   beforeAll(async () => {
-    ({ db, raw, migrate, dispose } = await testDb({ before: "0012_" }));
+    ({ db, raw, migrate, migrateFrom, dispose } = await testDb({ before: "0012_" }));
   }, 60_000);
   afterAll(async () => dispose());
 
@@ -110,7 +111,8 @@ describe("review mode backfill", () => {
 
   it("keeps reading a row an older Worker wrote without a mode", async () => {
     const ctx: ServiceContext = { db, userId: "u", actor: "user" };
-    await migrate("0013_card_images.sql");
+    // The rest of the schema, so today's queries find every column.
+    await migrateFrom("0013_");
     await raw
       .prepare(
         "update card_states set mode = case id when 's1' then null else mode end, due = 0, fsrs = ?",

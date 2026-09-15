@@ -476,6 +476,16 @@
     animation: carry-bail 2.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
   }
 }
+/* The import's working bar, while how long is left is not known. */
+@keyframes import-sweep {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 300% 0;
+  }
+}
+
 @keyframes flicker {
   0%,
   100% {

@@ -25,6 +25,9 @@ erDiagram
   user ||--o{ audit_log : "every write"
   user ||--|| user_settings : has
   user ||--o| user_avatars : "photo"
+  user ||--o{ imports : "brings in"
+  imports ||--o{ cards : "added"
+  imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
   user ||--o{ push_subscriptions : "one per subscribed device"
 
@@ -45,6 +48,8 @@ erDiagram
     text directions "recognition | production | both"
     int position "order within its series, or within Library"
     int archived_at "nullable"
+    text import_id "nullable, the import that made it"
+    text external_id "nullable, the source's key"
   }
   cards {
     text id PK
@@ -67,6 +72,23 @@ erDiagram
     text image_version "nullable opaque token of the last picture write"
     text created_by "user | api | mcp | ai | system"
     int archived_at "nullable"
+    text import_id "nullable, the import that added it"
+    text external_id "nullable, the source's id"
+  }
+  imports {
+    text id PK
+    text user_id FK
+    text source "anki"
+    text file_name "private, never logged"
+    int byte_size
+    text status "uploading | inspecting | ready | importing | done | failed | cancelled"
+    text failure "nullable code"
+    text object_key "nullable R2 key, cleared files"
+    json summary "decks, note types, counts"
+    json choices "language per deck, role per field"
+    json counts "what was written"
+    int written "chunks written"
+    int archived_at "nullable, stamped on the cards it archived"
   }
   user_settings {
     text user_id PK
@@ -129,7 +151,7 @@ erDiagram
     real stability_after "FSRS memory model after this review"
     real difficulty_after
     int reviewed_at
-    text source "web | api | mcp"
+    text source "web | api | mcp | import"
     text review_day_id FK "nullable: null before daily goals"
     text state_before "nullable JSON card state this grade replaced, for Undo"
   }
@@ -230,6 +252,14 @@ Contraction is a later, separate migration, once apps and offline outboxes from 
 ### Pictures
 
 A card has at most one active `card_images` row; a replaced picture keeps its row and its R2 object, and an archived one comes back with restore. Pictures share the private `PRIVATE_IMAGES` bucket and the Images binding with avatars, re-encoded to WebP of at most 1600 px a side under random keys, and `/api/cards/:id/image/:imageId` serves only the active one with `private, no-store`. Every picture write claims `cards.image_version` with a fresh token in the same batch as the change, and the batch's other statements run only if the claim landed; the claim's own row count says which write won, and only the loser deletes its uploaded object and gets a 409. A link import fetches once within 10 seconds and 10 MB, over http or https on the default port, with no credentials in the URL, and checks every redirect against private hosts. Callers may send the `imageVersion` they read as `version`. Descriptions that contain the term or the whole meaning are refused. Object keys, descriptions and source URLs never go into logs or errors, and only the host of an imported link is kept.
+
+### Imports
+
+An import writes ordinary decks, cards, states and reviews, and marks what it made with `import_id` and the source's `external_id`: an Anki note's guid for a basic or reversed note, and the guid with the cloze number for each cloze card. A card whose external id the learner already has is not added again; a later import fills only its empty fields and tags and adds none of its newer log, because replaying Anki grades between the learner's Lymi grades would give one schedule two histories. A term already active in the same language is skipped under ADR 0004.
+
+Each imported grade replays through the scheduler in order and is stored as a `reviews` row with `source = 'import'`, no `review_day_id` and no `state_before`, so Undo refuses it. The mode's state keeps the replayed memory and takes the source's due date. A mode with a schedule and no log starts from the source's stability and difficulty; a mode the source reset stays new with its log as history. Imported rows light days in Insights and are left out of the streak, today's draw log and the goal.
+
+Archiving an import stamps its own `archived_at` on every card it added that is still active, and on each deck it made that has no active card left; restore clears exactly the rows carrying that moment, so a card the learner archived or a suspended card that arrived archived stays archived.
 
 ### Tags and source
 

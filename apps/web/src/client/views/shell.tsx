@@ -61,6 +61,7 @@ interface SidebarProps {
   email?: string | undefined;
   onAdd: () => void;
   onCreateDeck?: (() => void) | undefined;
+  onImport?: (() => void) | undefined;
   onSearch?: (() => void) | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
@@ -87,6 +88,7 @@ export function Sidebar({
   email,
   onAdd,
   onCreateDeck,
+  onImport,
   onSearch,
   onSignOut,
   signingOut,
@@ -123,7 +125,13 @@ export function Sidebar({
             <Search />
           </IconButton>
         )}
-        <AddMenu onAddCard={onAdd} onCreateDeck={onCreateDeck} size="sm" align="end" />
+        <AddMenu
+          onAddCard={onAdd}
+          onCreateDeck={onCreateDeck}
+          onImport={onImport}
+          size="sm"
+          align="end"
+        />
       </div>
 
       {NAV.map((n) => (

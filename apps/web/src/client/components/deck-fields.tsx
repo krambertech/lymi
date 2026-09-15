@@ -1,7 +1,7 @@
 import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { Directions } from "@lymi/core";
+import { type Directions, LANGUAGE_TAGS } from "@lymi/core";
 import { useId, useState } from "react";
 import { RadioCard } from "./radio-card";
 import { Segmented } from "./segmented";
@@ -25,47 +25,7 @@ import { RadioGroup } from "./ui/radio-group";
  * settings screen so the same choice looks the same in both places.
  */
 
-/** Languages offered by name. Any other BCP 47 tag can still be typed in. */
-const TAGS = [
-  "ar",
-  "bg",
-  "cs",
-  "da",
-  "de",
-  "el",
-  "en",
-  "es",
-  "et",
-  "fa",
-  "fi",
-  "fr",
-  "he",
-  "hi",
-  "hr",
-  "hu",
-  "id",
-  "it",
-  "ja",
-  "ko",
-  "lt",
-  "lv",
-  "nl",
-  "no",
-  "pl",
-  "pt",
-  "pt-BR",
-  "ro",
-  "ru",
-  "sk",
-  "sl",
-  "sr",
-  "sv",
-  "th",
-  "tr",
-  "uk",
-  "vi",
-  "zh",
-];
+const TAGS: readonly string[] = LANGUAGE_TAGS;
 
 /** One display-name lookup per interface language; the locale can change while the app runs. */
 const names = new Map<string, Intl.DisplayNames | null>();

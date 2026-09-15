@@ -61,6 +61,10 @@ export const DeckOut = z
     position: z.number().int(),
     seriesId: SeriesId,
     archivedAt: Timestamp.nullable(),
+    importId: z
+      .string()
+      .nullable()
+      .meta({ description: "The import that created the deck, if one did" }),
     createdAt: Timestamp,
     updatedAt: Timestamp,
     ...Membership,
@@ -164,6 +168,10 @@ export const CardOut = z
     exampleSource: FieldSource.nullable(),
     audioKey: z.string().nullable(),
     createdBy: Actor.meta({ description: "Who added the card" }),
+    importId: z
+      .string()
+      .nullable()
+      .meta({ description: "The import that added the card, if one did" }),
     archivedAt: Timestamp.nullable(),
     createdAt: Timestamp,
     updatedAt: Timestamp,

@@ -20,6 +20,7 @@ export function previewNames(value) {
     databaseName: `${workerName}-db`,
     namespaceTitle: `${workerName}-sessions`,
     bucketName: `${workerName}-audio`,
+    workflowName: `${workerName}-import`,
     alias: "preview",
   };
 }
@@ -54,7 +55,13 @@ export function makePreviewConfig(base, { names, previewUrl, databaseId, namespa
       APP_PREVIEW: "true",
     },
     kv_namespaces: [{ binding: "SESSIONS", id: namespaceId }],
-    r2_buckets: [{ binding: "AUDIO", bucket_name: names.bucketName }],
+    // Imports share the disposable bucket; their objects are deleted when each import ends.
+    r2_buckets: [
+      { binding: "AUDIO", bucket_name: names.bucketName },
+      { binding: "IMPORTS", bucket_name: names.bucketName },
+    ],
+    // Workflow names are account-wide, so a preview must never register production's.
+    workflows: base.workflows?.map((workflow) => ({ ...workflow, name: names.workflowName })),
     d1_databases: [
       {
         binding: "DB",
@@ -293,6 +300,12 @@ export async function cleanupPreviewInfrastructure({
   await cfRequest(
     client,
     `/workers/scripts/${encodeURIComponent(names.workerName)}?force=true`,
+    { method: "DELETE" },
+    true,
+  );
+  await cfRequest(
+    client,
+    `/workflows/${encodeURIComponent(names.workflowName)}`,
     { method: "DELETE" },
     true,
   );

@@ -219,6 +219,8 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
           gte(schema.reviews.reviewedAt, day.start),
           lt(schema.reviews.reviewedAt, day.end),
           isNull(schema.reviewUndos.reviewId),
+          // Recalls imported from another app are history, not today's attempts.
+          ne(schema.reviews.source, "import"),
         ),
       )
       .orderBy(asc(schema.reviews.reviewedAt), asc(schema.reviews.id)),

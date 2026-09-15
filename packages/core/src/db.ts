@@ -6,4 +6,4 @@
  */
 export * from "drizzle-orm";
 export { drizzle } from "drizzle-orm/d1";
-export { alias } from "drizzle-orm/sqlite-core";
+export { alias, SQLiteAsyncDialect } from "drizzle-orm/sqlite-core";

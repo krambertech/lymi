@@ -608,12 +608,9 @@ export const SCREENS: Entry[] = [
                   onStartSection={noop}
                   sectionActions={{
                     onCreate: noop,
-                    onShowArchived: noop,
                     onRename: noop,
-                    onMove: noop,
-                    onArchive: noop,
                     onAddCard: noop,
-                    onReorder: noop,
+                    onManage: noop,
                     onPickSection: noop,
                     onMoveCards: noop,
                   }}

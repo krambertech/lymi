@@ -1,55 +1,25 @@
 import {
   type Announcements,
   type CollisionDetection,
-  closestCenter,
   DndContext,
   type DragEndEvent,
   DragOverlay,
   type DragStartEvent,
-  KeyboardSensor,
   MouseSensor,
   pointerWithin,
   rectIntersection,
   TouchSensor,
-  useDndContext,
   useDraggable,
   useDroppable,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import {
-  Archive,
-  ArrowDown,
-  ArrowUp,
-  GripVertical,
-  Lock,
-  MoreHorizontal,
-  PencilLine,
-  Plus,
-} from "lucide-react";
-import { useReducedMotion } from "motion/react";
-import {
-  type ButtonHTMLAttributes,
-  createContext,
-  type ReactNode,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Check, Lock, MoreHorizontal, PencilLine, Plus, Settings2 } from "lucide-react";
+import { type ButtonHTMLAttributes, type ReactNode, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/button";
 import { StateIcon, stateMarks } from "../components/state-mark";
-import { Checkbox } from "../components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -88,12 +58,11 @@ export const sectionAnchor = (sectionId: string) => `section-${sectionId}`;
 /** What the deck's owner can do to its sections from the list. */
 export interface SectionEditing {
   onRename: (section: Section) => void;
-  onMove: (section: Section, by: -1 | 1) => void;
-  onArchive: (section: Section) => void;
   onAddCard: (section: Section) => void;
+  /** Deck settings, where sections are ordered and archived. */
+  onManage: () => void;
   /** A drop of cards on a section, or on the cards without one. */
   onDropCards: (cardIds: string[], section: Section | null) => void;
-  onReorder: (sectionIds: string[]) => void;
 }
 
 export interface GlossaryProps {
@@ -134,15 +103,10 @@ export function Glossary(props: GlossaryProps) {
 
 function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
   const { t } = useLingui();
-  const reduce = useReducedMotion();
   const { groups, editing, selection } = props;
-  const [active, setActive] = useState<{ kind: "card" | "section"; id: string } | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const dropped = useRef(false);
 
-  const sectionIds = useMemo(
-    () => groups.flatMap((g) => (g.kind === "section" && g.section ? [g.section.id] : [])),
-    [groups],
-  );
   const rows = useMemo(
     () => new Map(groups.flatMap((g) => g.rows).map((r) => [r.card.id, r])),
     [groups],
@@ -161,129 +125,96 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
     // A long press, so a swipe still scrolls the deck on a phone.
     useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } }),
-    // Only a section's handle takes keys; a card moves from the keyboard through its menu.
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-      keyboardCodes: { start: ["Space"], cancel: ["Escape"], end: ["Space", "Enter"] },
-    }),
   );
 
-  const groupsOnly: CollisionDetection = (args) => {
-    const containers = args.droppableContainers.filter((c) => String(c.id).startsWith(GROUP));
-    const scoped = { ...args, droppableContainers: containers };
-    if (String(args.active.id).startsWith(CARD)) {
-      const within = args.pointerCoordinates ? pointerWithin(scoped) : rectIntersection(scoped);
-      return within.length > 0 ? within : closestCenter(scoped);
-    }
-    return closestCenter({
-      ...scoped,
-      droppableContainers: containers.filter((c) => String(c.id) !== GROUP),
-    });
+  // A card lands in whichever section the pointer is over, the whole block of it counting.
+  const overSection: CollisionDetection = (args) => {
+    const within = pointerWithin(args);
+    return within.length > 0 ? within : rectIntersection(args);
   };
 
   const moving = (cardId: string) => (selection?.ids.has(cardId) ? [...selection.ids] : [cardId]);
-
-  const nameOfGroup = (id: string) => {
+  const place = (id: string) => {
     const sectionId = id.slice(GROUP.length);
     return sectionId ? (sections.get(sectionId)?.name ?? "") : t`No section`;
   };
-  const nameOfActive = (id: string) =>
-    id.startsWith(CARD) ? (rows.get(id.slice(CARD.length))?.card.term ?? "") : nameOfGroup(id);
+  const term = (id: string) => rows.get(id.slice(CARD.length))?.card.term ?? "";
 
   const announcements: Announcements = {
-    onDragStart: ({ active: a }) => {
-      const name = nameOfActive(String(a.id));
+    onDragStart: ({ active }) => {
+      const name = term(String(active.id));
       return t`Picked up ${name}.`;
     },
-    onDragOver: ({ active: a, over }) => {
+    onDragOver: ({ active, over }) => {
       if (!over) return undefined;
-      const name = nameOfActive(String(a.id));
-      const place = nameOfGroup(String(over.id));
-      return t`${name} is over ${place}.`;
+      const name = term(String(active.id));
+      const where = place(String(over.id));
+      return t`${name} is over ${where}.`;
     },
-    onDragEnd: ({ active: a, over }) => {
-      const name = nameOfActive(String(a.id));
+    onDragEnd: ({ active, over }) => {
+      const name = term(String(active.id));
       if (!over) return t`${name} is back where it was.`;
-      const place = nameOfGroup(String(over.id));
-      return t`Dropped ${name} at ${place}.`;
+      const where = place(String(over.id));
+      return t`Dropped ${name} at ${where}.`;
     },
-    onDragCancel: ({ active: a }) => {
-      const name = nameOfActive(String(a.id));
+    onDragCancel: ({ active }) => {
+      const name = term(String(active.id));
       return t`${name} is back where it was.`;
     },
   };
 
-  const onDragStart = ({ active: a }: DragStartEvent) => {
-    const id = String(a.id);
-    setActive(
-      id.startsWith(CARD)
-        ? { kind: "card", id: id.slice(CARD.length) }
-        : { kind: "section", id: id.slice(GROUP.length) },
-    );
-  };
+  const onDragStart = ({ active }: DragStartEvent) =>
+    setActiveId(String(active.id).slice(CARD.length));
 
-  const onDragEnd = ({ active: a, over }: DragEndEvent) => {
-    setActive(null);
+  const onDragEnd = ({ active, over }: DragEndEvent) => {
+    setActiveId(null);
     if (!over) return;
     dropped.current = true;
     window.setTimeout(() => {
       dropped.current = false;
     }, 0);
-    const id = String(a.id);
     const target = String(over.id).slice(GROUP.length);
-    if (id.startsWith(CARD)) {
-      const cardIds = moving(id.slice(CARD.length)).filter(
-        (cardId) => (rows.get(cardId)?.card.sectionId ?? "") !== target,
-      );
-      if (cardIds.length === 0) return;
-      editing.onDropCards(cardIds, target ? (sections.get(target) ?? null) : null);
-      return;
-    }
-    const from = sectionIds.indexOf(id.slice(GROUP.length));
-    const to = sectionIds.indexOf(target);
-    if (from < 0 || to < 0 || from === to) return;
-    editing.onReorder(arrayMove(sectionIds, from, to));
+    const cardIds = moving(String(active.id).slice(CARD.length)).filter(
+      (cardId) => (rows.get(cardId)?.card.sectionId ?? "") !== target,
+    );
+    if (cardIds.length === 0) return;
+    editing.onDropCards(cardIds, target ? (sections.get(target) ?? null) : null);
   };
 
-  const activeRow = active?.kind === "card" ? rows.get(active.id) : undefined;
-  const activeSection = active?.kind === "section" ? sections.get(active.id) : undefined;
+  const activeRow = activeId ? rows.get(activeId) : undefined;
   const count = activeRow ? moving(activeRow.card.id).length : 0;
 
   return (
     <DndContext
       sensors={sensors}
-      collisionDetection={groupsOnly}
+      collisionDetection={overSection}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      onDragCancel={() => setActive(null)}
-      accessibility={{
-        announcements,
-        screenReaderInstructions: {
-          draggable: t`To move a section, press Space, use the arrow keys, and press Space again.`,
-        },
-      }}
+      onDragCancel={() => setActiveId(null)}
+      accessibility={{ announcements }}
     >
-      <SortableContext
-        items={sectionIds.map((id) => `${GROUP}${id}`)}
-        strategy={verticalListSortingStrategy}
-      >
-        <GroupList {...props} dropped={dropped} />
-      </SortableContext>
-      <DragOverlay dropAnimation={reduce ? null : undefined}>
+      <GroupList {...props} dropped={dropped} />
+      {/* No drop animation: the card is already in its new place, so the copy just goes. */}
+      <DragOverlay dropAnimation={null}>
         {activeRow ? (
-          <div className="edge-2 flex max-w-80 cursor-grabbing items-center gap-2.5 rounded-lg bg-plate px-4 py-3 shadow-lg">
-            <StateIcon state={rowState(activeRow)} className="size-[15px]" />
-            <span className="truncate text-lg font-medium">{activeRow.card.term}</span>
-            {count > 1 && (
-              <span className="ms-auto rounded-full bg-plate-2 px-2 text-sm font-medium text-text-2">
-                +{count - 1}
+          <div className="flex h-full w-full origin-left scale-[1.02] cursor-grabbing items-center gap-3 rounded-lg bg-plate px-4 edge-2 @xl/list:px-5">
+            <StateIcon state={rowState(activeRow)} className="size-[15px] shrink-0" />
+            <span
+              className="min-w-0 truncate text-lg font-medium text-text"
+              lang={activeRow.card.language ?? undefined}
+            >
+              {splitForms(activeRow.card.term).word}
+            </span>
+            {activeRow.card.meaning && (
+              <span className="min-w-0 flex-1 truncate text-md text-text-2">
+                {activeRow.card.meaning}
               </span>
             )}
-          </div>
-        ) : activeSection ? (
-          <div className="edge-2 flex cursor-grabbing items-center gap-2 rounded-lg bg-plate px-4 py-3 shadow-lg">
-            <GripVertical className="size-4 text-muted" aria-hidden="true" />
-            <span className="text-md font-medium">{activeSection.name}</span>
+            {count > 1 && (
+              <span className="ms-auto shrink-0 rounded-full bg-amber-tint px-2 text-sm font-medium tabular-nums text-amber-tint-ink">
+                {count}
+              </span>
+            )}
           </div>
         ) : null}
       </DragOverlay>
@@ -305,9 +236,6 @@ function GroupList({
   dropped,
 }: GlossaryProps & { dropped?: { current: boolean } | undefined }) {
   const { t, i18n } = useLingui();
-  const sectionIds = groups.flatMap((g) =>
-    g.kind === "section" && g.section ? [g.section.id] : [],
-  );
 
   const heading = (group: DeckGroup): string | null => {
     switch (group.kind) {
@@ -341,7 +269,6 @@ function GroupList({
       {groups.map((group) => {
         const label = heading(group);
         const section = group.kind === "section" ? group.section : null;
-        const index = section ? sectionIds.indexOf(section.id) : -1;
         const body = (
           <>
             {section?.status === "ready" && onStart && (
@@ -365,9 +292,6 @@ function GroupList({
                 here={!!progress && !!section && section.id === progress.currentId}
                 onStart={onStart}
                 editing={editing}
-                first={index === 0}
-                last={index === sectionIds.length - 1}
-                movable={!!movable && !!section}
               />
             )}
             {group.rows.length === 0 ? (
@@ -408,14 +332,10 @@ function GroupList({
           </>
         );
         if (group.kind === "section" && movable) {
-          return section ? (
-            <SortableGroup key={group.key} sectionId={section.id} label={label ?? ""}>
+          return (
+            <DropGroup key={group.key} sectionId={section?.id ?? ""} label={label ?? ""}>
               {body}
-            </SortableGroup>
-          ) : (
-            <LooseGroup key={group.key} label={label ?? ""}>
-              {body}
-            </LooseGroup>
+            </DropGroup>
           );
         }
         return (
@@ -428,8 +348,8 @@ function GroupList({
   );
 }
 
-/** A section's cards as one drop target that also sorts among the other sections. */
-function SortableGroup({
+/** A section's cards, or the cards without one, as one place to drop a card. */
+function DropGroup({
   sectionId,
   label,
   children,
@@ -438,47 +358,20 @@ function SortableGroup({
   label: string;
   children: ReactNode;
 }) {
-  const sortable = useSortable({ id: `${GROUP}${sectionId}` });
-  const { active } = useDndContext();
-  const cardOver = !!active && String(active.id).startsWith(CARD) && sortable.isOver;
-  return (
-    <section
-      ref={sortable.setNodeRef}
-      aria-label={label}
-      style={{
-        transform: CSS.Translate.toString(sortable.transform),
-        transition: sortable.transition,
-      }}
-      className={clsx(
-        "-mx-2 grid rounded-xl px-2 pb-2 transition-[background-color] duration-150",
-        cardOver && "bg-plate-2",
-        sortable.isDragging && "opacity-40",
-      )}
-    >
-      <HandleContext.Provider value={sortable}>{children}</HandleContext.Provider>
-    </section>
-  );
-}
-
-/** The cards without a section, a drop target that never moves. */
-function LooseGroup({ label, children }: { label: string; children: ReactNode }) {
-  const { setNodeRef, isOver, active } = useDroppable({ id: GROUP });
-  const cardOver = !!active && String(active.id).startsWith(CARD) && isOver;
+  const { setNodeRef, isOver, active } = useDroppable({ id: `${GROUP}${sectionId}` });
   return (
     <section
       ref={setNodeRef}
       aria-label={label}
       className={clsx(
-        "-mx-2 grid rounded-xl px-2 pb-2 transition-[background-color] duration-150",
-        cardOver && "bg-plate-2",
+        "-mx-2 grid rounded-xl px-2 pb-2 transition-[background-color] duration-150 ease-out motion-reduce:transition-none",
+        !!active && isOver && "bg-plate-2",
       )}
     >
       {children}
     </section>
   );
 }
-
-const HandleContext = createContext<ReturnType<typeof useSortable> | null>(null);
 
 function SectionHeading({
   label,
@@ -487,9 +380,6 @@ function SectionHeading({
   here,
   onStart,
   editing,
-  first,
-  last,
-  movable,
 }: {
   label: string;
   count: number;
@@ -497,28 +387,12 @@ function SectionHeading({
   here: boolean;
   onStart?: ((section: Section) => void) | undefined;
   editing?: SectionEditing | undefined;
-  first: boolean;
-  last: boolean;
-  movable: boolean;
 }) {
   const { t, i18n } = useLingui();
-  const handle = useContext(HandleContext);
   const locked = !!section && section.status !== "open";
   const sectionName = section?.name ?? "";
   return (
     <div className="flex min-h-11 flex-wrap items-center gap-x-2 gap-y-1 px-1 pt-6 pb-2">
-      {movable && handle && (
-        <button
-          type="button"
-          ref={handle.setActivatorNodeRef}
-          {...handle.attributes}
-          {...handle.listeners}
-          aria-label={t`Move ${sectionName}`}
-          className="-ms-2 grid size-8 cursor-grab touch-none place-items-center rounded-md text-faint transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text-2 active:cursor-grabbing"
-        >
-          <GripVertical className="size-4" aria-hidden="true" />
-        </button>
-      )}
       {locked && <Lock className="size-4 shrink-0 text-muted" aria-hidden="true" />}
       <h2
         id={section ? sectionAnchor(section.id) : undefined}
@@ -563,18 +437,10 @@ function SectionHeading({
               <PencilLine />
               <Trans>Rename</Trans>
             </DropdownMenuItem>
-            <DropdownMenuItem disabled={first} onClick={() => editing.onMove(section, -1)}>
-              <ArrowUp />
-              <Trans>Move up</Trans>
-            </DropdownMenuItem>
-            <DropdownMenuItem disabled={last} onClick={() => editing.onMove(section, 1)}>
-              <ArrowDown />
-              <Trans>Move down</Trans>
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" onClick={() => editing.onArchive(section)}>
-              <Archive />
-              <Trans>Archive section</Trans>
+            <DropdownMenuItem onClick={editing.onManage}>
+              <Settings2 />
+              <Trans>Arrange sections</Trans>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -642,9 +508,8 @@ function GlossaryRow({
       : null;
   const key = rowState(row);
   const selected = !!selection?.ids.has(card.id);
-  const columns = selection
-    ? "grid-cols-[20px_minmax(0,1fr)] @xl/list:grid-cols-[20px_minmax(0,1fr)_minmax(0,1.15fr)]"
-    : sort === "due"
+  const columns =
+    sort === "due"
       ? "grid-cols-[15px_minmax(0,1fr)_auto] @xl/list:grid-cols-[15px_minmax(0,1fr)_minmax(0,1.15fr)_8rem]"
       : "grid-cols-[15px_minmax(0,1fr)] @xl/list:grid-cols-[15px_minmax(0,1fr)_minmax(0,1.15fr)]";
 
@@ -667,12 +532,16 @@ function GlossaryRow({
     >
       <span className="row-span-2 mt-[3px] self-start @xl/list:row-span-1">
         {selection ? (
-          <Checkbox
-            checked={selected}
-            tabIndex={-1}
+          // The same 15 px as the state's mark it stands in for, so choosing cards moves nothing.
+          <span
             aria-hidden="true"
-            className="pointer-events-none -mt-0.5"
-          />
+            className={clsx(
+              "grid size-[15px] place-items-center rounded-[4px] border-[1.5px] transition-colors duration-150 ease-out motion-reduce:transition-none",
+              selected ? "border-text bg-text text-canvas" : "border-edge-2 bg-plate",
+            )}
+          >
+            {selected && <Check className="size-[11px]" strokeWidth={3} />}
+          </span>
         ) : waiting ? (
           <Lock className="size-[15px] text-faint" aria-hidden="true" />
         ) : (
@@ -705,7 +574,7 @@ function GlossaryRow({
       >
         {card.meaning ?? <Trans>No meaning yet</Trans>}
       </span>
-      {date && !selection && (
+      {date && (
         <span className="col-start-3 row-start-1 whitespace-nowrap text-end text-sm text-muted @xl/list:col-start-4">
           {date}
         </span>

@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
   Archive,
-  ArchiveRestore,
   ArrowUpDown,
   Download,
   KeyRound,
@@ -128,7 +127,6 @@ export interface DeckDetailProps {
 /** What the owner does to sections from the deck page; the route holds the dialogs. */
 export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards"> {
   onCreate: () => void;
-  onShowArchived: () => void;
   /** Open the picker for these cards; `after` runs once they have moved. */
   onPickSection: (cardIds: string[], after: () => void) => void;
   onMoveCards: (cardIds: string[], section: Section | null) => void;
@@ -342,7 +340,6 @@ function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }
 
 function ListTools({
   sections,
-  onSelect,
   filters,
   setFilters,
   sort,
@@ -352,8 +349,6 @@ function ListTools({
   searchRef,
 }: {
   sections: Section[];
-  /** Start choosing cards to move. Only the owner is offered it. */
-  onSelect?: (() => void) | undefined;
   filters: DeckFilters;
   setFilters: (next: DeckFilters) => void;
   sort: DeckSort;
@@ -496,12 +491,6 @@ function ListTools({
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
-        {onSelect && (
-          <Button size="sm" variant="ghost" onClick={onSelect}>
-            <SquareCheck aria-hidden="true" />
-            <Trans>Select</Trans>
-          </Button>
-        )}
         {/* Desktop keeps search beside the tools, where "/" lands; the phone has it up top. */}
         <div className="relative ms-auto hidden w-56 min-w-0 @3xl/shell:block">
           <Search
@@ -848,9 +837,12 @@ export function DeckDetailView({
               <ListTree />
               <Trans>New section</Trans>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={sectionActions.onShowArchived}>
-              <ArchiveRestore />
-              <Trans>Archived sections</Trans>
+            <DropdownMenuItem
+              onClick={() => setSelected(new Set())}
+              disabled={!cards?.length || !!selected}
+            >
+              <SquareCheck />
+              <Trans>Select cards</Trans>
             </DropdownMenuItem>
           </>
         )}
@@ -1029,7 +1021,6 @@ export function DeckDetailView({
           <div className={clsx(searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6")}>
             <ListTools
               sections={sections}
-              onSelect={sectionActions && !selected ? () => setSelected(new Set()) : undefined}
               filters={filters}
               setFilters={setFilters}
               sort={sort}

@@ -4,8 +4,6 @@ import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/reac
 import { useMemo, useRef, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import {
-  ArchivedSectionsDialog,
-  ArchiveSectionDialog,
   MoveToSectionDialog,
   SectionNameDialog,
   StartEarlyDialog,
@@ -17,7 +15,6 @@ import { api, type Card, errorMessage, type Section } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import {
-  archivedSectionsQuery,
   cardHistoryQuery,
   connectedAppsQuery,
   deckCardsQuery,
@@ -67,9 +64,6 @@ function DeckPage() {
   const sections = useQuery(sectionsQuery(deckId));
   const sectionActions = useSectionActions(deckId);
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
-  const [archivingSection, setArchivingSection] = useState<Section | null>(null);
-  const [showArchived, setShowArchived] = useState(false);
-  const archivedSections = useQuery({ ...archivedSectionsQuery(deckId), enabled: showArchived });
   const [picking, setPicking] = useState<{ cardIds: string[]; after: () => void } | null>(null);
   // The picker keeps its cards while it closes, so it never flashes "Move 0 cards".
   const lastPicking = useRef(picking);
@@ -198,23 +192,14 @@ function DeckPage() {
           isOwner
             ? {
                 onCreate: () => setNaming({}),
-                onShowArchived: () => setShowArchived(true),
                 onRename: (section) => setNaming({ section }),
-                onArchive: (section) =>
-                  section.total > 0
-                    ? setArchivingSection(section)
-                    : sectionActions.archive.mutate({ section, cards: "keep" }),
                 onAddCard: (section) => add.openCard(deckId, { sectionId: section.id }),
-                onMove: (section, by) => {
-                  const ids = sectionList.map((s) => s.id);
-                  const from = ids.indexOf(section.id);
-                  const to = from + by;
-                  if (from < 0 || to < 0 || to >= ids.length) return;
-                  ids.splice(from, 1);
-                  ids.splice(to, 0, section.id);
-                  sectionActions.reorder.mutate(ids);
-                },
-                onReorder: (ids) => sectionActions.reorder.mutate(ids),
+                onManage: () =>
+                  navigate({
+                    to: "/library/$deckId/settings",
+                    params: { deckId },
+                    hash: "sections",
+                  }),
                 onPickSection: (cardIds, after) => setPicking({ cardIds, after }),
                 onMoveCards: (cardIds, section) =>
                   sectionActions.moveCards.mutate({
@@ -265,26 +250,6 @@ function DeckPage() {
               else await sectionActions.create.mutateAsync({ name });
               setNaming(null);
             }}
-          />
-          <ArchiveSectionDialog
-            section={archivingSection}
-            onOpenChange={(open) => !open && setArchivingSection(null)}
-            onArchive={(choice) => {
-              if (archivingSection) {
-                sectionActions.archive.mutate({ section: archivingSection, cards: choice });
-              }
-              setArchivingSection(null);
-            }}
-          />
-          <ArchivedSectionsDialog
-            open={showArchived}
-            onOpenChange={setShowArchived}
-            sections={archivedSections.data?.sections}
-            onRestore={(section) => sectionActions.restore.mutate(section)}
-            restoring={
-              sectionActions.restore.isPending ? sectionActions.restore.variables?.id : undefined
-            }
-            error={archivedSections.isError ? errorMessage(archivedSections.error) : undefined}
           />
           <MoveToSectionDialog
             open={!!picking}

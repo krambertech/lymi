@@ -102,7 +102,11 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
     await expect(naming).toBeHidden();
     await expect(heading("Review")).toBeVisible();
 
-    await page.getByRole("button", { name: "Select", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Deck options", exact: true })
+      .filter({ visible: true })
+      .click();
+    await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();
     await row("tere").click();
     await row("leib").click();
     const bar = page.getByRole("region", { name: "Selected cards", exact: true });
@@ -120,16 +124,21 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
     await expect(heading("Greetings")).toHaveAccessibleName(/, 1$/);
   });
 
-  await test.step("the owner reorders sections from a heading's menu", async () => {
+  await test.step("the owner reorders sections in deck settings", async () => {
     await page.getByRole("button", { name: "Options for Review", exact: true }).click();
-    await page.getByRole("menuitem", { name: "Move up", exact: true }).click();
-    await expect(page.getByRole("heading", { level: 2 })).toHaveText([
-      /^Greetings/,
-      /^Numbers/,
-      /^Review/,
-      /^Food/,
+    await page.getByRole("menuitem", { name: "Arrange sections", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "Deck settings", exact: true })).toBeVisible();
+    const moveUp = page.getByRole("button", { name: "Move Review up", exact: true });
+    const manager = page.getByRole("list").filter({ has: moveUp });
+    await moveUp.click();
+    await expect(manager.getByRole("listitem")).toHaveText([
+      /Greetings/,
+      /Numbers/,
+      /Review/,
+      /Food/,
     ]);
-    await page.reload();
+
+    await page.goto(`/library/${deckId}`);
     await expect(page.getByRole("heading", { level: 2 })).toHaveText([
       /^Greetings/,
       /^Numbers/,

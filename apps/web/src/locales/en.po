@@ -60,6 +60,7 @@ msgstr "{0, plural, one {# card comes back with it} other {# cards come back wit
 
 #. placeholder {0}: deck.total
 #. placeholder {0}: s.total
+#. placeholder {0}: section.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
 
@@ -433,8 +434,8 @@ msgstr "{name} · Lymi"
 msgid "{name} is back where it was."
 msgstr "{name} is back where it was."
 
-msgid "{name} is over {place}."
-msgstr "{name} is over {place}."
+msgid "{name} is over {where}."
+msgstr "{name} is over {where}."
 
 msgid "{nextName} is ready"
 msgstr "{nextName} is ready"
@@ -671,6 +672,9 @@ msgstr "Archive “{sectionName}”?"
 msgid "Archive “{seriesName}”?"
 msgstr "Archive “{seriesName}”?"
 
+msgid "Archive {sectionName}"
+msgstr "Archive {sectionName}"
+
 msgid "Archive deck"
 msgstr "Archive deck"
 
@@ -715,8 +719,13 @@ msgstr "Archived sections"
 msgid "Archived series"
 msgstr "Archived series"
 
+<<<<<<< HEAD
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
+=======
+msgid "Arrange sections"
+msgstr "Arrange sections"
+>>>>>>> 3d560c1 (feat(web): arrange sections in settings and quiet card selection)
 
 msgid "Ask the person who shared it for a new link."
 msgstr "Ask the person who shared it for a new link."
@@ -1141,8 +1150,8 @@ msgstr "Drop or paste a picture"
 msgid "Dropped {deck} in {place}."
 msgstr "Dropped {deck} in {place}."
 
-msgid "Dropped {name} at {place}."
-msgstr "Dropped {name} at {place}."
+msgid "Dropped {name} at {where}."
+msgstr "Dropped {name} at {where}."
 
 msgid "Due"
 msgstr "Due"
@@ -1607,8 +1616,11 @@ msgstr "Move {0} down"
 msgid "Move {0} up"
 msgstr "Move {0} up"
 
-msgid "Move {sectionName}"
-msgstr "Move {sectionName}"
+msgid "Move {sectionName} down"
+msgstr "Move {sectionName} down"
+
+msgid "Move {sectionName} up"
+msgstr "Move {sectionName} up"
 
 msgid "Move down"
 msgstr "Move down"
@@ -1916,11 +1928,16 @@ msgstr "Other ways to add cards"
 msgid "own review"
 msgstr "own review"
 
+<<<<<<< HEAD
 msgid "past reviews"
 msgstr "past reviews"
 
 msgid "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
 msgstr "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
+=======
+msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
+msgstr "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
+>>>>>>> 3d560c1 (feat(web): arrange sections in settings and quiet card selection)
 
 msgid "Paste a link"
 msgstr "Paste a link"
@@ -2098,6 +2115,9 @@ msgstr "Remove the tag {tag}"
 msgid "Rename"
 msgstr "Rename"
 
+msgid "Rename {sectionName}"
+msgstr "Rename {sectionName}"
+
 msgid "Rename section"
 msgstr "Rename section"
 
@@ -2273,11 +2293,11 @@ msgstr "See the term, recall what it means."
 msgid "See your decks and cards"
 msgstr "See your decks and cards"
 
-msgid "Select"
-msgstr "Select"
-
 msgid "Select all"
 msgstr "Select all"
+
+msgid "Select cards"
+msgstr "Select cards"
 
 msgid "Selected cards"
 msgstr "Selected cards"
@@ -2589,9 +2609,6 @@ msgstr "Time"
 
 msgid "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
 msgstr "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
-
-msgid "To move a section, press Space, use the arrow keys, and press Space again."
-msgstr "To move a section, press Space, use the arrow keys, and press Space again."
 
 msgid "Today"
 msgstr "Today"

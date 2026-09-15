@@ -8,6 +8,7 @@ import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
 import { type DirectionExample, DirectionField, LanguageField } from "../components/deck-fields";
 import { RadioCard } from "../components/radio-card";
+import { SectionManager, type SectionManagerProps } from "../components/section-manager";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
 import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
@@ -37,8 +38,8 @@ export interface DeckSettingsProps {
   saved?: boolean | undefined;
   error?: string | undefined;
   onArchive?: (() => void) | undefined;
-  /** How many active sections the deck has; the setting that orders them shows only with some. */
-  sectionCount?: number | undefined;
+  /** The owner's section controls. Absent for a member, who cannot change them. */
+  sections?: SectionManagerProps | undefined;
   /** The owner's join-link controls. Absent for a member, who cannot share the deck. */
   sharing?: SharingProps | undefined;
   static?: StaticNav;
@@ -70,7 +71,7 @@ export function DeckSettingsView({
   saved,
   error,
   onArchive,
-  sectionCount = 0,
+  sections,
   sharing,
   static: st,
 }: DeckSettingsProps) {
@@ -211,25 +212,32 @@ export function DeckSettingsView({
             />
           </SettingsGroup>
 
-          {sectionCount > 0 && (
-            <SettingsGroup title={t`Sections`}>
-              <Field orientation="horizontal" className="items-start justify-between gap-4">
-                <FieldContent>
-                  <FieldLabel>{t`Open sections in order`}</FieldLabel>
-                  <FieldDescription>
-                    {deck.sectionsInOrder
-                      ? t`Everyone studying this deck starts with the first section. The next one is ready once every card of the current one has come up and 80% are Known. Anyone can start a section early.`
-                      : t`Every section is open, and every card comes up in review. Turning this on again keeps what each person already started.`}
-                  </FieldDescription>
-                </FieldContent>
-                {/* One line tall at the label's size, so the track centres on the label's first line. */}
-                <span className="flex h-lh shrink-0 items-center text-base">
-                  <Switch
-                    checked={deck.sectionsInOrder}
-                    onCheckedChange={(sectionsInOrder) => onSave({ sectionsInOrder })}
-                  />
-                </span>
-              </Field>
+          {sections && (
+            <SettingsGroup
+              id="sections"
+              title={t`Sections`}
+              description={t`Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order.`}
+            >
+              <SectionManager {...sections} />
+              {sections.sections.length > 0 && (
+                <Field orientation="horizontal" className="items-start justify-between gap-4">
+                  <FieldContent>
+                    <FieldLabel>{t`Open sections in order`}</FieldLabel>
+                    <FieldDescription>
+                      {deck.sectionsInOrder
+                        ? t`Everyone studying this deck starts with the first section. The next one is ready once every card of the current one has come up and 80% are Known. Anyone can start a section early.`
+                        : t`Every section is open, and every card comes up in review. Turning this on again keeps what each person already started.`}
+                    </FieldDescription>
+                  </FieldContent>
+                  {/* One line tall at the label's size, so the track centres on the label's first line. */}
+                  <span className="flex h-lh shrink-0 items-center text-base">
+                    <Switch
+                      checked={deck.sectionsInOrder}
+                      onCheckedChange={(sectionsInOrder) => onSave({ sectionsInOrder })}
+                    />
+                  </span>
+                </Field>
+              )}
             </SettingsGroup>
           )}
 

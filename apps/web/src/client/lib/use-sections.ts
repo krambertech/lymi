@@ -62,8 +62,9 @@ export function useSectionActions(deckId: string) {
   });
 
   /** Put cards in a section in the cache, returning where each was so Undo can put it back. */
-  const place = async (cardIds: readonly string[], sectionId: string | null) => {
-    await qc.cancelQueries({ queryKey: cardsKey, exact: true });
+  const place = (cardIds: readonly string[], sectionId: string | null) => {
+    // Not awaited: a dropped card has to land this frame, and cancelling already stops a stale fetch.
+    void qc.cancelQueries({ queryKey: cardsKey, exact: true });
     const before = qc.getQueryData<DeckRow[]>(cardsKey);
     const moving = new Set(cardIds);
     const from = new Map<string, string | null>();

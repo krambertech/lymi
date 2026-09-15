@@ -60,6 +60,7 @@ msgstr "{0, plural, one {Разом із ним повернеться # кар�
 
 #. placeholder {0}: deck.total
 #. placeholder {0}: s.total
+#. placeholder {0}: section.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
@@ -433,8 +434,8 @@ msgstr "{name} · Lymi"
 msgid "{name} is back where it was."
 msgstr "{name} знову на своєму місці."
 
-msgid "{name} is over {place}."
-msgstr "{name} над «{place}»."
+msgid "{name} is over {where}."
+msgstr "{name} над «{where}»."
 
 msgid "{nextName} is ready"
 msgstr "Можна починати {nextName}"
@@ -671,6 +672,9 @@ msgstr "Архівувати «{sectionName}»?"
 msgid "Archive “{seriesName}”?"
 msgstr "Архівувати «{seriesName}»?"
 
+msgid "Archive {sectionName}"
+msgstr "Архівувати «{sectionName}»"
+
 msgid "Archive deck"
 msgstr "Архівувати колоду"
 
@@ -715,8 +719,13 @@ msgstr "Архівовані розділи"
 msgid "Archived series"
 msgstr "Архівовані серії"
 
+<<<<<<< HEAD
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Архівує кожну картку, яку додав цей імпорт, і кожну створену ним колоду, у якій немає інших карток. Нічого не видаляється, і все можна відновити."
+=======
+msgid "Arrange sections"
+msgstr "Упорядкувати розділи"
+>>>>>>> 3d560c1 (feat(web): arrange sections in settings and quiet card selection)
 
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси нове посилання в того, хто ним поділився."
@@ -1141,8 +1150,8 @@ msgstr "Перетягни або встав зображення"
 msgid "Dropped {deck} in {place}."
 msgstr "{deck} тепер у «{place}»."
 
-msgid "Dropped {name} at {place}."
-msgstr "{name} тепер у «{place}»."
+msgid "Dropped {name} at {where}."
+msgstr "{name} тепер у «{where}»."
 
 msgid "Due"
 msgstr "Коли повторювати"
@@ -1607,8 +1616,11 @@ msgstr "Перемістити {0} нижче"
 msgid "Move {0} up"
 msgstr "Перемістити {0} вище"
 
-msgid "Move {sectionName}"
-msgstr "Перемістити {sectionName}"
+msgid "Move {sectionName} down"
+msgstr "Перемістити «{sectionName}» нижче"
+
+msgid "Move {sectionName} up"
+msgstr "Перемістити «{sectionName}» вище"
 
 msgid "Move down"
 msgstr "Нижче"
@@ -1916,11 +1928,16 @@ msgstr "Інші способи додати картки"
 msgid "own review"
 msgstr "власне повторення"
 
+<<<<<<< HEAD
 msgid "past reviews"
 msgstr "минулі повторення"
 
 msgid "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
 msgstr "Минулі повторення з’являться в Огляді у ті дні, коли вони були. Вони не зараховуються до сьогоднішньої мети чи серії."
+=======
+msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
+msgstr "Частини колоди, наприклад по одному уроку. Усі, хто вчить колоду, бачать їх у такому порядку."
+>>>>>>> 3d560c1 (feat(web): arrange sections in settings and quiet card selection)
 
 msgid "Paste a link"
 msgstr "Вставити посилання"
@@ -2098,6 +2115,9 @@ msgstr "Прибрати тег {tag}"
 msgid "Rename"
 msgstr "Перейменувати"
 
+msgid "Rename {sectionName}"
+msgstr "Перейменувати «{sectionName}»"
+
 msgid "Rename section"
 msgstr "Перейменувати розділ"
 
@@ -2273,11 +2293,11 @@ msgstr "Побачити термін і згадати його значенн�
 msgid "See your decks and cards"
 msgstr "Переглядати свої колоди й картки"
 
-msgid "Select"
-msgstr "Вибрати"
-
 msgid "Select all"
 msgstr "Вибрати всі"
+
+msgid "Select cards"
+msgstr "Вибрати картки"
 
 msgid "Selected cards"
 msgstr "Вибрані картки"
@@ -2589,9 +2609,6 @@ msgstr "Час"
 
 msgid "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
 msgstr "Щоб перенести колоду в серію чи з неї, натисни пробіл, пересунь її стрілками й натисни пробіл ще раз."
-
-msgid "To move a section, press Space, use the arrow keys, and press Space again."
-msgstr "Щоб перемістити розділ, натисни пробіл, пересунь його стрілками й натисни пробіл ще раз."
 
 msgid "Today"
 msgstr "Сьогодні"

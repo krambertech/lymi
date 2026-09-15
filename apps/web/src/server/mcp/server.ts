@@ -14,6 +14,9 @@ import {
   InsightsOut,
   ReviewMode,
   RoundsOut,
+  SectionArchiveInput,
+  SectionInput,
+  SectionOrderInput,
   SeriesArchiveInput,
   SeriesInput,
   SeriesOrderInput,
@@ -29,9 +32,11 @@ import {
   archiveCard,
   archiveCardImage,
   archiveDeck,
+  archiveSection,
   archiveSeries,
   type CardView,
   createDeck,
+  createSection,
   createSeries,
   describeCardImage,
   getDeck,
@@ -41,16 +46,21 @@ import {
   insights,
   listDeckCards,
   listDecks,
+  listSections,
   listSeries,
+  renameSection,
   renameSeries,
+  reorderSections,
   reorderSeries,
   restoreCard,
   restoreCardImage,
   restoreDeck,
+  restoreSection,
   restoreSeries,
   reviewRounds,
   ServiceError,
   searchCards,
+  setCardsSection,
   setSeriesDecks,
   showCard,
   streak,
@@ -86,6 +96,8 @@ A term already in the learner's decks is skipped, never rejected, and the result
 A card may have one picture, set with set_card_image from a public link or base64 bytes. Give it a description of what the picture shows that never names the term or meaning: it is what a screen reader says and what review shows if the picture cannot load. Picture review modes (cue "image") are set on each card with update_card or add_cards, never on a deck, and ask only while the card has a described picture. A road sign would be reviewModes [{ "cue": "image", "target": "meaning" }]; until it has a described picture, a card of picture modes only is asked in the text mode with the same target instead.
 
 A series is an optional, ordered group of the learner's own decks that they review together. Put a deck in one with update_deck and seriesId, or set a series' whole deck list with update_series. Decks the learner joined from someone else never belong to their series.
+
+A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, list the deck's cards with get_deck, group them by source, create a section per lesson in lesson order, and move each group in. While the deck opens sections in order (sectionsInOrder, on by default), each learner reviews the first section, and the next becomes ready once every card of the current one has come up and 80% are Known. The learner starts sections in the app; a card they already started always stays in review.
 
 Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 
@@ -481,6 +493,130 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   );
 
   server.registerTool(
+    "list_sections",
+    {
+      title: "List a deck's sections",
+      description:
+        "A deck's sections in order, each with its card count and the learner's standing: open, ready or locked, with Known and not-started counts. progress names the section the learner is on and the next one. Set archived to true for archived sections.",
+      inputSchema: z.object({
+        deckId: z.string().min(1),
+        archived: z.boolean().optional().describe("Archived sections instead of active ones"),
+      }),
+      outputSchema: SectionListOut,
+      ...readTool,
+    },
+    ({ deckId, archived }) =>
+      run("list_sections", async () => sectionsResult(await listSections(ctx, deckId, { archived }))),
+  );
+
+  server.registerTool(
+    "create_section",
+    {
+      title: "Create a section",
+      description:
+        "Make a section, last in the deck, and optionally move cards of the deck into it. Check list_sections first: it may exist. Only the deck's owner can. Needs write.",
+      inputSchema: z.object({ deckId: z.string().min(1) }).extend(SectionInput.shape),
+      outputSchema: SectionItemOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ deckId, ...input }) =>
+      run("create_section", async () => {
+        denyReads(principal);
+        return result(sectionOut(await createSection(ctx, deckId, input)));
+      }),
+  );
+
+  server.registerTool(
+    "rename_section",
+    {
+      title: "Rename a section",
+      description: "Give a section a new name. Needs write.",
+      inputSchema: z.object({ sectionId: z.string().min(1), name: SectionInput.shape.name }),
+      outputSchema: SectionItemOut,
+      ...writeTool({ idempotent: true, overwrites: true }),
+    },
+    ({ sectionId, name }) =>
+      run("rename_section", async () => {
+        denyReads(principal);
+        return result(sectionOut(await renameSection(ctx, sectionId, name)));
+      }),
+  );
+
+  server.registerTool(
+    "reorder_sections",
+    {
+      title: "Reorder a deck's sections",
+      description:
+        "Put a deck's active sections in a new order. List every one once; a list that no longer matches fails, so call list_sections again. Reordering never locks a section a learner opened. Needs write.",
+      inputSchema: z.object({ deckId: z.string().min(1) }).extend(SectionOrderInput.shape),
+      outputSchema: SectionListOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ deckId, sectionIds }) =>
+      run("reorder_sections", async () => {
+        denyReads(principal);
+        return sectionsResult(await reorderSections(ctx, deckId, { sectionIds }));
+      }),
+  );
+
+  server.registerTool(
+    "move_cards_to_section",
+    {
+      title: "Move cards to a section",
+      description:
+        "Put up to 500 cards of one deck in a section, or take them out of theirs with sectionId null. Schedules and history stay. Sending the same move again changes nothing. Needs write.",
+      inputSchema: z.object({
+        deckId: z.string().min(1),
+        cardIds: z.array(z.string().min(1)).min(1).max(500),
+        sectionId: z.string().min(1).nullable().describe("A section of the same deck, or null"),
+      }),
+      outputSchema: SectionListOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ deckId, cardIds, sectionId }) =>
+      run("move_cards_to_section", async () => {
+        denyReads(principal);
+        return sectionsResult(await setCardsSection(ctx, deckId, { cardIds, sectionId }));
+      }),
+  );
+
+  server.registerTool(
+    "archive_section",
+    {
+      title: "Archive a section",
+      description:
+        'Hide a section. With cards "archive" its cards leave the deck and review with it; with "keep" they stay in the deck, without a section. Ask the learner which they want. restore_section undoes either. Needs write.',
+      inputSchema: z.object({ sectionId: z.string().min(1) }).extend(SectionArchiveInput.shape),
+      outputSchema: OkOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ sectionId, cards }) =>
+      run("archive_section", async () => {
+        denyReads(principal);
+        await archiveSection(ctx, sectionId, { cards });
+        return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
+    "restore_section",
+    {
+      title: "Restore a section",
+      description:
+        "Bring an archived section back with the cards archived alongside it. Find archived sections with list_sections and archived set to true. Needs write.",
+      inputSchema: z.object({ sectionId: z.string().min(1) }),
+      outputSchema: OkOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ sectionId }) =>
+      run("restore_section", async () => {
+        denyReads(principal);
+        await restoreSection(ctx, sectionId);
+        return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
     "set_card_image",
     {
       title: "Set a card's picture",
@@ -818,6 +954,7 @@ const CardOut = z.object({
   language: z.string().nullable(),
   tags: z.array(z.string()),
   source: z.string().nullable(),
+  sectionId: z.string().nullable().describe("The card's section in its deck"),
   directions: Directions.nullable(),
   reviewModes: z
     .array(ReviewMode)
@@ -853,6 +990,7 @@ function cardOut(card: CardView): CardOut {
     language: card.language,
     tags: card.tags,
     source: card.source,
+    sectionId: card.sectionId,
     directions: card.directions,
     reviewModes: card.reviewModes,
     image: card.image && {
@@ -879,6 +1017,7 @@ const DeckOut = z.object({
   directions: Directions,
   reviewModes: z.array(ReviewMode),
   seriesId: z.string().nullable().describe("The learner's series the deck is in"),
+  sectionsInOrder: z.boolean().describe("Learners open the deck's sections in order"),
   archivedAt: Timestamp.nullable(),
   createdAt: Timestamp,
 });
@@ -893,6 +1032,7 @@ function deckOut(deck: Awaited<ReturnType<typeof getDeck>>): DeckOut {
     directions: deck.directions,
     reviewModes: deck.reviewModes,
     seriesId: deck.seriesId,
+    sectionsInOrder: deck.sectionsInOrder,
     archivedAt: deck.archivedAt ? deck.archivedAt.toISOString() : null,
     createdAt: deck.createdAt.toISOString(),
   };
@@ -1000,6 +1140,54 @@ const SeriesItemOut = z.object({
 });
 
 const SeriesListOut = z.object({ series: z.array(SeriesItemOut) });
+
+const SectionItemOut = z.object({
+  id: z.string(),
+  deckId: z.string(),
+  name: z.string(),
+  total: z.number().int(),
+  known: z.number().int().describe("Cards the learner knows"),
+  notStarted: z.number().int().describe("Cards that have not come up for the learner yet"),
+  knownNeeded: z.number().int().describe("Known cards needed before the next section is ready"),
+  status: z.enum(["open", "ready", "locked"]).describe("For the learner"),
+  archivedCards: z.number().int().describe("Cards restore_section brings back with it"),
+  archivedAt: Timestamp.nullable(),
+  createdAt: Timestamp,
+});
+
+const SectionListOut = z.object({
+  sections: z.array(SectionItemOut),
+  progress: z
+    .object({
+      currentId: z.string().nullable(),
+      nextId: z.string().nullable(),
+      ready: z.boolean(),
+    })
+    .nullable()
+    .describe("Where the learner is. Null when the deck has no sections with cards or does not open them in order."),
+});
+
+type SectionList = Awaited<ReturnType<typeof listSections>>;
+
+function sectionOut(section: SectionList["sections"][number]) {
+  return {
+    id: section.id,
+    deckId: section.deckId,
+    name: section.name,
+    total: section.total,
+    known: section.known,
+    notStarted: section.notStarted,
+    knownNeeded: section.knownNeeded,
+    status: section.status,
+    archivedCards: section.archivedCards,
+    archivedAt: section.archivedAt ? section.archivedAt.toISOString() : null,
+    createdAt: section.createdAt.toISOString(),
+  };
+}
+
+function sectionsResult(list: SectionList) {
+  return result({ sections: list.sections.map(sectionOut), progress: list.progress });
+}
 
 function seriesOut(series: Awaited<ReturnType<typeof listSeries>>[number]) {
   return {

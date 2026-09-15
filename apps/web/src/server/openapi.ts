@@ -78,6 +78,11 @@ export function mountOpenApi(app: Hono<AppEnv>) {
               "The owner's optional, ordered groups of their own decks, reviewed together. Members of a shared deck never see them.",
           },
           {
+            name: "Sections",
+            description:
+              "Optional, ordered parts of one deck that every learner sees. Each learner opens them in order unless the owner turns that off.",
+          },
+          {
             name: "Cards",
             description:
               "One term and what the learner knows about it. Adding a term that already exists is skipped, never rejected.",

@@ -97,7 +97,7 @@ A card may have one picture, set with set_card_image from a public link or base6
 
 A series is an optional, ordered group of the learner's own decks that they review together. Put a deck in one with update_deck and seriesId, or set a series' whole deck list with update_series. Decks the learner joined from someone else never belong to their series.
 
-A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, list the deck's cards with get_deck, group them by source, create a section per lesson in lesson order, and move each group in. While the deck opens sections in order (sectionsInOrder, on by default), each learner reviews the first section, and the next becomes ready once every card of the current one has come up and 80% are Known. The learner starts sections in the app; a card they already started always stays in review.
+A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, list the deck's cards with get_deck, group them by source, create a section per lesson in lesson order, and move each group in. How sections open is the deck's sectionProgression. automatic, the default: each learner reviews the first section, and the next opens by itself once every card of the current one has come up and 80% are Known. manual: the next section becomes ready then, and the learner starts it in the app. open: every section is open at once. A learner can start a later section early in the app, and a card they already started always stays in review.
 
 Archive is the only removal, and restore undoes it. Nothing is deleted.`;
 
@@ -1019,7 +1019,9 @@ const DeckOut = z.object({
   directions: Directions,
   reviewModes: z.array(ReviewMode),
   seriesId: z.string().nullable().describe("The learner's series the deck is in"),
-  sectionsInOrder: z.boolean().describe("Learners open the deck's sections in order"),
+  sectionProgression: z
+    .enum(["automatic", "manual", "open"])
+    .describe("How learners' sections open: automatic, manual (the learner starts each), or open"),
   archivedAt: Timestamp.nullable(),
   createdAt: Timestamp,
 });
@@ -1034,7 +1036,7 @@ function deckOut(deck: Awaited<ReturnType<typeof getDeck>>): DeckOut {
     directions: deck.directions,
     reviewModes: deck.reviewModes,
     seriesId: deck.seriesId,
-    sectionsInOrder: deck.sectionsInOrder,
+    sectionProgression: deck.sectionProgression,
     archivedAt: deck.archivedAt ? deck.archivedAt.toISOString() : null,
     createdAt: deck.createdAt.toISOString(),
   };

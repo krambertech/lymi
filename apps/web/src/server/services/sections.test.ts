@@ -42,7 +42,7 @@ async function sectioned(
   ctx: ServiceContext,
   parts: Record<string, string[]>,
   loose: string[] = [],
-  opts: { sectionsInOrder?: boolean } = {},
+  opts: { sectionProgression?: "automatic" | "manual" | "open" } = {},
 ) {
   const deck = await createDeck(ctx, { name: `Deck ${n}`, defaultLanguage: "et", ...opts });
   const sections: Record<string, string> = {};
@@ -288,10 +288,12 @@ describe("opening sections in order", () => {
     expect(decks.find((d) => d.id === deck.id)?.due).toBe(3);
   });
 
-  it("is ready once every card is started and 80% are Known", async () => {
+  it("is ready once every card is started and 80% are Known, and Start opens it when manual", async () => {
     const me = await person("Kateryna");
     const terms = ["a1", "a2", "a3", "a4", "a5"];
-    const { deck, sections, cards } = await sectioned(me, { A: terms, B: ["b1"] });
+    const { deck, sections, cards } = await sectioned(me, { A: terms, B: ["b1"] }, [], {
+      sectionProgression: "manual",
+    });
 
     for (const term of ["a1", "a2", "a3"]) await know(me, cards[term] as string);
     await forget(me, cards.a4 as string);
@@ -389,16 +391,82 @@ describe("opening sections in order", () => {
     });
   });
 
-  it("opens everything when the owner turns it off, and turning it back on keeps what was started", async () => {
+  it("opens the next section on the grade that makes it ready, once, by default", async () => {
     const me = await person("Kateryna");
-    const { deck, sections, cards } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });
+    const { deck, sections, cards } = await sectioned(me, {
+      A: ["a1", "a2"],
+      B: ["b1", "b2"],
+      C: ["c1"],
+    });
 
-    await updateDeck(me, deck.id, { sectionsInOrder: false });
+    await know(me, cards.a1 as string);
+    expect(await inReview(me, deck.id)).toEqual(["a1", "a2"]);
+
+    // The second Known card makes A ready, and the same grade opens B.
+    await know(me, cards.a2 as string);
+    const list = await listSections(me, deck.id);
+    expect(list.sections.map((s) => s.status)).toEqual(["open", "open", "locked"]);
+    expect(list.progress).toMatchObject({
+      currentId: sections.B,
+      nextId: sections.C,
+      ready: false,
+    });
+    expect(await inReview(me, deck.id)).toEqual(["a1", "a2", "b1", "b2"]);
+    const starts = await db
+      .select({ sectionId: schema.sectionStarts.sectionId, how: schema.sectionStarts.how })
+      .from(schema.sectionStarts)
+      .where(eq(schema.sectionStarts.userId, me.userId));
+    expect(starts).toEqual([{ sectionId: sections.B, how: "auto" }]);
+
+    // Forgetting A's cards afterwards never locks B again.
+    await gradeCard(me, {
+      cardId: cards.a2 as string,
+      direction: "recognition",
+      rating: 1,
+      timezone: "UTC",
+      reviewedAt: new Date(Date.now() + 60_000),
+    });
+    expect(await statuses(me, deck.id)).toEqual([
+      ["A", "open"],
+      ["B", "open"],
+      ["C", "locked"],
+    ]);
+  });
+
+  it("opens the next section when the current one was already known before its last card came up", async () => {
+    const me = await person("Kateryna");
+    const { deck, cards, sections } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });
+    // b1 was studied, then moved into A while B was locked; now A holds both and B takes it back.
+    await setCardsSection(me, deck.id, {
+      cardIds: [cards.b1 as string],
+      sectionId: sections.A as string,
+    });
+    await know(me, cards.b1 as string);
+    await setCardsSection(me, deck.id, {
+      cardIds: [cards.b1 as string],
+      sectionId: sections.B as string,
+    });
+
+    await know(me, cards.a1 as string);
+    expect(await statuses(me, deck.id)).toEqual([
+      ["A", "open"],
+      ["B", "open"],
+      ["C", "open"],
+    ]);
+  });
+
+  it("opens everything when the owner chooses all at once, and going back keeps what was started", async () => {
+    const me = await person("Kateryna");
+    const { deck, sections, cards } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] }, [], {
+      sectionProgression: "manual",
+    });
+
+    await updateDeck(me, deck.id, { sectionProgression: "open" });
     expect(await inReview(me, deck.id)).toEqual(["a1", "b1", "c1"]);
     expect((await listSections(me, deck.id)).progress).toBeNull();
 
     await forget(me, cards.b1 as string);
-    await updateDeck(me, deck.id, { sectionsInOrder: true });
+    await updateDeck(me, deck.id, { sectionProgression: "manual" });
     expect(await statuses(me, deck.id)).toEqual([
       ["A", "open"],
       ["B", "open"],

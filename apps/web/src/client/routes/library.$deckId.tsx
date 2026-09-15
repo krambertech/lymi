@@ -185,7 +185,7 @@ function DeckPage() {
           save.mutate({ id, patch: { deckId: toDeck } });
         }}
         sections={sectionList}
-        progress={deck?.sectionsInOrder === false ? null : sections.data?.progress}
+        progress={deck?.sectionProgression === "open" ? null : sections.data?.progress}
         onStartSection={startSection}
         startingSection={sectionActions.start.isPending}
         sectionActions={

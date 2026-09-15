@@ -50,7 +50,7 @@ erDiagram
     text default_language "nullable, convenience only"
     text directions "recognition | production | both"
     int position "order within its series, or within Library"
-    int sections_in_order "boolean, default true"
+    text section_progression "automatic | manual | open, default automatic"
     int archived_at "nullable"
     text import_id "nullable, the import that made it"
     text external_id "nullable, the source's key"
@@ -66,7 +66,7 @@ erDiagram
     text id PK
     text section_id FK
     text user_id FK
-    text how "ready | early"
+    text how "ready | early | auto"
     int started_at
   }
   cards {
@@ -238,7 +238,7 @@ A review day is one learner-local date measured against its streak goal. Attempt
 
 A section is an optional, ordered part of one deck, and every learner of the deck sees it. `cards.section_id` points at a section of the card's own deck; moving a card to another deck clears it. Archiving a section with `cards: keep` leaves `section_id` on its cards, and a card in an archived section reads as having none, so Restore regroups it. Archiving with `cards: archive` stamps the cards with the section's own `archived_at`.
 
-While `decks.sections_in_order` is on, each learner opens sections in order, and the rules live in `packages/core/src/sections.ts`. Open sections are always a prefix of the deck: every section up to the last one the learner has a `section_starts` row for, or has started a card in, plus the first section with cards. The next section is ready once every card of the current one has left New and 80% of them, rounded up, are Known by the state the deck's list shows. Start writes a row for the target and every section before it that was not open, with `on conflict do nothing`, so a retry or a second device lands the same, and rows are never removed. The draw in `services/draw.ts` leaves out a card in a section that is not open unless the learner has already started it, so Today, deck and series review, rounds, reminders and the offline draw all agree.
+Unless `decks.section_progression` is `open`, each learner opens sections in order, and the rules live in `packages/core/src/sections.ts`. Open sections are always a prefix of the deck: every section up to the last one the learner has a `section_starts` row for, or has started a card in, plus the first section with cards. The next section is ready once every card of the current one has left New and 80% of them, rounded up, are Known by the state the deck's list shows. Start writes a row for the target and every section before it that was not open, with `on conflict do nothing`, so a retry or a second device lands the same, and rows are never removed. In an `automatic` deck, `gradeCard` writes that row itself, `how = 'auto'`, on the grade that makes the next section ready and on its retries; readiness is only a grade away, so nothing else has to look. Writing it once is what keeps a section open after the learner later forgets cards below 80%. The draw in `services/draw.ts` leaves out a card in a section that is not open unless the learner has already started it, so Today, deck and series review, rounds, reminders and the offline draw all agree.
 
 ### Shared decks
 

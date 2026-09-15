@@ -11,6 +11,7 @@ import {
   ReminderTime,
   ReviewMode,
   Scope,
+  SectionProgression,
 } from "./types";
 
 /**
@@ -47,11 +48,6 @@ const SeriesId = z.string().nullable().meta({
     "The owner's active series the deck is in. Always null for a member, and while the series is archived.",
 });
 
-const SectionsInOrder = z.boolean().meta({
-  description:
-    "Each learner opens the deck's sections in order. Off, or with no sections, every card is open.",
-});
-
 export const DeckOut = z
   .object({
     id: z.string(),
@@ -65,7 +61,7 @@ export const DeckOut = z
       .meta({ description: "How cards that follow the deck are asked" }),
     position: z.number().int(),
     seriesId: SeriesId,
-    sectionsInOrder: SectionsInOrder,
+    sectionProgression: SectionProgression,
     archivedAt: Timestamp.nullable(),
     importId: z
       .string()
@@ -88,7 +84,7 @@ export const DeckSummaryOut = z
     reviewModes: z.array(ReviewMode),
     position: z.number().int(),
     seriesId: SeriesId,
-    sectionsInOrder: SectionsInOrder,
+    sectionProgression: SectionProgression,
     total: z.number().int().meta({ description: "Active cards in the deck" }),
     due: z.number().int().meta({ description: "Cards with a direction due now for the caller" }),
     ...Membership,

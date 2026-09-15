@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm";
 import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
-import { REVIEW_MODE_KEYS, type ReviewModeKey } from "../types";
+import { REVIEW_MODE_KEYS, type ReviewModeKey, SECTION_PROGRESSIONS } from "../types";
 import { user } from "./auth";
 
 const timestamps = {
@@ -56,8 +56,13 @@ export const decks = sqliteTable(
     importId: text("import_id"),
     /** The source's own key for the deck, so a later import of the same file reuses it. */
     externalId: text("external_id"),
-    /** With sections, each learner opens them in order. Off, every section is open to everyone. */
-    sectionsInOrder: integer("sections_in_order", { mode: "boolean" }).notNull().default(true),
+    /**
+     * How each learner's sections open: automatically once the one before is known, when they
+     * press Start, or all at once. Only a deck with sections reads it.
+     */
+    sectionProgression: text("section_progression", { enum: SECTION_PROGRESSIONS })
+      .notNull()
+      .default("automatic"),
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
@@ -86,7 +91,7 @@ export const sections = sqliteTable(
 );
 
 /**
- * A learner opened a section: with Start once it was ready, or early. Rows are never removed, so a
+ * A learner opened a section: with Start once it was ready, early, or automatically. Rows are never removed, so a
  * section never locks again. Opening a later section writes a row for every section before it.
  */
 export const sectionStarts = sqliteTable(
@@ -99,7 +104,8 @@ export const sectionStarts = sqliteTable(
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    how: text("how", { enum: ["ready", "early"] }).notNull(),
+    /** ready: Start on a ready section. early: Start anyway. auto: the deck opened it. */
+    how: text("how", { enum: ["ready", "early", "auto"] }).notNull(),
     startedAt: integer("started_at", { mode: "timestamp_ms" }).notNull(),
   },
   (t) => [

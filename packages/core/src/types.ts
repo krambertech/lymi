@@ -76,6 +76,15 @@ export const ReviewModes = z
 export const MemberRole = z.enum(["owner", "editor", "contributor", "learner"]);
 export type MemberRole = z.infer<typeof MemberRole>;
 
+/** How a deck's sections open for each learner. */
+export const SECTION_PROGRESSIONS = ["automatic", "manual", "open"] as const;
+export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
+  id: "SectionProgression",
+  description:
+    "How each learner's sections open. automatic, the default: the next section opens once every card of the current one has come up and 80% are Known. manual: it becomes ready then, and the learner starts it. open: every section is open. Anyone can start a later section early.",
+});
+export type SectionProgression = z.infer<typeof SectionProgression>;
+
 export const DeckInput = z.object({
   name: z
     .string()
@@ -98,10 +107,7 @@ export const DeckInput = z.object({
     description:
       "One of the owner's active series; the deck goes last in it. Null takes the deck out of its series.",
   }),
-  sectionsInOrder: z.boolean().optional().meta({
-    description:
-      "With sections, each learner opens them in order: the next one is ready once every card of the current one is started and 80% are Known. On by default. Off opens every section.",
-  }),
+  sectionProgression: SectionProgression.optional(),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 

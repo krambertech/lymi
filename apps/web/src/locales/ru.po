@@ -29,6 +29,14 @@ msgstr "{0, plural, =0 {Карточки попали в колоды, кото�
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
 
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
+msgstr "{0, plural, =1 {{nextName} откроется, как только последняя карточка из «{currentName}» появится в повторении.} one {{nextName} откроется, как только ещё # карточка из «{currentName}» появится в повторении.} few {{nextName} откроется, как только последние # карточки из «{currentName}» появятся в повторениях.} many {{nextName} откроется, как только последние # карточек из «{currentName}» появятся в повторениях.} other {{nextName} откроется, как только последние # карточки из «{currentName}» появятся в повторениях.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {{nextName} откроется, когда ты выучишь {needed} из # карточки.} few {{nextName} откроется, когда ты выучишь {needed} из # карточек.} many {{nextName} откроется, когда ты выучишь {needed} из # карточек.} other {{nextName} откроется, когда ты выучишь {needed} из # карточки.}}"
+
 #. placeholder {0}: preview.pictures
 msgid "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{0, plural, one {# карточка переносится с картинкой.} few {# карточки переносятся с картинками.} many {# карточек переносятся с картинками.} other {# карточки переносятся с картинками.}}"
@@ -36,6 +44,10 @@ msgstr "{0, plural, one {# карточка переносится с карти
 #. placeholder {0}: preview.existing
 msgid "{0, plural, one {# card came across in an earlier import. It isn’t added again; only its empty fields are filled.} other {# cards came across in an earlier import. They aren’t added again; only their empty fields are filled.}}"
 msgstr "{0, plural, one {# карточка уже пришла из прошлого импорта. Она не добавится второй раз, заполнятся только пустые поля.} few {# карточки уже пришли из прошлого импорта. Они не добавятся второй раз, заполнятся только пустые поля.} many {# карточек уже пришли из прошлого импорта. Они не добавятся второй раз, заполнятся только пустые поля.} other {# карточки уже пришли из прошлого импорта. Они не добавятся второй раз, заполнятся только пустые поля.}}"
+
+#. placeholder {0}: s.archivedCards
+msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
+msgstr "{0, plural, one {Вместе с ним вернётся # карточка} few {Вместе с ним вернутся # карточки} many {Вместе с ним вернутся # карточек} other {Вместе с ним вернутся # карточки}}"
 
 #. placeholder {0}: counts.existing
 msgid "{0, plural, one {# card from an earlier import was updated.} other {# cards from an earlier import were updated.}}"
@@ -46,21 +58,8 @@ msgid "{0, plural, one {# card has text that’s too long, so part of it moves t
 msgstr "{0, plural, one {В # карточке слишком длинный текст, поэтому часть уйдёт в заметки или будет обрезана.} few {В # карточках слишком длинный текст, поэтому часть уйдёт в заметки или будет обрезана.} many {В # карточках слишком длинный текст, поэтому часть уйдёт в заметки или будет обрезана.} other {В # карточки слишком длинный текст, поэтому часть уйдёт в заметки или будет обрезана.}}"
 
 #. placeholder {0}: deck.cards
-#. placeholder {0}: current.notStarted
-msgid "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
-msgstr "{0, plural, =1 {{nextName} откроется, как только последняя карточка из «{currentName}» появится в повторении.} one {{nextName} откроется, как только ещё # карточка из «{currentName}» появится в повторении.} few {{nextName} откроется, как только последние # карточки из «{currentName}» появятся в повторениях.} many {{nextName} откроется, как только последние # карточек из «{currentName}» появятся в повторениях.} other {{nextName} откроется, как только последние # карточки из «{currentName}» появятся в повторениях.}}"
-
-#. placeholder {0}: current.total
-msgid "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
-msgstr "{0, plural, one {{nextName} откроется, когда ты выучишь {needed} из # карточки.} few {{nextName} откроется, когда ты выучишь {needed} из # карточек.} many {{nextName} откроется, когда ты выучишь {needed} из # карточек.} other {{nextName} откроется, когда ты выучишь {needed} из # карточки.}}"
-
-#. placeholder {0}: s.archivedCards
-msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
-msgstr "{0, plural, one {Вместе с ним вернётся # карточка} few {Вместе с ним вернутся # карточки} many {Вместе с ним вернутся # карточек} other {Вместе с ним вернутся # карточки}}"
-
 #. placeholder {0}: deck.total
 #. placeholder {0}: s.total
-#. placeholder {0}: section.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
@@ -168,12 +167,13 @@ msgstr "{0, plural, one {повторение} few {повторения} many {
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Показать ещё # старую запись} few {Показать ещё # старые записи} many {Показать ещё # старых записей} other {Показать ещё # записи}}"
 
-#. placeholder {0}: preview.existing
-msgid "{0, plural, one {Update # card} other {Update # cards}}"
-msgstr "{0, plural, one {Обновить # карточку} few {Обновить # карточки} many {Обновить # карточек} other {Обновить # карточки}}"
 #. placeholder {0}: others + 1
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, =1 {Начать раздел} one {Начать # раздел} few {Начать # раздела} many {Начать # разделов} other {Начать # раздела}}"
+
+#. placeholder {0}: preview.existing
+msgid "{0, plural, one {Update # card} other {Update # cards}}"
+msgstr "{0, plural, one {Обновить # карточку} few {Обновить # карточки} many {Обновить # карточек} other {Обновить # карточки}}"
 
 #. placeholder {0}: current.total
 msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
@@ -463,13 +463,14 @@ msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {#
 msgid "<0/> of {size}"
 msgstr "<0/> из {size}"
 
+#. placeholder {0}: section.name
+msgid "<0>{0} is ready.</0> Its cards join your reviews once you start it."
+msgstr "<0>Можно начинать {0}.</0> Как только ты его начнёшь, его карточки появятся в повторениях."
+
 #. placeholder {0}: d.term
 #. placeholder {1}: d.deckName
 msgid "<0>{0}</0> in {1}"
 msgstr "<0>{0}</0> в «{1}»"
-#. placeholder {0}: section.name
-msgid "<0>{0} is ready.</0> Its cards join your reviews once you start it."
-msgstr "<0>Можно начинать {0}.</0> Как только ты его начнёшь, его карточки появятся в повторениях."
 
 msgid "<0>{name}</0> is ready. Copy it now. It is not shown again."
 msgstr "<0>{name}</0> готов. Скопируй его сейчас: больше он не показывается."
@@ -612,6 +613,9 @@ msgstr "Это написал ИИ"
 msgid "All"
 msgstr "Все"
 
+msgid "All at once"
+msgstr "Все сразу"
+
 msgid "Allow"
 msgstr "Разрешить"
 
@@ -651,6 +655,9 @@ msgstr "Ответ: {back}"
 msgid "Any time"
 msgstr "В любое время"
 
+msgid "Anyone studying the deck can start a later section early."
+msgstr "Любой, кто учит колоду, может начать следующий раздел раньше."
+
 msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 msgstr "Любой, у кого есть ссылка, может присоединиться и повторять твои карточки в своём темпе. Они не могут менять карточки, а ты не видишь их прогресса."
 
@@ -680,6 +687,7 @@ msgstr "Архивировать колоду"
 
 msgid "Archive import"
 msgstr "Архивировать импорт"
+
 msgid "Archive section"
 msgstr "Архивировать раздел"
 
@@ -719,13 +727,11 @@ msgstr "Архивные разделы"
 msgid "Archived series"
 msgstr "Архивные серии"
 
-<<<<<<< HEAD
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Архивирует каждую карточку, которую добавил этот импорт, и каждую созданную им колоду, в которой нет других карточек. Ничего не удаляется, и всё можно восстановить."
-=======
+
 msgid "Arrange sections"
 msgstr "Упорядочить разделы"
->>>>>>> 3d560c1 (feat(web): arrange sections in settings and quiet card selection)
 
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси новую ссылку у того, кто ей поделился."
@@ -828,9 +834,6 @@ msgstr "Архивированные карточки и колоды. «Вос�
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Карточки с уроков Марко по вторникам."
 
-msgid "Cards from the next section come up once you know most of this one. Anyone can start a section early."
-msgstr "Карточки из следующего раздела появляются, когда выучена большая часть текущего. Любой может начать раздел раньше."
-
 msgid "Cards from this deck"
 msgstr "Карточки из этой колоды"
 
@@ -910,7 +913,6 @@ msgstr "Выбрать новое…"
 msgid "Choose one"
 msgstr "Выбери один вариант"
 
-<<<<<<< HEAD
 msgid "Choose the .apkg or .colpkg file Anki exports."
 msgstr "Выбери файл .apkg или .colpkg, который экспортирует Anki."
 
@@ -925,10 +927,9 @@ msgstr "Выбери, чем каждое поле Anki станет в карт
 
 msgid "Choose your Anki file"
 msgstr "Выбор файла Anki"
-=======
+
 msgid "Clear"
 msgstr "Сбросить"
->>>>>>> a58588c (feat(web): put the selection toolbar in place of Filter and Sort)
 
 msgid "Clear filters"
 msgstr "Сбросить фильтры"
@@ -1179,6 +1180,9 @@ msgstr "Повторить сегодня"
 msgid "Each block is a day. They join up when you keep going."
 msgstr "Каждый блок — один день. Если продолжаешь, они соединяются."
 
+msgid "Each section opens once you know most of the one before it."
+msgstr "Каждый раздел открывается, как только выучена большая часть предыдущего."
+
 msgid "Easy"
 msgstr "Легко"
 
@@ -1202,9 +1206,6 @@ msgstr "Enter после каждого"
 
 msgid "Every card is asked twice."
 msgstr "Каждая карточка задаётся дважды."
-
-msgid "Every change a connected app, an API key or the AI made, by day."
-msgstr "Каждое изменение от подключённого приложения, ключа API или AI, по дням."
 
 msgid "Every section is open"
 msgstr "Все разделы открыты"
@@ -1349,6 +1350,9 @@ msgstr "Сколько повторений в день сохраняет сч�
 msgid "How often you remember a card when it comes back"
 msgstr "Как часто ты вспоминаешь карточку, когда она возвращается"
 
+msgid "How sections open"
+msgstr "Как открываются разделы"
+
 msgid "How to connect"
 msgstr "Как подключить"
 
@@ -1407,13 +1411,14 @@ msgstr "Оно может читать твои карточки, а также 
 msgid "It can read your decks and cards. It cannot change anything."
 msgstr "Оно может читать твои колоды и карточки. Ничего менять не может."
 
+msgid "It goes at the end. Move cards into it from the list."
+msgstr "Он появится в конце. Перемести в него карточки из списка."
+
 msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
 msgstr "Он три дня ждал подтверждения, поэтому файл удалён. Начни заново."
 
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Его карточки и созданные им колоды скрыты. Восстановление вернёт их вместе с историей."
-msgid "It goes at the end. Move cards into it from the list."
-msgstr "Он появится в конце. Перемести в него карточки из списка."
 
 msgid "Join"
 msgstr "Присоединиться"
@@ -1780,9 +1785,6 @@ msgstr "Без языка"
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "Языка с таким названием нет. Введи его тег, чтобы всё равно использовать."
 
-msgid "No lesson"
-msgstr "Без урока"
-
 msgid "No meaning"
 msgstr "Без значения"
 
@@ -1888,6 +1890,12 @@ msgstr "Сейчас в «{elsewhere}»"
 msgid "On a phone, or something went wrong? Read the guide"
 msgstr "На телефоне или что-то пошло не так? Прочитай руководство"
 
+msgid "One after another, automatically"
+msgstr "По очереди, автоматически"
+
+msgid "One after another, when you start them"
+msgstr "По очереди, когда ты их начнёшь"
+
 msgid "One card is ready"
 msgstr "Одна карточка готова"
 
@@ -1915,9 +1923,6 @@ msgstr "Открой Lymi с новой иконки."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Открой Lymi в Safari и коснись «Поделиться»."
 
-msgid "Open one section at a time"
-msgstr "Открывать по одному разделу"
-
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Открой меню браузера и выбери «Установить Lymi». Не каждый браузер это предлагает."
 
@@ -1936,16 +1941,14 @@ msgstr "Другие способы добавить карточки"
 msgid "own review"
 msgstr "своё повторение"
 
-<<<<<<< HEAD
+msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
+msgstr "Части колоды, например по одному уроку. Все, кто учит колоду, видят их в таком порядке."
+
 msgid "past reviews"
 msgstr "прошлые повторения"
 
 msgid "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
 msgstr "Прошлые повторения появятся в Обзоре в те дни, когда они были. Они не засчитываются в сегодняшнюю цель или серию."
-=======
-msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
-msgstr "Части колоды, например по одному уроку. Все, кто учит колоду, видят их в таком порядке."
->>>>>>> 3d560c1 (feat(web): arrange sections in settings and quiet card selection)
 
 msgid "Paste a link"
 msgstr "Вставить ссылку"
@@ -2149,6 +2152,7 @@ msgstr "Восстановление возвращает серию вмест�
 
 msgid "Restore import"
 msgstr "Восстановить импорт"
+
 msgid "Restore puts the cards you kept back in it"
 msgstr "Восстановление вернёт в него карточки, которые ты оставил"
 
@@ -2436,13 +2440,11 @@ msgstr "Ровно"
 msgid "Still need an invitation?"
 msgstr "Всё ещё нужно приглашение?"
 
-<<<<<<< HEAD
-msgid "Stopped"
-msgstr "Остановлен"
-=======
 msgid "Stop selecting"
 msgstr "Завершить выбор"
->>>>>>> a58588c (feat(web): put the selection toolbar in place of Filter and Sort)
+
+msgid "Stopped"
+msgstr "Остановлен"
 
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
@@ -2747,6 +2749,7 @@ msgstr "неделя с {0}"
 
 msgid "What comes across"
 msgstr "Что перенесётся"
+
 msgid "What happens to its cards"
 msgstr "Что будет с его карточками"
 
@@ -2761,6 +2764,9 @@ msgstr "Что на изображении, без ответа. Без опис
 
 msgid "When it’s back"
 msgstr "Когда вернётся"
+
+msgid "When most of a section is known, the next one is ready and you choose when to start it."
+msgstr "Когда большая часть раздела выучена, следующий готов, и ты решаешь, когда его начать."
 
 msgid "Which days you reviewed"
 msgstr "Дни, когда были повторения"

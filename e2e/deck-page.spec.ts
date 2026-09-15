@@ -35,7 +35,7 @@ test("a learner can filter, sort and open the words in a deck", async ({
   await test.step("read the words grouped by section, in the deck's order", async () => {
     const res = await page.request.post("/api/decks", {
       // Sections are open to everyone here, so this journey is only about reading the list.
-      data: { name: "Eesti A1", defaultLanguage: "et", sectionsInOrder: false },
+      data: { name: "Eesti A1", defaultLanguage: "et", sectionProgression: "open" },
     });
     expect(res.ok()).toBeTruthy();
     const deckId = ((await res.json()) as { id: string }).id;

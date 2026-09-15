@@ -53,7 +53,7 @@ async function standings(ctx: ServiceContext, deckId?: string) {
     .select({
       id: schema.sections.id,
       deckId: schema.sections.deckId,
-      sectionsInOrder: schema.decks.sectionsInOrder,
+      progression: schema.decks.sectionProgression,
       total: sql<number>`count(${schema.cards.id})`,
       known: sql<number>`coalesce(sum(case when ${leading} = 2 then 1 else 0 end), 0)`,
       started: sql<number>`coalesce(sum(case when ${started} then 1 else 0 end), 0)`,
@@ -89,7 +89,7 @@ export async function progressByDeck(ctx: ServiceContext, deckId?: string) {
   const rows = await standings(ctx, deckId);
   const byDeck = new Map<string, { inOrder: boolean; sections: SectionStanding[] }>();
   for (const row of rows) {
-    const deck = byDeck.get(row.deckId) ?? { inOrder: !!row.sectionsInOrder, sections: [] };
+    const deck = byDeck.get(row.deckId) ?? { inOrder: row.progression !== "open", sections: [] };
     deck.sections.push({
       id: row.id,
       total: Number(row.total),
@@ -466,6 +466,29 @@ export async function restoreSection(ctx: ServiceContext, id: string) {
     db.update(schema.sections).set({ archivedAt: null, updatedAt: now }).where(stillArchived),
   ]);
   return { ok: true as const };
+}
+
+/**
+ * In a deck whose sections open automatically, open each section the caller has made ready, as
+ * Start would. The row is written once, so a card forgotten later never locks the section again.
+ */
+export async function openReadySections(ctx: ServiceContext, deckId: string) {
+  const { db, userId } = ctx;
+  // A section can be ready the moment the one before it opens, when its cards were already started.
+  for (let step = 0; step < 50; step++) {
+    const progress = (await progressByDeck(ctx, deckId)).get(deckId);
+    if (!progress?.ready || !progress.nextId) return;
+    const now = new Date();
+    await runBatch(
+      db,
+      sectionsToStart(progress, progress.nextId).map((sectionId) =>
+        db
+          .insert(schema.sectionStarts)
+          .values({ id: newId(), sectionId, userId, how: "auto", startedAt: now })
+          .onConflictDoNothing(),
+      ),
+    );
+  }
 }
 
 /**

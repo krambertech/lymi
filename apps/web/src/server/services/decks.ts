@@ -34,7 +34,7 @@ export async function listDecks(ctx: ServiceContext) {
       directions: schema.decks.directions,
       position: deckOrder(userId),
       seriesId: effectiveSeriesId(userId),
-      sectionsInOrder: schema.decks.sectionsInOrder,
+      sectionProgression: schema.decks.sectionProgression,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
       ownerId: schema.decks.userId,
       ownerName: schema.user.name,
@@ -74,7 +74,7 @@ export async function createDeck(ctx: ServiceContext, input: DeckInput) {
     description: input.description ?? null,
     defaultLanguage: input.defaultLanguage ?? null,
     directions: resolveDeckDirections(input) ?? "recognition",
-    sectionsInOrder: input.sectionsInOrder ?? true,
+    sectionProgression: input.sectionProgression ?? "automatic",
     seriesId,
     // A deck without a series keeps the default, so Library still orders new decks by date.
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),

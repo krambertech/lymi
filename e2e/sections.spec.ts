@@ -32,7 +32,8 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
   await signInAsTestLearner(page, testInfo, "sections");
   const tag = testInfo.project.name;
   const deck = await page.request.post("/api/decks", {
-    data: { name: `Eesti ${tag}`, defaultLanguage: "et" },
+    // Started by hand here, so the journey can show the ready moment; automatic has its own step.
+    data: { name: `Eesti ${tag}`, defaultLanguage: "et", sectionProgression: "manual" },
   });
   expect(deck.ok()).toBeTruthy();
   const deckId = ((await deck.json()) as { id: string }).id;
@@ -138,12 +139,37 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
       /Food/,
     ]);
 
+    // All at once leaves nothing to start.
+    await page.getByRole("radio", { name: /All at once/ }).click();
+    await expect(page.getByRole("radio", { name: /All at once/ })).toBeChecked();
+
     await page.goto(`/library/${deckId}`);
+    await expect(today).not.toContainText("section");
+    await expect(page.getByRole("button", { name: "Start anyway", exact: true })).toHaveCount(0);
     await expect(page.getByRole("heading", { level: 2 })).toHaveText([
       /^Greetings/,
       /^Numbers/,
       /^Review/,
       /^Food/,
     ]);
+  });
+
+  await test.step("by default, knowing a section opens the next one by itself", async () => {
+    const auto = await page.request.post("/api/decks", {
+      data: { name: `Automatic ${tag}`, defaultLanguage: "et" },
+    });
+    expect(auto.ok()).toBeTruthy();
+    const autoId = ((await auto.json()) as { id: string }).id;
+    const [uno] = await addSection(page, autoId, "Uno", ["kolm"]);
+    await addSection(page, autoId, "Due", ["neli"]);
+    const graded = await page.request.post("/api/review/grade", {
+      data: { cardId: uno, mode: { cue: "term", target: "meaning" }, rating: 4 },
+    });
+    expect(graded.ok()).toBeTruthy();
+
+    await page.goto(`/library/${autoId}`);
+    await expect(today).toContainText("Every section is open");
+    await expect(heading("Due")).not.toHaveAccessibleName(/not open yet/);
+    await expect(row("neli")).not.toContainText("Not in review yet");
   });
 });

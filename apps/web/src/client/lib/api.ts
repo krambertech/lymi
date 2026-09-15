@@ -147,7 +147,7 @@ export type DeckSummary = Pick<
   | "directions"
   | "position"
   | "seriesId"
-  | "sectionsInOrder"
+  | "sectionProgression"
 > & {
   reviewModes: ReviewMode[];
   total: number;

@@ -31,6 +31,7 @@ import {
   settleDay,
   streak as streakSummary,
 } from "./review-days";
+import { openReadySections } from "./sections";
 import { activeSeries } from "./series-access";
 import { getSettings } from "./settings";
 
@@ -209,7 +210,12 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
   const reviewedAt = input.reviewedAt ?? new Date();
 
   const [row] = await db
-    .select({ state: schema.cardStates })
+    .select({
+      state: schema.cardStates,
+      deckId: schema.cards.deckId,
+      sectionId: schema.cards.sectionId,
+      progression: schema.decks.sectionProgression,
+    })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
@@ -223,6 +229,11 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     );
   if (!row) throw notFound("Card");
   const state = row.state;
+  // A grade is what makes a section ready, so an automatic deck opens the next one here, retries too.
+  const advance = () =>
+    row.sectionId && row.progression === "automatic"
+      ? openReadySections(ctx, row.deckId)
+      : Promise.resolve();
 
   const zone = await reviewZone(ctx, input.timezone);
   const settings = await getSettings(ctx);
@@ -245,7 +256,10 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       day,
     };
   };
-  if (state.lastReview && state.lastReview.getTime() >= reviewedAt.getTime()) return duplicate();
+  if (state.lastReview && state.lastReview.getTime() >= reviewedAt.getTime()) {
+    await advance();
+    return duplicate();
+  }
 
   const result = schedule(deserializeState(state.fsrs), rating, reviewedAt);
   const reviewDay = await openDay(ctx, date, zone, settings.dailyGoal);
@@ -297,6 +311,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       },
     );
   if (!stored) return duplicate();
+  await advance();
   await audit(db, {
     userId,
     actor,

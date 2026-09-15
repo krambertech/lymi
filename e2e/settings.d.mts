@@ -4,6 +4,7 @@ export type E2EAccount =
   | "deck-validation"
   | "card-selection"
   | "optional-meaning"
+  | "more-fields"
   | "archived-deck"
   | "responsive-creation"
   | "review-returns"

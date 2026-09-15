@@ -1,5 +1,5 @@
 import type { CardImageImportInput, CardImagePatch, CardImageVersionInput } from "@lymi/core";
-import { newId, normaliseTerm } from "@lymi/core";
+import { newId, revealsAnswer } from "@lymi/core";
 import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
 import { auditStatementWhen, insertWhen } from "../audit";
@@ -133,13 +133,8 @@ async function writableCard(
   return card;
 }
 
-/** A description that contains the term or the whole meaning would show the answer before reveal. */
 function checkDescription(card: Pick<Card, "term" | "meaning">, description: string) {
-  const text = normaliseTerm(description);
-  const reveals = [card.term, card.meaning]
-    .map((field) => normaliseTerm(field ?? ""))
-    .some((answer) => answer.length >= 3 && text.includes(answer));
-  if (reveals) {
+  if (revealsAnswer(card, description)) {
     throw new ServiceError(
       "invalid",
       "Describe what the picture shows without naming the term or the meaning.",

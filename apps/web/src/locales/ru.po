@@ -76,12 +76,16 @@ msgstr "{0} · {1}"
 msgid "{0} · created {1}"
 msgstr "{0} · создан {1}"
 
+#. placeholder {0}: formatSize(value.file.size, i18n.locale)
+msgid "{0} · sent with the card"
+msgstr "{0} · отправится вместе с карточкой"
+
 #. placeholder {0}: c.lapses
 #. placeholder {1}: c.reviews
 msgid "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 msgstr "{0} забыто <0>·</0> {1, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
-#. placeholder {0}: outcome.existing.term
+#. placeholder {0}: outcome.term
 #. placeholder {1}: outcome.deckName
 msgid "{0} is already in {1}"
 msgstr "{0} уже есть в {1}"
@@ -194,6 +198,9 @@ msgstr "{due, plural, one {# карточка ждёт, когда у тебя �
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# карточка в ближайшие семь дней.} few {# карточки в ближайшие семь дней.} many {# карточек в ближайшие семь дней.} other {# карточки в ближайшие семь дней.}}"
 
+msgid "{filled, plural, one {# filled} other {# filled}}"
+msgstr "{filled, plural, one {заполнено: #} few {заполнено: #} many {заполнено: #} other {заполнено: #}}"
+
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан на # повторении, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} few {Показатель запоминания основан на # повторениях, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} many {Показатель запоминания основан на # повторениях, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} other {Показатель запоминания основан на # повторения, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.}}"
 
@@ -259,9 +266,6 @@ msgstr "30 дней"
 msgid "90 days"
 msgstr "90 дней"
 
-msgid "A card lands in a deck. Create the first one and this card goes in it."
-msgstr "Карточка попадает в колоду. Создай первую, и эта карточка окажется в ней."
-
 msgid "a connected app"
 msgstr "подключённое приложение"
 
@@ -280,14 +284,14 @@ msgstr "Ключ даёт скрипту или curl читать твои ко�
 msgid "A key never grades reviews."
 msgstr "Ключ никогда не ставит оценок за повторение."
 
+msgid "A link to a picture online."
+msgstr "Ссылка на изображение в сети."
+
 msgid "A note to yourself about what is in here."
 msgstr "Заметка для себя о том, что здесь есть."
 
 msgid "A notification on this device when cards are due."
 msgstr "Уведомление на этом устройстве, когда есть карточки к повторению."
-
-msgid "A sentence it lives in"
-msgstr "Предложение, в котором он живёт"
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -310,11 +314,8 @@ msgstr "Добавить"
 msgid "Add a card"
 msgstr "Добавить карточку"
 
-msgid "Add a meaning"
-msgstr "Добавить значение"
-
-msgid "Add a sentence it lives in"
-msgstr "Добавить предложение, в котором он живёт"
+msgid "Add a picture"
+msgstr "Добавить изображение"
 
 msgid "Add card"
 msgstr "Добавить карточку"
@@ -343,6 +344,9 @@ msgstr "Добавить Lymi на экран «Домой»"
 msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 msgstr "Сначала добавь Lymi на экран «Домой». iPhone и iPad разрешают напоминания только оттуда."
 
+msgid "Add picture"
+msgstr "Добавить изображение"
+
 msgid "Add some from your next lesson"
 msgstr "Добавь из следующего урока"
 
@@ -352,8 +356,20 @@ msgstr "Добавить в {deckName}"
 msgid "Add, edit and archive cards"
 msgstr "Добавлять, редактировать и архивировать карточки"
 
-msgid "Added “{added}”"
-msgstr "Добавлено «{added}»"
+#. placeholder {0}: outcome.term
+msgid "Added “{0}”"
+msgstr "Добавлено «{0}»"
+
+#. placeholder {0}: outcome.term
+#. placeholder {1}: outcome.pictureError
+msgid "Added “{0}” without its picture. {1}"
+msgstr "«{0}» добавлено без изображения. {1}"
+
+msgid "Added “{term}”"
+msgstr "Добавлено «{term}»"
+
+msgid "Added “{term}” without its picture. {pictureError}"
+msgstr "«{term}» добавлено без изображения. {pictureError}"
 
 msgid "Added today"
 msgstr "Добавлено сегодня"
@@ -406,9 +422,6 @@ msgstr "Любой, у кого есть ссылка, может присоед
 msgid "Anyone with this link can join and review these cards."
 msgstr "Любой, у кого есть эта ссылка, может присоединиться и повторять эти карточки."
 
-msgid "Anything to remember it by"
-msgstr "Всё, что поможет это запомнить"
-
 msgid "API key for {name}"
 msgstr "Ключ API для {name}"
 
@@ -420,6 +433,9 @@ msgstr "Архивировать"
 
 msgid "Archive deck"
 msgstr "Архивировать колоду"
+
+msgid "Archive the picture"
+msgstr "Архивировать изображение"
 
 msgid "Archived"
 msgstr "Архив"
@@ -436,6 +452,12 @@ msgstr "Попроси новую ссылку у того, кто ей поде
 #. placeholder {0}: listOf( schedules.map((x) => i18n._(modeLabel(x.st.mode)).toLocaleLowerCase(i18n.locale)), i18n.locale, )
 msgid "asked by {0}"
 msgstr "задано как {0}"
+
+msgid "Asked once the card has a picture."
+msgstr "Будет спрашиваться, когда у карточки появится изображение."
+
+msgid "Asked once the picture has a description."
+msgstr "Будет спрашиваться, когда у изображения появится описание."
 
 msgid "Assistants that signed in to Lymi, such as Claude or ChatGPT."
 msgstr "Ассистенты, вошедшие в Lymi, например Claude или ChatGPT."
@@ -477,6 +499,9 @@ msgstr "называет себя «{0}»"
 msgid "Cancel"
 msgstr "Отмена"
 
+msgid "Cancel the link"
+msgstr "Отменить ссылку"
+
 msgid "Card"
 msgstr "Карточка"
 
@@ -486,8 +511,14 @@ msgstr "Карточка добавлена"
 msgid "Card added, meaning from the lesson"
 msgstr "Карточка добавлена, значение из урока"
 
+msgid "Card discarded"
+msgstr "Карточка отменена"
+
 msgid "Card options"
 msgstr "Параметры карточки"
+
+msgid "Card settings"
+msgstr "Настройки карточки"
 
 msgid "Cards"
 msgstr "Карточки"
@@ -507,6 +538,9 @@ msgstr "Изменить дневную цель"
 msgid "Change photo"
 msgstr "Изменить фото"
 
+msgid "Changes discarded"
+msgstr "Изменения отменены"
+
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Проверь, что ссылка скопирована полностью, или попроси новую."
 
@@ -525,6 +559,12 @@ msgstr "Выбрать оценку повторения"
 msgid "Choose a whole number from 1 to 200."
 msgstr "Выбери целое число от 1 до 200."
 
+msgid "Choose at least one way to be asked."
+msgstr "Выбери хотя бы один способ спрашивать."
+
+msgid "Choose file"
+msgstr "Выбрать файл"
+
 msgctxt "photo"
 msgid "Choose new…"
 msgstr "Выбрать новое…"
@@ -537,6 +577,9 @@ msgstr "Сбросить фильтры"
 
 msgid "Clear search"
 msgstr "Очистить поиск"
+
+msgid "Clear the picture"
+msgstr "Убрать изображение"
 
 msgid "Close"
 msgstr "Закрыть"
@@ -570,6 +613,9 @@ msgstr "Продолжить с Google"
 
 msgid "Copied"
 msgstr "Скопировано"
+
+msgid "Copied with the card"
+msgstr "Скопируется вместе с карточкой"
 
 msgid "Copy"
 msgstr "Копировать"
@@ -628,6 +674,9 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Не удалось сохранить оценку для «{term}». Эта карточка ещё вернётся."
 
+msgid "Create a deck first. This card goes in it."
+msgstr "Сначала создай колоду. Эта карточка попадёт в неё."
+
 msgid "Create a key in Settings"
 msgstr "Создай ключ в Настройках"
 
@@ -637,8 +686,14 @@ msgstr "Создать колоду"
 msgid "Create key"
 msgstr "Создать ключ"
 
+msgid "Create more"
+msgstr "Добавить ещё"
+
 msgid "Create or read API keys"
 msgstr "Создавать и просматривать ключи API"
+
+msgid "Current picture"
+msgstr "Текущее изображение"
 
 msgid "Custom"
 msgstr "Своя"
@@ -685,6 +740,9 @@ msgstr "Колоды к повторению"
 msgid "Deny"
 msgstr "Отклонить"
 
+msgid "Describe what the picture shows without naming the term or the meaning."
+msgstr "Опиши, что на изображении, не называя термин или значение."
+
 msgid "Description"
 msgstr "Описание"
 
@@ -705,6 +763,9 @@ msgstr "Перетащи фото или двигай его клавишами 
 
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Перетащи, чтобы подвинуть фото. Чтобы изменить масштаб, сведи или разведи пальцы или используй ползунок."
+
+msgid "Drop or paste a picture"
+msgstr "Перетащи или вставь изображение"
 
 msgid "Due"
 msgstr "Когда повторять"
@@ -727,18 +788,17 @@ msgstr "Каждый блок — один день. Если продолжае
 msgid "Easy"
 msgstr "Легко"
 
-msgid "Edit"
-msgstr "Редактировать"
-
-#. placeholder {0}: label.toLocaleLowerCase(i18n.locale)
-msgid "Edit {0}"
-msgstr "Редактировать {0}"
+msgid "Edit card"
+msgstr "Редактировать карточку"
 
 msgid "Edited {list}"
 msgstr "Изменено: {list}"
 
 msgid "Enriched {list}"
 msgstr "Дополнено: {list}"
+
+msgid "Enter after each"
+msgstr "Enter после каждого"
 
 msgid "Every card is asked twice."
 msgstr "Каждая карточка задаётся дважды."
@@ -763,6 +823,9 @@ msgstr "Экспортировать как CSV"
 
 msgid "Export as CSV without pictures"
 msgstr "Экспортировать в CSV без изображений"
+
+msgid "Fewer fields"
+msgstr "Меньше полей"
 
 msgid "Filter"
 msgstr "Фильтр"
@@ -834,6 +897,9 @@ msgstr "За какой период показано запоминание"
 msgid "how it is asked"
 msgstr "как задаётся"
 
+msgid "How it’s asked"
+msgstr "Как спрашивать"
+
 msgid "How many cards come back this week"
 msgstr "Сколько карточек вернётся на этой неделе"
 
@@ -889,6 +955,9 @@ msgstr "Ссылка для присоединения"
 msgid "Join with Google"
 msgstr "Присоединиться через Google"
 
+msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
+msgstr "JPEG, PNG, WebP или статичный GIF, до 10 МБ."
+
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Усердно"
@@ -898,6 +967,12 @@ msgstr "Оставить ключ"
 
 msgid "Keep sharing"
 msgstr "Не выключать"
+
+msgid "Keep the description under 300 characters."
+msgstr "Описание должно быть короче 300 символов."
+
+msgid "Keep the example under 1000 characters."
+msgstr "Пример должен быть короче 1000 символов."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Языковой тег должен быть короче 12 символов."
@@ -910,6 +985,15 @@ msgstr "Название должно быть короче 32 символов.
 
 msgid "Keep the name under 80 characters."
 msgstr "Название должно быть короче 80 символов."
+
+msgid "Keep the notes under 2000 characters."
+msgstr "Заметки должны быть короче 2000 символов."
+
+msgid "Keep the pronunciation under 200 characters."
+msgstr "Произношение должно быть короче 200 символов."
+
+msgid "Keep the source under 200 characters."
+msgstr "Источник должен быть короче 200 символов."
 
 msgid "Keep the term under 500 characters."
 msgstr "Термин должен быть короче 500 символов."
@@ -947,9 +1031,6 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "В изучении"
 
-msgid "Leave it empty and AI can fill it in later."
-msgstr "Оставь пустым, и ИИ сможет заполнить его позже."
-
 msgid "Leave review"
 msgstr "Выйти из повторения"
 
@@ -977,6 +1058,9 @@ msgstr "Легко"
 
 msgid "Link off"
 msgstr "Ссылка выключена"
+
+msgid "Link to a picture"
+msgstr "Ссылка на изображение"
 
 msgid "List, search and read them. Any connector needs this."
 msgstr "Просматривать список, искать и читать. Это нужно каждому коннектору."
@@ -1025,6 +1109,12 @@ msgstr "Режим"
 
 msgid "Month by month"
 msgstr "По месяцам"
+
+msgid "More about this card"
+msgstr "Больше о карточке"
+
+msgid "More fields"
+msgstr "Больше полей"
 
 msgid "More to review"
 msgstr "Ещё к повторению"
@@ -1237,6 +1327,15 @@ msgstr "Необязательно"
 msgid "Other ways to add cards"
 msgstr "Другие способы добавить карточки"
 
+msgid "own review"
+msgstr "своё повторение"
+
+msgid "Paste a link"
+msgstr "Вставить ссылку"
+
+msgid "Pasted picture"
+msgstr "Вставленное изображение"
+
 msgid "Pause the cards"
 msgstr "Остановить карточки"
 
@@ -1289,6 +1388,9 @@ msgstr "Воспроизвести произношение"
 msgid "Position your photo"
 msgstr "Расположи фото"
 
+msgid "Press Enter after each tag."
+msgstr "Нажимай Enter после каждого тега."
+
 msgid "Previous card"
 msgstr "Предыдущая карточка"
 
@@ -1306,6 +1408,9 @@ msgstr "Воспроизведение"
 
 msgid "Production card for {front}"
 msgstr "Карточка на воспроизведение для {front}"
+
+msgid "Pronunciation"
+msgstr "Произношение"
 
 msgid "Pronunciation changed to “{value}”"
 msgstr "Новое произношение: «{value}»"
@@ -1374,6 +1479,12 @@ msgstr "Убрать"
 msgid "Remove filter: {label}"
 msgstr "Убрать фильтр: {label}"
 
+msgid "Remove the tag {tag}"
+msgstr "Убрать тег {tag}"
+
+msgid "Replace the picture"
+msgstr "Заменить изображение"
+
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
 
@@ -1437,6 +1548,12 @@ msgstr "Раунд завершён"
 msgid "Round progress"
 msgstr "Прогресс раунда"
 
+msgid "Same as the deck"
+msgstr "Как в колоде"
+
+msgid "Save"
+msgstr "Сохранить"
+
 msgid "Save photo"
 msgstr "Сохранить фото"
 
@@ -1452,9 +1569,6 @@ msgstr "Сохранение…"
 #. placeholder {0}: card.term
 msgid "Say {0}"
 msgstr "Сказать {0}"
-
-msgid "sbrigarsi"
-msgstr "sbrigarsi"
 
 msgid "Schedule"
 msgstr "Расписание"
@@ -1476,13 +1590,34 @@ msgstr "Искать в этой колоде"
 msgid "See “{0}” → recall {1}"
 msgstr "Увидеть «{0}» → вспомнить {1}"
 
+msgid "See “{answer}”, recall {word}"
+msgstr "Увидеть «{answer}» и вспомнить {word}"
+
 #. placeholder {0}: example.term
 #. placeholder {1}: example.meaning
 msgid "See {0} → recall “{1}”"
 msgstr "Увидеть {0} → вспомнить «{1}»"
 
+msgid "See {word}, recall “{answer}”"
+msgstr "Увидеть {word} и вспомнить «{answer}»"
+
+msgid "See {word}, recall what it means"
+msgstr "Увидеть {word} и вспомнить значение"
+
+msgid "See the meaning, recall {word}"
+msgstr "Увидеть значение и вспомнить {word}"
+
 msgid "See the meaning, recall the term."
 msgstr "Увидеть значение и вспомнить термин."
+
+msgid "See the picture, recall “{answer}”"
+msgstr "Увидеть изображение и вспомнить «{answer}»"
+
+msgid "See the picture, recall {word}"
+msgstr "Увидеть изображение и вспомнить {word}"
+
+msgid "See the picture, recall the meaning"
+msgstr "Увидеть изображение и вспомнить значение"
 
 msgid "See the term, recall what it means."
 msgstr "Увидеть термин и вспомнить его значение."
@@ -1563,6 +1698,9 @@ msgstr "Сортировка"
 msgid "Sort: {0}"
 msgstr "Сортировка: {0}"
 
+msgid "Source"
+msgstr "Источник"
+
 msgid "Start review"
 msgstr "Начать повторение"
 
@@ -1597,6 +1735,12 @@ msgstr "Системная"
 
 msgid "System follows your device."
 msgstr "«Системная» повторяет настройки устройства."
+
+msgid "Tags"
+msgstr "Теги"
+
+msgid "Take photo"
+msgstr "Сфотографировать"
 
 msgid "Tap Add to Home Screen."
 msgstr "Коснись «На экран “Домой”»."
@@ -1673,6 +1817,9 @@ msgstr "заметки"
 msgid "the pronunciation"
 msgstr "произношение"
 
+msgid "the source"
+msgstr "источник"
+
 msgid "the tags"
 msgstr "теги"
 
@@ -1714,9 +1861,6 @@ msgstr "На этой неделе"
 
 msgid "Time"
 msgstr "Время"
-
-msgid "to hurry up"
-msgstr "торопиться"
 
 msgid "Today"
 msgstr "Сегодня"
@@ -1773,11 +1917,26 @@ msgstr "Обновлено {lastAdded}"
 msgid "Use “{tag}” as the tag"
 msgstr "Использовать «{tag}» как тег"
 
+msgid "Use a JPEG, PNG, WebP or still GIF under 10 MB."
+msgstr "Используй JPEG, PNG, WebP или статичный GIF до 10 МБ."
+
 msgid "Use a language tag like ca, pt-BR or zh-Hant."
 msgstr "Используй языковой тег вроде ca, pt-BR или zh-Hant."
 
+msgid "Use a public http or https link to a picture."
+msgstr "Используй публичную ссылку на изображение через http или https."
+
+msgid "Use link"
+msgstr "Использовать ссылку"
+
+msgid "Use the deck’s"
+msgstr "Вернуть как в колоде"
+
 msgid "Use the Google account that received your invitation."
 msgstr "Используй аккаунт Google, на который пришло приглашение."
+
+msgid "Use up to 20 tags of 40 characters or fewer."
+msgstr "Используй до 20 тегов, каждый до 40 символов."
 
 msgid "used {d} d ago"
 msgstr "использован {d} дн. назад"
@@ -1801,8 +1960,8 @@ msgstr "неделя с {0}"
 msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
 msgstr "Всё добавленное появляется сразу и с пометкой. Любое из этого можно отредактировать или архивировать."
 
-msgid "What it means"
-msgstr "Что это значит"
+msgid "What the picture shows, without the answer. Picture review needs it."
+msgstr "Что на изображении, без ответа. Без описания повторение по изображению не начнётся."
 
 msgid "When it’s back"
 msgstr "Когда вернётся"

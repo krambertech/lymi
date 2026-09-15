@@ -62,7 +62,7 @@ import {
   splitForms,
 } from "../lib/deck-list";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
-import { type WordEvent, type WordPatch, WordView } from "./word-view";
+import { type WordEvent, WordView } from "./word-view";
 
 /** A menu row greys its icons, so a state's mark takes its own colour back. */
 const menuMarkColour = {
@@ -95,7 +95,8 @@ export interface DeckDetailProps {
   events?: WordEvent[] | undefined;
   /** Play the word's pronunciation. Absent, the Say button is not drawn. */
   onPlayAudio?: ((card: DeckRow["card"]) => void) | undefined;
-  onSaveCard?: ((id: string, patch: WordPatch) => void) | undefined;
+  /** Opens the form for a card. Only a deck's owner is offered it. */
+  onEditCard?: ((card: DeckRow["card"]) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
   onMove?: ((id: string, deckId: string) => void) | undefined;
@@ -642,7 +643,7 @@ export function DeckDetailView({
   reviews,
   events,
   onPlayAudio,
-  onSaveCard,
+  onEditCard,
   decks,
   onMove,
   cardBeside,
@@ -720,6 +721,7 @@ export function DeckDetailView({
   const lastOpen = useRef(open);
   if (open) lastOpen.current = open;
   const shownWord = open ?? lastOpen.current;
+  const canEdit = !!onEditCard && deck?.role === "owner";
 
   // Walking the list with a word open, the way a mail client does.
   useEffect(() => {
@@ -768,7 +770,7 @@ export function DeckDetailView({
           document.querySelector<HTMLElement>(`[data-card-row="${CSS.escape(id)}"]`)?.focus(),
         );
       }}
-      onSave={onSaveCard ? (patch) => onSaveCard(shownWord.card.id, patch) : undefined}
+      onEdit={canEdit ? () => onEditCard?.(shownWord.card) : undefined}
       onArchive={() => {
         setOpen(null);
         onArchive(shownWord.card.id);

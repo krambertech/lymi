@@ -76,12 +76,16 @@ msgstr "{0} · {1}"
 msgid "{0} · created {1}"
 msgstr "{0} · created {1}"
 
+#. placeholder {0}: formatSize(value.file.size, i18n.locale)
+msgid "{0} · sent with the card"
+msgstr "{0} · sent with the card"
+
 #. placeholder {0}: c.lapses
 #. placeholder {1}: c.reviews
 msgid "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 msgstr "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 
-#. placeholder {0}: outcome.existing.term
+#. placeholder {0}: outcome.term
 #. placeholder {1}: outcome.deckName
 msgid "{0} is already in {1}"
 msgstr "{0} is already in {1}"
@@ -194,6 +198,9 @@ msgstr "{due, plural, one {One card is waiting when you have a moment.} other {#
 msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 
+msgid "{filled, plural, one {# filled} other {# filled}}"
+msgstr "{filled, plural, one {# filled} other {# filled}}"
+
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 
@@ -259,9 +266,6 @@ msgstr "30 days"
 msgid "90 days"
 msgstr "90 days"
 
-msgid "A card lands in a deck. Create the first one and this card goes in it."
-msgstr "A card lands in a deck. Create the first one and this card goes in it."
-
 msgid "a connected app"
 msgstr "a connected app"
 
@@ -280,14 +284,14 @@ msgstr "A key lets a script or curl read your decks, or add to them."
 msgid "A key never grades reviews."
 msgstr "A key never grades reviews."
 
+msgid "A link to a picture online."
+msgstr "A link to a picture online."
+
 msgid "A note to yourself about what is in here."
 msgstr "A note to yourself about what is in here."
 
 msgid "A notification on this device when cards are due."
 msgstr "A notification on this device when cards are due."
-
-msgid "A sentence it lives in"
-msgstr "A sentence it lives in"
 
 msgid "A–Z"
 msgstr "A–Z"
@@ -310,11 +314,8 @@ msgstr "Add"
 msgid "Add a card"
 msgstr "Add a card"
 
-msgid "Add a meaning"
-msgstr "Add a meaning"
-
-msgid "Add a sentence it lives in"
-msgstr "Add a sentence it lives in"
+msgid "Add a picture"
+msgstr "Add a picture"
 
 msgid "Add card"
 msgstr "Add card"
@@ -343,6 +344,9 @@ msgstr "Add Lymi to your Home Screen"
 msgid "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 msgstr "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there."
 
+msgid "Add picture"
+msgstr "Add picture"
+
 msgid "Add some from your next lesson"
 msgstr "Add some from your next lesson"
 
@@ -352,8 +356,20 @@ msgstr "Add to {deckName}"
 msgid "Add, edit and archive cards"
 msgstr "Add, edit and archive cards"
 
-msgid "Added “{added}”"
-msgstr "Added “{added}”"
+#. placeholder {0}: outcome.term
+msgid "Added “{0}”"
+msgstr "Added “{0}”"
+
+#. placeholder {0}: outcome.term
+#. placeholder {1}: outcome.pictureError
+msgid "Added “{0}” without its picture. {1}"
+msgstr "Added “{0}” without its picture. {1}"
+
+msgid "Added “{term}”"
+msgstr "Added “{term}”"
+
+msgid "Added “{term}” without its picture. {pictureError}"
+msgstr "Added “{term}” without its picture. {pictureError}"
 
 msgid "Added today"
 msgstr "Added today"
@@ -406,9 +422,6 @@ msgstr "Anyone with the link can join and review your cards on their own schedul
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
 
-msgid "Anything to remember it by"
-msgstr "Anything to remember it by"
-
 msgid "API key for {name}"
 msgstr "API key for {name}"
 
@@ -420,6 +433,9 @@ msgstr "Archive"
 
 msgid "Archive deck"
 msgstr "Archive deck"
+
+msgid "Archive the picture"
+msgstr "Archive the picture"
 
 msgid "Archived"
 msgstr "Archived"
@@ -436,6 +452,12 @@ msgstr "Ask the person who shared it for a new link."
 #. placeholder {0}: listOf( schedules.map((x) => i18n._(modeLabel(x.st.mode)).toLocaleLowerCase(i18n.locale)), i18n.locale, )
 msgid "asked by {0}"
 msgstr "asked by {0}"
+
+msgid "Asked once the card has a picture."
+msgstr "Asked once the card has a picture."
+
+msgid "Asked once the picture has a description."
+msgstr "Asked once the picture has a description."
 
 msgid "Assistants that signed in to Lymi, such as Claude or ChatGPT."
 msgstr "Assistants that signed in to Lymi, such as Claude or ChatGPT."
@@ -477,6 +499,9 @@ msgstr "calls itself “{0}”"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Cancel the link"
+msgstr "Cancel the link"
+
 msgid "Card"
 msgstr "Card"
 
@@ -486,8 +511,14 @@ msgstr "Card added"
 msgid "Card added, meaning from the lesson"
 msgstr "Card added, meaning from the lesson"
 
+msgid "Card discarded"
+msgstr "Card discarded"
+
 msgid "Card options"
 msgstr "Card options"
+
+msgid "Card settings"
+msgstr "Card settings"
 
 msgid "Cards"
 msgstr "Cards"
@@ -507,6 +538,9 @@ msgstr "Change daily goal"
 msgid "Change photo"
 msgstr "Change photo"
 
+msgid "Changes discarded"
+msgstr "Changes discarded"
+
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Check that the whole link was copied, or ask for a new one."
 
@@ -525,6 +559,12 @@ msgstr "Choose a recall grade"
 msgid "Choose a whole number from 1 to 200."
 msgstr "Choose a whole number from 1 to 200."
 
+msgid "Choose at least one way to be asked."
+msgstr "Choose at least one way to be asked."
+
+msgid "Choose file"
+msgstr "Choose file"
+
 msgctxt "photo"
 msgid "Choose new…"
 msgstr "Choose new…"
@@ -537,6 +577,9 @@ msgstr "Clear filters"
 
 msgid "Clear search"
 msgstr "Clear search"
+
+msgid "Clear the picture"
+msgstr "Clear the picture"
 
 msgid "Close"
 msgstr "Close"
@@ -570,6 +613,9 @@ msgstr "Continue with Google"
 
 msgid "Copied"
 msgstr "Copied"
+
+msgid "Copied with the card"
+msgstr "Copied with the card"
 
 msgid "Copy"
 msgstr "Copy"
@@ -628,6 +674,9 @@ msgstr "Couldn’t save your grade for “{term}”. The card is no longer in yo
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
+msgid "Create a deck first. This card goes in it."
+msgstr "Create a deck first. This card goes in it."
+
 msgid "Create a key in Settings"
 msgstr "Create a key in Settings"
 
@@ -637,8 +686,14 @@ msgstr "Create deck"
 msgid "Create key"
 msgstr "Create key"
 
+msgid "Create more"
+msgstr "Create more"
+
 msgid "Create or read API keys"
 msgstr "Create or read API keys"
+
+msgid "Current picture"
+msgstr "Current picture"
 
 msgid "Custom"
 msgstr "Custom"
@@ -685,6 +740,9 @@ msgstr "Decks to review"
 msgid "Deny"
 msgstr "Deny"
 
+msgid "Describe what the picture shows without naming the term or the meaning."
+msgstr "Describe what the picture shows without naming the term or the meaning."
+
 msgid "Description"
 msgstr "Description"
 
@@ -705,6 +763,9 @@ msgstr "Drag or use the arrow keys to move the photo."
 
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Drag to move the photo. Pinch or use the slider to zoom."
+
+msgid "Drop or paste a picture"
+msgstr "Drop or paste a picture"
 
 msgid "Due"
 msgstr "Due"
@@ -727,18 +788,17 @@ msgstr "Each block is a day. They join up when you keep going."
 msgid "Easy"
 msgstr "Easy"
 
-msgid "Edit"
-msgstr "Edit"
-
-#. placeholder {0}: label.toLocaleLowerCase(i18n.locale)
-msgid "Edit {0}"
-msgstr "Edit {0}"
+msgid "Edit card"
+msgstr "Edit card"
 
 msgid "Edited {list}"
 msgstr "Edited {list}"
 
 msgid "Enriched {list}"
 msgstr "Enriched {list}"
+
+msgid "Enter after each"
+msgstr "Enter after each"
 
 msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
@@ -763,6 +823,9 @@ msgstr "Export as CSV"
 
 msgid "Export as CSV without pictures"
 msgstr "Export as CSV without pictures"
+
+msgid "Fewer fields"
+msgstr "Fewer fields"
 
 msgid "Filter"
 msgstr "Filter"
@@ -834,6 +897,9 @@ msgstr "How far back the recall figure looks"
 msgid "how it is asked"
 msgstr "how it is asked"
 
+msgid "How it’s asked"
+msgstr "How it’s asked"
+
 msgid "How many cards come back this week"
 msgstr "How many cards come back this week"
 
@@ -889,6 +955,9 @@ msgstr "Join link"
 msgid "Join with Google"
 msgstr "Join with Google"
 
+msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
+msgstr "JPEG, PNG, WebP or still GIF, up to 10 MB."
+
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
@@ -898,6 +967,12 @@ msgstr "Keep key"
 
 msgid "Keep sharing"
 msgstr "Keep sharing"
+
+msgid "Keep the description under 300 characters."
+msgstr "Keep the description under 300 characters."
+
+msgid "Keep the example under 1000 characters."
+msgstr "Keep the example under 1000 characters."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Keep the language tag under 12 characters."
@@ -910,6 +985,15 @@ msgstr "Keep the name under 32 characters."
 
 msgid "Keep the name under 80 characters."
 msgstr "Keep the name under 80 characters."
+
+msgid "Keep the notes under 2000 characters."
+msgstr "Keep the notes under 2000 characters."
+
+msgid "Keep the pronunciation under 200 characters."
+msgstr "Keep the pronunciation under 200 characters."
+
+msgid "Keep the source under 200 characters."
+msgstr "Keep the source under 200 characters."
 
 msgid "Keep the term under 500 characters."
 msgstr "Keep the term under 500 characters."
@@ -947,9 +1031,6 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "Learning"
 
-msgid "Leave it empty and AI can fill it in later."
-msgstr "Leave it empty and AI can fill it in later."
-
 msgid "Leave review"
 msgstr "Leave review"
 
@@ -977,6 +1058,9 @@ msgstr "Light"
 
 msgid "Link off"
 msgstr "Link off"
+
+msgid "Link to a picture"
+msgstr "Link to a picture"
 
 msgid "List, search and read them. Any connector needs this."
 msgstr "List, search and read them. Any connector needs this."
@@ -1025,6 +1109,12 @@ msgstr "Mode"
 
 msgid "Month by month"
 msgstr "Month by month"
+
+msgid "More about this card"
+msgstr "More about this card"
+
+msgid "More fields"
+msgstr "More fields"
 
 msgid "More to review"
 msgstr "More to review"
@@ -1237,6 +1327,15 @@ msgstr "Optional"
 msgid "Other ways to add cards"
 msgstr "Other ways to add cards"
 
+msgid "own review"
+msgstr "own review"
+
+msgid "Paste a link"
+msgstr "Paste a link"
+
+msgid "Pasted picture"
+msgstr "Pasted picture"
+
 msgid "Pause the cards"
 msgstr "Pause the cards"
 
@@ -1289,6 +1388,9 @@ msgstr "Play pronunciation"
 msgid "Position your photo"
 msgstr "Position your photo"
 
+msgid "Press Enter after each tag."
+msgstr "Press Enter after each tag."
+
 msgid "Previous card"
 msgstr "Previous card"
 
@@ -1306,6 +1408,9 @@ msgstr "Production"
 
 msgid "Production card for {front}"
 msgstr "Production card for {front}"
+
+msgid "Pronunciation"
+msgstr "Pronunciation"
 
 msgid "Pronunciation changed to “{value}”"
 msgstr "Pronunciation changed to “{value}”"
@@ -1374,6 +1479,12 @@ msgstr "Remove"
 msgid "Remove filter: {label}"
 msgstr "Remove filter: {label}"
 
+msgid "Remove the tag {tag}"
+msgstr "Remove the tag {tag}"
+
+msgid "Replace the picture"
+msgstr "Replace the picture"
+
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
@@ -1437,6 +1548,12 @@ msgstr "Round done"
 msgid "Round progress"
 msgstr "Round progress"
 
+msgid "Same as the deck"
+msgstr "Same as the deck"
+
+msgid "Save"
+msgstr "Save"
+
 msgid "Save photo"
 msgstr "Save photo"
 
@@ -1452,9 +1569,6 @@ msgstr "Saving…"
 #. placeholder {0}: card.term
 msgid "Say {0}"
 msgstr "Say {0}"
-
-msgid "sbrigarsi"
-msgstr "sbrigarsi"
 
 msgid "Schedule"
 msgstr "Schedule"
@@ -1476,13 +1590,34 @@ msgstr "Search this deck"
 msgid "See “{0}” → recall {1}"
 msgstr "See “{0}” → recall {1}"
 
+msgid "See “{answer}”, recall {word}"
+msgstr "See “{answer}”, recall {word}"
+
 #. placeholder {0}: example.term
 #. placeholder {1}: example.meaning
 msgid "See {0} → recall “{1}”"
 msgstr "See {0} → recall “{1}”"
 
+msgid "See {word}, recall “{answer}”"
+msgstr "See {word}, recall “{answer}”"
+
+msgid "See {word}, recall what it means"
+msgstr "See {word}, recall what it means"
+
+msgid "See the meaning, recall {word}"
+msgstr "See the meaning, recall {word}"
+
 msgid "See the meaning, recall the term."
 msgstr "See the meaning, recall the term."
+
+msgid "See the picture, recall “{answer}”"
+msgstr "See the picture, recall “{answer}”"
+
+msgid "See the picture, recall {word}"
+msgstr "See the picture, recall {word}"
+
+msgid "See the picture, recall the meaning"
+msgstr "See the picture, recall the meaning"
 
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
@@ -1563,6 +1698,9 @@ msgstr "Sort"
 msgid "Sort: {0}"
 msgstr "Sort: {0}"
 
+msgid "Source"
+msgstr "Source"
+
 msgid "Start review"
 msgstr "Start review"
 
@@ -1597,6 +1735,12 @@ msgstr "System"
 
 msgid "System follows your device."
 msgstr "System follows your device."
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Take photo"
+msgstr "Take photo"
 
 msgid "Tap Add to Home Screen."
 msgstr "Tap Add to Home Screen."
@@ -1673,6 +1817,9 @@ msgstr "the notes"
 msgid "the pronunciation"
 msgstr "the pronunciation"
 
+msgid "the source"
+msgstr "the source"
+
 msgid "the tags"
 msgstr "the tags"
 
@@ -1714,9 +1861,6 @@ msgstr "This week"
 
 msgid "Time"
 msgstr "Time"
-
-msgid "to hurry up"
-msgstr "to hurry up"
 
 msgid "Today"
 msgstr "Today"
@@ -1773,11 +1917,26 @@ msgstr "Updated {lastAdded}"
 msgid "Use “{tag}” as the tag"
 msgstr "Use “{tag}” as the tag"
 
+msgid "Use a JPEG, PNG, WebP or still GIF under 10 MB."
+msgstr "Use a JPEG, PNG, WebP or still GIF under 10 MB."
+
 msgid "Use a language tag like ca, pt-BR or zh-Hant."
 msgstr "Use a language tag like ca, pt-BR or zh-Hant."
 
+msgid "Use a public http or https link to a picture."
+msgstr "Use a public http or https link to a picture."
+
+msgid "Use link"
+msgstr "Use link"
+
+msgid "Use the deck’s"
+msgstr "Use the deck’s"
+
 msgid "Use the Google account that received your invitation."
 msgstr "Use the Google account that received your invitation."
+
+msgid "Use up to 20 tags of 40 characters or fewer."
+msgstr "Use up to 20 tags of 40 characters or fewer."
 
 msgid "used {d} d ago"
 msgstr "used {d} d ago"
@@ -1801,8 +1960,8 @@ msgstr "week of {0}"
 msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
 msgstr "What it adds lands at once and is labelled. You can edit or archive any of it."
 
-msgid "What it means"
-msgstr "What it means"
+msgid "What the picture shows, without the answer. Picture review needs it."
+msgstr "What the picture shows, without the answer. Picture review needs it."
 
 msgid "When it’s back"
 msgstr "When it’s back"

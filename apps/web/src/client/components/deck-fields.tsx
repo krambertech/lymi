@@ -113,7 +113,8 @@ interface LanguageProps {
   value: string | null;
   onChange: (value: string | null) => void;
   label?: string | undefined;
-  description?: string | undefined;
+  /** Null leaves the field without one. */
+  description?: string | null | undefined;
   error?: string | undefined;
 }
 
@@ -180,9 +181,11 @@ export function LanguageField({ value, onChange, label, description, error }: La
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-      <FieldDescription>
-        {description ?? t`The language this deck’s cards are in. It fills in on every new card.`}
-      </FieldDescription>
+      {description !== null && (
+        <FieldDescription>
+          {description ?? t`The language this deck’s cards are in. It fills in on every new card.`}
+        </FieldDescription>
+      )}
       <FieldError>{error}</FieldError>
     </Field>
   );

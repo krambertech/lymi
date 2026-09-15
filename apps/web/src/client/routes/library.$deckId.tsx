@@ -1,7 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { EditCardSheet } from "../components/edit-card-sheet";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { api, type Card } from "../lib/api";
@@ -48,6 +49,8 @@ function DeckPage() {
   const deck = decks.data?.find((d) => d.id === deckId);
   const add = useAddCard();
   useDocumentTitle(deck?.name);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const editing = cards.data?.find((row) => row.card.id === editingId)?.card ?? null;
 
   const events = useMemo(
     () => history.data?.events.map((e) => describeEvent(e, i18n)),
@@ -119,29 +122,39 @@ function DeckPage() {
   const archiveDeck = useArchiveDeck(deckId, deck?.name);
 
   return (
-    <DeckDetailView
-      deck={deck}
-      cards={cards.data}
-      streak={streak.data}
-      onAdd={() => add.openCard(deckId)}
-      onArchive={(id) => archive.mutate(id)}
-      onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
-      onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
-      onArchiveDeck={() => archiveDeck.mutate()}
-      openCardId={openCardId ?? null}
-      onOpen={setOpen}
-      states={history.data?.states}
-      reviews={history.data?.reviews}
-      events={events}
-      onPlayAudio={playAudio}
-      onSaveCard={(id, patch) => save.mutate({ id, patch })}
-      decks={decks.data}
-      onMove={(id, toDeck) => {
-        setOpen(null);
-        save.mutate({ id, patch: { deckId: toDeck } });
-      }}
-      connectUrl={publicSiteUrl("/docs/mcp")}
-      connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
-    />
+    <>
+      <DeckDetailView
+        deck={deck}
+        cards={cards.data}
+        streak={streak.data}
+        onAdd={() => add.openCard(deckId)}
+        onArchive={(id) => archive.mutate(id)}
+        onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
+        onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
+        onArchiveDeck={() => archiveDeck.mutate()}
+        openCardId={openCardId ?? null}
+        onOpen={setOpen}
+        states={history.data?.states}
+        reviews={history.data?.reviews}
+        events={events}
+        onPlayAudio={playAudio}
+        onEditCard={(card) => setEditingId(card.id)}
+        decks={decks.data}
+        onMove={(id, toDeck) => {
+          setOpen(null);
+          save.mutate({ id, patch: { deckId: toDeck } });
+        }}
+        connectUrl={publicSiteUrl("/docs/mcp")}
+        connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
+      />
+      <EditCardSheet
+        card={editing}
+        decks={decks.data}
+        onClose={() => setEditingId(null)}
+        onReopen={(card) => setEditingId(card.id)}
+        // A card that moved is no longer in this deck's list, so it closes with the sheet.
+        onSaved={(_card, movedFrom) => movedFrom && setOpen(null)}
+      />
+    </>
   );
 }

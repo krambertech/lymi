@@ -41,14 +41,16 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
 
   await test.step("add a complete card", async () => {
     await page.getByRole("button", { name: "Add card" }).first().click();
-    const dialog = page.getByRole("dialog");
+    const dialog = page.getByRole("dialog", { name: "Add a card" });
     await expect(dialog).toBeVisible();
     await page.getByRole("textbox", { name: "Term", exact: true }).fill("sbrigarsi");
     await page.getByRole("textbox", { name: "Meaning", exact: true }).fill("to hurry up");
     await page.getByRole("button", { name: "Add to Italian lesson", exact: true }).click();
 
-    await expect(page.getByRole("status")).toContainText("Added “sbrigarsi”");
-    await page.getByRole("button", { name: "Cancel", exact: true }).click();
+    await expect(dialog).toBeHidden();
+    await expect(page.getByRole("region", { name: "Notifications" })).toContainText(
+      "Added “sbrigarsi”",
+    );
     await expect(page.getByText("sbrigarsi", { exact: true })).toBeVisible();
     await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
   });

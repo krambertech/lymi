@@ -613,9 +613,6 @@ msgstr "Не удалось связаться с сервисом входа. �
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не удалось сохранить «{failedTerm}». Проверь соединение и попробуй снова."
 
-msgid "Couldn’t save that grade. Try again."
-msgstr "Не удалось сохранить оценку. Попробуй ещё раз."
-
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не удалось сохранить язык. Проверь соединение и попробуй снова."
 
@@ -624,6 +621,12 @@ msgstr "Не удалось сохранить фото. Попробуй ещё
 
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Не удалось сохранить напоминание. Проверь соединение и попробуй снова."
+
+msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
+msgstr "Не удалось сохранить оценку для «{term}». Этой карточки больше нет в твоих колодах."
+
+msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
+msgstr "Не удалось сохранить оценку для «{term}». Эта карточка ещё вернётся."
 
 msgid "Create a key in Settings"
 msgstr "Создай ключ в Настройках"

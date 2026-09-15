@@ -166,14 +166,19 @@ function Toaster({
   children,
   label,
   closeLabel,
+  viewportClassName,
   toastManager = manager,
   ...props
-}: ToastPrimitive.Provider.Props & { label: string; closeLabel: string }) {
+}: ToastPrimitive.Provider.Props & {
+  label: string;
+  closeLabel: string;
+  viewportClassName?: string | undefined;
+}) {
   return (
     <ToastProvider toastManager={toastManager} {...props}>
       {children}
       <ToastPortal>
-        <ToastViewport aria-label={label}>
+        <ToastViewport aria-label={label} className={viewportClassName}>
           <ToastList closeLabel={closeLabel} />
         </ToastViewport>
       </ToastPortal>

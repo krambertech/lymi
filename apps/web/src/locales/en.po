@@ -613,9 +613,6 @@ msgstr "Couldn’t reach the sign-in service. Check your connection and try agai
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
 
-msgid "Couldn’t save that grade. Try again."
-msgstr "Couldn’t save that grade. Try again."
-
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
 
@@ -624,6 +621,12 @@ msgstr "Couldn’t save the photo. Try again."
 
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Couldn’t save the reminder. Check your connection and try again."
+
+msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
+msgstr "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
+
+msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
+msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
 msgid "Create a key in Settings"
 msgstr "Create a key in Settings"

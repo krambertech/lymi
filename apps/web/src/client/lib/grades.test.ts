@@ -49,18 +49,28 @@ beforeEach(() => {
 });
 
 describe("recording a grade", () => {
+  it("keeps it before the server answers, so the review moves on at once", async () => {
+    let answer = (_: unknown) => {};
+    grade.mockReturnValueOnce(new Promise((resolve) => (answer = resolve)));
+    const recorded = grades.recordGrade(g("a"));
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ cardId: "a" }]);
+    expect(grades.outboxSize()).toBe(1);
+    answer(accepted("rev-1"));
+    expect(await recorded).toBe("sent");
+  });
+
   it("sends it and keeps it for today's draws", async () => {
     grade.mockResolvedValueOnce(accepted("rev-1"));
-    expect(await grades.recordGrade(g("a"))).toEqual({ queued: false });
+    expect(await grades.recordGrade(g("a"))).toBe("sent");
     expect(grades.gradeStore.snapshot()).toMatchObject([{ cardId: "a" }]);
     expect(grades.outboxSize()).toBe(0);
   });
 
   it("queues offline, and sends later grades only after the queued ones", async () => {
     grade.mockRejectedValueOnce(offline());
-    expect(await grades.recordGrade(g("a", 1))).toEqual({ queued: true });
+    expect(await grades.recordGrade(g("a", 1))).toBe("queued");
     grade.mockRejectedValueOnce(offline());
-    expect(await grades.recordGrade(g("b"))).toEqual({ queued: true });
+    expect(await grades.recordGrade(g("b"))).toBe("queued");
     expect(grades.outboxSize()).toBe(2);
 
     grade.mockResolvedValueOnce(accepted("rev-a")).mockResolvedValueOnce(accepted("rev-b"));
@@ -74,15 +84,21 @@ describe("recording a grade", () => {
     expect(grades.outboxSize()).toBe(0);
   });
 
-  it("drops a refused grade and rejects, so the card stays", async () => {
+  it("drops a refused grade, so the card comes back", async () => {
+    grade.mockRejectedValueOnce(new ApiError(422, "invalid"));
+    expect(await grades.recordGrade(g("a"))).toBe("refused");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("tells a grade for a card that is gone from any other refusal", async () => {
     grade.mockRejectedValueOnce(new ApiError(404, "gone"));
-    await expect(grades.recordGrade(g("a"))).rejects.toThrow("gone");
+    expect(await grades.recordGrade(g("a"))).toBe("gone");
     expect(grades.gradeStore.snapshot()).toEqual([]);
   });
 
   it("forgets a grade the server calls a duplicate", async () => {
     grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: null });
-    expect(await grades.recordGrade(g("a"))).toEqual({ queued: false, duplicate: true });
+    expect(await grades.recordGrade(g("a"))).toBe("duplicate");
     expect(grades.gradeStore.snapshot()).toEqual([]);
   });
 
@@ -135,9 +151,9 @@ describe("resilience", () => {
     grade.mockRejectedValueOnce(offline());
     await grades.recordGrade(g("a", 1));
     grade.mockRejectedValueOnce(new ApiError(500, "broken")).mockResolvedValueOnce(accepted("rb"));
-    expect(await grades.recordGrade(g("b"))).toEqual({ queued: false });
+    expect(await grades.recordGrade(g("b"))).toBe("sent");
     grade.mockRejectedValueOnce(new ApiError(500, "broken"));
-    expect(await grades.recordGrade(g("a"))).toEqual({ queued: true });
+    expect(await grades.recordGrade(g("a"))).toBe("queued");
     expect(grades.outboxSize()).toBe(2);
   });
 

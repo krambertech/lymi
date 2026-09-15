@@ -1,6 +1,7 @@
 import type { Round } from "@lymi/core";
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { api } from "./api";
+import { flushOutbox } from "./grades";
 
 export const meQuery = queryOptions({
   queryKey: ["me"],
@@ -51,7 +52,11 @@ export const cardHistoryQuery = (cardId: string) =>
 export const queueQuery = (deckId?: string, round?: Round) =>
   queryOptions({
     queryKey: ["queue", deckId ?? "all", round ?? "order"],
-    queryFn: () => api.queue(deckId, round),
+    // The server chooses a round's cards, so grades still on their way land first.
+    queryFn: async () => {
+      await flushOutbox();
+      return api.queue(deckId, round);
+    },
     staleTime: 0,
     // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
     refetchOnWindowFocus: false,
@@ -71,7 +76,10 @@ export const drawQuery = (deckId?: string) =>
 /** How many cards each Today round holds. A review invalidates it with the decks. */
 export const roundsQuery = queryOptions({
   queryKey: ["rounds"],
-  queryFn: api.rounds,
+  queryFn: async () => {
+    await flushOutbox();
+    return api.rounds();
+  },
   staleTime: 0,
 });
 /** The flame in the chrome and the panel behind it. A review invalidates it on the way out. */

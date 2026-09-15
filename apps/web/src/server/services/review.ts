@@ -9,7 +9,6 @@ import {
   modeKey,
   modeOf,
   modesFromDirections,
-  newId,
   preview,
   roundOrder,
   schedule,
@@ -209,7 +208,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
   const settings = await getSettings(ctx);
   const date = dateFormatter(zone).format(reviewedAt);
 
-  if (state.lastReview && state.lastReview.getTime() >= reviewedAt.getTime()) {
+  const duplicate = async () => {
     const [existing] = await db
       .select()
       .from(schema.reviewDays)
@@ -225,11 +224,13 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       reviewId: null,
       day,
     };
-  }
+  };
+  if (state.lastReview && state.lastReview.getTime() >= reviewedAt.getTime()) return duplicate();
 
   const result = schedule(deserializeState(state.fsrs), rating, reviewedAt);
   const reviewDay = await openDay(ctx, date, zone, settings.dailyGoal);
-  const reviewId = newId();
+  // Named by the grade itself, so a copy that raced past the check above collides and rolls back.
+  const reviewId = await gradeReviewId(state.id, reviewedAt);
   const before: StateBefore = {
     fsrs: state.fsrs,
     due: state.due.getTime(),
@@ -237,36 +238,45 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     lastReview: state.lastReview?.getTime() ?? null,
   };
 
-  await db.batch([
-    db
-      .update(schema.cardStates)
-      .set({
-        due: result.card.due,
-        state: result.card.state,
-        fsrs: serializeState(result.card),
-        lastReview: reviewedAt,
-        updatedAt: new Date(),
-      })
-      .where(eq(schema.cardStates.id, state.id)),
-    db.insert(schema.reviews).values({
-      id: reviewId,
-      userId,
-      cardId,
-      cardStateId: state.id,
-      direction,
-      mode: key,
-      rating,
-      state: result.log.state,
-      elapsedDays: result.log.elapsedDays,
-      scheduledDays: result.log.scheduledDays,
-      stabilityAfter: result.card.stability,
-      difficultyAfter: result.card.difficulty,
-      reviewedAt,
-      source: "web",
-      reviewDayId: reviewDay.id,
-      stateBefore: JSON.stringify(before),
-    }),
-  ]);
+  const stored = await db
+    .batch([
+      db
+        .update(schema.cardStates)
+        .set({
+          due: result.card.due,
+          state: result.card.state,
+          fsrs: serializeState(result.card),
+          lastReview: reviewedAt,
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.cardStates.id, state.id)),
+      db.insert(schema.reviews).values({
+        id: reviewId,
+        userId,
+        cardId,
+        cardStateId: state.id,
+        direction,
+        mode: key,
+        rating,
+        state: result.log.state,
+        elapsedDays: result.log.elapsedDays,
+        scheduledDays: result.log.scheduledDays,
+        stabilityAfter: result.card.stability,
+        difficultyAfter: result.card.difficulty,
+        reviewedAt,
+        source: "web",
+        reviewDayId: reviewDay.id,
+        stateBefore: JSON.stringify(before),
+      }),
+    ])
+    .then(
+      () => true,
+      (err: unknown) => {
+        if (isUniqueViolation(err)) return false;
+        throw err;
+      },
+    );
+  if (!stored) return duplicate();
   await audit(db, {
     userId,
     actor,
@@ -284,6 +294,24 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     reviewId,
     day: await settleDay(ctx, reviewDay, "grade"),
   };
+}
+
+/** Time-sortable like `newId`, with the card state's hash in place of randomness. */
+async function gradeReviewId(cardStateId: string, reviewedAt: Date): Promise<string> {
+  const digest = new Uint8Array(
+    await crypto.subtle.digest("SHA-256", new TextEncoder().encode(cardStateId)),
+  );
+  const time = reviewedAt.getTime().toString(36).padStart(9, "0");
+  let hash = "";
+  for (const b of digest.subarray(0, 10)) hash += (b % 36).toString(36);
+  return time + hash;
+}
+
+function isUniqueViolation(err: unknown): boolean {
+  for (let e = err; e instanceof Error; e = e.cause) {
+    if (e.message.includes("UNIQUE constraint failed")) return true;
+  }
+  return false;
 }
 
 /** The mode a grade names. A legacy direction maps to the text mode it always meant. */

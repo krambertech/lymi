@@ -1,6 +1,6 @@
 import type { InsightsOut } from "@lymi/core";
 import type { StreakSummary } from "../components/streak";
-import type { Card, CardState, DeckSummary, QueueItem, Review } from "../lib/api";
+import type { Card, CardState, DeckSummary, QueueItem, Review, Series } from "../lib/api";
 import type { WordEvent } from "../views/word-view";
 
 const now = Date.now();
@@ -17,6 +17,7 @@ export const decks: DeckSummary[] = [
     directions: "recognition",
     reviewModes: [{ cue: "term", target: "meaning" }],
     position: 0,
+    seriesId: null,
     total: 64,
     due: 8,
     ...mine,
@@ -29,6 +30,7 @@ export const decks: DeckSummary[] = [
     directions: "recognition",
     reviewModes: [{ cue: "term", target: "meaning" }],
     position: 1,
+    seriesId: null,
     total: 41,
     due: 3,
     ...mine,
@@ -44,6 +46,7 @@ export const decks: DeckSummary[] = [
       { cue: "meaning", target: "term" },
     ],
     position: 2,
+    seriesId: null,
     total: 12,
     due: 0,
     ...mine,
@@ -56,6 +59,7 @@ export const decks: DeckSummary[] = [
     directions: "recognition",
     reviewModes: [{ cue: "term", target: "meaning" }],
     position: 3,
+    seriesId: null,
     total: 38,
     due: 5,
     role: "learner",
@@ -64,6 +68,26 @@ export const decks: DeckSummary[] = [
 ];
 
 export const quietDecks: DeckSummary[] = decks.map((d) => ({ ...d, due: 0 }));
+
+/** Two of the learner's decks gathered into one series, reviewed together. */
+export const series: Series[] = [
+  {
+    id: "s1",
+    name: "Romance languages",
+    position: 0,
+    deckIds: ["d2", "d1"],
+    total: 105,
+    due: 11,
+    archivedDecks: 0,
+    archivedAt: null,
+    createdAt: new Date(now - 9 * day).toISOString(),
+    updatedAt: new Date(now - 2 * day).toISOString(),
+  },
+];
+
+export const decksInSeries: DeckSummary[] = decks.map((d) =>
+  d.id === "d1" || d.id === "d2" ? { ...d, seriesId: "s1" } : d,
+);
 
 /** Today's rounds on a morning with cards due. */
 export const rounds = { forgotten: 3, new: 12, slipping: 5 };

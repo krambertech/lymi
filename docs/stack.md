@@ -66,7 +66,7 @@ The signed-in product at `my.lymi.app` is still a client-rendered single-page PW
 
 Review reminders use standards-based Web Push with VAPID, sent directly by the product Worker. Subscriptions and local reminder times are per device in D1. One UTC Cron Trigger runs every 15 minutes, evaluates each device in its stored IANA timezone, sends only when active cards are due, and atomically records the local date before delivery so retries do not duplicate a reminder. See ADR 0006.
 
-The deployment boundary is accepted in [ADR 0009](adr/0009-public-website-and-product-deploy-separately.md). The permanent origin and authentication contract remains in [ADR 0008](adr/0008-public-website-and-product-use-separate-origins.md), and the implementation rationale is recorded in [Public website and product app architecture](proposals/public-website-and-product-app.md).
+The deployment boundary is accepted in [ADR 0009](adr/0009-public-website-and-product-deploy-separately.md). The permanent origin and authentication contract remains in [ADR 0008](adr/0008-public-website-and-product-use-separate-origins.md).
 
 ### Feels native on the phone
 
@@ -82,7 +82,7 @@ The bar is "could be mistaken for native." Every screen is checked on a real iPh
 
 ### UI: Tailwind v4 + shadcn/ui on Base UI, tokens from DESIGN.md
 
-Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what DESIGN.md defines. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. The hand-built foundations move over one at a time, following [the migration plan](plans/2026-09-13-shadcn-base-ui-design-system.md). Motion for the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md).
+Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what DESIGN.md defines. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. Motion handles the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) owns the component boundary.
 
 Alternative considered: hand-built primitives on `<dialog>` and the `popover` attribute with vaul for the drawer. That was the first version. vaul stopped being maintained, and four separate open-and-close implementations disagreed on scroll lock, focus return and which device got which shape.
 
@@ -200,7 +200,7 @@ Two workspace details worth knowing. `drizzle-orm` is a dependency of `packages/
 
 ### Localization: Lingui catalogs, one app language
 
-The English text in a component is the message. Lingui macros mark it, `lingui extract` writes one `.po` catalog per locale in each app, and `@lingui/vite-plugin` compiles them at build time. The learner's app language is a stored setting that also sets the meaning language; the Worker reads it for push reminders and treats an unset value as English. The public site serves `/uk/` and `/ru/` through Astro's i18n routing with `hreflang` on landing and Join, and the docs stay English. Decisions in [ADR 0012](adr/0012-interface-text-is-english-source-translated-by-lingui.md) and [ADR 0012](adr/0013-app-language-is-one-setting-that-meaning-language-follows.md); order of work in [the localization plan](plans/2026-09-12-localization.md).
+The English text in a component is the message. Lingui macros mark it, `lingui extract` writes one `.po` catalog per locale in each app, and `@lingui/vite-plugin` compiles them at build time. The learner's app language is a stored setting that also sets the meaning language; the Worker reads it for push reminders and treats an unset value as English. The public site serves `/uk/` and `/ru/` through Astro's i18n routing with `hreflang` on landing and Join, and the docs stay English. [ADR 0012](adr/0012-interface-text-is-english-source-translated-by-lingui.md) owns interface translation and [ADR 0013](adr/0013-app-language-is-one-setting-that-meaning-language-follows.md) owns the language setting.
 
 Alternatives considered: keyed catalogs (i18next, Paraglide), which make every string change a two-file edit; a hosted translation editor, which is a third service for two locales the maintainer reads herself.
 

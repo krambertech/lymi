@@ -73,6 +73,11 @@ export function mountOpenApi(app: Hono<AppEnv>) {
         tags: [
           { name: "Decks", description: "A deck holds cards and sets their defaults." },
           {
+            name: "Series",
+            description:
+              "The owner's optional, ordered groups of their own decks, reviewed together. Members of a shared deck never see them.",
+          },
+          {
             name: "Cards",
             description:
               "One term and what the learner knows about it. Adding a term that already exists is skipped, never rejected.",

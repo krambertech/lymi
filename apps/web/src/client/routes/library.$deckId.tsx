@@ -3,9 +3,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
+import { MoveToSeriesDialog } from "../components/series-dialogs";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, type Card } from "../lib/api";
+import { api, type Card, errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import {
@@ -13,9 +14,11 @@ import {
   connectedAppsQuery,
   deckCardsQuery,
   decksQuery,
+  seriesQuery,
   streakQuery,
 } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
+import { useSeriesActions } from "../lib/use-series";
 import { DeckDetailView } from "../views/deck-detail-view";
 import { describeEvent } from "../views/word-view";
 
@@ -47,6 +50,10 @@ function DeckPage() {
   const apps = useQuery({ ...connectedAppsQuery, enabled: cards.data?.length === 0 });
   const history = useQuery({ ...cardHistoryQuery(openCardId ?? ""), enabled: !!openCardId });
   const deck = decks.data?.find((d) => d.id === deckId);
+  const isOwner = deck?.role === "owner";
+  const series = useQuery({ ...seriesQuery, enabled: isOwner });
+  const seriesActions = useSeriesActions();
+  const [movingToSeries, setMovingToSeries] = useState(false);
   const add = useAddCard();
   useDocumentTitle(deck?.name);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -132,6 +139,8 @@ function DeckPage() {
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
         onArchiveDeck={() => archiveDeck.mutate()}
+        onMoveToSeries={isOwner ? () => setMovingToSeries(true) : undefined}
+        seriesName={series.data?.find((s) => s.id === deck?.seriesId)?.name}
         openCardId={openCardId ?? null}
         onOpen={setOpen}
         states={history.data?.states}
@@ -155,6 +164,48 @@ function DeckPage() {
         // A card that moved is no longer in this deck's list, so it closes with the sheet.
         onSaved={(_card, movedFrom) => movedFrom && setOpen(null)}
       />
+      {deck && isOwner && (
+        <MoveToSeriesDialog
+          open={movingToSeries}
+          onOpenChange={(open) => {
+            setMovingToSeries(open);
+            if (!open) seriesActions.create.reset();
+          }}
+          deckName={deck.name}
+          current={deck.seriesId}
+          series={series.data}
+          onMove={(seriesId) => {
+            setMovingToSeries(false);
+            seriesActions.moveDeck.mutate({ deck, seriesId });
+          }}
+          creating={seriesActions.create.isPending}
+          error={
+            seriesActions.create.isError ? errorMessage(seriesActions.create.error) : undefined
+          }
+          onCreate={async (name) => {
+            // One write, so a failure never leaves an empty series behind.
+            const created = await seriesActions.create.mutateAsync({ name, deckIds: [deck.id] });
+            setMovingToSeries(false);
+            seriesActions.create.reset();
+            const deckName = deck.name;
+            const seriesName = created.name;
+            toast.add({
+              id: `move-${deck.id}`,
+              title: t`Moved “${deckName}” to ${seriesName}`,
+              actionProps: {
+                children: t`Undo`,
+                onClick: () => {
+                  toast.close(`move-${deck.id}`);
+                  seriesActions.moveDeck.mutate({
+                    deck: { ...deck, seriesId: created.id },
+                    seriesId: deck.seriesId,
+                  });
+                },
+              },
+            });
+          }}
+        />
+      )}
     </>
   );
 }

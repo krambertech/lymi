@@ -14,6 +14,8 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Library**: The screen holding every deck. The decks are decks; Library is where they are. _Avoid_: Decks (as a screen name), collections, my decks
 
+**Series**: An owner's optional, ordered group of their own decks, reviewed together. A deck is in at most one series, and a deck without one works as it always has. A member of a shared deck never sees the owner's series. Archiving a series asks whether its decks leave with it; Restore brings back the series with every deck that left with it and puts back the decks that stayed. _Avoid_: Course, collection, folder, playlist, group
+
 **Field source**: Where one field's text came from: the lesson, the AI, or the learner by hand. Shown so AI text is never mistaken for the lesson.
 
 **App language**: The language the interface and reminders are written in. A per-learner setting, taken from the browser on first sign-in and changeable in Settings. Meanings follow it. _Avoid_: Locale, UI language, interface language (in copy)

@@ -79,9 +79,9 @@ export function McpOverview() {
 
       <H2>What a connected assistant can do</H2>
       <p>
-        Seventeen tools, the same surface as the API less review grading. The assistant reads their
-        descriptions, so you rarely name one yourself: ask it to add the cards from a lesson, and it
-        finds the deck and calls <code>add_cards</code>.
+        The same surface as the API, less review grading. The assistant reads their descriptions, so
+        you rarely name one yourself: ask it to add the cards from a lesson, and it finds the deck
+        and calls <code>add_cards</code>.
       </p>
       <Defs
         items={[
@@ -96,7 +96,7 @@ export function McpOverview() {
           },
           {
             term: <code>update_deck</code>,
-            def: "Rename a deck, or change its description, language or directions.",
+            def: "Rename a deck, change its description, language or directions, or move it into or out of a series.",
           },
           {
             term: (
@@ -105,6 +105,23 @@ export function McpOverview() {
               </>
             ),
             def: "Hide a deck and its cards, and bring them back.",
+          },
+          {
+            term: (
+              <>
+                <code>list_series</code>, <code>create_series</code>, <code>update_series</code>,{" "}
+                <code>reorder_series</code>
+              </>
+            ),
+            def: "Your series: ordered groups of your own decks that you review together. Create one, rename it, set its decks in order, or reorder them all.",
+          },
+          {
+            term: (
+              <>
+                <code>archive_series</code>, <code>restore_series</code>
+              </>
+            ),
+            def: "Hide a series, with its decks or leaving them in Library, and bring it back.",
           },
           {
             term: <code>search_cards</code>,
@@ -129,7 +146,7 @@ export function McpOverview() {
           },
           {
             term: <code>due_counts</code>,
-            def: "How many cards are waiting, in total and per deck, and how many are in each Today round: forgotten today, new and slipping.",
+            def: "How many cards are waiting, in total, per deck and per series, and how many are in each Today round: forgotten today, new and slipping.",
           },
           {
             term: (

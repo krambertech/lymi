@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
+msgstr "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
+
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
 msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -43,6 +46,14 @@ msgstr "{0, plural, one {# card has text that’s too long, so part of it moves 
 #. placeholder {0}: deck.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
+
+#. placeholder {0}: s.archivedDecks
+msgid "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
+msgstr "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
+
+#. placeholder {0}: inSeries.length
+msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
+msgstr "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
 
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
@@ -100,6 +111,11 @@ msgstr "{0, plural, one {and # more} other {and # more}}"
 #. placeholder {0}: d.due
 msgid "{0, plural, one {card due} other {cards due}}"
 msgstr "{0, plural, one {card due} other {cards due}}"
+
+#. placeholder {0}: d.due
+#. placeholder {1}: d.decks
+msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
 
 #. placeholder {0}: 0
 #. placeholder {0}: cards.total
@@ -237,6 +253,18 @@ msgstr "{count, plural, one {# new} other {# new}}"
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
 
+msgid "{count, plural, one {Archive its deck too} other {Archive its # decks too}}"
+msgstr "{count, plural, one {Archive its deck too} other {Archive its # decks too}}"
+
+msgid "{count, plural, one {It leaves Library and stops coming up in review until you restore the series.} other {They leave Library and stop coming up in review until you restore the series.}}"
+msgstr "{count, plural, one {It leaves Library and stops coming up in review until you restore the series.} other {They leave Library and stop coming up in review until you restore the series.}}"
+
+msgid "{count, plural, one {It stays in Library without a series, and keeps coming up in review.} other {They stay in Library without a series, and keep coming up in review.}}"
+msgstr "{count, plural, one {It stays in Library without a series, and keeps coming up in review.} other {They stay in Library without a series, and keep coming up in review.}}"
+
+msgid "{count, plural, one {Keep the deck} other {Keep the decks}}"
+msgstr "{count, plural, one {Keep the deck} other {Keep the decks}}"
+
 msgid "{count, plural, one {review in this round} other {reviews in this round}}"
 msgstr "{count, plural, one {review in this round} other {reviews in this round}}"
 
@@ -279,6 +307,12 @@ msgstr "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of
 msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 msgstr "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 
+msgid "{deck} is back where it was."
+msgstr "{deck} is back where it was."
+
+msgid "{deck} is over {place}."
+msgstr "{deck} is over {place}."
+
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# due today} other {# due today}}"
 
@@ -287,6 +321,9 @@ msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName
 
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {card due today} other {cards due today}}"
+
+msgid "{due, plural, one {card due} other {cards due}} in {dueDecks, plural, one {# deck} other {# decks}}"
+msgstr "{due, plural, one {card due} other {cards due}} in {dueDecks, plural, one {# deck} other {# decks}}"
 
 msgid "{due, plural, one {card to review now} other {cards to review now}}"
 msgstr "{due, plural, one {card to review now} other {cards to review now}}"
@@ -405,6 +442,9 @@ msgstr "A note to yourself about what is in here."
 
 msgid "A notification on this device when cards are due."
 msgstr "A notification on this device when cards are due."
+
+msgid "A series is reviewed together, and its decks show in this order."
+msgstr "A series is reviewed together, and its decks show in this order."
 
 msgid "A–Z"
 msgstr "A–Z"
@@ -559,11 +599,17 @@ msgstr "API keys"
 msgid "Archive"
 msgstr "Archive"
 
+msgid "Archive “{seriesName}”?"
+msgstr "Archive “{seriesName}”?"
+
 msgid "Archive deck"
 msgstr "Archive deck"
 
 msgid "Archive import"
 msgstr "Archive import"
+
+msgid "Archive series"
+msgstr "Archive series"
 
 msgid "Archive the picture"
 msgstr "Archive the picture"
@@ -579,6 +625,15 @@ msgstr "Archived “{archivedTerm}”"
 
 msgid "Archived “{deckName}”"
 msgstr "Archived “{deckName}”"
+
+msgid "Archived “{seriesName}”"
+msgstr "Archived “{seriesName}”"
+
+msgid "Archived “{seriesName}” and its decks"
+msgstr "Archived “{seriesName}” and its decks"
+
+msgid "Archived series"
+msgstr "Archived series"
 
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
@@ -747,6 +802,9 @@ msgstr "Choose another file"
 msgid "Choose at least one way to be asked."
 msgstr "Choose at least one way to be asked."
 
+msgid "Choose decks"
+msgstr "Choose decks"
+
 msgid "Choose exactly one field as the term."
 msgstr "Choose exactly one field as the term."
 
@@ -844,6 +902,9 @@ msgstr "Couldn’t check this device. Reload to try again."
 msgid "Couldn’t load Activity"
 msgstr "Couldn’t load Activity"
 
+msgid "Couldn’t load archived series. Try again."
+msgstr "Couldn’t load archived series. Try again."
+
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
 
@@ -889,6 +950,9 @@ msgstr "Create a deck first. This card goes in it."
 msgid "Create a key in Settings"
 msgstr "Create a key in Settings"
 
+msgid "Create and move"
+msgstr "Create and move"
+
 msgid "Create deck"
 msgstr "Create deck"
 
@@ -900,6 +964,9 @@ msgstr "Create more"
 
 msgid "Create or read API keys"
 msgstr "Create or read API keys"
+
+msgid "Create series"
+msgstr "Create series"
 
 msgid "Current picture"
 msgstr "Current picture"
@@ -949,6 +1016,9 @@ msgstr "Decks"
 msgid "Decks to review"
 msgstr "Decks to review"
 
+msgid "Decks you make can go in a series. Decks you joined stay on their own."
+msgstr "Decks you make can go in a series. Decks you joined stay on their own."
+
 msgid "Deny"
 msgstr "Deny"
 
@@ -973,6 +1043,9 @@ msgstr "Does this card look right?"
 msgid "Done"
 msgstr "Done"
 
+msgid "Drag decks here, or choose which decks this series holds."
+msgstr "Drag decks here, or choose which decks this series holds."
+
 msgid "Drag or use the arrow keys to move the photo."
 msgstr "Drag or use the arrow keys to move the photo."
 
@@ -981,6 +1054,9 @@ msgstr "Drag to move the photo. Pinch or use the slider to zoom."
 
 msgid "Drop or paste a picture"
 msgstr "Drop or paste a picture"
+
+msgid "Dropped {deck} in {place}."
+msgstr "Dropped {deck} in {place}."
 
 msgid "Due"
 msgstr "Due"
@@ -1005,6 +1081,9 @@ msgstr "Easy"
 
 msgid "Edit card"
 msgstr "Edit card"
+
+msgid "Edit series"
+msgstr "Edit series"
 
 msgid "Edited {list}"
 msgstr "Edited {list}"
@@ -1097,6 +1176,9 @@ msgstr "Getting started"
 
 msgid "Give the deck a name."
 msgstr "Give the deck a name."
+
+msgid "Give the series a name."
+msgstr "Give the series a name."
 
 msgid "Go to Lymi"
 msgstr "Go to Lymi"
@@ -1294,6 +1376,9 @@ msgstr "Later"
 msgid "Later today"
 msgstr "Later today"
 
+msgid "Learn Estonian"
+msgstr "Learn Estonian"
+
 msgid "Learning"
 msgstr "Learning"
 
@@ -1321,6 +1406,9 @@ msgstr "Let {appName} use your Lymi?"
 
 msgid "Library"
 msgstr "Library"
+
+msgid "Library options"
+msgstr "Library options"
 
 msgid "Light"
 msgstr "Light"
@@ -1402,8 +1490,28 @@ msgstr "More to review"
 msgid "Move “{0}” to"
 msgstr "Move “{0}” to"
 
+#. placeholder {0}: deck.name
+msgid "Move {0} down"
+msgstr "Move {0} down"
+
+#. placeholder {0}: deck.name
+msgid "Move {0} up"
+msgstr "Move {0} up"
+
+msgid "Move down"
+msgstr "Move down"
+
+msgid "Move to series"
+msgstr "Move to series"
+
 msgid "Move to…"
 msgstr "Move to…"
+
+msgid "Move up"
+msgstr "Move up"
+
+msgid "Moved “{deckName}” to {seriesName}"
+msgstr "Moved “{deckName}” to {seriesName}"
 
 msgid "Moved to another deck"
 msgstr "Moved to another deck"
@@ -1445,6 +1553,9 @@ msgstr "New deck"
 msgid "New key"
 msgstr "New key"
 
+msgid "New series"
+msgstr "New series"
+
 msgid "Next"
 msgstr "Next"
 
@@ -1467,6 +1578,9 @@ msgstr "Next month"
 msgid "No apps connected"
 msgstr "No apps connected"
 
+msgid "No archived series."
+msgstr "No archived series."
+
 msgid "No card keeps slipping"
 msgstr "No card keeps slipping"
 
@@ -1482,6 +1596,9 @@ msgstr "No cards match these filters"
 
 msgid "No cards yet"
 msgstr "No cards yet"
+
+msgid "No decks in this series yet."
+msgstr "No decks in this series yet."
 
 msgid "No decks yet"
 msgstr "No decks yet"
@@ -1515,6 +1632,9 @@ msgstr "No meaning yet"
 
 msgid "No reviews yet. Each block here will be a day."
 msgstr "No reviews yet. Each block here will be a day."
+
+msgid "No series"
+msgstr "No series"
 
 msgid "Nobody can join it while it is archived."
 msgstr "Nobody can join it while it is archived."
@@ -1558,8 +1678,11 @@ msgstr "Nothing has come in yet"
 msgid "Nothing in it yet"
 msgstr "Nothing in it yet"
 
-msgid "Nothing left in {deckName}"
-msgstr "Nothing left in {deckName}"
+msgid "Nothing is deleted. Restore it from Archived series in Library’s menu."
+msgstr "Nothing is deleted. Restore it from Archived series in Library’s menu."
+
+msgid "Nothing left in {scopeName}"
+msgstr "Nothing left in {scopeName}"
 
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
@@ -1590,6 +1713,9 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Notifications are blocked. Allow them in your browser or device settings."
+
+msgid "Now in {elsewhere}"
+msgstr "Now in {elsewhere}"
 
 msgid "On a phone, or something went wrong? Read the guide"
 msgstr "On a phone, or something went wrong? Read the guide"
@@ -1627,6 +1753,9 @@ msgstr "Open your browser menu and choose Install Lymi. Not every browser offers
 msgid "Optional"
 msgstr "Optional"
 
+msgid "Options for {seriesName}"
+msgstr "Options for {seriesName}"
+
 msgid "Other ways to add cards"
 msgstr "Other ways to add cards"
 
@@ -1660,6 +1789,9 @@ msgstr "Photo position"
 
 msgid "Photo removed"
 msgstr "Photo removed"
+
+msgid "Picked up {deck}."
+msgstr "Picked up {deck}."
 
 msgid "Picture"
 msgstr "Picture"
@@ -1818,8 +1950,14 @@ msgstr "Request an invitation"
 msgid "Restore"
 msgstr "Restore"
 
+msgid "Restore brings a series back with the decks archived alongside it."
+msgstr "Restore brings a series back with the decks archived alongside it."
+
 msgid "Restore import"
 msgstr "Restore import"
+
+msgid "Restore puts the decks you kept back in it"
+msgstr "Restore puts the decks you kept back in it"
 
 msgid "Restored"
 msgstr "Restored"
@@ -1850,6 +1988,9 @@ msgstr "Review slipping"
 
 msgid "Review them"
 msgstr "Review them"
+
+msgid "Review this series"
+msgstr "Review this series"
 
 msgid "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
 msgstr "Reviewed on {lit} of the last {total, plural, one {# day} other {# days}}"
@@ -1886,6 +2027,9 @@ msgstr "Save"
 
 msgid "Save photo"
 msgstr "Save photo"
+
+msgid "Save series"
+msgstr "Save series"
 
 msgid "Save time"
 msgstr "Save time"
@@ -1960,6 +2104,9 @@ msgstr "Send a daily reminder"
 
 msgid "Send a lesson from Claude or ChatGPT"
 msgstr "Send a lesson from Claude or ChatGPT"
+
+msgid "Series"
+msgstr "Series"
 
 msgid "Settings"
 msgstr "Settings"
@@ -2238,6 +2385,9 @@ msgstr "This week"
 msgid "Time"
 msgstr "Time"
 
+msgid "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
+msgstr "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
+
 msgid "Today"
 msgstr "Today"
 
@@ -2258,6 +2408,9 @@ msgstr "Today’s goal"
 
 msgid "Tomorrow"
 msgstr "Tomorrow"
+
+msgid "Took “{deckName}” out of its series"
+msgstr "Took “{deckName}” out of its series"
 
 msgctxt "cards in this deck"
 msgid "Total"
@@ -2353,6 +2506,9 @@ msgstr "week of {0}"
 
 msgid "What comes across"
 msgstr "What comes across"
+
+msgid "What happens to its decks"
+msgstr "What happens to its decks"
 
 msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
 msgstr "What it adds lands at once and is labelled. You can edit or archive any of it."

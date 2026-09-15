@@ -34,7 +34,7 @@ function StatusChip({ item }: { item: Import }) {
 
 /**
  * Activity: what came into the learner's decks from outside the app. Imports first; writes by
- * connected apps and the AI join the same list later. DESIGN.md "Activity".
+ * connected apps and the AI join the same list later. docs/design/imports.md.
  */
 export function ActivityView({
   imports,

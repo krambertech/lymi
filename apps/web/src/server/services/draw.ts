@@ -55,6 +55,15 @@ function modeOrder(
   return [directions === "recognition" ? "term_to_meaning" : "meaning_to_term"];
 }
 
+/** Cards of the caller's own decks in their active series; a member's copy of a deck never matches. */
+function inSeries(userId: string, seriesId: string) {
+  return and(
+    eq(schema.decks.seriesId, seriesId),
+    eq(schema.decks.userId, userId),
+    sql`exists (select 1 from series where series.id = ${seriesId} and series.user_id = ${userId} and series.archived_at is null)`,
+  );
+}
+
 /** Every state asked now, as the counts, stats and reminders share it. */
 const asked = sql.raw(askedSql());
 
@@ -80,6 +89,8 @@ export interface DrawOptions {
   /** The review zone. Callers resolve it, so a count never writes a setting. */
   zone: string;
   deckId?: string | undefined;
+  /** Only the decks of the caller's own active series. */
+  seriesId?: string | undefined;
   /** Also load slipping cards whatever their due, for the slipping round. */
   slipping?: boolean | undefined;
 }
@@ -154,6 +165,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       opts.slipping ? isNotNull(slip.id) : undefined,
     ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
+    opts.seriesId ? inSeries(userId, opts.seriesId) : undefined,
   );
   const siblingOn = and(
     eq(sibling.cardId, schema.cardStates.cardId),

@@ -125,7 +125,12 @@ export default defineConfig({
       [
         {
           extends: true,
-          test: { name: "unit", exclude: [...configDefaults.exclude, "**/*.browser.test.tsx"] },
+          test: {
+            name: "unit",
+            exclude: [...configDefaults.exclude, "**/*.browser.test.tsx"],
+            // Service tests run against a real local D1, and a busy CI runner can take several seconds per test.
+            testTimeout: 15_000,
+          },
         },
         {
           // The primitives in real browsers, one instance per machine an overlay adapts to. Not the

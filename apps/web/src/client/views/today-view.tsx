@@ -1,3 +1,4 @@
+import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type Round, type RoundsOut, SLIPPING_LAPSES } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
@@ -15,12 +16,15 @@ import { Skeleton } from "../components/skeleton";
 import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
 import type { StreakSummary } from "../components/streak";
-import type { DeckSummary } from "../lib/api";
+import type { DeckSummary, Series } from "../lib/api";
 import { lanternFor } from "../lib/flame";
+import { groupDecks } from "../lib/library-groups";
 import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
+  /** The learner's series, each one row reviewed as a whole. Undefined shows decks alone. */
+  series?: Series[] | undefined;
   streak: StreakSummary | undefined;
   /** The streak card beside the due card. A slot, so the design page can pass a static one. */
   streakCard?: ReactNode | undefined;
@@ -46,7 +50,7 @@ export interface TodayProps {
   static?: StaticNav;
 }
 
-type ReviewSearch = { deck?: string; round?: Round };
+type ReviewSearch = { deck?: string; series?: string; round?: Round };
 
 /**
  * Home. The due card and the streak card share the top row; under them, the rounds that can be
@@ -56,6 +60,7 @@ type ReviewSearch = { deck?: string; round?: Round };
  */
 export function TodayView({
   decks,
+  series,
   streak,
   streakCard,
   streakButton,
@@ -76,7 +81,27 @@ export function TodayView({
   const { t } = useLingui();
   const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
-  const dueDecks = decks?.filter((d) => d.due > 0) ?? [];
+  // A series is what the learner chose to review together, so it is one row and its decks get none.
+  const groups = groupDecks(decks ?? [], series);
+  const rows = [
+    ...groups.loose
+      .filter((d) => d.due > 0)
+      .map((d) => ({ key: d.id, name: d.name, due: d.due, decks: 0, search: { deck: d.id } })),
+    ...groups.series.flatMap(({ series: s, decks: inSeries }) => {
+      const due = inSeries.reduce((n, d) => n + d.due, 0);
+      return due > 0
+        ? [
+            {
+              key: s.id,
+              name: s.name,
+              due,
+              decks: inSeries.filter((d) => d.due > 0).length,
+              search: { series: s.id },
+            },
+          ]
+        : [];
+    }),
+  ];
   const loading = decks === undefined || streak === undefined;
   const nothingYet = !loading && total === 0;
   const noDecks = nothingYet && decks?.length === 0;
@@ -196,7 +221,7 @@ export function TodayView({
 
           {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} st={st} />}
 
-          {!loading && decks && decks.length > 1 && dueDecks.length > 0 && (
+          {!loading && decks && decks.length > 1 && rows.length > 0 && (
             <section aria-labelledby="today-decks" className="grid gap-2.5">
               <div className="flex min-h-8 items-center justify-between gap-3 px-1">
                 <h2 id="today-decks" className="text-lg font-medium">
@@ -212,11 +237,11 @@ export function TodayView({
                 </To>
               </div>
               <ul className="edge overflow-hidden rounded-xl bg-plate">
-                {dueDecks.map((d) => (
-                  <li key={d.id} className="border-edge not-first:border-t">
+                {rows.map((d) => (
+                  <li key={d.key} className="border-edge not-first:border-t">
                     <To
                       to="/review"
-                      search={{ deck: d.id }}
+                      search={d.search}
                       st={st}
                       className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
                     >
@@ -225,7 +250,11 @@ export function TodayView({
                       <span className="grid min-w-0 flex-1 gap-0.5">
                         <span className="truncate text-md font-medium">{d.name}</span>
                         <span className="text-sm text-muted">
-                          <Plural value={d.due} one="card due" other="cards due" />
+                          {d.decks > 0 ? (
+                            t`${plural(d.due, { one: "card due", other: "cards due" })} in ${plural(d.decks, { one: "# deck", other: "# decks" })}`
+                          ) : (
+                            <Plural value={d.due} one="card due" other="cards due" />
+                          )}
                         </span>
                       </span>
                       <Go>

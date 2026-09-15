@@ -9,6 +9,8 @@ erDiagram
   user ||--o{ session : has
   user ||--o{ account : "signs in with"
   user ||--o{ decks : owns
+  user ||--o{ series : owns
+  series ||--o{ decks : "orders, optionally"
   user ||--o{ cards : owns
   decks ||--o{ cards : contains
   decks ||--o{ deck_members : "shared with"
@@ -29,14 +31,22 @@ erDiagram
   user ||--o{ apikey : "personal keys"
   user ||--o{ push_subscriptions : "one per subscribed device"
 
+  series {
+    text id PK
+    text user_id FK
+    text name
+    int position "order among the owner's series"
+    int archived_at "nullable"
+  }
   decks {
     text id PK
     text user_id FK
+    text series_id FK "nullable, the owner's series"
     text name
     text description
     text default_language "nullable, convenience only"
     text directions "recognition | production | both"
-    int position
+    int position "order within its series, or within Library"
     int archived_at "nullable"
     text import_id "nullable, the import that made it"
     text external_id "nullable, the source's key"
@@ -211,6 +221,12 @@ A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_memb
 
 A deck has at most one unrevoked `deck_invitations` link, enforced by a partial unique index. Turning the link off sets `revoked_at` for good, and turning it on again inserts a new row with a new token. The token is a capability: it appears in the join URL and nowhere else, never in audit payloads, logs or error messages. `/join/<token>` is rendered by the product Worker; it shows up to three recent cards, and its title and Open Graph tags carry none. A signed-out visitor's link rides through sign-in in a ten-minute HttpOnly cookie, which lets `user.create.before` admit an account that is not on `ALLOWED_EMAILS`, and `session.create.after` completes the membership. Repeated joins make one membership and one audit row.
 
+### Series
+
+A series belongs to `series.user_id` and holds only that owner's decks through `decks.series_id`; a deck is in at most one. Every deck read returns `seriesId` from `effectiveSeriesId` in `services/series-access.ts`, which is null for a member and while the series is archived, so a member never learns a series exists. `decks.position` orders a deck within its active series and joins it last; every other deck sorts as 0 and so by creation date, which keeps a Library without series exactly as it was and returns a deck that leaves a series to its old place. Order writes send the whole list (`PUT /api/series/{id}/decks`, `PUT /api/series/order`) as one JSON parameter to a single statement, so a retry lands the same order and D1's 100-parameter cap never splits the write.
+
+Archiving a series keeps `decks.series_id` and `decks.position`, so Restore regroups the decks in their order; clearing `seriesId` on a deck meanwhile keeps it out. With `decks: archive` the series' active decks take the series' own `archived_at`, and Restore returns exactly the decks whose `archived_at` still equals it; a deck archived earlier on its own stays archived. Reviewing a series is the ordinary draw over the rows of its active decks (ADR 0019).
+
 ### Avatars
 
 The learner's upload and the Google fallback sit in separate columns, and the upload wins while it exists. Both are 320 px WebP objects in the private `PRIVATE_IMAGES` bucket, re-encoded by the Images binding so no metadata survives, under random keys that name neither the learner nor the source. `/api/avatar/<version>` serves only the active version, with `private, no-store`; the client holds the bytes in memory through TanStack Query, so sign-out clears them. An upload or removal sends `If-Match` with `custom_revision` and gets 409 if the photo changed since. Each Google sign-in refreshes the fallback from the ID token's `picture`, fetched only from `*.googleusercontent.com`; a refresh that started earlier than the stored one is dropped, and a failed one keeps the previous photo and never blocks sign-in.
@@ -264,6 +280,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 - Reads need any credential. Writes need the `write` scope, or 403.
 - Grading, key management and the learner's photo are the learner's alone. Any key or token gets 403, whatever its scope.
 - Join links are managed and followed only from the app. Reading, turning on, or turning off a deck's link needs the owner's session; joining needs the learner's session. Any key or token gets 403.
+- A series is its owner's alone. Any other caller gets 404 for it, and a member's deck carries `seriesId: null`. Only the owner's own active decks can go in one; a deck they joined gets 403.
 - A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
 - A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.

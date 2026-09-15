@@ -15,7 +15,7 @@ test("skips product-only, documentation, and agent-only changes", () => {
   assert.equal(requiresSitePreview(["apps/web/src/client/routes/today.tsx"]), false);
   assert.equal(requiresSitePreview(["apps/web/src/client/design/DesignPage.tsx"]), false);
   assert.equal(requiresSitePreview(["DESIGN.md"]), false);
-  assert.equal(requiresSitePreview(["docs/plans/example.md"]), false);
+  assert.equal(requiresSitePreview(["docs/proposals/example.md"]), false);
   assert.equal(requiresSitePreview([".agents/skills/example/SKILL.md"]), false);
 });
 

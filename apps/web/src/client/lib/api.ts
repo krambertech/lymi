@@ -29,6 +29,10 @@ import type {
   Round,
   RoundsOut,
   Scope,
+  SeriesArchiveInput,
+  SeriesDecksInput,
+  SeriesInput,
+  SeriesOut,
   SettingsPatch,
   StreakOut,
 } from "@lymi/core";
@@ -131,7 +135,7 @@ export type Settings = {
 };
 export type DeckSummary = Pick<
   Deck,
-  "id" | "name" | "description" | "defaultLanguage" | "directions" | "position"
+  "id" | "name" | "description" | "defaultLanguage" | "directions" | "position" | "seriesId"
 > & {
   reviewModes: ReviewMode[];
   total: number;
@@ -140,6 +144,18 @@ export type DeckSummary = Pick<
   role: MemberRole;
   owner: { id: string; name: string };
 };
+/** A series as the API sends it: its active decks in order, and what they add up to. */
+export type Series = SeriesOut;
+/** What a review draws from: every deck, one deck, or one of the learner's series. */
+export type ReviewScope = { deck?: string | undefined; series?: string | undefined };
+/** One cache key per scope, so a series review and a deck review never share a draw. */
+export const scopeKey = (scope: ReviewScope = {}) =>
+  scope.deck ? `deck:${scope.deck}` : scope.series ? `series:${scope.series}` : "all";
+const scopeParams = (scope: ReviewScope = {}) => ({
+  ...(scope.deck ? { deck: scope.deck } : {}),
+  ...(scope.series ? { series: scope.series } : {}),
+});
+
 export type QueueItem = {
   card: Card;
   mode: ReviewMode;
@@ -242,6 +258,26 @@ export const api = {
     request<{ ok: true }>(`/api/decks/${id}/archive`, { method: "POST" }),
   restoreDeck: (id: string) =>
     request<{ ok: true }>(`/api/decks/${id}/restore`, { method: "POST" }),
+  series: () => request<Series[]>("/api/series"),
+  archivedSeries: () => request<Series[]>("/api/series?archived=true"),
+  createSeries: (body: SeriesInput) =>
+    request<Series>("/api/series", { method: "POST", body: JSON.stringify(body) }),
+  renameSeries: (id: string, name: string) =>
+    request<Series>(`/api/series/${id}`, { method: "PATCH", body: JSON.stringify({ name }) }),
+  setSeriesDecks: (id: string, body: SeriesDecksInput) =>
+    request<Series>(`/api/series/${id}/decks`, { method: "PUT", body: JSON.stringify(body) }),
+  reorderSeries: (seriesIds: string[]) =>
+    request<Series[]>("/api/series/order", {
+      method: "PUT",
+      body: JSON.stringify({ seriesIds }),
+    }),
+  archiveSeries: (id: string, body: SeriesArchiveInput) =>
+    request<{ ok: true }>(`/api/series/${id}/archive`, {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  restoreSeries: (id: string) =>
+    request<{ ok: true }>(`/api/series/${id}/restore`, { method: "POST" }),
   joinLink: (deckId: string) => request<JoinLinkOut>(`/api/decks/${deckId}/join-link`),
   turnOnJoinLink: (deckId: string) =>
     request<JoinLinkOut>(`/api/decks/${deckId}/join-link`, { method: "POST" }),
@@ -307,21 +343,17 @@ export const api = {
       method: "DELETE",
       body: JSON.stringify(body),
     }),
-  queue: (deckId?: string, round?: Round) => {
-    const params = new URLSearchParams();
-    if (deckId) params.set("deck", deckId);
+  queue: (scope?: ReviewScope, round?: Round) => {
+    const params = new URLSearchParams(scopeParams(scope));
     if (round) params.set("round", round);
     const search = params.toString();
     return request<Queue>(`/api/review/queue${search ? `?${search}` : ""}`);
   },
   rounds: () => request<RoundsOut>(`/api/review/rounds?tz=${encodeURIComponent(deviceTimezone())}`),
   /** What the review draws from; `tz` only matters until the review zone is known. */
-  draw: (deckId?: string) =>
+  draw: (scope?: ReviewScope) =>
     request<Draw>(
-      `/api/review/draw?${new URLSearchParams({
-        tz: deviceTimezone(),
-        ...(deckId ? { deck: deckId } : {}),
-      })}`,
+      `/api/review/draw?${new URLSearchParams({ tz: deviceTimezone(), ...scopeParams(scope) })}`,
     ),
   streak: () => request<StreakOut>(`/api/stats/streak?tz=${encodeURIComponent(deviceTimezone())}`),
   /** Settle today: confirms a nothing-due day, or an exhausted one. Send from a visible page. */

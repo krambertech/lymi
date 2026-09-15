@@ -7,7 +7,7 @@ date: 2026-09-12
 
 A learner can share a deck with a group. Every card the owner adds reaches every member. Members study. Only the owner writes.
 
-This record makes the four choices that are hard to reverse. [The proposal](../proposals/shared-decks.md) lists the options that lost. [The plan](../plans/2026-09-12-shared-decks.md) orders the work.
+This record makes the four choices that are hard to reverse. [The proposal](../proposals/shared-decks.md) preserves the product boundary and delivery outline.
 
 ## The deck is live, not copied
 

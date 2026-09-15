@@ -14,7 +14,7 @@ test("requires a preview for the product and its build inputs", () => {
 test("skips site-only, documentation, design-source, and agent-only changes", () => {
   assert.equal(requiresAppPreview(["apps/site/src/pages/index.astro"]), false);
   assert.equal(requiresAppPreview(["DESIGN.md"]), false);
-  assert.equal(requiresAppPreview(["docs/plans/example.md"]), false);
+  assert.equal(requiresAppPreview(["docs/proposals/example.md"]), false);
   assert.equal(requiresAppPreview([".agents/skills/example/SKILL.md"]), false);
 });
 

@@ -16,7 +16,7 @@ English component text is the source. `pnpm i18n:extract` updates the Lingui cat
 
 ## Translation bar
 
-- **Informal address.** Ukrainian says "ти", Russian says "ты". Never "ви" or "вы" in product copy. Decided 12 September 2026; the reasoning is in the [localization plan](../../../docs/plans/2026-09-12-localization.md).
+- **Informal address.** Ukrainian says "ти", Russian says "ты". Never "ви" or "вы" in product copy.
 - **Keep every placeholder.** `{0}`, `{name}`, `{due, plural, ...}` and `#` are code. Move them to where the sentence needs them, never rename or drop them.
 - **Write all plural forms.** Ukrainian and Russian need `one`, `few` and `many`, plus `other` for fractions. `1 картка`, `2 картки`, `5 карток`, `21 картка`. A translation with only `one` and `other` is wrong.
 - **Translate meaning, not English syntax.** Keep the message's function and tone, but use natural Ukrainian or Russian grammar. Do not add claims, urgency or celebration.
@@ -46,6 +46,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | example | приклад | пример |
 | deck | колода | колода |
 | Library (screen) | Бібліотека | Библиотека |
+| series (group of decks) | серія | серия |
 | Today (screen) | Сьогодні | Сегодня |
 | You (screen) | Ти | Ты |
 | Insights (screen) | Огляд | Обзор |
@@ -59,7 +60,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | app language | мова застосунку | язык приложения |
 | meaning language | мова значень | язык значений |
 | reminder | нагадування | напоминание |
-| streak / run | серія | серия |
+| streak / run | дні поспіль (лік днів поспіль) | дни подряд (счёт дней подряд) |
 | daily goal | денна мета | дневная цель |
 | AI | AI (never ШІ) | AI (never ИИ) |
 

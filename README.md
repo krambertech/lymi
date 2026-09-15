@@ -1,17 +1,16 @@
 # Lymi
 
-A vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, remember them with spaced repetition. Private and single-user for now.
+A private-first vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, and remember them with spaced repetition.
 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
-- [DESIGN.md](DESIGN.md): tokens, type, components, do's and don'ts
+- [DESIGN.md](DESIGN.md): system-wide tokens, components and interaction rules, with links to feature design in `docs/design`
 - `/design` on the local dev server: the design system rendered with the real components (local only)
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
 - [docs/mcp-directory-review.md](docs/mcp-directory-review.md): what ChatGPT and Claude directory review checks, and the review cases
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
-- [docs/plans](docs/plans): order of work for passes that are decided but not built
-- [docs/proposals](docs/proposals/README.md): future product directions under consideration, not committed plans
+- [docs/proposals](docs/proposals/README.md): product directions under consideration or delivery, never current product truth
 - [CONTEXT.md](CONTEXT.md): the vocabulary, one name per thing
 - `/docs` on the public development server: the API documentation, guides and MCP setup, in `apps/site/src/components/docs`
 

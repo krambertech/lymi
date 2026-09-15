@@ -369,7 +369,7 @@ function Figure({
 /**
  * The preview. It leads with one of the learner's own cards and asks whether it looks right,
  * then says in plain lines what the import keeps and what it skips. Languages and fields are
- * already answered and open only when the learner wants to change them. DESIGN.md "Imports".
+ * already answered and open only when the learner wants to change them. docs/design/imports.md.
  */
 export function ImportPreviewView({
   item,

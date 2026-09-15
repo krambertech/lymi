@@ -1,26 +1,58 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "@tanstack/react-router";
-import { ChevronRight, FileUp, Plus } from "lucide-react";
-import type { ReactNode } from "react";
+import {
+  Archive,
+  ArchiveRestore,
+  ArrowDown,
+  ArrowUp,
+  ChevronRight,
+  FileUp,
+  Layers,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+} from "lucide-react";
+import { type ReactNode, useMemo } from "react";
 import { AddMenu } from "../components/add-menu";
-import { Button } from "../components/button";
+import { Button, IconButton } from "../components/button";
 import { DeckCard } from "../components/deck-card";
+import { DueCount } from "../components/due-count";
 import { LearnerMenu } from "../components/learner-menu";
+import { LibraryBoard } from "../components/library-board";
 import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
-import type { DeckSummary } from "../lib/api";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
+import type { DeckSummary, Series } from "../lib/api";
+import { groupDecks } from "../lib/library-groups";
 import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
+  /** The learner's series. Undefined while loading or offline, which shows every deck loose. */
+  series?: Series[] | undefined;
   /** When each deck's next card comes back, keyed by deck id. E.g. "Monday". */
   next?: Record<string, string> | undefined;
   archivedCount?: number | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
   onImport?: (() => void) | undefined;
+  onNewSeries?: (() => void) | undefined;
+  onEditSeries?: ((series: Series) => void) | undefined;
+  onArchiveSeries?: ((series: Series) => void) | undefined;
+  /** Move a series one place up or down among the series. */
+  onMoveSeries?: ((series: Series, by: -1 | 1) => void) | undefined;
+  onShowArchivedSeries?: (() => void) | undefined;
+  /** A series' whole deck list after a drag. Absent, decks cannot be dragged. */
+  onSetSeriesDecks?: ((seriesId: string, deckIds: string[]) => void) | undefined;
+  onRemoveFromSeries?: ((deckId: string) => void) | undefined;
   /** The learner, for the avatar that opens their menu on the phone. */
   name?: string | undefined;
   email?: string | undefined;
@@ -34,16 +66,26 @@ export interface LibraryProps {
 }
 
 /**
- * Every deck, as a card: its name, whether it has cards due today, and its language and size. Nothing here reviews or searches: Today owns the daily review,
- * and a deck owns its own. Archived decks are a category of their own under the live ones.
+ * Every deck, as a card: its name, whether it has cards due today, and its language and size.
+ * Decks without a series come first, as they always have; each series follows under its own
+ * heading, with its decks in order and a Review for all of them. Nothing else here reviews or
+ * searches: Today owns the daily review, and a deck owns its own.
  */
 export function LibraryView({
   decks,
+  series,
   next,
   archivedCount,
   onAdd,
   onCreateDeck,
   onImport,
+  onNewSeries,
+  onEditSeries,
+  onArchiveSeries,
+  onMoveSeries,
+  onShowArchivedSeries,
+  onSetSeriesDecks,
+  onRemoveFromSeries,
   name,
   email,
   unseen,
@@ -56,6 +98,7 @@ export function LibraryView({
   const { t } = useLingui();
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
   const loading = decks === undefined;
+  const groups = useMemo(() => groupDecks(decks ?? [], series), [decks, series]);
 
   const To = ({
     to,
@@ -75,6 +118,143 @@ export function LibraryView({
         {children}
       </Link>
     );
+
+  const libraryMenu = (onNewSeries || onShowArchivedSeries) && (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <IconButton label={t`Library options`}>
+            <MoreHorizontal />
+          </IconButton>
+        }
+      />
+      <DropdownMenuContent aria-label={t`Library options`} align="end">
+        <DropdownMenuItem onClick={onNewSeries} disabled={!onNewSeries}>
+          <Layers />
+          <Trans>New series</Trans>
+        </DropdownMenuItem>
+        {onShowArchivedSeries && (
+          <DropdownMenuItem onClick={onShowArchivedSeries}>
+            <ArchiveRestore />
+            <Trans>Archived series</Trans>
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
+  const seriesHeader = (s: Series, inSeries: DeckSummary[]) => {
+    const index = groups.series.findIndex((g) => g.series.id === s.id);
+    const cards = inSeries.reduce((n, d) => n + d.total, 0);
+    const due = inSeries.reduce((n, d) => n + d.due, 0);
+    const seriesName = s.name;
+    const dueDecks = inSeries.filter((d) => d.due > 0).length;
+    const bannerClass =
+      "group flex min-h-12 w-full items-center gap-3 rounded-lg bg-plate-2 py-2 ps-3 pe-2 text-start transition-[background-color,scale] duration-150 active:scale-[0.99] hoverable:hover:bg-hover motion-reduce:active:scale-100";
+    const banner = (
+      <>
+        <DueCount>{due}</DueCount>
+        <span className="grid min-w-0 flex-1 gap-0.5 @2xl:flex @2xl:items-baseline @2xl:gap-2">
+          <span className="truncate text-base font-medium">
+            <Trans>Review this series</Trans>
+          </span>
+          <span className="truncate text-sm text-muted">
+            {t`${plural(due, { one: "card due", other: "cards due" })} in ${plural(dueDecks, { one: "# deck", other: "# decks" })}`}
+          </span>
+        </span>
+        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate text-text transition-[background-color] duration-150">
+          <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
+        </span>
+      </>
+    );
+    return (
+      <>
+        {/* The actions wrap under the name on a narrow phone rather than squeezing it. */}
+        <div className="flex min-h-10 flex-wrap items-center gap-x-2 gap-y-2 px-1">
+          <div className="grid min-w-0 flex-1 basis-40 gap-0.5">
+            <h2 className="truncate text-lg font-medium tracking-[-0.01em]">{s.name}</h2>
+            <p className="truncate text-sm text-muted tabular-nums">
+              {t`${plural(inSeries.length, { one: "# deck", other: "# decks" })} · ${plural(cards, { one: "# card", other: "# cards" })}`}
+            </p>
+          </div>
+          <div className="ms-auto flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <IconButton label={t`Options for ${seriesName}`} size="sm">
+                    <MoreHorizontal />
+                  </IconButton>
+                }
+              />
+              <DropdownMenuContent aria-label={t`Options for ${seriesName}`} align="end">
+                <DropdownMenuItem onClick={() => onEditSeries?.(s)} disabled={!onEditSeries}>
+                  <Pencil />
+                  <Trans>Edit series</Trans>
+                </DropdownMenuItem>
+                {groups.series.length > 1 && (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() => onMoveSeries?.(s, -1)}
+                      disabled={!onMoveSeries || index <= 0}
+                    >
+                      <ArrowUp />
+                      <Trans>Move up</Trans>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => onMoveSeries?.(s, 1)}
+                      disabled={!onMoveSeries || index >= groups.series.length - 1}
+                    >
+                      <ArrowDown />
+                      <Trans>Move down</Trans>
+                    </DropdownMenuItem>
+                  </>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={() => onArchiveSeries?.(s)}
+                  disabled={!onArchiveSeries}
+                >
+                  <Archive />
+                  <Trans>Archive series</Trans>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+        {/* Sunk into a well, so it never reads as one more deck. */}
+        {due > 0 &&
+          (st ? (
+            <a
+              href={`/review?series=${s.id}`}
+              onClick={(e) => e.preventDefault()}
+              className={bannerClass}
+            >
+              {banner}
+            </a>
+          ) : (
+            <Link to="/review" search={{ series: s.id }} className={bannerClass}>
+              {banner}
+            </Link>
+          ))}
+      </>
+    );
+  };
+
+  const emptySeries = (s: Series) => (
+    <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-lg border border-dashed border-edge-2 px-4 py-3">
+      <p className="max-w-sm text-sm text-text-2">
+        {onSetSeriesDecks ? (
+          <Trans>Drag decks here, or choose which decks this series holds.</Trans>
+        ) : (
+          <Trans>No decks in this series yet.</Trans>
+        )}
+      </p>
+      <Button size="sm" onClick={() => onEditSeries?.(s)} aria-disabled={!onEditSeries}>
+        <Trans>Choose decks</Trans>
+      </Button>
+    </div>
+  );
 
   return (
     <Page>
@@ -109,6 +289,8 @@ export function LibraryView({
             ? undefined
             : t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
         }
+        // Even with no decks left, archived series are still one menu away.
+        actions={loading ? undefined : libraryMenu}
       />
 
       {loading && (
@@ -164,35 +346,42 @@ export function LibraryView({
       )}
 
       {decks && decks.length > 0 && (
-        <ul className="grid gap-3 @3xl:grid-cols-2">
-          {decks.map((d) => (
-            <li key={d.id} className="flex min-w-0">
-              <DeckCard
-                id={d.id}
-                name={d.name}
-                language={d.defaultLanguage}
-                due={d.due}
-                total={d.total}
-                next={next?.[d.id]}
-                owner={d.role === "owner" ? null : d.owner.name}
-                st={st}
-              />
+        <LibraryBoard
+          loose={groups.loose}
+          series={groups.series}
+          onSetSeriesDecks={st ? undefined : onSetSeriesDecks}
+          onRemoveFromSeries={st ? undefined : onRemoveFromSeries}
+          renderDeck={(d, describedBy) => (
+            <DeckCard
+              id={d.id}
+              name={d.name}
+              language={d.defaultLanguage}
+              due={d.due}
+              total={d.total}
+              next={next?.[d.id]}
+              owner={d.role === "owner" ? null : d.owner.name}
+              describedBy={describedBy}
+              st={st}
+            />
+          )}
+          renderSeriesHeader={seriesHeader}
+          renderEmptySeries={emptySeries}
+          looseTrailer={
+            <li className="flex min-w-0">
+              {/* Dashed rather than amber: capture is the standing action, and a second amber
+                  thing on the page would make the due counts read as buttons. */}
+              <button
+                type="button"
+                onClick={onCreateDeck}
+                aria-disabled={!onCreateDeck}
+                className="flex min-h-[72px] w-full items-center justify-center gap-2 rounded-lg border border-dashed border-edge-2 text-base font-medium text-text-2 transition-[background-color,color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-plate hoverable:hover:text-text"
+              >
+                <Plus className="size-[18px]" aria-hidden="true" />
+                <Trans>New deck</Trans>
+              </button>
             </li>
-          ))}
-          <li className="flex min-w-0">
-            {/* Dashed rather than amber: capture is the standing action, and a second amber
-                thing on the page would make the due counts read as buttons. */}
-            <button
-              type="button"
-              onClick={onCreateDeck}
-              aria-disabled={!onCreateDeck}
-              className="flex min-h-[72px] w-full items-center justify-center gap-2 rounded-lg border border-dashed border-edge-2 text-base font-medium text-text-2 transition-[background-color,color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-plate hoverable:hover:text-text"
-            >
-              <Plus className="size-[18px]" aria-hidden="true" />
-              <Trans>New deck</Trans>
-            </button>
-          </li>
-        </ul>
+          }
+        />
       )}
 
       {archivedCount ? (

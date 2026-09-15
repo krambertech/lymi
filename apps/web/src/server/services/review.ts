@@ -31,6 +31,7 @@ import {
   settleDay,
   streak as streakSummary,
 } from "./review-days";
+import { activeSeries } from "./series-access";
 import { getSettings } from "./settings";
 
 /**
@@ -40,14 +41,21 @@ import { getSettings } from "./settings";
  */
 export async function reviewQueue(
   ctx: ServiceContext,
-  opts: { deckId?: string | undefined; limit?: number | undefined; round?: Round | undefined } = {},
+  opts: {
+    deckId?: string | undefined;
+    seriesId?: string | undefined;
+    limit?: number | undefined;
+    round?: Round | undefined;
+  } = {},
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
   const now = new Date();
   const zone = await reviewZone(ctx);
-  const { round, deckId } = opts;
+  const { round, deckId, seriesId } = opts;
+  if (seriesId) await activeSeries(ctx, seriesId);
   const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     deckId,
+    seriesId,
     now,
     zone,
     slipping: round === "slipping",
@@ -102,14 +110,26 @@ export async function reviewRounds(ctx: ServiceContext, opts: { zone?: string | 
  */
 export async function reviewDraw(
   ctx: ServiceContext,
-  opts: { deckId?: string | undefined; limit?: number | undefined; zone?: string | undefined },
+  opts: {
+    deckId?: string | undefined;
+    seriesId?: string | undefined;
+    limit?: number | undefined;
+    zone?: string | undefined;
+  },
 ) {
   const limit = Math.min(opts.limit ?? 100, 500);
   const now = new Date();
   const zone = await reviewZone(ctx, opts.zone);
   const settings = await getSettings(ctx);
+  if (opts.seriesId) await activeSeries(ctx, opts.seriesId);
+  // The series narrows the rows loaded, so the rules need no scope of their own for it.
   const scope = { deckId: opts.deckId };
-  const { cards, log, day, states } = await drawInputs(ctx, { ...scope, now, zone });
+  const { cards, log, day, states } = await drawInputs(ctx, {
+    ...scope,
+    seriesId: opts.seriesId,
+    now,
+    zone,
+  });
 
   const include = new Set(drawOrder(cards, log, day, scope, limit).map((d) => d.cardId));
   const latest = new Map<string, DrawLogEntry>();

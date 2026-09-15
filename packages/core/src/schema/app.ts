@@ -12,6 +12,25 @@ const timestamps = {
     .default(sql`(unixepoch() * 1000)`),
 };
 
+/**
+ * An owner's optional, ordered group of their own decks, reviewed together. Members of a shared
+ * deck never see it. Archiving hides the grouping; decks archived with it share its `archived_at`.
+ */
+export const series = sqliteTable(
+  "series",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    position: integer("position").notNull().default(0),
+    archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
+    ...timestamps,
+  },
+  (t) => [index("series_user_idx").on(t.userId, t.archivedAt, t.position)],
+);
+
 /** A deck groups cards. It may carry a default language, but language lives on the card. */
 export const decks = sqliteTable(
   "decks",
@@ -27,9 +46,12 @@ export const decks = sqliteTable(
     directions: text("directions", { enum: ["recognition", "production", "both"] })
       .notNull()
       .default("recognition"),
+    /** Order within the deck's series, or within Library for a deck without one. */
     position: integer("position").notNull().default(0),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
+    /** The owner's series. Kept while the series is archived, so Restore regroups the deck. */
+    seriesId: text("series_id").references(() => series.id),
     /** The import that created the deck, if one did. */
     importId: text("import_id"),
     /** The source's own key for the deck, so a later import of the same file reuses it. */
@@ -37,6 +59,7 @@ export const decks = sqliteTable(
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
+    index("decks_series_idx").on(t.seriesId, t.position),
     index("decks_user_external_idx").on(t.userId, t.externalId),
   ],
 );
@@ -450,6 +473,7 @@ export const auditLog = sqliteTable(
   (t) => [index("audit_user_idx").on(t.userId, t.createdAt)],
 );
 
+export type Series = typeof series.$inferSelect;
 export type Deck = typeof decks.$inferSelect;
 export type Card = typeof cards.$inferSelect;
 export type DeckMember = typeof deckMembers.$inferSelect;

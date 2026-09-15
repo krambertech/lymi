@@ -42,6 +42,11 @@ const Membership = {
   owner: z.object({ id: z.string(), name: z.string() }).meta({ description: "Who owns the deck" }),
 };
 
+const SeriesId = z.string().nullable().meta({
+  description:
+    "The owner's active series the deck is in. Always null for a member, and while the series is archived.",
+});
+
 export const DeckOut = z
   .object({
     id: z.string(),
@@ -54,6 +59,7 @@ export const DeckOut = z
       .array(ReviewMode)
       .meta({ description: "How cards that follow the deck are asked" }),
     position: z.number().int(),
+    seriesId: SeriesId,
     archivedAt: Timestamp.nullable(),
     importId: z
       .string()
@@ -75,12 +81,36 @@ export const DeckSummaryOut = z
     directions: Directions.meta({ description: "Legacy form of `reviewModes`" }),
     reviewModes: z.array(ReviewMode),
     position: z.number().int(),
+    seriesId: SeriesId,
     total: z.number().int().meta({ description: "Active cards in the deck" }),
     due: z.number().int().meta({ description: "Cards with a direction due now for the caller" }),
     ...Membership,
   })
   .meta({ id: "DeckSummary" });
 export type DeckSummaryOut = z.infer<typeof DeckSummaryOut>;
+
+export const SeriesOut = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    position: z.number().int(),
+    deckIds: z
+      .array(z.string())
+      .meta({ description: "Its active decks in order. Empty while the series is archived." }),
+    total: z.number().int().meta({ description: "Active cards across its active decks" }),
+    due: z
+      .number()
+      .int()
+      .meta({ description: "Cards that can be reviewed today across its active decks" }),
+    archivedDecks: z.number().int().meta({
+      description: "Decks archived with the series, which Restore brings back. 0 while active.",
+    }),
+    archivedAt: Timestamp.nullable(),
+    createdAt: Timestamp,
+    updatedAt: Timestamp,
+  })
+  .meta({ id: "Series" });
+export type SeriesOut = z.infer<typeof SeriesOut>;
 
 export const CardImageOut = z
   .object({

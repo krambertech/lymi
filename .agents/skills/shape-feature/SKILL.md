@@ -42,9 +42,8 @@ Stop when the outcome, boundaries, smallest vertical slice, and acceptance evide
 
 ## Route the result
 
-- Use a **ready issue** when the behavior is decided and one vertical slice fits one focused pull request. Include the outcome, boundaries, acceptance evidence, relevant risks, and verification path.
-- Use `docs/proposals/` when the direction remains optional or unresolved.
-- Use `docs/plans/` when the direction is accepted but delivery needs several independently verifiable slices.
+- Use a **ready issue** when the behavior is decided and one vertical slice fits one focused pull request. Include the outcome, boundaries, acceptance evidence, relevant risks, verification path, and a link to the proposal when one exists.
+- Use `docs/proposals/` when the direction remains optional or when an accepted direction needs several independently verifiable delivery slices.
 - Use an ADR only for an accepted decision that is consequential and hard to reverse.
 
 Return a concise summary of the decisions, assumptions, remaining questions, recommended artifact, and next action. Add a compact handoff when the user wants to continue in a fresh session.

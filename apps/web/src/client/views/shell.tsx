@@ -18,6 +18,7 @@ import { DueCount } from "../components/due-count";
 import { LearnerMenu } from "../components/learner-menu";
 import { AppTile, Wordmark } from "../components/logo";
 import { NavLink, type StaticNav } from "../components/nav-link";
+import { groupDecks } from "../lib/library-groups";
 
 export type { StaticNav } from "../components/nav-link";
 
@@ -26,6 +27,13 @@ export interface NavDeck {
   name: string;
   total: number;
   due: number;
+  seriesId: string | null;
+}
+
+export interface NavSeries {
+  id: string;
+  name: string;
+  deckIds: string[];
 }
 
 /**
@@ -47,6 +55,8 @@ export const NAV: {
 
 interface SidebarProps {
   decks: NavDeck[] | undefined;
+  /** Groups the decks under their series, in Library's order. */
+  series?: NavSeries[] | undefined;
   name: string | undefined;
   email?: string | undefined;
   onAdd: () => void;
@@ -73,6 +83,7 @@ interface SidebarProps {
  */
 export function Sidebar({
   decks,
+  series,
   name,
   email,
   onAdd,
@@ -88,8 +99,17 @@ export function Sidebar({
   className,
 }: SidebarProps) {
   const { t, i18n } = useLingui();
+  const groups = groupDecks(decks ?? [], series);
   const item =
     "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
+  const deckRow = (d: NavDeck) => (
+    <NavLink key={d.id} to="/library/$deckId" params={{ deckId: d.id }} className={item} st={st}>
+      <span className="flex-1 truncate">{d.name}</span>
+      <span className="text-xs tabular-nums text-muted">
+        {d.due > 0 ? <DueCount>{d.due}</DueCount> : d.total}
+      </span>
+    </NavLink>
+  );
   return (
     <aside
       className={clsx(
@@ -129,20 +149,17 @@ export function Sidebar({
           <div className="mx-2.5 mb-1.5 mt-7 text-xs font-medium uppercase tracking-[0.06em] text-muted">
             <Trans>Decks</Trans>
           </div>
-          {decks.map((d) => (
-            <NavLink
-              key={d.id}
-              to="/library/$deckId"
-              params={{ deckId: d.id }}
-              className={item}
-              st={st}
-            >
-              <span className="flex-1 truncate">{d.name}</span>
-              <span className="text-xs tabular-nums text-muted">
-                {d.due > 0 ? <DueCount>{d.due}</DueCount> : d.total}
-              </span>
-            </NavLink>
-          ))}
+          {groups.loose.map(deckRow)}
+          {groups.series.map(({ series: group, decks: inSeries }) =>
+            inSeries.length > 0 ? (
+              <div key={group.id} className="contents">
+                <div className="mx-2.5 mt-3 mb-1 truncate text-sm font-medium text-muted">
+                  {group.name}
+                </div>
+                {inSeries.map(deckRow)}
+              </div>
+            ) : null,
+          )}
         </>
       )}
 

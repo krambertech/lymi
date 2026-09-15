@@ -25,6 +25,9 @@ export const e2eAccounts = [
   "join-owner",
   "avatar",
   "avatar-other",
+  "series",
+  "series-archive",
+  "series-drag",
   "anki-import",
 ];
 

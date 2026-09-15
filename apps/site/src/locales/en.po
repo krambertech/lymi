@@ -99,11 +99,11 @@ msgstr "A deck in four sections. Greetings is done, Numbers and time is 82% know
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "A false friend. Embarrassed is avergonzado."
 
-msgid "A Finnish verb, a chess term, a line from a physics paper. Save it once, hear how it’s said, and Lymi brings it back right before you’d forget."
-msgstr "A Finnish verb, a chess term, a line from a physics paper. Save it once, hear how it’s said, and Lymi brings it back right before you’d forget."
-
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "A flat plate on a door says push; a handle says pull."
+
+msgid "A hobby"
+msgstr "A hobby"
 
 msgid "A language class"
 msgstr "A language class"
@@ -126,9 +126,6 @@ msgstr "A new language"
 msgid "A partnership between fungi and plant roots, trading water for sugar"
 msgstr "A partnership between fungi and plant roots, trading water for sugar"
 
-msgid "A personal interest"
-msgstr "A personal interest"
-
 msgid "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
 msgstr "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
 
@@ -137,9 +134,6 @@ msgstr "A photo of the board, your tutor’s message, a lesson transcript, the b
 
 msgid "A pile of unread books"
 msgstr "A pile of unread books"
-
-msgid "A professional field"
-msgstr "A professional field"
 
 msgid "A pun on tsunde oku, to leave piled, and doku, reading."
 msgstr "A pun on tsunde oku, to leave piled, and doku, reading."
@@ -171,9 +165,6 @@ msgstr "Add {title}"
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
 
-msgid "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
-msgstr "Add what you heard in the lesson. Lymi can fill in the missing meaning, example, pronunciation, and language without overwriting anything you entered."
-
 msgid "Added"
 msgstr "Added"
 
@@ -192,9 +183,6 @@ msgstr "Added to Chess, with the meaning and an example."
 msgid "adjective"
 msgstr "adjective"
 
-msgid "After the first recall"
-msgstr "After the first recall"
-
 msgid "After today’s lesson"
 msgstr "After today’s lesson"
 
@@ -203,6 +191,9 @@ msgstr "After you learn something new, you start noticing it everywhere"
 
 msgid "AI"
 msgstr "AI"
+
+msgid "AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
+msgstr "AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 
 msgid "AI assistants"
 msgstr "AI assistants"
@@ -273,6 +264,9 @@ msgstr "Anyone with the link can join this deck."
 msgid "anything"
 msgstr "anything"
 
+msgid "Anything you pick up and want to remember."
+msgstr "Anything you pick up and want to remember."
+
 msgid "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
 msgstr "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
 
@@ -282,8 +276,8 @@ msgstr "Anyway; long story short"
 msgid "API reference"
 msgstr "API reference"
 
-msgid "As the gaps widen"
-msgstr "As the gaps widen"
+msgid "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
+msgstr "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "Asked whether you’d like to win the lottery: “Magari!”"
@@ -425,6 +419,9 @@ msgstr "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript 
 
 msgid "Connect in three steps."
 msgstr "Connect in three steps."
+
+msgid "Connect your own tools."
+msgstr "Connect your own tools."
 
 msgid "Conversation"
 msgstr "Conversation"
@@ -633,11 +630,11 @@ msgstr "Food and drink"
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "For a cashier, a builder, or a friend who is studying."
 
+msgid "For anything you’re learning."
+msgstr "For anything you’re learning."
+
 msgid "For here or to go?"
 msgstr "For here or to go?"
-
-msgid "For whatever you’re learning."
-msgstr "For whatever you’re learning."
 
 msgid "for you"
 msgstr "for you"
@@ -762,6 +759,9 @@ msgstr "How many are waiting for me tonight?"
 msgid "How sections work"
 msgstr "How sections work"
 
+msgid "How spaced repetition works."
+msgstr "How spaced repetition works."
+
 msgid "How to connect"
 msgstr "How to connect"
 
@@ -791,9 +791,6 @@ msgstr "Ice, jää, plus edge, äär: four ä in a row."
 
 msgid "idea"
 msgstr "idea"
-
-msgid "Ideas from classes, workshops, and exam preparation."
-msgstr "Ideas from classes, workshops, and exam preparation."
 
 #. placeholder {0}: email.trim()
 msgid "If a place opens, we’ll email <0>{0}</0>. Nothing to do until then."
@@ -874,6 +871,9 @@ msgstr "Japanese 1 · Mondays"
 msgid "Join link"
 msgstr "Join link"
 
+msgid "Join the free beta."
+msgstr "Join the free beta."
+
 msgid "Just the right amount: not too much, not too little"
 msgstr "Just the right amount: not too much, not too little"
 
@@ -885,9 +885,6 @@ msgstr "Keep the Estonian from classes, letters and conversations. Photograph yo
 
 msgid "Keep the Estonian from your next class."
 msgstr "Keep the Estonian from your next class."
-
-msgid "Keep the next thing you learn."
-msgstr "Keep the next thing you learn."
 
 msgid "Keep the phrases you’ll actually say. Every card plays aloud, and Lymi asks both ways: what a phrase means, and how to say it from the meaning."
 msgstr "Keep the phrases you’ll actually say. Every card plays aloud, and Lymi asks both ways: what a phrase means, and how to say it from the meaning."
@@ -991,6 +988,9 @@ msgstr "Literally “that walks”. Waiters say it when they take your order."
 msgid "Long time no see"
 msgstr "Long time no see"
 
+msgid "Longer gaps, longer memory"
+msgstr "Longer gaps, longer memory"
+
 msgid "Longing"
 msgstr "Longing"
 
@@ -1003,11 +1003,11 @@ msgstr "look forward to"
 msgid "loyalty card"
 msgstr "loyalty card"
 
-msgid "Lymi · Keep what you learn"
-msgstr "Lymi · Keep what you learn"
+msgid "Lymi · Flashcard app with spaced repetition"
+msgstr "Lymi · Flashcard app with spaced repetition"
 
-msgid "Lymi asks before it shows. Trying to retrieve an idea strengthens later recall more than simply reading it again, as <0>Roediger and Karpicke found in 2006</0>."
-msgstr "Lymi asks before it shows. Trying to retrieve an idea strengthens later recall more than simply reading it again, as <0>Roediger and Karpicke found in 2006</0>."
+msgid "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
+msgstr "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 
 msgid "Lymi for language learning"
 msgstr "Lymi for language learning"
@@ -1021,14 +1021,17 @@ msgstr "Lymi for teachers"
 msgid "Lymi for teachers · One deck for your whole class"
 msgstr "Lymi for teachers · One deck for your whole class"
 
-msgid "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
-msgstr "Lymi has a public API, so the apps and tools you already use can work with your cards. Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or show what’s due on your own site."
-
 msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 msgstr "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 
+msgid "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
+msgstr "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
+
 msgid "Lymi home"
 msgstr "Lymi home"
+
+msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
+msgstr "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
 
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Lymi is private for now. Leave your email and we’ll write when a place opens."
@@ -1065,6 +1068,9 @@ msgstr "Make cards with Claude, ChatGPT or Gemini · Lymi"
 
 msgid "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
 msgstr "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
+
+msgid "Make flashcards in ChatGPT, Claude or Gemini."
+msgstr "Make flashcards in ChatGPT, Claude or Gemini."
 
 msgid "may I…?"
 msgstr "may I…?"
@@ -1247,9 +1253,6 @@ msgstr "Please; here you go"
 msgid "Please; here you go; you’re welcome"
 msgstr "Please; here you go; you’re welcome"
 
-msgid "Plug Lymi into anything."
-msgstr "Plug Lymi into anything."
-
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 
@@ -1292,6 +1295,9 @@ msgstr "Quick nunchi means sensing a mood before anyone says a word."
 msgid "Raise a glass and it becomes terviseks: to your health."
 msgstr "Raise a glass and it becomes terviseks: to your health."
 
+msgid "Read the docs"
+msgstr "Read the docs"
+
 msgid "Read your German deck"
 msgstr "Read your German deck"
 
@@ -1301,14 +1307,26 @@ msgstr "Reading your notes…"
 msgid "Ready to start"
 msgstr "Ready to start"
 
+msgid "Recall"
+msgstr "Recall"
+
 msgid "Recall first. Reveal second."
 msgstr "Recall first. Reveal second."
 
 msgid "Recall the word before you look, then say how well you knew it. Hard cards come back sooner, easy ones wait."
 msgstr "Recall the word before you look, then say how well you knew it. Hard cards come back sooner, easy ones wait."
 
+msgid "Recalling beats rereading"
+msgstr "Recalling beats rereading"
+
+msgid "Remember a card, and Lymi waits longer before showing it again. Forget it, and it comes back soon."
+msgstr "Remember a card, and Lymi waits longer before showing it again. Forget it, and it comes back soon."
+
 msgid "Remember Estonian vocabulary · Lymi"
 msgstr "Remember Estonian vocabulary · Lymi"
+
+msgid "Remember first, then check."
+msgstr "Remember first, then check."
 
 msgid "Repetition that works."
 msgstr "Repetition that works."
@@ -1330,9 +1348,6 @@ msgstr "Request access to the Lymi private beta."
 
 msgid "Request received."
 msgstr "Request received."
-
-msgid "Retrieving strengthens memory"
-msgstr "Retrieving strengthens memory"
 
 msgid "Reveal the meaning, then grade the recall."
 msgstr "Reveal the meaning, then grade the recall."
@@ -1370,8 +1385,8 @@ msgstr "Said to cut a rambling story down to its point."
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
 
-msgid "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in what’s missing, says it aloud, and brings the card back before you forget. Free during the private beta."
-msgstr "Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in what’s missing, says it aloud, and brings the card back before you forget. Free during the private beta."
+msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free during the beta."
+msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free during the beta."
 
 msgid "Say it"
 msgstr "Say it"
@@ -1466,6 +1481,9 @@ msgstr "Sounds good; that works"
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Soviet Russia recognised Estonia’s independence"
 
+msgid "Spacing"
+msgstr "Spacing"
+
 msgid "Spanish"
 msgstr "Spanish"
 
@@ -1474,6 +1492,9 @@ msgstr "Spanish B1 · Thursdays"
 
 msgid "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 msgstr "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
+
+msgid "Spreading reviews out helps you remember for longer. In 2013, <0>Dunlosky and colleagues rated testing yourself and spacing out practice as highly effective</0>."
+msgstr "Spreading reviews out helps you remember for longer. In 2013, <0>Dunlosky and colleagues rated testing yourself and spacing out practice as highly effective</0>."
 
 msgid "Spreadsheets"
 msgstr "Spreadsheets"
@@ -1484,9 +1505,6 @@ msgstr "Start"
 msgid "Start with a ready-made course."
 msgstr "Start with a ready-made course."
 
-msgid "Start with the term. Keep control of the rest."
-msgstr "Start with the term. Keep control of the rest."
-
 msgid "station"
 msgstr "station"
 
@@ -1495,9 +1513,6 @@ msgstr "Station"
 
 msgid "Statistics"
 msgstr "Statistics"
-
-msgid "Stay in the conversation."
-msgstr "Stay in the conversation."
 
 msgid "Staying at the table to talk after a meal"
 msgstr "Staying at the table to talk after a meal"
@@ -1516,9 +1531,6 @@ msgstr "Stubborn grit; carrying on anyway"
 
 msgid "Stubborn grit; carrying on when it gets hard"
 msgstr "Stubborn grit; carrying on when it gets hard"
-
-msgid "Successful reviews buy time"
-msgstr "Successful reviews buy time"
 
 msgid "Sugars and amino acids reacting in the heat."
 msgstr "Sugars and amino acids reacting in the heat."
@@ -1577,8 +1589,8 @@ msgstr "Term"
 msgid "Terms"
 msgstr "Terms"
 
-msgid "Terms and concepts from a new role, project, or technical field."
-msgstr "Terms and concepts from a new role, project, or technical field."
+msgid "Terms from a new job or project."
+msgstr "Terms from a new job or project."
 
 msgid "thank you"
 msgstr "thank you"
@@ -1691,9 +1703,6 @@ msgstr "The words and phrases from each unit of the course."
 msgid "Then review them in Lymi."
 msgstr "Then review them in Lymi."
 
-msgid "Things worth keeping from books, hobbies, and everyday curiosity."
-msgstr "Things worth keeping from books, hobbies, and everyday curiosity."
-
 msgid "To agree"
 msgstr "To agree"
 
@@ -1754,6 +1763,9 @@ msgstr "Too many attempts. Wait a minute, then try again."
 msgid "Try to recall the meaning before Lymi shows it. Then grade how well you remembered. Difficult cards return sooner; easy ones wait."
 msgstr "Try to recall the meaning before Lymi shows it. Then grade how well you remembered. Difficult cards return sooner; easy ones wait."
 
+msgid "Try to recall the meaning, then show it. Pick how well you knew it. Hard cards come back sooner, easy ones later."
+msgstr "Try to recall the meaning, then show it. Pick how well you knew it. Hard cards come back sooner, easy ones later."
+
 msgid "Turn a few cards over"
 msgstr "Turn a few cards over"
 
@@ -1771,6 +1783,9 @@ msgstr "two"
 
 msgid "Two euros ten."
 msgstr "Two euros ten."
+
+msgid "Type the term. AI fills in the rest."
+msgstr "Type the term. AI fills in the rest."
 
 msgid "Unable to reach the beta list. Check your connection and try again."
 msgstr "Unable to reach the beta list. Check your connection and try again."
@@ -1829,17 +1844,14 @@ msgstr "What if I already use Anki?"
 msgid "What if it gets something wrong?"
 msgstr "What if it gets something wrong?"
 
+msgid "What you need to know for a class or an exam."
+msgstr "What you need to know for a class or an exam."
+
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "When a measure becomes a target, it stops being a good measure"
 
-msgid "When a term comes up while you’re talking with an assistant, ask it to add the card. Keep talking; the card will be waiting in Lymi."
-msgstr "When a term comes up while you’re talking with an assistant, ask it to add the card. Keep talking; the card will be waiting in Lymi."
-
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
-
-msgid "When recall goes well, the next review can wait longer. In 2013, <0>Dunlosky and colleagues rated practice testing and distributed practice as highly effective techniques</0>."
-msgstr "When recall goes well, the next review can wait longer. In 2013, <0>Dunlosky and colleagues rated practice testing and distributed practice as highly effective techniques</0>."
 
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"
@@ -1868,8 +1880,8 @@ msgstr "Widgets"
 msgid "word"
 msgstr "word"
 
-msgid "Words and phrases from lessons, conversations, and reading."
-msgstr "Words and phrases from lessons, conversations, and reading."
+msgid "Words and phrases from lessons, chats and books."
+msgstr "Words and phrases from lessons, chats and books."
 
 msgid "Words and phrases from lessons, tutors and reading."
 msgstr "Words and phrases from lessons, tutors and reading."
@@ -1882,6 +1894,9 @@ msgstr "Words from your deck"
 
 msgid "work"
 msgstr "work"
+
+msgid "Work"
+msgstr "Work"
 
 msgid "Writing"
 msgstr "Writing"

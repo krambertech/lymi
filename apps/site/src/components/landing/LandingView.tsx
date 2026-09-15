@@ -17,8 +17,8 @@ import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 import { type UseCase, UseCases } from "./UseCases";
 
-export const LANDING_TITLE = msg`Lymi · Keep what you learn`;
-export const LANDING_BLURB = msg`Save a Finnish verb, a chess term, or a line from a paper. Lymi fills in what’s missing, says it aloud, and brings the card back before you forget. Free during the private beta.`;
+export const LANDING_TITLE = msg`Lymi · Flashcard app with spaced repetition`;
+export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta.`;
 export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the English line “Keep what you learn.”`;
 
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
@@ -29,7 +29,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
     {
       id: "languages",
       title: <Trans>A new language</Trans>,
-      body: <Trans>Words and phrases from lessons, conversations, and reading.</Trans>,
+      body: <Trans>Words and phrases from lessons, chats and books.</Trans>,
       card: USE_CASE_CARDS.languages,
       link: {
         href: localizedPath("languages", i18n.locale),
@@ -39,19 +39,19 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
     {
       id: "courses",
       title: <Trans>A course or lesson</Trans>,
-      body: <Trans>Ideas from classes, workshops, and exam preparation.</Trans>,
+      body: <Trans>What you need to know for a class or an exam.</Trans>,
       card: USE_CASE_CARDS.courses,
     },
     {
       id: "professional-terms",
-      title: <Trans>A professional field</Trans>,
-      body: <Trans>Terms and concepts from a new role, project, or technical field.</Trans>,
+      title: <Trans>Work</Trans>,
+      body: <Trans>Terms from a new job or project.</Trans>,
       card: USE_CASE_CARDS.professionalTerms,
     },
     {
       id: "personal-interests",
-      title: <Trans>A personal interest</Trans>,
-      body: <Trans>Things worth keeping from books, hobbies, and everyday curiosity.</Trans>,
+      title: <Trans>A hobby</Trans>,
+      body: <Trans>Anything you pick up and want to remember.</Trans>,
       card: USE_CASE_CARDS.personalInterests,
     },
   ];
@@ -64,33 +64,33 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           title={<Trans>Keep what you learn.</Trans>}
           lede={
             <Trans>
-              A Finnish verb, a chess term, a line from a physics paper. Save it once, hear how it’s
-              said, and Lymi brings it back right before you’d forget.
+              Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d
+              forget. Free during the beta.
             </Trans>
           }
         />
       </header>
 
       <main>
-        <UseCases title={<Trans>For whatever you’re learning.</Trans>} items={useCases} />
+        <UseCases title={<Trans>For anything you’re learning.</Trans>} items={useCases} />
 
         <RightMoment
-          title={<Trans>The right moment matters.</Trans>}
+          title={<Trans>How spaced repetition works.</Trans>}
           body={
             <Trans>
-              Memory fades. Recalling something at the right time strengthens it and lets the next
-              gap grow. Lymi uses each grade to decide when the card returns.
+              Remember a card, and Lymi waits longer before showing it again. Forget it, and it
+              comes back soon.
             </Trans>
           }
         />
 
         <FeatureSection
           id="how-it-works"
-          title={<Trans>Recall first. Reveal second.</Trans>}
+          title={<Trans>Remember first, then check.</Trans>}
           body={
             <Trans>
-              Try to recall the meaning before Lymi shows it. Then grade how well you remembered.
-              Difficult cards return sooner; easy ones wait.
+              Try to recall the meaning, then show it. Pick how well you knew it. Hard cards come
+              back sooner, easy ones later.
             </Trans>
           }
         >
@@ -99,11 +99,11 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
 
         <FeatureSection
           demoFirst
-          title={<Trans>Start with the term. Keep control of the rest.</Trans>}
+          title={<Trans>Type the term. AI fills in the rest.</Trans>}
           body={
             <Trans>
-              Add what you heard in the lesson. Lymi can fill in the missing meaning, example,
-              pronunciation, and language without overwriting anything you entered.
+              AI adds the meaning, an example and the pronunciation. It never changes what you
+              typed, and everything it wrote is marked.
             </Trans>
           }
         >
@@ -111,11 +111,11 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         </FeatureSection>
 
         <FeatureSection
-          title={<Trans>Stay in the conversation.</Trans>}
+          title={<Trans>Make flashcards in ChatGPT, Claude or Gemini.</Trans>}
           body={
             <Trans>
-              When a term comes up while you’re talking with an assistant, ask it to add the card.
-              Keep talking; the card will be waiting in Lymi.
+              Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to
+              review.
             </Trans>
           }
           after={<AssistantMarksWithMore />}
@@ -126,18 +126,17 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         <FeatureSection
           demoFirst
           tinted
-          title={<Trans>Plug Lymi into anything.</Trans>}
+          title={<Trans>Connect your own tools.</Trans>}
           body={
             <Trans>
-              Lymi has a public API, so the apps and tools you already use can work with your cards.
-              Add a word from a shortcut on your phone, bring in a lesson from a spreadsheet, or
-              show what’s due on your own site.
+              Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show
+              what’s due on your own site.
             </Trans>
           }
           after={
             <div className="flex flex-wrap gap-2">
               <a href="/docs" className={buttonClass("secondary")}>
-                <Trans>See how it works</Trans>
+                <Trans>Read the docs</Trans>
               </a>
               <a href="/docs/api" className={buttonClass("ghost")}>
                 <Trans>API reference</Trans>
@@ -148,7 +147,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           <ApiConnections />
         </FeatureSection>
 
-        <JoinSection title={<Trans>Keep the next thing you learn.</Trans>} source="landing" />
+        <JoinSection title={<Trans>Join the free beta.</Trans>} source="landing" />
       </main>
 
       <SiteFooter openAppUrl={openAppUrl} page="landing" />

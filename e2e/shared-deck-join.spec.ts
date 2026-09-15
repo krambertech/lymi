@@ -1,5 +1,5 @@
-import { type Browser, expect, type Page, type TestInfo, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { type Browser, expect, type Page, type TestInfo, test } from "./test";
 
 const password = "lymi-e2e-password";
 

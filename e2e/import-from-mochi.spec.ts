@@ -1,6 +1,6 @@
 import { join } from "node:path";
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 /** The Mochi fixture made by `fixtures/generate.py`: 13 cards in 3 decks, 12 reviews, 4 pictures; one card has no term. */
 const MOCHI_FILE = join(process.cwd(), "apps/web/src/server/imports/mochi/fixtures/export.mochi");

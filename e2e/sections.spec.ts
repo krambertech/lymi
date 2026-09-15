@@ -1,5 +1,5 @@
-import { expect, type Locator, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Locator, type Page, test } from "./test";
 
 /**
  * A deck's sections open in order: the learner sees where they are without scrolling, reads what is

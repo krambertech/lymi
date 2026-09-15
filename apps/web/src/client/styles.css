@@ -689,7 +689,8 @@
   }
 }
 /* The end of a review plays as one sequence. Each part waits for its moment in `--at`, and
-   `.seq-skip` on the screen finishes every part at once when the learner taps or presses a key. */
+   `.seq-skip` on the screen finishes every part at once when the learner taps or presses a key.
+   Browser tests set `--seq-filter: none`, because this blur stalls WebKit without a GPU (docs/testing.md). */
 .seq {
   animation: seq-rise 560ms var(--ease-out) var(--at, 0ms) both;
 }
@@ -697,7 +698,7 @@
   from {
     opacity: 0;
     transform: translateY(14px);
-    filter: blur(6px);
+    filter: var(--seq-filter, blur(6px));
   }
 }
 .seq-count {
@@ -707,7 +708,7 @@
   from {
     opacity: 0;
     transform: translateY(10px) scale(0.86);
-    filter: blur(8px);
+    filter: var(--seq-filter, blur(8px));
   }
 }
 .light-on {

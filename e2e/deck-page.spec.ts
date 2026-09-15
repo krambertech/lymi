@@ -1,5 +1,5 @@
-import { expect, type Page, test } from "@playwright/test";
 import { signInAsTestLearner } from "./auth";
+import { expect, type Page, test } from "./test";
 
 async function addSection(page: Page, deckId: string, name: string) {
   const res = await page.request.post(`/api/decks/${deckId}/sections`, { data: { name } });

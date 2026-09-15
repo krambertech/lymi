@@ -170,6 +170,12 @@ A photo is normalised on the Worker by the Cloudflare Images binding, not by a W
 
 A card's picture takes the avatar path: the same byte checks, the same Images binding and the same private bucket, re-encoded to WebP of at most 1600 px a side rather than cropped square. It arrives through the API or MCP as bytes or a public link; a link is fetched once, with every redirect checked against private hosts, and only its host is kept. Rules are in [the data model](data-model.md#pictures). ADR 0014.
 
+### Card notes: markdown-it with only the subset switched on
+
+Notes are read by `markdown-it` in `packages/core`, from its zero preset with only lists, line breaks, emphasis and escapes enabled, so every other construct stays literal text by construction and HTML is never on. Core turns its tokens into a small tree that React renders as elements, never as an HTML string. It is imported as `@lymi/core/notes` rather than through the package root, so the public site and the app's first load never carry the parser. The rules are in [the notes guidance](design/library-decks-and-cards.md#notes).
+
+Alternatives considered: `mdast-util-from-markdown` on micromark, about 16 KB gzipped against markdown-it's 40 KB, lost because its development build imports the CommonJS `debug` package, which the Worker test runtime cannot load, and it parsed a note four to five times slower, which search pays per card. `marked` is smaller still but has no supported way to switch a construct off.
+
 ### Imports: R2, a Workflow and a reader that holds the collection once
 
 An import's file goes to the `IMPORTS` R2 bucket in 10 MB parts through R2 multipart uploads, because a phone's file can be far larger than one request. `ImportWorkflow` (binding `IMPORT_WORKFLOW`) reads it, stores its notes as JSON chunks beside it, and after the learner confirms writes one chunk of 500 notes per step and pictures fifty per step, so closing the app loses nothing and a failure retries one step. A run hands over to a new run after 9,000 steps, under the paid plan's 10,000 per instance, carrying the next chunk and any pictures still to store. Each chunk is one D1 batch whose statements run only while the import's `written` count equals that chunk, so a retried step writes nothing twice, and rows travel as one JSON parameter to stay under D1's 100-parameter limit. The file and its chunks are deleted when the import ends, and the cron trigger fails imports left waiting for three days. [The import proposal](proposals/importing-from-other-apps.md).

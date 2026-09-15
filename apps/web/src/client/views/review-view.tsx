@@ -24,6 +24,7 @@ import {
   useState,
 } from "react";
 import { buttonClass, IconButton } from "../components/button";
+import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
@@ -518,12 +519,9 @@ export function ReviewCard({
         </motion.p>
       )}
       {card.notes && (
-        <motion.p
-          variants={answerLine}
-          className="whitespace-pre-line text-sm text-muted [overflow-wrap:anywhere]"
-        >
-          {card.notes}
-        </motion.p>
+        <motion.div variants={answerLine} className="text-sm text-muted">
+          <CardNotes source={card.notes} />
+        </motion.div>
       )}
     </>
   );

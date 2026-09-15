@@ -1,6 +1,7 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
 import { newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
+import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
@@ -249,13 +250,14 @@ export function foldForSearch(text: string): string {
   return normaliseTerm(text);
 }
 
-/** True when the folded needle occurs in the term, meaning, example or notes. */
+/** True when the folded needle occurs in the term, meaning, example or the notes' words. */
 export function matchesSearch(
   card: Pick<Card, "normalizedTerm" | "meaning" | "example" | "notes">,
   needle: string,
 ): boolean {
   if (card.normalizedTerm.includes(needle)) return true;
-  for (const field of [card.meaning, card.example, card.notes]) {
+  const notes = card.notes && notesToText(card.notes);
+  for (const field of [card.meaning, card.example, notes]) {
     if (field && foldForSearch(field).includes(needle)) return true;
   }
   return false;

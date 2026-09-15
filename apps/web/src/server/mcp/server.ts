@@ -949,7 +949,7 @@ const CardOut = z.object({
   meaning: z.string().nullable(),
   pronunciation: z.string().nullable(),
   example: z.string().nullable(),
-  notes: z.string().nullable(),
+  notes: z.string().nullable().describe("Markdown source in the notes subset"),
   language: z.string().nullable(),
   tags: z.array(z.string()),
   source: z.string().nullable(),

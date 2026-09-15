@@ -2,6 +2,7 @@ import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/c
 import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { canSpeakTerm, deserializeState, type FsrsCard, type ReviewMode } from "@lymi/core";
+import { notesToText } from "@lymi/core/notes";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -22,6 +23,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { IconButton } from "../components/button";
+import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
@@ -153,8 +155,10 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
     return { ...base, kind: "enriched", text: i18n._(msg`Enriched ${list}`), actor: by };
   const only = keys.length === 1 ? keys[0] : undefined;
   const value = only ? payload[only] : undefined;
-  if (only && typeof value === "string" && value.trim()) {
-    const next = value.trim();
+  // Notes quote their words, never their Markdown.
+  const quoted = only === "notes" && typeof value === "string" ? notesToText(value) : value;
+  if (only && typeof quoted === "string" && quoted.trim()) {
+    const next = quoted.trim();
     if (only === "language") {
       const text = i18n._(msg`Language changed to ${languageName(next, i18n.locale)}`);
       return { ...base, kind: "edited", text, actor: by };
@@ -245,11 +249,14 @@ function ReadField({
   aside,
   value,
   empty,
+  children,
 }: {
   label: string;
   aside?: ReactNode | undefined;
-  value: string;
+  value?: string | undefined;
   empty?: boolean | undefined;
+  /** Formatted content in place of `value`. */
+  children?: ReactNode | undefined;
 }) {
   return (
     <div className="grid gap-1">
@@ -257,14 +264,16 @@ function ReadField({
         <span className="text-sm font-medium text-text-2">{label}</span>
         {aside && <span className="text-xs text-muted">{aside}</span>}
       </div>
-      <p
-        className={clsx(
-          "whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
-          empty ? "text-muted" : "text-text",
-        )}
-      >
-        {value}
-      </p>
+      {children ?? (
+        <p
+          className={clsx(
+            "whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
+            empty ? "text-muted" : "text-text",
+          )}
+        >
+          {value}
+        </p>
+      )}
     </div>
   );
 }
@@ -549,7 +558,11 @@ export function WordView({
         {card.example && (
           <ReadField label={t`Example`} aside={source(card.exampleSource)} value={card.example} />
         )}
-        {card.notes && <ReadField label={t`Notes`} value={card.notes} />}
+        {card.notes && (
+          <ReadField label={t`Notes`}>
+            <CardNotes source={card.notes} className="text-md leading-relaxed text-text" />
+          </ReadField>
+        )}
       </div>
 
       <Dialog open={moving} onOpenChange={setMoving}>

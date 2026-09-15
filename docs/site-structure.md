@@ -55,6 +55,7 @@ Documentation source lives in `apps/site/src/components/docs`, with one Astro pa
 | `/docs/quickstart` | Make a key, add a card and see it in the app. |
 | `/docs/authentication` | Keys, scopes, rate limit and error codes. |
 | `/docs/cards` | Card shape, duplicate rules, directions and FSRS states. |
+| `/docs/import-from-anki` | For learners, not developers: exporting from Anki on a computer and a phone, what an import brings across and leaves behind, duplicates, importing again, undo and the three failures a learner can fix. |
 | `/docs/scheduling` | How FSRS sets intervals and how the draw picks the next card. Tables, the simulated day and interval examples are computed from `packages/core` at build time; the year-long studies come from `packages/core/simulation/results.json`. |
 | `/docs/recipes` | Import a word list, safely re-run a script and back up a deck. |
 | `/docs/api` | Browser-rendered reference loaded from `https://my.lymi.app/api/openapi.json` without credentials. |

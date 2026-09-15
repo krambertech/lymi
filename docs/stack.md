@@ -170,6 +170,14 @@ A photo is normalised on the Worker by the Cloudflare Images binding, not by a W
 
 A card's picture takes the avatar path: the same byte checks, the same Images binding and the same private bucket, re-encoded to WebP of at most 1600 px a side rather than cropped square. It arrives through the API or MCP as bytes or a public link; a link is fetched once, with every redirect checked against private hosts, and only its host is kept. Rules are in [the data model](data-model.md#pictures). ADR 0014.
 
+### Imports: R2, a Workflow and a reader that holds the collection once
+
+An import's file goes to the `IMPORTS` R2 bucket in 10 MB parts through R2 multipart uploads, because a phone's file can be far larger than one request. `ImportWorkflow` (binding `IMPORT_WORKFLOW`) reads it, stores its notes as JSON chunks beside it, and after the learner confirms writes one chunk per step and pictures twenty per step, so closing the app loses nothing and a failure retries one step. Each chunk is one D1 batch whose statements run only while the import's `written` count equals that chunk, so a retried step writes nothing twice, and rows travel as one JSON parameter to stay under D1's 100-parameter limit. The file and its chunks are deleted when the import ends, and the cron trigger fails imports left waiting for three days. [The import proposal](proposals/importing-from-other-apps.md).
+
+A source is one adapter in `apps/web/src/server/imports`: detect, inspect into a summary and notes, and turn a note into the common imported card. The Anki adapter reads the zip's central directory by ranges, decompresses zstd with `fzstd`, decodes Anki's protobuf itself, and reads the collection's SQLite pages with a small reader in `sqlite.ts`. The proposal named `sql.js`, but a WASM SQLite copies the database into its own heap, which doubles an 80 MB collection past a Worker's 128 MB; the reader walks b-trees over the one copy and is tested against `node:sqlite`. Fixtures are exported by Anki's own library from `fixtures/generate.py`.
+
+A preview Worker's Workflow is named after the preview, because Workflow names are account-wide and a preview must never register production's.
+
 ### Repo: pnpm workspace
 
 ```

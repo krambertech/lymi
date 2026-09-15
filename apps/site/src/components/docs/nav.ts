@@ -8,6 +8,7 @@ export type DocPath =
   | "/docs/quickstart"
   | "/docs/authentication"
   | "/docs/cards"
+  | "/docs/import-from-anki"
   | "/docs/scheduling"
   | "/docs/recipes"
   | "/docs/api"
@@ -68,6 +69,13 @@ export const PAGES: DocPage[] = [
     nav: "Decks and cards",
     title: "Decks and cards",
     blurb: "How a card is shaped, what happens to duplicates, and which modes it is asked in.",
+    section: "Guides",
+  },
+  {
+    to: "/docs/import-from-anki",
+    nav: "Import from Anki",
+    title: "Import from Anki",
+    blurb: "Bring your Anki decks across with their pictures, tags and review history.",
     section: "Guides",
   },
   {

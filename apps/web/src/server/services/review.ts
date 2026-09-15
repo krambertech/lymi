@@ -257,6 +257,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     };
   };
   if (state.lastReview && state.lastReview.getTime() >= reviewedAt.getTime()) {
+    // A replayed grade may be the one whose opening never landed, so it looks again.
     await advance();
     return duplicate();
   }
@@ -311,7 +312,8 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       },
     );
   if (!stored) return duplicate();
-  await advance();
+  // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.
+  if (state.state === 0 || result.card.state === 2) await advance();
   await audit(db, {
     userId,
     actor,

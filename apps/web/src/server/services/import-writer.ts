@@ -20,6 +20,7 @@ import { auditStatement } from "../audit";
 import { type BatchStatement, batchStatements } from "../batch";
 import { type Db, schema } from "../db";
 import type { ImportChoices, SourceAdapter, SourceSummary } from "../imports/adapter";
+import { selectIn } from "./batch";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { stateStatementsForCards } from "./modes";
@@ -77,13 +78,6 @@ function directionsOf(modes: readonly ReviewModeKey[]): Directions {
   const recognition = modes.includes("term_to_meaning");
   const production = modes.includes("meaning_to_term");
   return recognition && production ? "both" : production ? "production" : "recognition";
-}
-
-/** D1 allows 100 bound parameters, so `IN (...)` lists are read in slices. */
-async function selectIn<T, R>(values: T[], select: (slice: T[]) => Promise<R[]>): Promise<R[]> {
-  const rows: R[] = [];
-  for (let i = 0; i < values.length; i += 90) rows.push(...(await select(values.slice(i, i + 90))));
-  return rows;
 }
 
 type Lookup = {

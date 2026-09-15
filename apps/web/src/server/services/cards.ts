@@ -4,10 +4,12 @@ import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/d
 import type { Card } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
+import { selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { memberOf } from "./members";
 import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
+import { activeSectionOf } from "./sections";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -189,19 +191,6 @@ async function runInBatches(db: Db, groups: Statement[][]) {
   await flush();
 }
 
-/**
- * D1 allows 100 bound parameters per query and a lesson can be 200 terms, so `IN (...)`
- * lists are queried in slices. Returns every row across the slices.
- */
-async function selectIn<T, R>(values: T[], select: (slice: T[]) => Promise<R[]>): Promise<R[]> {
-  const size = 90;
-  const rows: R[] = [];
-  for (let i = 0; i < values.length; i += size) {
-    rows.push(...(await select(values.slice(i, i + size))));
-  }
-  return rows;
-}
-
 /** A card with no language only matches other cards with no language. */
 function dupKey(language: string | null, normalizedTerm: string): string {
   return `${language ?? ""} ${normalizedTerm}`;
@@ -351,19 +340,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
     if (!deck) throw notFound("Deck");
   }
   const deckId = patch.deckId ?? current.deckId;
-  if (patch.sectionId) {
-    const [section] = await db
-      .select({ id: schema.sections.id })
-      .from(schema.sections)
-      .where(
-        and(
-          eq(schema.sections.id, patch.sectionId),
-          eq(schema.sections.deckId, deckId),
-          isNull(schema.sections.archivedAt),
-        ),
-      );
-    if (!section) throw notFound("Section");
-  }
+  if (patch.sectionId) await activeSectionOf(ctx, deckId, patch.sectionId);
   // A section belongs to one deck, so a card that changes deck leaves its section unless given one there.
   const section =
     patch.sectionId !== undefined

@@ -10,16 +10,12 @@ import { deckProgress, newId, sectionsToStart } from "@lymi/core";
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { auditStatement, auditStatementWhen } from "../audit";
 import { type Db, schema } from "../db";
+import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { deckAccess, memberOf, ownedDeck } from "./members";
 import { askedSql, stateStatementsForDeck } from "./modes";
 
 type Statement = Parameters<Db["batch"]>[0][number];
-
-async function runBatch(db: Db, statements: Statement[]) {
-  const [first, ...rest] = statements;
-  if (first) await db.batch([first, ...rest]);
-}
 
 /** A list of ids as one bound JSON parameter, since D1 caps a query at 100 parameters. */
 const jsonIds = (ids: readonly string[]) => JSON.stringify(ids);
@@ -29,6 +25,18 @@ const sectionOrder = [
   asc(schema.sections.createdAt),
   asc(schema.sections.id),
 ];
+
+/**
+ * True for a `cards` row the caller has started in a mode it is still asked in. The standings and
+ * the draw share it, so a card the list shows as waiting is one the draw leaves out.
+ */
+export function startedSql(userId: string) {
+  return sql`exists (
+    select 1 from card_states as begun
+    where begun.card_id = cards.id and begun.user_id = ${userId} and begun.state != 0
+      and ${sql.raw(askedSql("begun.direction"))}
+  )`;
+}
 
 /**
  * The caller's standing in every active section of the decks they can see, in deck order.
@@ -44,11 +52,7 @@ async function standings(ctx: ServiceContext, deckId?: string) {
       when leading.direction = 'recognition' then 1 else 2 end
     limit 1
   )`;
-  const started = sql`exists (
-    select 1 from card_states as begun
-    where begun.card_id = cards.id and begun.user_id = ${userId} and begun.state != 0
-      and ${sql.raw(askedSql("begun.direction"))}
-  )`;
+  const started = startedSql(userId);
   return db
     .select({
       id: schema.sections.id,
@@ -104,13 +108,18 @@ export async function progressByDeck(ctx: ServiceContext, deckId?: string) {
   return out;
 }
 
-/** Sections whose cards wait for the caller, across every deck they can see. */
-export async function lockedSectionIds(ctx: ServiceContext, deckId?: string) {
+/**
+ * True for a `cards` row that waits for the caller: in a section that is not open, and not started.
+ * Every count of what can be reviewed filters with it. Undefined when nothing is locked.
+ */
+export async function waitingCardsSql(ctx: ServiceContext, deckId?: string) {
   const locked: string[] = [];
   for (const progress of (await progressByDeck(ctx, deckId)).values()) {
     for (const section of progress.sections) if (section.status !== "open") locked.push(section.id);
   }
-  return locked;
+  if (locked.length === 0) return undefined;
+  return sql`(coalesce(${schema.cards.sectionId}, '') in (select value from json_each(${JSON.stringify(locked)}))
+    and not ${startedSql(ctx.userId)})`;
 }
 
 /**
@@ -473,22 +482,47 @@ export async function restoreSection(ctx: ServiceContext, id: string) {
  * Start would. The row is written once, so a card forgotten later never locks the section again.
  */
 export async function openReadySections(ctx: ServiceContext, deckId: string) {
-  const { db, userId } = ctx;
   // A section can be ready the moment the one before it opens, when its cards were already started.
   for (let step = 0; step < 50; step++) {
     const progress = (await progressByDeck(ctx, deckId)).get(deckId);
     if (!progress?.ready || !progress.nextId) return;
-    const now = new Date();
-    await runBatch(
-      db,
-      sectionsToStart(progress, progress.nextId).map((sectionId) =>
-        db
-          .insert(schema.sectionStarts)
-          .values({ id: newId(), sectionId, userId, how: "auto", startedAt: now })
-          .onConflictDoNothing(),
-      ),
-    );
+    await openSections(ctx, progress, progress.nextId, "auto");
   }
+}
+
+/** Write the start rows that open `targetId`, with one Activity entry when this write opened it. */
+async function openSections(
+  { db, userId, actor }: ServiceContext,
+  progress: DeckProgress,
+  targetId: string,
+  how: "ready" | "early" | "auto",
+) {
+  const opening = sectionsToStart(progress, targetId);
+  if (opening.length === 0) return;
+  const now = new Date();
+  // A retry or a second device finds the target's row already there, so only the first start is recorded.
+  const landed: SQL = sql`${schema.sectionStarts.sectionId} = ${targetId} and ${schema.sectionStarts.userId} = ${userId} and ${schema.sectionStarts.startedAt} = ${now.getTime()}`;
+  await runBatch(db, [
+    ...opening.map((sectionId) =>
+      db
+        .insert(schema.sectionStarts)
+        .values({ id: newId(), sectionId, userId, how, startedAt: now })
+        .onConflictDoNothing(),
+    ),
+    auditStatementWhen(
+      db,
+      {
+        userId,
+        actor,
+        action: "start",
+        entity: "section",
+        entityId: targetId,
+        payload: { how, sectionIds: opening },
+      },
+      schema.sectionStarts,
+      landed,
+    ),
+  ]);
 }
 
 /**
@@ -496,22 +530,15 @@ export async function openReadySections(ctx: ServiceContext, deckId: string) {
  * that is already open changes nothing, so a retry or a second device lands the same.
  */
 export async function startSection(ctx: ServiceContext, id: string) {
-  const { db, userId } = ctx;
   const { section, deck } = await sectionAccess(ctx, id);
   if (section.archivedAt) throw notFound("Section");
   const progress = (await progressByDeck(ctx, deck.id)).get(deck.id);
   if (progress) {
-    const how = progress.nextId === id && progress.ready ? "ready" : "early";
-    const now = new Date();
-    const opening = sectionsToStart(progress, id);
-    await runBatch(
-      db,
-      opening.map((sectionId) =>
-        db
-          .insert(schema.sectionStarts)
-          .values({ id: newId(), sectionId, userId, how, startedAt: now })
-          .onConflictDoNothing(),
-      ),
+    await openSections(
+      ctx,
+      progress,
+      id,
+      progress.nextId === id && progress.ready ? "ready" : "early",
     );
   }
   return listSections(ctx, deck.id);

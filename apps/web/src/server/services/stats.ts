@@ -5,6 +5,7 @@ import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
 import { memberOf } from "./members";
+import { waitingCardsSql } from "./sections";
 import { lapsesSql, reviewCountSql, slippingHaving, slippingReviewsWhere } from "./slipping";
 
 /**
@@ -232,8 +233,11 @@ async function collection({ db, userId }: ServiceContext) {
  * Cards due on each of the next seven local days, today first. Anything already overdue is
  * counted into today, because that is when the learner will meet it.
  */
-async function forecast({ db, userId }: ServiceContext, fmt: LocalDateFormatter) {
+async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
+  const { db, userId } = ctx;
   const today = fmt.format(new Date());
+  // Cards in a locked section wait, as they do in the draw, so the forecast never promises them.
+  const waiting = await waitingCardsSql(ctx);
   // One extra day of slack so a due time late on day seven is not cut off by the zone.
   const horizon = new Date(Date.parse(`${addDays(today, 8)}T00:00:00Z`) + DAY_MS);
 
@@ -250,6 +254,7 @@ async function forecast({ db, userId }: ServiceContext, fmt: LocalDateFormatter)
         isNull(schema.decks.archivedAt),
         asked,
         lte(schema.cardStates.due, horizon),
+        waiting ? sql`not ${waiting}` : undefined,
       ),
     );
 

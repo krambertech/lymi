@@ -18,6 +18,7 @@ import {
   startSection,
 } from "./sections";
 import { createSeries } from "./series";
+import { insights } from "./stats";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -494,6 +495,58 @@ describe("opening sections in order", () => {
     expect((await reviewDraw(me, { seriesId: series.id, zone: "UTC" })).total).toBe(2);
     expect((await reviewRounds(me, { zone: "UTC" })).new).toBe(2);
     expect(series.total).toBe(4);
+  });
+
+  it("leaves locked cards out of the Insights forecast, as the draw does", async () => {
+    const me = await person("Kateryna");
+    await sectioned(me, { A: ["a1", "a2"], B: ["b1", "b2", "b3"] });
+    const { forecast } = await insights(me, { zone: "UTC" });
+    expect(forecast[0]?.count).toBe(2);
+  });
+
+  it("does not count a mode the deck no longer asks as started", async () => {
+    const me = await person("Kateryna");
+    const deck = await createDeck(me, {
+      name: "Both ways",
+      defaultLanguage: "et",
+      directions: "both",
+    });
+    const a = await createSection(me, deck.id, { name: "A" });
+    const b = await createSection(me, deck.id, { name: "B" });
+    const [first, locked] = await addCards(me, [
+      { deckId: deck.id, term: "a1", sectionId: a.id },
+      { deckId: deck.id, term: "b1", sectionId: b.id },
+    ]);
+    if (first?.status !== "added" || locked?.status !== "added") throw new Error("not added");
+    // b1 was reviewed the other way round, then the deck stopped asking it that way.
+    await db
+      .update(schema.cardStates)
+      .set({ state: 2 })
+      .where(
+        and(
+          eq(schema.cardStates.cardId, locked.card.id),
+          eq(schema.cardStates.direction, "production"),
+        ),
+      );
+    await updateDeck(me, deck.id, { directions: "recognition" });
+
+    expect(await statuses(me, deck.id)).toEqual([
+      ["A", "open"],
+      ["B", "locked"],
+    ]);
+    expect(await inReview(me, deck.id)).toEqual(["a1"]);
+  });
+
+  it("records one Activity entry per start, and none for a retry", async () => {
+    const me = await person("Kateryna");
+    const { sections } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });
+    const c = sections.C as string;
+
+    await startSection(me, c);
+    await startSection(me, c);
+
+    const starts = (await sectionAudits(me, c)).filter((x) => x.action === "start");
+    expect(starts).toHaveLength(1);
   });
 
   it("leaves a deck without sections exactly as it was", async () => {

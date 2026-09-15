@@ -31,7 +31,7 @@ import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { memberOf } from "./members";
 import { askedSql, stateMode } from "./modes";
-import { lockedSectionIds } from "./sections";
+import { waitingCardsSql } from "./sections";
 import { slippingCardIds } from "./slipping";
 
 /**
@@ -155,14 +155,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
   };
 
   // A locked section's cards wait, except one the learner already started: progress never hides.
-  const locked = await lockedSectionIds(ctx, opts.deckId);
-  const waiting = locked.length
-    ? sql`coalesce(${schema.cards.sectionId}, '') in (select value from json_each(${JSON.stringify(locked)}))
-        and not exists (
-          select 1 from card_states as begun
-          where begun.card_id = cards.id and begun.user_id = ${userId} and begun.state != 0
-        )`
-    : undefined;
+  const waiting = await waitingCardsSql(ctx, opts.deckId);
 
   const where = and(
     eq(schema.cardStates.userId, userId),

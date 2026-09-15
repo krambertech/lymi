@@ -6,6 +6,7 @@ import {
   CardInput,
   CardPatch,
   CardSearchInput,
+  CardSectionInput,
   DeckInput,
   Directions,
   FieldSource,
@@ -567,11 +568,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Move cards to a section",
       description:
         "Put up to 500 cards of one deck in a section, or take them out of theirs with sectionId null. Schedules and history stay. Sending the same move again changes nothing. Needs write.",
-      inputSchema: z.object({
-        deckId: z.string().min(1),
-        cardIds: z.array(z.string().min(1)).min(1).max(500),
-        sectionId: z.string().min(1).nullable().describe("A section of the same deck, or null"),
-      }),
+      inputSchema: z.object({ deckId: z.string().min(1) }).extend(CardSectionInput.shape),
       outputSchema: SectionListOut,
       ...writeTool({ idempotent: true }),
     },

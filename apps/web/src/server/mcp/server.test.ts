@@ -427,6 +427,16 @@ describe("Lymi MCP server", () => {
     });
   });
 
+  it("refuses a move that lists a card twice, as the API does", async () => {
+    const client = await connect("write");
+    const res = await client.callTool({
+      name: "move_cards_to_section",
+      arguments: { deckId: "deck-1", cardIds: ["card-1", "card-1"], sectionId: null },
+    });
+    expect(res.isError).toBe(true);
+    expect(services.setCardsSection).not.toHaveBeenCalled();
+  });
+
   it("archives a section only with an explicit choice about its cards", async () => {
     services.archiveSection.mockResolvedValue({ ok: true });
     const client = await connect("write");

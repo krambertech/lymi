@@ -67,6 +67,32 @@ type Leg = { date: string; from: number; satisfied: boolean } & (
 const gradedKey = (item: Pick<QueueItem, "card" | "mode">) =>
   drawKey(item.card.id, modeKey(item.mode));
 
+/** A list leg's cards by key: graded, sent to the end by a refused grade, or out because the card is gone. */
+type LegCards = {
+  graded: ReadonlySet<string>;
+  returned: ReadonlySet<string>;
+  dropped: ReadonlySet<string>;
+};
+const NO_LEG_CARDS: LegCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
+
+const withKey = (keys: ReadonlySet<string>, key: string) => new Set(keys).add(key);
+const withoutKey = (keys: ReadonlySet<string>, key: string) => {
+  const next = new Set(keys);
+  next.delete(key);
+  return next;
+};
+
+/** What is left of a list leg, with the cards a refused grade sent back at the end. */
+function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => string): T[] {
+  const left = items.filter(
+    (item) => !cards.graded.has(key(item)) && !cards.dropped.has(key(item)),
+  );
+  return [
+    ...left.filter((item) => !cards.returned.has(key(item))),
+    ...left.filter((item) => cards.returned.has(key(item))),
+  ];
+}
+
 /** A review of another deck starts over, so nothing from this one carries into it. */
 function ReviewPage() {
   const { deck } = Route.useSearch();
@@ -94,7 +120,9 @@ function Review() {
   const [revealed, setRevealed] = useState(false);
   const [done, setDone] = useState(0);
   const [chosenLeg, setLeg] = useState<Leg | null>(null);
-  const [legGraded, setLegGraded] = useState<ReadonlySet<string>>(() => new Set());
+  const [legCards, setLegCards] = useState<LegCards>(NO_LEG_CARDS);
+  // Grades this page has recorded that the server has not answered yet.
+  const [sending, setSending] = useState(0);
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
   const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
@@ -137,7 +165,7 @@ function Review() {
         (today?.date === state.day.date &&
           (today.outcome === "goal_met" || today.outcome === "exhausted")),
     };
-    setLegGraded(new Set());
+    setLegCards(NO_LEG_CARDS);
     if (round && roundItems) setLeg({ ...base, kind: "today", size: roundItems.length });
     else if (attempts < data.goal) setLeg({ ...base, kind: "goal", until: data.goal });
     else {
@@ -151,11 +179,11 @@ function Review() {
   const atStop = !!drawLeg && !!state && state.attempts >= drawLeg.until;
   const listLeft: QueueItem[] =
     leg?.kind === "today"
-      ? (roundItems ?? []).filter((item) => !legGraded.has(gradedKey(item)))
+      ? leftInLeg(roundItems ?? [], legCards, gradedKey)
       : leg?.kind === "forgotten" && data && state
-        ? leg.items
-            .filter((d) => !legGraded.has(drawKey(d.cardId, d.mode)))
-            .flatMap((d) => reviewItem(data, state.log, d) ?? [])
+        ? leftInLeg(leg.items, legCards, (d) => drawKey(d.cardId, d.mode)).flatMap(
+            (d) => reviewItem(data, state.log, d) ?? [],
+          )
         : [];
   const current: QueueItem | null = !leg
     ? null
@@ -172,13 +200,13 @@ function Review() {
   usePrefetchPictures(drawLeg ? (state?.upcoming ?? []) : listLeft, 0);
 
   // What the header counts: the goal for its own stretch, and a round's own cards otherwise.
-  const legDone = !leg || !state ? 0 : drawLeg ? state.attempts - leg.from : legGraded.size;
+  const legDone = !leg || !state ? 0 : drawLeg ? state.attempts - leg.from : legCards.graded.size;
   const legSize = !leg
     ? 0
     : leg.kind === "today"
-      ? leg.size
+      ? leg.size - legCards.dropped.size
       : leg.kind === "forgotten"
-        ? leg.items.length
+        ? leg.items.length - legCards.dropped.size
         : leg.until - leg.from;
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
@@ -239,11 +267,13 @@ function Review() {
   useEffect(() => {
     if (checking && !unreachable && !draw.isFetching) void draw.refetch();
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
+  // The end waits for the last grades to land, so a refusal never takes back an end already shown.
+  const landing = sending > 0 && !unreachable;
   // A deck's end names the deck and weighs the other decks, so it waits for them while they load.
   const decksLoading = !!deck && !decks.data && decks.fetchStatus === "fetching";
   const result = useMemo(
     () =>
-      stopped && !checking && !decksLoading && leg && data && state
+      stopped && !checking && !landing && !decksLoading && leg && data && state
         ? reviewEnd({
             stretch: drawLeg ? drawLeg.kind : "list",
             goal: data.goal,
@@ -260,6 +290,7 @@ function Review() {
     [
       stopped,
       checking,
+      landing,
       decksLoading,
       leg,
       drawLeg,
@@ -307,7 +338,7 @@ function Review() {
   const startLeg = (next: Leg) => {
     // The pressed button fades out for a moment, and while it holds focus Space would not reach the card.
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
-    setLegGraded(new Set());
+    setLegCards(NO_LEG_CARDS);
     setHeld({
       week: streak.data && streakWith(streak.data, next.from, false),
       lantern: lanternFor(streak.data),
@@ -398,27 +429,46 @@ function Review() {
           : item.fsrsState,
         timezone: deviceTimezone(),
       });
-      if (leg && !drawLeg) setLegGraded((keys) => new Set(keys).add(gradedKey(item)));
+      const listed = !!leg && !drawLeg;
+      if (listed) setLegCards((c) => ({ ...c, graded: withKey(c.graded, gradedKey(item)) }));
+      setSending((n) => n + 1);
       setAnimateNextCard(input !== "keyboard");
       setRevealed(false);
       setNow(new Date());
       setPinned(null);
       setDone((n) => n + 1);
 
-      void recorded.then((outcome) => {
-        invalidateReviewData();
-        if (outcome === "queued") return;
-        if (outcome === "refused") {
-          toast.add({ type: "error", title: t`Couldn’t save your last grade.` });
-        }
-        // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
-        const behind = gradeStore
-          .snapshot()
-          .filter((g) => new Date(g.reviewedAt).getTime() >= data.fetchedAt).length;
-        if (outcome !== "sent" || behind >= REFRESH_AFTER || runningShort) {
-          void qc.invalidateQueries({ queryKey: ["queue"] });
-        }
-      });
+      void recorded
+        .then((outcome) => {
+          invalidateReviewData();
+          if (outcome === "queued") return;
+          if (outcome === "refused" || outcome === "gone") {
+            const key = gradedKey(item);
+            const term = item.card.term;
+            if (listed) {
+              setLegCards((c) => ({
+                graded: withoutKey(c.graded, key),
+                returned: outcome === "refused" ? withKey(c.returned, key) : c.returned,
+                dropped: outcome === "gone" ? withKey(c.dropped, key) : c.dropped,
+              }));
+            }
+            toast.add({
+              type: "error",
+              title:
+                outcome === "gone"
+                  ? t`Couldn’t save your grade for “${term}”. The card is no longer in your decks.`
+                  : t`Couldn’t save your grade for “${term}”. You’ll see it again.`,
+            });
+          }
+          // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
+          const behind = gradeStore
+            .snapshot()
+            .filter((g) => new Date(g.reviewedAt).getTime() >= data.fetchedAt).length;
+          if (outcome !== "sent" || behind >= REFRESH_AFTER || runningShort) {
+            void qc.invalidateQueries({ queryKey: ["queue"] });
+          }
+        })
+        .finally(() => setSending((n) => n - 1));
     },
     [revealed, current, data, state, leg, drawLeg, invalidateReviewData, qc, t],
   );

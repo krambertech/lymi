@@ -125,8 +125,8 @@ interface Flushed {
   offline: boolean;
   /** Modes with a grade still queued, so a later grade of the same mode waits behind it. */
   held: Set<string>;
-  /** Grades the server refused and the outbox dropped. */
-  refused: LocalGrade[];
+  /** Grades the server refused and the outbox dropped, with the status it gave. */
+  refused: { grade: LocalGrade; status: number }[];
 }
 
 async function flushQueued(): Promise<Flushed> {
@@ -147,7 +147,7 @@ async function flushQueued(): Promise<Flushed> {
       const refused = err instanceof ApiError && err.status >= 400 && err.status < 500;
       if (refused && err.status !== 401) {
         write(read().filter((g) => !same(g, grade)));
-        result.refused.push(grade);
+        result.refused.push({ grade, status: err.status });
       } else result.held.add(modeOfGrade(grade));
     }
   }
@@ -159,14 +159,16 @@ export function flushOutbox(): Promise<number> {
   return serial(async () => (await flushQueued()).sent);
 }
 
-export type Recorded = "sent" | "queued" | "duplicate" | "refused";
+/** `gone` is a refusal because the card is no longer the learner's to grade. */
+export type Recorded = "sent" | "queued" | "duplicate" | "refused" | "gone";
 
 /** Keeps a grade on the device at once, so the review never waits, then sends it after any queued before it. */
 export function recordGrade(grade: LocalGrade & { timezone?: string }): Promise<Recorded> {
   write([...read(), grade]);
   return serial(async (): Promise<Recorded> => {
     const flushed = await flushQueued();
-    if (flushed.refused.some((g) => same(g, grade))) return "refused";
+    const refused = flushed.refused.find((r) => same(r.grade, grade));
+    if (refused) return refused.status === 404 ? "gone" : "refused";
     const kept = read().find((g) => same(g, grade));
     // Gone without a refusal means a flush found a later grade of this mode on the server.
     if (!kept) return "duplicate";

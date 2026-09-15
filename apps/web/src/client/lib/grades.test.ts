@@ -85,8 +85,14 @@ describe("recording a grade", () => {
   });
 
   it("drops a refused grade, so the card comes back", async () => {
-    grade.mockRejectedValueOnce(new ApiError(404, "gone"));
+    grade.mockRejectedValueOnce(new ApiError(422, "invalid"));
     expect(await grades.recordGrade(g("a"))).toBe("refused");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("tells a grade for a card that is gone from any other refusal", async () => {
+    grade.mockRejectedValueOnce(new ApiError(404, "gone"));
+    expect(await grades.recordGrade(g("a"))).toBe("gone");
     expect(grades.gradeStore.snapshot()).toEqual([]);
   });
 

@@ -39,6 +39,14 @@ const DevPanel =
     ? lazy(() => import("../dev/dev-panel"))
     : null;
 
+/**
+ * A review has no pill nav, so a toast clears the grade strip instead. On a phone the strip sits on
+ * the bottom edge; on a desktop its top is 116 px up while the card fits, or 692 px down once the
+ * card reaches its 600 px cap; from 92 rem the corner is beside the strip.
+ */
+const REVIEW_TOAST_INSET =
+  "[--toast-inset:calc(env(safe-area-inset-bottom)+108px)] md:[--toast-inset:max(128px,calc(100dvh-680px))] min-[92rem]:[--toast-inset:1rem]";
+
 /** The streak is a place, so its open state is here: Back closes it, and a reload or a link keeps it. ADR 0017. */
 const RootSearch = z.object({ streak: z.literal(true).optional().catch(undefined) });
 
@@ -58,7 +66,11 @@ function Root() {
         <AddCardProvider>
           <SignOutProvider>
             <Shell />
-            <Toaster label={t`Notifications`} closeLabel={t`Dismiss`} />
+            <Toaster
+              label={t`Notifications`}
+              closeLabel={t`Dismiss`}
+              viewportClassName={pathname.startsWith("/review") ? REVIEW_TOAST_INSET : undefined}
+            />
             {/* Personas and seeds mean nothing on the design system pages. */}
             {DevPanel && !pathname.startsWith("/design") && (
               <Suspense fallback={null}>

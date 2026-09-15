@@ -39,8 +39,14 @@ msgstr "{0, plural, one {# section} other {# sections}}"
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
 
+msgid "{cards, plural, one {card} other {cards}}"
+msgstr "{cards, plural, one {card} other {cards}}"
+
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
+
+msgid "{decks, plural, one {deck} other {decks}}"
+msgstr "{decks, plural, one {deck} other {decks}}"
 
 msgid "{known}% known"
 msgstr "{known}% known"
@@ -50,6 +56,12 @@ msgstr "{learners, plural, one {# learner} other {# learners}}"
 
 msgid "{learners, plural, one {Reached # learner} other {Reached all # learners}}"
 msgstr "{learners, plural, one {Reached # learner} other {Reached all # learners}}"
+
+msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
+msgstr "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
+
+msgid "{reviews, plural, one {past review} other {past reviews}}"
+msgstr "{reviews, plural, one {past review} other {past reviews}}"
 
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
@@ -360,6 +372,9 @@ msgstr "Card. Thanks!"
 msgid "Cards in"
 msgstr "Cards in"
 
+msgid "Cards keep the due dates they had in {app}."
+msgstr "Cards keep the due dates they had in {app}."
+
 msgid "Catching up with a friend"
 msgstr "Catching up with a friend"
 
@@ -500,6 +515,9 @@ msgstr "Does the AI write my cards?"
 
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Doing it twice has the same effect as doing it once"
+
+msgid "Don’t start from scratch."
+msgstr "Don’t start from scratch."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Don’t take down a fence until you know why it was put up"
@@ -811,6 +829,12 @@ msgstr "Illustration of recall over thirty days. One line fades after a card is 
 msgid "Illustration only. Your review timing adapts to what you remember."
 msgstr "Illustration only. Your review timing adapts to what you remember."
 
+msgid "Import"
+msgstr "Import"
+
+msgid "Import your flashcards from Anki or Mochi. Decks, pictures and review history come too, so nothing you’ve learned starts over."
+msgstr "Import your flashcards from Anki or Mochi. Decks, pictures and review history come too, so nothing you’ve learned starts over."
+
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "In a bar in Spain, you ask them to “put” you one."
 
@@ -1024,14 +1048,14 @@ msgstr "Lymi for teachers · One deck for your whole class"
 msgid "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 msgstr "Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from a spreadsheet, or show what’s due on your own site."
 
-msgid "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
-msgstr "Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
-
 msgid "Lymi home"
 msgstr "Lymi home"
 
-msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
-msgstr "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
+msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
+msgstr "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
+
+msgid "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
+msgstr "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
 
 msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
 msgstr "Lymi is private for now. Leave your email and we’ll write when a place opens."
@@ -1098,6 +1122,12 @@ msgstr "More than a translation."
 
 msgid "Most land plants have one."
 msgstr "Most land plants have one."
+
+msgid "Moving from Anki"
+msgstr "Moving from Anki"
+
+msgid "Moving from Mochi"
+msgstr "Moving from Mochi"
 
 msgid "Music"
 msgstr "Music"
@@ -1385,8 +1415,8 @@ msgstr "Said to cut a rambling story down to its point."
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
 
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free during the beta."
-msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Free during the beta."
+msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free during the beta."
+msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free during the beta."
 
 msgid "Say it"
 msgstr "Say it"
@@ -1477,6 +1507,9 @@ msgstr "Sounds good"
 
 msgid "Sounds good; that works"
 msgstr "Sounds good; that works"
+
+msgid "Source code"
+msgstr "Source code"
 
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Soviet Russia recognised Estonia’s independence"
@@ -1834,6 +1867,9 @@ msgstr "what"
 
 msgid "What an object’s shape tells you to do with it"
 msgstr "What an object’s shape tells you to do with it"
+
+msgid "What comes across"
+msgstr "What comes across"
 
 msgid "What does it cost?"
 msgstr "What does it cost?"

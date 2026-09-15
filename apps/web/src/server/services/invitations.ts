@@ -3,10 +3,8 @@ import { newId } from "@lymi/core";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { type ServiceContext, ServiceError } from "./context";
+import { previewDoor } from "./deck-door";
 import { join, ownedDeck } from "./members";
-
-/** How many cards a join page shows. They are drawn at random on every visit. */
-const JOIN_SAMPLES = 10;
 
 /** 24 random bytes as base64url: 192 bits, so a join link cannot be guessed. */
 const TOKEN_SHAPE = /^[A-Za-z0-9_-]{32}$/;
@@ -136,87 +134,22 @@ export async function joinLinkAdmits(db: Db, token: string): Promise<boolean> {
   return Boolean(link && !link.revokedAt && !link.deckArchivedAt);
 }
 
-/**
- * What the join page may show to this viewer: the deck's size and a few example cards while
- * the link works, and nothing about the deck once it does not.
- */
+/** What the join page may show this viewer while the link works, and nothing once it does not. */
 export async function previewJoin(
   db: Db,
   token: string,
   viewerId: string | null,
 ): Promise<JoinPreviewOut> {
   const link = await linkByToken(db, token);
-  if (!link) {
-    return {
-      status: "invalid",
-      deck: null,
-      viewer: viewerId ? "visitor" : "signed-out",
-      deckId: null,
-    };
-  }
-
-  const viewer = await viewerOf(db, { id: link.deckId, ownerId: link.ownerId }, viewerId);
-  const status = link.revokedAt ? "off" : link.deckArchivedAt ? "archived" : "live";
-  const canOpen = (viewer === "owner" || viewer === "member") && !link.deckArchivedAt;
-  const deck =
-    status === "live"
-      ? await deckSample(db, {
-          id: link.deckId,
-          name: link.deckName,
-          language: link.deckLanguage,
-          ownerName: link.ownerName,
-        })
-      : null;
-  return { status, deck, viewer, deckId: canOpen ? link.deckId : null };
-}
-
-/** Who is looking at a deck's front door: signed out, a stranger, in it, its owner, or removed. */
-export async function viewerOf(
-  db: Db,
-  deck: { id: string; ownerId: string },
-  viewerId: string | null,
-): Promise<JoinPreviewOut["viewer"]> {
-  if (!viewerId) return "signed-out";
-  if (viewerId === deck.ownerId) return "owner";
-  const [membership] = await db
-    .select({ removedAt: schema.deckMembers.removedAt, removedBy: schema.deckMembers.removedBy })
-    .from(schema.deckMembers)
-    .where(and(eq(schema.deckMembers.deckId, deck.id), eq(schema.deckMembers.userId, viewerId)));
-  if (!membership) return "visitor";
-  if (!membership.removedAt) return "member";
-  return membership.removedBy === "owner" ? "removed" : "visitor";
-}
-
-/** The deck's size and a random few cards, for a page that shows a deck before joining it. */
-export async function deckSample(
-  db: Db,
-  deck: { id: string; name: string; language: string | null; ownerName: string },
-): Promise<NonNullable<JoinPreviewOut["deck"]>> {
-  const active = and(eq(schema.cards.deckId, deck.id), isNull(schema.cards.archivedAt));
-  const [[stats], samples] = await Promise.all([
-    db
-      .select({
-        total: sql<number>`count(*)`,
-        lastAddedAt: sql<number | null>`max(${schema.cards.createdAt})`,
-      })
-      .from(schema.cards)
-      .where(active),
-    // A random few with a meaning first, so a visit shows the deck rather than its latest lesson.
-    db
-      .select({ term: schema.cards.term, meaning: schema.cards.meaning })
-      .from(schema.cards)
-      .where(active)
-      .orderBy(sql`${schema.cards.meaning} is null`, sql`random()`)
-      .limit(JOIN_SAMPLES),
-  ]);
-  return {
-    name: deck.name,
-    total: stats?.total ?? 0,
-    owner: { name: deck.ownerName },
-    language: deck.language,
-    lastAddedAt: stats?.lastAddedAt ? new Date(stats.lastAddedAt).toISOString() : null,
-    samples,
+  const deck = link && {
+    id: link.deckId,
+    name: link.deckName,
+    language: link.deckLanguage,
+    ownerId: link.ownerId,
+    shownOwner: link.ownerName,
+    archivedAt: link.deckArchivedAt,
   };
+  return previewDoor(db, deck, Boolean(link?.revokedAt), viewerId);
 }
 
 /**

@@ -4,7 +4,7 @@ import { and, eq, isNull, sql } from "@lymi/core/db";
 import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
 import { type ServiceContext, ServiceError } from "./context";
-import { deckSample, viewerOf } from "./invitations";
+import { previewDoor } from "./deck-door";
 import { join, ownedDeck } from "./members";
 
 export function isPublicationSlug(value: string | undefined | null): value is string {
@@ -200,32 +200,15 @@ export async function previewPublication(
   viewerId: string | null,
 ): Promise<JoinPreviewOut> {
   const publication = await publicationBySlug(db, slug);
-  if (!publication) {
-    return {
-      status: "invalid",
-      deck: null,
-      viewer: viewerId ? "visitor" : "signed-out",
-      deckId: null,
-    };
-  }
-  const viewer = await viewerOf(
-    db,
-    { id: publication.deckId, ownerId: publication.ownerId },
-    viewerId,
-  );
-  const status =
-    publication.status === "withdrawn" ? "off" : publication.deckArchivedAt ? "archived" : "live";
-  const canOpen = (viewer === "owner" || viewer === "member") && !publication.deckArchivedAt;
-  const deck =
-    status === "live"
-      ? await deckSample(db, {
-          id: publication.deckId,
-          name: publication.deckName,
-          language: publication.deckLanguage,
-          ownerName: publication.publisher,
-        })
-      : null;
-  return { status, deck, viewer, deckId: canOpen ? publication.deckId : null };
+  const deck = publication && {
+    id: publication.deckId,
+    name: publication.deckName,
+    language: publication.deckLanguage,
+    ownerId: publication.ownerId,
+    shownOwner: publication.publisher,
+    archivedAt: publication.deckArchivedAt,
+  };
+  return previewDoor(db, deck, publication?.status === "withdrawn", viewerId);
 }
 
 /**

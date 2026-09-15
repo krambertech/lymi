@@ -8,6 +8,7 @@ import {
   type ReviewModeKey,
   revealsAnswer,
 } from "@lymi/core";
+import { useQuery } from "@tanstack/react-query";
 import { cn } from "cn";
 import {
   AlertCircle,
@@ -30,6 +31,7 @@ import { useObjectUrl } from "../lib/avatar";
 import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
+import { sectionsQuery } from "../lib/queries";
 import { Button } from "./button";
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
 import { LanguageField, languageName } from "./deck-fields";
@@ -58,6 +60,8 @@ export interface CardFormValues {
   reviewModes: ReviewModeKey[] | null;
   picture: PictureDraft;
   description: string;
+  /** A section of the chosen deck, or none. */
+  sectionId: string | null;
 }
 
 /** What a submit did, so the form can say it under the term. */
@@ -78,6 +82,8 @@ export interface CardFormProps {
   decks: DeckSummary[] | undefined;
   /** Preselect a deck, e.g. when opened from a deck page. */
   deckId?: string | undefined;
+  /** Preselect a section of that deck. */
+  sectionId?: string | undefined;
   /** The card being edited. */
   card?: Card | undefined;
   /** A discarded draft being brought back. */
@@ -126,6 +132,7 @@ export function CardForm({
   mode,
   decks,
   deckId,
+  sectionId,
   card,
   draft,
   pending,
@@ -148,6 +155,9 @@ export function CardForm({
   const [term, setTerm] = useState(draft?.term ?? card?.term ?? "");
   const [meaning, setMeaning] = useState(draft?.meaning ?? card?.meaning ?? "");
   const [deck, setDeck] = useState(draft?.deckId ?? card?.deckId ?? deckId ?? "");
+  const [section, setSection] = useState<string | null>(
+    draft ? draft.sectionId : card ? card.sectionId : (sectionId ?? null),
+  );
   const [pronunciation, setPronunciation] = useState(
     draft?.pronunciation ?? card?.pronunciation ?? "",
   );
@@ -216,6 +226,10 @@ export function CardForm({
 
   const noDecks = owned?.length === 0;
   const current = decks?.find((d) => d.id === deck);
+  const sections = useQuery({
+    ...sectionsQuery(deck),
+    enabled: !st && !!deck && current?.role === "owner",
+  }).data?.sections;
   const deckLanguage = current?.defaultLanguage ?? null;
   const language = chosenLanguage ? chosenLanguage.value : deckLanguage;
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
@@ -235,6 +249,7 @@ export function CardForm({
     reviewModes: modes,
     picture,
     description: description.trim(),
+    sectionId: section,
   };
   const draftRef = useRef(onDraftChange);
   draftRef.current = onDraftChange;
@@ -449,6 +464,7 @@ export function CardForm({
       <Select
         value={deck || null}
         onValueChange={(v) => {
+          if ((v ?? "") !== deck) setSection(null);
           setDeck(v ?? "");
           clear("deckId");
         }}
@@ -466,6 +482,33 @@ export function CardForm({
         </SelectContent>
       </Select>
       <FieldError>{invalid.deckId}</FieldError>
+    </Field>
+  );
+
+  // A deck with sections asks which one; the list is the deck's own, so a moved card leaves its section.
+  const sectionField = sections && sections.length > 0 && (
+    <Field>
+      <FieldLabel aside={t`Optional`}>{t`Section`}</FieldLabel>
+      <Select
+        value={section ?? ""}
+        onValueChange={(v) => setSection(v ? v : null)}
+        items={[
+          { value: "", label: t`No section` },
+          ...sections.map((s) => ({ value: s.id, label: s.name })),
+        ]}
+      >
+        <SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent aria-label={t`Section`}>
+          <SelectItem value="">{t`No section`}</SelectItem>
+          {sections.map((s) => (
+            <SelectItem key={s.id} value={s.id}>
+              {s.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </Field>
   );
 
@@ -634,6 +677,7 @@ export function CardForm({
           {termField}
           {meaningField}
           {deckField}
+          {sectionField}
           <FieldChipRow label={t`More about this card`}>
             <FieldChip
               icon={TextQuote}
@@ -699,6 +743,7 @@ export function CardForm({
           {termField}
           {meaningField}
           {deckField}
+          {sectionField}
           <button
             type="button"
             aria-expanded={expanded}

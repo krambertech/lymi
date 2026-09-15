@@ -63,6 +63,10 @@
     {
       "name": "0015_imports.sql",
       "sha256": "a9f943137199ce79755fd3970b92445934036e920d703aedb8673092442c2e5c"
+    },
+    {
+      "name": "0016_sections.sql",
+      "sha256": "ca876c458404a2325ca38a2897dd163e7ecf1eceb731e8ad69ffad3993300d81"
     }
   ]
 }

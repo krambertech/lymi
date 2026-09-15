@@ -26,6 +26,13 @@ vi.mock("../services", async () => {
     reorderSeries: vi.fn(),
     archiveSeries: vi.fn(),
     restoreSeries: vi.fn(),
+    listSections: vi.fn(),
+    createSection: vi.fn(),
+    renameSection: vi.fn(),
+    reorderSections: vi.fn(),
+    setCardsSection: vi.fn(),
+    archiveSection: vi.fn(),
+    restoreSection: vi.fn(),
     searchCards: vi.fn(),
     showCard: vi.fn(),
     addCards: vi.fn(),
@@ -55,6 +62,7 @@ const deck: Awaited<ReturnType<typeof getDeck>> = {
   reviewModes: [{ cue: "term", target: "meaning" }],
   position: 0,
   seriesId: null,
+  sectionProgression: "automatic",
   archivedAt: null,
   importId: null,
   externalId: null,
@@ -76,6 +84,7 @@ const card: CardView = {
   language: "it",
   tags: [],
   source: null,
+  sectionId: null,
   directions: null,
   reviewModes: null,
   image: null,
@@ -119,8 +128,10 @@ describe("Lymi MCP server", () => {
       "archive_card",
       "archive_card_image",
       "archive_deck",
+      "archive_section",
       "archive_series",
       "create_deck",
+      "create_section",
       "create_series",
       "describe_card_image",
       "due_counts",
@@ -130,11 +141,16 @@ describe("Lymi MCP server", () => {
       "get_settings",
       "get_streak",
       "list_decks",
+      "list_sections",
       "list_series",
+      "move_cards_to_section",
+      "rename_section",
+      "reorder_sections",
       "reorder_series",
       "restore_card",
       "restore_card_image",
       "restore_deck",
+      "restore_section",
       "restore_series",
       "search_cards",
       "set_card_image",
@@ -194,6 +210,7 @@ describe("Lymi MCP server", () => {
         reviewModes: [{ cue: "term", target: "meaning" }],
         position: 0,
         seriesId: "series-1",
+        sectionProgression: "automatic",
         total: 12,
         due: 3,
         ...owned,
@@ -287,6 +304,12 @@ describe("Lymi MCP server", () => {
       ["reorder_series", { seriesIds: ["series-1"] }],
       ["archive_series", { seriesId: "series-1", decks: "keep" }],
       ["restore_series", { seriesId: "series-1" }],
+      ["create_section", { deckId: "deck-1", name: "Lesson 1" }],
+      ["rename_section", { sectionId: "section-1", name: "Lesson 2" }],
+      ["reorder_sections", { deckId: "deck-1", sectionIds: ["section-1"] }],
+      ["move_cards_to_section", { deckId: "deck-1", cardIds: ["card-1"], sectionId: null }],
+      ["archive_section", { sectionId: "section-1", cards: "keep" }],
+      ["restore_section", { sectionId: "section-1" }],
       ["update_settings", { appLanguage: "uk" }],
     ] as const) {
       const res = await client.callTool({ name, arguments: args });
@@ -312,6 +335,12 @@ describe("Lymi MCP server", () => {
     expect(services.reorderSeries).not.toHaveBeenCalled();
     expect(services.archiveSeries).not.toHaveBeenCalled();
     expect(services.restoreSeries).not.toHaveBeenCalled();
+    expect(services.createSection).not.toHaveBeenCalled();
+    expect(services.renameSection).not.toHaveBeenCalled();
+    expect(services.reorderSections).not.toHaveBeenCalled();
+    expect(services.setCardsSection).not.toHaveBeenCalled();
+    expect(services.archiveSection).not.toHaveBeenCalled();
+    expect(services.restoreSection).not.toHaveBeenCalled();
     expect(services.updateSettings).not.toHaveBeenCalled();
   });
 
@@ -358,6 +387,73 @@ describe("Lymi MCP server", () => {
       arguments: { seriesId: "series-1" },
     });
     expect(empty.isError).toBe(true);
+  });
+
+  it("moves many cards to a section in one call, through the same service as the API", async () => {
+    const section = {
+      id: "section-1",
+      deckId: "deck-1",
+      name: "Lesson 14",
+      position: 0,
+      total: 2,
+      known: 0,
+      notStarted: 2,
+      knownNeeded: 2,
+      status: "open" as const,
+      archivedCards: 0,
+      archivedAt: null,
+      createdAt: now,
+      updatedAt: now,
+    };
+    services.setCardsSection.mockResolvedValue({
+      sections: [section],
+      progress: { currentId: "section-1", nextId: null, ready: false },
+    });
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "move_cards_to_section",
+      arguments: { deckId: "deck-1", cardIds: ["card-1", "card-2"], sectionId: "section-1" },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.setCardsSection).toHaveBeenCalledWith(expect.anything(), "deck-1", {
+      cardIds: ["card-1", "card-2"],
+      sectionId: "section-1",
+    });
+    expect(res.structuredContent).toMatchObject({
+      sections: [{ id: "section-1", status: "open", total: 2 }],
+      progress: { currentId: "section-1" },
+    });
+  });
+
+  it("refuses a move that lists a card twice, as the API does", async () => {
+    const client = await connect("write");
+    const res = await client.callTool({
+      name: "move_cards_to_section",
+      arguments: { deckId: "deck-1", cardIds: ["card-1", "card-1"], sectionId: null },
+    });
+    expect(res.isError).toBe(true);
+    expect(services.setCardsSection).not.toHaveBeenCalled();
+  });
+
+  it("archives a section only with an explicit choice about its cards", async () => {
+    services.archiveSection.mockResolvedValue({ ok: true });
+    const client = await connect("write");
+
+    const missing = await client.callTool({
+      name: "archive_section",
+      arguments: { sectionId: "section-1" },
+    });
+    expect(missing.isError).toBe(true);
+
+    await client.callTool({
+      name: "archive_section",
+      arguments: { sectionId: "section-1", cards: "archive" },
+    });
+    expect(services.archiveSection).toHaveBeenCalledWith(expect.anything(), "section-1", {
+      cards: "archive",
+    });
   });
 
   it("archives a series only with an explicit choice about its decks", async () => {

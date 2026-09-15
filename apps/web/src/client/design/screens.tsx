@@ -534,6 +534,20 @@ export const SCREENS: Entry[] = [
               static={{ path: "/library/d1" }}
             />
           </PhoneShot>
+          <PhoneShot caption="A deck with sections" initial="light" path="/library">
+            <DeckDetailView
+              deck={m.decks[0]}
+              cards={m.deckCardsInSections}
+              streak={m.streak}
+              onAdd={noop}
+              onArchive={noop}
+              openCardId={null}
+              sections={m.sections}
+              progress={m.sectionProgress}
+              onStartSection={noop}
+              static={{ path: "/library/d1" }}
+            />
+          </PhoneShot>
           <PhoneShot caption="A card" initial="light" path="/library">
             <div className="px-5 pt-5">
               <WordView
@@ -566,6 +580,41 @@ export const SCREENS: Entry[] = [
                   next={{ d3: "Monday" }}
                   archivedCount={2}
                   static={{ path: "/library" }}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+        <Shot caption="Desktop, a deck whose next section is ready, as its owner" initial="dark">
+          {(t) => (
+            <Desktop theme={t} height={760}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                docsUrl="https://lymi.app/docs"
+                onAdd={noop}
+                static={{ path: "/library/d1" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <DeckDetailView
+                  deck={{ ...m.decks[0], due: 0 } as NonNullable<(typeof m.decks)[0]>}
+                  cards={m.deckCardsInSections}
+                  onAdd={noop}
+                  onArchive={noop}
+                  streak={m.streak}
+                  openCardId={null}
+                  sections={m.readySections}
+                  progress={m.readyProgress}
+                  onStartSection={noop}
+                  sectionActions={{
+                    onCreate: noop,
+                    onRename: noop,
+                    onAddCard: noop,
+                    onManage: noop,
+                    onPickSection: noop,
+                    onMoveCards: noop,
+                  }}
+                  static={{ path: "/library/d1" }}
                 />
               </main>
             </Desktop>

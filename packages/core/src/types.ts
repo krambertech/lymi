@@ -76,6 +76,15 @@ export const ReviewModes = z
 export const MemberRole = z.enum(["owner", "editor", "contributor", "learner"]);
 export type MemberRole = z.infer<typeof MemberRole>;
 
+/** How a deck's sections open for each learner. */
+export const SECTION_PROGRESSIONS = ["automatic", "manual", "open"] as const;
+export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
+  id: "SectionProgression",
+  description:
+    "How each learner's sections open. automatic, the default: the next section opens once every card of the current one has come up and 80% are Known. manual: it becomes ready then, and the learner starts it. open: every section is open. Anyone can start a later section early.",
+});
+export type SectionProgression = z.infer<typeof SectionProgression>;
+
 export const DeckInput = z.object({
   name: z
     .string()
@@ -98,6 +107,7 @@ export const DeckInput = z.object({
     description:
       "One of the owner's active series; the deck goes last in it. Null takes the deck out of its series.",
   }),
+  sectionProgression: SectionProgression.optional(),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
@@ -151,6 +161,56 @@ export const SeriesArchiveInput = z.object({
 });
 export type SeriesArchiveInput = z.infer<typeof SeriesArchiveInput>;
 
+const SectionName = z
+  .string()
+  .trim()
+  .min(1, "Give the section a name.")
+  .max(80, "Keep the name under 80 characters.");
+
+/** Card ids, each once. */
+const CardIds = z
+  .array(z.string().min(1))
+  .max(500)
+  .refine((ids) => new Set(ids).size === ids.length, "List each card once.");
+
+export const SectionInput = z.object({
+  name: SectionName,
+  cardIds: CardIds.optional().meta({
+    description: "Cards of the deck to move into the new section",
+  }),
+});
+export type SectionInput = z.infer<typeof SectionInput>;
+
+export const SectionPatch = z.object({ name: SectionName });
+export type SectionPatch = z.infer<typeof SectionPatch>;
+
+export const SectionOrderInput = z.object({
+  sectionIds: z
+    .array(z.string().min(1))
+    .max(500)
+    .refine((ids) => new Set(ids).size === ids.length, "List each section once.")
+    .meta({ description: "Every active section of the deck, in the new order" }),
+});
+export type SectionOrderInput = z.infer<typeof SectionOrderInput>;
+
+/** What happens to a section's active cards when it is archived. */
+export const SectionArchiveInput = z.object({
+  cards: z.enum(["archive", "keep"]).meta({
+    description:
+      "archive: the cards leave the deck and review with the section. keep: they stay in the deck, without a section.",
+  }),
+});
+export type SectionArchiveInput = z.infer<typeof SectionArchiveInput>;
+
+/** Put many cards of one deck in a section, or take them out of theirs. */
+export const CardSectionInput = z.object({
+  cardIds: CardIds.min(1, "Choose at least one card."),
+  sectionId: z.string().min(1).nullable().meta({
+    description: "An active section of the same deck. Null takes the cards out of theirs.",
+  }),
+});
+export type CardSectionInput = z.infer<typeof CardSectionInput>;
+
 export const CardInput = z.object({
   deckId: z.string().min(1, "Choose a deck for it to go in."),
   term: z.string().trim().min(1, "Type the term.").max(500, "Keep the term under 500 characters."),
@@ -169,6 +229,10 @@ export const CardInput = z.object({
     .meta({ description: "Overrides the deck's review modes. Null follows the deck." }),
   meaningSource: FieldSource.optional(),
   exampleSource: FieldSource.optional(),
+  sectionId: z.string().min(1).nullable().optional().meta({
+    description:
+      "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",
+  }),
 });
 export type CardInput = z.infer<typeof CardInput>;
 

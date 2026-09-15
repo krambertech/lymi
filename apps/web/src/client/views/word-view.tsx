@@ -11,6 +11,7 @@ import {
   ChevronRight,
   FolderInput,
   Image as ImageIcon,
+  ListTree,
   type LucideIcon,
   MoreHorizontal,
   Pencil,
@@ -187,6 +188,8 @@ export interface WordProps {
   /** Every deck the word could move to. The menu lists them by name. */
   decks?: { id: string; name: string }[] | undefined;
   onMove?: ((deckId: string) => void) | undefined;
+  /** Opens the section picker. Only a deck's owner, in a deck with sections, is offered it. */
+  onMoveToSection?: (() => void) | undefined;
   onPlayAudio?: (() => void) | undefined;
   /** The term heading's id, so a sheet or drawer holding the word can take its name. */
   titleId?: string | undefined;
@@ -344,6 +347,7 @@ export function WordView({
   onArchive,
   decks,
   onMove,
+  onMoveToSection,
   onPlayAudio,
   titleId,
   onBusyChange,
@@ -451,6 +455,12 @@ export function WordView({
             <FolderInput />
             <Trans>Move to…</Trans>
           </DropdownMenuItem>
+          {onMoveToSection && (
+            <DropdownMenuItem onClick={onMoveToSection}>
+              <ListTree />
+              <Trans>Move to section…</Trans>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" onClick={onArchive} disabled={!onArchive}>
             <Archive />

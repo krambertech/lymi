@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm";
 import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
-import { REVIEW_MODE_KEYS, type ReviewModeKey } from "../types";
+import { REVIEW_MODE_KEYS, type ReviewModeKey, SECTION_PROGRESSIONS } from "../types";
 import { user } from "./auth";
 
 const timestamps = {
@@ -56,11 +56,61 @@ export const decks = sqliteTable(
     importId: text("import_id"),
     /** The source's own key for the deck, so a later import of the same file reuses it. */
     externalId: text("external_id"),
+    /**
+     * How each learner's sections open: automatically once the one before is known, when they
+     * press Start, or all at once. Only a deck with sections reads it.
+     */
+    sectionProgression: text("section_progression", { enum: SECTION_PROGRESSIONS })
+      .notNull()
+      .default("automatic"),
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
     index("decks_series_idx").on(t.seriesId, t.position),
     index("decks_user_external_idx").on(t.userId, t.externalId),
+  ],
+);
+
+/**
+ * An optional, ordered part of one deck. Every learner of the deck sees it; only the owner
+ * changes it. Cards archived with a section share its `archived_at`, so Restore finds them.
+ */
+export const sections = sqliteTable(
+  "sections",
+  {
+    id: text("id").primaryKey(),
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    position: integer("position").notNull().default(0),
+    archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
+    ...timestamps,
+  },
+  (t) => [index("sections_deck_idx").on(t.deckId, t.archivedAt, t.position)],
+);
+
+/**
+ * A learner opened a section: with Start once it was ready, early, or automatically. Rows are never removed, so a
+ * section never locks again. Opening a later section writes a row for every section before it.
+ */
+export const sectionStarts = sqliteTable(
+  "section_starts",
+  {
+    id: text("id").primaryKey(),
+    sectionId: text("section_id")
+      .notNull()
+      .references(() => sections.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** ready: Start on a ready section. early: Start anyway. auto: the deck opened it. */
+    how: text("how", { enum: ["ready", "early", "auto"] }).notNull(),
+    startedAt: integer("started_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [
+    uniqueIndex("section_starts_section_user_idx").on(t.sectionId, t.userId),
+    index("section_starts_user_idx").on(t.userId),
   ],
 );
 
@@ -110,11 +160,14 @@ export const cards = sqliteTable(
     importId: text("import_id"),
     /** The source's own id for the card, so importing the same file again updates it. */
     externalId: text("external_id"),
+    /** A section of the card's own deck. Kept while the section is archived, so Restore regroups the card. */
+    sectionId: text("section_id").references(() => sections.id),
   },
   (t) => [
     index("cards_deck_idx").on(t.deckId, t.archivedAt),
     index("cards_user_external_idx").on(t.userId, t.externalId),
     index("cards_import_idx").on(t.importId, t.archivedAt),
+    index("cards_section_idx").on(t.sectionId),
     index("cards_user_term_idx").on(t.userId, t.term),
     index("cards_user_lang_norm_idx").on(t.userId, t.language, t.normalizedTerm),
   ],
@@ -475,6 +528,8 @@ export const auditLog = sqliteTable(
 
 export type Series = typeof series.$inferSelect;
 export type Deck = typeof decks.$inferSelect;
+export type Section = typeof sections.$inferSelect;
+export type SectionStart = typeof sectionStarts.$inferSelect;
 export type Card = typeof cards.$inferSelect;
 export type DeckMember = typeof deckMembers.$inferSelect;
 export type DeckInvitation = typeof deckInvitations.$inferSelect;

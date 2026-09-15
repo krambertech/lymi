@@ -219,6 +219,7 @@ function Shell() {
         open={add.open === "card"}
         onOpenChange={(v) => (v ? add.openCard() : add.close("card"))}
         deckId={add.deckId}
+        sectionId={add.sectionId}
         onCreateDeck={add.openDeck}
       />
       <NewDeckSheet

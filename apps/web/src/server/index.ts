@@ -25,6 +25,7 @@ import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
 import { push } from "./routes/push";
 import { review } from "./routes/review";
+import { deckSections, sections } from "./routes/sections";
 import { series } from "./routes/series";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
@@ -159,6 +160,8 @@ app.get(
 
 app.route("/api/decks", decks);
 app.route("/api/series", series);
+app.route("/api/decks", deckSections);
+app.route("/api/sections", sections);
 app.route("/api/join", join);
 app.route("/api/cards", cards);
 app.route("/api/cards", images);

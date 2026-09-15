@@ -31,6 +31,7 @@ import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { memberOf } from "./members";
 import { askedSql, stateMode } from "./modes";
+import { waitingCardsSql } from "./sections";
 import { slippingCardIds } from "./slipping";
 
 /**
@@ -153,6 +154,9 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     createdAt: sibling.createdAt,
   };
 
+  // A locked section's cards wait, except one the learner already started: progress never hides.
+  const waiting = await waitingCardsSql(ctx, opts.deckId);
+
   const where = and(
     eq(schema.cardStates.userId, userId),
     memberOf(userId),
@@ -166,6 +170,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
     opts.seriesId ? inSeries(userId, opts.seriesId) : undefined,
+    waiting ? sql`not (${waiting})` : undefined,
   );
   const siblingOn = and(
     eq(sibling.cardId, schema.cardStates.cardId),

@@ -3,7 +3,7 @@ import { createContext, type ReactNode, useContext, useMemo, useState } from "re
 
 interface AddCard {
   /** Open the capture sheet, optionally targeting one deck. */
-  openCard: (deckId?: string) => void;
+  openCard: (deckId?: string, opts?: { sectionId?: string | undefined }) => void;
   /** Open the new-deck field. */
   openDeck: () => void;
   /** Go to the import screen, the third thing the plus adds. */
@@ -12,6 +12,8 @@ interface AddCard {
   /** What is open: nothing, the capture sheet, or the new-deck field. */
   open: "card" | "deck" | null;
   deckId: string | undefined;
+  /** The section the capture sheet was opened for, from a section's menu. */
+  sectionId: string | undefined;
 }
 
 const Ctx = createContext<AddCard | null>(null);
@@ -24,17 +26,21 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState<"card" | "deck" | null>(null);
   const [deckId, setDeckId] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
+  const [sectionId, setSectionId] = useState<string | undefined>(undefined);
 
   const value = useMemo<AddCard>(
     () => ({
       open,
       deckId,
-      openCard: (id) => {
+      sectionId,
+      openCard: (id, opts) => {
         setDeckId(id);
+        setSectionId(opts?.sectionId);
         setOpen("card");
       },
       openDeck: () => {
         setDeckId(undefined);
+        setSectionId(undefined);
         setOpen("deck");
       },
       openImport: () => {
@@ -44,7 +50,7 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
       close: (expected) =>
         setOpen((current) => (expected && current !== expected ? current : null)),
     }),
-    [open, deckId, navigate],
+    [open, deckId, sectionId, navigate],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

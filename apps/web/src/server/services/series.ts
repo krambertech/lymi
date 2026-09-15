@@ -8,17 +8,13 @@ import { newId } from "@lymi/core";
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { auditStatement, auditStatementWhen } from "../audit";
 import { type Db, schema } from "../db";
+import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { listDecks } from "./decks";
 import { memberOf } from "./members";
 import { activeSeries, ownedSeries } from "./series-access";
 
 type Statement = Parameters<Db["batch"]>[0][number];
-
-async function runBatch(db: Db, statements: Statement[]) {
-  const [first, ...rest] = statements;
-  if (first) await db.batch([first, ...rest]);
-}
 
 /** A list of ids as one bound JSON parameter, since D1 caps a query at 100 parameters. */
 const jsonIds = (ids: readonly string[]) => JSON.stringify(ids);

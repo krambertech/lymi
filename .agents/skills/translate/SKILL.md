@@ -47,6 +47,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | deck | колода | колода |
 | Library (screen) | Бібліотека | Библиотека |
 | series (group of decks) | серія | серия |
+| section (part of a deck) | розділ | раздел |
 | Today (screen) | Сьогодні | Сегодня |
 | You (screen) | Ти | Ты |
 | Insights (screen) | Огляд | Обзор |

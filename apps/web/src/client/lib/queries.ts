@@ -27,6 +27,19 @@ export const deckCardsQuery = (deckId: string) =>
     queryFn: () => api.deckCards(deckId),
     staleTime: 0,
   });
+// Under the deck's key, so every review that refreshes the decks refreshes where the learner is.
+export const sectionsQuery = (deckId: string) =>
+  queryOptions({
+    queryKey: ["decks", deckId, "sections"],
+    queryFn: () => api.sections(deckId),
+    staleTime: 0,
+  });
+export const archivedSectionsQuery = (deckId: string) =>
+  queryOptions({
+    queryKey: ["decks", deckId, "sections", "archived"],
+    queryFn: () => api.archivedSections(deckId),
+    staleTime: 0,
+  });
 // Series counts move with every review, like the decks they add up from.
 export const seriesQuery = queryOptions({
   queryKey: ["series"],

@@ -4,10 +4,12 @@ import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/d
 import type { Card } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
+import { selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { memberOf } from "./members";
 import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
+import { activeSectionOf } from "./sections";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -51,6 +53,14 @@ export async function addCards(
       .where(and(inArray(schema.decks.id, ids), memberOf(userId), isNull(schema.decks.archivedAt))),
   );
   const deckById = new Map(decks.map((d) => [d.id, d]));
+  const sectionIds = [...new Set(inputs.flatMap((i) => (i.sectionId ? [i.sectionId] : [])))];
+  const sections = await selectIn(sectionIds, (ids) =>
+    db
+      .select({ id: schema.sections.id, deckId: schema.sections.deckId })
+      .from(schema.sections)
+      .where(and(inArray(schema.sections.id, ids), isNull(schema.sections.archivedAt))),
+  );
+  const sectionDeck = new Map(sections.map((s) => [s.id, s.deckId]));
 
   // Resolve language and key per input, then look up every key in one query.
   const prepared = inputs.map((input) => {
@@ -59,6 +69,7 @@ export async function addCards(
     if (deck.userId !== userId) {
       throw new ServiceError("forbidden", "Only the deck's owner can add cards to it");
     }
+    if (input.sectionId && sectionDeck.get(input.sectionId) !== deck.id) throw notFound("Section");
     const language = input.language === undefined ? deck.defaultLanguage : input.language;
     return { input, deck, language, key: normaliseTerm(input.term) };
   });
@@ -118,6 +129,7 @@ export async function addCards(
       imageVersion: null,
       importId: null,
       externalId: null,
+      sectionId: input.sectionId ?? null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       audioKey: null,
@@ -177,19 +189,6 @@ async function runInBatches(db: Db, groups: Statement[][]) {
     batch.push(...group);
   }
   await flush();
-}
-
-/**
- * D1 allows 100 bound parameters per query and a lesson can be 200 terms, so `IN (...)`
- * lists are queried in slices. Returns every row across the slices.
- */
-async function selectIn<T, R>(values: T[], select: (slice: T[]) => Promise<R[]>): Promise<R[]> {
-  const size = 90;
-  const rows: R[] = [];
-  for (let i = 0; i < values.length; i += size) {
-    rows.push(...(await select(values.slice(i, i + size))));
-  }
-  return rows;
 }
 
 /** A card with no language only matches other cards with no language. */
@@ -340,6 +339,15 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       .where(and(eq(schema.decks.id, patch.deckId), eq(schema.decks.userId, userId)));
     if (!deck) throw notFound("Deck");
   }
+  const deckId = patch.deckId ?? current.deckId;
+  if (patch.sectionId) await activeSectionOf(ctx, deckId, patch.sectionId);
+  // A section belongs to one deck, so a card that changes deck leaves its section unless given one there.
+  const section =
+    patch.sectionId !== undefined
+      ? { sectionId: patch.sectionId }
+      : deckId !== current.deckId
+        ? { sectionId: null }
+        : {};
   // Always recompute the duplicate key, so a card whose stored key predates normaliseTerm()
   // (the 0002 backfill used SQLite's ASCII-only lower()) is repaired by any edit.
   const normalizedTerm = normaliseTerm(patch.term ?? current.term);
@@ -356,6 +364,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
     .set({
       ...fields,
       ...(modes ?? {}),
+      ...section,
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
       updatedAt: new Date(),

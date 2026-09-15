@@ -124,6 +124,23 @@ export function McpOverview() {
             def: "Hide a series, with its decks or leaving them in Library, and bring it back.",
           },
           {
+            term: (
+              <>
+                <code>list_sections</code>, <code>create_section</code>, <code>rename_section</code>
+                , <code>reorder_sections</code>, <code>move_cards_to_section</code>
+              </>
+            ),
+            def: "A deck's sections: ordered parts such as one lesson each, which learners open in order. Create one, rename it, reorder them, or move many cards in or out at once.",
+          },
+          {
+            term: (
+              <>
+                <code>archive_section</code>, <code>restore_section</code>
+              </>
+            ),
+            def: "Hide a section, with its cards or leaving them in the deck, and bring it back.",
+          },
+          {
             term: <code>search_cards</code>,
             def: "Cards matching text in the term, meaning, example or notes. Can look through archived cards.",
           },

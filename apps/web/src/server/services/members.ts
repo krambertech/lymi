@@ -3,6 +3,7 @@ import { newId } from "@lymi/core";
 import { and, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { type Db, schema } from "../db";
+import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { deckModes, stateStatementsForLearner } from "./modes";
 import { deckOrder, effectiveSeriesId } from "./series-access";
@@ -70,13 +71,6 @@ export async function ownedDeck(ctx: ServiceContext, deckId: string) {
     throw new ServiceError("forbidden", "Only the deck's owner can change it");
   }
   return deck;
-}
-
-type Statement = Parameters<Db["batch"]>[0][number];
-
-async function runBatch(db: Db, statements: Statement[]) {
-  const [first, ...rest] = statements;
-  if (first) await db.batch([first, ...rest]);
 }
 
 /**

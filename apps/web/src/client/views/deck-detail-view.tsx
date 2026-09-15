@@ -8,11 +8,13 @@ import {
   KeyRound,
   Layers,
   ListFilter,
+  ListTree,
   MoreHorizontal,
   Plug,
   Plus,
   Search,
   Settings2,
+  SquareCheck,
   X,
 } from "lucide-react";
 import {
@@ -31,6 +33,7 @@ import { Button, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { NoResults } from "../components/empty-state";
 import { NextStep, NextSteps } from "../components/next-steps";
+import { SectionProgress } from "../components/section-progress";
 import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
 import { StateIcon, stateMarks } from "../components/state-mark";
@@ -49,21 +52,18 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
-import type { CardState, DeckSummary, Review } from "../lib/api";
+import type { CardState, DeckSummary, Review, Section, Sections } from "../lib/api";
 import {
   activeFilterCount,
   type DeckFilters,
-  type DeckGroup,
   type DeckRow,
   type DeckSort,
-  dueBucket,
   filterRows,
   groupRows,
-  lessonsOf,
   noFilters,
   rowState,
-  splitForms,
 } from "../lib/deck-list";
+import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
 import { type WordEvent, WordView } from "./word-view";
 
@@ -111,9 +111,25 @@ export interface DeckDetailProps {
   connectUrl?: string | undefined;
   /** Whether an assistant is connected; undefined while unknown, so its row does not flash. */
   connected?: boolean | undefined;
+  /** The deck's active sections with the learner's standing, and where the learner is. */
+  sections?: Section[] | undefined;
+  progress?: Sections["progress"] | undefined;
+  /** Start a section, for anyone studying the deck. */
+  onStartSection?: ((section: Section) => void) | undefined;
+  startingSection?: boolean | undefined;
+  /** The owner's section writes. Absent for a member. */
+  sectionActions?: DeckSectionActions | undefined;
   /** Draw an open card beside the list at any width, for the design system's narrower frames. */
   cardBeside?: boolean | undefined;
   static?: StaticNav;
+}
+
+/** What the owner does to sections from the deck page; the route holds the dialogs. */
+export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards"> {
+  onCreate: () => void;
+  /** Open the picker for these cards; `after` runs once they have moved. */
+  onPickSection: (cardIds: string[], after: () => void) => void;
+  onMoveCards: (cardIds: string[], section: Section | null) => void;
 }
 
 /** Word, meaning, status and next review as a CSV file the browser saves. */
@@ -154,11 +170,6 @@ export function exportCsv(deckName: string, rows: DeckRow[]) {
   URL.revokeObjectURL(url);
 }
 
-const startOfDay = (at: number) => {
-  const d = new Date(at);
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-};
-
 /** The parts under a deck's title, dot-separated, or nothing when there are none. */
 function subline(...parts: ReactNode[]) {
   const shown = parts.filter(Boolean);
@@ -192,14 +203,6 @@ function nextDueLabel(locale: string, cards: DeckRow[], now = Date.now()): strin
   return rtf.format(Math.round(days / 30), "month");
 }
 
-/** When one card is back, by calendar day: "later today", "tomorrow", "in 12 days". */
-function backLabel(locale: string, due: number, now: number): string {
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-  const days = Math.round((startOfDay(due) - startOfDay(now)) / DAY);
-  if (days < 30) return rtf.format(Math.max(days, 0), "day");
-  return rtf.format(Math.round(days / 30), "month");
-}
-
 function useWidth(ref: RefObject<HTMLElement | null>): number {
   const [width, setWidth] = useState(0);
   useLayoutEffect(() => {
@@ -226,12 +229,15 @@ function DeckPlates({
   streak,
   onReview,
   onAdd,
+  section,
 }: {
   deck: DeckSummary;
   cards: DeckRow[];
   streak?: StreakSummary | undefined;
   onReview?: (() => void) | undefined;
   onAdd: () => void;
+  /** The row about sections under Today's, when the deck opens them in order. */
+  section?: ReactNode;
 }) {
   const { t, i18n } = useLingui();
   const summary = useTodayStatus(streak);
@@ -247,38 +253,38 @@ function DeckPlates({
     // A container query styles only what is inside the container, so the plates sit one level in.
     <div className="@container/plates">
       <div className="grid gap-3">
-        <section
-          aria-label={t`Today`}
-          className="edge flex flex-wrap items-center gap-x-4 gap-y-4 rounded-xl bg-plate p-5 @md/plates:ps-6"
-        >
-          <p className="text-4xl font-semibold leading-none tracking-[-0.03em] tabular-nums">
-            {i18n.number(due)}
-          </p>
-          <div className="grid min-w-0 flex-1 gap-0.5">
-            <p className="text-md text-text">
-              <Plural value={due} one="card to review now" other="cards to review now" />
+        <section aria-label={t`Today`} className="edge grid rounded-xl bg-plate">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-4 p-5 @md/plates:ps-6">
+            <p className="text-4xl font-semibold leading-none tracking-[-0.03em] tabular-nums">
+              {i18n.number(due)}
             </p>
-            {next ? (
-              <p className="text-sm text-muted">{t`The next card is back ${next}.`}</p>
+            <div className="grid min-w-0 flex-1 gap-0.5">
+              <p className="text-md text-text">
+                <Plural value={due} one="card to review now" other="cards to review now" />
+              </p>
+              {next ? (
+                <p className="text-sm text-muted">{t`The next card is back ${next}.`}</p>
+              ) : (
+                status && <p className="text-sm text-muted">{status}</p>
+              )}
+            </div>
+            {due > 0 ? (
+              <Button
+                variant="primary"
+                onClick={onReview}
+                aria-disabled={!onReview}
+                className="w-full @md/plates:w-auto @md/plates:px-8"
+              >
+                <Trans>Review</Trans>
+              </Button>
             ) : (
-              status && <p className="text-sm text-muted">{status}</p>
+              <Button onClick={onAdd} kbd="N" className="w-full @md/plates:w-auto">
+                <Plus aria-hidden="true" />
+                <Trans>Add card</Trans>
+              </Button>
             )}
           </div>
-          {due > 0 ? (
-            <Button
-              variant="primary"
-              onClick={onReview}
-              aria-disabled={!onReview}
-              className="w-full @md/plates:w-auto @md/plates:px-8"
-            >
-              <Trans>Review</Trans>
-            </Button>
-          ) : (
-            <Button onClick={onAdd} kbd="N" className="w-full @md/plates:w-auto">
-              <Plus aria-hidden="true" />
-              <Trans>Add card</Trans>
-            </Button>
-          )}
+          {section}
         </section>
         {/* A narrow plate cannot fit four counts in the hundreds, so the total takes its own row there. */}
         <dl className="edge grid grid-cols-3 items-center rounded-xl bg-plate py-4 @md/plates:grid-cols-4">
@@ -333,7 +339,7 @@ function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }
 }
 
 function ListTools({
-  cards,
+  sections,
   filters,
   setFilters,
   sort,
@@ -342,7 +348,7 @@ function ListTools({
   setQuery,
   searchRef,
 }: {
-  cards: DeckRow[];
+  sections: Section[];
   filters: DeckFilters;
   setFilters: (next: DeckFilters) => void;
   sort: DeckSort;
@@ -352,11 +358,11 @@ function ListTools({
   searchRef: RefObject<HTMLInputElement | null>;
 }) {
   const { t, i18n } = useLingui();
-  const lessons = useMemo(() => lessonsOf(cards), [cards]);
-  const lessonName = (lesson: string) => lesson || t`No lesson`;
+  const sectionName = (id: string) =>
+    id ? (sections.find((s) => s.id === id)?.name ?? "") : t`No section`;
   const dueName = { today: t`Due today`, week: t`Due this week` };
   const sortName: Record<DeckSort, string> = {
-    lesson: t`Lesson`,
+    section: t`Section`,
     due: t`When it’s back`,
     added: t`Recently added`,
     az: t`A–Z`,
@@ -379,10 +385,10 @@ function ListTools({
           },
         ]
       : []),
-    ...filters.lessons.map((lesson) => ({
-      key: `lesson:${lesson}`,
-      label: lessonName(lesson),
-      remove: () => setFilters({ ...filters, lessons: toggle(filters.lessons, lesson, false) }),
+    ...filters.sections.map((id) => ({
+      key: `section:${id}`,
+      label: sectionName(id),
+      remove: () => setFilters({ ...filters, sections: toggle(filters.sections, id, false) }),
     })),
   ];
 
@@ -440,22 +446,22 @@ function ListTools({
                 ))}
               </DropdownMenuRadioGroup>
             </DropdownMenuGroup>
-            {lessons.length > 1 && (
+            {sections.length > 0 && (
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>
-                    <Trans>Lesson</Trans>
+                    <Trans>Section</Trans>
                   </DropdownMenuLabel>
-                  {lessons.map((lesson) => (
+                  {[...sections.map((s) => s.id), ""].map((id) => (
                     <DropdownMenuCheckboxItem
-                      key={lesson || "none"}
-                      checked={filters.lessons.includes(lesson)}
+                      key={id || "none"}
+                      checked={filters.sections.includes(id)}
                       onCheckedChange={(on) =>
-                        setFilters({ ...filters, lessons: toggle(filters.lessons, lesson, on) })
+                        setFilters({ ...filters, sections: toggle(filters.sections, id, on) })
                       }
                     >
-                      <span className="truncate">{lessonName(lesson)}</span>
+                      <span className="truncate">{sectionName(id)}</span>
                     </DropdownMenuCheckboxItem>
                   ))}
                 </DropdownMenuGroup>
@@ -474,7 +480,10 @@ function ListTools({
           />
           <DropdownMenuContent aria-label={t`Sort`}>
             <DropdownMenuRadioGroup value={sort} onValueChange={(v) => setSort(v as DeckSort)}>
-              {(["lesson", "due", "added", "az"] as const).map((key) => (
+              {(sections.length > 0
+                ? (["section", "due", "added", "az"] as const)
+                : (["added", "due", "az"] as const)
+              ).map((key) => (
                 <DropdownMenuRadioItem key={key} value={key}>
                   {sortName[key]}
                 </DropdownMenuRadioItem>
@@ -518,132 +527,58 @@ function ListTools({
 }
 
 /**
- * The words as a glossary: each row the state's mark, the term with its other forms lighter, and
- * the meaning, which drops under the term when the list is narrow. Text wraps and is never cut,
- * because it is the content. A date shows only under the When it's back sort.
+ * While cards are being chosen, this takes the place of Filter and Sort and sticks to the top of
+ * the page, so the count and the action stay where the eye already is and cover nothing.
  */
-function Glossary({
-  groups,
-  sort,
-  openId,
-  onOpen,
-  now,
+function SelectionToolbar({
+  count,
+  total,
+  onAll,
+  onClear,
+  onMove,
+  onDone,
 }: {
-  groups: DeckGroup[];
-  sort: DeckSort;
-  openId: string | null;
-  onOpen: (id: string | null) => void;
-  now: number;
+  count: number;
+  total: number;
+  onAll: () => void;
+  onClear: () => void;
+  onMove: () => void;
+  onDone: () => void;
 }) {
-  const { t, i18n } = useLingui();
-  const heading = (group: DeckGroup): string | null => {
-    switch (group.kind) {
-      case "all":
-        return null;
-      case "lesson":
-        return group.lesson || t`No lesson`;
-      case "due":
-        return {
-          now: t`Due now`,
-          week: t`This week`,
-          later: t`Later`,
-          new: t`Not started`,
-        }[group.bucket];
-      case "day": {
-        const days = Math.round((startOfDay(now) - group.day.getTime()) / DAY);
-        if (days === 0) return t`Today`;
-        if (days === 1) return t`Yesterday`;
-        const sameYear = group.day.getFullYear() === new Date(now).getFullYear();
-        return i18n.date(group.day, {
-          day: "numeric",
-          month: "long",
-          ...(sameYear ? {} : { year: "numeric" }),
-        });
-      }
-    }
-  };
-
+  const { t } = useLingui();
+  const all = count > 0 && count === total;
   return (
-    <div className="@container/list grid">
-      {groups.map((group) => {
-        const label = heading(group);
-        return (
-          <section key={group.key} className="grid" aria-label={label ?? undefined}>
-            {label && (
-              <h2 className="px-1 pt-7 pb-2.5 text-md font-medium text-balance text-text">
-                {label}
-                {/* Read as "Lesson 14, 4" rather than "Lesson 144". */}
-                <span className="sr-only">, </span>
-                <span className="ms-2 text-sm font-normal text-muted">
-                  {i18n.number(group.rows.length)}
-                </span>
-              </h2>
-            )}
-            <ul className="edge divide-y divide-edge overflow-hidden rounded-lg bg-plate">
-              {group.rows.map((row) => {
-                const { card, state } = row;
-                const { word, forms } = splitForms(card.term);
-                const bucket = sort === "due" ? dueBucket(row, now) : null;
-                const date =
-                  state && (bucket === "week" || bucket === "later")
-                    ? backLabel(i18n.locale, new Date(state.due).getTime(), now)
-                    : null;
-                const key = rowState(row);
-                const isOpen = card.id === openId;
-                return (
-                  <li key={card.id}>
-                    <button
-                      type="button"
-                      data-card-row={card.id}
-                      onClick={() => onOpen(isOpen ? null : card.id)}
-                      aria-current={isOpen || undefined}
-                      className={clsx(
-                        "grid w-full items-start gap-x-3 gap-y-0.5 px-4 py-3 text-start transition-colors duration-150 focus-visible:outline-offset-[-2px] @xl/list:items-baseline @xl/list:gap-x-5 @xl/list:px-5",
-                        // Every row under this sort keeps the date's column, so meanings line up across groups.
-                        sort === "due"
-                          ? "grid-cols-[15px_minmax(0,1fr)_auto] @xl/list:grid-cols-[15px_minmax(0,1fr)_minmax(0,1.15fr)_8rem]"
-                          : "grid-cols-[15px_minmax(0,1fr)] @xl/list:grid-cols-[15px_minmax(0,1fr)_minmax(0,1.15fr)]",
-                        isOpen ? "bg-hover" : "hoverable:hover:bg-plate-2",
-                      )}
-                    >
-                      <span className="row-span-2 mt-[3px] self-start @xl/list:row-span-1">
-                        <StateIcon state={key} className="size-[15px]" />
-                        <span className="sr-only">{i18n._(stateMarks[key].label)}</span>
-                      </span>
-                      <span
-                        className="col-start-2 row-start-1 text-lg font-medium leading-snug text-text [overflow-wrap:anywhere]"
-                        lang={card.language ?? undefined}
-                      >
-                        {word}
-                        {forms && (
-                          <span className="font-normal text-text-2">
-                            {" · "}
-                            {forms}
-                          </span>
-                        )}
-                      </span>
-                      <span
-                        className={clsx(
-                          "col-start-2 row-start-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
-                          card.meaning ? "text-text-2" : "text-faint",
-                        )}
-                      >
-                        {card.meaning ?? <Trans>No meaning yet</Trans>}
-                      </span>
-                      {date && (
-                        <span className="col-start-3 row-start-1 whitespace-nowrap text-end text-sm text-muted @xl/list:col-start-4">
-                          {date}
-                        </span>
-                      )}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        );
-      })}
-    </div>
+    <section
+      aria-label={t`Selected cards`}
+      className="@container/tools edge-2 flex h-11 items-center gap-1 rounded-lg bg-plate ps-1 pe-1.5"
+    >
+      <IconButton size="sm" label={t`Stop selecting`} onClick={onDone}>
+        <X />
+      </IconButton>
+      <p
+        className="me-auto min-w-0 truncate ps-1 text-base font-medium tabular-nums"
+        aria-live="polite"
+      >
+        <Plural value={count} _0="Choose cards" one="# selected" other="# selected" />
+      </p>
+      <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
+        {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
+      </Button>
+      <Button
+        size="sm"
+        variant="primary"
+        aria-disabled={count === 0}
+        aria-label={t`Move to section…`}
+        onClick={() => count > 0 && onMove()}
+      >
+        <span className="@md/tools:hidden">
+          <Trans>Move…</Trans>
+        </span>
+        <span className="hidden @md/tools:inline">
+          <Trans>Move to section…</Trans>
+        </span>
+      </Button>
+    </section>
   );
 }
 
@@ -673,6 +608,11 @@ export function DeckDetailView({
   onEditCard,
   decks,
   onMove,
+  sections = [],
+  progress,
+  onStartSection,
+  startingSection,
+  sectionActions,
   cardBeside,
   connectUrl,
   connected,
@@ -681,7 +621,16 @@ export function DeckDetailView({
   const { t, i18n } = useLingui();
   const [q, setQ] = useState("");
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
-  const [sort, setSort] = useState<DeckSort>("lesson");
+  const [chosenSort, setSort] = useState<DeckSort | null>(null);
+  // A deck with sections opens on them; one without has nothing to group that way.
+  const sort: DeckSort =
+    chosenSort === "section" || chosenSort === null
+      ? sections.length > 0
+        ? "section"
+        : "added"
+      : chosenSort;
+  const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
+  const anchor = useRef<string | null>(null);
   const [localOpen, setLocalOpen] = useState<string | null>(null);
   const openId = openCardId === undefined ? localOpen : openCardId;
   const setOpen = useCallback(
@@ -721,14 +670,63 @@ export function DeckDetailView({
   // biome-ignore lint/correctness/useExhaustiveDependencies: the cards are the reason to look again
   const now = useMemo(() => Date.now(), [cards]);
   const shown = useMemo(
-    () => (cards ? filterRows(cards, filters, q, now) : undefined),
-    [cards, filters, q, now],
+    () => (cards ? filterRows(cards, filters, q, now, sections) : undefined),
+    [cards, filters, q, now, sections],
   );
+  const everything = q.trim() === "" && activeFilterCount(filters) === 0;
+  // The owner sees every section, empty ones too, so there is always somewhere to drop a card.
+  const arranging = !!sectionActions && sort === "section" && everything;
   const groups = useMemo(
-    () => (shown ? groupRows(shown, sort, now, i18n.locale) : []),
-    [shown, sort, now, i18n.locale],
+    () => (shown ? groupRows(shown, sort, now, i18n.locale, sections, arranging) : []),
+    [shown, sort, now, i18n.locale, sections, arranging],
   );
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+
+  const toggleSelected = (id: string, range: boolean) => {
+    setSelected((prev) => {
+      const next = new Set(prev ?? []);
+      const from = anchor.current ? ordered.findIndex((r) => r.card.id === anchor.current) : -1;
+      const to = ordered.findIndex((r) => r.card.id === id);
+      if (range && from >= 0 && to >= 0) {
+        const on = !next.has(id);
+        for (const row of ordered.slice(Math.min(from, to), Math.max(from, to) + 1)) {
+          if (on) next.add(row.card.id);
+          else next.delete(row.card.id);
+        }
+      } else if (next.has(id)) next.delete(id);
+      else next.add(id);
+      anchor.current = id;
+      return next;
+    });
+  };
+  const stopSelecting = useCallback(() => {
+    setSelected(null);
+    anchor.current = null;
+  }, []);
+
+  // Escape leaves selection, unless something above the list has it.
+  useEffect(() => {
+    if (!selected) return;
+    const onKey = (e: KeyboardEvent) => {
+      // A menu or dialog open over the list takes this Escape for itself.
+      const overlay = document.querySelector("[role='menu'], [role='dialog']");
+      if (e.key === "Escape" && !e.defaultPrevented && !overlay) stopSelecting();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selected, stopSelecting]);
+
+  const goToSection = (sectionId: string) => {
+    if (chosenSort !== null && chosenSort !== "section") setSort("section");
+    setFilters(noFilters);
+    setQ("");
+    requestAnimationFrame(() => {
+      const heading = document.getElementById(sectionAnchor(sectionId));
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      heading?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      heading?.focus({ preventScroll: true });
+    });
+  };
 
   const openIndex = ordered.findIndex((r) => r.card.id === openId);
   const open = openIndex >= 0 ? ordered[openIndex] : cards?.find((r) => r.card.id === openId);
@@ -804,6 +802,11 @@ export function DeckDetailView({
       }}
       decks={decks}
       onMove={onMove ? (deckId) => onMove(shownWord.card.id, deckId) : undefined}
+      onMoveToSection={
+        sectionActions
+          ? () => sectionActions.onPickSection([shownWord.card.id], () => {})
+          : undefined
+      }
       titleId={titleId}
       onBusyChange={setBusy}
     />
@@ -834,6 +837,21 @@ export function DeckDetailView({
             <Layers />
             <Trans>Move to series</Trans>
           </DropdownMenuItem>
+        )}
+        {sectionActions && (
+          <>
+            <DropdownMenuItem onClick={sectionActions.onCreate}>
+              <ListTree />
+              <Trans>New section</Trans>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setSelected(new Set())}
+              disabled={!cards?.length || !!selected}
+            >
+              <SquareCheck />
+              <Trans>Select cards</Trans>
+            </DropdownMenuItem>
+          </>
         )}
         <DropdownMenuItem
           onClick={() => deck && cards && exportCsv(deck.name, cards)}
@@ -957,6 +975,19 @@ export function DeckDetailView({
               streak={streak}
               onReview={onReview}
               onAdd={onAdd}
+              section={
+                progress &&
+                onStartSection && (
+                  <SectionProgress
+                    sections={sections}
+                    progress={progress}
+                    due={deck.due}
+                    onGoTo={goToSection}
+                    onStart={onStartSection}
+                    starting={startingSection}
+                  />
+                )
+              }
             />
           ) : (
             <StartPanel
@@ -994,17 +1025,35 @@ export function DeckDetailView({
         </div>
 
         {cards && cards.length > 0 && (
-          <div className={clsx(searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6")}>
-            <ListTools
-              cards={cards}
-              filters={filters}
-              setFilters={setFilters}
-              sort={sort}
-              setSort={setSort}
-              query={q}
-              setQuery={setQ}
-              searchRef={searchRef}
-            />
+          <div
+            className={clsx(
+              searchOpen ? "mt-2 @3xl/shell:mt-6" : "mt-6",
+              // Pinned over a strip of the page's own ground, so rows never show beside it.
+              selected &&
+                "sticky top-0 z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
+            )}
+          >
+            {selected && sectionActions ? (
+              <SelectionToolbar
+                count={selected.size}
+                total={ordered.length}
+                onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
+                onClear={() => setSelected(new Set())}
+                onMove={() => sectionActions.onPickSection([...selected], stopSelecting)}
+                onDone={stopSelecting}
+              />
+            ) : (
+              <ListTools
+                sections={sections}
+                filters={filters}
+                setFilters={setFilters}
+                sort={sort}
+                setSort={setSort}
+                query={q}
+                setQuery={setQ}
+                searchRef={searchRef}
+              />
+            )}
           </div>
         )}
 
@@ -1018,7 +1067,23 @@ export function DeckDetailView({
 
         {groups.length > 0 && (
           <div className={clsx(sort === "az" && "pt-4")}>
-            <Glossary groups={groups} sort={sort} openId={openId} onOpen={setOpen} now={now} />
+            <Glossary
+              groups={groups}
+              sort={sort}
+              openId={openId}
+              onOpen={setOpen}
+              now={now}
+              progress={progress}
+              onStart={onStartSection}
+              editing={
+                sectionActions && {
+                  ...sectionActions,
+                  onDropCards: sectionActions.onMoveCards,
+                }
+              }
+              movable={arranging && !st}
+              selection={selected ? { ids: selected, onToggle: toggleSelected } : undefined}
+            />
           </div>
         )}
 

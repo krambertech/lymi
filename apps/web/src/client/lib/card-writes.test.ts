@@ -18,6 +18,7 @@ const values = (p: Partial<CardFormValues> = {}): CardFormValues => ({
   reviewModes: null,
   picture: { kind: "none" },
   description: "",
+  sectionId: null,
   ...p,
 });
 
@@ -34,6 +35,7 @@ const card: Card = {
   language: "it",
   tags: ["verbs"],
   source: "Lesson 14",
+  sectionId: null,
   directions: null,
   reviewModes: null,
   image: null,

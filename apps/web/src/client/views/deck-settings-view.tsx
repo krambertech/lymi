@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { Directions } from "@lymi/core";
+import type { Directions, SectionProgression } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { Archive, Check, Link2Off, Share } from "lucide-react";
@@ -8,9 +8,10 @@ import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
 import { type DirectionExample, DirectionField, LanguageField } from "../components/deck-fields";
 import { RadioCard } from "../components/radio-card";
+import { SectionManager, type SectionManagerProps } from "../components/section-manager";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
-import { Field, FieldDescription, FieldLabel } from "../components/ui/field";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Textarea } from "../components/ui/textarea";
@@ -23,6 +24,7 @@ export interface DeckSettingsPatch {
   description?: string | null;
   defaultLanguage?: string | null;
   directions?: Directions;
+  sectionProgression?: SectionProgression;
 }
 
 export interface DeckSettingsProps {
@@ -35,6 +37,8 @@ export interface DeckSettingsProps {
   saved?: boolean | undefined;
   error?: string | undefined;
   onArchive?: (() => void) | undefined;
+  /** The owner's section controls. Absent for a member, who cannot change them. */
+  sections?: SectionManagerProps | undefined;
   /** The owner's join-link controls. Absent for a member, who cannot share the deck. */
   sharing?: SharingProps | undefined;
   static?: StaticNav;
@@ -66,6 +70,7 @@ export function DeckSettingsView({
   saved,
   error,
   onArchive,
+  sections,
   sharing,
   static: st,
 }: DeckSettingsProps) {
@@ -206,6 +211,17 @@ export function DeckSettingsView({
             />
           </SettingsGroup>
 
+          {sections && (
+            <SettingsGroup
+              id="sections"
+              title={t`Sections`}
+              description={t`Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order.`}
+            >
+              <SectionManager {...sections} />
+              {sections.sections.length > 0 && <ProgressionField deck={deck} onSave={onSave} />}
+            </SettingsGroup>
+          )}
+
           {sharing && <SharingGroup {...sharing} />}
 
           <SettingsGroup title={t`Archive`}>
@@ -225,6 +241,50 @@ export function DeckSettingsView({
         </>
       )}
     </Page>
+  );
+}
+
+/** How the deck's sections open for everyone studying it, made the moment it is chosen. */
+function ProgressionField({
+  deck,
+  onSave,
+}: {
+  deck: DeckSummary;
+  onSave: (patch: DeckSettingsPatch) => void;
+}) {
+  const { t } = useLingui();
+  const name = useId();
+  return (
+    <div className="grid gap-2 pt-2">
+      <p className="text-base font-medium text-text" id={`${name}-label`}>
+        <Trans>How sections open</Trans>
+      </p>
+      <RadioGroup<SectionProgression>
+        aria-labelledby={`${name}-label`}
+        name={name}
+        value={deck.sectionProgression}
+        onValueChange={(sectionProgression) => onSave({ sectionProgression })}
+      >
+        <RadioCard
+          value="automatic"
+          title={t`One after another, automatically`}
+          description={t`Each section opens once you know most of the one before it.`}
+        />
+        <RadioCard
+          value="manual"
+          title={t`One after another, when you start them`}
+          description={t`When most of a section is known, the next one is ready and you choose when to start it.`}
+        />
+        <RadioCard
+          value="open"
+          title={t`All at once`}
+          description={t`Every section is open, so any card can come up in review.`}
+        />
+      </RadioGroup>
+      <p className="text-sm text-muted">
+        <Trans>Anyone studying the deck can start a later section early.</Trans>
+      </p>
+    </div>
   );
 }
 

@@ -1,9 +1,9 @@
 import { type StateKey, stateKey } from "../components/state-mark";
-import type { Card, CardState } from "./api";
+import type { Card, CardState, Section } from "./api";
 
 export type DeckRow = { card: Card; state: CardState | null };
 
-export type DeckSort = "lesson" | "due" | "added" | "az";
+export type DeckSort = "section" | "due" | "added" | "az";
 
 /** Where a card stands in its schedule, as the When it's back headings name it. */
 export type DueBucket = "now" | "week" | "later" | "new";
@@ -11,15 +11,15 @@ export type DueBucket = "now" | "week" | "later" | "new";
 export interface DeckFilters {
   states: StateKey[];
   due: "today" | "week" | null;
-  /** Lesson names from each card's `source`; "" is a card with no lesson. */
-  lessons: string[];
+  /** Section ids; "" is a card with no section. */
+  sections: string[];
 }
 
-export const noFilters: DeckFilters = { states: [], due: null, lessons: [] };
+export const noFilters: DeckFilters = { states: [], due: null, sections: [] };
 
 export type DeckGroup =
   | { kind: "all"; key: string; rows: DeckRow[] }
-  | { kind: "lesson"; key: string; lesson: string; rows: DeckRow[] }
+  | { kind: "section"; key: string; section: Section | null; rows: DeckRow[] }
   | { kind: "due"; key: string; bucket: DueBucket; rows: DeckRow[] }
   | { kind: "day"; key: string; day: Date; rows: DeckRow[] };
 
@@ -49,26 +49,19 @@ export function dueBucket(row: DeckRow, now: number): DueBucket {
 }
 
 export function activeFilterCount(filters: DeckFilters): number {
-  return filters.states.length + (filters.due ? 1 : 0) + filters.lessons.length;
+  return filters.states.length + (filters.due ? 1 : 0) + filters.sections.length;
 }
 
-/** Lessons in the order the Lesson sort shows them: newest first, then cards with no lesson. */
-export function lessonsOf(rows: DeckRow[]): string[] {
-  const newest = new Map<string, number>();
-  for (const row of rows) {
-    const key = row.card.source ?? "";
-    newest.set(key, Math.max(newest.get(key) ?? 0, createdAt(row)));
-  }
-  return [...newest.entries()]
-    .sort(([a, at], [b, bt]) => (a === "" ? 1 : b === "" ? -1 : bt - at))
-    .map(([key]) => key);
-}
+/** The section a card sorts under: its own when that section is listed, otherwise none. */
+export const sectionOf = (row: DeckRow, sections: readonly Section[]): string =>
+  row.card.sectionId && sections.some((s) => s.id === row.card.sectionId) ? row.card.sectionId : "";
 
 export function filterRows(
   rows: DeckRow[],
   filters: DeckFilters,
   query: string,
   now: number,
+  sections: readonly Section[] = [],
 ): DeckRow[] {
   const needle = query.trim().toLocaleLowerCase();
   const limit = filters.due === "today" ? endOfDay(now) : now + WEEK;
@@ -80,7 +73,8 @@ export function filterRows(
     )
       return false;
     if (filters.states.length && !filters.states.includes(rowState(row))) return false;
-    if (filters.lessons.length && !filters.lessons.includes(row.card.source ?? "")) return false;
+    if (filters.sections.length && !filters.sections.includes(sectionOf(row, sections)))
+      return false;
     if (filters.due) {
       if (rowState(row) === "new" || !(dueAt(row) < limit)) return false;
     }
@@ -88,11 +82,18 @@ export function filterRows(
   });
 }
 
+/**
+ * The list's groups. The Section sort shows every section in order, each with its cards oldest
+ * first as a lesson was added, then the cards without one; `withEmpty` keeps a section with no
+ * cards, so the owner has somewhere to drop them.
+ */
 export function groupRows(
   rows: DeckRow[],
   sort: DeckSort,
   now: number,
   locale: string,
+  sections: readonly Section[] = [],
+  withEmpty = false,
 ): DeckGroup[] {
   if (sort === "az") {
     const collator = new Intl.Collator(locale, { sensitivity: "base", numeric: true });
@@ -131,12 +132,25 @@ export function groupRows(
     }));
   }
 
-  return lessonsOf(rows).map((lesson) => ({
-    kind: "lesson" as const,
-    key: `lesson:${lesson}`,
-    lesson,
-    rows: rows.filter((row) => (row.card.source ?? "") === lesson),
-  }));
+  const bySection = new Map<string, DeckRow[]>();
+  for (const row of [...rows].sort((a, b) => createdAt(a) - createdAt(b))) {
+    const key = sectionOf(row, sections);
+    bySection.set(key, [...(bySection.get(key) ?? []), row]);
+  }
+  const groups: DeckGroup[] = sections.flatMap((section) => {
+    const group = bySection.get(section.id) ?? [];
+    if (group.length === 0 && !withEmpty) return [];
+    return [{ kind: "section" as const, key: `section:${section.id}`, section, rows: group }];
+  });
+  const loose = bySection.get("") ?? [];
+  if (loose.length > 0) {
+    // A deck without sections is one list, newest first, as it was before sections existed.
+    if (sections.length === 0) {
+      return [{ kind: "all", key: "all", rows: [...loose].reverse() }];
+    }
+    groups.push({ kind: "section", key: "section:", section: null, rows: loose });
+  }
+  return groups;
 }
 
 /** A term that lists its forms, "õppima · õppida · õpin", as the word and the forms after it. */

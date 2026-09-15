@@ -13,6 +13,9 @@ erDiagram
   series ||--o{ decks : "orders, optionally"
   user ||--o{ cards : owns
   decks ||--o{ cards : contains
+  decks ||--o{ sections : "orders, optionally"
+  sections ||--o{ cards : "groups, optionally"
+  sections ||--o{ section_starts : "opened by each learner"
   decks ||--o{ deck_members : "shared with"
   decks ||--o{ deck_invitations : "join link"
   user ||--o{ deck_members : "studies"
@@ -47,9 +50,24 @@ erDiagram
     text default_language "nullable, convenience only"
     text directions "recognition | production | both"
     int position "order within its series, or within Library"
+    text section_progression "automatic | manual | open, default automatic"
     int archived_at "nullable"
     text import_id "nullable, the import that made it"
     text external_id "nullable, the source's key"
+  }
+  sections {
+    text id PK
+    text deck_id FK
+    text name
+    int position "order within the deck"
+    int archived_at "nullable; cards archived with it share it"
+  }
+  section_starts {
+    text id PK
+    text section_id FK
+    text user_id FK
+    text how "ready | early | auto"
+    int started_at
   }
   cards {
     text id PK
@@ -70,6 +88,7 @@ erDiagram
     text audio_key "nullable R2 key"
     json review_modes "nullable mode keys, read only while directions is set"
     text image_version "nullable opaque token of the last picture write"
+    text section_id FK "nullable, a section of its own deck"
     text created_by "user | api | mcp | ai | system"
     int archived_at "nullable"
     text import_id "nullable, the import that added it"
@@ -189,7 +208,7 @@ erDiagram
     text user_id FK
     text actor "user | api | mcp | ai | system"
     text action "create update archive restore grade"
-    text entity "deck | card | review"
+    text entity "deck | series | section | card | review | account"
     text entity_id
     json payload
     int created_at
@@ -214,6 +233,12 @@ The `user`, `session`, `account`, `verification` and `apikey` tables belong to B
 ### Review days
 
 A review day is one learner-local date measured against its streak goal. Attempts are counted from `reviews` less `review_undos`, never stored as a counter. A grade fixes `review_day_id` when it lands, in the review timezone of that moment, so a later timezone change never moves completed history. `outcome` only moves forward on a grade or a lower goal; Undo recomputes it and can reopen a day. Reviews from before daily goals have no day and still count as a reviewed day. The rules are in [the daily review goal proposal](proposals/daily-review-goal-and-rolling-queue.md) and live in `services/review-days.ts`.
+
+### Sections
+
+A section is an optional, ordered part of one deck, and every learner of the deck sees it. `cards.section_id` points at a section of the card's own deck; moving a card to another deck clears it. Archiving a section with `cards: keep` leaves `section_id` on its cards, and a card in an archived section reads as having none, so Restore regroups it. Archiving with `cards: archive` stamps the cards with the section's own `archived_at`.
+
+Unless `decks.section_progression` is `open`, each learner opens sections in order, and the rules live in `packages/core/src/sections.ts`. Open sections are always a prefix of the deck: every section up to the last one the learner has a `section_starts` row for, or has started a card in, plus the first section with cards. The next section is ready once every card of the current one has left New and 80% of them, rounded up, are Known by the state the deck's list shows. Start writes a row for the target and every section before it that was not open, with `on conflict do nothing`, so a retry or a second device lands the same, and rows are never removed. In an `automatic` deck, `gradeCard` writes that row itself, `how = 'auto'`, on the grade that makes the next section ready and on its retries; readiness is only a grade away, so nothing else has to look. Writing it once is what keeps a section open after the learner later forgets cards below 80%. The draw in `services/draw.ts` leaves out a card in a section that is not open unless the learner has already started it, so Today, deck and series review, rounds, reminders and the offline draw all agree.
 
 ### Shared decks
 
@@ -263,7 +288,7 @@ Archiving an import stamps its own `archived_at` on every card it added that is 
 
 ### Tags and source
 
-Tags are labels on a card, global to the user, any number per card, stored as a JSON array until search or renaming needs a table. `source` is free text saying where the card came from. When AI capture arrives, pasted material becomes a `sources` row and cards point at it with `source_id`; the text column stays for hand-added cards.
+Tags are labels on a card, global to the user, any number per card, stored as a JSON array until search or renaming needs a table. `source` is free text saying where the card came from; it is a label on the card, and a deck is grouped by its sections, not by source. When AI capture arrives, pasted material becomes a `sources` row and cards point at it with `source_id`; the text column stays for hand-added cards.
 
 ### Why language is on the card
 
@@ -281,6 +306,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 - Grading, key management and the learner's photo are the learner's alone. Any key or token gets 403, whatever its scope.
 - Join links are managed and followed only from the app. Reading, turning on, or turning off a deck's link needs the owner's session; joining needs the learner's session. Any key or token gets 403.
 - A series is its owner's alone. Any other caller gets 404 for it, and a member's deck carries `seriesId: null`. Only the owner's own active decks can go in one; a deck they joined gets 403.
+- A section is its deck's owner's to change; a member gets 403 and a stranger 404. A member reads the same sections with their own standing. Starting a section is learner-only, like grading, so a key or MCP token gets 403.
 - A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
 - A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.

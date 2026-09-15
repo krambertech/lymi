@@ -333,6 +333,12 @@ export const api = {
     request<{ ok: true }>(`/api/join/${encodeURIComponent(token)}/sign-in`, { method: "POST" }),
   join: (token: string) =>
     request<JoinOut>(`/api/join/${encodeURIComponent(token)}`, { method: "POST" }),
+  addPreview: (slug: string) => request<JoinPreviewOut>(`/api/add/${encodeURIComponent(slug)}`),
+  /** Holds the published deck in a short-lived cookie so the sign-in that follows adds it. */
+  holdPublishedDeck: (slug: string) =>
+    request<{ ok: true }>(`/api/add/${encodeURIComponent(slug)}/sign-in`, { method: "POST" }),
+  addPublishedDeck: (slug: string) =>
+    request<JoinOut>(`/api/add/${encodeURIComponent(slug)}`, { method: "POST" }),
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>

@@ -5,9 +5,12 @@ import {
   DeckSummaryOut,
   JoinLinkOut,
   OkOut,
+  PublicationInput,
+  PublicationOut,
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
+import { publisherEmails } from "../env";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import {
@@ -15,12 +18,16 @@ import {
   createDeck,
   getDeck,
   getJoinLink,
+  getPublication,
   listDeckCards,
   listDecks,
+  publicationOut,
+  publishDeck,
   restoreDeck,
   turnOffJoinLink,
   turnOnJoinLink,
   updateDeck,
+  withdrawDeck,
 } from "../services";
 
 export const decks = new Hono<AppEnv>();
@@ -149,6 +156,54 @@ decks.delete(
 function joinLinkOut(productUrl: string, link: { token: string; createdAt: Date }) {
   return { url: new URL(`/join/${link.token}`, productUrl).toString(), createdAt: link.createdAt };
 }
+
+const PUBLICATION =
+  "A published deck can be added by anyone from its public page. Only Lymi's publishers can publish, and only decks they own. Needs the write scope.";
+
+decks.get(
+  "/:id/publication",
+  describe({
+    tags: ["Decks"],
+    summary: "Get a deck's publication",
+    description: PUBLICATION,
+    ok: { schema: PublicationOut, description: "The publication, or null" },
+    errors: [404],
+  }),
+  async (c) =>
+    c.json(publicationOut(c.env.PRODUCT_URL, await getPublication(ctxOf(c), c.req.param("id")))),
+);
+
+decks.put(
+  "/:id/publication",
+  describe({
+    tags: ["Decks"],
+    summary: "Publish a deck",
+    description: `${PUBLICATION} Publishing again updates the public page and brings a withdrawn deck back.`,
+    ok: { schema: PublicationOut, description: "The publication" },
+    errors: [400, 404, 409],
+  }),
+  body(PublicationInput, "publication"),
+  async (c) =>
+    c.json(
+      publicationOut(
+        c.env.PRODUCT_URL,
+        await publishDeck(ctxOf(c), c.req.param("id"), c.req.valid("json"), publisherEmails(c.env)),
+      ),
+    ),
+);
+
+decks.delete(
+  "/:id/publication",
+  describe({
+    tags: ["Decks"],
+    summary: "Withdraw a published deck",
+    description: `${PUBLICATION} Members keep studying it; nobody new can add it.`,
+    ok: { schema: PublicationOut, description: "The withdrawn publication" },
+    errors: [404],
+  }),
+  async (c) =>
+    c.json(publicationOut(c.env.PRODUCT_URL, await withdrawDeck(ctxOf(c), c.req.param("id")))),
+);
 
 decks.get(
   "/:id/cards",

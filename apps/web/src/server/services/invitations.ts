@@ -155,55 +155,68 @@ export async function previewJoin(
     };
   }
 
-  let viewer: JoinPreviewOut["viewer"] = "signed-out";
-  if (viewerId === link.ownerId) viewer = "owner";
-  else if (viewerId) {
-    const [membership] = await db
-      .select({ removedAt: schema.deckMembers.removedAt, removedBy: schema.deckMembers.removedBy })
-      .from(schema.deckMembers)
-      .where(
-        and(eq(schema.deckMembers.deckId, link.deckId), eq(schema.deckMembers.userId, viewerId)),
-      );
-    viewer = !membership
-      ? "visitor"
-      : !membership.removedAt
-        ? "member"
-        : membership.removedBy === "owner"
-          ? "removed"
-          : "visitor";
-  }
-
+  const viewer = await viewerOf(db, { id: link.deckId, ownerId: link.ownerId }, viewerId);
   const status = link.revokedAt ? "off" : link.deckArchivedAt ? "archived" : "live";
   const canOpen = (viewer === "owner" || viewer === "member") && !link.deckArchivedAt;
-  let deck: JoinPreviewOut["deck"] = null;
-  if (status === "live") {
-    const active = and(eq(schema.cards.deckId, link.deckId), isNull(schema.cards.archivedAt));
-    const [[stats], samples] = await Promise.all([
-      db
-        .select({
-          total: sql<number>`count(*)`,
-          lastAddedAt: sql<number | null>`max(${schema.cards.createdAt})`,
+  const deck =
+    status === "live"
+      ? await deckSample(db, {
+          id: link.deckId,
+          name: link.deckName,
+          language: link.deckLanguage,
+          ownerName: link.ownerName,
         })
-        .from(schema.cards)
-        .where(active),
-      // A random few with a meaning first, so a visit shows the deck rather than its latest lesson.
-      db
-        .select({ term: schema.cards.term, meaning: schema.cards.meaning })
-        .from(schema.cards)
-        .where(active)
-        .orderBy(sql`${schema.cards.meaning} is null`, sql`random()`)
-        .limit(JOIN_SAMPLES),
-    ]);
-    deck = {
-      name: link.deckName,
-      total: stats?.total ?? 0,
-      owner: { name: link.ownerName },
-      language: link.deckLanguage,
-      lastAddedAt: stats?.lastAddedAt ? new Date(stats.lastAddedAt).toISOString() : null,
-      samples,
-    };
-  }
+      : null;
   return { status, deck, viewer, deckId: canOpen ? link.deckId : null };
+}
+
+/** Who is looking at a deck's front door: signed out, a stranger, in it, its owner, or removed. */
+export async function viewerOf(
+  db: Db,
+  deck: { id: string; ownerId: string },
+  viewerId: string | null,
+): Promise<JoinPreviewOut["viewer"]> {
+  if (!viewerId) return "signed-out";
+  if (viewerId === deck.ownerId) return "owner";
+  const [membership] = await db
+    .select({ removedAt: schema.deckMembers.removedAt, removedBy: schema.deckMembers.removedBy })
+    .from(schema.deckMembers)
+    .where(and(eq(schema.deckMembers.deckId, deck.id), eq(schema.deckMembers.userId, viewerId)));
+  if (!membership) return "visitor";
+  if (!membership.removedAt) return "member";
+  return membership.removedBy === "owner" ? "removed" : "visitor";
+}
+
+/** The deck's size and a random few cards, for a page that shows a deck before joining it. */
+export async function deckSample(
+  db: Db,
+  deck: { id: string; name: string; language: string | null; ownerName: string },
+): Promise<NonNullable<JoinPreviewOut["deck"]>> {
+  const active = and(eq(schema.cards.deckId, deck.id), isNull(schema.cards.archivedAt));
+  const [[stats], samples] = await Promise.all([
+    db
+      .select({
+        total: sql<number>`count(*)`,
+        lastAddedAt: sql<number | null>`max(${schema.cards.createdAt})`,
+      })
+      .from(schema.cards)
+      .where(active),
+    // A random few with a meaning first, so a visit shows the deck rather than its latest lesson.
+    db
+      .select({ term: schema.cards.term, meaning: schema.cards.meaning })
+      .from(schema.cards)
+      .where(active)
+      .orderBy(sql`${schema.cards.meaning} is null`, sql`random()`)
+      .limit(JOIN_SAMPLES),
+  ]);
+  return {
+    name: deck.name,
+    total: stats?.total ?? 0,
+    owner: { name: deck.ownerName },
+    language: deck.language,
+    lastAddedAt: stats?.lastAddedAt ? new Date(stats.lastAddedAt).toISOString() : null,
+    samples,
+  };
 }
 
 /**

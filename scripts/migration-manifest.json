@@ -67,6 +67,10 @@
     {
       "name": "0016_sections.sql",
       "sha256": "ca876c458404a2325ca38a2897dd163e7ecf1eceb731e8ad69ffad3993300d81"
+    },
+    {
+      "name": "0017_deck_publications.sql",
+      "sha256": "30f95a61ad791ee1c8ee2a31571a4fee8515d7c38128f3c5dd006053c2b2d504"
     }
   ]
 }

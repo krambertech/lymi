@@ -663,6 +663,29 @@ export const JoinLinkOut = z
   .meta({ id: "JoinLink" });
 export type JoinLinkOut = z.infer<typeof JoinLinkOut>;
 
+export const PublicationOut = z
+  .object({
+    publication: z
+      .object({
+        slug: z.string(),
+        status: z.enum(["published", "withdrawn"]),
+        summary: z.string(),
+        level: z.string().nullable(),
+        meaningLanguage: z.string(),
+        publisher: z.string(),
+        sources: z.array(z.object({ title: z.string(), url: z.string().optional() })),
+        reviewedAt: Timestamp.nullable(),
+        revision: z.number().int(),
+        publishedAt: Timestamp,
+        withdrawnAt: Timestamp.nullable(),
+        addUrl: z.string().meta({ description: "Where anyone can add the deck" }),
+      })
+      .nullable()
+      .meta({ description: "Null while the deck has never been published" }),
+  })
+  .meta({ id: "Publication" });
+export type PublicationOut = z.infer<typeof PublicationOut>;
+
 /** What a join page may show. Never cards, and nothing about the deck unless the link works. */
 export const JoinPreviewOut = z
   .object({

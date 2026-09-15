@@ -39,6 +39,11 @@ export function isJoinPagePath(pathname: string): boolean {
   return /^\/join\/[A-Za-z0-9_-]+$/.test(pathname);
 }
 
+/** Where "Add to Lymi" lands for a published deck, `/add/<slug>`. ADR 0020. */
+export function isAddPagePath(pathname: string): boolean {
+  return /^\/add\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(pathname);
+}
+
 /** Routes a signed-out learner may safely resume after authentication. */
 function isProtectedProductPath(pathname: string): boolean {
   return PRODUCT_PATHS.slice(0, 10).some(
@@ -60,7 +65,11 @@ export function safeProductReturnPath(value: string | null | undefined): string 
     if (
       url.origin !== "https://product.invalid" ||
       url.hash ||
-      !(isProtectedProductPath(url.pathname) || isJoinPagePath(url.pathname))
+      !(
+        isProtectedProductPath(url.pathname) ||
+        isJoinPagePath(url.pathname) ||
+        isAddPagePath(url.pathname)
+      )
     ) {
       return DEFAULT_PRODUCT_RETURN_PATH;
     }

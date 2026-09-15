@@ -81,7 +81,7 @@ export async function ownedDeck(ctx: ServiceContext, deckId: string) {
 export async function join(
   { db, userId, actor }: ServiceContext,
   deckId: string,
-  opts: { invitationId?: string | undefined } = {},
+  opts: { invitationId?: string | undefined; publicationId?: string | undefined } = {},
 ) {
   const [deck] = await db
     .select({ id: schema.decks.id, userId: schema.decks.userId })
@@ -114,7 +114,14 @@ export async function join(
         where deck_invitations.id = ${opts.invitationId} and deck_invitations.deck_id = ${deckId}
           and deck_invitations.revoked_at is null and decks.archived_at is null
       )`
-    : sql`exists (select 1 from decks where decks.id = ${deckId} and decks.archived_at is null)`;
+    : opts.publicationId
+      ? sql`exists (
+          select 1 from deck_publications join decks on decks.id = deck_publications.deck_id
+          where deck_publications.id = ${opts.publicationId} and deck_publications.deck_id = ${deckId}
+            and deck_publications.status = 'published' and decks.archived_at is null
+        )`
+      : sql`exists (select 1 from decks where decks.id = ${deckId} and decks.archived_at is null)`;
+  const via = opts.invitationId ? "link" : opts.publicationId ? "publication" : undefined;
   const membership = existing
     ? db
         .update(schema.deckMembers)
@@ -146,7 +153,7 @@ export async function join(
     ...stateStatementsForLearner(db, deckId, userId, now),
     db.insert(schema.auditLog).select(
       sql`select ${newId()}, ${deck.userId}, ${actor}, 'join', 'deck', ${deckId},
-        ${JSON.stringify({ memberId: userId })}, ${at}
+        ${JSON.stringify({ memberId: userId, ...(via && { via }) })}, ${at}
       where exists (
         select 1 from deck_members
         where id = ${membershipId} and joined_at = ${at} and removed_at is null
@@ -161,7 +168,9 @@ export async function join(
   if (!after || after.removedAt) {
     throw opts.invitationId
       ? new ServiceError("not_found", "This join link does not work")
-      : notFound("Deck");
+      : opts.publicationId
+        ? new ServiceError("not_found", "This deck is not published")
+        : notFound("Deck");
   }
   return { ok: true as const, role: "learner" as const };
 }

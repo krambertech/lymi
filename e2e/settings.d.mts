@@ -25,7 +25,14 @@ export type E2EAccount =
   | "avatar"
   | "avatar-other"
   | "deck-page"
-  | "long-cards";
+  | "long-cards"
+  | "series"
+  | "series-archive"
+  | "series-drag"
+  | "anki-import"
+  | "sections"
+  | "mochi-import"
+  | "publisher";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];
@@ -38,3 +45,4 @@ export function e2eEmail(
   repeat: number,
 ): string;
 export const e2eAllowedEmails: readonly string[];
+export const e2ePublisherEmails: readonly string[];

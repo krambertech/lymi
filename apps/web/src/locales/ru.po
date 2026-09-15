@@ -477,6 +477,9 @@ msgstr "{total, plural, one {# карточка} few {# карточки} many {
 msgid "{total, plural, one {# card} other {# cards}} from {owner}. Join to review them on your own schedule."
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}} от {owner}. Присоединяйся, чтобы повторять их в своём темпе."
 
+msgid "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
+msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Добавь колоду, чтобы повторять их в своём темпе."
+
 #. placeholder {0}: 30
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
@@ -557,6 +560,9 @@ msgstr "Активность"
 msgid "Add"
 msgstr "Добавить"
 
+msgid "Add {name} to Lymi"
+msgstr "Добавь колоду «{name}» в Lymi"
+
 msgid "Add a card"
 msgstr "Добавить карточку"
 
@@ -601,6 +607,12 @@ msgstr "Добавь из следующего урока"
 
 msgid "Add to {deckName}"
 msgstr "Добавить в {deckName}"
+
+msgid "Add to Lymi"
+msgstr "Добавить в Lymi"
+
+msgid "Add with Google"
+msgstr "Добавить через Google"
 
 msgid "Add, edit and archive cards"
 msgstr "Добавлять, редактировать и архивировать карточки"
@@ -673,6 +685,9 @@ msgstr "Ответ: {back}"
 
 msgid "Any time"
 msgstr "В любое время"
+
+msgid "Anyone can add this deck from its public page."
+msgstr "Любой может добавить эту колоду с её публичной страницы."
 
 msgid "Anyone studying the deck can start a later section early."
 msgstr "Любой, кто учит колоду, может начать следующий раздел раньше."
@@ -892,6 +907,9 @@ msgstr "Сначала проверь, правильно ли выглядит 
 msgid "Check that the whole link was copied, or ask for a new one."
 msgstr "Проверь, что ссылка скопирована полностью, или попроси новую."
 
+msgid "Check that the whole link was copied."
+msgstr "Проверь, что ссылка скопирована полностью."
+
 msgid "Check this card, then press Import again."
 msgstr "Проверь эту карточку, потом снова нажми «Импортировать»."
 
@@ -1009,6 +1027,9 @@ msgstr "Скопируется вместе с карточкой"
 
 msgid "Copy"
 msgstr "Копировать"
+
+msgid "Could not add the deck. Check your connection and try again."
+msgstr "Не удалось добавить колоду. Проверь соединение и попробуй ещё раз."
 
 msgid "Could not join. Check your connection and try again."
 msgstr "Не удалось присоединиться. Проверь соединение и попробуй ещё раз."
@@ -1314,6 +1335,10 @@ msgstr "Забыто {0}+ раз"
 
 msgid "Forgotten {SLIPPING_LAPSES} or more times"
 msgstr "Забыты не меньше {SLIPPING_LAPSES} раз"
+
+#. placeholder {0}: deck.owner.name
+msgid "From {0}"
+msgstr "От {0}"
 
 msgid "From the lesson"
 msgstr "С урока"
@@ -1852,8 +1877,14 @@ msgstr "Без раздела"
 msgid "No series"
 msgstr "Без серии"
 
+msgid "Nobody can add it while it is archived."
+msgstr "Пока колода в архиве, её никто не может добавить."
+
 msgid "Nobody can join it while it is archived."
 msgstr "Пока колода в архиве, к ней никто не может присоединиться."
+
+msgid "Nobody new can add it."
+msgstr "Новые люди уже не могут её добавить."
 
 msgid "Not asked yet. It joins the next review."
 msgstr "Ещё не спрашивалась. Появится в следующем повторении."
@@ -2017,6 +2048,9 @@ msgstr "Остановить карточки"
 #. placeholder {0}: weekday(peak.date)
 msgid "peak, {0}"
 msgstr "пик, {0}"
+
+msgid "People who added it keep studying it, but nobody new can add it."
+msgstr "Кто уже добавил колоду, продолжает её учить, но новые люди добавить её не могут."
 
 msgid "Photo"
 msgstr "Фото"
@@ -2626,6 +2660,9 @@ msgstr "Загрузка остановилась на полпути"
 msgid "Theme"
 msgstr "Тема"
 
+msgid "There is no deck at this address"
+msgstr "По этому адресу нет колоды"
+
 msgid "This browser can’t show reminders."
 msgstr "Этот браузер не показывает напоминания."
 
@@ -2638,8 +2675,17 @@ msgstr "Изображение этой карточки убрано."
 msgid "This collection is too large to import at once"
 msgstr "Эта коллекция слишком большая, чтобы импортировать её за раз"
 
+msgid "This deck is already in your Library."
+msgstr "Эта колода уже есть в твоей Библиотеке."
+
 msgid "This deck is archived"
 msgstr "Эта колода в архиве"
+
+msgid "This deck is no longer published"
+msgstr "Эта колода больше не опубликована"
+
+msgid "This deck is no longer published."
+msgstr "Эта колода больше не опубликована."
 
 msgid "This file has no review history, so every card starts as new."
 msgstr "В этом файле нет истории повторений, поэтому каждая карточка начнётся как новая."
@@ -2877,11 +2923,17 @@ msgstr "Эту вкладку можно закрыть."
 msgid "You can undo the whole import later from Activity."
 msgstr "Весь импорт можно потом отменить в Активности."
 
+msgid "You cannot add this deck."
+msgstr "Ты не можешь добавить эту колоду."
+
 msgid "You cannot join this deck through this link."
 msgstr "Через эту ссылку нельзя присоединиться к этой колоде."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "Тебя убрали из этой колоды, поэтому эта ссылка не добавит тебя снова. Твои повторения сохранены."
+
+msgid "You were removed from this deck, so you cannot add it again. Your reviews are kept."
+msgstr "Тебя убрали из этой колоды, поэтому добавить её снова не получится. Твои повторения сохранены."
 
 msgid "You wrote this"
 msgstr "Это написано тобой"

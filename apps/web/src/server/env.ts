@@ -83,8 +83,17 @@ export function withServedOrigin<T extends { PRODUCT_URL: string; PUBLIC_SITE_UR
 export const DEV_EMAIL_DOMAIN = "@lymi.local";
 
 export function allowedEmails(env: Bindings): Set<string> {
+  return emailSet(env.ALLOWED_EMAILS);
+}
+
+/** Accounts that may publish a deck they own to the public catalog. ADR 0020. */
+export function publisherEmails(env: Bindings): Set<string> {
+  return emailSet(env.PUBLISHER_EMAILS);
+}
+
+function emailSet(list: string | undefined): Set<string> {
   return new Set(
-    (env.ALLOWED_EMAILS ?? "")
+    (list ?? "")
       .split(",")
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean),

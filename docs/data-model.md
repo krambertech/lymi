@@ -18,6 +18,7 @@ erDiagram
   sections ||--o{ section_starts : "opened by each learner"
   decks ||--o{ deck_members : "shared with"
   decks ||--o{ deck_invitations : "join link"
+  decks ||--o| deck_publications : "published as"
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
   cards ||--o{ card_images : "one active picture"
@@ -145,6 +146,21 @@ erDiagram
     text token "unique, 32 base64url chars"
     int revoked_at "nullable, permanent"
   }
+  deck_publications {
+    text id PK
+    text deck_id FK "unique"
+    text slug "unique, lower-case words and hyphens"
+    text status "published | withdrawn"
+    text summary
+    text level "nullable, CEFR"
+    text meaning_language
+    text publisher
+    text sources "JSON [{title, url?}]"
+    int reviewed_at "nullable"
+    int revision "raised on every publish or withdrawal"
+    int published_at
+    int withdrawn_at "nullable"
+  }
   card_states {
     text id PK
     text card_id FK
@@ -245,6 +261,8 @@ Unless `decks.section_progression` is `open`, each learner opens sections in ord
 A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_members` row. Leaving or being removed sets `removed_at` and keeps the row; `removed_by = 'owner'` blocks the join link until a named invitation. `card_states` is unique per `(card_id, user_id, direction)`, so each learner of a shared card has their own schedule. Every read goes through `memberOf` in `services/members.ts`; every write to a deck's content requires the owner. [ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md).
 
 A deck has at most one unrevoked `deck_invitations` link, enforced by a partial unique index. Turning the link off sets `revoked_at` for good, and turning it on again inserts a new row with a new token. The token is a capability: it appears in the join URL and nowhere else, never in audit payloads, logs or error messages. `/join/<token>` is rendered by the product Worker; it shows up to three recent cards, and its title and Open Graph tags carry none. A signed-out visitor's link rides through sign-in in a ten-minute HttpOnly cookie, which lets `user.create.before` admit an account that is not on `ALLOWED_EMAILS`, and `session.create.after` completes the membership. Repeated joins make one membership and one audit row.
+
+A deck has at most one `deck_publications` row. Publishing inserts or updates it and raises `revision`; withdrawing sets `status` and `withdrawn_at` and keeps the row, so publishing again brings the same slug back. Only an owner on `PUBLISHER_EMAILS` publishes. `/add/<slug>` admits sign-up the way a join link does: the slug rides in the same cookie with a `p.` prefix, and the membership write re-checks that the deck is still published and not archived. The join audit row records `via: publication`. ADR 0020.
 
 ### Series
 

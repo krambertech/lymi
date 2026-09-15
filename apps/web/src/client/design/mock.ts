@@ -1,6 +1,6 @@
 import type { InsightsOut } from "@lymi/core";
 import type { StreakSummary } from "../components/streak";
-import type { Card, CardState, DeckSummary, QueueItem, Review, Series } from "../lib/api";
+import type { Card, CardState, DeckSummary, QueueItem, Review, Section, Series } from "../lib/api";
 import type { WordEvent } from "../views/word-view";
 
 const now = Date.now();
@@ -237,6 +237,51 @@ export const deckCards: { card: Card; state: CardState | null }[] = [
   { card: byId("c5"), state: state("c5", 2, 21 * day, 6) },
   { card: byId("c7"), state: state("c7", 2, 64 * day, 8) },
 ];
+
+const section = (id: string, name: string, position: number, over: Partial<Section>): Section => ({
+  id,
+  deckId: "d1",
+  name,
+  position,
+  total: 0,
+  known: 0,
+  notStarted: 0,
+  knownNeeded: 0,
+  status: "open",
+  archivedCards: 0,
+  archivedAt: null,
+  createdAt: new Date(now - (10 - position) * day).toISOString(),
+  updatedAt: new Date(now - day).toISOString(),
+  ...over,
+});
+
+/** A deck of three lessons: the first known, the learner on the second, the third still locked. */
+export const sections: Section[] = [
+  section("s1", "Lezione 11", 0, { total: 3, known: 3, knownNeeded: 3 }),
+  section("s2", "Lezione 12", 1, { total: 2, known: 0, knownNeeded: 2 }),
+  section("s3", "Lezione 13", 2, { total: 2, notStarted: 2, knownNeeded: 2, status: "locked" }),
+];
+export const sectionProgress = { currentId: "s2", nextId: "s3", ready: false };
+
+/** The same deck once the second lesson is known well enough to go on. */
+export const readySections: Section[] = sections.map((s) =>
+  s.id === "s2" ? { ...s, known: 2 } : s.id === "s3" ? { ...s, status: "ready" } : s,
+);
+export const readyProgress = { ...sectionProgress, ready: true };
+
+const sectionOfCard: Record<string, string> = {
+  c3: "s1",
+  c5: "s1",
+  c7: "s1",
+  c1: "s2",
+  c6: "s2",
+  c2: "s3",
+  c4: "s3",
+};
+export const deckCardsInSections = deckCards.map((row) => ({
+  ...row,
+  card: { ...row.card, sectionId: sectionOfCard[row.card.id] ?? null },
+}));
 
 function review(
   id: string,

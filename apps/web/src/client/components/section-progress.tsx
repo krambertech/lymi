@@ -34,7 +34,6 @@ export function SectionProgress({
   const currentName = current.name;
   const nextName = next?.name ?? "";
   const known = i18n.number(current.known);
-  const total = i18n.number(current.total);
   const needed = i18n.number(current.knownNeeded);
 
   const goTo = (
@@ -54,16 +53,20 @@ export function SectionProgress({
   if (!next) {
     title = t`Every section is open`;
     detail = (
-      <Trans>
-        You know {known} of {total} cards in {currentName}, the last section.
-      </Trans>
+      <Plural
+        value={current.total}
+        one={`You know ${known} of # card in ${currentName}, the last section.`}
+        other={`You know ${known} of # cards in ${currentName}, the last section.`}
+      />
     );
   } else if (progress.ready) {
     title = t`${nextName} is ready`;
     detail = (
-      <Trans>
-        You know {known} of {total} cards in {currentName}.
-      </Trans>
+      <Plural
+        value={current.total}
+        one={`You know ${known} of # card in ${currentName}.`}
+        other={`You know ${known} of # cards in ${currentName}.`}
+      />
     );
   } else if (current.notStarted > 0 && current.known >= current.knownNeeded) {
     title = currentName;
@@ -77,9 +80,11 @@ export function SectionProgress({
   } else {
     title = currentName;
     detail = (
-      <Trans>
-        {nextName} opens when you know {needed} of {total} cards.
-      </Trans>
+      <Plural
+        value={current.total}
+        one={`${nextName} opens when you know ${needed} of # card.`}
+        other={`${nextName} opens when you know ${needed} of # cards.`}
+      />
     );
   }
 

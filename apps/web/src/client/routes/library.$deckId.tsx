@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import {
   ArchivedSectionsDialog,
@@ -71,6 +71,10 @@ function DeckPage() {
   const [showArchived, setShowArchived] = useState(false);
   const archivedSections = useQuery({ ...archivedSectionsQuery(deckId), enabled: showArchived });
   const [picking, setPicking] = useState<{ cardIds: string[]; after: () => void } | null>(null);
+  // The picker keeps its cards while it closes, so it never flashes "Move 0 cards".
+  const lastPicking = useRef(picking);
+  if (picking) lastPicking.current = picking;
+  const shownPicking = picking ?? lastPicking.current;
   const [startingEarly, setStartingEarly] = useState<{
     section: Section;
     opening: Section[];
@@ -288,14 +292,14 @@ function DeckPage() {
               setPicking(null);
               sectionActions.create.reset();
             }}
-            count={picking?.cardIds.length ?? 0}
+            count={shownPicking?.cardIds.length ?? 0}
             term={
-              picking?.cardIds.length === 1
-                ? cards.data?.find((row) => row.card.id === picking.cardIds[0])?.card.term
+              shownPicking?.cardIds.length === 1
+                ? cards.data?.find((row) => row.card.id === shownPicking.cardIds[0])?.card.term
                 : undefined
             }
             current={(() => {
-              const rows = cards.data?.filter((row) => picking?.cardIds.includes(row.card.id));
+              const rows = cards.data?.filter((row) => shownPicking?.cardIds.includes(row.card.id));
               const first = rows?.[0]?.card.sectionId ?? null;
               return rows?.every((row) => row.card.sectionId === first) ? first : undefined;
             })()}

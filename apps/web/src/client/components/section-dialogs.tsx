@@ -2,7 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { SectionInput } from "@lymi/core";
 import { clsx } from "clsx";
 import { Check, Plus } from "lucide-react";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import type { Section } from "../lib/api";
 import { Button } from "./button";
 import { RadioCard } from "./radio-card";
@@ -146,18 +146,22 @@ interface ArchiveSectionDialogProps {
 
 /** Archiving a section with cards asks first, because the owner says what happens to the cards. */
 export function ArchiveSectionDialog({
-  section,
+  section: given,
   onOpenChange,
   onArchive,
 }: ArchiveSectionDialogProps) {
   const { t } = useLingui();
+  // The section stays named while the dialog closes.
+  const last = useRef(given);
+  if (given) last.current = given;
+  const section = given ?? last.current;
   const [choice, setChoice] = useState<"archive" | "keep">("keep");
   const name = useId();
   const sectionName = section?.name ?? "";
   const count = section?.total ?? 0;
   return (
     <Dialog
-      open={!!section}
+      open={!!given}
       onOpenChange={(open) => {
         if (!open) setChoice("keep");
         onOpenChange(open);
@@ -461,13 +465,16 @@ interface StartEarlyDialogProps {
  * Starting a section early that has locked sections before it opens them too, so the learner is
  * told how many and how many cards before it happens. Starting is never undone.
  */
-export function StartEarlyDialog({ target, onOpenChange, onStart }: StartEarlyDialogProps) {
+export function StartEarlyDialog({ target: given, onOpenChange, onStart }: StartEarlyDialogProps) {
   const { t } = useLingui();
+  const last = useRef(given);
+  if (given) last.current = given;
+  const target = given ?? last.current;
   const sectionName = target?.section.name ?? "";
   const others = (target?.opening.length ?? 1) - 1;
   const cards = target?.opening.reduce((sum, s) => sum + s.total, 0) ?? 0;
   return (
-    <Dialog open={!!target} onOpenChange={onOpenChange}>
+    <Dialog open={!!given} onOpenChange={onOpenChange}>
       <DialogContent className="w-[min(92vw,440px)]">
         <DialogHeader>
           <DialogTitle>{t`Start ${sectionName} early?`}</DialogTitle>

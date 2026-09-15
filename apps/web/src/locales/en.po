@@ -50,6 +50,10 @@ msgstr "{0, plural, one {# card has text that’s too long, so part of it moves 
 msgid "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
 msgstr "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
 
+#. placeholder {0}: current.total
+msgid "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
+
 #. placeholder {0}: s.archivedCards
 msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
 msgstr "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
@@ -169,6 +173,14 @@ msgstr "{0, plural, one {Update # card} other {Update # cards}}"
 #. placeholder {0}: others + 1
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, one {Start section} other {Start # sections}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
 #. placeholder {0}: item.fileName
@@ -426,9 +438,6 @@ msgstr "{name} is over {place}."
 
 msgid "{nextName} is ready"
 msgstr "{nextName} is ready"
-
-msgid "{nextName} opens when you know {needed} of {total} cards."
-msgstr "{nextName} opens when you know {needed} of {total} cards."
 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
@@ -2764,12 +2773,6 @@ msgstr "You can undo the whole import later from Activity."
 
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."
-
-msgid "You know {known} of {total} cards in {currentName}, the last section."
-msgstr "You know {known} of {total} cards in {currentName}, the last section."
-
-msgid "You know {known} of {total} cards in {currentName}."
-msgstr "You know {known} of {total} cards in {currentName}."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "You were removed from this deck, so this link cannot add you back. Your reviews are kept."

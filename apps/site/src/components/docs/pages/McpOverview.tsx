@@ -126,9 +126,8 @@ export function McpOverview() {
           {
             term: (
               <>
-                <code>list_sections</code>, <code>create_section</code>,{" "}
-                <code>rename_section</code>, <code>reorder_sections</code>,{" "}
-                <code>move_cards_to_section</code>
+                <code>list_sections</code>, <code>create_section</code>, <code>rename_section</code>
+                , <code>reorder_sections</code>, <code>move_cards_to_section</code>
               </>
             ),
             def: "A deck's sections: ordered parts such as one lesson each, which learners open in order. Create one, rename it, reorder them, or move many cards in or out at once.",

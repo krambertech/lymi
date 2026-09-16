@@ -6,6 +6,7 @@ import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { MonthBars } from "../components/month-bars";
+import { RecallTally } from "../components/recall-tally";
 import { RunStrip } from "../components/run-strip";
 import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
@@ -13,7 +14,7 @@ import { StartPanel } from "../components/start-panel";
 import { StatPlate } from "../components/stat-plate";
 import { StateIcon, stateMarks } from "../components/state-mark";
 import { addDays } from "../components/streak-calendar";
-import { TrendLine } from "../components/trend-line";
+import { TREND_MIN_POINTS, TrendLine } from "../components/trend-line";
 import { deviceTimezone } from "../lib/api";
 import { Page, PageHeader } from "./shell";
 
@@ -65,19 +66,26 @@ export function InsightsView({
 
   // On the Recall plate's label row rather than in the page header: in the header the same
   // control reads as a filter for the whole screen, and it moves this one figure only.
-  const switcher = (
-    <Segmented
-      size="sm"
-      label={t`How far back the recall figure looks`}
-      value={period}
-      onChange={onPeriod}
-      options={[
-        { value: "30", label: t`30 days` },
-        { value: "90", label: t`90 days` },
-        { value: "0", label: t`All` },
-      ]}
-    />
-  );
+  //
+  // Only the periods the history can actually tell apart are offered, and none at all until
+  // there are more than thirty days of it. Three buttons that all return the same number
+  // read as a broken control rather than a choice.
+  const periodSwitcher = (daysAllTime: number) => {
+    if (daysAllTime <= 30) return undefined;
+    return (
+      <Segmented
+        size="sm"
+        label={t`How far back the recall figure looks`}
+        value={period}
+        onChange={onPeriod}
+        options={[
+          { value: "30", label: t`30 days` },
+          ...(daysAllTime > 90 ? [{ value: "90" as const, label: t`90 days` }] : []),
+          { value: "0", label: t`All` },
+        ]}
+      />
+    );
+  };
 
   if (failed) {
     return (
@@ -96,7 +104,7 @@ export function InsightsView({
   if (!data) {
     return (
       <Page>
-        <PageHeader title={t`Insights`} actions={switcher} />
+        <PageHeader title={t`Insights`} />
         {/* Same heights the plates settle at, so the screen does not jump when they land. */}
         <div className="grid gap-3 @3xl:grid-cols-2">
           {[0, 1, 2, 3].map((i) => (
@@ -109,7 +117,7 @@ export function InsightsView({
   }
 
   const { recall, consistency, months, cards, forecast, leeches } = data;
-  const { litAllTime, daysAllTime } = consistency;
+  const { daysAllTime } = consistency;
   const nothingYet = daysAllTime === 0 && cards.total === 0;
 
   if (nothingYet) {
@@ -137,14 +145,9 @@ export function InsightsView({
             ghost
             label={t`Recall`}
             value="—"
-            figure={
-              <div className="relative h-full w-full">
-                <div className="absolute inset-x-0 top-1/3 border-t border-dashed border-edge-2" />
-                <span className="absolute end-0 top-1/3 -translate-y-full pb-1 text-2xs text-muted tabular-nums">
-                  90%
-                </span>
-              </div>
-            }
+            /* The real chart with nothing in it, so the reference cannot sit somewhere the
+               live chart would never put it. */
+            figure={<TrendLine points={[]} target={0.9} targetLabel="90%" label="" />}
             note={t`How often you remember a card when it comes back`}
           />
           <StatPlate
@@ -191,6 +194,10 @@ export function InsightsView({
       label: monthly
         ? i18n.date(start, { month: "long" })
         : t`week of ${i18n.date(start, { day: "numeric", month: "short" })}`,
+      /* The chart's own end labels, short enough to sit under the plot. */
+      short: monthly
+        ? i18n.date(start, { month: "short" })
+        : i18n.date(start, { day: "numeric", month: "short" }),
     };
   });
   const series = trend.map((p) => `${p.label} ${Math.round(p.value * 100)}%`).join(", ");
@@ -202,6 +209,8 @@ export function InsightsView({
     },
   );
   const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
+  const monthLit = months.reduce((n, m) => n + m.lit, 0);
+  const monthDays = months.reduce((n, m) => n + m.days, 0);
 
   return (
     <Page>
@@ -225,10 +234,13 @@ export function InsightsView({
       >
         <StatPlate
           label={t`Recall`}
-          control={switcher}
+          control={periodSwitcher(daysAllTime)}
           value={recall.rate === null ? "—" : `${Math.round(recall.rate * 100)}%`}
+          /* Too few weeks to have a trend draws the sample the figure is made of instead.
+             One bucket has no shape at all: a line through a single point strokes nothing,
+             leaving a lone dot in an empty plate. */
           figure={
-            trend.length > 0 ? (
+            trend.length >= TREND_MIN_POINTS ? (
               <TrendLine
                 points={trend}
                 target={0.9}
@@ -239,7 +251,9 @@ export function InsightsView({
                     : t`Recall by week: ${series}. The schedule aims for 90%.`
                 }
               />
-            ) : undefined
+            ) : (
+              <RecallTally passed={recall.passed} failed={recall.failed} />
+            )
           }
           note={
             recall.rate === null
@@ -254,7 +268,7 @@ export function InsightsView({
           unit={t`/ ${plural(consistency.days.length, { one: "# day", other: "# days" })}`}
           figure={<RunStrip days={consistency.days} />}
           note={
-            consistency.days.length === 0
+            consistency.lit === 0
               ? t`No reviews yet. Each block here will be a day.`
               : consistency.longestRun > 1
                 ? t`${plural(consistency.longestRun, {
@@ -291,11 +305,13 @@ export function InsightsView({
             <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
               <Trans>Month by month</Trans>
             </h2>
+            {/* Sums the bars below rather than counting from the first review, so the
+                heading and the months it heads can never disagree. */}
             <span className="text-xs text-muted tabular-nums">
               <Plural
-                value={daysAllTime}
-                one={`${litAllTime} of # day`}
-                other={`${litAllTime} of # days`}
+                value={monthDays}
+                one={`${monthLit} of # day`}
+                other={`${monthLit} of # days`}
               />
             </span>
           </div>

@@ -564,9 +564,10 @@ export const InsightsOut = z
         }),
     }),
     consistency: z.object({
-      days: z
-        .array(z.object({ date: LocalDate, lit: z.boolean() }))
-        .meta({ description: "The last thirty days, oldest first" }),
+      days: z.array(z.object({ date: LocalDate, lit: z.boolean() })).meta({
+        description:
+          "The thirty local days ending today, oldest first. Always thirty, so a first day is drawn inside the same frame as a full month.",
+      }),
       lit: z.number().int().meta({ description: "Days reviewed of those thirty" }),
       longestRun: z.number().int().meta({ description: "Longest unbroken run, all time" }),
       litAllTime: z.number().int(),
@@ -577,10 +578,10 @@ export const InsightsOut = z
         z.object({
           month: z.string().meta({ description: "Local YYYY-MM" }),
           lit: z.number().int(),
-          days: z
-            .number()
-            .int()
-            .meta({ description: "Days elapsed; the current month counts to today" }),
+          days: z.number().int().meta({
+            description:
+              "Elapsed days of the calendar month; the current month counts to today. Not days since the first review, so every bar shares one frame.",
+          }),
         }),
       )
       .meta({ description: "Up to twelve months, oldest first" }),

@@ -382,9 +382,6 @@ msgstr "{days, plural, one {# день} few {# дні} many {# днів} other {
 msgid "{days, plural, one {In # day} other {In # days}}"
 msgstr "{days, plural, one {Через # день} few {Через # дні} many {Через # днів} other {Через # дня}}"
 
-msgid "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
-msgstr "{daysAllTime, plural, one {{litAllTime} з # дня} few {{litAllTime} з # днів} many {{litAllTime} з # днів} other {{litAllTime} з # дня}}"
-
 msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 msgstr "{daysAllTime, plural, one {# день від першого повторення} few {# дні від першого повторення} many {# днів від першого повторення} other {# дня від першого повторення}}"
 
@@ -448,6 +445,9 @@ msgstr "{members, plural, one {Нові люди не можуть приєдн�
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 msgstr "{missingLanguage, plural, one {У # колоди ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.} few {У # колод ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.} many {У # колод ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.} other {У # колоди ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.}}"
 
+msgid "{monthDays, plural, one {{monthLit} of # day} other {{monthLit} of # days}}"
+msgstr "{monthDays, plural, one {{monthLit} з # дня} few {{monthLit} з # днів} many {{monthLit} з # днів} other {{monthLit} з # дня}}"
+
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# місяць} few {# місяці} many {# місяців} other {# місяця}}"
 
@@ -483,6 +483,9 @@ msgstr "{oneSided, plural, one {У # картці немає рядка ---, т�
 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {Попередній розділ теж почнеться, щоб розділи йшли по порядку.} few {# попередні розділи теж почнуться, щоб розділи йшли по порядку.} many {# попередніх розділів теж почнуться, щоб розділи йшли по порядку.} other {# попереднього розділу теж почнуться, щоб розділи йшли по порядку.}}"
+
+msgid "{passed} remembered, {failed} forgotten"
+msgstr "Запам’ятано: {passed}, забуто: {failed}"
 
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оцінка з офлайн-повторення ще не дійшла до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти її.} few {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} many {# оцінок з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} other {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.}}"

@@ -382,9 +382,6 @@ msgstr "{days, plural, one {# day} other {# days}}"
 msgid "{days, plural, one {In # day} other {In # days}}"
 msgstr "{days, plural, one {In # day} other {In # days}}"
 
-msgid "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
-msgstr "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
-
 msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 msgstr "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 
@@ -448,6 +445,9 @@ msgstr "{members, plural, one {Nobody new can join. The one person who joined ke
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 msgstr "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 
+msgid "{monthDays, plural, one {{monthLit} of # day} other {{monthLit} of # days}}"
+msgstr "{monthDays, plural, one {{monthLit} of # day} other {{monthLit} of # days}}"
+
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# month} other {# months}}"
 
@@ -483,6 +483,9 @@ msgstr "{oneSided, plural, one {# card has no --- line, so it comes across with 
 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+
+msgid "{passed} remembered, {failed} forgotten"
+msgstr "{passed} remembered, {failed} forgotten"
 
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"

@@ -1,4 +1,5 @@
 import { MonthBars } from "../../components/month-bars";
+import { RecallTally } from "../../components/recall-tally";
 import { RunStrip } from "../../components/run-strip";
 import { SevenLights } from "../../components/seven-lights";
 import { StatPlate } from "../../components/stat-plate";
@@ -20,6 +21,7 @@ const trend = insights.recall.series.map((p) => ({
   t: new Date(p.at).getTime(),
   value: p.rate,
   label: `week of ${p.at}`,
+  short: new Date(p.at).toLocaleDateString("en", { day: "numeric", month: "short" }),
 }));
 
 export const streak: Group = {
@@ -202,7 +204,7 @@ export const charts: Group = {
           items={[
             {
               label: "Weekly, with a target",
-              note: "The dashed rule is the 90% the schedule aims for. The last point is the one the number talks about.",
+              note: "The dashed rule is the 90% the schedule aims for. Every bucket carries a dot, and the end labels name the span and the last bucket's value.",
               render: () => (
                 <TrendLine
                   points={trend}
@@ -212,6 +214,35 @@ export const charts: Group = {
                   className="w-full"
                 />
               ),
+            },
+            {
+              label: "No points",
+              note: "What the zero state draws. The same component, so the reference cannot land somewhere the live chart would never put it.",
+              render: () => (
+                <TrendLine points={[]} target={0.9} targetLabel="90%" label="" className="w-full" />
+              ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "recall-tally",
+      name: "Recall tally",
+      source: "components/recall-tally.tsx",
+      note: "Drawn in place of the trend line while there are fewer than three weeks to draw. One mark per graded review, so the sample size the percentage hides is visible. A tally, not a timeline.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "A first week",
+              note: "Thirteen marks, one of them forgotten. The count is the point.",
+              render: () => <RecallTally passed={12} failed={1} className="w-full" />,
+            },
+            {
+              label: "Past counting",
+              note: "Over sixty marks are thinner than the gaps between them, so the tally falls back to shares.",
+              render: () => <RecallTally passed={132} failed={9} className="w-full" />,
             },
           ]}
         />
@@ -231,7 +262,7 @@ export const charts: Group = {
             },
             {
               label: "The first week",
-              note: "Five days of history still fill the strip.",
+              note: "Five days of history inside the same thirty-day frame, so a first week cannot read as a full month.",
               render: () => <RunStrip days={thinInsights.consistency.days} className="w-full" />,
             },
           ]}

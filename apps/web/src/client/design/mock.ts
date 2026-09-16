@@ -523,16 +523,19 @@ export const thinInsights: InsightsOut = {
     series: [{ at: "2026-08-31", passed: 6, failed: 1, rate: 6 / 7 }],
   },
   consistency: {
-    days: Array.from({ length: 5 }, (_, i) => ({
-      date: new Date(now - (4 - i) * day).toISOString().slice(0, 10),
-      lit: i !== 1,
+    /* Thirty days like any other account: five days of history, the other twenty-five
+       unlit because the learner was not here yet. */
+    days: Array.from({ length: 30 }, (_, i) => ({
+      date: new Date(now - (29 - i) * day).toISOString().slice(0, 10),
+      lit: i >= 25 && i !== 26,
     })),
     lit: 4,
     longestRun: 3,
     litAllTime: 4,
     daysAllTime: 5,
   },
-  months: [{ month: "2026-09", lit: 4, days: 5 }],
+  /* The calendar month, not the five days since the first review. */
+  months: [{ month: "2026-09", lit: 4, days: 16 }],
   cards: { total: 18, new: 11, learning: 7, known: 0 },
   forecast: Array.from({ length: 7 }, (_, i) => ({
     date: new Date(now + i * day).toISOString().slice(0, 10),

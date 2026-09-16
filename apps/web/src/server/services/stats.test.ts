@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { byMonth, type DayLight, longestRun } from "./stats";
+import { byMonth, type DayLight, lastThirty, longestRun } from "./stats";
 
 const day = (date: string, lit: boolean): DayLight => ({ date, lit });
 
@@ -29,7 +29,7 @@ describe("longestRun", () => {
 });
 
 describe("byMonth", () => {
-  it("counts days elapsed, not days in the month, so an unfinished month is honest", () => {
+  it("counts the calendar month, so joining late does not fill the bar", () => {
     const days = [
       day("2026-05-30", true),
       day("2026-05-31", false),
@@ -37,20 +37,55 @@ describe("byMonth", () => {
       day("2026-06-02", true),
     ];
 
-    expect(byMonth(days)).toEqual([
-      { month: "2026-05", lit: 1, days: 2 },
+    // May is over, so it is judged against all 31 of its days; June counts to today.
+    expect(byMonth(days, "2026-06-02")).toEqual([
+      { month: "2026-05", lit: 1, days: 31 },
       { month: "2026-06", lit: 2, days: 2 },
     ]);
   });
 
+  it("does not let a first review fill its month", () => {
+    expect(byMonth([day("2026-09-16", true)], "2026-09-16")).toEqual([
+      { month: "2026-09", lit: 1, days: 16 },
+    ]);
+  });
+
+  it("counts February's real length in a leap year", () => {
+    expect(byMonth([day("2024-02-03", true)], "2024-04-01")[0]?.days).toBe(29);
+  });
+
   it("keeps months in order and does not merge a month that comes back", () => {
-    expect(byMonth([day("2026-05-01", true), day("2026-06-01", true)]).map((m) => m.month)).toEqual(
-      ["2026-05", "2026-06"],
-    );
+    expect(
+      byMonth([day("2026-05-01", true), day("2026-06-01", true)], "2026-06-01").map((m) => m.month),
+    ).toEqual(["2026-05", "2026-06"]);
   });
 
   it("is empty when there is no history", () => {
-    expect(byMonth([])).toEqual([]);
+    expect(byMonth([], "2026-06-02")).toEqual([]);
+  });
+});
+
+describe("lastThirty", () => {
+  it("is always thirty days ending today, however little history there is", () => {
+    const strip = lastThirty([day("2026-09-16", true)], "2026-09-16");
+
+    expect(strip).toHaveLength(30);
+    expect(strip.at(-1)).toEqual({ date: "2026-09-16", lit: true });
+    expect(strip.at(0)).toEqual({ date: "2026-08-18", lit: false });
+    expect(strip.filter((d) => d.lit)).toHaveLength(1);
+  });
+
+  it("drops days that fell out of the window and keeps the ones inside it", () => {
+    const strip = lastThirty([day("2026-07-01", true), day("2026-09-10", true)], "2026-09-16");
+
+    expect(strip.filter((d) => d.lit).map((d) => d.date)).toEqual(["2026-09-10"]);
+  });
+
+  it("is thirty unlit days when nothing has been reviewed", () => {
+    const strip = lastThirty([], "2026-09-16");
+
+    expect(strip).toHaveLength(30);
+    expect(strip.some((d) => d.lit)).toBe(false);
   });
 });
 
@@ -76,6 +111,6 @@ describe("date bucketing", () => {
     }
 
     // March is when Europe changes its clocks; the month still has 31 days.
-    expect(byMonth(days)).toEqual([{ month: "2026-03", lit: 15, days: 31 }]);
+    expect(byMonth(days, "2026-04-01")).toEqual([{ month: "2026-03", lit: 15, days: 31 }]);
   });
 });

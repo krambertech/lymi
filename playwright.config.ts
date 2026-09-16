@@ -5,6 +5,9 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   timeout: process.env.CI ? 60_000 : 30_000,
+  // A CI runner takes about three times as long as a developer's machine for this suite, so an
+  // assertion's default five seconds is a budget tuned to the wrong machine. docs/testing.md.
+  expect: { timeout: process.env.CI ? 15_000 : 5_000 },
   retries: process.env.CI ? 1 : 0,
   // The journeys share one Vite dev server, one Worker and one D1. Accounts are already keyed
   // per test, but the server is not: concurrent workers starve it. docs/testing.md.
@@ -17,6 +20,8 @@ export default defineConfig({
     screenshot: "only-on-failure",
     trace: "on-first-retry",
     video: "on-first-retry",
+    // Measured, not assumed: the same suite failed 10 under this and 24 at full motion. docs/testing.md.
+    reducedMotion: "reduce",
   },
   projects: [
     {

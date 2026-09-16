@@ -166,11 +166,15 @@ export default defineConfig({
             name: "components",
             include: ["src/client/**/*.browser.test.tsx"],
             setupFiles: ["src/client/test/browser-setup.ts"],
+            // These gate the same merges as the journeys, which have always retried once.
+            retry: process.env.CI ? 1 : 0,
             browser: {
               enabled: true,
               headless: true,
               screenshotFailures: false,
-              provider: playwright(),
+              // A part that is still moving is not clickable, and `forced-states` rewrites the
+              // motion queries into `data-motion`, so the specimens still prove both. docs/testing.md.
+              provider: playwright({ contextOptions: { reducedMotion: "reduce" } }),
               instances: [
                 {
                   name: "desktop",
@@ -182,14 +186,18 @@ export default defineConfig({
                   name: "touch",
                   browser: "chromium",
                   viewport: { width: 390, height: 844 },
-                  provider: playwright({ contextOptions: { hasTouch: true, isMobile: true } }),
+                  provider: playwright({
+                    contextOptions: { hasTouch: true, isMobile: true, reducedMotion: "reduce" },
+                  }),
                   provide: { machine: "touch" },
                 },
                 {
                   name: "touch-webkit",
                   browser: "webkit",
                   viewport: { width: 390, height: 844 },
-                  provider: playwright({ contextOptions: { hasTouch: true, isMobile: true } }),
+                  provider: playwright({
+                    contextOptions: { hasTouch: true, isMobile: true, reducedMotion: "reduce" },
+                  }),
                   provide: { machine: "touch" },
                 },
               ],

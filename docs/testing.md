@@ -25,6 +25,10 @@ pnpm exec playwright install chromium webkit
 
 Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test.
 
+Every page runs under `prefers-reduced-motion: reduce`, the product's own quieter twin, and an assertion gets fifteen seconds on CI rather than Playwright's five. Both are measured rather than assumed: on 2026-09-16 the same commit failed 10 Chromium tests in 20.3 minutes under reduced motion and 24 in 27.4 at full motion, and the suite that takes 7.7 minutes on a developer's machine takes three times that on a runner with no GPU, which is the same reason `timeout` already doubles there. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
+
+The journeys run one at a time. They share a single Vite dev server, a single Worker and a single D1, and only the accounts are keyed per test: `e2eEmail` in `e2e/settings.mjs` keys one by test, project, retry and repeat. Three workers were tried on 2026-09-16 and 49 of 63 Chromium tests failed, every one of them a signed-in journey whose screen never mounted inside the expect budget while the tests that touch no account passed. Parallel journeys need a backend per worker, or a served build in place of the dev server, before the worker count is worth raising again.
+
 ## Component tests in real browsers
 
 Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components` project in `apps/web/vite.config.ts`. Each test runs three times: desktop Chromium at 1280 px with a fine pointer, and Chromium and WebKit as a 390 px touch device. A test reads `inject("machine")` to know which shape to expect, so one file proves both shapes of an adaptive component. `pnpm test` runs them after the unit tests, so the browsers must be installed. Workers Builds sets `WORKERS_CI=1` and has no browsers, so the production build skips this project and relies on GitHub CI, which runs it before merge:
@@ -33,6 +37,8 @@ Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components`
 pnpm exec playwright install chromium webkit
 pnpm --filter @lymi/web exec vitest run --project components
 ```
+
+Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys: these gate the same merges.
 
 WebKit does not focus a button that is clicked, so a test about focus return opens the overlay from the keyboard. A swipe is not covered here; it belongs in a Playwright journey on the iPhone project.
 
@@ -43,6 +49,8 @@ WebKit does not focus a button that is clicked, so a test about focus return ope
 ## CI policy
 
 `pnpm verify` is the canonical local base gate. CI keeps those commands in one quality job and the same fail-fast order, with formatting and lint, migration safety, build, TypeScript, and unit tests as distinct steps. A short planning job selects coverage first, then the quality job and required browser E2E run in parallel. A final check reports every gate and fails unless the plan, quality job and required browser job succeeded.
+
+A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so queued pushes to `main` used to cancel each other before either started and neither commit was verified; superseding the older run verifies the newest commit instead. The browser job's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
 
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 

@@ -1,6 +1,7 @@
+import { e2eProductPackageUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
-const productionProduct = "http://localhost:4175";
+const productionProduct = e2eProductPackageUrl;
 
 test("the production product package installs its shell and starts offline", async ({
   browserName,

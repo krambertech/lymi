@@ -1,9 +1,10 @@
 import { expect, test } from "@playwright/test";
+import { e2eProductUrl, e2eSiteUrl } from "./ports.mjs";
 
 /** The site reads `e2e/fixtures/published-decks.sql`; publishing itself is covered by the add spec. */
-const publicSite = "http://localhost:4174";
+const publicSite = e2eSiteUrl;
 const pagePath = "/decks/evening-estonian";
-const addUrl = "http://localhost:4173/add/evening-estonian";
+const addUrl = `${e2eProductUrl}/add/evening-estonian`;
 
 test("anyone can read a published deck's page, see its sections and cards, and turn a few over", async ({
   page,

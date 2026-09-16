@@ -1,4 +1,5 @@
 import { signInAsTestLearner } from "./auth";
+import { e2eSiteUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
 test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
@@ -18,7 +19,7 @@ test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
   await page.getByRole("button", { name: "Dev", exact: true }).click();
   await expect(page.getByRole("menuitem", { name: "Docs" })).toHaveAttribute(
     "href",
-    "http://localhost:4174/docs",
+    `${e2eSiteUrl}/docs`,
   );
 });
 

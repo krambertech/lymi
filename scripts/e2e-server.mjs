@@ -3,8 +3,17 @@
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
+import { createServer } from "node:net";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  e2eProductPackagePort,
+  e2eProductPackageUrl,
+  e2eProductPort,
+  e2eProductUrl,
+  e2eSitePort,
+  e2eSiteUrl,
+} from "../e2e/ports.mjs";
 import { e2eAllowedEmails, e2eOperatorEmails } from "../e2e/settings.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -35,6 +44,30 @@ if (dirname(productPackageState) !== expectedParent) {
   throw new Error(`Refusing to clear unexpected product-package E2E path: ${productPackageState}`);
 }
 
+function portIsFree(port) {
+  return new Promise((resolve) => {
+    const probe = createServer();
+    probe.once("error", () => resolve(false));
+    probe.listen(port, "127.0.0.1", () => probe.close(() => resolve(true)));
+  });
+}
+
+// Fail here rather than let Playwright's health check find another worktree's server and run the
+// whole suite against its code. A passing run against the wrong build is worse than no run.
+for (const [port, name] of [
+  [e2eProductPort, "product (Vite)"],
+  [e2eSitePort, "site Worker"],
+  [e2eProductPackagePort, "product package"],
+]) {
+  if (await portIsFree(port)) continue;
+  console.error(
+    `Port ${port} is already in use, so the ${name} server cannot start. Another E2E run, ` +
+      `probably in another worktree, holds it. Run this one on its own triple with ` +
+      `E2E_PORT=<base>, for example E2E_PORT=4183.`,
+  );
+  process.exit(1);
+}
+
 rmSync(state, { recursive: true, force: true });
 rmSync(siteState, { recursive: true, force: true });
 rmSync(productPackageState, { recursive: true, force: true });
@@ -43,8 +76,8 @@ mkdirSync(productPackageState, { recursive: true });
 // Cloudflare gives .dev.vars.<environment> precedence over .dev.vars. Use a unique,
 // short-lived environment so ignored developer secrets and allowlists cannot affect E2E.
 const testVars = [
-  "PUBLIC_SITE_URL=http://localhost:4174",
-  "PRODUCT_URL=http://localhost:4173",
+  `PUBLIC_SITE_URL=${e2eSiteUrl}`,
+  `PRODUCT_URL=${e2eProductUrl}`,
   `ALLOWED_EMAILS=${e2eAllowedEmails.join(",")}`,
   `OPERATOR_EMAILS=${e2eOperatorEmails.join(",")}`,
   "BETTER_AUTH_SECRET=lymi-e2e-secret-at-least-thirty-two-characters",
@@ -137,8 +170,8 @@ const siteBuild = spawnSync(pnpm, ["run", "build"], {
   cwd: site,
   env: {
     ...process.env,
-    PUBLIC_PRODUCT_URL: "http://localhost:4173",
-    PUBLIC_SITE_URL: "http://localhost:4174",
+    PUBLIC_PRODUCT_URL: e2eProductUrl,
+    PUBLIC_SITE_URL: e2eSiteUrl,
   },
   stdio: "inherit",
 });
@@ -190,8 +223,8 @@ delete generatedProductConfig.configPath;
 delete generatedProductConfig.userConfigPath;
 generatedProductConfig.vars = {
   ...generatedProductConfig.vars,
-  PUBLIC_SITE_URL: "http://localhost:4174",
-  PRODUCT_URL: "http://localhost:4175",
+  PUBLIC_SITE_URL: e2eSiteUrl,
+  PRODUCT_URL: e2eProductPackageUrl,
   ALLOWED_EMAILS: e2eAllowedEmails.join(","),
   OPERATOR_EMAILS: e2eOperatorEmails.join(","),
 };
@@ -200,8 +233,8 @@ writeFileSync(productPackageConfig, JSON.stringify(generatedProductConfig));
 writeFileSync(
   productPackageDevVars,
   [
-    "PUBLIC_SITE_URL=http://localhost:4174",
-    "PRODUCT_URL=http://localhost:4175",
+    `PUBLIC_SITE_URL=${e2eSiteUrl}`,
+    `PRODUCT_URL=${e2eProductPackageUrl}`,
     `ALLOWED_EMAILS=${e2eAllowedEmails.join(",")}`,
     `OPERATOR_EMAILS=${e2eOperatorEmails.join(",")}`,
     "BETTER_AUTH_SECRET=lymi-e2e-secret-at-least-thirty-two-characters",
@@ -220,7 +253,7 @@ const siteServer = spawn(
     "--ip",
     "127.0.0.1",
     "--port",
-    "4174",
+    String(e2eSitePort),
     "--persist-to",
     ".wrangler/e2e",
   ],
@@ -245,7 +278,7 @@ async function waitFor(url) {
   throw new Error(`Timed out waiting for ${url}`);
 }
 
-await waitFor("http://127.0.0.1:4174/api/health");
+await waitFor(`http://127.0.0.1:${e2eSitePort}/api/health`);
 
 const productPackageServer = spawn(
   process.execPath,
@@ -257,7 +290,7 @@ const productPackageServer = spawn(
     "--ip",
     "127.0.0.1",
     "--port",
-    "4175",
+    String(e2eProductPackagePort),
     "--persist-to",
     productPackageState,
   ],
@@ -270,11 +303,18 @@ productPackageServer.on("error", (error) => {
   process.exit(1);
 });
 
-await waitFor("http://localhost:4175/api/health");
+await waitFor(`${e2eProductPackageUrl}/api/health`);
 
 const productServer = spawn(
   process.execPath,
-  [packageBin("vite", "bin/vite.js"), "--host", "127.0.0.1", "--port", "4173", "--strictPort"],
+  [
+    packageBin("vite", "bin/vite.js"),
+    "--host",
+    "127.0.0.1",
+    "--port",
+    String(e2eProductPort),
+    "--strictPort",
+  ],
   {
     cwd: web,
     env: { ...process.env, CLOUDFLARE_ENV: cloudflareEnv, LYMI_E2E: "1" },

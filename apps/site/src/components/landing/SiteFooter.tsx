@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
-import { type LocalizedPage, localizedPath } from "../../lib/routes";
-import { LanguageLinks } from "../LanguageLinks";
+import { localizedPath } from "../../lib/routes";
+import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
 import { SOURCE_CODE_URL, USE_CASE_LINKS } from "./site-links";
 
@@ -16,13 +16,10 @@ function Group({ title, children }: { title: ReactNode; children: ReactNode }) {
   );
 }
 
-interface Props {
-  openAppUrl: string;
-  /** The page the language links lead to in each locale. */
-  page: LocalizedPage;
-}
+/** The language links lead to the same page in each locale. */
+type Props = { openAppUrl: string } & LanguageTarget;
 
-export function SiteFooter({ openAppUrl, page }: Props) {
+export function SiteFooter({ openAppUrl, ...languages }: Props) {
   const { i18n } = useLingui();
 
   return (
@@ -87,7 +84,7 @@ export function SiteFooter({ openAppUrl, page }: Props) {
           </Group>
         </div>
       </div>
-      <LanguageLinks page={page} />
+      <LanguageLinks {...languages} />
     </footer>
   );
 }

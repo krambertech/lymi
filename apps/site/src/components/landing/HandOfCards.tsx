@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import {
   type CSSProperties,
+  type ReactNode,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -112,8 +113,9 @@ function FanCard({
     setLanded(true);
   }, [landed]);
 
-  const say = (d: MessageDescriptor) => i18n._(d);
-  const source = typeof card.source === "string" ? card.source : say(card.source);
+  const say = (d: string | MessageDescriptor) => (typeof d === "string" ? d : i18n._(d));
+  const heading = [say(card.source), card.kind && say(card.kind)].filter(Boolean).join(" · ");
+  const audible = card.audio !== null;
   const front = place === "front";
   // A CJK character is about two Latin letters wide and has no spaces to wrap at.
   const longest = Math.max(
@@ -124,9 +126,9 @@ function FanCard({
 
   const top = (
     <>
-      <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">
-        {source} · {say(card.kind)}
-      </p>
+      {heading && (
+        <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">{heading}</p>
+      )}
       <p
         lang={card.language}
         dir="auto"
@@ -140,26 +142,30 @@ function FanCard({
           {card.reading}
         </p>
       )}
-      <p className="mt-2.5 flex min-h-8 items-center gap-2.5 text-md text-muted">
-        {card.pronunciation && <span className="hand-ipa truncate">{card.pronunciation}</span>}
-        <button
-          type="button"
-          aria-label={playing ? t`Replay pronunciation` : t`Play pronunciation`}
-          tabIndex={front ? 0 : -1}
-          onClick={(e) => {
-            e.stopPropagation();
-            onPlay(card);
-          }}
-          className={clsx(
-            "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover",
-            "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
-            playing ? "text-text" : "text-text-2",
-            !front && "invisible",
+      {(card.pronunciation || audible) && (
+        <p className="mt-2.5 flex min-h-8 items-center gap-2.5 text-md text-muted">
+          {card.pronunciation && <span className="hand-ipa truncate">{card.pronunciation}</span>}
+          {audible && (
+            <button
+              type="button"
+              aria-label={playing ? t`Replay pronunciation` : t`Play pronunciation`}
+              tabIndex={front ? 0 : -1}
+              onClick={(e) => {
+                e.stopPropagation();
+                onPlay(card);
+              }}
+              className={clsx(
+                "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover",
+                "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
+                playing ? "text-text" : "text-text-2",
+                !front && "invisible",
+              )}
+            >
+              <Volume2 aria-hidden="true" />
+            </button>
           )}
-        >
-          <Volume2 aria-hidden="true" />
-        </button>
-      </p>
+        </p>
+      )}
     </>
   );
 
@@ -197,7 +203,9 @@ function FanCard({
           <p className="mt-auto border-t border-edge-2 pt-3.5 text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
             {say(card.meaning)}
           </p>
-          <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
+          {card.note && (
+            <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
+          )}
         </div>
       </div>
     </div>
@@ -209,6 +217,10 @@ interface Props {
   cards?: readonly HandCard[] | undefined;
   /** A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. */
   layout?: "fan" | "stack" | undefined;
+  /** Hold these from the first render, so the hand is in the server's HTML and needs no script to be there. */
+  dealt?: readonly HandCard[] | undefined;
+  /** Deal each card once; after the last, this takes the hand's place and can deal them again. */
+  finale?: ((again: () => void, turned: readonly HandCard[]) => ReactNode) | undefined;
 }
 
 /**
@@ -216,29 +228,45 @@ interface Props {
  * teaches the one move Lymi is built on, looking at a term before its meaning, and shows how
  * much a card can hold. The deal plays once per session; after that the hand is simply there.
  */
-export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
+export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, finale }: Props) {
   const { t, i18n } = useLingui();
-  const [hand, setHand] = useState<Dealt[]>([]);
+  const [hand, setHand] = useState<Dealt[]>(() =>
+    (given ?? []).map((card, key) => ({ key, card })),
+  );
   const [gone, setGone] = useState<Dealt[]>([]);
-  const [phase, setPhase] = useState<"dealing" | "front" | "back">("dealing");
+  const [phase, setPhase] = useState<"dealing" | "front" | "back" | "done">(
+    given ? "front" : "dealing",
+  );
+  const [round, setRound] = useState(0);
+  const once = Boolean(finale);
   const [intro, setIntro] = useState(false);
   const [turned, setTurned] = useState(0);
+  const [turnedCards, setTurnedCards] = useState<HandCard[]>([]);
   const [playing, setPlaying] = useState<string | null>(null);
-  const [announce, setAnnounce] = useState("");
+  const [announce, setAnnounce] = useState<ReactNode>(null);
   const pile = useRef<HandCard[]>([]);
   const nextKey = useRef(0);
+  const started = useRef(false);
   const audio = useRef<HTMLAudioElement | null>(null);
   const frontFlip = useRef<HTMLDivElement | null>(null);
   const [hint, setHint] = useState(false);
   const [finePointer, setFinePointer] = useState(true);
   const taught = useRef(false);
   const held = useRef<Dealt[]>([]);
-  const dealt = useRef(false);
+  const dealt = useRef(Boolean(given));
   const size = Math.min(HAND_SIZE, cards.length);
   const [dealFrom, setDealFrom] = useState(0);
 
   // The hand is random, so it is dealt after hydration rather than rendered on the server.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new round deals the same cards again.
   useEffect(() => {
+    // A hand the server dealt is already held; keep it rather than dealing over it.
+    if (given && !started.current) {
+      started.current = true;
+      nextKey.current = given.length;
+      pile.current = cards.filter((card) => !given.includes(card));
+      return;
+    }
     let seen = false;
     try {
       seen = sessionStorage.getItem(DEALT_KEY) === "1";
@@ -248,7 +276,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
     setFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     const redeal = dealt.current;
     dealt.current = true;
-    pile.current = [];
+    pile.current = once ? shuffle(cards) : [];
     const tossed = held.current;
     if (redeal && tossed.length > 0) {
       setGone((g) => [...g, ...tossed]);
@@ -262,7 +290,8 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
     const first: Dealt[] = [];
     const count = Math.min(HAND_SIZE, cards.length);
     for (let i = 0; i < count; i++) {
-      first.push({ key: nextKey.current++, card: draw(pile.current, first, cards) });
+      const card = once ? (pile.current.shift() as HandCard) : draw(pile.current, first, cards);
+      first.push({ key: nextKey.current++, card });
     }
     const play = (redeal || !seen) && !still;
     setIntro(play);
@@ -274,7 +303,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
       DEAL_STAGGER_MS * (count - 1) + DEAL_MS,
     );
     return () => window.clearTimeout(settle);
-  }, [cards]);
+  }, [cards, given, once, round]);
 
   // A visitor who has not turned the first card after a moment is shown how: the card is pressed
   // and lifts at one edge as if turning, and a line says what to do. Anyone who already knows
@@ -311,7 +340,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
 
   const play = useCallback((card: HandCard) => {
     audio.current?.pause();
-    const clip = new Audio(`/audio/hand/${card.id}.mp3`);
+    const clip = new Audio(card.audio ?? `/audio/hand/${card.id}.mp3`);
     audio.current = clip;
     setPlaying(card.id);
     const done = () => setPlaying((current) => (current === card.id ? null : current));
@@ -326,21 +355,50 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
     taught.current = true;
     setHint(false);
     setPhase("back");
-    setAnnounce(`${front.card.term}: ${i18n._(front.card.meaning)}`);
+    const meaning = front.card.meaning;
+    setAnnounce(
+      <Trans>
+        <span lang={front.card.language}>{front.card.term}</span>:{" "}
+        {typeof meaning === "string" ? meaning : i18n._(meaning)}
+      </Trans>,
+    );
   }, [hand, phase, i18n]);
 
   const next = useCallback(() => {
     const [front, ...rest] = hand;
     if (phase !== "back" || !front) return;
     stopAudio();
-    const dealt = { key: nextKey.current++, card: draw(pile.current, rest, cards) };
+    const card = once ? pile.current.shift() : draw(pile.current, rest, cards);
     setGone((g) => [...g, front]);
     window.setTimeout(() => setGone((g) => g.filter((d) => d.key !== front.key)), TOSS_MS);
-    setHand([...rest, dealt]);
+    setHand(card ? [...rest, { key: nextKey.current++, card }] : rest);
     setTurned((n) => n + 1);
-    setPhase("front");
-    if (rest[0]) setAnnounce(t`Next card: ${rest[0].card.term}`);
-  }, [hand, phase, cards, stopAudio, t]);
+    if (once) setTurnedCards((list) => [...list, front.card]);
+    setPhase(rest.length === 0 && !card ? "done" : "front");
+    const next = rest[0];
+    if (next) {
+      setAnnounce(
+        <Trans>
+          Next card: <span lang={next.card.language}>{next.card.term}</span>
+        </Trans>,
+      );
+    }
+  }, [hand, phase, cards, once, stopAudio]);
+
+  const finale_ = useRef<HTMLDivElement>(null);
+  const pressed = useRef(false);
+
+  const again = useCallback(() => {
+    pressed.current = true;
+    setTurned(0);
+    setTurnedCards([]);
+    setRound((n) => n + 1);
+  }, []);
+
+  // The turn button goes with the last card, so the finale takes the focus it left behind.
+  useEffect(() => {
+    if (phase === "done" && pressed.current) finale_.current?.focus({ preventScroll: true });
+  }, [phase]);
 
   const press = phase === "back" ? next : reveal;
   const behind = hand.length - 1;
@@ -366,6 +424,11 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
             onPress={press}
           />
         ))}
+        {phase === "done" && finale && (
+          <div ref={finale_} tabIndex={-1} className="hand-finale">
+            {finale(again, turnedCards)}
+          </div>
+        )}
         {hand.map(({ key, card }, k) => {
           const angle = k === 0 ? 0 : behind === 1 ? 1 : (k - 1 - (behind - 1) / 2) * 1.5;
           const dealing = intro && key >= dealFrom && key < dealFrom + size;
@@ -402,21 +465,24 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan" }: Props) {
       </div>
 
       <div className="mt-4 flex min-h-10 items-center gap-3">
-        {hand.length > 0 && (
+        {hand.length > 0 && phase !== "done" && (
           <button
             type="button"
-            onClick={press}
+            onClick={() => {
+              pressed.current = true;
+              press();
+            }}
             aria-disabled={phase === "dealing" || undefined}
             className={buttonClass(
               "ghost",
               "sm",
-              "font-normal text-muted hoverable:hover:bg-transparent hoverable:hover:text-text-2",
+              "font-normal text-muted before:absolute before:-inset-2 before:content-[''] hoverable:hover:bg-transparent hoverable:hover:text-text-2",
             )}
           >
             {phase === "back" ? <Trans>Next card</Trans> : <Trans>Turn it over</Trans>}
           </button>
         )}
-        {turned > 0 && (
+        {turned > 0 && phase !== "done" && (
           <p className="text-xs text-muted tabular-nums" aria-hidden="true">
             <Plural value={turned} one="# turned" other="# turned" />
           </p>

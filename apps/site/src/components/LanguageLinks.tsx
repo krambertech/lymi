@@ -1,7 +1,7 @@
 import { I18nProvider } from "@lingui/react";
 import { useLingui } from "@lingui/react/macro";
 import { pageI18n } from "../lib/i18n";
-import { type LocalizedPage, localizedPath } from "../lib/routes";
+import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
 
 const languages = [
   { locale: "en", label: "English" },
@@ -9,12 +9,11 @@ const languages = [
   { locale: "ru", label: "Русский" },
 ] as const;
 
-interface Props {
-  page: LocalizedPage;
-}
+/** A fixed page, or the paths of a page rendered per request, such as a published deck. */
+export type LanguageTarget = { page: LocalizedPage } | { paths: Record<Locale, string> };
 
 /** Language names stay in their own language so every visitor can find theirs. */
-export function LanguageLinks({ page }: Props) {
+export function LanguageLinks(target: LanguageTarget) {
   const { t, i18n } = useLingui();
 
   return (
@@ -26,7 +25,7 @@ export function LanguageLinks({ page }: Props) {
         return (
           <a
             key={locale}
-            href={localizedPath(page, locale)}
+            href={"paths" in target ? target.paths[locale] : localizedPath(target.page, locale)}
             hrefLang={locale}
             lang={locale}
             aria-current={i18n.locale === locale ? "page" : undefined}
@@ -40,7 +39,7 @@ export function LanguageLinks({ page }: Props) {
   );
 }
 
-export function LocalizedLanguageLinks({ page, locale }: Props & { locale: string }) {
+export function LocalizedLanguageLinks({ page, locale }: { page: LocalizedPage; locale: string }) {
   return (
     <I18nProvider i18n={pageI18n(locale)}>
       <LanguageLinks page={page} />

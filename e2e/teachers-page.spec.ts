@@ -31,7 +31,7 @@ test("a teacher can reach the teachers page, try the join link and see what is r
   });
 
   await test.step("every edition is in the sitemap", async () => {
-    const sitemap = await (await request.get(`${publicSite}/sitemap.xml`)).text();
+    const sitemap = await (await request.get(`${publicSite}/sitemap-pages.xml`)).text();
     for (const path of ["/teachers", "/uk/teachers", "/ru/teachers"]) {
       expect(sitemap).toContain(`<loc>https://lymi.app${path}</loc>`);
     }

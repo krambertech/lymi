@@ -38,6 +38,8 @@ The accounts are `<id>@lymi.local`. They pass the invitation allowlist only on a
 
 To see a deck's join page, turn on its join link in deck settings and open the link signed out, or signed in as another persona with `/api/dev/sign-in?as=streak&returnTo=/join/<token>`. Adding `?dev=1` to a join link offers the local email sign-in, which carries the link through sign-in like Google does, so an address on no allowlist can join.
 
+To see a published deck's public page, add `PUBLISHER_EMAILS=learner@lymi.local` to `apps/web/.dev.vars`, publish one of the learner's decks with `PUT /api/decks/<id>/publication`, then build the site and serve it from `apps/site` with `pnpm exec wrangler dev --persist-to ../web/.wrangler/state` to read the product's local D1, and open `/decks/<slug>`. The add link follows `PUBLIC_PRODUCT_URL` at build time. Two local runtimes writing to one D1 can crash on `SQLITE_BUSY` ([workers-sdk#14916](https://github.com/cloudflare/workers-sdk/issues/14916)), so stop the site server before heavy product writes such as an import.
+
 A real account signed in locally through Google works with every tool below too; it just has no persona of its own, so seeding it loads `learner` unless another persona is named.
 
 ## Change the state from the panel

@@ -31,9 +31,9 @@ pnpm dev                                            # site http://localhost:4321
 ## Layout
 
 ```
-apps/site         Public deployable: Astro pages + beta/health Worker
+apps/site         Public deployable: Astro pages, published deck pages + beta/health Worker
   src/pages       Landing, Join, documentation routes, sitemap and robots
-  src/worker.ts   Website beta signup, health and static assets
+  src/worker.ts   Website beta signup and health, then Astro's handler
 apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/client      Routes, views, components, styles, and the /design page
   src/server      Hono app, auth, API, static asset fallback

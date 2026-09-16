@@ -109,6 +109,30 @@ if (siteMigration.status !== 0) {
   process.exit(siteMigration.status ?? 1);
 }
 
+// Published decks for the public pages. The site keeps its own local D1: two local runtimes
+// sharing one crash on SQLITE_BUSY (cloudflare/workers-sdk#14916).
+const siteFixture = spawnSync(
+  pnpm,
+  [
+    "exec",
+    "wrangler",
+    "d1",
+    "execute",
+    "lymi",
+    "--local",
+    "--persist-to",
+    ".wrangler/e2e",
+    "--file",
+    resolve(root, "e2e/fixtures/published-decks.sql"),
+  ],
+  { cwd: site, env: { ...process.env, CI: "true" }, stdio: "inherit" },
+);
+
+if (siteFixture.status !== 0) {
+  cleanup();
+  process.exit(siteFixture.status ?? 1);
+}
+
 const siteBuild = spawnSync(pnpm, ["run", "build"], {
   cwd: site,
   env: {

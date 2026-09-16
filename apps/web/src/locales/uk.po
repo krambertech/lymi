@@ -771,6 +771,9 @@ msgstr "Ключі API"
 msgid "Apps you can import from"
 msgstr "Застосунки, з яких можна імпортувати"
 
+msgid "Apps, the AI, imports, exports and the people in your shared decks all show up here."
+msgstr "Тут видно застосунки, AI, імпорт, експорт і людей у твоїх спільних колодах."
+
 msgid "Archive"
 msgstr "Архівувати"
 
@@ -1702,9 +1705,6 @@ msgstr "Імпорт із {source}"
 
 msgid "Importing your cards"
 msgstr "Імпортуємо твої картки"
-
-msgid "Imports, exports and what connected apps add show up here."
-msgstr "Тут видно імпорт, експорт і те, що додають підключені застосунки."
 
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "В Anki на комп’ютері вибери <0>File</0>, потім <1>Export</1>."
@@ -3028,6 +3028,9 @@ msgstr "Цей пароль задовгий."
 
 msgid "That reset link no longer works. Ask for a new one."
 msgstr "Це посилання вже не працює. Попроси нове."
+
+msgid "That’s everything."
+msgstr "Це все."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."

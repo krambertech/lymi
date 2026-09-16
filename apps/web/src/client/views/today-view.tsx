@@ -35,8 +35,6 @@ export interface TodayProps {
   /** The learner, for the avatar that opens their menu on the phone. */
   name?: string | undefined;
   email?: string | undefined;
-  /** Something an integration wrote is unseen. Marks Activity in the phone's menu. */
-  unseen?: boolean | undefined;
   docsUrl?: string | undefined;
   /** How to connect an assistant, offered until the learner has cards. */
   connectUrl?: string | undefined;
@@ -66,7 +64,6 @@ export function TodayView({
   rounds,
   name,
   email,
-  unseen,
   docsUrl,
   connectUrl,
   connected,
@@ -120,7 +117,6 @@ export function TodayView({
               variant="phone"
               name={name}
               email={email}
-              unseen={unseen}
               docsUrl={docsUrl ?? "/"}
               onSignOut={onSignOut}
               signingOut={signingOut}

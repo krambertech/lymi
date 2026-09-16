@@ -395,6 +395,10 @@ export const ActivityPageOut = z
     today: z.string().meta({
       description: "The learner-local YYYY-MM-DD now, so a heading can say Today without a clock",
     }),
+    zone: z.string().meta({
+      description:
+        "The learner's review timezone, so a row's time is read on the day it is filed under",
+    }),
     nextCursor: z
       .string()
       .nullable()

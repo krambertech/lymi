@@ -175,15 +175,17 @@ export const activityQuery = infiniteQueryOptions({
   getNextPageParam: (last) => last.nextCursor ?? undefined,
   staleTime: 0,
   refetchOnWindowFocus: true,
-  // A file on its way finishes without the learner reloading, as it does on its own screen.
-  // Only the newest page is read: an in-flight file is always on it, and polling every page the
-  // learner has opened would re-read the whole log every three seconds.
-  refetchInterval: (query) =>
-    query.state.data?.pages[0]?.entries.some(
+  // A file on its way finishes without the learner reloading, as it does on its own screen. A
+  // refetch reads every page that is loaded, so this only runs while there is one: a learner
+  // reading back through the log is not worth re-reading it every three seconds.
+  refetchInterval: (query) => {
+    const pages = query.state.data?.pages;
+    if (!pages || pages.length !== 1) return false;
+    const working = pages[0]?.entries.some(
       (entry) => WORKING.has(entry.import?.status ?? "") || entry.export?.status === "exporting",
-    )
-      ? 3000
-      : false,
+    );
+    return working ? 3000 : false;
+  },
   // What an app wrote is the learner's own, and Activity has no reason to open offline.
   meta: { persist: false },
 });

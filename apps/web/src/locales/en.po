@@ -771,6 +771,9 @@ msgstr "API keys"
 msgid "Apps you can import from"
 msgstr "Apps you can import from"
 
+msgid "Apps, the AI, imports, exports and the people in your shared decks all show up here."
+msgstr "Apps, the AI, imports, exports and the people in your shared decks all show up here."
+
 msgid "Archive"
 msgstr "Archive"
 
@@ -1702,9 +1705,6 @@ msgstr "Importing from {source}"
 
 msgid "Importing your cards"
 msgstr "Importing your cards"
-
-msgid "Imports, exports and what connected apps add show up here."
-msgstr "Imports, exports and what connected apps add show up here."
 
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
@@ -3028,6 +3028,9 @@ msgstr "That password is too long."
 
 msgid "That reset link no longer works. Ask for a new one."
 msgstr "That reset link no longer works. Ask for a new one."
+
+msgid "That’s everything."
+msgstr "That’s everything."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."

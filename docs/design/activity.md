@@ -26,7 +26,7 @@ Twelve cards from one app in one afternoon is one row, not twelve. Writes group 
 
 ## Empty, loading, failing
 
-An empty Activity is not a screen to fill, so it has no start panel and asks for nothing: it is an `EmptySection` with the screen's own mark, **Nothing yet**, and one line saying what shows up here. The screen carries no subtitle either, because the rows say what they are. Nothing having come in is the good news, and importing starts in Settings. Loading is a day heading and a plate of two rows at the height they load at. A list that fails to load is `ErrorState` with Try again; a later page that fails says so beside its button and leaves the rows above it alone.
+An empty Activity is not a screen to fill, so it has no start panel and asks for nothing: it is an `EmptySection` with the screen's own mark, **Nothing yet**, and one line saying what shows up here. The screen carries no subtitle either, because the rows say what they are. Nothing having come in is the good news, and importing starts in Settings. Loading is a day heading and a plate of two rows at the height they load at. The foot of the list stays put: **Show more** while there is another page, and **That's everything** once there is not, so the key that pressed the button still has somewhere to be. A list that fails to load is `ErrorState` with Try again; a later page that fails says so beside its button and leaves the rows above it alone.
 
 ## What it costs to add an event
 

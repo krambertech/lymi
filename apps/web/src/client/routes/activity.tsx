@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import type { ActivityEntry } from "../lib/api";
+import { mergeActivity } from "../lib/activity-list";
 import { useDocumentTitle } from "../lib/document-title";
 import { activityQuery } from "../lib/queries";
 import { ActivityView } from "../views/activity-view";
@@ -18,8 +18,9 @@ function ActivityRoute() {
 
   return (
     <ActivityView
-      entries={entries && merge(entries)}
+      entries={entries && mergeActivity(entries)}
       today={activity.data?.pages[0]?.today}
+      zone={activity.data?.pages[0]?.zone}
       error={activity.isError}
       onRetry={() => void activity.refetch()}
       retrying={activity.isFetching}
@@ -51,25 +52,4 @@ function ActivityRoute() {
       )}
     />
   );
-}
-
-/**
- * A group cut in half by the end of a page comes back as two entries, so the halves are joined
- * again here rather than read as two writes.
- */
-function merge(entries: ActivityEntry[]): ActivityEntry[] {
-  const joined: ActivityEntry[] = [];
-  for (const entry of entries) {
-    const last = joined.at(-1);
-    if (last && last.group === entry.group) {
-      joined[joined.length - 1] = {
-        ...last,
-        count: last.count + entry.count,
-        cards: [...last.cards, ...entry.cards],
-      };
-      continue;
-    }
-    joined.push(entry);
-  }
-  return joined;
 }

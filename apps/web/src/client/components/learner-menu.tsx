@@ -36,8 +36,6 @@ interface Props {
   email?: string | undefined;
   /** "rail" sits at the foot of the sidebar and opens upward; "phone" is the avatar in a header. */
   variant: "rail" | "phone";
-  /** Something an integration wrote is unseen. Shown beside Activity. */
-  unseen?: boolean | undefined;
   docsUrl: string;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
@@ -60,7 +58,6 @@ export function LearnerMenu({
   name,
   email,
   variant,
-  unseen,
   docsUrl,
   onSignOut,
   signingOut,
@@ -91,7 +88,6 @@ export function LearnerMenu({
       {trailing}
     </DropdownMenuLinkItem>
   );
-  const dot = <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />;
 
   return (
     <>
@@ -146,12 +142,7 @@ export function LearnerMenu({
           {place("/settings", <Settings aria-hidden="true" />, <Trans>Settings</Trans>)}
           {/* Activity is behind You on every device: it is read when something is in question,
               not a destination the learner steers by. DESIGN.md, Layout. */}
-          {place(
-            "/activity",
-            <Activity aria-hidden="true" />,
-            <Trans>Activity</Trans>,
-            unseen ? dot : undefined,
-          )}
+          {place("/activity", <Activity aria-hidden="true" />, <Trans>Activity</Trans>)}
           {variant === "phone" &&
             place("/insights", <ChartNoAxesColumn aria-hidden="true" />, <Trans>Insights</Trans>)}
           {place("/archived", <Archive aria-hidden="true" />, <Trans>Archived</Trans>)}

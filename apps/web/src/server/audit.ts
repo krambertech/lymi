@@ -52,7 +52,11 @@ export function auditStatementWhen(db: Db, entry: AuditInput, from: Table, where
   );
 }
 
-/** Inserts one row per `from` row matching `where`, with Drizzle checking the selected keys against the table's columns. */
+/**
+ * Inserts one row per `from` row matching `where`. Values are keyed by column name and written in
+ * `getTableColumns` order, which is the order Drizzle emits the column list in, so a column added
+ * later cannot shift a value into its neighbour.
+ */
 export function insertWhen<T extends Table>(
   db: Db,
   table: T,

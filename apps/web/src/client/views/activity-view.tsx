@@ -17,7 +17,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { type ReactNode, useId, useState } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { Button, buttonClass } from "../components/button";
 import { Chip } from "../components/chip";
 import { EmptySection, ErrorState } from "../components/empty-state";
@@ -372,7 +372,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
               {entry.cards.map((card) => (
                 <CardRow key={card.id} card={card} link={cardLink} />
               ))}
-              {entry.count > entry.cards.length && entry.deck && (
+              {entry.count > entry.cards.length && entry.deck && !entry.deck.archived && (
                 <li>
                   {deckLink(
                     entry.deck.id,
@@ -435,6 +435,8 @@ export interface ActivityViewProps {
   entries: ActivityEntry[] | undefined;
   /** The learner-local day the server is on, so a heading says Today without the browser clock. */
   today?: string | undefined;
+  /** The learner's review timezone, so a row's time belongs to the day it is filed under. */
+  zone?: string | undefined;
   error?: boolean | undefined;
   onRetry: () => void;
   retrying?: boolean | undefined;
@@ -456,6 +458,7 @@ export interface ActivityViewProps {
 export function ActivityView({
   entries,
   today,
+  zone,
   error,
   onRetry,
   retrying,
@@ -468,7 +471,19 @@ export function ActivityView({
   cardLink,
 }: ActivityViewProps) {
   const { t, i18n } = useLingui();
-  const time = new Intl.DateTimeFormat(i18n.locale, { timeStyle: "short" });
+  const foot = useRef<HTMLParagraphElement>(null);
+  const asked = useRef(false);
+  if (loadingMore) asked.current = true;
+  // The button the learner pressed has just unmounted; the line that replaced it takes the focus.
+  useEffect(() => {
+    if (hasMore || !asked.current) return;
+    asked.current = false;
+    foot.current?.focus();
+  }, [hasMore]);
+  const time = new Intl.DateTimeFormat(i18n.locale, {
+    timeStyle: "short",
+    ...(zone ? { timeZone: zone } : {}),
+  });
   const days = entries
     ? byDay(entries, i18n.locale, {
         today: t`Today`,
@@ -496,7 +511,7 @@ export function ActivityView({
         <EmptySection
           icon={<ActivityIcon />}
           title={t`Nothing yet`}
-          body={t`Imports, exports and what connected apps add show up here.`}
+          body={t`Apps, the AI, imports, exports and the people in your shared decks all show up here.`}
         />
       ) : (
         <div className="grid gap-6">
@@ -530,19 +545,24 @@ export function ActivityView({
               </ul>
             </section>
           ))}
-          {hasMore && (
-            <div className="grid gap-2 justify-items-center">
-              {/* A page that failed says so here: the list above it is still what came in. */}
-              {moreFailed && (
-                <p role="status" className="text-sm text-danger">
-                  <Trans>Couldn’t load more.</Trans>
-                </p>
-              )}
+          {/* The foot stays mounted when the last page lands, so the focus on Show more has
+              somewhere to go and the keyboard is told the list is finished. */}
+          <div className="grid gap-2 justify-items-center">
+            {moreFailed && (
+              <p role="status" className="text-sm text-danger">
+                <Trans>Couldn’t load more.</Trans>
+              </p>
+            )}
+            {hasMore ? (
               <Button variant="secondary" onClick={onMore} loading={loadingMore} className="w-full">
                 {moreFailed ? <Trans>Try again</Trans> : <Trans>Show more</Trans>}
               </Button>
-            </div>
-          )}
+            ) : (
+              <p ref={foot} tabIndex={-1} role="status" className="text-sm text-muted">
+                <Trans>That’s everything.</Trans>
+              </p>
+            )}
+          </div>
         </div>
       )}
     </Page>

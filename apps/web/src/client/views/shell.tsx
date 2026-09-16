@@ -64,8 +64,6 @@ interface SidebarProps {
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
   docsUrl: string;
-  /** Something an integration wrote is unseen. A dot, never a count. */
-  unseen?: boolean | undefined;
   /** The streak pill, which shares the first line with capture. */
   streak?: ReactNode | undefined;
   static?: StaticNav;
@@ -90,7 +88,6 @@ export function Sidebar({
   onSignOut,
   signingOut,
   docsUrl,
-  unseen,
   streak,
   static: st,
   className,
@@ -129,9 +126,6 @@ export function Sidebar({
         <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
           <n.icon aria-hidden="true" />
           <span className="flex-1">{i18n._(n.label)}</span>
-          {n.to === "/activity" && unseen && (
-            <i className="size-1.5 rounded-full bg-amber-text" aria-hidden="true" />
-          )}
         </NavLink>
       ))}
 

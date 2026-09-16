@@ -83,17 +83,18 @@ export async function listActivity(
 ) {
   const limit = Math.min(Math.max(input.limit ?? ACTIVITY_PAGE_ROWS, 1), 200);
   // Days are the learner's own, so a write just after midnight in Kyiv is not yesterday.
-  const day = dateFormatter(await reviewZone(ctx));
+  const zone = await reviewZone(ctx);
+  const day = dateFormatter(zone);
   let cursor = input.cursor;
   // A page can hold only writes this reader has no sentence for. Read on rather than hand back
   // an empty list with a live cursor, which the screen would show as nothing having come in.
   const today = day.format(new Date());
   for (let page = 0; page < 5; page++) {
     const read = await readPage(ctx, { cursor, limit, day });
-    if (read.entries.length > 0 || !read.nextCursor) return { ...read, today };
+    if (read.entries.length > 0 || !read.nextCursor) return { ...read, today, zone };
     cursor = read.nextCursor;
   }
-  return { ...(await readPage(ctx, { cursor, limit, day })), today };
+  return { ...(await readPage(ctx, { cursor, limit, day })), today, zone };
 }
 
 async function readPage(
@@ -145,6 +146,9 @@ async function readPage(
 /** Everything the learner did not write in the app themselves, plus who is in a shared deck. */
 function fromOutside(): SQL | undefined {
   return and(
+    // Spelled out so `audit_activity_idx` applies: SQLite matches a partial index term for
+    // term, and does not read this one out of the `IN` list below. migrations/0020.
+    ne(schema.auditLog.entity, "review"),
     inArray(schema.auditLog.entity, ENTITIES),
     notInArray(schema.auditLog.action, UNSAID_ACTIONS),
     or(
@@ -448,7 +452,7 @@ async function appNames(
 ): Promise<Map<string, string | null>> {
   if (ids.length === 0) return new Map();
   const [clients, keys] = await Promise.all([
-    clientNames({ db }, ids),
+    selectIn(ids, (slice) => clientNames({ db }, slice).then((names) => [...names])),
     selectIn(ids, (slice) =>
       db
         .select({ id: schema.apikey.id, name: schema.apikey.name })
@@ -457,7 +461,7 @@ async function appNames(
         .where(and(inArray(schema.apikey.id, slice), eq(schema.apikey.referenceId, userId))),
     ),
   ]);
-  const names = new Map(clients);
+  const names = new Map<string, string | null>(clients);
   for (const key of keys) names.set(key.id, key.name);
   return names;
 }

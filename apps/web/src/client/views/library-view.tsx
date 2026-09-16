@@ -61,7 +61,6 @@ export interface LibraryProps {
   /** The learner, for the avatar that opens their menu on the phone. */
   name?: string | undefined;
   email?: string | undefined;
-  unseen?: boolean | undefined;
   docsUrl?: string | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
@@ -96,7 +95,6 @@ export function LibraryView({
   onRemoveFromSeries,
   name,
   email,
-  unseen,
   docsUrl,
   onSignOut,
   signingOut,
@@ -277,7 +275,6 @@ export function LibraryView({
               variant="phone"
               name={name}
               email={email}
-              unseen={unseen}
               docsUrl={docsUrl ?? "/"}
               onSignOut={onSignOut}
               signingOut={signingOut}

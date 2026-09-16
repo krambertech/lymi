@@ -1,0 +1,14 @@
+import { launch, makeContext, signIn, shot, settle, VIEWPORTS, BASE } from './lib.mjs';
+const browser = await launch();
+const ctx = await makeContext(browser, { viewport: VIEWPORTS.laptop });
+const page = await ctx.newPage();
+await signIn(page, 'learner', '/today'); await settle(page, 1500);
+await page.keyboard.press('n'); await settle(page, 900);
+await page.getByLabel(/Term/i).first().fill('y'.repeat(600));
+await settle(page, 500);
+await page.getByRole('button', { name: /Add to/i }).first().click();
+await settle(page, 2000);
+await shot(page, 'forms/over-limit-submit', { fullPage: false });
+const t = await page.locator('body').innerText();
+console.log('after submitting 600-char term:', t.replace(/y{10,}/g,'[600 y]').replace(/\n+/g,' | ').slice(-600));
+await browser.close();

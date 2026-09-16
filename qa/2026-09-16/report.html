@@ -1,0 +1,1216 @@
+<title>Lymi Pre-Launch QA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  /* ---- Lymi's own two rooms, used as the report's two themes ---- */
+  :root {
+    --canvas:      #f8f6f4;
+    --plate:       #ffffff;
+    --plate-2:     #f2f0ec;
+    --ink:         #1c140f;
+    --ink-2:       #49403a;
+    --muted:       #72665f;
+    --faint:       #a2968c;
+    --edge:        #2013081a;
+    --edge-2:      #20130833;
+    --amber:       #f8ac3d;
+    --amber-text:  #9f4500;
+    --amber-soft:  #f8ac3d29;
+    --danger:      #be241f;
+    --danger-soft: #be241f1a;
+    --good:        #006e42;
+    --good-soft:   #006e421f;
+    --blue:        #23588a;
+    --blue-soft:   #4284c524;
+    --shadow:      0 1px 2px #20130814;
+
+    --sev-1: var(--danger);
+    --sev-1-soft: var(--danger-soft);
+    --sev-2: var(--amber-text);
+    --sev-2-soft: var(--amber-soft);
+    --sev-3: var(--blue);
+    --sev-3-soft: var(--blue-soft);
+
+    --col: 74ch;
+    --step--1: 0.8125rem;
+    --step-0:  1rem;
+    --step-1:  1.1875rem;
+    --step-2:  1.5rem;
+    --step-3:  2rem;
+    --step-4:  2.75rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --canvas:      #130d09;
+      --plate:       #201713;
+      --plate-2:     #29211b;
+      --ink:         #f1eee7;
+      --ink-2:       #c5bcb1;
+      --muted:       #a89c90;
+      --faint:       #665c52;
+      --edge:        #ffffff14;
+      --edge-2:      #ffffff26;
+      --amber:       #fdb443;
+      --amber-text:  #f9bf60;
+      --amber-soft:  #fdb44324;
+      --danger:      #fb8274;
+      --danger-soft: #fb827424;
+      --good:        #7bc495;
+      --good-soft:   #7bc49524;
+      --blue:        #a2c8f0;
+      --blue-soft:   #85b6e924;
+      --shadow:      0 1px 2px #00000040;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --canvas:      #130d09;
+    --plate:       #201713;
+    --plate-2:     #29211b;
+    --ink:         #f1eee7;
+    --ink-2:       #c5bcb1;
+    --muted:       #a89c90;
+    --faint:       #665c52;
+    --edge:        #ffffff14;
+    --edge-2:      #ffffff26;
+    --amber:       #fdb443;
+    --amber-text:  #f9bf60;
+    --amber-soft:  #fdb44324;
+    --danger:      #fb8274;
+    --danger-soft: #fb827424;
+    --good:        #7bc495;
+    --good-soft:   #7bc49524;
+    --blue:        #a2c8f0;
+    --blue-soft:   #85b6e924;
+    --shadow:      0 1px 2px #00000040;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: "Literata", Georgia, "Times New Roman", serif;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--col);
+    margin-inline: auto;
+    padding-inline: 20px;
+    padding-block: 0;
+  }
+
+  h1, h2, h3, .sans { font-family: "Onest", ui-sans-serif, system-ui, sans-serif; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* ---------------- masthead ---------------- */
+
+  header.masthead { padding-block: 56px 28px; border-bottom: 1px solid var(--edge); }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .standfirst {
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin: 0 0 28px;
+    max-width: 60ch;
+  }
+
+  .tally { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+
+  .tally button {
+    font-family: "Onest", system-ui, sans-serif;
+    font-size: var(--step--1);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--edge-2);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .tally button:hover { border-color: var(--ink-2); }
+  .tally button[aria-pressed="true"] { background: var(--ink); color: var(--canvas); border-color: var(--ink); }
+  .tally button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  .tally .n { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  .meta {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: var(--step--1);
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+  .meta b { color: var(--ink-2); font-weight: 500; }
+
+  /* ---------------- section headings ---------------- */
+
+  .group { padding-block: 44px 0; }
+  .group > h2 {
+    font-size: var(--step-2);
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .group > p.lede { color: var(--muted); font-size: var(--step--1); margin: 0 0 8px; max-width: 58ch; }
+
+  /* ---------------- a finding ---------------- */
+
+  article.finding {
+    border-top: 1px solid var(--edge);
+    padding-block: 30px;
+    padding-inline-start: 18px;
+    position: relative;
+  }
+  article.finding::before {
+    content: "";
+    position: absolute;
+    inset-block: 30px;
+    inset-inline-start: 0;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--stripe, var(--edge-2));
+  }
+  article.finding[data-sev="1"] { --stripe: var(--sev-1); }
+  article.finding[data-sev="2"] { --stripe: var(--sev-2); }
+  article.finding[data-sev="3"] { --stripe: var(--sev-3); }
+
+  .tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+
+  .id {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .chip {
+    font-family: "Onest", system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  .chip.sev1 { background: var(--sev-1-soft); color: var(--sev-1); }
+  .chip.sev2 { background: var(--sev-2-soft); color: var(--sev-2); }
+  .chip.sev3 { background: var(--sev-3-soft); color: var(--sev-3); }
+  .chip.area { background: var(--plate-2); color: var(--muted); font-weight: 500; letter-spacing: 0.03em; }
+
+  article.finding h3 {
+    font-size: var(--step-1);
+    line-height: 1.35;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+
+  article.finding p { margin: 0 0 12px; color: var(--ink-2); overflow-wrap: break-word; }
+  article.finding p:last-child { margin-bottom: 0; }
+  article.finding strong { color: var(--ink); font-weight: 600; }
+
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.875em;
+    background: var(--plate-2);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  /* repro + pointer rows */
+  dl.rows { margin: 14px 0 0; display: grid; gap: 0; }
+  dl.rows > div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 14px;
+    padding-block: 9px;
+    border-top: 1px dotted var(--edge-2);
+    align-items: start;
+  }
+  dl.rows dt {
+    font-family: "Onest", system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 3px;
+  }
+  dl.rows dd {
+    margin: 0;
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--ink-2);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  dl.rows dd.code { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.78rem; color: var(--ink-2); }
+  dl.rows ol { margin: 0; padding-inline-start: 1.15em; }
+  dl.rows ol li { margin-bottom: 3px; }
+
+  @media (max-width: 560px) {
+    dl.rows > div { grid-template-columns: 1fr; gap: 3px; }
+  }
+
+  /* ---------------- evidence ---------------- */
+
+  /* Evidence breaks out past the reading measure where there is room: the screenshots
+     are the proof, and app chrome at text width is unreadable. */
+  figure.shot { margin: 18px 0 0; }
+  @media (min-width: 1100px) {
+    figure.shot { margin-inline-end: -13rem; }
+    .pair { margin-inline-end: -13rem; }
+    .pair figure.shot { margin-inline-end: 0; }
+  }
+  figure.shot button.zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--edge-2);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--plate);
+    cursor: zoom-in;
+    box-shadow: var(--shadow);
+    line-height: 0;
+  }
+  figure.shot button.zoom:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+  figure.shot img { display: block; width: 100%; max-width: 100%; height: auto; }
+  figure.shot img.tall { max-height: 480px; object-fit: cover; object-position: top center; }
+  figure.shot figcaption {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 620px) { .pair { grid-template-columns: 1fr; } }
+
+  /* lightbox */
+  dialog.lightbox {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 96vw;
+    max-height: 94vh;
+    color: var(--ink);
+  }
+  dialog.lightbox::backdrop { background: #0a0705e6; }
+  dialog.lightbox img { display: block; max-width: 96vw; max-height: 88vh; width: auto; border-radius: 8px; }
+  dialog.lightbox .close {
+    font-family: "Onest", system-ui, sans-serif;
+    font-size: 0.8125rem;
+    margin-top: 10px;
+    background: var(--plate);
+    color: var(--ink);
+    border: 1px solid var(--edge-2);
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+
+  /* ---------------- notes & footer ---------------- */
+
+  .panel {
+    background: var(--plate);
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-block: 20px;
+    box-shadow: var(--shadow);
+  }
+  .panel h3 {
+    font-size: var(--step-0);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  .panel p, .panel li { font-size: var(--step--1); color: var(--ink-2); }
+  .panel ul { margin: 0; padding-inline-start: 1.15em; }
+  .panel li { margin-bottom: 6px; }
+
+  .worked { border-inline-start: 3px solid var(--good); }
+  .worked h3 { color: var(--good); }
+
+  footer.end {
+    border-top: 1px solid var(--edge);
+    margin-top: 48px;
+    padding-block: 28px 64px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: var(--step--1);
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .hidden { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Exploratory pass · 16 September 2026 · build 9b08004</p>
+    <h1>Lymi Pre-Launch QA</h1>
+    <p class="standfirst">
+      Thirty-two findings from driving the running product through every persona, viewport and theme
+      it ships with. Nothing crashed and no request failed — what follows is about numbers that
+      disagree with each other, screens that never finish loading, and charts that a learner in
+      their first week cannot read.
+    </p>
+
+    <div class="tally" role="group" aria-label="Filter findings by severity">
+      <button type="button" data-filter="all" aria-pressed="true"><span class="n">32</span> All findings</button>
+      <button type="button" data-filter="1" aria-pressed="false"><span class="n">6</span> Fix before signups</button>
+      <button type="button" data-filter="2" aria-pressed="false"><span class="n">18</span> Confusing</button>
+      <button type="button" data-filter="3" aria-pressed="false"><span class="n">8</span> Polish</button>
+    </div>
+
+    <p class="meta">
+      <b>Personas</b> fresh · learner · streak · backlog · long · polyglot, plus two accounts built from scratch through the interface<br>
+      <b>Viewports</b> 320 · 390 · 768 · 1280 · 1920<br>
+      <b>Themes</b> light · dark &nbsp;&nbsp; <b>Languages</b> English · Ukrainian<br>
+      <b>Clean</b> no page errors, no failed requests, no horizontal overflow, focus rings on every control
+    </p>
+  </header>
+
+  <!-- ============ SEVERITY 1 ============ -->
+  <section class="group">
+    <h2>Fix before signups</h2>
+    <p class="lede">Each of these is reachable on an ordinary path, and each ends with the learner stuck, misinformed, or unable to get something back.</p>
+
+    <article class="finding" data-sev="1">
+      <div class="tags">
+        <span class="id">LY-01</span>
+        <span class="chip sev1">Before signups</span>
+        <span class="chip area">Archive</span>
+      </div>
+      <h3>Archiving a deck is a one-way door: Archived is still “Coming soon”</h3>
+      <p>
+        Archive sits in the deck menu and runs immediately, with no confirmation. A toast offers
+        <strong>Undo</strong> for a few seconds. Once it clears, <code>/archived</code> — the screen
+        the learner menu links to, and the only place Restore is meant to live — shows an empty
+        “Coming soon” state. The deck and every card in it are gone from the interface.
+      </p>
+      <p>
+        The API already has <code>POST /api/decks/:id/restore</code> and the same for cards, so the
+        data is intact; there is simply no way in. The seeded <code>learner</code> account ships with
+        one archived deck and one archived card that cannot be reached at all.
+      </p>
+      <dl class="rows">
+        <div><dt>Steps</dt><dd><ol>
+          <li>Open any deck → <b>···</b> → <b>Archive</b>.</li>
+          <li>Let the toast time out.</li>
+          <li>Learner menu → <b>Archived</b>.</li>
+        </ol></dd></div>
+        <div><dt>Contradicts</dt><dd><code>CONTEXT.md</code> — “Archive: hiding a card or deck without destroying it. The only kind of removal the app has. Restore undoes it.”</dd></div>
+      </dl>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/archived-coming-soon.png" alt="The Archived screen showing a lantern and the words Coming soon"></button>
+        <figcaption>/archived on an account that already holds an archived deck and an archived card.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="1">
+      <div class="tags">
+        <span class="id">LY-02</span>
+        <span class="chip sev1">Before signups</span>
+        <span class="chip area">Today</span>
+      </div>
+      <h3>“2 cards due” and “Nothing left today” sit side by side</h3>
+      <p>
+        Review in the morning, add cards from the evening lesson, and Today says both things at once:
+        the due card counts the new cards and offers <strong>Review</strong>, while the streak card
+        beside it still reports the day as finished. The same pair appears on the deck screen’s
+        Today plate.
+      </p>
+      <p>
+        The streak card is reading the day’s stored outcome rather than what is actually reviewable
+        now. This is the most common daily rhythm the app is designed for, so most learners will hit it.
+      </p>
+      <dl class="rows">
+        <div><dt>Steps</dt><dd><ol>
+          <li>New account, one deck, three cards.</li>
+          <li>Review all three to the end.</li>
+          <li>Add two more cards. Reload Today.</li>
+        </ol></dd></div>
+        <div><dt>Confirmed</dt><dd>Reproduced from a blank account built entirely through the interface; also visible on a freshly seeded <code>learner</code>.</dd></div>
+      </dl>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/nothing-left-contradiction.png" alt="Today showing 2 cards due in Lesson 1 with a Review button, next to a streak card reading Nothing left today"></button>
+        <figcaption>Two cards due, a Review button, and “Nothing left today.” on the same row.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="1">
+      <div class="tags">
+        <span class="id">LY-03</span>
+        <span class="chip sev1">Before signups</span>
+        <span class="chip area">Review</span>
+      </div>
+      <h3>The review meter measures the daily goal, so it is wrong in both directions</h3>
+      <p>
+        The bar at the top of a review counts toward the daily goal, not the cards in front of you
+        (<code>apps/web/src/client/views/review-view.tsx:88</code> — <code>const size = round ? round.size : goal</code>).
+      </p>
+      <p>
+        A learner with nine cards due opens the review at <strong>0 of 50</strong> and finishes at
+        <strong>9 of 50</strong>, with the bar a fifth full, on a day the app has actually counted as
+        complete — the streak went up on that same screen. A learner returning to a 60-card backlog
+        gets the opposite: the bar reaches 100% with ten cards still to grade.
+      </p>
+      <p>
+        Since a new account almost never holds 50 cards, nearly every first review ends on a bar that
+        looks like failure. The rule that finishing every available card also satisfies the day is
+        never stated anywhere in the interface.
+      </p>
+      <dl class="rows">
+        <div><dt>Seen at</dt><dd><code>0 of 50</code> with 9 due (learner) · <code>0 of 50</code> with 60 due (backlog) · <code>9 of 50</code> on the completion screen of a brand-new account</dd></div>
+      </dl>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/review-meter-of-50.png" alt="A review card for the word farcela, with a nearly empty progress bar reading 0 of 50"></button>
+        <figcaption>Nine cards are due. The meter opens at 0 of 50.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="1">
+      <div class="tags">
+        <span class="id">LY-04</span>
+        <span class="chip sev1">Before signups</span>
+        <span class="chip area">Library</span>
+      </div>
+      <h3>A deck that no longer exists leaves the screen on skeletons forever</h3>
+      <p>
+        <code>GET /api/decks/:id</code> answers <code>404 {"error":"Deck not found"}</code> correctly,
+        but the deck screen keeps its loading placeholders indefinitely — no title, no error, no way
+        back. Still grey after 15 seconds.
+      </p>
+      <p>
+        Reachable from a bookmarked deck archived on another device, a shared deck the learner was
+        removed from, or any stale link. <code>DESIGN.md</code> already specifies the component for
+        this: “A screen that failed to load uses <code>ErrorState</code> … the title says what failed,
+        the line says the fix, and Try again retries.”
+      </p>
+      <dl class="rows">
+        <div><dt>Steps</dt><dd>Signed in, open <code>/library/doesnotexist</code>.</dd></div>
+      </dl>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/deck-404-skeleton.png" alt="A deck page showing five grey skeleton blocks and no content" class="tall"></button>
+        <figcaption>/library/doesnotexist, fifteen seconds in.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="1">
+      <div class="tags">
+        <span class="id">LY-05</span>
+        <span class="chip sev1">Before signups</span>
+        <span class="chip area">Library</span>
+      </div>
+      <h3>Library shows skeletons forever when the network is down; other screens handle it</h3>
+      <p>
+        With every <code>/api/*</code> call failing, Insights and Activity both show
+        “Couldn’t load … Check your connection and try again” with a working <strong>Try again</strong>.
+        Today renders in full from cache, which is exactly right. Library shows three grey blocks and
+        nothing else, and the rail’s deck list empties out at the same time.
+      </p>
+      <p>
+        On a phone with a weak signal this is the screen a learner is most likely to open, and it
+        never resolves or explains itself.
+      </p>
+      <dl class="rows">
+        <div><dt>Steps</dt><dd>Sign in, then block <code>**/api/**</code> and open <code>/library</code>.</dd></div>
+        <div><dt>Related</dt><dd>Same missing error path as LY-04 — both are the deck queries.</dd></div>
+      </dl>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/library-offline-skeleton.png" alt="The Library screen with three grey skeleton rectangles and an empty deck rail" class="tall"></button>
+        <figcaption>Library with the API unreachable. No error, no retry, no decks in the rail.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="1">
+      <div class="tags">
+        <span class="id">LY-06</span>
+        <span class="chip sev1">Before signups</span>
+        <span class="chip area">Activity</span>
+      </div>
+      <h3>Activity never shows what an assistant added, though the screen promises it</h3>
+      <p>
+        The route queries imports and exports only
+        (<code>apps/web/src/client/routes/activity.tsx</code> — <code>importsQuery</code>, <code>exportsQuery</code>).
+        Cards written by an MCP client, the API or the AI never appear. The seeded
+        <code>learner</code> account has three cards an assistant added today — the fixture even
+        comments “still unseen in Activity” — and the screen reads “Nothing has come in yet”.
+      </p>
+      <p>
+        The screen contradicts itself: its own subtitle says “Cards that came in from other apps, and
+        files you took out,” while the empty state narrows to “Imports from Anki and Mochi appear here.”
+        With integrations as a headline feature at launch, writes from outside the app land silently —
+        which is the one thing this screen exists to prevent.
+      </p>
+      <dl class="rows">
+        <div><dt>Contradicts</dt><dd><code>CONTEXT.md</code> and <code>AGENTS.md</code> — “Every write records an actor through <code>audit.ts</code> — the Activity screen exists so nothing an integration does lands unseen.”</dd></div>
+      </dl>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/activity-empty.png" alt="The Activity screen reading Nothing has come in yet" class="tall"></button>
+        <figcaption>Activity on an account holding three assistant-written cards from today.</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <!-- ============ CHARTS ============ -->
+  <section class="group">
+    <h2>Insights, and what a first-week learner sees</h2>
+    <p class="lede">The charts are honest about sample size in their captions — “nothing honest to report”, “one bad evening moves it” — but the marks themselves overstate, and two of the headline figures disagree with Today.</p>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-07</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>Ahead counts review directions; Today counts cards. Both say “cards”.</h3>
+      <p>
+        On one freshly seeded <code>learner</code>: Today says <strong>9 cards due today</strong>,
+        Insights says <strong>18 peak, Wed</strong> and “33 cards over the next seven days”. Exactly
+        double for the decks asked both ways.
+      </p>
+      <p>
+        <code>forecast()</code> in <code>apps/web/src/server/services/stats.ts:236</code> buckets rows
+        from <code>cardStates</code>, which holds one row per card <em>per direction</em>, while the
+        review queue returns one item per card per day. A card asked both ways is counted twice in the
+        forecast and once in the queue.
+      </p>
+      <dl class="rows">
+        <div><dt>Measured</dt><dd class="code">GET /api/review/queue → total: 9<br>GET /api/stats/insights → forecast[0].count: 18</dd></div>
+      </dl>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-08</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Today</span>
+      </div>
+      <h3>Today says “0 New cards — add some from your next lesson” while Insights says 3 new</h3>
+      <p>
+        The Today tile counts what is left in the <em>new</em> round after the day’s draw has already
+        taken those cards; Insights counts cards in the New state. Both are labelled “new”, one click
+        apart, and the tile actively tells the learner to add cards they already have.
+      </p>
+      <dl class="rows">
+        <div><dt>Measured</dt><dd class="code">GET /api/review/rounds → new: 0<br>GET /api/stats/insights → cards.new: 3</dd></div>
+      </dl>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-09</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>Consistency reads “0 / 0 days” and draws nothing</h3>
+      <p>
+        Add cards but review none — the state every new learner passes through — and the plate reads
+        <strong>0 / 0 days</strong> over a large blank gap.
+        <code>RunStrip</code> returns <code>null</code> when <code>days.length === 0</code>
+        (<code>components/run-strip.tsx</code>), so the strip disappears entirely.
+      </p>
+      <p>
+        It is a step backwards from the zero state before it: with no cards at all the ghost plate
+        reads a sensible “0 / 30 days” and draws thirty empty blocks. Adding cards makes the card
+        emptier and its denominator nonsensical.
+      </p>
+      <div class="pair">
+        <figure class="shot">
+          <button class="zoom" type="button"><img src="evidence/consistency-zero-of-zero.png" alt="A Consistency card reading 0 slash 0 days with an empty area below it"></button>
+          <figcaption>Cards added, none reviewed.</figcaption>
+        </figure>
+        <figure class="shot">
+          <button class="zoom" type="button"><img src="evidence/consistency-one-day.png" alt="A Consistency card reading 1 slash 1 day with one solid orange bar across the full width"></button>
+          <figcaption>After one day (LY-10).</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-10</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>One day of history draws a full-width solid bar — it reads as 100%, not as one day</h3>
+      <p>
+        Consistency at “1 / 1 day” fills the whole plate with amber. Month by month at “1 of 1 day”
+        does the same. Both are the same shape the app uses elsewhere for a progress meter, so a
+        learner’s first visit to Insights looks like they have completed something.
+      </p>
+      <p>
+        The strip is scaled to the days that exist rather than to a fixed window, so the first day is
+        indistinguishable from a perfect month. Drawing the run inside a constant frame — the thirty
+        blocks the ghost state already shows — would fix Consistency, Month by month and LY-09 together.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/insights-day-one.png" alt="The full Insights screen after one day of reviews, with a single dot on the recall chart and full-width bars"></button>
+        <figcaption>Insights after a single day: one dot, two full bars, and “7 peak, Fri”.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-11</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>The Recall chart has no scale, and its line ends below the marker while the headline says 95%</h3>
+      <p>Four things go wrong in one small drawing:</p>
+      <dl class="rows">
+        <div><dt>No axis</dt><dd>The series is four <em>weekly</em> buckets (<code>2026-08-24</code> … <code>2026-09-14</code>) drawn as a smooth continuous line. There are no dates and no y-axis, so it reads as a daily trend across thirty days.</dd></div>
+        <div><dt>Contradiction</dt><dd>The final point is 87.5%, drawn below the dashed 90% line, while the figure above it reads <b>95%</b>. At a glance the chart says the learner has fallen under the threshold.</dd></div>
+        <div><dt>Hard edge</dt><dd>The area fill is a rectangle with a sharp bottom edge, not a fade, and its right edge stops short of the endpoint dot — clearest in the dark room.</dd></div>
+        <div><dt>Occlusion</dt><dd>The “90%” label carries an opaque chip that punches a hole through the dashed line and the fill behind it.</dd></div>
+      </dl>
+      <div class="pair">
+        <figure class="shot">
+          <button class="zoom" type="button"><img src="evidence/recall-chart-dark.png" alt="The Recall chart in dark mode showing a hard-edged grey rectangle under the line"></button>
+          <figcaption>Dark: the fill is a box, clipped before the dot.</figcaption>
+        </figure>
+        <figure class="shot">
+          <button class="zoom" type="button"><img src="evidence/recall-chart-phone.png" alt="The Recall chart on a phone with the endpoint dot sitting below the 90 percent dashed line" class="tall"></button>
+          <figcaption>Phone: 95% above, endpoint below the 90% line.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-12</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>The Cards bar becomes one solid block when every card is in the same state</h3>
+      <p>
+        A new learner’s bar is 100% grey (“8 new”); a week later it is 100% green (“20 known”). A
+        single full-width block carries no composition — it reads as a loading bar or a meter at full.
+        The chips underneath are doing all the work.
+      </p>
+      <p>
+        <code>DESIGN.md</code> notes this bar is “the one place the colour stands alone”, which makes
+        the single-segment case worth designing deliberately rather than leaving as a fallthrough.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/cards-bar-single-state.png" alt="A Cards plate reading 8 cards with a solid dark grey bar across the full width"></button>
+        <figcaption>Eight cards, all new. Compare the dashed ghost the empty state draws.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-13</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>Ahead: “peak” is jargon, no bar carries a value, and today is not marked</h3>
+      <p>
+        The headline is <strong>“14 peak, Wed”</strong> — a statistics word, and an unusual sentence
+        shape in an app that otherwise writes in plain lines. The amber bar marks the busiest day, not
+        today, so the day the learner actually cares about is the same grey as the rest. No bar shows
+        its number, so only the peak is readable.
+      </p>
+      <p>The Ukrainian catalogue carries the same jargon: “4 пік, ср”.</p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/ahead-chart.png" alt="The Ahead chart with seven bars, one amber, labelled 7 peak Thu"></button>
+        <figcaption>Thursday is amber because it is the peak. Wednesday is today.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-14</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Streak</span>
+      </div>
+      <h3>The streak modal never shows the goal it is measuring against</h3>
+      <p>
+        The modal reads “Today ✓ 10 reviews” over a completely full amber bar. The goal is 50. The
+        number 50 appears nowhere on the screen — it only surfaces after pressing the pencil, inside
+        the goal picker.
+      </p>
+      <p>
+        <code>docs/design/streak.md</code> asks for “today’s attempts against the goal”. As drawn it
+        is attempts alone, over a bar that is full for a different reason.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/streak-modal.png" alt="The streak modal showing Today, 10 reviews, and a full amber bar, with a calendar below"></button>
+        <figcaption>Ten reviews against a goal of fifty, drawn as a complete bar.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-15</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Streak</span>
+      </div>
+      <h3>Calendar days are announced as “goal reached” when the goal was not reached</h3>
+      <p>
+        Every lit day in the streak calendar carries an accessible label of the form
+        <code>September 1: goal reached, 8 reviews</code>. The goal is 50. The day counted because
+        every available review was done, which is a different fact and worth its own words — “all
+        caught up”, say. As written, a screen-reader user is told the goal was met on days it was not,
+        and the same conflation drives LY-03 and LY-14.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-16</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>Month by month repeats Consistency’s headline and is a single bar for weeks</h3>
+      <p>
+        Consistency says “18 / 22 days”; Month by month, three plates lower, is headed “18 of 22 days”
+        and holds two bars. Until an account is two months old the whole plate is one bar, and it says
+        nothing Consistency has not already said. Worth folding in or holding back until there are a
+        few months to compare.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-17</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Insights</span>
+      </div>
+      <h3>The Recall ghost puts its “90%” label on the opposite side from the real chart</h3>
+      <p>
+        In the zero state the marker sits at the end of the dashed line; in the live chart it sits at
+        the start. The ghost is meant to be the same component at zero, so the reference should not
+        move when data arrives.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/insights-ghost-zero.png" alt="The Insights zero state with four dashed ghost plates" class="tall"></button>
+        <figcaption>The ghost plates. Otherwise a nicely judged empty state.</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <!-- ============ CONFUSING ============ -->
+  <section class="group">
+    <h2>Numbers and words that mislead</h2>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-18</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Navigation</span>
+      </div>
+      <h3>The rail’s deck number means “due” or “total”, depending, with nothing to say which</h3>
+      <p>
+        <code>views/shell.tsx:107</code> — <code>{d.due &gt; 0 ? &lt;DueCount&gt;{d.due}&lt;/DueCount&gt; : d.total}</code>.
+        A deck with cards due shows the due count in an amber pill; a deck with none shows its total
+        card count in plain grey. Both appear in the same rail at the same time.
+      </p>
+      <p>
+        A learner who saw “Lezione 12 · 3” in the morning sees “Lezione 12 · 21” after reviewing, in
+        the same slot. In the Ukrainian account below, two of the three numbers are due counts and
+        one is a card count.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/rail-badge-ambiguity.png" alt="The navigation rail showing three decks: Italian 2 in an amber pill, Suomi 5 in plain grey, Notes 2 in an amber pill" class="tall"></button>
+        <figcaption>Італійська 2 and Нотатки 2 are due. Suomi 5 is a card count.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-19</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Today</span>
+      </div>
+      <h3>“50 reviews to today’s goal” next to nine available cards</h3>
+      <p>
+        The line appears on the Today streak card and again on every deck’s Today plate, without
+        reference to how many cards actually exist. A learner three weeks in with nine due reads that
+        they are 50 away from a goal they can only get nine closer to. The rule that finishing
+        everything also counts is never said.
+      </p>
+      <p>
+        This is LY-03 in copy form. Both would be answered by one sentence that names the smaller of
+        the goal and what is actually reviewable.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-20</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Onboarding</span>
+      </div>
+      <h3>The default goal of 50 is out of reach for a learner’s first weeks</h3>
+      <p>
+        The picker offers Light 10, Steady 25, <strong>Keen 50</strong>, Intense 100, and every new
+        account starts on Keen. A first deck is ten or twenty cards, so the goal is unreachable for
+        weeks and drives the meter in LY-03, the line in LY-19, and the full-but-not-met bar in LY-14.
+      </p>
+      <p>
+        Worth considering Light as the default, or a goal that starts from the size of the library
+        and grows. The picker itself is clear and well made — the issue is only which rung it starts on.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/goal-picker.png" alt="The Daily goal picker showing Light 10, Steady 25, Keen 50 selected, Intense 100, and Custom"></button>
+        <figcaption>Every account starts on the third rung.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-21</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Settings</span>
+      </div>
+      <h3>Settings has no review timezone</h3>
+      <p>
+        The screen holds Account, Language, Theme, Daily reminder, Connected apps, API keys, Export
+        and Import. There is no timezone control, and none exists anywhere in
+        <code>apps/web/src/client</code> — the client only reports the device zone automatically.
+      </p>
+      <p>
+        The server route is built and documented (<code>PUT /api/settings/timezone</code>, “manual
+        keeps the given zone until the learner goes back to automatic”), and both
+        <code>CONTEXT.md</code> and <code>docs/design/streak.md</code> place the control in Settings.
+        The day boundary decides streaks, so a learner travelling, or on a device with the wrong zone,
+        has no way to correct it.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-22</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Navigation</span>
+      </div>
+      <h3>There is no search, and the rail’s search button is never rendered</h3>
+      <p>
+        <code>views/shell.tsx</code> defines an optional <code>onSearch</code> and renders a search
+        icon button when it is supplied. Nothing in the client ever supplies it, so the button never
+        appears. <code>DESIGN.md</code> describes the rail’s first line as “the app tile beside the
+        wordmark, search and the capture button on that same line.”
+      </p>
+      <p>
+        There is a per-deck “Search this deck”, but no way to find a card without first remembering
+        which deck it is in. Worth an explicit decision before signups: build it, or take the dead
+        branch and the line in the design system out.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-23</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Auth</span>
+      </div>
+      <h3>The sign-in screen is still invitation-only</h3>
+      <p>
+        <code>/login</code> reads “Use the Google account that received your invitation” with
+        “Need an invitation? <u>Request an invitation</u>” beneath it. If signups open without this
+        screen changing, every arriving learner is told they need something they do not have. Flagging
+        it as a launch checklist item rather than a defect.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/login-invite-only.png" alt="The Lymi sign-in screen reading Use the Google account that received your invitation" class="tall"></button>
+        <figcaption>The screen every new signup will land on.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-24</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Settings</span>
+      </div>
+      <h3>“Not available on this server yet” is server-speak in a learner’s settings</h3>
+      <p>
+        The Daily reminder toggle is disabled and explains itself with the word “server”, which is the
+        deployment’s vocabulary rather than the learner’s. It appears whenever the VAPID keys are
+        missing. Two things to settle before launch: confirm the production Worker has
+        <code>VAPID_PUBLIC_KEY</code>, <code>VAPID_PRIVATE_KEY</code> and <code>VAPID_SUBJECT</code>,
+        and rewrite the fallback line in the learner’s terms.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-25</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Today</span>
+      </div>
+      <h3>A learner returning to 60 due cards is told to add more</h3>
+      <p>
+        The <code>backlog</code> persona opens Today to sixty due cards, an unlit lantern and a broken
+        streak — and an empty New cards tile reading “Add some from your next lesson”, with an
+        <strong>Add cards</strong> action. The tile’s copy assumes an empty day. A backlog is the one
+        moment to say something else, or nothing.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="2">
+      <div class="tags">
+        <span class="id">LY-26</span>
+        <span class="chip sev2">Confusing</span>
+        <span class="chip area">Auth</span>
+      </div>
+      <h3>An unrecognised app produces “Let An app use your Lymi?”</h3>
+      <p>
+        When the consent request carries no client, the fallback name “An app” is substituted into the
+        heading, capital and all, and its first letter becomes the app tile’s initial: a plain
+        <strong>A</strong>. The rest of the page handles the error well — the red line and the disabled
+        Allow are exactly right — but the heading needs its own wording for the unknown case.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/consent-an-app.png" alt="A consent screen headed Let An app use your Lymi, with a tile showing the letter A" class="tall"></button>
+        <figcaption>The unknown-client fallback on the consent screen.</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <!-- ============ POLISH ============ -->
+  <section class="group">
+    <h2>Polish and accessibility</h2>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-27</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Typography</span>
+      </div>
+      <h3>Tabular figures pull deck names apart: “Add to Lezione 1 2”</h3>
+      <p>
+        <code>components/button.tsx:20</code> puts <code>tabular-nums</code> on every button. Onest’s
+        tabular <em>1</em> carries wide side bearings, so a deck name ending in a number gains a
+        visible gap — 6.02px on “Lezione 12” at button size. Deck names like <em>Lesson 15</em> or
+        <em>Unit 3</em> are the norm, so this shows up constantly. Scoping the numeric variant to the
+        figures that need to line up would fix it.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/tabular-nums-button.png" alt="An amber button reading Add to Lezione 12 with a visible gap between the 1 and the 2"></button>
+        <figcaption>Measured: 70.36px with normal figures, 76.38px with tabular.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-28</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Typography</span>
+      </div>
+      <h3>Long compounds break mid-word with no hyphen, stranding single letters</h3>
+      <p>
+        <em>Rechtsschutzversicherungsgesellschaften</em> breaks as
+        <code>Rechtsschutzversich / erungsgesellschaften</code> under review, and as
+        <code>…gesellschafte / n</code> in the deck list, leaving one letter alone on a line. There is
+        no <code>hyphens: auto</code>, and the card’s <code>lang</code> is not driving hyphenation.
+        German, Finnish and Ukrainian are all in the seeded personas, so this is the everyday case
+        rather than the edge.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/german-hyphenation.png" alt="A review card showing the German word Rechtsschutzversicherungsgesellschaften broken across two lines without a hyphen" class="tall"></button>
+        <figcaption>320px. The same break appears in the deck list at every width.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-29</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Review</span>
+      </div>
+      <h3>At 320px the review mode truncates to “Prod…” while the deck name keeps its room</h3>
+      <p>
+        The card’s top line is deck · mode · state. On a small phone the mode is the part that gets
+        cut, so the learner loses the one word telling them whether they are being asked to recognise
+        or to produce — while the deck name, which the review does not depend on, stays whole.
+        Truncating the deck name first would keep the instruction.
+      </p>
+      <figure class="shot">
+        <button class="zoom" type="button"><img src="evidence/mode-truncated.png" alt="A review card on a narrow phone with the header reading Lange Karten, Prod dot dot dot, New" class="tall"></button>
+        <figcaption>iPhone SE width. “Production” becomes “Prod…”.</figcaption>
+      </figure>
+    </article>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-30</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Accessibility</span>
+      </div>
+      <h3>Insights skips a heading level, and the review screen has no heading at all</h3>
+      <p>
+        Insights runs <code>h1</code> → four <code>h3</code>s → one <code>h2</code>, so the four stat
+        plates sit a level below a heading that comes after them. The review screen exposes no heading
+        of any level, which leaves a screen-reader user without a landmark on the app’s central screen.
+      </p>
+      <p>
+        Everything else in the audit came back clean: every control has an accessible name, every
+        image has alt text, focus rings are a consistent 2px on all seven screens, and no ids collide.
+      </p>
+      <dl class="rows">
+        <div><dt>Insights</dt><dd class="code">h1 Insights → h3 RECALL · h3 CONSISTENCY · h3 CARDS · h3 AHEAD → h2 MONTH BY MONTH</dd></div>
+        <div><dt>Review</dt><dd class="code">(no headings)</dd></div>
+      </dl>
+    </article>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-31</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Streak</span>
+      </div>
+      <h3>Future days in the streak calendar look the same as missed days</h3>
+      <p>
+        In the month grid, 17–30 September are drawn in the same ink as 3 and 11, which were days the
+        learner missed. Nothing distinguishes “not yet” from “not done”, so the end of the month reads
+        as a run of failures.
+      </p>
+    </article>
+
+    <article class="finding" data-sev="3">
+      <div class="tags">
+        <span class="id">LY-32</span>
+        <span class="chip sev3">Polish</span>
+        <span class="chip area">Forms</span>
+      </div>
+      <h3>Card fields have no length limit until submit</h3>
+      <p>
+        Term is capped at 500 characters and meaning at 2,000 in the Zod schema, but the inputs carry
+        no <code>maxlength</code> and no counter. Someone pasting a long passage types freely and only
+        learns on submit. The error itself is good — “Keep the term under 500 characters.” shown
+        inline under the field — so this is only about saying it earlier.
+      </p>
+    </article>
+  </section>
+
+  <!-- ============ WHAT HELD ============ -->
+  <section class="group">
+    <h2>What held up</h2>
+
+    <div class="panel worked">
+      <h3>Worth keeping in mind while fixing the above</h3>
+      <ul>
+        <li><strong>Offline review is real.</strong> With every API call blocked, Today renders in full from cache — counts, streak, deck rows. That is the hardest part of the promise and it works.</li>
+        <li><strong>The review screen itself.</strong> Reveal, grading, the queue, the keyboard path, long-text handling with the inner scroll and soft edges — all correct at 320px and at 1920px.</li>
+        <li><strong>The completion screen.</strong> Lantern, count, lights, run, one button. Correct singular and plural, correct flame state for a broken streak.</li>
+        <li><strong>Duplicates.</strong> Typing an existing term shows “sbrigare is already in Lezione 12” under the field before submit, exactly as <code>CONTEXT.md</code> describes.</li>
+        <li><strong>Dark mode</strong> is a separate warm palette, not an inversion, and holds across every screen checked.</li>
+        <li><strong>Ukrainian</strong> is fully translated with no truncation or overflow at any width.</li>
+        <li><strong>Empty states</strong> — Library, deck, Insights, Connected apps, API keys — are the most finished part of the product.</li>
+        <li><strong>Error copy</strong> where it exists is excellent: “Nothing has come back for a second look yet, so there is nothing honest to report.”</li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h3>Two patterns behind most of the list</h3>
+      <p>
+        <strong>The goal and the day’s work are treated as one number.</strong> A day counts when the
+        goal is met <em>or</em> everything available is done, but only the first has a number, so the
+        second borrows it. That produces LY-03, LY-14, LY-15 and LY-19, and it is why a full bar can
+        sit above “10 reviews” against a goal of 50.
+      </p>
+      <p>
+        <strong>Cards and review directions are counted interchangeably.</strong> A card asked both
+        ways is one card to Today and two rows to Insights. That produces LY-07, and the same
+        card-versus-state ambiguity sits under LY-08 and LY-18.
+      </p>
+    </div>
+  </section>
+
+  <footer class="end">
+    Driven with Playwright against the product Worker on <code class="mono">localhost:5241</code>, build
+    <span class="mono">9b08004</span>. Roughly 180 screenshots across personas, viewports and themes;
+    the evidence above is the subset that shows a defect. Screenshots, capture scripts and raw API
+    responses are kept alongside this report.
+  </footer>
+
+</div>
+
+<dialog class="lightbox" id="lightbox">
+  <img id="lightbox-img" alt="">
+  <div style="text-align:center"><button class="close sans" type="button" id="lightbox-close">Close</button></div>
+</dialog>
+
+<script>
+  (function () {
+    // Severity filter
+    var buttons = document.querySelectorAll('.tally button');
+    var findings = document.querySelectorAll('article.finding');
+    var groups = document.querySelectorAll('section.group');
+
+    function apply(filter) {
+      findings.forEach(function (f) {
+        f.classList.toggle('hidden', filter !== 'all' && f.dataset.sev !== filter);
+      });
+      groups.forEach(function (g) {
+        var any = g.querySelector('article.finding:not(.hidden)');
+        var hasPanels = g.querySelector('.panel');
+        g.classList.toggle('hidden', !any && !hasPanels && !!g.querySelector('article.finding'));
+      });
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.filter === filter));
+      });
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { apply(b.dataset.filter); });
+    });
+
+    // Lightbox
+    var dlg = document.getElementById('lightbox');
+    var dlgImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('figure.shot button.zoom').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var img = btn.querySelector('img');
+        dlgImg.src = img.getAttribute('src');
+        dlgImg.alt = img.getAttribute('alt') || '';
+        if (dlg.showModal) dlg.showModal();
+      });
+    });
+    document.getElementById('lightbox-close').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  })();
+</script>

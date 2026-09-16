@@ -1,0 +1,12 @@
+import { launch, makeContext, signIn, settle, BASE, VIEWPORTS } from './lib.mjs';
+const browser = await launch();
+const ctx = await makeContext(browser, { viewport: VIEWPORTS.laptop });
+const page = await ctx.newPage();
+await signIn(page, 'learner', '/today');
+await settle(page, 1200);
+await page.keyboard.press('n');
+await settle(page, 900);
+const btn = page.getByRole('button', { name: /Add to/i }).first();
+console.log('accessible name:', await btn.getAttribute('aria-label'), '| text:', JSON.stringify(await btn.innerText()));
+console.log('outerHTML:', (await btn.evaluate(e => e.outerHTML)).slice(0, 1500));
+await browser.close();

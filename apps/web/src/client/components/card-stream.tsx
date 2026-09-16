@@ -64,7 +64,7 @@ export function CardStream({ cards, language, direction, className }: Props) {
           <span
             lang={language ?? undefined}
             className={clsx(
-              "line-clamp-2 break-words font-medium tracking-[-0.015em]",
+              "hyphenate line-clamp-2 break-words font-medium tracking-[-0.015em]",
               up ? "text-2xl leading-[1.2]" : "text-xl leading-[1.2]",
             )}
           >

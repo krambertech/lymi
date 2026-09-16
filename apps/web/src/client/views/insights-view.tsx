@@ -320,7 +320,7 @@ export function InsightsView({
                 className="flex items-center justify-between gap-4 border-t border-edge px-5 py-3"
               >
                 {/* The card in its deck holds the whole text; this row only has to be recognised. */}
-                <span className="line-clamp-3 min-w-0 [overflow-wrap:anywhere]">
+                <span className="hyphenate line-clamp-3 min-w-0 [overflow-wrap:anywhere]">
                   <span className="font-medium text-text" lang={c.language ?? undefined}>
                     {c.term}
                   </span>

@@ -16,8 +16,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
+// No tabular figures: Onest's tabular 1 carries side bearings wide enough to pull "Lezione 12"
+// apart mid-label. A button showing figures that line up in a column asks for `tabular-nums` itself.
 const base =
-  "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium tabular-nums " +
+  "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium " +
   "transition-[background-color,color,box-shadow,scale] duration-150 ease-out " +
   "active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 " +
   // Busy and unavailable dim the same way, but stay focusable: see the note on `Button`.

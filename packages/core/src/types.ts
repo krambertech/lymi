@@ -277,6 +277,19 @@ export const CardInput = z.object({
 });
 export type CardInput = z.infer<typeof CardInput>;
 
+/**
+ * How long each of a card's text fields may be, read off `CardInput` itself. A form caps and counts
+ * from here, so the limit a learner sees can never drift from the one the route refuses.
+ */
+export const cardLimits = {
+  term: CardInput.shape.term.maxLength,
+  meaning: CardInput.shape.meaning.unwrap().maxLength,
+  pronunciation: CardInput.shape.pronunciation.unwrap().maxLength,
+  example: CardInput.shape.example.unwrap().maxLength,
+  notes: CardInput.shape.notes.unwrap().maxLength,
+  source: CardInput.shape.source.unwrap().maxLength,
+} satisfies Record<string, number | null>;
+
 /** A batch add. A lesson is 20 to 40 terms; one call, not one per term. */
 export const CardsInput = z.object({
   cards: z.array(CardInput).min(1).max(200),

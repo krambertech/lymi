@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import {
   CardInput,
+  cardLimits,
   ImageDescription,
   modeKey,
   modeOf,
@@ -109,6 +110,9 @@ export interface CardFormProps {
   /** No autofocus. For the design page. */
   static?: boolean | undefined;
 }
+
+/** Under a tenth of a field left. Before that a count is noise; after it, it is the warning. */
+const NEARLY_FULL = 0.9;
 
 type Notice = { kind: "ok" | "warn" | "dup"; text: string };
 type Panel = "picture" | "example" | "pronunciation" | "notes" | "source" | "tags" | "settings";
@@ -258,6 +262,16 @@ export function CardForm({
   });
 
   const clear = (key: string) => setInvalid(({ [key]: _, ...rest }) => rest);
+  /** What is left in a nearly full field. `maxLength` stops the typing; this says so first. */
+  const roomLeft = (value: string, limit: number | null) => {
+    if (limit === null || value.length < limit * NEARLY_FULL) return undefined;
+    const left = limit - value.length;
+    return (
+      <span role="status">
+        {t`${plural(left, { one: "# character left", other: "# characters left" })}`}
+      </span>
+    );
+  };
   const panelProps = (name: Panel) => ({
     open: panel === name,
     onOpenChange: (open: boolean) => setPanel(open ? name : null),
@@ -393,10 +407,11 @@ export function CardForm({
 
   const termField = (
     <Field>
-      <FieldLabel>{t`Term`}</FieldLabel>
+      <FieldLabel aside={roomLeft(term, cardLimits.term)}>{t`Term`}</FieldLabel>
       <Input
         ref={termRef}
         autoFocus={adding && !st}
+        maxLength={cardLimits.term ?? undefined}
         value={term}
         onChange={(e) => {
           setTerm(e.target.value);
@@ -436,9 +451,12 @@ export function CardForm({
 
   const meaningField = (
     <Field>
-      <FieldLabel aside={t`Optional`}>{t`Meaning`}</FieldLabel>
+      <FieldLabel
+        aside={roomLeft(meaning, cardLimits.meaning) ?? t`Optional`}
+      >{t`Meaning`}</FieldLabel>
       {/* One line to start, like the term; Enter still adds the card and Shift Enter breaks the line. */}
       <Textarea
+        maxLength={cardLimits.meaning ?? undefined}
         value={meaning}
         rows={1}
         className="min-h-11 py-2.5 leading-normal md:min-h-10"
@@ -542,8 +560,14 @@ export function CardForm({
 
   const exampleField = (
     <Field>
-      <FieldLabel className={chips ? "sr-only" : undefined}>{t`Example`}</FieldLabel>
+      <FieldLabel
+        className={chips ? "sr-only" : undefined}
+        aside={roomLeft(example, cardLimits.example)}
+      >
+        {t`Example`}
+      </FieldLabel>
       <Textarea
+        maxLength={cardLimits.example ?? undefined}
         value={example}
         rows={chips ? 3 : 2}
         className={chips ? undefined : "min-h-[68px]"}
@@ -558,8 +582,14 @@ export function CardForm({
 
   const pronunciationField = (
     <Field>
-      <FieldLabel className={chips ? "sr-only" : undefined}>{t`Pronunciation`}</FieldLabel>
+      <FieldLabel
+        className={chips ? "sr-only" : undefined}
+        aside={roomLeft(pronunciation, cardLimits.pronunciation)}
+      >
+        {t`Pronunciation`}
+      </FieldLabel>
       <Input
+        maxLength={cardLimits.pronunciation ?? undefined}
         value={pronunciation}
         autoComplete="off"
         onKeyDown={closeOnEnter}
@@ -574,8 +604,14 @@ export function CardForm({
 
   const notesField = (
     <Field>
-      <FieldLabel className={chips ? "sr-only" : undefined}>{t`Notes`}</FieldLabel>
+      <FieldLabel
+        className={chips ? "sr-only" : undefined}
+        aside={roomLeft(notes, cardLimits.notes)}
+      >
+        {t`Notes`}
+      </FieldLabel>
       <Textarea
+        maxLength={cardLimits.notes ?? undefined}
         value={notes}
         rows={chips ? 3 : 2}
         className={chips ? undefined : "min-h-[68px]"}
@@ -591,8 +627,14 @@ export function CardForm({
 
   const sourceField = (
     <Field>
-      <FieldLabel className={chips ? "sr-only" : undefined}>{t`Source`}</FieldLabel>
+      <FieldLabel
+        className={chips ? "sr-only" : undefined}
+        aside={roomLeft(source, cardLimits.source)}
+      >
+        {t`Source`}
+      </FieldLabel>
       <Input
+        maxLength={cardLimits.source ?? undefined}
         value={source}
         autoComplete="off"
         onKeyDown={closeOnEnter}

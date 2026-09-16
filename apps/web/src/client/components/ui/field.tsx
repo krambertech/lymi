@@ -234,7 +234,8 @@ function FieldLabel({ className, htmlFor, aside, ...props }: FieldLabelProps) {
   return (
     <div data-slot="field-label-row" className="flex items-baseline justify-between gap-3">
       {label}
-      <span data-slot="field-label-aside" className="text-xs text-muted">
+      {/* `ms-auto`: a label hidden with `sr-only` leaves the flex row, and the aside still sits at the end. */}
+      <span data-slot="field-label-aside" className="ms-auto text-xs text-muted">
         {aside}
       </span>
     </div>

@@ -46,7 +46,7 @@ export function CardPicture({
           <Trans>Couldn’t load the picture</Trans>
         </span>
         {fallback === "description" && image.description && (
-          <p className="text-xl leading-snug text-text [overflow-wrap:anywhere]">
+          <p className="hyphenate text-xl leading-snug text-text [overflow-wrap:anywhere]">
             {image.description}
           </p>
         )}

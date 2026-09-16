@@ -373,6 +373,9 @@ msgstr "{day}: цель достигнута, {reviews}"
 msgid "{day}: no reviews"
 msgstr "{day}: без повторений"
 
+msgid "{day}: not yet"
+msgstr "{day}: ещё впереди"
+
 msgid "{day}: nothing due"
 msgstr "{day}: ничего не было"
 
@@ -438,6 +441,9 @@ msgstr "{label}: {lit} из {days, plural, one {# дня} few {# дней} many 
 
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: пока {lit} из {days, plural, one {# дня} few {# дней} many {# дней} other {# дня}}"
+
+msgid "{left, plural, one {# character left} other {# characters left}}"
+msgstr "{left, plural, one {остался # символ} few {осталось # символа} many {осталось # символов} other {осталось # символа}}"
 
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "До сегодняшней цели: {left, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"

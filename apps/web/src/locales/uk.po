@@ -373,6 +373,9 @@ msgstr "{day}: мету досягнуто, {reviews}"
 msgid "{day}: no reviews"
 msgstr "{day}: без повторень"
 
+msgid "{day}: not yet"
+msgstr "{day}: ще попереду"
+
 msgid "{day}: nothing due"
 msgstr "{day}: нічого не було"
 
@@ -438,6 +441,9 @@ msgstr "{label}: {lit} з {days, plural, one {# дня} few {# днів} many {#
 
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: поки що {lit} з {days, plural, one {# дня} few {# днів} many {# днів} other {# дня}}"
+
+msgid "{left, plural, one {# character left} other {# characters left}}"
+msgstr "{left, plural, one {лишився # символ} few {лишилося # символи} many {лишилося # символів} other {лишилося # символу}}"
 
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "До сьогоднішньої мети: {left, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"

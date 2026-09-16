@@ -8,6 +8,7 @@ export * from "./context";
 export * from "./decks";
 export * from "./draw";
 export * from "./email";
+export * from "./enrichment";
 export * from "./exports";
 export * from "./feedback";
 export * from "./imports";

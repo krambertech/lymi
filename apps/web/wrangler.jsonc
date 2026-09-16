@@ -53,7 +53,9 @@
   ],
   "workflows": [
     { "name": "lymi-import", "binding": "IMPORT_WORKFLOW", "class_name": "ImportWorkflow" },
-    { "name": "lymi-export", "binding": "EXPORT_WORKFLOW", "class_name": "ExportWorkflow" }
+    { "name": "lymi-export", "binding": "EXPORT_WORKFLOW", "class_name": "ExportWorkflow" },
+    // Fills the empty fields on cards an add left behind. ADR 0002.
+    { "name": "lymi-enrich", "binding": "ENRICH_WORKFLOW", "class_name": "EnrichWorkflow" }
   ],
   // Decodes, resizes and re-encodes uploads; WebP output carries no metadata.
   "images": { "binding": "IMAGES" },

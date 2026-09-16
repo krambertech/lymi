@@ -12,6 +12,10 @@ export type Rating = z.infer<typeof Rating>;
 export const FieldSource = z.enum(["lesson", "ai", "manual"]);
 export type FieldSource = z.infer<typeof FieldSource>;
 
+/** Where a card's enrichment stands. Null once nothing is outstanding. */
+export const EnrichmentStatus = z.enum(["working", "failed"]);
+export type EnrichmentStatus = z.infer<typeof EnrichmentStatus>;
+
 /** Who performed an action. Written to the audit log. */
 export const Actor = z.enum(["user", "api", "mcp", "ai", "system"]);
 export type Actor = z.infer<typeof Actor>;
@@ -270,6 +274,7 @@ export const CardInput = z.object({
     .meta({ description: "Overrides the deck's review modes. Null follows the deck." }),
   meaningSource: FieldSource.optional(),
   exampleSource: FieldSource.optional(),
+  pronunciationSource: FieldSource.optional(),
   sectionId: z.string().min(1).nullable().optional().meta({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",

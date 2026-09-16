@@ -211,7 +211,11 @@ export const lymi: SourceAdapter<LymiNote> = {
         shortened: fitted.shortened || tags.shortened,
         // A card in its deck's language follows the language the learner chooses for the deck.
         language: card.language !== note.deckLanguage ? card.language : undefined,
-        fieldSources: { meaning: card.meaningSource, example: card.exampleSource },
+        fieldSources: {
+          meaning: card.meaningSource,
+          example: card.exampleSource,
+          pronunciation: card.pronunciationSource ?? null,
+        },
         origin: card.source ?? undefined,
         pictureDescription: card.picture?.description ?? undefined,
       },

@@ -4,6 +4,7 @@ import type { Auth } from "../auth";
 import type { Db } from "../db";
 import type { Bindings } from "../env";
 import { grantedScope } from "../services/connected-apps";
+import { enrichmentQueue } from "../services/enrichment";
 import { buildMcpServer, type McpPrincipal } from "./server";
 
 /** The scopes an MCP client is told to ask for. offline_access buys it a refresh token. */
@@ -44,7 +45,11 @@ export function mcpResourceMetadataUrl(env: ProductOrigin): string {
 /** A disconnect deletes the consent but not the token, so consent decides access and scope. */
 export async function authorizeMcpClaims(
   claims: Record<string, unknown>,
-  deps: { db: Db; env: ProductOrigin & Partial<Pick<Bindings, "PRIVATE_IMAGES" | "IMAGES">> },
+  deps: {
+    db: Db;
+    env: ProductOrigin &
+      Partial<Pick<Bindings, "PRIVATE_IMAGES" | "IMAGES" | "OPENAI_API_KEY" | "ENRICH_WORKFLOW">>;
+  },
 ): Promise<McpPrincipal | Response> {
   const userId = typeof claims.sub === "string" ? claims.sub : null;
   const clientId = typeof claims.client_id === "string" ? claims.client_id : null;
@@ -64,6 +69,7 @@ export async function authorizeMcpClaims(
       deps.env.PRIVATE_IMAGES && deps.env.IMAGES
         ? { bucket: deps.env.PRIVATE_IMAGES, images: deps.env.IMAGES }
         : undefined,
+    enrichment: enrichmentQueue(deps.env),
   };
 }
 

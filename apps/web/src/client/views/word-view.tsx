@@ -21,7 +21,7 @@ import {
   Volume2,
   X,
 } from "lucide-react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
 import { IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
@@ -29,6 +29,7 @@ import { Chip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { ReviewTimeline } from "../components/review-timeline";
+import { Skeleton } from "../components/skeleton";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
   DropdownMenu,
@@ -250,6 +251,7 @@ function ReadField({
   value,
   empty,
   lang,
+  working,
   children,
 }: {
   label: string;
@@ -258,6 +260,8 @@ function ReadField({
   empty?: boolean | undefined;
   /** The language the text is in, so a long word hyphenates by its own rules. */
   lang?: string | undefined;
+  /** The AI is filling this field, so its space shimmers until the text lands. */
+  working?: boolean | undefined;
   /** Formatted content in place of `value`. */
   children?: ReactNode | undefined;
 }) {
@@ -267,16 +271,23 @@ function ReadField({
         <span className="text-sm font-medium text-text-2">{label}</span>
         {aside && <span className="text-xs text-muted">{aside}</span>}
       </div>
-      {children ?? (
-        <p
-          lang={lang}
-          className={clsx(
-            "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
-            empty ? "text-muted" : "text-text",
-          )}
-        >
-          {value}
-        </p>
+      {working ? (
+        <div className="grid gap-1.5 py-1">
+          <Skeleton className="h-3.5 w-full rounded-sm" />
+          <Skeleton className="h-3.5 w-2/5 rounded-sm" />
+        </div>
+      ) : (
+        (children ?? (
+          <p
+            lang={lang}
+            className={clsx(
+              "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
+              empty ? "text-muted" : "text-text",
+            )}
+          >
+            {value}
+          </p>
+        ))
       )}
     </div>
   );
@@ -428,6 +439,11 @@ export function WordView({
     return () => onBusyChange?.(false);
   }, [moving, onBusyChange]);
 
+  // The AI is filling this card, so each field it will write holds its space until the text lands.
+  const filling = card.enrichmentStatus === "working";
+  const waiting = (field: "meaning" | "example" | "pronunciation" | "language") =>
+    filling && !card[field];
+
   const source = (s: Card["meaningSource"]) =>
     s === "ai"
       ? t`AI wrote this`
@@ -524,10 +540,18 @@ export function WordView({
             </IconButton>
           )}
         </h1>
-        {card.pronunciation && <p className="text-md text-muted">{card.pronunciation}</p>}
-        <p className="text-sm text-muted">
+        {card.pronunciation ? (
+          <p className="text-md text-muted">{card.pronunciation}</p>
+        ) : (
+          waiting("pronunciation") && <Skeleton className="my-1 h-3.5 w-28 rounded-sm" />
+        )}
+        <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-muted">
           {[
-            card.language ? languageName(card.language) : null,
+            card.language ? (
+              languageName(card.language)
+            ) : waiting("language") ? (
+              <Skeleton key="language" className="h-3 w-16 rounded-sm" />
+            ) : null,
             card.source ?? deckName,
             schedules.length > 0
               ? t`asked by ${listOf(
@@ -537,7 +561,14 @@ export function WordView({
               : null,
           ]
             .filter(Boolean)
-            .join(" · ")}
+            .map((part, index) => (
+              // Parts come from a fixed list in a fixed order, so the index is a stable key.
+              // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length list in a fixed order
+              <Fragment key={index}>
+                {index > 0 && <span aria-hidden="true">·</span>}
+                {part}
+              </Fragment>
+            ))}
         </p>
         {card.tags.length > 0 && (
           <ul className="flex flex-wrap gap-1.5 pt-1" aria-label={t`Tags`}>
@@ -558,13 +589,15 @@ export function WordView({
           aside={card.meaning ? source(card.meaningSource) : undefined}
           value={card.meaning || t`No meaning yet`}
           empty={!card.meaning}
+          working={waiting("meaning")}
         />
-        {card.example && (
+        {(card.example || waiting("example")) && (
           <ReadField
             label={t`Example`}
-            aside={source(card.exampleSource)}
-            value={card.example}
+            aside={card.example ? source(card.exampleSource) : undefined}
+            value={card.example ?? ""}
             lang={card.language ?? undefined}
+            working={waiting("example")}
           />
         )}
         {card.notes && (

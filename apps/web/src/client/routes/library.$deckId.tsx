@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import { ExportSheet } from "../components/export-sheet";
 import {
@@ -61,6 +61,13 @@ function DeckPage() {
   const streak = useQuery(streakQuery);
   const apps = useQuery({ ...connectedAppsQuery, enabled: cards.data?.length === 0 });
   const history = useQuery({ ...cardHistoryQuery(openCardId ?? ""), enabled: !!openCardId });
+  // The enrichment row only exists once the fill lands, so ask for the history again then.
+  const settled = cards.data?.find((row) => row.card.id === openCardId)?.card.enrichmentStatus;
+  useEffect(() => {
+    if (openCardId && settled !== "working") {
+      void qc.invalidateQueries({ queryKey: ["cards", openCardId, "history"] });
+    }
+  }, [openCardId, settled, qc]);
   const deck = decks.data?.find((d) => d.id === deckId);
   const isOwner = deck?.role === "owner";
   const series = useQuery({ ...seriesQuery, enabled: isOwner });

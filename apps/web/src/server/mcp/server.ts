@@ -9,6 +9,7 @@ import {
   CardSectionInput,
   DeckInput,
   Directions,
+  EnrichmentStatus,
   FieldSource,
   IMAGE_LIMITS,
   ImageDescription,
@@ -72,6 +73,7 @@ import {
 } from "../services";
 import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
+import type { EnrichmentQueue } from "../services/enrichment";
 
 /** What one MCP request runs as. Built from the verified access token, never from the body. */
 export interface McpPrincipal {
@@ -81,6 +83,8 @@ export interface McpPrincipal {
   resourceMetadataUrl: string;
   /** Picture storage and processing, missing where the Worker has no bindings. */
   images?: CardImageStorage | undefined;
+  /** Where an add queues its enrichment run, missing where no text vendor is configured. */
+  enrichment?: EnrichmentQueue | null | undefined;
 }
 
 /** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
@@ -241,7 +245,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     ({ cards }) =>
       run("add_cards", async () => {
         denyReads(principal);
-        const outcomes = await addCards(ctx, cards.map(withAiSourceDefaults));
+        const outcomes = await addCards(ctx, cards.map(withAiSourceDefaults), principal.enrichment);
         return result({
           added: outcomes.filter((o) => o.status === "added").length,
           skipped: outcomes.filter((o) => o.status === "skipped").length,
@@ -872,6 +876,8 @@ type SourcedFields = {
   meaningSource?: FieldSource | undefined;
   example?: string | undefined;
   exampleSource?: FieldSource | undefined;
+  pronunciation?: string | undefined;
+  pronunciationSource?: FieldSource | undefined;
 };
 
 /**
@@ -887,6 +893,9 @@ export function withAiSourceDefaults<T extends SourcedFields>(input: T): T {
       : {}),
     ...(input.example !== undefined && input.exampleSource === undefined
       ? { exampleSource: "ai" as const }
+      : {}),
+    ...(input.pronunciation !== undefined && input.pronunciationSource === undefined
+      ? { pronunciationSource: "ai" as const }
       : {}),
   };
 }
@@ -946,6 +955,9 @@ const sourceFields = {
   exampleSource: McpFieldSource.optional().describe(
     '"lesson" when the example is in the material, "ai" when you wrote it. Defaults to "ai".',
   ),
+  pronunciationSource: McpFieldSource.optional().describe(
+    '"lesson" when the pronunciation is in the material, "ai" when you wrote it. Defaults to "ai".',
+  ),
 };
 
 const McpCardInput = CardInput.extend(sourceFields);
@@ -981,6 +993,10 @@ const CardOut = z.object({
   imageVersion: z.string().nullable(),
   meaningSource: FieldSource.nullable(),
   exampleSource: FieldSource.nullable(),
+  pronunciationSource: FieldSource.nullable(),
+  enrichmentStatus: EnrichmentStatus.nullable().describe(
+    "Set while Lymi is filling the card's empty fields, and null once it settles",
+  ),
   archivedAt: Timestamp.nullable(),
   createdAt: Timestamp,
 });
@@ -1012,6 +1028,8 @@ function cardOut(card: CardView): CardOut {
     imageVersion: card.imageVersion,
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
+    pronunciationSource: card.pronunciationSource,
+    enrichmentStatus: card.enrichmentStatus,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
     createdAt: card.createdAt.toISOString(),
   };

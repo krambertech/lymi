@@ -15,3 +15,18 @@ export interface SpeechProvider {
 }
 
 export type Fetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+
+/** One text completion: what the model is for, what to work on, and the shape of the reply. */
+export type TextRequest = {
+  instructions: string;
+  input: string;
+  /** JSON Schema the reply must satisfy, named for the vendor's structured-output call. */
+  schema: { name: string; schema: Record<string, unknown> };
+};
+
+export interface TextProvider {
+  provider: "openai";
+  model: string;
+  /** The parsed reply. Callers validate it; a provider only promises valid JSON. */
+  complete(request: TextRequest): Promise<unknown>;
+}

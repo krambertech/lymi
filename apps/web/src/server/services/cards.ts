@@ -8,6 +8,7 @@ import { type Db, schema } from "../db";
 import { selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
+import { type EnrichmentQueue, failEnrichment, needsEnrichment } from "./enrichment";
 import { memberOf } from "./members";
 import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
 import { activeSectionOf } from "./sections";
@@ -21,8 +22,12 @@ export type AddCardOutcome =
   | { status: "skipped"; term: string; existing: CardView; deckName: string };
 
 /** One card. Same rule as the batch, one outcome. */
-export async function addCard(ctx: ServiceContext, input: CardInput): Promise<AddCardOutcome> {
-  const [outcome] = await addCards(ctx, [input]);
+export async function addCard(
+  ctx: ServiceContext,
+  input: CardInput,
+  enrichment?: EnrichmentQueue | null,
+): Promise<AddCardOutcome> {
+  const [outcome] = await addCards(ctx, [input], enrichment);
   if (!outcome) throw new Error("addCards returned no outcome for one input");
   return outcome;
 }
@@ -32,10 +37,14 @@ export async function addCard(ctx: ServiceContext, input: CardInput): Promise<Ad
  * Duplicates, against the learner's active cards and against earlier cards in the same
  * batch, are skipped and reported. Order of outcomes matches order of inputs. Only the
  * deck's owner adds; a member gets forbidden, a stranger not found.
+ *
+ * Given an enrichment queue, every added card with an empty field starts at `working` and one
+ * background run fills it. Without one, the cards stay exactly as they arrived. ADR 0002.
  */
 export async function addCards(
   ctx: ServiceContext,
   inputs: CardInput[],
+  enrichment?: EnrichmentQueue | null,
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
   if (inputs.length === 0) return [];
@@ -98,6 +107,7 @@ export async function addCards(
   // One group per card: the card, live learner states, and its audit row. A group never
   // splits across batches, so a failed batch leaves no partially created card.
   const groups: Statement[][] = [];
+  const enriching: string[] = [];
 
   for (const { input, deck, language, key } of prepared) {
     const hit = existing.get(dupKey(language, key));
@@ -133,12 +143,18 @@ export async function addCards(
       sectionId: input.sectionId ?? null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
+      pronunciationSource: input.pronunciationSource ?? (input.pronunciation ? "manual" : null),
+      enrichmentStatus: null,
       audioKey: null,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
       updatedAt: now,
     };
+    if (enrichment && needsEnrichment(card)) {
+      card.enrichmentStatus = "working";
+      enriching.push(id);
+    }
     groups.push([
       db.insert(schema.cards).values(card),
       // A new card has no picture yet, so only its text modes can be asked.
@@ -158,6 +174,22 @@ export async function addCards(
   }
 
   await runInBatches(db, groups);
+  if (enrichment && enriching.length > 0) {
+    try {
+      await enrichment.create({
+        id: `enrich-${newId()}`,
+        params: { userId, cardIds: enriching },
+      });
+    } catch {
+      // The add stands whatever the queue does; the cards say so rather than waiting forever.
+      await failEnrichment(db, userId, enriching);
+      for (const outcome of outcomes) {
+        if (outcome.status === "added" && enriching.includes(outcome.card.id)) {
+          outcome.card.enrichmentStatus = "failed";
+        }
+      }
+    }
+  }
   const views = await presentCards(
     db,
     outcomes.map((o) => (o.status === "added" ? o.card : o.existing)),

@@ -26,6 +26,9 @@ export const deckCardsQuery = (deckId: string) =>
     queryKey: ["decks", deckId, "cards"],
     queryFn: () => api.deckCards(deckId),
     staleTime: 0,
+    // While the AI is filling a card, keep asking so its shimmer resolves without a reload.
+    refetchInterval: (query) =>
+      query.state.data?.some((row) => row.card.enrichmentStatus === "working") ? 2000 : false,
   });
 // Under the deck's key, so every review that refreshes the decks refreshes where the learner is.
 export const sectionsQuery = (deckId: string) =>

@@ -44,6 +44,8 @@ const card: Card = {
   externalId: null,
   meaningSource: "ai",
   exampleSource: null,
+  pronunciationSource: null,
+  enrichmentStatus: null,
   audioKey: null,
   createdBy: "user",
   archivedAt: null,

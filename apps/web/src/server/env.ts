@@ -18,6 +18,7 @@ export interface Bindings extends Env {
   OPENAI_BASE_URL?: string;
   OPENAI_SPEECH_MODEL?: string;
   OPENAI_SPEECH_VOICE?: string;
+  OPENAI_TEXT_MODEL?: string;
   AI_GATEWAY_TOKEN?: string;
   /** Web Push is unavailable until all three VAPID values are configured as secrets. */
   VAPID_PUBLIC_KEY?: string;

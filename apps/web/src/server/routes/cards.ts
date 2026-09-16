@@ -19,6 +19,7 @@ import {
   addCards,
   archiveCard,
   cardHistory,
+  enrichmentQueue,
   restoreCard,
   searchCards,
   showCard,
@@ -68,7 +69,7 @@ cards.post(
   }),
   body(CardInput, "card"),
   async (c) => {
-    const outcome = await addCard(ctxOf(c), c.req.valid("json"));
+    const outcome = await addCard(ctxOf(c), c.req.valid("json"), enrichmentQueue(c.env));
     return c.json(outcome, outcome.status === "added" ? 201 : 200);
   },
 );
@@ -83,7 +84,10 @@ cards.post(
     errors: [400, 404],
   }),
   body(CardsInput, "cards"),
-  async (c) => c.json({ results: await addCards(ctxOf(c), c.req.valid("json").cards) }),
+  async (c) =>
+    c.json({
+      results: await addCards(ctxOf(c), c.req.valid("json").cards, enrichmentQueue(c.env)),
+    }),
 );
 
 cards.get(

@@ -18,6 +18,7 @@ import { AddMenu } from "../components/add-menu";
 import { Button, IconButton } from "../components/button";
 import { DeckCard } from "../components/deck-card";
 import { DueCount } from "../components/due-count";
+import { ErrorState } from "../components/empty-state";
 import { LearnerMenu } from "../components/learner-menu";
 import { LibraryBoard } from "../components/library-board";
 import { Go } from "../components/next-steps";
@@ -36,6 +37,10 @@ import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
+  /** The decks failed to load and nothing is cached, so the screen offers a retry. */
+  failed?: boolean | undefined;
+  onRetry?: (() => void) | undefined;
+  retrying?: boolean | undefined;
   /** The learner's series. Undefined while loading or offline, which shows every deck loose. */
   series?: Series[] | undefined;
   /** When each deck's next card comes back, keyed by deck id. E.g. "Monday". */
@@ -73,6 +78,9 @@ export interface LibraryProps {
  */
 export function LibraryView({
   decks,
+  failed,
+  onRetry,
+  retrying,
   series,
   next,
   archivedCount,
@@ -97,7 +105,8 @@ export function LibraryView({
 }: LibraryProps) {
   const { t } = useLingui();
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
-  const loading = decks === undefined;
+  const failedEmpty = failed === true && decks === undefined;
+  const loading = decks === undefined && !failedEmpty;
   const groups = useMemo(() => groupDecks(decks ?? [], series), [decks, series]);
 
   const To = ({
@@ -280,12 +289,12 @@ export function LibraryView({
       <PageHeader
         title={t`Library`}
         sub={
-          loading
-            ? undefined
-            : t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
+          decks
+            ? t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
+            : undefined
         }
         // Even with no decks left, archived series are still one menu away.
-        actions={loading ? undefined : libraryMenu}
+        actions={decks ? libraryMenu : undefined}
       />
 
       {loading && (
@@ -294,6 +303,15 @@ export function LibraryView({
           <Skeleton className="h-[118px] rounded-lg" />
           <Skeleton className="h-[118px] rounded-lg" />
         </div>
+      )}
+
+      {failedEmpty && (
+        <ErrorState
+          title={t`Couldn’t load Library`}
+          onRetry={onRetry}
+          retrying={retrying}
+          className="flex-1"
+        />
       )}
 
       {decks && decks.length === 0 && (

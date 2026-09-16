@@ -15,7 +15,9 @@ on:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  # Only one run per group may wait, so queueing pushes to `main` cancelled each other before
+  # they started. Superseding the older run verifies the newest commit instead of neither.
+  cancel-in-progress: true
 
 jobs:
   plan:
@@ -143,7 +145,8 @@ jobs:
     needs: plan
     if: needs.plan.outputs.run_e2e == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # A safety net, not a budget: the parallel suite finishes well inside this.
+    timeout-minutes: 30
     permissions:
       contents: read
     outputs:

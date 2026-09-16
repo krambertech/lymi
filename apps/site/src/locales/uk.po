@@ -1233,8 +1233,8 @@ msgstr "У Lymi є публічний API. Додай слово через шв
 msgid "Lymi home"
 msgstr "Головна сторінка Lymi"
 
-msgid "Lymi is a vocabulary app: it brings each card back right before you’d forget it."
-msgstr "Lymi — застосунок для вивчення слів: він повертає кожну картку якраз перед тим, як ти її забудеш."
+msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free during the beta."
+msgstr "Lymi — застосунок із флеш-картками: він повертає кожну картку якраз перед тим, як ти її забудеш. Безкоштовно під час бети."
 
 msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
 msgstr "Lymi — застосунок із флеш-картками та інтервальним повторенням, з відкритим кодом. Додай слово чи термін, AI допише значення, а картка повернеться, перш ніж ти забудеш. Безкоштовно в беті."
@@ -1296,8 +1296,8 @@ msgstr "Хай буде легко"
 msgid "Meaning"
 msgstr "Значення"
 
-msgid "Meanings in {meaningLanguage}"
-msgstr "Значення: {meaningLanguage}"
+msgid "meanings in {meaningLanguage}"
+msgstr "значення — {meaningLanguage}"
 
 msgid "Medicine and nursing"
 msgstr "Медицина й догляд за пацієнтами"
@@ -1528,9 +1528,8 @@ msgstr "громадський транспорт"
 msgid "Public transport"
 msgstr "Громадський транспорт"
 
-#. placeholder {0}: date(deck.publishedAt)
-msgid "Published {0}"
-msgstr "Опубліковано {0}"
+msgid "Published {published}"
+msgstr "опубліковано {published}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push-підписки зберігаються, доки ти не вимкнеш нагадування, push-сервіс не повідомить про завершення підписки або обліковий запис не буде видалено."

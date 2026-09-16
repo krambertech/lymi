@@ -1233,8 +1233,8 @@ msgstr "Lymi has a public API. Add a word from a shortcut on your phone, bring i
 msgid "Lymi home"
 msgstr "Lymi home"
 
-msgid "Lymi is a vocabulary app: it brings each card back right before you’d forget it."
-msgstr "Lymi is a vocabulary app: it brings each card back right before you’d forget it."
+msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free during the beta."
+msgstr "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free during the beta."
 
 msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
 msgstr "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
@@ -1296,8 +1296,8 @@ msgstr "May it come easy"
 msgid "Meaning"
 msgstr "Meaning"
 
-msgid "Meanings in {meaningLanguage}"
-msgstr "Meanings in {meaningLanguage}"
+msgid "meanings in {meaningLanguage}"
+msgstr "meanings in {meaningLanguage}"
 
 msgid "Medicine and nursing"
 msgstr "Medicine and nursing"
@@ -1528,9 +1528,8 @@ msgstr "public transport"
 msgid "Public transport"
 msgstr "Public transport"
 
-#. placeholder {0}: date(deck.publishedAt)
-msgid "Published {0}"
-msgstr "Published {0}"
+msgid "Published {published}"
+msgstr "Published {published}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."

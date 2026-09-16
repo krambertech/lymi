@@ -40,6 +40,7 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const date = useDate();
   const publisher = deck.publisher;
+  const published = date(deck.publishedAt);
   const checked = deck.reviewedAt ? date(deck.reviewedAt) : null;
   return (
     <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md">
@@ -56,11 +57,9 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
       <span className="font-medium text-text">
         <Trans>By {publisher}</Trans>
       </span>
-      {checked && (
-        <span className="text-muted before:me-2.5 before:text-faint before:content-['·']">
-          <Trans>Checked {checked}</Trans>
-        </span>
-      )}
+      <span className="text-muted before:me-2.5 before:text-faint before:content-['·']">
+        {checked ? <Trans>Checked {checked}</Trans> : <Trans>Published {published}</Trans>}
+      </span>
     </p>
   );
 }
@@ -72,10 +71,11 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const meaningLanguage = languageName(deck.meaningLanguage, i18n.locale);
   const level = deck.level;
   const items = [
-    language,
-    level && <Trans key="level">Level {level}</Trans>,
+    language && level
+      ? `${language} ${level}`
+      : (language ?? (level && <Trans key="level">Level {level}</Trans>)),
     <Plural key="cards" value={deck.cardCount} one="# card" other="# cards" />,
-    meaningLanguage && <Trans key="meanings">Meanings in {meaningLanguage}</Trans>,
+    meaningLanguage && <Trans key="meanings">meanings in {meaningLanguage}</Trans>,
   ].filter(Boolean);
   return (
     <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-md text-muted">
@@ -186,11 +186,6 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
         <div className="mt-4">
           <DeckFacts deck={deck} />
         </div>
-        <p className="mx-auto mt-6 max-w-[42ch] text-md text-pretty text-text-2">
-          <Trans>
-            Lymi is a vocabulary app: it brings each card back right before you’d forget it.
-          </Trans>
-        </p>
         <div className="mt-7 flex flex-wrap justify-center gap-2">
           <a href={addUrl(deck.slug)} className={buttonClass("primary", "lg")}>
             <Trans>Add to Lymi</Trans>
@@ -199,6 +194,12 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
             <Trans>Try a few cards</Trans>
           </a>
         </div>
+        <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-muted">
+          <Trans>
+            Lymi is a flashcard app: it brings each card back right before you’d forget it. Free
+            during the beta.
+          </Trans>
+        </p>
         {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
       </div>
     </Localized>
@@ -260,24 +261,6 @@ export function DeckHowItWorks({ locale }: LocaleProps) {
         </ol>
       </div>
     </Localized>
-  );
-}
-
-/** The last quiet line of the page: when the publisher put the deck out. */
-export function DeckPublished({ deck, locale }: DeckProps) {
-  return (
-    <Localized locale={locale}>
-      <DeckPublishedLine deck={deck} />
-    </Localized>
-  );
-}
-
-function DeckPublishedLine({ deck }: { deck: PublicDeckOut }) {
-  const date = useDate();
-  return (
-    <p className="px-5 pb-16 text-center text-sm text-muted @2xl:px-10">
-      <Trans>Published {date(deck.publishedAt)}</Trans>
-    </p>
   );
 }
 

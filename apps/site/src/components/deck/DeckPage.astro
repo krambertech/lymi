@@ -8,7 +8,7 @@ import PublicNav from "../islands/PublicNav";
 import DeckSections from "../islands/DeckSections";
 import DeckStack from "../islands/DeckStack";
 import { deckDescription, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckFooter, DeckGone, DeckHero, DeckHowItWorks, DeckPublished } from "./DeckView";
+import { addUrl, DeckFooter, DeckGone, DeckHero, DeckHowItWorks } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -72,7 +72,6 @@ const stack = deck ? stackCards(deck) : [];
               )}
             </div>
           </section>
-          <DeckPublished deck={page.deck} locale={locale} />
         </main>
         <DeckFooter locale={locale} languagePaths={paths} />
       </div>

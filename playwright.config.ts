@@ -6,10 +6,9 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   timeout: process.env.CI ? 60_000 : 30_000,
   retries: process.env.CI ? 1 : 0,
-  // Three of the runner's four cores, leaving the fourth for the servers; what makes parallel
-  // files safe, and why the tests inside one stay serial, is in docs/testing.md.
-  workers: process.env.CI ? 3 : undefined,
-  globalSetup: "./e2e/global-setup.ts",
+  // The journeys share one Vite dev server, one Worker and one D1. Accounts are already keyed
+  // per test, but the server is not: concurrent workers starve it. docs/testing.md.
+  workers: 1,
   reporter: process.env.CI
     ? [["github"], ["html", { open: "never" }]]
     : [["list"], ["html", { open: "never" }]],

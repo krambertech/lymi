@@ -82,7 +82,7 @@ test("a learner can restore a deck and a card from Archived", async ({ page }, t
     await expect(notifications(page)).toContainText(`Restored “${term}”`);
 
     await page.reload();
-    await expect(page.getByRole("heading", { level: 2, name: "Nothing archived" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: "Nothing archived" })).toBeVisible();
 
     await page.goto("/library");
     await page

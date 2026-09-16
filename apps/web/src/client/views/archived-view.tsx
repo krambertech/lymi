@@ -1,8 +1,9 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { Archive } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "../components/button";
-import { EmptyState, ErrorState } from "../components/empty-state";
+import { EmptySection, ErrorState } from "../components/empty-state";
 import { Skeleton } from "../components/skeleton";
 import type { CardHit, DeckSummary } from "../lib/api";
 import { Page, PageHeader } from "./shell";
@@ -55,10 +56,11 @@ export function ArchivedView({
           <Skeleton className="h-[72px] rounded-lg" />
         </div>
       ) : nothing ? (
-        <EmptyState
+        // The same plate Activity shows with nothing in it, and no action: archiving is not invited.
+        <EmptySection
+          icon={<Archive />}
           title={t`Nothing archived`}
           body={t`Archiving hides a card or deck. Nothing is deleted, and Restore puts it back.`}
-          className="flex-1"
         />
       ) : (
         <div className="grid gap-8">

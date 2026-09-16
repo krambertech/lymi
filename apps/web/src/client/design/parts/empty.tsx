@@ -226,20 +226,20 @@ export const empty: Group = {
       ),
     },
     {
-      slug: "whole-screen",
-      name: "Whole screen",
+      slug: "coming-soon",
+      name: "Coming soon",
       source: "components/empty-state.tsx",
-      note: "A whole screen with nothing to outline. The brand lantern, still, because an empty screen says nothing about the streak.",
+      note: "A whole screen with nothing to outline. The brand lantern, still, because an empty screen says nothing about the streak. No screen uses this today: Archived was the last one, and it now shows an empty section like Activity.",
       Demo: () => (
         <Variants
           items={[
             {
-              label: "Archived",
+              label: "A screen on its way",
               render: () => (
                 <EmptyState
                   className="w-full py-4"
-                  title="Nothing archived"
-                  body="Archiving hides a card or deck. Nothing is deleted, and Restore puts it back."
+                  title="Coming soon"
+                  body="This screen is on its way."
                 />
               ),
             },

@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { safeProductReturnPath } from "../../shared/origins";
 import { identifyApp } from "../components/app-mark";
@@ -98,14 +98,19 @@ function issueFor(code: string | undefined): SignInIssue | null {
   };
 }
 
-/** What the confirmation link should bring the learner back to, with this page reading the result. */
+/**
+ * What the confirmation link should bring the learner back to. The signed OAuth query rides
+ * along so the MCP client's authorization can resume; a failure already on the URL does not,
+ * because it belongs to the attempt the learner has just moved past.
+ */
 function verificationCallback(search: string): string {
   const params = new URLSearchParams(search);
+  params.delete("error");
   params.set("verify", "1");
   return `/login?${params.toString()}`;
 }
 
-type Notice = { title: React.ReactNode; body: React.ReactNode; actions?: React.ReactNode };
+type Notice = { title: ReactNode; body: ReactNode; actions?: ReactNode };
 
 function Login() {
   const { t, i18n } = useLingui();
@@ -172,10 +177,10 @@ function Login() {
 
   /** Every learner-typed failure a credential call can return, as one sentence. */
   function messageFor(
-    error: { code?: string | undefined; status?: number | undefined } | null,
+    failure: { code?: string | undefined; status?: number | undefined } | null,
   ): string {
-    const code = error?.code;
-    if (error?.status === 429) return i18n._(tooManyAttempts(minutesUntilRetry(error)));
+    const code = failure?.code;
+    if (failure?.status === 429) return i18n._(tooManyAttempts(minutesUntilRetry(failure)));
     switch (code) {
       case "INVALID_EMAIL_OR_PASSWORD":
         return t`That email and password don’t match. Try again, or reset your password.`;

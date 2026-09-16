@@ -11,7 +11,7 @@ export function deckTitle(i18n: I18n, deck: PublicDeckOut): string {
   if (language && level)
     return i18n._(msg`${name} · ${language} vocabulary, level ${level} · Lymi`);
   if (language) return i18n._(msg`${name} · ${language} vocabulary · Lymi`);
-  return i18n._(msg`${name} · Vocabulary cards · Lymi`);
+  return i18n._(msg`${name} · Flashcards · Lymi`);
 }
 
 /** Written from the deck's facts so it reads in the page language, whatever the deck is in. */
@@ -31,7 +31,7 @@ export function deckDescription(i18n: I18n, deck: PublicDeckOut): string {
     );
   }
   return i18n._(
-    msg`${plural(count, { one: "# card", other: "# cards" })} with meanings in ${meaningLanguage}. Try a few, then add the deck to Lymi to review them all.`,
+    msg`${plural(count, { one: "# card", other: "# cards" })}. Try a few, then add the deck to Lymi to review them all.`,
   );
 }
 

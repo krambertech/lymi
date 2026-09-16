@@ -66,8 +66,8 @@ msgstr "{count, plural, one {# {language} card} other {# {language} cards}} at l
 msgid "{count, plural, one {# {language} card} other {# {language} cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
 msgstr "{count, plural, one {# {language} card} other {# {language} cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
 
-msgid "{count, plural, one {# card} other {# cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# card} other {# cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
+msgid "{count, plural, one {# card} other {# cards}}. Try a few, then add the deck to Lymi to review them all."
+msgstr "{count, plural, one {# card} other {# cards}}. Try a few, then add the deck to Lymi to review them all."
 
 msgid "{decks, plural, one {deck} other {decks}}"
 msgstr "{decks, plural, one {deck} other {decks}}"
@@ -90,8 +90,8 @@ msgstr "{name} · {language} vocabulary · Lymi"
 msgid "{name} · {language} vocabulary, level {level} · Lymi"
 msgstr "{name} · {language} vocabulary, level {level} · Lymi"
 
-msgid "{name} · Vocabulary cards · Lymi"
-msgstr "{name} · Vocabulary cards · Lymi"
+msgid "{name} · Flashcards · Lymi"
+msgstr "{name} · Flashcards · Lymi"
 
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
@@ -1528,8 +1528,8 @@ msgstr "public transport"
 msgid "Public transport"
 msgstr "Public transport"
 
-msgid "Published {published}"
-msgstr "Published {published}"
+msgid "published {published}"
+msgstr "published {published}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."

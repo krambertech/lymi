@@ -40,7 +40,6 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const date = useDate();
   const publisher = deck.publisher;
-  const published = date(deck.publishedAt);
   const checked = deck.reviewedAt ? date(deck.reviewedAt) : null;
   return (
     <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md">
@@ -57,9 +56,11 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
       <span className="font-medium text-text">
         <Trans>By {publisher}</Trans>
       </span>
-      <span className="text-muted before:me-2.5 before:text-faint before:content-['·']">
-        {checked ? <Trans>Checked {checked}</Trans> : <Trans>Published {published}</Trans>}
-      </span>
+      {checked && (
+        <span className="text-muted before:me-2.5 before:text-faint before:content-['·']">
+          <Trans>Checked {checked}</Trans>
+        </span>
+      )}
     </p>
   );
 }
@@ -68,14 +69,20 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
 export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const language = languageName(deck.language, i18n.locale, { label: true });
-  const meaningLanguage = languageName(deck.meaningLanguage, i18n.locale);
+  // A deck with no language of its own is not translated into one, so its meanings need no label.
+  const meaningLanguage = deck.language ? languageName(deck.meaningLanguage, i18n.locale) : null;
   const level = deck.level;
+  const published = new Intl.DateTimeFormat(i18n.locale, {
+    dateStyle: "medium",
+    timeZone: "UTC",
+  }).format(new Date(deck.publishedAt));
   const items = [
     language && level
       ? `${language} ${level}`
       : (language ?? (level && <Trans key="level">Level {level}</Trans>)),
     <Plural key="cards" value={deck.cardCount} one="# card" other="# cards" />,
     meaningLanguage && <Trans key="meanings">meanings in {meaningLanguage}</Trans>,
+    <Trans key="published">published {published}</Trans>,
   ].filter(Boolean);
   return (
     <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-md text-muted">

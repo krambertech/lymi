@@ -66,8 +66,8 @@ msgstr "{count, plural, one {# карточка} few {# карточки} many {
 msgid "{count, plural, one {# {language} card} other {# {language} cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
 msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. {language} язык. Значения — {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
 
-msgid "{count, plural, one {# card} other {# cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Язык значений: {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
+msgid "{count, plural, one {# card} other {# cards}}. Try a few, then add the deck to Lymi to review them all."
+msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
 
 msgid "{decks, plural, one {deck} other {decks}}"
 msgstr "{decks, plural, one {колода} few {колоды} many {колод} other {колоды}}"
@@ -90,8 +90,8 @@ msgstr "{name} · {language} язык · Lymi"
 msgid "{name} · {language} vocabulary, level {level} · Lymi"
 msgstr "{name} · {language} язык, уровень {level} · Lymi"
 
-msgid "{name} · Vocabulary cards · Lymi"
-msgstr "{name} · Карточки со словами · Lymi"
+msgid "{name} · Flashcards · Lymi"
+msgstr "{name} · Флеш-карточки · Lymi"
 
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# карточка переносится с картинкой.} few {# карточки переносятся с картинками.} many {# карточек переносятся с картинками.} other {# карточки переносятся с картинками.}}"
@@ -1528,7 +1528,7 @@ msgstr "общественный транспорт"
 msgid "Public transport"
 msgstr "Общественный транспорт"
 
-msgid "Published {published}"
+msgid "published {published}"
 msgstr "опубликовано {published}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."

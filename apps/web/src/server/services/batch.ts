@@ -26,12 +26,18 @@ export async function runInBatches(db: Db, groups: Statement[][]) {
   await flush();
 }
 
-/** D1 allows 100 bound parameters per query, so `IN (...)` lists are read in slices of 90. */
+/**
+ * D1 allows 100 bound parameters per query, so `IN (...)` lists are read in slices of 90. A caller
+ * that binds more than the ten spare parameters passes a smaller `size`.
+ */
 export async function selectIn<T, R>(
   values: readonly T[],
   select: (slice: T[]) => Promise<R[]>,
+  size = 90,
 ): Promise<R[]> {
   const rows: R[] = [];
-  for (let i = 0; i < values.length; i += 90) rows.push(...(await select(values.slice(i, i + 90))));
+  for (let i = 0; i < values.length; i += size) {
+    rows.push(...(await select(values.slice(i, i + size))));
+  }
   return rows;
 }

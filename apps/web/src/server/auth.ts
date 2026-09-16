@@ -289,7 +289,13 @@ export function createAuth(
             const ctx = { db, userId: session.userId, actor: "user" as const };
             try {
               if (admission.kind === "link") await joinThroughLink(ctx, admission.token);
-              else await addPublishedDeck(ctx, admission.slug, admission.meaningLanguage);
+              else {
+                // A day can pass between the hold and the sign-in, so an edition withdrawn in
+                // between admits the learner to the original rather than to nothing. ADR 0015.
+                await addPublishedDeck(ctx, admission.slug, admission.meaningLanguage, {
+                  fallBackToOriginal: true,
+                });
+              }
             } catch (err) {
               if (!(err instanceof ServiceError)) console.error("Joining after sign-in failed");
             }

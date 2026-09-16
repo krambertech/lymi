@@ -73,17 +73,21 @@ export async function editionText(db: Db, viewerId: string, cards: readonly Card
   if (pinned.size === 0) return new Map<string, CardLocalization>();
   const wanted = cards.filter((card) => pinned.has(card.deckId)).map((card) => card.id);
   const languages = [...new Set(pinned.values())];
-  const rows = await selectIn(wanted, (slice) =>
-    db
-      .select()
-      .from(schema.cardLocalizations)
-      .where(
-        and(
-          inArray(schema.cardLocalizations.cardId, slice),
-          inArray(schema.cardLocalizations.language, languages),
-          eq(schema.cardLocalizations.status, "approved"),
+  const rows = await selectIn(
+    wanted,
+    (slice) =>
+      db
+        .select()
+        .from(schema.cardLocalizations)
+        .where(
+          and(
+            inArray(schema.cardLocalizations.cardId, slice),
+            inArray(schema.cardLocalizations.language, languages),
+            eq(schema.cardLocalizations.status, "approved"),
+          ),
         ),
-      ),
+    // The languages and `approved` are bound too, so the id slice leaves room for them.
+    Math.max(1, 95 - languages.length),
   );
   const byCard = new Map(cards.map((card) => [card.id, card.deckId]));
   return new Map(

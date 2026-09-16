@@ -241,20 +241,20 @@ export async function addPublishedDeck(
   ctx: ServiceContext,
   slug: string,
   meaningLanguage?: string | undefined,
+  /** Take the original when the chosen edition is gone, rather than refusing the whole add. */
+  opts: { fallBackToOriginal?: boolean } = {},
 ) {
   const publication = await publicationBySlug(ctx.db, slug);
   if (!publication || publication.status !== "published" || publication.deckArchivedAt) {
     throw new ServiceError("not_found", "This deck is not published");
   }
   const editions = await addableEditions(ctx.db, publication.deckId, publication.meaningLanguage);
-  if (meaningLanguage && !editions.includes(meaningLanguage)) {
+  const chosen = meaningLanguage && editions.includes(meaningLanguage) ? meaningLanguage : null;
+  if (meaningLanguage && !chosen && !opts.fallBackToOriginal) {
     throw new ServiceError("invalid", "This deck is not published in that language");
   }
   // The original edition is the deck's own words, so it pins nothing.
-  const pinned =
-    meaningLanguage && meaningLanguage !== publication.meaningLanguage
-      ? meaningLanguage
-      : undefined;
+  const pinned = chosen && chosen !== publication.meaningLanguage ? chosen : undefined;
   const { role } = await join(ctx, publication.deckId, {
     publicationId: publication.id,
     meaningLanguage: pinned,

@@ -281,9 +281,18 @@ export async function importEdition(
       );
     }
   }
+  const localizesTerm = publication.editionFields.includes("term");
   for (const card of input.cards) {
     if (!cardRevisions.has(card.cardId)) {
       throw new ServiceError("invalid", `${card.cardId} is not an active card of the deck`);
+    }
+    // A localized term replaces what the card asks. On a language deck that turns the prompt into
+    // the answer, so only a publication that declares `term` may send one. ADR 0015.
+    if (card.term && !localizesTerm) {
+      throw new ServiceError(
+        "invalid",
+        "This deck's terms are shared by every edition. Add `term` to the publication's `editionFields` to localize them.",
+      );
     }
   }
 
@@ -413,7 +422,8 @@ export async function approveEdition(
     activeSectionsOf(db, deckId),
     activeCardsOf(db, deckId),
   ]);
-  const whole = !input.cardIds && !input.sectionIds && input.deck === undefined;
+  const whole =
+    !input.cardIds && !input.sectionIds && input.deck === undefined && input.series === undefined;
   const sectionIds = whole ? sections.map((row) => row.id) : (input.sectionIds ?? []);
   const cardIds = whole ? cards.map((row) => row.id) : (input.cardIds ?? []);
   // An id that names nothing would sign off nothing and then read as unsigned text, so say so.
@@ -439,6 +449,23 @@ export async function approveEdition(
           and(
             eq(schema.deckLocalizations.deckId, deckId),
             eq(schema.deckLocalizations.language, language),
+          ),
+        ),
+    ]);
+  }
+  if ((whole || input.series) && deck.seriesId) {
+    const [series] = await db
+      .select({ revision: schema.series.revision })
+      .from(schema.series)
+      .where(eq(schema.series.id, deck.seriesId));
+    statements.push([
+      db
+        .update(schema.seriesLocalizations)
+        .set({ ...signed, sourceRevision: series?.revision ?? 1 })
+        .where(
+          and(
+            eq(schema.seriesLocalizations.seriesId, deck.seriesId),
+            eq(schema.seriesLocalizations.language, language),
           ),
         ),
     ]);

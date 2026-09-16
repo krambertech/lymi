@@ -465,8 +465,9 @@ export const sectionLocalizations = sqliteTable(
 );
 
 /**
- * A card's text in one edition. `term` is localized only by a deck whose terms are not in a
- * language being learned; the card's language, tags, picture, audio and modes are never localized.
+ * A card's text in one edition. A localized `term` replaces what the card asks, so `importEdition`
+ * takes one only from a publication whose `edition_fields` names `term`; the card's language, tags,
+ * picture, audio and modes are never localized.
  */
 export const cardLocalizations = sqliteTable(
   "card_localizations",

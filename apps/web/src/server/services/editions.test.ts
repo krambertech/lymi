@@ -6,7 +6,7 @@ import type { Db } from "../db";
 import { schema } from "../db";
 import { addCards, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
-import { createDeck, listDeckCards, updateDeck } from "./decks";
+import { createDeck, listDeckCards, listDecks, updateDeck } from "./decks";
 import {
   approveEdition,
   importEdition,
@@ -16,6 +16,7 @@ import {
 } from "./editions";
 import { addPublishedDeck, previewPublication, publishDeck } from "./publications";
 import { createSection, listSections } from "./sections";
+import { createSeries } from "./series";
 import { updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
 
@@ -171,6 +172,67 @@ describe("a long edition", () => {
   }, 60_000);
 });
 
+describe("what an edition may change", () => {
+  it("refuses a localized term unless the publication declares one", async () => {
+    const deck = await estonian("shared-terms");
+    await expect(
+      importEdition(
+        lymi,
+        deck.deckId,
+        "uk",
+        {
+          sections: [],
+          cards: [{ cardId: deck.cardIds[0], provenance: "ai", term: "привіт", meaning: "привіт" }],
+        },
+        publishers,
+      ),
+    ).rejects.toThrow(/terms are shared by every edition/);
+  });
+
+  it("takes one when the publication asks its terms to be localized", async () => {
+    const deck = await createDeckFor("own-terms");
+    await publishDeck(
+      lymi,
+      deck.deckId,
+      { ...publication("own-terms"), editionFields: ["term", "meaning"] },
+      publishers,
+    );
+    await importEdition(
+      lymi,
+      deck.deckId,
+      "uk",
+      {
+        deck: { provenance: "human", name: "Своя", summary: "Своя колода." },
+        sections: [{ sectionId: deck.sectionId, provenance: "human", name: "Вітання" }],
+        cards: deck.cardIds.map((cardId, i) => ({
+          cardId,
+          provenance: "human" as const,
+          term: `термін-${i}`,
+          meaning: `значення ${i}`,
+        })),
+      },
+      publishers,
+    );
+    await approveEdition(lymi, deck.deckId, "uk", {}, publishers);
+    await publishEdition(lymi, deck.deckId, "uk", publishers);
+    await addPublishedDeck(bohdan, "own-terms", "uk");
+    const read = await listDeckCards(bohdan, deck.deckId);
+    expect(read.map((row) => row.card.term).sort()).toEqual(["термін-0", "термін-1"]);
+  });
+
+  it("keeps a republished publication's declared fields when they are left out", async () => {
+    const deck = await createDeckFor("kept-fields");
+    await publishDeck(
+      lymi,
+      deck.deckId,
+      { ...publication("kept-fields"), editionFields: ["term", "meaning"] },
+      publishers,
+    );
+    await publishDeck(lymi, deck.deckId, publication("kept-fields"), publishers);
+    expect((await listEditions(lymi, deck.deckId)).editionFields).toEqual(["term", "meaning"]);
+  });
+});
+
 describe("human approval", () => {
   it("refuses an API key or an MCP client, and records the person who signed off", async () => {
     const deck = await estonian("approval");
@@ -187,6 +249,24 @@ describe("human approval", () => {
       .from(schema.cardLocalizations)
       .where(eq(schema.cardLocalizations.cardId, deck.cardIds[0]));
     expect(row).toMatchObject({ status: "approved", approvedBy: "lymi" });
+  });
+
+  it("signs off the series name with the rest of the edition", async () => {
+    const deck = await estonian("with-series");
+    const made = await createSeries(lymi, { name: "Estonian", deckIds: [deck.deckId] });
+    await importEdition(
+      lymi,
+      deck.deckId,
+      "uk",
+      { ...ukrainian(deck), series: { provenance: "human", name: "Естонська" } },
+      publishers,
+    );
+    await approveEdition(lymi, deck.deckId, "uk", {}, publishers);
+    const [row] = await db
+      .select()
+      .from(schema.seriesLocalizations)
+      .where(eq(schema.seriesLocalizations.seriesId, made.id));
+    expect(row).toMatchObject({ status: "approved", approvedBy: "lymi", name: "Естонська" });
   });
 
   it("refuses an id that names nothing in the deck", async () => {
@@ -298,6 +378,18 @@ describe("a learner's pinned edition", () => {
     await expect(addPublishedDeck(anna, "unpublished-edition", "uk")).rejects.toThrow(
       /not published in that language/,
     );
+  });
+
+  it("admits a held sign-in to the original when its edition went away meanwhile", async () => {
+    const deck = await estonian("held-edition");
+    await publishUkrainian(deck);
+    await withdrawEdition(lymi, deck.deckId, "uk", publishers);
+    // What the sign-in hook does with a day-old cookie: the deck, rather than nothing.
+    const added = await addPublishedDeck(bohdan, "held-edition", "uk", {
+      fallBackToOriginal: true,
+    });
+    const [joined] = (await listDecks(bohdan)).filter((row) => row.id === added.deckId);
+    expect(joined).toMatchObject({ meaningLanguage: null, name: "Everyday Estonian held-edition" });
   });
 
   it("keeps reading a withdrawn edition, which nobody new can add", async () => {

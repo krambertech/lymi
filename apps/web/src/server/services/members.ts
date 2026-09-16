@@ -165,11 +165,27 @@ export async function join(
         )
     : db
         .insert(schema.deckMembers)
+        // Built through the query builder so the statement names its columns. A positional
+        // insert would rest on the table's physical column order, which a later ADD COLUMN or a
+        // rebuild can change without any build failing.
         .select(
-          // Positional, so the columns are the table's own order; `meaning_language` came last.
-          sql`select ${membershipId}, ${deckId}, ${userId}, 'learner', ${opts.invitationId ?? null},
-            ${at}, null, null, ${at}, ${at}, ${opts.meaningLanguage ?? null}
-          where ${admitted}`,
+          db
+            .select({
+              id: sql`${membershipId}`.as("id"),
+              deckId: sql`${deckId}`.as("deck_id"),
+              userId: sql`${userId}`.as("user_id"),
+              role: sql`'learner'`.as("role"),
+              invitationId: sql`${opts.invitationId ?? null}`.as("invitation_id"),
+              joinedAt: sql`${at}`.as("joined_at"),
+              removedAt: sql`null`.as("removed_at"),
+              removedBy: sql`null`.as("removed_by"),
+              createdAt: sql`${at}`.as("created_at"),
+              updatedAt: sql`${at}`.as("updated_at"),
+              meaningLanguage: sql`${opts.meaningLanguage ?? null}`.as("meaning_language"),
+            })
+            // One row, so the guard decides whether the insert writes anything at all.
+            .from(sql`(select 1)`)
+            .where(admitted),
         )
         .onConflictDoNothing({ target: [schema.deckMembers.deckId, schema.deckMembers.userId] });
   await runBatch(db, [

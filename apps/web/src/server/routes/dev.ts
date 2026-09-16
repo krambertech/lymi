@@ -1,8 +1,10 @@
+import { eq } from "@lymi/core/db";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
 import { devPersonaCookieName } from "../../shared/cookies";
 import { safeProductReturnPath } from "../../shared/origins";
 import type { Auth } from "../auth";
+import { type Db, schema } from "../db";
 import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
 import { devToolsEnabled } from "../env";
 import { body, describe, query } from "../http";
@@ -83,7 +85,7 @@ dev.on(
     const persona = personas.find((p) => p.id === as);
     if (!persona) return c.json({ error: "Unknown persona" }, 400);
 
-    const signed = await signInPersona(c.get("auth"), persona);
+    const signed = await signInPersona(c.get("auth"), c.get("db"), persona);
     const ctx = { db: c.get("db"), userId: signed.userId, actor: "user" as const };
 
     let seeded = false;
@@ -184,30 +186,41 @@ dev.post("/due", describe({ hide: true, open: true }), body(DueBody, "due"), asy
  *
  * Sign-up issues no session while verification is required, so a fresh persona signs in on a
  * second call. It succeeds because a persona account is created already confirmed.
+ *
+ * A store that outlives a change to `DEV_PASSWORD` holds personas whose stored password is
+ * the old one, and no public endpoint sets a password without a link from an inbox a persona
+ * does not have. A fixture whose password no longer matches its definition is rebuilt, and
+ * the caller reseeds it.
  */
-async function signInPersona(auth: Auth, persona: Persona) {
+async function signInPersona(auth: Auth, db: Db, persona: Persona) {
   const email = personaEmail(persona.id);
-  const attempt = await auth.api.signInEmail({
-    body: { email, password: DEV_PASSWORD },
-    asResponse: true,
-  });
+  const signIn = () =>
+    auth.api.signInEmail({ body: { email, password: DEV_PASSWORD }, asResponse: true });
+
+  const attempt = await signIn();
   if (attempt.ok) return await sessionFrom(attempt, false);
 
   const created = await auth.api.signUpEmail({
     body: { email, password: DEV_PASSWORD, name: persona.name },
     asResponse: true,
   });
-  if (!created.ok) {
-    throw new Error(`Could not create ${email}: ${await created.text()}`);
-  }
-  const signedIn = await auth.api.signInEmail({
-    body: { email, password: DEV_PASSWORD },
+  if (!created.ok) throw new Error(`Could not create ${email}: ${await created.text()}`);
+
+  const signedIn = await signIn();
+  if (signedIn.ok) return await sessionFrom(signedIn, true);
+
+  // The account is there and its password is not this one, so the fixture is stale.
+  console.warn(`Rebuilding ${email}: its stored password predates the current fixture.`);
+  await db.delete(schema.user).where(eq(schema.user.email, email));
+  const rebuilt = await auth.api.signUpEmail({
+    body: { email, password: DEV_PASSWORD, name: persona.name },
     asResponse: true,
   });
-  if (!signedIn.ok) {
-    throw new Error(`Could not sign ${email} in: ${await signedIn.text()}`);
-  }
-  return await sessionFrom(signedIn, true);
+  if (!rebuilt.ok) throw new Error(`Could not rebuild ${email}: ${await rebuilt.text()}`);
+
+  const final = await signIn();
+  if (!final.ok) throw new Error(`Could not sign ${email} in: ${await final.text()}`);
+  return await sessionFrom(final, true);
 }
 
 async function sessionFrom(response: Response, created: boolean) {

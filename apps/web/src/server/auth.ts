@@ -53,6 +53,8 @@ export function createAuth(
    * so this holds one request's answer.
    */
   let provenBeforeGoogle = false;
+  /** A persona has no inbox, so nothing Lymi sends should ever be addressed to one. */
+  const isPersona = (email: string) => dev && email.toLowerCase().endsWith(DEV_EMAIL_DOMAIN);
 
   const auth = betterAuth({
     baseURL: env.PRODUCT_URL,
@@ -137,6 +139,7 @@ export function createAuth(
       requireEmailVerification: true,
       revokeSessionsOnPasswordReset: true,
       sendResetPassword: async ({ user, url }, request) => {
+        if (isPersona(user.email)) return;
         const ctx = { db, userId: user.id, actor: "user" as const };
         const language = await accountEmailLanguage(db, user.id, request);
         // A Google account has no password, and must not gain one here. Every other account
@@ -154,6 +157,7 @@ export function createAuth(
       },
       // The address is taken, so the response says nothing. The address owner is told instead.
       onExistingUserSignUp: async ({ user }, request) => {
+        if (isPersona(user.email)) return;
         const ctx = { db, userId: user.id, actor: "user" as const };
         const language = await accountEmailLanguage(db, user.id, request);
         await sendAccountEmail(ctx, env, {
@@ -187,9 +191,7 @@ export function createAuth(
         });
       },
       sendVerificationEmail: async ({ user, url }, request) => {
-        // A persona is born confirmed and has no inbox; sending would only fill the outbox
-        // that the local tests read.
-        if (dev && user.email.toLowerCase().endsWith(DEV_EMAIL_DOMAIN)) return;
+        if (isPersona(user.email)) return;
         const ctx = { db, userId: user.id, actor: "user" as const };
         await sendAccountEmail(ctx, env, {
           kind: "verify-email",

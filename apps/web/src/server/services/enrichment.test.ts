@@ -1,20 +1,27 @@
-import { CardInput, CardPatch } from "@lymi/core";
+import { CardInput, CardPatch, emptyFields, needsEnrichment } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
 import type { Db } from "../db";
-import { addCards, cardHistory, showCard, updateCard } from "./cards";
+import {
+  addCards,
+  archiveCard,
+  cardHistory,
+  requestEnrichment,
+  showCard,
+  updateCard,
+} from "./cards";
+import { ServiceError } from "./context";
 import { createDeck } from "./decks";
 import {
   CARDS_PER_CALL,
   chunked,
   type EnrichmentQueue,
-  emptyFields,
   enrichCards,
   enrichmentQueue,
   enrichmentWrite,
   failEnrichment,
-  needsEnrichment,
 } from "./enrichment";
+import { join } from "./members";
 import { updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
 
@@ -320,5 +327,126 @@ describe("enrichCards", () => {
     if (added?.status !== "added") throw new Error("not added");
     expect(added.card.enrichmentStatus).toBe("failed");
     expect((await showCard(ctx, added.card.id)).enrichmentStatus).toBe("failed");
+  });
+});
+
+describe("requestEnrichment", () => {
+  let db: Db;
+  let dispose: () => Promise<void>;
+
+  beforeAll(async () => {
+    ({ db, dispose } = await testDb());
+  }, 60_000);
+
+  afterAll(async () => {
+    await dispose();
+  });
+
+  /** A card with only a term, added without a queue, the way one added before enrichment existed is. */
+  async function bareCard(who: string) {
+    const ctx = await learner(db, who, "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const [added] = await addCards(ctx, [CardInput.parse({ deckId: deck.id, term: "sbrigarsi" })]);
+    if (added?.status !== "added") throw new Error("not added");
+    return { ctx, deck, card: added.card };
+  }
+
+  const code = async (run: Promise<unknown>) =>
+    run.then(
+      () => "no error",
+      (error: unknown) => (error instanceof ServiceError ? error.code : String(error)),
+    );
+
+  it("moves the card to working and hands the run over", async () => {
+    const { ctx, card } = await bareCard("ask-1");
+    const queue: EnrichmentQueue = { create: vi.fn().mockResolvedValue(undefined) };
+    const asked = await requestEnrichment(ctx, card.id, queue);
+    expect(asked.enrichmentStatus).toBe("working");
+    expect((await showCard(ctx, card.id)).enrichmentStatus).toBe("working");
+    expect(queue.create).toHaveBeenCalledWith(
+      expect.objectContaining({ params: { userId: ctx.userId, cardIds: [card.id] } }),
+    );
+  });
+
+  it("asking twice queues one run, because the outstanding one is the answer", async () => {
+    const { ctx, card } = await bareCard("ask-2");
+    const queue: EnrichmentQueue = { create: vi.fn().mockResolvedValue(undefined) };
+    await requestEnrichment(ctx, card.id, queue);
+    const again = await requestEnrichment(ctx, card.id, queue);
+    expect(again.enrichmentStatus).toBe("working");
+    expect(queue.create).toHaveBeenCalledTimes(1);
+  });
+
+  it("lifts a failed card back to working, so the quiet line's Try again works", async () => {
+    const { ctx, card } = await bareCard("ask-3");
+    await failEnrichment(db, ctx.userId, [card.id]);
+    const queue: EnrichmentQueue = { create: vi.fn().mockResolvedValue(undefined) };
+    expect((await requestEnrichment(ctx, card.id, queue)).enrichmentStatus).toBe("working");
+  });
+
+  it("refuses a card with no empty field rather than accepting it silently", async () => {
+    const { ctx, card } = await bareCard("ask-4");
+    await updateCard(ctx, card.id, CardPatch.parse(full));
+    expect(needsEnrichment(await showCard(ctx, card.id))).toBe(false);
+    const queue: EnrichmentQueue = { create: vi.fn() };
+    expect(await code(requestEnrichment(ctx, card.id, queue))).toBe("invalid");
+    expect(queue.create).not.toHaveBeenCalled();
+    expect((await showCard(ctx, card.id)).enrichmentStatus).toBeNull();
+  });
+
+  it("forbids a member of a shared deck who does not own the card", async () => {
+    const { ctx, deck, card } = await bareCard("ask-5");
+    const anna = await learner(db, "ask-5-anna", "Anna");
+    await join(anna, deck.id);
+    // Anna can read the card, which is what makes this forbidden rather than not found.
+    expect(emptyFields(await showCard(anna, card.id))).toContain("meaning");
+    const queue: EnrichmentQueue = { create: vi.fn() };
+    expect(await code(requestEnrichment(anna, card.id, queue))).toBe("forbidden");
+    expect(queue.create).not.toHaveBeenCalled();
+    expect((await showCard(ctx, card.id)).enrichmentStatus).toBeNull();
+  });
+
+  it("is not found for a stranger, who cannot see the card at all", async () => {
+    const { card } = await bareCard("ask-6");
+    const marko = await learner(db, "ask-6-marko", "Marko");
+    expect(await code(requestEnrichment(marko, card.id, { create: vi.fn() }))).toBe("not_found");
+  });
+
+  it("says the server cannot when no text vendor is configured", async () => {
+    const { ctx, card } = await bareCard("ask-7");
+    expect(await code(requestEnrichment(ctx, card.id, null))).toBe("unavailable");
+    expect((await showCard(ctx, card.id)).enrichmentStatus).toBeNull();
+  });
+
+  it("refuses an archived card, which no run would reach", async () => {
+    const { ctx, card } = await bareCard("ask-8");
+    await archiveCard(ctx, card.id);
+    expect(await code(requestEnrichment(ctx, card.id, { create: vi.fn() }))).toBe("invalid");
+  });
+
+  it("leaves the card failed when the queue refuses the run", async () => {
+    const { ctx, card } = await bareCard("ask-9");
+    const refusing: EnrichmentQueue = {
+      create: vi.fn().mockRejectedValue(new Error("no workflow")),
+    };
+    expect((await requestEnrichment(ctx, card.id, refusing)).enrichmentStatus).toBe("failed");
+    expect((await showCard(ctx, card.id)).enrichmentStatus).toBe("failed");
+  });
+
+  it("fills only what was still empty, so a hand-written meaning is kept", async () => {
+    const { ctx, card } = await bareCard("ask-10");
+    await updateCard(ctx, card.id, CardPatch.parse({ meaning: "mine", meaningSource: "manual" }));
+    await requestEnrichment(ctx, card.id, { create: async () => undefined });
+    await enrichCards(
+      { ...ctx, actor: "ai" },
+      [card.id],
+      fakeProvider({ cards: [{ id: card.id, ...full, meaning: "the model\u2019s" }] }),
+    );
+    const after = await showCard(ctx, card.id);
+    expect(after.meaning).toBe("mine");
+    expect(after.meaningSource).toBe("manual");
+    expect(after.example).toBe(full.example);
+    expect(after.exampleSource).toBe("ai");
+    expect(after.enrichmentStatus).toBeNull();
   });
 });

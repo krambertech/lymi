@@ -1,4 +1,5 @@
 export * from "./draw";
+export * from "./enrichment";
 export * from "./export";
 export * from "./feedback";
 export * from "./fsrs";

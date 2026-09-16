@@ -117,6 +117,16 @@ export function Cards() {
         <code>"failed"</code> if it gives up. Poll the card to watch it settle to <code>null</code>.
         The add itself always succeeds; enrichment never holds it up or fails it.
       </p>
+      <p>
+        Ask again for one card, whether its job failed or it was added before enrichment existed.
+        The rules are the add path's: only empty fields, only the card's owner, and a card with
+        nothing left to fill is refused with <code>400</code>.
+      </p>
+      <Code
+        lang="bash"
+        label="Terminal"
+        code={`curl -X POST "$LYMI_URL/api/cards/0mtoyiymrvqpdz02hlv/enrich" -H "x-api-key: $LYMI_KEY"`}
+      />
 
       <H2>The same term twice is not an error</H2>
       <p>

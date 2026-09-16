@@ -19,6 +19,9 @@ msgstr ", ще не відкрито"
 msgid "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
 msgstr "«{deckName}» повторюватиметься разом з іншими колодами серії й стоятиме поруч із ними в Бібліотеці."
 
+msgid "“{term}” has nothing left to fill in."
+msgstr "У «{term}» нічого доповнювати."
+
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
 msgstr "{0, plural, =0 {Картки потрапили в колоди, які в тебе вже були.} one {Вони в # новій колоді в Бібліотеці.} few {Вони в # нових колодах у Бібліотеці.} many {Вони в # нових колодах у Бібліотеці.} other {Вони в # нової колоди в Бібліотеці.}}"
@@ -1173,6 +1176,12 @@ msgstr "Не вдалося перевірити, чи є ще картки"
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Не вдалося перевірити цей пристрій. Онови сторінку, щоб спробувати ще раз."
 
+msgid "Couldn’t enrich “{term}”. Check your connection and try again."
+msgstr "Не вдалося доповнити «{term}». Перевір з’єднання й повтори спробу."
+
+msgid "Couldn’t enrich this card."
+msgstr "Не вдалося доповнити цю картку."
+
 msgid "Couldn’t load Activity"
 msgstr "Не вдалося завантажити Активність"
 
@@ -1440,6 +1449,9 @@ msgstr "Порожнє в першій картці"
 
 msgid "Empty in the first note"
 msgstr "Порожнє в першому записі"
+
+msgid "Enrich"
+msgstr "Доповнити"
 
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Доповнено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"

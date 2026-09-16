@@ -1,7 +1,13 @@
 import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { canSpeakTerm, deserializeState, type FsrsCard, type ReviewMode } from "@lymi/core";
+import {
+  canSpeakTerm,
+  deserializeState,
+  type FsrsCard,
+  needsEnrichment,
+  type ReviewMode,
+} from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
 import { clsx } from "clsx";
 import {
@@ -195,6 +201,8 @@ export interface WordProps {
   onMove?: ((deckId: string) => void) | undefined;
   /** Opens the section picker. Only a deck's owner, in a deck with sections, is offered it. */
   onMoveToSection?: (() => void) | undefined;
+  /** Asks the AI to fill what is still empty. Only the card's owner is offered it. */
+  onEnrich?: (() => void) | undefined;
   onPlayAudio?: (() => void) | undefined;
   /** The term heading's id, so a sheet or drawer holding the word can take its name. */
   titleId?: string | undefined;
@@ -375,6 +383,7 @@ export function WordView({
   decks,
   onMove,
   onMoveToSection,
+  onEnrich,
   onPlayAudio,
   titleId,
   onBusyChange,
@@ -487,6 +496,12 @@ export function WordView({
           }
         />
         <DropdownMenuContent aria-label={t`Card options`} align="end">
+          {onEnrich && needsEnrichment(card) && (
+            <DropdownMenuItem onClick={onEnrich} disabled={filling}>
+              <Sparkle />
+              <Trans>Enrich</Trans>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             onClick={() => setMoving(true)}
             disabled={!onMove || elsewhere.length === 0}
@@ -633,6 +648,19 @@ export function WordView({
           <ReadField label={t`Notes`}>
             <CardNotes source={card.notes} className="text-md leading-relaxed text-text" />
           </ReadField>
+        )}
+        {/* One quiet line, only here: a row that says "No meaning yet" is already saying enough. */}
+        {onEnrich && card.enrichmentStatus === "failed" && (
+          <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
+            <Trans>Couldn’t enrich this card.</Trans>
+            <button
+              type="button"
+              onClick={onEnrich}
+              className="-my-2.5 min-h-11 rounded-xs text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
+            >
+              <Trans>Try again</Trans>
+            </button>
+          </p>
         )}
       </div>
 

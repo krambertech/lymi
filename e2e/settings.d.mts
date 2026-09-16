@@ -35,13 +35,21 @@ export type E2EAccount =
   | "export"
   | "publisher"
   | "email-outbox"
-  | "email-non-operator";
+  | "email-non-operator"
+  | "password-account"
+  | "password-reset";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];
 export const e2eRetries: readonly number[];
 export const e2eRepeats: readonly number[];
 export function e2eEmail(
+  account: E2EAccount,
+  project: string,
+  retry: number,
+  repeat: number,
+): string;
+export function e2eInboxEmail(
   account: E2EAccount,
   project: string,
   retry: number,

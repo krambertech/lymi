@@ -43,6 +43,24 @@ export function signInWithGoogle(returnTo?: string | null) {
   });
 }
 
+/**
+ * Resume the MCP client's authorization after a sign-in that did not go through a sign-in
+ * endpoint, such as a confirmation link opened from an email. The signed query on this page
+ * is attached by the oauthProviderClient plugin; it expires ten minutes after the client sent
+ * the learner here, and a stale one leaves them signed in to ask the app again.
+ */
+export async function continueOAuthAuthorization(): Promise<boolean> {
+  try {
+    const res = await authClient.oauth2.continue({ selected: true });
+    const redirect = (res.data as { redirect_uri?: unknown } | null)?.redirect_uri;
+    if (res.error || typeof redirect !== "string" || !redirect) return false;
+    window.location.assign(redirect);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function signOut() {
   clearStoredLanguage();
   return authClient.signOut();

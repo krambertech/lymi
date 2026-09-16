@@ -56,7 +56,8 @@ export interface PersonaCard {
   archived?: boolean;
 }
 
-export const DEV_PASSWORD = "lymi-dev-password";
+/** Fixed and public. It still satisfies the real password rule, so nothing is exempt. */
+export const DEV_PASSWORD = "quiet-harbour-evening";
 
 export function personaEmail(id: string): string {
   return `${id}@lymi.local`;

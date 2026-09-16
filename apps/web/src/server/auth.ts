@@ -2,12 +2,14 @@ import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
 import type { GenericEndpointContext } from "@better-auth/core";
 import { mcp } from "@better-auth/mcp";
+import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
+import { audit } from "./audit";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
@@ -20,8 +22,15 @@ import {
   pictureFromIdToken,
 } from "./services/avatars";
 import { ServiceError } from "./services/context";
+import { accountEmailLanguage, sendAccountEmail } from "./services/email";
 import { joinLinkAdmits, joinThroughLink } from "./services/invitations";
 import { addPublishedDeck, publicationAdmits } from "./services/publications";
+import {
+  signedUpHere,
+  signUpCookieAttributes,
+  signUpCookieName,
+  signUpCookieValue,
+} from "./signup-cookie";
 
 /**
  * Better Auth must be created per request on Workers because D1 and KV bindings are
@@ -35,8 +44,19 @@ export function createAuth(
 ) {
   const allowed = allowedEmails(env);
   const dev = devToolsEnabled(env);
+  // A hook that has to call an endpoint of the instance it belongs to. Every hook runs long
+  // after this function returns, so the holder is always filled by the time one reads it.
+  let self: Auth | undefined;
+  /**
+   * Whether the account Google is about to claim had already proved its address. Read before
+   * the link, because linking sets `emailVerified` itself. `createAuth` is built per request,
+   * so this holds one request's answer.
+   */
+  let provenBeforeGoogle = false;
+  /** A persona has no inbox, so nothing Lymi sends should ever be addressed to one. */
+  const isPersona = (email: string) => dev && email.toLowerCase().endsWith(DEV_EMAIL_DOMAIN);
 
-  return betterAuth({
+  const auth = betterAuth({
     baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
@@ -111,8 +131,85 @@ export function createAuth(
         return next;
       },
     },
-    // Local development only: email + password so the app is usable before Google is set up.
-    emailAndPassword: { enabled: dev },
+    emailAndPassword: {
+      enabled: true,
+      minPasswordLength: MIN_PASSWORD_LENGTH,
+      // Verification is what makes a password account real, so nothing is granted before it.
+      // It also makes Better Auth answer a taken address exactly as it answers a free one.
+      requireEmailVerification: true,
+      revokeSessionsOnPasswordReset: true,
+      sendResetPassword: async ({ user, url }, request) => {
+        if (isPersona(user.email)) return;
+        const ctx = { db, userId: user.id, actor: "user" as const };
+        const language = await accountEmailLanguage(db, user.id, request);
+        // A Google account has no password, and must not gain one here. Every other account
+        // may set one, whether or not it has a password today. The token Better Auth just
+        // minted is simply never delivered when the link would be wrong.
+        const kind = (await hasGoogleAccount(db, user.id))
+          ? ("reset-google-account" as const)
+          : ("reset-password" as const);
+        await sendAccountEmail(ctx, env, {
+          kind,
+          to: user.email,
+          language,
+          url: kind === "reset-password" ? url : signInUrl(env),
+        });
+      },
+      // The address is taken, so the response says nothing. The address owner is told instead.
+      onExistingUserSignUp: async ({ user }, request) => {
+        if (isPersona(user.email)) return;
+        const ctx = { db, userId: user.id, actor: "user" as const };
+        const language = await accountEmailLanguage(db, user.id, request);
+        await sendAccountEmail(ctx, env, {
+          kind: (await hasGoogleAccount(db, user.id)) ? "google-account" : "existing-account",
+          to: user.email,
+          language,
+          url: signInUrl(env),
+        });
+      },
+    },
+    emailVerification: {
+      autoSignInAfterVerification: true,
+      expiresIn: VERIFICATION_EXPIRES_SECONDS,
+      /**
+       * Confirming proves the address, not the password on it. Anyone holding a join link can
+       * sign up with someone else's address and choose the password; the owner then confirms
+       * and inherits it. So a password the confirming browser did not set is retired here,
+       * before the session exists, and its owner is mailed a link to set their own. Issue 251.
+       */
+      afterEmailVerification: async (user, request) => {
+        if (await signedUpHere(env.PRODUCT_URL, env.BETTER_AUTH_SECRET, user.id, request?.headers))
+          return;
+        if (!(await hasCredentialAccount(db, user.id))) return;
+        await dropCredentialAccount(db, user.id);
+        await clearClaimedName(db, user);
+        await self?.api.requestPasswordReset({
+          body: {
+            email: user.email,
+            redirectTo: `/reset-password?${new URLSearchParams({ email: user.email })}`,
+          },
+        });
+      },
+      sendVerificationEmail: async ({ user, url }, request) => {
+        if (isPersona(user.email)) return;
+        const ctx = { db, userId: user.id, actor: "user" as const };
+        await sendAccountEmail(ctx, env, {
+          kind: "verify-email",
+          to: user.email,
+          language: await accountEmailLanguage(db, user.id, request),
+          url,
+        });
+      },
+    },
+    account: {
+      accountLinking: {
+        // Google owns the address it returns, so it may claim a user that signed up with a
+        // password and never confirmed. The credential account is dropped on the way in, so
+        // an unconfirmed sign-up on someone else's address grants nothing. Issue 251.
+        trustedProviders: ["google"],
+        requireLocalEmailVerified: false,
+      },
+    },
     // Registered only when configured: an empty pair makes Better Auth warn on every request,
     // which buries anything else in a local server's log.
     socialProviders:
@@ -142,12 +239,36 @@ export function createAuth(
             const email = user.email.toLowerCase();
             // Persona accounts need no entry in .dev.vars; they cannot exist outside a local D1.
             const persona = dev && email.endsWith(DEV_EMAIL_DOMAIN);
-            if (allowed.has(email) || persona) return { data: user };
+            // A persona has no inbox, so it is born confirmed and signs in with its fixed password.
+            if (persona) return { data: { ...user, emailVerified: true } };
+            if (allowed.has(email)) return { data: user };
             const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
             if (admission && (await admits(db, admission))) return { data: user };
             throw new APIError("FORBIDDEN", {
               message: "This is a private app. Your account is not on the list.",
             });
+          },
+          // Remember the browser that signed up, so confirming from it keeps its password.
+          after: async (user, context) => {
+            if (user.emailVerified) return;
+            context?.setCookie(
+              signUpCookieName(env.PRODUCT_URL),
+              await signUpCookieValue(env.BETTER_AUTH_SECRET, user.id),
+              signUpCookieAttributes(env.PRODUCT_URL),
+            );
+          },
+        },
+      },
+      account: {
+        create: {
+          // Read the account's state before Google's link changes it.
+          before: async (account) => {
+            if (account.providerId !== "google") return;
+            const [row] = await db
+              .select({ emailVerified: schema.user.emailVerified })
+              .from(schema.user)
+              .where(eq(schema.user.id, account.userId));
+            provenBeforeGoogle = Boolean(row?.emailVerified);
           },
         },
       },
@@ -157,6 +278,10 @@ export function createAuth(
           // learner in; the join or add page then says why.
           after: async (session, context) => {
             if (isGoogleCallback(context)) {
+              // An unproved password was set by whoever typed the address first, who need not
+              // be its owner, so Google's proof retires it. A password the owner had already
+              // confirmed stays: taking it would leave them with one way in and no way back.
+              if (!provenBeforeGoogle) await retireUnprovedPassword(db, session.userId);
               await syncGoogleAvatar(env, db, session.userId, waitUntil);
             }
             const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
@@ -179,6 +304,66 @@ export function createAuth(
     advanced: {
       cookiePrefix: cookiePrefix(env.PRODUCT_URL),
     },
+  });
+
+  self = auth;
+  return auth;
+}
+
+/** A confirmation link outlives the session that asked for it, so a day rather than an hour. */
+const VERIFICATION_EXPIRES_SECONDS = 60 * 60 * 24;
+
+function signInUrl(env: Bindings): string {
+  return new URL("/login", env.PRODUCT_URL).toString();
+}
+
+/** Whether this account can sign in with a password at all. */
+async function hasCredentialAccount(db: Db, userId: string): Promise<boolean> {
+  const [row] = await db
+    .select({ id: schema.account.id })
+    .from(schema.account)
+    .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "credential")));
+  return Boolean(row);
+}
+
+/**
+ * Forget the name and photo whoever typed the address chose. They were never the owner's, and
+ * the owner's own name arrives with their next sign-in or from Settings.
+ */
+async function clearClaimedName(db: Db, user: { id: string; email: string }): Promise<void> {
+  await db
+    .update(schema.user)
+    .set({ name: user.email.split("@")[0] ?? user.email, image: null })
+    .where(eq(schema.user.id, user.id));
+}
+
+/** Whether Google owns this account, which is what decides a password may never be set on it. */
+async function hasGoogleAccount(db: Db, userId: string): Promise<boolean> {
+  const [row] = await db
+    .select({ id: schema.account.id })
+    .from(schema.account)
+    .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "google")));
+  return Boolean(row);
+}
+
+/** Take the password off an account, so only the provider that just proved the address opens it. */
+async function dropCredentialAccount(db: Db, userId: string): Promise<void> {
+  await db
+    .delete(schema.account)
+    .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "credential")));
+}
+
+/** Drop an unproved password and leave the reason in the Activity screen. */
+async function retireUnprovedPassword(db: Db, userId: string): Promise<void> {
+  if (!(await hasCredentialAccount(db, userId))) return;
+  await dropCredentialAccount(db, userId);
+  await audit(db, {
+    userId,
+    actor: "user",
+    action: "retire_unproved_password",
+    entity: "account",
+    entityId: userId,
+    payload: { reason: "google_proved_the_address" },
   });
 }
 

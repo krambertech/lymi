@@ -559,6 +559,9 @@ msgstr "A note to yourself about what is in here."
 msgid "A notification on this device when cards are due."
 msgstr "A notification on this device when cards are due."
 
+msgid "A reset link works once, within an hour."
+msgstr "A reset link works once, within an hour."
+
 msgid "A series is reviewed together, and its decks show in this order."
 msgstr "A series is reviewed together, and its decks show in this order."
 
@@ -815,6 +818,9 @@ msgstr "Assistants that signed in to Lymi, such as Claude or ChatGPT."
 msgid "At {savedTime}, {zone} time, only on days with cards due."
 msgstr "At {savedTime}, {zone} time, only on days with cards due."
 
+msgid "At least {MIN_PASSWORD_LENGTH} characters."
+msgstr "At least {MIN_PASSWORD_LENGTH} characters."
+
 msgid "Back"
 msgstr "Back"
 
@@ -823,6 +829,9 @@ msgstr "back later today"
 
 msgid "back the same day"
 msgstr "back the same day"
+
+msgid "Back to sign in"
+msgstr "Back to sign in"
 
 msgid "Back to streak"
 msgstr "Back to streak"
@@ -924,6 +933,15 @@ msgstr "Change photo"
 msgid "Changes discarded"
 msgstr "Changes discarded"
 
+msgid "Check {address}. If it can have a Lymi account, a link is on the way."
+msgstr "Check {address}. If it can have a Lymi account, a link is on the way."
+
+msgid "Check {address}. If it has a Lymi password, a link is on the way. It works for one hour."
+msgstr "Check {address}. If it has a Lymi password, a link is on the way. It works for one hour."
+
+msgid "Check {address}. If it still needs confirming, a link is on the way."
+msgstr "Check {address}. If it still needs confirming, a link is on the way."
+
 msgid "Check each kind of card first. {unchecked} still to check."
 msgstr "Check each kind of card first. {unchecked} still to check."
 
@@ -944,6 +962,9 @@ msgstr "Check those too"
 
 msgid "Check your connection and try again."
 msgstr "Check your connection and try again."
+
+msgid "Check your inbox"
+msgstr "Check your inbox"
 
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
@@ -1036,6 +1057,15 @@ msgstr "Come back later, or add something new."
 msgid "Coming soon"
 msgstr "Coming soon"
 
+msgid "Confirm your address to finish creating your Lymi account:"
+msgstr "Confirm your address to finish creating your Lymi account:"
+
+msgid "Confirm your email address"
+msgstr "Confirm your email address"
+
+msgid "Confirm your email address first."
+msgstr "Confirm your email address first."
+
 msgid "Connect {appName}"
 msgstr "Connect {appName}"
 
@@ -1056,6 +1086,9 @@ msgstr "Continue to {appName}"
 
 msgid "Continue with Google"
 msgstr "Continue with Google"
+
+msgid "Continue with Google here:"
+msgstr "Continue with Google here:"
 
 msgid "Copied"
 msgstr "Copied"
@@ -1141,6 +1174,12 @@ msgstr "Create a deck first. This card goes in it."
 msgid "Create a key in Settings"
 msgstr "Create a key in Settings"
 
+msgid "Create account"
+msgstr "Create account"
+
+msgid "Create an account"
+msgstr "Create an account"
+
 msgid "Create and move"
 msgstr "Create and move"
 
@@ -1161,6 +1200,9 @@ msgstr "Create section"
 
 msgid "Create series"
 msgstr "Create series"
+
+msgid "Create your Lymi account"
+msgstr "Create your Lymi account"
 
 msgid "Current picture"
 msgstr "Current picture"
@@ -1237,6 +1279,12 @@ msgstr "Docs"
 msgid "Does this card look right?"
 msgstr "Does this card look right?"
 
+msgid "Don’t use “Lymi” in your password."
+msgstr "Don’t use “Lymi” in your password."
+
+msgid "Don’t use your email address in your password."
+msgstr "Don’t use your email address in your password."
+
 msgid "Done"
 msgstr "Done"
 
@@ -1298,6 +1346,9 @@ msgstr "Edit series"
 msgid "Edited {list}"
 msgstr "Edited {list}"
 
+msgid "Email"
+msgstr "Email"
+
 msgid "Empty in the first card"
 msgstr "Empty in the first card"
 
@@ -1309,6 +1360,9 @@ msgstr "Enriched {list}"
 
 msgid "Enter after each"
 msgstr "Enter after each"
+
+msgid "Enter an email address, like you@example.com."
+msgstr "Enter an email address, like you@example.com."
 
 msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
@@ -1370,6 +1424,10 @@ msgstr "Exporting from {app}"
 msgid "Exports"
 msgstr "Exports"
 
+msgctxt "Password strength"
+msgid "Fair"
+msgstr "Fair"
+
 msgid "Fewer fields"
 msgstr "Fewer fields"
 
@@ -1397,6 +1455,9 @@ msgstr "Forgot recently"
 
 msgid "Forgot today"
 msgstr "Forgot today"
+
+msgid "Forgot your password?"
+msgstr "Forgot your password?"
 
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Forgot, Hard, Good, Easy"
@@ -1468,6 +1529,9 @@ msgstr "Head back to the app. You can close this tab."
 
 msgid "Hello,"
 msgstr "Hello,"
+
+msgid "Hide password"
+msgstr "Hide password"
 
 msgid "History"
 msgstr "History"
@@ -1733,6 +1797,9 @@ msgstr "Lymi file"
 msgid "Lymi home"
 msgstr "Lymi home"
 
+msgid "Lymi is in a private beta."
+msgstr "Lymi is in a private beta."
+
 msgid "Main"
 msgstr "Main"
 
@@ -1835,9 +1902,6 @@ msgstr "Name"
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Name the key, so you know which one to revoke later."
 
-msgid "Need an invitation?"
-msgstr "Need an invitation?"
-
 msgid "never used"
 msgstr "never used"
 
@@ -1866,11 +1930,17 @@ msgstr "New deck"
 msgid "New key"
 msgstr "New key"
 
+msgid "New password"
+msgstr "New password"
+
 msgid "New section"
 msgstr "New section"
 
 msgid "New series"
 msgstr "New series"
+
+msgid "New to Lymi?"
+msgstr "New to Lymi?"
 
 msgid "Next"
 msgstr "Next"
@@ -2105,6 +2175,10 @@ msgstr "Options for {sectionName}"
 msgid "Options for {seriesName}"
 msgstr "Options for {seriesName}"
 
+msgctxt "Between two ways to sign in"
+msgid "or"
+msgstr "or"
+
 msgid "Other ways to add cards"
 msgstr "Other ways to add cards"
 
@@ -2113,6 +2187,9 @@ msgstr "own review"
 
 msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
 msgstr "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
+
+msgid "Password"
+msgstr "Password"
 
 msgid "past reviews"
 msgstr "past reviews"
@@ -2311,8 +2388,14 @@ msgstr "Replace the picture"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
-msgid "Request an invitation"
-msgstr "Request an invitation"
+msgid "Request access"
+msgstr "Request access"
+
+msgid "Reset your Lymi password"
+msgstr "Reset your Lymi password"
+
+msgid "Reset your password"
+msgstr "Reset your password"
 
 msgid "Restore"
 msgstr "Restore"
@@ -2397,6 +2480,9 @@ msgstr "Same as the deck"
 
 msgid "Save"
 msgstr "Save"
+
+msgid "Save password"
+msgstr "Save password"
 
 msgid "Save photo"
 msgstr "Save photo"
@@ -2496,8 +2582,26 @@ msgstr "Send a daily reminder"
 msgid "Send a lesson from Claude or ChatGPT"
 msgstr "Send a lesson from Claude or ChatGPT"
 
+msgid "Send a new link"
+msgstr "Send a new link"
+
+msgid "Send it again"
+msgstr "Send it again"
+
+msgid "Send the link"
+msgstr "Send the link"
+
+msgid "Sent again"
+msgstr "Sent again"
+
 msgid "Series"
 msgstr "Series"
+
+msgid "Set a new password"
+msgstr "Set a new password"
+
+msgid "Set a new password for your Lymi account:"
+msgstr "Set a new password for your Lymi account:"
 
 msgid "Settings"
 msgstr "Settings"
@@ -2523,6 +2627,9 @@ msgstr "Show all"
 msgid "Show another"
 msgstr "Show another"
 
+msgid "Show password"
+msgstr "Show password"
+
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
 
@@ -2538,11 +2645,17 @@ msgstr "Sign in before choosing what it may do."
 msgid "Sign in here and choose that file, without unzipping it."
 msgstr "Sign in here and choose that file, without unzipping it."
 
+msgid "Sign in here. You can ask for a new password on that page:"
+msgstr "Sign in here. You can ask for a new password on that page:"
+
 msgid "Sign in required"
 msgstr "Sign in required"
 
 msgid "Sign in to Lymi"
 msgstr "Sign in to Lymi"
+
+msgid "Sign in with your new password."
+msgstr "Sign in with your new password."
 
 msgid "Sign out"
 msgstr "Sign out"
@@ -2550,17 +2663,26 @@ msgstr "Sign out"
 msgid "Sign out and lose them"
 msgstr "Sign out and lose them"
 
+msgid "Sign-in didn’t finish. Try again, or request access."
+msgstr "Sign-in didn’t finish. Try again, or request access."
+
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
-
-msgid "Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation."
-msgstr "Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation."
 
 msgid "So you know which key to revoke later."
 msgstr "So you know which key to revoke later."
 
 msgid "Some grades haven’t synced"
 msgstr "Some grades haven’t synced"
+
+msgid "Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset."
+msgstr "Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset."
+
+msgid "Someone tried to create a Lymi account with this address and a password. This address signs in with Google, so nothing changed."
+msgstr "Someone tried to create a Lymi account with this address and a password. This address signs in with Google, so nothing changed."
+
+msgid "Someone tried to create a Lymi account with this address. You already have one, so nothing changed."
+msgstr "Someone tried to create a Lymi account with this address. You already have one, so nothing changed."
 
 msgid "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
 msgstr "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
@@ -2622,8 +2744,8 @@ msgctxt "daily goal"
 msgid "Steady"
 msgstr "Steady"
 
-msgid "Still need an invitation?"
-msgstr "Still need an invitation?"
+msgid "Still need access?"
+msgstr "Still need access?"
 
 msgid "Stop selecting"
 msgstr "Stop selecting"
@@ -2634,6 +2756,10 @@ msgstr "Stopped"
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
+
+msgctxt "Password strength"
+msgid "Strong"
+msgstr "Strong"
 
 msgid "Support"
 msgstr "Support"
@@ -2680,6 +2806,9 @@ msgstr "Test email from Lymi"
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
 
+msgid "That email and password don’t match."
+msgstr "That email and password don’t match."
+
 msgid "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
 msgstr "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
 
@@ -2695,6 +2824,18 @@ msgstr "That image is too small. Choose one at least 16 pixels wide."
 #. placeholder {0}: item.fileName
 msgid "That isn’t the same file. Choose {0}."
 msgstr "That isn’t the same file. Choose {0}."
+
+msgid "That link no longer works. Sign in to get a new one."
+msgstr "That link no longer works. Sign in to get a new one."
+
+msgid "That password is too easy to guess. Try another."
+msgstr "That password is too easy to guess. Try another."
+
+msgid "That password is too long."
+msgstr "That password is too long."
+
+msgid "That reset link no longer works. Ask for a new one."
+msgstr "That reset link no longer works. Ask for a new one."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
@@ -2732,6 +2873,12 @@ msgstr "The language this deck’s cards are in. It starts every new card, and p
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 
+msgid "The link works for 24 hours. If you didn’t create a Lymi account, ignore this email."
+msgstr "The link works for 24 hours. If you didn’t create a Lymi account, ignore this email."
+
+msgid "The link works for one hour. If you didn’t ask for a new password, ignore this email. Nothing has changed."
+msgstr "The link works for one hour. If you didn’t ask for a new password, ignore this email. Nothing has changed."
+
 msgid "the meaning"
 msgstr "the meaning"
 
@@ -2764,6 +2911,9 @@ msgstr "Theme"
 
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
+
+msgid "This account hasn’t been invited. Try another, or request access."
+msgstr "This account hasn’t been invited. Try another, or request access."
 
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
@@ -2806,9 +2956,6 @@ msgstr "This file is larger than 1 GB. Export one deck at a time."
 
 msgid "This file was deleted a day after it was written. Export again to get a new one."
 msgstr "This file was deleted a day after it was written. Export again to get a new one."
-
-msgid "This Google account has not been invited. Request an invitation, or try another account."
-msgstr "This Google account has not been invited. Request an invitation, or try another account."
 
 msgid "This import is archived"
 msgstr "This import is archived"
@@ -2870,6 +3017,12 @@ msgstr "Today’s goal"
 msgid "Tomorrow"
 msgstr "Tomorrow"
 
+msgid "Too many attempts. Try again in {minutes, plural, one {# minute} other {# minutes}}."
+msgstr "Too many attempts. Try again in {minutes, plural, one {# minute} other {# minutes}}."
+
+msgid "Too many attempts. Try again later."
+msgstr "Too many attempts. Try again later."
+
 msgid "Took “{deckName}” out of its series"
 msgstr "Took “{deckName}” out of its series"
 
@@ -2888,9 +3041,6 @@ msgstr "Try again"
 
 msgid "Try again on a steadier connection, and keep Lymi open until the upload is done."
 msgstr "Try again on a steadier connection, and keep Lymi open until the upload is done."
-
-msgid "Try another Google account"
-msgstr "Try another Google account"
 
 msgid "Turn off link"
 msgstr "Turn off link"
@@ -2934,14 +3084,20 @@ msgstr "Use a language tag like ca, pt-BR or zh-Hant."
 msgid "Use a public http or https link to a picture."
 msgstr "Use a public http or https link to a picture."
 
+msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
+msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
+
 msgid "Use link"
 msgstr "Use link"
+
+msgid "Use the account that received your invitation."
+msgstr "Use the account that received your invitation."
 
 msgid "Use the deck’s"
 msgstr "Use the deck’s"
 
-msgid "Use the Google account that received your invitation."
-msgstr "Use the Google account that received your invitation."
+msgid "Use the email address that received your invitation."
+msgstr "Use the email address that received your invitation."
 
 msgid "Use these fields"
 msgstr "Use these fields"
@@ -2969,6 +3125,16 @@ msgstr "used just now"
 
 msgid "Waiting for you"
 msgstr "Waiting for you"
+
+msgid "We signed out your other devices."
+msgstr "We signed out your other devices."
+
+msgid "We’ll email you a link to set a new one."
+msgstr "We’ll email you a link to set a new one."
+
+msgctxt "Password strength"
+msgid "Weak"
+msgstr "Weak"
 
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
 msgid "week of {0}"
@@ -3019,6 +3185,9 @@ msgstr "you"
 msgid "You"
 msgstr "You"
 
+msgid "You already have a Lymi account"
+msgstr "You already have a Lymi account"
+
 msgid "You are already in this deck."
 msgstr "You are already in this deck."
 
@@ -3061,6 +3230,9 @@ msgstr "You were removed from this deck, so you cannot add it again. Your review
 msgid "You wrote this"
 msgstr "You wrote this"
 
+msgid "You’ll sign in with this from now on."
+msgstr "You’ll sign in with this from now on."
+
 msgid "Your deck"
 msgstr "Your deck"
 
@@ -3070,8 +3242,14 @@ msgstr "Your Google photo is back"
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
 
+msgid "Your Lymi account signs in with Google"
+msgstr "Your Lymi account signs in with Google"
+
 msgid "Your own schedule and review history come with it. The deck stays as it is."
 msgstr "Your own schedule and review history come with it. The deck stays as it is."
+
+msgid "Your password is set"
+msgstr "Your password is set"
 
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Your photo was changed somewhere else. Check it, then try again."

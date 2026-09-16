@@ -1,17 +1,26 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { passwordProblem } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { safeProductReturnPath } from "../../shared/origins";
 import { identifyApp } from "../components/app-mark";
 import { Button } from "../components/button";
 import { Input } from "../components/ui/input";
-import { authClient, followOAuthRedirect, signInWithGoogle } from "../lib/auth";
+import {
+  authClient,
+  continueOAuthAuthorization,
+  followOAuthRedirect,
+  signInWithGoogle,
+} from "../lib/auth";
 import { useDocumentTitle } from "../lib/document-title";
+import { passwordMessage } from "../lib/password-copy";
 import { clearPersistedLearnerState } from "../lib/persisted";
+import { minutesUntilRetry, tooManyAttempts } from "../lib/retry-after";
+import type { CredentialValues, LoginMode } from "../views/login-view";
 import { LoginView } from "../views/login-view";
 
 /**
@@ -24,6 +33,12 @@ const Search = z.object({
   scope: z.string().optional(),
   error: z.string().optional(),
   returnTo: z.string().optional(),
+  /** Set on the link a confirmation email carries, so this page knows what just happened. */
+  verify: z.coerce.string().pipe(z.literal("1")).optional(),
+  /** Which form the panel opens on, so another screen can send a learner straight to it. */
+  mode: z.enum(["sign-in", "sign-up", "forgot"]).optional(),
+  /** Carried from a spent reset link, so the learner does not retype what they just used. */
+  email: z.string().max(254).optional(),
   /** Keeps the local email/password helper out of the real sign-in experience. */
   dev: z.coerce.string().pipe(z.literal("1")).optional(),
 });
@@ -55,6 +70,8 @@ const RETRYABLE = new Set([
   "unable_to_create_session",
   "unable_to_get_user_info",
 ]);
+/** What Better Auth redirects a spent or forged confirmation link back with. */
+const STALE_LINK = new Set(["TOKEN_EXPIRED", "INVALID_TOKEN", "USER_NOT_FOUND"]);
 
 interface SignInIssue {
   message: MessageDescriptor;
@@ -63,9 +80,15 @@ interface SignInIssue {
 
 function issueFor(code: string | undefined): SignInIssue | null {
   if (!code) return null;
+  if (STALE_LINK.has(code)) {
+    return {
+      message: msg`That link no longer works. Sign in to get a new one.`,
+      blocked: false,
+    };
+  }
   if (BLOCKED.has(code) || /not.on.the.list/i.test(code)) {
     return {
-      message: msg`This Google account has not been invited. Request an invitation, or try another account.`,
+      message: msg`This account hasn’t been invited. Try another, or request access.`,
       blocked: true,
     };
   }
@@ -75,17 +98,53 @@ function issueFor(code: string | undefined): SignInIssue | null {
   // An unknown code is more often a blocked account than a blip, so do not promise a retry
   // will work.
   return {
-    message: msg`Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation.`,
+    message: msg`Sign-in didn’t finish. Try again, or request access.`,
     blocked: false,
   };
 }
 
+/**
+ * What the confirmation link should bring the learner back to. The signed OAuth query rides
+ * along so the MCP client's authorization can resume; a failure already on the URL does not,
+ * because it belongs to the attempt the learner has just moved past.
+ */
+function verificationCallback(search: string): string {
+  const params = new URLSearchParams(search);
+  params.delete("error");
+  params.set("verify", "1");
+  return `/login?${params.toString()}`;
+}
+
+type Notice = { title: ReactNode; body: ReactNode; actions?: ReactNode };
+
 function Login() {
   const { t, i18n } = useLingui();
-  const { client_id: clientId, error, dev, returnTo: rawReturnTo } = Route.useSearch();
+  const queryClient = useQueryClient();
+  const search = Route.useSearch();
+  const {
+    client_id: clientId,
+    error,
+    dev,
+    verify,
+    mode: openOn,
+    email: known,
+    returnTo: rawReturnTo,
+  } = search;
   const returnTo = safeProductReturnPath(rawReturnTo);
+  const [mode, setMode] = useState<LoginMode>(openOn ?? "sign-in");
+  const [email, setEmail] = useState(known ?? "");
+  const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [failed, setFailed] = useState<string | null>(null);
+  /** A Google failure belongs beside the Google button, not with the form. */
+  const [googleFailed, setGoogleFailed] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<Notice | null>(null);
+  const [resending, setResending] = useState(false);
+  /** The learner already has an account, so the notice must not talk about creating one. */
+  const [needsConfirming, setNeedsConfirming] = useState(false);
   const issue = issueFor(error);
   useDocumentTitle(t`Sign in`);
 
@@ -103,25 +162,239 @@ function Login() {
 
   const app = clientId ? identifyApp(clientId, claimed.data) : undefined;
 
+  /**
+   * A confirmed address already holds a session by the time the link lands here, so this
+   * page's only job is to send the learner on: back to an MCP client's authorization, or to
+   * where they started. A stale signed query leaves them signed in with the panel to read.
+   */
+  const resumed = useRef(false);
+  useEffect(() => {
+    if (verify !== "1" || error || resumed.current) return;
+    resumed.current = true;
+    void (async () => {
+      const session = await authClient.getSession();
+      if (!session.data) return;
+      clearPersistedLearnerState();
+      queryClient.clear();
+      if (clientId && (await continueOAuthAuthorization())) return;
+      window.location.assign(returnTo);
+    })();
+  }, [verify, error, clientId, queryClient, returnTo]);
+
+  function clearMessages() {
+    setFailed(null);
+    setGoogleFailed(null);
+    setEmailError(null);
+    setPasswordError(null);
+  }
+
+  function switchTo(next: LoginMode) {
+    setMode(next);
+    setNotice(null);
+    setNeedsConfirming(false);
+    clearMessages();
+  }
+
+  /** Every learner-typed failure a credential call can return, as one sentence. */
+  function messageFor(
+    failure: { code?: string | undefined; status?: number | undefined } | null,
+  ): string {
+    const code = failure?.code;
+    if (failure?.status === 429) return i18n._(tooManyAttempts(minutesUntilRetry(failure)));
+    switch (code) {
+      case "INVALID_EMAIL_OR_PASSWORD":
+        return t`That email and password don’t match.`;
+      case "EMAIL_NOT_VERIFIED":
+        return t`Confirm your email address first.`;
+      case "PASSWORD_TOO_SHORT":
+        return i18n._(passwordMessage("too-short"));
+      case "PASSWORD_TOO_LONG":
+        return i18n._(passwordMessage("too-long"));
+      case "PASSWORD_TOO_GUESSABLE":
+        return i18n._(passwordMessage("too-common"));
+      case "INVALID_EMAIL":
+        return t`Enter an email address, like you@example.com.`;
+      default:
+        return t`Couldn’t reach Lymi. Check your connection and try again.`;
+    }
+  }
+
+  function checkInbox(address: string, resend: () => void | Promise<void>, again = false): Notice {
+    return {
+      title: again ? <Trans>Sent again</Trans> : <Trans>Check your inbox</Trans>,
+      body: needsConfirming ? (
+        <Trans>Check {address}. If it still needs confirming, a link is on the way.</Trans>
+      ) : (
+        <Trans>Check {address}. If it can have a Lymi account, a link is on the way.</Trans>
+      ),
+      actions: (
+        <>
+          <Button size="sm" variant="secondary" loading={resending} onClick={() => void resend()}>
+            <Trans>Send it again</Trans>
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => switchTo("sign-in")}>
+            <Trans>Back to sign in</Trans>
+          </Button>
+        </>
+      ),
+    };
+  }
+
+  async function signUp(values: CredentialValues) {
+    const res = await authClient.signUp.email({
+      email: values.email,
+      password: values.password,
+      name: values.email.split("@")[0] ?? values.email,
+      callbackURL: verificationCallback(window.location.search),
+    });
+    if (res.error) {
+      const message = messageFor(res.error);
+      if (res.error.code?.startsWith("PASSWORD_")) setPasswordError(message);
+      else if (res.error.code === "INVALID_EMAIL") setEmailError(message);
+      else setFailed(message);
+      return;
+    }
+    setNeedsConfirming(false);
+    setNotice(checkInbox(values.email, () => resendVerification(values)));
+  }
+
+  async function resendVerification(values: CredentialValues, first = false) {
+    setResending(!first);
+    try {
+      const res = await authClient.sendVerificationEmail({
+        email: values.email,
+        callbackURL: verificationCallback(window.location.search),
+      });
+      if (res.error) {
+        setNotice(null);
+        setFailed(messageFor(res.error));
+        return;
+      }
+    } catch {
+      setNotice(null);
+      setFailed(t`Couldn’t reach Lymi. Check your connection and try again.`);
+      return;
+    } finally {
+      setResending(false);
+    }
+    clearMessages();
+    setNotice(checkInbox(values.email, () => resendVerification(values), !first));
+  }
+
+  async function signIn(values: CredentialValues) {
+    clearPersistedLearnerState();
+    const res = await authClient.signIn.email({
+      email: values.email,
+      password: values.password,
+    });
+    if (res.error) {
+      if (res.error.code === "EMAIL_NOT_VERIFIED") {
+        setNeedsConfirming(true);
+        await resendVerification(values, true);
+        return;
+      }
+      setFailed(messageFor(res.error));
+      return;
+    }
+    queryClient.clear();
+    if (followOAuthRedirect(res.data)) return;
+    window.location.assign(returnTo);
+  }
+
+  async function forgot(values: CredentialValues) {
+    const res = await authClient.requestPasswordReset({
+      email: values.email,
+      // The address rides along so the page can hand it to a password manager.
+      redirectTo: `/reset-password?${new URLSearchParams({ email: values.email })}`,
+    });
+    if (res.error) {
+      setFailed(messageFor(res.error));
+      return;
+    }
+    const address = values.email;
+    setNotice({
+      title: <Trans>Check your inbox</Trans>,
+      body: (
+        <Trans>
+          Check {address}. If it has a Lymi password, a link is on the way. It works for one hour.
+        </Trans>
+      ),
+      actions: (
+        <Button size="sm" variant="ghost" onClick={() => switchTo("sign-in")}>
+          <Trans>Back to sign in</Trans>
+        </Button>
+      ),
+    });
+  }
+
+  async function submit(values: CredentialValues) {
+    clearMessages();
+    const address = values.email.trim();
+    if (!address.includes("@")) {
+      setEmailError(t`Enter an email address, like you@example.com.`);
+      return;
+    }
+    // Signing in checks nothing: an old password that no longer meets the rule must still
+    // reach the reset that replaces it, rather than being refused by its own door.
+    if (mode === "sign-up") {
+      const problem = passwordProblem(values.password, address);
+      if (problem) {
+        setPasswordError(i18n._(passwordMessage(problem)));
+        return;
+      }
+    }
+    setSubmitting(true);
+    try {
+      const credentials = { email: address, password: values.password };
+      if (mode === "sign-up") await signUp(credentials);
+      else if (mode === "forgot") await forgot(credentials);
+      else await signIn(credentials);
+    } catch {
+      setFailed(t`Couldn’t reach Lymi. Check your connection and try again.`);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <LoginView
       app={app}
+      mode={mode}
+      onModeChange={switchTo}
       busy={busy}
-      // `failed` is this attempt; `error` on the URL is a callback that came back refused.
-      error={failed ?? (issue ? i18n._(issue.message) : undefined)}
-      blocked={!failed && issue?.blocked}
+      submitting={submitting}
+      email={email}
+      onEmailChange={(value) => {
+        setEmail(value);
+        setEmailError(null);
+      }}
+      password={password}
+      onPasswordChange={(value) => {
+        setPassword(value);
+        setPasswordError(null);
+      }}
+      onSubmit={submit}
+      emailError={emailError}
+      passwordError={passwordError}
+      notice={notice ?? undefined}
+      // The door's own failure: a Google attempt, or a callback that came back refused.
+      error={googleFailed ?? (issue ? i18n._(issue.message) : undefined)}
+      formError={failed ?? undefined}
+      blocked={!googleFailed && issue?.blocked}
       onGoogle={async () => {
         setBusy(true);
-        setFailed(null);
+        clearMessages();
         // The account coming back may not be the one whose cache is on this device.
         clearPersistedLearnerState();
         try {
           // better-auth returns the failure rather than throwing, so a silent `await` here
           // left the button spinning and then stopping with nothing said.
           const res = await signInWithGoogle(returnTo);
-          if (res.error) setFailed(t`Sign-in didn’t finish. Try again.`);
+          if (res.error) setGoogleFailed(t`Sign-in didn’t finish. Try again.`);
         } catch {
-          setFailed(t`Couldn’t reach the sign-in service. Check your connection and try again.`);
+          setGoogleFailed(
+            t`Couldn’t reach the sign-in service. Check your connection and try again.`,
+          );
         } finally {
           setBusy(false);
         }
@@ -137,17 +410,20 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("dev@lymi.local");
-  const [password, setPassword] = useState("lymi-dev-password");
+  const [password, setPassword] = useState("quiet-harbour-evening");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function go(mode: "in" | "up") {
     setBusy(true);
     setError(null);
-    const res =
-      mode === "up"
-        ? await authClient.signUp.email({ email, password, name: "Dev" })
-        : await authClient.signIn.email({ email, password });
+    // Creating issues no session while verification is required, so it is followed by a
+    // sign-in. A local address is created already confirmed, so that sign-in succeeds; any
+    // other address has to open the link in the outbox, which lands on `returnTo`.
+    if (mode === "up") {
+      await authClient.signUp.email({ email, password, name: "Dev", callbackURL: returnTo });
+    }
+    const res = await authClient.signIn.email({ email, password });
     setBusy(false);
     if (res.error) {
       setError(res.error.message ?? "Sign in failed");
@@ -173,7 +449,9 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
 
   return (
     <form
-      className="enter-fade edge mt-10 grid w-full max-w-72 gap-2 rounded-md bg-plate p-4 text-left"
+      // Named so a browser test can tell these boxes from the real form's.
+      aria-label="Dev sign-in"
+      className="enter-fade edge mt-10 grid w-full max-w-72 gap-2 rounded-md bg-plate p-4 text-start"
       onSubmit={(e) => {
         e.preventDefault();
         void go("in");

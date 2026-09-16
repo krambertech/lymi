@@ -34,7 +34,7 @@ No password is typed anywhere. The server creates the account on first use, seed
 | `long` | Ingrid | Six German cards asked both ways, all due: a sentence as the term, a dictionary-length meaning, and a card with every field at its limit. |
 | `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |
 
-The accounts are `<id>@lymi.local`. They pass the invitation allowlist only on a loopback origin, so `.dev.vars` needs no entry for them. `pnpm local personas` prints the same table from the running server.
+The accounts are `<id>@lymi.local`. They pass the invitation allowlist only on a loopback origin, so `.dev.vars` needs no entry for them, and they are created already confirmed so no confirmation email stands between the URL and the app. `pnpm local personas` prints the same table from the running server.
 
 To see a deck's join page, turn on its join link in deck settings and open the link signed out, or signed in as another persona with `/api/dev/sign-in?as=streak&returnTo=/join/<token>`. Adding `?dev=1` to a join link offers the local email sign-in, which carries the link through sign-in like Google does, so an address on no allowlist can join.
 
@@ -85,12 +85,13 @@ The panel and the CLI use these. They sit under `/api/dev`, outside the OpenAPI 
 | `POST /api/dev/seed` `{ persona? }` | Empties the account and loads a persona's data. |
 | `POST /api/dev/reset` | Empties the account. |
 | `POST /api/dev/due` `{ count: n \| "all" }` | Makes exactly `count` cards due now and moves the rest to tomorrow or later. |
+| `POST /api/dev/outbox` `{ to }` | The last account email sent to that address, so a confirmation or reset link can be opened without a real inbox. |
 
 Seeding goes through the same services as the app and the API, so decks and cards carry audit rows and scheduling state. The review history is then replayed through the real scheduler in memory and written back in one go. The same persona seeds the same grades every time.
 
 ## How the gate works
 
-Two gates, one at build time and one at run time. The Worker imports the `/api/dev` routes only inside an `import.meta.env.DEV` branch, so a production build contains none of the routes, the persona fixtures, the fixed password, or the seed and reset services. At run time, `devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides whether email and password sign-in is on, whether the routes answer, and whether a `@lymi.local` address may create an account. Production's `PRODUCT_URL` is `https://my.lymi.app`, so even a build that carried the routes would answer 404.
+Two gates, one at build time and one at run time. The Worker imports the `/api/dev` routes only inside an `import.meta.env.DEV` branch, so a production build contains none of the routes, the persona fixtures, the fixed password, or the seed and reset services. At run time, `devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides whether the routes answer, whether a `@lymi.local` address may create an account, and whether that address skips the confirmation email. Email and password sign-in itself is no longer local-only: it is how anyone without a Google account gets in. Production's `PRODUCT_URL` is `https://my.lymi.app`, so even a build that carried the routes would answer 404.
 
 The client side is gated the same way. The panel and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind `import.meta.env.DEV`, so the production bundle never includes them. Sign-out and every sign-in path clear the same persisted state through `clearPersistedLearnerState`, so a real account signed in after a persona never inherits its cache or queued grades.
 

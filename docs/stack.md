@@ -116,7 +116,7 @@ Later option: a Durable Object per user holding its own SQLite, which turns sync
 
 ### Auth: Better Auth on the Worker
 
-Better Auth runs on Workers, supports D1 natively as of 1.5, and does social login plus sessions, API keys for the public API, and an Expo plugin for the React Native app later. Google is the only sign-in provider at launch. An allowlist of one email keeps the app private until that changes.
+Better Auth runs on Workers, supports D1 natively as of 1.5, and does social login plus sessions, API keys for the public API, and an Expo plugin for the React Native app later. Two ways in: Continue with Google, and an email address with a password. `ALLOWED_EMAILS`, a working join link and a published deck gate both the same way, so who may create an account does not depend on which door they use.
 
 Known issue to watch: a reported bug where sessions expire after five minutes with D1 and KV. Test session refresh before relying on it.
 
@@ -133,6 +133,20 @@ Three ways in, one system:
 Claude Desktop and Codex both require OAuth for remote MCP servers, which is why a bearer key alone was not enough. `@better-auth/mcp` (Better Auth 1.7) serves the `.well-known` metadata, the consent page and JWT access tokens. The Worker checks tokens against its own JWKS with no database hit. Cloudflare's `workers-oauth-provider` was the earlier plan and is no longer needed.
 
 Every key and every OAuth grant carries one scope, `read` or `write`. Write allows creating, editing and archiving decks and cards. Nothing an integration holds can grade a review.
+
+Password accounts are Better Auth's own credentials, hashing and verification tokens ([ADR 0003](adr/0003-better-auth-is-the-oauth-server.md)). Four rules shape them.
+
+What Lymi asks of a password lives in `@lymi/core`, so the box and the route cannot disagree: at least ten characters, no composition rules, and a screen against the passwords a guesser opens with, anything built from the learner's own address, and anything built from the word Lymi. Requiring a capital and a symbol is left out deliberately — it pushes people towards `Passw0rd!`, which is shorter and more guessable than three plain words. `server/password-rules.ts` is what makes the rule true rather than a suggestion, because these endpoints take a form-encoded body that no form of ours produced.
+
+An address is proven before it grants anything. `requireEmailVerification` means sign-up issues no session and a confirmation link is what signs the learner in, and it also makes Better Auth answer a taken address exactly as it answers a free one. Sign-up, resend and reset therefore return the same confirmation whatever the address is; the address owner, not the requester, is told what actually happened.
+
+A password is retired wherever it was never proved. Anyone holding a join link can sign up with someone else's address and choose the password, so confirming, which proves only the address, is not allowed to bless it: a sign-up binds itself to the browser that made it with a signed cookie, and a confirmation from anywhere else drops the credential, forgets the name and photo that sign-up claimed, and mails the owner a link to set their own password. Google's callback does the same when the account had not proved its address before the link, and leaves a password the owner had already confirmed alone, so pressing Continue with Google once does not lock them out of their own account. Both deletions are audited. A reset asked for a Google account emails the door rather than a reset link, so a reset can never mint a password on an account Google owns.
+
+A learner who confirms on a different device from the one they signed up on pays for this: the password goes and a reset link arrives. That is the cost of not being able to tell them apart from someone who typed their address.
+
+Rate limits are per address as well as per caller. Better Auth's own limiter counts requests per path and IP, which leaves one mailbox open to a flood from many machines, so `server/auth-rate-limit.ts` meters sign-in, sign-up, resend and reset on both keys in KV and answers 429 with the seconds to wait. It reads a form-encoded body as well as JSON, because Better Auth accepts both on these endpoints, and refuses a body it cannot read rather than letting it past unmetered. A sign-in that worked spends nothing, so guessing at a known address cannot lock its owner out. Sign-up holds every answer for a fixed floor, because refusing an address with no invitation is faster than admitting one and the bodies are otherwise identical. The per-caller budget is off on loopback, where every local request shares one address.
+
+Transactional email has a daily ceiling of its own in KV, under the provider's quota, so a spread of machines inside the per-caller budgets cannot spend the day's allowance and leave a real learner's reset undelivered.
 
 ### Transactional email: Cloudflare Email Service from the product Worker
 
@@ -232,11 +246,11 @@ Alternatives considered: keyed catalogs (i18next, Paraglide), which make every s
 
 TypeScript strict. Biome for lint and format. Vitest covers packages and Worker behavior. A build-artifact check enforces that the website has no PWA and the production product has no public pages or preview tools. Playwright runs the canonical learning journey and two-origin contract in desktop Chromium and iPhone-sized WebKit against isolated local Cloudflare bindings. GitHub Actions keeps the base gates in one fail-fast quality job and runs required browser E2E beside it, adds Chromium and both Wrangler deployment dry runs for production-affecting pull requests, and runs Chromium plus WebKit on every push to `main` or explicit `/e2e` request. After quality passes, affected pull requests receive stable deployment links: the public site uses a version alias on `lymi-site`, while the product uses its own disposable Worker and synthetic D1, KV and R2 state as decided in [ADR 0018](adr/0018-product-previews-use-isolated-disposable-workers.md). Separate Cloudflare Workers Builds projects own production deployments from `main`; each health endpoint identifies its active Worker version, and both configurations enable Workers Logs.
 
-Local development accepts email and password sign-in so the app is usable before Google is configured. It is enabled only when `PRODUCT_URL` is a loopback URL.
+Persona accounts under `@lymi.local` are created already confirmed and send no confirmation email, so local development and browser tests sign in with a fixed password and no inbox.
 
 ## Decided
 
-- Sign-in: Google only at launch. Apple can be added when React Native arrives.
+- Sign-in: Google, plus an email address with a password (16 September 2026). Apple can be added when React Native arrives.
 - Origins and deployments: `lymi-site` serves the public website and docs on `lymi.app`; `lymi` serves the product, auth, API, MCP and PWA on `my.lymi.app`.
 - Auth: Better Auth from the start, no Cloudflare Access interim.
 - AI: OpenAI for text enrichment. Gemini-TTS for speech, with a pinned locale, falling back to Chirp 3 HD and then OpenAI (14 September 2026).

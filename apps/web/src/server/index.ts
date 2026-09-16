@@ -2,6 +2,7 @@ import type { Actor, Scope } from "@lymi/core";
 import { MeOut } from "@lymi/core";
 import { Hono } from "hono";
 import { type Auth, createAuth, type SessionUser } from "./auth";
+import { limitCredentialRequests } from "./auth-rate-limit";
 import { createDb, type Db } from "./db";
 import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
@@ -11,6 +12,7 @@ import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
+import { requireStrongPassword } from "./password-rules";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
@@ -94,7 +96,9 @@ app.get("/api/health", describe({ hide: true }), (c) =>
   }),
 );
 
-// Better Auth owns everything under /api/auth.
+// Better Auth owns everything under /api/auth. The credential endpoints are metered first.
+app.use("/api/auth/*", limitCredentialRequests);
+app.use("/api/auth/*", requireStrongPassword);
 app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
 
 // A deck's join page. Signed-out classmates land here from a chat, so it sits before
@@ -185,10 +189,18 @@ app.route("/api/avatar", avatar);
 app.route("/api/imports", imports);
 app.route("/api/exports", exportRoutes);
 
-app.notFound((c) => {
+app.notFound(async (c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
   if (!c.env.ASSETS) return c.text("Not found", 404);
-  return fetchConfiguredAsset(c.req.raw, c.env);
+  const response = await fetchConfiguredAsset(c.req.raw, c.env);
+  // This page carries a one-use reset token in its query, so the address never rides a
+  // referer off this origin. The join page sets the same header for the same reason.
+  if (c.req.path === "/reset-password") {
+    const withPolicy = new Response(response.body, response);
+    withPolicy.headers.set("referrer-policy", "same-origin");
+    return withPolicy;
+  }
+  return response;
 });
 
 app.onError(handleError);

@@ -984,6 +984,9 @@ msgstr "Если ты включаешь напоминания о повтор�
 msgid "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
 msgstr "Если ты запрашиваешь доступ, мы храним твой адрес электронной почты, место на сайте и время отправки запроса. Запрос доступа не создаёт аккаунт."
 
+msgid "If you sign in with an email address and a password, we store the address and a hash of the password, never the password itself. We also store short-lived records for confirming an address and resetting a password, and counts of recent sign-in, sign-up, resend and reset attempts by address and IP address, so those requests can be rate limited."
+msgstr "Если ты входишь по адресу почты и паролю, мы храним адрес и хеш пароля, а не сам пароль. Ещё мы храним кратковременные записи для подтверждения адреса и смены пароля, а также счётчики недавних попыток входа, создания аккаунта, повторной отправки письма и смены пароля по адресу и IP-адресу, чтобы ограничивать частоту таких запросов."
+
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Условный график памяти за тридцать дней. Без повторений знание постепенно угасает. После повторений на 3-й, 8-й и 19-й день оно восстанавливается, а с более длинными перерывами угасает медленнее."
 

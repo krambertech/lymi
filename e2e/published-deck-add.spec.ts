@@ -1,19 +1,9 @@
-import { expect, type Page, type TestInfo, test } from "@playwright/test";
-import { signInAsTestLearner } from "./auth";
-
-const password = "lymi-e2e-password";
+import { expect, type TestInfo, test } from "@playwright/test";
+import { createAccountThroughDevForm, signInAsTestLearner } from "./auth";
 
 /** An email on no allowlist and not a local persona, so only the published deck can admit it. */
 function stranger(testInfo: TestInfo, who: string) {
   return `e2e-${who}-${testInfo.project.name}-r${testInfo.retry}-p${testInfo.repeatEachIndex}@example.test`;
-}
-
-/** Create a local account through the dev email form, as a Google account would arrive. */
-async function createAccount(page: Page, email: string) {
-  await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
-  await page.getByRole("textbox", { name: "Email", exact: true }).fill(email);
-  await page.getByRole("textbox", { name: "Password", exact: true }).fill(password);
-  await page.getByRole("button", { name: "Create account", exact: true }).click();
 }
 
 test("anyone can add a published deck, and a withdrawn one admits nobody new", async ({
@@ -70,7 +60,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
 
     await visitor.getByRole("button", { name: "Dev sign-in", exact: true }).click();
     await expect(visitor).toHaveURL(/\/login\?dev=1/);
-    await createAccount(visitor, stranger(testInfo, "visitor"));
+    await createAccountThroughDevForm(visitor, stranger(testInfo, "visitor"));
 
     await expect(visitor).toHaveURL(new RegExp(`/library/${deckId}$`));
     await expect(visitor.getByText("tere hommikust", { exact: true })).toBeVisible();

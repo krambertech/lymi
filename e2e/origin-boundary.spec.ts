@@ -67,6 +67,11 @@ test("each origin exposes only its own route and indexing contract", async ({ pa
   const productUnknown = await request.get("/public-page-that-does-not-exist");
   expect(productUnknown.status()).toBe(404);
 
+  // The site renders unknown paths through Astro now that the assets binding no longer handles them.
+  const siteUnknown = await request.get(`${publicSite}/page-that-does-not-exist`);
+  expect(siteUnknown.status()).toBe(404);
+  expect(await siteUnknown.text()).toContain("<title>Page not found · Lymi</title>");
+
   const metadata = await request.get("/.well-known/oauth-protected-resource/mcp");
   expect(metadata.status()).toBe(200);
   expect(await metadata.json()).toMatchObject({

@@ -357,10 +357,10 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
     setPhase("back");
     const meaning = front.card.meaning;
     setAnnounce(
-      <>
+      <Trans>
         <span lang={front.card.language}>{front.card.term}</span>:{" "}
         {typeof meaning === "string" ? meaning : i18n._(meaning)}
-      </>,
+      </Trans>,
     );
   }, [hand, phase, i18n]);
 
@@ -378,12 +378,12 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
     const next = rest[0];
     if (next) {
       setAnnounce(
-        <>
-          {t`Next card:`} <span lang={next.card.language}>{next.card.term}</span>
-        </>,
+        <Trans>
+          Next card: <span lang={next.card.language}>{next.card.term}</span>
+        </Trans>,
       );
     }
-  }, [hand, phase, cards, once, stopAudio, t]);
+  }, [hand, phase, cards, once, stopAudio]);
 
   const finale_ = useRef<HTMLDivElement>(null);
   const pressed = useRef(false);

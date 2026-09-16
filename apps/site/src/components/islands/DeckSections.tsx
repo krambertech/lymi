@@ -352,7 +352,7 @@ function CardsView({
                 key={sectionId(i)}
                 id={sectionId(i)}
                 data-section={i}
-                aria-labelledby={`${sectionId(i)}-title`}
+                aria-labelledby={inOrder ? `${sectionId(i)}-title` : undefined}
                 className="mt-10 scroll-mt-32 @4xl:mt-14 @4xl:scroll-mt-24"
               >
                 {inOrder && (
@@ -387,9 +387,18 @@ function CardsView({
                       >
                         {card.term}
                       </dt>
-                      <dd lang={meaningLanguage} className="break-words text-text-2">
-                        {card.meaning}
-                      </dd>
+                      {card.meaning === null ? (
+                        <dd className="text-faint">
+                          <span aria-hidden="true">—</span>
+                          <span className="sr-only">
+                            <Trans>No meaning yet</Trans>
+                          </span>
+                        </dd>
+                      ) : (
+                        <dd lang={meaningLanguage} className="break-words text-text-2">
+                          {card.meaning}
+                        </dd>
+                      )}
                     </div>
                   ))}
                 </dl>

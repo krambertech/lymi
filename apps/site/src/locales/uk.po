@@ -98,6 +98,11 @@ msgstr "{reviews, plural, one {минуле повторення} few {мину�
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
 
+#. placeholder {0}: front.card.term
+#. placeholder {1}: typeof meaning === "string" ? meaning : i18n._(meaning)
+msgid "<0>{0}</0>: {1}"
+msgstr "<0>{0}</0>: {1}"
+
 msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, operational logs and transactional email delivery."
 msgstr "<0>Cloudflare</0> надає сайт, застосунок, базу даних, сховище об’єктів, сховище сеансів, захист мережі, операційні журнали та доставку транзакційних листів."
 
@@ -1356,8 +1361,9 @@ msgstr "Нова"
 msgid "Next card"
 msgstr "Наступна картка"
 
-msgid "Next card:"
-msgstr "Наступна картка:"
+#. placeholder {0}: next.card.term
+msgid "Next card: <0>{0}</0>"
+msgstr "Наступна картка: <0>{0}</0>"
 
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приємно познайомитися; наперед дякую"
@@ -1367,6 +1373,9 @@ msgstr "Без чату? Введи слово."
 
 msgid "No deck at this address · Lymi"
 msgstr "За цією адресою немає колоди · Lymi"
+
+msgid "No meaning yet"
+msgstr "Значення ще немає"
 
 msgid "No, I don’t."
 msgstr "Ні, немає."

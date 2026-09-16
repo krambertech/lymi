@@ -37,6 +37,7 @@ function useDate() {
 
 /** Who made the deck. A catalog card can show the same line. */
 export function DeckByline({ deck }: { deck: PublicDeckOut }) {
+  const { i18n } = useLingui();
   const date = useDate();
   const publisher = deck.publisher;
   const checked = deck.reviewedAt ? date(deck.reviewedAt) : null;
@@ -49,7 +50,7 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
           aria-hidden="true"
           className="grid size-7 shrink-0 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
         >
-          {publisher.trim().charAt(0).toLocaleUpperCase()}
+          {publisher.trim().charAt(0).toLocaleUpperCase(i18n.locale)}
         </span>
       )}
       <span className="font-medium text-text">

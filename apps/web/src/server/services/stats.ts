@@ -160,6 +160,19 @@ async function lights(
   return out;
 }
 
+/**
+ * The thirty local days ending today, always thirty of them. Days before the first review
+ * are unlit rather than absent: a strip scaled to the days that exist makes a learner's
+ * first day the same picture as a perfect month.
+ */
+export function lastThirty(days: DayLight[], today: string): DayLight[] {
+  const lit = new Set(days.filter((d) => d.lit).map((d) => d.date));
+  return Array.from({ length: 30 }, (_, i) => {
+    const date = addDays(today, i - 29);
+    return { date, lit: lit.has(date) };
+  });
+}
+
 /** The longest unbroken run of lit days anywhere in `days`. */
 export function longestRun(days: DayLight[]): number {
   let best = 0;
@@ -171,20 +184,33 @@ export function longestRun(days: DayLight[]): number {
   return best;
 }
 
-/** Roll days up per month, newest month last. Only months that have days are included. */
-export function byMonth(days: DayLight[]): MonthTotal[] {
+/**
+ * Roll days up per month, newest month last. Only months that have days are included.
+ *
+ * The denominator is the calendar month's elapsed days, not the days since the first
+ * review, so every bar is drawn against the same frame and a learner's first day cannot
+ * fill its month. The current month counts to today.
+ */
+export function byMonth(days: DayLight[], today: string): MonthTotal[] {
   const out: MonthTotal[] = [];
   for (const d of days) {
     const month = d.date.slice(0, 7);
     const last = out.at(-1);
     if (last?.month === month) {
-      last.days++;
       if (d.lit) last.lit++;
     } else {
-      out.push({ month, lit: d.lit ? 1 : 0, days: 1 });
+      out.push({ month, lit: d.lit ? 1 : 0, days: elapsedInMonth(month, today) });
     }
   }
   return out;
+}
+
+/** Days of `month` that have happened: all of them, or the day of the month today is. */
+function elapsedInMonth(month: string, today: string): number {
+  const [y, m] = month.split("-").map(Number);
+  if (month === today.slice(0, 7)) return Number(today.slice(8, 10));
+  // Day zero of the next month is the last day of this one.
+  return new Date(Date.UTC(y ?? 1970, m ?? 1, 0)).getUTCDate();
 }
 
 /** Cards by FSRS state, plus the ones that have no state yet because nothing asked them. */
@@ -316,7 +342,8 @@ export async function insights(
   ]);
 
   const graded = recall.passed + recall.failed;
-  const last30 = days.slice(-30);
+  const today = fmt.format(new Date());
+  const last30 = lastThirty(days, today);
 
   return {
     period,
@@ -335,7 +362,7 @@ export async function insights(
       daysAllTime: days.length,
     },
     /** Twelve months at most. Older than that and the strip stops being readable. */
-    months: byMonth(days).slice(-12),
+    months: byMonth(days, today).slice(-12),
     cards,
     forecast: due,
     leeches: {

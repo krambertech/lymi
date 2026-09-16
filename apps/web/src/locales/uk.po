@@ -190,6 +190,10 @@ msgstr "{0, plural, one {Показати ще # старіший запис} fe
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, =1 {Почати розділ} one {Почати # розділ} few {Почати # розділи} many {Почати # розділів} other {Почати # розділу}}"
 
+#. placeholder {0}: busiest.count
+msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+msgstr "{0, plural, one {Сьогодні найзавантаженіший день: # картка.} few {Сьогодні найзавантаженіший день: # картки.} many {Сьогодні найзавантаженіший день: # карток.} other {Сьогодні найзавантаженіший день: # картки.}}"
+
 #. placeholder {0}: preview.existing
 msgid "{0, plural, one {Update # card} other {Update # cards}}"
 msgstr "{0, plural, one {Оновити # картку} few {Оновити # картки} many {Оновити # карток} other {Оновити # картки}}"
@@ -239,6 +243,11 @@ msgstr "{0} забуто <0>·</0> {1, plural, one {# повторення} few 
 #. placeholder {1}: outcome.deckName
 msgid "{0} is already in {1}"
 msgstr "{0} уже є в {1}"
+
+#. placeholder {0}: longWeekday(busiest.date)
+#. placeholder {1}: busiest.count
+msgid "{0} is the busiest day, with {1, plural, one {# card} other {# cards}}."
+msgstr "{0} — найзавантаженіший день: {1, plural, one {# картка} few {# картки} many {# карток} other {# картки}}."
 
 #. placeholder {0}: cards.known
 msgid "{0} known"
@@ -393,9 +402,6 @@ msgstr "{days, plural, one {# день} few {# дні} many {# днів} other {
 msgid "{days, plural, one {In # day} other {In # days}}"
 msgstr "{days, plural, one {Через # день} few {Через # дні} many {Через # днів} other {Через # дня}}"
 
-msgid "{daysAllTime, plural, one {{litAllTime} of # day} other {{litAllTime} of # days}}"
-msgstr "{daysAllTime, plural, one {{litAllTime} з # дня} few {{litAllTime} з # днів} many {{litAllTime} з # днів} other {{litAllTime} з # дня}}"
-
 msgid "{daysAllTime, plural, one {# day since your first review} other {# days since your first review}}"
 msgstr "{daysAllTime, plural, one {# день від першого повторення} few {# дні від першого повторення} many {# днів від першого повторення} other {# дня від першого повторення}}"
 
@@ -422,9 +428,6 @@ msgstr "{due, plural, one {картка до повторення} few {карт
 
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {# картка чекає, коли матимеш хвилинку.} few {# картки чекають, коли матимеш хвилинку.} many {# карток чекають, коли матимеш хвилинку.} other {# картки чекає, коли матимеш хвилинку.}}"
-
-msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
-msgstr "{dueSoon, plural, one {# картка протягом наступних семи днів.} few {# картки протягом наступних семи днів.} many {# карток протягом наступних семи днів.} other {# картки протягом наступних семи днів.}}"
 
 msgid "{field} becomes"
 msgstr "{field} стає"
@@ -462,6 +465,9 @@ msgstr "{members, plural, one {Нові люди не можуть приєдн�
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 msgstr "{missingLanguage, plural, one {У # колоди ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.} few {У # колод ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.} many {У # колод ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.} other {У # колоди ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв слова.}}"
 
+msgid "{monthLit, plural, one {# day reviewed} other {# days reviewed}}"
+msgstr "{monthLit, plural, one {# день з переглядами} few {# дні з переглядами} many {# днів з переглядами} other {# дня з переглядами}}"
+
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# місяць} few {# місяці} many {# місяців} other {# місяця}}"
 
@@ -497,6 +503,9 @@ msgstr "{oneSided, plural, one {У # картці немає рядка ---, т�
 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {Попередній розділ теж почнеться, щоб розділи йшли по порядку.} few {# попередні розділи теж почнуться, щоб розділи йшли по порядку.} many {# попередніх розділів теж почнуться, щоб розділи йшли по порядку.} other {# попереднього розділу теж почнуться, щоб розділи йшли по порядку.}}"
+
+msgid "{passed} remembered, {failed} forgotten"
+msgstr "Запам’ятано: {passed}, забуто: {failed}"
 
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оцінка з офлайн-повторення ще не дійшла до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти її.} few {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} many {# оцінок з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} other {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.}}"
@@ -2143,6 +2152,9 @@ msgstr "Нові нотатки: «{value}»"
 msgid "Nothing archived"
 msgstr "Архів порожній"
 
+msgid "Nothing comes back in the next seven days."
+msgstr "У найближчі сім днів нічого не повернеться."
+
 msgid "Nothing due"
 msgstr "Нічого до повторення"
 
@@ -2287,10 +2299,6 @@ msgstr "Вставлене зображення"
 
 msgid "Pause the cards"
 msgstr "Зупинити картки"
-
-#. placeholder {0}: weekday(peak.date)
-msgid "peak, {0}"
-msgstr "пік, {0}"
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "Хто вже додав колоду, далі її вчить, але нові люди додати її не можуть."

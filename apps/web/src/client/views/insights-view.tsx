@@ -6,6 +6,7 @@ import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { MonthBars } from "../components/month-bars";
+import { RecallTally } from "../components/recall-tally";
 import { RunStrip } from "../components/run-strip";
 import { Segmented } from "../components/segmented";
 import { Skeleton } from "../components/skeleton";
@@ -13,7 +14,7 @@ import { StartPanel } from "../components/start-panel";
 import { StatPlate } from "../components/stat-plate";
 import { StateIcon, stateMarks } from "../components/state-mark";
 import { addDays } from "../components/streak-calendar";
-import { TrendLine } from "../components/trend-line";
+import { TREND_MIN_POINTS, TrendLine } from "../components/trend-line";
 import { deviceTimezone } from "../lib/api";
 import { Page, PageHeader } from "./shell";
 
@@ -61,23 +62,32 @@ export function InsightsView({
 }: InsightsProps) {
   const { t, i18n } = useLingui();
   /* Formatters follow the interface language, which can change while this screen is open. */
-  const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
+  const longWeekday = (date: string) => i18n.date(parseLocal(date), { weekday: "long" });
+  /* Every percentage on this screen goes through one formatter; uk and ru space the sign. */
+  const pct = (v: number) => i18n.number(v, { style: "percent" });
 
   // On the Recall plate's label row rather than in the page header: in the header the same
   // control reads as a filter for the whole screen, and it moves this one figure only.
-  const switcher = (
-    <Segmented
-      size="sm"
-      label={t`How far back the recall figure looks`}
-      value={period}
-      onChange={onPeriod}
-      options={[
-        { value: "30", label: t`30 days` },
-        { value: "90", label: t`90 days` },
-        { value: "0", label: t`All` },
-      ]}
-    />
-  );
+  //
+  // Only the periods the history can actually tell apart are offered, and none at all until
+  // there are more than thirty days of it. Three buttons that all return the same number
+  // read as a broken control rather than a choice.
+  const periodSwitcher = (daysAllTime: number) => {
+    if (daysAllTime <= 30) return undefined;
+    return (
+      <Segmented
+        size="sm"
+        label={t`How far back the recall figure looks`}
+        value={period}
+        onChange={onPeriod}
+        options={[
+          { value: "30", label: t`30 days` },
+          ...(daysAllTime > 90 ? [{ value: "90" as const, label: t`90 days` }] : []),
+          { value: "0", label: t`All` },
+        ]}
+      />
+    );
+  };
 
   if (failed) {
     return (
@@ -96,7 +106,7 @@ export function InsightsView({
   if (!data) {
     return (
       <Page>
-        <PageHeader title={t`Insights`} actions={switcher} />
+        <PageHeader title={t`Insights`} />
         {/* Same heights the plates settle at, so the screen does not jump when they land. */}
         <div className="grid gap-3 @3xl:grid-cols-2">
           {[0, 1, 2, 3].map((i) => (
@@ -109,7 +119,7 @@ export function InsightsView({
   }
 
   const { recall, consistency, months, cards, forecast, leeches } = data;
-  const { litAllTime, daysAllTime } = consistency;
+  const { daysAllTime } = consistency;
   const nothingYet = daysAllTime === 0 && cards.total === 0;
 
   if (nothingYet) {
@@ -137,14 +147,9 @@ export function InsightsView({
             ghost
             label={t`Recall`}
             value="—"
-            figure={
-              <div className="relative h-full w-full">
-                <div className="absolute inset-x-0 top-1/3 border-t border-dashed border-edge-2" />
-                <span className="absolute end-0 top-1/3 -translate-y-full pb-1 text-2xs text-muted tabular-nums">
-                  90%
-                </span>
-              </div>
-            }
+            /* The real chart with nothing in it, so the reference cannot sit somewhere the
+               live chart would never put it. */
+            figure={<TrendLine points={[]} target={0.9} targetLabel={pct(0.9)} label="" />}
             note={t`How often you remember a card when it comes back`}
           />
           <StatPlate
@@ -191,17 +196,21 @@ export function InsightsView({
       label: monthly
         ? i18n.date(start, { month: "long" })
         : t`week of ${i18n.date(start, { day: "numeric", month: "short" })}`,
+      /* The chart's own end labels, short enough to sit under the plot. */
+      short: monthly
+        ? i18n.date(start, { month: "short" })
+        : i18n.date(start, { day: "numeric", month: "short" }),
     };
   });
-  const series = trend.map((p) => `${p.label} ${Math.round(p.value * 100)}%`).join(", ");
-  const peak = forecast.reduce(
+  const series = trend.map((p) => `${p.label} ${pct(p.value)}`).join(", ");
+  // Ties keep the earliest day, so the sentence names the one the learner reaches first.
+  const busiest = forecast.reduce(
     (a, b) => (b.count > a.count ? b : a),
-    forecast[0] ?? {
-      date: "",
-      count: 0,
-    },
+    forecast[0] ?? { date: "", count: 0 },
   );
+  const busiestIsToday = busiest.date === forecast[0]?.date;
   const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
+  const monthLit = months.reduce((n, m) => n + m.lit, 0);
 
   return (
     <Page>
@@ -225,21 +234,29 @@ export function InsightsView({
       >
         <StatPlate
           label={t`Recall`}
-          control={switcher}
-          value={recall.rate === null ? "—" : `${Math.round(recall.rate * 100)}%`}
+          control={periodSwitcher(daysAllTime)}
+          value={recall.rate === null ? "—" : pct(recall.rate)}
+          /* Too few weeks to have a trend draws the sample the figure is made of instead.
+             One bucket has no shape at all: a line through a single point strokes nothing,
+             leaving a lone dot in an empty plate. */
           figure={
-            trend.length > 0 ? (
+            trend.length >= TREND_MIN_POINTS ? (
               <TrendLine
                 points={trend}
                 target={0.9}
-                targetLabel="90%"
+                targetLabel={pct(0.9)}
                 label={
                   monthly
                     ? t`Recall by month: ${series}. The schedule aims for 90%.`
                     : t`Recall by week: ${series}. The schedule aims for 90%.`
                 }
               />
-            ) : undefined
+            ) : graded > 0 ? (
+              <RecallTally passed={recall.passed} failed={recall.failed} />
+            ) : (
+              /* Nothing graded yet: the reference alone, exactly as the ghost draws it. */
+              <TrendLine points={[]} target={0.9} targetLabel={pct(0.9)} label="" />
+            )
           }
           note={
             recall.rate === null
@@ -254,7 +271,7 @@ export function InsightsView({
           unit={t`/ ${plural(consistency.days.length, { one: "# day", other: "# days" })}`}
           figure={<RunStrip days={consistency.days} />}
           note={
-            consistency.days.length === 0
+            consistency.lit === 0
               ? t`No reviews yet. Each block here will be a day.`
               : consistency.longestRun > 1
                 ? t`${plural(consistency.longestRun, {
@@ -275,13 +292,25 @@ export function InsightsView({
 
         <StatPlate
           label={t`Ahead`}
-          value={peak.count}
-          unit={peak.count > 0 ? t`peak, ${weekday(peak.date)}` : t`due this week`}
+          value={dueSoon}
+          unit={t`due this week`}
           figure={<ForecastBars forecast={forecast} />}
-          note={t`${plural(dueSoon, {
-            one: "# card over the next seven days.",
-            other: "# cards over the next seven days.",
-          })}`}
+          /* The heaviest day moves into the sentence, where it can be said in words. As the
+             plate's headline it had to be compressed to "peak", which is a statistics term
+             in an app that writes plain lines. */
+          note={
+            dueSoon === 0
+              ? t`Nothing comes back in the next seven days.`
+              : busiestIsToday
+                ? t`${plural(busiest.count, {
+                    one: "Today is the busiest day, with # card.",
+                    other: "Today is the busiest day, with # cards.",
+                  })}`
+                : t`${longWeekday(busiest.date)} is the busiest day, with ${plural(busiest.count, {
+                    one: "# card",
+                    other: "# cards",
+                  })}.`
+          }
         />
       </div>
 
@@ -291,12 +320,10 @@ export function InsightsView({
             <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
               <Trans>Month by month</Trans>
             </h2>
+            {/* A count, not a ratio. Each bar carries its own denominator; summing them
+                would total calendar days from before the learner had an account. */}
             <span className="text-xs text-muted tabular-nums">
-              <Plural
-                value={daysAllTime}
-                one={`${litAllTime} of # day`}
-                other={`${litAllTime} of # days`}
-              />
+              <Plural value={monthLit} one="# day reviewed" other="# days reviewed" />
             </span>
           </div>
           <MonthBars months={months} />
@@ -407,31 +434,49 @@ interface ForecastBarsProps {
 /**
  * Bars on a baseline, using the whole figure box. A track behind each one reads as a second
  * object stacked on the bar rather than as the space it could fill.
+ *
+ * Amber marks today, which is the day the learner can act on, rather than the heaviest day,
+ * which the sentence under the chart already names. Today is also named in words and set in
+ * ink, so it is never marked by colour alone.
+ *
+ * Every bar carries its count. Two cards and three cards are the same bar to the eye at this
+ * height, and a tooltip is not an answer on a touch device.
  */
 function ForecastBars({ forecast }: ForecastBarsProps) {
-  const { i18n } = useLingui();
+  const { t, i18n } = useLingui();
   const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
-  const peak = Math.max(0, ...forecast.map((d) => d.count));
-  const maxDue = Math.max(1, peak);
+  const maxDue = Math.max(1, ...forecast.map((d) => d.count));
+  /* The forecast starts at today by contract, so today is the first day, never a match. */
+  const dayName = (date: string, i: number) => (i === 0 ? t`Today` : weekday(date));
   return (
     <div
       className="flex h-full w-full items-stretch gap-1.5"
       role="img"
-      aria-label={forecast.map((d) => `${weekday(d.date)} ${d.count}`).join(", ")}
+      aria-label={forecast.map((d, i) => `${dayName(d.date, i)} ${d.count}`).join(", ")}
     >
-      {forecast.map((d) => (
-        <div key={d.date} className="flex flex-1 flex-col gap-1.5">
+      {forecast.map((d, i) => (
+        <div key={d.date} className="flex flex-1 flex-col gap-1">
+          <span
+            className={clsx(
+              "text-center text-2xs tabular-nums",
+              i === 0 ? "font-medium text-text" : d.count > 0 ? "text-muted" : "text-faint",
+            )}
+          >
+            {i18n.number(d.count)}
+          </span>
           <div className="flex flex-1 items-end border-b border-edge">
             <i
-              className={clsx(
-                "block w-full rounded-t-[4px]",
-                d.count === peak && peak > 0 ? "bg-amber" : "bg-text/35",
-              )}
+              className={clsx("block w-full rounded-t-[4px]", i === 0 ? "bg-amber" : "bg-text/35")}
               style={{ height: d.count > 0 ? `max(3px, ${(d.count / maxDue) * 100}%)` : 0 }}
             />
           </div>
-          <span className="text-center text-2xs text-muted tabular-nums">
-            {weekday(d.date).slice(0, 2)}
+          <span
+            className={clsx(
+              "truncate text-center text-2xs",
+              i === 0 ? "font-medium text-text" : "text-muted",
+            )}
+          >
+            {i === 0 ? dayName(d.date, i) : weekday(d.date).slice(0, 2)}
           </span>
         </div>
       ))}

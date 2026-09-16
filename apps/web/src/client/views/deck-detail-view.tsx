@@ -29,9 +29,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { Button, IconButton } from "../components/button";
+import { Button, buttonClass, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
-import { NoResults } from "../components/empty-state";
+import { ErrorState, NoResults } from "../components/empty-state";
 import { NextStep, NextSteps } from "../components/next-steps";
 import { SectionProgress } from "../components/section-progress";
 import { Skeleton } from "../components/skeleton";
@@ -79,6 +79,9 @@ const LIST_PX = 640;
 const CARD_PX = 400;
 const DAY = 86_400_000;
 
+/** A deck the screen cannot draw: one that is not there any more, or one it could not reach. */
+export type DeckFailure = "gone" | "unreachable";
+
 export interface DeckDetailProps {
   deck: DeckSummary | undefined;
   cards: DeckRow[] | undefined;
@@ -121,6 +124,11 @@ export interface DeckDetailProps {
   startingSection?: boolean | undefined;
   /** The owner's section writes. Absent for a member. */
   sectionActions?: DeckSectionActions | undefined;
+  /** Why the deck is not on screen: gone for good, or the app could not reach it. */
+  failure?: DeckFailure | undefined;
+  /** Fetch the deck again, for a failure that can be recovered from. */
+  onRetry?: (() => void) | undefined;
+  retrying?: boolean | undefined;
   /** Draw an open card beside the list at any width, for the design system's narrower frames. */
   cardBeside?: boolean | undefined;
   static?: StaticNav;
@@ -616,6 +624,9 @@ export function DeckDetailView({
   onStartSection,
   startingSection,
   sectionActions,
+  failure,
+  onRetry,
+  retrying,
   cardBeside,
   connectUrl,
   connected,
@@ -869,6 +880,37 @@ export function DeckDetailView({
     </DropdownMenu>
   );
 
+  // The design page renders the screen without a router, so every way back is a plain anchor there.
+  const toLibrary = (className: string, content: ReactNode) =>
+    st ? (
+      <a href="/library" onClick={(e) => e.preventDefault()} className={className}>
+        {content}
+      </a>
+    ) : (
+      <Link to="/library" className={className}>
+        {content}
+      </Link>
+    );
+  const backToLibrary = <BackButton label={t`Library`}>{toLibrary}</BackButton>;
+
+  // A deck that could not be loaded takes the whole screen, so no skeleton is left waiting under it.
+  if (failure) {
+    return (
+      <Page>
+        <TopBar back={backToLibrary} />
+        {failure === "gone" ? (
+          <ErrorState
+            title={t`This deck is no longer here`}
+            body={t`It may have been archived, or shared with you and then removed.`}
+            action={toLibrary(buttonClass("primary"), t`Open Library`)}
+          />
+        ) : (
+          <ErrorState title={t`Couldn’t load this deck`} onRetry={onRetry} retrying={retrying} />
+        )}
+      </Page>
+    );
+  }
+
   const query = q.trim();
   const filtered = query !== "" || activeFilterCount(filters) > 0;
 
@@ -903,21 +945,7 @@ export function DeckDetailView({
           </header>
         ) : (
           <TopBar
-            back={
-              <BackButton label={t`Library`}>
-                {(className, content) =>
-                  st ? (
-                    <a href="/library" onClick={(e) => e.preventDefault()} className={className}>
-                      {content}
-                    </a>
-                  ) : (
-                    <Link to="/library" className={className}>
-                      {content}
-                    </Link>
-                  )
-                }
-              </BackButton>
-            }
+            back={backToLibrary}
             actions={
               <>
                 {cards && cards.length > 0 && (

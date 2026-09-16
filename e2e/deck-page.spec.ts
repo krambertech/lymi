@@ -142,3 +142,44 @@ test("a learner can filter, sort and open the words in a deck", async ({
     });
   }
 });
+
+/**
+ * A deck that cannot be drawn says so. One that is gone leads back to Library; one the app could
+ * not reach offers Try again, and recovers on it. Issue #268.
+ */
+test("a learner sees why a deck could not be opened", async ({ page }, testInfo) => {
+  await signInAsTestLearner(page, testInfo, "deck-page");
+
+  // Each request retries once before the screen gives up, so both messages land after the default wait.
+  const settles = { timeout: 20_000 };
+
+  await test.step("a deck id that is not there names the state and leads to Library", async () => {
+    await page.goto("/library/no-such-deck");
+
+    await expect(page.getByRole("heading", { name: "This deck is no longer here" })).toBeVisible(
+      settles,
+    );
+    await page.getByRole("link", { name: "Open Library" }).click();
+    await expect(page).toHaveURL(/\/library$/);
+  });
+
+  const res = await page.request.post("/api/decks", {
+    data: { name: "Suomi A1", defaultLanguage: "fi" },
+  });
+  expect(res.ok()).toBeTruthy();
+  const deckId = ((await res.json()) as { id: string }).id;
+
+  await test.step("a real deck the app cannot reach recovers on Try again", async () => {
+    await page.route(`**/api/decks/${deckId}/cards`, (route) =>
+      route.abort("internetdisconnected"),
+    );
+    await page.goto(`/library/${deckId}`);
+    await expect(page.getByRole("heading", { name: "Couldn’t load this deck" })).toBeVisible(
+      settles,
+    );
+
+    await page.unroute(`**/api/decks/${deckId}/cards`);
+    await page.getByRole("button", { name: "Try again" }).click();
+    await expect(page.getByRole("heading", { level: 1, name: "Suomi A1" })).toBeVisible();
+  });
+});

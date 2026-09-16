@@ -12,7 +12,7 @@ import {
 import { MoveToSeriesDialog } from "../components/series-dialogs";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, type Card, errorMessage, type Section } from "../lib/api";
+import { ApiError, api, type Card, errorMessage, type Section } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import {
@@ -28,7 +28,7 @@ import { shortQuote } from "../lib/short-quote";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
-import { DeckDetailView, exportCsv } from "../views/deck-detail-view";
+import { DeckDetailView, type DeckFailure, exportCsv } from "../views/deck-detail-view";
 import { describeEvent } from "../views/word-view";
 
 export const Route = createFileRoute("/library/$deckId")({
@@ -39,6 +39,9 @@ export const Route = createFileRoute("/library/$deckId")({
   }),
   component: Deck,
 });
+
+/** A 404: the deck was archived elsewhere, or shared with this learner and then taken back. */
+const isMissing = (error: unknown) => error instanceof ApiError && error.status === 404;
 
 /** Settings is a child route, so it replaces the deck rather than sitting under it. */
 function Deck() {
@@ -77,6 +80,26 @@ function DeckPage() {
     opening: Section[];
   } | null>(null);
   const sectionList = sections.data?.sections ?? [];
+
+  // The deck, its cards and its sections stand or fall together, so one failure is one message.
+  // A request that never arrived outranks a missing deck: the cached list may simply be behind.
+  const unreachable =
+    (decks.isError && !isMissing(decks.error)) ||
+    (cards.isError && !isMissing(cards.error)) ||
+    (sections.isError && !isMissing(sections.error));
+  // The list answers on its own once it has been fetched, because a deck's own request can sit
+  // in a paused retry, and a list still in flight never lets a deck that is merely new read as gone.
+  const missing =
+    isMissing(cards.error) ||
+    isMissing(sections.error) ||
+    (decks.isSuccess && !decks.isFetching && !deck);
+  const failure: DeckFailure | undefined =
+    deck && cards.data ? undefined : unreachable ? "unreachable" : missing ? "gone" : undefined;
+  const retry = () => {
+    void decks.refetch();
+    void cards.refetch();
+    void sections.refetch();
+  };
 
   /** Start a section; one with locked sections before it asks first, since they start too. */
   const startSection = (section: Section) => {
@@ -167,6 +190,9 @@ function DeckPage() {
     <>
       <DeckDetailView
         deck={deck}
+        failure={failure}
+        onRetry={retry}
+        retrying={decks.isFetching || cards.isFetching || sections.isFetching}
         // Held until the sections arrive, so a sectioned deck never flashes in another order.
         cards={sections.isPending ? undefined : cards.data}
         streak={streak.data}

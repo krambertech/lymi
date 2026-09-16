@@ -1143,6 +1143,9 @@ msgstr "Couldn’t load Library"
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
 
+msgid "Couldn’t load this deck"
+msgstr "Couldn’t load this deck"
+
 msgid "Couldn’t load this import"
 msgstr "Couldn’t load this import"
 
@@ -1661,6 +1664,9 @@ msgstr "It can read your decks and cards. It cannot change anything."
 
 msgid "It goes at the end. Move cards into it from the list."
 msgstr "It goes at the end. Move cards into it from the list."
+
+msgid "It may have been archived, or shared with you and then removed."
+msgstr "It may have been archived, or shared with you and then removed."
 
 msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
 msgstr "It waited three days without being confirmed, so its file was deleted. Start it again."
@@ -2996,6 +3002,9 @@ msgstr "This deck is already in your Library."
 
 msgid "This deck is archived"
 msgstr "This deck is archived"
+
+msgid "This deck is no longer here"
+msgstr "This deck is no longer here"
 
 msgid "This deck is no longer published"
 msgstr "This deck is no longer published"

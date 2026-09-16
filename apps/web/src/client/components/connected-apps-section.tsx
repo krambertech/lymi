@@ -119,7 +119,7 @@ function AppRow({
       <AppMark app={app} className="size-9 rounded-sm" />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-base font-medium">{app.name}</span>
+          <span className="truncate text-base font-medium">{app.name ?? t`An app`}</span>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </div>
         {/* A long host truncates; the date never does, so the row always says when. */}

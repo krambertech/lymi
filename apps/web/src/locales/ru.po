@@ -1074,6 +1074,9 @@ msgstr "Сначала подтверди адрес почты."
 msgid "Connect {appName}"
 msgstr "Подключить {appName}"
 
+msgid "Connect an app"
+msgstr "Подключить приложение"
+
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Подключи Lymi, вставь урок и попроси сделать карточки"
 
@@ -1777,6 +1780,9 @@ msgstr "Урок 15"
 msgid "Let {appName} use your Lymi?"
 msgstr "Разрешить {appName} пользоваться твоим Lymi?"
 
+msgid "Let this app use your Lymi?"
+msgstr "Разрешить этому приложению пользоваться твоим Lymi?"
+
 msgid "Library"
 msgstr "Библиотека"
 
@@ -2143,6 +2149,9 @@ msgstr "Ничего не добавлено, а файл удалён."
 
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Ничего не было предоставлено. Можешь в любое время начать заново в {appName}."
+
+msgid "Nothing was shared. You can start again from the app whenever you like."
+msgstr "Ничего не было предоставлено. Можешь в любое время начать заново из приложения."
 
 msgid "Nothing yet."
 msgstr "Пока ничего."
@@ -2906,6 +2915,12 @@ msgstr "API"
 
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "Приложение не указало, куда перейти дальше. Попробуй снова из приложения."
+
+msgid "The app is connected"
+msgstr "Приложение подключено"
+
+msgid "The app was not connected"
+msgstr "Приложение не подключено"
 
 msgid "the card"
 msgstr "карточку"

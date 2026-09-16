@@ -1074,6 +1074,9 @@ msgstr "Confirm your email address first."
 msgid "Connect {appName}"
 msgstr "Connect {appName}"
 
+msgid "Connect an app"
+msgstr "Connect an app"
+
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Connect Lymi, paste the lesson, and ask for the cards"
 
@@ -1777,6 +1780,9 @@ msgstr "Lesson 15"
 msgid "Let {appName} use your Lymi?"
 msgstr "Let {appName} use your Lymi?"
 
+msgid "Let this app use your Lymi?"
+msgstr "Let this app use your Lymi?"
+
 msgid "Library"
 msgstr "Library"
 
@@ -2143,6 +2149,9 @@ msgstr "Nothing was added, and the file was deleted."
 
 msgid "Nothing was shared. You can start again from {appName} whenever you like."
 msgstr "Nothing was shared. You can start again from {appName} whenever you like."
+
+msgid "Nothing was shared. You can start again from the app whenever you like."
+msgstr "Nothing was shared. You can start again from the app whenever you like."
 
 msgid "Nothing yet."
 msgstr "Nothing yet."
@@ -2906,6 +2915,12 @@ msgstr "the API"
 
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "The app did not say where to go next. Try again from the app."
+
+msgid "The app is connected"
+msgstr "The app is connected"
+
+msgid "The app was not connected"
+msgstr "The app was not connected"
 
 msgid "the card"
 msgstr "the card"

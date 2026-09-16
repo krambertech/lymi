@@ -24,10 +24,17 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
       <div className="grid w-full max-w-sm justify-items-center gap-4">
         <Connection app={app} state={refused ? "refused" : "connected"} />
         <h1 className="max-w-[22ch] text-2xl font-medium leading-tight">
-          {refused ? (
-            <Trans>{appName} was not connected</Trans>
+          {/* An app Lymi cannot name is written about, never named with a placeholder. */}
+          {appName ? (
+            refused ? (
+              <Trans>{appName} was not connected</Trans>
+            ) : (
+              <Trans>{appName} is connected</Trans>
+            )
+          ) : refused ? (
+            <Trans>The app was not connected</Trans>
           ) : (
-            <Trans>{appName} is connected</Trans>
+            <Trans>The app is connected</Trans>
           )}
         </h1>
         <AppIdentityLine app={app} />
@@ -35,7 +42,11 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
 
       <p className="max-w-[34ch] text-md text-text-2">
         {refused ? (
-          <Trans>Nothing was shared. You can start again from {appName} whenever you like.</Trans>
+          appName ? (
+            <Trans>Nothing was shared. You can start again from {appName} whenever you like.</Trans>
+          ) : (
+            <Trans>Nothing was shared. You can start again from the app whenever you like.</Trans>
+          )
         ) : scopes?.write ? (
           <Trans>It can read your cards, and add, edit and archive them.</Trans>
         ) : (

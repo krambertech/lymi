@@ -55,7 +55,7 @@ function Consent() {
 
   const app = identifyApp(clientId, client.data?.client_name);
   const appName = app.name;
-  useDocumentTitle(t`Connect ${appName}`);
+  useDocumentTitle(appName ? t`Connect ${appName}` : t`Connect an app`);
 
   async function decide(accept: boolean) {
     setError(null);

@@ -61,8 +61,11 @@ export function ConsentView({
         <h1 className="max-w-[20ch] text-center text-2xl font-medium leading-tight">
           {loading ? (
             <Skeleton className="h-7 w-56" />
-          ) : (
+          ) : appName ? (
             <Trans>Let {appName} use your Lymi?</Trans>
+          ) : (
+            // A request that named nothing gets its own sentence; no placeholder goes in the gap.
+            <Trans>Let this app use your Lymi?</Trans>
           )}
         </h1>
         {loading ? (

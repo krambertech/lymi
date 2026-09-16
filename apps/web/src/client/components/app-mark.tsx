@@ -1,6 +1,6 @@
-import { t } from "@lingui/core/macro";
 import { GEMINI_CLI_CLIENT_PATH } from "@lymi/core";
 import { clsx } from "clsx";
+import { Plug } from "lucide-react";
 import { publicSiteUrl } from "../lib/origins";
 
 /**
@@ -20,9 +20,9 @@ import { publicSiteUrl } from "../lib/origins";
  */
 
 /**
- * Paths from simple-icons (CC0), and Gemini from lobe-icons (MIT). Trademarks belong to their
- * owners; used here to name them. `clientIds` names a client by the exact document Lymi
- * publishes for it, since its host is Lymi's own.
+ * Paths from simple-icons (CC0), and ChatGPT, Codex and Gemini from lobe-icons (MIT). Trademarks
+ * belong to their owners; used here to name them. `clientIds` names a client by the exact
+ * document it signs in with, for a client whose host is shared with another app or is Lymi's own.
  */
 const MARKS: {
   hosts: string[];
@@ -48,6 +48,18 @@ const MARKS: {
     path: "M2.25 1.5a.75.75 0 0 0-.75.75v16.5H0V2.25A2.25 2.25 0 0 1 2.25 0h20.095c1.002 0 1.504 1.212.795 1.92L10.764 14.298h3.486V12.75h1.5v1.922a1.125 1.125 0 0 1-1.125 1.125H9.264l-2.578 2.578h11.689V9h1.5v9.375a1.5 1.5 0 0 1-1.5 1.5H5.185L2.562 22.5H21.75a.75.75 0 0 0 .75-.75V5.25H24v16.5A2.25 2.25 0 0 1 21.75 24H1.655C.653 24 .151 22.788.86 22.08L13.19 9.75H9.75v1.5h-1.5V9.375A1.125 1.125 0 0 1 9.375 8.25h5.314l2.625-2.625H5.625V15h-1.5V5.625a1.5 1.5 0 0 1 1.5-1.5h13.19L21.438 1.5z",
   },
   {
+    // Codex signs in from ChatGPT's own host, so its exact document is what tells the two apart.
+    hosts: [],
+    clientIds: ["https://chatgpt.com/oauth/codex/client.json"],
+    name: "Codex",
+    path: "M8.086.457a6.105 6.105 0 013.046-.415c1.333.153 2.521.72 3.564 1.7a.117.117 0 00.107.029c1.408-.346 2.762-.224 4.061.366l.063.03.154.076c1.357.703 2.33 1.77 2.918 3.198.278.679.418 1.388.421 2.126a5.655 5.655 0 01-.18 1.631.167.167 0 00.04.155 5.982 5.982 0 011.578 2.891c.385 1.901-.01 3.615-1.183 5.14l-.182.22a6.063 6.063 0 01-2.934 1.851.162.162 0 00-.108.102c-.255.736-.511 1.364-.987 1.992-1.199 1.582-2.962 2.462-4.948 2.451-1.583-.008-2.986-.587-4.21-1.736a.145.145 0 00-.14-.032c-.518.167-1.04.191-1.604.185a5.924 5.924 0 01-2.595-.622 6.058 6.058 0 01-2.146-1.781c-.203-.269-.404-.522-.551-.821a7.74 7.74 0 01-.495-1.283 6.11 6.11 0 01-.017-3.064.166.166 0 00.008-.074.115.115 0 00-.037-.064 5.958 5.958 0 01-1.38-2.202 5.196 5.196 0 01-.333-1.589 6.915 6.915 0 01.188-2.132c.45-1.484 1.309-2.648 2.577-3.493.282-.188.55-.334.802-.438.286-.12.573-.22.861-.304a.129.129 0 00.087-.087A6.016 6.016 0 015.635 2.31C6.315 1.464 7.132.846 8.086.457zm-.804 7.85a.848.848 0 00-1.473.842l1.694 2.965-1.688 2.848a.849.849 0 001.46.864l1.94-3.272a.849.849 0 00.007-.854l-1.94-3.393zm5.446 6.24a.849.849 0 000 1.695h4.848a.849.849 0 000-1.696h-4.848z",
+  },
+  {
+    hosts: ["chatgpt.com", "openai.com"],
+    name: "ChatGPT",
+    path: "M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z",
+  },
+  {
     hosts: [],
     clientIds: [publicSiteUrl(GEMINI_CLI_CLIENT_PATH)],
     name: "Gemini CLI",
@@ -59,10 +71,12 @@ const MARKS: {
 export interface AppIdentity {
   /**
    * What to call it. The recognised name for a host we ship a mark for, else the host
-   * itself. Never the client's own `client_name`: that is text the client chose, and the
-   * headline of a permission screen is the last place to put an unverified claim.
+   * itself, and null when the request carries neither. Never the client's own `client_name`:
+   * that is text the client chose, and the headline of a permission screen is the last place
+   * to put an unverified claim. A screen with no name says so in a sentence of its own rather
+   * than interpolating a placeholder.
    */
-  name: string;
+  name: string | null;
   /** The name the client gave for itself, when it is unverified and adds anything. */
   claimed: string | null;
   /** The host of the client_id URL. Null when the client_id is not a URL. */
@@ -89,7 +103,7 @@ export function identifyApp(
     : undefined;
   const claimed = claimedName?.trim() || null;
   return {
-    name: known?.name ?? host ?? t`An app`,
+    name: known?.name ?? host,
     // A recognised host names itself; anywhere else the claim is shown as a claim, or not
     // at all when it only repeats the address.
     claimed: known || !claimed || claimed === host ? null : claimed,
@@ -127,8 +141,11 @@ export function AppMark({ app, className }: { app: AppIdentity; className?: stri
         <svg viewBox="0 0 24 24" className="size-1/2" fill={app.brand ?? "currentColor"}>
           <path d={app.path} />
         </svg>
-      ) : (
+      ) : app.name ? (
         <span className="text-lg font-semibold uppercase text-text-2">{app.name.slice(0, 1)}</span>
+      ) : (
+        // Nothing to take an initial from, so the tile says "an app" rather than inventing a letter.
+        <Plug className="size-1/2 text-muted" />
       )}
     </span>
   );

@@ -192,6 +192,7 @@ async function library(ctx: ServiceContext) {
       pronunciation: "il ˈɡat.to",
       example: "Il gatto dorme.",
       exampleSource: "ai",
+      pronunciationSource: "ai",
       notes: "Masculine.\nPlural: i gatti",
       tags: ["animals", "lesson one"],
       source: "Lesson 14",
@@ -336,6 +337,7 @@ async function snapshot(ctx: ServiceContext) {
           source: card.source,
           meaningSource: card.meaningSource,
           exampleSource: card.exampleSource,
+          pronunciationSource: card.pronunciationSource,
           reviewModes: card.directions ? card.reviewModeKeys : null,
           archived: card.archivedAt !== null,
           picture: image

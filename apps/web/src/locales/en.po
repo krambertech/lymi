@@ -1396,6 +1396,12 @@ msgstr "Empty in the first note"
 msgid "Enriched {list}"
 msgstr "Enriched {list}"
 
+msgid "Enriched this card"
+msgstr "Enriched this card"
+
+msgid "Enriching this card"
+msgstr "Enriching this card"
+
 msgid "Enter after each"
 msgstr "Enter after each"
 

@@ -251,21 +251,42 @@ export type CardSectionInput = z.infer<typeof CardSectionInput>;
 const NOTES_FORMAT =
   "Markdown subset: paragraphs, line breaks, **bold**, *italic*, and bulleted (- item) or numbered (1. item) lists. A single line break stays a line break. Anything else, HTML included, shows as its literal text.";
 
+/**
+ * How long each field of a card may be. Enrichment bounds what a model returns by the same
+ * numbers, so AI text can never be longer than the edit sheet will let the learner save.
+ */
+export const CARD_LIMITS = {
+  term: 500,
+  meaning: 2000,
+  pronunciation: 200,
+  example: 2000,
+  notes: 2000,
+  source: 200,
+} as const;
+
 export const CardInput = z.object({
   deckId: z.string().min(1, "Choose a deck for it to go in."),
-  term: z.string().trim().min(1, "Type the term.").max(500, "Keep the term under 500 characters."),
-  meaning: z.string().trim().max(2000, "Keep the meaning under 2000 characters.").optional(),
-  pronunciation: z.string().trim().max(200).optional(),
-  example: z.string().trim().max(2000).optional(),
+  term: z
+    .string()
+    .trim()
+    .min(1, "Type the term.")
+    .max(CARD_LIMITS.term, "Keep the term under 500 characters."),
+  meaning: z
+    .string()
+    .trim()
+    .max(CARD_LIMITS.meaning, "Keep the meaning under 2000 characters.")
+    .optional(),
+  pronunciation: z.string().trim().max(CARD_LIMITS.pronunciation).optional(),
+  example: z.string().trim().max(CARD_LIMITS.example).optional(),
   notes: z
     .string()
     .trim()
-    .max(2000)
+    .max(CARD_LIMITS.notes)
     .optional()
     .meta({ description: `${NOTES_FORMAT} The limit counts the Markdown source.` }),
   language: LanguageTag.nullable().optional(),
   tags: z.array(z.string().trim().min(1).max(40)).max(20).optional(),
-  source: z.string().trim().max(200).optional(),
+  source: z.string().trim().max(CARD_LIMITS.source).optional(),
   directions: Directions.nullable()
     .optional()
     .meta({ description: "Legacy form of `reviewModes`. Null follows the deck." }),

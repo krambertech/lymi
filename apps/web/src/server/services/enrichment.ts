@@ -1,5 +1,5 @@
-import { LanguageTag } from "@lymi/core";
-import { and, eq, inArray, isNull } from "@lymi/core/db";
+import { CARD_LIMITS, LanguageTag } from "@lymi/core";
+import { and, eq, inArray, isNull, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
@@ -15,6 +15,9 @@ export type EnrichedField = (typeof ENRICHED_FIELDS)[number];
 
 /** Cards per model call. A lesson lands in waves rather than all at once. */
 export const CARDS_PER_CALL = 10;
+
+/** `LanguageTag`'s own ceiling, so an over-long tag is dropped before it reaches the parse. */
+const LANGUAGE_MAX = 12;
 
 /** What a background enrichment run works on. One run per add. */
 export type EnrichRunParams = {
@@ -49,10 +52,10 @@ export function chunked<T>(items: readonly T[], size: number): T[][] {
 /** What one card's model reply may carry. Every key is present; null means the model had nothing. */
 const Filled = z.object({
   id: z.string(),
-  meaning: z.string().nullable(),
-  example: z.string().nullable(),
-  pronunciation: z.string().nullable(),
-  language: z.string().nullable(),
+  meaning: z.string().max(CARD_LIMITS.meaning).nullable().catch(null),
+  example: z.string().max(CARD_LIMITS.example).nullable().catch(null),
+  pronunciation: z.string().max(CARD_LIMITS.pronunciation).nullable().catch(null),
+  language: z.string().max(LANGUAGE_MAX).nullable().catch(null),
 });
 type Filled = z.infer<typeof Filled>;
 
@@ -69,10 +72,10 @@ const REPLY_SCHEMA = {
           type: "object",
           properties: {
             id: { type: "string" },
-            meaning: { type: ["string", "null"] },
-            example: { type: ["string", "null"] },
-            pronunciation: { type: ["string", "null"] },
-            language: { type: ["string", "null"] },
+            meaning: { type: ["string", "null"], maxLength: CARD_LIMITS.meaning },
+            example: { type: ["string", "null"], maxLength: CARD_LIMITS.example },
+            pronunciation: { type: ["string", "null"], maxLength: CARD_LIMITS.pronunciation },
+            language: { type: ["string", "null"], maxLength: LANGUAGE_MAX },
           },
           required: ["id", "meaning", "example", "pronunciation", "language"],
           additionalProperties: false,
@@ -157,10 +160,48 @@ async function askProvider(
   return reply.success ? reply.data.cards : [];
 }
 
+/** The source column that records who wrote a field. Language carries none. */
+const SOURCE_COLUMN = {
+  meaning: "meaningSource",
+  example: "exampleSource",
+  pronunciation: "pronunciationSource",
+} as const;
+
+/** Only a card of this learner's that is still waiting on this run. */
+function stillWorking(userId: string, cardId: string): SQL {
+  return and(
+    eq(schema.cards.id, cardId),
+    eq(schema.cards.userId, userId),
+    eq(schema.cards.enrichmentStatus, "working"),
+  ) as SQL;
+}
+
+/** True in SQL when the column holds no text, by the same rule `emptyFields` uses in memory. */
+function emptyColumn(field: EnrichedField): SQL {
+  const column = schema.cards[field];
+  return or(isNull(column), eq(sql`trim(${column})`, "")) as SQL;
+}
+
 /**
- * Fill one run of cards and settle their status. Only empty fields are written, so a card the
- * learner edited while the model was thinking keeps what they typed. Each card that gains a
- * field gets one audit row naming the fields, which Activity renders as "Enriched …".
+ * Which fields a run actually landed: the card holds the value this run wrote, and the field
+ * says the AI wrote it. A guarded write that lost its race leaves the learner's text and their
+ * own source, so it is not named.
+ */
+function landed(after: Card | undefined, write: EnrichmentWrite): EnrichedField[] {
+  if (!after) return [];
+  return ENRICHED_FIELDS.filter((field) => {
+    const value = write[field];
+    if (value === undefined || after[field] !== value) return false;
+    return field === "language" || after[SOURCE_COLUMN[field]] === "ai";
+  });
+}
+
+/**
+ * Fill one run of cards and settle their status. The model takes seconds, so every write
+ * carries its own emptiness test: a learner who types into a shimmering field between the read
+ * and the write keeps what they typed, and the field stays theirs. Each card that gains a field
+ * gets one audit row naming the fields that actually landed, which Activity renders as
+ * "Enriched …".
  */
 export async function enrichCards(
   ctx: ServiceContext,
@@ -168,42 +209,71 @@ export async function enrichCards(
   provider: TextProvider,
 ): Promise<{ enriched: number }> {
   const { db, userId, actor } = ctx;
-  const cards = await workingCards(db, userId, cardIds);
-  if (cards.length === 0) return { enriched: 0 };
+  const before = await workingCards(db, userId, cardIds);
+  if (before.length === 0) return { enriched: 0 };
   const { meaningLanguage } = await getSettings(ctx);
   const filled = new Map(
-    (await askProvider(provider, meaningLanguage, cards)).map((card) => [card.id, card]),
+    (await askProvider(provider, meaningLanguage, before)).map((card) => [card.id, card]),
   );
 
   const now = new Date();
-  const statements = [];
-  let enriched = 0;
-  for (const card of cards) {
+  const writes = [];
+  const attempted = new Map<string, EnrichmentWrite>();
+  for (const card of before) {
     const reply = filled.get(card.id);
     const write = reply ? enrichmentWrite(card, reply) : {};
-    const fields = Object.keys(write);
-    statements.push(
-      db
-        .update(schema.cards)
-        .set({ ...write, enrichmentStatus: null, updatedAt: now })
-        .where(eq(schema.cards.id, card.id)),
+    attempted.set(card.id, write);
+    for (const field of ENRICHED_FIELDS) {
+      const value = write[field];
+      if (value === undefined) continue;
+      const source = field === "language" ? {} : { [SOURCE_COLUMN[field]]: "ai" as const };
+      writes.push(
+        db
+          .update(schema.cards)
+          .set({ [field]: value, ...source, updatedAt: now })
+          .where(and(stillWorking(userId, card.id), emptyColumn(field))),
+      );
+    }
+    // After that card's fields, so each write still sees `working`.
+    writes.push(
+      db.update(schema.cards).set({ enrichmentStatus: null }).where(stillWorking(userId, card.id)),
     );
+  }
+  const [firstWrite, ...restWrites] = writes;
+  if (firstWrite) await db.batch([firstWrite, ...restWrites]);
+
+  // Read back rather than trust the patch: a guarded write may have lost a race, and Activity
+  // must name what the AI wrote, not what it tried to.
+  const after = new Map(
+    (
+      await selectIn(
+        before.map((card) => card.id),
+        (ids) =>
+          db
+            .select()
+            .from(schema.cards)
+            .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.id, ids))),
+      )
+    ).map((card) => [card.id, card]),
+  );
+  const rows = [];
+  for (const card of before) {
+    const fields = landed(after.get(card.id), attempted.get(card.id) ?? {});
     if (fields.length === 0) continue;
-    enriched += 1;
-    statements.push(
+    rows.push(
       auditStatement(db, {
         userId,
         actor,
         action: "update",
         entity: "card",
         entityId: card.id,
-        payload: write,
+        payload: Object.fromEntries(fields.map((field) => [field, after.get(card.id)?.[field]])),
       }),
     );
   }
-  const [first, ...rest] = statements;
-  if (first) await db.batch([first, ...rest]);
-  return { enriched };
+  const [firstRow, ...restRows] = rows;
+  if (firstRow) await db.batch([firstRow, ...restRows]);
+  return { enriched: rows.length };
 }
 
 /** A card whose run gives up ends at `failed`, so the screen stops waiting on it. */

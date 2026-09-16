@@ -1,8 +1,8 @@
-import { CardInput } from "@lymi/core";
+import { CardInput, CardPatch } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
 import type { Db } from "../db";
-import { addCards, cardHistory, showCard } from "./cards";
+import { addCards, cardHistory, showCard, updateCard } from "./cards";
 import { createDeck } from "./decks";
 import {
   CARDS_PER_CALL,
@@ -147,7 +147,9 @@ describe("enrichCards", () => {
       queue,
     );
     const ids = outcomes.map((o) => (o.status === "added" ? o.card.id : ""));
-    expect(outcomes.every((o) => o.status === "added" && o.card.enrichmentStatus === "working"));
+    expect(
+      outcomes.every((o) => o.status === "added" && o.card.enrichmentStatus === "working"),
+    ).toBe(true);
 
     const provider = fakeProvider({
       cards: [
@@ -253,6 +255,55 @@ describe("enrichCards", () => {
     const card = await showCard(ctx, added.card.id);
     expect(card.enrichmentStatus).toBeNull();
     expect(card.meaning).toBeNull();
+  });
+
+  it("keeps what the learner typed while the model was thinking", async () => {
+    const ctx = await learner(db, "enrich-7", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const [added] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: deck.id, term: "sbrigarsi" })],
+      queue,
+    );
+    if (added?.status !== "added") throw new Error("not added");
+
+    // The provider stands in for a slow model: the learner saves a meaning mid-call.
+    const provider: TextProvider = {
+      provider: "openai",
+      model: "test",
+      complete: async () => {
+        await updateCard(
+          ctx,
+          added.card.id,
+          CardPatch.parse({ meaning: "mine", meaningSource: "manual" }),
+        );
+        return {
+          cards: [
+            {
+              id: added.card.id,
+              meaning: "the model's",
+              example: "Sbrigati!",
+              pronunciation: null,
+              language: null,
+            },
+          ],
+        };
+      },
+    };
+    await enrichCards({ ...ctx, actor: "ai" }, [added.card.id], provider);
+
+    const card = await showCard(ctx, added.card.id);
+    expect(card.meaning).toBe("mine");
+    expect(card.meaningSource).toBe("manual");
+    // The field that was still empty is filled, and the card settles either way.
+    expect(card.example).toBe("Sbrigati!");
+    expect(card.enrichmentStatus).toBeNull();
+
+    // Activity names what landed, not what was attempted.
+    const history = await cardHistory(ctx, added.card.id);
+    const enriched = history.events.filter((e) => e.actor === "ai" && e.action === "update");
+    expect(enriched).toHaveLength(1);
+    expect(Object.keys(enriched[0]?.payload as object)).toEqual(["example"]);
   });
 
   it("marks the cards failed when the queue refuses the run, and the add still succeeds", async () => {

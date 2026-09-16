@@ -1396,6 +1396,12 @@ msgstr "Пусто в первой записи"
 msgid "Enriched {list}"
 msgstr "Дополнено: {list}"
 
+msgid "Enriched this card"
+msgstr "Карточка дополнена"
+
+msgid "Enriching this card"
+msgstr "Дополняем эту карточку"
+
 msgid "Enter after each"
 msgstr "Enter после каждого"
 

@@ -275,10 +275,10 @@ function ReadField({
         {aside}
       </div>
       {working ? (
-        <div className="grid gap-1.5 py-1">
+        // One line of the same type, so the text that lands grows the card rather than jolting it.
+        <p className="flex items-center text-md leading-relaxed" aria-hidden="true">
           <Skeleton className="h-3.5 w-full rounded-sm" />
-          <Skeleton className="h-3.5 w-2/5 rounded-sm" />
-        </div>
+        </p>
       ) : (
         (children ?? (
           <p
@@ -447,6 +447,22 @@ export function WordView({
   const waiting = (field: "meaning" | "example" | "pronunciation" | "language") =>
     filling && !card[field];
 
+  // A shimmer says nothing out loud, so the card says it: once when the AI starts on it, once
+  // when the text lands. Held per card, so moving to another word does not announce its neighbour.
+  const [enrichment, setEnrichment] = useState("");
+  const startedOn = useRef<string | null>(null);
+  useEffect(() => {
+    if (filling) {
+      startedOn.current = card.id;
+      setEnrichment(t`Enriching this card`);
+    } else if (startedOn.current === card.id) {
+      startedOn.current = null;
+      setEnrichment(t`Enriched this card`);
+    } else {
+      setEnrichment("");
+    }
+  }, [filling, card.id, t]);
+
   // A touch screen gets full-size targets; a pointer keeps the header compact.
   const size = useDesktop() ? "sm" : "md";
   const controls = (
@@ -542,7 +558,11 @@ export function WordView({
             )}
           </p>
         ) : (
-          waiting("pronunciation") && <Skeleton className="my-1 h-3.5 w-28 rounded-sm" />
+          waiting("pronunciation") && (
+            <p className="flex items-center text-md" aria-hidden="true">
+              <Skeleton className="h-3.5 w-28 rounded-sm" />
+            </p>
+          )
         )}
         <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-muted">
           {[
@@ -581,6 +601,10 @@ export function WordView({
       </header>
 
       <PictureSection card={card} modes={modes} />
+
+      <p className="sr-only" role="status">
+        {enrichment}
+      </p>
 
       <div className="grid gap-4">
         <ReadField

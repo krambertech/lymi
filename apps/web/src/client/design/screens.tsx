@@ -359,7 +359,7 @@ export const SCREENS: Entry[] = [
     slug: "insights",
     name: "Insights",
     source: "views/insights-view.tsx",
-    note: "The one screen where charts belong, and the only one where looking at them is a choice. Four numbers, each with the line that makes it mean something. Every figure draws in ink; the lights and the peak stay amber, because those are the streak and the thing to notice. The last frame is the first week, when almost nothing has happened yet.",
+    note: "The one screen where charts belong, and the only one where looking at them is a choice. Four numbers, each with the line that makes it mean something. Every figure draws in ink; the lights and today’s bar on Ahead stay amber, because those are the streak and the day you can act on. The last frame is the first week, when Recall draws its sample rather than a trend it does not have.",
     Demo: () => (
       <div className="grid gap-10">
         <Shot caption="Desktop, Insights" initial="light">

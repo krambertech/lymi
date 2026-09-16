@@ -1,6 +1,6 @@
 # Insights
 
-The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act". The two exceptions are the lights, which are the streak, and the single bar the sentence above the chart is pointing at.
+The one screen where charts belong, and the only place they are allowed. Every figure draws in **ink at graded opacity** over a `plate-2` well, never in amber: a chart wants a series colour, and if the series takes amber then this is the one screen where the accent means "data" instead of "act". The two exceptions are the lights, which are the streak, and today’s bar on Ahead, because today is the day the learner can act on and amber is the colour that means act. Amber never marks the heaviest day: that one is named in the sentence under the chart, where it can be said in words instead of competing with today for the accent.
 
 Four plates in a 2x2 grid — Recall, Consistency, Cards, Ahead — each carrying a number and one line of plain words. The line is not a caption. 91% says nothing until the plate says the schedule aims for 90, and a grid of numbers without those lines is the dashboard the product does without. Under them the month bars run full width, then the cards that keep slipping.
 

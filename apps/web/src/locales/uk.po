@@ -188,6 +188,10 @@ msgstr "{0, plural, one {Показати ще # старіший запис} fe
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, =1 {Почати розділ} one {Почати # розділ} few {Почати # розділи} many {Почати # розділів} other {Почати # розділу}}"
 
+#. placeholder {0}: busiest.count
+msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+msgstr "{0, plural, one {Сьогодні найзавантаженіший день: # картка.} few {Сьогодні найзавантаженіший день: # картки.} many {Сьогодні найзавантаженіший день: # карток.} other {Сьогодні найзавантаженіший день: # картки.}}"
+
 #. placeholder {0}: preview.existing
 msgid "{0, plural, one {Update # card} other {Update # cards}}"
 msgstr "{0, plural, one {Оновити # картку} few {Оновити # картки} many {Оновити # карток} other {Оновити # картки}}"
@@ -237,6 +241,11 @@ msgstr "{0} забуто <0>·</0> {1, plural, one {# повторення} few 
 #. placeholder {1}: outcome.deckName
 msgid "{0} is already in {1}"
 msgstr "{0} уже є в {1}"
+
+#. placeholder {0}: longWeekday(busiest.date)
+#. placeholder {1}: busiest.count
+msgid "{0} is the busiest day, with {1, plural, one {# card} other {# cards}}."
+msgstr "{0} — найзавантаженіший день: {1, plural, one {# картка} few {# картки} many {# карток} other {# картки}}."
 
 #. placeholder {0}: cards.known
 msgid "{0} known"
@@ -408,9 +417,6 @@ msgstr "{due, plural, one {картка до повторення} few {карт
 
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {# картка чекає, коли матимеш хвилинку.} few {# картки чекають, коли матимеш хвилинку.} many {# карток чекають, коли матимеш хвилинку.} other {# картки чекає, коли матимеш хвилинку.}}"
-
-msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
-msgstr "{dueSoon, plural, one {# картка протягом наступних семи днів.} few {# картки протягом наступних семи днів.} many {# карток протягом наступних семи днів.} other {# картки протягом наступних семи днів.}}"
 
 msgid "{field} becomes"
 msgstr "{field} стає"
@@ -2102,6 +2108,9 @@ msgstr "Нові нотатки: «{value}»"
 msgid "Nothing archived"
 msgstr "Архів порожній"
 
+msgid "Nothing comes back in the next seven days."
+msgstr "У найближчі сім днів нічого не повернеться."
+
 msgid "Nothing due"
 msgstr "Нічого до повторення"
 
@@ -2243,10 +2252,6 @@ msgstr "Вставлене зображення"
 
 msgid "Pause the cards"
 msgstr "Зупинити картки"
-
-#. placeholder {0}: weekday(peak.date)
-msgid "peak, {0}"
-msgstr "пік, {0}"
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "Хто вже додав колоду, далі її вчить, але нові люди додати її не можуть."

@@ -62,7 +62,7 @@ export function InsightsView({
 }: InsightsProps) {
   const { t, i18n } = useLingui();
   /* Formatters follow the interface language, which can change while this screen is open. */
-  const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
+  const longWeekday = (date: string) => i18n.date(parseLocal(date), { weekday: "long" });
 
   // On the Recall plate's label row rather than in the page header: in the header the same
   // control reads as a filter for the whole screen, and it moves this one figure only.
@@ -201,13 +201,12 @@ export function InsightsView({
     };
   });
   const series = trend.map((p) => `${p.label} ${Math.round(p.value * 100)}%`).join(", ");
-  const peak = forecast.reduce(
+  // Ties keep the earliest day, so the sentence names the one the learner reaches first.
+  const busiest = forecast.reduce(
     (a, b) => (b.count > a.count ? b : a),
-    forecast[0] ?? {
-      date: "",
-      count: 0,
-    },
+    forecast[0] ?? { date: "", count: 0 },
   );
+  const busiestIsToday = busiest.date === forecast[0]?.date;
   const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
   const monthLit = months.reduce((n, m) => n + m.lit, 0);
   const monthDays = months.reduce((n, m) => n + m.days, 0);
@@ -289,13 +288,25 @@ export function InsightsView({
 
         <StatPlate
           label={t`Ahead`}
-          value={peak.count}
-          unit={peak.count > 0 ? t`peak, ${weekday(peak.date)}` : t`due this week`}
+          value={dueSoon}
+          unit={t`due this week`}
           figure={<ForecastBars forecast={forecast} />}
-          note={t`${plural(dueSoon, {
-            one: "# card over the next seven days.",
-            other: "# cards over the next seven days.",
-          })}`}
+          /* The heaviest day moves into the sentence, where it can be said in words. As the
+             plate's headline it had to be compressed to "peak", which is a statistics term
+             in an app that writes plain lines. */
+          note={
+            dueSoon === 0
+              ? t`Nothing comes back in the next seven days.`
+              : busiestIsToday
+                ? t`${plural(busiest.count, {
+                    one: "Today is the busiest day, with # card.",
+                    other: "Today is the busiest day, with # cards.",
+                  })}`
+                : t`${longWeekday(busiest.date)} is the busiest day, with ${plural(busiest.count, {
+                    one: "# card",
+                    other: "# cards",
+                  })}.`
+          }
         />
       </div>
 
@@ -423,31 +434,49 @@ interface ForecastBarsProps {
 /**
  * Bars on a baseline, using the whole figure box. A track behind each one reads as a second
  * object stacked on the bar rather than as the space it could fill.
+ *
+ * Amber marks today, which is the day the learner can act on, rather than the heaviest day,
+ * which the sentence under the chart already names. Today is also named in words and set in
+ * ink, so it is never marked by colour alone.
+ *
+ * Every bar carries its count. Two cards and three cards are the same bar to the eye at this
+ * height, and a tooltip is not an answer on a touch device.
  */
 function ForecastBars({ forecast }: ForecastBarsProps) {
-  const { i18n } = useLingui();
+  const { t, i18n } = useLingui();
   const weekday = (date: string) => i18n.date(parseLocal(date), { weekday: "short" });
-  const peak = Math.max(0, ...forecast.map((d) => d.count));
-  const maxDue = Math.max(1, peak);
+  const maxDue = Math.max(1, ...forecast.map((d) => d.count));
+  /* The forecast starts at today by contract, so today is the first day, never a match. */
+  const dayName = (date: string, i: number) => (i === 0 ? t`Today` : weekday(date));
   return (
     <div
       className="flex h-full w-full items-stretch gap-1.5"
       role="img"
-      aria-label={forecast.map((d) => `${weekday(d.date)} ${d.count}`).join(", ")}
+      aria-label={forecast.map((d, i) => `${dayName(d.date, i)} ${d.count}`).join(", ")}
     >
-      {forecast.map((d) => (
-        <div key={d.date} className="flex flex-1 flex-col gap-1.5">
+      {forecast.map((d, i) => (
+        <div key={d.date} className="flex flex-1 flex-col gap-1">
+          <span
+            className={clsx(
+              "text-center text-2xs tabular-nums",
+              i === 0 ? "font-medium text-text" : d.count > 0 ? "text-muted" : "text-faint",
+            )}
+          >
+            {i18n.number(d.count)}
+          </span>
           <div className="flex flex-1 items-end border-b border-edge">
             <i
-              className={clsx(
-                "block w-full rounded-t-[4px]",
-                d.count === peak && peak > 0 ? "bg-amber" : "bg-text/35",
-              )}
+              className={clsx("block w-full rounded-t-[4px]", i === 0 ? "bg-amber" : "bg-text/35")}
               style={{ height: d.count > 0 ? `max(3px, ${(d.count / maxDue) * 100}%)` : 0 }}
             />
           </div>
-          <span className="text-center text-2xs text-muted tabular-nums">
-            {weekday(d.date).slice(0, 2)}
+          <span
+            className={clsx(
+              "truncate text-center text-2xs",
+              i === 0 ? "font-medium text-text" : "text-muted",
+            )}
+          >
+            {i === 0 ? dayName(d.date, i) : weekday(d.date).slice(0, 2)}
           </span>
         </div>
       ))}

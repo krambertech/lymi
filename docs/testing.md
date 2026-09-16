@@ -25,6 +25,10 @@ pnpm exec playwright install chromium webkit
 
 Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test.
 
+Every page runs under `prefers-reduced-motion: reduce`, the product's own quieter twin. Playwright refuses to click a part whose box is still moving, and a runner without a GPU can hold one there past the test timeout; no journey asserts an animation, so the reduced form is what they drive. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
+
+CI runs three of the runner's four cores as workers, leaving the fourth for the Vite server, both Workers and their one D1. Files run in parallel and the tests inside a file stay serial in one worker, which is the order the few files whose tests share an account rely on: `e2eEmail` in `e2e/settings.mjs` keys an account by test, project, retry and repeat, so nothing else is shared. `e2e/global-setup.ts` constructs Better Auth once before any worker opens a browser, because the Worker seeds the OAuth resource row the first time it builds Better Auth and parallel workers would race that one write against the single local D1. A new spec that shares an account with an existing one belongs in that spec's file.
+
 ## Component tests in real browsers
 
 Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components` project in `apps/web/vite.config.ts`. Each test runs three times: desktop Chromium at 1280 px with a fine pointer, and Chromium and WebKit as a 390 px touch device. A test reads `inject("machine")` to know which shape to expect, so one file proves both shapes of an adaptive component. `pnpm test` runs them after the unit tests, so the browsers must be installed. Workers Builds sets `WORKERS_CI=1` and has no browsers, so the production build skips this project and relies on GitHub CI, which runs it before merge:
@@ -33,6 +37,8 @@ Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components`
 pnpm exec playwright install chromium webkit
 pnpm --filter @lymi/web exec vitest run --project components
 ```
+
+Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys: these gate the same merges.
 
 WebKit does not focus a button that is clicked, so a test about focus return opens the overlay from the keyboard. A swipe is not covered here; it belongs in a Playwright journey on the iPhone project.
 
@@ -43,6 +49,8 @@ WebKit does not focus a button that is clicked, so a test about focus return ope
 ## CI policy
 
 `pnpm verify` is the canonical local base gate. CI keeps those commands in one quality job and the same fail-fast order, with formatting and lint, migration safety, build, TypeScript, and unit tests as distinct steps. A short planning job selects coverage first, then the quality job and required browser E2E run in parallel. A final check reports every gate and fails unless the plan, quality job and required browser job succeeded.
+
+A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so queued pushes to `main` used to cancel each other before either started and neither commit was verified; superseding the older run verifies the newest commit instead. The browser job's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
 
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 

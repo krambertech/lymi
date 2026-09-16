@@ -6,9 +6,10 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   timeout: process.env.CI ? 60_000 : 30_000,
   retries: process.env.CI ? 1 : 0,
-  // The local Worker shares one D1 database. Serial browser sessions avoid racing
-  // Better Auth's one-time OAuth resource initialization against that database.
-  workers: 1,
+  // Three of the runner's four cores, leaving the fourth for the servers; what makes parallel
+  // files safe, and why the tests inside one stay serial, is in docs/testing.md.
+  workers: process.env.CI ? 3 : undefined,
+  globalSetup: "./e2e/global-setup.ts",
   reporter: process.env.CI
     ? [["github"], ["html", { open: "never" }]]
     : [["list"], ["html", { open: "never" }]],
@@ -17,6 +18,8 @@ export default defineConfig({
     screenshot: "only-on-failure",
     trace: "on-first-retry",
     video: "on-first-retry",
+    // A part that is still moving is not clickable, and no journey asserts an animation. docs/testing.md.
+    reducedMotion: "reduce",
   },
   projects: [
     {

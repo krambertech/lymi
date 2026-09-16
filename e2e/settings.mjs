@@ -75,8 +75,11 @@ export function e2eInboxEmail(account, project, retry, repeat) {
   return e2eEmail(account, project, retry, repeat).replace(/@lymi\.local$/, "@lymi.test");
 }
 
-const everyAccount = (build) =>
-  e2eAccounts.flatMap((account) =>
+/** Only the password journeys need an address with an inbox; every other account is a persona. */
+const inboxAccounts = ["password-account", "password-reset"];
+
+const everyVariant = (accounts, build) =>
+  accounts.flatMap((account) =>
     e2eProjects.flatMap((project) =>
       e2eRetries.flatMap((retry) =>
         e2eRepeats.map((repeat) => build(account, project, retry, repeat)),
@@ -84,4 +87,7 @@ const everyAccount = (build) =>
     ),
   );
 
-export const e2eAllowedEmails = [...everyAccount(e2eEmail), ...everyAccount(e2eInboxEmail)];
+export const e2eAllowedEmails = [
+  ...everyVariant(e2eAccounts, e2eEmail),
+  ...everyVariant(inboxAccounts, e2eInboxEmail),
+];

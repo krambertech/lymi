@@ -57,17 +57,24 @@ export async function signInAsTestLearner(
   }
 }
 
-/**
- * Create a local account through the dev email form, as a classmate arriving on a join or add
- * page would. An address outside `@lymi.local` has to be confirmed, so this opens the link the
- * local outbox holds; that link signs the learner in and lands them on where they started.
- */
-export async function createAccountThroughDevForm(page: Page, email: string) {
+/** Ask the dev email form to create an account, without waiting for what it leads to. */
+export async function submitDevSignUp(page: Page, email: string) {
   await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
   const panel = page.getByRole("form", { name: "Dev sign-in" });
   await panel.getByRole("textbox", { name: "Email", exact: true }).fill(email);
   await panel.getByRole("textbox", { name: "Password", exact: true }).fill(password);
+  const created = page.waitForResponse((r) => r.url().endsWith("/api/auth/sign-up/email"));
   await panel.getByRole("button", { name: "Create account", exact: true }).click();
+  await created;
+}
+
+/**
+ * Create a local account through the dev email form, as a classmate arriving on a join or add
+ * page would. An address outside `@lymi.local` has to be confirmed, so this opens the link the
+ * local outbox holds; that link signs the learner in and lands them where they started.
+ */
+export async function createAccountThroughDevForm(page: Page, email: string) {
+  await submitDevSignUp(page, email);
   await page.goto(await confirmationLink(page, email));
 }
 
@@ -88,4 +95,13 @@ async function confirmationLink(page: Page, email: string): Promise<string> {
   const link = /https?:\/\/\S+/.exec(message?.text ?? "")?.[0];
   expect(link, "no link in the confirmation email").toBeDefined();
   return link as string;
+}
+
+/**
+ * Nothing was sent to this address. A sign-up the allowlist refused answers exactly like one
+ * it accepted, so the outbox is where the difference shows.
+ */
+export async function expectNoAccountEmail(page: Page, email: string) {
+  const response = await page.request.post("/api/dev/outbox", { data: { to: email } });
+  expect(response.status(), `an email reached ${email}`).toBe(404);
 }

@@ -1,4 +1,9 @@
-import { createAccountThroughDevForm, signInAsTestLearner } from "./auth";
+import {
+  createAccountThroughDevForm,
+  expectNoAccountEmail,
+  signInAsTestLearner,
+  submitDevSignUp,
+} from "./auth";
 import { type Browser, expect, type Page, type TestInfo, test } from "./test";
 
 /**
@@ -62,10 +67,14 @@ test("an owner shares a deck and a classmate joins through the link", async ({
   const classmate = await signedOutPage(browser);
 
   await test.step("a signed-out classmate cannot create an account without the link", async () => {
+    const uninvited = outsider(testInfo, "uninvited");
     await classmate.goto("/login?dev=1");
-    await createAccountThroughDevForm(classmate, outsider(testInfo, "uninvited"));
-    await expect(classmate.getByText(/not on the list/)).toBeVisible();
+    await submitDevSignUp(classmate, uninvited);
+
+    // The refusal is silent by design, so the proof is that nothing was created or sent.
+    await expectNoAccountEmail(classmate, uninvited);
     await expect(classmate).toHaveURL(/\/login/);
+    expect((await classmate.request.get("/api/me")).status()).toBe(401);
   });
 
   await test.step("the join link admits the classmate and lands them in the deck", async () => {

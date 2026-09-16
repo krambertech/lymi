@@ -3,35 +3,6 @@ import { clsx } from "clsx";
 import { CircleAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "./button";
-import { Lantern } from "./lantern";
-
-interface EmptyStateProps {
-  title: ReactNode;
-  /** Why it is empty and what to do. One sentence. */
-  body?: ReactNode | undefined;
-  action?: ReactNode | undefined;
-  className?: string | undefined;
-}
-
-/**
- * A whole screen with nothing to outline yet, such as one that is coming soon. The brand lantern,
- * still: an empty screen says nothing about the streak. DESIGN.md, "Empty states".
- */
-export function EmptyState({ title, body, action, className }: EmptyStateProps) {
-  return (
-    <section
-      className={clsx(
-        "flex flex-col items-center justify-center gap-1 py-10 text-center",
-        className,
-      )}
-    >
-      <Lantern className="mb-3 size-16" />
-      <h2 className="text-lg font-medium text-balance">{title}</h2>
-      {body && <p className="max-w-[40ch] text-base text-text-2 text-pretty">{body}</p>}
-      {action && <div className="mt-4 flex flex-wrap justify-center gap-2">{action}</div>}
-    </section>
-  );
-}
 
 interface ErrorStateProps {
   /** "Couldn't load [thing]". */

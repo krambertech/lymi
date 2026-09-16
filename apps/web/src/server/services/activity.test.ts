@@ -40,7 +40,10 @@ afterAll(async () => {
   await dispose();
 });
 
-const entries = async (ctx: ServiceContext = kateryna) => (await listActivity(ctx)).entries;
+// Every test in this file writes to one database, so a read that stops at the newest page would
+// quietly stop covering the tests that ran first.
+const entries = async (ctx: ServiceContext = kateryna) =>
+  (await listActivity(ctx, { limit: 200 })).entries;
 const inDeck = async (deckId: string) =>
   (await entries()).filter((entry) => entry.deck?.id === deckId);
 
@@ -168,6 +171,28 @@ describe("naming the caller", () => {
       .where(eq(schema.auditLog.entityId, (await inDeck(deck.id))[0]?.cards[0]?.id ?? ""));
     const [row] = await inDeck(deck.id);
     expect(row?.app).toBe("Claude");
+  });
+});
+
+describe("what the AI filled in", () => {
+  it("says a card was enriched, not edited", async () => {
+    const deck = await createDeck(kateryna, { name: "Enriched", defaultLanguage: "it" });
+    const [added] = await addCards(kateryna, [{ deckId: deck.id, term: "la fattura" }]);
+    if (added?.status !== "added") throw new Error("the card was not added");
+    // What `enrichment.ts` writes when a run fills empty fields on a card the learner added.
+    await db.insert(schema.auditLog).values({
+      id: newId(),
+      userId: kateryna.userId,
+      actor: "ai",
+      action: "update",
+      entity: "card",
+      entityId: added.card.id,
+      payload: { meaning: "the bill" },
+    });
+
+    const [row] = await inDeck(deck.id);
+    expect(row).toMatchObject({ kind: "cards_enriched", actor: "ai", count: 1 });
+    expect(row?.cards[0]?.term).toBe("la fattura");
   });
 });
 

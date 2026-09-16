@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { safeProductReturnPath } from "../../shared/origins";
 import { identifyApp } from "../components/app-mark";
@@ -139,21 +139,24 @@ function Login() {
 
   const app = clientId ? identifyApp(clientId, claimed.data) : undefined;
 
-  /** A confirmed address already holds a session by the time this page loads. */
-  const confirmed = useQuery({
-    queryKey: ["login-confirmed", verify],
-    enabled: verify === "1" && !error,
-    retry: false,
-    queryFn: async () => {
+  /**
+   * A confirmed address already holds a session by the time the link lands here, so this
+   * page's only job is to send the learner on: back to an MCP client's authorization, or to
+   * where they started. A stale signed query leaves them signed in with the panel to read.
+   */
+  const resumed = useRef(false);
+  useEffect(() => {
+    if (verify !== "1" || error || resumed.current) return;
+    resumed.current = true;
+    void (async () => {
       const session = await authClient.getSession();
-      if (!session.data) return null;
+      if (!session.data) return;
       clearPersistedLearnerState();
       queryClient.clear();
-      if (clientId && (await continueOAuthAuthorization())) return null;
+      if (clientId && (await continueOAuthAuthorization())) return;
       window.location.assign(returnTo);
-      return null;
-    },
-  });
+    })();
+  }, [verify, error, clientId, queryClient, returnTo]);
 
   function clearMessages() {
     setFailed(null);
@@ -310,7 +313,7 @@ function Login() {
       app={app}
       mode={mode}
       onModeChange={switchTo}
-      busy={busy || confirmed.isFetching}
+      busy={busy}
       submitting={submitting}
       email={email}
       onEmailChange={(value) => {

@@ -268,8 +268,8 @@ function ReadField({
 }) {
   return (
     <div className="grid gap-1">
-      {/* Centred, not baseline: the badge is a pill, and a pill has no baseline to share. */}
-      <div className="flex min-h-[22px] items-center justify-between gap-3">
+      {/* The badge belongs to the label, not to the far edge of the panel. */}
+      <div className="flex min-h-[17px] flex-wrap items-center gap-2">
         <span className="text-sm font-medium text-text-2">{label}</span>
         {aside}
       </div>
@@ -534,7 +534,7 @@ export function WordView({
           )}
         </h1>
         {card.pronunciation ? (
-          <p className="flex flex-wrap items-center gap-2 text-md text-muted">
+          <p className="flex flex-wrap items-center gap-1.5 text-md text-muted">
             <span className="[overflow-wrap:anywhere]">{card.pronunciation}</span>
             {card.pronunciationSource && (
               <SourceChip source={card.pronunciationSource} field="pronunciation" compact />

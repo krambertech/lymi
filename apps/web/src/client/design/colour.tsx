@@ -90,6 +90,12 @@ const TOKENS: Token[] = [
   },
   { name: "danger-soft", role: "The danger button at rest, and error tints." },
   {
+    name: "ai",
+    role: "What the AI wrote. The source badge only; enriched text stays ink.",
+    on: "canvas",
+  },
+  { name: "ai-soft", role: "The source badge's ground." },
+  {
     name: "ring",
     role: "The focus outline on every control. Neutral, never amber.",
     on: "canvas",

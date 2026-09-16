@@ -55,7 +55,7 @@ export const labels: Group = {
       slug: "source-chip",
       name: "Source chip",
       source: "components/chip.tsx",
-      note: "Says who wrote a field, so a generated meaning is never mistaken for one from the lesson. The compact form is the badge that sits beside the text itself.",
+      note: "Says who wrote a field, so a generated meaning is never mistaken for one from the lesson. The compact form is the badge that sits beside the field's label.",
       Demo: () => (
         <Variants
           items={[
@@ -71,7 +71,7 @@ export const labels: Group = {
             },
             {
               label: "AI",
-              note: "Generated. A dashed edge on top of the label.",
+              note: "Generated. Violet, the one source with a colour.",
               render: () => <SourceChip source="ai" field="meaning" />,
             },
             {
@@ -81,7 +81,7 @@ export const labels: Group = {
             },
             {
               label: "Compact",
-              note: "Beside the text itself. A screen reader still hears the whole sentence.",
+              note: "Beside the field's label. A screen reader still hears the whole sentence.",
               render: () => (
                 <span className="flex flex-wrap items-center gap-1.5">
                   <SourceChip source="ai" field="meaning" compact />

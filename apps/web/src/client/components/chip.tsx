@@ -11,7 +11,7 @@ export type ChipTone = "default" | "ai" | "danger";
 
 const tones: Record<ChipTone, string> = {
   default: "bg-plate-2 text-text-2",
-  ai: "border border-dashed border-edge-2 bg-transparent text-muted",
+  ai: "bg-ai-soft text-ai",
   danger: "bg-danger-soft text-danger",
 };
 
@@ -22,7 +22,7 @@ export function Chip({
   className,
 }: {
   tone?: ChipTone | undefined;
-  size?: "sm" | "md" | "lg" | undefined;
+  size?: "xs" | "sm" | "md" | "lg" | undefined;
   children: ReactNode;
   className?: string | undefined;
 }) {
@@ -33,6 +33,7 @@ export function Chip({
         size === "lg" && "h-7 gap-2 px-3 text-sm",
         size === "md" && "h-[26px] px-2.5 text-xs",
         size === "sm" && "h-[22px] px-2 text-2xs",
+        size === "xs" && "h-[17px] gap-1 px-1.5 text-2xs",
         tones[tone],
         className,
       )}
@@ -112,10 +113,11 @@ const sourceLabels: Record<SourceField | "field", Record<FieldSource, MessageDes
 
 /**
  * Where a field's content came from. AI text is always labelled so it is never mistaken for
- * the lesson. The dashed edge is the "not confirmed" signal, on top of the label.
+ * the lesson, and it is the one source with a colour: the lesson and the learner are the
+ * ordinary case and stay in ink.
  *
- * `compact` is the badge form: the mark and one word, beside the text it belongs to. It keeps
- * the whole sentence for a screen reader, because two letters are not a sentence.
+ * `compact` is the badge form: the mark and one word, beside the label of the field it belongs
+ * to. It keeps the whole sentence for a screen reader, because two letters are not a sentence.
  */
 export function SourceChip({
   source,
@@ -134,8 +136,8 @@ export function SourceChip({
   const Icon = m.icon;
   const label = i18n._(sourceLabels[field ?? "field"][source]);
   return (
-    <Chip tone={m.tone} size={compact ? "sm" : size}>
-      <Icon className="size-3" aria-hidden="true" />
+    <Chip tone={m.tone} size={compact ? "xs" : size}>
+      <Icon className={compact ? "size-2.5" : "size-3"} aria-hidden="true" />
       {compact ? (
         <>
           <span aria-hidden="true">{i18n._(m.mark)}</span>

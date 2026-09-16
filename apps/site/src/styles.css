@@ -120,6 +120,9 @@
   --state-known: oklch(0.58 0.13 155);
   --danger: oklch(0.52 0.19 28);
   --danger-soft: oklch(0.52 0.19 28 / 0.1);
+  /* What the AI wrote. The product marks an enriched field with it; the site mirrors the palette. */
+  --ai: oklch(0.48 0.16 305);
+  --ai-soft: oklch(0.48 0.16 305 / 0.1);
 
   --ring: oklch(0.2 0.03 60 / 0.6);
   --scrim: oklch(0.2 0.02 50 / 0.35);
@@ -166,6 +169,8 @@
   --state-known: var(--good);
   --danger: oklch(0.74 0.15 28);
   --danger-soft: oklch(0.74 0.15 28 / 0.14);
+  --ai: oklch(0.79 0.11 305);
+  --ai-soft: oklch(0.79 0.11 305 / 0.16);
 
   --ring: oklch(0.95 0.01 85 / 0.7);
   --scrim: oklch(0 0 0 / 0.55);
@@ -217,6 +222,8 @@
   --color-state-known: var(--state-known);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
+  --color-ai: var(--ai);
+  --color-ai-soft: var(--ai-soft);
   --color-grade-forgot: var(--danger);
   --color-grade-hard: var(--muted);
   --color-grade-good: var(--good);

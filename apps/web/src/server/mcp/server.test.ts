@@ -213,6 +213,7 @@ describe("Lymi MCP server", () => {
         sectionProgression: "automatic",
         total: 12,
         due: 3,
+        archivedAt: null,
         ...owned,
       },
     ]);
@@ -251,7 +252,50 @@ describe("Lymi MCP server", () => {
     });
     expect(services.listDecks).toHaveBeenCalledWith(
       expect.objectContaining({ userId: "user-1", actor: "mcp" }),
+      { archived: undefined },
     );
+  });
+
+  it("lists archived decks with when each was archived, so one can be found to restore", async () => {
+    const archivedAt = new Date("2026-09-01T10:00:00.000Z");
+    services.listDecks.mockResolvedValue([
+      {
+        id: deck.id,
+        name: deck.name,
+        description: null,
+        defaultLanguage: "it",
+        directions: "recognition",
+        reviewModes: [{ cue: "term", target: "meaning" }],
+        position: 0,
+        seriesId: null,
+        sectionProgression: "automatic",
+        total: 12,
+        due: 0,
+        archivedAt,
+        ...owned,
+      },
+    ]);
+    services.getSettings.mockResolvedValue({
+      userId: "user-1",
+      appLanguage: "uk",
+      meaningLanguage: "uk",
+      dailyGoal: 50,
+      dailyGoalChosenAt: null,
+      reviewTimezone: null,
+      reviewTimezoneMode: "automatic",
+      reviewTimezoneUpdatedAt: null,
+      createdAt: now,
+      updatedAt: now,
+    });
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "list_decks", arguments: { archived: true } });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.listDecks).toHaveBeenCalledWith(expect.anything(), { archived: true });
+    expect(
+      (res.structuredContent as { decks: { archivedAt?: string }[] }).decks[0]?.archivedAt,
+    ).toBe(archivedAt.toISOString());
   });
 
   it("adds cards through the service layer and reports duplicates as skipped", async () => {

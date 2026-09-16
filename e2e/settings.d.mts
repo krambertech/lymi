@@ -6,6 +6,7 @@ export type E2EAccount =
   | "optional-meaning"
   | "more-fields"
   | "archived-deck"
+  | "archived-page"
   | "responsive-creation"
   | "review-returns"
   | "review-queued"

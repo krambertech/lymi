@@ -21,6 +21,7 @@ export const decks: DeckSummary[] = [
     sectionProgression: "automatic",
     total: 64,
     due: 8,
+    archivedAt: null,
     ...mine,
   },
   {
@@ -35,6 +36,7 @@ export const decks: DeckSummary[] = [
     sectionProgression: "automatic",
     total: 41,
     due: 3,
+    archivedAt: null,
     ...mine,
   },
   {
@@ -52,6 +54,7 @@ export const decks: DeckSummary[] = [
     sectionProgression: "automatic",
     total: 12,
     due: 0,
+    archivedAt: null,
     ...mine,
   },
   {
@@ -66,6 +69,7 @@ export const decks: DeckSummary[] = [
     sectionProgression: "automatic",
     total: 38,
     due: 5,
+    archivedAt: null,
     role: "learner",
     owner: { id: "u2", name: "Liis" },
   },

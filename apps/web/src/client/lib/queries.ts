@@ -47,6 +47,16 @@ export const seriesQuery = queryOptions({
   staleTime: 0,
   refetchOnWindowFocus: true,
 });
+export const archivedDecksQuery = queryOptions({
+  queryKey: ["decks", "archived"],
+  queryFn: api.archivedDecks,
+  staleTime: 0,
+});
+export const archivedCardsQuery = queryOptions({
+  queryKey: ["cards", "archived"],
+  queryFn: api.archivedCards,
+  staleTime: 0,
+});
 export const archivedSeriesQuery = queryOptions({
   queryKey: ["series", "archived"],
   queryFn: api.archivedSeries,

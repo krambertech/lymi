@@ -1,6 +1,6 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
 import { newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
-import { and, asc, desc, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
+import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
@@ -211,7 +211,8 @@ export const SEARCH_LIMIT = 200;
  *
  * Active means the card and its deck are both unarchived: archiving a deck hides its cards
  * without touching them, so a card-only check would surface cards the learner cannot see.
- * `archived` returns the cards hidden either way.
+ * `archived` returns only cards archived on their own, in a deck that is still active, because
+ * those are the ones restore can bring back; a card inside an archived deck returns with its deck.
  */
 export async function searchCards({ db, userId }: ServiceContext, search: CardSearchInput) {
   const limit = Math.min(Math.max(search.limit ?? 50, 1), SEARCH_LIMIT);
@@ -224,13 +225,13 @@ export async function searchCards({ db, userId }: ServiceContext, search: CardSe
       and(
         memberOf(userId),
         search.archived
-          ? or(isNotNull(schema.cards.archivedAt), isNotNull(schema.decks.archivedAt))
+          ? and(isNotNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt))
           : and(isNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt)),
         search.deckId ? eq(schema.cards.deckId, search.deckId) : undefined,
         search.language ? eq(schema.cards.language, search.language) : undefined,
       ),
     )
-    .orderBy(desc(schema.cards.createdAt))
+    .orderBy(search.archived ? desc(schema.cards.archivedAt) : desc(schema.cards.createdAt))
     .limit(needle ? SEARCH_SCAN_LIMIT : limit);
   const matched = needle
     ? rows.filter((row) => matchesSearch(row.card, needle)).slice(0, limit)

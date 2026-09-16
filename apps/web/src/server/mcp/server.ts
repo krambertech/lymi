@@ -117,14 +117,23 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "List decks",
       description:
-        "Every active deck with its card count and how many cards are due now, plus the language meanings are written in. Call this first: card adds need a deck id.",
-      inputSchema: z.object({}),
+        "Every active deck with its card count and how many cards are due now, plus the language meanings are written in. Call this first: card adds need a deck id. " +
+        "Set archived to true to list archived decks instead, for example to find one to restore.",
+      inputSchema: z.object({
+        archived: z
+          .boolean()
+          .optional()
+          .describe("Archived decks instead of active ones. Off by default."),
+      }),
       outputSchema: DecksOut,
       ...readTool,
     },
-    () =>
+    ({ archived }) =>
       run("list_decks", async () => {
-        const [decks, settings] = await Promise.all([listDecks(ctx), getSettings(ctx)]);
+        const [decks, settings] = await Promise.all([
+          listDecks(ctx, { archived }),
+          getSettings(ctx),
+        ]);
         return result({
           meaningLanguage: settings.meaningLanguage,
           decks: decks.map(deckSummary),
@@ -1070,6 +1079,11 @@ const DeckSummaryOut = z.object({
   seriesId: z.string().nullable().describe("The learner's series the deck is in"),
   total: z.number().int(),
   due: z.number().int(),
+  archivedAt: z
+    .string()
+    .nullable()
+    .optional()
+    .describe("When the deck was archived. Only on archived decks."),
 });
 
 function deckSummary(deck: Awaited<ReturnType<typeof listDecks>>[number]) {
@@ -1083,6 +1097,7 @@ function deckSummary(deck: Awaited<ReturnType<typeof listDecks>>[number]) {
     seriesId: deck.seriesId,
     total: deck.total,
     due: deck.due,
+    ...(deck.archivedAt ? { archivedAt: deck.archivedAt.toISOString() } : {}),
   };
 }
 

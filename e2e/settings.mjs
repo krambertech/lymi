@@ -7,6 +7,7 @@ export const e2eAccounts = [
   "more-fields",
   "archived-deck",
   "archived-page",
+  "library-offline",
   "responsive-creation",
   "long-cards",
   "review-returns",

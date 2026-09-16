@@ -1137,6 +1137,9 @@ msgstr "Не вдалося завантажити архівовані сері
 msgid "Couldn’t load Insights"
 msgstr "Не вдалося завантажити Огляд"
 
+msgid "Couldn’t load Library"
+msgstr "Не вдалося завантажити Бібліотеку"
+
 msgid "Couldn’t load the picture"
 msgstr "Не вдалося завантажити зображення"
 

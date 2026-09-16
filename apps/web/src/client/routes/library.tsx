@@ -66,6 +66,9 @@ function DeckList() {
     <>
       <LibraryView
         decks={decks.data}
+        failed={decks.isError && decks.data === undefined}
+        onRetry={() => void decks.refetch()}
+        retrying={decks.isFetching}
         series={series.data}
         onAdd={() => add.openCard()}
         onCreateDeck={add.openDeck}

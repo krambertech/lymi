@@ -1137,6 +1137,9 @@ msgstr "Couldn’t load archived series. Try again."
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
 
+msgid "Couldn’t load Library"
+msgstr "Couldn’t load Library"
+
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
 

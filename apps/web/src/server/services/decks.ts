@@ -1,6 +1,6 @@
 import type { DeckInput } from "@lymi/core";
 import { newId } from "@lymi/core";
-import { and, asc, eq, isNull, sql } from "@lymi/core/db";
+import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { audit } from "../audit";
 import { schema } from "../db";
 import { type CardView, presentCards } from "./card-view";
@@ -20,11 +20,18 @@ import { getSettings } from "./settings";
 /** Whether a state is asked now; a mode turned off keeps its states uncounted (ADR 0007, ADR 0014). */
 export const asked = sql.raw(askedSql());
 
-/** All active decks the learner can see, with how many of their cards can be reviewed, in the learner's order. */
-export async function listDecks(ctx: ServiceContext) {
+/**
+ * The decks the learner can see, in their order. Active ones carry how many cards can be reviewed;
+ * archived ones skip that count, which nothing can act on, and come back newest first.
+ */
+export async function listDecks(
+  ctx: ServiceContext,
+  opts: { archived?: boolean | undefined } = {},
+) {
   const { db, userId } = ctx;
-  const zone = (await getSettings(ctx)).reviewTimezone ?? "UTC";
-  const due = await drawableByDeck(ctx, { zone });
+  const due = opts.archived
+    ? new Map<string, number>()
+    : await drawableByDeck(ctx, { zone: (await getSettings(ctx)).reviewTimezone ?? "UTC" });
   const rows = await db
     .select({
       id: schema.decks.id,
@@ -36,6 +43,7 @@ export async function listDecks(ctx: ServiceContext) {
       seriesId: effectiveSeriesId(userId),
       sectionProgression: schema.decks.sectionProgression,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
+      archivedAt: schema.decks.archivedAt,
       ownerId: schema.decks.userId,
       ownerName: schema.user.name,
       memberRole: schema.deckMembers.role,
@@ -50,8 +58,17 @@ export async function listDecks(ctx: ServiceContext) {
         isNull(schema.deckMembers.removedAt),
       ),
     )
-    .where(and(memberOf(userId), isNull(schema.decks.archivedAt)))
-    .orderBy(deckOrder(userId), asc(schema.decks.createdAt));
+    .where(
+      and(
+        memberOf(userId),
+        opts.archived ? isNotNull(schema.decks.archivedAt) : isNull(schema.decks.archivedAt),
+      ),
+    )
+    .orderBy(
+      ...(opts.archived
+        ? [desc(schema.decks.archivedAt), desc(schema.decks.createdAt)]
+        : [deckOrder(userId), asc(schema.decks.createdAt)]),
+    );
   return rows.map(({ ownerId, ownerName, memberRole, ...deck }) => ({
     ...deck,
     reviewModes: deckModes(deck.directions),

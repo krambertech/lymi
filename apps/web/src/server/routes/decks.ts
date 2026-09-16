@@ -11,7 +11,7 @@ import {
 import { Hono } from "hono";
 import { z } from "zod";
 import { publisherEmails } from "../env";
-import { body, ctxOf, describe } from "../http";
+import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
   archiveDeck,
@@ -32,15 +32,26 @@ import {
 
 export const decks = new Hono<AppEnv>();
 
+const ListQuery = z.object({
+  archived: z
+    .stringbool()
+    .optional()
+    .meta({ description: "Archived decks instead of active ones. Off by default." }),
+});
+
 decks.get(
   "/",
   describe({
     tags: ["Decks"],
     summary: "List decks",
-    description: "Active decks in the learner's order, each with its total and due counts.",
+    description:
+      "Active decks in the learner's order, each with its total and due counts. " +
+      "`archived=true` lists archived decks newest first instead, with no due count to act on.",
     ok: { schema: z.array(DeckSummaryOut), description: "Decks" },
+    errors: [400],
   }),
-  async (c) => c.json(await listDecks(ctxOf(c))),
+  query(ListQuery, "query"),
+  async (c) => c.json(await listDecks(ctxOf(c), c.req.valid("query"))),
 );
 
 decks.post(

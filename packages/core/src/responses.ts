@@ -87,6 +87,7 @@ export const DeckSummaryOut = z
     sectionProgression: SectionProgression,
     total: z.number().int().meta({ description: "Active cards in the deck" }),
     due: z.number().int().meta({ description: "Cards with a direction due now for the caller" }),
+    archivedAt: Timestamp.nullable().meta({ description: "Null while the deck is active" }),
     ...Membership,
   })
   .meta({ id: "DeckSummary" });

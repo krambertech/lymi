@@ -1,7 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { toast } from "../components/ui/toast";
+import { api, type CardHit, type DeckSummary } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { ComingSoonView } from "../views/coming-soon-view";
+import { archivedCardsQuery, archivedDecksQuery } from "../lib/queries";
+import { ArchivedView } from "../views/archived-view";
 
 export const Route = createFileRoute("/archived")({
   component: Archived,
@@ -10,10 +14,65 @@ export const Route = createFileRoute("/archived")({
 function Archived() {
   const { t } = useLingui();
   useDocumentTitle(t`Archived`);
+  const qc = useQueryClient();
+  const decks = useQuery(archivedDecksQuery);
+  const cards = useQuery(archivedCardsQuery);
+  // A restore moves a deck or card between every list that counts it, so all of them refetch.
+  const invalidate = () => {
+    qc.invalidateQueries({ queryKey: ["decks"] });
+    qc.invalidateQueries({ queryKey: ["cards"] });
+    qc.invalidateQueries({ queryKey: ["series"] });
+    qc.invalidateQueries({ queryKey: ["queue"] });
+  };
+
+  const undoDeck = useMutation({
+    mutationFn: (id: string) => api.archiveDeck(id),
+    onSuccess: invalidate,
+  });
+  const undoCard = useMutation({
+    mutationFn: (id: string) => api.archiveCard(id),
+    onSuccess: invalidate,
+  });
+  const restoreDeck = useMutation({
+    mutationFn: (deck: DeckSummary) => api.restoreDeck(deck.id),
+    onSuccess: (_, deck) => {
+      invalidate();
+      toast.add({
+        title: t`Restored “${deck.name}”`,
+        actionProps: { children: t`Undo`, onClick: () => undoDeck.mutate(deck.id) },
+      });
+    },
+  });
+  const restoreCard = useMutation({
+    mutationFn: (card: CardHit) => api.restoreCard(card.id),
+    onSuccess: (_, card) => {
+      invalidate();
+      toast.add({
+        title: t`Restored “${card.term}”`,
+        actionProps: { children: t`Undo`, onClick: () => undoCard.mutate(card.id) },
+      });
+    },
+  });
+
   return (
-    <ComingSoonView
-      title={t`Archived`}
-      body={t`Cards and decks you archived. Restore puts them back.`}
+    <ArchivedView
+      decks={decks.data}
+      cards={cards.data}
+      error={decks.isError || cards.isError}
+      onRetry={() => {
+        void decks.refetch();
+        void cards.refetch();
+      }}
+      retrying={decks.isFetching || cards.isFetching}
+      onRestoreDeck={(deck) => restoreDeck.mutate(deck)}
+      onRestoreCard={(card) => restoreCard.mutate(card)}
+      restoring={
+        restoreDeck.isPending
+          ? restoreDeck.variables.id
+          : restoreCard.isPending
+            ? restoreCard.variables.id
+            : undefined
+      }
     />
   );
 }

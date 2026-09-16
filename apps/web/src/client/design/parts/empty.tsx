@@ -226,8 +226,8 @@ export const empty: Group = {
       ),
     },
     {
-      slug: "coming-soon",
-      name: "Coming soon",
+      slug: "whole-screen",
+      name: "Whole screen",
       source: "components/empty-state.tsx",
       note: "A whole screen with nothing to outline. The brand lantern, still, because an empty screen says nothing about the streak.",
       Demo: () => (
@@ -238,8 +238,8 @@ export const empty: Group = {
               render: () => (
                 <EmptyState
                   className="w-full py-4"
-                  title="Coming soon"
-                  body="Cards and decks you archived. Restore puts them back."
+                  title="Nothing archived"
+                  body="Archiving hides a card or deck. Nothing is deleted, and Restore puts it back."
                 />
               ),
             },

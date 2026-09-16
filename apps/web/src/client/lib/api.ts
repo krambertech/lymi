@@ -154,10 +154,14 @@ export type DeckSummary = Pick<
   reviewModes: ReviewMode[];
   total: number;
   due: number;
+  /** When the deck was archived, null while it is active. */
+  archivedAt: string | null;
   /** The learner's role in the deck and who owns it. Only the owner writes. ADR 0011. */
   role: MemberRole;
   owner: { id: string; name: string };
 };
+/** A card a search matched, with the name of the deck it sits in. */
+export type CardHit = Card & { deckName: string };
 /** A deck's section with the learner's standing in it. */
 export type Section = SectionOut;
 /** A deck's sections in order and where the learner is. */
@@ -273,6 +277,8 @@ export const api = {
   updateSettings: (body: SettingsPatch) =>
     request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),
   decks: () => request<DeckSummary[]>("/api/decks"),
+  archivedDecks: () => request<DeckSummary[]>("/api/decks?archived=true"),
+  archivedCards: () => request<CardHit[]>("/api/cards?archived=true"),
   createDeck: (body: DeckInput) =>
     request<Deck>("/api/decks", { method: "POST", body: JSON.stringify(body) }),
   updateDeck: (id: string, body: { [K in keyof DeckInput]?: DeckInput[K] | undefined }) =>

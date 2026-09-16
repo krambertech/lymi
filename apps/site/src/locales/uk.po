@@ -911,7 +911,7 @@ msgid "If you request access, we store your email address, where on the site you
 msgstr "Якщо ти просиш доступ, ми зберігаємо твою адресу електронної пошти, місце на сайті й час надсилання запиту. Запит на доступ не створює облікового запису."
 
 msgid "If you sign in with an email address and a password, we store the address and a hash of the password, never the password itself. We also store short-lived records for confirming an address and resetting a password, and counts of recent sign-in, sign-up, resend and reset attempts by address and IP address, so those requests can be rate limited."
-msgstr "Якщо ти входиш за адресою пошти й паролем, ми зберігаємо адресу та хеш пароля, а не сам пароль. Ще ми зберігаємо короткочасні записи для підтвердження адреси та зміни пароля, а також лічильники недавніх спроб входу, створення акаунта, повторного надсилання листа й зміни пароля за адресою та IP-адресою, щоб обмежувати частоту таких запитів."
+msgstr "Якщо ти входиш за адресою пошти й паролем, ми зберігаємо адресу та хеш пароля, а не сам пароль. Ще ми зберігаємо короткочасні записи для підтвердження адреси та зміни пароля, а також лічильники недавніх спроб входу, створення облікового запису, повторного надсилання листа й зміни пароля за адресою та IP-адресою, щоб обмежувати частоту таких запитів."
 
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Умовний графік пам’яті за тридцять днів. Без повторень знання поступово згасає. Після повторень на 3-й, 8-й і 19-й день воно відновлюється, а з довшими перервами згасає повільніше."

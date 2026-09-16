@@ -34,6 +34,10 @@ const Search = z.object({
   returnTo: z.string().optional(),
   /** Set on the link a confirmation email carries, so this page knows what just happened. */
   verify: z.coerce.string().pipe(z.literal("1")).optional(),
+  /** Which form the panel opens on, so another screen can send a learner straight to it. */
+  mode: z.enum(["sign-in", "sign-up", "forgot"]).optional(),
+  /** Carried from a spent reset link, so the learner does not retype what they just used. */
+  email: z.string().max(254).optional(),
   /** Keeps the local email/password helper out of the real sign-in experience. */
   dev: z.coerce.string().pipe(z.literal("1")).optional(),
 });
@@ -116,10 +120,18 @@ function Login() {
   const { t, i18n } = useLingui();
   const queryClient = useQueryClient();
   const search = Route.useSearch();
-  const { client_id: clientId, error, dev, verify, returnTo: rawReturnTo } = search;
+  const {
+    client_id: clientId,
+    error,
+    dev,
+    verify,
+    mode: openOn,
+    email: known,
+    returnTo: rawReturnTo,
+  } = search;
   const returnTo = safeProductReturnPath(rawReturnTo);
-  const [mode, setMode] = useState<LoginMode>("sign-in");
-  const [email, setEmail] = useState("");
+  const [mode, setMode] = useState<LoginMode>(openOn ?? "sign-in");
+  const [email, setEmail] = useState(known ?? "");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -127,6 +139,9 @@ function Login() {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [resending, setResending] = useState(false);
+  /** The learner already has an account, so the notice must not talk about creating one. */
+  const [needsConfirming, setNeedsConfirming] = useState(false);
   const issue = issueFor(error);
   useDocumentTitle(t`Sign in`);
 
@@ -172,6 +187,7 @@ function Login() {
   function switchTo(next: LoginMode) {
     setMode(next);
     setNotice(null);
+    setNeedsConfirming(false);
     clearMessages();
   }
 
@@ -197,10 +213,12 @@ function Login() {
     }
   }
 
-  function checkInbox(address: string, resend: () => void | Promise<void>): Notice {
+  function checkInbox(address: string, resend: () => void | Promise<void>, again = false): Notice {
     return {
-      title: <Trans>Check your inbox</Trans>,
-      body: (
+      title: again ? <Trans>Sent again</Trans> : <Trans>Check your inbox</Trans>,
+      body: needsConfirming ? (
+        <Trans>If {address} still needs confirming, a link is on the way. Open it to finish.</Trans>
+      ) : (
         <Trans>
           If {address} can create a Lymi account, a link to confirm it is on the way. Open it to
           finish.
@@ -208,7 +226,7 @@ function Login() {
       ),
       actions: (
         <>
-          <Button size="sm" variant="secondary" onClick={() => void resend()}>
+          <Button size="sm" variant="secondary" loading={resending} onClick={() => void resend()}>
             <Trans>Send it again</Trans>
           </Button>
           <Button size="sm" variant="ghost" onClick={() => switchTo("sign-in")}>
@@ -233,15 +251,31 @@ function Login() {
       else setFailed(message);
       return;
     }
+    setNeedsConfirming(false);
     setNotice(checkInbox(values.email, () => resendVerification(values)));
   }
 
-  async function resendVerification(values: CredentialValues) {
-    await authClient.sendVerificationEmail({
-      email: values.email,
-      callbackURL: verificationCallback(window.location.search),
-    });
-    setNotice(checkInbox(values.email, () => resendVerification(values)));
+  async function resendVerification(values: CredentialValues, first = false) {
+    setResending(!first);
+    try {
+      const res = await authClient.sendVerificationEmail({
+        email: values.email,
+        callbackURL: verificationCallback(window.location.search),
+      });
+      if (res.error) {
+        setNotice(null);
+        setFailed(messageFor(res.error));
+        return;
+      }
+    } catch {
+      setNotice(null);
+      setFailed(t`Couldn’t reach Lymi. Check your connection and try again.`);
+      return;
+    } finally {
+      setResending(false);
+    }
+    clearMessages();
+    setNotice(checkInbox(values.email, () => resendVerification(values), !first));
   }
 
   async function signIn(values: CredentialValues) {
@@ -252,7 +286,8 @@ function Login() {
     });
     if (res.error) {
       if (res.error.code === "EMAIL_NOT_VERIFIED") {
-        await resendVerification(values);
+        setNeedsConfirming(true);
+        await resendVerification(values, true);
         return;
       }
       setFailed(messageFor(res.error));
@@ -266,7 +301,8 @@ function Login() {
   async function forgot(values: CredentialValues) {
     const res = await authClient.requestPasswordReset({
       email: values.email,
-      redirectTo: "/reset-password",
+      // The address rides along so the page can hand it to a password manager.
+      redirectTo: `/reset-password?${new URLSearchParams({ email: values.email })}`,
     });
     if (res.error) {
       setFailed(messageFor(res.error));
@@ -405,7 +441,7 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
     <form
       // Named so a browser test can tell these boxes from the real form's.
       aria-label="Dev sign-in"
-      className="enter-fade edge mt-10 grid w-full max-w-72 gap-2 rounded-md bg-plate p-4 text-left"
+      className="enter-fade edge mt-10 grid w-full max-w-72 gap-2 rounded-md bg-plate p-4 text-start"
       onSubmit={(e) => {
         e.preventDefault();
         void go("in");

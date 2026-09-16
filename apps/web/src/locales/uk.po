@@ -818,8 +818,8 @@ msgstr "Асистенти, що увійшли в Lymi, як-от Claude чи C
 msgid "At {savedTime}, {zone} time, only on days with cards due."
 msgstr "О {savedTime} за часом {zone}, лише в дні, коли є картки до повторення."
 
-msgid "At least 8 characters."
-msgstr "Щонайменше 8 символів."
+msgid "At least {MIN_PASSWORD_LENGTH} characters."
+msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
 
 msgid "Back"
 msgstr "Назад"
@@ -998,7 +998,7 @@ msgid "Choose one"
 msgstr "Вибери один варіант"
 
 msgid "Choose one you haven’t used on Lymi before."
-msgstr "Вибери такий, якого ще не використовував у Lymi."
+msgstr "Вибери новий пароль, якого ще немає в Lymi."
 
 msgid "Choose the .apkg or .colpkg file Anki exports."
 msgstr "Вибери файл .apkg або .colpkg, який експортує Anki."
@@ -1441,7 +1441,7 @@ msgid "Forgot today"
 msgstr "Забуті сьогодні"
 
 msgid "Forgot your password?"
-msgstr "Забув пароль?"
+msgstr "Не пам'ятаєш пароль?"
 
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Не пам’ятаю, Важко, Добре, Легко"
@@ -1555,6 +1555,9 @@ msgstr "Якщо на {address} можна створити акаунт Lymi, �
 
 msgid "If {address} has a Lymi password, a link to set a new one is on the way. The link works for one hour."
 msgstr "Якщо в {address} є пароль Lymi, посилання для нового вже в дорозі. Воно діє годину."
+
+msgid "If {address} still needs confirming, a link is on the way. Open it to finish."
+msgstr "Якщо адресу {address} ще треба підтвердити, посилання вже в дорозі. Відкрий його, щоб завершити."
 
 msgid "Import"
 msgstr "Імпорт"
@@ -2584,6 +2587,9 @@ msgstr "Надіслати ще раз"
 msgid "Send the link"
 msgstr "Надіслати посилання"
 
+msgid "Sent again"
+msgstr "Надіслали ще раз"
+
 msgid "Series"
 msgstr "Серія"
 
@@ -2630,13 +2636,16 @@ msgid "Sign in here and choose that file, without unzipping it."
 msgstr "Увійди тут і вибери цей файл, не розпаковуючи його."
 
 msgid "Sign in here, and ask for a new password if you have forgotten yours:"
-msgstr "Увійди тут, а якщо забув пароль — попроси новий:"
+msgstr "Увійди тут, а якщо не пам'ятаєш пароль — попроси новий:"
 
 msgid "Sign in required"
 msgstr "Потрібно ввійти"
 
 msgid "Sign in to Lymi"
 msgstr "Увійти в Lymi"
+
+msgid "Sign in with your new password."
+msgstr "Увійди з новим паролем."
 
 msgid "Sign out"
 msgstr "Вийти"
@@ -2848,10 +2857,10 @@ msgid "The link stops working for good. People who joined stay in the deck, and 
 msgstr "Посилання перестане працювати назавжди. Ті, хто приєднався, залишаться в колоді, а наступне поширення створить нове посилання."
 
 msgid "The link works for 24 hours. If you didn’t create a Lymi account, ignore this email."
-msgstr "Посилання діє 24 години. Якщо ти не створював акаунт Lymi, просто не зважай на цей лист."
+msgstr "Посилання діє 24 години. Якщо це не ти створюєш акаунт Lymi, просто не зважай на цей лист."
 
 msgid "The link works for one hour. If you didn’t ask for a new password, ignore this email. Nothing has changed."
-msgstr "Посилання діє годину. Якщо ти не просив новий пароль, просто не зважай на цей лист. Нічого не змінилося."
+msgstr "Посилання діє годину. Якщо це не ти просиш новий пароль, просто не зважай на цей лист. Нічого не змінилося."
 
 msgid "the meaning"
 msgstr "значення"
@@ -3016,9 +3025,6 @@ msgstr "Спробувати ще раз"
 msgid "Try again on a steadier connection, and keep Lymi open until the upload is done."
 msgstr "Спробуй ще раз зі стабільнішим з’єднанням і не закривай Lymi, доки файл не завантажиться."
 
-msgid "Try another Google account"
-msgstr "Спробувати інший обліковий запис Google"
-
 msgid "Turn off link"
 msgstr "Вимкнути посилання"
 
@@ -3072,6 +3078,9 @@ msgstr "Скористайся акаунтом, який отримав зап�
 
 msgid "Use the deck’s"
 msgstr "Повернути як у колоді"
+
+msgid "Use the email address that received your invitation."
+msgstr "Скористайся адресою пошти, яка отримала запрошення."
 
 msgid "Use these fields"
 msgstr "Використати ці поля"

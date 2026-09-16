@@ -237,10 +237,31 @@ function writeLocalEmail(message: RenderedEmail, to: string): LocalEmail {
   return stored;
 }
 
+/**
+ * What Lymi will send in one UTC day, under the provider's own quota. Per-caller budgets alone
+ * still let a spread of machines spend the day's allowance on confirmations nobody asked for,
+ * and the learner whose reset is then dropped never learns why. Issue 251.
+ */
+const DAILY_SEND_LIMIT = 150;
+
+/** True while the day still has room, counting this send. A storage failure never blocks one. */
+async function withinDailyBudget(sessions: KVNamespace | undefined): Promise<boolean> {
+  if (!sessions) return true;
+  const key = `email:sent:${new Date().toISOString().slice(0, 10)}`;
+  try {
+    const sent = Number((await sessions.get(key)) ?? 0);
+    if (sent >= DAILY_SEND_LIMIT) return false;
+    await sessions.put(key, String(sent + 1), { expirationTtl: 60 * 60 * 48 });
+    return true;
+  } catch {
+    return true;
+  }
+}
+
 /** Send through Cloudflare in production and keep all loopback delivery inside the local Worker. */
 export async function sendTransactionalEmail(
   ctx: ServiceContext,
-  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL">,
+  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & { SESSIONS?: KVNamespace },
   input: TransactionalEmailInput,
 ): Promise<{ delivery: "provider" | "outbox" }> {
   const message = await renderTransactionalEmail(input.kind, input.language, {
@@ -251,6 +272,12 @@ export async function sendTransactionalEmail(
     writeLocalEmail(message, input.to);
     delivery = "outbox";
   } else {
+    if (!(await withinDailyBudget(env.SESSIONS))) {
+      console.error(
+        JSON.stringify({ event: "transactional_email_over_daily_budget", kind: input.kind }),
+      );
+      throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
+    }
     try {
       await env.EMAIL.send({
         to: input.to,

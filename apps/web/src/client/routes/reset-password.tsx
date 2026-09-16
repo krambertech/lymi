@@ -16,6 +16,8 @@ import { ResetPasswordView } from "../views/reset-password-view";
 const Search = z.object({
   token: z.string().optional(),
   error: z.string().optional(),
+  /** Whose password this is, so a password manager updates the entry it already holds. */
+  email: z.string().max(254).optional(),
 });
 
 export const Route = createFileRoute("/reset-password")({
@@ -27,7 +29,7 @@ function ResetPassword() {
   const { t, i18n } = useLingui();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { token, error: linkError } = Route.useSearch();
+  const { token, error: linkError, email } = Route.useSearch();
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
@@ -71,6 +73,7 @@ function ResetPassword() {
 
   return (
     <ResetPasswordView
+      email={email}
       password={password}
       onPasswordChange={(value) => {
         setPassword(value);
@@ -83,7 +86,10 @@ function ResetPassword() {
       done={done}
       expired={expired}
       onSignIn={() => void navigate({ to: "/login" })}
-      onAskAgain={() => void navigate({ to: "/login" })}
+      // Straight into the form that sends one, rather than the door it lives behind.
+      onAskAgain={() =>
+        void navigate({ to: "/login", search: { mode: "forgot", ...(email ? { email } : {}) } })
+      }
     />
   );
 }

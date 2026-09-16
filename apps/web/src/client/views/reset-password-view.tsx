@@ -5,9 +5,12 @@ import { AuthNotice } from "../components/auth-notice";
 import { Button } from "../components/button";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
+import { MIN_PASSWORD_LENGTH } from "../lib/auth";
 import { publicSiteUrl } from "../lib/origins";
 
 export interface ResetPasswordProps {
+  /** Whose password this is. A manager will not offer to update a stored one without it. */
+  email?: string | undefined;
   password?: string | undefined;
   onPasswordChange?: ((password: string) => void) | undefined;
   onSubmit?: (() => void | Promise<void>) | undefined;
@@ -26,6 +29,7 @@ export interface ResetPasswordProps {
 
 /** The second half of a reset: the link has been opened, and a new password is typed here. */
 export function ResetPasswordView({
+  email,
   password = "",
   onPasswordChange,
   onSubmit,
@@ -74,15 +78,31 @@ export function ResetPasswordView({
         )}
 
         {done ? (
-          <Button variant="primary" size="lg" onClick={onSignIn} className="mt-7 w-full">
-            <Trans>Sign in</Trans>
-          </Button>
+          <>
+            <AuthNotice role="status" tone="success" className="mt-6">
+              <Trans>Sign in with your new password.</Trans>
+            </AuthNotice>
+            <Button variant="primary" size="lg" onClick={onSignIn} className="mt-6 w-full">
+              <Trans>Sign in</Trans>
+            </Button>
+          </>
         ) : expired ? (
           <Button variant="primary" size="lg" onClick={onAskAgain} className="mt-7 w-full">
             <Trans>Send a new link</Trans>
           </Button>
         ) : (
           <form onSubmit={submit} noValidate className="mt-7">
+            {/* Read by a password manager so it updates the stored entry rather than adding one. */}
+            <input
+              type="email"
+              name="email"
+              value={email ?? ""}
+              autoComplete="username"
+              readOnly
+              tabIndex={-1}
+              aria-hidden="true"
+              className="sr-only"
+            />
             <Field>
               <FieldLabel>
                 <Trans>New password</Trans>
@@ -98,7 +118,7 @@ export function ResetPasswordView({
                 <FieldError>{passwordError}</FieldError>
               ) : (
                 <FieldDescription>
-                  <Trans>At least 8 characters.</Trans>
+                  <Trans>At least {MIN_PASSWORD_LENGTH} characters.</Trans>
                 </FieldDescription>
               )}
             </Field>

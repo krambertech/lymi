@@ -12,6 +12,7 @@ import {
   FieldLabel,
 } from "../components/ui/field";
 import { Input } from "../components/ui/input";
+import { MIN_PASSWORD_LENGTH } from "../lib/auth";
 import { publicSiteUrl } from "../lib/origins";
 
 /** What the panel is asking for. Google stays put; only the form below it changes. */
@@ -108,6 +109,8 @@ export function LoginView({
             <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
               {mode === "forgot" ? (
                 <Trans>We’ll send a link to set a new one.</Trans>
+              ) : mode === "sign-up" ? (
+                <Trans>Use the email address that received your invitation.</Trans>
               ) : (
                 <Trans>Use the account that received your invitation.</Trans>
               )}
@@ -145,11 +148,7 @@ export function LoginView({
                   onClick={onGoogle}
                   className="mt-7 w-full"
                 >
-                  {blocked ? (
-                    <Trans>Try another Google account</Trans>
-                  ) : (
-                    <Trans>Continue with Google</Trans>
-                  )}
+                  <Trans>Continue with Google</Trans>
                 </Button>
                 <div
                   aria-hidden="true"
@@ -169,7 +168,7 @@ export function LoginView({
                   <Input
                     type="email"
                     name="email"
-                    autoComplete="email"
+                    autoComplete="username email"
                     autoCapitalize="none"
                     spellCheck={false}
                     value={email}
@@ -193,7 +192,7 @@ export function LoginView({
                     {passwordError && <FieldError>{passwordError}</FieldError>}
                     {mode === "sign-up" && !passwordError && (
                       <FieldDescription>
-                        <Trans>At least 8 characters.</Trans>
+                        <Trans>At least {MIN_PASSWORD_LENGTH} characters.</Trans>
                       </FieldDescription>
                     )}
                     {mode === "sign-in" && (

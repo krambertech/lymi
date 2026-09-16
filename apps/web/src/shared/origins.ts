@@ -2,7 +2,8 @@ export const DEFAULT_PUBLIC_SITE_ORIGIN = "https://lymi.app";
 export const DEFAULT_PRODUCT_ORIGIN = "https://my.lymi.app";
 export const DEFAULT_PRODUCT_RETURN_PATH = "/today";
 
-const PRODUCT_PATHS = [
+/** Screens behind authentication, and so the only ones safe to resume after it. */
+const PROTECTED_PRODUCT_PATHS = [
   "/app",
   "/today",
   "/library",
@@ -13,13 +14,21 @@ const PRODUCT_PATHS = [
   "/archived",
   "/insights",
   "/import",
+] as const;
+
+/**
+ * Product routes a signed-out learner reaches directly. None is a safe return path: sending
+ * someone back to `/login` loops, and `/reset-password` carries a one-use token in its query.
+ */
+const OPEN_PRODUCT_PATHS = [
   "/login",
   "/consent",
-  // Opened from a reset email, so it is a product route a signed-out learner reaches directly.
   "/reset-password",
   // The live design system. Its route redirects home outside local development.
   "/design",
 ] as const;
+
+const PRODUCT_PATHS = [...PROTECTED_PRODUCT_PATHS, ...OPEN_PRODUCT_PATHS];
 
 /** True for localhost, 127.0.0.1 and [::1]. Decides every local-only capability. */
 export function isLoopbackUrl(value: string): boolean {
@@ -48,7 +57,7 @@ export function isAddPagePath(pathname: string): boolean {
 
 /** Routes a signed-out learner may safely resume after authentication. */
 function isProtectedProductPath(pathname: string): boolean {
-  return PRODUCT_PATHS.slice(0, 10).some(
+  return PROTECTED_PRODUCT_PATHS.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
 }

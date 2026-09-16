@@ -187,10 +187,18 @@ app.route("/api/avatar", avatar);
 app.route("/api/imports", imports);
 app.route("/api/exports", exportRoutes);
 
-app.notFound((c) => {
+app.notFound(async (c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
   if (!c.env.ASSETS) return c.text("Not found", 404);
-  return fetchConfiguredAsset(c.req.raw, c.env);
+  const response = await fetchConfiguredAsset(c.req.raw, c.env);
+  // This page carries a one-use reset token in its query, so the address never rides a
+  // referer off this origin. The join page sets the same header for the same reason.
+  if (c.req.path === "/reset-password") {
+    const withPolicy = new Response(response.body, response);
+    withPolicy.headers.set("referrer-policy", "same-origin");
+    return withPolicy;
+  }
+  return response;
 });
 
 app.onError(handleError);

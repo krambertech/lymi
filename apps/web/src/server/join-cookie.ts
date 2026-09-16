@@ -4,10 +4,14 @@ import { isLoopbackUrl } from "../shared/origins";
 
 /**
  * A join link or a published deck carried through sign-in. Google's callback is a cross-site
- * top-level redirect, so the cookie is `SameSite=Lax`; ten minutes is enough to choose an
- * account. ADR 0011.
+ * top-level redirect, so the cookie is `SameSite=Lax`. ADR 0011.
+ *
+ * It lasts a day rather than the ten minutes Google needs, because a password account joins
+ * when its confirmation link creates the first session, which can be a day after the sign-up
+ * that set this. A learner who confirms on another device still lands signed in, and the join
+ * page then admits them on the next visit. Issue 251.
  */
-const MAX_AGE_SECONDS = 10 * 60;
+const MAX_AGE_SECONDS = 60 * 60 * 25;
 
 /** A published deck's slug is stored after this prefix; a bare value is a join link token. */
 const PUBLICATION_PREFIX = "p.";

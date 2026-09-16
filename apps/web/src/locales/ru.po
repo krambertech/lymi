@@ -1137,6 +1137,9 @@ msgstr "Не удалось загрузить Обзор"
 msgid "Couldn’t load the picture"
 msgstr "Не удалось загрузить изображение"
 
+msgid "Couldn’t load this deck"
+msgstr "Не удалось загрузить эту колоду"
+
 msgid "Couldn’t load this import"
 msgstr "Не удалось загрузить этот импорт"
 
@@ -1643,6 +1646,9 @@ msgstr "Оно может читать твои колоды и карточки
 
 msgid "It goes at the end. Move cards into it from the list."
 msgstr "Он появится в конце. Перемести в него карточки из списка."
+
+msgid "It may have been archived, or shared with you and then removed."
+msgstr "Возможно, её архивировали или доступ к ней для тебя закрыли."
 
 msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
 msgstr "Он три дня ждал подтверждения, поэтому файл удалён. Начни заново."
@@ -2951,6 +2957,9 @@ msgstr "Эта колода уже есть в твоей Библиотеке."
 
 msgid "This deck is archived"
 msgstr "Эта колода в архиве"
+
+msgid "This deck is no longer here"
+msgstr "Этой колоды больше нет"
 
 msgid "This deck is no longer published"
 msgstr "Эта колода больше не опубликована"

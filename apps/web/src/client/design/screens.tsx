@@ -553,6 +553,27 @@ export const SCREENS: Entry[] = [
               static={{ path: "/library/d1" }}
             />
           </PhoneShot>
+          <PhoneShot caption="A deck that is gone" initial="light" path="/library">
+            <DeckDetailView
+              deck={undefined}
+              cards={undefined}
+              onAdd={noop}
+              onArchive={noop}
+              failure="gone"
+              static={{ path: "/library/gone" }}
+            />
+          </PhoneShot>
+          <PhoneShot caption="A deck that would not load" initial="dark" path="/library">
+            <DeckDetailView
+              deck={undefined}
+              cards={undefined}
+              onAdd={noop}
+              onArchive={noop}
+              failure="unreachable"
+              onRetry={noop}
+              static={{ path: "/library/d1" }}
+            />
+          </PhoneShot>
           <PhoneShot caption="A card" initial="light" path="/library">
             <div className="px-5 pt-5">
               <WordView

@@ -1173,9 +1173,6 @@ msgstr "Разрешить Claude добавлять карточки?"
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Давай попрактикуемся. Используй немецкие слова из моей колоды."
 
-msgid "Level {level}"
-msgstr "Уровень {level}"
-
 msgid "Lingering at the table after a meal"
 msgstr "Задержаться за столом после еды"
 
@@ -1295,9 +1292,6 @@ msgstr "Пусть будет легко"
 
 msgid "Meaning"
 msgstr "Значение"
-
-msgid "meanings in {meaningLanguage}"
-msgstr "значения — {meaningLanguage}"
 
 msgid "Medicine and nursing"
 msgstr "Медицина и сестринское дело"
@@ -1528,8 +1522,9 @@ msgstr "общественный транспорт"
 msgid "Public transport"
 msgstr "Общественный транспорт"
 
-msgid "published {published}"
-msgstr "опубликовано {published}"
+#. placeholder {0}: date(deck.publishedAt)
+msgid "published {0}"
+msgstr "опубликовано {0}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push-подписки хранятся, пока ты не отключишь напоминания, push-сервис не сообщит об окончании подписки или аккаунт не будет удалён."

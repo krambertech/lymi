@@ -1173,9 +1173,6 @@ msgstr "Let Claude add cards?"
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Let’s practise. Use the German words from my deck."
 
-msgid "Level {level}"
-msgstr "Level {level}"
-
 msgid "Lingering at the table after a meal"
 msgstr "Lingering at the table after a meal"
 
@@ -1295,9 +1292,6 @@ msgstr "May it come easy"
 
 msgid "Meaning"
 msgstr "Meaning"
-
-msgid "meanings in {meaningLanguage}"
-msgstr "meanings in {meaningLanguage}"
 
 msgid "Medicine and nursing"
 msgstr "Medicine and nursing"
@@ -1528,8 +1522,9 @@ msgstr "public transport"
 msgid "Public transport"
 msgstr "Public transport"
 
-msgid "published {published}"
-msgstr "published {published}"
+#. placeholder {0}: date(deck.publishedAt)
+msgid "published {0}"
+msgstr "published {0}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."

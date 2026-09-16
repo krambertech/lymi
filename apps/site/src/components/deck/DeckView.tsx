@@ -65,32 +65,33 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   );
 }
 
-/** The deck at a glance. A catalog card can show the same facts. */
+/** What the deck is in, if it is in a language at all. A catalog card can show the same line. */
 export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const language = languageName(deck.language, i18n.locale, { label: true });
-  // A deck with no language of its own is not translated into one, so its meanings need no label.
-  const meaningLanguage = deck.language ? languageName(deck.meaningLanguage, i18n.locale) : null;
-  const level = deck.level;
-  const published = new Intl.DateTimeFormat(i18n.locale, {
-    dateStyle: "medium",
-    timeZone: "UTC",
-  }).format(new Date(deck.publishedAt));
-  const items = [
-    language && level
-      ? `${language} ${level}`
-      : (language ?? (level && <Trans key="level">Level {level}</Trans>)),
-    <Plural key="cards" value={deck.cardCount} one="# card" other="# cards" />,
-    meaningLanguage && <Trans key="meanings">meanings in {meaningLanguage}</Trans>,
-    <Trans key="published">published {published}</Trans>,
-  ].filter(Boolean);
+  if (!language) return null;
+  return <p className="text-md text-muted">{language}</p>;
+}
+
+/** The last quiet line of the page: how much there is, and when the publisher put it out. */
+export function DeckFooterFacts({ deck, locale }: DeckProps) {
   return (
-    <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-md text-muted">
-      {items.map((item, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: a fixed list that never reorders.
-        <li key={index}>{item}</li>
-      ))}
-    </ul>
+    <Localized locale={locale}>
+      <DeckFooterFactsLine deck={deck} />
+    </Localized>
+  );
+}
+
+function DeckFooterFactsLine({ deck }: { deck: PublicDeckOut }) {
+  const date = useDate();
+  return (
+    <p className="px-5 pb-16 text-center text-sm text-muted @2xl:px-10">
+      <Plural value={deck.cardCount} one="# card" other="# cards" />
+      <span aria-hidden="true" className="mx-2 text-faint">
+        ·
+      </span>
+      <Trans>published {date(deck.publishedAt)}</Trans>
+    </p>
   );
 }
 

@@ -188,6 +188,10 @@ msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, one {Start section} other {Start # sections}}"
 
+#. placeholder {0}: busiest.count
+msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+
 #. placeholder {0}: preview.existing
 msgid "{0, plural, one {Update # card} other {Update # cards}}"
 msgstr "{0, plural, one {Update # card} other {Update # cards}}"
@@ -237,6 +241,11 @@ msgstr "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 #. placeholder {1}: outcome.deckName
 msgid "{0} is already in {1}"
 msgstr "{0} is already in {1}"
+
+#. placeholder {0}: longWeekday(busiest.date)
+#. placeholder {1}: busiest.count
+msgid "{0} is the busiest day, with {1, plural, one {# card} other {# cards}}."
+msgstr "{0} is the busiest day, with {1, plural, one {# card} other {# cards}}."
 
 #. placeholder {0}: cards.known
 msgid "{0} known"
@@ -408,9 +417,6 @@ msgstr "{due, plural, one {card to review now} other {cards to review now}}"
 
 msgid "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
 msgstr "{due, plural, one {One card is waiting when you have a moment.} other {# cards are waiting when you have a moment.}}"
-
-msgid "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
-msgstr "{dueSoon, plural, one {# card over the next seven days.} other {# cards over the next seven days.}}"
 
 msgid "{field} becomes"
 msgstr "{field} becomes"
@@ -2102,6 +2108,9 @@ msgstr "Notes changed to “{value}”"
 msgid "Nothing archived"
 msgstr "Nothing archived"
 
+msgid "Nothing comes back in the next seven days."
+msgstr "Nothing comes back in the next seven days."
+
 msgid "Nothing due"
 msgstr "Nothing due"
 
@@ -2243,10 +2252,6 @@ msgstr "Pasted picture"
 
 msgid "Pause the cards"
 msgstr "Pause the cards"
-
-#. placeholder {0}: weekday(peak.date)
-msgid "peak, {0}"
-msgstr "peak, {0}"
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "People who added it keep studying it, but nobody new can add it."

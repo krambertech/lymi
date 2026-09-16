@@ -46,6 +46,14 @@ function PrivacyPolicyContent() {
           which can include an IP address, browser information and sign-in tokens.
         </Trans>
       </p>
+      <p>
+        <Trans>
+          If you sign in with an email address and a password, we store the address and a hash of
+          the password, never the password itself. We also store short-lived records for confirming
+          an address and resetting a password, and counts of recent sign-in, sign-up, resend and
+          reset attempts by address and IP address, so those requests can be rate limited.
+        </Trans>
+      </p>
 
       <h3>
         <Trans>Learning data</Trans>

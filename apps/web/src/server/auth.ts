@@ -20,6 +20,7 @@ import {
   pictureFromIdToken,
 } from "./services/avatars";
 import { ServiceError } from "./services/context";
+import { accountEmailLanguage, sendAccountEmail } from "./services/email";
 import { joinLinkAdmits, joinThroughLink } from "./services/invitations";
 import { addPublishedDeck, publicationAdmits } from "./services/publications";
 
@@ -111,8 +112,65 @@ export function createAuth(
         return next;
       },
     },
-    // Local development only: email + password so the app is usable before Google is set up.
-    emailAndPassword: { enabled: dev },
+    emailAndPassword: {
+      enabled: true,
+      minPasswordLength: MIN_PASSWORD_LENGTH,
+      // Verification is what makes a password account real, so nothing is granted before it.
+      // It also makes Better Auth answer a taken address exactly as it answers a free one.
+      requireEmailVerification: true,
+      revokeSessionsOnPasswordReset: true,
+      sendResetPassword: async ({ user, url }, request) => {
+        const ctx = { db, userId: user.id, actor: "user" as const };
+        const language = await accountEmailLanguage(db, user.id, request);
+        // A Google account has no password to reset. The token Better Auth just minted is
+        // never delivered, so it cannot become a password on an account that has none.
+        const kind = (await hasCredentialAccount(db, user.id))
+          ? ("reset-password" as const)
+          : ("reset-google-account" as const);
+        await sendAccountEmail(ctx, env, {
+          kind,
+          to: user.email,
+          language,
+          url: kind === "reset-password" ? url : signInUrl(env),
+        });
+      },
+      // The address is taken, so the response says nothing. The address owner is told instead.
+      onExistingUserSignUp: async ({ user }, request) => {
+        const ctx = { db, userId: user.id, actor: "user" as const };
+        const language = await accountEmailLanguage(db, user.id, request);
+        await sendAccountEmail(ctx, env, {
+          kind: (await hasCredentialAccount(db, user.id)) ? "existing-account" : "google-account",
+          to: user.email,
+          language,
+          url: signInUrl(env),
+        });
+      },
+    },
+    emailVerification: {
+      autoSignInAfterVerification: true,
+      expiresIn: VERIFICATION_EXPIRES_SECONDS,
+      sendVerificationEmail: async ({ user, url }, request) => {
+        // A persona is born confirmed and has no inbox; sending would only fill the outbox
+        // that the local tests read.
+        if (dev && user.email.toLowerCase().endsWith(DEV_EMAIL_DOMAIN)) return;
+        const ctx = { db, userId: user.id, actor: "user" as const };
+        await sendAccountEmail(ctx, env, {
+          kind: "verify-email",
+          to: user.email,
+          language: await accountEmailLanguage(db, user.id, request),
+          url,
+        });
+      },
+    },
+    account: {
+      accountLinking: {
+        // Google owns the address it returns, so it may claim a user that signed up with a
+        // password and never confirmed. The credential account is dropped on the way in, so
+        // an unconfirmed sign-up on someone else's address grants nothing. Issue 251.
+        trustedProviders: ["google"],
+        requireLocalEmailVerified: false,
+      },
+    },
     // Registered only when configured: an empty pair makes Better Auth warn on every request,
     // which buries anything else in a local server's log.
     socialProviders:
@@ -142,7 +200,9 @@ export function createAuth(
             const email = user.email.toLowerCase();
             // Persona accounts need no entry in .dev.vars; they cannot exist outside a local D1.
             const persona = dev && email.endsWith(DEV_EMAIL_DOMAIN);
-            if (allowed.has(email) || persona) return { data: user };
+            // A persona has no inbox, so it is born confirmed and signs in with its fixed password.
+            if (persona) return { data: { ...user, emailVerified: true } };
+            if (allowed.has(email)) return { data: user };
             const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
             if (admission && (await admits(db, admission))) return { data: user };
             throw new APIError("FORBIDDEN", {
@@ -157,6 +217,9 @@ export function createAuth(
           // learner in; the join or add page then says why.
           after: async (session, context) => {
             if (isGoogleCallback(context)) {
+              // Google has just proved the address. Any password on this account was set by
+              // whoever typed the address first, which need not be its owner. Issue 251.
+              await dropCredentialAccount(db, session.userId);
               await syncGoogleAvatar(env, db, session.userId, waitUntil);
             }
             const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
@@ -180,6 +243,32 @@ export function createAuth(
       cookiePrefix: cookiePrefix(env.PRODUCT_URL),
     },
   });
+}
+
+/** The floor from the product decision: long enough to matter, with no composition rules. */
+export const MIN_PASSWORD_LENGTH = 8;
+
+/** A confirmation link outlives the session that asked for it, so a day rather than an hour. */
+const VERIFICATION_EXPIRES_SECONDS = 60 * 60 * 24;
+
+function signInUrl(env: Bindings): string {
+  return new URL("/login", env.PRODUCT_URL).toString();
+}
+
+/** Whether this account can sign in with a password at all. */
+async function hasCredentialAccount(db: Db, userId: string): Promise<boolean> {
+  const [row] = await db
+    .select({ id: schema.account.id })
+    .from(schema.account)
+    .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "credential")));
+  return Boolean(row);
+}
+
+/** Take the password off an account, so only the provider that just proved the address opens it. */
+async function dropCredentialAccount(db: Db, userId: string): Promise<void> {
+  await db
+    .delete(schema.account)
+    .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "credential")));
 }
 
 export type Auth = ReturnType<typeof createAuth>;

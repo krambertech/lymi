@@ -3,6 +3,9 @@ import { createAuthClient } from "better-auth/react";
 import { safeProductReturnPath } from "../../shared/origins";
 import { clearStoredLanguage } from "./i18n";
 
+/** Mirrors `MIN_PASSWORD_LENGTH` on the server, so the box says what the route would. */
+export const MIN_PASSWORD_LENGTH = 8;
+
 /**
  * The oauthProviderClient plugin does two things for the OAuth server: it adds the current
  * page's signed `oauth_query` to sign-in calls, so a sign-in that started from an MCP
@@ -41,6 +44,24 @@ export function signInWithGoogle(returnTo?: string | null) {
     callbackURL: destination,
     errorCallbackURL,
   });
+}
+
+/**
+ * Resume the MCP client's authorization after a sign-in that did not go through a sign-in
+ * endpoint, such as a confirmation link opened from an email. The signed query on this page
+ * is attached by the oauthProviderClient plugin; it expires ten minutes after the client sent
+ * the learner here, and a stale one leaves them signed in to ask the app again.
+ */
+export async function continueOAuthAuthorization(): Promise<boolean> {
+  try {
+    const res = await authClient.oauth2.continue({ selected: true });
+    const redirect = (res.data as { redirect_uri?: unknown } | null)?.redirect_uri;
+    if (res.error || typeof redirect !== "string" || !redirect) return false;
+    window.location.assign(redirect);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function signOut() {

@@ -1,7 +1,10 @@
-import { signInAsTestLearner } from "./auth";
+import {
+  createAccountThroughDevForm,
+  expectNoAccountEmail,
+  signInAsTestLearner,
+  submitDevSignUp,
+} from "./auth";
 import { type Browser, expect, type Page, type TestInfo, test } from "./test";
-
-const password = "lymi-e2e-password";
 
 /**
  * A classmate's email that is on no allowlist and is not a local persona, so only the join
@@ -9,14 +12,6 @@ const password = "lymi-e2e-password";
  */
 function outsider(testInfo: TestInfo, who: string) {
   return `e2e-${who}-${testInfo.project.name}-r${testInfo.retry}@example.test`;
-}
-
-/** Create a local account through the dev email form, as a Google account would arrive. */
-async function createAccount(page: Page, email: string) {
-  await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
-  await page.getByRole("textbox", { name: "Email", exact: true }).fill(email);
-  await page.getByRole("textbox", { name: "Password", exact: true }).fill(password);
-  await page.getByRole("button", { name: "Create account", exact: true }).click();
 }
 
 /** The radio input is visually hidden; a learner presses the card around it. */
@@ -72,10 +67,14 @@ test("an owner shares a deck and a classmate joins through the link", async ({
   const classmate = await signedOutPage(browser);
 
   await test.step("a signed-out classmate cannot create an account without the link", async () => {
+    const uninvited = outsider(testInfo, "uninvited");
     await classmate.goto("/login?dev=1");
-    await createAccount(classmate, outsider(testInfo, "uninvited"));
-    await expect(classmate.getByText(/not on the list/)).toBeVisible();
+    await submitDevSignUp(classmate, uninvited);
+
+    // The refusal is silent by design, so the proof is that nothing was created or sent.
+    await expectNoAccountEmail(classmate, uninvited);
     await expect(classmate).toHaveURL(/\/login/);
+    expect((await classmate.request.get("/api/me")).status()).toBe(401);
   });
 
   await test.step("the join link admits the classmate and lands them in the deck", async () => {
@@ -88,7 +87,7 @@ test("an owner shares a deck and a classmate joins through the link", async ({
 
     await classmate.getByRole("button", { name: "Dev sign-in", exact: true }).click();
     await expect(classmate).toHaveURL(/\/login\?dev=1/);
-    await createAccount(classmate, outsider(testInfo, "classmate"));
+    await createAccountThroughDevForm(classmate, outsider(testInfo, "classmate"));
 
     await expect(classmate).toHaveURL(new RegExp(`/library/${deckId}$`));
     await expect(classmate.getByRole("heading", { name: deckName, exact: true })).toBeVisible();

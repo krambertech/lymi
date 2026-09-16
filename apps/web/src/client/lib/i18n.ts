@@ -63,6 +63,7 @@ export function bootstrapLanguage(pathname: string) {
 export function isBareShell(pathname: string): boolean {
   return (
     pathname === "/login" ||
+    pathname === "/reset-password" ||
     pathname === "/consent" ||
     pathname.startsWith("/join/") ||
     pathname.startsWith("/add/") ||

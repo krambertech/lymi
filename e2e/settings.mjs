@@ -36,6 +36,8 @@ export const e2eAccounts = [
   "publisher",
   "email-outbox",
   "email-non-operator",
+  "password-account",
+  "password-reset",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];
@@ -65,10 +67,27 @@ export const e2eOperatorEmails = e2eProjects.flatMap((project) =>
   ),
 );
 
-export const e2eAllowedEmails = e2eAccounts.flatMap((account) =>
-  e2eProjects.flatMap((project) =>
-    e2eRetries.flatMap((retry) =>
-      e2eRepeats.map((repeat) => e2eEmail(account, project, retry, repeat)),
+/**
+ * An address that is not a persona, so Better Auth requires it to be confirmed and the
+ * outbox holds the message. Only the password journeys use one.
+ */
+export function e2eInboxEmail(account, project, retry, repeat) {
+  return e2eEmail(account, project, retry, repeat).replace(/@lymi\.local$/, "@lymi.test");
+}
+
+/** Only the password journeys need an address with an inbox; every other account is a persona. */
+const inboxAccounts = ["password-account", "password-reset"];
+
+const everyVariant = (accounts, build) =>
+  accounts.flatMap((account) =>
+    e2eProjects.flatMap((project) =>
+      e2eRetries.flatMap((retry) =>
+        e2eRepeats.map((repeat) => build(account, project, retry, repeat)),
+      ),
     ),
-  ),
-);
+  );
+
+export const e2eAllowedEmails = [
+  ...everyVariant(e2eAccounts, e2eEmail),
+  ...everyVariant(inboxAccounts, e2eInboxEmail),
+];

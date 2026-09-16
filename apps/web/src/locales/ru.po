@@ -559,6 +559,9 @@ msgstr "Заметка для себя о том, что здесь есть."
 msgid "A notification on this device when cards are due."
 msgstr "Уведомление на этом устройстве, когда есть карточки к повторению."
 
+msgid "A reset link works for one hour, and only once."
+msgstr "Ссылка для смены пароля действует час и только один раз."
+
 msgid "A series is reviewed together, and its decks show in this order."
 msgstr "Колоды серии повторяются вместе и показываются в этом порядке."
 
@@ -815,6 +818,9 @@ msgstr "Ассистенты, вошедшие в Lymi, например Claude 
 msgid "At {savedTime}, {zone} time, only on days with cards due."
 msgstr "В {savedTime} по времени {zone}, только в дни, когда есть карточки к повторению."
 
+msgid "At least 8 characters."
+msgstr "Не меньше 8 символов."
+
 msgid "Back"
 msgstr "Назад"
 
@@ -823,6 +829,9 @@ msgstr "снова позже сегодня"
 
 msgid "back the same day"
 msgstr "снова в тот же день"
+
+msgid "Back to sign in"
+msgstr "Назад ко входу"
 
 msgid "Back to streak"
 msgstr "Назад к дням подряд"
@@ -945,6 +954,9 @@ msgstr "Проверить и их"
 msgid "Check your connection and try again."
 msgstr "Проверь соединение и попробуй снова."
 
+msgid "Check your inbox"
+msgstr "Проверь почту"
+
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Выбери <0>Anki Deck Package</0> и отметь <1>Include Scheduling Information</1> и <2>Include Media</2>."
 
@@ -984,6 +996,9 @@ msgstr "Выбрать новое…"
 
 msgid "Choose one"
 msgstr "Выбери один вариант"
+
+msgid "Choose one you haven’t used on Lymi before."
+msgstr "Выбери тот, которым ещё не пользовался в Lymi."
 
 msgid "Choose the .apkg or .colpkg file Anki exports."
 msgstr "Выбери файл .apkg или .colpkg, который экспортирует Anki."
@@ -1036,6 +1051,12 @@ msgstr "Вернись позже или добавь что-нибудь нов
 msgid "Coming soon"
 msgstr "Скоро появится"
 
+msgid "Confirm your email address"
+msgstr "Подтверди свой адрес"
+
+msgid "Confirm your email address first. Check your inbox for the link."
+msgstr "Сначала подтверди адрес. Ссылка ждёт на почте."
+
 msgid "Connect {appName}"
 msgstr "Подключить {appName}"
 
@@ -1056,6 +1077,9 @@ msgstr "Продолжить в {appName}"
 
 msgid "Continue with Google"
 msgstr "Продолжить с Google"
+
+msgid "Continue with Google here:"
+msgstr "Продолжить через Google здесь:"
 
 msgid "Copied"
 msgstr "Скопировано"
@@ -1141,6 +1165,12 @@ msgstr "Сначала создай колоду. Эта карточка поп
 msgid "Create a key in Settings"
 msgstr "Создай ключ в Настройках"
 
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+msgid "Create an account"
+msgstr "Создать аккаунт"
+
 msgid "Create and move"
 msgstr "Создать и перенести"
 
@@ -1161,6 +1191,9 @@ msgstr "Создать раздел"
 
 msgid "Create series"
 msgstr "Создать серию"
+
+msgid "Create your Lymi account"
+msgstr "Создай аккаунт Lymi"
 
 msgid "Current picture"
 msgstr "Текущее изображение"
@@ -1298,6 +1331,9 @@ msgstr "Изменить серию"
 msgid "Edited {list}"
 msgstr "Изменено: {list}"
 
+msgid "Email"
+msgstr "Почта"
+
 msgid "Empty in the first card"
 msgstr "Пусто в первой карточке"
 
@@ -1310,11 +1346,17 @@ msgstr "Дополнено: {list}"
 msgid "Enter after each"
 msgstr "Enter после каждого"
 
+msgid "Enter an email address, such as you@example.com."
+msgstr "Введи адрес почты, например you@example.com."
+
 msgid "Every card is asked twice."
 msgstr "Каждая карточка задаётся дважды."
 
 msgid "Every deck, archived ones included, with your schedule and review history."
 msgstr "Все колоды, включая архивные, с твоим расписанием и историей повторений."
+
+msgid "Every other device signed in with the old one has been signed out."
+msgstr "Все остальные устройства со старым паролем вышли из аккаунта."
 
 msgid "Every section is open"
 msgstr "Все разделы открыты"
@@ -1397,6 +1439,9 @@ msgstr "Недавно забыто"
 
 msgid "Forgot today"
 msgstr "Забытые сегодня"
+
+msgid "Forgot your password?"
+msgstr "Забыл пароль?"
 
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Не помню, Трудно, Хорошо, Легко"
@@ -1504,6 +1549,12 @@ msgstr "Как тебя спрашивать"
 
 msgid "Identified by"
 msgstr "Определено по адресу"
+
+msgid "If {address} can create a Lymi account, a link to confirm it is on the way. Open it to finish."
+msgstr "Если на {address} можно создать аккаунт Lymi, ссылка для подтверждения уже в пути. Открой её, чтобы закончить."
+
+msgid "If {address} has a Lymi password, a link to set a new one is on the way. The link works for one hour."
+msgstr "Если у {address} есть пароль Lymi, ссылка для нового уже в пути. Она действует час."
 
 msgid "Import"
 msgstr "Импорт"
@@ -1866,11 +1917,17 @@ msgstr "Новая колода"
 msgid "New key"
 msgstr "Новый ключ"
 
+msgid "New password"
+msgstr "Новый пароль"
+
 msgid "New section"
 msgstr "Новый раздел"
 
 msgid "New series"
 msgstr "Новая серия"
+
+msgid "New to Lymi?"
+msgstr "Впервые в Lymi?"
 
 msgid "Next"
 msgstr "Следующее"
@@ -2093,6 +2150,12 @@ msgstr "Открой Lymi с новой иконки."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Открой Lymi в Safari и коснись «Поделиться»."
 
+msgid "Open this link to confirm your address and finish creating your Lymi account:"
+msgstr "Открой эту ссылку, чтобы подтвердить адрес и закончить создание аккаунта Lymi:"
+
+msgid "Open this link to set a new password for your Lymi account:"
+msgstr "Открой эту ссылку, чтобы задать новый пароль для аккаунта Lymi:"
+
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Открой меню браузера и выбери «Установить Lymi». Не каждый браузер это предлагает."
 
@@ -2105,6 +2168,10 @@ msgstr "Параметры «{sectionName}»"
 msgid "Options for {seriesName}"
 msgstr "Параметры «{seriesName}»"
 
+msgctxt "Between two ways to sign in"
+msgid "or"
+msgstr "или"
+
 msgid "Other ways to add cards"
 msgstr "Другие способы добавить карточки"
 
@@ -2113,6 +2180,9 @@ msgstr "своё повторение"
 
 msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
 msgstr "Части колоды, например по одному уроку. Все, кто учит колоду, видят их в таком порядке."
+
+msgid "Password"
+msgstr "Пароль"
 
 msgid "past reviews"
 msgstr "прошлые повторения"
@@ -2314,6 +2384,12 @@ msgstr "Воспроизвести произношение ещё раз"
 msgid "Request an invitation"
 msgstr "Запросить приглашение"
 
+msgid "Reset your Lymi password"
+msgstr "Новый пароль для Lymi"
+
+msgid "Reset your password"
+msgstr "Новый пароль"
+
 msgid "Restore"
 msgstr "Восстановить"
 
@@ -2397,6 +2473,9 @@ msgstr "Как в колоде"
 
 msgid "Save"
 msgstr "Сохранить"
+
+msgid "Save password"
+msgstr "Сохранить пароль"
 
 msgid "Save photo"
 msgstr "Сохранить фото"
@@ -2496,8 +2575,20 @@ msgstr "Присылать ежедневное напоминание"
 msgid "Send a lesson from Claude or ChatGPT"
 msgstr "Отправь урок из Claude или ChatGPT"
 
+msgid "Send a new link"
+msgstr "Отправить новую ссылку"
+
+msgid "Send it again"
+msgstr "Отправить ещё раз"
+
+msgid "Send the link"
+msgstr "Отправить ссылку"
+
 msgid "Series"
 msgstr "Серия"
+
+msgid "Set a new password"
+msgstr "Задай новый пароль"
 
 msgid "Settings"
 msgstr "Настройки"
@@ -2538,6 +2629,9 @@ msgstr "Войди, прежде чем выбирать, что ему разр
 msgid "Sign in here and choose that file, without unzipping it."
 msgstr "Войди здесь и выбери этот файл, не распаковывая его."
 
+msgid "Sign in here, and ask for a new password if you have forgotten yours:"
+msgstr "Войди здесь, а если забыл пароль — попроси новый:"
+
 msgid "Sign in required"
 msgstr "Нужно войти"
 
@@ -2561,6 +2655,15 @@ msgstr "Чтобы потом знать, какой ключ отозвать."
 
 msgid "Some grades haven’t synced"
 msgstr "Некоторые оценки ещё не синхронизированы"
+
+msgid "Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset."
+msgstr "Кто-то попросил новый пароль для этого адреса. Он входит через Google, так что пароля здесь нет."
+
+msgid "Someone tried to create a Lymi account with this address and a password. This address signs in with Google, so nothing was created."
+msgstr "Кто-то попробовал создать аккаунт Lymi на этом адресе с паролем. Он входит через Google, так что ничего не создано."
+
+msgid "Someone tried to create a Lymi account with this address. You already have one, so nothing was created."
+msgstr "Кто-то попробовал создать аккаунт Lymi на этом адресе. У тебя он уже есть, так что ничего не создано."
 
 msgid "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
 msgstr "На стороне Lymi что-то пошло не так. Карточки, добавленные до остановки, уже в твоих колодах."
@@ -2677,8 +2780,14 @@ msgstr "Термины, значения и даты повторения в ф�
 msgid "Test email from Lymi"
 msgstr "Тестовое письмо от Lymi"
 
+msgid "That confirmation link no longer works. Sign in to get a new one."
+msgstr "Эта ссылка для подтверждения больше не работает. Войди, чтобы получить новую."
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не получилось. Обнови страницу и попробуй снова."
+
+msgid "That email and password don’t match. Try again, or reset your password."
+msgstr "Эта почта и пароль не совпадают. Попробуй ещё раз или задай новый пароль."
 
 msgid "That file couldn’t be opened. Choose a JPEG, PNG or WebP image."
 msgstr "Не удалось открыть файл. Выбери изображение JPEG, PNG или WebP."
@@ -2695,6 +2804,12 @@ msgstr "Изображение слишком маленькое. Выбери �
 #. placeholder {0}: item.fileName
 msgid "That isn’t the same file. Choose {0}."
 msgstr "Это другой файл. Выбери {0}."
+
+msgid "That password is too long."
+msgstr "Этот пароль слишком длинный."
+
+msgid "That reset link no longer works. Ask for a new one."
+msgstr "Эта ссылка больше не работает. Попроси новую."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Этого уже нет. Обнови страницу, чтобы увидеть изменения."
@@ -2732,6 +2847,12 @@ msgstr "Язык карточек в этой колоде. С него начи
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "Ссылка перестанет работать навсегда. Те, кто присоединился, останутся в колоде, а при повторном открытии доступа появится новая ссылка."
 
+msgid "The link works for 24 hours. If you didn’t create a Lymi account, ignore this email."
+msgstr "Ссылка действует 24 часа. Если ты не создавал аккаунт Lymi, просто не обращай внимания на это письмо."
+
+msgid "The link works for one hour. If you didn’t ask for a new password, ignore this email. Nothing has changed."
+msgstr "Ссылка действует час. Если ты не просил новый пароль, просто не обращай внимания на это письмо. Ничего не изменилось."
+
 msgid "the meaning"
 msgstr "значение"
 
@@ -2764,6 +2885,9 @@ msgstr "Тема"
 
 msgid "There is no deck at this address"
 msgstr "По этому адресу нет колоды"
+
+msgid "This account has not been invited. Request an invitation, or try another account."
+msgstr "У этого аккаунта нет приглашения. Попроси приглашение или попробуй другой аккаунт."
 
 msgid "This browser can’t show reminders."
 msgstr "Этот браузер не показывает напоминания."
@@ -2806,9 +2930,6 @@ msgstr "Этот файл больше 1 ГБ. Экспортируй колод
 
 msgid "This file was deleted a day after it was written. Export again to get a new one."
 msgstr "Этот файл удалён через день после создания. Экспортируй ещё раз, чтобы получить новый."
-
-msgid "This Google account has not been invited. Request an invitation, or try another account."
-msgstr "Этот аккаунт Google не приглашён. Запроси приглашение или попробуй другой аккаунт."
 
 msgid "This import is archived"
 msgstr "Этот импорт архивирован"
@@ -2869,6 +2990,12 @@ msgstr "Цель на сегодня"
 
 msgid "Tomorrow"
 msgstr "Завтра"
+
+msgid "Too many attempts. Try again in {minutes, plural, one {# minute} other {# minutes}}."
+msgstr "Слишком много попыток. Попробуй через {minutes, plural, one {# минуту} few {# минуты} many {# минут} other {# минуты}}."
+
+msgid "Too many attempts. Try again later."
+msgstr "Слишком много попыток. Попробуй чуть позже."
 
 msgid "Took “{deckName}” out of its series"
 msgstr "«{deckName}» убрана из серии"
@@ -2934,14 +3061,17 @@ msgstr "Используй языковой тег вроде ca, pt-BR или z
 msgid "Use a public http or https link to a picture."
 msgstr "Используй публичную ссылку на изображение через http или https."
 
+msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
+msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."
+
 msgid "Use link"
 msgstr "Использовать ссылку"
 
+msgid "Use the account that received your invitation."
+msgstr "Воспользуйся аккаунтом, который получил приглашение."
+
 msgid "Use the deck’s"
 msgstr "Вернуть как в колоде"
-
-msgid "Use the Google account that received your invitation."
-msgstr "Используй аккаунт Google, на который пришло приглашение."
 
 msgid "Use these fields"
 msgstr "Использовать эти поля"
@@ -2969,6 +3099,9 @@ msgstr "только что использован"
 
 msgid "Waiting for you"
 msgstr "Ждёт тебя"
+
+msgid "We’ll send a link to set a new one."
+msgstr "Отправим ссылку, чтобы задать новый."
 
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
 msgid "week of {0}"
@@ -3018,6 +3151,9 @@ msgstr "ты"
 
 msgid "You"
 msgstr "Ты"
+
+msgid "You already have a Lymi account"
+msgstr "У тебя уже есть аккаунт Lymi"
 
 msgid "You are already in this deck."
 msgstr "Ты уже в этой колоде."
@@ -3070,8 +3206,14 @@ msgstr "Снова показываем фото из Google"
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твои оценки сохранены. Проверь соединение и попробуй снова."
 
+msgid "Your Lymi account signs in with Google"
+msgstr "Твой аккаунт Lymi входит через Google"
+
 msgid "Your own schedule and review history come with it. The deck stays as it is."
 msgstr "Вместе с ней экспортируются твоё расписание и история повторений. Колода останется как есть."
+
+msgid "Your password is set"
+msgstr "Пароль сохранён"
 
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Фото изменилось в другом месте. Проверь его и попробуй ещё раз."

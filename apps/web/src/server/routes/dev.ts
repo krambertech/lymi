@@ -181,6 +181,9 @@ dev.post("/due", describe({ hide: true, open: true }), body(DueBody, "due"), asy
 /**
  * Sign the persona's account in through Better Auth's own email flow, creating it on first
  * use. The password is fixed and public; the accounts exist only in disposable data stores.
+ *
+ * Sign-up issues no session while verification is required, so a fresh persona signs in on a
+ * second call. It succeeds because a persona account is created already confirmed.
  */
 async function signInPersona(auth: Auth, persona: Persona) {
   const email = personaEmail(persona.id);
@@ -197,7 +200,14 @@ async function signInPersona(auth: Auth, persona: Persona) {
   if (!created.ok) {
     throw new Error(`Could not create ${email}: ${await created.text()}`);
   }
-  return await sessionFrom(created, true);
+  const signedIn = await auth.api.signInEmail({
+    body: { email, password: DEV_PASSWORD },
+    asResponse: true,
+  });
+  if (!signedIn.ok) {
+    throw new Error(`Could not sign ${email} in: ${await signedIn.text()}`);
+  }
+  return await sessionFrom(signedIn, true);
 }
 
 async function sessionFrom(response: Response, created: boolean) {

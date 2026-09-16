@@ -52,6 +52,9 @@ test("each origin exposes only its own route and indexing contract", async ({ pa
   const siteRobots = await request.get(`${publicSite}/robots.txt`);
   expect(siteRobots.status()).toBe(200);
   expect(await siteRobots.text()).toContain("Sitemap: https://lymi.app/sitemap.xml");
+  const sitemapIndex = await (await request.get(`${publicSite}/sitemap.xml`)).text();
+  expect(sitemapIndex).toContain("<loc>https://lymi.app/sitemap-pages.xml</loc>");
+  expect(sitemapIndex).toContain("<loc>https://lymi.app/sitemap-decks.xml</loc>");
 
   const productRobots = await request.get("/robots.txt");
   expect(productRobots.status()).toBe(200);
@@ -63,6 +66,11 @@ test("each origin exposes only its own route and indexing contract", async ({ pa
 
   const productUnknown = await request.get("/public-page-that-does-not-exist");
   expect(productUnknown.status()).toBe(404);
+
+  // The site renders unknown paths through Astro now that the assets binding no longer handles them.
+  const siteUnknown = await request.get(`${publicSite}/page-that-does-not-exist`);
+  expect(siteUnknown.status()).toBe(404);
+  expect(await siteUnknown.text()).toContain("<title>Page not found · Lymi</title>");
 
   const metadata = await request.get("/.well-known/oauth-protected-resource/mcp");
   expect(metadata.status()).toBe(200);
@@ -104,6 +112,9 @@ test("the public Worker owns beta signup without exposing product APIs", async (
     "href",
     "/privacy",
   );
+  // The form submits once its island hydrates, and Astro drops `ssr` from the island then; with
+  // the immutable asset cache a click can otherwise land first. No accessible state marks it.
+  await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
   await page.getByRole("textbox", { name: "Email address" }).fill(uiEmail);
   const signup = page.waitForResponse(
     (response) =>

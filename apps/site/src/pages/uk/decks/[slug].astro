@@ -1,0 +1,11 @@
+---
+import DeckPage from "../../../components/deck/DeckPage.astro";
+import { resolveDeckPage } from "../../../lib/public-deck";
+
+export const prerender = false;
+
+const page = await resolveDeckPage(Astro, "uk");
+if (page instanceof Response) return page;
+---
+
+<DeckPage page={page} />

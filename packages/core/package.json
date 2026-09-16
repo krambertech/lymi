@@ -9,6 +9,7 @@
     "./schema": "./src/schema/index.ts",
     "./db": "./src/db.ts",
     "./notes": "./src/notes.ts",
+    "./catalog": "./src/catalog.ts",
     "./simulation": "./simulation/index.ts"
   },
   "scripts": {

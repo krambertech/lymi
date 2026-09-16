@@ -50,7 +50,7 @@ test("someone with an AI assistant can reach the assistants page and see how to 
   });
 
   await test.step("every edition of the page is in the sitemap", async () => {
-    const sitemap = await (await request.get(`${publicSite}/sitemap.xml`)).text();
+    const sitemap = await (await request.get(`${publicSite}/sitemap-pages.xml`)).text();
     for (const prefix of ["", "/uk", "/ru"]) {
       expect(sitemap).toContain(`<loc>https://lymi.app${prefix}/ai-assistants</loc>`);
     }

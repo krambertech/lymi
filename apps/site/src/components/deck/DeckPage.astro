@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { deckPath, deckPaths, deckStructuredData, jsonForScript, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
+import { pageI18n } from "../../lib/i18n";
+import { localizedPath } from "../../lib/routes";
+import type { DeckPage } from "../../lib/public-deck";
+import PublicNav from "../islands/PublicNav";
+import DeckSections from "../islands/DeckSections";
+import DeckStack from "../islands/DeckStack";
+import { deckDescription, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
+import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks } from "./DeckView";
+
+interface Props {
+  page: DeckPage;
+}
+
+const { page } = Astro.props;
+const { locale } = page;
+const i18n = pageI18n(locale);
+const slug = page.status === 200 ? page.deck.slug : page.slug;
+const paths = deckPaths(slug);
+const deck = page.status === 200 ? page.deck : null;
+const path = deck ? sectionPath(deck) : null;
+const stack = deck ? stackCards(deck) : [];
+---
+
+{
+  page.status === 200 ? (
+    <BaseLayout
+      title={deckTitle(i18n, page.deck)}
+      description={deckDescription(i18n, page.deck)}
+      canonicalPath={deckPath(slug, locale)}
+      alternatePaths={paths}
+    >
+      <script
+        slot="head"
+        is:inline
+        type="application/ld+json"
+        set:html={jsonForScript(deckStructuredData(page.deck, locale))}
+      />
+      <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+        <header>
+          <PublicNav client:load locale={locale} />
+          <DeckHero deck={page.deck} locale={locale} spread={spreadCards(page.deck)} />
+        </header>
+        <main>
+          {path && (
+            <DeckSections
+              client:load
+              locale={locale}
+              name={page.deck.name}
+              termLanguage={page.deck.language}
+              meaningLanguage={page.deck.meaningLanguage}
+              cardCount={page.deck.cardCount}
+              addUrl={addUrl(slug)}
+              inOrder={path.inOrder}
+              steps={path.steps}
+            />
+          )}
+          <section id="how" aria-labelledby="how-title" class="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24">
+            <div class="mx-auto grid max-w-[1040px] items-center gap-12 @4xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] @4xl:gap-20">
+              <DeckHowItWorks locale={locale} />
+              {stack.length > 0 && (
+                <DeckStack
+                  client:load
+                  locale={locale}
+                  cards={stack}
+                  termLanguage={page.deck.language}
+                  total={page.deck.cardCount}
+                  addUrl={addUrl(slug)}
+                />
+              )}
+            </div>
+          </section>
+        </main>
+        <DeckFooterFacts deck={page.deck} locale={locale} />
+        <DeckFooter locale={locale} languagePaths={paths} />
+      </div>
+    </BaseLayout>
+  ) : (
+    <BaseLayout
+      title={i18n._(page.status === 410 ? UNAVAILABLE_TITLE : MISSING_TITLE)}
+      description={i18n._(page.status === 410 ? UNAVAILABLE_BLURB : MISSING_BLURB)}
+      canonicalPath={localizedPath("landing", locale)}
+    >
+      <meta slot="head" name="robots" content="noindex" />
+      <div class="@container flex min-h-dvh flex-col overflow-x-clip bg-canvas text-text">
+        <header>
+          <PublicNav client:load locale={locale} />
+        </header>
+        <div class="flex flex-1 flex-col justify-center">
+          <DeckGone status={page.status} locale={locale} />
+        </div>
+        <DeckFooter locale={locale} languagePaths={paths} />
+      </div>
+    </BaseLayout>
+  )
+}

@@ -11,8 +11,9 @@ import { isUseCasePage, MENU_USE_CASE_LINKS } from "./site-links";
 interface Props {
   openAppUrl: string;
   current?: LocalizedPage | undefined;
-  /** Where Request access goes. A page without its own join section sends it to /join. */
-  joinHref?: string | undefined;
+  /** Where Request access goes. A page without its own join section sends it to /join, and a page
+   * that admits anyone, such as a published deck, passes null to leave it out. */
+  joinHref?: string | null | undefined;
 }
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
@@ -107,7 +108,7 @@ const unlockScroll = () => {
 interface PhoneMenuProps {
   openAppUrl: string;
   current: LocalizedPage | undefined;
-  joinHref: string;
+  joinHref: string | null;
 }
 
 function PhoneMenu({ openAppUrl, current, joinHref }: PhoneMenuProps) {
@@ -195,9 +196,15 @@ function PhoneMenu({ openAppUrl, current, joinHref }: PhoneMenuProps) {
             <a onClick={close} href={openAppUrl} className={buttonClass("primary", "lg", "w-full")}>
               <Trans>Open Lymi</Trans>
             </a>
-            <a onClick={close} href={joinHref} className={buttonClass("secondary", "lg", "w-full")}>
-              <Trans>Request access</Trans>
-            </a>
+            {joinHref !== null && (
+              <a
+                onClick={close}
+                href={joinHref}
+                className={buttonClass("secondary", "lg", "w-full")}
+              >
+                <Trans>Request access</Trans>
+              </a>
+            )}
           </div>
         </div>
       </dialog>
@@ -227,9 +234,11 @@ export function SiteNav({ openAppUrl, current, joinHref = "#join" }: Props) {
           <a href="/docs" className={buttonClass("ghost", "sm")}>
             <Trans>Docs</Trans>
           </a>
-          <a href={joinHref} className={buttonClass("ghost", "sm")}>
-            <Trans>Request access</Trans>
-          </a>
+          {joinHref !== null && (
+            <a href={joinHref} className={buttonClass("ghost", "sm")}>
+              <Trans>Request access</Trans>
+            </a>
+          )}
           <a href={openAppUrl} className={buttonClass("secondary", "sm", "ms-1")}>
             <Trans>Open Lymi</Trans>
           </a>

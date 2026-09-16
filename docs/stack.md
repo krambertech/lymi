@@ -11,6 +11,7 @@ flowchart LR
   subgraph Site["apps/site (Astro + site Worker)"]
     Public[Prerendered landing + docs]
     Islands[React islands]
+    Catalog[Published deck pages\nrendered per request]
     Beta[Website API\n/api/beta + /api/health]
   end
   subgraph Product["apps/web (Vite + React + Hono)"]
@@ -34,6 +35,7 @@ flowchart LR
 
   Public --> Islands
   Beta -->|beta signups only| D1
+  Catalog -->|public projection, read only| D1
   UI --> Assets
   UI -->|fetch, session cookie| API
   SW -->|replay queued reviews| API
@@ -58,7 +60,7 @@ flowchart LR
 
 ### Clients: prerendered Astro website plus a client-rendered React PWA
 
-The public site at `lymi.app` is statically rendered by Astro. Landing, Join and documentation ship useful HTML and canonical metadata before JavaScript runs; interactive React components hydrate as islands. A narrow Worker serves the static assets, beta signup and a versioned health endpoint. It has no product shell, authentication or PWA behavior.
+The public site at `lymi.app` is rendered by Astro. Landing, Join and documentation are prerendered and ship useful HTML and canonical metadata before JavaScript runs; interactive React components hydrate as islands. Published deck pages (`/decks/<slug>` in each locale) and the deck sitemap are the only routes Astro renders per request, from the public projection of D1 in `packages/core/src/catalog.ts` ([ADR 0016](adr/0016-public-catalog-pages-render-on-the-public-worker.md)). A narrow Worker serves the assets, those pages, beta signup and a versioned health endpoint. It has no product shell, authentication or PWA behavior.
 
 The signed-in product at `my.lymi.app` is still a client-rendered single-page PWA. It sits behind a login, so a static shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train. `/today` is the product home and `/app` redirects there. The product root sends a valid session to Today and a signed-out visitor to sign-in, preserving safe product deep links through authentication.
 
@@ -98,9 +100,11 @@ Alternative considered: the Google Fonts stylesheet with `display=swap`. It cost
 
 ### Servers: two Cloudflare Workers, with Hono on the product
 
-The public `lymi-site` Worker serves Astro's static output and runs first only for `/api/*`, where it exposes beta signup and health. The product `lymi` Worker routes `/api/*`, `/api/auth/*`, `/mcp`, OAuth discovery and product navigations through Hono before its SPA asset fallback. Product documentation paths redirect to `lymi.app`; unknown product paths can never render public content. Local browser tests run the two Workers on separate loopback origins.
+The public `lymi-site` Worker is built by `@astrojs/cloudflare`. Assets and prerendered pages are served before the Worker runs; `src/worker.ts` answers `/api/health` and `/api/beta` and hands every other request to Astro's handler, which renders a published deck page or the 404 page. A deck page is `public, max-age=300` with an ETag of slug, revision, locale and Worker version, and it never reads a cookie. The product `lymi` Worker routes `/api/*`, `/api/auth/*`, `/mcp`, OAuth discovery and product navigations through Hono before its SPA asset fallback. Product documentation paths redirect to `lymi.app`; unknown product paths can never render public content. Local browser tests run the two Workers on separate loopback origins.
 
 Alternative considered: Cloudflare Pages plus Functions for the website. A Worker with static assets keeps both deployments on the same platform, supplies version metadata and supports the narrow beta action without another service.
+
+Alternative considered for deck pages: a prerendered shell per locale that the Worker fills from D1 with `HTMLRewriter`. It keeps the build fully static, but every title, description, JSON-LD block and card row would be written twice, once in Astro and once as string rewriting in the Worker, and localized copy would have to be shipped to the Worker separately. The Cloudflare adapter renders the same Astro and React components per request and keeps every other page prerendered.
 
 ### Data: D1 with Drizzle
 
@@ -202,9 +206,9 @@ The Anki package is Anki's legacy container, `collection.anki21` with a placehol
 
 ```
 lymi/
-  apps/site         Public deployable: Astro static site + narrow Worker
-    src/pages       Landing, Join, documentation, metadata and public files
-    src/worker.ts   Beta signup, health and static asset binding
+  apps/site         Public deployable: Astro site + narrow Worker
+    src/pages       Landing, Join, documentation, published decks, metadata and public files
+    src/worker.ts   Beta signup and health, then Astro's handler
   apps/web          Product deployable: Vite React PWA client + Hono Worker
     src/client      Routes, components, styles (Tailwind v4 tokens from DESIGN.md)
     src/server      Hono app, Better Auth, API and MCP routes, product asset fallback

@@ -720,6 +720,284 @@
   padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
 }
 
+/* ---- Published deck ---------------------------------------------------- */
+
+/* The opening spread: a few of the deck's cards floating apart, each at its own height and tilt.
+   A phone keeps the middle three and lets the edge cut the outer two; --cw is a card's width. */
+.deck-spread {
+  --cw: 46cqw;
+  --step: 50cqw;
+  --lift: 0.55;
+  position: relative;
+  height: calc(var(--cw) * 1.12 + 56px);
+  margin-top: 2.25rem;
+}
+@container (min-width: 42rem) {
+  .deck-spread {
+    --cw: 26cqw;
+    --step: 30cqw;
+    --lift: 0.8;
+    height: calc(var(--cw) * 1.12 + 70px);
+    margin-top: 3.25rem;
+  }
+}
+@container (min-width: 56rem) {
+  .deck-spread {
+    --cw: min(196px, 17cqw);
+    --step: min(222px, 19.4cqw);
+    --lift: 1;
+    height: calc(var(--cw) * 1.12 + 84px);
+  }
+}
+.deck-spread-card {
+  position: absolute;
+  top: 8px;
+  left: calc(50% - var(--cw) / 2);
+  width: var(--cw);
+  transform: translate(calc(var(--o) * var(--step)), calc(var(--y) * var(--lift))) rotate(var(--r));
+  z-index: calc(10 - var(--a) * 2);
+  animation: deck-deal 1100ms var(--ease-out) calc(var(--a) * 90ms + 120ms) both;
+}
+.deck-spread-card[data-outer] {
+  display: none;
+}
+@container (min-width: 56rem) {
+  .deck-spread-card[data-outer] {
+    display: block;
+  }
+}
+/* Only a start is given, so each card deals from the middle into its own place. */
+@keyframes deck-deal {
+  from {
+    transform: translate(0, 34px) rotate(0deg) scale(0.94);
+  }
+}
+.deck-spread-float {
+  animation: deck-float var(--dur) ease-in-out var(--delay) infinite alternate;
+}
+@keyframes deck-float {
+  to {
+    transform: translateY(-8px) rotate(var(--wob));
+  }
+}
+.deck-spread-face {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1 / 1.12;
+  padding: calc(var(--cw) * 0.085);
+  border-radius: calc(var(--cw) * 0.1);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge);
+  text-align: start;
+  transition:
+    transform 380ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .deck-spread-card:hover .deck-spread-face {
+    transform: translateY(-12px) rotate(calc(var(--r) * -1));
+    box-shadow: 0 0 0 1px var(--edge-2);
+  }
+}
+.deck-spread-section {
+  font-size: max(0.6875rem, calc(var(--cw) * 0.054));
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.deck-spread-term {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-top: calc(var(--cw) * 0.06);
+  /* --term steps down for a long word, as the landing card does; a compound would break mid-letter. */
+  font-size: max(1.25rem, calc(var(--cw) * var(--term, 0.14)));
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  color: var(--text);
+}
+.deck-spread-meaning {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-top: auto;
+  padding-top: calc(var(--cw) * 0.06);
+  border-top: 1px solid var(--edge-2);
+  font-size: max(0.8125rem, calc(var(--cw) * 0.074));
+  line-height: 1.3;
+  color: var(--text-2);
+}
+
+/* The end of the deck page's hand, borrowed from the end of a review: the lantern lights the room
+   with a pool of its own glow that blooms and then breathes, embers lift off the flame once, and the
+   words just turned and the way on rise after it. */
+.deck-finale {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 30rem);
+  text-align: center;
+}
+.deck-finale-light {
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+}
+.deck-finale-pool {
+  position: absolute;
+  z-index: -1;
+  top: 55%;
+  left: 50%;
+  width: 28rem;
+  height: 28rem;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+.deck-finale-pool > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--glow),
+    color-mix(in oklab, var(--glow) 40%, transparent) 45%,
+    transparent
+  );
+  animation:
+    deck-finale-bloom 1600ms var(--ease-out) 120ms both,
+    deck-finale-breath 2.6s ease-in-out 1720ms infinite;
+}
+@keyframes deck-finale-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+}
+@keyframes deck-finale-breath {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  30% {
+    transform: scale(1.07);
+    opacity: 1;
+  }
+  62% {
+    transform: scale(0.96);
+    opacity: 0.8;
+  }
+}
+.deck-finale-ember {
+  position: absolute;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--flame-core);
+  box-shadow:
+    0 0 4px 1px var(--amber),
+    0 0 10px var(--glow);
+  opacity: 0;
+  animation: deck-finale-ember var(--dur) cubic-bezier(0.2, 0.7, 0.3, 1) var(--delay) both;
+}
+@keyframes deck-finale-ember {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(0.3);
+  }
+}
+.deck-finale-rise {
+  animation: deck-finale-rise 560ms var(--ease-out) var(--delay, 0ms) both;
+}
+@keyframes deck-finale-rise {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+    filter: blur(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck-finale-pool > span,
+  .deck-finale-rise {
+    animation: none;
+  }
+  .deck-finale-ember {
+    display: none;
+  }
+}
+
+/* Every card, in a view of its own over the page. A phone gets it as a sheet rising from the bottom. */
+.deck-cards {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--canvas);
+  color: var(--text);
+}
+.deck-cards::backdrop {
+  background: transparent;
+}
+.deck-cards[open] {
+  animation: deck-cards-in 340ms var(--ease-out);
+}
+@media (max-width: 40rem) {
+  .deck-cards[open] {
+    animation: deck-cards-up 450ms var(--ease-drawer);
+  }
+}
+@keyframes deck-cards-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+@keyframes deck-cards-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+html:has(.deck-cards[open]) {
+  overflow: hidden;
+}
+/* Without script the same #cards link still opens the view, as a plain part of the page. */
+.deck-cards:target:not([open]) {
+  display: block;
+  position: static;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-spread-card,
+  .deck-spread-float,
+  .deck-cards[open] {
+    animation: none;
+  }
+  .deck-spread-face {
+    transition: none;
+  }
+}
+
 /* ---- Docs -------------------------------------------------------------- */
 
 /*
@@ -934,6 +1212,33 @@
   pointer-events: none;
 }
 
+/* The deck page's hand spreads less than the landing page's, because one deck's cards are one
+   language and a wide fan puts a term the visitor has not been asked next to the one they have.
+   A phone squares them up: at that width a fanned card bleeds off the screen. */
+.deck-hand .hand-stage {
+  --spread: 6deg;
+}
+@media (max-width: 40rem) {
+  .deck-hand .hand-stage {
+    height: calc(var(--ch) + var(--cw) * 0.24);
+  }
+  .deck-hand .hand-card {
+    transform-origin: 50% 100%;
+  }
+  .deck-hand .hand-card[data-place="deck"] {
+    transform: translateX(calc(var(--cw) * 0.3)) rotate(4deg) scale(0.96);
+  }
+  .deck-hand .hand-card[data-place="front"] {
+    transform: none;
+  }
+  .deck-hand .hand-card[data-place="fan"] {
+    transform: translateY(calc(var(--slot) * var(--cw) * 0.05)) scale(calc(1 - var(--slot) * 0.05));
+  }
+  .deck-hand .hand-card[data-place="gone"] {
+    transform: translate(calc(var(--cw) * -0.3), calc(var(--cw) * 0.04)) rotate(-5deg) scale(0.96);
+  }
+}
+
 /* Lesson notes in a hand. Caveat covers Latin and Cyrillic; a Japanese notebook would need a face of its own. */
 .notes-hand {
   font-family: "Caveat", cursive;
@@ -1066,6 +1371,18 @@
 }
 .hand-stage[data-layout="single"] .hand-card[data-place="front"] {
   transform: none;
+}
+
+/* What the hand leaves after its last card. It also covers the button row under the stage, which
+   keeps its height, so the finale sits in the middle of the whole hand and nothing below moves. */
+.hand-finale {
+  position: absolute;
+  inset: 0 0 -3.5rem;
+  display: grid;
+  place-items: center;
+}
+.hand-stage:has(.hand-finale) {
+  clip-path: none;
 }
 
 .hand-flip {

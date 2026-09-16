@@ -556,7 +556,7 @@ function GlossaryRow({
       </span>
       <span
         className={clsx(
-          "col-start-2 row-start-1 line-clamp-3 text-lg font-medium leading-snug [overflow-wrap:anywhere]",
+          "hyphenate col-start-2 row-start-1 line-clamp-3 text-lg font-medium leading-snug [overflow-wrap:anywhere]",
           waiting ? "text-text-2" : "text-text",
         )}
         lang={card.language ?? undefined}
@@ -571,7 +571,7 @@ function GlossaryRow({
       </span>
       <span
         className={clsx(
-          "col-start-2 row-start-2 line-clamp-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
+          "hyphenate col-start-2 row-start-2 line-clamp-2 text-md leading-snug [overflow-wrap:anywhere] @xl/list:col-start-3 @xl/list:row-start-1",
           !card.meaning ? "text-faint" : waiting ? "text-muted" : "text-text-2",
         )}
       >

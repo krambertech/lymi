@@ -373,6 +373,9 @@ msgstr "{day}: goal reached, {reviews}"
 msgid "{day}: no reviews"
 msgstr "{day}: no reviews"
 
+msgid "{day}: not yet"
+msgstr "{day}: not yet"
+
 msgid "{day}: nothing due"
 msgstr "{day}: nothing due"
 
@@ -438,6 +441,9 @@ msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
 
 msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
 msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
+
+msgid "{left, plural, one {# character left} other {# characters left}}"
+msgstr "{left, plural, one {# character left} other {# characters left}}"
 
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"

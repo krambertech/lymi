@@ -88,6 +88,10 @@ export function ReviewHeader({
   const size = round ? round.size : goal;
   return (
     <header className="flex min-h-14 shrink-0 items-center gap-3 pt-2 @3xl:pt-4">
+      {/* The screen is chromeless by design, so its heading is for the screen reader alone. */}
+      <h1 className="sr-only">
+        <Trans>Review</Trans>
+      </h1>
       {/* The slot keeps its place while the lantern is away, so the header never shifts. */}
       <span className="-ms-[11.5px] -me-2 size-11 shrink-0">
         {!complete && (
@@ -512,7 +516,7 @@ export function ReviewCard({
       {card.example && (
         <motion.p
           variants={answerLine}
-          className="whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
+          className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
           {card.example}
@@ -547,7 +551,7 @@ export function ReviewCard({
               <motion.p
                 variants={answerLine}
                 className={clsx(
-                  "hyphens-auto font-medium leading-[1.2] text-text [overflow-wrap:anywhere]",
+                  "hyphenate font-medium leading-[1.2] text-text [overflow-wrap:anywhere]",
                   TERM_SIZE[step],
                 )}
                 lang={card.language ?? undefined}
@@ -560,7 +564,7 @@ export function ReviewCard({
                 <motion.p
                   variants={answerLine}
                   className={clsx(
-                    "hyphens-auto whitespace-pre-line leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                    "hyphenate whitespace-pre-line leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
                     CONTEXT_SIZE[step],
                   )}
                 >
@@ -573,7 +577,7 @@ export function ReviewCard({
               <motion.p
                 variants={answerLine}
                 className={clsx(
-                  "hyphens-auto whitespace-pre-line leading-[1.3] text-text [overflow-wrap:anywhere]",
+                  "hyphenate whitespace-pre-line leading-[1.3] text-text [overflow-wrap:anywhere]",
                   picture ? ["font-medium", PICTURE_TARGET_SIZE[step]] : MEANING_SIZE[step],
                 )}
               >
@@ -584,7 +588,7 @@ export function ReviewCard({
                   <motion.p
                     variants={answerLine}
                     className={clsx(
-                      "hyphens-auto leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
+                      "hyphenate leading-[1.35] text-text-2 [overflow-wrap:anywhere]",
                       CONTEXT_SIZE[step],
                     )}
                     lang={card.language ?? undefined}
@@ -676,14 +680,13 @@ export function ReviewCard({
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  {/* The deck name keeps its width up to 60%; the mode label truncates first. */}
-                  <span className="max-w-[60%] shrink-0 truncate font-medium text-text-2">
-                    {deck.name}
-                  </span>
+                  {/* The mode keeps its width: it says what is being asked, and the review does not
+                      depend on the deck name, so on a narrow phone the name truncates first. */}
+                  <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
                   <span aria-hidden="true">·</span>
                 </>
               )}
-              <span className="min-w-0 truncate">
+              <span className="max-w-full shrink-0 truncate">
                 {i18n._(modeLabel(mode))}
                 {/* The deck implies its language, so the code shows only for a card that differs. */}
                 {card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase() && (
@@ -722,7 +725,7 @@ export function ReviewCard({
                   <p
                     lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
                     className={clsx(
-                      "hyphens-auto whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
+                      "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
                       CUE_SIZE[step],
                     )}
                   >

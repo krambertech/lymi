@@ -249,12 +249,15 @@ function ReadField({
   aside,
   value,
   empty,
+  lang,
   children,
 }: {
   label: string;
   aside?: ReactNode | undefined;
   value?: string | undefined;
   empty?: boolean | undefined;
+  /** The language the text is in, so a long word hyphenates by its own rules. */
+  lang?: string | undefined;
   /** Formatted content in place of `value`. */
   children?: ReactNode | undefined;
 }) {
@@ -266,8 +269,9 @@ function ReadField({
       </div>
       {children ?? (
         <p
+          lang={lang}
           className={clsx(
-            "whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
+            "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
             empty ? "text-muted" : "text-text",
           )}
         >
@@ -499,7 +503,7 @@ export function WordView({
           tabIndex={titleId ? -1 : undefined}
           className="flex min-w-0 items-center gap-3 text-3xl font-medium leading-[1.05] tracking-[-0.03em] outline-none"
         >
-          <span className="min-w-0 break-words" lang={card.language ?? undefined}>
+          <span className="hyphenate min-w-0 break-words" lang={card.language ?? undefined}>
             {forms.word}
             {forms.forms && (
               <span className="font-normal text-text-2">
@@ -556,7 +560,12 @@ export function WordView({
           empty={!card.meaning}
         />
         {card.example && (
-          <ReadField label={t`Example`} aside={source(card.exampleSource)} value={card.example} />
+          <ReadField
+            label={t`Example`}
+            aside={source(card.exampleSource)}
+            value={card.example}
+            lang={card.language ?? undefined}
+          />
         )}
         {card.notes && (
           <ReadField label={t`Notes`}>

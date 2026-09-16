@@ -44,7 +44,8 @@ export function StatPlate({
       {/* 34 px is the segmented control at `sm` plus its track padding. Fixed so a plate
           with a control and one without still line up across the grid. */}
       <div className="flex min-h-[34px] flex-wrap items-center justify-between gap-x-3 gap-y-2">
-        <h3 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h3>
+        {/* h2: the plates sit directly under the page's h1, beside the sections below them. */}
+        <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h2>
         {control}
       </div>
       <p

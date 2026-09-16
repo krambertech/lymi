@@ -131,6 +131,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run }:
                 const on = !!entry?.satisfied;
                 const kept = keeps(date);
                 const isToday = date === today;
+                const future = date > today;
                 const joinsBefore = kept && keeps(week[i - 1]?.date);
                 const joinsAfter = kept && keeps(week[i + 1]?.date);
                 const drawAt = run?.has(date) ? runOrder.indexOf(date) : -1;
@@ -140,21 +141,23 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run }:
                     : undefined;
                 const day = dayLabel.format(asDate(date));
                 const reviews = plural(count, { one: "# review", other: "# reviews" });
-                const label = entry?.nothingDue
-                  ? isToday
-                    ? t`Today, ${day}: nothing due`
-                    : t`${day}: nothing due`
-                  : isToday
-                    ? count > 0
-                      ? on
-                        ? t`Today, ${day}: goal reached, ${reviews}`
-                        : t`Today, ${day}: ${reviews}`
-                      : t`Today, ${day}: no reviews yet`
-                    : count > 0
-                      ? on
-                        ? t`${day}: goal reached, ${reviews}`
-                        : t`${day}: ${reviews}, goal missed`
-                      : t`${day}: no reviews`;
+                const label = future
+                  ? t`${day}: not yet`
+                  : entry?.nothingDue
+                    ? isToday
+                      ? t`Today, ${day}: nothing due`
+                      : t`${day}: nothing due`
+                    : isToday
+                      ? count > 0
+                        ? on
+                          ? t`Today, ${day}: goal reached, ${reviews}`
+                          : t`Today, ${day}: ${reviews}`
+                        : t`Today, ${day}: no reviews yet`
+                      : count > 0
+                        ? on
+                          ? t`${day}: goal reached, ${reviews}`
+                          : t`${day}: ${reviews}, goal missed`
+                        : t`${day}: no reviews`;
                 return (
                   <td key={key} className="relative h-10 p-0 text-center">
                     {(joinsBefore || joinsAfter) && (
@@ -188,11 +191,19 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run }:
                         className="absolute top-1/2 left-1/2 block size-8 -translate-1/2 rounded-full edge-2"
                       />
                     )}
+                    {/* Dashed is this system's mark for "not here yet", so a day still to come cannot
+                        be read as a day that was missed, in any palette or in none. */}
+                    {future && (
+                      <i
+                        aria-hidden="true"
+                        className="absolute top-1/2 left-1/2 block size-8 -translate-1/2 rounded-full border border-dashed border-edge-2"
+                      />
+                    )}
                     <span
                       aria-hidden="true"
                       className={clsx(
                         "relative text-sm tabular-nums",
-                        on ? "font-medium text-text" : "text-muted",
+                        on ? "font-medium text-text" : future ? "text-faint" : "text-muted",
                         isToday && "font-semibold",
                       )}
                     >

@@ -334,6 +334,15 @@
   }
 }
 
+/* A learner's own words wrap by their language's hyphenation rather than breaking anywhere: a German
+   compound reads as one word broken at a joint, never as a line ending in a stranded letter. The
+   element needs `lang` for the browser to pick a dictionary, and `overflow-wrap` still catches a
+   string no dictionary knows. */
+@utility hyphenate {
+  hyphens: auto;
+  hyphenate-limit-chars: auto 3 3;
+}
+
 /* One hairline edge, a shadow so it never changes layout; forced colours drop shadows, so there it becomes an outline the system paints. */
 @utility edge {
   box-shadow: 0 0 0 1px var(--edge);

@@ -1,5 +1,6 @@
 export * from "./draw";
 export * from "./export";
+export * from "./feedback";
 export * from "./fsrs";
 export * from "./ids";
 export * from "./images";

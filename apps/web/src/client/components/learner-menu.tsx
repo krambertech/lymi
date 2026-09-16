@@ -9,12 +9,14 @@ import {
   Download,
   Keyboard,
   LogOut,
+  MessageSquare,
   Settings,
 } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { useLearnerAvatar } from "../lib/avatar";
 import { promptToInstall, useInstallState } from "../lib/pwa-install";
 import { Avatar } from "./avatar";
+import { FeedbackDialog } from "./feedback-dialog";
 import { InstallDialog } from "./install-dialog";
 import type { StaticNav } from "./nav-link";
 import { ShortcutsDialog } from "./shortcuts-dialog";
@@ -51,7 +53,8 @@ export function firstName(name: string | undefined): string | undefined {
  * The learner, and the few things that belong to them rather than to a screen: where to go,
  * what this device can do, and the way out. The rail already lists Activity and Insights, so
  * on desktop the menu holds only what has no other home. Keyboard shortcuts appear where
- * there is a keyboard; Install appears where the browser can actually do it.
+ * there is a keyboard; Install appears where the browser can actually do it. Writing to Lymi sits
+ * with the docs, since both are where a learner goes when the app has not answered them.
  */
 export function LearnerMenu({
   name,
@@ -67,6 +70,7 @@ export function LearnerMenu({
   const install = useInstallState();
   const photo = useLearnerAvatar();
   const [shortcuts, setShortcuts] = useState(false);
+  const [feedback, setFeedback] = useState(false);
   const [installHelp, setInstallHelp] = useState(false);
   const short = firstName(name) ?? t`You`;
   const installable = !install.installed && (install.canPrompt || install.isIOS);
@@ -173,6 +177,10 @@ export function LearnerMenu({
             <BookOpen aria-hidden="true" />
             <Trans>Docs</Trans>
           </DropdownMenuLinkItem>
+          <DropdownMenuItem onClick={() => !st && setFeedback(true)}>
+            <MessageSquare aria-hidden="true" />
+            <Trans>Send feedback</Trans>
+          </DropdownMenuItem>
 
           <DropdownMenuSeparator />
           <DropdownMenuItem
@@ -189,6 +197,7 @@ export function LearnerMenu({
       {variant === "rail" && (
         <ShortcutsDialog open={shortcuts} onClose={() => setShortcuts(false)} />
       )}
+      {!st && <FeedbackDialog open={feedback} onOpenChange={setFeedback} />}
       {installable && (
         <InstallDialog
           open={installHelp}

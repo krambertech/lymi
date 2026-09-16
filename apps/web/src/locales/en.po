@@ -871,6 +871,9 @@ msgstr "Bring your decks from another app with their pictures, tags and review h
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Brings back every card this import added and the decks it made."
 
+msgid "Bug"
+msgstr "Bug"
+
 msgid "by {who}"
 msgstr "by {who}"
 
@@ -1170,6 +1173,12 @@ msgstr "Couldn’t save your grade for “{term}”. The card is no longer in yo
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
+msgid "Couldn’t send this one"
+msgstr "Couldn’t send this one"
+
+msgid "Couldn’t send your feedback"
+msgstr "Couldn’t send your feedback"
+
 msgid "Couldn’t write the file. Try again."
 msgstr "Couldn’t write the file. Try again."
 
@@ -1436,6 +1445,9 @@ msgctxt "Password strength"
 msgid "Fair"
 msgstr "Fair"
 
+msgid "Feedback sent"
+msgstr "Feedback sent"
+
 msgid "Fewer fields"
 msgstr "Fewer fields"
 
@@ -1574,6 +1586,9 @@ msgstr "How to connect"
 msgid "How you are asked"
 msgstr "How you are asked"
 
+msgid "Idea"
+msgstr "Idea"
+
 msgid "Identified by"
 msgstr "Identified by"
 
@@ -1686,6 +1701,9 @@ msgstr "Keep the language tag under 12 characters."
 
 msgid "Keep the meaning under 2000 characters."
 msgstr "Keep the meaning under 2000 characters."
+
+msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
+msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 
 msgid "Keep the name under 32 characters."
 msgstr "Keep the name under 32 characters."
@@ -1808,6 +1826,9 @@ msgstr "Lymi home"
 msgid "Lymi is in a private beta."
 msgstr "Lymi is in a private beta."
 
+msgid "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
+msgstr "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
+
 msgid "Main"
 msgstr "Main"
 
@@ -1831,6 +1852,9 @@ msgstr "Meaning changed to “{value}”"
 
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
+
+msgid "Message"
+msgstr "Message"
 
 msgid "Mode"
 msgstr "Mode"
@@ -2595,6 +2619,9 @@ msgstr "Select cards"
 msgid "Selected cards"
 msgstr "Selected cards"
 
+msgid "Send"
+msgstr "Send"
+
 msgid "Send a daily reminder"
 msgstr "Send a daily reminder"
 
@@ -2603,6 +2630,9 @@ msgstr "Send a lesson from Claude or ChatGPT"
 
 msgid "Send a new link"
 msgstr "Send a new link"
+
+msgid "Send feedback"
+msgstr "Send feedback"
 
 msgid "Send it again"
 msgstr "Send it again"
@@ -2702,6 +2732,9 @@ msgstr "Someone tried to create a Lymi account with this address and a password.
 
 msgid "Someone tried to create a Lymi account with this address. You already have one, so nothing changed."
 msgstr "Someone tried to create a Lymi account with this address. You already have one, so nothing changed."
+
+msgid "Something else"
+msgstr "Something else"
 
 msgid "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
 msgstr "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
@@ -2804,6 +2837,9 @@ msgstr "Tap Add to Home Screen."
 msgid "Tap the card when you have it"
 msgstr "Tap the card when you have it"
 
+msgid "Tell Lymi what broke or what it should do. Replies come to your email."
+msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
+
 msgid "Term"
 msgstr "Term"
 
@@ -2821,6 +2857,9 @@ msgstr "Terms, meanings and due dates in a .csv file, without review history."
 
 msgid "Test email from Lymi"
 msgstr "Test email from Lymi"
+
+msgid "Thank you. A reply comes to your email."
+msgstr "Thank you. A reply comes to your email."
 
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
@@ -2909,6 +2948,9 @@ msgstr "the notes"
 
 msgid "the pronunciation"
 msgstr "the pronunciation"
+
+msgid "The screen you are on, the app version, your browser and your app language go with it."
+msgstr "The screen you are on, the app version, your browser and your app language go with it."
 
 msgid "the source"
 msgstr "the source"
@@ -3174,6 +3216,9 @@ msgstr "What it adds lands at once and is labelled. You can edit or archive any 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "What the picture shows, without the answer. Picture review needs it."
 
+msgid "What this is about"
+msgstr "What this is about"
+
 msgid "When it’s back"
 msgstr "When it’s back"
 
@@ -3185,6 +3230,9 @@ msgstr "Which days you reviewed"
 
 msgid "Who can join this deck"
 msgstr "Who can join this deck"
+
+msgid "Write what you want to tell Lymi."
+msgstr "Write what you want to tell Lymi."
 
 msgid "Writing"
 msgstr "Writing"
@@ -3263,6 +3311,9 @@ msgstr "Your grades are saved. Check your connection and try again."
 
 msgid "Your Lymi account signs in with Google"
 msgstr "Your Lymi account signs in with Google"
+
+msgid "Your message is kept, so try again, or write to <0>hello@lymi.app</0>."
+msgstr "Your message is kept, so try again, or write to <0>hello@lymi.app</0>."
 
 msgid "Your own schedule and review history come with it. The deck stays as it is."
 msgstr "Your own schedule and review history come with it. The deck stays as it is."

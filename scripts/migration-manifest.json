@@ -75,6 +75,10 @@
     {
       "name": "0018_exports.sql",
       "sha256": "4aff264c10bf1efc79bccabaaa300994fcd1b9488fd668930de24aaedde459ef"
+    },
+    {
+      "name": "0019_feedback.sql",
+      "sha256": "e4bfb361421055c09470a0e4538ef53a426e5c52b321ada6faf22dae3ba22410"
     }
   ]
 }

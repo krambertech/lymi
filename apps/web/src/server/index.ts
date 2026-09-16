@@ -24,6 +24,7 @@ import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
 import { email } from "./routes/email";
 import { exports as exportRoutes } from "./routes/exports";
+import { feedback } from "./routes/feedback";
 import { images } from "./routes/images";
 import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
@@ -188,6 +189,7 @@ app.route("/api/audio", audio);
 app.route("/api/avatar", avatar);
 app.route("/api/imports", imports);
 app.route("/api/exports", exportRoutes);
+app.route("/api/feedback", feedback);
 
 app.notFound(async (c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);

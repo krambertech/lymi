@@ -871,6 +871,9 @@ msgstr "Перенеси колоди з іншого застосунку з к
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Повертає кожну картку, яку додав цей імпорт, і створені ним колоди."
 
+msgid "Bug"
+msgstr "Помилка"
+
 msgid "by {who}"
 msgstr "автор: {who}"
 
@@ -1170,6 +1173,12 @@ msgstr "Не вдалося зберегти оцінку для «{term}». Ц�
 msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
 msgstr "Не вдалося зберегти оцінку для «{term}». Ця картка ще повернеться."
 
+msgid "Couldn’t send this one"
+msgstr "Це повідомлення не надіслано"
+
+msgid "Couldn’t send your feedback"
+msgstr "Не вдалося надіслати повідомлення"
+
 msgid "Couldn’t write the file. Try again."
 msgstr "Не вдалося записати файл. Спробуй ще раз."
 
@@ -1436,6 +1445,9 @@ msgctxt "Password strength"
 msgid "Fair"
 msgstr "Непогано"
 
+msgid "Feedback sent"
+msgstr "Зворотній зв'язок надіслано"
+
 msgid "Fewer fields"
 msgstr "Менше полів"
 
@@ -1574,6 +1586,9 @@ msgstr "Як підключити"
 msgid "How you are asked"
 msgstr "Як тебе запитувати"
 
+msgid "Idea"
+msgstr "Ідея"
+
 msgid "Identified by"
 msgstr "Ідентифіковано за адресою"
 
@@ -1686,6 +1701,9 @@ msgstr "Мовний тег має бути коротшим за 12 симво�
 
 msgid "Keep the meaning under 2000 characters."
 msgstr "Значення має бути коротшим за 2000 символів."
+
+msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
+msgstr "Повідомлення має бути коротшим за {FEEDBACK_MESSAGE_MAX} символів."
 
 msgid "Keep the name under 32 characters."
 msgstr "Назва має бути коротшою за 32 символи."
@@ -1808,6 +1826,9 @@ msgstr "Головна Lymi"
 msgid "Lymi is in a private beta."
 msgstr "Lymi у приватній беті."
 
+msgid "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
+msgstr "Lymi приймає не більше {FEEDBACK_DAILY_LIMIT} повідомлень на добу з одного облікового запису. Спробуй завтра."
+
 msgid "Main"
 msgstr "Головна навігація"
 
@@ -1831,6 +1852,9 @@ msgstr "Нове значення: «{value}»"
 
 msgid "Meaning from lesson"
 msgstr "Значення з уроку"
+
+msgid "Message"
+msgstr "Повідомлення"
 
 msgid "Mode"
 msgstr "Режим"
@@ -2595,6 +2619,9 @@ msgstr "Вибрати картки"
 msgid "Selected cards"
 msgstr "Вибрані картки"
 
+msgid "Send"
+msgstr "Надіслати"
+
 msgid "Send a daily reminder"
 msgstr "Надсилати щоденне нагадування"
 
@@ -2603,6 +2630,9 @@ msgstr "Надішли урок із Claude або ChatGPT"
 
 msgid "Send a new link"
 msgstr "Надіслати нове посилання"
+
+msgid "Send feedback"
+msgstr "Зворотній зв'язок"
 
 msgid "Send it again"
 msgstr "Надіслати ще раз"
@@ -2702,6 +2732,9 @@ msgstr "Хтось спробував створити акаунт Lymi на ц
 
 msgid "Someone tried to create a Lymi account with this address. You already have one, so nothing changed."
 msgstr "Хтось спробував створити акаунт Lymi на цій адресі. У тебе він уже є, тож нічого не змінилося."
+
+msgid "Something else"
+msgstr "Інше"
 
 msgid "Something went wrong on Lymi’s side. Cards added before it stopped are in your decks."
 msgstr "На боці Lymi щось пішло не так. Картки, додані до зупинки, уже у твоїх колодах."
@@ -2804,6 +2837,9 @@ msgstr "Торкнись «На початковий екран»."
 msgid "Tap the card when you have it"
 msgstr "Торкнися картки, коли згадаєш"
 
+msgid "Tell Lymi what broke or what it should do. Replies come to your email."
+msgstr "Розкажи Lymi, що зламалося або що варто додати. Відповідь прийде на твою пошту."
+
 msgid "Term"
 msgstr "Термін"
 
@@ -2821,6 +2857,9 @@ msgstr "Терміни, значення й дати повторення у ф�
 
 msgid "Test email from Lymi"
 msgstr "Тестовий лист від Lymi"
+
+msgid "Thank you. A reply comes to your email."
+msgstr "Дякуємо. Відповідь прийде на твою пошту."
 
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не вдалося. Онови сторінку й повтори спробу."
@@ -2909,6 +2948,9 @@ msgstr "нотатки"
 
 msgid "the pronunciation"
 msgstr "вимову"
+
+msgid "The screen you are on, the app version, your browser and your app language go with it."
+msgstr "Разом із ним підуть екран, на якому ти зараз, версія застосунку, браузер і мова застосунку."
 
 msgid "the source"
 msgstr "джерело"
@@ -3174,6 +3216,9 @@ msgstr "Усе додане з’являється одразу й має по�
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Що на зображенні, без відповіді. Без опису повторення за зображенням не почнеться."
 
+msgid "What this is about"
+msgstr "Про що це"
+
 msgid "When it’s back"
 msgstr "Коли повернеться"
 
@@ -3185,6 +3230,9 @@ msgstr "Дні, коли були повторення"
 
 msgid "Who can join this deck"
 msgstr "Хто може приєднатися до цієї колоди"
+
+msgid "Write what you want to tell Lymi."
+msgstr "Напиши, що хочеш розповісти Lymi."
 
 msgid "Writing"
 msgstr "Записується"
@@ -3263,6 +3311,9 @@ msgstr "Твої оцінки збережено. Перевір з’єднан
 
 msgid "Your Lymi account signs in with Google"
 msgstr "Твій акаунт Lymi входить через Google"
+
+msgid "Your message is kept, so try again, or write to <0>hello@lymi.app</0>."
+msgstr "Твій текст збережено — спробуй ще раз або напиши на <0>hello@lymi.app</0>."
 
 msgid "Your own schedule and review history come with it. The deck stays as it is."
 msgstr "Разом із нею експортуються твій розклад та історія повторень. Колода лишиться як є."

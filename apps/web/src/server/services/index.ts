@@ -9,6 +9,7 @@ export * from "./decks";
 export * from "./draw";
 export * from "./email";
 export * from "./exports";
+export * from "./feedback";
 export * from "./imports";
 export * from "./invitations";
 export * from "./members";

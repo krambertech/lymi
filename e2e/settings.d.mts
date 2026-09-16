@@ -38,7 +38,8 @@ export type E2EAccount =
   | "email-outbox"
   | "email-non-operator"
   | "password-account"
-  | "password-reset";
+  | "password-reset"
+  | "feedback";
 
 export const e2eAccounts: readonly E2EAccount[];
 export const e2eProjects: readonly string[];

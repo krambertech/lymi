@@ -244,7 +244,7 @@ function spanLabel(i18n: I18n, days: number): string {
 /** How many History rows show before "Show older". */
 const HISTORY_ROWS = 8;
 
-/** A field at rest: its label, the badge saying where its text came from, and the text. */
+/** A field at rest: its label, the AI badge when the AI wrote it, and the text. */
 function ReadField({
   label,
   aside,
@@ -255,7 +255,7 @@ function ReadField({
   children,
 }: {
   label: string;
-  /** The badge saying who wrote the field. */
+  /** The AI badge, on a field the AI wrote. */
   aside?: ReactNode | undefined;
   value?: string | undefined;
   empty?: boolean | undefined;
@@ -268,7 +268,8 @@ function ReadField({
 }) {
   return (
     <div className="grid gap-1">
-      {/* The badge belongs to the label, not to the far edge of the panel. */}
+      {/* The badge belongs to the label, not to the far edge of the panel. Only the AI has one:
+          the learner's own words and the lesson's are the ordinary case and need no mark. */}
       <div className="flex min-h-[17px] flex-wrap items-center gap-2">
         <span className="text-sm font-medium text-text-2">{label}</span>
         {aside}
@@ -536,8 +537,8 @@ export function WordView({
         {card.pronunciation ? (
           <p className="flex flex-wrap items-center gap-1.5 text-md text-muted">
             <span className="[overflow-wrap:anywhere]">{card.pronunciation}</span>
-            {card.pronunciationSource && (
-              <SourceChip source={card.pronunciationSource} field="pronunciation" compact />
+            {card.pronunciationSource === "ai" && (
+              <SourceChip source="ai" field="pronunciation" compact />
             )}
           </p>
         ) : (
@@ -586,7 +587,7 @@ export function WordView({
           label={t`Meaning`}
           aside={
             card.meaning &&
-            card.meaningSource && <SourceChip source={card.meaningSource} field="meaning" compact />
+            card.meaningSource === "ai" && <SourceChip source="ai" field="meaning" compact />
           }
           value={card.meaning || t`No meaning yet`}
           empty={!card.meaning}
@@ -597,9 +598,7 @@ export function WordView({
             label={t`Example`}
             aside={
               card.example &&
-              card.exampleSource && (
-                <SourceChip source={card.exampleSource} field="example" compact />
-              )
+              card.exampleSource === "ai" && <SourceChip source="ai" field="example" compact />
             }
             value={card.example ?? ""}
             lang={card.language ?? undefined}

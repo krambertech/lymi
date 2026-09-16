@@ -64,8 +64,8 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
     await sheet.getByRole("button", { name: "Save", exact: true }).click();
     await expect(sheet).toBeHidden();
     await expect(shown("to hurry up, to get a move on")).toBeVisible();
-    await expect(shown("You")).toBeVisible();
-    await expect(shown("Meaning by you")).toBeAttached();
+    // Only the AI is marked, so a meaning the learner rewrites loses its badge.
+    await expect(shown("AI")).toBeHidden();
     await expect(shown("Meaning changed to “to hurry up, to get a move on”")).toBeVisible();
   });
 

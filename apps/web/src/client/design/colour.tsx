@@ -91,7 +91,7 @@ const TOKENS: Token[] = [
   { name: "danger-soft", role: "The danger button at rest, and error tints." },
   {
     name: "ai",
-    role: "What the AI wrote. The source badge only; enriched text stays ink.",
+    role: "What the AI wrote. The badge only, and only the AI carries one.",
     on: "canvas",
   },
   { name: "ai-soft", role: "The source badge's ground." },

@@ -800,9 +800,6 @@ msgstr "Не помню"
 msgid "Français · phrase"
 msgstr "Français · фраза"
 
-msgid "Free during the beta."
-msgstr "Бесплатно во время беты."
-
 msgid "French"
 msgstr "Французский"
 

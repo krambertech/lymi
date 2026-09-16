@@ -87,14 +87,6 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   );
 }
 
-function BetaNote() {
-  return (
-    <p className="text-sm text-muted">
-      <Trans>Free during the beta.</Trans>
-    </p>
-  );
-}
-
 // Each card's height and tilt, by place from the start, for spreads of one to five cards.
 const POSES: [number, number][][] = [
   [[10, -2]],
@@ -206,9 +198,6 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
           <a href="#how" className={buttonClass("ghost", "lg")}>
             <Trans>Try a few cards</Trans>
           </a>
-        </div>
-        <div className="mt-3">
-          <BetaNote />
         </div>
         {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
       </div>

@@ -67,14 +67,16 @@ test("a learner exports a deck and the library, and finds the files in Activity"
 
   await test.step("both files are listed in Activity with their downloads", async () => {
     await page.goto("/activity");
-    await expect(page.getByRole("heading", { name: "Exports", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
+    await expect(page.getByText(/Exported \d+ cards as a Lymi file/)).toBeVisible();
+    await expect(page.getByText(/Exported \d+ cards as an Anki package/)).toBeVisible();
     await expect(
       page.getByRole("link", { name: /^Download export-(chromium|webkit)\.zip$/ }),
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: /^Download lymi-library-.*\.apkg$/ }),
     ).toBeVisible();
-    // A learner who has only exported still finds the way to import.
-    await expect(page.getByRole("link", { name: "Import cards", exact: true })).toBeVisible();
+    // Activity is a log, so it carries no import action of its own; Settings holds that.
+    await expect(page.getByRole("link", { name: "Import cards", exact: true })).toHaveCount(0);
   });
 });

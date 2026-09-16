@@ -50,7 +50,6 @@ export const NAV: {
   // Exact, so a deck page lights only its own row under Decks.
   { to: "/library", label: msg`Library`, icon: BookMarked, exact: true },
   { to: "/insights", label: msg`Insights`, icon: ChartNoAxesColumn },
-  { to: "/activity", label: msg`Activity`, icon: Activity },
 ];
 
 interface SidebarProps {

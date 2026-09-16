@@ -16,6 +16,7 @@ import { requireStrongPassword } from "./password-rules";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
+import { activity } from "./routes/activity";
 import { add, addOpen } from "./routes/add";
 import { audio } from "./routes/audio";
 import { avatar } from "./routes/avatar";
@@ -48,6 +49,10 @@ export type AppEnv = {
     actor: Actor;
     /** What this caller may do. The learner in the app always has write. */
     scope: Scope;
+    /** The API key behind an `api` request, so Activity can name it. Unset for the learner. */
+    client?: string | undefined;
+    /** That key's name, written onto the rows it makes. */
+    clientName?: string | undefined;
   };
 };
 
@@ -190,6 +195,7 @@ app.route("/api/avatar", avatar);
 app.route("/api/imports", imports);
 app.route("/api/exports", exportRoutes);
 app.route("/api/feedback", feedback);
+app.route("/api/activity", activity);
 
 app.notFound(async (c) => {
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);

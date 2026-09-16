@@ -1,5 +1,5 @@
 import type { Round } from "@lymi/core";
-import { keepPreviousData, queryOptions } from "@tanstack/react-query";
+import { infiniteQueryOptions, keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { api, type ReviewScope, scopeKey } from "./api";
 import { flushOutbox } from "./grades";
 
@@ -164,23 +164,27 @@ export const connectedAppsQuery = queryOptions({
   staleTime: 0,
 });
 
-/** Imports newest first, for Activity. */
-export const importsQuery = queryOptions({
-  queryKey: ["imports"],
-  queryFn: api.imports,
-  staleTime: 0,
-  // File names are the learner's own and Activity has no reason to open offline.
-  meta: { persist: false },
-});
+/** Statuses the server is still working through, so a screen keeps asking. */
+const WORKING = new Set(["inspecting", "importing"]);
 
-/** Exports newest first, for Activity. */
-export const exportsQuery = queryOptions({
-  queryKey: ["exports"],
-  queryFn: api.exports,
+/** Activity, newest first, a page at a time. */
+export const activityQuery = infiniteQueryOptions({
+  queryKey: ["activity"],
+  queryFn: ({ pageParam }) => api.activity(pageParam),
+  initialPageParam: undefined as string | undefined,
+  getNextPageParam: (last) => last.nextCursor ?? undefined,
   staleTime: 0,
+  refetchOnWindowFocus: true,
+  // A file on its way finishes without the learner reloading, as it does on its own screen.
+  // Only the newest page is read: an in-flight file is always on it, and polling every page the
+  // learner has opened would re-read the whole log every three seconds.
   refetchInterval: (query) =>
-    query.state.data?.some((item) => item.status === "exporting") ? 3000 : false,
-  // A download link is only good for a day and only online.
+    query.state.data?.pages[0]?.entries.some(
+      (entry) => WORKING.has(entry.import?.status ?? "") || entry.export?.status === "exporting",
+    )
+      ? 3000
+      : false,
+  // What an app wrote is the learner's own, and Activity has no reason to open offline.
   meta: { persist: false },
 });
 
@@ -193,9 +197,6 @@ export const exportQuery = (id: string) =>
     refetchInterval: (query) => (query.state.data?.status === "exporting" ? 1500 : false),
     meta: { persist: false },
   });
-
-/** Statuses the server is still working through, so the screen keeps asking. */
-const WORKING = new Set(["inspecting", "importing"]);
 
 /** One import, polled while the server reads or writes it. */
 export const importQuery = (id: string) =>

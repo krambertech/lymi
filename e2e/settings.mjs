@@ -23,6 +23,7 @@ export const e2eAccounts = [
   "review-round-crosses",
   "review-deck-out",
   "word-detail",
+  "activity",
   "deck-page",
   "language",
   "join-owner",

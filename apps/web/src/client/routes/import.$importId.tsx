@@ -46,7 +46,7 @@ function ImportRoute() {
   const previous = useRef(item?.status);
   useEffect(() => {
     if (previous.current === "importing" && item?.status !== "importing") {
-      for (const key of ["decks", "queue", "rounds", "streak", "insights", "imports"]) {
+      for (const key of ["decks", "queue", "rounds", "streak", "insights", "activity"]) {
         void qc.invalidateQueries({ queryKey: [key] });
       }
     }
@@ -62,7 +62,7 @@ function ImportRoute() {
     onSuccess: update,
   });
   const invalidateContent = () => {
-    for (const key of ["decks", "queue", "rounds", "insights", "imports"])
+    for (const key of ["decks", "queue", "rounds", "insights", "activity"])
       void qc.invalidateQueries({ queryKey: [key] });
   };
   const restore = useMutation({

@@ -58,6 +58,8 @@ test("a learner imports a Mochi export and finds it in Activity", async ({ page 
       page.locator("main").getByText("Italian / Lesson 1 / Verbs", { exact: true }),
     ).toBeVisible();
     await page.goto("/activity");
-    await expect(page.getByRole("link", { name: /export\.mochi.*Mochi ·/ })).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /Imported \d+ cards from Mochi.*export\.mochi/ }),
+    ).toBeVisible();
   });
 });

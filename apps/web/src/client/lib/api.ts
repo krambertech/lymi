@@ -1,5 +1,8 @@
 import { t } from "@lingui/core/macro";
 import type {
+  ActivityCardOut,
+  ActivityEntryOut,
+  ActivityPageOut,
   ApiKeyInput,
   AppLanguage,
   CardImageImportInput,
@@ -230,6 +233,9 @@ export type ConnectedApp = {
 
 export type Import = ImportOut;
 export type Export = ExportOut;
+export type ActivityPage = ActivityPageOut;
+export type ActivityEntry = ActivityEntryOut;
+export type ActivityCard = ActivityCardOut;
 export type ImportPreview = ImportPreviewOut;
 
 export type PushSubscriptionStatus = {
@@ -240,7 +246,9 @@ export type PushSubscriptionStatus = {
 
 export const api = {
   me: () => request<Me>("/api/me"),
-  imports: () => request<Import[]>("/api/imports"),
+  /** One page of Activity. `cursor` comes from the previous page's `nextCursor`. */
+  activity: (cursor?: string) =>
+    request<ActivityPage>(`/api/activity${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`),
   import: (id: string) => request<Import>(`/api/imports/${id}`),
   startImport: (file: { name: string; size: number }) =>
     request<Import>("/api/imports", {
@@ -270,7 +278,6 @@ export const api = {
   cancelImport: (id: string) => request<Import>(`/api/imports/${id}/cancel`, { method: "POST" }),
   archiveImport: (id: string) => request<Import>(`/api/imports/${id}/archive`, { method: "POST" }),
   restoreImport: (id: string) => request<Import>(`/api/imports/${id}/restore`, { method: "POST" }),
-  exports: () => request<Export[]>("/api/exports"),
   export: (id: string) => request<Export>(`/api/exports/${id}`),
   startExport: (body: ExportStartInput) =>
     request<Export>("/api/exports", { method: "POST", body: JSON.stringify(body) }),

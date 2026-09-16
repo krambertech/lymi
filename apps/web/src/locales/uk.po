@@ -92,6 +92,10 @@ msgstr "{0, plural, one {# колода} few {# колоди} many {# колод
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
+#. placeholder {0}: entry.count - entry.cards.length
+msgid "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
+msgstr "{0, plural, one {ще # картка в цій колоді} few {ще # картки в цій колоді} many {ще # карток у цій колоді} other {ще # картки в цій колоді}}"
+
 #. placeholder {0}: preview.unsupported + preview.skipped
 msgid "{0, plural, one {# note is left out: it’s image occlusion or has no term.} other {# notes are left out: they’re image occlusion or have no term.}}"
 msgstr "{0, plural, one {# запис пропущено: це image occlusion або в ньому немає терміна.} few {# записи пропущено: це image occlusion або в них немає терміна.} many {# записів пропущено: це image occlusion або в них немає терміна.} other {# запису пропущено: це image occlusion або в них немає терміна.}}"
@@ -206,20 +210,14 @@ msgstr "{0, plural, one {Засвоєно {known} з # картки в «{curren
 msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 msgstr "{0, plural, one {Засвоєно {known} з # картки в «{currentName}».} few {Засвоєно {known} з # карток у «{currentName}».} many {Засвоєно {known} з # карток у «{currentName}».} other {Засвоєно {known} з # картки в «{currentName}».}}"
 
-#. placeholder {0}: SOURCE_NAMES[item.source]
 #. placeholder {0}: card.deckName
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
-#. placeholder {1}: date.format(new Date(item.createdAt))
+#. placeholder {0}: item.fileName
 #. placeholder {1}: fileSize(item.byteSize, i18n.locale)
 #. placeholder {1}: item.next
+#. placeholder {1}: when(card.archivedAt)
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
-
-#. placeholder {0}: SOURCE_NAMES[item.source]
-#. placeholder {1}: date.format(new Date(item.createdAt))
-#. placeholder {2}: item.counts?.added ?? 0
-msgid "{0} · {1} · {2, plural, one {# card added} other {# cards added}}"
-msgstr "{0} · {1} · {2, plural, one {додано # картку} few {додано # картки} many {додано # карток} other {додано # картки}}"
 
 #. placeholder {0}: item.fileName
 msgid "{0} · {date}"
@@ -435,12 +433,6 @@ msgstr "{field} стає"
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {заповнено: #} few {заповнено: #} many {заповнено: #} other {заповнено: #}}"
 
-msgid "{format} · {when}"
-msgstr "{format} · {when}"
-
-msgid "{format} · {when} · {cards, plural, one {# card} other {# cards}}"
-msgstr "{format} · {when} · {cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
-
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Показник запам’ятовування базується на # повторенні, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} few {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} many {Показник запам’ятовування базується на # повтореннях, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.} other {Показник запам’ятовування базується на # повторення, тому один невдалий вечір помітно його змінює. За кілька тижнів він стабілізується.}}"
 
@@ -494,6 +486,12 @@ msgstr "{name} знову на своєму місці."
 
 msgid "{name} is over {where}."
 msgstr "{name} над «{where}»."
+
+msgid "{name} joined {deck}"
+msgstr "{name} тепер у колоді «{deck}»"
+
+msgid "{name} left {deck}"
+msgstr "{name} більше не в колоді «{deck}»"
 
 msgid "{nextName} is ready"
 msgstr "Можна починати {nextName}"
@@ -559,6 +557,9 @@ msgstr "Файл .zip до 1 ГБ. Можна також перетягнути 
 
 msgid "a connected app"
 msgstr "підключений застосунок"
+
+msgid "A connected app"
+msgstr "Підключений застосунок"
 
 msgid "a day"
 msgstr "день"
@@ -682,6 +683,9 @@ msgstr "Додано «{term}»"
 
 msgid "Added “{term}” without its picture. {pictureError}"
 msgstr "«{term}» додано без зображення. {pictureError}"
+
+msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
+msgstr "Додано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} до колоди «{deck}»"
 
 msgid "Added today"
 msgstr "Додано сьогодні"
@@ -818,11 +822,23 @@ msgstr "Заархівовано «{seriesName}»"
 msgid "Archived “{seriesName}” and its decks"
 msgstr "Заархівовано «{seriesName}» разом із колодами"
 
+msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
+
 msgid "Archived sections"
 msgstr "Архівовані розділи"
 
 msgid "Archived series"
 msgstr "Архівовані серії"
+
+msgid "Archived the deck {deck}"
+msgstr "Заархівовано колоду «{deck}»"
+
+msgid "Archived the section {name} in {deck}"
+msgstr "Заархівовано розділ «{name}» у колоді «{deck}»"
+
+msgid "Archived the series {name}"
+msgstr "Заархівовано серію «{name}»"
 
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Архівує кожну картку, яку додав цей імпорт, і кожну створену ним колоду, у якій немає інших карток. Нічого не видаляється, і все можна відновити."
@@ -951,9 +967,6 @@ msgstr "Картки з цієї колоди"
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Картки збережуть дати повторення, які мали в {app}."
-
-msgid "Cards that came in from other apps, and files you took out."
-msgstr "Картки, що прийшли з інших застосунків, і твої експорти."
 
 msgid "Change"
 msgstr "Змінити"
@@ -1172,6 +1185,9 @@ msgstr "Не вдалося завантажити Огляд"
 msgid "Couldn’t load Library"
 msgstr "Не вдалося завантажити Бібліотеку"
 
+msgid "Couldn’t load more."
+msgstr "Не вдалося завантажити більше."
+
 msgid "Couldn’t load the picture"
 msgstr "Не вдалося завантажити зображення"
 
@@ -1346,7 +1362,7 @@ msgstr "Готово"
 msgid "Download"
 msgstr "Завантажити"
 
-#. placeholder {0}: item.fileName
+#. placeholder {0}: entry.export?.fileName ?? ""
 msgid "Download {0}"
 msgstr "Завантажити {0}"
 
@@ -1398,8 +1414,20 @@ msgstr "Редагувати картку"
 msgid "Edit series"
 msgstr "Змінити серію"
 
+msgid "Edited {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Змінено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
+
 msgid "Edited {list}"
 msgstr "Змінено {list}"
+
+msgid "Edited the deck {deck}"
+msgstr "Змінено колоду «{deck}»"
+
+msgid "Edited the section {name} in {deck}"
+msgstr "Змінено розділ «{name}» у колоді «{deck}»"
+
+msgid "Edited the series {name}"
+msgstr "Змінено серію «{name}»"
 
 msgid "Email"
 msgstr "Пошта"
@@ -1409,6 +1437,9 @@ msgstr "Порожнє в першій картці"
 
 msgid "Empty in the first note"
 msgstr "Порожнє в першому записі"
+
+msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Доповнено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
 
 msgid "Enriched {list}"
 msgstr "Доповнено {list}"
@@ -1479,11 +1510,20 @@ msgstr "Експортуй колоди по одній або ще раз бе�
 msgid "Export your library"
 msgstr "Експорт бібліотеки"
 
+msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
+msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у файл Lymi"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
+msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у пакунок Anki"
+
+msgid "Exporting as a Lymi file"
+msgstr "Експорт у файл Lymi"
+
+msgid "Exporting as an Anki package"
+msgstr "Експорт у пакунок Anki"
+
 msgid "Exporting from {app}"
 msgstr "Як експортувати з {app}"
-
-msgid "Exports"
-msgstr "Експорти"
 
 msgctxt "Password strength"
 msgid "Fair"
@@ -1651,17 +1691,20 @@ msgstr "Імпортувати картки"
 msgid "Import from {app}"
 msgstr "Імпорт з {app}"
 
+msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
+msgstr "Імпортовано {added, plural, one {# картку} few {# картки} many {# карток} other {# картки}} із {source}"
+
 msgid "Importing"
 msgstr "Імпортується"
+
+msgid "Importing from {source}"
+msgstr "Імпорт із {source}"
 
 msgid "Importing your cards"
 msgstr "Імпортуємо твої картки"
 
-msgid "Imports"
-msgstr "Імпорти"
-
-msgid "Imports from Anki and Mochi appear here, with what each one added."
-msgstr "Тут з’являться імпорти з Anki і Mochi та те, що кожен із них додав."
+msgid "Imports, exports and what connected apps add show up here."
+msgstr "Тут видно імпорт, експорт і те, що додають підключені застосунки."
 
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "В Anki на комп’ютері вибери <0>File</0>, потім <1>Export</1>."
@@ -1881,6 +1924,15 @@ msgstr "Lymi у приватній беті."
 
 msgid "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
 msgstr "Lymi приймає не більше {FEEDBACK_DAILY_LIMIT} повідомлень на добу з одного облікового запису. Спробуй завтра."
+
+msgid "Made the deck {deck}"
+msgstr "Створено колоду «{deck}»"
+
+msgid "Made the section {name} in {deck}"
+msgstr "Створено розділ «{name}» у колоді «{deck}»"
+
+msgid "Made the series {name}"
+msgstr "Створено серію «{name}»"
 
 msgid "Main"
 msgstr "Головна навігація"
@@ -2167,9 +2219,6 @@ msgstr "Сьогодні нічого не забуто"
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
 msgstr "Ще нічого не повернулося для другого погляду, тому поки немає чесних даних."
 
-msgid "Nothing has come in yet"
-msgstr "Поки нічого не надходило"
-
 msgid "Nothing in it yet"
 msgstr "Тут поки порожньо"
 
@@ -2202,6 +2251,9 @@ msgstr "Нічого не надано. Можеш будь-коли почат�
 
 msgid "Nothing was shared. You can start again from the app whenever you like."
 msgstr "Нічого не надано. Можеш будь-коли почати знову із застосунку."
+
+msgid "Nothing yet"
+msgstr "Поки нічого"
 
 msgid "Nothing yet."
 msgstr "Поки нічого."
@@ -2469,6 +2521,9 @@ msgstr "Прибрати фільтр: {label}"
 msgid "Remove the tag {tag}"
 msgstr "Прибрати тег {tag}"
 
+msgid "Removed {name} from {deck}"
+msgstr "Доступ до колоди «{deck}» закрито для {name}"
+
 msgid "Rename"
 msgstr "Перейменувати"
 
@@ -2521,6 +2576,18 @@ msgstr "Відновлено"
 #. placeholder {0}: deck.name
 msgid "Restored “{0}”"
 msgstr "Відновлено «{0}»"
+
+msgid "Restored {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Відновлено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
+
+msgid "Restored the deck {deck}"
+msgstr "Відновлено колоду «{deck}»"
+
+msgid "Restored the section {name} in {deck}"
+msgstr "Відновлено розділ «{name}» у колоді «{deck}»"
+
+msgid "Restored the series {name}"
+msgstr "Відновлено серію «{name}»"
 
 msgid "Retry"
 msgstr "Повторити"
@@ -2737,6 +2804,9 @@ msgstr "Показати всі"
 msgid "Show another"
 msgstr "Показати іншу"
 
+msgid "Show more"
+msgstr "Показати більше"
+
 msgid "Show password"
 msgstr "Показати пароль"
 
@@ -2784,6 +2854,9 @@ msgstr "Щоб потім знати, який ключ відкликати."
 
 msgid "Some grades haven’t synced"
 msgstr "Деякі оцінки ще не синхронізовано"
+
+msgid "Someone"
+msgstr "Хтось"
 
 msgid "Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset."
 msgstr "Хтось попросив новий пароль для цієї адреси. Вона входить через Google, тож пароля тут немає."
@@ -2962,7 +3035,13 @@ msgstr "Цього вже немає. Онови сторінку, щоб поб
 msgid "the AI"
 msgstr "AI"
 
+msgid "The AI"
+msgstr "AI"
+
 msgid "the API"
+msgstr "API"
+
+msgid "The API"
 msgstr "API"
 
 msgid "The app did not say where to go next. Try again from the app."
@@ -3184,6 +3263,12 @@ msgstr "Вимкнути посилання для приєднання"
 
 msgid "Turn off the join link?"
 msgstr "Вимкнути посилання для приєднання?"
+
+msgid "Turned off the join link for {deck}"
+msgstr "Посилання для приєднання до «{deck}» вимкнено"
+
+msgid "Turned on the join link for {deck}"
+msgstr "Посилання для приєднання до «{deck}» увімкнено"
 
 msgid "Type the term."
 msgstr "Введи термін."

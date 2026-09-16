@@ -241,8 +241,10 @@ erDiagram
     text id PK
     text user_id FK
     text actor "user | api | mcp | ai | system"
+    text actor_client "OAuth client or API key id"
+    text actor_client_name "its name at the write"
     text action "create update archive restore grade"
-    text entity "deck | series | section | card | review | account"
+    text entity "deck | series | section | card | review | account | import | export"
     text entity_id
     json payload
     int created_at
@@ -356,7 +358,7 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 - A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
 - A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.
-- Every write appends to `audit_log` with its actor, and every card carries `created_by`, so Activity can show what integrations and the AI wrote.
+- Every write appends to `audit_log` with its actor, and every card carries `created_by`, so Activity can show what integrations and the AI wrote. A write by an app or a key also keeps that caller's id and its name as it stood, so revoking a key does not erase it from the log.
 - Archive learning content instead of deleting it. Device push subscriptions are removed when disabled or expired.
 - `language` on a new card defaults to the deck's `default_language` when not given.
 - Validation failures return `400 { error, issues }` with the Zod issues. Missing or bad credentials return `401 { error }`.

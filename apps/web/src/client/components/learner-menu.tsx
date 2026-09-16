@@ -36,7 +36,7 @@ interface Props {
   email?: string | undefined;
   /** "rail" sits at the foot of the sidebar and opens upward; "phone" is the avatar in a header. */
   variant: "rail" | "phone";
-  /** Something an integration wrote is unseen. Shown beside Activity, phone only. */
+  /** Something an integration wrote is unseen. Shown beside Activity. */
   unseen?: boolean | undefined;
   docsUrl: string;
   onSignOut?: (() => void | Promise<void>) | undefined;
@@ -51,7 +51,7 @@ export function firstName(name: string | undefined): string | undefined {
 
 /**
  * The learner, and the few things that belong to them rather than to a screen: where to go,
- * what this device can do, and the way out. The rail already lists Activity and Insights, so
+ * what this device can do, and the way out. The rail already lists Insights, so
  * on desktop the menu holds only what has no other home. Keyboard shortcuts appear where
  * there is a keyboard; Install appears where the browser can actually do it. Writing to Lymi sits
  * with the docs, since both are where a learner goes when the app has not answered them.
@@ -144,13 +144,14 @@ export function LearnerMenu({
           )}
 
           {place("/settings", <Settings aria-hidden="true" />, <Trans>Settings</Trans>)}
-          {variant === "phone" &&
-            place(
-              "/activity",
-              <Activity aria-hidden="true" />,
-              <Trans>Activity</Trans>,
-              unseen ? dot : undefined,
-            )}
+          {/* Activity is behind You on every device: it is read when something is in question,
+              not a destination the learner steers by. DESIGN.md, Layout. */}
+          {place(
+            "/activity",
+            <Activity aria-hidden="true" />,
+            <Trans>Activity</Trans>,
+            unseen ? dot : undefined,
+          )}
           {variant === "phone" &&
             place("/insights", <ChartNoAxesColumn aria-hidden="true" />, <Trans>Insights</Trans>)}
           {place("/archived", <Archive aria-hidden="true" />, <Trans>Archived</Trans>)}

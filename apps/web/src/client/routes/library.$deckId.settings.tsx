@@ -66,15 +66,21 @@ function DeckSettings() {
 
   const turnOn = useMutation({
     mutationFn: () => api.turnOnJoinLink(deckId),
-    onSuccess: (value) => qc.setQueryData(joinLinkQuery(deckId).queryKey, value),
+    onSuccess: (value) => {
+      qc.setQueryData(joinLinkQuery(deckId).queryKey, value);
+      // Turning the link on is an Activity row.
+      void qc.invalidateQueries({ queryKey: ["activity"] });
+    },
   });
   const turnOff = useMutation({
     mutationFn: () => api.turnOffJoinLink(deckId),
-    onSuccess: () =>
+    onSuccess: () => {
       qc.setQueryData(joinLinkQuery(deckId).queryKey, (prev) => ({
         link: null,
         members: prev?.members ?? 0,
-      })),
+      }));
+      void qc.invalidateQueries({ queryKey: ["activity"] });
+    },
   });
   const sharingError = turnOn.isError
     ? t`Could not turn on the join link. Try again.`

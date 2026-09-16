@@ -352,6 +352,13 @@ export const CardSearchQuery = CardSearchInput.extend({
   limit: z.coerce.number().int().min(1).max(200).optional(),
 });
 
+/** A page of Activity: where to carry on from, and how many audit rows to read. */
+export const ActivityQuery = z.object({
+  cursor: z.string().min(1).optional(),
+  limit: z.coerce.number().int().min(1).max(200).optional(),
+});
+export type ActivityQuery = z.infer<typeof ActivityQuery>;
+
 export const CardPatch = CardInput.partial()
   .omit({ deckId: true })
   .extend({

@@ -66,7 +66,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Export**: One file the learner takes out of Lymi, for one deck or the whole library: an Anki package that Anki and Mochi open, or a Lymi file that Lymi imports back without loss. The server writes it, it downloads only with the learner's own session or key, and it is deleted a day after it is written. A shared deck exports with the learner's own schedule and history. A spreadsheet of one deck is written in the browser and is not an export in this sense. _Avoid_: Backup, download (for the thing itself), dump
 
-**Activity**: The list of what came into the learner's decks from outside the app, and the exports they took out: imports and exports now, and writes made by integrations and the AI, shown in the app so nothing lands unseen. Cards can be inspected, edited or archived from there. _Avoid_: Review queue, inbox, approvals, history (for this screen)
+**Activity**: The list of what came into the learner's decks from outside the app — imports, and writes made by integrations and the AI — with the files they took out and who is in their shared decks: joins, leaves, removals, and the join link going on or off. Nothing lands unseen. Writes of one kind by one caller in one deck on one day are one row, which opens the cards it wrote so they can be inspected, edited or archived without leaving. _Avoid_: Review queue, inbox, approvals, history (for this screen)
 
 **Settings**: The screen holding every setting: the learner's photo, language, theme, the review timezone, the daily reminder, connected apps and API keys, then exporting the library and importing from another app. Nothing else lives there. _Avoid_: You, profile, account, preferences
 

@@ -4,37 +4,46 @@ import { checkAppPreview } from "./check-app-preview.mjs";
 
 const entryUrl = "https://preview-lymi-app-pr-105.example.workers.dev/_preview?key=capability";
 
-function previewFetch(calls, entryResponses = []) {
+function previewFetch(calls, queues = {}) {
+  const queued = (hop) => {
+    const next = queues[hop]?.shift();
+    if (next instanceof Error) throw next;
+    return next;
+  };
   return async (url, init) => {
     const value = String(url);
     calls.push([value, init.headers?.cookie ?? ""]);
     if (value.includes("/_preview?key=")) {
-      const next = entryResponses.shift();
-      if (next instanceof Error) throw next;
-      if (next) return next;
-      return new Response(null, {
-        status: 303,
-        headers: {
-          location: "/api/dev/sign-in?as=learner",
-          "set-cookie": "__Host-lymi-preview=access; Path=/; HttpOnly",
-        },
-      });
+      return (
+        queued("entry") ??
+        new Response(null, {
+          status: 303,
+          headers: {
+            location: "/api/dev/sign-in?as=learner",
+            "set-cookie": "__Host-lymi-preview=access; Path=/; HttpOnly",
+          },
+        })
+      );
     }
     if (value.includes("/api/dev/sign-in")) {
-      return new Response(null, {
-        status: 303,
-        headers: { location: "/today", "set-cookie": "lymi.session_token=session; Path=/" },
-      });
+      return (
+        queued("signIn") ??
+        new Response(null, {
+          status: 303,
+          headers: { location: "/today", "set-cookie": "lymi.session_token=session; Path=/" },
+        })
+      );
     }
     if (value.endsWith("/api/me")) {
-      return Response.json({ email: "learner@lymi.local" });
+      return queued("me") ?? Response.json({ email: "learner@lymi.local" });
     }
-    if (value.endsWith("/api/decks")) return Response.json([{ id: "deck" }]);
+    if (value.endsWith("/api/decks")) return queued("decks") ?? Response.json([{ id: "deck" }]);
     throw new Error(`Unexpected ${value}`);
   };
 }
 
-const entryRequests = (calls) => calls.filter(([url]) => url.includes("/_preview?key=")).length;
+const requestsTo = (calls, fragment) => calls.filter(([url]) => url.includes(fragment)).length;
+const entryRequests = (calls) => requestsTo(calls, "/_preview?key=");
 
 test("verifies capability entry, persona sign-in, and seeded data", async () => {
   const calls = [];
@@ -48,32 +57,74 @@ test("verifies capability entry, persona sign-in, and seeded data", async () => 
 test("waits for a new preview Worker that answers 404 or drops the connection", async () => {
   const calls = [];
   const retries = [];
-  const fetchImpl = previewFetch(calls, [
-    new Response("Not found", { status: 404 }),
-    new TypeError("fetch failed"),
-  ]);
+  const fetchImpl = previewFetch(calls, {
+    entry: [new Response("Not found", { status: 404 }), new TypeError("fetch failed")],
+  });
 
   const result = await checkAppPreview(entryUrl, {
     attempts: 3,
     retryDelayMs: 0,
     fetchImpl,
-    onRetry: (reason, attempt) => retries.push([reason, attempt]),
+    onRetry: (hop, reason, attempt) => retries.push([hop, reason, attempt]),
   });
 
   assert.equal(result.decks, 1);
   assert.equal(entryRequests(calls), 3);
   assert.deepEqual(retries, [
-    ["HTTP 404", 1],
-    ["fetch failed", 2],
+    ["GET /_preview", "HTTP 404", 1],
+    ["GET /_preview", "fetch failed", 2],
+  ]);
+});
+
+test("waits for the persona sign-in route to propagate after the entry hop is live", async () => {
+  const calls = [];
+  const retries = [];
+  const fetchImpl = previewFetch(calls, {
+    signIn: [new Response("Not found", { status: 404 })],
+  });
+
+  const result = await checkAppPreview(entryUrl, {
+    attempts: 3,
+    retryDelayMs: 0,
+    fetchImpl,
+    onRetry: (hop, reason, attempt) => retries.push([hop, reason, attempt]),
+  });
+
+  assert.equal(result.destination, "/today");
+  assert.equal(entryRequests(calls), 1);
+  assert.equal(requestsTo(calls, "/api/dev/sign-in"), 2);
+  assert.deepEqual(retries, [["GET /api/dev/sign-in", "HTTP 404", 1]]);
+});
+
+test("waits for the session and deck routes to propagate", async () => {
+  const calls = [];
+  const retries = [];
+  const fetchImpl = previewFetch(calls, {
+    me: [new Response("Not found", { status: 404 })],
+    decks: [new Response("Not found", { status: 404 })],
+  });
+
+  const result = await checkAppPreview(entryUrl, {
+    attempts: 3,
+    retryDelayMs: 0,
+    fetchImpl,
+    onRetry: (hop, reason, attempt) => retries.push([hop, reason, attempt]),
+  });
+
+  assert.equal(result.decks, 1);
+  assert.equal(requestsTo(calls, "/api/me"), 2);
+  assert.equal(requestsTo(calls, "/api/decks"), 2);
+  assert.deepEqual(retries, [
+    ["GET /api/me", "HTTP 404", 1],
+    ["GET /api/decks", "HTTP 404", 1],
   ]);
 });
 
 test("fails after the bounded attempts when preview mode never becomes live", async () => {
   const calls = [];
-  const fetchImpl = previewFetch(
-    calls,
-    Array.from({ length: 3 }, () => new Response("Not found", { status: 404 })),
-  );
+  const fetchImpl = previewFetch(calls, {
+    entry: Array.from({ length: 3 }, () => new Response("Not found", { status: 404 })),
+  });
 
   await assert.rejects(
     () => checkAppPreview(entryUrl, { attempts: 3, retryDelayMs: 0, fetchImpl }),
@@ -82,9 +133,22 @@ test("fails after the bounded attempts when preview mode never becomes live", as
   assert.equal(entryRequests(calls), 3);
 });
 
+test("fails after the bounded attempts when the sign-in route never becomes live", async () => {
+  const calls = [];
+  const fetchImpl = previewFetch(calls, {
+    signIn: Array.from({ length: 3 }, () => new Response("Not found", { status: 404 })),
+  });
+
+  await assert.rejects(
+    () => checkAppPreview(entryUrl, { attempts: 3, retryDelayMs: 0, fetchImpl }),
+    /GET \/api\/dev\/sign-in was not live after 3 attempt\(s\); last response: HTTP 404/,
+  );
+  assert.equal(requestsTo(calls, "/api/dev/sign-in"), 3);
+});
+
 test("fails at once on a wrong capability key", async () => {
   const calls = [];
-  const fetchImpl = previewFetch(calls, [new Response("not valid", { status: 403 })]);
+  const fetchImpl = previewFetch(calls, { entry: [new Response("not valid", { status: 403 })] });
 
   await assert.rejects(
     () => checkAppPreview(entryUrl, { attempts: 10, retryDelayMs: 60_000, fetchImpl }),
@@ -93,16 +157,26 @@ test("fails at once on a wrong capability key", async () => {
   assert.equal(entryRequests(calls), 1);
 });
 
+test("fails at once on a sign-in hop that answers something other than a redirect", async () => {
+  const calls = [];
+  const fetchImpl = previewFetch(calls, { signIn: [new Response("nope", { status: 500 })] });
+
+  await assert.rejects(
+    () => checkAppPreview(entryUrl, { attempts: 10, retryDelayMs: 60_000, fetchImpl }),
+    /preview persona sign-in returned HTTP 500/,
+  );
+  assert.equal(requestsTo(calls, "/api/dev/sign-in"), 1);
+});
+
 test("fails at once on a malformed session payload", async () => {
   const calls = [];
-  const inner = previewFetch(calls);
-  const fetchImpl = async (url, init) =>
-    String(url).endsWith("/api/me") ? new Response("<html>", { status: 200 }) : inner(url, init);
+  const fetchImpl = previewFetch(calls, { me: [new Response("<html>", { status: 200 })] });
 
   await assert.rejects(() =>
     checkAppPreview(entryUrl, { attempts: 10, retryDelayMs: 60_000, fetchImpl }),
   );
   assert.equal(entryRequests(calls), 1);
+  assert.equal(requestsTo(calls, "/api/me"), 1);
 });
 
 test("rejects a raw preview URL without its protected entry path", async () => {

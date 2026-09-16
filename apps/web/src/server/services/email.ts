@@ -1,5 +1,6 @@
 import type { I18n } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import type { FeedbackKind } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
 import { audit } from "../audit";
@@ -15,18 +16,36 @@ export type TransactionalEmailKind =
   | "reset-password"
   | "existing-account"
   | "google-account"
-  | "reset-google-account";
+  | "reset-google-account"
+  | "feedback";
 export type TransactionalEmailLanguage = "en" | "uk" | "ru";
 
-/** Every kind but `test` carries the one link its message is about. */
+/** What a learner wrote and the little Lymi knows about where they wrote it. */
+export interface FeedbackEmailData {
+  kind: FeedbackKind;
+  /** The learner's text, as typed. */
+  message: string;
+  /** Who wrote, as a name and address a reply can go to. */
+  from: string;
+  screen: string;
+  appVersion: string;
+  browser: string;
+  /** The learner's app language, so a reply can be written in it. */
+  language: string;
+}
+
+/** What a message needs beyond its kind: an account kind's one link, or a learner's note. */
 export interface TransactionalEmailParams {
   url?: string;
+  feedback?: FeedbackEmailData;
 }
 
 export interface TransactionalEmailInput extends TransactionalEmailParams {
   kind: TransactionalEmailKind;
   to: string;
   language: string;
+  /** Who a reply goes to, when it is not the address the whole sender answers at. */
+  replyTo?: string | undefined;
 }
 
 export interface RenderedEmail {
@@ -40,11 +59,14 @@ export interface RenderedEmail {
 export interface LocalEmail extends RenderedEmail {
   id: string;
   to: string;
+  replyTo: string;
   sentAt: string;
 }
 
 const FROM = { email: "notifications@lymi.app", name: "Lymi" } as const;
-const REPLY_TO = "hello@lymi.app";
+/** Where a learner reaches a person, and where a message written for Lymi itself lands. */
+export const OPERATOR_INBOX = "hello@lymi.app";
+const REPLY_TO = OPERATOR_INBOX;
 const LOCAL_OUTBOX_LIMIT = 100;
 const localOutbox: LocalEmail[] = [];
 
@@ -63,7 +85,7 @@ function htmlDocument(language: TransactionalEmailLanguage, blocks: Block[]): st
   const body = blocks
     .map((block) =>
       typeof block === "string"
-        ? `<p>${escapeHtml(block)}</p>`
+        ? `<p>${escapeHtml(block).replaceAll("\n", "<br>")}</p>`
         : `<p><a href="${escapeHtml(block.link)}">${escapeHtml(block.link)}</a></p>`,
     )
     .join("");
@@ -96,6 +118,13 @@ export async function renderTransactionalEmail(
   };
 }
 
+/** Feedback is read by Lymi rather than by a learner, so its scaffolding is English wherever it is sent from. */
+const FEEDBACK_SUBJECTS: Record<FeedbackKind, string> = {
+  bug: "Lymi feedback: Bug",
+  idea: "Lymi feedback: Idea",
+  other: "Lymi feedback: Something else",
+};
+
 /** A link the message cannot be written without; a missing one is a caller bug, not a learner's. */
 function required(url: string | undefined, kind: TransactionalEmailKind): string {
   if (!url) throw new Error(`The ${kind} email needs a link`);
@@ -111,6 +140,23 @@ function compose(
   const signature = "Lymi";
 
   switch (kind) {
+    case "feedback": {
+      const it = params.feedback;
+      if (!it) throw new Error("The feedback email needs the note it is about");
+      return {
+        subject: FEEDBACK_SUBJECTS[it.kind],
+        blocks: [
+          it.message,
+          [
+            `From: ${it.from}`,
+            `Screen: ${it.screen}`,
+            `App version: ${it.appVersion}`,
+            `Browser: ${it.browser}`,
+            `App language: ${it.language}`,
+          ].join("\n"),
+        ],
+      };
+    }
     case "test":
       return {
         subject: i18n._(msg`Test email from Lymi`),
@@ -223,11 +269,12 @@ function providerErrorClass(error: unknown): string {
   }
 }
 
-function writeLocalEmail(message: RenderedEmail, to: string): LocalEmail {
+function writeLocalEmail(message: RenderedEmail, to: string, replyTo: string): LocalEmail {
   const stored = {
     ...message,
     id: crypto.randomUUID(),
     to: to.trim().toLowerCase(),
+    replyTo: replyTo.trim().toLowerCase(),
     sentAt: new Date().toISOString(),
   };
   localOutbox.push(stored);
@@ -264,10 +311,11 @@ export async function sendTransactionalEmail(
 ): Promise<{ delivery: "provider" | "outbox" }> {
   const message = await renderTransactionalEmail(input.kind, input.language, {
     ...(input.url ? { url: input.url } : {}),
+    ...(input.feedback ? { feedback: input.feedback } : {}),
   });
   let delivery: "provider" | "outbox";
   if (isLoopbackUrl(env.PRODUCT_URL)) {
-    writeLocalEmail(message, input.to);
+    writeLocalEmail(message, input.to, input.replyTo ?? REPLY_TO);
     delivery = "outbox";
   } else {
     if (!(await withinDailyBudget(env.SESSIONS))) {
@@ -280,7 +328,7 @@ export async function sendTransactionalEmail(
       await env.EMAIL.send({
         to: input.to,
         from: FROM,
-        replyTo: REPLY_TO,
+        replyTo: input.replyTo ?? REPLY_TO,
         subject: message.subject,
         text: message.text,
         html: message.html,
@@ -326,9 +374,15 @@ export async function sendOperatorTestEmail(
   return sendTransactionalEmail(ctx, env, { ...input, kind: "test" });
 }
 
-export function latestLocalEmail(to: string): LocalEmail | null {
-  const address = to.trim().toLowerCase();
-  return localOutbox.findLast((message) => message.to === address) ?? null;
+/**
+ * The latest message an address is part of. Reply-to counts as well as the recipient, so a message
+ * Lymi sent to itself is still found by the learner who caused it, whoever else wrote in meanwhile.
+ */
+export function latestLocalEmail(address: string): LocalEmail | null {
+  const wanted = address.trim().toLowerCase();
+  return (
+    localOutbox.findLast((message) => message.to === wanted || message.replyTo === wanted) ?? null
+  );
 }
 
 /** Test-only reset; the outbox itself is reachable only in loopback or isolated preview builds. */

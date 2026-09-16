@@ -31,6 +31,7 @@ erDiagram
   user ||--o| user_avatars : "photo"
   user ||--o{ imports : "brings in"
   user ||--o{ exports : "takes out"
+  user ||--o{ feedback : "writes to Lymi"
   imports ||--o{ cards : "added"
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
@@ -324,6 +325,10 @@ Archiving an import stamps its own `archived_at` on every card it added that is 
 ### Exports
 
 An export reads the decks the learner can see, archived ones included, or one deck they can see. Cards and pictures are the deck's; states and reviews are the exporting learner's own, and undone reviews are left out. Every export writes a `create` and a `complete` audit row with entity `export`, so Activity lists it. `downloadUrl` is set only while the file exists; object keys never leave the server. `POST /api/exports` takes the read scope, since it reads.
+
+### Feedback
+
+A note a learner sends from the learner menu is stored before it is emailed, so a provider that is down loses nothing; the row keeps the delivery it ended with. It carries the screen, the app version, the browser and the app language, which the message repeats for whoever reads it. The learner-local date of each row carries the cap of 20 notes a day, and the audit row names the kind and the delivery only.
 
 ### Tags and source
 

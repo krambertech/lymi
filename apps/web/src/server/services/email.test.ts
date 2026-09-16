@@ -79,6 +79,64 @@ describe("transactional email", () => {
     });
   });
 
+  it("renders feedback in English whatever the learner reads, with the kind in the subject", async () => {
+    const message = await renderTransactionalEmail("feedback", "en", {
+      feedback: {
+        kind: "idea",
+        message: "Let a deck hold a picture.",
+        from: "Lesia <lesia@example.com>",
+        screen: "/today",
+        appVersion: "v42",
+        browser: "Safari/17",
+        language: "uk",
+      },
+    });
+
+    expect(message).toMatchObject({
+      kind: "feedback",
+      language: "en",
+      subject: "Lymi feedback: Idea",
+    });
+    expect(message.text).toBe(
+      "Let a deck hold a picture.\n\nFrom: Lesia <lesia@example.com>\nScreen: /today\nApp version: v42\nBrowser: Safari/17\nApp language: uk",
+    );
+    expect(message.html).toContain('<html lang="en">');
+    expect(message.html).toContain("Screen: /today<br>");
+    // The learner's own words are escaped rather than rendered as markup.
+    expect(message.html).toContain("Lesia &lt;lesia@example.com&gt;");
+  });
+
+  it("sends feedback to the operator inbox with the learner as reply-to", async () => {
+    const ctx = await person("Feedback");
+    const { env, send } = fakeEnv("https://my.lymi.app");
+
+    await expect(
+      sendTransactionalEmail(ctx, env, {
+        kind: "feedback",
+        to: "hello@lymi.app",
+        language: "en",
+        replyTo: "lesia@example.com",
+        feedback: {
+          kind: "bug",
+          message: "The streak flame is missing.",
+          from: "Lesia <lesia@example.com>",
+          screen: "/today",
+          appVersion: "v42",
+          browser: "Safari/17",
+          language: "uk",
+        },
+      }),
+    ).resolves.toEqual({ delivery: "provider" });
+
+    expect(send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: "hello@lymi.app",
+        replyTo: "lesia@example.com",
+        subject: "Lymi feedback: Bug",
+      }),
+    );
+  });
+
   it("writes loopback sends to the outbox without touching the provider", async () => {
     const ctx = await person("Loopback");
     const { env, send } = fakeEnv("http://127.0.0.1:4173");

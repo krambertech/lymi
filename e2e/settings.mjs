@@ -39,6 +39,7 @@ export const e2eAccounts = [
   "email-non-operator",
   "password-account",
   "password-reset",
+  "feedback",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

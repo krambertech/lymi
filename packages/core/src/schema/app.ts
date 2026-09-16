@@ -638,3 +638,35 @@ export const betaSignups = sqliteTable(
 );
 
 export type BetaSignup = typeof betaSignups.$inferSelect;
+
+/**
+ * A note a learner sent from the learner menu. The row is written before the message is sent, so
+ * what they typed survives a failed send, and its local date carries the per-day cap.
+ */
+export const feedback = sqliteTable(
+  "feedback",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    kind: text("kind", { enum: ["bug", "idea", "other"] }).notNull(),
+    /** What the learner typed, as typed. Private: never logged or audited. */
+    message: text("message").notNull(),
+    /** The path they were on, the build they were running, and the browser they wrote from. */
+    screen: text("screen").notNull(),
+    appVersion: text("app_version").notNull(),
+    browser: text("browser").notNull(),
+    /** Their app language, so a reply can be written in it. */
+    language: text("language").notNull(),
+    /** The learner-local date the note was written, which the daily cap counts. */
+    localDate: text("local_date").notNull(),
+    delivery: text("delivery", { enum: ["provider", "outbox", "failed"] }).notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (t) => [index("feedback_user_day_idx").on(t.userId, t.localDate)],
+);
+
+export type Feedback = typeof feedback.$inferSelect;

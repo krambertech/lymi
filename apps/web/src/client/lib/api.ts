@@ -13,6 +13,7 @@ import type {
   DrawOut,
   ExportOut,
   ExportStartInput,
+  FeedbackInput,
   GradeInput,
   GradeOut,
   ImportChoicesInput,
@@ -273,6 +274,8 @@ export const api = {
   export: (id: string) => request<Export>(`/api/exports/${id}`),
   startExport: (body: ExportStartInput) =>
     request<Export>("/api/exports", { method: "POST", body: JSON.stringify(body) }),
+  sendFeedback: (body: FeedbackInput) =>
+    request<{ ok: true }>("/api/feedback", { method: "POST", body: JSON.stringify(body) }),
   settings: () => request<Settings>("/api/settings"),
   updateSettings: (body: SettingsPatch) =>
     request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),

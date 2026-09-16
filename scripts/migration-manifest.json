@@ -83,6 +83,10 @@
     {
       "name": "0020_enrichment.sql",
       "sha256": "d6bc6f2fe9ca034b4fe3ac6a2a939eb37c9d106329655b36f4f7da6abca1192c"
+    },
+    {
+      "name": "0021_audit_actor_client.sql",
+      "sha256": "e6c426e89dc3072ee935617c9708af2216b70b43d01d313d17e6958fae38921e"
     }
   ]
 }

@@ -3,7 +3,7 @@ import { createMcpHandler } from "agents/mcp/server";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
 import type { Bindings } from "../env";
-import { grantedScope } from "../services/connected-apps";
+import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
 import { buildMcpServer, type McpPrincipal } from "./server";
 
@@ -61,8 +61,16 @@ export async function authorizeMcpClaims(
     return unauthorized(deps.env, "This connection was disconnected in Lymi. Sign in again.");
   }
   const tokenWrites = scopesOf(claims.scope).has("write");
+  // The app's own name, kept on every row it writes so a disconnect does not erase who wrote.
+  const named = (await clientNames({ db: deps.db }, [clientId])).get(clientId);
   return {
-    ctx: { db: deps.db, userId, actor: "mcp" },
+    ctx: {
+      db: deps.db,
+      userId,
+      actor: "mcp",
+      client: clientId,
+      ...(named ? { clientName: named } : {}),
+    },
     scope: tokenWrites && consent === "write" ? "write" : "read",
     resourceMetadataUrl: mcpResourceMetadataUrl(deps.env),
     images:

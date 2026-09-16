@@ -6,6 +6,10 @@ import { schema } from "./db";
 type AuditInput = {
   userId: string;
   actor: Actor;
+  /** The OAuth client or API key behind the write, when one is calling. */
+  client?: string | undefined;
+  /** Its name at the time of the write, so the log keeps it after the key is revoked. */
+  clientName?: string | undefined;
   action: string;
   entity: "deck" | "series" | "section" | "card" | "review" | "account" | "import" | "export";
   entityId: string;
@@ -18,6 +22,8 @@ export function auditStatement(db: Db, entry: AuditInput) {
     id: newId(),
     userId: entry.userId,
     actor: entry.actor,
+    actorClient: entry.client ?? null,
+    actorClientName: entry.clientName ?? null,
     action: entry.action,
     entity: entry.entity,
     entityId: entry.entityId,
@@ -34,6 +40,8 @@ export function auditStatementWhen(db: Db, entry: AuditInput, from: Table, where
       id: newId(),
       userId: entry.userId,
       actor: entry.actor,
+      actorClient: entry.client ?? null,
+      actorClientName: entry.clientName ?? null,
       action: entry.action,
       entity: entry.entity,
       entityId: entry.entityId,
@@ -44,7 +52,11 @@ export function auditStatementWhen(db: Db, entry: AuditInput, from: Table, where
   );
 }
 
-/** Inserts one row per `from` row matching `where`, with Drizzle checking the selected keys against the table's columns. */
+/**
+ * Inserts one row per `from` row matching `where`. Values are keyed by column name and written in
+ * `getTableColumns` order, which is the order Drizzle emits the column list in, so a column added
+ * later cannot shift a value into its neighbour.
+ */
 export function insertWhen<T extends Table>(
   db: Db,
   table: T,

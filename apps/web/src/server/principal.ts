@@ -14,6 +14,10 @@ export interface Principal {
   user: SessionUser;
   actor: Actor;
   scope: Scope;
+  /** The API key this request came in on. The learner in the app has none. */
+  client?: string | undefined;
+  /** The name the learner gave that key, kept on every row it writes. */
+  clientName?: string | undefined;
 }
 
 export type Unauthenticated = { error: string; status: 401 | 429 };
@@ -38,6 +42,11 @@ async function fromApiKey(auth: Auth, db: Db, key: string): Promise<Principal | 
     }
     return { error: "This API key is not valid", status: 401 };
   }
+  // The key's own row carries its name; `verifyApiKey` does not return one.
+  const [named] = await db
+    .select({ name: schema.apikey.name })
+    .from(schema.apikey)
+    .where(eq(schema.apikey.id, result.key.id));
   const [user] = await db
     .select({
       id: schema.user.id,
@@ -51,7 +60,13 @@ async function fromApiKey(auth: Auth, db: Db, key: string): Promise<Principal | 
     .from(schema.user)
     .where(eq(schema.user.id, result.key.referenceId));
   if (!user) return { error: "This API key is not valid", status: 401 };
-  return { user, actor: "api", scope: scopeOf(result.key.permissions) };
+  return {
+    user,
+    actor: "api",
+    scope: scopeOf(result.key.permissions),
+    client: result.key.id,
+    ...(named?.name ? { clientName: named.name } : {}),
+  };
 }
 
 /** Permissions are `{ lymi: [...] }`. Anything without "write" is read. */
@@ -70,6 +85,8 @@ export const authenticate: MiddlewareHandler<AppEnv> = async (c, next) => {
   c.set("user", principal.user);
   c.set("actor", principal.actor);
   c.set("scope", principal.scope);
+  if (principal.client) c.set("client", principal.client);
+  if (principal.clientName) c.set("clientName", principal.clientName);
   await next();
 };
 

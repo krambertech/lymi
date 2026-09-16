@@ -17,7 +17,13 @@ import { type ServiceContext, ServiceError } from "./services/context";
 
 /** Build the service context for the caller of this request. */
 export function ctxOf(c: Context<AppEnv>): ServiceContext {
-  return { db: c.get("db"), userId: c.get("user").id, actor: c.get("actor") };
+  return {
+    db: c.get("db"),
+    userId: c.get("user").id,
+    actor: c.get("actor"),
+    client: c.get("client"),
+    clientName: c.get("clientName"),
+  };
 }
 
 /**

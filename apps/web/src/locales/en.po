@@ -92,6 +92,10 @@ msgstr "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 
+#. placeholder {0}: entry.count - entry.cards.length
+msgid "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
+msgstr "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
+
 #. placeholder {0}: preview.unsupported + preview.skipped
 msgid "{0, plural, one {# note is left out: it’s image occlusion or has no term.} other {# notes are left out: they’re image occlusion or have no term.}}"
 msgstr "{0, plural, one {# note is left out: it’s image occlusion or has no term.} other {# notes are left out: they’re image occlusion or have no term.}}"
@@ -206,20 +210,14 @@ msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last s
 msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 
-#. placeholder {0}: SOURCE_NAMES[item.source]
 #. placeholder {0}: card.deckName
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
-#. placeholder {1}: date.format(new Date(item.createdAt))
+#. placeholder {0}: item.fileName
 #. placeholder {1}: fileSize(item.byteSize, i18n.locale)
 #. placeholder {1}: item.next
+#. placeholder {1}: when(card.archivedAt)
 msgid "{0} · {1}"
 msgstr "{0} · {1}"
-
-#. placeholder {0}: SOURCE_NAMES[item.source]
-#. placeholder {1}: date.format(new Date(item.createdAt))
-#. placeholder {2}: item.counts?.added ?? 0
-msgid "{0} · {1} · {2, plural, one {# card added} other {# cards added}}"
-msgstr "{0} · {1} · {2, plural, one {# card added} other {# cards added}}"
 
 #. placeholder {0}: item.fileName
 msgid "{0} · {date}"
@@ -435,12 +433,6 @@ msgstr "{field} becomes"
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {# filled} other {# filled}}"
 
-msgid "{format} · {when}"
-msgstr "{format} · {when}"
-
-msgid "{format} · {when} · {cards, plural, one {# card} other {# cards}}"
-msgstr "{format} · {when} · {cards, plural, one {# card} other {# cards}}"
-
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 
@@ -494,6 +486,12 @@ msgstr "{name} is back where it was."
 
 msgid "{name} is over {where}."
 msgstr "{name} is over {where}."
+
+msgid "{name} joined {deck}"
+msgstr "{name} joined {deck}"
+
+msgid "{name} left {deck}"
+msgstr "{name} left {deck}"
 
 msgid "{nextName} is ready"
 msgstr "{nextName} is ready"
@@ -559,6 +557,9 @@ msgstr "A .zip file, up to 1 GB. You can also drop it here."
 
 msgid "a connected app"
 msgstr "a connected app"
+
+msgid "A connected app"
+msgstr "A connected app"
 
 msgid "a day"
 msgstr "a day"
@@ -683,6 +684,9 @@ msgstr "Added “{term}”"
 msgid "Added “{term}” without its picture. {pictureError}"
 msgstr "Added “{term}” without its picture. {pictureError}"
 
+msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
+msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
+
 msgid "Added today"
 msgstr "Added today"
 
@@ -767,6 +771,9 @@ msgstr "API keys"
 msgid "Apps you can import from"
 msgstr "Apps you can import from"
 
+msgid "Apps, the AI, imports, exports and the people in your shared decks all show up here."
+msgstr "Apps, the AI, imports, exports and the people in your shared decks all show up here."
+
 msgid "Archive"
 msgstr "Archive"
 
@@ -818,11 +825,23 @@ msgstr "Archived “{seriesName}”"
 msgid "Archived “{seriesName}” and its decks"
 msgstr "Archived “{seriesName}” and its decks"
 
+msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
+
 msgid "Archived sections"
 msgstr "Archived sections"
 
 msgid "Archived series"
 msgstr "Archived series"
+
+msgid "Archived the deck {deck}"
+msgstr "Archived the deck {deck}"
+
+msgid "Archived the section {name} in {deck}"
+msgstr "Archived the section {name} in {deck}"
+
+msgid "Archived the series {name}"
+msgstr "Archived the series {name}"
 
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
@@ -951,9 +970,6 @@ msgstr "Cards from this deck"
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Cards keep the due dates they had in {app}."
-
-msgid "Cards that came in from other apps, and files you took out."
-msgstr "Cards that came in from other apps, and files you took out."
 
 msgid "Change"
 msgstr "Change"
@@ -1172,6 +1188,9 @@ msgstr "Couldn’t load Insights"
 msgid "Couldn’t load Library"
 msgstr "Couldn’t load Library"
 
+msgid "Couldn’t load more."
+msgstr "Couldn’t load more."
+
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
 
@@ -1346,7 +1365,7 @@ msgstr "Done"
 msgid "Download"
 msgstr "Download"
 
-#. placeholder {0}: item.fileName
+#. placeholder {0}: entry.export?.fileName ?? ""
 msgid "Download {0}"
 msgstr "Download {0}"
 
@@ -1398,8 +1417,20 @@ msgstr "Edit card"
 msgid "Edit series"
 msgstr "Edit series"
 
+msgid "Edited {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Edited {count, plural, one {# card} other {# cards}} in {deck}"
+
 msgid "Edited {list}"
 msgstr "Edited {list}"
+
+msgid "Edited the deck {deck}"
+msgstr "Edited the deck {deck}"
+
+msgid "Edited the section {name} in {deck}"
+msgstr "Edited the section {name} in {deck}"
+
+msgid "Edited the series {name}"
+msgstr "Edited the series {name}"
 
 msgid "Email"
 msgstr "Email"
@@ -1409,6 +1440,9 @@ msgstr "Empty in the first card"
 
 msgid "Empty in the first note"
 msgstr "Empty in the first note"
+
+msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 
 msgid "Enriched {list}"
 msgstr "Enriched {list}"
@@ -1479,11 +1513,20 @@ msgstr "Export one deck at a time, or export again without media."
 msgid "Export your library"
 msgstr "Export your library"
 
+msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
+msgstr "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
+msgstr "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
+
+msgid "Exporting as a Lymi file"
+msgstr "Exporting as a Lymi file"
+
+msgid "Exporting as an Anki package"
+msgstr "Exporting as an Anki package"
+
 msgid "Exporting from {app}"
 msgstr "Exporting from {app}"
-
-msgid "Exports"
-msgstr "Exports"
 
 msgctxt "Password strength"
 msgid "Fair"
@@ -1651,17 +1694,17 @@ msgstr "Import cards"
 msgid "Import from {app}"
 msgstr "Import from {app}"
 
+msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
+msgstr "Imported {added, plural, one {# card} other {# cards}} from {source}"
+
 msgid "Importing"
 msgstr "Importing"
 
+msgid "Importing from {source}"
+msgstr "Importing from {source}"
+
 msgid "Importing your cards"
 msgstr "Importing your cards"
-
-msgid "Imports"
-msgstr "Imports"
-
-msgid "Imports from Anki and Mochi appear here, with what each one added."
-msgstr "Imports from Anki and Mochi appear here, with what each one added."
 
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
@@ -1881,6 +1924,15 @@ msgstr "Lymi is in a private beta."
 
 msgid "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
 msgstr "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
+
+msgid "Made the deck {deck}"
+msgstr "Made the deck {deck}"
+
+msgid "Made the section {name} in {deck}"
+msgstr "Made the section {name} in {deck}"
+
+msgid "Made the series {name}"
+msgstr "Made the series {name}"
 
 msgid "Main"
 msgstr "Main"
@@ -2167,9 +2219,6 @@ msgstr "Nothing forgotten today"
 msgid "Nothing has come back for a second look yet, so there is nothing honest to report."
 msgstr "Nothing has come back for a second look yet, so there is nothing honest to report."
 
-msgid "Nothing has come in yet"
-msgstr "Nothing has come in yet"
-
 msgid "Nothing in it yet"
 msgstr "Nothing in it yet"
 
@@ -2202,6 +2251,9 @@ msgstr "Nothing was shared. You can start again from {appName} whenever you like
 
 msgid "Nothing was shared. You can start again from the app whenever you like."
 msgstr "Nothing was shared. You can start again from the app whenever you like."
+
+msgid "Nothing yet"
+msgstr "Nothing yet"
 
 msgid "Nothing yet."
 msgstr "Nothing yet."
@@ -2469,6 +2521,9 @@ msgstr "Remove filter: {label}"
 msgid "Remove the tag {tag}"
 msgstr "Remove the tag {tag}"
 
+msgid "Removed {name} from {deck}"
+msgstr "Removed {name} from {deck}"
+
 msgid "Rename"
 msgstr "Rename"
 
@@ -2521,6 +2576,18 @@ msgstr "Restored"
 #. placeholder {0}: deck.name
 msgid "Restored “{0}”"
 msgstr "Restored “{0}”"
+
+msgid "Restored {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Restored {count, plural, one {# card} other {# cards}} in {deck}"
+
+msgid "Restored the deck {deck}"
+msgstr "Restored the deck {deck}"
+
+msgid "Restored the section {name} in {deck}"
+msgstr "Restored the section {name} in {deck}"
+
+msgid "Restored the series {name}"
+msgstr "Restored the series {name}"
 
 msgid "Retry"
 msgstr "Retry"
@@ -2737,6 +2804,9 @@ msgstr "Show all"
 msgid "Show another"
 msgstr "Show another"
 
+msgid "Show more"
+msgstr "Show more"
+
 msgid "Show password"
 msgstr "Show password"
 
@@ -2784,6 +2854,9 @@ msgstr "So you know which key to revoke later."
 
 msgid "Some grades haven’t synced"
 msgstr "Some grades haven’t synced"
+
+msgid "Someone"
+msgstr "Someone"
 
 msgid "Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset."
 msgstr "Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset."
@@ -2956,14 +3029,23 @@ msgstr "That password is too long."
 msgid "That reset link no longer works. Ask for a new one."
 msgstr "That reset link no longer works. Ask for a new one."
 
+msgid "That’s everything."
+msgstr "That’s everything."
+
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
 
 msgid "the AI"
 msgstr "the AI"
 
+msgid "The AI"
+msgstr "The AI"
+
 msgid "the API"
 msgstr "the API"
+
+msgid "The API"
+msgstr "The API"
 
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "The app did not say where to go next. Try again from the app."
@@ -3184,6 +3266,12 @@ msgstr "Turn off the join link"
 
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
+
+msgid "Turned off the join link for {deck}"
+msgstr "Turned off the join link for {deck}"
+
+msgid "Turned on the join link for {deck}"
+msgstr "Turned on the join link for {deck}"
 
 msgid "Type the term."
 msgstr "Type the term."

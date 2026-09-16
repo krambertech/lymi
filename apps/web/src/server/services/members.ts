@@ -1,7 +1,7 @@
 import type { MemberRole } from "@lymi/core";
 import { newId } from "@lymi/core";
-import { and, eq, isNotNull, isNull, sql } from "@lymi/core/db";
-import { audit } from "../audit";
+import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
+import { audit, auditStatementWhen } from "../audit";
 import { type Db, schema } from "../db";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -79,7 +79,7 @@ export async function ownedDeck(ctx: ServiceContext, deckId: string) {
  * clears the block. The join lands in the owner's Activity.
  */
 export async function join(
-  { db, userId, actor }: ServiceContext,
+  { db, userId, actor, client, clientName }: ServiceContext,
   deckId: string,
   opts: { invitationId?: string | undefined; publicationId?: string | undefined } = {},
 ) {
@@ -151,13 +151,24 @@ export async function join(
   await runBatch(db, [
     membership,
     ...stateStatementsForLearner(db, deckId, userId, now),
-    db.insert(schema.auditLog).select(
-      sql`select ${newId()}, ${deck.userId}, ${actor}, 'join', 'deck', ${deckId},
-        ${JSON.stringify({ memberId: userId, ...(via && { via }) })}, ${at}
-      where exists (
-        select 1 from deck_members
-        where id = ${membershipId} and joined_at = ${at} and removed_at is null
-      )`,
+    auditStatementWhen(
+      db,
+      {
+        userId: deck.userId,
+        actor,
+        client,
+        clientName,
+        action: "join",
+        entity: "deck",
+        entityId: deckId,
+        payload: { memberId: userId, ...(via && { via }) },
+      },
+      schema.deckMembers,
+      and(
+        eq(schema.deckMembers.id, membershipId),
+        eq(schema.deckMembers.joinedAt, now),
+        isNull(schema.deckMembers.removedAt),
+      ) as SQL,
     ),
   ]);
 

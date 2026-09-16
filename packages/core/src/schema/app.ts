@@ -590,6 +590,10 @@ export const auditLog = sqliteTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     actor: text("actor", { enum: ["user", "api", "mcp", "ai", "system"] }).notNull(),
+    /** The OAuth client or API key behind an `api` or `mcp` write, so Activity can name it. */
+    actorClient: text("actor_client"),
+    /** Its name as it stood at the write, so revoking a key does not erase it from the log. */
+    actorClientName: text("actor_client_name"),
     action: text("action").notNull(),
     entity: text("entity").notNull(),
     entityId: text("entity_id").notNull(),
@@ -598,7 +602,11 @@ export const auditLog = sqliteTable(
       .notNull()
       .default(sql`(unixepoch() * 1000)`),
   },
-  (t) => [index("audit_user_idx").on(t.userId, t.createdAt)],
+  (t) => [
+    index("audit_user_idx").on(t.userId, t.createdAt),
+    // Activity reads everything but the grades, which outnumber the rest many times over.
+    index("audit_activity_idx").on(t.userId, t.createdAt).where(sql`entity <> 'review'`),
+  ],
 );
 
 export type Series = typeof series.$inferSelect;

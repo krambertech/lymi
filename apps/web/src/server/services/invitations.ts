@@ -1,6 +1,7 @@
 import type { JoinPreviewOut } from "@lymi/core";
 import { newId } from "@lymi/core";
-import { and, eq, isNull, sql } from "@lymi/core/db";
+import { and, eq, isNull, type SQL, sql } from "@lymi/core/db";
+import { auditStatementWhen } from "../audit";
 import { type Db, schema } from "../db";
 import { type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
@@ -53,7 +54,7 @@ export async function getJoinLink(ctx: ServiceContext, deckId: string) {
  * A link that was turned off is never revived: this makes a new token.
  */
 export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   const deck = await ownedDeck(ctx, deckId);
   if (deck.archivedAt) {
     throw new ServiceError("invalid", "Restore the deck before sharing it");
@@ -68,10 +69,19 @@ export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
       .insert(schema.deckInvitations)
       .values({ id, deckId, kind: "link", token: newJoinToken() })
       .onConflictDoNothing(),
-    db.insert(schema.auditLog).select(
-      sql`select ${newId()}, ${userId}, ${actor}, 'turn_on_join_link', 'deck', ${deckId}, '{}',
-        ${Date.now()}
-      where exists (select 1 from deck_invitations where id = ${id})`,
+    auditStatementWhen(
+      db,
+      {
+        userId,
+        actor,
+        client,
+        clientName,
+        action: "turn_on_join_link",
+        entity: "deck",
+        entityId: deckId,
+      },
+      schema.deckInvitations,
+      eq(schema.deckInvitations.id, id),
     ),
   ]);
   const link = await activeLink(db, deckId);
@@ -81,7 +91,7 @@ export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
 
 /** Turn sharing off for good. Members stay; the URL never works again. Owner only. */
 export async function turnOffJoinLink(ctx: ServiceContext, deckId: string) {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   await ownedDeck(ctx, deckId);
   const now = Date.now();
   // One batch, so a revocation never lands without its audit row.
@@ -96,13 +106,23 @@ export async function turnOffJoinLink(ctx: ServiceContext, deckId: string) {
           isNull(schema.deckInvitations.revokedAt),
         ),
       ),
-    db.insert(schema.auditLog).select(
-      sql`select ${newId()}, ${userId}, ${actor}, 'turn_off_join_link', 'deck', ${deckId}, '{}',
-        ${now}
-      where exists (
-        select 1 from deck_invitations
-        where deck_id = ${deckId} and kind = 'link' and revoked_at = ${now}
-      )`,
+    auditStatementWhen(
+      db,
+      {
+        userId,
+        actor,
+        client,
+        clientName,
+        action: "turn_off_join_link",
+        entity: "deck",
+        entityId: deckId,
+      },
+      schema.deckInvitations,
+      and(
+        eq(schema.deckInvitations.deckId, deckId),
+        eq(schema.deckInvitations.kind, "link"),
+        eq(schema.deckInvitations.revokedAt, new Date(now)),
+      ) as SQL,
     ),
   ]);
   return { ok: true as const };

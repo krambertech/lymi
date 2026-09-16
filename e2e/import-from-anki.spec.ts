@@ -74,8 +74,8 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
       page.locator("main").getByText("Italian / Lesson 1", { exact: true }),
     ).toBeVisible();
     await page.goto("/activity");
-    await expect(page.getByRole("heading", { name: "Imports", exact: true })).toBeVisible();
-    await page.getByRole("link", { name: /current\.apkg/ }).click();
+    await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
+    await page.getByRole("link", { name: /Imported 10 cards from Anki.*current\.apkg/ }).click();
     await expect(
       page.getByRole("heading", { name: "Imported 10 cards", exact: true }),
     ).toBeVisible();

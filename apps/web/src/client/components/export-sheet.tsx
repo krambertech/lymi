@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Download, RotateCcw } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { api, type Export, errorMessage } from "../lib/api";
-import { exportQuery, exportsQuery } from "../lib/queries";
+import { exportQuery } from "../lib/queries";
 import { Button, buttonClass } from "./button";
 import { fileSize } from "./import-parts";
 import { RadioCard } from "./radio-card";
@@ -178,7 +178,8 @@ export function ExportSheet({
       api.startExport(scope.kind === "deck" ? { format, deckId: scope.deckId } : { format }),
     onSuccess: (started) => {
       qc.setQueryData(exportQuery(started.id).queryKey, started);
-      void qc.invalidateQueries({ queryKey: exportsQuery.queryKey });
+      // The export becomes a row on Activity the moment it starts.
+      void qc.invalidateQueries({ queryKey: ["activity"] });
       setExportId(started.id);
     },
   });

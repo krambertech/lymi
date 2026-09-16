@@ -80,7 +80,7 @@ export async function listDecks(
 }
 
 export async function createDeck(ctx: ServiceContext, input: DeckInput) {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   const seriesId = input.seriesId ?? null;
   if (seriesId) await activeSeries(ctx, seriesId);
   const id = newId();
@@ -99,6 +99,8 @@ export async function createDeck(ctx: ServiceContext, input: DeckInput) {
   await audit(db, {
     userId,
     actor,
+    client,
+    clientName,
     action: "create",
     entity: "deck",
     entityId: id,
@@ -154,7 +156,7 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
 export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 
 export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPatch) {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   const deck = await ownedDeck(ctx, id);
   const { reviewModes, seriesId, ...fields } = patch;
   const directions = resolveDeckDirections(patch);
@@ -191,6 +193,8 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
   await audit(db, {
     userId,
     actor,
+    client,
+    clientName,
     action: "update",
     entity: "deck",
     entityId: id,
@@ -208,7 +212,7 @@ export async function restoreDeck(ctx: ServiceContext, id: string) {
 }
 
 async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   await ownedDeck(ctx, id);
   const result = await db
     .update(schema.decks)
@@ -219,6 +223,8 @@ async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date
   await audit(db, {
     userId,
     actor,
+    client,
+    clientName,
     action: archivedAt ? "archive" : "restore",
     entity: "deck",
     entityId: id,

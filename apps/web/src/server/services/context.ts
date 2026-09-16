@@ -10,6 +10,10 @@ export interface ServiceContext {
   db: Db;
   userId: string;
   actor: Actor;
+  /** Which OAuth client or API key is calling, so Activity can name the app that wrote. */
+  client?: string | undefined;
+  /** What that caller is called, kept on the row so a revoked key stays named in the log. */
+  clientName?: string | undefined;
 }
 
 /** A failure the caller turns into an HTTP status or a tool error. */

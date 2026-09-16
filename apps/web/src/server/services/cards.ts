@@ -46,7 +46,7 @@ export async function addCards(
   inputs: CardInput[],
   enrichment?: EnrichmentQueue | null,
 ): Promise<AddCardOutcome[]> {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   if (inputs.length === 0) return [];
 
   const deckIds = [...new Set(inputs.map((i) => i.deckId))];
@@ -162,6 +162,8 @@ export async function addCards(
       auditStatement(db, {
         userId,
         actor,
+        client,
+        clientName,
         action: "create",
         entity: "card",
         entityId: id,
@@ -365,7 +367,7 @@ export async function cardHistory(ctx: ServiceContext, id: string) {
 }
 
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   const current = await ownedCard(ctx, id);
   if (patch.deckId && patch.deckId !== current.deckId) {
     const [deck] = await db
@@ -412,6 +414,8 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       auditStatement(db, {
         userId,
         actor,
+        client,
+        clientName,
         action: "update",
         entity: "card",
         entityId: id,
@@ -432,7 +436,7 @@ export function restoreCard(ctx: ServiceContext, id: string) {
 }
 
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
-  const { db, userId, actor } = ctx;
+  const { db, userId, actor, client, clientName } = ctx;
   await ownedCard(ctx, id);
   const update = db
     .update(schema.cards)
@@ -445,6 +449,8 @@ async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | n
       auditStatement(db, {
         userId,
         actor,
+        client,
+        clientName,
         action: archivedAt ? "archive" : "restore",
         entity: "card",
         entityId: id,

@@ -1,8 +1,9 @@
 import { useLingui } from "@lingui/react/macro";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { mergeActivity } from "../lib/activity-list";
 import { useDocumentTitle } from "../lib/document-title";
-import { exportsQuery, importsQuery } from "../lib/queries";
+import { activityQuery } from "../lib/queries";
 import { ActivityView } from "../views/activity-view";
 
 export const Route = createFileRoute("/activity")({
@@ -12,22 +13,40 @@ export const Route = createFileRoute("/activity")({
 function ActivityRoute() {
   const { t } = useLingui();
   useDocumentTitle(t`Activity`);
-  const imports = useQuery(importsQuery);
-  const exports = useQuery(exportsQuery);
+  const activity = useInfiniteQuery(activityQuery);
+  const entries = activity.data?.pages.flatMap((page) => page.entries);
+
   return (
     <ActivityView
-      imports={imports.data}
-      exports={exports.data}
-      error={imports.isError}
-      onRetry={() => void imports.refetch()}
-      retrying={imports.isFetching}
+      entries={entries && mergeActivity(entries)}
+      today={activity.data?.pages[0]?.today}
+      zone={activity.data?.pages[0]?.zone}
+      error={activity.isError}
+      onRetry={() => void activity.refetch()}
+      retrying={activity.isFetching}
+      hasMore={activity.hasNextPage}
+      loadingMore={activity.isFetchingNextPage}
+      onMore={() => void activity.fetchNextPage()}
+      // The first page failing is the error state; a later one leaves the list and says so.
+      moreFailed={activity.isError && !!entries?.length}
       importLink={(item, className, children) => (
         <Link to="/import/$importId" params={{ importId: item.id }} className={className}>
           {children}
         </Link>
       )}
-      startLink={(className, children) => (
-        <Link to="/settings" hash="import" className={className}>
+      deckLink={(deckId, className, children) => (
+        <Link to="/library/$deckId" params={{ deckId }} className={className}>
+          {children}
+        </Link>
+      )}
+      // A card opens where every card opens: the word in its deck, with its history under it.
+      cardLink={(deckId, cardId, className, children) => (
+        <Link
+          to="/library/$deckId"
+          params={{ deckId }}
+          search={{ card: cardId }}
+          className={className}
+        >
           {children}
         </Link>
       )}

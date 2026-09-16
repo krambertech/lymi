@@ -107,6 +107,14 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     );
   });
 
+  await test.step("the owner's Activity says the link went on and who joined", async () => {
+    await page.goto("/activity");
+    await expect(
+      page.getByRole("link", { name: new RegExp(`Turned on the join link for ${deckName}`) }),
+    ).toBeVisible();
+    await expect(page.getByRole("link", { name: new RegExp(`joined ${deckName}`) })).toBeVisible();
+  });
+
   await test.step("opening the link again changes nothing", async () => {
     await classmate.goto(joinUrl);
     await expect(classmate.getByText("You are already in this deck.")).toBeVisible();

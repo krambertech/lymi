@@ -25,7 +25,7 @@ import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
 import { IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
-import { Chip, StateChip } from "../components/chip";
+import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { ReviewTimeline } from "../components/review-timeline";
@@ -244,7 +244,7 @@ function spanLabel(i18n: I18n, days: number): string {
 /** How many History rows show before "Show older". */
 const HISTORY_ROWS = 8;
 
-/** A field at rest: its label, where its text came from, and the text. */
+/** A field at rest: its label, the badge saying where its text came from, and the text. */
 function ReadField({
   label,
   aside,
@@ -255,6 +255,7 @@ function ReadField({
   children,
 }: {
   label: string;
+  /** The badge saying who wrote the field. */
   aside?: ReactNode | undefined;
   value?: string | undefined;
   empty?: boolean | undefined;
@@ -267,9 +268,10 @@ function ReadField({
 }) {
   return (
     <div className="grid gap-1">
-      <div className="flex items-baseline justify-between gap-3">
+      {/* Centred, not baseline: the badge is a pill, and a pill has no baseline to share. */}
+      <div className="flex min-h-[22px] items-center justify-between gap-3">
         <span className="text-sm font-medium text-text-2">{label}</span>
-        {aside && <span className="text-xs text-muted">{aside}</span>}
+        {aside}
       </div>
       {working ? (
         <div className="grid gap-1.5 py-1">
@@ -444,15 +446,6 @@ export function WordView({
   const waiting = (field: "meaning" | "example" | "pronunciation" | "language") =>
     filling && !card[field];
 
-  const source = (s: Card["meaningSource"]) =>
-    s === "ai"
-      ? t`AI wrote this`
-      : s === "manual"
-        ? t`You wrote this`
-        : s === "lesson"
-          ? t`From the lesson`
-          : undefined;
-
   // A touch screen gets full-size targets; a pointer keeps the header compact.
   const size = useDesktop() ? "sm" : "md";
   const controls = (
@@ -541,7 +534,12 @@ export function WordView({
           )}
         </h1>
         {card.pronunciation ? (
-          <p className="text-md text-muted">{card.pronunciation}</p>
+          <p className="flex flex-wrap items-center gap-2 text-md text-muted">
+            <span className="[overflow-wrap:anywhere]">{card.pronunciation}</span>
+            {card.pronunciationSource && (
+              <SourceChip source={card.pronunciationSource} field="pronunciation" compact />
+            )}
+          </p>
         ) : (
           waiting("pronunciation") && <Skeleton className="my-1 h-3.5 w-28 rounded-sm" />
         )}
@@ -586,7 +584,10 @@ export function WordView({
       <div className="grid gap-4">
         <ReadField
           label={t`Meaning`}
-          aside={card.meaning ? source(card.meaningSource) : undefined}
+          aside={
+            card.meaning &&
+            card.meaningSource && <SourceChip source={card.meaningSource} field="meaning" compact />
+          }
           value={card.meaning || t`No meaning yet`}
           empty={!card.meaning}
           working={waiting("meaning")}
@@ -594,7 +595,12 @@ export function WordView({
         {(card.example || waiting("example")) && (
           <ReadField
             label={t`Example`}
-            aside={card.example ? source(card.exampleSource) : undefined}
+            aside={
+              card.example &&
+              card.exampleSource && (
+                <SourceChip source={card.exampleSource} field="example" compact />
+              )
+            }
             value={card.example ?? ""}
             lang={card.language ?? undefined}
             working={waiting("example")}

@@ -1,3 +1,5 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { FieldSource } from "@lymi/core";
 import { clsx } from "clsx";
@@ -72,53 +74,76 @@ export function StateChip({
   );
 }
 
-const sourceMeta: Record<FieldSource, { icon: typeof Sparkle; tone: ChipTone }> = {
-  lesson: { icon: BookOpen, tone: "default" },
-  ai: { icon: Sparkle, tone: "ai" },
-  manual: { icon: PencilLine, tone: "default" },
+const sourceMeta: Record<
+  FieldSource,
+  { icon: typeof Sparkle; tone: ChipTone; mark: MessageDescriptor }
+> = {
+  lesson: { icon: BookOpen, tone: "default", mark: msg`Lesson` },
+  ai: { icon: Sparkle, tone: "ai", mark: msg`AI` },
+  manual: { icon: PencilLine, tone: "default", mark: msg`You` },
 };
 
-type SourceField = "meaning" | "example";
+type SourceField = "meaning" | "example" | "pronunciation";
+
+// Whole sentences per field, so each language can inflect the field word on its own. `field`
+// is the form for a place that does not name the field next to the chip.
+const sourceLabels: Record<SourceField | "field", Record<FieldSource, MessageDescriptor>> = {
+  field: {
+    lesson: msg`From the lesson`,
+    ai: msg`AI wrote this`,
+    manual: msg`You wrote this`,
+  },
+  meaning: {
+    lesson: msg`Meaning from lesson`,
+    ai: msg`AI meaning`,
+    manual: msg`Meaning by you`,
+  },
+  example: {
+    lesson: msg`Example from lesson`,
+    ai: msg`AI example`,
+    manual: msg`Example by you`,
+  },
+  pronunciation: {
+    lesson: msg`Pronunciation from lesson`,
+    ai: msg`AI pronunciation`,
+    manual: msg`Pronunciation by you`,
+  },
+};
 
 /**
  * Where a field's content came from. AI text is always labelled so it is never mistaken for
  * the lesson. The dashed edge is the "not confirmed" signal, on top of the label.
+ *
+ * `compact` is the badge form: the mark and one word, beside the text it belongs to. It keeps
+ * the whole sentence for a screen reader, because two letters are not a sentence.
  */
 export function SourceChip({
   source,
   field,
+  compact = false,
   size = "sm",
 }: {
   source: FieldSource;
   /** Which field. Shown as "AI meaning". */
   field?: SourceField | undefined;
+  compact?: boolean | undefined;
   size?: "sm" | "md" | undefined;
 }) {
-  const { t } = useLingui();
+  const { i18n } = useLingui();
   const m = sourceMeta[source];
   const Icon = m.icon;
-  // Whole sentences per field, so each language can inflect the field word on its own.
-  const text = !field
-    ? source === "ai"
-      ? t`AI wrote this`
-      : source === "lesson"
-        ? t`From the lesson`
-        : t`You wrote this`
-    : source === "ai"
-      ? field === "meaning"
-        ? t`AI meaning`
-        : t`AI example`
-      : source === "lesson"
-        ? field === "meaning"
-          ? t`Meaning from lesson`
-          : t`Example from lesson`
-        : field === "meaning"
-          ? t`Meaning by you`
-          : t`Example by you`;
+  const label = i18n._(sourceLabels[field ?? "field"][source]);
   return (
-    <Chip tone={m.tone} size={size}>
+    <Chip tone={m.tone} size={compact ? "sm" : size}>
       <Icon className="size-3" aria-hidden="true" />
-      {text}
+      {compact ? (
+        <>
+          <span aria-hidden="true">{i18n._(m.mark)}</span>
+          <span className="sr-only">{label}</span>
+        </>
+      ) : (
+        label
+      )}
     </Chip>
   );
 }

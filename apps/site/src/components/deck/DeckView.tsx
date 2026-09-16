@@ -69,8 +69,14 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
 export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const language = languageName(deck.language, i18n.locale, { label: true });
-  if (!language) return null;
-  return <p className="text-md text-muted">{language}</p>;
+  return (
+    <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-md text-muted">
+      {language && <span>{language}</span>}
+      <span>
+        <Plural value={deck.cardCount} one="# card" other="# cards" />
+      </span>
+    </p>
+  );
 }
 
 /** The last quiet line of the page: how much there is, and when the publisher put it out. */
@@ -86,11 +92,7 @@ function DeckFooterFactsLine({ deck }: { deck: PublicDeckOut }) {
   const date = useDate();
   return (
     <p className="px-5 pb-16 text-center text-sm text-muted @2xl:px-10">
-      <Plural value={deck.cardCount} one="# card" other="# cards" />
-      <span aria-hidden="true" className="mx-2 text-faint">
-        ·
-      </span>
-      <Trans>published {date(deck.publishedAt)}</Trans>
+      <Trans>Published {date(deck.publishedAt)}</Trans>
     </p>
   );
 }

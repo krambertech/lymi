@@ -90,6 +90,34 @@ function Sections(props: Omit<Props, "locale">) {
   const named = steps.filter((step) => step.position !== null);
   const first = named[0]?.name ?? "";
 
+  if (!inOrder) {
+    return (
+      <section
+        id="sections"
+        aria-labelledby="sections-title"
+        className="scroll-mt-6 border-t border-edge px-5 py-10 text-center @2xl:px-10 @4xl:py-14"
+      >
+        <h2 id="sections-title" className="sr-only">
+          <Trans>Every card in the deck</Trans>
+        </h2>
+        <a
+          href={HASH}
+          onClick={(event) => {
+            event.preventDefault();
+            open(event);
+          }}
+          className={buttonClass("secondary", "lg")}
+        >
+          <Plural value={cardCount} one="See the card" other="See all # cards" />
+          <span aria-hidden="true">
+            <ChevronRight className="rtl:rotate-180" />
+          </span>
+        </a>
+        <CardsView {...props} dialogRef={dialog} />
+      </section>
+    );
+  }
+
   return (
     <section
       id="sections"
@@ -102,7 +130,7 @@ function Sections(props: Omit<Props, "locale">) {
             id="sections-title"
             className="min-w-0 text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
           >
-            {inOrder ? <Trans>What’s inside</Trans> : <Trans>Every card in the deck</Trans>}
+            <Trans>What’s inside</Trans>
           </h2>
           <a
             href={HASH}

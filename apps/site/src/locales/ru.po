@@ -1523,8 +1523,8 @@ msgid "Public transport"
 msgstr "Общественный транспорт"
 
 #. placeholder {0}: date(deck.publishedAt)
-msgid "published {0}"
-msgstr "опубликовано {0}"
+msgid "Published {0}"
+msgstr "Опубликовано {0}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push-подписки хранятся, пока ты не отключишь напоминания, push-сервис не сообщит об окончании подписки или аккаунт не будет удалён."

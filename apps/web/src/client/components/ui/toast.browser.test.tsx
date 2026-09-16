@@ -4,6 +4,9 @@ import { render } from "vitest-browser-react";
 import { Toaster, toast } from "./toast";
 
 const region = () => page.getByRole("region", { name: "Notifications" });
+// The toaster runs without a dismiss timer: a toast leaves when a test closes it, and the timing test sets its own on `add`.
+const renderToaster = () =>
+  render(<Toaster label="Notifications" closeLabel="Dismiss" timeout={0} />);
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // The pointer stays wherever an earlier test left it; a stack arriving under it spreads and pauses.
@@ -12,7 +15,7 @@ afterEach(() => toast.close());
 
 describe("toast", () => {
   test("toasts stack up to three, newest in front", async () => {
-    await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+    await renderToaster();
     for (const term of ["uno", "due", "tre", "quattro"]) toast.add({ title: `Archived “${term}”` });
     await expect.element(region().getByText("Archived “quattro”")).toBeVisible();
 
@@ -27,7 +30,7 @@ describe("toast", () => {
   });
 
   test("the stack collapses behind the newest and spreads under the pointer", async () => {
-    await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+    await renderToaster();
     for (const term of ["cinque", "sei", "sette"]) toast.add({ title: `Archived “${term}”` });
     const box = (term: string) =>
       [...document.querySelectorAll('[data-slot="toast"]')]
@@ -52,7 +55,7 @@ describe("toast", () => {
   test.runIf(inject("machine") === "desktop")(
     "a focused button's ring is the room's colour, so it shows on the ink toast",
     async () => {
-      await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+      await renderToaster();
       toast.add({ title: "Archived “uno”", actionProps: { children: "Undo" } });
       const undo = region().getByRole("button", { name: "Undo" });
       await expect.element(undo).toBeVisible();
@@ -77,7 +80,7 @@ describe("toast", () => {
 
   test("its one action runs", async () => {
     const onClick = vi.fn();
-    await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+    await renderToaster();
     toast.add({ title: "Archived “uno”", actionProps: { children: "Undo", onClick } });
 
     await region().getByRole("button", { name: "Undo" }).click();
@@ -85,7 +88,7 @@ describe("toast", () => {
   });
 
   test("it holds while the pointer is on it and leaves after", async () => {
-    await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+    await renderToaster();
     toast.add({ title: "Archived “nove”", timeout: 800 });
     const message = region().getByText("Archived “nove”");
     await expect.element(message).toBeVisible();
@@ -104,7 +107,7 @@ describe("toast", () => {
   });
 
   test("an error is announced at once", async () => {
-    await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+    await renderToaster();
     toast.add({ type: "error", title: "Couldn’t save “uno”." });
 
     await expect.element(page.getByRole("alert")).toHaveTextContent("Couldn’t save “uno”.");
@@ -112,7 +115,7 @@ describe("toast", () => {
 
   test("Escape dismisses it from the keyboard", async () => {
     const onClose = vi.fn();
-    await render(<Toaster label="Notifications" closeLabel="Dismiss" />);
+    await renderToaster();
     toast.add({ title: "Archived “uno”", actionProps: { children: "Undo" }, onClose });
     const undo = region().getByRole("button", { name: "Undo" });
     await expect.element(undo).toBeVisible();

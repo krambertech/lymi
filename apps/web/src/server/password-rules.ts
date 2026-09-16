@@ -48,11 +48,11 @@ function messageFor(problem: PasswordProblem): string {
     case "too-long":
       return "That password is too long.";
     case "too-common":
-      return "That password is one of the first an attacker tries. Choose another.";
+      return "That password is too easy to guess. Try another.";
     case "from-address":
-      return "That password is built from your email address. Choose another.";
+      return "Don’t use your email address in your password.";
     case "from-lymi":
-      return "That password is built from the word Lymi. Choose another.";
+      return "Don’t use “Lymi” in your password.";
   }
 }
 

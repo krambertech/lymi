@@ -82,13 +82,13 @@ function issueFor(code: string | undefined): SignInIssue | null {
   if (!code) return null;
   if (STALE_LINK.has(code)) {
     return {
-      message: msg`That confirmation link no longer works. Sign in to get a new one.`,
+      message: msg`That link no longer works. Sign in to get a new one.`,
       blocked: false,
     };
   }
   if (BLOCKED.has(code) || /not.on.the.list/i.test(code)) {
     return {
-      message: msg`This account has not been invited. Request an invitation, or try another account.`,
+      message: msg`This account hasn’t been invited. Try another, or request access.`,
       blocked: true,
     };
   }
@@ -98,7 +98,7 @@ function issueFor(code: string | undefined): SignInIssue | null {
   // An unknown code is more often a blocked account than a blip, so do not promise a retry
   // will work.
   return {
-    message: msg`Sign-in didn’t finish. Try again. If you haven’t been invited, request an invitation.`,
+    message: msg`Sign-in didn’t finish. Try again, or request access.`,
     blocked: false,
   };
 }
@@ -137,6 +137,8 @@ function Login() {
   const [busy, setBusy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [failed, setFailed] = useState<string | null>(null);
+  /** A Google failure belongs beside the Google button, not with the form. */
+  const [googleFailed, setGoogleFailed] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
@@ -181,6 +183,7 @@ function Login() {
 
   function clearMessages() {
     setFailed(null);
+    setGoogleFailed(null);
     setEmailError(null);
     setPasswordError(null);
   }
@@ -200,9 +203,9 @@ function Login() {
     if (failure?.status === 429) return i18n._(tooManyAttempts(minutesUntilRetry(failure)));
     switch (code) {
       case "INVALID_EMAIL_OR_PASSWORD":
-        return t`That email and password don’t match. Try again, or reset your password.`;
+        return t`That email and password don’t match.`;
       case "EMAIL_NOT_VERIFIED":
-        return t`Confirm your email address first. Check your inbox for the link.`;
+        return t`Confirm your email address first.`;
       case "PASSWORD_TOO_SHORT":
         return i18n._(passwordMessage("too-short"));
       case "PASSWORD_TOO_LONG":
@@ -210,7 +213,7 @@ function Login() {
       case "PASSWORD_TOO_GUESSABLE":
         return i18n._(passwordMessage("too-common"));
       case "INVALID_EMAIL":
-        return t`Enter an email address, such as you@example.com.`;
+        return t`Enter an email address, like you@example.com.`;
       default:
         return t`Couldn’t reach Lymi. Check your connection and try again.`;
     }
@@ -220,12 +223,9 @@ function Login() {
     return {
       title: again ? <Trans>Sent again</Trans> : <Trans>Check your inbox</Trans>,
       body: needsConfirming ? (
-        <Trans>If {address} still needs confirming, a link is on the way. Open it to finish.</Trans>
+        <Trans>Check {address}. If it still needs confirming, a link is on the way.</Trans>
       ) : (
-        <Trans>
-          If {address} can create a Lymi account, a link to confirm it is on the way. Open it to
-          finish.
-        </Trans>
+        <Trans>Check {address}. If it can have a Lymi account, a link is on the way.</Trans>
       ),
       actions: (
         <>
@@ -316,8 +316,7 @@ function Login() {
       title: <Trans>Check your inbox</Trans>,
       body: (
         <Trans>
-          If {address} has a Lymi password, a link to set a new one is on the way. The link works
-          for one hour.
+          Check {address}. If it has a Lymi password, a link is on the way. It works for one hour.
         </Trans>
       ),
       actions: (
@@ -332,7 +331,7 @@ function Login() {
     clearMessages();
     const address = values.email.trim();
     if (!address.includes("@")) {
-      setEmailError(t`Enter an email address, such as you@example.com.`);
+      setEmailError(t`Enter an email address, like you@example.com.`);
       return;
     }
     // Signing in checks nothing: an old password that no longer meets the rule must still
@@ -378,9 +377,10 @@ function Login() {
       emailError={emailError}
       passwordError={passwordError}
       notice={notice ?? undefined}
-      // `failed` is this attempt; `error` on the URL is a callback that came back refused.
-      error={failed ?? (issue ? i18n._(issue.message) : undefined)}
-      blocked={!failed && issue?.blocked}
+      // The door's own failure: a Google attempt, or a callback that came back refused.
+      error={googleFailed ?? (issue ? i18n._(issue.message) : undefined)}
+      formError={failed ?? undefined}
+      blocked={!googleFailed && issue?.blocked}
       onGoogle={async () => {
         setBusy(true);
         clearMessages();
@@ -390,9 +390,11 @@ function Login() {
           // better-auth returns the failure rather than throwing, so a silent `await` here
           // left the button spinning and then stopping with nothing said.
           const res = await signInWithGoogle(returnTo);
-          if (res.error) setFailed(t`Sign-in didn’t finish. Try again.`);
+          if (res.error) setGoogleFailed(t`Sign-in didn’t finish. Try again.`);
         } catch {
-          setFailed(t`Couldn’t reach the sign-in service. Check your connection and try again.`);
+          setGoogleFailed(
+            t`Couldn’t reach the sign-in service. Check your connection and try again.`,
+          );
         } finally {
           setBusy(false);
         }

@@ -126,9 +126,7 @@ function compose(
         subject: i18n._(msg`Confirm your email address`),
         blocks: [
           hello,
-          i18n._(
-            msg`Open this link to confirm your address and finish creating your Lymi account:`,
-          ),
+          i18n._(msg`Confirm your address to finish creating your Lymi account:`),
           { link: required(params.url, kind) },
           i18n._(
             msg`The link works for 24 hours. If you didn’t create a Lymi account, ignore this email.`,
@@ -141,7 +139,7 @@ function compose(
         subject: i18n._(msg`Reset your Lymi password`),
         blocks: [
           hello,
-          i18n._(msg`Open this link to set a new password for your Lymi account:`),
+          i18n._(msg`Set a new password for your Lymi account:`),
           { link: required(params.url, kind) },
           i18n._(
             msg`The link works for one hour. If you didn’t ask for a new password, ignore this email. Nothing has changed.`,
@@ -155,9 +153,9 @@ function compose(
         blocks: [
           hello,
           i18n._(
-            msg`Someone tried to create a Lymi account with this address. You already have one, so nothing was created.`,
+            msg`Someone tried to create a Lymi account with this address. You already have one, so nothing changed.`,
           ),
-          i18n._(msg`Sign in here, and ask for a new password if you have forgotten yours:`),
+          i18n._(msg`Sign in here. You can ask for a new password on that page:`),
           { link: required(params.url, kind) },
           signature,
         ],
@@ -181,7 +179,7 @@ function compose(
         blocks: [
           hello,
           i18n._(
-            msg`Someone tried to create a Lymi account with this address and a password. This address signs in with Google, so nothing was created.`,
+            msg`Someone tried to create a Lymi account with this address and a password. This address signs in with Google, so nothing changed.`,
           ),
           i18n._(msg`Continue with Google here:`),
           { link: required(params.url, kind) },

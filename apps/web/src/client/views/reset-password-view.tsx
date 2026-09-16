@@ -56,11 +56,11 @@ export function ResetPasswordView({
           {/* The form's instruction is wrong once there is no form, so each state says its own. */}
           <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
             {done ? (
-              <Trans>Every other device signed in with the old one has been signed out.</Trans>
+              <Trans>We signed out your other devices.</Trans>
             ) : expired ? (
-              <Trans>A reset link works for one hour, and only once.</Trans>
+              <Trans>A reset link works once, within an hour.</Trans>
             ) : (
-              <Trans>Choose one you haven’t used on Lymi before.</Trans>
+              <Trans>You’ll sign in with this from now on.</Trans>
             )}
           </p>
         </div>
@@ -119,10 +119,7 @@ export function ResetPasswordView({
               ) : (
                 !password && (
                   <FieldDescription>
-                    <Trans>
-                      At least {MIN_PASSWORD_LENGTH} characters. A few plain words beat one clever
-                      one.
-                    </Trans>
+                    <Trans>At least {MIN_PASSWORD_LENGTH} characters.</Trans>
                   </FieldDescription>
                 )
               )}

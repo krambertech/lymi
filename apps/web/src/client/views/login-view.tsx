@@ -5,6 +5,7 @@ import { type AppIdentity, AppMark } from "../components/app-mark";
 import { AuthFrame } from "../components/auth-frame";
 import { AuthNotice } from "../components/auth-notice";
 import { Button } from "../components/button";
+import { GoogleMark } from "../components/google-mark";
 import { PasswordField } from "../components/password-field";
 import {
   Field,
@@ -43,8 +44,10 @@ export interface LoginProps {
    * who is waiting on the other side, so the consent screen is not the first mention of it.
    */
   app?: AppIdentity | undefined;
-  /** Shown in place of the fine print when sign-in fails. */
+  /** A failure of the door itself, such as a Google callback that came back refused. */
   error?: ReactNode | undefined;
+  /** A failure of the form below the rule. It sits with the fields, not with Google. */
+  formError?: ReactNode | undefined;
   /** A valid account that simply has no invitation. This is a path, not a failure. */
   blocked?: boolean | undefined;
   /** The message under the email box, such as an address that is not an address. */
@@ -70,6 +73,7 @@ export function LoginView({
   submitting,
   app,
   error,
+  formError,
   blocked = false,
   emailError,
   passwordError,
@@ -117,7 +121,7 @@ export function LoginView({
             </h1>
             <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
               {mode === "forgot" ? (
-                <Trans>We’ll send a link to set a new one.</Trans>
+                <Trans>We’ll email you a link to set a new one.</Trans>
               ) : mode === "sign-up" ? (
                 <Trans>Use the email address that received your invitation.</Trans>
               ) : (
@@ -151,12 +155,15 @@ export function LoginView({
             {mode !== "forgot" && (
               <>
                 <Button
-                  variant="primary"
+                  variant="secondary"
                   size="lg"
                   loading={busy}
                   onClick={onGoogle}
-                  className="mt-7 w-full"
+                  // A stronger edge than the usual secondary: this is the way in most learners
+                  // take, and the one amber belongs to the form they are filling.
+                  className="mt-7 w-full edge-2 font-medium"
                 >
+                  <GoogleMark className="size-5" />
                   <Trans>Continue with Google</Trans>
                 </Button>
                 <div
@@ -169,6 +176,11 @@ export function LoginView({
             )}
 
             <form onSubmit={submit} noValidate className={mode === "forgot" ? "mt-7" : undefined}>
+              {formError && (
+                <AuthNotice role="alert" tone="danger" className="mb-5">
+                  {formError}
+                </AuthNotice>
+              )}
               <FieldGroup>
                 <Field>
                   <FieldLabel>
@@ -201,10 +213,7 @@ export function LoginView({
                     {passwordError && <FieldError>{passwordError}</FieldError>}
                     {mode === "sign-up" && !passwordError && !password && (
                       <FieldDescription>
-                        <Trans>
-                          At least {MIN_PASSWORD_LENGTH} characters. A few plain words beat one
-                          clever one.
-                        </Trans>
+                        <Trans>At least {MIN_PASSWORD_LENGTH} characters.</Trans>
                       </FieldDescription>
                     )}
                     {mode === "sign-in" && (
@@ -224,7 +233,7 @@ export function LoginView({
                 type="submit"
                 // Google is the panel's one primary wherever it appears, so the form submits
                 // beside it rather than against it. Resetting a password has no Google button.
-                variant={mode === "forgot" ? "primary" : "secondary"}
+                variant="primary"
                 size="lg"
                 loading={submitting}
                 className="mt-6 w-full"
@@ -268,11 +277,7 @@ export function LoginView({
 function AccessNote({ blocked }: { blocked: boolean }) {
   return (
     <p className="mt-6 text-center text-sm text-muted">
-      {blocked ? (
-        <Trans>Still need an invitation?</Trans>
-      ) : (
-        <Trans>Lymi is in a private beta.</Trans>
-      )}{" "}
+      {blocked ? <Trans>Still need access?</Trans> : <Trans>Lymi is in a private beta.</Trans>}{" "}
       <a
         href={publicSiteUrl("/join")}
         className="rounded-sm text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"

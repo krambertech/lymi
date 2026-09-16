@@ -10,10 +10,10 @@ export function passwordMessage(problem: PasswordProblem): MessageDescriptor {
     case "too-long":
       return msg`That password is too long.`;
     case "too-common":
-      return msg`That password is one of the first an attacker tries. Choose another.`;
+      return msg`That password is too easy to guess. Try another.`;
     case "from-address":
-      return msg`That password is built from your email address. Choose another.`;
+      return msg`Don’t use your email address in your password.`;
     case "from-lymi":
-      return msg`That password is built from the word Lymi. Choose another.`;
+      return msg`Don’t use “Lymi” in your password.`;
   }
 }

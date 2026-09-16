@@ -16,7 +16,14 @@ const MAX_AGE_SECONDS = 60 * 60 * 25;
 /** A published deck's slug is stored after this prefix; a bare value is a join link token. */
 const PUBLICATION_PREFIX = "p.";
 
-export type Admission = { kind: "link"; token: string } | { kind: "publication"; slug: string };
+export type Admission =
+  | { kind: "link"; token: string }
+  | {
+      kind: "publication";
+      slug: string;
+      /** The edition the visitor chose before signing in. A slug holds no dot, so this parses. */
+      meaningLanguage?: string | undefined;
+    };
 
 export function cookieName(productUrl: string): string {
   return isLoopbackUrl(productUrl) ? `${cookiePrefix(productUrl)}-join` : "__Host-lymi-join";
@@ -38,8 +45,13 @@ export function joinCookie(productUrl: string, token: string): string {
   });
 }
 
-export function addCookie(productUrl: string, slug: string): string {
-  return joinCookie(productUrl, `${PUBLICATION_PREFIX}${slug}`);
+export function addCookie(
+  productUrl: string,
+  slug: string,
+  meaningLanguage?: string | undefined,
+): string {
+  const value = meaningLanguage ? `${slug}.${meaningLanguage}` : slug;
+  return joinCookie(productUrl, `${PUBLICATION_PREFIX}${value}`);
 }
 
 export function clearedJoinCookie(productUrl: string): string {
@@ -51,7 +63,7 @@ export function admissionFrom(productUrl: string, headers: Headers | undefined):
   if (!header) return null;
   const value = parse(header, cookieName(productUrl))[cookieName(productUrl)];
   if (!value) return null;
-  return value.startsWith(PUBLICATION_PREFIX)
-    ? { kind: "publication", slug: value.slice(PUBLICATION_PREFIX.length) }
-    : { kind: "link", token: value };
+  if (!value.startsWith(PUBLICATION_PREFIX)) return { kind: "link", token: value };
+  const [slug, meaningLanguage] = value.slice(PUBLICATION_PREFIX.length).split(".");
+  return { kind: "publication", slug: slug ?? "", meaningLanguage };
 }

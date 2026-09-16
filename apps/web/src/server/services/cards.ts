@@ -4,13 +4,14 @@ import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { auditStatement } from "../audit";
-import { type Db, schema } from "../db";
-import { selectIn } from "./batch";
-import { type CardView, presentCard, presentCards } from "./card-view";
+import { schema } from "../db";
+import { runInBatches, type Statement, selectIn } from "./batch";
+import { type CardView, editionText, inEdition, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { type EnrichmentQueue, failEnrichment, needsEnrichment } from "./enrichment";
 import { memberOf } from "./members";
 import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
+import { bumped } from "./revisions";
 import { activeSectionOf } from "./sections";
 
 /**
@@ -150,6 +151,7 @@ export async function addCards(
       archivedAt: null,
       createdAt: now,
       updatedAt: now,
+      revision: 1,
     };
     if (enrichment && needsEnrichment(card)) {
       card.enrichmentStatus = "working";
@@ -195,6 +197,7 @@ export async function addCards(
   const views = await presentCards(
     db,
     outcomes.map((o) => (o.status === "added" ? o.card : o.existing)),
+    userId,
   );
   return outcomes.map((outcome, index) => {
     const card = views[index] as CardView;
@@ -205,26 +208,6 @@ export async function addCards(
 type RawOutcome =
   | { status: "added"; card: Card }
   | { status: "skipped"; term: string; existing: Card; deckName: string };
-
-type Statement = Parameters<Db["batch"]>[0][number];
-
-/**
- * D1 caps a batch. Whole groups go into a batch, up to about fifty statements, so a card,
- * its live membership fan-out, and its audit row always land together.
- */
-async function runInBatches(db: Db, groups: Statement[][]) {
-  let batch: Statement[] = [];
-  const flush = async () => {
-    const [first, ...rest] = batch;
-    if (first) await db.batch([first, ...rest]);
-    batch = [];
-  };
-  for (const group of groups) {
-    if (batch.length > 0 && batch.length + group.length > 50) await flush();
-    batch.push(...group);
-  }
-  await flush();
-}
 
 /** A card with no language only matches other cards with no language. */
 function dupKey(language: string | null, normalizedTerm: string): string {
@@ -267,12 +250,24 @@ export async function searchCards({ db, userId }: ServiceContext, search: CardSe
     )
     .orderBy(search.archived ? desc(schema.cards.archivedAt) : desc(schema.cards.createdAt))
     .limit(needle ? SEARCH_SCAN_LIMIT : limit);
+  // Matched against the edition the learner reads the deck in, so a search finds the words on
+  // their screen. A learner who pinned none pays one indexed lookup that returns nothing.
+  const editions = needle
+    ? await editionText(
+        db,
+        userId,
+        rows.map((row) => row.card),
+      )
+    : new Map();
   const matched = needle
-    ? rows.filter((row) => matchesSearch(row.card, needle)).slice(0, limit)
+    ? rows
+        .filter((row) => matchesSearch(inEdition(row.card, editions.get(row.card.id)), needle))
+        .slice(0, limit)
     : rows;
   const cards = await presentCards(
     db,
     matched.map((row) => row.card),
+    userId,
   );
   return matched.map((row, index) => ({ card: cards[index] as CardView, deckName: row.deckName }));
 }
@@ -311,7 +306,7 @@ export async function getCard({ db, userId }: ServiceContext, id: string) {
 
 /** A card with its review modes, for callers outside the server. */
 export async function showCard(ctx: ServiceContext, id: string): Promise<CardView> {
-  return presentCard(ctx.db, await getCard(ctx, id));
+  return presentCard(ctx.db, await getCard(ctx, id), ctx.userId);
 }
 
 /** The card, or forbidden when the learner can see it but does not own it. */
@@ -402,6 +397,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       ...fields,
       ...(modes ?? {}),
       ...section,
+      ...bumped("card", patch, current),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
       updatedAt: new Date(),

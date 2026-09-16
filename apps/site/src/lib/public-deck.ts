@@ -18,15 +18,16 @@ export type DeckPage =
 const catalogDb = () => drizzle(env.DB);
 
 /**
- * Loads the deck and sets the response's status and cache headers. Nothing here reads a cookie
- * or a session, so one cached copy is right for every visitor. ADR 0016.
+ * Loads the deck and sets the response's status and cache headers. The page's locale picks the
+ * meaning-language edition, falling back to the original where the deck has no published one.
+ * Nothing here reads a cookie or a session, so one cached copy is right for every visitor. ADR 0016.
  */
 export async function resolveDeckPage(
   astro: AstroGlobal,
   locale: Locale,
 ): Promise<DeckPage | Response> {
   const slug = astro.params.slug ?? "";
-  const result = await loadPublicDeck(catalogDb(), slug);
+  const result = await loadPublicDeck(catalogDb(), slug, locale);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
   if (result.status !== "published") {

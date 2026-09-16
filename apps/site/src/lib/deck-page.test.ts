@@ -23,6 +23,8 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   level: "A1",
   language: "et",
   meaningLanguage: "en",
+  originalMeaningLanguage: "en",
+  editions: ["en"],
   publisher: "Lymi",
   sources: [{ title: "Keeleklikk", url: "https://www.keeleklikk.ee/" }, { title: "A teacher" }],
   reviewedAt: null,

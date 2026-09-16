@@ -289,7 +289,7 @@ export function createAuth(
             const ctx = { db, userId: session.userId, actor: "user" as const };
             try {
               if (admission.kind === "link") await joinThroughLink(ctx, admission.token);
-              else await addPublishedDeck(ctx, admission.slug);
+              else await addPublishedDeck(ctx, admission.slug, admission.meaningLanguage);
             } catch (err) {
               if (!(err instanceof ServiceError)) console.error("Joining after sign-in failed");
             }

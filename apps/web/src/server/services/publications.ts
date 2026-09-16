@@ -5,24 +5,12 @@ import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
 import { type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
+import { addableEditions } from "./editions";
 import { join, ownedDeck } from "./members";
+import { assertPublisher } from "./publishers";
 
 export function isPublicationSlug(value: string | undefined | null): value is string {
   return typeof value === "string" && value.length <= 80 && PUBLICATION_SLUG.test(value);
-}
-
-/**
- * Only first-party publishers may publish while the catalog is curated. The list is the
- * `PUBLISHER_EMAILS` variable; the publisher must also own the deck. ADR 0015.
- */
-async function assertPublisher(ctx: ServiceContext, publishers: Set<string>) {
-  const [row] = await ctx.db
-    .select({ email: schema.user.email })
-    .from(schema.user)
-    .where(eq(schema.user.id, ctx.userId));
-  if (!row || !publishers.has(row.email.toLowerCase())) {
-    throw new ServiceError("forbidden", "Only Lymi's publishers can publish a deck");
-  }
 }
 
 async function publicationOf(db: Db, deckId: string) {
@@ -45,6 +33,7 @@ export function publicationOut(
       summary: row.summary,
       level: row.level,
       meaningLanguage: row.meaningLanguage,
+      editionFields: row.editionFields,
       publisher: row.publisher,
       sources: row.sources,
       reviewedAt: row.reviewedAt?.toISOString() ?? null,
@@ -89,22 +78,40 @@ export async function publishDeck(
   if (taken && taken.deckId !== deckId) {
     throw new ServiceError("conflict", "Another deck already uses this slug");
   }
+  // The original is the deck's own words, so it can never also be one of its editions.
+  const [clash] = await db
+    .select({ id: schema.deckEditions.id })
+    .from(schema.deckEditions)
+    .where(
+      and(
+        eq(schema.deckEditions.deckId, deckId),
+        eq(schema.deckEditions.language, input.meaningLanguage),
+      ),
+    );
+  if (clash) {
+    throw new ServiceError("conflict", "The deck already has an edition in that language");
+  }
 
   const now = new Date();
+  const existing = await publicationOf(db, deckId);
   const fields = {
     slug: input.slug,
     status: "published" as const,
     summary: input.summary,
     level: input.level ?? null,
     meaningLanguage: input.meaningLanguage,
+    // Left out, the choice stands: shrinking it silently would make a half-written edition
+    // read as complete, and publishing it would put untranslated cards in front of a learner.
+    editionFields: input.editionFields ?? existing?.editionFields ?? ["meaning" as const],
     publisher: input.publisher,
     sources: input.sources,
     reviewedAt: input.reviewedAt ? new Date(input.reviewedAt) : null,
     withdrawnAt: null,
     updatedAt: now,
   };
-  const existing = await publicationOf(db, deckId);
   const revision = (existing?.revision ?? 0) + 1;
+  // The summary is text an edition translates, so a new one makes every edition of it stale.
+  const summaryChanged = existing ? existing.summary !== input.summary : false;
   try {
     await db.batch([
       db
@@ -120,6 +127,14 @@ export async function publishDeck(
               then ${now.getTime()} else ${schema.deckPublications.publishedAt} end`,
           },
         }),
+      ...(summaryChanged
+        ? [
+            db
+              .update(schema.decks)
+              .set({ revision: sql`revision + 1`, updatedAt: now })
+              .where(eq(schema.decks.id, deckId)),
+          ]
+        : []),
       auditStatement(db, {
         userId,
         actor,
@@ -180,6 +195,7 @@ async function publicationBySlug(db: Db, slug: string) {
       deckLanguage: schema.decks.defaultLanguage,
       deckArchivedAt: schema.decks.archivedAt,
       ownerId: schema.decks.userId,
+      meaningLanguage: schema.deckPublications.meaningLanguage,
     })
     .from(schema.deckPublications)
     .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
@@ -208,18 +224,40 @@ export async function previewPublication(
     shownOwner: publication.publisher,
     archivedAt: publication.deckArchivedAt,
   };
-  return previewDoor(db, deck, publication?.status === "withdrawn", viewerId);
+  const preview = await previewDoor(db, deck, publication?.status === "withdrawn", viewerId);
+  if (!publication || preview.status !== "live") return preview;
+  return {
+    ...preview,
+    editions: await addableEditions(db, publication.deckId, publication.meaningLanguage),
+  };
 }
 
 /**
- * Add a published deck to the learner's Library. Repeats are safe; a learner the owner removed
- * is refused, and a withdrawn or archived deck admits nobody.
+ * Add a published deck to the learner's Library, in the edition the visitor chose. The edition is
+ * pinned on the membership and never moves again, whatever the app language does. ADR 0015.
+ * Repeats are safe; a learner the owner removed is refused, and a withdrawn deck admits nobody.
  */
-export async function addPublishedDeck(ctx: ServiceContext, slug: string) {
+export async function addPublishedDeck(
+  ctx: ServiceContext,
+  slug: string,
+  meaningLanguage?: string | undefined,
+) {
   const publication = await publicationBySlug(ctx.db, slug);
   if (!publication || publication.status !== "published" || publication.deckArchivedAt) {
     throw new ServiceError("not_found", "This deck is not published");
   }
-  const { role } = await join(ctx, publication.deckId, { publicationId: publication.id });
+  const editions = await addableEditions(ctx.db, publication.deckId, publication.meaningLanguage);
+  if (meaningLanguage && !editions.includes(meaningLanguage)) {
+    throw new ServiceError("invalid", "This deck is not published in that language");
+  }
+  // The original edition is the deck's own words, so it pins nothing.
+  const pinned =
+    meaningLanguage && meaningLanguage !== publication.meaningLanguage
+      ? meaningLanguage
+      : undefined;
+  const { role } = await join(ctx, publication.deckId, {
+    publicationId: publication.id,
+    meaningLanguage: pinned,
+  });
   return { deckId: publication.deckId, role };
 }

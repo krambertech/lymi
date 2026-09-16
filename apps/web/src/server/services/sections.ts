@@ -133,9 +133,18 @@ export async function listSections(
 ) {
   const { db } = ctx;
   const deck = await deckAccess(ctx, deckId);
-  const rows = await db
+  const found = await db
     .select()
     .from(schema.sections)
+    .leftJoin(
+      schema.sectionLocalizations,
+      and(
+        eq(schema.sectionLocalizations.sectionId, schema.sections.id),
+        // A binding, not a column: the caller's pinned edition, or nothing when they pinned none.
+        eq(schema.sectionLocalizations.language, deck.meaningLanguage ?? ""),
+        eq(schema.sectionLocalizations.status, "approved"),
+      ),
+    )
     .where(
       and(
         eq(schema.sections.deckId, deckId),
@@ -143,6 +152,10 @@ export async function listSections(
       ),
     )
     .orderBy(...sectionOrder);
+  const rows = found.map(({ sections: section, section_localizations: text }) => {
+    const { revision: _revision, ...rest } = section;
+    return { ...rest, name: text?.name ?? section.name };
+  });
 
   if (opts.archived) {
     const withCards = await db
@@ -298,7 +311,8 @@ export async function renameSection(ctx: ServiceContext, id: string, name: strin
     await runBatch(db, [
       db
         .update(schema.sections)
-        .set({ name, updatedAt: new Date() })
+        // A rename is text an edition translates, so every edition of it goes stale.
+        .set({ name, revision: sql`revision + 1`, updatedAt: new Date() })
         .where(eq(schema.sections.id, id)),
       auditStatement(db, {
         userId,

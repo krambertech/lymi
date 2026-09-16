@@ -14,6 +14,7 @@ import {
   resolveDeckDirections,
   stateStatementsForDeck,
 } from "./modes";
+import { bumped } from "./revisions";
 import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
 import { getSettings } from "./settings";
 
@@ -47,6 +48,9 @@ export async function listDecks(
       ownerId: schema.decks.userId,
       ownerName: schema.user.name,
       memberRole: schema.deckMembers.role,
+      meaningLanguage: schema.deckMembers.meaningLanguage,
+      editionName: schema.deckLocalizations.name,
+      editionDescription: schema.deckLocalizations.description,
     })
     .from(schema.decks)
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
@@ -56,6 +60,15 @@ export async function listDecks(
         eq(schema.deckMembers.deckId, schema.decks.id),
         eq(schema.deckMembers.userId, userId),
         isNull(schema.deckMembers.removedAt),
+      ),
+    )
+    // The deck's text in the edition this learner pinned, if any. ADR 0015.
+    .leftJoin(
+      schema.deckLocalizations,
+      and(
+        eq(schema.deckLocalizations.deckId, schema.decks.id),
+        eq(schema.deckLocalizations.language, schema.deckMembers.meaningLanguage),
+        eq(schema.deckLocalizations.status, "approved"),
       ),
     )
     .where(
@@ -69,14 +82,18 @@ export async function listDecks(
         ? [desc(schema.decks.archivedAt), desc(schema.decks.createdAt)]
         : [deckOrder(userId), asc(schema.decks.createdAt)]),
     );
-  return rows.map(({ ownerId, ownerName, memberRole, ...deck }) => ({
-    ...deck,
-    reviewModes: deckModes(deck.directions),
-    // Cards, not direction states: the same count the queue reports as its total.
-    due: due.get(deck.id) ?? 0,
-    role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
-    owner: { id: ownerId, name: ownerName },
-  }));
+  return rows.map(
+    ({ ownerId, ownerName, memberRole, editionName, editionDescription, ...deck }) => ({
+      ...deck,
+      name: editionName ?? deck.name,
+      description: editionDescription ?? deck.description,
+      reviewModes: deckModes(deck.directions),
+      // Cards, not direction states: the same count the queue reports as its total.
+      due: due.get(deck.id) ?? 0,
+      role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
+      owner: { id: ownerId, name: ownerName },
+    }),
+  );
 }
 
 export async function createDeck(ctx: ServiceContext, input: DeckInput) {
@@ -146,6 +163,7 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
   const cards = await presentCards(
     db,
     rows.map((row) => row.card),
+    userId,
   );
   return rows.map(({ state }, index) => ({
     card: cards[index] as CardView,
@@ -160,9 +178,14 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
   const deck = await ownedDeck(ctx, id);
   const { reviewModes, seriesId, ...fields } = patch;
   const directions = resolveDeckDirections(patch);
-  // Compared with the stored series, so clearing one that is archived still takes the deck out of it.
+  // The stored row, not the view: the series so clearing an archived one still takes the deck
+  // out of it, and the text so an edition goes stale against the deck's own words.
   const [stored] = await db
-    .select({ seriesId: schema.decks.seriesId })
+    .select({
+      seriesId: schema.decks.seriesId,
+      name: schema.decks.name,
+      description: schema.decks.description,
+    })
     .from(schema.decks)
     .where(eq(schema.decks.id, deck.id));
   // A series to move into must be active, even the one the deck is already in.
@@ -180,6 +203,7 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
       ...fields,
       ...placement,
       ...(directions ? { directions } : {}),
+      ...bumped("deck", fields, stored ?? {}),
       updatedAt: new Date(),
     })
     .where(eq(schema.decks.id, id))

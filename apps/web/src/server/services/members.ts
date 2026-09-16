@@ -40,6 +40,9 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
       memberRole: schema.deckMembers.role,
       seriesId: effectiveSeriesId(userId),
       position: deckOrder(userId),
+      editionName: schema.deckLocalizations.name,
+      editionDescription: schema.deckLocalizations.description,
+      meaningLanguage: schema.deckMembers.meaningLanguage,
     })
     .from(schema.decks)
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
@@ -51,11 +54,24 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
         isNull(schema.deckMembers.removedAt),
       ),
     )
+    .leftJoin(
+      schema.deckLocalizations,
+      and(
+        eq(schema.deckLocalizations.deckId, schema.decks.id),
+        eq(schema.deckLocalizations.language, schema.deckMembers.meaningLanguage),
+        eq(schema.deckLocalizations.status, "approved"),
+      ),
+    )
     .where(and(eq(schema.decks.id, deckId), memberOf(userId)));
   if (!row) throw notFound("Deck");
   const role: MemberRole = row.deck.userId === userId ? "owner" : (row.memberRole ?? "learner");
+  const { revision: _revision, ...deck } = row.deck;
   return {
-    ...row.deck,
+    ...deck,
+    name: row.editionName ?? deck.name,
+    description: row.editionDescription ?? deck.description,
+    // The edition this caller reads the deck in, or null for the deck's own words.
+    meaningLanguage: row.meaningLanguage,
     seriesId: row.seriesId,
     position: row.position,
     reviewModes: deckModes(row.deck.directions),
@@ -81,7 +97,12 @@ export async function ownedDeck(ctx: ServiceContext, deckId: string) {
 export async function join(
   { db, userId, actor, client, clientName }: ServiceContext,
   deckId: string,
-  opts: { invitationId?: string | undefined; publicationId?: string | undefined } = {},
+  opts: {
+    invitationId?: string | undefined;
+    publicationId?: string | undefined;
+    /** The edition being added. Pinned on the membership and never moved again. ADR 0015. */
+    meaningLanguage?: string | undefined;
+  } = {},
 ) {
   const [deck] = await db
     .select({ id: schema.decks.id, userId: schema.decks.userId })
@@ -130,6 +151,8 @@ export async function join(
           removedBy: null,
           joinedAt: now,
           invitationId: opts.invitationId ?? existing.invitationId,
+          // Rejoining keeps the edition pinned the first time; it is never re-chosen.
+          meaningLanguage: existing.meaningLanguage ?? opts.meaningLanguage ?? null,
           updatedAt: now,
         })
         .where(
@@ -143,8 +166,9 @@ export async function join(
     : db
         .insert(schema.deckMembers)
         .select(
+          // Positional, so the columns are the table's own order; `meaning_language` came last.
           sql`select ${membershipId}, ${deckId}, ${userId}, 'learner', ${opts.invitationId ?? null},
-            ${at}, null, null, ${at}, ${at}
+            ${at}, null, null, ${at}, ${at}, ${opts.meaningLanguage ?? null}
           where ${admitted}`,
         )
         .onConflictDoNothing({ target: [schema.deckMembers.deckId, schema.deckMembers.userId] });

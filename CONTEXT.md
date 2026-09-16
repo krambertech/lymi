@@ -24,7 +24,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **App language**: The language the interface and reminders are written in. A per-learner setting, taken from the browser on first sign-in and changeable in Settings. Meanings follow it. _Avoid_: Locale, UI language, interface language (in copy)
 
-**Meaning language**: The language meanings are written in. Follows the app language and is not shown as its own setting. Independent of any card's language. _Avoid_: Native language, mother tongue, L1, base language
+**Meaning language**: The language meanings are written in. Follows the app language and is not shown as its own setting. Independent of any card's language. The one exception is a published deck added in a chosen edition, which stays in that language whatever the app language becomes. _Avoid_: Native language, mother tongue, L1, base language
 
 **Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Adding one is skipped, never rejected, and the caller is told which card already exists.
 
@@ -91,6 +91,10 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 **Join link**: A deck's one shareable link. Anyone who opens it can join. The owner can turn it off. _Avoid_: Share link, invite link, public link
 
 **Published deck**: A shared deck anyone can add from its public page, without a link from the owner. Only Lymi's publishers publish. Withdrawing it stops new adds; members keep studying. Its add page says **Add to Lymi**. ADR 0020. _Avoid_: Public deck (in copy), catalog deck, template, marketplace
+
+**Edition**: One meaning-language version of a published deck. The deck's own fields are its original edition, and every further edition is a localization of the meaning side. All editions share the same terms, ordering, pictures, sources and review modes, so they are one deck rather than translated copies. A learner picks an edition when they add the deck and keeps it; changing the app language never moves it. ADR 0015. _Avoid_: Translation, version, variant, locale, copy
+
+**Localization**: The text of one series, deck, section or card in one edition, with who wrote it, whether a person has signed it off, and the revision of the original it was written from. Only signed-off text reaches a reader. Text written before the original changed is **stale**, and an edition that is stale or unfinished cannot be published. _Avoid_: Translation row, string, i18n, override
 
 **Invitation**: A deck's welcome to one email address. Accepting it, or joining through the join link, creates the account if there is none. _Avoid_: Invite (as a noun), request, seat
 

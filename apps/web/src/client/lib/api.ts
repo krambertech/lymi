@@ -50,13 +50,15 @@ import type {
 import type {
   Card as CardRow,
   CardState as CardStateRow,
-  Deck,
+  Deck as DeckRow,
   Review as ReviewRow,
 } from "@lymi/core/schema";
 
 export type CardImage = CardImageOut;
+/** A deck as the API sends it. `revision` is the server's own bookkeeping for editions. */
+export type Deck = Omit<DeckRow, "revision">;
 /** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
-export type Card = Omit<CardRow, "reviewModeKeys"> & {
+export type Card = Omit<CardRow, "reviewModeKeys" | "revision"> & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;
 };
@@ -69,6 +71,11 @@ export type Review = Omit<ReviewRow, "mode" | "direction"> & {
   mode: ReviewMode;
   direction: Direction | null;
 };
+
+/** The chosen edition as a query string, or nothing at all for the deck's own words. */
+function edition(meaningLanguage: string | undefined): string {
+  return meaningLanguage ? `?${new URLSearchParams({ meaningLanguage })}` : "";
+}
 
 /** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {
@@ -358,10 +365,18 @@ export const api = {
     request<JoinOut>(`/api/join/${encodeURIComponent(token)}`, { method: "POST" }),
   addPreview: (slug: string) => request<JoinPreviewOut>(`/api/add/${encodeURIComponent(slug)}`),
   /** Holds the published deck in a short-lived cookie so the sign-in that follows adds it. */
-  holdPublishedDeck: (slug: string) =>
-    request<{ ok: true }>(`/api/add/${encodeURIComponent(slug)}/sign-in`, { method: "POST" }),
-  addPublishedDeck: (slug: string) =>
-    request<JoinOut>(`/api/add/${encodeURIComponent(slug)}`, { method: "POST" }),
+  holdPublishedDeck: (slug: string, meaningLanguage?: string) =>
+    request<{ ok: true }>(
+      `/api/add/${encodeURIComponent(slug)}/sign-in${edition(meaningLanguage)}`,
+      {
+        method: "POST",
+      },
+    ),
+  /** The edition is pinned on the membership; changing the app language never moves it. */
+  addPublishedDeck: (slug: string, meaningLanguage?: string) =>
+    request<JoinOut>(`/api/add/${encodeURIComponent(slug)}${edition(meaningLanguage)}`, {
+      method: "POST",
+    }),
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>

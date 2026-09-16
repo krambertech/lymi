@@ -8,7 +8,7 @@ import PublicNav from "../islands/PublicNav";
 import DeckSections from "../islands/DeckSections";
 import DeckStack from "../islands/DeckStack";
 import { deckDescription, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks } from "./DeckView";
+import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, editionOf } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -22,6 +22,7 @@ const paths = deckPaths(slug);
 const deck = page.status === 200 ? page.deck : null;
 const path = deck ? sectionPath(deck) : null;
 const stack = deck ? stackCards(deck) : [];
+const edition = deck ? editionOf(deck) : undefined;
 ---
 
 {
@@ -52,7 +53,7 @@ const stack = deck ? stackCards(deck) : [];
               termLanguage={page.deck.language}
               meaningLanguage={page.deck.meaningLanguage}
               cardCount={page.deck.cardCount}
-              addUrl={addUrl(slug)}
+              addUrl={addUrl(slug, edition)}
               inOrder={path.inOrder}
               steps={path.steps}
             />
@@ -67,7 +68,7 @@ const stack = deck ? stackCards(deck) : [];
                   cards={stack}
                   termLanguage={page.deck.language}
                   total={page.deck.cardCount}
-                  addUrl={addUrl(slug)}
+                  addUrl={addUrl(slug, edition)}
                 />
               )}
             </div>

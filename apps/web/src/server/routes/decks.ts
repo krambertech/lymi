@@ -3,7 +3,12 @@ import {
   DeckInput,
   DeckOut,
   DeckSummaryOut,
+  EditionApprovalInput,
+  EditionImportInput,
+  EditionOut,
+  EditionsOut,
   JoinLinkOut,
+  LanguageTag,
   OkOut,
   PublicationInput,
   PublicationOut,
@@ -14,21 +19,27 @@ import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
+  approveEdition,
   archiveDeck,
   createDeck,
   getDeck,
   getJoinLink,
   getPublication,
+  importEdition,
   listDeckCards,
   listDecks,
+  listEditions,
   publicationOut,
   publishDeck,
+  publishEdition,
   restoreDeck,
   turnOffJoinLink,
   turnOnJoinLink,
   updateDeck,
   withdrawDeck,
+  withdrawEdition,
 } from "../services";
+import { ServiceError } from "../services/context";
 
 export const decks = new Hono<AppEnv>();
 
@@ -214,6 +225,112 @@ decks.delete(
   }),
   async (c) =>
     c.json(publicationOut(c.env.PRODUCT_URL, await withdrawDeck(ctxOf(c), c.req.param("id")))),
+);
+
+const EDITION =
+  "A meaning-language edition of a published deck. The deck's own fields are the original edition; another edition is typed localizations of them, signed off by a person before anyone reads it. Only Lymi's publishers, and only decks they own. ADR 0015.";
+
+/** The language in the path, checked the same way a body field would be. */
+function editionLanguage(value: string | undefined) {
+  const parsed = LanguageTag.safeParse(value);
+  if (!parsed.success) throw new ServiceError("invalid", "Invalid language", parsed.error);
+  return parsed.data;
+}
+
+decks.get(
+  "/:id/editions",
+  describe({
+    tags: ["Decks"],
+    summary: "List a deck's editions",
+    description: `${EDITION} Each says how much of it is signed off, how much has gone stale, and what is holding it back.`,
+    ok: { schema: EditionsOut, description: "Every edition of the deck" },
+    errors: [400, 404],
+  }),
+  async (c) => c.json(await listEditions(ctxOf(c), c.req.param("id"))),
+);
+
+decks.put(
+  "/:id/editions/:language",
+  describe({
+    tags: ["Decks"],
+    summary: "Write an edition's text",
+    description: `${EDITION} Every row lands as a draft against the text it was written from, so text sent over a signed-off row is signed off again.`,
+    ok: { schema: EditionOut, description: "Where the edition stands now" },
+    errors: [400, 404],
+  }),
+  body(EditionImportInput, "edition"),
+  async (c) =>
+    c.json(
+      await importEdition(
+        ctxOf(c),
+        c.req.param("id"),
+        editionLanguage(c.req.param("language")),
+        c.req.valid("json"),
+        publisherEmails(c.env),
+      ),
+    ),
+);
+
+decks.post(
+  "/:id/editions/:language/approval",
+  describe({
+    tags: ["Decks"],
+    summary: "Sign off an edition's text",
+    description: `${EDITION} A person signs it off against the text as it stands now; an empty body signs off the whole edition. An API key or an MCP client cannot.`,
+    ok: { schema: EditionOut, description: "Where the edition stands now" },
+    errors: [400, 404],
+  }),
+  body(EditionApprovalInput, "approval"),
+  async (c) =>
+    c.json(
+      await approveEdition(
+        ctxOf(c),
+        c.req.param("id"),
+        editionLanguage(c.req.param("language")),
+        c.req.valid("json"),
+        publisherEmails(c.env),
+      ),
+    ),
+);
+
+decks.put(
+  "/:id/editions/:language/publication",
+  describe({
+    tags: ["Decks"],
+    summary: "Publish an edition",
+    description: `${EDITION} An edition missing text, or written from text that has since changed, is refused with what is holding it back.`,
+    ok: { schema: EditionOut, description: "The published edition" },
+    errors: [400, 404],
+  }),
+  async (c) =>
+    c.json(
+      await publishEdition(
+        ctxOf(c),
+        c.req.param("id"),
+        editionLanguage(c.req.param("language")),
+        publisherEmails(c.env),
+      ),
+    ),
+);
+
+decks.delete(
+  "/:id/editions/:language/publication",
+  describe({
+    tags: ["Decks"],
+    summary: "Withdraw an edition",
+    description: `${EDITION} Nobody new can add it; the learners who pinned it keep reading it.`,
+    ok: { schema: EditionOut, description: "The withdrawn edition" },
+    errors: [400, 404],
+  }),
+  async (c) =>
+    c.json(
+      await withdrawEdition(
+        ctxOf(c),
+        c.req.param("id"),
+        editionLanguage(c.req.param("language")),
+        publisherEmails(c.env),
+      ),
+    ),
 );
 
 decks.get(

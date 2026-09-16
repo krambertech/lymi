@@ -17,8 +17,6 @@ export default defineConfig({
     screenshot: "only-on-failure",
     trace: "on-first-retry",
     video: "on-first-retry",
-    // A part that is still moving is not clickable, and no journey asserts an animation. docs/testing.md.
-    reducedMotion: "reduce",
   },
   projects: [
     {

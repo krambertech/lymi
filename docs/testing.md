@@ -25,7 +25,7 @@ pnpm exec playwright install chromium webkit
 
 Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test.
 
-Every page runs under `prefers-reduced-motion: reduce`, the product's own quieter twin. Playwright refuses to click a part whose box is still moving, and a runner without a GPU can hold one there past the test timeout; no journey asserts an animation, so the reduced form is what they drive. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
+The journeys run under the motion the product ships. Emulating `prefers-reduced-motion: reduce` across them was tried on 2026-09-16 and is being measured against this run: the component tests take it (see below), but a journey drives whole screens, and the suite's own failures have to be told apart from it first.
 
 The journeys run one at a time. They share a single Vite dev server, a single Worker and a single D1, and only the accounts are keyed per test: `e2eEmail` in `e2e/settings.mjs` keys one by test, project, retry and repeat. Three workers were tried on 2026-09-16 and 49 of 63 Chromium tests failed, every one of them a signed-in journey whose screen never mounted inside the expect budget while the tests that touch no account passed. Parallel journeys need a backend per worker, or a served build in place of the dev server, before the worker count is worth raising again.
 

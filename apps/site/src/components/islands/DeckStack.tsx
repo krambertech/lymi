@@ -87,12 +87,13 @@ function Hand({ hand, total, addUrl }: { hand: HandCard[]; total: number; addUrl
                 ))}
               </span>
             </div>
-            <p
-              className="deck-finale-rise mt-6 text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+            <h3
+              tabIndex={-1}
+              className="deck-finale-rise mt-6 text-4xl font-medium tracking-[-0.03em] text-balance text-text outline-none @2xl:text-5xl"
               style={delay(640)}
             >
               <Trans>Keep going in Lymi</Trans>
-            </p>
+            </h3>
             <p
               className="deck-finale-rise mt-3 max-w-[36ch] text-lg text-pretty text-text-2"
               style={delay(800)}

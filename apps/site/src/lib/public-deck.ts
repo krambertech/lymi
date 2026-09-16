@@ -2,7 +2,13 @@ import { env } from "cloudflare:workers";
 import { listPublicDeckSlugs, loadPublicDeck, type PublicDeckOut } from "@lymi/core/catalog";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
-import { DECK_CACHE_CONTROL, deckEtag, etagMatches, MISSING_CACHE_CONTROL } from "./deck-page";
+import {
+  DECK_CACHE_CONTROL,
+  deckContentHash,
+  deckEtag,
+  etagMatches,
+  MISSING_CACHE_CONTROL,
+} from "./deck-page";
 import type { Locale } from "./routes";
 
 export type DeckPage =
@@ -31,7 +37,7 @@ export async function resolveDeckPage(
   }
   const etag = deckEtag({
     slug: result.deck.slug,
-    revision: result.deck.revision,
+    content: deckContentHash(result.deck),
     locale,
     version: env.CF_VERSION_METADATA?.id,
   });

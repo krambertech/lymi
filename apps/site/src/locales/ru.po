@@ -41,6 +41,10 @@ msgstr "{0, plural, one {Ещё # раздел} few {Ещё # раздела} ma
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
 
+#. placeholder {0}: step.cards.length - shownCards.length
+msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
+msgstr "{0, plural, one {Ещё одна карточка этого раздела — в Lymi.} few {Ещё # карточки этого раздела — в Lymi.} many {Ещё # карточек этого раздела — в Lymi.} other {Ещё # карточки этого раздела — в Lymi.}}"
+
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
 
@@ -57,10 +61,10 @@ msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}
 msgstr "{CLASS_LEARNERS, plural, one {Присоединился # ученик} few {Присоединились # ученика} many {Присоединились # учеников} other {Присоединились # ученика}}"
 
 msgid "{count, plural, one {# {language} card} other {# {language} cards}} at level {level}, with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}} для изучения языка: {language}, уровень {level}. Язык значений: {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
+msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. {language} язык, уровень {level}. Значения — {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
 
 msgid "{count, plural, one {# {language} card} other {# {language} cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}} для изучения языка: {language}. Язык значений: {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
+msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. {language} язык. Значения — {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
 
 msgid "{count, plural, one {# card} other {# cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
 msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Язык значений: {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
@@ -81,10 +85,10 @@ msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when
 msgstr "{left, plural, =0 {Это вся колода. Добавь её, и Lymi сама выберет, когда вернуть каждую карточку.} one {Ждёт ещё одна карточка. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} few {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} many {Ждут ещё # карточек. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} other {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.}}"
 
 msgid "{name} · {language} vocabulary · Lymi"
-msgstr "{name} · {language} язык, лексика · Lymi"
+msgstr "{name} · {language} язык · Lymi"
 
 msgid "{name} · {language} vocabulary, level {level} · Lymi"
-msgstr "{name} · {language} язык, лексика уровня {level} · Lymi"
+msgstr "{name} · {language} язык, уровень {level} · Lymi"
 
 msgid "{name} · Vocabulary cards · Lymi"
 msgstr "{name} · Карточки со словами · Lymi"
@@ -446,7 +450,7 @@ msgid "Buying books and letting them pile up unread"
 msgstr "Покупать книги и складывать их непрочитанными"
 
 msgid "By {publisher}"
-msgstr "Издатель: {publisher}"
+msgstr "От {publisher}"
 
 msgid "by card"
 msgstr "картой"

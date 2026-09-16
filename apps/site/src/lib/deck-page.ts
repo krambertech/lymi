@@ -1,12 +1,13 @@
 import type { PublicDeckOut } from "@lymi/core/catalog";
+import { HAND_SIZE } from "./hand";
 import { type Locale, locales } from "./routes";
 
 const SITE = "https://lymi.app";
 
 /** The most cards laid out at the top of the page. */
 export const SPREAD_SIZE = 5;
-/** How many cards the stack under How it works holds. */
-export const STACK_SIZE = 5;
+/** How many cards the page's hand holds, which is the hand's own size so a second round matches. */
+export const STACK_SIZE = HAND_SIZE;
 
 export type DeckCard = { term: string; meaning: string; section: string | null };
 
@@ -135,16 +136,24 @@ export function languageName(
 }
 
 /**
- * Changes whenever what the page shows can change: a publish or withdrawal raises the
- * revision, and a deploy changes the version. It never depends on who is asking.
+ * Everything the page renders, folded into one value. The publish revision moves only on publish
+ * and withdrawal, so a corrected meaning or a new card would otherwise keep its old validator.
+ */
+export function deckContentHash(deck: PublicDeckOut): string {
+  return hash(JSON.stringify(deck)).toString(36);
+}
+
+/**
+ * Changes whenever what the page shows changes: the deck's own content, the locale it is read in,
+ * and the Worker that rendered it. It never depends on who is asking.
  */
 export function deckEtag(parts: {
   slug: string;
-  revision: number;
+  content: string;
   locale: Locale;
   version: string | undefined;
 }): string {
-  return `W/"deck-${parts.slug}-r${parts.revision}-${parts.locale}-${parts.version ?? "dev"}"`;
+  return `W/"deck-${parts.slug}-${parts.content}-${parts.locale}-${parts.version ?? "dev"}"`;
 }
 
 export function etagMatches(ifNoneMatch: string | null, etag: string): boolean {

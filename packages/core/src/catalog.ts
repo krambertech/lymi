@@ -162,13 +162,19 @@ export async function loadPublicDeck(db: CatalogDb, slug: string): Promise<Publi
       .from(cards)
       .where(and(eq(cards.deckId, publication.deckId), isNull(cards.archivedAt)))
       // Cards added in one batch share a timestamp; rowid keeps the order they were sent in.
-      .orderBy(asc(cards.createdAt), sql`${cards}.rowid`),
+      .orderBy(asc(cards.createdAt), sql`rowid`),
   ]);
   return projectPublicDeck(publication, sectionRows, cardRows);
 }
 
+/**
+ * A sitemap file holds 50,000 URLs and each deck takes one per locale, so the listing stops well
+ * inside that. A catalog approaching this needs a paginated sitemap index rather than a bigger cap.
+ */
+export const SITEMAP_DECK_LIMIT = 10_000;
+
 /** The slugs whose public page answers 200, for the sitemap. */
-export async function listPublicDeckSlugs(db: CatalogDb) {
+export async function listPublicDeckSlugs(db: CatalogDb, limit = SITEMAP_DECK_LIMIT) {
   return db
     .select({ slug: deckPublications.slug, updatedAt: deckPublications.updatedAt })
     .from(deckPublications)
@@ -180,5 +186,6 @@ export async function listPublicDeckSlugs(db: CatalogDb) {
         sql`exists (select 1 from ${cards} where ${cards.deckId} = ${decks.id} and ${cards.archivedAt} is null)`,
       ),
     )
-    .orderBy(asc(deckPublications.slug));
+    .orderBy(asc(deckPublications.slug))
+    .limit(limit);
 }

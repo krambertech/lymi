@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { deckPath, deckPaths, deckStructuredData, jsonForScript, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
+import { localizedPath } from "../../lib/routes";
 import type { DeckPage } from "../../lib/public-deck";
 import PublicNav from "../islands/PublicNav";
 import DeckSections from "../islands/DeckSections";
@@ -80,7 +81,7 @@ const stack = deck ? stackCards(deck) : [];
     <BaseLayout
       title={i18n._(page.status === 410 ? UNAVAILABLE_TITLE : MISSING_TITLE)}
       description={i18n._(page.status === 410 ? UNAVAILABLE_BLURB : MISSING_BLURB)}
-      canonicalPath={deckPath(slug, locale)}
+      canonicalPath={localizedPath("landing", locale)}
     >
       <meta slot="head" name="robots" content="noindex" />
       <div class="@container flex min-h-dvh flex-col overflow-x-clip bg-canvas text-text">

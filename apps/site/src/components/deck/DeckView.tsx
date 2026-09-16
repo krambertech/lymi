@@ -131,7 +131,10 @@ function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] })
       {cards.map((card, index) => {
         const offset = index - (cards.length - 1) / 2;
         const [lift, tilt] = poses[index] ?? [0, 0];
+        // A long word would break mid-letter at the full size, so the card steps down first.
+        const longest = Math.max(...card.term.split(/\s+/).map((word) => word.length));
         const style = {
+          "--term": longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14,
           "--o": offset,
           "--a": Math.abs(offset),
           "--y": `${lift}px`,

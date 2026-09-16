@@ -41,6 +41,10 @@ msgstr "{0, plural, one {# more section} other {# more sections}}"
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# section} other {# sections}}"
 
+#. placeholder {0}: step.cards.length - shownCards.length
+msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
+msgstr "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
+
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
 

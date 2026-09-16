@@ -13,7 +13,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     const response = await request.get(`${publicSite}${pagePath}`);
     expect(response.status()).toBe(200);
     expect(response.headers()["cache-control"]).toBe("public, max-age=300");
-    expect(response.headers().etag).toContain("deck-evening-estonian-r3-en-");
+    expect(response.headers().etag).toMatch(/deck-evening-estonian-[a-z0-9]+-en-/);
     expect(response.headers()["set-cookie"]).toBeUndefined();
 
     const html = await response.text();
@@ -69,24 +69,28 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     await expect(rows.nth(0)).toContainText("3 cards");
     await expect(rows.nth(0)).toContainText("Start here");
     await expect(rows.nth(1)).toContainText("In the café");
+    await expect(rows.nth(1)).toContainText("2 cards");
     await expect(sections.getByText("one coffee, please", { exact: true })).toBeHidden();
 
-    await sections.getByRole("link", { name: "See all 4 cards" }).click();
-    const view = page.getByRole("dialog", { name: "All 4 cards" });
+    await sections.getByRole("link", { name: "See all 5 cards" }).click();
+    const view = page.getByRole("dialog", { name: "All 5 cards" });
     await expect(view).toBeVisible();
     await expect(page).toHaveURL(/#cards$/);
     await view.getByRole("link", { name: /In the café/ }).click();
     await expect(view.getByText("one coffee, please", { exact: true })).toBeInViewport();
+    // A card with no meaning keeps its place and says so.
+    await expect(view.getByRole("term").filter({ hasText: "kohupiim" })).toBeVisible();
+    await expect(view.getByText("No meaning yet")).toBeAttached();
     await page.keyboard.press("Escape");
     await expect(view).toBeHidden();
     await expect(page).not.toHaveURL(/#cards$/);
-    await expect(sections.getByRole("link", { name: "See all 4 cards" })).toBeFocused();
+    await expect(sections.getByRole("link", { name: "See all 5 cards" })).toBeFocused();
   });
 
   await test.step("a link to #cards opens the view, and Back closes it", async () => {
     await page.goto(`${publicSite}${pagePath}`);
     await page.goto(`${publicSite}${pagePath}#cards`);
-    const view = page.getByRole("dialog", { name: "All 4 cards" });
+    const view = page.getByRole("dialog", { name: "All 5 cards" });
     await expect(view).toBeVisible();
     await page.goBack();
     await expect(view).toBeHidden();
@@ -104,7 +108,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
       await stack.getByRole("button", { name: "Next card" }).click();
     }
     await expect(stack.getByText("Keep going in Lymi", { exact: true })).toBeVisible();
-    await expect(stack.getByText("That’s the whole deck.", { exact: false })).toBeVisible();
+    await expect(stack.getByText("One more card is waiting", { exact: false })).toBeVisible();
     await expect(stack.getByRole("link", { name: "Add to Lymi" })).toHaveAttribute("href", addUrl);
     await stack.getByRole("button", { name: "Try again" }).click();
     await expect(stack.getByRole("button", { name: "Turn it over" })).toBeVisible();
@@ -153,7 +157,7 @@ test("without JavaScript the page still shows the deck and its sections", async 
   );
   // The hand is dealt by the server, so its cards and the way into every card need no script.
   await expect(page.locator("#how .hand-card")).toHaveCount(4);
-  await expect(page.getByRole("link", { name: "See all 4 cards" })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "See all 5 cards" })).toHaveAttribute(
     "href",
     "#cards",
   );

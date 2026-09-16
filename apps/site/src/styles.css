@@ -800,7 +800,7 @@
   }
 }
 .deck-spread-section {
-  font-size: max(0.65625rem, calc(var(--cw) * 0.054));
+  font-size: max(0.6875rem, calc(var(--cw) * 0.054));
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: 0.06em;
@@ -808,8 +808,13 @@
   color: var(--muted);
 }
 .deck-spread-term {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
   margin-top: calc(var(--cw) * 0.06);
-  font-size: max(1.375rem, calc(var(--cw) * 0.14));
+  /* --term steps down for a long word, as the landing card does; a compound would break mid-letter. */
+  font-size: max(1.25rem, calc(var(--cw) * var(--term, 0.14)));
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.03em;
@@ -817,6 +822,10 @@
   color: var(--text);
 }
 .deck-spread-meaning {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
   margin-top: auto;
   padding-top: calc(var(--cw) * 0.06);
   border-top: 1px solid var(--edge-2);
@@ -890,7 +899,7 @@
 }
 .deck-finale-ember {
   position: absolute;
-  margin: -2px 0 0 -2px;
+  translate: -50% -50%;
   border-radius: 50%;
   background: var(--flame-core);
   box-shadow:
@@ -970,6 +979,12 @@
 }
 html:has(.deck-cards[open]) {
   overflow: hidden;
+}
+/* Without script the same #cards link still opens the view, as a plain part of the page. */
+.deck-cards:target:not([open]) {
+  display: block;
+  position: static;
+  height: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

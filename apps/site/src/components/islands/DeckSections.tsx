@@ -37,6 +37,8 @@ export default function DeckSections({ locale, ...props }: Props) {
 
 /** A deck with more sections than this lists one fewer, and a last row for the rest. */
 const MAX_ROWS = 16;
+/** The view stops listing here, so a catalog-sized deck cannot turn one page into megabytes. */
+const MAX_CARDS = 500;
 const HASH = "#cards";
 
 type Open = (event: MouseEvent<HTMLElement>) => void;
@@ -239,7 +241,8 @@ function CardsView({
     const nav = index.current;
     const chip = nav?.querySelectorAll<HTMLElement>("a")[active];
     if (!nav || !chip || nav.scrollWidth <= nav.clientWidth) return;
-    nav.scrollTo({ left: chip.offsetLeft - 20, behavior: "smooth" });
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    nav.scrollTo({ left: chip.offsetLeft - 20, behavior: still ? "auto" : "smooth" });
   }, [active]);
 
   const jump = (event: MouseEvent<HTMLAnchorElement>, i: number) => {
@@ -266,6 +269,7 @@ function CardsView({
         ticking.current = true;
         requestAnimationFrame(spy);
       }}
+      id="cards"
       className="deck-cards"
     >
       <div className="@container min-h-full">
@@ -347,63 +351,79 @@ function CardsView({
                 <Trans>In the order you learn them, one section at a time.</Trans>
               </p>
             )}
-            {steps.map((step, i) => (
-              <section
-                key={sectionId(i)}
-                id={sectionId(i)}
-                data-section={i}
-                aria-labelledby={inOrder ? `${sectionId(i)}-title` : undefined}
-                className="mt-10 scroll-mt-32 @4xl:mt-14 @4xl:scroll-mt-24"
-              >
-                {inOrder && (
-                  <h3
-                    id={`${sectionId(i)}-title`}
-                    className="flex items-baseline gap-2.5 pb-3 text-xl font-medium tracking-[-0.02em] text-text"
-                  >
-                    {step.position !== null && (
-                      <span className="text-md text-muted tabular-nums">{step.position}</span>
-                    )}
-                    <span
-                      lang={step.name === null ? undefined : meaningLanguage}
-                      className="min-w-0 break-words"
+            {steps.map((step, i) => {
+              // The view stops listing once the budget is spent, so one page cannot run to megabytes.
+              const before = steps
+                .slice(0, i)
+                .reduce((sum, earlier) => sum + earlier.cards.length, 0);
+              const shownCards = step.cards.slice(0, Math.max(MAX_CARDS - before, 0));
+              return (
+                <section
+                  key={sectionId(i)}
+                  id={sectionId(i)}
+                  data-section={i}
+                  aria-labelledby={inOrder ? `${sectionId(i)}-title` : undefined}
+                  className="mt-10 scroll-mt-32 @4xl:mt-14 @4xl:scroll-mt-24"
+                >
+                  {inOrder && (
+                    <h3
+                      id={`${sectionId(i)}-title`}
+                      className="flex items-baseline gap-2.5 pb-3 text-xl font-medium tracking-[-0.02em] text-text"
                     >
-                      {step.name ?? <Trans>Cards outside a section</Trans>}
-                    </span>
-                    <span className="ms-auto shrink-0 text-sm font-normal tracking-normal text-muted tabular-nums">
-                      <Plural value={step.cards.length} one="# card" other="# cards" />
-                    </span>
-                  </h3>
-                )}
-                <dl>
-                  {step.cards.map((card, cardIndex) => (
-                    <div
-                      // biome-ignore lint/suspicious/noArrayIndexKey: terms can repeat across sections; order is fixed.
-                      key={cardIndex}
-                      className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-5 border-t border-edge py-2.5 text-md"
-                    >
-                      <dt
-                        lang={termLanguage ?? undefined}
-                        className="font-medium break-words text-text"
-                      >
-                        {card.term}
-                      </dt>
-                      {card.meaning === null ? (
-                        <dd className="text-faint">
-                          <span aria-hidden="true">—</span>
-                          <span className="sr-only">
-                            <Trans>No meaning yet</Trans>
-                          </span>
-                        </dd>
-                      ) : (
-                        <dd lang={meaningLanguage} className="break-words text-text-2">
-                          {card.meaning}
-                        </dd>
+                      {step.position !== null && (
+                        <span className="text-md text-muted tabular-nums">{step.position}</span>
                       )}
-                    </div>
-                  ))}
-                </dl>
-              </section>
-            ))}
+                      <span
+                        lang={step.name === null ? undefined : meaningLanguage}
+                        className="min-w-0 break-words"
+                      >
+                        {step.name ?? <Trans>Cards outside a section</Trans>}
+                      </span>
+                      <span className="ms-auto shrink-0 text-sm font-normal tracking-normal text-muted tabular-nums">
+                        <Plural value={step.cards.length} one="# card" other="# cards" />
+                      </span>
+                    </h3>
+                  )}
+                  <dl>
+                    {shownCards.map((card, cardIndex) => (
+                      <div
+                        // biome-ignore lint/suspicious/noArrayIndexKey: terms can repeat across sections; order is fixed.
+                        key={cardIndex}
+                        className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-5 border-t border-edge py-2.5 text-md"
+                      >
+                        <dt
+                          lang={termLanguage ?? undefined}
+                          className="font-medium break-words text-text"
+                        >
+                          {card.term}
+                        </dt>
+                        {card.meaning === null ? (
+                          <dd className="text-faint">
+                            <span aria-hidden="true">—</span>
+                            <span className="sr-only">
+                              <Trans>No meaning yet</Trans>
+                            </span>
+                          </dd>
+                        ) : (
+                          <dd lang={meaningLanguage} className="break-words text-text-2">
+                            {card.meaning}
+                          </dd>
+                        )}
+                      </div>
+                    ))}
+                  </dl>
+                  {shownCards.length < step.cards.length && (
+                    <p className="border-t border-edge pt-2.5 text-md text-muted">
+                      <Plural
+                        value={step.cards.length - shownCards.length}
+                        one="One more card in this section, in Lymi."
+                        other="# more cards in this section, in Lymi."
+                      />
+                    </p>
+                  )}
+                </section>
+              );
+            })}
           </div>
         </div>
       </div>

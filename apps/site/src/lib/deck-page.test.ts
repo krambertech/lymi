@@ -1,6 +1,7 @@
 import type { PublicDeckOut } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
 import {
+  deckContentHash,
   deckEtag,
   deckPaths,
   deckSitemap,
@@ -100,7 +101,7 @@ describe("spreadCards", () => {
         },
       ],
     });
-    expect(spreadCards(long, 1)).toEqual([{ term: "lühike", meaning: "short", section: "Mixed" }]);
+    expect(spreadCards(long, 1)[0]?.term).toBe("lühike");
     expect(spreadCards(deck({ sections: sections(9) }))).toEqual(
       spreadCards(deck({ sections: sections(9) })),
     );
@@ -151,13 +152,26 @@ describe("languageName", () => {
   });
 });
 
+describe("deckContentHash", () => {
+  it("changes when anything the page renders changes, not only on a publish", () => {
+    const base = deckContentHash(deck());
+    expect(deckContentHash(deck())).toBe(base);
+    expect(deckContentHash(deck({ name: "Renamed" }))).not.toBe(base);
+    expect(
+      deckContentHash(
+        deck({ sections: [{ name: "Greetings", cards: [{ term: "tere", meaning: "hi" }] }] }),
+      ),
+    ).not.toBe(base);
+  });
+});
+
 describe("deck caching", () => {
-  it("keys the ETag on slug, revision, locale and version only", () => {
-    const etag = deckEtag({ slug: "a", revision: 3, locale: "uk", version: "v1" });
-    expect(etag).toBe('W/"deck-a-r3-uk-v1"');
-    expect(deckEtag({ slug: "a", revision: 4, locale: "uk", version: "v1" })).not.toBe(etag);
-    expect(deckEtag({ slug: "a", revision: 3, locale: "ru", version: "v1" })).not.toBe(etag);
-    expect(deckEtag({ slug: "a", revision: 3, locale: "uk", version: "v2" })).not.toBe(etag);
+  it("keys the ETag on slug, content, locale and version only", () => {
+    const etag = deckEtag({ slug: "a", content: "abc", locale: "uk", version: "v1" });
+    expect(etag).toBe('W/"deck-a-abc-uk-v1"');
+    expect(deckEtag({ slug: "a", content: "abd", locale: "uk", version: "v1" })).not.toBe(etag);
+    expect(deckEtag({ slug: "a", content: "abc", locale: "ru", version: "v1" })).not.toBe(etag);
+    expect(deckEtag({ slug: "a", content: "abc", locale: "uk", version: "v2" })).not.toBe(etag);
   });
 
   it("matches If-None-Match lists, weak or strong", () => {

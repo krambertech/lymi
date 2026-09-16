@@ -11,10 +11,10 @@ import {
   useRef,
   useState,
 } from "react";
+import { HAND_SIZE } from "../../lib/hand";
 import { buttonClass } from "../Button";
 import { HAND_CARDS, type HandCard } from "./hand-cards";
 
-const HAND_SIZE = 5;
 const DEAL_STAGGER_MS = 90;
 const DEAL_MS = 720;
 const TOSS_MS = 620;
@@ -126,9 +126,9 @@ function FanCard({
 
   const top = (
     <>
-      {heading && (
-        <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">{heading}</p>
-      )}
+      <p className="min-h-4 text-xs font-medium tracking-[0.06em] text-muted uppercase">
+        {heading}
+      </p>
       <p
         lang={card.language}
         dir="auto"
@@ -260,6 +260,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
   // The hand is random, so it is dealt after hydration rather than rendered on the server.
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new round deals the same cards again.
   useEffect(() => {
+    setFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     // A hand the server dealt is already held; keep it rather than dealing over it.
     if (given && !started.current) {
       started.current = true;
@@ -273,7 +274,6 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
       sessionStorage.setItem(DEALT_KEY, "1");
     } catch {}
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     const redeal = dealt.current;
     dealt.current = true;
     pile.current = once ? shuffle(cards) : [];
@@ -397,7 +397,9 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
 
   // The turn button goes with the last card, so the finale takes the focus it left behind.
   useEffect(() => {
-    if (phase === "done" && pressed.current) finale_.current?.focus({ preventScroll: true });
+    if (phase !== "done" || !pressed.current) return;
+    const heading = finale_.current?.querySelector<HTMLElement>("h1, h2, h3, h4");
+    (heading ?? finale_.current)?.focus({ preventScroll: true });
   }, [phase]);
 
   const press = phase === "back" ? next : reveal;
@@ -425,7 +427,7 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
           />
         ))}
         {phase === "done" && finale && (
-          <div ref={finale_} tabIndex={-1} className="hand-finale">
+          <div ref={finale_} className="hand-finale">
             {finale(again, turnedCards)}
           </div>
         )}

@@ -193,7 +193,7 @@ export async function reviewDraw(
 /** The cards a draw returned, as the API shows them, by id. */
 async function presentContent(ctx: ServiceContext, ids: string[]) {
   const rows = await cardsById(ctx, ids);
-  const views = await presentCards(ctx.db, [...rows.values()]);
+  const views = await presentCards(ctx.db, [...rows.values()], ctx.userId);
   return new Map(views.map((view) => [view.id, view]));
 }
 

@@ -1,10 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { DeckInput, type Directions } from "@lymi/core";
-import type { Deck } from "@lymi/core/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { api, errorMessage } from "../lib/api";
+import { api, type Deck, errorMessage } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button } from "./button";
 import { DirectionCompact, LanguageField } from "./deck-fields";

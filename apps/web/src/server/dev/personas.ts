@@ -34,8 +34,36 @@ export interface PersonaDeck {
   directions?: Directions;
   /** Days ago the deck was created. Its cards inherit this unless they say otherwise. */
   introducedDaysAgo: number;
+  /** Named sections, in order. A card joins one by naming it. */
+  sections?: string[];
   cards: PersonaCard[];
   archived?: boolean;
+  /** Publishes the deck in the local database, so its public page and add flow can be opened. */
+  publication?: PersonaPublication;
+}
+
+/** A local publication, seeded through the same services a publisher would call. ADR 0015. */
+export interface PersonaPublication {
+  slug: string;
+  summary: string;
+  level?: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+  publisher: string;
+  /** The language the deck's own meanings are in. Every edition localizes this one. */
+  meaningLanguage: string;
+  /** Further editions, written, signed off and published by the seed. */
+  editions?: PersonaEdition[];
+}
+
+/** One meaning-language edition, keyed by the English text it replaces so it reads as a pair. */
+export interface PersonaEdition {
+  language: string;
+  name: string;
+  summary: string;
+  description?: string;
+  /** The section's name in this edition, by the section's name in the original. */
+  sections?: Record<string, string>;
+  /** The card's meaning in this edition, by its term. */
+  meanings: Record<string, string>;
 }
 
 export interface PersonaCard {
@@ -50,6 +78,8 @@ export interface PersonaCard {
   source?: string;
   meaningSource?: FieldSource;
   exampleSource?: FieldSource;
+  /** The deck section it goes in, by name. */
+  section?: string;
   /** Who added it. `mcp` and `api` cards show up in Activity. */
   createdBy?: Actor;
   introducedDaysAgo?: number;
@@ -312,6 +342,44 @@ const LONG_CARDS: PersonaCard[] = [
 const everyDay = (from: number, to: number): number[] =>
   Array.from({ length: from - to + 1 }, (_, i) => to + i);
 
+/** Estonian with English meanings, the original edition of the persona's published deck. */
+const ESTONIAN_A1: PersonaCard[] = [
+  { term: "tere", meaning: "hello", section: "Greetings", pronunciation: "TEH-reh" },
+  { term: "tere hommikust", meaning: "good morning", section: "Greetings" },
+  { term: "head aega", meaning: "goodbye", section: "Greetings" },
+  { term: "aitäh", meaning: "thank you", section: "Greetings" },
+  { term: "palun", meaning: "please; you're welcome", section: "Greetings" },
+  { term: "leib", meaning: "bread", section: "In the shop" },
+  { term: "piim", meaning: "milk", section: "In the shop" },
+  { term: "vesi", meaning: "water", section: "In the shop" },
+  { term: "kui palju see maksab?", meaning: "how much does it cost?", section: "In the shop" },
+  { term: "kott", meaning: "bag", section: "In the shop" },
+  { term: "buss", meaning: "bus", section: "Getting around" },
+  { term: "rong", meaning: "train", section: "Getting around" },
+  { term: "kus on...?", meaning: "where is...?", section: "Getting around" },
+  { term: "vasakule", meaning: "to the left", section: "Getting around" },
+  { term: "paremale", meaning: "to the right", section: "Getting around" },
+].map((card) => ({ ...card, language: "et", meaningSource: "lesson" as const }));
+
+/** The same deck's Ukrainian edition: the terms are shared, only the meaning side is written. */
+const ESTONIAN_A1_UK: Record<string, string> = {
+  tere: "привіт",
+  "tere hommikust": "доброго ранку",
+  "head aega": "до побачення",
+  aitäh: "дякую",
+  palun: "будь ласка",
+  leib: "хліб",
+  piim: "молоко",
+  vesi: "вода",
+  "kui palju see maksab?": "скільки це коштує?",
+  kott: "сумка",
+  buss: "автобус",
+  rong: "потяг",
+  "kus on...?": "де знаходиться...?",
+  vasakule: "ліворуч",
+  paremale: "праворуч",
+};
+
 export const personas: Persona[] = [
   {
     id: "fresh",
@@ -462,6 +530,45 @@ export const personas: Persona[] = [
         defaultLanguage: null,
         introducedDaysAgo: 4,
         cards: NOTES,
+      },
+    ],
+  },
+  {
+    id: "publisher",
+    name: "Lymi",
+    description: "The publisher account. One published deck, in English and Ukrainian editions.",
+    appLanguage: "en",
+    reviewDays: [],
+    dueNow: 0,
+    decks: [
+      {
+        name: "Everyday Estonian",
+        description: "Words and phrases for your first weeks in Estonia.",
+        defaultLanguage: "et",
+        introducedDaysAgo: 30,
+        sections: ["Greetings", "In the shop", "Getting around"],
+        cards: ESTONIAN_A1,
+        publication: {
+          slug: "everyday-estonian",
+          summary: "Words and phrases for your first weeks in Estonia.",
+          level: "A1",
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            {
+              language: "uk",
+              name: "Естонська на щодень",
+              summary: "Слова та фрази на перші тижні в Естонії.",
+              description: "Слова та фрази на перші тижні в Естонії.",
+              sections: {
+                Greetings: "Вітання",
+                "In the shop": "У магазині",
+                "Getting around": "У дорозі",
+              },
+              meanings: ESTONIAN_A1_UK,
+            },
+          ],
+        },
       },
     ],
   },

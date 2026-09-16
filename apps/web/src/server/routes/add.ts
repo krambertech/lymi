@@ -1,6 +1,6 @@
-import { JoinOut, JoinPreviewOut, OkOut } from "@lymi/core";
+import { AddQuery, JoinOut, JoinPreviewOut, OkOut } from "@lymi/core";
 import { Hono } from "hono";
-import { ctxOf, describe } from "../http";
+import { ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import { addCookie } from "../join-cookie";
 import { canonicalOrigins } from "../origin-routing";
@@ -36,8 +36,9 @@ addOpen.post(
     open: true,
     summary: "Carry a published deck through sign-in",
     ok: { schema: OkOut, description: "The deck is held for the next sign-in on this browser" },
-    errors: [404],
+    errors: [400, 404],
   }),
+  query(AddQuery, "edition"),
   async (c) => {
     // Only the add page may set this, or another site could make a later sign-in add a deck.
     if (c.req.header("origin") !== canonicalOrigins(c.env).product) {
@@ -47,7 +48,10 @@ addOpen.post(
     if (!(await publicationAdmits(c.get("db"), slug))) {
       throw new ServiceError("not_found", "This deck is not published");
     }
-    c.header("set-cookie", addCookie(c.env.PRODUCT_URL, slug));
+    c.header(
+      "set-cookie",
+      addCookie(c.env.PRODUCT_URL, slug, c.req.valid("query").meaningLanguage),
+    );
     c.header("cache-control", "no-store");
     return c.json({ ok: true as const });
   },
@@ -63,7 +67,11 @@ add.post(
     learnerOnly: true,
     summary: "Add a published deck to Library",
     ok: { schema: JoinOut, description: "The deck, now in Library" },
-    errors: [404],
+    errors: [400, 404],
   }),
-  async (c) => c.json(await addPublishedDeck(ctxOf(c), c.req.param("slug"))),
+  query(AddQuery, "edition"),
+  async (c) =>
+    c.json(
+      await addPublishedDeck(ctxOf(c), c.req.param("slug"), c.req.valid("query").meaningLanguage),
+    ),
 );

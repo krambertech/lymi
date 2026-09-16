@@ -46,7 +46,7 @@ export async function listSeries(
       .where(and(eq(schema.decks.userId, userId), sql`decks.archived_at = series.archived_at`))
       .groupBy(schema.decks.seriesId);
     const archived = new Map(withDecks.map((row) => [row.seriesId, row.count]));
-    return rows.map(({ userId: _owner, ...row }) => ({
+    return rows.map(({ userId: _owner, revision: _revision, ...row }) => ({
       ...row,
       deckIds: [] as string[],
       total: 0,
@@ -56,7 +56,7 @@ export async function listSeries(
   }
   // The same rows and counts Library shows, so a series always adds up to its decks.
   const decks = rows.length > 0 ? await listDecks(ctx) : [];
-  return rows.map(({ userId: _owner, ...row }) => {
+  return rows.map(({ userId: _owner, revision: _revision, ...row }) => {
     const inSeries = decks.filter((deck) => deck.seriesId === row.id);
     return {
       ...row,
@@ -160,7 +160,8 @@ export async function renameSeries(ctx: ServiceContext, id: string, name: string
     await runBatch(db, [
       db
         .update(schema.series)
-        .set({ name, updatedAt: new Date() })
+        // A rename is text an edition translates, so every edition of it goes stale.
+        .set({ name, revision: sql`revision + 1`, updatedAt: new Date() })
         .where(and(eq(schema.series.id, id), eq(schema.series.userId, userId))),
       auditStatement(db, {
         userId,

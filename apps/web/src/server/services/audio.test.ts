@@ -13,6 +13,7 @@ function card(patch: Partial<Card> = {}): Card {
     id: "card-1",
     userId: "user-1",
     deckId: "deck-1",
+    revision: 1,
     term: "jäääär",
     normalizedTerm: "jäääär",
     meaning: "edge of the ice",

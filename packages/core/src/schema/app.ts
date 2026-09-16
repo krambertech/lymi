@@ -1,6 +1,14 @@
 import { sql } from "drizzle-orm";
 import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
-import { REVIEW_MODE_KEYS, type ReviewModeKey, SECTION_PROGRESSIONS } from "../types";
+import {
+  EDITION_STATUSES,
+  type EditionCardField,
+  LOCALIZATION_PROVENANCES,
+  LOCALIZATION_STATUSES,
+  REVIEW_MODE_KEYS,
+  type ReviewModeKey,
+  SECTION_PROGRESSIONS,
+} from "../types";
 import { user } from "./auth";
 
 const timestamps = {
@@ -10,6 +18,14 @@ const timestamps = {
   updatedAt: integer("updated_at", { mode: "timestamp_ms" })
     .notNull()
     .default(sql`(unixepoch() * 1000)`),
+};
+
+/**
+ * The canonical revision a localization is based on. It goes up whenever a field an edition
+ * translates changes, so a stale edition is found by comparison rather than by reading text.
+ */
+const revision = {
+  revision: integer("revision").notNull().default(1),
 };
 
 /**
@@ -27,6 +43,7 @@ export const series = sqliteTable(
     position: integer("position").notNull().default(0),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
+    ...revision,
   },
   (t) => [index("series_user_idx").on(t.userId, t.archivedAt, t.position)],
 );
@@ -63,6 +80,7 @@ export const decks = sqliteTable(
     sectionProgression: text("section_progression", { enum: SECTION_PROGRESSIONS })
       .notNull()
       .default("automatic"),
+    ...revision,
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
@@ -86,6 +104,7 @@ export const sections = sqliteTable(
     position: integer("position").notNull().default(0),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
+    ...revision,
   },
   (t) => [index("sections_deck_idx").on(t.deckId, t.archivedAt, t.position)],
 );
@@ -165,6 +184,7 @@ export const cards = sqliteTable(
     externalId: text("external_id"),
     /** A section of the card's own deck. Kept while the section is archived, so Restore regroups the card. */
     sectionId: text("section_id").references(() => sections.id),
+    ...revision,
   },
   (t) => [
     index("cards_deck_idx").on(t.deckId, t.archivedAt),
@@ -270,6 +290,11 @@ export const deckMembers = sqliteTable(
     removedAt: integer("removed_at", { mode: "timestamp_ms" }),
     removedBy: text("removed_by", { enum: ["owner", "self"] }),
     ...timestamps,
+    /**
+     * The edition this learner added, fixed when they joined. Null on an ordinary shared deck and
+     * on a published deck added in its original language. The app language never moves it. ADR 0015.
+     */
+    meaningLanguage: text("meaning_language"),
   },
   (t) => [
     uniqueIndex("deck_members_deck_user_idx").on(t.deckId, t.userId),
@@ -322,7 +347,16 @@ export const deckPublications = sqliteTable(
     summary: text("summary").notNull(),
     /** A CEFR level such as A1, or null when the deck has none. */
     level: text("level"),
+    /** The original edition: the language the deck's own fields are written in. */
     meaningLanguage: text("meaning_language").notNull(),
+    /**
+     * Card fields every edition must carry before it can be published. A language deck localizes
+     * the meaning side only; a deck whose terms are not in a language being learned adds `term`.
+     */
+    editionFields: text("edition_fields", { mode: "json" })
+      .$type<EditionCardField[]>()
+      .notNull()
+      .default(sql`'["meaning"]'`),
     publisher: text("publisher").notNull(),
     sources: text("sources", { mode: "json" })
       .$type<{ title: string; url?: string | undefined }[]>()
@@ -337,6 +371,121 @@ export const deckPublications = sqliteTable(
   (t) => [
     uniqueIndex("deck_publications_deck_idx").on(t.deckId),
     uniqueIndex("deck_publications_slug_idx").on(t.slug),
+  ],
+);
+
+/**
+ * One meaning-language edition of a published deck. The original edition has no row: it is the
+ * deck's own fields. An edition is published only while every localization it needs is approved
+ * and current, and withdrawing it leaves the learners who pinned it studying. ADR 0015.
+ */
+export const deckEditions = sqliteTable(
+  "deck_editions",
+  {
+    id: text("id").primaryKey(),
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    /** The meaning language this edition is written in, never the deck's original. */
+    language: text("language").notNull(),
+    status: text("status", { enum: EDITION_STATUSES }).notNull().default("draft"),
+    /** Goes up on every publish and every withdrawal, so the owner can see it moved. */
+    revision: integer("revision").notNull().default(0),
+    publishedAt: integer("published_at", { mode: "timestamp_ms" }),
+    withdrawnAt: integer("withdrawn_at", { mode: "timestamp_ms" }),
+    /** The person who published it. Nothing publishes an edition on its own. */
+    publishedBy: text("published_by").references(() => user.id),
+    ...timestamps,
+  },
+  (t) => [
+    uniqueIndex("deck_editions_deck_language_idx").on(t.deckId, t.language),
+    index("deck_editions_language_idx").on(t.language, t.status),
+  ],
+);
+
+/**
+ * What every localization row records besides its text: who wrote it, how far it has got, and
+ * the canonical revision it was written from, which is what makes a stale edition findable.
+ */
+const localization = {
+  language: text("language").notNull(),
+  provenance: text("provenance", { enum: LOCALIZATION_PROVENANCES }).notNull(),
+  status: text("status", { enum: LOCALIZATION_STATUSES }).notNull().default("draft"),
+  /** The entity's `revision` when this text was written. Lower than the entity's now means stale. */
+  sourceRevision: integer("source_revision").notNull(),
+  /** The person who signed it off. Only a person does, whatever the provenance. */
+  approvedBy: text("approved_by").references(() => user.id),
+  approvedAt: integer("approved_at", { mode: "timestamp_ms" }),
+  ...timestamps,
+};
+
+/** A series' name in one edition. Fields left null keep the canonical text. */
+export const seriesLocalizations = sqliteTable(
+  "series_localizations",
+  {
+    id: text("id").primaryKey(),
+    seriesId: text("series_id")
+      .notNull()
+      .references(() => series.id, { onDelete: "cascade" }),
+    name: text("name"),
+    ...localization,
+  },
+  (t) => [uniqueIndex("series_localizations_idx").on(t.seriesId, t.language)],
+);
+
+/** A deck's name, description and public summary in one edition. */
+export const deckLocalizations = sqliteTable(
+  "deck_localizations",
+  {
+    id: text("id").primaryKey(),
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    name: text("name"),
+    description: text("description"),
+    /** The publication's summary in this language; the public page shows it. */
+    summary: text("summary"),
+    ...localization,
+  },
+  (t) => [uniqueIndex("deck_localizations_idx").on(t.deckId, t.language)],
+);
+
+/** A section's name in one edition. */
+export const sectionLocalizations = sqliteTable(
+  "section_localizations",
+  {
+    id: text("id").primaryKey(),
+    sectionId: text("section_id")
+      .notNull()
+      .references(() => sections.id, { onDelete: "cascade" }),
+    name: text("name"),
+    ...localization,
+  },
+  (t) => [uniqueIndex("section_localizations_idx").on(t.sectionId, t.language)],
+);
+
+/**
+ * A card's text in one edition. A localized `term` replaces what the card asks, so `importEdition`
+ * takes one only from a publication whose `edition_fields` names `term`; the card's language, tags,
+ * picture, audio and modes are never localized.
+ */
+export const cardLocalizations = sqliteTable(
+  "card_localizations",
+  {
+    id: text("id").primaryKey(),
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    term: text("term"),
+    meaning: text("meaning"),
+    pronunciation: text("pronunciation"),
+    example: text("example"),
+    notes: text("notes"),
+    ...localization,
+  },
+  (t) => [
+    uniqueIndex("card_localizations_idx").on(t.cardId, t.language),
+    index("card_localizations_language_idx").on(t.language, t.status),
   ],
 );
 
@@ -617,6 +766,11 @@ export type Card = typeof cards.$inferSelect;
 export type DeckMember = typeof deckMembers.$inferSelect;
 export type DeckInvitation = typeof deckInvitations.$inferSelect;
 export type DeckPublication = typeof deckPublications.$inferSelect;
+export type DeckEdition = typeof deckEditions.$inferSelect;
+export type SeriesLocalization = typeof seriesLocalizations.$inferSelect;
+export type DeckLocalization = typeof deckLocalizations.$inferSelect;
+export type SectionLocalization = typeof sectionLocalizations.$inferSelect;
+export type CardLocalization = typeof cardLocalizations.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type CardImage = typeof cardImages.$inferSelect;
 export type Review = typeof reviews.$inferSelect;

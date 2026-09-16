@@ -227,10 +227,13 @@ export async function enrichCards(
       const value = write[field];
       if (value === undefined) continue;
       const source = field === "language" ? {} : { [SOURCE_COLUMN[field]]: "ai" as const };
+      // Filling an empty field is text an edition translates, so its localization goes stale.
+      // The write is guarded by `emptyColumn`, so the revision only moves when the fill lands.
+      const stale = field === "language" ? {} : { revision: sql`revision + 1` };
       writes.push(
         db
           .update(schema.cards)
-          .set({ [field]: value, ...source, updatedAt: now })
+          .set({ [field]: value, ...source, ...stale, updatedAt: now })
           .where(and(stillWorking(userId, card.id), emptyColumn(field))),
       );
     }

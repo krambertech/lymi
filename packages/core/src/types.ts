@@ -115,6 +115,131 @@ export const DeckInput = z.object({
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
+/** Card fields an edition may carry. The rest of the card is shared by every edition. ADR 0015. */
+export const EDITION_CARD_FIELDS = [
+  "term",
+  "meaning",
+  "pronunciation",
+  "example",
+  "notes",
+] as const;
+export const EditionCardField = z.enum(EDITION_CARD_FIELDS);
+export type EditionCardField = z.infer<typeof EditionCardField>;
+
+/** Who wrote a localization. Only a human approves one, whatever wrote it. ADR 0015. */
+export const LOCALIZATION_PROVENANCES = ["human", "ai", "imported"] as const;
+export const LocalizationProvenance = z.enum(LOCALIZATION_PROVENANCES).meta({
+  id: "LocalizationProvenance",
+  description:
+    "human: written by a person. ai: drafted by the AI. imported: brought in from a file.",
+});
+export type LocalizationProvenance = z.infer<typeof LocalizationProvenance>;
+
+/** How far a localization has got. Only `approved` rows reach a reader. */
+export const LOCALIZATION_STATUSES = ["draft", "in_review", "approved"] as const;
+export const LocalizationStatus = z.enum(LOCALIZATION_STATUSES).meta({
+  id: "LocalizationStatus",
+  description:
+    "draft: being written. in_review: waiting for a person. approved: a person signed it off.",
+});
+export type LocalizationStatus = z.infer<typeof LocalizationStatus>;
+
+/** Where one meaning-language edition of a published deck stands. */
+export const EDITION_STATUSES = ["draft", "published", "withdrawn"] as const;
+export const EditionStatus = z.enum(EDITION_STATUSES).meta({ id: "EditionStatus" });
+export type EditionStatus = z.infer<typeof EditionStatus>;
+
+const LocalizedText = (max: number) => z.string().trim().max(max).nullable().optional();
+
+/** The meaning-side text of one card in one edition. A field left null keeps the original. */
+export const CardLocalizationFields = z.object({
+  term: LocalizedText(500),
+  meaning: LocalizedText(2000),
+  pronunciation: LocalizedText(200),
+  example: LocalizedText(2000),
+  notes: LocalizedText(2000),
+});
+export type CardLocalizationFields = z.infer<typeof CardLocalizationFields>;
+
+export const DeckLocalizationFields = z.object({
+  name: LocalizedText(80),
+  description: LocalizedText(500),
+  summary: LocalizedText(500).meta({ description: "The public page's summary in this language" }),
+});
+export type DeckLocalizationFields = z.infer<typeof DeckLocalizationFields>;
+
+export const SectionLocalizationFields = z.object({ name: LocalizedText(80) });
+export type SectionLocalizationFields = z.infer<typeof SectionLocalizationFields>;
+
+export const SeriesLocalizationFields = z.object({ name: LocalizedText(80) });
+export type SeriesLocalizationFields = z.infer<typeof SeriesLocalizationFields>;
+
+/** Provenance every written localization declares. A row never claims to be human on its own. */
+const Written = {
+  provenance: LocalizationProvenance.meta({ description: "Who wrote this text" }),
+};
+
+export const CardLocalizationInput = CardLocalizationFields.extend({
+  cardId: z.string().min(1),
+  ...Written,
+});
+export type CardLocalizationInput = z.infer<typeof CardLocalizationInput>;
+
+/**
+ * One edition's text, written in one call so a retry lands the same. Rows arrive as drafts;
+ * a person approves them before the edition can be published. ADR 0015.
+ */
+export const EditionImportInput = z
+  .object({
+    deck: DeckLocalizationFields.extend(Written).optional(),
+    series: SeriesLocalizationFields.extend(Written).optional().meta({
+      description: "The owner's series holding the deck, when it is in one",
+    }),
+    sections: z
+      .array(SectionLocalizationFields.extend({ sectionId: z.string().min(1), ...Written }))
+      .max(500)
+      .refine(
+        (rows) => new Set(rows.map((row) => row.sectionId)).size === rows.length,
+        "List each section once.",
+      )
+      .default([]),
+    cards: z
+      .array(CardLocalizationInput)
+      .max(500)
+      .refine(
+        (rows) => new Set(rows.map((row) => row.cardId)).size === rows.length,
+        "List each card once.",
+      )
+      .default([]),
+  })
+  .meta({ id: "EditionImport" });
+export type EditionImportInput = z.infer<typeof EditionImportInput>;
+
+/** Which rows a person is signing off. Empty lists mean the whole edition. */
+export const EditionApprovalInput = z
+  .object({
+    cardIds: z.array(z.string().min(1)).max(500).optional(),
+    sectionIds: z.array(z.string().min(1)).max(500).optional(),
+    deck: z.boolean().optional(),
+    series: z.boolean().optional(),
+  })
+  .meta({ id: "EditionApproval" });
+export type EditionApprovalInput = z.infer<typeof EditionApprovalInput>;
+
+/**
+ * The edition a learner picks when adding a published deck. It is pinned and never changes. It
+ * rides as a query parameter because adding has always taken no body, and still does.
+ */
+export const AddQuery = z
+  .object({
+    meaningLanguage: LanguageTag.optional().meta({
+      description:
+        "A published edition of the deck, or its original meaning language. Left out: the original.",
+    }),
+  })
+  .meta({ id: "AddQuery" });
+export type AddQuery = z.infer<typeof AddQuery>;
+
 /** Lower-case words joined by hyphens, as in `everyday-estonian`. */
 export const PUBLICATION_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -132,7 +257,19 @@ export const PublicationInput = z
       .nullable()
       .optional()
       .meta({ description: "CEFR level" }),
-    meaningLanguage: LanguageTag.meta({ description: "The language the meanings are written in" }),
+    meaningLanguage: LanguageTag.meta({
+      description:
+        "The original edition: the language the deck's own meanings are written in. Other editions are localizations of it.",
+    }),
+    editionFields: z
+      .array(EditionCardField)
+      .min(1)
+      .max(EDITION_CARD_FIELDS.length)
+      .optional()
+      .meta({
+        description:
+          "Card fields every other edition must carry before it can be published. `meaning` by default; add `term` only when the terms are not in a language being learned.",
+      }),
     publisher: z.string().trim().min(1).max(80),
     sources: z
       .array(z.object({ title: z.string().trim().min(1).max(200), url: z.url().optional() }))

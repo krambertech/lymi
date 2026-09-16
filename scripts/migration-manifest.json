@@ -87,6 +87,10 @@
     {
       "name": "0021_audit_actor_client.sql",
       "sha256": "e6c426e89dc3072ee935617c9708af2216b70b43d01d313d17e6958fae38921e"
+    },
+    {
+      "name": "0022_localized_editions.sql",
+      "sha256": "5de58d67d1ada1046913a6f52a7bc5bcb2a3871d05c7c17ec6108ceb7dfd3c8e"
     }
   ]
 }

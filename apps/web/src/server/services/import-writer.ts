@@ -580,6 +580,12 @@ export async function writeChunk<Note>(
           example = coalesce(cards.example, incoming.example),
           notes = coalesce(cards.notes, incoming.notes),
           tags = case when cards.tags = '[]' then incoming.tags else cards.tags end,
+          -- Filling a blank field is text an edition translates, so its localization goes stale.
+          revision = case when (cards.meaning is null and incoming.meaning is not null)
+              or (cards.pronunciation is null and incoming.pronunciation is not null)
+              or (cards.example is null and incoming.example is not null)
+              or (cards.notes is null and incoming.notes is not null)
+            then cards.revision + 1 else cards.revision end,
           updated_at = ${now.getTime()}
         from ${rows} as incoming
         where cards.id = incoming.id and cards.user_id = ${userId} and ${guard}`,

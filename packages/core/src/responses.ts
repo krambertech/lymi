@@ -7,6 +7,8 @@ import {
   AppLanguage,
   Direction,
   Directions,
+  EditionCardField,
+  EditionStatus,
   EnrichmentStatus,
   FieldSource,
   MemberRole,
@@ -66,6 +68,10 @@ export const DeckOut = z
     position: z.number().int(),
     seriesId: SeriesId,
     sectionProgression: SectionProgression,
+    meaningLanguage: z.string().nullable().meta({
+      description:
+        "The edition the caller reads this deck in, pinned when they added it. Null for its own words.",
+    }),
     archivedAt: Timestamp.nullable(),
     importId: z
       .string()
@@ -89,6 +95,10 @@ export const DeckSummaryOut = z
     position: z.number().int(),
     seriesId: SeriesId,
     sectionProgression: SectionProgression,
+    meaningLanguage: z.string().nullable().meta({
+      description:
+        "The edition the caller reads this deck in, pinned when they added it. Null for its own words.",
+    }),
     total: z.number().int().meta({ description: "Active cards in the deck" }),
     due: z.number().int().meta({ description: "Cards with a direction due now for the caller" }),
     archivedAt: Timestamp.nullable().meta({ description: "Null while the deck is active" }),
@@ -785,7 +795,12 @@ export const PublicationOut = z
         status: z.enum(["published", "withdrawn"]),
         summary: z.string(),
         level: z.string().nullable(),
-        meaningLanguage: z.string(),
+        meaningLanguage: z.string().meta({
+          description: "The original edition, which the deck's own fields are written in",
+        }),
+        editionFields: z
+          .array(EditionCardField)
+          .meta({ description: "Card fields every other edition must carry" }),
         publisher: z.string(),
         sources: z.array(z.object({ title: z.string(), url: z.string().optional() })),
         reviewedAt: Timestamp.nullable(),
@@ -825,9 +840,41 @@ export const JoinPreviewOut = z
       .string()
       .nullable()
       .meta({ description: "Present only when the viewer can already open the deck" }),
+    editions: z.array(z.string()).optional().meta({
+      description:
+        "Meaning languages a published deck can be added in, the original first. Absent on a join link.",
+    }),
   })
   .meta({ id: "JoinPreview" });
 export type JoinPreviewOut = z.infer<typeof JoinPreviewOut>;
+
+/** How complete one edition is, and what is holding it back. Owner only. */
+export const EditionOut = z
+  .object({
+    language: z.string(),
+    status: EditionStatus,
+    revision: z.number().int(),
+    publishedAt: Timestamp.nullable(),
+    withdrawnAt: Timestamp.nullable(),
+    total: z.number().int().meta({ description: "The deck, plus each active section and card" }),
+    ready: z.number().int().meta({ description: "Signed off and written from the current text" }),
+    stale: z.number().int().meta({ description: "Signed off before the text changed" }),
+    missing: z.number().int().meta({ description: "Not signed off, or a required field is empty" }),
+    blockers: z
+      .array(z.string())
+      .meta({ description: "Why it cannot be published, in plain words. Empty while it can." }),
+  })
+  .meta({ id: "Edition" });
+export type EditionOut = z.infer<typeof EditionOut>;
+
+export const EditionsOut = z
+  .object({
+    originalMeaningLanguage: z.string(),
+    editionFields: z.array(EditionCardField),
+    editions: z.array(EditionOut),
+  })
+  .meta({ id: "Editions" });
+export type EditionsOut = z.infer<typeof EditionsOut>;
 
 export const JoinOut = z.object({ deckId: z.string(), role: MemberRole }).meta({ id: "Join" });
 export type JoinOut = z.infer<typeof JoinOut>;

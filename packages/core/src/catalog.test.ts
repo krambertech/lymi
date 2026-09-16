@@ -13,6 +13,8 @@ const publication = (over: Partial<PublicationRow> = {}): PublicationRow => ({
   summary: "Words and phrases for your first weeks in Estonia.",
   level: "A1",
   meaningLanguage: "en",
+  originalMeaningLanguage: "en",
+  editions: ["en"],
   publisher: "Lymi",
   sources: [{ title: "EKI A1 word list", url: "https://www.eki.ee/" }],
   reviewedAt: new Date("2026-09-01T00:00:00.000Z"),

@@ -14,6 +14,8 @@ const Search = z.object({
   /** Keeps the local email sign-in out of the real add page, as on /login. */
   dev: z.coerce.string().pipe(z.literal("1")).optional(),
   continue: z.coerce.string().optional(),
+  /** The edition the public page was read in. Pinned on the membership. ADR 0015. */
+  edition: z.coerce.string().max(12).optional(),
 });
 
 export const Route = createFileRoute("/add/$slug")({
@@ -40,7 +42,7 @@ const served = (() => {
 function Add() {
   const { t } = useLingui();
   const { slug } = Route.useParams();
-  const { dev } = Route.useSearch();
+  const { dev, edition } = Route.useSearch();
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [failed, setFailed] = useState<string | null>(null);
@@ -49,7 +51,9 @@ function Add() {
     ...addPreviewQuery(slug),
     initialData: () => (served?.path === path ? served.preview : undefined),
   });
-  const returnTo = `${path}?continue=1`;
+  const returnTo = `${path}?${new URLSearchParams({ continue: "1", ...(edition && { edition }) })}`;
+  // An edition the deck is not published in is ignored, so an old link still adds the original.
+  const chosen = preview.data?.editions?.includes(edition ?? "") ? edition : undefined;
 
   const describe = (err: unknown) => {
     if (err instanceof ApiError && err.status === 404) {
@@ -63,7 +67,7 @@ function Add() {
 
   const hold = useMutation({
     mutationFn: async (via: "google" | "dev") => {
-      await api.holdPublishedDeck(slug);
+      await api.holdPublishedDeck(slug, chosen);
       // The account coming back may not be the one whose cache is on this device.
       clearPersistedLearnerState();
       if (via === "dev") {
@@ -81,7 +85,7 @@ function Add() {
   });
 
   const add = useMutation({
-    mutationFn: () => api.addPublishedDeck(slug),
+    mutationFn: () => api.addPublishedDeck(slug, chosen),
     onMutate: () => setFailed(null),
     onSuccess: async ({ deckId }) => {
       await qc.invalidateQueries({ queryKey: ["decks"] });

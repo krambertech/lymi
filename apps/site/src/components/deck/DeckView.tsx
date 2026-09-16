@@ -23,8 +23,16 @@ function Localized({ locale, children }: LocaleProps & { children: ReactNode }) 
   return <I18nProvider i18n={pageI18n(locale)}>{children}</I18nProvider>;
 }
 
-export function addUrl(slug: string): string {
-  return productUrl(`/add/${slug}`);
+/** The edition the page was read in rides to the product, which pins it on the membership. */
+export function addUrl(slug: string, edition?: string | undefined): string {
+  return productUrl(`/add/${slug}${edition ? `?edition=${edition}` : ""}`);
+}
+
+/** The edition a page shows, or nothing when it shows the deck's own words. */
+export function editionOf(
+  deck: Pick<PublicDeckOut, "meaningLanguage" | "originalMeaningLanguage">,
+) {
+  return deck.meaningLanguage === deck.originalMeaningLanguage ? undefined : deck.meaningLanguage;
 }
 
 function useDate() {
@@ -204,7 +212,7 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
           <DeckFacts deck={deck} />
         </div>
         <div className="mt-7 flex flex-wrap justify-center gap-2">
-          <a href={addUrl(deck.slug)} className={buttonClass("primary", "lg")}>
+          <a href={addUrl(deck.slug, editionOf(deck))} className={buttonClass("primary", "lg")}>
             <Trans>Add to Lymi</Trans>
           </a>
           <a href="#how" className={buttonClass("ghost", "lg")}>

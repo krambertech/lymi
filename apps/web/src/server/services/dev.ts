@@ -1,10 +1,15 @@
 import { type Actor, emptyState, type Rating, schedule, serializeState } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
-import type { Persona, PersonaCard } from "../dev/personas";
+import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
+import { personaEmail } from "../dev/personas";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, asked, createDeck, listDecks } from "./decks";
+import { approveEdition, importEdition, publishEdition } from "./editions";
+import { publishDeck } from "./publications";
+import { activeCardsOf, activeSectionsOf } from "./revisions";
+import { createSection } from "./sections";
 import { updateSettings } from "./settings";
 
 const DAY = 86_400_000;
@@ -79,6 +84,11 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
         directions: deck.directions ?? "recognition",
       },
     );
+    const sections = new Map<string, string>();
+    for (const name of deck.sections ?? []) {
+      const section = await createSection({ db, userId, actor: "user" }, created.id, { name });
+      sections.set(name, section.id);
+    }
     // Cards go in grouped by actor so the audit log says who added which.
     const byActor = new Map<Actor, PersonaCard[]>();
     for (const card of deck.cards) {
@@ -100,6 +110,7 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
           ...(c.source !== undefined && { source: c.source }),
           ...(c.meaningSource !== undefined && { meaningSource: c.meaningSource }),
           ...(c.exampleSource !== undefined && { exampleSource: c.exampleSource }),
+          ...(c.section && { sectionId: sections.get(c.section) }),
         })),
       );
       outcomes.forEach((outcome, i) => {
@@ -111,6 +122,7 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
       });
     }
     if (deck.archived) await archiveDeck({ db, userId, actor: "user" }, created.id);
+    if (deck.publication) await seedPublication(ctx, persona, created.id, deck.publication);
   }
 
   await backdate(ctx, introducedAt);
@@ -123,6 +135,64 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
   }
   await setDue(ctx, persona.dueNow);
   return devCounts(ctx);
+}
+
+/**
+ * Publish a persona's deck locally and put its further editions on the public page, through the
+ * same services a publisher calls. The publisher list is the persona's own address: these routes
+ * ship only in local and preview builds, so nothing here can publish anything in production.
+ */
+async function seedPublication(
+  ctx: ServiceContext,
+  persona: Persona,
+  deckId: string,
+  publication: NonNullable<PersonaDeck["publication"]>,
+) {
+  const as: ServiceContext = { db: ctx.db, userId: ctx.userId, actor: "user" };
+  const publishers = new Set([personaEmail(persona.id)]);
+  await publishDeck(
+    as,
+    deckId,
+    {
+      slug: publication.slug,
+      summary: publication.summary,
+      level: publication.level ?? null,
+      meaningLanguage: publication.meaningLanguage,
+      publisher: publication.publisher,
+      sources: [],
+    },
+    publishers,
+  );
+  for (const edition of publication.editions ?? []) {
+    const [sections, cards] = await Promise.all([
+      activeSectionsOf(ctx.db, deckId),
+      activeCardsOf(ctx.db, deckId),
+    ]);
+    await importEdition(
+      as,
+      deckId,
+      edition.language,
+      {
+        deck: {
+          provenance: "human",
+          name: edition.name,
+          summary: edition.summary,
+          description: edition.description ?? null,
+        },
+        sections: sections.flatMap((section) => {
+          const name = edition.sections?.[section.name];
+          return name ? [{ sectionId: section.id, provenance: "human" as const, name }] : [];
+        }),
+        cards: cards.flatMap((card) => {
+          const meaning = edition.meanings[card.term];
+          return meaning ? [{ cardId: card.id, provenance: "human" as const, meaning }] : [];
+        }),
+      },
+      publishers,
+    );
+    await approveEdition(as, deckId, edition.language, {}, publishers);
+    await publishEdition(as, deckId, edition.language, publishers);
+  }
 }
 
 /** Creation timestamps to the day the persona says, so Activity and arrivals read right. */

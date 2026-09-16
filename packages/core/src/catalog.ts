@@ -1,7 +1,16 @@
 import { and, asc, eq, isNull, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
-import { cards, deckPublications, decks, sections } from "./schema/app";
+import {
+  cardLocalizations,
+  cards,
+  deckEditions,
+  deckLocalizations,
+  deckPublications,
+  decks,
+  sectionLocalizations,
+  sections,
+} from "./schema/app";
 import { PUBLICATION_SLUG } from "./types";
 
 /**
@@ -16,7 +25,12 @@ export const PublicDeckOut = z.object({
   level: z.string().nullable(),
   /** The language the terms are in, from the deck. */
   language: z.string().nullable(),
+  /** The meaning language of the edition on this page. */
   meaningLanguage: z.string(),
+  /** The language the deck's own fields are written in, whichever edition is shown. */
+  originalMeaningLanguage: z.string(),
+  /** Every meaning language the deck can be read in, the original first. */
+  editions: z.array(z.string()),
   publisher: z.string(),
   sources: z.array(z.object({ title: z.string(), url: z.string().optional() })),
   reviewedAt: z.iso.datetime().nullable(),
@@ -47,7 +61,10 @@ export interface PublicationRow {
   status: "published" | "withdrawn";
   summary: string;
   level: string | null;
+  /** The edition this page shows, which is the original unless a published one was asked for. */
   meaningLanguage: string;
+  originalMeaningLanguage: string;
+  editions: string[];
   publisher: string;
   sources: { title: string; url?: string | undefined }[];
   reviewedAt: Date | null;
@@ -110,6 +127,8 @@ export function projectPublicDeck(
     level: publication.level,
     language: publication.deckLanguage,
     meaningLanguage: publication.meaningLanguage,
+    originalMeaningLanguage: publication.originalMeaningLanguage,
+    editions: publication.editions,
     publisher: publication.publisher,
     sources: publication.sources.map((source) => {
       const url = webUrl(source.url);
@@ -124,8 +143,25 @@ export function projectPublicDeck(
   return { status: "published", deck };
 }
 
-/** Read one published deck for its public page. Selects allowlisted columns only. */
-export async function loadPublicDeck(db: CatalogDb, slug: string): Promise<PublicDeckResult> {
+/**
+ * An edition's text replaces the deck's own only where a person has approved it. Text that has
+ * gone stale since it was approved still shows: it is the best the reader's language has, and
+ * publishing an edition already refused staleness. ADR 0015.
+ */
+const approvedIn = (language: string | null) =>
+  language === null
+    ? sql`0 = 1`
+    : sql`${sql.raw("localization.status")} = 'approved' and ${sql.raw("localization.language")} = ${language}`;
+
+/**
+ * Read one published deck for its public page, in the meaning language asked for when the deck
+ * is published in it. Selects allowlisted columns only, and never a draft or withdrawn edition.
+ */
+export async function loadPublicDeck(
+  db: CatalogDb,
+  slug: string,
+  language?: string | undefined,
+): Promise<PublicDeckResult> {
   if (!isPublicDeckSlug(slug)) return { status: "missing" };
   const [publication] = await db
     .select({
@@ -151,20 +187,74 @@ export async function loadPublicDeck(db: CatalogDb, slug: string): Promise<Publi
   if (publication.status !== "published" || publication.deckArchivedAt) {
     return { status: "unavailable" };
   }
-  const [sectionRows, cardRows] = await Promise.all([
+
+  const published = await db
+    .select({ language: deckEditions.language })
+    .from(deckEditions)
+    .where(and(eq(deckEditions.deckId, publication.deckId), eq(deckEditions.status, "published")))
+    .orderBy(asc(deckEditions.language));
+  const original = publication.meaningLanguage;
+  const editions = [original, ...published.map((row) => row.language)];
+  // Only a published edition is shown, so a draft or a withdrawn one reads as the original.
+  const wanted =
+    language && language !== original && published.some((row) => row.language === language)
+      ? language
+      : null;
+  const shown = wanted ?? original;
+
+  const [deckText, sectionRows, cardRows] = await Promise.all([
+    wanted
+      ? db
+          .select({ name: deckLocalizations.name, summary: deckLocalizations.summary })
+          .from(deckLocalizations)
+          .where(
+            and(
+              eq(deckLocalizations.deckId, publication.deckId),
+              eq(deckLocalizations.language, wanted),
+              eq(deckLocalizations.status, "approved"),
+            ),
+          )
+      : [],
     db
-      .select({ id: sections.id, name: sections.name })
+      .select({
+        id: sections.id,
+        name: sql<string>`coalesce(localization.name, ${sections.name})`,
+      })
       .from(sections)
+      .leftJoin(
+        sql`${sectionLocalizations} as localization`,
+        and(sql`${sql.raw("localization.section_id")} = ${sections.id}`, approvedIn(wanted)),
+      )
       .where(and(eq(sections.deckId, publication.deckId), isNull(sections.archivedAt)))
       .orderBy(asc(sections.position), asc(sections.createdAt), asc(sections.id)),
     db
-      .select({ term: cards.term, meaning: cards.meaning, sectionId: cards.sectionId })
+      .select({
+        term: sql<string>`coalesce(localization.term, ${cards.term})`,
+        meaning: sql<string | null>`coalesce(localization.meaning, ${cards.meaning})`,
+        sectionId: cards.sectionId,
+      })
       .from(cards)
+      .leftJoin(
+        sql`${cardLocalizations} as localization`,
+        and(sql`${sql.raw("localization.card_id")} = ${cards.id}`, approvedIn(wanted)),
+      )
       .where(and(eq(cards.deckId, publication.deckId), isNull(cards.archivedAt)))
       // Cards added in one batch share a timestamp; rowid keeps the order they were sent in.
-      .orderBy(asc(cards.createdAt), sql`rowid`),
+      .orderBy(asc(cards.createdAt), sql`cards.rowid`),
   ]);
-  return projectPublicDeck(publication, sectionRows, cardRows);
+  const text = deckText[0];
+  return projectPublicDeck(
+    {
+      ...publication,
+      meaningLanguage: shown,
+      originalMeaningLanguage: original,
+      editions,
+      summary: text?.summary ?? publication.summary,
+      deckName: text?.name ?? publication.deckName,
+    },
+    sectionRows,
+    cardRows,
+  );
 }
 
 /**

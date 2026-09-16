@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { passwordProblem } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -13,10 +14,10 @@ import {
   authClient,
   continueOAuthAuthorization,
   followOAuthRedirect,
-  MIN_PASSWORD_LENGTH,
   signInWithGoogle,
 } from "../lib/auth";
 import { useDocumentTitle } from "../lib/document-title";
+import { passwordMessage } from "../lib/password-copy";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { minutesUntilRetry, tooManyAttempts } from "../lib/retry-after";
 import type { CredentialValues, LoginMode } from "../views/login-view";
@@ -203,9 +204,11 @@ function Login() {
       case "EMAIL_NOT_VERIFIED":
         return t`Confirm your email address first. Check your inbox for the link.`;
       case "PASSWORD_TOO_SHORT":
-        return t`Use at least ${MIN_PASSWORD_LENGTH} characters.`;
+        return i18n._(passwordMessage("too-short"));
       case "PASSWORD_TOO_LONG":
-        return t`That password is too long.`;
+        return i18n._(passwordMessage("too-long"));
+      case "PASSWORD_TOO_GUESSABLE":
+        return i18n._(passwordMessage("too-common"));
       case "INVALID_EMAIL":
         return t`Enter an email address, such as you@example.com.`;
       default:
@@ -332,9 +335,14 @@ function Login() {
       setEmailError(t`Enter an email address, such as you@example.com.`);
       return;
     }
-    if (mode !== "forgot" && values.password.length < MIN_PASSWORD_LENGTH) {
-      setPasswordError(t`Use at least ${MIN_PASSWORD_LENGTH} characters.`);
-      return;
+    // Signing in checks nothing: an old password that no longer meets the rule must still
+    // reach the reset that replaces it, rather than being refused by its own door.
+    if (mode === "sign-up") {
+      const problem = passwordProblem(values.password, address);
+      if (problem) {
+        setPasswordError(i18n._(passwordMessage(problem)));
+        return;
+      }
     }
     setSubmitting(true);
     try {
@@ -400,7 +408,7 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("dev@lymi.local");
-  const [password, setPassword] = useState("lymi-dev-password");
+  const [password, setPassword] = useState("quiet-harbour-evening");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 

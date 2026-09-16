@@ -12,6 +12,7 @@ import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
+import { requireStrongPassword } from "./password-rules";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { dispatchReviewReminders } from "./push-delivery";
@@ -97,6 +98,7 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 
 // Better Auth owns everything under /api/auth. The credential endpoints are metered first.
 app.use("/api/auth/*", limitCredentialRequests);
+app.use("/api/auth/*", requireStrongPassword);
 app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
 
 // A deck's join page. Signed-out classmates land here from a chat, so it sits before

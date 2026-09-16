@@ -3,9 +3,6 @@ import { createAuthClient } from "better-auth/react";
 import { safeProductReturnPath } from "../../shared/origins";
 import { clearStoredLanguage } from "./i18n";
 
-/** Mirrors `MIN_PASSWORD_LENGTH` on the server, so the box says what the route would. */
-export const MIN_PASSWORD_LENGTH = 8;
-
 /**
  * The oauthProviderClient plugin does two things for the OAuth server: it adds the current
  * page's signed `oauth_query` to sign-in calls, so a sign-in that started from an MCP

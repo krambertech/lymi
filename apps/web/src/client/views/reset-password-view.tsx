@@ -1,11 +1,11 @@
 import { Trans } from "@lingui/react/macro";
+import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import type { FormEvent, ReactNode } from "react";
 import { AuthFrame } from "../components/auth-frame";
 import { AuthNotice } from "../components/auth-notice";
 import { Button } from "../components/button";
+import { PasswordField } from "../components/password-field";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../components/ui/field";
-import { Input } from "../components/ui/input";
-import { MIN_PASSWORD_LENGTH } from "../lib/auth";
 import { publicSiteUrl } from "../lib/origins";
 
 export interface ResetPasswordProps {
@@ -107,19 +107,24 @@ export function ResetPasswordView({
               <FieldLabel>
                 <Trans>New password</Trans>
               </FieldLabel>
-              <Input
-                type="password"
-                name="password"
-                autoComplete="new-password"
+              <PasswordField
                 value={password}
-                onChange={(event) => onPasswordChange?.(event.target.value)}
+                onValueChange={(value) => onPasswordChange?.(value)}
+                autoComplete="new-password"
+                meter
+                email={email}
               />
               {passwordError ? (
                 <FieldError>{passwordError}</FieldError>
               ) : (
-                <FieldDescription>
-                  <Trans>At least {MIN_PASSWORD_LENGTH} characters.</Trans>
-                </FieldDescription>
+                !password && (
+                  <FieldDescription>
+                    <Trans>
+                      At least {MIN_PASSWORD_LENGTH} characters. A few plain words beat one clever
+                      one.
+                    </Trans>
+                  </FieldDescription>
+                )
               )}
             </Field>
             <Button

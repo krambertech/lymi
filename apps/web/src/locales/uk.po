@@ -818,8 +818,8 @@ msgstr "Асистенти, що увійшли в Lymi, як-от Claude чи C
 msgid "At {savedTime}, {zone} time, only on days with cards due."
 msgstr "О {savedTime} за часом {zone}, лише в дні, коли є картки до повторення."
 
-msgid "At least {MIN_PASSWORD_LENGTH} characters."
-msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
+msgid "At least {MIN_PASSWORD_LENGTH} characters. A few plain words beat one clever one."
+msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів. Кілька простих слів надійніші за одне хитре."
 
 msgid "Back"
 msgstr "Назад"
@@ -1412,6 +1412,10 @@ msgstr "Як експортувати з {app}"
 msgid "Exports"
 msgstr "Експорти"
 
+msgctxt "Password strength"
+msgid "Fair"
+msgstr "Непогано"
+
 msgid "Fewer fields"
 msgstr "Менше полів"
 
@@ -1513,6 +1517,9 @@ msgstr "Повернися до застосунку. Цю вкладку мож
 
 msgid "Hello,"
 msgstr "Вітаємо,"
+
+msgid "Hide password"
+msgstr "Сховати пароль"
 
 msgid "History"
 msgstr "Історія"
@@ -1787,6 +1794,9 @@ msgstr "Файл Lymi"
 msgid "Lymi home"
 msgstr "Головна Lymi"
 
+msgid "Lymi is in a private beta."
+msgstr "Lymi у приватній беті."
+
 msgid "Main"
 msgstr "Головна навігація"
 
@@ -1888,9 +1898,6 @@ msgstr "Назва"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Назви ключ, щоб потім знати, який саме відкликати."
-
-msgid "Need an invitation?"
-msgstr "Потрібне запрошення?"
 
 msgid "never used"
 msgstr "ще не використовувався"
@@ -2384,8 +2391,8 @@ msgstr "Замінити зображення"
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
 
-msgid "Request an invitation"
-msgstr "Запросити запрошення"
+msgid "Request access"
+msgstr "Попросити доступ"
 
 msgid "Reset your Lymi password"
 msgstr "Новий пароль для Lymi"
@@ -2620,6 +2627,9 @@ msgstr "Показати всі"
 msgid "Show another"
 msgstr "Показати іншу"
 
+msgid "Show password"
+msgstr "Показати пароль"
+
 msgid "Show the meaning, then Good"
 msgstr "Показати значення, потім «Добре»"
 
@@ -2747,6 +2757,10 @@ msgstr "Зупинено"
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{0, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
 
+msgctxt "Password strength"
+msgid "Strong"
+msgstr "Надійний"
+
 msgid "Support"
 msgstr "Підтримка"
 
@@ -2813,6 +2827,15 @@ msgstr "Зображення замале. Вибери таке, що має щ
 #. placeholder {0}: item.fileName
 msgid "That isn’t the same file. Choose {0}."
 msgstr "Це інший файл. Вибери {0}."
+
+msgid "That password is built from the word Lymi. Choose another."
+msgstr "Цей пароль побудований зі слова Lymi. Вибери інший."
+
+msgid "That password is built from your email address. Choose another."
+msgstr "Цей пароль побудований з твоєї адреси пошти. Вибери інший."
+
+msgid "That password is one of the first an attacker tries. Choose another."
+msgstr "Цей пароль — один із перших, які пробують зловмисники. Вибери інший."
 
 msgid "That password is too long."
 msgstr "Цей пароль задовгий."
@@ -3111,6 +3134,10 @@ msgstr "Чекає на тебе"
 
 msgid "We’ll send a link to set a new one."
 msgstr "Надішлемо посилання, щоб задати новий."
+
+msgctxt "Password strength"
+msgid "Weak"
+msgstr "Слабкий"
 
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
 msgid "week of {0}"

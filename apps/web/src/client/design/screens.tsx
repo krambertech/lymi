@@ -848,13 +848,21 @@ export const SCREENS: Entry[] = [
               error="This account has not been invited. Request an invitation, or try another account."
             />
           </PhoneShot>
-          <PhoneShot caption="A password too short" initial="dark" path="/login" bare>
+          <PhoneShot caption="A password a guesser opens with" initial="dark" path="/login" bare>
             <LoginView
               onGoogle={noop}
               mode="sign-up"
               email="ada@example.com"
-              password="short"
-              passwordError="Use at least 8 characters."
+              password="password123"
+              passwordError="That password is one of the first an attacker tries. Choose another."
+            />
+          </PhoneShot>
+          <PhoneShot caption="A password worth keeping" initial="light" path="/login" bare>
+            <LoginView
+              onGoogle={noop}
+              mode="sign-up"
+              email="ada@example.com"
+              password="thunder-oyster-lamp"
             />
           </PhoneShot>
         </div>

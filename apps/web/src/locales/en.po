@@ -818,8 +818,8 @@ msgstr "Assistants that signed in to Lymi, such as Claude or ChatGPT."
 msgid "At {savedTime}, {zone} time, only on days with cards due."
 msgstr "At {savedTime}, {zone} time, only on days with cards due."
 
-msgid "At least {MIN_PASSWORD_LENGTH} characters."
-msgstr "At least {MIN_PASSWORD_LENGTH} characters."
+msgid "At least {MIN_PASSWORD_LENGTH} characters. A few plain words beat one clever one."
+msgstr "At least {MIN_PASSWORD_LENGTH} characters. A few plain words beat one clever one."
 
 msgid "Back"
 msgstr "Back"
@@ -1412,6 +1412,10 @@ msgstr "Exporting from {app}"
 msgid "Exports"
 msgstr "Exports"
 
+msgctxt "Password strength"
+msgid "Fair"
+msgstr "Fair"
+
 msgid "Fewer fields"
 msgstr "Fewer fields"
 
@@ -1513,6 +1517,9 @@ msgstr "Head back to the app. You can close this tab."
 
 msgid "Hello,"
 msgstr "Hello,"
+
+msgid "Hide password"
+msgstr "Hide password"
 
 msgid "History"
 msgstr "History"
@@ -1787,6 +1794,9 @@ msgstr "Lymi file"
 msgid "Lymi home"
 msgstr "Lymi home"
 
+msgid "Lymi is in a private beta."
+msgstr "Lymi is in a private beta."
+
 msgid "Main"
 msgstr "Main"
 
@@ -1888,9 +1898,6 @@ msgstr "Name"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Name the key, so you know which one to revoke later."
-
-msgid "Need an invitation?"
-msgstr "Need an invitation?"
 
 msgid "never used"
 msgstr "never used"
@@ -2384,8 +2391,8 @@ msgstr "Replace the picture"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
-msgid "Request an invitation"
-msgstr "Request an invitation"
+msgid "Request access"
+msgstr "Request access"
 
 msgid "Reset your Lymi password"
 msgstr "Reset your Lymi password"
@@ -2620,6 +2627,9 @@ msgstr "Show all"
 msgid "Show another"
 msgstr "Show another"
 
+msgid "Show password"
+msgstr "Show password"
+
 msgid "Show the meaning, then Good"
 msgstr "Show the meaning, then Good"
 
@@ -2747,6 +2757,10 @@ msgstr "Stopped"
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {0, plural, one {# day in a row} other {# days in a row}}"
 
+msgctxt "Password strength"
+msgid "Strong"
+msgstr "Strong"
+
 msgid "Support"
 msgstr "Support"
 
@@ -2813,6 +2827,15 @@ msgstr "That image is too small. Choose one at least 16 pixels wide."
 #. placeholder {0}: item.fileName
 msgid "That isn’t the same file. Choose {0}."
 msgstr "That isn’t the same file. Choose {0}."
+
+msgid "That password is built from the word Lymi. Choose another."
+msgstr "That password is built from the word Lymi. Choose another."
+
+msgid "That password is built from your email address. Choose another."
+msgstr "That password is built from your email address. Choose another."
+
+msgid "That password is one of the first an attacker tries. Choose another."
+msgstr "That password is one of the first an attacker tries. Choose another."
 
 msgid "That password is too long."
 msgstr "That password is too long."
@@ -3111,6 +3134,10 @@ msgstr "Waiting for you"
 
 msgid "We’ll send a link to set a new one."
 msgstr "We’ll send a link to set a new one."
+
+msgctxt "Password strength"
+msgid "Weak"
+msgstr "Weak"
 
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short" })
 msgid "week of {0}"

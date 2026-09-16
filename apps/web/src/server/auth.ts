@@ -2,6 +2,7 @@ import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
 import type { GenericEndpointContext } from "@better-auth/core";
 import { mcp } from "@better-auth/mcp";
+import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -306,9 +307,6 @@ export function createAuth(
   self = auth;
   return auth;
 }
-
-/** The floor from the product decision: long enough to matter, with no composition rules. */
-export const MIN_PASSWORD_LENGTH = 8;
 
 /** A confirmation link outlives the session that asked for it, so a day rather than an hour. */
 const VERIFICATION_EXPIRES_SECONDS = 60 * 60 * 24;

@@ -86,8 +86,11 @@ export const limitCredentialRequests: MiddlewareHandler<AppEnv> = async (c, next
   await next();
   if (limits.floorMs) await holdUntil(started + limits.floorMs);
 
-  // A learner who signs in with their own password has not spent anyone's budget, so the
-  // attempt is not counted. Without this, ten guesses at a known address lock its owner out.
+  // A request the endpoint refused as malformed sent no email and created no account, so it
+  // costs nothing: a learner correcting a password Lymi would not accept is not an attack.
+  if (c.res.status === 400) return;
+  // Nor has a learner who signed in with their own password. Without this, ten guesses at a
+  // known address would lock its owner out.
   if (limits.spare === "on-success" && c.res.ok) return;
   for (const { key, budget } of keyed) await count(c.env.SESSIONS, key, budget);
 };

@@ -1,9 +1,11 @@
 import { Trans } from "@lingui/react/macro";
+import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import type { FormEvent, ReactNode } from "react";
 import { type AppIdentity, AppMark } from "../components/app-mark";
 import { AuthFrame } from "../components/auth-frame";
 import { AuthNotice } from "../components/auth-notice";
 import { Button } from "../components/button";
+import { PasswordField } from "../components/password-field";
 import {
   Field,
   FieldDescription,
@@ -12,7 +14,6 @@ import {
   FieldLabel,
 } from "../components/ui/field";
 import { Input } from "../components/ui/input";
-import { MIN_PASSWORD_LENGTH } from "../lib/auth";
 import { publicSiteUrl } from "../lib/origins";
 
 /** What the panel is asking for. Google stays put; only the form below it changes. */
@@ -83,7 +84,15 @@ export function LoginView({
   }
 
   return (
-    <AuthFrame footer={children} homeHref={publicSiteUrl()}>
+    <AuthFrame
+      footer={
+        <div className="w-full">
+          <AccessNote blocked={blocked} />
+          {children}
+        </div>
+      }
+      homeHref={publicSiteUrl()}
+    >
       <section className="edge min-w-0 rounded-xl bg-plate p-6 @xl:p-10">
         {app ? (
           <div className="flex flex-col items-center text-center">
@@ -182,17 +191,20 @@ export function LoginView({
                     <FieldLabel>
                       <Trans>Password</Trans>
                     </FieldLabel>
-                    <Input
-                      type="password"
-                      name="password"
-                      autoComplete={mode === "sign-up" ? "new-password" : "current-password"}
+                    <PasswordField
                       value={password}
-                      onChange={(event) => onPasswordChange?.(event.target.value)}
+                      onValueChange={(value) => onPasswordChange?.(value)}
+                      autoComplete={mode === "sign-up" ? "new-password" : "current-password"}
+                      meter={mode === "sign-up"}
+                      email={email}
                     />
                     {passwordError && <FieldError>{passwordError}</FieldError>}
-                    {mode === "sign-up" && !passwordError && (
+                    {mode === "sign-up" && !passwordError && !password && (
                       <FieldDescription>
-                        <Trans>At least {MIN_PASSWORD_LENGTH} characters.</Trans>
+                        <Trans>
+                          At least {MIN_PASSWORD_LENGTH} characters. A few plain words beat one
+                          clever one.
+                        </Trans>
                       </FieldDescription>
                     )}
                     {mode === "sign-in" && (
@@ -243,18 +255,31 @@ export function LoginView({
             </p>
           </>
         )}
-
-        <p className="mt-7 text-center text-sm text-muted">
-          {blocked ? <Trans>Still need an invitation?</Trans> : <Trans>Need an invitation?</Trans>}{" "}
-          <a
-            href={publicSiteUrl("/join")}
-            className="rounded-sm font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
-          >
-            <Trans>Request an invitation</Trans>
-          </a>
-        </p>
       </section>
     </AuthFrame>
+  );
+}
+
+/**
+ * Who may have an account at all, which is a different question from which form is open. It
+ * sits under the panel rather than inside it, so it reads as the terms of the door rather
+ * than a second thing to press.
+ */
+function AccessNote({ blocked }: { blocked: boolean }) {
+  return (
+    <p className="mt-6 text-center text-sm text-muted">
+      {blocked ? (
+        <Trans>Still need an invitation?</Trans>
+      ) : (
+        <Trans>Lymi is in a private beta.</Trans>
+      )}{" "}
+      <a
+        href={publicSiteUrl("/join")}
+        className="rounded-sm text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
+      >
+        <Trans>Request access</Trans>
+      </a>
+    </p>
   );
 }
 

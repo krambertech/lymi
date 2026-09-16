@@ -1,7 +1,7 @@
 import { type E2EAccount, e2eEmail } from "./settings.mjs";
 import { expect, type Page, type TestInfo } from "./test";
 
-const password = "lymi-e2e-password";
+const password = "quiet-harbour-morning";
 
 /** Sign in to this scenario's disposable account, creating it on the first attempt. */
 export async function signInAsTestLearner(

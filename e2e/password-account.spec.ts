@@ -1,8 +1,8 @@
 import { e2eInboxEmail } from "./settings.mjs";
 import { expect, type Page, type TestInfo, test } from "./test";
 
-const PASSWORD = "lymi-e2e-password";
-const NEW_PASSWORD = "lymi-e2e-new-password";
+const PASSWORD = "quiet-harbour-morning";
+const NEW_PASSWORD = "quiet-harbour-midnight";
 
 function address(account: "password-account" | "password-reset", testInfo: TestInfo) {
   return e2eInboxEmail(account, testInfo.project.name, testInfo.retry, testInfo.repeatEachIndex);

@@ -157,6 +157,26 @@ describe("metering the credential endpoints", () => {
     });
   });
 
+  it("charges nothing for a request the endpoint refused as malformed", async () => {
+    const refusing = new Hono<AppEnv>()
+      .use("/api/auth/*", limitCredentialRequests)
+      .all("/api/auth/*", (c) => c.json({ code: "PASSWORD_TOO_GUESSABLE" }, 400));
+    const email = address();
+    const tries = () =>
+      refusing.request(
+        new Request("https://my.lymi.app/api/auth/sign-up/email", {
+          method: "POST",
+          headers: { "content-type": "application/json", "cf-connecting-ip": "203.0.113.7" },
+          body: JSON.stringify({ email }),
+        }),
+        undefined,
+        env,
+      );
+    // Well past the budget of three, because none of these could have sent anything.
+    for (const _ of Array.from({ length: 8 })) expect((await tries()).status).toBe(400);
+    expect((await attempt("/api/auth/sign-up/email", email)).status).toBe(200);
+  });
+
   it("leaves everything else under /api/auth alone", async () => {
     const email = address();
     for (const _ of Array.from({ length: 20 })) {

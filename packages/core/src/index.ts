@@ -8,6 +8,7 @@ export * from "./import-replay";
 export * from "./languages";
 export * from "./mcp-clients";
 export * from "./modes";
+export * from "./passwords";
 export * from "./responses";
 export * from "./sections";
 export * from "./slipping";

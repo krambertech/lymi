@@ -1,10 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
+import { passwordProblem } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { authClient, MIN_PASSWORD_LENGTH } from "../lib/auth";
+import { authClient } from "../lib/auth";
 import { useDocumentTitle } from "../lib/document-title";
+import { passwordMessage } from "../lib/password-copy";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { minutesUntilRetry, tooManyAttempts } from "../lib/retry-after";
 import { ResetPasswordView } from "../views/reset-password-view";
@@ -42,8 +44,9 @@ function ResetPassword() {
   async function submit() {
     setPasswordError(null);
     setFailed(null);
-    if (password.length < MIN_PASSWORD_LENGTH) {
-      setPasswordError(t`Use at least ${MIN_PASSWORD_LENGTH} characters.`);
+    const problem = passwordProblem(password, email);
+    if (problem) {
+      setPasswordError(i18n._(passwordMessage(problem)));
       return;
     }
     setSubmitting(true);

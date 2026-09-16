@@ -375,7 +375,6 @@ An empty state shows the learner how to fill what is empty, and it looks tempora
 - **A screen whose layout is worth previewing shows its real components at zero.** Insights draws its four `StatPlate`s with `ghost`, dashed and muted with their figures drawn empty, under its start panel. The preview uses the real component, so it moves when the layout does; a second drawing of the same shape is not allowed.
 - **An empty group inside a screen is an empty section.** `EmptySection`, such as API keys or Connected apps in Settings: an icon in a `plate-2` circle, a short title, one line of why, and the action that fills it.
 - **A search or filter with no match is one line.** `NoResults` sits under the controls that caused it, names the query or the filter, and offers Clear search or Show all.
-- **A whole screen with nothing to outline uses `EmptyState`**, centred with the still brand lantern: Coming soon.
 - **A screen that failed to load uses `ErrorState`**, centred with the alert icon on `danger-soft`, never the lantern. The title says what failed, the line says the fix, and Try again retries.
 
 Every empty state is quieter than the page: its title sits below the page title, `text-xl` for the getting started guide, which is the whole of Today, and `text-lg` or smaller everywhere else. Its button is a normal button, never the 64 px Review button.

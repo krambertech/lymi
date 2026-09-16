@@ -36,7 +36,7 @@ export function streakWith(summary: StreakOut, attempts: number, counts: boolean
     attempts,
     goal: today.goal,
     satisfied: now,
-    nothingDue: false,
+    outcome,
   };
   const listed = summary.days.some((d) => d.date === today.date);
   return {
@@ -46,7 +46,7 @@ export function streakWith(summary: StreakOut, attempts: number, counts: boolean
     today: { ...today, attempts, outcome },
     days: listed
       ? summary.days.map((d) =>
-          d.date === today.date ? { ...d, attempts, satisfied: d.satisfied || now } : d,
+          d.date === today.date ? { ...d, attempts, satisfied: d.satisfied || now, outcome } : d,
         )
       : [...summary.days, day],
   };

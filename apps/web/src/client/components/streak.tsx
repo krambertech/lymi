@@ -134,7 +134,11 @@ export function StreakWeek({
   );
 }
 
-/** Today's attempts against the goal, in amber because it is the flame's own measure. */
+/**
+ * Today's attempts against the goal, in amber because it is the flame's own measure. It measures
+ * the goal and nothing else: a day satisfied by running out of reviews stops where its attempts
+ * stopped, and the line above it says the day counted.
+ */
 function GoalTrack({
   today,
   label,
@@ -145,8 +149,7 @@ function GoalTrack({
   label?: string | undefined;
   className?: string | undefined;
 }) {
-  const done = satisfied(today.outcome);
-  const share = done ? 1 : Math.min(1, today.attempts / today.goal);
+  const reached = Math.min(today.attempts, today.goal);
   return (
     <span
       {...(label
@@ -155,14 +158,14 @@ function GoalTrack({
             "aria-label": label,
             "aria-valuemin": 0,
             "aria-valuemax": today.goal,
-            "aria-valuenow": done ? today.goal : Math.min(today.attempts, today.goal),
+            "aria-valuenow": reached,
           }
         : { "aria-hidden": true })}
       className={clsx("block h-2 overflow-hidden rounded-full bg-plate edge-inset", className)}
     >
       <i
         className="streak-fill block h-full origin-left rounded-full bg-amber rtl:origin-right"
-        style={{ transform: `scaleX(${share})` }}
+        style={{ transform: `scaleX(${today.goal > 0 ? reached / today.goal : 0})` }}
       />
     </span>
   );
@@ -267,7 +270,7 @@ export function StreakPanel({
     let day = done ? today.date : addDays(today.date, -1);
     for (
       let kept = byDate.get(day);
-      kept && (kept.satisfied || kept.nothingDue);
+      kept && (kept.satisfied || kept.outcome === "nothing_due");
       kept = byDate.get(day)
     ) {
       if (kept.satisfied) dates.add(day);
@@ -364,12 +367,16 @@ export function StreakPanel({
             <span className="text-xs text-muted">
               <Trans>Today</Trans>
             </span>
-            <span className="text-base font-medium tabular-nums text-text">
-              {done ? (
-                <span className="inline-flex items-center gap-1.5">
-                  <Check className="size-4 text-amber-text" aria-hidden="true" />
-                  <Plural value={today.attempts} one="# review" other="# reviews" />
-                </span>
+            {/* The goal is named whether or not the day is done, so the bar below has a number to mean. */}
+            <span className="flex items-center gap-1.5 text-base font-medium tabular-nums text-text">
+              {done && <Check className="size-4 shrink-0 text-amber-text" aria-hidden="true" />}
+              {/* "of" only holds up to the goal; a round past it counts on and still names what it passed. */}
+              {today.attempts > today.goal ? (
+                <Plural
+                  value={today.attempts}
+                  one={`# review, goal ${today.goal}`}
+                  other={`# reviews, goal ${today.goal}`}
+                />
               ) : (
                 <Plural
                   value={today.goal}

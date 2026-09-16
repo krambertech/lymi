@@ -98,7 +98,10 @@ describe("the daily goal counts attempts", () => {
       attempts: 2,
       outcome: "exhausted",
     });
-    expect((await streak(ctx)).current).toBe(1);
+    const summary = await streak(ctx);
+    expect(summary.current).toBe(1);
+    // The calendar reads this to say "nothing left" rather than borrowing "goal reached".
+    expect(summary.days.at(-1)).toMatchObject({ outcome: "exhausted", satisfied: true });
   });
 
   it("ignores a duplicate grade", async () => {
@@ -282,7 +285,7 @@ describe("summariseStreak", () => {
     attempts: kind === "nothing" ? 0 : 3,
     goal: 3,
     satisfied: kind === "met",
-    nothingDue: kind === "nothing",
+    outcome: kind === "met" ? "goal_met" : kind === "nothing" ? "nothing_due" : "open",
   });
 
   it("keeps yesterday's run while today is unfinished", () => {

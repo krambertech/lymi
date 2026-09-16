@@ -113,8 +113,10 @@ msgid "{0, plural, one {# picture couldn’t be read and was left out.} other {#
 msgstr "{0, plural, one {# картинку не удалось прочитать, она пропущена.} few {# картинки не удалось прочитать, они пропущены.} many {# картинок не удалось прочитать, они пропущены.} other {# картинки не удалось прочитать, они пропущены.}}"
 
 #. placeholder {0}: today.attempts
-msgid "{0, plural, one {# review} other {# reviews}}"
-msgstr "{0, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
+#. placeholder {1}: today.goal
+#. placeholder {2}: today.goal
+msgid "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
+msgstr "{0, plural, one {# повторение, цель {1}} few {# повторения, цель {1}} many {# повторений, цель {1}} other {# повторения, цель {2}}}"
 
 #. placeholder {0}: reviews.length
 #. placeholder {1}: day(start)
@@ -364,6 +366,9 @@ msgstr "{day}: нет"
 msgid "{day}: {n} reviewed"
 msgstr "{day}: повторено {n}"
 
+msgid "{day}: {reviews}"
+msgstr "{day}: {reviews}"
+
 msgid "{day}: {reviews}, goal missed"
 msgstr "{day}: {reviews}, цель не достигнута"
 
@@ -378,6 +383,9 @@ msgstr "{day}: ещё впереди"
 
 msgid "{day}: nothing due"
 msgstr "{day}: ничего не было"
+
+msgid "{day}: nothing left, {reviews}"
+msgstr "{day}: больше ничего, {reviews}"
 
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# день} few {# дня} many {# дней} other {# дня}}"
@@ -3104,6 +3112,9 @@ msgstr "Сегодня, {day}: пока без повторений"
 
 msgid "Today, {day}: nothing due"
 msgstr "Сегодня, {day}: нечего повторять"
+
+msgid "Today, {day}: nothing left, {reviews}"
+msgstr "Сегодня, {day}: больше ничего, {reviews}"
 
 msgid "Today’s goal"
 msgstr "Цель на сегодня"

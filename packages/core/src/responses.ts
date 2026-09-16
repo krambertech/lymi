@@ -26,6 +26,7 @@ export const ReviewDayOutcome = z.enum(["open", "goal_met", "exhausted", "nothin
   description:
     "open: not yet satisfied. goal_met: the goal's attempts landed. exhausted: every eligible review was done below the goal. nothing_due: nothing was eligible, which protects the streak without adding to it.",
 });
+export type ReviewDayOutcome = z.infer<typeof ReviewDayOutcome>;
 
 export const ReviewDayProgress = z
   .object({
@@ -639,7 +640,10 @@ export const StreakOut = z
             description:
               "The day counts toward a streak: its goal was met, its eligible reviews were exhausted, or it predates goals and had a review",
           }),
-          nothingDue: z.boolean(),
+          outcome: ReviewDayOutcome.nullable().meta({
+            description:
+              "How the day ended, so a day that met its goal is told apart from one that ran out below it. Null before goals.",
+          }),
         }),
       )
       .meta({

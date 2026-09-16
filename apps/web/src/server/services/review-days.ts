@@ -330,7 +330,8 @@ export interface StreakDay {
   /** The goal the day was measured against. Null for a day from before goals. */
   goal: number | null;
   satisfied: boolean;
-  nothingDue: boolean;
+  /** How the day ended, so met and exhausted stay apart. Null for a day from before goals. */
+  outcome: Outcome | null;
 }
 
 /**
@@ -340,7 +341,7 @@ export interface StreakDay {
  */
 export function summariseStreak(days: StreakDay[], today: string) {
   const byDate = new Map(days.map((d) => [d.date, d]));
-  const keeps = (d: StreakDay | undefined) => !!d && (d.satisfied || d.nothingDue);
+  const keeps = (d: StreakDay | undefined) => !!d && (d.satisfied || d.outcome === "nothing_due");
 
   let current = 0;
   let date = today;
@@ -423,7 +424,7 @@ export async function streak(ctx: ServiceContext, opts: { zone?: string | undefi
       attempts: 0,
       goal: null,
       satisfied: true,
-      nothingDue: false,
+      outcome: null,
     };
     d.attempts += r.n;
     days.set(date, d);
@@ -436,7 +437,7 @@ export async function streak(ctx: ServiceContext, opts: { zone?: string | undefi
       attempts: attempts + (d?.attempts ?? 0),
       goal: row.goal,
       satisfied: satisfies(row.outcome) || !!d?.satisfied,
-      nothingDue: row.outcome === "nothing_due",
+      outcome: row.outcome,
     });
   }
 

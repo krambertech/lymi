@@ -97,6 +97,27 @@ describe("lymi adapter", () => {
     expect(await lymi.detect(apkg, "current.apkg")).toBe(false);
   });
 
+  it("carries a pronunciation's source, and reads a file written before the key existed", async () => {
+    const withSource = card({
+      id: "c3",
+      pronunciation: "il ˈɡatto",
+      pronunciationSource: "ai",
+    });
+    // A zip from before the key: the field is simply absent, as an older Lymi wrote it.
+    const { pronunciationSource: _omitted, ...older } = card({
+      id: "c4",
+      pronunciation: "il ˈɡatto",
+    });
+    const file = await zip({}, [withSource, older as LymiFileCard]);
+    const { summary, notes } = await lymi.inspect(file);
+    const cards = [...notes].flatMap((note) =>
+      lymi.cards(note, summary, { languages: {}, roles: {} }),
+    );
+    expect(cards[0]?.fieldSources?.pronunciation).toBe("ai");
+    // Absent means nobody said, which the writer records as the learner's own.
+    expect(cards[1]?.fieldSources?.pronunciation).toBeNull();
+  });
+
   it("refuses a file from a newer Lymi and a damaged card line", async () => {
     await expect(lymi.inspect(await zip({ version: 2 }, [card()]))).rejects.toMatchObject({
       failure: "unrecognized",
@@ -129,7 +150,7 @@ describe("lymi adapter", () => {
       externalId: "lymi:c1",
       modes: ["term_to_meaning", "meaning_to_term"],
       language: undefined,
-      fieldSources: { meaning: "ai", example: null },
+      fieldSources: { meaning: "ai", example: null, pronunciation: null },
       picture: "media/c1.webp",
       pictureDescription: "An orange animal",
     });

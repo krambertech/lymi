@@ -5,6 +5,7 @@ import {
   AppLanguage,
   Direction,
   Directions,
+  EnrichmentStatus,
   FieldSource,
   MemberRole,
   Rating,
@@ -219,6 +220,10 @@ export const CardOut = z
     }),
     meaningSource: FieldSource.nullable(),
     exampleSource: FieldSource.nullable(),
+    pronunciationSource: FieldSource.nullable(),
+    enrichmentStatus: EnrichmentStatus.nullable().meta({
+      description: "Set while the AI is filling the card's empty fields, and null once it settles",
+    }),
     audioKey: z.string().nullable(),
     createdBy: Actor.meta({ description: "Who added the card" }),
     importId: z

@@ -30,6 +30,8 @@ function card(patch: Partial<Card> = {}): Card {
     externalId: null,
     meaningSource: "manual",
     exampleSource: null,
+    pronunciationSource: null,
+    enrichmentStatus: null,
     audioKey: null,
     createdBy: "user",
     archivedAt: null,

@@ -11,7 +11,9 @@ export function addInput(values: CardFormValues): CardInput {
     language: values.language,
     ...(values.meaning ? { meaning: values.meaning, meaningSource: "manual" } : {}),
     ...(values.example ? { example: values.example, exampleSource: "manual" } : {}),
-    ...(values.pronunciation ? { pronunciation: values.pronunciation } : {}),
+    ...(values.pronunciation
+      ? { pronunciation: values.pronunciation, pronunciationSource: "manual" as const }
+      : {}),
     ...(values.notes ? { notes: values.notes } : {}),
     ...(values.source ? { source: values.source } : {}),
     ...(values.tags.length ? { tags: values.tags } : {}),
@@ -36,8 +38,10 @@ export function cardPatch(card: Card, values: CardFormValues): CardPatch {
     patch.example = values.example;
     patch.exampleSource = "manual";
   }
-  if (values.pronunciation !== (card.pronunciation ?? ""))
+  if (values.pronunciation !== (card.pronunciation ?? "")) {
     patch.pronunciation = values.pronunciation;
+    patch.pronunciationSource = "manual";
+  }
   if (values.notes !== (card.notes ?? "")) patch.notes = values.notes;
   if (values.source !== (card.source ?? "")) patch.source = values.source;
   if (values.language !== card.language) patch.language = values.language;

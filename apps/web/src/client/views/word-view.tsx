@@ -21,14 +21,15 @@ import {
   Volume2,
   X,
 } from "lucide-react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
 import { IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
-import { Chip, StateChip } from "../components/chip";
+import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { ReviewTimeline } from "../components/review-timeline";
+import { Skeleton } from "../components/skeleton";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import {
   DropdownMenu,
@@ -243,40 +244,53 @@ function spanLabel(i18n: I18n, days: number): string {
 /** How many History rows show before "Show older". */
 const HISTORY_ROWS = 8;
 
-/** A field at rest: its label, where its text came from, and the text. */
+/** A field at rest: its label, the AI badge when the AI wrote it, and the text. */
 function ReadField({
   label,
   aside,
   value,
   empty,
   lang,
+  working,
   children,
 }: {
   label: string;
+  /** The AI badge, on a field the AI wrote. */
   aside?: ReactNode | undefined;
   value?: string | undefined;
   empty?: boolean | undefined;
   /** The language the text is in, so a long word hyphenates by its own rules. */
   lang?: string | undefined;
+  /** The AI is filling this field, so its space shimmers until the text lands. */
+  working?: boolean | undefined;
   /** Formatted content in place of `value`. */
   children?: ReactNode | undefined;
 }) {
   return (
     <div className="grid gap-1">
-      <div className="flex items-baseline justify-between gap-3">
+      {/* The badge belongs to the label, not to the far edge of the panel. Only the AI has one:
+          the learner's own words and the lesson's are the ordinary case and need no mark. */}
+      <div className="flex min-h-[17px] flex-wrap items-center gap-2">
         <span className="text-sm font-medium text-text-2">{label}</span>
-        {aside && <span className="text-xs text-muted">{aside}</span>}
+        {aside}
       </div>
-      {children ?? (
-        <p
-          lang={lang}
-          className={clsx(
-            "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
-            empty ? "text-muted" : "text-text",
-          )}
-        >
-          {value}
+      {working ? (
+        // One line of the same type, so the text that lands grows the card rather than jolting it.
+        <p className="flex items-center text-md leading-relaxed" aria-hidden="true">
+          <Skeleton className="h-3.5 w-full rounded-sm" />
         </p>
+      ) : (
+        (children ?? (
+          <p
+            lang={lang}
+            className={clsx(
+              "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
+              empty ? "text-muted" : "text-text",
+            )}
+          >
+            {value}
+          </p>
+        ))
       )}
     </div>
   );
@@ -428,14 +442,26 @@ export function WordView({
     return () => onBusyChange?.(false);
   }, [moving, onBusyChange]);
 
-  const source = (s: Card["meaningSource"]) =>
-    s === "ai"
-      ? t`AI wrote this`
-      : s === "manual"
-        ? t`You wrote this`
-        : s === "lesson"
-          ? t`From the lesson`
-          : undefined;
+  // The AI is filling this card, so each field it will write holds its space until the text lands.
+  const filling = card.enrichmentStatus === "working";
+  const waiting = (field: "meaning" | "example" | "pronunciation" | "language") =>
+    filling && !card[field];
+
+  // A shimmer says nothing out loud, so the card says it: once when the AI starts on it, once
+  // when the text lands. Held per card, so moving to another word does not announce its neighbour.
+  const [enrichment, setEnrichment] = useState("");
+  const startedOn = useRef<string | null>(null);
+  useEffect(() => {
+    if (filling) {
+      startedOn.current = card.id;
+      setEnrichment(t`Enriching this card`);
+    } else if (startedOn.current === card.id) {
+      startedOn.current = null;
+      setEnrichment(t`Enriched this card`);
+    } else {
+      setEnrichment("");
+    }
+  }, [filling, card.id, t]);
 
   // A touch screen gets full-size targets; a pointer keeps the header compact.
   const size = useDesktop() ? "sm" : "md";
@@ -524,10 +550,27 @@ export function WordView({
             </IconButton>
           )}
         </h1>
-        {card.pronunciation && <p className="text-md text-muted">{card.pronunciation}</p>}
-        <p className="text-sm text-muted">
+        {card.pronunciation ? (
+          <p className="flex flex-wrap items-center gap-1.5 text-md text-muted">
+            <span className="[overflow-wrap:anywhere]">{card.pronunciation}</span>
+            {card.pronunciationSource === "ai" && (
+              <SourceChip source="ai" field="pronunciation" compact />
+            )}
+          </p>
+        ) : (
+          waiting("pronunciation") && (
+            <p className="flex items-center text-md" aria-hidden="true">
+              <Skeleton className="h-3.5 w-28 rounded-sm" />
+            </p>
+          )
+        )}
+        <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-muted">
           {[
-            card.language ? languageName(card.language) : null,
+            card.language ? (
+              languageName(card.language)
+            ) : waiting("language") ? (
+              <Skeleton key="language" className="h-3 w-16 rounded-sm" />
+            ) : null,
             card.source ?? deckName,
             schedules.length > 0
               ? t`asked by ${listOf(
@@ -537,7 +580,14 @@ export function WordView({
               : null,
           ]
             .filter(Boolean)
-            .join(" · ")}
+            .map((part, index) => (
+              // Parts come from a fixed list in a fixed order, so the index is a stable key.
+              // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length list in a fixed order
+              <Fragment key={index}>
+                {index > 0 && <span aria-hidden="true">·</span>}
+                {part}
+              </Fragment>
+            ))}
         </p>
         {card.tags.length > 0 && (
           <ul className="flex flex-wrap gap-1.5 pt-1" aria-label={t`Tags`}>
@@ -552,19 +602,31 @@ export function WordView({
 
       <PictureSection card={card} modes={modes} />
 
+      <p className="sr-only" role="status">
+        {enrichment}
+      </p>
+
       <div className="grid gap-4">
         <ReadField
           label={t`Meaning`}
-          aside={card.meaning ? source(card.meaningSource) : undefined}
+          aside={
+            card.meaning &&
+            card.meaningSource === "ai" && <SourceChip source="ai" field="meaning" compact />
+          }
           value={card.meaning || t`No meaning yet`}
           empty={!card.meaning}
+          working={waiting("meaning")}
         />
-        {card.example && (
+        {(card.example || waiting("example")) && (
           <ReadField
             label={t`Example`}
-            aside={source(card.exampleSource)}
-            value={card.example}
+            aside={
+              card.example &&
+              card.exampleSource === "ai" && <SourceChip source="ai" field="example" compact />
+            }
+            value={card.example ?? ""}
             lang={card.language ?? undefined}
+            working={waiting("example")}
           />
         )}
         {card.notes && (

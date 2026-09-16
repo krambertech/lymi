@@ -93,6 +93,8 @@ const card: CardView = {
   externalId: null,
   meaningSource: "ai",
   exampleSource: null,
+  pronunciationSource: null,
+  enrichmentStatus: null,
   audioKey: null,
   createdBy: "mcp",
   archivedAt: null,
@@ -325,10 +327,14 @@ describe("Lymi MCP server", () => {
       existing: { id: "card-1", deckName: "Italian" },
     });
     // The first meaning was the assistant's own; the second said it came from the lesson.
-    expect(services.addCards).toHaveBeenCalledWith(expect.anything(), [
-      { deckId: "deck-1", term: "sbrigarsi", meaning: "to hurry up", meaningSource: "ai" },
-      { deckId: "deck-1", term: "Sbrigarsi", meaning: "hurry", meaningSource: "lesson" },
-    ]);
+    expect(services.addCards).toHaveBeenCalledWith(
+      expect.anything(),
+      [
+        { deckId: "deck-1", term: "sbrigarsi", meaning: "to hurry up", meaningSource: "ai" },
+        { deckId: "deck-1", term: "Sbrigarsi", meaning: "hurry", meaningSource: "lesson" },
+      ],
+      undefined,
+    );
   });
 
   it("refuses every write on a read-only token and says how to fix it", async () => {
@@ -613,9 +619,11 @@ describe("Lymi MCP server", () => {
       arguments: { cards: [{ deckId: "deck-1", term: "Head aega!", notes }] },
     });
     expect(add.isError).toBeFalsy();
-    expect(services.addCards).toHaveBeenCalledWith(expect.anything(), [
-      { deckId: "deck-1", term: "Head aega!", notes },
-    ]);
+    expect(services.addCards).toHaveBeenCalledWith(
+      expect.anything(),
+      [{ deckId: "deck-1", term: "Head aega!", notes }],
+      undefined,
+    );
 
     const edit = await client.callTool({
       name: "update_card",

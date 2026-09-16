@@ -144,6 +144,9 @@ export const cards = sqliteTable(
     directions: text("directions", { enum: ["recognition", "production", "both"] }),
     meaningSource: text("meaning_source", { enum: ["lesson", "ai", "manual"] }),
     exampleSource: text("example_source", { enum: ["lesson", "ai", "manual"] }),
+    pronunciationSource: text("pronunciation_source", { enum: ["lesson", "ai", "manual"] }),
+    /** Set while an enrichment job is outstanding, and cleared once it settles. */
+    enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** R2 key of generated pronunciation audio, if any. */
     audioKey: text("audio_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */

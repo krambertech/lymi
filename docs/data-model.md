@@ -88,6 +88,8 @@ erDiagram
     text directions "nullable override of the deck setting"
     text meaning_source "lesson | ai | manual"
     text example_source "lesson | ai | manual"
+    text pronunciation_source "lesson | ai | manual"
+    text enrichment_status "nullable working | failed"
     text audio_key "nullable R2 key"
     json review_modes "nullable mode keys, read only while directions is set"
     text image_version "nullable opaque token of the last picture write"

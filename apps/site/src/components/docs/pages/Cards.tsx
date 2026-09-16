@@ -31,6 +31,16 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     type: '"lesson" | "ai" | "manual"',
     note: "Who wrote the example.",
   },
+  {
+    name: "pronunciationSource",
+    type: '"lesson" | "ai" | "manual"',
+    note: "Who wrote the pronunciation.",
+  },
+  {
+    name: "enrichmentStatus",
+    type: '"working" | "failed" | null',
+    note: "Read-only. Set while Lymi is filling the card's empty fields, and null once it settles.",
+  },
 ];
 
 export function Cards() {
@@ -87,11 +97,26 @@ export function Cards() {
       </Table>
 
       <Note title="Say when a model wrote it">
-        If you generate a meaning or an example with an AI, set <code>meaningSource</code> or{" "}
-        <code>exampleSource</code> to <code>"ai"</code>. The app labels those fields wherever they
-        appear, so machine-written text is never mistaken for the lesson. Send a meaning with no
-        source and it is recorded as <code>manual</code>.
+        If you generate a meaning, example or pronunciation with an AI, set the matching{" "}
+        <code>meaningSource</code>, <code>exampleSource</code> or <code>pronunciationSource</code>{" "}
+        to <code>"ai"</code>. Those fields carry a small AI badge wherever they appear, so
+        machine-written text is never mistaken for the lesson. Nothing else is marked: a field from
+        the lesson or typed by hand carries no badge. Send a meaning with no source and it is
+        recorded as <code>manual</code>.
       </Note>
+
+      <H2>Lymi fills what you leave empty</H2>
+      <p>
+        A card added with fields missing enriches itself in the background: meaning, example,
+        pronunciation and language, written in the learner's meaning language. It fills only what is
+        empty, so any text you send is kept exactly as you sent it, whatever its source. Each filled
+        field is recorded as <code>"ai"</code> and carries the badge.
+      </p>
+      <p>
+        While a job is outstanding the card reads <code>enrichmentStatus: "working"</code>, and{" "}
+        <code>"failed"</code> if it gives up. Poll the card to watch it settle to <code>null</code>.
+        The add itself always succeeds; enrichment never holds it up or fails it.
+      </p>
 
       <H2>The same term twice is not an error</H2>
       <p>

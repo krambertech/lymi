@@ -675,11 +675,17 @@ msgstr "Adding a way asks every card in the deck that way, starting now. Taking 
 msgid "Ahead"
 msgstr "Ahead"
 
+msgid "AI"
+msgstr "AI"
+
 msgid "AI example"
 msgstr "AI example"
 
 msgid "AI meaning"
 msgstr "AI meaning"
+
+msgid "AI pronunciation"
+msgstr "AI pronunciation"
 
 msgid "AI wrote this"
 msgstr "AI wrote this"
@@ -1390,6 +1396,12 @@ msgstr "Empty in the first note"
 msgid "Enriched {list}"
 msgstr "Enriched {list}"
 
+msgid "Enriched this card"
+msgstr "Enriched this card"
+
+msgid "Enriching this card"
+msgstr "Enriching this card"
+
 msgid "Enter after each"
 msgstr "Enter after each"
 
@@ -1788,6 +1800,9 @@ msgstr "Leave review"
 
 msgid "Leave review or close a sheet"
 msgstr "Leave review or close a sheet"
+
+msgid "Lesson"
+msgstr "Lesson"
 
 msgid "Lesson 15"
 msgstr "Lesson 15"
@@ -2353,8 +2368,14 @@ msgstr "Production card for {front}"
 msgid "Pronunciation"
 msgstr "Pronunciation"
 
+msgid "Pronunciation by you"
+msgstr "Pronunciation by you"
+
 msgid "Pronunciation changed to “{value}”"
 msgstr "Pronunciation changed to “{value}”"
+
+msgid "Pronunciation from lesson"
+msgstr "Pronunciation from lesson"
 
 msgid "Reach today’s goal to keep it going."
 msgstr "Reach today’s goal to keep it going."

@@ -38,7 +38,9 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
       .click();
     await expect(page).toHaveURL(/\?card=/);
     await expect(page.getByRole("heading", { level: 1, name: term })).toBeVisible();
-    await expect(shown("AI wrote this")).toBeVisible();
+    // The badge is the mark and one word; the whole sentence stays for a screen reader.
+    await expect(shown("AI")).toBeVisible();
+    await expect(shown("AI meaning")).toBeAttached();
     await expect(shown("Card added")).toBeVisible();
   });
 
@@ -62,7 +64,8 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
     await sheet.getByRole("button", { name: "Save", exact: true }).click();
     await expect(sheet).toBeHidden();
     await expect(shown("to hurry up, to get a move on")).toBeVisible();
-    await expect(shown("You wrote this")).toBeVisible();
+    // Only the AI is marked, so a meaning the learner rewrites loses its badge.
+    await expect(shown("AI")).toBeHidden();
     await expect(shown("Meaning changed to “to hurry up, to get a move on”")).toBeVisible();
   });
 

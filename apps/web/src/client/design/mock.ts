@@ -135,6 +135,8 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     externalId: null,
     meaningSource: "lesson",
     exampleSource: null,
+    pronunciationSource: null,
+    enrichmentStatus: null,
     audioKey: null,
     createdBy: "user",
     archivedAt: null,

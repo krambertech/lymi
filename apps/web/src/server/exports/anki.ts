@@ -541,6 +541,7 @@ export async function ankiPlaceholder(now: Date): Promise<Uint8Array[]> {
       source: null,
       meaningSource: null,
       exampleSource: null,
+      pronunciationSource: null,
       reviewModes: null,
       picture: null,
       archivedAt: null,

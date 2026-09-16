@@ -34,6 +34,8 @@ colors:
   state-known: "#249057"
   danger: "#be241f"
   danger-soft: "#be241f1a"
+  ai: "#733ea4"
+  ai-soft: "#733ea41a"
   ring: "#20130899"
   scrim: "#1e130e59"
   shimmer: "#ffffff66"
@@ -74,6 +76,8 @@ colors:
   dark-state-known: "#7bc495"
   dark-danger: "#fb8274"
   dark-danger-soft: "#fb827424"
+  dark-ai: "#cba9f3"
+  dark-ai-soft: "#cba9f329"
   dark-ring: "#f1eee7b3"
   dark-scrim: "#0000008c"
   dark-shimmer: "#ffffff0f"
@@ -210,6 +214,12 @@ components:
     textColor: "{colors.text-2}"
     rounded: "{rounded.pill}"
     height: "26px"
+  chip-source-badge:
+    backgroundColor: "{colors.ai-soft}"
+    textColor: "{colors.ai}"
+    rounded: "{rounded.pill}"
+    height: "17px"
+    padding: "0 6px"
   due-count:
     backgroundColor: "{colors.amber-tint}"
     textColor: "{colors.amber-tint-ink}"
@@ -255,7 +265,9 @@ Card states have one colour and one icon each, the same everywhere a state shows
 
 Forgot is a grade, not a state, and its mark is the red turn-back arrow wherever it shows: the Forgot grade, the Forgot today tile, Review forgotten at the end of a review, and the chip on a relearning card under review, which says **Forgot recently** rather than the schedule's name for it. Everywhere else relearning is Learning, because a lapse on a word's schedule table may be months old. The state words live on `stateMarks` beside the icons, so New, Learning and Known are written once.
 
-Status is never colour alone. New, Learning, Known carry an icon and a word. Errors carry an icon.
+What the AI wrote is the fourth mark, and the one colour outside the states. A meaning, example or pronunciation it filled carries `ai`, a violet badge of the sparkle and the word AI, beside the field's label rather than at the far edge of the panel. **A word marks the AI and nothing else.** The learner's own words and the lesson's are the ordinary case: they carry no badge, and that silence is what makes the violet one carry. Violet is the last hue that is not amber, a card state or `danger`, so the badge reads as "not from you or the lesson" without reading as act, progress or error. It was a dashed grey edge once, which said "unconfirmed" to someone already looking for it and nothing to anyone scanning. The colour lives on the badge alone: enriched text is ordinary text, because the learner is meant to read the meaning, not the label. `SourceChip` in `components/chip.tsx`, `compact` for the badge, and the full form naming all three sources where a chip row has the space and the comparison helps, as under a review's answer.
+
+Status is never colour alone. New, Learning, Known carry an icon and a word. Errors carry an icon. The AI badge carries its mark and its word too, and the whole sentence as its accessible name, because two letters are not a sentence.
 
 The twice-per-screen count is about chrome and actions. A status chip in a list repeats once per row, as `StateChip` already does down a deck table and as the due counts do down Library. That is one decision shown many times, not many uses of amber.
 
@@ -417,7 +429,7 @@ Rules: one primary per view. Every control has default, hover, focus, active, di
 
 ## Voice
 
-Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "Nothing left today", not "Congratulations!". Anything the AI wrote is labelled where it appears.
+Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "Nothing left today", not "Congratulations!". Anything the AI wrote carries its badge where it appears, and nothing else is marked, so the label is a fact about one field rather than a disclaimer about the card.
 
 - A field error says how to fix it: "Keep the term under 500 characters."
 - Any other error says "Couldn't [verb] [thing]." and then the fix, never a status code: "Couldn't save the reminder. Check your connection and try again."

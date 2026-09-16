@@ -79,6 +79,10 @@
     {
       "name": "0019_feedback.sql",
       "sha256": "e4bfb361421055c09470a0e4538ef53a426e5c52b321ada6faf22dae3ba22410"
+    },
+    {
+      "name": "0020_enrichment.sql",
+      "sha256": "d6bc6f2fe9ca034b4fe3ac6a2a939eb37c9d106329655b36f4f7da6abca1192c"
     }
   ]
 }

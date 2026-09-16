@@ -84,8 +84,14 @@ export type ImportedCard = {
   shortened: boolean;
   /** The card's own language, where the source records one apart from its deck's. */
   language?: string | null | undefined;
-  /** Where the meaning and example came from, from a Lymi zip; other sources' text is manual. */
-  fieldSources?: { meaning: FieldSource | null; example: FieldSource | null } | undefined;
+  /** Where the text came from, from a Lymi zip; other sources' text is manual. */
+  fieldSources?:
+    | {
+        meaning: FieldSource | null;
+        example: FieldSource | null;
+        pronunciation?: FieldSource | null | undefined;
+      }
+    | undefined;
   /** Where the learner found the word, such as "Lesson 14". */
   origin?: string | undefined;
   /** What the picture shows, so picture modes are asked from the start. */

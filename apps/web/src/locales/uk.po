@@ -675,14 +675,20 @@ msgstr "Додавання способу відразу застосовує й
 msgid "Ahead"
 msgstr "Попереду"
 
+msgid "AI"
+msgstr "AI"
+
 msgid "AI example"
-msgstr "Приклад від ШІ"
+msgstr "Приклад від AI"
 
 msgid "AI meaning"
-msgstr "Значення від ШІ"
+msgstr "Значення від AI"
+
+msgid "AI pronunciation"
+msgstr "Вимова від AI"
 
 msgid "AI wrote this"
-msgstr "Це написав ШІ"
+msgstr "Це написав AI"
 
 msgid "All"
 msgstr "Усі"
@@ -1390,6 +1396,12 @@ msgstr "Порожнє в першому записі"
 msgid "Enriched {list}"
 msgstr "Доповнено {list}"
 
+msgid "Enriched this card"
+msgstr "Картку доповнено"
+
+msgid "Enriching this card"
+msgstr "Доповнюємо цю картку"
+
 msgid "Enter after each"
 msgstr "Enter після кожного"
 
@@ -1480,7 +1492,7 @@ msgid "For scripts and curl. An assistant signs in instead, under Connected apps
 msgstr "Для скриптів і curl. Асистент натомість входить сам, див. «Підключені застосунки»."
 
 msgid "For the interface, and for the meanings the AI writes."
-msgstr "Для інтерфейсу та для значень, які пише ШІ."
+msgstr "Для інтерфейсу та для значень, які пише AI."
 
 msgid "Forgot"
 msgstr "Не пам’ятаю"
@@ -1788,6 +1800,9 @@ msgstr "Вийти з повторення"
 
 msgid "Leave review or close a sheet"
 msgstr "Вийти з повторення або закрити панель"
+
+msgid "Lesson"
+msgstr "Урок"
 
 msgid "Lesson 15"
 msgstr "Урок 15"
@@ -2353,8 +2368,14 @@ msgstr "Картка на відтворення для {front}"
 msgid "Pronunciation"
 msgstr "Вимова"
 
+msgid "Pronunciation by you"
+msgstr "Твоя вимова"
+
 msgid "Pronunciation changed to “{value}”"
 msgstr "Нова вимова: «{value}»"
+
+msgid "Pronunciation from lesson"
+msgstr "Вимова з уроку"
 
 msgid "Reach today’s goal to keep it going."
 msgstr "Досягни сьогоднішньої мети, щоб не перервати дні поспіль."
@@ -2923,7 +2944,7 @@ msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
 
 msgid "the AI"
-msgstr "ШІ"
+msgstr "AI"
 
 msgid "the API"
 msgstr "API"
@@ -2956,7 +2977,7 @@ msgid "The language this deck’s cards are in. It fills in on every new card."
 msgstr "Мова карток у цій колоді. Вона заповнюється в кожній новій картці."
 
 msgid "The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings."
-msgstr "Мова карток у цій колоді. З неї починається кожна нова картка, і без неї не працюють вимова та ШІ. Значення пишуться мовою значень, яка повторює мову застосунку в Налаштуваннях."
+msgstr "Мова карток у цій колоді. З неї починається кожна нова картка, і без неї не працюють вимова та AI. Значення пишуться мовою значень, яка повторює мову застосунку в Налаштуваннях."
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "Посилання перестане працювати назавжди. Ті, хто приєднався, залишаться в колоді, а наступне поширення створить нове посилання."

@@ -554,7 +554,7 @@ export function streakFrom(counts: number[], goal = 10): StreakSummary {
     attempts,
     goal,
     satisfied: attempts >= goal,
-    nothingDue: false,
+    outcome: attempts >= goal ? ("goal_met" as const) : ("open" as const),
   }));
   const todayCount = counts.at(-1) ?? 0;
   let current = 0;

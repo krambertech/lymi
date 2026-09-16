@@ -113,8 +113,10 @@ msgid "{0, plural, one {# picture couldn’t be read and was left out.} other {#
 msgstr "{0, plural, one {# picture couldn’t be read and was left out.} other {# pictures couldn’t be read and were left out.}}"
 
 #. placeholder {0}: today.attempts
-msgid "{0, plural, one {# review} other {# reviews}}"
-msgstr "{0, plural, one {# review} other {# reviews}}"
+#. placeholder {1}: today.goal
+#. placeholder {2}: today.goal
+msgid "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
+msgstr "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 
 #. placeholder {0}: reviews.length
 #. placeholder {1}: day(start)
@@ -364,6 +366,9 @@ msgstr "{day} none"
 msgid "{day}: {n} reviewed"
 msgstr "{day}: {n} reviewed"
 
+msgid "{day}: {reviews}"
+msgstr "{day}: {reviews}"
+
 msgid "{day}: {reviews}, goal missed"
 msgstr "{day}: {reviews}, goal missed"
 
@@ -378,6 +383,9 @@ msgstr "{day}: not yet"
 
 msgid "{day}: nothing due"
 msgstr "{day}: nothing due"
+
+msgid "{day}: nothing left, {reviews}"
+msgstr "{day}: nothing left, {reviews}"
 
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# day} other {# days}}"
@@ -3125,6 +3133,9 @@ msgstr "Today, {day}: no reviews yet"
 
 msgid "Today, {day}: nothing due"
 msgstr "Today, {day}: nothing due"
+
+msgid "Today, {day}: nothing left, {reviews}"
+msgstr "Today, {day}: nothing left, {reviews}"
 
 msgid "Today’s goal"
 msgstr "Today’s goal"

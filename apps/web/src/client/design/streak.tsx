@@ -1,4 +1,4 @@
-import { StreakButton, StreakWeek } from "../components/streak";
+import { StreakButton, type StreakSummary, StreakWeek } from "../components/streak";
 import { DocLink } from "./doc-link";
 import { Doc, Sub, Variants } from "./frame";
 import { streakDaysOpen, streakFrom, streak as streakSummary } from "./mock";
@@ -38,6 +38,22 @@ const RULES = [
 ];
 
 const open = streakFrom(streakDaysOpen.map((n) => n * 2));
+/** Today satisfied by running out of reviews below the goal: the second way a day counts. */
+const exhausted: StreakSummary = {
+  ...open,
+  current: open.current + 1,
+  today: { ...open.today, attempts: 3, outcome: "exhausted" },
+  days: [
+    ...open.days.filter((d) => d.date !== open.today.date),
+    {
+      date: open.today.date,
+      attempts: 3,
+      goal: open.today.goal,
+      satisfied: true,
+      outcome: "exhausted",
+    },
+  ],
+};
 const none = {
   ...streakSummary,
   current: 0,
@@ -116,6 +132,16 @@ export function StreakPage() {
                 <div className="flex flex-wrap items-center gap-8">
                   <StreakButton variant="phone" summary={open} />
                   <StreakWeek summary={open} size="lg" />
+                </div>
+              ),
+            },
+            {
+              label: "Nothing left today",
+              note: "Every available review done below the goal. It counts, and the modal says why.",
+              render: () => (
+                <div className="flex flex-wrap items-center gap-8">
+                  <StreakButton variant="phone" summary={exhausted} />
+                  <StreakWeek summary={exhausted} size="lg" />
                 </div>
               ),
             },

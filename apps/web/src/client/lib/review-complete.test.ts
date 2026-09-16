@@ -76,7 +76,7 @@ const summary = (over: Partial<StreakOut> & { outcome?: StreakOut["today"]["outc
     current: 3,
     longest: 3,
     reviewedDays: 10,
-    days: [{ date: "2026-09-13", attempts: 4, goal: 5, satisfied: false, nothingDue: false }],
+    days: [{ date: "2026-09-13", attempts: 4, goal: 5, satisfied: false, outcome: "open" }],
     ...rest,
   } satisfies StreakOut;
 };
@@ -118,7 +118,7 @@ describe("the streak once today counts", () => {
     const after = streakWith(summary({ days: [] }), 2, true);
     expect(after.today.outcome).toBe("exhausted");
     expect(after.days).toEqual([
-      { date: "2026-09-13", attempts: 2, goal: 5, satisfied: true, nothingDue: false },
+      { date: "2026-09-13", attempts: 2, goal: 5, satisfied: true, outcome: "exhausted" },
     ]);
   });
 });

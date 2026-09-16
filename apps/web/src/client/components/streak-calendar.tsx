@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import type { ReviewDayOutcome } from "@lymi/core";
 import { clsx } from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
@@ -28,7 +29,7 @@ const asDate = (date: string) => new Date(`${date}T12:00:00Z`);
 
 interface Props {
   /** The days that had an attempt or a nothing-due confirmation. Missing days had neither. */
-  days: Map<string, { attempts: number; satisfied: boolean; nothingDue: boolean }>;
+  days: Map<string, { attempts: number; satisfied: boolean; outcome: ReviewDayOutcome | null }>;
   today: string;
   /** The local YYYY-MM on show. */
   month: string;
@@ -73,7 +74,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run }:
   const atEnd = month >= thisMonth;
   const keeps = (date: string | null | undefined) => {
     const d = date ? days.get(date) : undefined;
-    return !!d && (d.satisfied || d.nothingDue);
+    return !!d && (d.satisfied || d.outcome === "nothing_due");
   };
   const runOrder = run ? [...run].sort() : [];
 
@@ -141,23 +142,30 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run }:
                     : undefined;
                 const day = dayLabel.format(asDate(date));
                 const reviews = plural(count, { one: "# review", other: "# reviews" });
+                // Each way a day can end has its own sentence: only one of them met a goal.
                 const label = future
                   ? t`${day}: not yet`
-                  : entry?.nothingDue
+                  : entry?.outcome === "nothing_due"
                     ? isToday
                       ? t`Today, ${day}: nothing due`
                       : t`${day}: nothing due`
-                    : isToday
-                      ? count > 0
-                        ? on
+                    : count === 0
+                      ? isToday
+                        ? t`Today, ${day}: no reviews yet`
+                        : t`${day}: no reviews`
+                      : entry?.outcome === "goal_met"
+                        ? isToday
                           ? t`Today, ${day}: goal reached, ${reviews}`
-                          : t`Today, ${day}: ${reviews}`
-                        : t`Today, ${day}: no reviews yet`
-                      : count > 0
-                        ? on
-                          ? t`${day}: goal reached, ${reviews}`
-                          : t`${day}: ${reviews}, goal missed`
-                        : t`${day}: no reviews`;
+                          : t`${day}: goal reached, ${reviews}`
+                        : entry?.outcome === "exhausted"
+                          ? isToday
+                            ? t`Today, ${day}: nothing left, ${reviews}`
+                            : t`${day}: nothing left, ${reviews}`
+                          : isToday
+                            ? t`Today, ${day}: ${reviews}`
+                            : on
+                              ? t`${day}: ${reviews}`
+                              : t`${day}: ${reviews}, goal missed`;
                 return (
                   <td key={key} className="relative h-10 p-0 text-center">
                     {(joinsBefore || joinsAfter) && (

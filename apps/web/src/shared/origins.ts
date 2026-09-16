@@ -15,6 +15,8 @@ const PRODUCT_PATHS = [
   "/import",
   "/login",
   "/consent",
+  // Opened from a reset email, so it is a product route a signed-out learner reaches directly.
+  "/reset-password",
   // The live design system. Its route redirects home outside local development.
   "/design",
 ] as const;

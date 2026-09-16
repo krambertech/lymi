@@ -14,19 +14,28 @@ export async function signInAsTestLearner(
 
   await page.goto(`/login?${new URLSearchParams({ dev: "1", returnTo })}`);
   await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
-  await page.getByRole("textbox", { name: "Email", exact: true }).fill(email);
-  await page.getByRole("textbox", { name: "Password", exact: true }).fill(password);
+  // The real door offers the same labels, so every control here comes from the dev panel.
+  const panel = page.getByRole("form", { name: "Dev sign-in" });
+  await panel.getByRole("textbox", { name: "Email", exact: true }).fill(email);
+  await panel.getByRole("textbox", { name: "Password", exact: true }).fill(password);
 
-  const response = page.waitForResponse(
-    (candidate) =>
-      candidate.request().method() === "POST" &&
-      candidate.url().endsWith("/api/auth/sign-in/email"),
-  );
-  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  const signedIn = () =>
+    page.waitForResponse(
+      (candidate) =>
+        candidate.request().method() === "POST" &&
+        candidate.url().endsWith("/api/auth/sign-in/email"),
+    );
 
-  const signIn = await response;
+  const first = signedIn();
+  await panel.getByRole("button", { name: "Sign in", exact: true }).click();
+  const signIn = await first;
   if (signIn.status() === 401) {
-    await page.getByRole("button", { name: "Create account", exact: true }).click();
+    // No account yet. Creating one signs in straight after, because a local address is
+    // created already confirmed.
+    const created = signedIn();
+    await panel.getByRole("button", { name: "Create account", exact: true }).click();
+    const retry = await created;
+    expect(retry.ok(), `Sign in after creating failed with HTTP ${retry.status()}`).toBe(true);
   } else {
     expect(signIn.ok(), `Sign in failed with HTTP ${signIn.status()}`).toBe(true);
   }

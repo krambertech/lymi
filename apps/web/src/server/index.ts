@@ -2,6 +2,7 @@ import type { Actor, Scope } from "@lymi/core";
 import { MeOut } from "@lymi/core";
 import { Hono } from "hono";
 import { type Auth, createAuth, type SessionUser } from "./auth";
+import { limitCredentialRequests } from "./auth-rate-limit";
 import { createDb, type Db } from "./db";
 import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
@@ -94,7 +95,8 @@ app.get("/api/health", describe({ hide: true }), (c) =>
   }),
 );
 
-// Better Auth owns everything under /api/auth.
+// Better Auth owns everything under /api/auth. The credential endpoints are metered first.
+app.use("/api/auth/*", limitCredentialRequests);
 app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
 
 // A deck's join page. Signed-out classmates land here from a chat, so it sits before

@@ -15,6 +15,7 @@ import { DeckSettingsView } from "../views/deck-settings-view";
 import { InsightsView } from "../views/insights-view";
 import { LibraryView } from "../views/library-view";
 import { LoginView } from "../views/login-view";
+import { ResetPasswordView } from "../views/reset-password-view";
 import { GradeBar, ReviewCard, ReviewComplete, ReviewHeader } from "../views/review-view";
 import { SettingsView } from "../views/settings-view";
 import { Sidebar } from "../views/shell";
@@ -799,25 +800,86 @@ export const SCREENS: Entry[] = [
     slug: "sign-in",
     name: "Sign in",
     source: "views/login-view.tsx",
-    note: "The front door has one job: sign in. The lantern and plain wordmark sit above one centered task. When an MCP client sent the learner here, its verified identity appears inside that same focused panel.",
+    note: "The front door has one job: sign in. Google stays the first control, and the email form sits under one rule as the other way in; only that form changes when the learner asks to create an account or reset a password. When an MCP client sent the learner here, its verified identity appears inside that same focused panel.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <PhoneShot caption="Sign in" initial="dark" path="/login" bare>
             <LoginView onGoogle={noop} />
           </PhoneShot>
+          <PhoneShot caption="Create an account" initial="light" path="/login" bare>
+            <LoginView onGoogle={noop} mode="sign-up" />
+          </PhoneShot>
+          <PhoneShot caption="Reset a password" initial="light" path="/login" bare>
+            <LoginView mode="forgot" />
+          </PhoneShot>
+          <PhoneShot caption="The link is on its way" initial="dark" path="/login" bare>
+            <LoginView
+              mode="sign-up"
+              notice={{
+                title: "Check your inbox",
+                body: "If ada@example.com can create a Lymi account, a link to confirm it is on the way. Open it to finish.",
+                actions: (
+                  <>
+                    <Button size="sm" variant="secondary">
+                      Send it again
+                    </Button>
+                    <Button size="sm" variant="ghost">
+                      Back to sign in
+                    </Button>
+                  </>
+                ),
+              }}
+            />
+          </PhoneShot>
           <PhoneShot caption="Sent here by an app" initial="light" path="/login" bare>
             <LoginView onGoogle={noop} app={CLAUDE} />
           </PhoneShot>
-          <PhoneShot caption="Sign-in failed" initial="light" path="/login" bare>
-            <LoginView onGoogle={noop} error="Sign-in didn’t finish. Try again." />
+          <PhoneShot caption="Sign-in failed" initial="dark" path="/login" bare>
+            <LoginView
+              onGoogle={noop}
+              error="That email and password don’t match. Try again, or reset your password."
+            />
           </PhoneShot>
-          <PhoneShot caption="Not on the invite list" initial="dark" path="/login" bare>
+          <PhoneShot caption="Not on the invite list" initial="light" path="/login" bare>
             <LoginView
               onGoogle={noop}
               blocked
-              error="This Google account has not been invited. Request an invitation, or try another account."
+              error="This account has not been invited. Request an invitation, or try another account."
             />
+          </PhoneShot>
+          <PhoneShot caption="A password too short" initial="dark" path="/login" bare>
+            <LoginView
+              onGoogle={noop}
+              mode="sign-up"
+              email="ada@example.com"
+              password="short"
+              passwordError="Use at least 8 characters."
+            />
+          </PhoneShot>
+        </div>
+      </div>
+    ),
+  },
+  {
+    slug: "set-a-password",
+    name: "Set a password",
+    source: "views/reset-password-view.tsx",
+    note: "The second half of a reset, opened from the email. It is the login panel with one field, so the learner never leaves the door they started at. A spent link says so and offers a new one rather than a dead form.",
+    Demo: () => (
+      <div className="grid gap-10">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="Set a new password" initial="dark" path="/reset-password" bare>
+            <ResetPasswordView />
+          </PhoneShot>
+          <PhoneShot caption="Too short" initial="light" path="/reset-password" bare>
+            <ResetPasswordView password="short" passwordError="Use at least 8 characters." />
+          </PhoneShot>
+          <PhoneShot caption="The link is spent" initial="light" path="/reset-password" bare>
+            <ResetPasswordView expired />
+          </PhoneShot>
+          <PhoneShot caption="Saved" initial="dark" path="/reset-password" bare>
+            <ResetPasswordView done />
           </PhoneShot>
         </div>
       </div>

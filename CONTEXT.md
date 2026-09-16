@@ -88,6 +88,6 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Published deck**: A shared deck anyone can add from its public page, without a link from the owner. Only Lymi's publishers publish. Withdrawing it stops new adds; members keep studying. Its add page says **Add to Lymi**. ADR 0020. _Avoid_: Public deck (in copy), catalog deck, template, marketplace
 
-**Invitation**: A deck's welcome to one Google email. Accepting it, or joining through the join link, creates the account if there is none. _Avoid_: Invite (as a noun), request, seat
+**Invitation**: A deck's welcome to one email address. Accepting it, or joining through the join link, creates the account if there is none. _Avoid_: Invite (as a noun), request, seat
 
 **Join**: Becoming a member of a shared deck. **Leave** is the member's way out and **Remove** is the owner's; neither deletes the member's reviews. _Avoid_: Subscribe, enroll, follow, kick

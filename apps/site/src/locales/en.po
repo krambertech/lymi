@@ -910,6 +910,9 @@ msgstr "If you enable review reminders, we store a push endpoint, browser-genera
 msgid "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
 msgstr "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
 
+msgid "If you sign in with an email address and a password, we store the address and a hash of the password, never the password itself. We also store short-lived records for confirming an address and resetting a password, and counts of recent sign-in, sign-up, resend and reset attempts by address and IP address, so those requests can be rate limited."
+msgstr "If you sign in with an email address and a password, we store the address and a hash of the password, never the password itself. We also store short-lived records for confirming an address and resetting a password, and counts of recent sign-in, sign-up, resend and reset attempts by address and IP address, so those requests can be rate limited."
+
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 

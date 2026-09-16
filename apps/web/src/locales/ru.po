@@ -451,8 +451,8 @@ msgstr "{members, plural, one {Новые люди не могут присое�
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 msgstr "{missingLanguage, plural, one {У # колоды пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил слова.} few {У # колод пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил слова.} many {У # колод пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил слова.} other {У # колоды пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил слова.}}"
 
-msgid "{monthDays, plural, one {{monthLit} of # day} other {{monthLit} of # days}}"
-msgstr "{monthDays, plural, one {{monthLit} из # дня} few {{monthLit} из # дней} many {{monthLit} из # дней} other {{monthLit} из # дня}}"
+msgid "{monthLit, plural, one {# day reviewed} other {# days reviewed}}"
+msgstr "{monthLit, plural, one {# день с повторениями} few {# дня с повторениями} many {# дней с повторениями} other {# дня с повторениями}}"
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# месяц} few {# месяца} many {# месяцев} other {# месяца}}"

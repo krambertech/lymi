@@ -411,6 +411,30 @@ export const streakDaysOpen: number[] = [...streakDays.slice(0, -1), 0];
 
 export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com" };
 
+/**
+ * Month totals the way the server builds them: the denominator is the calendar month's
+ * elapsed days, so a fixture can never show a shape the product cannot produce.
+ */
+function monthsFrom(days: { date: string; lit: boolean }[]) {
+  const today = new Date(now).toISOString().slice(0, 10);
+  const out: { month: string; lit: number; days: number }[] = [];
+  for (const d of days) {
+    const month = d.date.slice(0, 7);
+    const last = out.at(-1);
+    if (last?.month === month) {
+      if (d.lit) last.lit++;
+      continue;
+    }
+    const [y, m] = month.split("-").map(Number);
+    const elapsed =
+      month === today.slice(0, 7)
+        ? Number(today.slice(8, 10))
+        : new Date(Date.UTC(y ?? 1970, m ?? 1, 0)).getUTCDate();
+    out.push({ month, lit: d.lit ? 1 : 0, days: elapsed });
+  }
+  return out;
+}
+
 /** Insights, at the point where there is enough history for every block to say something. */
 const insightDays = (() => {
   const off = new Set([
@@ -448,13 +472,7 @@ export const insights: InsightsOut = {
     litAllTime: insightDays.filter((d) => d.lit).length,
     daysAllTime: insightDays.length,
   },
-  months: [
-    { month: "2026-05", lit: 24, days: 28 },
-    { month: "2026-06", lit: 22, days: 30 },
-    { month: "2026-07", lit: 28, days: 31 },
-    { month: "2026-08", lit: 25, days: 31 },
-    { month: "2026-09", lit: 6, days: 6 },
-  ],
+  months: monthsFrom(insightDays),
   cards: { total: 340, new: 62, learning: 41, known: 237 },
   forecast: Array.from({ length: 7 }, (_, i) => ({
     date: new Date(now + i * day).toISOString().slice(0, 10),
@@ -514,6 +532,12 @@ export const insights: InsightsOut = {
 };
 
 /** The first week. Every block has to say something true with almost nothing behind it. */
+/** The first week: five days of history inside the same thirty-day frame. */
+const thinDays = Array.from({ length: 30 }, (_, i) => ({
+  date: new Date(now - (29 - i) * day).toISOString().slice(0, 10),
+  lit: i >= 25 && i !== 26,
+}));
+
 export const thinInsights: InsightsOut = {
   period: 30,
   recall: {
@@ -525,17 +549,14 @@ export const thinInsights: InsightsOut = {
   consistency: {
     /* Thirty days like any other account: five days of history, the other twenty-five
        unlit because the learner was not here yet. */
-    days: Array.from({ length: 30 }, (_, i) => ({
-      date: new Date(now - (29 - i) * day).toISOString().slice(0, 10),
-      lit: i >= 25 && i !== 26,
-    })),
+    days: thinDays,
     lit: 4,
     longestRun: 3,
     litAllTime: 4,
     daysAllTime: 5,
   },
-  /* The calendar month, not the five days since the first review. */
-  months: [{ month: "2026-09", lit: 4, days: 16 }],
+  /* Built the way the server builds it, so the frame follows today rather than drifting. */
+  months: monthsFrom(thinDays.slice(-5)),
   cards: { total: 18, new: 11, learning: 7, known: 0 },
   forecast: Array.from({ length: 7 }, (_, i) => ({
     date: new Date(now + i * day).toISOString().slice(0, 10),

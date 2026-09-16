@@ -63,6 +63,8 @@ export function InsightsView({
   const { t, i18n } = useLingui();
   /* Formatters follow the interface language, which can change while this screen is open. */
   const longWeekday = (date: string) => i18n.date(parseLocal(date), { weekday: "long" });
+  /* Every percentage on this screen goes through one formatter; uk and ru space the sign. */
+  const pct = (v: number) => i18n.number(v, { style: "percent" });
 
   // On the Recall plate's label row rather than in the page header: in the header the same
   // control reads as a filter for the whole screen, and it moves this one figure only.
@@ -147,7 +149,7 @@ export function InsightsView({
             value="—"
             /* The real chart with nothing in it, so the reference cannot sit somewhere the
                live chart would never put it. */
-            figure={<TrendLine points={[]} target={0.9} targetLabel="90%" label="" />}
+            figure={<TrendLine points={[]} target={0.9} targetLabel={pct(0.9)} label="" />}
             note={t`How often you remember a card when it comes back`}
           />
           <StatPlate
@@ -200,7 +202,7 @@ export function InsightsView({
         : i18n.date(start, { day: "numeric", month: "short" }),
     };
   });
-  const series = trend.map((p) => `${p.label} ${Math.round(p.value * 100)}%`).join(", ");
+  const series = trend.map((p) => `${p.label} ${pct(p.value)}`).join(", ");
   // Ties keep the earliest day, so the sentence names the one the learner reaches first.
   const busiest = forecast.reduce(
     (a, b) => (b.count > a.count ? b : a),
@@ -209,7 +211,6 @@ export function InsightsView({
   const busiestIsToday = busiest.date === forecast[0]?.date;
   const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
   const monthLit = months.reduce((n, m) => n + m.lit, 0);
-  const monthDays = months.reduce((n, m) => n + m.days, 0);
 
   return (
     <Page>
@@ -234,7 +235,7 @@ export function InsightsView({
         <StatPlate
           label={t`Recall`}
           control={periodSwitcher(daysAllTime)}
-          value={recall.rate === null ? "—" : `${Math.round(recall.rate * 100)}%`}
+          value={recall.rate === null ? "—" : pct(recall.rate)}
           /* Too few weeks to have a trend draws the sample the figure is made of instead.
              One bucket has no shape at all: a line through a single point strokes nothing,
              leaving a lone dot in an empty plate. */
@@ -243,15 +244,18 @@ export function InsightsView({
               <TrendLine
                 points={trend}
                 target={0.9}
-                targetLabel="90%"
+                targetLabel={pct(0.9)}
                 label={
                   monthly
                     ? t`Recall by month: ${series}. The schedule aims for 90%.`
                     : t`Recall by week: ${series}. The schedule aims for 90%.`
                 }
               />
-            ) : (
+            ) : graded > 0 ? (
               <RecallTally passed={recall.passed} failed={recall.failed} />
+            ) : (
+              /* Nothing graded yet: the reference alone, exactly as the ghost draws it. */
+              <TrendLine points={[]} target={0.9} targetLabel={pct(0.9)} label="" />
             )
           }
           note={
@@ -316,14 +320,10 @@ export function InsightsView({
             <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
               <Trans>Month by month</Trans>
             </h2>
-            {/* Sums the bars below rather than counting from the first review, so the
-                heading and the months it heads can never disagree. */}
+            {/* A count, not a ratio. Each bar carries its own denominator; summing them
+                would total calendar days from before the learner had an account. */}
             <span className="text-xs text-muted tabular-nums">
-              <Plural
-                value={monthDays}
-                one={`${monthLit} of # day`}
-                other={`${monthLit} of # days`}
-              />
+              <Plural value={monthLit} one="# day reviewed" other="# days reviewed" />
             </span>
           </div>
           <MonthBars months={months} />

@@ -451,8 +451,8 @@ msgstr "{members, plural, one {Nobody new can join. The one person who joined ke
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 msgstr "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and say words.} other {# decks have no language yet. Choose one so Lymi can find duplicates and say words.}}"
 
-msgid "{monthDays, plural, one {{monthLit} of # day} other {{monthLit} of # days}}"
-msgstr "{monthDays, plural, one {{monthLit} of # day} other {{monthLit} of # days}}"
+msgid "{monthLit, plural, one {# day reviewed} other {# days reviewed}}"
+msgstr "{monthLit, plural, one {# day reviewed} other {# days reviewed}}"
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# month} other {# months}}"

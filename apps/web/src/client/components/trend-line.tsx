@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 
 export interface TrendPoint {
@@ -20,8 +21,12 @@ export interface TrendPoint {
 const W = 300;
 const H = 58;
 const PAD_Y = 12;
-/** Room for the reference label, so it sits beside the plot instead of on top of it. */
-const GUTTER = 30;
+/**
+ * Room for the reference label, so it sits beside the plot instead of on top of it. Wide
+ * enough to hold "90%" at 11 px on the narrowest plate: the label no longer carries an
+ * opaque backing, so anything it overhangs it draws straight through.
+ */
+const GUTTER = 44;
 const PAD_R = 8;
 /** The end labels' row, below the plot and inside the figure box the plates share. */
 const ENDS_H = 15;
@@ -92,6 +97,7 @@ export function TrendLine({
   className?: string | undefined;
   label: string;
 }) {
+  const { i18n } = useLingui();
   const values = points.map((p) => p.value);
   const lo = Math.min(...values, target ?? 1) - 0.05;
   const hi = Math.max(...values, target ?? 0) + 0.05;
@@ -136,7 +142,7 @@ export function TrendLine({
             // past both ends of the data claims a span the chart never measured.
             <line
               x1={GUTTER}
-              x2={W}
+              x2={W - PAD_R}
               y1={y(target)}
               y2={y(target)}
               stroke="var(--edge-2)"
@@ -193,7 +199,7 @@ export function TrendLine({
           reference rule whenever the last bucket is under target, and below it lands on
           this row. The row keeps its height with no points so the ghost's plot matches. */}
       <div
-        className="flex justify-between text-2xs text-faint"
+        className="flex justify-between text-2xs text-muted"
         style={{ height: ENDS_H, marginInlineStart: `${(GUTTER / W) * 100}%` }}
         aria-hidden="true"
       >
@@ -201,7 +207,9 @@ export function TrendLine({
         {lastValue !== undefined && points.length > 1 && (
           <span>
             {points.at(-1)?.short}{" "}
-            <b className="font-medium text-amber-text">{Math.round(lastValue * 100)}%</b>
+            <b className="font-medium text-text tabular-nums">
+              {i18n.number(lastValue, { style: "percent" })}
+            </b>
           </span>
         )}
       </div>

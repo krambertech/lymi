@@ -80,7 +80,7 @@ The product OpenAPI route permits CORS only for the exact public website origin 
 - `apps/web/wrangler.jsonc` owns the existing `lymi` Worker, product custom domain, backend bindings, secrets, cron and disabled preview URLs.
 - `apps/web/src/server/origin-routing.ts` enforces product-only paths and public-route redirects before the product SPA fallback.
 
-Browser E2E uses `http://localhost:4174` for the website, `http://localhost:4173` for interactive product journeys and `http://localhost:4175` for the production-built product package. It builds both apps, starts each Worker with isolated local state, and exercises the route boundary, product journeys, installed service worker and offline shell in one test run.
+Browser E2E gives the website, the interactive product journeys and the production-built product package a port each, from the base in `e2e/ports.mjs` (4173 by default, `E2E_PORT` to move all three). It builds both apps, starts each Worker with isolated local state, and exercises the route boundary, product journeys, installed service worker and offline shell in one test run.
 
 ## Reversible production cutover
 

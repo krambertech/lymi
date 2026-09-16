@@ -1,6 +1,7 @@
+import { e2eProductUrl, e2eSiteUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
-const publicSite = "http://localhost:4174";
+const publicSite = e2eSiteUrl;
 
 test("the public surface has no install contract while the product keeps its PWA", async ({
   page,
@@ -11,7 +12,7 @@ test("the public surface has no install contract while the product keeps its PWA
   await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Open Lymi", exact: true }).first()).toHaveAttribute(
     "href",
-    "http://localhost:4173/",
+    `${e2eProductUrl}/`,
   );
   await expect(page.getByRole("link", { name: "Privacy", exact: true })).toHaveAttribute(
     "href",
@@ -28,7 +29,7 @@ test("the public surface has no install contract while the product keeps its PWA
   await expect(page.getByRole("heading", { name: "Sign in to Lymi" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Privacy" })).toHaveAttribute(
     "href",
-    "http://localhost:4174/privacy",
+    `${e2eSiteUrl}/privacy`,
   );
 
   await page.goto("/docs/api");
@@ -128,7 +129,7 @@ test("the public Worker owns beta signup without exposing product APIs", async (
 test("clearing an installed product origin recovers from stale browser storage", async ({
   browser,
 }) => {
-  const staleContext = await browser.newContext({ baseURL: "http://localhost:4173" });
+  const staleContext = await browser.newContext({ baseURL: e2eProductUrl });
   const page = await staleContext.newPage();
   await page.goto("/login?dev=1");
   await page.evaluate(async () => {
@@ -144,7 +145,7 @@ test("clearing an installed product origin recovers from stale browser storage",
   // An unregistered worker can keep controlling its current document until that client closes.
   // A fresh context represents clearing all site data and reopening the browser or installed app.
   await staleContext.close();
-  const recoveredContext = await browser.newContext({ baseURL: "http://localhost:4173" });
+  const recoveredContext = await browser.newContext({ baseURL: e2eProductUrl });
   const recoveredPage = await recoveredContext.newPage();
 
   await recoveredPage.goto("/");

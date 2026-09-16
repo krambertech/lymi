@@ -1,6 +1,7 @@
+import { e2eSiteUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
-const publicSite = "http://localhost:4174";
+const publicSite = e2eSiteUrl;
 
 test("someone with an AI assistant can reach the assistants page and see how to connect", async ({
   page,

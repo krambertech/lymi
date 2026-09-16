@@ -1,6 +1,7 @@
+import { e2eSiteUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
-const publicSite = "http://localhost:4174";
+const publicSite = e2eSiteUrl;
 
 test("the privacy policy names email delivery in every supported language", async ({ request }) => {
   const pages = [

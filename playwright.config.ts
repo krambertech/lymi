@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { e2eProductUrl } from "./e2e/ports.mjs";
 
 export default defineConfig({
   testDir: "./e2e",
@@ -16,7 +17,7 @@ export default defineConfig({
     ? [["github"], ["html", { open: "never" }]]
     : [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: "http://localhost:4173",
+    baseURL: e2eProductUrl,
     screenshot: "only-on-failure",
     trace: "on-first-retry",
     video: "on-first-retry",
@@ -35,7 +36,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "node scripts/e2e-server.mjs",
-    url: "http://localhost:4173/api/health",
+    url: `${e2eProductUrl}/api/health`,
     reuseExistingServer: false,
     gracefulShutdown: { signal: "SIGTERM", timeout: 500 },
     timeout: 120_000,

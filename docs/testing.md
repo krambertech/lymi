@@ -21,7 +21,13 @@ Install the configured browsers once on a new machine:
 pnpm exec playwright install chromium webkit
 ```
 
-`scripts/e2e-server.mjs` clears only its three isolated Wrangler state directories, applies every D1 migration, seeds the site's D1 with the published decks in `e2e/fixtures/published-decks.sql`, builds both applications, starts the site Worker on port 4174, starts the production-built product package on port 4175 for PWA installation and offline-shell coverage, and starts the product through Vite on port 4173 for the interactive journeys. Its short-lived variable files contain local-only credentials. It never overwrites a pre-existing developer file, removes the files it creates on exit, and does not touch normal Wrangler state, a developer's `.dev.vars`, or any remote Cloudflare binding.
+`scripts/e2e-server.mjs` clears only its three isolated Wrangler state directories, applies every D1 migration, seeds the site's D1 with the published decks in `e2e/fixtures/published-decks.sql`, builds both applications, starts the site Worker, the production-built product package for PWA installation and offline-shell coverage, and the product through Vite for the interactive journeys. Its short-lived variable files contain local-only credentials. It never overwrites a pre-existing developer file, removes the files it creates on exit, and does not touch normal Wrangler state, a developer's `.dev.vars`, or any remote Cloudflare binding.
+
+`e2e/ports.mjs` owns the three ports. `E2E_PORT` sets the base and the other two follow it, so `E2E_PORT=4183` runs the suite on 4183, 4184 and 4185; the default is 4173, 4174 and 4175. Give a second worktree its own base, because the servers are not keyed per checkout and a run that finds another worktree's server would report on the wrong code. The server refuses to start when any of its three ports is taken, and `reuseExistingServer` is off, so a clash is a loud failure rather than a meaningless pass.
+
+```bash
+E2E_PORT=4183 pnpm test:e2e:chromium
+```
 
 Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test.
 

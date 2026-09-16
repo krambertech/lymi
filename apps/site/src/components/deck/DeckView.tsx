@@ -70,8 +70,15 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const language = languageName(deck.language, i18n.locale, { label: true });
   return (
-    <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-md text-muted">
-      {language && <span>{language}</span>}
+    <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md text-muted">
+      {language && (
+        <>
+          <span>{language}</span>
+          <span aria-hidden="true" className="text-faint">
+            ·
+          </span>
+        </>
+      )}
       <span>
         <Plural value={deck.cardCount} one="# card" other="# cards" />
       </span>

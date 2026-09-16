@@ -559,6 +559,9 @@ msgstr "A note to yourself about what is in here."
 msgid "A notification on this device when cards are due."
 msgstr "A notification on this device when cards are due."
 
+msgid "A reset link works for one hour, and only once."
+msgstr "A reset link works for one hour, and only once."
+
 msgid "A series is reviewed together, and its decks show in this order."
 msgstr "A series is reviewed together, and its decks show in this order."
 

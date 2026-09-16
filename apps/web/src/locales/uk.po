@@ -559,6 +559,9 @@ msgstr "Нотатка для себе про те, що тут є."
 msgid "A notification on this device when cards are due."
 msgstr "Сповіщення на цьому пристрої, коли є картки до повторення."
 
+msgid "A reset link works for one hour, and only once."
+msgstr "Посилання для зміни пароля діє годину й тільки один раз."
+
 msgid "A series is reviewed together, and its decks show in this order."
 msgstr "Колоди серії повторюються разом і показуються в цьому порядку."
 

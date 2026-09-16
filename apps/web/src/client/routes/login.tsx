@@ -367,8 +367,11 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
     setBusy(true);
     setError(null);
     // Creating issues no session while verification is required, so it is followed by a
-    // sign-in. A local address is created already confirmed, so that sign-in succeeds.
-    if (mode === "up") await authClient.signUp.email({ email, password, name: "Dev" });
+    // sign-in. A local address is created already confirmed, so that sign-in succeeds; any
+    // other address has to open the link in the outbox, which lands on `returnTo`.
+    if (mode === "up") {
+      await authClient.signUp.email({ email, password, name: "Dev", callbackURL: returnTo });
+    }
     const res = await authClient.signIn.email({ email, password });
     setBusy(false);
     if (res.error) {

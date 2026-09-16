@@ -56,3 +56,36 @@ export async function signInAsTestLearner(
     ).toBeVisible();
   }
 }
+
+/**
+ * Create a local account through the dev email form, as a classmate arriving on a join or add
+ * page would. An address outside `@lymi.local` has to be confirmed, so this opens the link the
+ * local outbox holds; that link signs the learner in and lands them on where they started.
+ */
+export async function createAccountThroughDevForm(page: Page, email: string) {
+  await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
+  const panel = page.getByRole("form", { name: "Dev sign-in" });
+  await panel.getByRole("textbox", { name: "Email", exact: true }).fill(email);
+  await panel.getByRole("textbox", { name: "Password", exact: true }).fill(password);
+  await panel.getByRole("button", { name: "Create account", exact: true }).click();
+  await page.goto(await confirmationLink(page, email));
+}
+
+/** The confirmation link the local outbox holds for this address. */
+async function confirmationLink(page: Page, email: string): Promise<string> {
+  let message: { kind: string; text: string } | null = null;
+  await expect
+    .poll(
+      async () => {
+        const response = await page.request.post("/api/dev/outbox", { data: { to: email } });
+        if (!response.ok()) return null;
+        ({ message } = (await response.json()) as { message: typeof message });
+        return message?.kind ?? null;
+      },
+      { message: `no confirmation email for ${email}` },
+    )
+    .toBe("verify-email");
+  const link = /https?:\/\/\S+/.exec(message?.text ?? "")?.[0];
+  expect(link, "no link in the confirmation email").toBeDefined();
+  return link as string;
+}

@@ -49,9 +49,12 @@ export function ResetPasswordView({
           <h1 className="text-2xl font-medium tracking-[-0.02em] text-text">
             {done ? <Trans>Your password is set</Trans> : <Trans>Set a new password</Trans>}
           </h1>
+          {/* The form's instruction is wrong once there is no form, so each state says its own. */}
           <p className="mx-auto mt-2 max-w-[38ch] text-md text-text-2">
             {done ? (
               <Trans>Every other device signed in with the old one has been signed out.</Trans>
+            ) : expired ? (
+              <Trans>A reset link works for one hour, and only once.</Trans>
             ) : (
               <Trans>Choose one you haven’t used on Lymi before.</Trans>
             )}

@@ -16,3 +16,4 @@ coverage
 .tanstack
 .astro
 apps/web/src/client/routeTree.gen.ts
+scripts/tts-compare/out/

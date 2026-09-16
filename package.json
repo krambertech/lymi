@@ -34,6 +34,7 @@
     "db:migrate": "pnpm --filter @lymi/web db:migrate",
     "db:migrate:prod": "pnpm --filter @lymi/web db:migrate:prod",
     "icons": "sh scripts/icons.sh",
+    "tts:compare": "node --import ./scripts/tts-compare/resolve-ts.mjs scripts/tts-compare/run.mjs",
     "i18n:extract": "pnpm -r --filter @lymi/web --filter @lymi/site i18n:extract",
     "i18n:check": "pnpm i18n:extract && git diff --exit-code --stat -- 'apps/*/src/locales/*.po'",
     "local": "node scripts/local.mjs"

@@ -227,9 +227,6 @@ msgstr "Штука; штуковина"
 msgid "a word that makes a question"
 msgstr "слово, которое делает предложение вопросом"
 
-msgid "About this deck"
-msgstr "О колоде"
-
 msgid "Accents that land between the beats"
 msgstr "Акценты, которые приходятся между основными долями"
 
@@ -1149,9 +1146,6 @@ msgstr "Язык"
 msgid "Language learning"
 msgstr "Изучение языков"
 
-msgid "Last checked"
-msgstr "Последняя проверка"
-
 msgid "Last updated"
 msgstr "Обновлено"
 
@@ -1534,8 +1528,9 @@ msgstr "общественный транспорт"
 msgid "Public transport"
 msgstr "Общественный транспорт"
 
-msgid "Published"
-msgstr "Дата публикации"
+#. placeholder {0}: date(deck.publishedAt)
+msgid "Published {0}"
+msgstr "Опубликовано {0}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push-подписки хранятся, пока ты не отключишь напоминания, push-сервис не сообщит об окончании подписки или аккаунт не будет удалён."
@@ -1773,9 +1768,6 @@ msgstr "Договорились; подходит"
 
 msgid "Source code"
 msgstr "Исходный код"
-
-msgid "Sources"
-msgstr "Источники"
 
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Советская Россия признала независимость Эстонии"

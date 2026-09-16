@@ -227,9 +227,6 @@ msgstr "A thing; a whatsit"
 msgid "a word that makes a question"
 msgstr "a word that makes a question"
 
-msgid "About this deck"
-msgstr "About this deck"
-
 msgid "Accents that land between the beats"
 msgstr "Accents that land between the beats"
 
@@ -1149,9 +1146,6 @@ msgstr "Language"
 msgid "Language learning"
 msgstr "Language learning"
 
-msgid "Last checked"
-msgstr "Last checked"
-
 msgid "Last updated"
 msgstr "Last updated"
 
@@ -1534,8 +1528,9 @@ msgstr "public transport"
 msgid "Public transport"
 msgstr "Public transport"
 
-msgid "Published"
-msgstr "Published"
+#. placeholder {0}: date(deck.publishedAt)
+msgid "Published {0}"
+msgstr "Published {0}"
 
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
@@ -1773,9 +1768,6 @@ msgstr "Sounds good; that works"
 
 msgid "Source code"
 msgstr "Source code"
-
-msgid "Sources"
-msgstr "Sources"
 
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Soviet Russia recognised Estonia’s independence"

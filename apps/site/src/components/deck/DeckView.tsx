@@ -263,68 +263,21 @@ export function DeckHowItWorks({ locale }: LocaleProps) {
   );
 }
 
-/** Where the deck's words come from, and when it was published. */
-export function DeckAbout({ deck, locale }: DeckProps) {
+/** The last quiet line of the page: when the publisher put the deck out. */
+export function DeckPublished({ deck, locale }: DeckProps) {
   return (
     <Localized locale={locale}>
-      <DeckAboutBody deck={deck} />
+      <DeckPublishedLine deck={deck} />
     </Localized>
   );
 }
 
-function DeckAboutBody({ deck }: { deck: PublicDeckOut }) {
+function DeckPublishedLine({ deck }: { deck: PublicDeckOut }) {
   const date = useDate();
-  const rows: { key: string; label: ReactNode; value: ReactNode }[] = [
-    { key: "published", label: <Trans>Published</Trans>, value: date(deck.publishedAt) },
-    ...(deck.reviewedAt
-      ? [{ key: "checked", label: <Trans>Last checked</Trans>, value: date(deck.reviewedAt) }]
-      : []),
-  ];
   return (
-    <section
-      aria-labelledby="about-title"
-      className="border-t border-edge px-5 py-14 @2xl:px-10 @4xl:py-20"
-    >
-      <div className="mx-auto grid max-w-[1040px] gap-6 @4xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] @4xl:gap-20">
-        <h2 id="about-title" className="text-xl font-medium tracking-[-0.02em] text-text">
-          <Trans>About this deck</Trans>
-        </h2>
-        <dl className="grid gap-x-6 gap-y-4 @xl:grid-cols-2">
-          {rows.map((row) => (
-            <div key={row.key} className="grid gap-0.5">
-              <dt className="text-sm text-muted">{row.label}</dt>
-              <dd className="text-md text-text">{row.value}</dd>
-            </div>
-          ))}
-          {deck.sources.length > 0 && (
-            <div className="grid gap-0.5 @xl:col-span-2">
-              <dt className="text-sm text-muted">
-                <Trans>Sources</Trans>
-              </dt>
-              <dd>
-                <ul className="grid gap-1 text-md text-text">
-                  {deck.sources.map((source) => (
-                    <li key={`${source.title}-${source.url ?? ""}`} lang={deck.meaningLanguage}>
-                      {source.url ? (
-                        <a
-                          href={source.url}
-                          rel="nofollow noopener noreferrer"
-                          className="rounded-xs underline decoration-edge-2 underline-offset-4 transition-[text-decoration-color] duration-150 hoverable:hover:decoration-current"
-                        >
-                          {source.title}
-                        </a>
-                      ) : (
-                        source.title
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          )}
-        </dl>
-      </div>
-    </section>
+    <p className="px-5 pb-16 text-center text-sm text-muted @2xl:px-10">
+      <Trans>Published {date(deck.publishedAt)}</Trans>
+    </p>
   );
 }
 

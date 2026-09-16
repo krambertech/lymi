@@ -429,7 +429,7 @@ Rules: one primary per view. Every control has default, hover, focus, active, di
 
 ## Voice
 
-Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "Nothing left today", not "Congratulations!". Anything the AI wrote is labelled where it appears.
+Plain and friendly. Counts cards, not points. Never nags, never celebrates for you. "Nothing left today", not "Congratulations!". Anything the AI wrote carries its badge where it appears, and nothing else is marked, so the label is a fact about one field rather than a disclaimer about the card.
 
 - A field error says how to fix it: "Keep the term under 500 characters."
 - Any other error says "Couldn't [verb] [thing]." and then the fix, never a status code: "Couldn't save the reminder. Check your connection and try again."

@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { explorePaths, explorePath } from "../../lib/explore";
+import { pageI18n } from "../../lib/i18n";
+import type { ExplorePage } from "../../lib/public-catalog";
+import ExploreCatalog from "../islands/ExploreCatalog";
+import PublicNav from "../islands/PublicNav";
+import { ExploreEmpty, ExploreFooter, ExploreHeading } from "./ExploreView";
+import { exploreDescription, exploreTitle } from "./explore-meta";
+
+interface Props {
+  page: ExplorePage;
+}
+
+const { page } = Astro.props;
+const { locale, decks } = page;
+const i18n = pageI18n(locale);
+const paths = explorePaths();
+---
+
+<BaseLayout
+  title={exploreTitle(i18n)}
+  description={exploreDescription(i18n)}
+  canonicalPath={explorePath(locale)}
+  alternatePaths={paths}
+>
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+    <header class="explore-hero over-tint">
+      <PublicNav client:load locale={locale} />
+      <div class="mx-auto max-w-[1160px] px-5 pt-10 pb-4 text-center @2xl:px-10 @4xl:pt-16">
+        <ExploreHeading locale={locale} />
+      </div>
+    </header>
+    <main class="mx-auto max-w-[1160px] px-5 pb-20 @2xl:px-10">
+      {
+        decks.length > 0 ? (
+          <ExploreCatalog client:load locale={locale} decks={decks} />
+        ) : (
+          <ExploreEmpty locale={locale} />
+        )
+      }
+    </main>
+    <ExploreFooter locale={locale} paths={paths} />
+  </div>
+</BaseLayout>

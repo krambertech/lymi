@@ -11,7 +11,7 @@ export const localizedPages = {
 export type LocalizedPage = keyof typeof localizedPages;
 
 /** Pages rendered per request from the database, in every locale; the runtime sitemap lists them. */
-export const localizedRuntimePages = ["/decks/[slug]"] as const;
+export const localizedRuntimePages = ["/explore", "/explore/[slug]"] as const;
 
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];

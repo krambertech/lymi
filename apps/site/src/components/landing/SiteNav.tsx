@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { useEffect, useId, useRef, useState } from "react";
+import { explorePath } from "../../lib/explore";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { Lockup } from "../Logo";
@@ -185,7 +186,14 @@ function PhoneMenu({ openAppUrl, current, joinHref }: PhoneMenuProps) {
                 ))}
               </ul>
             </div>
-            <div className="border-t border-edge pt-6">
+            <div className="grid gap-0.5 border-t border-edge pt-6">
+              <a
+                onClick={close}
+                href={explorePath(i18n.locale)}
+                className={clsx(rowClass, "text-xl font-medium")}
+              >
+                <Trans>Explore</Trans>
+              </a>
               <a onClick={close} href="/docs" className={clsx(rowClass, "text-xl font-medium")}>
                 <Trans>Docs</Trans>
               </a>
@@ -231,6 +239,9 @@ export function SiteNav({ openAppUrl, current, joinHref = "#join" }: Props) {
         </a>
         <div className="hidden items-center gap-1 @2xl:flex">
           <UseCasesMenu current={current} />
+          <a href={explorePath(i18n.locale)} className={buttonClass("ghost", "sm")}>
+            <Trans>Explore</Trans>
+          </a>
           <a href="/docs" className={buttonClass("ghost", "sm")}>
             <Trans>Docs</Trans>
           </a>

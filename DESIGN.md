@@ -255,7 +255,19 @@ Three words: warm, calm, quick.
 
 Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of four tones: `canvas` (the room), `rail` (the navigation, one step off the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it. Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour. Nothing lifts, and amber never marks state.
 
-The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it. At the end of a review the same light spills into the room around the lantern, under Motion.
+The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it. At the end of a review the same light spills into the room around the lantern, under Motion. Explore's header is the one other place it spills: a still pool of it behind the search, and the only background on a public page. It goes under `prefers-reduced-transparency`.
+
+## The tray
+
+On Explore a published deck shows as one of its own cards sitting in a **tray**: a rounded panel the card is cut against, with the deck's name below it on the open canvas rather than inside a box. The tray is the reason the cut reads as tucked into the shelf; the same card cut in mid-air reads as clipped. It shows two thirds of the card, which is the most that can be taken before the meaning goes with it, and the deck's name is the largest thing in the group.
+
+The card in a tray sits on paper: one blank sheet per further card the deck holds, at most two, so the stack is the deck's own depth rather than a decoration. Pointing at a deck lifts the card and spreads the sheets either side of it over 260 ms; under reduced motion they rest where they are and nothing moves.
+
+A tray is the one surface that carries a hue. Eight of them at one lightness and one chroma, chosen from the slug and nothing else, so a deck keeps its colour as the catalogue grows, a search that hides its neighbours does not repaint it, and its own page arrives at the same colour without being told. Two of the eight landing side by side is the price of that. **The amber band is left out**: amber means act, and a tray is not a thing to press. At night the tray is darker than the card rather than lighter, so the card still sits proud of it instead of sinking in. `trayHue` in the site's `lib/tray.ts`, `.deck-tray` in its `styles.css`.
+
+A deck keeps that colour on its own page, as the ground its card spread lies on: click a lilac tray and land on a lilac page. The colour is a pure function of the slug, so nothing is stored and the two pages cannot disagree. The ground runs to both edges, because the spread's outer cards reach past the text column, and it holds **less chroma than a tray** — the same colour over a page reads far louder than over 216 px.
+
+A **chosen chip** is a solid `text` fill with `canvas` text, and its count goes to 60% of that. It is the only selected state a chip has: amber is out because it means act, and the segmented control's plate on plate-2 has too little contrast against the canvas at chip size.
 
 ## Colour
 
@@ -322,6 +334,7 @@ It moves on the lantern's springs from `FLAME_MOTION`: out to full is the catch,
 - [Review completion](docs/design/review-completion.md)
 - [Imports and exports](docs/design/imports.md)
 - [Activity](docs/design/activity.md)
+- [Explore](docs/design/explore.md)
 
 ## Wordmark and lockups
 

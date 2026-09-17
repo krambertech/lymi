@@ -1,5 +1,5 @@
 import type { PublicationInput } from "@lymi/core";
-import { listPublicDeckSlugs, loadPublicDeck } from "@lymi/core/catalog";
+import { listPublicCatalog, listPublicDeckSlugs, loadPublicDeck } from "@lymi/core/catalog";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { Db } from "../db";
 import { addCards, archiveCard } from "./cards";
@@ -31,6 +31,7 @@ const input = (slug: string): PublicationInput => ({
   slug,
   summary: "Words and phrases for your first weeks in Estonia.",
   level: "A1",
+  category: "languages",
   meaningLanguage: "en",
   publisher: "Lymi",
   sources: [{ title: "EKI A1 word list", url: "https://www.eki.ee/" }],
@@ -130,5 +131,59 @@ describe("loadPublicDeck", () => {
     await publishDeck(lymi, deck.id, { ...input("revised-page"), summary: "New." }, publishers);
     const result = await loadPublicDeck(db, "revised-page");
     expect(result).toMatchObject({ status: "published", deck: { revision: 2, summary: "New." } });
+  });
+});
+
+/** Explore's read of the whole catalogue. The second allowlist of ADR 0016. */
+describe("listPublicCatalog", () => {
+  it("carries a deck's shelf, its counts and one of its cards, and nothing private", async () => {
+    const deck = await sectionedDeck("shelf");
+    await turnOnJoinLink(lymi, deck.id);
+    await addPublishedDeck(anna, "shelf");
+
+    const row = (await listPublicCatalog(db)).find((entry) => entry.slug === "shelf");
+    expect(row).toMatchObject({
+      name: "Everyday Estonian shelf",
+      category: "languages",
+      level: "A1",
+      language: "et",
+      meaningLanguage: "en",
+      cardCount: 5,
+      sectionCount: 2,
+    });
+    // The card on the tray is a real one from the deck, with its meaning and its section.
+    expect(row?.card?.term).toContain("shelf");
+    expect(row?.card?.meaning).toBeTruthy();
+
+    const json = JSON.stringify(row);
+    for (const secret of [
+      deck.id,
+      "lymi@lymi.test",
+      "anna",
+      "Lymi Publisher Account",
+      "PRIVATE-NOTE",
+      "PRIVATE-EXAMPLE",
+      "ARCHIVED",
+    ]) {
+      expect(json).not.toContain(secret);
+    }
+    expect(json).not.toMatch(/"(id|userId|deckId|sectionId|notes|example|token|publisher)"/);
+  });
+
+  it("holds exactly the decks whose own page answers 200", async () => {
+    const gone = await sectionedDeck("withdrawn-shelf");
+    await withdrawDeck(lymi, gone.id);
+    const slugs = (await listPublicCatalog(db)).map((row) => row.slug);
+    expect(slugs).toContain("shelf");
+    expect(slugs).not.toContain("withdrawn-shelf");
+    expect(slugs).not.toContain("archived-page");
+    expect(new Set(slugs)).toEqual(new Set((await listPublicDeckSlugs(db)).map((row) => row.slug)));
+  });
+
+  it("gives the same deck the same tray card until its revision moves", async () => {
+    await sectionedDeck("steady");
+    const first = (await listPublicCatalog(db)).find((row) => row.slug === "steady")?.card?.term;
+    const again = (await listPublicCatalog(db)).find((row) => row.slug === "steady")?.card?.term;
+    expect(again).toBe(first);
   });
 });

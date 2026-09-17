@@ -5,6 +5,7 @@ import {
   type EditionCardField,
   LOCALIZATION_PROVENANCES,
   LOCALIZATION_STATUSES,
+  PUBLICATION_CATEGORIES,
   REVIEW_MODE_KEYS,
   type ReviewModeKey,
   SECTION_PROGRESSIONS,
@@ -341,12 +342,14 @@ export const deckPublications = sqliteTable(
     deckId: text("deck_id")
       .notNull()
       .references(() => decks.id, { onDelete: "cascade" }),
-    /** The public URL part: `lymi.app/decks/<slug>` and `my.lymi.app/add/<slug>`. */
+    /** The public URL part: `lymi.app/explore/<slug>` and `my.lymi.app/add/<slug>`. */
     slug: text("slug").notNull(),
     status: text("status", { enum: ["published", "withdrawn"] }).notNull(),
     summary: text("summary").notNull(),
     /** A CEFR level such as A1, or null when the deck has none. */
     level: text("level"),
+    /** Which shelf the deck sits on in Explore. Null until a publisher chooses one. */
+    category: text("category", { enum: PUBLICATION_CATEGORIES }),
     /** The original edition: the language the deck's own fields are written in. */
     meaningLanguage: text("meaning_language").notNull(),
     /**

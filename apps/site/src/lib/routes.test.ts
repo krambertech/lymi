@@ -26,7 +26,13 @@ const pages = Object.keys(localizedPages) as LocalizedPage[];
 const translatedPaths = (locale: string) => pages.map((page) => bare(localizedPath(page, locale)));
 const translatedPrefix = new RegExp(`^/(${locales.filter((l) => l !== "en").join("|")})(/|$)`);
 const allRoutes = new Set(pageFiles.map(routeOf).filter((route) => route !== "/404"));
-const isRuntime = (route: string) => route.includes("[");
+const runtimePaths = new Set(
+  locales.flatMap((locale) =>
+    localizedRuntimePages.map((path) => (locale === "en" ? path : `/${locale}${path}`)),
+  ),
+);
+/** Rendered per request: a `[param]` route, or a fixed path the runtime list names. */
+const isRuntime = (route: string) => route.includes("[") || runtimePaths.has(route);
 const routes = new Set([...allRoutes].filter((route) => !isRuntime(route)));
 
 describe("public routes", () => {
@@ -52,10 +58,11 @@ describe("public routes", () => {
   });
 
   it("has every page rendered per request in every locale, and nothing else dynamic", () => {
-    const expected = locales.flatMap((locale) =>
-      localizedRuntimePages.map((path) => (locale === "en" ? path : `/${locale}${path}`)),
+    expect([...runtimePaths].filter((path) => !allRoutes.has(path))).toEqual([]);
+    const undeclared = [...allRoutes].filter(
+      (route) => route.includes("[") && !runtimePaths.has(route),
     );
-    expect(new Set([...allRoutes].filter(isRuntime))).toEqual(new Set(expected));
+    expect(undeclared).toEqual([]);
   });
 
   it("lists every public page in the sitemap", async () => {

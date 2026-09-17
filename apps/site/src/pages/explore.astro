@@ -1,0 +1,11 @@
+---
+import ExplorePage from "../components/explore/ExplorePage.astro";
+import { resolveExplorePage } from "../lib/public-catalog";
+
+export const prerender = false;
+
+const page = await resolveExplorePage(Astro, "en");
+if (page instanceof Response) return page;
+---
+
+<ExplorePage page={page} />

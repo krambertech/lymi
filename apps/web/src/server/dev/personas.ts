@@ -1,4 +1,4 @@
-import type { Actor, AppLanguage, Directions, FieldSource } from "@lymi/core";
+import type { Actor, AppLanguage, Directions, FieldSource, PublicationCategory } from "@lymi/core";
 
 /**
  * The learners a local developer can become. Each is one account in the local D1, named
@@ -47,6 +47,8 @@ export interface PersonaPublication {
   slug: string;
   summary: string;
   level?: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+  /** The shelf the deck sits on in Explore. */
+  category?: PublicationCategory;
   publisher: string;
   /** The language the deck's own meanings are in. Every edition localizes this one. */
   meaningLanguage: string;
@@ -339,6 +341,28 @@ const LONG_CARDS: PersonaCard[] = [
   { term: "der Hund", meaning: "dog", example: "Der Hund schläft." },
 ];
 
+/** A second published deck, so Explore has more than one deck on its Languages shelf. */
+const FINNISH_A1: PersonaCard[] = [
+  { term: "aamiainen", meaning: "breakfast", section: "Arki" },
+  { term: "kiitos", meaning: "thank you", section: "Arki" },
+  { term: "hyvää huomenta", meaning: "good morning", section: "Arki" },
+  { term: "juna", meaning: "train", section: "Arki" },
+  { term: "leipä", meaning: "bread", section: "Kaupassa" },
+  { term: "maito", meaning: "milk", section: "Kaupassa" },
+  { term: "paljonko tämä maksaa?", meaning: "how much does this cost?", section: "Kaupassa" },
+  { term: "kassa", meaning: "the till", section: "Kaupassa" },
+];
+
+/** A published deck on another shelf, so Explore renders more than one category. */
+const DRIVING_ET: PersonaCard[] = [
+  { term: "peatee", meaning: "priority road", section: "Märgid" },
+  { term: "ülekäigurada", meaning: "pedestrian crossing", section: "Märgid" },
+  { term: "keelumärk", meaning: "a prohibition sign", section: "Märgid" },
+  { term: "teed andma", meaning: "to give way", section: "Teeandmine" },
+  { term: "ristmik", meaning: "a junction", section: "Teeandmine" },
+  { term: "foor", meaning: "traffic light", section: "Teeandmine" },
+];
+
 const everyDay = (from: number, to: number): number[] =>
   Array.from({ length: from - to + 1 }, (_, i) => to + i);
 
@@ -552,6 +576,7 @@ export const personas: Persona[] = [
           slug: "everyday-estonian",
           summary: "Words and phrases for your first weeks in Estonia.",
           level: "A1",
+          category: "languages",
           publisher: "Lymi",
           meaningLanguage: "en",
           editions: [
@@ -568,6 +593,37 @@ export const personas: Persona[] = [
               meanings: ESTONIAN_A1_UK,
             },
           ],
+        },
+      },
+      {
+        name: "Everyday Finnish",
+        description: "Home, work and the shop, in the words people use.",
+        defaultLanguage: "fi",
+        introducedDaysAgo: 24,
+        sections: ["Arki", "Kaupassa"],
+        cards: FINNISH_A1,
+        publication: {
+          slug: "everyday-finnish",
+          summary: "Home, work and the shop, in the words people use.",
+          level: "A1",
+          category: "languages",
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Driving theory, Estonia",
+        description: "Signs, right of way and the questions the test repeats.",
+        defaultLanguage: "et",
+        introducedDaysAgo: 18,
+        sections: ["Märgid", "Teeandmine"],
+        cards: DRIVING_ET,
+        publication: {
+          slug: "driving-theory-estonia",
+          summary: "Signs, right of way and the questions the test repeats.",
+          category: "driving",
+          publisher: "Lymi",
+          meaningLanguage: "en",
         },
       },
     ],

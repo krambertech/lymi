@@ -12,7 +12,18 @@ export const STACK_SIZE = HAND_SIZE;
 export type DeckCard = { term: string; meaning: string; section: string | null };
 
 export function deckPath(slug: string, locale: Locale): string {
-  return locale === "en" ? `/decks/${slug}` : `/${locale}/decks/${slug}`;
+  return locale === "en" ? `/explore/${slug}` : `/${locale}/explore/${slug}`;
+}
+
+/**
+ * Where a link to the old `/decks/<slug>` address goes now. A deck's address was shared before
+ * Explore existed, so it answers a permanent redirect rather than a 404.
+ */
+export function movedDeckPath(pathname: string): string | null {
+  const match = /^(?:\/(uk|ru))?\/decks\/([^/]+)\/?$/.exec(pathname);
+  if (!match) return null;
+  const locale = (match[1] ?? "en") as Locale;
+  return deckPath(match[2] as string, locale);
 }
 
 export function deckPaths(slug: string): Record<Locale, string> {

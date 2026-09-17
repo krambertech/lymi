@@ -91,6 +91,10 @@
     {
       "name": "0022_localized_editions.sql",
       "sha256": "5de58d67d1ada1046913a6f52a7bc5bcb2a3871d05c7c17ec6108ceb7dfd3c8e"
+    },
+    {
+      "name": "0023_colossal_sunset_bain.sql",
+      "sha256": "0b9a7468c3a066d9365805e4c893897b30382aa79fc36e62c5d54c0757b88659"
     }
   ]
 }

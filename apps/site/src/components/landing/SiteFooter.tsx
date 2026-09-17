@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
+import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
@@ -37,6 +38,13 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
                 </a>
               </li>
             ))}
+          </Group>
+          <Group title={<Trans>Decks</Trans>}>
+            <li>
+              <a href={explorePath(i18n.locale)} className={linkClass}>
+                <Trans>Explore decks</Trans>
+              </a>
+            </li>
           </Group>
           <Group title={<Trans>Docs</Trans>}>
             <li>

@@ -243,6 +243,21 @@ export type AddQuery = z.infer<typeof AddQuery>;
 /** Lower-case words joined by hyphens, as in `everyday-estonian`. */
 export const PUBLICATION_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+/**
+ * The shelves on Explore. A closed list, because each one is a heading a translator writes and
+ * a visitor learns; a new shelf is a deliberate change, not a typo in a publish call.
+ */
+export const PUBLICATION_CATEGORIES = [
+  "languages",
+  "exams",
+  "driving",
+  "science",
+  "geography",
+  "work",
+] as const;
+export const PublicationCategory = z.enum(PUBLICATION_CATEGORIES);
+export type PublicationCategory = z.infer<typeof PublicationCategory>;
+
 export const PublicationInput = z
   .object({
     slug: z
@@ -252,6 +267,9 @@ export const PublicationInput = z
       .regex(PUBLICATION_SLUG, "Use lower-case words joined by hyphens, like everyday-estonian.")
       .meta({ description: "The public URL part. Changing it breaks links already shared." }),
     summary: z.string().trim().min(1).max(500).meta({ description: "One or two plain sentences" }),
+    category: PublicationCategory.nullable()
+      .optional()
+      .meta({ description: "The shelf the deck sits on in Explore. A deck sits on one shelf." }),
     level: z
       .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
       .nullable()

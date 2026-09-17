@@ -262,6 +262,9 @@ msgstr "Додати «{title}»"
 msgid "Add it to your assistant"
 msgstr "Додай її до свого асистента"
 
+msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
+msgstr "Додай колоду й вчи її безкоштовно — Lymi повертає кожну картку саме перед тим, як ти її забудеш."
+
 msgid "Add the deck"
 msgstr "Додай колоду"
 
@@ -622,12 +625,6 @@ msgstr "Любий; дорогий"
 msgid "Decks"
 msgstr "Колоди"
 
-msgid "Decks made to be learnt"
-msgstr "Колоди, створені, щоб їх вивчити"
-
-msgid "Decks of flashcards, written by a person and checked card by card. Add one and learn it for free."
-msgstr "Колоди флеш-карток, написані людиною та перевірені картка за карткою. Додай одну й вчи безкоштовно."
-
 msgid "Deep, lasting affection"
 msgstr "Глибока, тривала прихильність"
 
@@ -796,9 +793,6 @@ msgstr "Колоди"
 msgid "Explore decks"
 msgstr "Переглянути колоди"
 
-msgid "Explore decks — Lymi"
-msgstr "Колоди Lymi — картки, готові до вивчення"
-
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "На цьому почутті тримається фаду — тужлива португальська пісня."
 
@@ -813,6 +807,9 @@ msgstr "У фінській є окреме слово для вечора, ко
 
 msgid "Finns often name it as part of the national character."
 msgstr "Фіни часто називають це рисою національного характеру."
+
+msgid "Flashcard decks, ready to learn"
+msgstr "Колоди флеш-карток, готові до вивчення"
 
 msgid "Food and drink"
 msgstr "Їжа й напої"
@@ -834,6 +831,9 @@ msgstr "Не пам’ятаю"
 
 msgid "Français · phrase"
 msgstr "Français · фраза"
+
+msgid "Free flashcard decks — languages, exams and more · Lymi"
+msgstr "Безкоштовні колоди флеш-карток — мови, іспити й не тільки · Lymi"
 
 msgid "French"
 msgstr "Французька"
@@ -1615,6 +1615,9 @@ msgstr "Читаємо нотатки…"
 msgid "Ready to start"
 msgstr "Можна починати"
 
+msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
+msgstr "Готові колоди флеш-карток, написані людиною та перевірені картка за карткою: мови, іспити й усе інше, що варто пам’ятати. Додай колоду безкоштовно й повторюй її своєю мовою по кілька хвилин на день."
+
 msgid "Recall"
 msgstr "Пригадування"
 
@@ -2223,9 +2226,6 @@ msgstr "Зазвичай"
 
 msgid "verb"
 msgstr "дієслово"
-
-msgid "Vocabulary decks written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one and review it in your own language."
-msgstr "Колоди карток, написані людиною та перевірені картка за карткою: мови, іспити й усе інше, що варто пам’ятати. Додай колоду й повторюй її своєю мовою."
 
 msgid "Waiting for your notes"
 msgstr "Чекаємо на нотатки"

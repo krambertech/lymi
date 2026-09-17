@@ -262,6 +262,9 @@ msgstr "Add {title}"
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
 
+msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
+msgstr "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
+
 msgid "Add the deck"
 msgstr "Add the deck"
 
@@ -622,12 +625,6 @@ msgstr "Dear; expensive"
 msgid "Decks"
 msgstr "Decks"
 
-msgid "Decks made to be learnt"
-msgstr "Decks made to be learnt"
-
-msgid "Decks of flashcards, written by a person and checked card by card. Add one and learn it for free."
-msgstr "Decks of flashcards, written by a person and checked card by card. Add one and learn it for free."
-
 msgid "Deep, lasting affection"
 msgstr "Deep, lasting affection"
 
@@ -796,9 +793,6 @@ msgstr "Explore"
 msgid "Explore decks"
 msgstr "Explore decks"
 
-msgid "Explore decks — Lymi"
-msgstr "Explore decks — Lymi"
-
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "Fado, Portugal’s mournful song, is built on it."
 
@@ -813,6 +807,9 @@ msgstr "Finnish has a word for a night with no plans to go out."
 
 msgid "Finns often name it as part of the national character."
 msgstr "Finns often name it as part of the national character."
+
+msgid "Flashcard decks, ready to learn"
+msgstr "Flashcard decks, ready to learn"
 
 msgid "Food and drink"
 msgstr "Food and drink"
@@ -834,6 +831,9 @@ msgstr "Forgot"
 
 msgid "Français · phrase"
 msgstr "Français · phrase"
+
+msgid "Free flashcard decks — languages, exams and more · Lymi"
+msgstr "Free flashcard decks — languages, exams and more · Lymi"
 
 msgid "French"
 msgstr "French"
@@ -1615,6 +1615,9 @@ msgstr "Reading your notes…"
 msgid "Ready to start"
 msgstr "Ready to start"
 
+msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
+msgstr "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
+
 msgid "Recall"
 msgstr "Recall"
 
@@ -2223,9 +2226,6 @@ msgstr "Usually"
 
 msgid "verb"
 msgstr "verb"
-
-msgid "Vocabulary decks written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one and review it in your own language."
-msgstr "Vocabulary decks written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one and review it in your own language."
 
 msgid "Waiting for your notes"
 msgstr "Waiting for your notes"

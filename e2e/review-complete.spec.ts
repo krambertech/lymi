@@ -50,8 +50,8 @@ test("at the goal a learner can review forgotten cards, take another round, or s
   page,
 }, testInfo) => {
   test.setTimeout(120_000);
-  // The only journey that needs the end's sequence to really play: its tap-to-finish rule exists
-  // only under motion, and the suite's reduced motion makes the end instant. docs/testing.md.
+  // Tap-to-finish exists only under motion, and the suite's reduced motion makes the end instant,
+  // so the first step alone plays the sequence for real and the rest stay quiet. docs/testing.md.
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await signInAsTestLearner(page, testInfo, "review-goal");
   await setGoal(page, 3);
@@ -72,6 +72,7 @@ test("at the goal a learner can review forgotten cards, take another round, or s
     await expect(page.getByText(/^3\s*reviews today$/)).toBeVisible();
     await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
   });
+  await page.emulateMedia({ reducedMotion: "reduce" });
 
   await test.step("Review forgotten counts its own card and ends as a round", async () => {
     await page.getByRole("button", { name: /Review \d+ forgotten card/ }).click();

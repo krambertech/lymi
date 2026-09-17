@@ -50,6 +50,9 @@ test("at the goal a learner can review forgotten cards, take another round, or s
   page,
 }, testInfo) => {
   test.setTimeout(120_000);
+  // Tap-to-finish exists only under motion, and the suite's reduced motion makes the end instant,
+  // so the first step alone plays the sequence for real and the rest stay quiet. docs/testing.md.
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await signInAsTestLearner(page, testInfo, "review-goal");
   await setGoal(page, 3);
   await addCards(page, await addDeck(page, "Goal"), "Goal", 16);
@@ -61,14 +64,15 @@ test("at the goal a learner can review forgotten cards, take another round, or s
     await grade(page, "Good");
     await grade(page, "Good");
     await expect(heading(page, "Daily goal reached")).toBeVisible();
-    // A tap during the celebration finishes it; it must not also press the still-invisible Done.
-    const done = await page.getByRole("link", { name: "Done", exact: true }).boundingBox();
-    if (done) await page.mouse.click(done.x + done.width / 2, done.y + done.height / 2);
+    // A tap during the celebration finishes it; it must not also press the still-invisible Done,
+    // so the click is forced past the actionability check that pointer-events-none would fail.
+    await page.getByRole("link", { name: "Done", exact: true }).click({ force: true });
     await expect(heading(page, "Daily goal reached")).toBeVisible();
     await expect(page).toHaveURL(/\/review$/);
     await expect(page.getByText(/^3\s*reviews today$/)).toBeVisible();
     await expect(page.getByText(/^1\s*day in a row$/)).toBeVisible();
   });
+  await page.emulateMedia({ reducedMotion: "reduce" });
 
   await test.step("Review forgotten counts its own card and ends as a round", async () => {
     await page.getByRole("button", { name: /Review \d+ forgotten card/ }).click();

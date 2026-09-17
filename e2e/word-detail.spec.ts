@@ -23,11 +23,13 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
   const second = await createDeck(page, "Word detail second");
   const term = "sbrigarsi";
 
+  let cardId = "";
   await test.step("add a word whose meaning the AI wrote", async () => {
     const res = await page.request.post("/api/cards", {
       data: { deckId: first, term, meaning: "to hurry", meaningSource: "ai", language: "it" },
     });
     expect(res.ok()).toBeTruthy();
+    cardId = ((await res.json()) as { card: { id: string } }).card.id;
   });
 
   await test.step("open it from the list", async () => {
@@ -67,6 +69,27 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
     // Only the AI is marked, so a meaning the learner rewrites loses its badge.
     await expect(shown("AI")).toBeHidden();
     await expect(shown("Meaning changed to “to hurry up, to get a move on”")).toBeVisible();
+  });
+
+  await test.step("Enrich is offered while a field is empty, and gone once none is", async () => {
+    const menu = page.getByRole("button", { name: "Card options", exact: true });
+    const enrich = page.getByRole("menuitem", { name: "Enrich", exact: true });
+    // The example and the pronunciation are still empty, so there is something to ask for.
+    await menu.click();
+    await expect(enrich).toBeVisible();
+
+    const res = await page.request.patch(`/api/cards/${cardId}`, {
+      data: { example: "Sbrigati, il treno parte!", pronunciation: "zbri\u02c8garsi" },
+    });
+    expect(res.ok()).toBeTruthy();
+    // A reload puts the menu away without a gesture that differs between the drawer and the pointer menu.
+    await page.reload();
+    await expect(shown("Sbrigati, il treno parte!")).toBeVisible();
+
+    await menu.click();
+    await expect(page.getByRole("menuitem", { name: "Archive", exact: true })).toBeVisible();
+    await expect(enrich).toHaveCount(0);
+    await page.reload();
   });
 
   await test.step("move it to the other deck", async () => {

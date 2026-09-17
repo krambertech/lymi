@@ -1,5 +1,5 @@
 import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
-import { newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
+import { needsEnrichment, newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
@@ -8,7 +8,7 @@ import { schema } from "../db";
 import { runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, editionText, inEdition, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { type EnrichmentQueue, failEnrichment, needsEnrichment } from "./enrichment";
+import { type EnrichmentQueue, queueEnrichment } from "./enrichment";
 import { memberOf } from "./members";
 import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
 import { bumped } from "./revisions";
@@ -178,19 +178,15 @@ export async function addCards(
   }
 
   await runInBatches(db, groups);
-  if (enrichment && enriching.length > 0) {
-    try {
-      await enrichment.create({
-        id: `enrich-${newId()}`,
-        params: { userId, cardIds: enriching },
-      });
-    } catch {
-      // The add stands whatever the queue does; the cards say so rather than waiting forever.
-      await failEnrichment(db, userId, enriching);
-      for (const outcome of outcomes) {
-        if (outcome.status === "added" && enriching.includes(outcome.card.id)) {
-          outcome.card.enrichmentStatus = "failed";
-        }
+  // The add stands whatever the queue does; a refused run leaves its cards saying so.
+  if (
+    enrichment &&
+    enriching.length > 0 &&
+    !(await queueEnrichment(db, userId, enriching, enrichment))
+  ) {
+    for (const outcome of outcomes) {
+      if (outcome.status === "added" && enriching.includes(outcome.card.id)) {
+        outcome.card.enrichmentStatus = "failed";
       }
     }
   }
@@ -316,6 +312,43 @@ export async function ownedCard(ctx: ServiceContext, id: string) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
   }
   return card;
+}
+
+/**
+ * Ask the AI to fill one card, the way an add does. Only the card's owner may ask, so a member
+ * of a shared deck is forbidden, and only a card with an empty field: one the AI has nothing
+ * left to fill is refused rather than silently accepted. The card moves to `working` before the
+ * run is handed over, so the shimmer the add path already draws appears with no second state.
+ */
+export async function requestEnrichment(
+  ctx: ServiceContext,
+  id: string,
+  enrichment: EnrichmentQueue | null,
+): Promise<CardView> {
+  const { db, userId } = ctx;
+  const card = await ownedCard(ctx, id);
+  if (card.archivedAt) throw new ServiceError("invalid", "An archived card cannot be enriched");
+  if (!needsEnrichment(card)) {
+    throw new ServiceError("invalid", "This card has nothing left for the AI to fill in");
+  }
+  if (!enrichment) {
+    throw new ServiceError("unavailable", "Enrichment is not configured on this server");
+  }
+  // A run already outstanding is the answer, so asking twice does not queue twice.
+  if (card.enrichmentStatus === "working") return presentCard(db, card, userId);
+  // `updatedAt` moves because the card did, and because the screen stops waiting on a card
+  // that has said `working` for too long: a card added months ago must not read as stale.
+  const working = { enrichmentStatus: "working" as const, updatedAt: new Date() };
+  await db
+    .update(schema.cards)
+    .set(working)
+    .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
+  const queued = await queueEnrichment(db, userId, [id], enrichment);
+  return presentCard(
+    db,
+    { ...card, ...working, ...(queued ? {} : { enrichmentStatus: "failed" as const }) },
+    userId,
+  );
 }
 
 /**

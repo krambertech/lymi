@@ -109,6 +109,8 @@ export interface DeckDetailProps {
   onPlayAudio?: ((card: DeckRow["card"]) => void) | undefined;
   /** Opens the form for a card. Only a deck's owner is offered it. */
   onEditCard?: ((card: DeckRow["card"]) => void) | undefined;
+  /** Asks the AI to fill a card's empty fields. Only a deck's owner is offered it. */
+  onEnrichCard?: ((card: DeckRow["card"]) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
   onMove?: ((id: string, deckId: string) => void) | undefined;
@@ -617,6 +619,7 @@ export function DeckDetailView({
   events,
   onPlayAudio,
   onEditCard,
+  onEnrichCard,
   decks,
   onMove,
   sections = [],
@@ -810,6 +813,9 @@ export function DeckDetailView({
         );
       }}
       onEdit={canEdit ? () => onEditCard?.(shownWord.card) : undefined}
+      onEnrich={
+        onEnrichCard && deck?.role === "owner" ? () => onEnrichCard(shownWord.card) : undefined
+      }
       onArchive={() => {
         setOpen(null);
         onArchive(shownWord.card.id);

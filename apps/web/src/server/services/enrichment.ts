@@ -1,4 +1,11 @@
-import { CARD_LIMITS, LanguageTag } from "@lymi/core";
+import {
+  CARD_LIMITS,
+  ENRICHED_FIELDS,
+  type EnrichedField,
+  emptyFields,
+  LanguageTag,
+  newId,
+} from "@lymi/core";
 import { and, eq, inArray, isNull, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
@@ -8,10 +15,6 @@ import { type Db, schema } from "../db";
 import { selectIn } from "./batch";
 import type { ServiceContext } from "./context";
 import { getSettings } from "./settings";
-
-/** The fields enrichment may fill. Text already on a card is never overwritten, whatever wrote it. */
-export const ENRICHED_FIELDS = ["meaning", "example", "pronunciation", "language"] as const;
-export type EnrichedField = (typeof ENRICHED_FIELDS)[number];
 
 /** Cards per model call. A lesson lands in waves rather than all at once. */
 export const CARDS_PER_CALL = 10;
@@ -31,16 +34,6 @@ export function enrichmentContext(db: Db, params: EnrichRunParams): ServiceConte
 }
 
 type Fillable = Pick<Card, EnrichedField>;
-
-/** Which of a card's enrichable fields hold no text. Whitespace is not text. */
-export function emptyFields(card: Fillable): EnrichedField[] {
-  return ENRICHED_FIELDS.filter((field) => !card[field]?.trim());
-}
-
-/** True when a card has at least one empty field, so an add is worth a run. */
-export function needsEnrichment(card: Fillable): boolean {
-  return emptyFields(card).length > 0;
-}
 
 /** Split a list into runs of `size`, keeping order, so the first cards fill before the last. */
 export function chunked<T>(items: readonly T[], size: number): T[][] {
@@ -326,6 +319,25 @@ async function workingCards(db: Db, userId: string, cardIds: readonly string[]):
 export type EnrichmentQueue = {
   create(options: { id: string; params: EnrichRunParams }): Promise<unknown>;
 };
+
+/**
+ * Hand one run to the workflow. True when it took it; false when it refused, in which case
+ * the cards end at `failed` rather than shimmering for a run that will never start.
+ */
+export async function queueEnrichment(
+  db: Db,
+  userId: string,
+  cardIds: string[],
+  queue: EnrichmentQueue,
+): Promise<boolean> {
+  try {
+    await queue.create({ id: `enrich-${newId()}`, params: { userId, cardIds } });
+    return true;
+  } catch {
+    await failEnrichment(db, userId, cardIds);
+    return false;
+  }
+}
 
 /**
  * The queue, or null where no text vendor is configured, so an add on a Worker without an

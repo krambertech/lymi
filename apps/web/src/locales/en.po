@@ -19,6 +19,9 @@ msgstr ", not open yet"
 msgid "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
 msgstr "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
 
+msgid "“{term}” has nothing left to fill in."
+msgstr "“{term}” has nothing left to fill in."
+
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
 msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -1173,6 +1176,12 @@ msgstr "Couldn’t check for more cards"
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Couldn’t check this device. Reload to try again."
 
+msgid "Couldn’t enrich “{term}”. Check your connection and try again."
+msgstr "Couldn’t enrich “{term}”. Check your connection and try again."
+
+msgid "Couldn’t enrich this card."
+msgstr "Couldn’t enrich this card."
+
 msgid "Couldn’t load Activity"
 msgstr "Couldn’t load Activity"
 
@@ -1440,6 +1449,9 @@ msgstr "Empty in the first card"
 
 msgid "Empty in the first note"
 msgstr "Empty in the first note"
+
+msgid "Enrich"
+msgstr "Enrich"
 
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Enriched {count, plural, one {# card} other {# cards}} in {deck}"

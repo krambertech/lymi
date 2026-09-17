@@ -191,6 +191,30 @@ function DeckPage() {
       });
     },
   });
+  const enrich = useMutation({
+    mutationFn: (card: Card) => api.enrichCard(card.id),
+    // The card comes back working, so its shimmer starts before the next poll comes round.
+    onSuccess: (card) =>
+      qc.setQueryData(deckCardsQuery(deckId).queryKey, (rows) =>
+        rows?.map((row) => (row.card.id === card.id ? { ...row, card } : row)),
+      ),
+    onError: (error, card) => {
+      const term = shortQuote(card.term);
+      // The menu only offers this while a field is empty, so a refusal means the card filled
+      // itself, or another device did, between the menu opening and the tap.
+      if (error instanceof ApiError && error.status === 400) {
+        toast.add({ id: `enrich-${card.id}`, title: t`“${term}” has nothing left to fill in.` });
+        void qc.invalidateQueries({ queryKey: ["decks", deckId, "cards"] });
+        return;
+      }
+      toast.add({
+        id: `enrich-${card.id}`,
+        type: "error",
+        title: t`Couldn’t enrich “${term}”. Check your connection and try again.`,
+        actionProps: { children: t`Retry`, onClick: () => enrich.mutate(card) },
+      });
+    },
+  });
   const archiveDeck = useArchiveDeck(deckId, deck?.name);
 
   return (
@@ -218,6 +242,7 @@ function DeckPage() {
         events={events}
         onPlayAudio={playAudio}
         onEditCard={(card) => setEditingId(card.id)}
+        onEnrichCard={(card) => enrich.mutate(card)}
         decks={decks.data}
         onMove={(id, toDeck) => {
           setOpen(null);

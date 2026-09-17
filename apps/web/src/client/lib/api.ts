@@ -384,6 +384,8 @@ export const api = {
   /** Send only the fields that changed. `deckId` moves the card to another deck. */
   updateCard: (id: string, body: CardPatch) =>
     request<Card>(`/api/cards/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+  /** Ask the AI to fill the card's empty fields. Comes back working; the deck's poll watches it. */
+  enrichCard: (id: string) => request<Card>(`/api/cards/${id}/enrich`, { method: "POST" }),
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   audioUrl: (cardId: string) => `/api/audio/${encodeURIComponent(cardId)}`,

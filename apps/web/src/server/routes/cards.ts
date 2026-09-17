@@ -20,6 +20,7 @@ import {
   archiveCard,
   cardHistory,
   enrichmentQueue,
+  requestEnrichment,
   restoreCard,
   searchCards,
   showCard,
@@ -126,6 +127,22 @@ cards.patch(
   }),
   body(CardPatch, "patch"),
   async (c) => c.json(await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+);
+
+cards.post(
+  "/:id/enrich",
+  describe({
+    tags: ["Cards"],
+    summary: "Enrich a card",
+    description:
+      "Needs the write scope. Asks the AI to fill the card's empty fields, the same way an add does: " +
+      "only meaning, example, pronunciation and language, only where they hold no text, and meanings in the learner's meaning language. " +
+      'The card comes back at `enrichmentStatus: "working"`; poll it to watch the text land. ' +
+      "Only the card's owner may ask, and a card with nothing left to fill is refused with 400.",
+    ok: { schema: CardOut, description: "The card, now working" },
+    errors: [400, 404, 503],
+  }),
+  async (c) => c.json(await requestEnrichment(ctxOf(c), c.req.param("id"), enrichmentQueue(c.env))),
 );
 
 cards.post(

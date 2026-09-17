@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { deckPath, deckPaths, deckStructuredData, jsonForScript, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { localizedPath } from "../../lib/routes";
+import { trayHue } from "../../lib/tray";
 import type { DeckPage } from "../../lib/public-deck";
 import PublicNav from "../islands/PublicNav";
 import DeckSections from "../islands/DeckSections";
@@ -40,7 +41,7 @@ const edition = deck ? editionOf(deck) : undefined;
         set:html={jsonForScript(deckStructuredData(page.deck, locale))}
       />
       <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-        <header>
+        <header class="deck-hero-tint over-tint" data-hue={trayHue(slug)}>
           <PublicNav client:load locale={locale} />
           <DeckHero deck={page.deck} locale={locale} spread={spreadCards(page.deck)} />
         </header>

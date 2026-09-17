@@ -5,6 +5,7 @@ INSERT INTO user (id, name, email) VALUES
 
 INSERT INTO decks (id, user_id, name, default_language, description) VALUES
   ('e2e-deck-evening', 'e2e-publisher', 'Evening Estonian', 'et', 'PRIVATE description'),
+  ('e2e-deck-signs', 'e2e-publisher', 'Estonian road signs', 'et', NULL),
   ('e2e-deck-withdrawn', 'e2e-publisher', 'Withdrawn Estonian', 'et', NULL);
 INSERT INTO decks (id, user_id, name, default_language, archived_at) VALUES
   ('e2e-deck-archived', 'e2e-publisher', 'Archived Estonian', 'et', unixepoch() * 1000);
@@ -23,13 +24,18 @@ INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning, notes, examp
 INSERT INTO cards (id, user_id, deck_id, section_id, term) VALUES
   ('e2e-card-no-meaning', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-cafe', 'kohupiim');
 
+INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning) VALUES
+  ('e2e-card-signs-1', 'e2e-publisher', 'e2e-deck-signs', NULL, 'peatee', 'priority road'),
+  ('e2e-card-signs-2', 'e2e-publisher', 'e2e-deck-signs', NULL, 'ülekäigurada', 'pedestrian crossing');
+
 INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning, archived_at) VALUES
   ('e2e-card-archived', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-greetings', 'PRIVATE archived card', 'gone', unixepoch() * 1000);
 
 INSERT INTO deck_members (id, deck_id, user_id, role, joined_at) VALUES
   ('e2e-member-evening', 'e2e-deck-evening', 'e2e-member', 'learner', unixepoch() * 1000);
 
-INSERT INTO deck_publications (id, deck_id, slug, status, summary, level, meaning_language, publisher, sources, revision, published_at, withdrawn_at) VALUES
-  ('e2e-pub-evening', 'e2e-deck-evening', 'evening-estonian', 'published', 'Phrases for the end of the day.', 'A1', 'en', 'Lymi', '[{"title":"Keeleklikk","url":"https://www.keeleklikk.ee/"}]', 3, unixepoch() * 1000, NULL),
-  ('e2e-pub-withdrawn', 'e2e-deck-withdrawn', 'withdrawn-estonian', 'withdrawn', 'Gone.', 'A1', 'en', 'Lymi', '[]', 2, unixepoch() * 1000, unixepoch() * 1000),
-  ('e2e-pub-archived', 'e2e-deck-archived', 'archived-estonian', 'published', 'Archived.', 'A1', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL);
+INSERT INTO deck_publications (id, deck_id, slug, status, summary, level, category, meaning_language, publisher, sources, revision, published_at, withdrawn_at) VALUES
+  ('e2e-pub-evening', 'e2e-deck-evening', 'evening-estonian', 'published', 'Phrases for the end of the day.', 'A1', 'languages', 'en', 'Lymi', '[{"title":"Keeleklikk","url":"https://www.keeleklikk.ee/"}]', 3, unixepoch() * 1000, NULL),
+  ('e2e-pub-signs', 'e2e-deck-signs', 'estonian-road-signs', 'published', 'The signs the theory test repeats.', NULL, 'driving', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL),
+  ('e2e-pub-withdrawn', 'e2e-deck-withdrawn', 'withdrawn-estonian', 'withdrawn', 'Gone.', 'A1', 'languages', 'en', 'Lymi', '[]', 2, unixepoch() * 1000, unixepoch() * 1000),
+  ('e2e-pub-archived', 'e2e-deck-archived', 'archived-estonian', 'published', 'Archived.', 'A1', 'languages', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL);

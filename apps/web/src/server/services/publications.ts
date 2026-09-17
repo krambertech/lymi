@@ -32,6 +32,7 @@ export function publicationOut(
       status: row.status,
       summary: row.summary,
       level: row.level,
+      category: row.category,
       meaningLanguage: row.meaningLanguage,
       editionFields: row.editionFields,
       publisher: row.publisher,
@@ -99,6 +100,7 @@ export async function publishDeck(
     status: "published" as const,
     summary: input.summary,
     level: input.level ?? null,
+    category: input.category ?? null,
     meaningLanguage: input.meaningLanguage,
     // Left out, the choice stands: shrinking it silently would make a half-written edition
     // read as complete, and publishing it would put untranslated cards in front of a learner.

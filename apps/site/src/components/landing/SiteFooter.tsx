@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
+import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
@@ -28,7 +29,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
         <div>
           <Lockup size={18} className="text-muted" />
         </div>
-        <div className="grid grid-cols-2 gap-x-12 gap-y-8 @2xl:grid-cols-3 @2xl:gap-x-16">
+        <div className="grid grid-cols-2 gap-x-12 gap-y-8 @2xl:grid-cols-4 @2xl:gap-x-14">
           <Group title={<Trans>Use cases</Trans>}>
             {USE_CASE_LINKS.map((link) => (
               <li key={link.page}>
@@ -37,6 +38,13 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
                 </a>
               </li>
             ))}
+          </Group>
+          <Group title={<Trans>Decks</Trans>}>
+            <li>
+              <a href={explorePath(i18n.locale)} className={linkClass}>
+                <Trans>Explore decks</Trans>
+              </a>
+            </li>
           </Group>
           <Group title={<Trans>Docs</Trans>}>
             <li>

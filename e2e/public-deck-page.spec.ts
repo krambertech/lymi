@@ -3,7 +3,7 @@ import { e2eProductUrl, e2eSiteUrl } from "./ports.mjs";
 
 /** The site reads `e2e/fixtures/published-decks.sql`; publishing itself is covered by the add spec. */
 const publicSite = e2eSiteUrl;
-const pagePath = "/decks/evening-estonian";
+const pagePath = "/explore/evening-estonian";
 const addUrl = `${e2eProductUrl}/add/evening-estonian`;
 
 test("anyone can read a published deck's page, see its sections and cards, and turn a few over", async ({
@@ -125,7 +125,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
   });
 
   await test.step("an unknown deck or locale is not found", async () => {
-    const unknown = await page.goto(`${publicSite}/decks/never-published`);
+    const unknown = await page.goto(`${publicSite}/explore/never-published`);
     expect(unknown?.status()).toBe(404);
     await expect(
       page.getByRole("heading", { name: "There is no deck at this address." }),
@@ -134,12 +134,22 @@ test("anyone can read a published deck's page, see its sections and cards, and t
   });
 
   await test.step("a withdrawn or archived deck is gone from its page and the sitemap", async () => {
-    const withdrawn = await page.goto(`${publicSite}/decks/withdrawn-estonian`);
+    const withdrawn = await page.goto(`${publicSite}/explore/withdrawn-estonian`);
     expect(withdrawn?.status()).toBe(410);
     await expect(
       page.getByRole("heading", { name: "This deck is no longer published." }),
     ).toBeVisible();
-    expect((await request.get(`${publicSite}/uk/decks/archived-estonian`)).status()).toBe(410);
+    expect((await request.get(`${publicSite}/uk/explore/archived-estonian`)).status()).toBe(410);
+
+    // The deck used to live at /decks/<slug>, and those links are already shared.
+    for (const [old, moved] of [
+      ["/decks/evening-estonian", "/explore/evening-estonian"],
+      ["/uk/decks/evening-estonian", "/uk/explore/evening-estonian"],
+    ]) {
+      const redirect = await request.get(`${publicSite}${old}`, { maxRedirects: 0 });
+      expect(redirect.status()).toBe(301);
+      expect(redirect.headers().location).toBe(`${publicSite}${moved}`);
+    }
 
     const sitemap = await (await request.get(`${publicSite}/sitemap-decks.xml`)).text();
     expect(sitemap).toContain(`<loc>https://lymi.app/uk${pagePath}</loc>`);

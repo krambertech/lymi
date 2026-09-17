@@ -28,6 +28,10 @@ msgstr "«Schönen Feierabend!» — пожелание хорошо отдох�
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
+#. placeholder {0}: shelf.decks.length
+msgid "{0, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
+
 #. placeholder {0}: deck.length - (index % deck.length)
 msgid "{0, plural, one {# due} other {# due}}"
 msgstr "{0, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
@@ -37,6 +41,7 @@ msgid "{0, plural, one {# more section} other {# more sections}}"
 msgstr "{0, plural, one {Ещё # раздел} few {Ещё # раздела} many {Ещё # разделов} other {Ещё # раздела}}"
 
 #. placeholder {0}: SECTIONS.length
+#. placeholder {0}: deck.sectionCount
 #. placeholder {0}: deck.sections
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
@@ -72,8 +77,14 @@ msgstr "{count, plural, one {# карточка} few {# карточки} many {
 msgid "{decks, plural, one {deck} other {decks}}"
 msgstr "{decks, plural, one {колода} few {колоды} many {колод} other {колоды}}"
 
+msgid "{found, plural, one {# deck} other {# decks}}"
+msgstr "{found, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
+
 msgid "{known}% known"
 msgstr "Выучено {known}%"
+
+msgid "{label} decks"
+msgstr "Колоды: {label}"
 
 msgid "{learners, plural, one {# learner} other {# learners}}"
 msgstr "{learners, plural, one {# ученик} few {# ученика} many {# учеников} other {# ученика}}"
@@ -251,6 +262,9 @@ msgstr "Добавить «{title}»"
 msgid "Add it to your assistant"
 msgstr "Добавь его в своего ассистента"
 
+msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
+msgstr "Добавь колоду и учи её бесплатно — Lymi возвращает каждую карточку прямо перед тем, как ты её забудешь."
+
 msgid "Add the deck"
 msgstr "Добавь колоду"
 
@@ -292,6 +306,9 @@ msgstr "AI-ассистенты"
 
 msgid "Al que madruga, Dios lo ayuda: the early bird catches the worm."
 msgstr "Al que madruga, Dios lo ayuda: кто рано встаёт, тому Бог подаёт."
+
+msgid "All"
+msgstr "Все"
 
 msgid "All good?"
 msgstr "Всё хорошо?"
@@ -605,6 +622,9 @@ msgstr "ДЕНЬ 30"
 msgid "Dear; expensive"
 msgstr "Милый; дорогой"
 
+msgid "Decks"
+msgstr "Колоды"
+
 msgid "Deep, lasting affection"
 msgstr "Глубокая, долгая привязанность"
 
@@ -658,6 +678,9 @@ msgstr "Выпивать дома в нижнем белье"
 
 msgid "Drinking at home, alone, in your underwear"
 msgstr "Выпивать дома в одиночку в одних трусах"
+
+msgid "Driving"
+msgstr "Вождение"
 
 msgid "Easy"
 msgstr "Легко"
@@ -752,6 +775,9 @@ msgstr "Подготовка к экзаменам"
 msgid "Example"
 msgstr "Пример"
 
+msgid "Exams and tests"
+msgstr "Экзамены и тесты"
+
 msgid "Excuse me"
 msgstr "Извините"
 
@@ -760,6 +786,12 @@ msgstr "Дорогой; а ещё милый"
 
 msgid "Explaining your code aloud, line by line, until the bug shows itself"
 msgstr "Объяснять код вслух строка за строкой, пока ошибка не найдётся"
+
+msgid "Explore"
+msgstr "Колоды"
+
+msgid "Explore decks"
+msgstr "Посмотреть колоды"
 
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "На этом чувстве держится фаду — печальная португальская песня."
@@ -775,6 +807,9 @@ msgstr "В финском есть отдельное слово для вече
 
 msgid "Finns often name it as part of the national character."
 msgstr "Финны часто называют это чертой национального характера."
+
+msgid "Flashcard decks, ready to learn"
+msgstr "Колоды флеш-карточек, готовые к изучению"
 
 msgid "Food and drink"
 msgstr "Еда и напитки"
@@ -797,6 +832,9 @@ msgstr "Не помню"
 msgid "Français · phrase"
 msgstr "Français · фраза"
 
+msgid "Free flashcard decks — languages, exams and more · Lymi"
+msgstr "Бесплатные колоды флеш-карточек — языки, экзамены и не только · Lymi"
+
 msgid "French"
 msgstr "Французский"
 
@@ -814,6 +852,9 @@ msgstr "Из книги Г. К. Честертона «The Thing» 1929 года
 
 msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 msgstr "Созданное озвучивание хранится вместе с соответствующей карточкой или аккаунтом, пока не будет удалено по правилам жизненного цикла хранилища сервиса."
+
+msgid "Geography"
+msgstr "География"
 
 msgid "German"
 msgstr "Немецкий"
@@ -1149,6 +1190,9 @@ msgstr "Язык"
 msgid "Language learning"
 msgstr "Изучение языков"
 
+msgid "Languages"
+msgstr "Языки"
+
 msgid "Last updated"
 msgstr "Обновлено"
 
@@ -1248,6 +1292,9 @@ msgstr "Пока в Lymi можно попасть только по пригл�
 msgid "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
 msgstr "Lymi предоставляет Krambertech OÜ, эстонское частное общество с ограниченной ответственностью. В этой политике «Lymi», «мы» и «нас» означают Krambertech OÜ. Связаться с нами можно по адресу <0>hello@lymi.app</0>."
 
+msgid "Lymi is writing the first decks now. In the meantime you can make your own and share it with anyone."
+msgstr "Lymi сейчас пишет первые колоды. А пока сделай свою и поделись ею с кем угодно."
+
 msgid "Lymi schedules every card around it."
 msgstr "На этом принципе Lymi строит расписание повторений."
 
@@ -1307,6 +1354,9 @@ msgstr "Память угасает. Если вспомнить что-то в�
 
 msgid "Menu"
 msgstr "Меню"
+
+msgid "More decks"
+msgstr "Другие колоды"
 
 msgid "More than a translation."
 msgstr "Больше, чем перевод."
@@ -1396,6 +1446,9 @@ msgstr "Заметки"
 msgid "Nothing during the private beta."
 msgstr "Во время закрытой беты — ничего."
 
+msgid "Nothing here by that name."
+msgstr "Такого здесь нет."
+
 msgid "noun"
 msgstr "существительное"
 
@@ -1425,6 +1478,9 @@ msgstr "Открыть Lymi"
 
 msgid "Open menu"
 msgstr "Открыть меню"
+
+msgid "Open the deck"
+msgstr "Открыть колоду"
 
 msgid "or"
 msgstr "или"
@@ -1559,6 +1615,9 @@ msgstr "Читаем заметки…"
 msgid "Ready to start"
 msgstr "Можно начинать"
 
+msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
+msgstr "Готовые колоды флеш-карточек, написанные человеком и проверенные карточка за карточкой: языки, экзамены и всё остальное, что стоит помнить. Добавь колоду бесплатно и повторяй её на своём языке по нескольку минут в день."
+
 msgid "Recall"
 msgstr "Вспоминание"
 
@@ -1661,6 +1720,12 @@ msgstr "Приветствие"
 msgid "Schnaps, spirits, plus Idee, idea."
 msgstr "Schnaps — водка, Idee — идея."
 
+msgid "Science"
+msgstr "Наука"
+
+msgid "Search decks"
+msgstr "Поиск колод"
+
 msgid "Section {position}:"
 msgstr "Раздел {position}:"
 
@@ -1715,8 +1780,14 @@ msgstr "Одна колода на всю группу."
 msgid "Share one link."
 msgstr "Одна ссылка для всех."
 
+msgid "Shelf"
+msgstr "Полка"
+
 msgid "Shortcuts"
 msgstr "Быстрые команды"
+
+msgid "Show every deck"
+msgstr "Показать все колоды"
 
 msgid "Show the meaning"
 msgstr "Показать значение"
@@ -2000,6 +2071,9 @@ msgstr "Потом повторяй их в Lymi."
 msgid "There is no deck at this address."
 msgstr "По этому адресу нет колоды."
 
+msgid "There is nothing published yet."
+msgstr "Пока ничего не опубликовано."
+
 msgid "These providers may process data in countries outside Estonia or the European Economic Area. Where required, we rely on the transfer safeguards made available for the relevant service."
 msgstr "Эти поставщики могут обрабатывать данные в странах за пределами Эстонии или Европейской экономической зоны. Когда это необходимо, мы полагаемся на гарантии передачи данных, доступные для соответствующего сервиса."
 
@@ -2086,6 +2160,9 @@ msgstr "Слишком много попыток. Подожди минуту и
 
 msgid "Try a few cards"
 msgstr "Попробовать несколько карточек"
+
+msgid "Try a word you would find on a card, or the language you are learning. Lymi publishes a deck as soon as it is written and checked."
+msgstr "Попробуй слово, которое было бы на карточке, или язык, который учишь. Lymi публикует колоду, как только её напишут и проверят."
 
 msgid "Try again"
 msgstr "Попробовать ещё раз"
@@ -2263,6 +2340,9 @@ msgstr "работа"
 
 msgid "Work"
 msgstr "Работа"
+
+msgid "Work and study"
+msgstr "Работа и учёба"
 
 msgid "Writing"
 msgstr "Письмо"

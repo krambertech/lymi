@@ -9,6 +9,7 @@ import {
   etagMatches,
   jsonForScript,
   languageName,
+  movedDeckPath,
   SPREAD_SIZE,
   STACK_SIZE,
   sectionPath,
@@ -48,9 +49,9 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
 describe("deck page paths", () => {
   it("puts English at the path and the other locales under their prefix", () => {
     expect(deckPaths("everyday-estonian")).toEqual({
-      en: "/decks/everyday-estonian",
-      uk: "/uk/decks/everyday-estonian",
-      ru: "/ru/decks/everyday-estonian",
+      en: "/explore/everyday-estonian",
+      uk: "/uk/explore/everyday-estonian",
+      ru: "/ru/explore/everyday-estonian",
     });
   });
 });
@@ -190,8 +191,8 @@ describe("deckStructuredData", () => {
     expect(deckStructuredData(deck(), "ru")).toEqual({
       "@context": "https://schema.org",
       "@type": "LearningResource",
-      "@id": "https://lymi.app/ru/decks/everyday-estonian",
-      url: "https://lymi.app/ru/decks/everyday-estonian",
+      "@id": "https://lymi.app/ru/explore/everyday-estonian",
+      url: "https://lymi.app/ru/explore/everyday-estonian",
       name: "Everyday Estonian",
       description: "Words for your first weeks.",
       learningResourceType: "Vocabulary list",
@@ -237,7 +238,21 @@ describe("deckSitemap", () => {
       expect(xml).toContain(`<loc>https://lymi.app${path}</loc>`);
     }
     expect(xml.match(/<url>/g)).toHaveLength(3);
-    expect(xml).toContain('hreflang="x-default" href="https://lymi.app/decks/everyday-estonian"');
+    expect(xml).toContain('hreflang="x-default" href="https://lymi.app/explore/everyday-estonian"');
     expect(deckSitemap([])).toContain("<urlset");
+  });
+});
+
+describe("movedDeckPath", () => {
+  it("moves a deck's old address under Explore, in every locale", () => {
+    expect(movedDeckPath("/decks/everyday-estonian")).toBe("/explore/everyday-estonian");
+    expect(movedDeckPath("/uk/decks/everyday-estonian")).toBe("/uk/explore/everyday-estonian");
+    expect(movedDeckPath("/ru/decks/everyday-estonian/")).toBe("/ru/explore/everyday-estonian");
+  });
+
+  it("leaves every other address alone", () => {
+    for (const path of ["/explore", "/explore/everyday-estonian", "/decks", "/api/decks/x", "/"]) {
+      expect(movedDeckPath(path)).toBeNull();
+    }
   });
 });

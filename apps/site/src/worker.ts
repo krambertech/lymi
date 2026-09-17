@@ -3,6 +3,7 @@
 import { handle } from "@astrojs/cloudflare/handler";
 import { BetaSignupInput } from "@lymi/core";
 import { createDb } from "./db";
+import { movedDeckPath } from "./lib/deck-page";
 import { BetaSignupUnavailable, joinBeta } from "./services/beta";
 
 function json(body: unknown, status = 200): Response {
@@ -56,6 +57,12 @@ export default {
     }
 
     if (url.pathname.startsWith("/api/")) return json({ error: "Not found" }, 404);
+
+    // A deck used to live at /decks/<slug>. Those links are already shared, so they move rather
+    // than break, and a search engine is told the address is permanent.
+    const moved = movedDeckPath(url.pathname);
+    if (moved) return Response.redirect(new URL(moved + url.search, url).toString(), 301);
+
     return handle(request, env, ctx);
   },
 } satisfies ExportedHandler<Env>;

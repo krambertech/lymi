@@ -12,6 +12,7 @@ import {
   EnrichmentStatus,
   FieldSource,
   MemberRole,
+  PublicationCategory,
   Rating,
   ReminderTime,
   ReviewMode,
@@ -795,6 +796,7 @@ export const PublicationOut = z
         status: z.enum(["published", "withdrawn"]),
         summary: z.string(),
         level: z.string().nullable(),
+        category: PublicationCategory.nullable(),
         meaningLanguage: z.string().meta({
           description: "The original edition, which the deck's own fields are written in",
         }),

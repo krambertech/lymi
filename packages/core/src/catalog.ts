@@ -1,4 +1,4 @@
-import { and, asc, eq, isNull, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, isNotNull, isNull, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
 import {
@@ -278,4 +278,258 @@ export async function listPublicDeckSlugs(db: CatalogDb, limit = SITEMAP_DECK_LI
     )
     .orderBy(asc(deckPublications.slug))
     .limit(limit);
+}
+
+/**
+ * What Explore may show for each deck, and nothing else. The second allowlist of ADR 0016:
+ * `listPublicCatalog` selects only these fields and every row is parsed through this schema.
+ */
+export const PublicDeckSummary = z.object({
+  slug: z.string(),
+  name: z.string(),
+  summary: z.string(),
+  level: z.string().nullable(),
+  category: z.string().nullable(),
+  /** The language the terms are in, from the deck. */
+  language: z.string().nullable(),
+  /** The meaning language this row is written in, which is the edition Explore showed. */
+  meaningLanguage: z.string(),
+  cardCount: z.number().int(),
+  sectionCount: z.number().int(),
+  /** One card from the deck, for its tray. Null for a deck whose cards have no meanings. */
+  card: z
+    .object({ term: z.string(), meaning: z.string(), section: z.string().nullable() })
+    .nullable(),
+});
+export type PublicDeckSummary = z.infer<typeof PublicDeckSummary>;
+
+/** A deck appears on Explore only while its own page answers 200, so the two can never disagree. */
+const publishedAndAlive = () =>
+  and(
+    eq(deckPublications.status, "published"),
+    isNull(decks.archivedAt),
+    sql`exists (select 1 from ${cards} where ${cards.deckId} = ${decks.id} and ${cards.archivedAt} is null)`,
+  );
+
+/**
+ * Every published deck, for Explore, in the meaning language asked for where the deck has a
+ * published edition in it. Reads no cookie and no learner row, so one cached copy per locale
+ * is right for every visitor. ADR 0016.
+ */
+export async function listPublicCatalog(
+  db: CatalogDb,
+  language?: string | undefined,
+  limit = SITEMAP_DECK_LIMIT,
+): Promise<PublicDeckSummary[]> {
+  const rows = await db
+    .select({
+      deckId: deckPublications.deckId,
+      slug: deckPublications.slug,
+      summary: deckPublications.summary,
+      level: deckPublications.level,
+      category: deckPublications.category,
+      meaningLanguage: deckPublications.meaningLanguage,
+      revision: deckPublications.revision,
+      deckName: decks.name,
+      deckLanguage: decks.defaultLanguage,
+    })
+    .from(deckPublications)
+    .innerJoin(decks, eq(decks.id, deckPublications.deckId))
+    .where(publishedAndAlive())
+    .orderBy(asc(deckPublications.publishedAt), asc(deckPublications.slug))
+    .limit(limit);
+  if (rows.length === 0) return [];
+
+  const deckIds = rows.map((row) => row.deckId);
+  const editionOf = await publishedEditions(db, deckIds, language);
+  const [cardsPerDeck, sectionsPerDeck, sample] = await Promise.all([
+    cardCounts(db, deckIds),
+    sectionCounts(db, deckIds),
+    sampleCards(db, rows, editionOf, language),
+  ]);
+  return rows.map((row) => {
+    const shown = editionOf.get(row.deckId) ?? null;
+    const text = shown?.deck;
+    return PublicDeckSummary.parse({
+      slug: row.slug,
+      name: text?.name ?? row.deckName,
+      summary: text?.summary ?? row.summary,
+      level: row.level,
+      category: row.category,
+      language: row.deckLanguage,
+      meaningLanguage: shown?.language ?? row.meaningLanguage,
+      cardCount: cardsPerDeck.get(row.deckId) ?? 0,
+      sectionCount: sectionsPerDeck.get(row.deckId) ?? 0,
+      card: sample.get(row.deckId) ?? null,
+    });
+  });
+}
+
+interface ShownEdition {
+  language: string;
+  deck: { name: string | null; summary: string | null } | undefined;
+}
+
+/** The edition each deck is read in here: the one asked for where it is published, else nothing. */
+async function publishedEditions(
+  db: CatalogDb,
+  deckIds: string[],
+  language: string | undefined,
+): Promise<Map<string, ShownEdition>> {
+  const shown = new Map<string, ShownEdition>();
+  if (!language) return shown;
+  const published = await db
+    .select({ deckId: deckEditions.deckId })
+    .from(deckEditions)
+    .where(
+      and(
+        inArray(deckEditions.deckId, deckIds),
+        eq(deckEditions.language, language),
+        eq(deckEditions.status, "published"),
+      ),
+    );
+  if (published.length === 0) return shown;
+  const wanted = published.map((row) => row.deckId);
+  const text = await db
+    .select({
+      deckId: deckLocalizations.deckId,
+      name: deckLocalizations.name,
+      summary: deckLocalizations.summary,
+    })
+    .from(deckLocalizations)
+    .where(
+      and(
+        inArray(deckLocalizations.deckId, wanted),
+        eq(deckLocalizations.language, language),
+        eq(deckLocalizations.status, "approved"),
+      ),
+    );
+  const byDeck = new Map(text.map((row) => [row.deckId, row]));
+  for (const deckId of wanted) shown.set(deckId, { language, deck: byDeck.get(deckId) });
+  return shown;
+}
+
+async function cardCounts(db: CatalogDb, deckIds: string[]): Promise<Map<string, number>> {
+  const rows = await db
+    .select({ deckId: cards.deckId, count: sql<number>`count(*)` })
+    .from(cards)
+    .where(and(inArray(cards.deckId, deckIds), isNull(cards.archivedAt)))
+    .groupBy(cards.deckId);
+  return new Map(rows.map((row) => [row.deckId, Number(row.count)]));
+}
+
+async function sectionCounts(db: CatalogDb, deckIds: string[]): Promise<Map<string, number>> {
+  const rows = await db
+    .select({ deckId: sections.deckId, count: sql<number>`count(*)` })
+    .from(sections)
+    .where(and(inArray(sections.deckId, deckIds), isNull(sections.archivedAt)))
+    .groupBy(sections.deckId);
+  return new Map(rows.map((row) => [row.deckId, Number(row.count)]));
+}
+
+/** How many of a deck's cards the tray chooses between. */
+const TRAY_CANDIDATES = 40;
+
+/**
+ * One card per deck for its tray, drawn from the deck's own revision rather than at random, so
+ * every visitor to one revision is served the same page and its validator stays honest.
+ */
+async function sampleCards(
+  db: CatalogDb,
+  rows: readonly { deckId: string; slug: string; revision: number }[],
+  editionOf: Map<string, ShownEdition>,
+  language: string | undefined,
+): Promise<Map<string, PublicDeckSummary["card"]>> {
+  const deckIds = rows.map((row) => row.deckId);
+  // One card per deck is wanted, so only the first few of each are read. Without the cap this
+  // query would carry every card of every published deck to render one tray apiece.
+  const ranked = db
+    .select({
+      deckId: cards.deckId,
+      cardId: cards.id,
+      term: cards.term,
+      meaning: cards.meaning,
+      sectionId: cards.sectionId,
+      place: sql<number>`row_number() over (
+        partition by ${cards.deckId} order by ${cards.createdAt} asc, cards.rowid asc
+      )`.as("place"),
+    })
+    .from(cards)
+    .where(and(inArray(cards.deckId, deckIds), isNull(cards.archivedAt), isNotNull(cards.meaning)))
+    .as("ranked");
+  const candidates = await db
+    .select({
+      deckId: ranked.deckId,
+      cardId: ranked.cardId,
+      term: ranked.term,
+      meaning: ranked.meaning,
+      sectionName: sections.name,
+    })
+    .from(ranked)
+    .leftJoin(sections, and(eq(sections.id, ranked.sectionId), isNull(sections.archivedAt)))
+    .where(sql`${ranked.place} <= ${TRAY_CANDIDATES}`)
+    .orderBy(asc(ranked.place));
+
+  const localized = await localizedSamples(db, candidates, editionOf, language);
+  const byDeck = new Map<string, typeof candidates>();
+  for (const card of candidates) {
+    const list = byDeck.get(card.deckId);
+    if (list) list.push(card);
+    else byDeck.set(card.deckId, [card]);
+  }
+  const chosen = new Map<string, PublicDeckSummary["card"]>();
+  for (const row of rows) {
+    const list = byDeck.get(row.deckId);
+    if (!list || list.length === 0) continue;
+    // Prefer a card short enough to read at a glance on a tray, as the deck page's spread does.
+    const glanceable = list.filter(
+      (card) => card.term.length <= 22 && (card.meaning?.length ?? 0) <= 40,
+    );
+    const from = glanceable.length > 0 ? glanceable : list;
+    const card = from[hash(`${row.slug}:${row.revision}:tray`) % from.length];
+    if (!card?.meaning) continue;
+    const text = localized.get(card.cardId);
+    chosen.set(row.deckId, {
+      term: text?.term ?? card.term,
+      meaning: text?.meaning ?? card.meaning,
+      section: card.sectionName,
+    });
+  }
+  return chosen;
+}
+
+/** The chosen cards' approved text in the edition each deck is shown in. ADR 0015. */
+async function localizedSamples(
+  db: CatalogDb,
+  candidates: readonly { deckId: string; cardId: string }[],
+  editionOf: Map<string, ShownEdition>,
+  language: string | undefined,
+): Promise<Map<string, { term: string | null; meaning: string | null }>> {
+  const wanted = candidates.filter((card) => editionOf.has(card.deckId)).map((card) => card.cardId);
+  if (wanted.length === 0 || !language) return new Map();
+  const rows = await db
+    .select({
+      cardId: cardLocalizations.cardId,
+      term: cardLocalizations.term,
+      meaning: cardLocalizations.meaning,
+    })
+    .from(cardLocalizations)
+    .where(
+      and(
+        inArray(cardLocalizations.cardId, wanted),
+        eq(cardLocalizations.language, language),
+        eq(cardLocalizations.status, "approved"),
+      ),
+    );
+  return new Map(rows.map((row) => [row.cardId, row]));
+}
+
+/** FNV-1a, so a deck's tray card stays the same for one revision. */
+function hash(text: string): number {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return h >>> 0;
 }

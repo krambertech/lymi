@@ -1,0 +1,27 @@
+# Explore
+
+`lymi.app/explore` is where a visitor finds a published deck without knowing its address. It renders on the public Worker from a strict projection, carries no learner data, and is localized at `/uk/explore` and `/ru/explore` like every other public page. [ADR 0016](../adr/0016-public-catalog-pages-render-on-the-public-worker.md) owns the origin boundary.
+
+## The page
+
+The header is one thing: a search field, under the page's name and one line of what the catalogue is, over a still pool of the lantern's light. It carries no amber, because the page has no single primary action — a visitor is here to find one deck among many, not to press the one button. It does not count the decks: the shelves below already do, each under its own heading.
+
+Under it the catalogue is a **shelf per category**, each scrolling sideways. A shelf is one screen tall whatever it holds, so a category of forty decks lengthens one row instead of burying the page, and a new category adds a shelf rather than changing the layout. The alternative, a grid of tiles, was drawn first and rejected: it is built for a fixed number of decks and looks broken above and below it.
+
+A deck on a shelf is one of its own cards in a [tray](../../DESIGN.md#the-tray), its name under the tray, then its summary and its level, card count and section count. The card is real, drawn from the deck's own revision so every visitor to one revision sees the same page. The name is the largest thing in the group and the card's term sets smaller than it. Behind the card is a sheet of paper for each further card the deck holds, up to two; pointing at a deck spreads them.
+
+The tray's colour follows the deck to its own page, where the same hue becomes the pool behind its name. Nothing stores it: both pages hash the slug, and neither takes the shelf into account, so narrowing the page never repaints a deck.
+
+## Search and shelves
+
+Search narrows what is already on the page: the deck's name, summary, level, the card on its tray, and the languages it teaches and explains, in the reading language and in English. Choosing a shelf narrows it the same way. Neither touches the address, so neither makes a page of its own for a crawler to find, and the whole catalogue is in the server-rendered HTML — the page is complete with JavaScript off.
+
+A search with no match shows the lantern with its flame out — the search looked here and found nothing — says so, suggests a word from a card or a language, and offers the way back to everything.
+
+## Categories
+
+A category is a column on the publication, from a closed list in `packages/core/src/types.ts`. It is closed because each one is a heading a translator writes and a visitor learns; adding a shelf is a deliberate change, not a typo in a publish call. A deck sits on one shelf. A deck with no category, or one naming a category that has since gone, gathers under **More decks** at the end, so publishing is never blocked on choosing a shelf, and a shelf with nothing on it never renders.
+
+## What it costs to be wrong
+
+A deck appears here only while its own page answers 200, from the same conditions, so the two can never disagree: withdrawing a deck or archiving it takes it off this page within the five minutes the cache holds. The response's validator changes with the catalogue's content, the locale and the Worker version, and never with who is asking.

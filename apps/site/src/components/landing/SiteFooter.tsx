@@ -29,7 +29,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
         <div>
           <Lockup size={18} className="text-muted" />
         </div>
-        <div className="grid grid-cols-2 gap-x-12 gap-y-8 @2xl:grid-cols-3 @2xl:gap-x-16">
+        <div className="grid grid-cols-2 gap-x-12 gap-y-8 @2xl:grid-cols-4 @2xl:gap-x-14">
           <Group title={<Trans>Use cases</Trans>}>
             {USE_CASE_LINKS.map((link) => (
               <li key={link.page}>

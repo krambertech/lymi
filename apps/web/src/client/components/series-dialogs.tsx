@@ -2,7 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { SeriesInput } from "@lymi/core";
 import { clsx } from "clsx";
 import { ArrowDown, ArrowUp, Check, Plus } from "lucide-react";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button, IconButton } from "./button";
@@ -243,14 +243,13 @@ export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSer
   const name = useId();
   const seriesName = series?.name ?? "";
   const count = series?.deckIds.length ?? 0;
+  // Keyed on the series, not on closing: Cancel and Delete close it from the parent, which never
+  // reaches `onOpenChange`, and a remembered Archive would take the next series' decks unasked.
+  useEffect(() => {
+    if (series) setChoice("keep");
+  }, [series]);
   return (
-    <Dialog
-      open={!!series}
-      onOpenChange={(open) => {
-        if (!open) setChoice("keep");
-        onOpenChange(open);
-      }}
-    >
+    <Dialog open={!!series} onOpenChange={onOpenChange}>
       <DialogContent className="w-[min(92vw,460px)]">
         <DialogHeader>
           <DialogTitle>{t`Delete “${seriesName}”?`}</DialogTitle>

@@ -473,7 +473,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         'Delete a series. It is gone for good, so ask the learner first, and ask which they want for its decks: with decks "archive" they are archived with it, and with "keep" they stay in Library without a series. Either way the decks and their cards survive. Needs write.',
       inputSchema: z.object({ seriesId: z.string().min(1) }).extend(SeriesDeleteInput.shape),
       outputSchema: OkOut,
-      ...writeTool({ idempotent: true }),
+      ...writeTool({ idempotent: true, overwrites: true }),
     },
     ({ seriesId, decks }) =>
       run("delete_series", async () => {
@@ -812,8 +812,9 @@ const readTool = {
 };
 
 /**
- * Archive is reversible, so only an edit that replaces text with no way back is destructive.
- * A tool is idempotent only when repeating it adds nothing to Activity.
+ * Destructive means there is no way back: an edit that replaces text, or a delete. Archive stays
+ * non-destructive because Restore undoes it. A tool is idempotent only when repeating it adds
+ * nothing to Activity.
  */
 function writeTool({
   idempotent,

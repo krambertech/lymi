@@ -37,8 +37,13 @@ function DeckList() {
   const decks = useQuery(decksQuery);
   const series = useQuery(seriesQuery);
   const me = useQuery(meQuery);
-  // Deleting a series can archive decks, so Library says where they went.
-  const archivedDecks = useQuery(archivedDecksQuery);
+  // Deleting a series can archive decks, so Library says where they went. Only the count is used,
+  // and an archive write invalidates ["decks"], so the list need not be refetched on every visit.
+  const archivedCount = useQuery({
+    ...archivedDecksQuery,
+    staleTime: 5 * 60_000,
+    select: (decks) => decks.length,
+  });
   const leave = useSignOut();
   const add = useAddCard();
   const navigate = useNavigate();
@@ -66,7 +71,7 @@ function DeckList() {
         onRetry={() => void decks.refetch()}
         retrying={decks.isFetching}
         series={series.data}
-        archivedCount={archivedDecks.data?.length}
+        archivedCount={archivedCount.data}
         onAdd={() => add.openCard()}
         onCreateDeck={add.openDeck}
         onImport={() => void navigate({ to: "/settings", hash: "import" })}

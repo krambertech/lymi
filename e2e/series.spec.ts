@@ -175,6 +175,24 @@ test("deleting a series asks about its decks and does not come back", async ({
     await page.goto("/archived");
     await expect(page.getByRole("button", { name: `Restore ${first}`, exact: true })).toBeVisible();
   });
+
+  await test.step("the next series is asked again rather than inheriting Archive", async () => {
+    const next = `Next ${tag}`;
+    const kept = `N1 ${tag}`;
+    const doomed = `Doomed ${tag}`;
+    await makeSeries(next, [kept]);
+    await makeSeries(doomed, [`D1 ${tag}`]);
+    await openLibrary(page);
+    // No navigation after this delete: the dialog stays mounted, which is where the choice stuck.
+    await remove(doomed, /^Archive its deck too/);
+    await page.getByRole("button", { name: `Options for ${next}`, exact: true }).click();
+    await page.getByRole("menuitem", { name: "Delete series", exact: true }).click();
+    const ask = dialog(page, `Delete “${next}”?`);
+    // Deleting is final, so a choice made for the last series must not archive this one's decks.
+    await expect(ask.getByRole("radio", { name: /^Keep the deck/ })).toBeChecked();
+    await ask.getByRole("button", { name: "Delete series", exact: true }).click();
+    await expect(deckLink(page.locator("main"), kept)).toBeVisible();
+  });
 });
 
 test("a deck can be dragged into a series and along it", async ({ page, isMobile }, testInfo) => {

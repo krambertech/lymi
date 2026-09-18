@@ -45,7 +45,6 @@ export async function listSeries(ctx: ServiceContext) {
 }
 
 export async function getSeries(ctx: ServiceContext, id: string) {
-  await ownedSeries(ctx, id);
   const found = (await listSeries(ctx)).find((s) => s.id === id);
   if (!found) throw notFound("Series");
   return found;

@@ -938,12 +938,9 @@
   translate: -50% 0;
 }
 
-/* The closing invitation. The lantern hangs over the headline and throws the page's one pool of
-   light, which leans toward a pointer and settles back when there is none. --lx/--ly are written
-   by the section; both fall back to the hook the lantern hangs on. */
+/* The closing invitation: the lantern lit over its own pool of light, the page's one glow. The
+   wick catches when the section first comes into view and the pool opens behind it. */
 .signup-plate {
-  /* Where the light is, in pixels from the plate's top-left. The section writes both: the hook on
-     mount, then every frame while a pointer moves. Before it does, the pool is transparent. */
   --reach: 20rem;
   position: relative;
   isolation: isolate;
@@ -952,18 +949,16 @@
 .signup-pool {
   position: absolute;
   z-index: -1;
-  top: 0;
-  left: 0;
+  top: 26%;
+  left: 50%;
   width: calc(var(--reach) * 2);
   height: calc(var(--reach) * 2);
-  /* Moved with `translate` alone, so following a pointer never costs a layout. */
-  margin: calc(var(--reach) * -1) 0 0 calc(var(--reach) * -1);
-  translate: calc(var(--lx, 0) * 1px) calc(var(--ly, 0) * 1px);
+  translate: -50% -50%;
   pointer-events: none;
   opacity: 0;
   border-radius: 50%;
   /* Soft all the way out: no stop the eye can find, and a blur over it so the edge is weather
-     rather than a shape. One element, so the cost stays where it can be seen. */
+     rather than a shape. */
   filter: blur(32px);
   background: radial-gradient(
     closest-side,
@@ -973,7 +968,6 @@
     transparent 88%
   );
 }
-/* The wick catches, and the room it lights opens after it. */
 .signup-plate[data-lit] .signup-pool {
   animation: signup-bloom 1400ms var(--ease-out) 260ms both;
 }
@@ -987,7 +981,6 @@
     scale: 1;
   }
 }
-/* The lantern hangs where it hangs. Only the light it throws answers a pointer. */
 .signup-lamp {
   display: block;
   width: 4.5rem;

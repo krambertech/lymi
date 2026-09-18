@@ -1836,11 +1836,11 @@ msgstr "Начать"
 msgid "Start here"
 msgstr "Начни отсюда"
 
+msgid "Start learning"
+msgstr "Начни учиться"
+
 msgid "Start with a ready-made course."
 msgstr "Начни с готового курса."
-
-msgid "Start your first deck."
-msgstr "Собери свою первую колоду."
 
 msgid "station"
 msgstr "станция"

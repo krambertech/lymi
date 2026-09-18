@@ -174,7 +174,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           <ImportDemo />
         </FeatureSection>
 
-        <SignUpSection title={<Trans>Start your first deck.</Trans>} />
+        <SignUpSection title={<Trans>Start learning</Trans>} />
       </main>
 
       <SiteFooter openAppUrl={openAppUrl} page="landing" />

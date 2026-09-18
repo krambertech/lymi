@@ -1836,11 +1836,11 @@ msgstr "Start"
 msgid "Start here"
 msgstr "Start here"
 
+msgid "Start learning"
+msgstr "Start learning"
+
 msgid "Start with a ready-made course."
 msgstr "Start with a ready-made course."
-
-msgid "Start your first deck."
-msgstr "Start your first deck."
 
 msgid "station"
 msgstr "station"

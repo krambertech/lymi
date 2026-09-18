@@ -99,9 +99,7 @@ export function Sidebar({
   const deckRow = (d: NavDeck) => (
     <NavLink key={d.id} to="/library/$deckId" params={{ deckId: d.id }} className={item} st={st}>
       <span className="flex-1 truncate">{d.name}</span>
-      <span className="text-xs tabular-nums text-muted">
-        {d.due > 0 ? <DueCount>{d.due}</DueCount> : d.total}
-      </span>
+      {d.due > 0 && <DueCount>{d.due}</DueCount>}
     </NavLink>
   );
   return (

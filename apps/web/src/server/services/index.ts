@@ -17,6 +17,7 @@ export * from "./imports";
 export * from "./invitations";
 export * from "./members";
 export * from "./modes";
+export * from "./public-media";
 export * from "./publications";
 export * from "./publishers";
 export * from "./push";

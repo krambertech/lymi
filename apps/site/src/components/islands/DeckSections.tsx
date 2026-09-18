@@ -1,7 +1,7 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
 import {
   type CSSProperties,
   type MouseEvent,
@@ -14,6 +14,7 @@ import {
 } from "react";
 import type { SectionStep } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
+import { publicMediaUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 
 interface Props {
@@ -423,7 +424,34 @@ function CardsView({
                           lang={termLanguage ?? undefined}
                           className="font-medium break-words text-text"
                         >
-                          {card.term}
+                          <span className="flex flex-wrap items-center gap-2">
+                            {card.term}
+                            {card.audio && (
+                              <button
+                                type="button"
+                                aria-label={t`Play pronunciation`}
+                                onClick={() => {
+                                  if (card.audio) {
+                                    new Audio(publicMediaUrl(card.audio.id)).play().catch(() => {});
+                                  }
+                                }}
+                                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full edge text-text-2 hoverable:hover:bg-hover"
+                              >
+                                <Volume2 aria-hidden="true" className="size-4" />
+                              </button>
+                            )}
+                          </span>
+                          {card.image && (
+                            <img
+                              src={publicMediaUrl(card.image.id)}
+                              alt={card.image.description}
+                              width={card.image.width}
+                              height={card.image.height}
+                              loading="lazy"
+                              decoding="async"
+                              className="mt-2 max-h-32 w-auto max-w-full rounded-sm object-contain"
+                            />
+                          )}
                         </dt>
                         {card.meaning === null ? (
                           <dd className="text-faint">

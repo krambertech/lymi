@@ -19,9 +19,11 @@ erDiagram
   decks ||--o{ deck_members : "shared with"
   decks ||--o{ deck_invitations : "join link"
   decks ||--o| deck_publications : "published as"
+  deck_publications ||--o{ publication_media : "approves exact assets"
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
   cards ||--o{ card_images : "one active picture"
+  cards ||--o{ publication_media : "public assets"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
   review_days ||--o{ reviews : "counts toward"
@@ -179,6 +181,19 @@ erDiagram
     int published_at
     int withdrawn_at "nullable"
   }
+  publication_media {
+    text id PK "opaque public URL part"
+    text publication_id FK
+    text card_id FK
+    text kind "image | audio"
+    text image_id FK "nullable, exact picture"
+    text audio_key "nullable, exact generated R2 object"
+    text rights_basis "own_work | licensed | public_domain | generated"
+    text rights_reference "nullable, private"
+    text approved_by FK
+    int approved_at
+    int revoked_at "nullable, one live approval per publication, card and kind"
+  }
   card_states {
     text id PK
     text card_id FK
@@ -282,7 +297,9 @@ A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_memb
 
 A deck has at most one unrevoked `deck_invitations` link, enforced by a partial unique index. Turning the link off sets `revoked_at` for good, and turning it on again inserts a new row with a new token. The token is a capability: it appears in the join URL and nowhere else, never in audit payloads, logs or error messages. `/join/<token>` is rendered by the product Worker; it shows up to three recent cards, and its title and Open Graph tags carry none. A signed-out visitor's link rides through sign-in in a ten-minute HttpOnly cookie, which lets `user.create.before` admit an account that is not on `ALLOWED_EMAILS`, and `session.create.after` completes the membership. Repeated joins make one membership and one audit row.
 
-A deck has at most one `deck_publications` row. Publishing inserts or updates it and raises `revision`; withdrawing sets `status` and `withdrawn_at` and keeps the row, so publishing again brings the same slug back. Only an owner on `PUBLISHER_EMAILS` publishes. `/add/<slug>` admits sign-up the way a join link does: the slug rides in the same cookie with a `p.` prefix, and the membership write re-checks that the deck is still published and not archived. The join audit row records `via: publication`. ADR 0020. The public site reads a publication only through `loadPublicDeck` in `packages/core/src/catalog.ts`: the publication's page fields, the deck's name and language, and the term and meaning of each active card under its active section. ADR 0016.
+A deck has at most one `deck_publications` row. Publishing inserts or updates it and raises `revision`; withdrawing sets `status` and `withdrawn_at` and keeps the row, so publishing again brings the same slug back. Only an owner on `PUBLISHER_EMAILS` publishes. `/add/<slug>` admits sign-up the way a join link does: the slug rides in the same cookie with a `p.` prefix, and the membership write re-checks that the deck is still published and not archived. The join audit row records `via: publication`. ADR 0020. The public site reads a publication only through `loadPublicDeck` in `packages/core/src/catalog.ts`: the publication's page fields, each active card's term and meaning under its active section, and opaque IDs and display metadata for approved media. ADR 0016.
+
+`publication_media` records a publisher's approval of one exact picture or generated pronunciation object, with its rights basis, actor and time; its private object key or rights reference never enters the public projection. Only a signed-in publisher who owns the deck may approve or revoke, and a replacement receives a new approval ID. The product Worker serves an approved object's bytes without authentication only while the publication, card, approval and exact asset remain active; it never generates audio on that path. Withdrawal or revocation stops new reads, and public responses are not stored in a shared cache. Browser copies already obtained cannot be recalled.
 
 ### Editions
 

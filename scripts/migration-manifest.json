@@ -95,6 +95,10 @@
     {
       "name": "0023_colossal_sunset_bain.sql",
       "sha256": "0b9a7468c3a066d9365805e4c893897b30382aa79fc36e62c5d54c0757b88659"
+    },
+    {
+      "name": "0024_flawless_piledriver.sql",
+      "sha256": "e6985c3892927f17e1d19f4b86fb27c0b2c8d6abc61ab90a1dcb1080d35036e6"
     }
   ]
 }

@@ -3,6 +3,7 @@ import { Plural, Trans } from "@lingui/react/macro";
 import { type CSSProperties, useMemo } from "react";
 import type { DeckCard } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
+import { publicMediaUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { HandOfCards } from "../landing/HandOfCards";
@@ -42,7 +43,15 @@ export default function DeckStack({ locale, cards, termLanguage, total, addUrl }
         language: termLanguage ?? undefined,
         term: card.term,
         meaning: card.meaning,
-        audio: null,
+        audio: card.audio ? publicMediaUrl(card.audio.id) : null,
+        image: card.image
+          ? {
+              url: publicMediaUrl(card.image.id),
+              description: card.image.description,
+              width: card.image.width,
+              height: card.image.height,
+            }
+          : null,
       })),
     [cards, termLanguage],
   );

@@ -817,6 +817,18 @@ export const PublicationOut = z
   .meta({ id: "Publication" });
 export type PublicationOut = z.infer<typeof PublicationOut>;
 
+export const PublicationMediaOut = z
+  .object({
+    id: z.string(),
+    cardId: z.string(),
+    kind: z.enum(["image", "audio"]),
+    rightsBasis: z.enum(["own_work", "licensed", "public_domain", "generated"]),
+    rightsReference: z.string().nullable(),
+    approvedAt: Timestamp,
+  })
+  .meta({ id: "PublicationMedia" });
+export type PublicationMediaOut = z.infer<typeof PublicationMediaOut>;
+
 /** What a join page may show. Never cards, and nothing about the deck unless the link works. */
 export const JoinPreviewOut = z
   .object({

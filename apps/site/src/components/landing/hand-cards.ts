@@ -23,6 +23,7 @@ export interface HandCard {
   note?: string | MessageDescriptor;
   /** Where the pronunciation plays from, or null for a card without one. Defaults to the clip named by `id`. */
   audio?: string | null;
+  image?: { url: string; description: string; width: number; height: number } | null;
 }
 
 export const noun = msg`noun`;

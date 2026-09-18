@@ -639,6 +639,39 @@ export const cardImages = sqliteTable(
   ],
 );
 
+/** A publisher's approval of one exact stored asset for one published card. */
+export const publicationMedia = sqliteTable(
+  "publication_media",
+  {
+    id: text("id").primaryKey(),
+    publicationId: text("publication_id")
+      .notNull()
+      .references(() => deckPublications.id, { onDelete: "cascade" }),
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    kind: text("kind", { enum: ["image", "audio"] }).notNull(),
+    imageId: text("image_id").references(() => cardImages.id, { onDelete: "cascade" }),
+    /** The generated object's key stays private, even in the public deck projection. */
+    audioKey: text("audio_key"),
+    rightsBasis: text("rights_basis", {
+      enum: ["own_work", "licensed", "public_domain", "generated"],
+    }).notNull(),
+    rightsReference: text("rights_reference"),
+    approvedBy: text("approved_by")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    approvedAt: integer("approved_at", { mode: "timestamp_ms" }).notNull(),
+    revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
+  },
+  (t) => [
+    uniqueIndex("publication_media_active_idx")
+      .on(t.publicationId, t.cardId, t.kind)
+      .where(sql`revoked_at is null`),
+    index("publication_media_publication_idx").on(t.publicationId, t.cardId),
+  ],
+);
+
 /**
  * One file brought in from another app. The row carries the preview and the result; the
  * file itself lives in R2 only until the import finishes or fails. Archiving the import
@@ -776,6 +809,7 @@ export type SectionLocalization = typeof sectionLocalizations.$inferSelect;
 export type CardLocalization = typeof cardLocalizations.$inferSelect;
 export type CardState = typeof cardStates.$inferSelect;
 export type CardImage = typeof cardImages.$inferSelect;
+export type PublicationMedia = typeof publicationMedia.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;
 export type UserAvatar = typeof userAvatars.$inferSelect;

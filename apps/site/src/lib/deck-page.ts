@@ -9,7 +9,13 @@ export const SPREAD_SIZE = 5;
 /** How many cards the page's hand holds, which is the hand's own size so a second round matches. */
 export const STACK_SIZE = HAND_SIZE;
 
-export type DeckCard = { term: string; meaning: string; section: string | null };
+export type DeckCard = {
+  term: string;
+  meaning: string;
+  section: string | null;
+  image?: PublicDeckOut["sections"][number]["cards"][number]["image"];
+  audio?: PublicDeckOut["sections"][number]["cards"][number]["audio"];
+};
 
 export function deckPath(slug: string, locale: Locale): string {
   return locale === "en" ? `/explore/${slug}` : `/${locale}/explore/${slug}`;
@@ -37,7 +43,17 @@ function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
   return deck.sections
     .map((section) =>
       section.cards.flatMap((card) =>
-        card.meaning ? [{ term: card.term, meaning: card.meaning, section: section.name }] : [],
+        card.meaning
+          ? [
+              {
+                term: card.term,
+                meaning: card.meaning,
+                section: section.name,
+                image: card.image,
+                audio: card.audio,
+              },
+            ]
+          : [],
       ),
     )
     .filter((cards) => cards.length > 0);

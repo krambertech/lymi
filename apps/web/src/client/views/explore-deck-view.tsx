@@ -1,12 +1,13 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { ExploreDeckOut, PublicDeckOut } from "@lymi/core/catalog";
+import { publisherAvatarPath } from "@lymi/core/catalog";
 import { Link } from "@tanstack/react-router";
 import { Check, ChevronDown, Plus } from "lucide-react";
 import { Button, buttonClass } from "../components/button";
 import { DeckMeta, DeckTray } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
-import { AppTile } from "../components/logo";
 import type { StaticNav } from "../components/nav-link";
+import { PublisherMark } from "../components/publisher-mark";
 import { Skeleton } from "../components/skeleton";
 import { BackButton, Page, PageHeader, TopBar } from "./shell";
 
@@ -132,8 +133,16 @@ export function ExploreDeckView({
             >
               {deck.name}
             </h1>
-            <p className="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
-              <AppTile size={18} />
+            <p className="mt-2 flex items-center gap-2 text-sm text-muted">
+              {/* The photo is served by this Worker beside the deck's own media, so the path is
+                  the deck's slug rather than anything naming the account. ADR 0016. */}
+              <PublisherMark
+                name={deck.publisher}
+                src={
+                  deck.publisherAvatar ? publisherAvatarPath(deck.slug, deck.publisherAvatar) : null
+                }
+                size={20}
+              />
               <Trans>By {deck.publisher}</Trans>
             </p>
           </header>

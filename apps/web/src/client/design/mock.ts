@@ -826,6 +826,7 @@ export const publicDeck: PublicDeckOut = {
   originalMeaningLanguage: "en",
   editions: ["en", "uk"],
   publisher: "Lymi",
+  publisherAvatar: null,
   sources: [{ title: "EKI A1 word list", url: "https://www.eki.ee/" }],
   reviewedAt: null,
   revision: 3,

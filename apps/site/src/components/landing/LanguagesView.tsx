@@ -261,7 +261,7 @@ function commonQuestions(): Question[] {
     {
       id: "cost",
       question: <Trans>What does it cost?</Trans>,
-      answer: <Trans>Nothing while Lymi is in public beta.</Trans>,
+      answer: <Trans>Nothing. Lymi is free to use.</Trans>,
     },
   ];
 }

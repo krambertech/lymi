@@ -1261,14 +1261,14 @@ msgstr "У Lymi есть публичный API. Добавь слово чер�
 msgid "Lymi home"
 msgstr "Главная страница Lymi"
 
-msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free during the beta."
-msgstr "Lymi — приложение с флеш-карточками: оно возвращает каждую карточку как раз перед тем, как ты её забудешь. Бесплатно во время беты."
+msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
+msgstr "Lymi — приложение с флеш-карточками: оно возвращает каждую карточку как раз перед тем, как ты её забудешь. Бесплатно."
 
-msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
-msgstr "Lymi — приложение с флеш-карточками и интервальным повторением, с открытым исходным кодом. Добавь слово или термин, AI допишет значение, а карточка вернётся до того, как забудется. Бесплатно в бете."
+msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
+msgstr "Lymi — приложение с флеш-карточками и интервальными повторениями, с открытым кодом. Добавь слово или термин, AI впишет значение, и карточка вернётся перед тем, как ты её забудешь. Бесплатно."
 
-msgid "Lymi is in public beta, and it is free while it is there."
-msgstr "Lymi в открытой бете, и пока она идёт — всё бесплатно."
+msgid "Lymi is free to use, and your first card takes a minute."
+msgstr "Lymi бесплатный, а первая карточка займёт минуту."
 
 msgid "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
 msgstr "У Lymi открытый код и публичный API. Добавляй карточки через быструю команду на телефоне или из таблицы либо показывай на своём сайте, что пора повторить."
@@ -1430,8 +1430,8 @@ msgstr "Заметки"
 msgid "Nothing here by that name."
 msgstr "Такого здесь нет."
 
-msgid "Nothing while Lymi is in public beta."
-msgstr "Ничего, пока идёт открытая бета."
+msgid "Nothing. Lymi is free to use."
+msgstr "Ничего. Lymi бесплатный."
 
 msgid "noun"
 msgstr "существительное"
@@ -1680,8 +1680,8 @@ msgstr "Так говорят, чтобы свести длинную истор
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизируй с частотой вдвое выше максимальной"
 
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free during the beta."
-msgstr "Сохрани слово, термин или идею как флеш-карточку. Lymi покажет её снова как раз перед тем, как ты забудешь. Код открыт, а пока идёт бета — бесплатно."
+msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free to use."
+msgstr "Сохрани слово, термин или идею как флеш-карточку. Lymi покажет её снова как раз перед тем, как ты забудешь. Код открыт, пользование бесплатное."
 
 msgid "Say it"
 msgstr "Произношение"
@@ -1773,8 +1773,8 @@ msgstr "достопримечательность"
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Войди и разреши ассистенту добавлять карточки. Потом отправь ему заметки."
 
-msgid "Sign in with Google and it joins your Library. Free during the beta."
-msgstr "Войди через Google, и колода появится в Библиотеке. Бесплатно, пока идёт бета."
+msgid "Sign in with Google and it joins your Library, free."
+msgstr "Войди через Google, и колода появится в Библиотеке. Бесплатно."
 
 msgid "Signals"
 msgstr "Обработка сигналов"

@@ -120,7 +120,7 @@ export function LoginView({
               {mode === "forgot" ? (
                 <Trans>We’ll email you a link to set a new one.</Trans>
               ) : mode === "sign-up" ? (
-                <Trans>It takes a minute, and Lymi is free while it is in beta.</Trans>
+                <Trans>It takes a minute, and Lymi is free to use.</Trans>
               ) : (
                 <Trans>Welcome back.</Trans>
               )}

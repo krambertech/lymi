@@ -841,6 +841,39 @@
   color: var(--text-2);
 }
 
+/* The closing invitation: the lantern lit over its own pool of light, the one glow on the page.
+   The pool is still, because a section at the foot of a long page should not animate unseen. */
+.signup-plate {
+  position: relative;
+  isolation: isolate;
+  /* The plate is the room the lantern lights, so the pool stops at its edge. */
+  overflow: hidden;
+}
+.signup-light {
+  position: relative;
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-inline: auto;
+}
+.signup-pool {
+  position: absolute;
+  z-index: -1;
+  top: 56%;
+  left: 50%;
+  width: 17rem;
+  height: 17rem;
+  translate: -50% -50%;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--glow),
+    color-mix(in oklab, var(--glow) 38%, transparent) 45%,
+    transparent
+  );
+}
+
 /* The end of the deck page's hand, borrowed from the end of a review: the lantern lights the room
    with a pool of its own glow that blooms and then breathes, embers lift off the flame once, and the
    words just turned and the way on rise after it. */

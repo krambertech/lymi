@@ -1261,14 +1261,14 @@ msgstr "Lymi has a public API. Add a word from a shortcut on your phone, bring i
 msgid "Lymi home"
 msgstr "Lymi home"
 
-msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free during the beta."
-msgstr "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free during the beta."
+msgid "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
+msgstr "Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to use."
 
-msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
-msgstr "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
+msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
+msgstr "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use."
 
-msgid "Lymi is in public beta, and it is free while it is there."
-msgstr "Lymi is in public beta, and it is free while it is there."
+msgid "Lymi is free to use, and your first card takes a minute."
+msgstr "Lymi is free to use, and your first card takes a minute."
 
 msgid "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
 msgstr "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
@@ -1430,8 +1430,8 @@ msgstr "Notes"
 msgid "Nothing here by that name."
 msgstr "Nothing here by that name."
 
-msgid "Nothing while Lymi is in public beta."
-msgstr "Nothing while Lymi is in public beta."
+msgid "Nothing. Lymi is free to use."
+msgstr "Nothing. Lymi is free to use."
 
 msgid "noun"
 msgstr "noun"
@@ -1680,8 +1680,8 @@ msgstr "Said to cut a rambling story down to its point."
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
 
-msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free during the beta."
-msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free during the beta."
+msgid "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free to use."
+msgstr "Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d forget. Open source, and free to use."
 
 msgid "Say it"
 msgstr "Say it"
@@ -1773,8 +1773,8 @@ msgstr "sight (to see)"
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Sign in and let it add cards. Then send it your notes."
 
-msgid "Sign in with Google and it joins your Library. Free during the beta."
-msgstr "Sign in with Google and it joins your Library. Free during the beta."
+msgid "Sign in with Google and it joins your Library, free."
+msgstr "Sign in with Google and it joins your Library, free."
 
 msgid "Signals"
 msgstr "Signals"

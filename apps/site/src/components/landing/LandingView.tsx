@@ -20,7 +20,7 @@ import { SOURCE_CODE_URL } from "./site-links";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const LANDING_TITLE = msg`Lymi · Flashcard app with spaced repetition`;
-export const LANDING_BLURB = msg`Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta.`;
+export const LANDING_BLURB = msg`Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.`;
 export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the English line “Keep what you learn.”`;
 
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
@@ -67,7 +67,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           lede={
             <Trans>
               Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d
-              forget. Open source, and free during the beta.
+              forget. Open source, and free to use.
             </Trans>
           }
         />

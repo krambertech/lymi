@@ -85,8 +85,10 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     await expect(learner).toHaveURL(new RegExp(`/explore/${onPage.slug}$`));
     await expect(learner.getByRole("heading", { name: onPage.name, exact: true })).toBeVisible();
     await expect(learner.getByText("By Lymi")).toBeVisible();
-    await learner.getByText("Cards outside a section").click();
-    await expect(learner.getByText("priority road", { exact: true })).toBeVisible();
+    // Scoped to the list: the hand of cards beside the deck's name shows meanings too.
+    const everyCard = learner.getByRole("region", { name: "Every card" });
+    await everyCard.getByText("Cards outside a section").click();
+    await expect(everyCard.getByText("priority road", { exact: true })).toBeVisible();
   });
 
   await test.step("a reload keeps the added deck marked and still offers the other", async () => {

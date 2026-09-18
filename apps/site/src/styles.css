@@ -1675,29 +1675,22 @@ html:has(.deck-cards[open]) {
   color: var(--text-2);
 }
 
-/* A shelf scrolls sideways, so a category of forty decks lengthens one row rather than burying
-   the page. The padding lets a focus ring and the hover lift show without being clipped. */
+/* A shelf wraps, so every deck in a category is on the page at once and nothing hides behind a
+   sideways scroll. Tracks fill the row, so a shelf of three does not stretch into three banners. */
 .deck-shelf {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 216px;
-  gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
+  gap: 30px 22px;
   align-items: start;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
   padding-block: 24px 10px;
-  padding-inline: 14px;
-  margin-inline: -14px;
-  scrollbar-width: thin;
 }
 .deck-tile {
-  scroll-snap-align: start;
   border-radius: var(--radius-lg);
 }
 @media (max-width: 40rem) {
   .deck-shelf {
-    grid-auto-columns: 182px;
-    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 24px 18px;
   }
   .deck-tray {
     --cw: 126px;

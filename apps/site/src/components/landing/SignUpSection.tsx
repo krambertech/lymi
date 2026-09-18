@@ -49,7 +49,7 @@ export function SignUpSection({ title, note }: Props) {
         <div className="relative">
           <span className="signup-lamp">
             <Lantern
-              key={lit ? "lit" : "dark"}
+              key={lit ? "lit" : "unlit"}
               glow
               flicker
               catchLight={lit}

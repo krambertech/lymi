@@ -370,6 +370,8 @@ export function LibraryView({
               total={d.total}
               next={next?.[d.id]}
               owner={d.role === "owner" ? null : d.owner.name}
+              published={d.published}
+              publisherPhoto={d.owner.avatarUrl}
               describedBy={describedBy}
               st={st}
             />

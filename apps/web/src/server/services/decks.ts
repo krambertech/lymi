@@ -6,7 +6,15 @@ import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
 import { drawableByDeck } from "./draw";
-import { deckAccess, memberOf, ownedDeck } from "./members";
+import {
+  deckAccess,
+  livePublication,
+  memberOf,
+  ownedDeck,
+  ownerAvatar,
+  publisherColumns,
+  publisherOf,
+} from "./members";
 import {
   askedSql,
   deckModes,
@@ -51,9 +59,12 @@ export async function listDecks(
       meaningLanguage: schema.deckMembers.meaningLanguage,
       editionName: schema.deckLocalizations.name,
       editionDescription: schema.deckLocalizations.description,
+      ...publisherColumns,
     })
     .from(schema.decks)
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
+    .leftJoin(schema.deckPublications, livePublication)
+    .leftJoin(schema.userAvatars, ownerAvatar)
     .leftJoin(
       schema.deckMembers,
       and(
@@ -83,16 +94,37 @@ export async function listDecks(
         : [deckOrder(userId), asc(schema.decks.createdAt)]),
     );
   return rows.map(
-    ({ ownerId, ownerName, memberRole, editionName, editionDescription, ...deck }) => ({
-      ...deck,
-      name: editionName ?? deck.name,
-      description: editionDescription ?? deck.description,
-      reviewModes: deckModes(deck.directions),
-      // Cards, not direction states: the same count the queue reports as its total.
-      due: due.get(deck.id) ?? 0,
-      role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
-      owner: { id: ownerId, name: ownerName },
-    }),
+    ({
+      ownerId,
+      ownerName,
+      memberRole,
+      editionName,
+      editionDescription,
+      publicationSlug,
+      avatarCustomKey,
+      avatarCustomVersion,
+      avatarGoogleVersion,
+      ...deck
+    }) => {
+      const publisher = publisherOf({
+        publicationSlug,
+        avatarCustomKey,
+        avatarCustomVersion,
+        avatarGoogleVersion,
+        archivedAt: deck.archivedAt,
+      });
+      return {
+        ...deck,
+        name: editionName ?? deck.name,
+        description: editionDescription ?? deck.description,
+        reviewModes: deckModes(deck.directions),
+        // Cards, not direction states: the same count the queue reports as its total.
+        due: due.get(deck.id) ?? 0,
+        role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
+        owner: { id: ownerId, name: ownerName, avatarUrl: publisher.avatarUrl },
+        published: publisher.published,
+      };
+    },
   );
 }
 

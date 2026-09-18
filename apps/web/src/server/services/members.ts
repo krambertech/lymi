@@ -1,5 +1,6 @@
 import type { MemberRole } from "@lymi/core";
 import { newId } from "@lymi/core";
+import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { audit, auditStatementWhen } from "./audit";
@@ -28,7 +29,49 @@ export function memberOf(userId: string) {
 /** Who owns a deck and what the caller may do in it, as every deck response carries it. */
 export interface Membership {
   role: MemberRole;
-  owner: { id: string; name: string };
+  owner: { id: string; name: string; avatarUrl: string | null };
+  published: boolean;
+}
+
+/** The columns a deck read selects to name its publisher, beside the joins below. */
+export const publisherColumns = {
+  publicationSlug: schema.deckPublications.slug,
+  avatarCustomKey: schema.userAvatars.customKey,
+  avatarCustomVersion: schema.userAvatars.customVersion,
+  avatarGoogleVersion: schema.userAvatars.googleVersion,
+};
+
+/** The live publication a deck has, if any. */
+export const livePublication = and(
+  eq(schema.deckPublications.deckId, schema.decks.id),
+  eq(schema.deckPublications.status, "published"),
+);
+
+/** The owner's photo row, which only a published deck turns into a public address. */
+export const ownerAvatar = eq(schema.userAvatars.userId, schema.decks.userId);
+
+/**
+ * Whether a deck is published and where its publisher's photo is served. Publishing is what
+ * makes the photo public, so a deck shared by link carries none, and an archived deck stops
+ * serving one the moment its public page does.
+ */
+export function publisherOf(row: {
+  publicationSlug: string | null;
+  archivedAt: Date | null;
+  avatarCustomKey: string | null;
+  avatarCustomVersion: string | null;
+  avatarGoogleVersion: string | null;
+}): { published: boolean; avatarUrl: string | null } {
+  const slug = row.publicationSlug;
+  if (!slug) return { published: false, avatarUrl: null };
+  const version = row.archivedAt
+    ? null
+    : activeAvatarVersion({
+        customKey: row.avatarCustomKey,
+        customVersion: row.avatarCustomVersion,
+        googleVersion: row.avatarGoogleVersion,
+      });
+  return { published: true, avatarUrl: version ? publisherAvatarPath(slug, version) : null };
 }
 
 /** The deck with the caller's role, or not found when they cannot see it. */
@@ -43,9 +86,12 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
       editionName: schema.deckLocalizations.name,
       editionDescription: schema.deckLocalizations.description,
       meaningLanguage: schema.deckMembers.meaningLanguage,
+      ...publisherColumns,
     })
     .from(schema.decks)
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
+    .leftJoin(schema.deckPublications, livePublication)
+    .leftJoin(schema.userAvatars, ownerAvatar)
     .leftJoin(
       schema.deckMembers,
       and(
@@ -66,6 +112,7 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
   if (!row) throw notFound("Deck");
   const role: MemberRole = row.deck.userId === userId ? "owner" : (row.memberRole ?? "learner");
   const { revision: _revision, ...deck } = row.deck;
+  const publisher = publisherOf({ ...row, archivedAt: row.deck.archivedAt });
   return {
     ...deck,
     name: row.editionName ?? deck.name,
@@ -76,7 +123,8 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
     position: row.position,
     reviewModes: deckModes(row.deck.directions),
     role,
-    owner: { id: row.deck.userId, name: row.ownerName },
+    owner: { id: row.deck.userId, name: row.ownerName, avatarUrl: publisher.avatarUrl },
+    published: publisher.published,
   };
 }
 

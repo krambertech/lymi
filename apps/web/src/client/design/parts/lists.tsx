@@ -76,6 +76,24 @@ export const lists: Group = {
                 </div>
               ),
             },
+            {
+              label: "Added from Explore",
+              note: "A published deck names its publisher with their mark, the lantern for Lymi’s own decks.",
+              render: () => (
+                <div className="w-full">
+                  <DeckCard
+                    id="d5"
+                    name="Eesti keel, A2"
+                    language="et"
+                    due={0}
+                    total={120}
+                    owner="Lymi"
+                    published
+                    st={{ path: "" }}
+                  />
+                </div>
+              ),
+            },
           ]}
         />
       ),

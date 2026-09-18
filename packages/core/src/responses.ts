@@ -44,10 +44,23 @@ export const ReviewDayProgress = z
   .meta({ id: "ReviewDayProgress" });
 export type ReviewDayProgress = z.infer<typeof ReviewDayProgress>;
 
-/** Whose deck it is and what the caller may do in it. */
+/** Whose deck it is, what the caller may do in it, and whether its owner published it. */
 const Membership = {
   role: MemberRole.meta({ description: "The caller's role in the deck" }),
-  owner: z.object({ id: z.string(), name: z.string() }).meta({ description: "Who owns the deck" }),
+  owner: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+      /**
+       * Where the owner's photo is served, or null. A published deck only: publishing is the
+       * deliberate act that makes a photo public, so a deck shared by link carries none.
+       */
+      avatarUrl: z.string().nullable().default(null),
+    })
+    .meta({ description: "Who owns the deck" }),
+  published: z.boolean().meta({
+    description: "True while the deck is published, which makes its owner its publisher",
+  }),
 };
 
 const SeriesId = z.string().nullable().meta({

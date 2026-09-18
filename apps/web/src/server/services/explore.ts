@@ -1,6 +1,6 @@
 import type { ExploreDeckOut, ExploreOut } from "@lymi/core/catalog";
 import { listPublicCatalog, loadPublicDeck } from "@lymi/core/catalog";
-import { and, eq, inArray, isNull } from "@lymi/core/db";
+import { and, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Db } from "../db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
@@ -34,7 +34,11 @@ export async function exploreDeck(ctx: ServiceContext, slug: string): Promise<Ex
   return { deck: result.deck, deckId: added.get(slug) ?? null };
 }
 
-/** Which of these published decks the learner is still a member of, and the deck each one is. */
+/**
+ * Which of these published decks are already this learner's, and the deck each one is. A deck's
+ * owner counts: joining one's own deck writes no member row and changes nothing, so a publisher
+ * offered Add on their own deck would press it and see nothing happen.
+ */
 async function addedDecks(
   db: Db,
   userId: string,
@@ -44,12 +48,19 @@ async function addedDecks(
   const rows = await db
     .select({ slug: schema.deckPublications.slug, deckId: schema.deckPublications.deckId })
     .from(schema.deckPublications)
-    .innerJoin(schema.deckMembers, eq(schema.deckMembers.deckId, schema.deckPublications.deckId))
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
+    .leftJoin(
+      schema.deckMembers,
+      and(
+        eq(schema.deckMembers.deckId, schema.deckPublications.deckId),
+        eq(schema.deckMembers.userId, userId),
+        isNull(schema.deckMembers.removedAt),
+      ),
+    )
     .where(
       and(
         inArray(schema.deckPublications.slug, [...slugs]),
-        eq(schema.deckMembers.userId, userId),
-        isNull(schema.deckMembers.removedAt),
+        or(eq(schema.decks.userId, userId), isNotNull(schema.deckMembers.userId)),
       ),
     );
   return new Map(rows.map((row) => [row.slug, row.deckId]));

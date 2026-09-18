@@ -23,7 +23,11 @@ function ExploreDeck() {
       missing={error instanceof ApiError && error.status === 404}
       busy={isFetching}
       onRetry={() => void refetch()}
-      onAdd={() => data && add.mutate({ slug, name: data.deck.name })}
+      onAdd={() =>
+        data &&
+        // The edition the page was read in, which is a published one by construction.
+        add.mutate({ slug, name: data.deck.name, edition: data.deck.meaningLanguage })
+      }
       adding={add.isPending}
     />
   );

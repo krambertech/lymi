@@ -5,9 +5,9 @@ import { toast } from "../components/ui/toast";
 import { ApiError, api } from "./api";
 
 /**
- * Adding a published deck, from wherever Explore offers it. The edition is the learner's own
- * meaning language where the deck is published in it, chosen on the server; an old pin never
- * moves. ADR 0015, ADR 0020.
+ * Adding a published deck, from wherever Explore offers it. The caller passes the edition the row
+ * it pressed was read in, so the deck lands in Library saying what Explore said: the server pins
+ * nothing when it is told nothing, and a membership's edition is never chosen again. ADR 0015.
  *
  * `land` decides where the press leaves the learner: pressing Add on a deck's own page means
  * they want that deck, so it opens in Library; pressing it in a list means they are still
@@ -18,7 +18,8 @@ export function useAddPublishedDeck({ land }: { land: "library" | "here" }) {
   const qc = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: ({ slug }: { slug: string; name: string }) => api.addPublishedDeck(slug),
+    mutationFn: ({ slug, edition }: { slug: string; name: string; edition: string }) =>
+      api.addPublishedDeck(slug, edition),
     onSuccess: async ({ deckId }, { name }) => {
       await Promise.all([
         qc.invalidateQueries({ queryKey: ["decks"] }),

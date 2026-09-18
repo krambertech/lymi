@@ -51,8 +51,9 @@ export const NAV: {
   // Exact, so a deck page lights only its own row under Decks.
   { to: "/library", label: msg`Library`, icon: BookMarked, exact: true },
   { to: "/insights", label: msg`Insights`, icon: ChartNoAxesColumn },
-  // Exact, so a deck opened from Explore lights only the row it is under.
-  { to: "/explore", label: msg`Explore`, icon: Compass, exact: true },
+  // Not exact: Explore has no deck rows under it to light instead, so `/explore/<slug>` would
+  // leave the rail with nothing marked at all.
+  { to: "/explore", label: msg`Explore`, icon: Compass },
 ];
 
 interface SidebarProps {

@@ -984,18 +984,6 @@
   --tray-l: 0.192;
   --tray-c: 0.015;
 }
-/* Over a tint, an opaque grey surface reads as a patch stuck on the colour. Inside a tinted
-   area the two hover surfaces become translucent ink instead, so a hover or a chip darkens
-   whatever is actually behind it and works over any hue. */
-.over-tint {
-  --plate-2: color-mix(in oklch, var(--text) 7%, transparent);
-  --hover: color-mix(in oklch, var(--text) 12%, transparent);
-}
-[data-theme="dark"] .over-tint {
-  --plate-2: color-mix(in oklch, var(--text) 10%, transparent);
-  --hover: color-mix(in oklch, var(--text) 15%, transparent);
-}
-
 .deck-tray[data-hue="0"] {
   --tray-h: 25;
 }

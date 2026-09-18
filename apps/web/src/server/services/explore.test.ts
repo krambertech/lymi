@@ -73,6 +73,12 @@ describe("exploreCatalog", () => {
     expect((await exploreCatalog(await learner(db, "bo", "Bo"))).added.added).toBeUndefined();
   });
 
+  it("counts a deck the learner owns as theirs, so a publisher is never offered its own", async () => {
+    const deck = await publish("owned");
+    expect((await exploreCatalog(lymi)).added.owned).toBe(deck.id);
+    expect((await exploreDeck(lymi, "owned")).deckId).toBe(deck.id);
+  });
+
   it("drops a withdrawn deck, as the public page does", async () => {
     const deck = await publish("withdrawn");
     expect(find(await exploreCatalog(anna), "withdrawn")).toBeDefined();

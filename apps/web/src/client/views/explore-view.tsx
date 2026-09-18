@@ -17,7 +17,7 @@ interface Props {
   failed?: boolean | undefined;
   busy?: boolean | undefined;
   onRetry?: (() => void) | undefined;
-  onAdd: (slug: string, name: string) => void;
+  onAdd: (deck: { slug: string; name: string; edition: string }) => void;
   /** The slug currently being added, so only its own tile waits. */
   adding?: string | undefined;
   /** The phone bar carries the learner, since the rail that usually does is not there. */
@@ -134,7 +134,14 @@ export function ExploreView({
                     <DeckTile
                       deck={deck}
                       addedTo={data.added[deck.slug] ?? null}
-                      onAdd={() => onAdd(deck.slug, deck.name)}
+                      onAdd={() =>
+                        onAdd({
+                          slug: deck.slug,
+                          name: deck.name,
+                          // The edition this row was read in, so Library says what the shelf said.
+                          edition: deck.meaningLanguage,
+                        })
+                      }
                       adding={adding === deck.slug}
                       st={st}
                     />

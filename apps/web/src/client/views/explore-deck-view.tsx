@@ -22,6 +22,21 @@ interface Props {
 }
 
 /**
+ * Stable keys for a list the projection gives no ids for. A repeated term is ordinary in a
+ * vocabulary deck and two sections may share a name, so a name that has been seen carries how
+ * many times: the same list always yields the same keys, and no key is just a position.
+ */
+function keyed<T>(items: readonly T[], nameOf: (item: T) => string): { item: T; key: string }[] {
+  const seen = new Map<string, number>();
+  return items.map((item) => {
+    const name = nameOf(item);
+    const count = (seen.get(name) ?? 0) + 1;
+    seen.set(name, count);
+    return { item, key: count === 1 ? name : `${name}#${count}` };
+  });
+}
+
+/**
  * The card this deck's tray shows: the first with a meaning, named with its section. It is the
  * tray the learner pressed on the shelf, so the same card meets them here in the same colour.
  */
@@ -171,20 +186,19 @@ export function ExploreDeckView({
               <Trans>What you learn, in order</Trans>
             </h2>
             <ol className="edge mt-4 grid gap-px overflow-hidden rounded-md bg-edge">
-              {sections.map((section, at) => (
-                <li
-                  key={section.name}
-                  className="flex items-center gap-3 bg-plate px-4 py-3 text-base"
-                >
-                  <span className="w-5 shrink-0 text-sm text-muted tabular-nums">{at + 1}</span>
-                  <span lang={deck.meaningLanguage} className="min-w-0 flex-1 truncate text-text">
-                    {section.name}
-                  </span>
-                  <span className="shrink-0 text-sm text-muted tabular-nums">
-                    <Plural value={section.cards.length} one="# card" other="# cards" />
-                  </span>
-                </li>
-              ))}
+              {keyed(sections, (section) => section.name ?? "").map(
+                ({ item: section, key }, at) => (
+                  <li key={key} className="flex items-center gap-3 bg-plate px-4 py-3 text-base">
+                    <span className="w-5 shrink-0 text-sm text-muted tabular-nums">{at + 1}</span>
+                    <span lang={deck.meaningLanguage} className="min-w-0 flex-1 truncate text-text">
+                      {section.name}
+                    </span>
+                    <span className="shrink-0 text-sm text-muted tabular-nums">
+                      <Plural value={section.cards.length} one="# card" other="# cards" />
+                    </span>
+                  </li>
+                ),
+              )}
             </ol>
             <p className="mt-3 text-sm text-muted">
               <Trans>You start with the first section. The next opens as you learn this one.</Trans>
@@ -198,40 +212,39 @@ export function ExploreDeckView({
             <Trans>Every card</Trans>
           </h2>
           <div className="mt-4 grid gap-2">
-            {deck.sections.map((section) => (
-              <details
-                key={section.name ?? "loose"}
-                className="group edge overflow-hidden rounded-md bg-plate"
-              >
-                <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 text-base text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
-                  <span lang={deck.meaningLanguage} className="min-w-0 flex-1 truncate">
-                    {section.name ?? <Trans>Cards outside a section</Trans>}
-                  </span>
-                  <span className="shrink-0 text-sm text-muted tabular-nums">
-                    <Plural value={section.cards.length} one="# card" other="# cards" />
-                  </span>
-                  <ChevronDown
-                    aria-hidden="true"
-                    className="size-[18px] shrink-0 text-muted transition-transform duration-150 group-open:rotate-180"
-                  />
-                </summary>
-                <ul className="grid gap-px border-t border-edge bg-edge">
-                  {section.cards.map((card) => (
-                    <li
-                      key={card.term}
-                      className="grid gap-0.5 bg-plate px-4 py-2.5 @md:grid-cols-2 @md:gap-4"
-                    >
-                      <span lang={deck.language ?? undefined} className="text-base text-text">
-                        {card.term}
-                      </span>
-                      <span lang={deck.meaningLanguage} className="text-base text-text-2">
-                        {card.meaning}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ))}
+            {keyed(deck.sections, (section) => section.name ?? "loose").map(
+              ({ item: section, key }) => (
+                <details key={key} className="group edge overflow-hidden rounded-md bg-plate">
+                  <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 text-base text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
+                    <span lang={deck.meaningLanguage} className="min-w-0 flex-1 truncate">
+                      {section.name ?? <Trans>Cards outside a section</Trans>}
+                    </span>
+                    <span className="shrink-0 text-sm text-muted tabular-nums">
+                      <Plural value={section.cards.length} one="# card" other="# cards" />
+                    </span>
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="size-[18px] shrink-0 text-muted transition-transform duration-150 group-open:rotate-180"
+                    />
+                  </summary>
+                  <ul className="grid gap-px border-t border-edge bg-edge">
+                    {keyed(section.cards, (card) => card.term).map(({ item: card, key }) => (
+                      <li
+                        key={key}
+                        className="grid gap-0.5 bg-plate px-4 py-2.5 @md:grid-cols-2 @md:gap-4"
+                      >
+                        <span lang={deck.language ?? undefined} className="text-base text-text">
+                          {card.term}
+                        </span>
+                        <span lang={deck.meaningLanguage} className="text-base text-text-2">
+                          {card.meaning}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ),
+            )}
           </div>
         </section>
       </div>

@@ -35,7 +35,7 @@ function Catalogue() {
       failed={isError && data === undefined}
       busy={isFetching}
       onRetry={() => void refetch()}
-      onAdd={(slug, name) => add.mutate({ slug, name })}
+      onAdd={(deck) => add.mutate(deck)}
       adding={add.isPending ? add.variables?.slug : undefined}
       name={me.data?.name}
       email={me.data?.email}

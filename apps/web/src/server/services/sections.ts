@@ -8,8 +8,8 @@ import type {
 } from "@lymi/core";
 import { deckProgress, newId, sectionsToStart } from "@lymi/core";
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
-import { auditStatement, auditStatementWhen } from "../audit";
 import { type Db, schema } from "../db";
+import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { deckAccess, memberOf, ownedDeck } from "./members";
@@ -279,7 +279,7 @@ async function cardsOfDeck({ db }: ServiceContext, deckId: string, cardIds: read
 }
 
 export async function createSection(ctx: ServiceContext, deckId: string, input: SectionInput) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   await ownedDeck(ctx, deckId);
   const cardIds = input.cardIds ?? [];
   await cardsOfDeck(ctx, deckId, cardIds);
@@ -292,20 +292,13 @@ export async function createSection(ctx: ServiceContext, deckId: string, input: 
   await runBatch(db, [
     db.insert(schema.sections).values({ id, deckId, name: input.name, position: last?.next ?? 0 }),
     ...(cardIds.length > 0 ? [placeCards(db, deckId, id, cardIds, now)] : []),
-    auditStatement(db, {
-      userId,
-      actor,
-      action: "create",
-      entity: "section",
-      entityId: id,
-      payload: { deckId, ...input },
-    }),
+    auditStatement(ctx, { entity: "section", action: "create", id, details: { deckId, ...input } }),
   ]);
   return getSection(ctx, id);
 }
 
 export async function renameSection(ctx: ServiceContext, id: string, name: string) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   const { section } = await ownedSection(ctx, id);
   if (section.name !== name) {
     await runBatch(db, [
@@ -314,14 +307,7 @@ export async function renameSection(ctx: ServiceContext, id: string, name: strin
         // A rename is text an edition translates, so every edition of it goes stale.
         .set({ name, revision: sql`revision + 1`, updatedAt: new Date() })
         .where(eq(schema.sections.id, id)),
-      auditStatement(db, {
-        userId,
-        actor,
-        action: "update",
-        entity: "section",
-        entityId: id,
-        payload: { name },
-      }),
+      auditStatement(ctx, { entity: "section", action: "update", id, details: { name } }),
     ]);
   }
   return getSection(ctx, id);
@@ -333,7 +319,7 @@ export async function reorderSections(
   deckId: string,
   input: SectionOrderInput,
 ) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   await ownedDeck(ctx, deckId);
   const current = await db
     .select({ id: schema.sections.id, position: schema.sections.position })
@@ -364,13 +350,11 @@ export async function reorderSections(
             sql`${schema.sections.id} in (select value from json_each(${list}))`,
           ),
         ),
-      auditStatement(db, {
-        userId,
-        actor,
-        action: "reorder",
+      auditStatement(ctx, {
         entity: "section",
-        entityId: input.sectionIds[0] ?? deckId,
-        payload: { deckId, ...input },
+        action: "reorder",
+        id: input.sectionIds[0] ?? deckId,
+        details: { deckId, ...input },
       }),
     ]);
   }
@@ -386,7 +370,7 @@ export async function setCardsSection(
   deckId: string,
   input: CardSectionInput,
 ) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   await ownedDeck(ctx, deckId);
   if (input.sectionId) await activeSectionOf(ctx, deckId, input.sectionId);
   await cardsOfDeck(ctx, deckId, input.cardIds);
@@ -405,13 +389,11 @@ export async function setCardsSection(
   if (Number(moving?.count ?? 0) > 0) {
     await runBatch(db, [
       placeCards(db, deckId, input.sectionId, input.cardIds, new Date()),
-      auditStatement(db, {
-        userId,
-        actor,
-        action: "move",
+      auditStatement(ctx, {
         entity: "section",
-        entityId: input.sectionId ?? deckId,
-        payload: { deckId, ...input },
+        action: "move",
+        id: input.sectionId ?? deckId,
+        details: { deckId, ...input },
       }),
     ]);
   }
@@ -423,7 +405,7 @@ export async function setCardsSection(
  * `archived_at` so Restore finds exactly them, or stay in the deck without a section.
  */
 export async function archiveSection(ctx: ServiceContext, id: string, input: SectionArchiveInput) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   const { section } = await ownedSection(ctx, id);
   if (section.archivedAt) return { ok: true as const };
   const at = new Date();
@@ -449,8 +431,8 @@ export async function archiveSection(ctx: ServiceContext, id: string, input: Sec
       : // Kept cards keep `section_id`, so Restore regroups them as they were.
         []),
     auditStatementWhen(
-      db,
-      { userId, actor, action: "archive", entity: "section", entityId: id, payload: input },
+      ctx,
+      { entity: "section", action: "archive", id, details: input },
       schema.sections,
       landed,
     ),
@@ -460,7 +442,7 @@ export async function archiveSection(ctx: ServiceContext, id: string, input: Sec
 
 /** Bring a section back with the cards archived alongside it. Restoring twice is harmless. */
 export async function restoreSection(ctx: ServiceContext, id: string) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   const { section } = await ownedSection(ctx, id);
   if (!section.archivedAt) return { ok: true as const };
   const at = section.archivedAt;
@@ -481,8 +463,8 @@ export async function restoreSection(ctx: ServiceContext, id: string) {
     // A restored card may be asked in a mode its deck gained while it was away.
     ...stateStatementsForDeck(db, section.deckId),
     auditStatementWhen(
-      db,
-      { userId, actor, action: "restore", entity: "section", entityId: id },
+      ctx,
+      { entity: "section", action: "restore", id },
       schema.sections,
       stillArchived,
     ),
@@ -506,11 +488,12 @@ export async function openReadySections(ctx: ServiceContext, deckId: string) {
 
 /** Write the start rows that open `targetId`, with one Activity entry when this write opened it. */
 async function openSections(
-  { db, userId, actor }: ServiceContext,
+  ctx: ServiceContext,
   progress: DeckProgress,
   targetId: string,
   how: "ready" | "early" | "auto",
 ) {
+  const { db, userId } = ctx;
   const opening = sectionsToStart(progress, targetId);
   if (opening.length === 0) return;
   const now = new Date();
@@ -524,15 +507,8 @@ async function openSections(
         .onConflictDoNothing(),
     ),
     auditStatementWhen(
-      db,
-      {
-        userId,
-        actor,
-        action: "start",
-        entity: "section",
-        entityId: targetId,
-        payload: { how, sectionIds: opening },
-      },
+      ctx,
+      { entity: "section", action: "start", id: targetId, details: { how, sectionIds: opening } },
       schema.sectionStarts,
       landed,
     ),

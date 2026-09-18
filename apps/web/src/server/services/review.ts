@@ -16,8 +16,8 @@ import {
   stateDirection,
 } from "@lymi/core";
 import { and, eq, gte, ne } from "@lymi/core/db";
-import { audit } from "../audit";
 import { schema } from "../db";
+import { audit } from "./audit";
 import { presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
 import { dateFormatter } from "./days";
@@ -203,7 +203,7 @@ async function presentContent(ctx: ServiceContext, ids: string[]) {
  * Every accepted grade is one attempt toward the learner-local day it happened on, fixed now.
  */
 export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   const { cardId, rating } = input;
   const key = gradedMode(input);
   const direction = stateDirection(key);
@@ -314,13 +314,11 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
   if (!stored) return duplicate();
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.
   if (state.state === 0 || result.card.state === 2) await advance();
-  await audit(db, {
-    userId,
-    actor,
-    action: "grade",
+  await audit(ctx, {
     entity: "review",
-    entityId: cardId,
-    payload: { rating, direction, mode: key },
+    action: "grade",
+    id: cardId,
+    details: { rating, direction, mode: key },
   });
 
   return {

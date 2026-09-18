@@ -3,6 +3,7 @@ import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import { listActivity } from "./activity";
+import { audit } from "./audit";
 import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
@@ -10,6 +11,8 @@ import { startExport } from "./exports";
 import { turnOffJoinLink, turnOnJoinLink } from "./invitations";
 import { join, leave, removeMember } from "./members";
 import { setReviewTimezone } from "./review-days";
+import { createSection } from "./sections";
+import { createSeries } from "./series";
 import { learner, testDb } from "./test-db";
 
 /**
@@ -161,6 +164,17 @@ describe("naming the caller", () => {
     expect(row).toMatchObject({ kind: "cards_added", app: "Codex" });
   });
 
+  it("names the app on a section and a series it created", async () => {
+    const deck = await createDeck(kateryna, { name: "Lessons", defaultLanguage: "it" });
+    await createSection(claude, deck.id, { name: "Lesson 1" });
+    const series = await createSeries(claude, { name: "Italian A1" });
+
+    const [section] = await inDeck(deck.id);
+    expect(section).toMatchObject({ kind: "section_added", actor: "mcp", app: "Claude" });
+    const row = (await entries()).find((entry) => entry.kind === "series_added");
+    expect(row).toMatchObject({ app: "Claude", person: series.name });
+  });
+
   it("falls back to the live name for a row written before the name was kept", async () => {
     const deck = await createDeck(kateryna, { name: "Legacy", defaultLanguage: "it" });
     await addCards(claude, [{ deckId: deck.id, term: "il passato" }]);
@@ -180,6 +194,27 @@ describe("what the AI filled in", () => {
     const [added] = await addCards(kateryna, [{ deckId: deck.id, term: "la fattura" }]);
     if (added?.status !== "added") throw new Error("the card was not added");
     // What `enrichment.ts` writes when a run fills empty fields on a card the learner added.
+    await audit(
+      { ...kateryna, actor: "ai" },
+      {
+        entity: "card",
+        action: "enrich",
+        id: added.card.id,
+        deckId: deck.id,
+        details: { meaning: "the bill" },
+      },
+    );
+
+    const [row] = await inDeck(deck.id);
+    expect(row).toMatchObject({ kind: "cards_enriched", actor: "ai", count: 1 });
+    expect(row?.cards[0]?.term).toBe("la fattura");
+  });
+
+  it("still reads a run written before enrichment had its own action", async () => {
+    const deck = await createDeck(kateryna, { name: "Enriched then", defaultLanguage: "it" });
+    const [added] = await addCards(kateryna, [{ deckId: deck.id, term: "lo scontrino" }]);
+    if (added?.status !== "added") throw new Error("the card was not added");
+    // An older row: the AI's fill-in recorded as an update by the AI.
     await db.insert(schema.auditLog).values({
       id: newId(),
       userId: kateryna.userId,
@@ -187,12 +222,11 @@ describe("what the AI filled in", () => {
       action: "update",
       entity: "card",
       entityId: added.card.id,
-      payload: { meaning: "the bill" },
+      payload: { meaning: "the receipt" },
     });
 
     const [row] = await inDeck(deck.id);
     expect(row).toMatchObject({ kind: "cards_enriched", actor: "ai", count: 1 });
-    expect(row?.cards[0]?.term).toBe("la fattura");
   });
 });
 
@@ -202,14 +236,10 @@ describe("what the list refuses to say", () => {
     const [added] = await addCards(kateryna, [{ deckId: deck.id, term: "la voce" }]);
     if (added?.status !== "added") throw new Error("the card was not added");
     // The AI caches the audio; nothing about the card changed, so no row claims it did.
-    await db.insert(schema.auditLog).values({
-      id: newId(),
-      userId: kateryna.userId,
-      actor: "ai",
-      action: "generate_audio",
-      entity: "card",
-      entityId: added.card.id,
-    });
+    await audit(
+      { ...kateryna, actor: "ai" },
+      { entity: "card", action: "generate_audio", id: added.card.id, deckId: deck.id },
+    );
     expect(await inDeck(deck.id)).toHaveLength(0);
   });
 
@@ -219,14 +249,10 @@ describe("what the list refuses to say", () => {
     if (added?.status !== "added") throw new Error("the card was not added");
     // Ten writes with no sentence, newer than the one that has one.
     for (let i = 0; i < 10; i++) {
-      await db.insert(schema.auditLog).values({
-        id: newId(),
-        userId: kateryna.userId,
-        actor: "ai",
-        action: "generate_audio",
-        entity: "card",
-        entityId: added.card.id,
-      });
+      await audit(
+        { ...kateryna, actor: "ai" },
+        { entity: "card", action: "generate_audio", id: added.card.id, deckId: deck.id },
+      );
     }
     const read = await listActivity(kateryna, { limit: 5 });
     // A page of only unsaid writes would leave the screen saying nothing has come in.

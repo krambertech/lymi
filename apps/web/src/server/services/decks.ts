@@ -1,8 +1,8 @@
 import type { DeckInput } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
-import { audit } from "../audit";
 import { schema } from "../db";
+import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
 import { drawableByDeck } from "./draw";
@@ -97,7 +97,7 @@ export async function listDecks(
 }
 
 export async function createDeck(ctx: ServiceContext, input: DeckInput) {
-  const { db, userId, actor, client, clientName } = ctx;
+  const { db, userId } = ctx;
   const seriesId = input.seriesId ?? null;
   if (seriesId) await activeSeries(ctx, seriesId);
   const id = newId();
@@ -113,16 +113,7 @@ export async function createDeck(ctx: ServiceContext, input: DeckInput) {
     // A deck without a series keeps the default, so Library still orders new decks by date.
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
-  await audit(db, {
-    userId,
-    actor,
-    client,
-    clientName,
-    action: "create",
-    entity: "deck",
-    entityId: id,
-    payload: input,
-  });
+  await audit(ctx, { entity: "deck", action: "create", id, details: input });
   return getDeck(ctx, id);
 }
 
@@ -174,7 +165,7 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
 export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 
 export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPatch) {
-  const { db, userId, actor, client, clientName } = ctx;
+  const { db } = ctx;
   const deck = await ownedDeck(ctx, id);
   const { reviewModes, seriesId, ...fields } = patch;
   const directions = resolveDeckDirections(patch);
@@ -214,16 +205,7 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
     const [first, ...rest] = stateStatementsForDeck(db, id);
     if (first) await db.batch([first, ...rest]);
   }
-  await audit(db, {
-    userId,
-    actor,
-    client,
-    clientName,
-    action: "update",
-    entity: "deck",
-    entityId: id,
-    payload: patch,
-  });
+  await audit(ctx, { entity: "deck", action: "update", id, details: patch });
   return getDeck(ctx, id);
 }
 
@@ -236,7 +218,7 @@ export async function restoreDeck(ctx: ServiceContext, id: string) {
 }
 
 async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
-  const { db, userId, actor, client, clientName } = ctx;
+  const { db } = ctx;
   await ownedDeck(ctx, id);
   const result = await db
     .update(schema.decks)
@@ -244,15 +226,6 @@ async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date
     .where(eq(schema.decks.id, id))
     .returning({ id: schema.decks.id });
   if (result.length === 0) throw notFound("Deck");
-  await audit(db, {
-    userId,
-    actor,
-    client,
-    clientName,
-    action: archivedAt ? "archive" : "restore",
-    entity: "deck",
-    entityId: id,
-    payload: {},
-  });
+  await audit(ctx, { entity: "deck", action: archivedAt ? "archive" : "restore", id });
   return { ok: true as const };
 }

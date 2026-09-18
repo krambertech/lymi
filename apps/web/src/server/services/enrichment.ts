@@ -10,8 +10,8 @@ import { and, eq, inArray, isNull, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
-import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
+import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import type { ServiceContext } from "./context";
 import { getSettings } from "./settings";
@@ -201,7 +201,7 @@ export async function enrichCards(
   cardIds: readonly string[],
   provider: TextProvider,
 ): Promise<{ enriched: number }> {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   const before = await workingCards(db, userId, cardIds);
   if (before.length === 0) return { enriched: 0 };
   const { meaningLanguage } = await getSettings(ctx);
@@ -257,13 +257,12 @@ export async function enrichCards(
     const fields = landed(after.get(card.id), attempted.get(card.id) ?? {});
     if (fields.length === 0) continue;
     rows.push(
-      auditStatement(db, {
-        userId,
-        actor,
-        action: "update",
+      auditStatement(ctx, {
         entity: "card",
-        entityId: card.id,
-        payload: Object.fromEntries(fields.map((field) => [field, after.get(card.id)?.[field]])),
+        action: "enrich",
+        id: card.id,
+        deckId: card.deckId,
+        details: Object.fromEntries(fields.map((field) => [field, after.get(card.id)?.[field]])),
       }),
     );
   }

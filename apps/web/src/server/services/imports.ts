@@ -12,13 +12,13 @@ import {
 } from "@lymi/core";
 import { and, desc, eq, inArray, isNull, lt, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
-import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
 import type { ImportChoices, SourceAdapter } from "../imports/adapter";
 import { anki } from "../imports/anki";
 import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
 import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
+import { auditStatement } from "./audit";
 import type { CardImageStorage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import {
@@ -151,7 +151,7 @@ export async function startImport(ctx: ServiceContext, input: ImportStartInput, 
       parts: [],
       createdBy: actor,
     }),
-    auditStatement(db, { userId, actor, action: "create", entity: "import", entityId: id }),
+    auditStatement(ctx, { entity: "import", action: "create", id }),
   ]);
   return getImport(ctx, id);
 }
@@ -424,13 +424,11 @@ export async function finishImport(
       .update(schema.imports)
       .set({ status: "done", counts, finishedAt: now, updatedAt: now })
       .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "importing"))),
-    auditStatement(ctx.db, {
-      userId: ctx.userId,
-      actor: ctx.actor,
-      action: "complete",
+    auditStatement(ctx, {
       entity: "import",
-      entityId: id,
-      payload: { added: counts.added, existing: counts.existing, duplicates: counts.duplicates },
+      action: "complete",
+      id,
+      details: { added: counts.added, existing: counts.existing, duplicates: counts.duplicates },
     }),
   ]);
   await deleteFiles(uploads, row);
@@ -470,13 +468,7 @@ export async function cancelImport(ctx: ServiceContext, id: string, uploads: R2B
           inArray(schema.imports.status, ["uploading", "inspecting", "ready"]),
         ),
       ),
-    auditStatement(ctx.db, {
-      userId: ctx.userId,
-      actor: ctx.actor,
-      action: "cancel",
-      entity: "import",
-      entityId: id,
-    }),
+    auditStatement(ctx, { entity: "import", action: "cancel", id }),
   ]);
   await deleteFiles(uploads, row);
   return getImport(ctx, id);

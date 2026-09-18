@@ -30,8 +30,8 @@ An empty Activity is not a screen to fill, so it has no start panel and asks for
 
 ## What it costs to add an event
 
-An event appears here because a service wrote an audit row for it, so the screen is a read and never a second source of truth. A new kind of write is one entry in the reader's table of kinds and one sentence. Two things make a write invisible: no audit row at all, which is the bug to look for when something lands unseen, and an action on the reader's unsaid list, which is deliberate — caching a card's audio is the AI's work but not a change to the card, and naming it an edit here would be a lie on the one screen that must not tell one.
+An event appears here because a service wrote an audit row for it, so the screen is a read and never a second source of truth. The rows a service can write are one typed list in `services/audit.ts`, and the reader's table in `services/activity.ts` names a sentence, or deliberately none, for every entry in it, so a new kind of write does not compile until this screen has decided on it. Two things make a write invisible: no audit row at all, which is the bug to look for when something lands unseen, and a kind the reader's table marks as unsaid — caching a card's audio is the AI's work but not a change to the card, and naming it an edit here would be a lie on the one screen that must not tell one.
 
 The AI's own writes are here too: a run that fills empty fields after an add is "Enriched 3 cards in Verbi", the word CONTEXT.md owns for it, and never an edit.
 
-Only a caller Lymi can name is named. Card, deck and sharing writes keep the app or key behind them; the other services do not yet, so their rows say "a connected app". A row keeps the name it had at the write, so revoking a key leaves its history readable.
+Only a caller Lymi can name is named. Every row keeps the app or key behind the write and its name at the time, taken from the service context rather than passed by each writer, so no write can lose it; a caller the context cannot name shows as "a connected app". A row keeps the name it had at the write, so revoking a key leaves its history readable.

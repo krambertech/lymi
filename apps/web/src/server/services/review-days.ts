@@ -2,8 +2,8 @@ import type { DeviceTimezoneInput, ReviewTimezoneInput } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
-import { audit } from "../audit";
 import { schema } from "../db";
+import { audit } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { addDays, dateFormatter, daysBetween } from "./days";
 import { drawableCount } from "./draw";
@@ -304,13 +304,11 @@ export async function undoReview(ctx: ServiceContext, reviewId: string): Promise
       throw new ServiceError("conflict", "Only the latest grade of a card can be undone.");
     }
     if (undo.undoneAt.getTime() === now.getTime()) {
-      await audit(ctx.db, {
-        userId: ctx.userId,
-        actor: ctx.actor,
-        action: "undo_grade",
+      await audit(ctx, {
         entity: "review",
-        entityId: review.review.cardId,
-        payload: { reviewId, direction: review.review.direction },
+        action: "undo_grade",
+        id: review.review.cardId,
+        details: { reviewId, direction: review.review.direction },
       });
     }
   }

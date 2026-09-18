@@ -2,8 +2,8 @@ import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
-import { audit } from "../audit";
 import { schema } from "../db";
+import { audit } from "./audit";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 
@@ -182,14 +182,16 @@ async function rememberAudioKey(
     .returning({ id: schema.cards.id });
   if (!generated || !updated) return;
   // The key is a cache on the owner's card, whoever asked for the audio. ADR 0011.
-  await audit(ctx.db, {
-    userId: card.userId,
-    actor: "ai",
-    action: "generate_audio",
-    entity: "card",
-    entityId: card.id,
-    payload: { language: card.language, provider },
-  });
+  await audit(
+    { ...ctx, userId: card.userId, actor: "ai" },
+    {
+      entity: "card",
+      action: "generate_audio",
+      id: card.id,
+      deckId: card.deckId,
+      details: { language: card.language, provider },
+    },
+  );
 }
 
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {

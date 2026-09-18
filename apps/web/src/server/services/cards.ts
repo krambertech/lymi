@@ -3,8 +3,8 @@ import { needsEnrichment, newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
-import { auditStatement } from "../audit";
 import { schema } from "../db";
+import { auditStatement } from "./audit";
 import { runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, editionText, inEdition, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -47,7 +47,7 @@ export async function addCards(
   inputs: CardInput[],
   enrichment?: EnrichmentQueue | null,
 ): Promise<AddCardOutcome[]> {
-  const { db, userId, actor, client, clientName } = ctx;
+  const { db, userId, actor } = ctx;
   if (inputs.length === 0) return [];
 
   const deckIds = [...new Set(inputs.map((i) => i.deckId))];
@@ -161,15 +161,12 @@ export async function addCards(
       db.insert(schema.cards).values(card),
       // A new card has no picture yet, so only its text modes can be asked.
       ...stateStatementsForCard(db, id, now, TEXT_MODES),
-      auditStatement(db, {
-        userId,
-        actor,
-        client,
-        clientName,
-        action: "create",
+      auditStatement(ctx, {
         entity: "card",
-        entityId: id,
-        payload: input,
+        action: "create",
+        id,
+        deckId: input.deckId,
+        details: input,
       }),
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
@@ -395,7 +392,7 @@ export async function cardHistory(ctx: ServiceContext, id: string) {
 }
 
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
-  const { db, userId, actor, client, clientName } = ctx;
+  const { db, userId } = ctx;
   const current = await ownedCard(ctx, id);
   if (patch.deckId && patch.deckId !== current.deckId) {
     const [deck] = await db
@@ -440,16 +437,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
     [
       update,
       ...(modes || patch.deckId !== undefined ? stateStatementsForCard(db, id) : []),
-      auditStatement(db, {
-        userId,
-        actor,
-        client,
-        clientName,
-        action: "update",
-        entity: "card",
-        entityId: id,
-        payload: patch,
-      }),
+      auditStatement(ctx, { entity: "card", action: "update", id, deckId, details: patch }),
     ],
   ]);
   return showCard(ctx, id);
@@ -465,8 +453,8 @@ export function restoreCard(ctx: ServiceContext, id: string) {
 }
 
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
-  const { db, userId, actor, client, clientName } = ctx;
-  await ownedCard(ctx, id);
+  const { db } = ctx;
+  const current = await ownedCard(ctx, id);
   const update = db
     .update(schema.cards)
     .set({ archivedAt, updatedAt: new Date() })
@@ -475,14 +463,11 @@ async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | n
     [
       update,
       ...(archivedAt === null ? stateStatementsForCard(db, id) : []),
-      auditStatement(db, {
-        userId,
-        actor,
-        client,
-        clientName,
-        action: archivedAt ? "archive" : "restore",
+      auditStatement(ctx, {
         entity: "card",
-        entityId: id,
+        action: archivedAt ? "archive" : "restore",
+        id,
+        deckId: current.deckId,
       }),
     ],
   ]);

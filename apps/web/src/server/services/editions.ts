@@ -8,8 +8,8 @@ import type {
 } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, eq, inArray, sql } from "@lymi/core/db";
-import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
+import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
 import { ownedDeck } from "./members";
@@ -263,7 +263,7 @@ export async function importEdition(
   input: EditionImportInput,
   publishers: Set<string>,
 ): Promise<EditionOut> {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   const { deck, publication } = await publishedDeck(ctx, deckId, publishers);
   notTheOriginal(publication, language);
 
@@ -374,13 +374,11 @@ export async function importEdition(
     ]);
   }
   statements.push([
-    auditStatement(db, {
-      userId,
-      actor,
-      action: "import_edition",
+    auditStatement(ctx, {
       entity: "deck",
-      entityId: deckId,
-      payload: {
+      action: "import_edition",
+      id: deckId,
+      details: {
         language,
         deck: Boolean(input.deck),
         sections: input.sections.length,
@@ -499,13 +497,11 @@ export async function approveEdition(
     ]);
   }
   statements.push([
-    auditStatement(db, {
-      userId,
-      actor,
-      action: "approve_edition",
+    auditStatement(ctx, {
       entity: "deck",
-      entityId: deckId,
-      payload: { language, sections: sectionIds.length, cards: cardIds.length },
+      action: "approve_edition",
+      id: deckId,
+      details: { language, sections: sectionIds.length, cards: cardIds.length },
     }),
   ]);
   await runInBatches(db, statements);
@@ -552,13 +548,11 @@ export async function publishEdition(
         updatedAt: now,
       })
       .where(eq(schema.deckEditions.id, existing.id)),
-    auditStatement(db, {
-      userId,
-      actor,
-      action: existing.status === "published" ? "update_edition" : "publish_edition",
+    auditStatement(ctx, {
       entity: "deck",
-      entityId: deckId,
-      payload: { language },
+      action: existing.status === "published" ? "update_edition" : "publish_edition",
+      id: deckId,
+      details: { language },
     }),
   ]);
   return editionView(db, deckId, language, publication.editionFields);
@@ -571,7 +565,7 @@ export async function withdrawEdition(
   language: string,
   publishers: Set<string>,
 ): Promise<EditionOut> {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   const { publication } = await publishedDeck(ctx, deckId, publishers);
   const existing = await editionRow(db, deckId, language);
   if (!existing) throw new ServiceError("not_found", "No edition");
@@ -587,13 +581,11 @@ export async function withdrawEdition(
           updatedAt: now,
         })
         .where(eq(schema.deckEditions.id, existing.id)),
-      auditStatement(db, {
-        userId,
-        actor,
-        action: "withdraw_edition",
+      auditStatement(ctx, {
         entity: "deck",
-        entityId: deckId,
-        payload: { language },
+        action: "withdraw_edition",
+        id: deckId,
+        details: { language },
       }),
     ]);
   }

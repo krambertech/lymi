@@ -2,8 +2,8 @@ import type { CardImageImportInput, CardImagePatch, CardImageVersionInput } from
 import { newId, revealsAnswer } from "@lymi/core";
 import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
-import { auditStatementWhen, insertWhen } from "../audit";
 import { type Db, schema } from "../db";
+import { type AuditAction, auditStatementWhen, insertWhen } from "./audit";
 import { getCard, ownedCard, showCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { type Fetcher, fetchRemoteImage } from "./image-import";
@@ -230,7 +230,7 @@ async function setStatus(
   card: Card,
   image: CardImage,
   status: "active" | "archived",
-  action: string,
+  action: "archive_image" | "restore_image",
 ) {
   const token = newId();
   const [claimResult] = await ctx.db.batch([
@@ -285,12 +285,13 @@ function auditIfClaimed(
   ctx: ServiceContext,
   card: Card,
   token: string,
-  action: string,
-  payload: Record<string, unknown>,
+  action: Extract<AuditAction<"card">, `${string}_image`>,
+  details: Record<string, unknown>,
 ) {
+  // The picture is a change to the owner's card, whoever set it. ADR 0011.
   return auditStatementWhen(
-    ctx.db,
-    { userId: card.userId, actor: ctx.actor, action, entity: "card", entityId: card.id, payload },
+    { ...ctx, userId: card.userId },
+    { entity: "card", action, id: card.id, deckId: card.deckId, details },
     schema.cards,
     claimedRow(card.id, token),
   );

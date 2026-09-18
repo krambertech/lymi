@@ -145,8 +145,9 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
     return { ...base, kind: "archived", text: i18n._(msg`Archived`), actor: by };
   if (e.action === "restore")
     return { ...base, kind: "restored", text: i18n._(msg`Restored`), actor: by };
-  if (e.action !== "update") return { ...base, kind: "edited", text: e.action, actor: by };
-  if ("deckId" in payload)
+  if (e.action !== "update" && e.action !== "enrich")
+    return { ...base, kind: "edited", text: e.action, actor: by };
+  if (e.action === "update" && "deckId" in payload)
     return { ...base, kind: "moved", text: i18n._(msg`Moved to another deck`), actor: by };
 
   const keys = Object.keys(payload).filter((k) => k in fieldName);
@@ -158,7 +159,8 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
       }),
       i18n.locale,
     ) || i18n._(msg`a field`);
-  if (e.actor === "ai")
+  // Before enrichment had its own action, the AI's fill-in was an update by the AI.
+  if (e.action === "enrich" || e.actor === "ai")
     return { ...base, kind: "enriched", text: i18n._(msg`Enriched ${list}`), actor: by };
   const only = keys.length === 1 ? keys[0] : undefined;
   const value = only ? payload[only] : undefined;

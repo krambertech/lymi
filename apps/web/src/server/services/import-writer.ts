@@ -17,10 +17,10 @@ import {
 } from "@lymi/core";
 import { and, eq, inArray, isNotNull, isNull, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
-import { auditStatement } from "../audit";
 import { type BatchStatement, batchStatements } from "../batch";
-import { type Db, schema } from "../db";
+import { schema } from "../db";
 import type { ImportChoices, SourceAdapter, SourceSummary } from "../imports/adapter";
+import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -720,7 +720,7 @@ export async function archiveImport(ctx: ServiceContext, id: string) {
     sql`insert into audit_log (id, user_id, actor, action, entity, entity_id, payload, created_at)
       select lower(hex(randomblob(10))), ${userId}, ${actor}, 'archive', 'card', id, ${JSON.stringify({ importId: id })}, ${at}
       from cards where import_id = ${id} and user_id = ${userId} and archived_at = ${at}`,
-    auditStatement(db, { userId, actor, action: "archive", entity: "import", entityId: id }),
+    auditStatement(ctx, { entity: "import", action: "archive", id }),
   ]);
   return ownedImport(ctx, id);
 }
@@ -752,7 +752,7 @@ export async function restoreImport(ctx: ServiceContext, id: string) {
       select lower(hex(randomblob(10))), ${userId}, ${actor}, 'restore', 'card', value, ${JSON.stringify({ importId: id })}, ${now}
       from json_each(${JSON.stringify(restored.map((c) => c.id))})`,
     sql`update imports set archived_at = null, updated_at = ${now} where id = ${id}`,
-    auditStatement(db, { userId, actor, action: "restore", entity: "import", entityId: id }),
+    auditStatement(ctx, { entity: "import", action: "restore", id }),
   ]);
   return ownedImport(ctx, id);
 }

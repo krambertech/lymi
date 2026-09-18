@@ -1,8 +1,8 @@
 import type { JoinPreviewOut } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, eq, isNull, type SQL, sql } from "@lymi/core/db";
-import { auditStatementWhen } from "../audit";
 import { type Db, schema } from "../db";
+import { auditStatementWhen } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
 import { join, ownedDeck } from "./members";
@@ -54,7 +54,7 @@ export async function getJoinLink(ctx: ServiceContext, deckId: string) {
  * A link that was turned off is never revived: this makes a new token.
  */
 export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
-  const { db, userId, actor, client, clientName } = ctx;
+  const { db } = ctx;
   const deck = await ownedDeck(ctx, deckId);
   if (deck.archivedAt) {
     throw new ServiceError("invalid", "Restore the deck before sharing it");
@@ -70,16 +70,8 @@ export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
       .values({ id, deckId, kind: "link", token: newJoinToken() })
       .onConflictDoNothing(),
     auditStatementWhen(
-      db,
-      {
-        userId,
-        actor,
-        client,
-        clientName,
-        action: "turn_on_join_link",
-        entity: "deck",
-        entityId: deckId,
-      },
+      ctx,
+      { entity: "deck", action: "turn_on_join_link", id: deckId },
       schema.deckInvitations,
       eq(schema.deckInvitations.id, id),
     ),
@@ -91,7 +83,7 @@ export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
 
 /** Turn sharing off for good. Members stay; the URL never works again. Owner only. */
 export async function turnOffJoinLink(ctx: ServiceContext, deckId: string) {
-  const { db, userId, actor, client, clientName } = ctx;
+  const { db } = ctx;
   await ownedDeck(ctx, deckId);
   const now = Date.now();
   // One batch, so a revocation never lands without its audit row.
@@ -107,16 +99,8 @@ export async function turnOffJoinLink(ctx: ServiceContext, deckId: string) {
         ),
       ),
     auditStatementWhen(
-      db,
-      {
-        userId,
-        actor,
-        client,
-        clientName,
-        action: "turn_off_join_link",
-        entity: "deck",
-        entityId: deckId,
-      },
+      ctx,
+      { entity: "deck", action: "turn_off_join_link", id: deckId },
       schema.deckInvitations,
       and(
         eq(schema.deckInvitations.deckId, deckId),

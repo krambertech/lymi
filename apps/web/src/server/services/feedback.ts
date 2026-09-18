@@ -1,8 +1,8 @@
 import { FEEDBACK_DAILY_LIMIT, type FeedbackInput, newId } from "@lymi/core";
 import { and, count, eq } from "@lymi/core/db";
-import { audit } from "../audit";
 import { schema } from "../db";
 import type { Bindings } from "../env";
+import { audit } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import { OPERATOR_INBOX, sendTransactionalEmail } from "./email";
@@ -95,12 +95,10 @@ function recordFeedback(
   kind: FeedbackInput["kind"],
   delivery: "provider" | "outbox" | "failed",
 ) {
-  return audit(ctx.db, {
-    userId: ctx.userId,
-    actor: ctx.actor,
-    action: "send_feedback",
+  return audit(ctx, {
     entity: "account",
-    entityId: id,
-    payload: { kind, delivery },
+    action: "send_feedback",
+    id,
+    details: { kind, delivery },
   });
 }

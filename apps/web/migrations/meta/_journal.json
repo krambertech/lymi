@@ -169,6 +169,13 @@
       "when": 1789591037796,
       "tag": "0023_colossal_sunset_bain",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "6",
+      "when": 1789747818871,
+      "tag": "0024_free_vapor",
+      "breakpoints": true
     }
   ]
 }

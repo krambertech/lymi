@@ -175,3 +175,57 @@ test("without JavaScript the page still shows the deck and its sections", async 
   await expect(page.getByRole("region", { name: "What’s inside" })).toContainText("In the café");
   await context.close();
 });
+
+test("the card list stops the previous pronunciation and reports playback failures", async ({
+  page,
+}) => {
+  const events: string[] = [];
+  await page.exposeFunction("__recordAudioEvent", (event: string) => events.push(event));
+  await page.addInitScript(() => {
+    const state = { fail: false };
+    (window as unknown as { __mediaTest: typeof state }).__mediaTest = state;
+    const record = (event: string) =>
+      (window as unknown as { __recordAudioEvent: (event: string) => void }).__recordAudioEvent(
+        event,
+      );
+    class FakeAudio extends EventTarget {
+      constructor(readonly src: string) {
+        super();
+      }
+
+      play() {
+        record(`play:${this.src}`);
+        return state.fail ? Promise.reject(new Error("Playback failed")) : Promise.resolve();
+      }
+
+      pause() {
+        record(`pause:${this.src}`);
+      }
+    }
+    Object.defineProperty(window, "Audio", { value: FakeAudio });
+  });
+
+  await page.goto(`${publicSite}${pagePath}`);
+  await page.getByRole("link", { name: "See all 5 cards" }).click();
+  const view = page.getByRole("dialog", { name: "All 5 cards" });
+  const play = view.getByRole("button", { name: "Play pronunciation" });
+
+  await play.first().click();
+  await expect(view.getByRole("button", { name: "Stop pronunciation" })).toBeVisible();
+  await play.click();
+  await expect(view.getByRole("button", { name: "Stop pronunciation" })).toBeVisible();
+  await expect.poll(() => events.length).toBe(3);
+  expect(events).toEqual([
+    expect.stringContaining("play:"),
+    expect.stringContaining("pause:"),
+    expect.stringContaining("play:"),
+  ]);
+
+  await view.getByRole("button", { name: "Stop pronunciation" }).click();
+  await expect(view.getByRole("button", { name: "Stop pronunciation" })).toHaveCount(0);
+  await page.evaluate(() => {
+    (window as unknown as { __mediaTest: { fail: boolean } }).__mediaTest.fail = true;
+  });
+  await play.first().click();
+  await expect(view.getByRole("status")).toHaveText("Pronunciation couldn’t play. Try again.");
+});

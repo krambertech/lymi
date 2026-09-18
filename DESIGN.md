@@ -267,6 +267,8 @@ A tray is the one surface that carries a hue. Eight of them at one lightness and
 
 A deck keeps that colour on its own page, as the ground its card spread lies on: click a lilac tray and land on a lilac page. The colour is a pure function of the slug, so nothing is stored and the two pages cannot disagree. The ground runs to both edges, because the spread's outer cards reach past the text column, and it holds **less chroma than a tray** — the same colour over a page reads far louder than over 216 px.
 
+On a published deck's page, an approved picture sits with its card rather than in the page's decorative spread. The card list keeps the term readable beside the picture, and the try-it card shows the picture without hiding its term. Pronunciation has a named play control and never starts on its own.
+
 A **chosen chip** is a solid `text` fill with `canvas` text, and its count goes to 60% of that. It is the only selected state a chip has: amber is out because it means act, and the segmented control's plate on plate-2 has too little contrast against the canvas at chip size.
 
 ## Colour

@@ -30,6 +30,7 @@ import { images } from "./routes/images";
 import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
+import { publicMedia } from "./routes/public-media";
 import { push } from "./routes/push";
 import { review } from "./routes/review";
 import { deckSections, sections } from "./routes/sections";
@@ -114,6 +115,7 @@ app.route("/api/join", joinOpen);
 // Where "Add to Lymi" on a published deck's public page lands. ADR 0020.
 app.get("/add/:slug", addPage);
 app.route("/api/add", addOpen);
+app.route("/public/media", publicMedia);
 
 // OAuth discovery lives at the site root by RFC 8414 and RFC 9728. Better Auth answers these
 // from its request hooks, so they are forwarded as they are.

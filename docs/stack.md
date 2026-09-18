@@ -188,6 +188,8 @@ Route logic lives in service functions that take `db`, `userId` and `actor`. Hon
 
 Pronunciation audio is generated only when the learner first presses play. Cards without a language, and terms longer than 200 characters, never show the control and never call a speech provider. The Worker tries Gemini, Chirp 3 HD and OpenAI in that order for the languages each one publishes, stores the MP3 in R2, and remembers the object on the card. The cache identity includes the term, locale, provider, model and voice, and changing the term or language detaches stale audio. Remembered audio from anything other than the preferred provider is regenerated on the next play, and still plays if every provider fails.
 
+The publisher can approve a stored pronunciation for a published deck after listening to it. The public site receives only its opaque approval ID; `/public/media/:id` on the product Worker checks the live publication and exact asset before streaming the existing R2 object. An anonymous visitor never reaches a speech provider.
+
 ### Avatars: Images binding, private R2
 
 A photo is normalised on the Worker by the Cloudflare Images binding, not by a WASM codec: decoding runs outside the Worker's CPU budget and adds nothing to the bundle, and WebP output drops all metadata. The client crops to a square and uploads the crop; the server sniffs the bytes, bounds size and pixels, refuses SVG and animation, and re-encodes whatever arrives. Local development and service tests use the binding's offline mode. Rules are in [the data model](data-model.md#avatars).
@@ -195,6 +197,8 @@ A photo is normalised on the Worker by the Cloudflare Images binding, not by a W
 ### Card pictures: the avatar pipeline, plus a link import
 
 A card's picture takes the avatar path: the same byte checks, the same Images binding and the same private bucket, re-encoded to WebP of at most 1600 px a side rather than cropped square. It arrives through the API or MCP as bytes or a public link; a link is fetched once, with every redirect checked against private hosts, and only its host is kept. Rules are in [the data model](data-model.md#pictures). ADR 0014.
+
+A publisher may separately approve one exact described picture for public delivery. The public site receives its approval ID and display metadata, while the product Worker keeps R2 access and refuses replaced, archived, unapproved or withdrawn media. The buckets remain private.
 
 ### Card notes: markdown-it with only the subset switched on
 

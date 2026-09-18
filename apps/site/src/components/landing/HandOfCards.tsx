@@ -124,7 +124,7 @@ function FanCard({
   // A long single word would otherwise break mid-letter at the card's width.
   const termSize = longest >= 13 ? 0.115 : longest >= 10 ? 0.13 : 0.155;
 
-  const top = (
+  const top = (showImage: boolean) => (
     <>
       <p className="min-h-4 text-xs font-medium tracking-[0.06em] text-muted uppercase">
         {heading}
@@ -137,6 +137,17 @@ function FanCard({
       >
         {card.term}
       </p>
+      {showImage && card.image && (
+        <img
+          src={card.image.url}
+          alt={card.image.description}
+          width={card.image.width}
+          height={card.image.height}
+          loading="lazy"
+          decoding="async"
+          className="mx-auto mt-3 max-h-24 w-auto max-w-full rounded-sm object-contain"
+        />
+      )}
       {card.reading && (
         <p lang={card.language} className="mt-1.5 text-md text-text-2">
           {card.reading}
@@ -190,7 +201,7 @@ function FanCard({
     >
       <div ref={flipRef} className="hand-flip">
         <div className="hand-face" aria-hidden={revealed || undefined}>
-          {top}
+          {top(true)}
           <p
             className="hand-hint mt-auto text-base text-muted"
             data-shown={hint ? true : undefined}
@@ -199,7 +210,7 @@ function FanCard({
           </p>
         </div>
         <div className="hand-face hand-back" aria-hidden={!revealed || undefined}>
-          {top}
+          {top(false)}
           <p className="mt-auto border-t border-edge-2 pt-3.5 text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
             {say(card.meaning)}
           </p>

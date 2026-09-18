@@ -32,6 +32,8 @@ Learning moves from recognising material toward producing it. The review queue i
 
 Lymi should remain open to the tools learners already use. The app, API, and MCP surface share the same product rules, while private card content and review evidence stay under the learner's control.
 
+A published deck may show its publisher-approved pictures and pronunciation on its public page. Approval is for an exact asset, so replacing a picture or generating a new pronunciation does not publish it automatically. Audio plays only when a visitor asks; opening a public page never generates speech.
+
 Product success is repeated use of real material and retained recall, not the number of generated cards, public pages, or AI actions.
 
 ## Daily Review Goal

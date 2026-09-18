@@ -1,6 +1,7 @@
 import { and, asc, eq, inArray, isNotNull, isNull, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
+import { livePublicationMedia } from "./publication-media";
 import {
   cardLocalizations,
   cards,
@@ -41,7 +42,21 @@ export const PublicDeckOut = z.object({
   sections: z.array(
     z.object({
       name: z.string().nullable(),
-      cards: z.array(z.object({ term: z.string(), meaning: z.string().nullable() })),
+      cards: z.array(
+        z.object({
+          term: z.string(),
+          meaning: z.string().nullable(),
+          image: z
+            .object({
+              id: z.string(),
+              description: z.string(),
+              width: z.number().int(),
+              height: z.number().int(),
+            })
+            .optional(),
+          audio: z.object({ id: z.string() }).optional(),
+        }),
+      ),
     }),
   ),
 });
@@ -81,9 +96,19 @@ export interface SectionRow {
 }
 
 export interface CardRow {
+  id: string;
   term: string;
   meaning: string | null;
   sectionId: string | null;
+}
+
+export interface PublicMediaRow {
+  id: string;
+  cardId: string;
+  kind: "image" | "audio";
+  description: string | null;
+  width: number | null;
+  height: number | null;
 }
 
 export function isPublicDeckSlug(slug: string | undefined): slug is string {
@@ -109,16 +134,40 @@ export function projectPublicDeck(
   publication: PublicationRow,
   sectionRows: readonly SectionRow[],
   cardRows: readonly CardRow[],
+  mediaRows: readonly PublicMediaRow[] = [],
 ): PublicDeckResult {
   if (publication.status !== "published" || publication.deckArchivedAt || cardRows.length === 0) {
     return { status: "unavailable" };
   }
   const groups = new Map<string | null, PublicDeckOut["sections"][number]>();
+  const mediaByCard = new Map<
+    string,
+    { image?: PublicDeckOut["sections"][number]["cards"][number]["image"]; audio?: { id: string } }
+  >();
+  for (const media of mediaRows) {
+    const entry = mediaByCard.get(media.cardId) ?? {};
+    if (media.kind === "image" && media.description && media.width && media.height) {
+      entry.image = {
+        id: media.id,
+        description: media.description,
+        width: media.width,
+        height: media.height,
+      };
+    }
+    if (media.kind === "audio") entry.audio = { id: media.id };
+    mediaByCard.set(media.cardId, entry);
+  }
   for (const section of sectionRows) groups.set(section.id, { name: section.name, cards: [] });
   groups.set(null, { name: null, cards: [] });
   for (const card of cardRows) {
     const group = groups.get(card.sectionId) ?? groups.get(null);
-    group?.cards.push({ term: card.term, meaning: card.meaning });
+    const media = mediaByCard.get(card.id);
+    group?.cards.push({
+      term: card.term,
+      meaning: card.meaning,
+      ...(media?.image ? { image: media.image } : {}),
+      ...(media?.audio ? { audio: media.audio } : {}),
+    });
   }
   const deck = PublicDeckOut.parse({
     slug: publication.slug,
@@ -166,6 +215,7 @@ export async function loadPublicDeck(
   const [publication] = await db
     .select({
       deckId: deckPublications.deckId,
+      id: deckPublications.id,
       slug: deckPublications.slug,
       status: deckPublications.status,
       summary: deckPublications.summary,
@@ -202,7 +252,7 @@ export async function loadPublicDeck(
       : null;
   const shown = wanted ?? original;
 
-  const [deckText, sectionRows, cardRows] = await Promise.all([
+  const [deckText, sectionRows, cardRows, mediaRows] = await Promise.all([
     wanted
       ? db
           .select({ name: deckLocalizations.name, summary: deckLocalizations.summary })
@@ -229,6 +279,7 @@ export async function loadPublicDeck(
       .orderBy(asc(sections.position), asc(sections.createdAt), asc(sections.id)),
     db
       .select({
+        id: cards.id,
         term: sql<string>`coalesce(localization.term, ${cards.term})`,
         meaning: sql<string | null>`coalesce(localization.meaning, ${cards.meaning})`,
         sectionId: cards.sectionId,
@@ -241,6 +292,7 @@ export async function loadPublicDeck(
       .where(and(eq(cards.deckId, publication.deckId), isNull(cards.archivedAt)))
       // Cards added in one batch share a timestamp; rowid keeps the order they were sent in.
       .orderBy(asc(cards.createdAt), sql`cards.rowid`),
+    livePublicationMedia(db, { publicationId: publication.id }),
   ]);
   const text = deckText[0];
   return projectPublicDeck(
@@ -254,6 +306,7 @@ export async function loadPublicDeck(
     },
     sectionRows,
     cardRows,
+    mediaRows,
   );
 }
 

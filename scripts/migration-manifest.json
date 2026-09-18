@@ -95,6 +95,10 @@
     {
       "name": "0023_colossal_sunset_bain.sql",
       "sha256": "0b9a7468c3a066d9365805e4c893897b30382aa79fc36e62c5d54c0757b88659"
+    },
+    {
+      "name": "0024_free_vapor.sql",
+      "sha256": "f61d033486fb345851534ee5de57cbe87e623b51405fa4f71ce3a0ee664f6928"
     }
   ]
 }

@@ -1572,6 +1572,9 @@ msgstr "Privacy policy · Lymi"
 msgid "Programming"
 msgstr "Programming"
 
+msgid "Pronunciation couldn’t play. Try again."
+msgstr "Pronunciation couldn’t play. Try again."
+
 msgid "Psychology"
 msgstr "Psychology"
 
@@ -1881,6 +1884,9 @@ msgstr "Staying at the table to talk after a meal"
 
 msgid "Sticking with something because of what you have already put in"
 msgstr "Sticking with something because of what you have already put in"
+
+msgid "Stop pronunciation"
+msgstr "Stop pronunciation"
 
 msgid "strength; hang in there"
 msgstr "strength; hang in there"

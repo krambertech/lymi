@@ -1,7 +1,7 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Square, Volume2 } from "lucide-react";
 import {
   type CSSProperties,
   type MouseEvent,
@@ -14,6 +14,7 @@ import {
 } from "react";
 import type { SectionStep } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
+import { publicMediaUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 
 interface Props {
@@ -248,6 +249,53 @@ function CardsView({
   const index = useRef<HTMLElement>(null);
   const jumping = useRef(0);
   const ticking = useRef(false);
+  const audio = useRef<HTMLAudioElement | null>(null);
+  const [playing, setPlaying] = useState<string | null>(null);
+  const [failedAudio, setFailedAudio] = useState<string | null>(null);
+
+  const stopAudio = useCallback(() => {
+    audio.current?.pause();
+    audio.current = null;
+    setPlaying(null);
+    setFailedAudio(null);
+  }, []);
+
+  const toggleAudio = useCallback(
+    (id: string) => {
+      if (playing === id) {
+        stopAudio();
+        return;
+      }
+      audio.current?.pause();
+      setFailedAudio(null);
+      const clip = new Audio(publicMediaUrl(id));
+      audio.current = clip;
+      setPlaying(id);
+      const done = () => {
+        if (audio.current !== clip) return;
+        audio.current = null;
+        setPlaying(null);
+      };
+      const failed = () => {
+        if (audio.current !== clip) return;
+        done();
+        setFailedAudio(id);
+      };
+      clip.addEventListener("ended", done);
+      clip.addEventListener("error", failed);
+      clip.play().catch(failed);
+    },
+    [playing, stopAudio],
+  );
+
+  useEffect(() => {
+    const view = dialogRef.current;
+    view?.addEventListener("close", stopAudio);
+    return () => {
+      view?.removeEventListener("close", stopAudio);
+      audio.current?.pause();
+    };
+  }, [dialogRef, stopAudio]);
 
   // The section under the bar is the current one; the last counts once the list reaches its end.
   const spy = useCallback(() => {
@@ -423,7 +471,50 @@ function CardsView({
                           lang={termLanguage ?? undefined}
                           className="font-medium break-words text-text"
                         >
-                          {card.term}
+                          <span className="flex flex-wrap items-center gap-2">
+                            {card.term}
+                            {card.audio && (
+                              <button
+                                type="button"
+                                aria-label={
+                                  playing === card.audio.id
+                                    ? t`Stop pronunciation`
+                                    : t`Play pronunciation`
+                                }
+                                onClick={() => card.audio && toggleAudio(card.audio.id)}
+                                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full edge text-text-2 hoverable:hover:bg-hover"
+                              >
+                                {playing === card.audio.id ? (
+                                  <Square
+                                    aria-hidden="true"
+                                    className="size-3"
+                                    fill="currentColor"
+                                  />
+                                ) : (
+                                  <Volume2 aria-hidden="true" className="size-4" />
+                                )}
+                              </button>
+                            )}
+                          </span>
+                          {failedAudio === card.audio?.id && (
+                            <span
+                              role="status"
+                              className="mt-1 block text-sm font-normal text-danger"
+                            >
+                              <Trans>Pronunciation couldn’t play. Try again.</Trans>
+                            </span>
+                          )}
+                          {card.image && (
+                            <img
+                              src={publicMediaUrl(card.image.id)}
+                              alt={card.image.description}
+                              width={card.image.width}
+                              height={card.image.height}
+                              loading="lazy"
+                              decoding="async"
+                              className="mt-2 max-h-32 w-auto max-w-full rounded-sm object-contain"
+                            />
+                          )}
                         </dt>
                         {card.meaning === null ? (
                           <dd className="text-faint">

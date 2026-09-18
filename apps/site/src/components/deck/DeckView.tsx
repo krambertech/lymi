@@ -57,21 +57,26 @@ function PublisherMark({
   photo: string | null;
   locale: string;
 }) {
-  const fallback =
-    publisher.trim().toLowerCase() === "lymi" ? (
-      <AppTile size={28} />
-    ) : (
-      <span
-        aria-hidden="true"
-        className="grid size-7 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
-      >
-        {publisher.trim().charAt(0).toLocaleUpperCase(locale)}
+  const letter = (
+    <span
+      aria-hidden="true"
+      className="grid size-7 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
+    >
+      {publisher.trim().charAt(0).toLocaleUpperCase(locale)}
+    </span>
+  );
+  // No photo: Lymi's own decks carry the lantern, which is a squircle and stands on its own.
+  if (!photo) {
+    return (
+      <span className="shrink-0">
+        {publisher.trim().toLowerCase() === "lymi" ? <AppTile size={28} /> : letter}
       </span>
     );
-  if (!photo) return <span className="shrink-0">{fallback}</span>;
+  }
+  // A photo is round, so what sits behind it is the round plate; the tile's corners would show.
   return (
     <span className="relative grid size-7 shrink-0 place-items-center">
-      {fallback}
+      {letter}
       <img
         src={photo}
         alt=""

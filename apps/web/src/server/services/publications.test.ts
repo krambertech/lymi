@@ -239,7 +239,7 @@ describe("the publisher's photo", () => {
     expect(await publisherAvatar(db, "with-photo")).toEqual({ key: "avatars/lymi", version: "v1" });
     const preview = await previewPublication(db, "with-photo", null);
     expect(preview.deck?.owner.avatarUrl).toBe(
-      "/api/public/decks/with-photo/publisher-avatar?v=v1",
+      "/public/media/deck/with-photo/publisher-avatar?v=v1",
     );
     // ADR 0016 keeps account identifiers off a public page, so the address carries the slug.
     expect(JSON.stringify(preview)).not.toContain('"lymi"');

@@ -693,6 +693,7 @@ export function CardForm({
   const settingsChip = (
     <FieldChip
       icon={Settings2}
+      keyboard={false}
       label={t`Card settings`}
       value={settingsValue}
       invalid={!!invalid.reviewModes}
@@ -779,6 +780,7 @@ export function CardForm({
             </FieldChip>
             <FieldChip
               icon={ImageIcon}
+              keyboard={false}
               label={t`Picture`}
               value={pictureName}
               valueText={pictureName}
@@ -868,9 +870,10 @@ export function CardForm({
         className={cn(
           "flex items-center gap-2",
           // The sheet scrolls as one on a short screen, and the actions stay in reach at its foot,
-          // which in a drawer sits above the software keyboard.
+          // which in a drawer sits above the software keyboard. The dialog's scroller has padding
+          // that sticky ignores, hence its offset; the drawer's has none.
           chips
-            ? "sticky -bottom-5 -mx-4 -mb-5 bg-plate px-4 pt-3 pb-5"
+            ? "sticky bottom-0 -mx-4 -mb-5 bg-plate px-4 pt-3 pb-5"
             : "sticky -bottom-5 -mx-5 -mb-5 bg-plate px-5 pt-3 pb-5",
         )}
       >

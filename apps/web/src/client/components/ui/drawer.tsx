@@ -94,9 +94,114 @@ function DrawerSwipeHandle({ className, ...props }: React.ComponentProps<"div">)
   );
 }
 
+/**
+ * Mirrors Base UI's keyboard inset onto the popup as `--keyboard`. Growth lands at once, because Base
+ * UI measures the drawer as the field focuses. Shrinking waits until a tap in flight has delivered
+ * its click, since iOS sends the compatibility mouse events and the click after the pointer lifts,
+ * and a drawer that drops between them hands the click to whatever slid under the finger. Then the
+ * drawer slides down over 250 ms.
+ */
+function useKeyboardInset(el: HTMLElement | null) {
+  React.useEffect(() => {
+    const viewport = el?.parentElement;
+    if (!el || !viewport) return;
+    const TAP_SETTLE_MS = 400;
+    let tapAt = Number.NEGATIVE_INFINITY;
+    let pending = false;
+    let settle = 0;
+    let release = 0;
+    const clearKeyboardState = () => {
+      delete el.dataset.keyboard;
+    };
+    const sync = () => {
+      const next = viewport.style.getPropertyValue("--drawer-keyboard-inset") || "0px";
+      const current = el.style.getPropertyValue("--keyboard") || "0px";
+      if (next === current) return;
+      if (Number.parseFloat(next) > Number.parseFloat(current)) {
+        window.clearTimeout(settle);
+        clearKeyboardState();
+        el.style.setProperty("--keyboard", next);
+        return;
+      }
+      if (performance.now() - tapAt < TAP_SETTLE_MS) {
+        if (!pending) {
+          pending = true;
+          window.clearTimeout(release);
+          release = window.setTimeout(flush, TAP_SETTLE_MS);
+        }
+        return;
+      }
+      el.dataset.keyboard = "closing";
+      el.style.setProperty("--keyboard", next);
+      window.clearTimeout(settle);
+      settle = window.setTimeout(clearKeyboardState, 300);
+    };
+    const flush = () => {
+      if (!pending) return;
+      pending = false;
+      tapAt = Number.NEGATIVE_INFINITY;
+      sync();
+    };
+    const observer = new MutationObserver(sync);
+    observer.observe(viewport, { attributes: true, attributeFilter: ["style"] });
+    const down = () => {
+      tapAt = performance.now();
+    };
+    // The click is the last event a tap produces; the drawer may move once it has been delivered.
+    const click = () => {
+      if (pending) window.setTimeout(flush, 0);
+    };
+    document.addEventListener("pointerdown", down, true);
+    document.addEventListener("click", click, true);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(settle);
+      window.clearTimeout(release);
+      document.removeEventListener("pointerdown", down, true);
+      document.removeEventListener("click", click, true);
+    };
+  }, [el]);
+}
+
+/**
+ * Raises the software keyboard inside the tap that opens a drawer holding one field. iOS raises the
+ * keyboard only for focus inside a gesture, and Base UI focuses the field after the drawer mounts,
+ * so the field would show a caret and no keys. A hidden input takes focus during the tap, the
+ * keyboard rises with the drawer, and once the drawer has settled focus moves to the field, so Base
+ * UI measures a drawer at rest. Render `input` beside the trigger, inside the drawer root.
+ */
+function useKeyboardHandoff(field: () => HTMLElement | null | undefined) {
+  const warm = React.useRef<HTMLInputElement>(null);
+  const warmUp = React.useCallback(() => warm.current?.focus({ preventScroll: true }), []);
+  // A keyboard has no software keyboard to raise, and its next keystrokes belong to the field.
+  const initialFocus = React.useCallback(
+    (openType: string) =>
+      openType === "touch" || openType === "pen" ? (warm.current ?? true) : (field() ?? true),
+    [field],
+  );
+  const handOff = React.useCallback(
+    (open: boolean) => {
+      if (open) field()?.focus({ preventScroll: true });
+    },
+    [field],
+  );
+  const input = (
+    <input
+      ref={warm}
+      aria-hidden="true"
+      tabIndex={-1}
+      autoComplete="off"
+      className="pointer-events-none absolute h-px w-px opacity-0"
+    />
+  );
+  return { input, warmUp, initialFocus, handOff };
+}
+
 function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.Props) {
   const { hasSnapPoints, modal, showSwipeHandle, swipeDirection } = useDrawer();
   const swipeAxis = swipeDirection === "down" || swipeDirection === "up" ? "y" : "x";
+  const [popupEl, setPopupEl] = React.useState<HTMLElement | null>(null);
+  useKeyboardInset(popupEl);
 
   return (
     <DrawerPortal data-slot="drawer-portal">
@@ -107,22 +212,25 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
         className="pointer-events-none fixed inset-0 z-(--z-sheet) select-none data-[modal=true]:pointer-events-auto"
       >
         <DrawerPrimitive.Popup
+          ref={setPopupEl}
           data-slot="drawer-popup"
           data-swipe-axis={swipeAxis}
           data-snap-points={hasSnapPoints ? "" : undefined}
           className={cn(
             // Base.
-            "group/drawer-popup edge-2 pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-text transition-[transform,height,padding,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
+            "group/drawer-popup edge-2 pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-text transition-[transform,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
             // Keyboard: the software keyboard's height becomes bottom padding, so the foot of the
             // drawer, and any footer pinned to it, sits above the keys; the safe area is under them.
-            "[--keyboard:var(--drawer-keyboard-inset,0px)] pb-[max(env(safe-area-inset-bottom),var(--keyboard))]",
+            // Only the closing slides: a drawer still reaching under a rising keyboard when Base UI
+            // measures it earns scroll slack that displaces a sticky footer.
+            "pb-[max(env(safe-area-inset-bottom),var(--keyboard,0px))] data-[keyboard=closing]:transition-[transform,opacity,filter,padding] data-[keyboard=closing]:[transition-duration:450ms,450ms,450ms,250ms]",
             // Nested: the drawer behind keeps its height and its content; the nested scrim dims it.
             "data-nested-drawer-open:overflow-hidden",
             // Bleed: paint past the edge, so an overscroll never shows the page under the drawer.
             "after:pointer-events-none after:absolute after:bg-(--drawer-bleed-background,var(--color-plate)) data-[swipe-axis=x]:after:inset-y-0 data-[swipe-axis=x]:after:w-(--bleed) data-[swipe-axis=y]:after:inset-x-0 data-[swipe-axis=y]:after:h-(--bleed) data-[swipe-direction=down]:after:top-full data-[swipe-direction=left]:after:end-full data-[swipe-direction=right]:after:start-full data-[swipe-direction=up]:after:bottom-full",
             // Sizing: edge to edge on a phone, no wider than a short form on a tablet, and never
             // taller than the room above the keyboard.
-            "[--drawer-content-height:var(--drawer-height,auto)] data-[swipe-axis=x]:[--drawer-content-width:75%] data-[swipe-axis=y]:[--drawer-content-max-height:calc(min(85dvh,100dvh-var(--keyboard)-env(safe-area-inset-top)-1rem)+var(--keyboard))] data-[swipe-axis=y]:data-snap-points:[--drawer-content-height:100dvh] data-[swipe-axis=x]:sm:[--drawer-content-width:24rem] data-[swipe-axis=y]:sm:mx-auto data-[swipe-axis=y]:sm:max-w-md",
+            "[--drawer-content-height:var(--drawer-height,auto)] data-[swipe-axis=x]:[--drawer-content-width:75%] data-[swipe-axis=y]:[--drawer-content-max-height:calc(min(85dvh,100dvh-var(--keyboard,0px)-env(safe-area-inset-top)-1rem)+var(--keyboard,0px))] data-[swipe-axis=y]:data-snap-points:[--drawer-content-height:100dvh] data-[swipe-axis=x]:sm:[--drawer-content-width:24rem] data-[swipe-axis=y]:sm:mx-auto data-[swipe-axis=y]:sm:max-w-md",
             // Stack: a nested drawer rises over a drawer that stays put, the way an action sheet
             // sits over a sheet; the machinery keeps a step and a peek for a stack that wants them.
             "[--bleed:3rem] [--peek:0px] [--stack-height:var(--drawer-height,0px)] [--stack-peek-offset:max(0px,calc((var(--nested-drawers)-var(--stack-progress))*var(--peek)))] [--stack-progress:clamp(0,var(--drawer-swipe-progress),1)] [--stack-scale-base:max(0,calc(1-(var(--nested-drawers)*var(--stack-step))))] [--stack-scale:clamp(0,calc(var(--stack-scale-base)+(var(--stack-step)*var(--stack-progress))),1)] [--stack-shrink:calc(1-var(--stack-scale))] [--stack-step:0]",
@@ -210,4 +318,5 @@ export {
   DrawerTitle,
   DrawerTrigger,
   DrawerVirtualKeyboardProvider,
+  useKeyboardHandoff,
 };

@@ -129,7 +129,7 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
         className={cn(
           "flex items-center gap-2 pt-1",
           // In a drawer the actions stay at its foot, above the software keyboard.
-          !desktop && "sticky -bottom-5 -mx-4 -mb-5 bg-plate px-4 pt-3 pb-5",
+          !desktop && "sticky bottom-0 -mx-4 -mb-5 bg-plate px-4 pt-3 pb-5",
         )}
       >
         <p className="flex-1 text-sm text-danger" role="status">

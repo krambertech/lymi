@@ -13,6 +13,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
   DrawerVirtualKeyboardProvider,
+  useKeyboardHandoff,
 } from "./drawer";
 import { useField, useFieldControl } from "./field";
 import { controlBase, controlSize } from "./input";
@@ -28,6 +29,8 @@ interface ComboboxContextValue {
   disabled: boolean;
   trigger: React.RefObject<HTMLButtonElement | null>;
   input: React.RefObject<HTMLInputElement | null>;
+  /** Raises the keyboard with the drawer and hands focus to the search field once it settles. */
+  handoff: ReturnType<typeof useKeyboardHandoff>;
 }
 
 const ComboboxContext = React.createContext<ComboboxContextValue | null>(null);
@@ -71,9 +74,10 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
   const shape = useOverlayShape(open);
   const trigger = React.useRef<HTMLButtonElement>(null);
   const input = React.useRef<HTMLInputElement>(null);
+  const handoff = useKeyboardHandoff(React.useCallback(() => input.current, []));
   const context = React.useMemo(
-    () => ({ shape, open, setOpen, disabled, trigger, input }),
-    [shape, open, setOpen, disabled],
+    () => ({ shape, open, setOpen, disabled, trigger, input, handoff }),
+    [shape, open, setOpen, disabled, handoff],
   );
   return (
     <ComboboxContext.Provider value={context}>
@@ -94,9 +98,13 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
           <Drawer
             open={open}
             onOpenChange={(next) => setOpen(next)}
-            onOpenChangeComplete={onOpenChangeComplete}
+            onOpenChangeComplete={(next) => {
+              handoff.handOff(next);
+              onOpenChangeComplete?.(next);
+            }}
             showSwipeHandle
           >
+            {handoff.input}
             <DrawerVirtualKeyboardProvider>{children}</DrawerVirtualKeyboardProvider>
           </Drawer>
         )}
@@ -117,7 +125,8 @@ const setInputValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype
 
 /** The box. Put a `ComboboxValue` inside; the chevron is already there. */
 function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
-  const { shape, open, setOpen, disabled, trigger, input } = useCombobox("ComboboxTrigger");
+  const { shape, open, setOpen, disabled, trigger, input, handoff } =
+    useCombobox("ComboboxTrigger");
   const a11y = useFieldControl(props);
   const typed = React.useRef("");
   // A letter on the closed box opens it with that letter searched; letters typed before the field has focus are kept.
@@ -179,6 +188,7 @@ function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
         aria-expanded={open}
         data-popup-open={open || undefined}
         disabled={disabled}
+        onClick={handoff.warmUp}
         onKeyDown={onKeyDown}
         className={classes}
       >
@@ -296,12 +306,12 @@ function tabNeighbour(from: HTMLElement, backwards: boolean, skip: Element | nul
 
 // One list height while it filters, so the drawer does not jump with every letter. Tab moves on, as from the panel.
 function DrawerSearchContent({ "aria-label": label, className, children }: ContentProps) {
-  const { input, trigger, setOpen } = useCombobox("ComboboxContent");
+  const { handoff, trigger, setOpen } = useCombobox("ComboboxContent");
   const ref = React.useRef<HTMLDivElement>(null);
   const tabbed = React.useRef<"forward" | "back" | null>(null);
   return (
     <DrawerContent
-      initialFocus={input}
+      initialFocus={handoff.initialFocus}
       finalFocus={() => {
         const box = trigger.current;
         const direction = tabbed.current;

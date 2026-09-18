@@ -33,11 +33,11 @@ const sections: SectionRow[] = [
 ];
 
 const cards: CardRow[] = [
-  { term: "tere", meaning: "hello", sectionId: "s1" },
-  { term: "leib", meaning: "bread", sectionId: "s2" },
-  { term: "aitäh", meaning: "thank you", sectionId: "s1" },
-  { term: "kott", meaning: null, sectionId: "archived-section" },
-  { term: "jah", meaning: "yes", sectionId: null },
+  { id: "c1", term: "tere", meaning: "hello", sectionId: "s1" },
+  { id: "c2", term: "leib", meaning: "bread", sectionId: "s2" },
+  { id: "c3", term: "aitäh", meaning: "thank you", sectionId: "s1" },
+  { id: "c4", term: "kott", meaning: null, sectionId: "archived-section" },
+  { id: "c5", term: "jah", meaning: "yes", sectionId: null },
 ];
 
 describe("projectPublicDeck", () => {

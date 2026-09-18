@@ -7,7 +7,7 @@ import { type Db, schema } from "../db";
 import { handleError } from "../http";
 import type { AppEnv } from "../index";
 import { publicMedia } from "../routes/public-media";
-import { addCards, archiveCard } from "./cards";
+import { addCards, archiveCard, restoreCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { approveEdition, importEdition, publishEdition } from "./editions";
@@ -94,7 +94,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "image",
-      { rightsBasis: "own_work" },
       publishers,
       storage(),
     );
@@ -108,7 +107,6 @@ describe("public deck media", () => {
       height: 480,
     });
     expect(JSON.stringify(projected)).not.toContain(image.objectKey);
-    expect(JSON.stringify(projected)).not.toContain("rightsBasis");
     const file = await publicMediaFile(db, approved.id, storage());
     expect(file.kind).toBe("image");
     expect(new Uint8Array(await new Response(file.object.body).arrayBuffer())).toEqual(
@@ -129,7 +127,7 @@ describe("public deck media", () => {
     }
   });
 
-  it("requires a human publisher, ownership, rights, and an existing asset", async () => {
+  it("requires a human publisher, ownership, and an existing asset", async () => {
     const { deckId, cardId } = await publishedCard("approval-rules");
     const privateDeck = await createDeck(publisher, { name: "Private media" });
     const [privateCard] = await addCards(publisher, [
@@ -142,44 +140,16 @@ describe("public deck media", () => {
         privateDeck.id,
         privateCard.card.id,
         "image",
-        { rightsBasis: "own_work" },
         publishers,
         storage(),
       ),
     ).rejects.toEqual(missing);
     await expect(
-      approvePublicationMedia(
-        publisher,
-        deckId,
-        cardId,
-        "image",
-        { rightsBasis: "own_work" },
-        publishers,
-        storage(),
-      ),
+      approvePublicationMedia(publisher, deckId, cardId, "image", publishers, storage()),
     ).rejects.toMatchObject({ code: "invalid" });
     await picture(cardId, "stone");
     await expect(
-      approvePublicationMedia(
-        publisher,
-        deckId,
-        cardId,
-        "image",
-        { rightsBasis: "licensed" },
-        publishers,
-        storage(),
-      ),
-    ).rejects.toMatchObject({ code: "invalid" });
-    await expect(
-      approvePublicationMedia(
-        stranger,
-        deckId,
-        cardId,
-        "image",
-        { rightsBasis: "own_work" },
-        publishers,
-        storage(),
-      ),
+      approvePublicationMedia(stranger, deckId, cardId, "image", publishers, storage()),
     ).rejects.toMatchObject({ code: "forbidden" });
     await expect(
       approvePublicationMedia(
@@ -187,7 +157,6 @@ describe("public deck media", () => {
         deckId,
         cardId,
         "image",
-        { rightsBasis: "own_work" },
         publishers,
         storage(),
       ),
@@ -204,7 +173,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "audio",
-      { rightsBasis: "generated" },
       publishers,
       storage(),
     );
@@ -226,7 +194,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "audio",
-      { rightsBasis: "generated" },
       publishers,
       storage(),
     );
@@ -240,7 +207,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "audio",
-      { rightsBasis: "generated" },
       publishers,
       storage(),
     );
@@ -248,8 +214,8 @@ describe("public deck media", () => {
     await expect(publicMediaFile(db, again.id, storage())).rejects.toEqual(missing);
   });
 
-  it("returns a bounded audio range and disables the same URL after revocation", async () => {
-    const { deckId, cardId } = await publishedCard("audio-range");
+  it("serves the whole audio object and disables the same URL after revocation", async () => {
+    const { deckId, cardId } = await publishedCard("audio-response");
     const audioKey = `test/public-audio/${cardId}`;
     await env.AUDIO.put(audioKey, new Uint8Array([10, 20, 30, 40]));
     await db.update(schema.cards).set({ audioKey }).where(eq(schema.cards.id, cardId));
@@ -258,7 +224,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "audio",
-      { rightsBasis: "generated" },
       publishers,
       storage(),
     );
@@ -272,15 +237,10 @@ describe("public deck media", () => {
     const bindings = env as unknown as AppEnv["Bindings"];
     const path = `/public/media/${approved.id}`;
     const response = await app.request(path, { headers: { Range: "bytes=1-2" } }, bindings);
-    expect(response.status).toBe(206);
-    expect(response.headers.get("Content-Range")).toBe("bytes 1-2/4");
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Content-Range")).toBeNull();
     expect(response.headers.get("Cache-Control")).toBe("no-store");
-    expect(new Uint8Array(await response.arrayBuffer())).toEqual(new Uint8Array([20, 30]));
-
-    const openEnded = await app.request(path, { headers: { Range: "bytes=1-" } }, bindings);
-    expect(openEnded.status).toBe(206);
-    expect(openEnded.headers.get("Content-Range")).toBe("bytes 1-3/4");
-    expect(new Uint8Array(await openEnded.arrayBuffer())).toEqual(new Uint8Array([20, 30, 40]));
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(new Uint8Array([10, 20, 30, 40]));
 
     await revokePublicationMedia(publisher, deckId, cardId, "audio", publishers);
     const gone = await app.request(path, {}, bindings);
@@ -295,7 +255,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "image",
-      { rightsBasis: "own_work" },
       publishers,
       storage(),
     );
@@ -315,6 +274,29 @@ describe("public deck media", () => {
     await archiveCard(publisher, cardId);
     await expect(publicMediaFile(db, approved.id, storage())).rejects.toEqual(missing);
     expect((await loadPublicDeck(db, slug)).status).toBe("unavailable");
+    await restoreCard(publisher, cardId);
+    expect((await publicMediaFile(db, approved.id, storage())).kind).toBe("image");
+    expect((await listPublicationMedia(publisher, deckId, publishers))[0]?.id).toBe(approved.id);
+  });
+
+  it("rejects an approval row whose kind and asset do not match", async () => {
+    const { deckId, cardId } = await publishedCard("asset-constraint");
+    const [publication] = await db
+      .select({ id: schema.deckPublications.id })
+      .from(schema.deckPublications)
+      .where(eq(schema.deckPublications.deckId, deckId));
+    if (!publication) throw new Error("Expected publication");
+    await expect(
+      db.insert(schema.publicationMedia).values({
+        id: newId(),
+        publicationId: publication.id,
+        cardId,
+        kind: "image",
+        audioKey: "unapproved-audio",
+        approvedBy: publisher.userId,
+        approvedAt: new Date(),
+      }),
+    ).rejects.toThrow();
   });
 
   it("uses the same approved media in every published edition", async () => {
@@ -325,7 +307,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "image",
-      { rightsBasis: "own_work" },
       publishers,
       storage(),
     );
@@ -337,7 +318,6 @@ describe("public deck media", () => {
       deckId,
       cardId,
       "audio",
-      { rightsBasis: "generated" },
       publishers,
       storage(),
     );

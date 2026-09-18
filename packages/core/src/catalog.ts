@@ -1,15 +1,14 @@
-import { and, asc, eq, inArray, isNotNull, isNull, or, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, isNotNull, isNull, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
+import { livePublicationMedia } from "./publication-media";
 import {
-  cardImages,
   cardLocalizations,
   cards,
   deckEditions,
   deckLocalizations,
   deckPublications,
   decks,
-  publicationMedia,
   sectionLocalizations,
   sections,
 } from "./schema/app";
@@ -54,9 +53,8 @@ export const PublicDeckOut = z.object({
               width: z.number().int(),
               height: z.number().int(),
             })
-            .nullable()
             .optional(),
-          audio: z.object({ id: z.string() }).nullable().optional(),
+          audio: z.object({ id: z.string() }).optional(),
         }),
       ),
     }),
@@ -98,7 +96,7 @@ export interface SectionRow {
 }
 
 export interface CardRow {
-  id?: string;
+  id: string;
   term: string;
   meaning: string | null;
   sectionId: string | null;
@@ -163,7 +161,7 @@ export function projectPublicDeck(
   groups.set(null, { name: null, cards: [] });
   for (const card of cardRows) {
     const group = groups.get(card.sectionId) ?? groups.get(null);
-    const media = card.id ? mediaByCard.get(card.id) : undefined;
+    const media = mediaByCard.get(card.id);
     group?.cards.push({
       term: card.term,
       meaning: card.meaning,
@@ -294,47 +292,7 @@ export async function loadPublicDeck(
       .where(and(eq(cards.deckId, publication.deckId), isNull(cards.archivedAt)))
       // Cards added in one batch share a timestamp; rowid keeps the order they were sent in.
       .orderBy(asc(cards.createdAt), sql`cards.rowid`),
-    db
-      .select({
-        id: publicationMedia.id,
-        cardId: publicationMedia.cardId,
-        kind: publicationMedia.kind,
-        description: cardImages.description,
-        width: cardImages.width,
-        height: cardImages.height,
-      })
-      .from(publicationMedia)
-      .innerJoin(
-        cards,
-        and(
-          eq(cards.id, publicationMedia.cardId),
-          eq(cards.deckId, publication.deckId),
-          isNull(cards.archivedAt),
-        ),
-      )
-      .leftJoin(
-        cardImages,
-        and(
-          eq(cardImages.id, publicationMedia.imageId),
-          eq(cardImages.cardId, cards.id),
-          eq(cardImages.status, "active"),
-          isNotNull(cardImages.description),
-        ),
-      )
-      .where(
-        and(
-          eq(publicationMedia.publicationId, publication.id),
-          isNull(publicationMedia.revokedAt),
-          or(
-            and(eq(publicationMedia.kind, "image"), isNotNull(cardImages.id)),
-            and(
-              eq(publicationMedia.kind, "audio"),
-              isNotNull(cards.audioKey),
-              eq(publicationMedia.audioKey, cards.audioKey),
-            ),
-          ),
-        ),
-      ),
+    livePublicationMedia(db, { publicationId: publication.id }),
   ]);
   const text = deckText[0];
   return projectPublicDeck(

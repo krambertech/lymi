@@ -1,5 +1,13 @@
 import { sql } from "drizzle-orm";
-import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+  check,
+  index,
+  integer,
+  real,
+  sqliteTable,
+  text,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import {
   EDITION_STATUSES,
   type EditionCardField,
@@ -654,10 +662,6 @@ export const publicationMedia = sqliteTable(
     imageId: text("image_id").references(() => cardImages.id, { onDelete: "cascade" }),
     /** The generated object's key stays private, even in the public deck projection. */
     audioKey: text("audio_key"),
-    rightsBasis: text("rights_basis", {
-      enum: ["own_work", "licensed", "public_domain", "generated"],
-    }).notNull(),
-    rightsReference: text("rights_reference"),
     approvedBy: text("approved_by")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
@@ -665,6 +669,10 @@ export const publicationMedia = sqliteTable(
     revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
   },
   (t) => [
+    check(
+      "publication_media_asset_check",
+      sql`(${t.kind} = 'image' and ${t.imageId} is not null and ${t.audioKey} is null) or (${t.kind} = 'audio' and ${t.imageId} is null and ${t.audioKey} is not null)`,
+    ),
     uniqueIndex("publication_media_active_idx")
       .on(t.publicationId, t.cardId, t.kind)
       .where(sql`revoked_at is null`),

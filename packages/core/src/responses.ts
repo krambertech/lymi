@@ -822,8 +822,6 @@ export const PublicationMediaOut = z
     id: z.string(),
     cardId: z.string(),
     kind: z.enum(["image", "audio"]),
-    rightsBasis: z.enum(["own_work", "licensed", "public_domain", "generated"]),
-    rightsReference: z.string().nullable(),
     approvedAt: Timestamp,
   })
   .meta({ id: "PublicationMedia" });

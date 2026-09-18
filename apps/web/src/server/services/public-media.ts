@@ -1,6 +1,7 @@
-import type { PublicationMediaApprovalInput, PublicationMediaOut } from "@lymi/core";
+import type { PublicationMediaOut } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, eq, isNotNull, isNull } from "@lymi/core/db";
+import { livePublicationMedia } from "@lymi/core/publication-media";
 import type { PublicationMedia } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { auditStatement } from "./audit";
@@ -10,24 +11,6 @@ import { ownedDeck } from "./members";
 import { assertPublisher } from "./publishers";
 
 export type PublicMediaKind = "image" | "audio";
-
-function requestedRange(value: string | undefined): R2Range | undefined {
-  const match = /^bytes=(\d*)-(\d*)$/.exec(value ?? "");
-  if (!match) return undefined;
-  const start = match[1];
-  const end = match[2];
-  if (start) {
-    const offset = Number(start);
-    if (!Number.isSafeInteger(offset)) return undefined;
-    if (!end) return { offset };
-    const last = Number(end);
-    return Number.isSafeInteger(last) && last >= offset
-      ? { offset, length: last - offset + 1 }
-      : undefined;
-  }
-  const suffix = Number(end);
-  return end && Number.isSafeInteger(suffix) && suffix > 0 ? { suffix } : undefined;
-}
 
 const activeApproval = (publicationId: string, cardId: string, kind: PublicMediaKind) =>
   and(
@@ -42,8 +25,6 @@ function mediaOut(row: PublicationMedia): PublicationMediaOut {
     id: row.id,
     cardId: row.cardId,
     kind: row.kind,
-    rightsBasis: row.rightsBasis,
-    rightsReference: row.rightsReference,
     approvedAt: row.approvedAt.toISOString(),
   };
 }
@@ -75,43 +56,16 @@ export async function listPublicationMedia(
   publishers: Set<string>,
 ): Promise<PublicationMediaOut[]> {
   const publication = await publisherPublication(ctx, deckId, publishers);
-  const rows = await ctx.db
-    .select({
-      approval: schema.publicationMedia,
-      currentAudioKey: schema.cards.audioKey,
-      activeImageId: schema.cardImages.id,
-    })
-    .from(schema.publicationMedia)
-    .innerJoin(
-      schema.cards,
-      and(
-        eq(schema.cards.id, schema.publicationMedia.cardId),
-        eq(schema.cards.deckId, deckId),
-        isNull(schema.cards.archivedAt),
-      ),
-    )
-    .leftJoin(
-      schema.cardImages,
-      and(
-        eq(schema.cardImages.id, schema.publicationMedia.imageId),
-        eq(schema.cardImages.cardId, schema.cards.id),
-        eq(schema.cardImages.status, "active"),
-        isNotNull(schema.cardImages.description),
-      ),
-    )
-    .where(
-      and(
-        eq(schema.publicationMedia.publicationId, publication.id),
-        isNull(schema.publicationMedia.revokedAt),
-      ),
-    );
-  return rows
-    .filter(({ approval, currentAudioKey, activeImageId }) =>
-      approval.kind === "image"
-        ? activeImageId !== null
-        : approval.audioKey !== null && approval.audioKey === currentAudioKey,
-    )
-    .map(({ approval }) => mediaOut(approval));
+  const rows = await livePublicationMedia(ctx.db, { publicationId: publication.id }, "publisher");
+  return rows.map((row) => {
+    if (!row.approvedAt) throw new Error("Publisher approval time is missing");
+    return {
+      id: row.id,
+      cardId: row.cardId,
+      kind: row.kind,
+      approvedAt: row.approvedAt.toISOString(),
+    };
+  });
 }
 
 /** Approve the image or stored pronunciation that is current at this instant. */
@@ -120,7 +74,6 @@ export async function approvePublicationMedia(
   deckId: string,
   cardId: string,
   kind: PublicMediaKind,
-  input: PublicationMediaApprovalInput,
   publishers: Set<string>,
   storage: { images: R2Bucket; audio: R2Bucket },
 ): Promise<PublicationMediaOut> {
@@ -129,19 +82,6 @@ export async function approvePublicationMedia(
   if (card.deckId !== deckId || card.archivedAt) {
     throw new ServiceError("not_found", "Card not found");
   }
-  if (kind === "image" && input.rightsBasis === "generated") {
-    throw new ServiceError("invalid", "Choose how you may publish this picture");
-  }
-  if (kind === "audio" && input.rightsBasis !== "generated") {
-    throw new ServiceError("invalid", "This pronunciation is generated audio");
-  }
-  if (
-    (input.rightsBasis === "licensed" || input.rightsBasis === "public_domain") &&
-    !input.rightsReference
-  ) {
-    throw new ServiceError("invalid", "Give the source of the picture's public-use rights");
-  }
-
   let imageId: string | null = null;
   let audioKey: string | null = null;
   if (kind === "image") {
@@ -173,13 +113,7 @@ export async function approvePublicationMedia(
     .select()
     .from(schema.publicationMedia)
     .where(activeApproval(publication.id, cardId, kind));
-  if (
-    current &&
-    current.imageId === imageId &&
-    current.audioKey === audioKey &&
-    current.rightsBasis === input.rightsBasis &&
-    current.rightsReference === (input.rightsReference ?? null)
-  ) {
+  if (current && current.imageId === imageId && current.audioKey === audioKey) {
     return mediaOut(current);
   }
 
@@ -191,8 +125,6 @@ export async function approvePublicationMedia(
     kind,
     imageId,
     audioKey,
-    rightsBasis: input.rightsBasis,
-    rightsReference: input.rightsReference ?? null,
     approvedBy: ctx.userId,
     approvedAt: now,
   };
@@ -201,7 +133,7 @@ export async function approvePublicationMedia(
     action: "approve_public_media",
     id: cardId,
     deckId,
-    details: { kind, approvalId: next.id, rightsBasis: input.rightsBasis },
+    details: { kind, approvalId: next.id },
   });
   if (current) {
     await ctx.db.batch([
@@ -219,8 +151,6 @@ export async function approvePublicationMedia(
     id: next.id,
     cardId,
     kind,
-    rightsBasis: input.rightsBasis,
-    rightsReference: input.rightsReference ?? null,
     approvedAt: now.toISOString(),
   };
 }
@@ -262,61 +192,10 @@ export async function publicMediaFile(
   db: Db,
   approvalId: string,
   storage: { images: R2Bucket; audio: R2Bucket },
-  range?: string,
 ): Promise<{ kind: PublicMediaKind; object: R2ObjectBody }> {
-  const [row] = await db
-    .select({
-      kind: schema.publicationMedia.kind,
-      cardId: schema.publicationMedia.cardId,
-      imageId: schema.publicationMedia.imageId,
-      audioKey: schema.publicationMedia.audioKey,
-      currentAudioKey: schema.cards.audioKey,
-    })
-    .from(schema.publicationMedia)
-    .innerJoin(
-      schema.deckPublications,
-      eq(schema.deckPublications.id, schema.publicationMedia.publicationId),
-    )
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
-    .innerJoin(
-      schema.cards,
-      and(
-        eq(schema.cards.id, schema.publicationMedia.cardId),
-        eq(schema.cards.deckId, schema.decks.id),
-      ),
-    )
-    .where(
-      and(
-        eq(schema.publicationMedia.id, approvalId),
-        isNull(schema.publicationMedia.revokedAt),
-        eq(schema.deckPublications.status, "published"),
-        isNull(schema.decks.archivedAt),
-        isNull(schema.cards.archivedAt),
-      ),
-    );
-  if (!row) throw new ServiceError("not_found", "Media not found");
-  const requested = requestedRange(range);
-  const options = requested ? { range: requested } : undefined;
-  if (row.kind === "audio" && row.audioKey && row.audioKey === row.currentAudioKey) {
-    const object = await storage.audio.get(row.audioKey, options);
-    if (object) return { kind: "audio", object };
-  }
-  if (row.kind === "image" && row.imageId) {
-    const [image] = await db
-      .select({ objectKey: schema.cardImages.objectKey })
-      .from(schema.cardImages)
-      .where(
-        and(
-          eq(schema.cardImages.id, row.imageId),
-          eq(schema.cardImages.cardId, row.cardId),
-          eq(schema.cardImages.status, "active"),
-          isNotNull(schema.cardImages.description),
-        ),
-      );
-    if (image) {
-      const object = await storage.images.get(image.objectKey, options);
-      if (object) return { kind: "image", object };
-    }
-  }
-  throw new ServiceError("not_found", "Media not found");
+  const [row] = await livePublicationMedia(db, { approvalId }, "delivery");
+  if (!row?.objectKey) throw new ServiceError("not_found", "Media not found");
+  const object = await storage[row.kind === "image" ? "images" : "audio"].get(row.objectKey);
+  if (!object) throw new ServiceError("not_found", "Media not found");
+  return { kind: row.kind, object };
 }

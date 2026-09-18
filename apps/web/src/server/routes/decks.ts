@@ -11,7 +11,6 @@ import {
   LanguageTag,
   OkOut,
   PublicationInput,
-  PublicationMediaApprovalInput,
   PublicationMediaOut,
   PublicationOut,
 } from "@lymi/core";
@@ -259,12 +258,11 @@ decks.put(
   describe({
     tags: ["Decks"],
     summary: "Approve public picture or pronunciation",
-    description: `${PUBLIC_MEDIA} Play generated pronunciation once before approving it. Record the rights basis for a picture.`,
+    description: `${PUBLIC_MEDIA} Play generated pronunciation once before approving it.`,
     learnerOnly: true,
     ok: { schema: PublicationMediaOut, description: "The approved asset" },
     errors: [400, 404, 409],
   }),
-  body(PublicationMediaApprovalInput, "public media approval"),
   async (c) =>
     c.json(
       await approvePublicationMedia(
@@ -272,7 +270,6 @@ decks.put(
         c.req.param("id"),
         c.req.param("cardId"),
         publicMediaKind(c.req.param("kind")),
-        c.req.valid("json"),
         publisherEmails(c.env),
         { images: c.env.PRIVATE_IMAGES, audio: c.env.AUDIO },
       ),

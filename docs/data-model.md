@@ -188,8 +188,6 @@ erDiagram
     text kind "image | audio"
     text image_id FK "nullable, exact picture"
     text audio_key "nullable, exact generated R2 object"
-    text rights_basis "own_work | licensed | public_domain | generated"
-    text rights_reference "nullable, private"
     text approved_by FK
     int approved_at
     int revoked_at "nullable, one live approval per publication, card and kind"
@@ -299,7 +297,7 @@ A deck has at most one unrevoked `deck_invitations` link, enforced by a partial 
 
 A deck has at most one `deck_publications` row. Publishing inserts or updates it and raises `revision`; withdrawing sets `status` and `withdrawn_at` and keeps the row, so publishing again brings the same slug back. Only an owner on `PUBLISHER_EMAILS` publishes. `/add/<slug>` admits sign-up the way a join link does: the slug rides in the same cookie with a `p.` prefix, and the membership write re-checks that the deck is still published and not archived. The join audit row records `via: publication`. ADR 0020. The public site reads a publication only through `loadPublicDeck` in `packages/core/src/catalog.ts`: the publication's page fields, each active card's term and meaning under its active section, and opaque IDs and display metadata for approved media. ADR 0016.
 
-`publication_media` records a publisher's approval of one exact picture or generated pronunciation object, with its rights basis, actor and time; its private object key or rights reference never enters the public projection. Only a signed-in publisher who owns the deck may approve or revoke, and a replacement receives a new approval ID. The product Worker serves an approved object's bytes without authentication only while the publication, card, approval and exact asset remain active; it never generates audio on that path. Withdrawal or revocation stops new reads, and public responses are not stored in a shared cache. Browser copies already obtained cannot be recalled.
+`publication_media` records a publisher's approval of one exact picture or generated pronunciation object, with its actor and time; its private object key never enters the public projection. Exactly one of `image_id` or `audio_key` matches the kind. Only a signed-in publisher who owns the deck may approve or revoke, and a replacement receives a new approval ID. The product Worker serves an approved object's bytes without authentication only while the publication, card, approval and exact asset remain active; it never generates audio on that path. Archiving hides an approval, and restoring the same card and asset makes it live again; the publisher revokes it to prevent that. Responses use `no-store` so withdrawal and revocation stop new reads immediately, though browser copies already obtained cannot be recalled.
 
 ### Editions
 

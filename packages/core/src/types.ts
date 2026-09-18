@@ -302,14 +302,6 @@ export const PublicationInput = z
   .meta({ id: "PublicationInput" });
 export type PublicationInput = z.infer<typeof PublicationInput>;
 
-export const PublicationMediaApprovalInput = z
-  .object({
-    rightsBasis: z.enum(["own_work", "licensed", "public_domain", "generated"]),
-    rightsReference: z.string().trim().min(1).max(500).optional(),
-  })
-  .meta({ id: "PublicationMediaApprovalInput" });
-export type PublicationMediaApprovalInput = z.infer<typeof PublicationMediaApprovalInput>;
-
 const SeriesName = z
   .string()
   .trim()

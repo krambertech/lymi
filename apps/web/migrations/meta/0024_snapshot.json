@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "95f63de5-ce36-4881-9d18-08187f4e9600",
+  "id": "1ac1bec5-744a-4d99-8bc6-b6cff84d7da4",
   "prevId": "9d95bcb9-7d57-44f0-b3ad-941e03bf7a30",
   "tables": {
     "audit_log": {
@@ -2255,20 +2255,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "rights_basis": {
-          "name": "rights_basis",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "rights_reference": {
-          "name": "rights_reference",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "approved_by": {
           "name": "approved_by",
           "type": "text",
@@ -2367,7 +2353,12 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraints": {
+        "publication_media_asset_check": {
+          "name": "publication_media_asset_check",
+          "value": "(\"publication_media\".\"kind\" = 'image' and \"publication_media\".\"image_id\" is not null and \"publication_media\".\"audio_key\" is null) or (\"publication_media\".\"kind\" = 'audio' and \"publication_media\".\"image_id\" is null and \"publication_media\".\"audio_key\" is not null)"
+        }
+      }
     },
     "push_subscriptions": {
       "name": "push_subscriptions",

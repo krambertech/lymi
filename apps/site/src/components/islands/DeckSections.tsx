@@ -1,7 +1,7 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Square, Volume2 } from "lucide-react";
 import {
   type CSSProperties,
   type MouseEvent,
@@ -249,6 +249,53 @@ function CardsView({
   const index = useRef<HTMLElement>(null);
   const jumping = useRef(0);
   const ticking = useRef(false);
+  const audio = useRef<HTMLAudioElement | null>(null);
+  const [playing, setPlaying] = useState<string | null>(null);
+  const [failedAudio, setFailedAudio] = useState<string | null>(null);
+
+  const stopAudio = useCallback(() => {
+    audio.current?.pause();
+    audio.current = null;
+    setPlaying(null);
+    setFailedAudio(null);
+  }, []);
+
+  const toggleAudio = useCallback(
+    (id: string) => {
+      if (playing === id) {
+        stopAudio();
+        return;
+      }
+      audio.current?.pause();
+      setFailedAudio(null);
+      const clip = new Audio(publicMediaUrl(id));
+      audio.current = clip;
+      setPlaying(id);
+      const done = () => {
+        if (audio.current !== clip) return;
+        audio.current = null;
+        setPlaying(null);
+      };
+      const failed = () => {
+        if (audio.current !== clip) return;
+        done();
+        setFailedAudio(id);
+      };
+      clip.addEventListener("ended", done);
+      clip.addEventListener("error", failed);
+      clip.play().catch(failed);
+    },
+    [playing, stopAudio],
+  );
+
+  useEffect(() => {
+    const view = dialogRef.current;
+    view?.addEventListener("close", stopAudio);
+    return () => {
+      view?.removeEventListener("close", stopAudio);
+      audio.current?.pause();
+    };
+  }, [dialogRef, stopAudio]);
 
   // The section under the bar is the current one; the last counts once the list reaches its end.
   const spy = useCallback(() => {
@@ -429,18 +476,34 @@ function CardsView({
                             {card.audio && (
                               <button
                                 type="button"
-                                aria-label={t`Play pronunciation`}
-                                onClick={() => {
-                                  if (card.audio) {
-                                    new Audio(publicMediaUrl(card.audio.id)).play().catch(() => {});
-                                  }
-                                }}
+                                aria-label={
+                                  playing === card.audio.id
+                                    ? t`Stop pronunciation`
+                                    : t`Play pronunciation`
+                                }
+                                onClick={() => card.audio && toggleAudio(card.audio.id)}
                                 className="inline-flex size-8 shrink-0 items-center justify-center rounded-full edge text-text-2 hoverable:hover:bg-hover"
                               >
-                                <Volume2 aria-hidden="true" className="size-4" />
+                                {playing === card.audio.id ? (
+                                  <Square
+                                    aria-hidden="true"
+                                    className="size-3"
+                                    fill="currentColor"
+                                  />
+                                ) : (
+                                  <Volume2 aria-hidden="true" className="size-4" />
+                                )}
                               </button>
                             )}
                           </span>
+                          {failedAudio === card.audio?.id && (
+                            <span
+                              role="status"
+                              className="mt-1 block text-sm font-normal text-danger"
+                            >
+                              <Trans>Pronunciation couldn’t play. Try again.</Trans>
+                            </span>
+                          )}
                           {card.image && (
                             <img
                               src={publicMediaUrl(card.image.id)}

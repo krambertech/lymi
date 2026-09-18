@@ -1572,6 +1572,9 @@ msgstr "Политика конфиденциальности · Lymi"
 msgid "Programming"
 msgstr "Программирование"
 
+msgid "Pronunciation couldn’t play. Try again."
+msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз."
+
 msgid "Psychology"
 msgstr "Психология"
 
@@ -1881,6 +1884,9 @@ msgstr "Оставаться за столом и разговаривать п�
 
 msgid "Sticking with something because of what you have already put in"
 msgstr "Держаться за что-то лишь из-за уже вложенных ресурсов"
+
+msgid "Stop pronunciation"
+msgstr "Остановить воспроизведение"
 
 msgid "strength; hang in there"
 msgstr "сил; держись"

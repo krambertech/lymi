@@ -86,10 +86,6 @@ msgstr "{0, plural, one {# карточка} few {# карточки} many {# к
 msgid "{0, plural, one {# card} other {# cards}} · {1}"
 msgstr "{0, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}} · {1}"
 
-#. placeholder {0}: s.archivedDecks
-msgid "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
-msgstr "{0, plural, one {Вместе с ней вернётся # колода} few {Вместе с ней вернутся # колоды} many {Вместе с ней вернутся # колод} other {Вместе с ней вернутся # колоды}}"
-
 #. placeholder {0}: shelf.decks.length
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
@@ -348,8 +344,8 @@ msgstr "{count, plural, one {Архивировать и карточку} few {
 msgid "{count, plural, one {Archive its deck too} other {Archive its # decks too}}"
 msgstr "{count, plural, one {Архивировать и колоду} few {Архивировать и # колоды} many {Архивировать и # колод} other {Архивировать и # колоды}}"
 
-msgid "{count, plural, one {It leaves Library and stops coming up in review until you restore the series.} other {They leave Library and stop coming up in review until you restore the series.}}"
-msgstr "{count, plural, one {Она пропадёт из Библиотеки и повторений, пока ты не восстановишь серию.} few {Они пропадут из Библиотеки и повторений, пока ты не восстановишь серию.} many {Они пропадут из Библиотеки и повторений, пока ты не восстановишь серию.} other {Они пропадут из Библиотеки и повторений, пока ты не восстановишь серию.}}"
+msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+msgstr "{count, plural, one {Она исчезнет из Библиотеки и повторений. Восстановить её можно в Архиве.} few {Они исчезнут из Библиотеки и повторений. Восстановить их можно в Архиве.} many {Они исчезнут из Библиотеки и повторений. Восстановить их можно в Архиве.} other {Они исчезнут из Библиотеки и повторений. Восстановить их можно в Архиве.}}"
 
 msgid "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
 msgstr "{count, plural, one {Она пропадёт из колоды и повторений, пока ты не восстановишь раздел.} few {Они пропадут из колоды и повторений, пока ты не восстановишь раздел.} many {Они пропадут из колоды и повторений, пока ты не восстановишь раздел.} other {Они пропадут из колоды и повторений, пока ты не восстановишь раздел.}}"
@@ -807,9 +803,6 @@ msgstr "Архивировать"
 msgid "Archive “{sectionName}”?"
 msgstr "Архивировать «{sectionName}»?"
 
-msgid "Archive “{seriesName}”?"
-msgstr "Архивировать «{seriesName}»?"
-
 msgid "Archive {sectionName}"
 msgstr "Архивировать «{sectionName}»"
 
@@ -821,9 +814,6 @@ msgstr "Архивировать импорт"
 
 msgid "Archive section"
 msgstr "Архивировать раздел"
-
-msgid "Archive series"
-msgstr "Архивировать серию"
 
 msgid "Archive the picture"
 msgstr "Архивировать изображение"
@@ -846,29 +836,17 @@ msgstr "Архивировано «{sectionName}»"
 msgid "Archived “{sectionName}” and its cards"
 msgstr "Архивировано «{sectionName}» вместе с карточками"
 
-msgid "Archived “{seriesName}”"
-msgstr "Архивировано «{seriesName}»"
-
-msgid "Archived “{seriesName}” and its decks"
-msgstr "Архивировано «{seriesName}» вместе с колодами"
-
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Заархивирована # карточка} few {Заархивировано # карточки} many {Заархивировано # карточек} other {Заархивировано # карточки}} в колоде «{deck}»"
 
 msgid "Archived sections"
 msgstr "Архивные разделы"
 
-msgid "Archived series"
-msgstr "Архивные серии"
-
 msgid "Archived the deck {deck}"
 msgstr "Заархивирована колода «{deck}»"
 
 msgid "Archived the section {name} in {deck}"
 msgstr "Заархивирован раздел «{name}» в колоде «{deck}»"
-
-msgid "Archived the series {name}"
-msgstr "Заархивирована серия «{name}»"
 
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Архивирует каждую карточку, которую добавил этот импорт, и каждую созданную им колоду, в которой нет других карточек. Ничего не удаляется, и всё можно восстановить."
@@ -1222,9 +1200,6 @@ msgstr "Не удалось загрузить Активность"
 msgid "Couldn’t load Archived"
 msgstr "Не удалось загрузить Архив"
 
-msgid "Couldn’t load archived series. Try again."
-msgstr "Не удалось загрузить архивные серии. Попробуй ещё раз."
-
 msgid "Couldn’t load Explore"
 msgstr "Не удалось загрузить каталог"
 
@@ -1381,8 +1356,23 @@ msgstr "Колоды к повторению"
 msgid "Decks you make can go in a series. Decks you joined stay on their own."
 msgstr "В серию можно добавить колоды, которые ты создал. Колоды, к которым ты присоединился, остаются отдельно."
 
+msgid "Delete “{seriesName}”?"
+msgstr "Удалить «{seriesName}»?"
+
+msgid "Delete series"
+msgstr "Удалить серию"
+
 msgid "Deleted"
 msgstr "Удалён"
+
+msgid "Deleted “{seriesName}”"
+msgstr "«{seriesName}» удалена"
+
+msgid "Deleted “{seriesName}” and archived its decks"
+msgstr "«{seriesName}» удалена, колоды в Архиве"
+
+msgid "Deleted the series {name}"
+msgstr "Удалила серию {name}"
 
 msgid "Deny"
 msgstr "Отклонить"
@@ -1955,9 +1945,6 @@ msgstr "Разрешить этому приложению пользовать�
 msgid "Library"
 msgstr "Библиотека"
 
-msgid "Library options"
-msgstr "Параметры Библиотеки"
-
 msgid "Light"
 msgstr "Светлая"
 
@@ -2189,9 +2176,6 @@ msgstr "Нет подключённых приложений"
 msgid "No archived sections."
 msgstr "Архивных разделов нет."
 
-msgid "No archived series."
-msgstr "Архивных подборок нет."
-
 msgid "No card keeps slipping"
 msgstr "Ни одна карточка не забывается постоянно"
 
@@ -2309,9 +2293,6 @@ msgstr "Здесь пока пусто"
 
 msgid "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
 msgstr "Ничего не удаляется. Восстановить его можно в меню колоды, в пункте «Архивные разделы»."
-
-msgid "Nothing is deleted. Restore it from Archived series in Library’s menu."
-msgstr "Ничего не удаляется. Восстановить её можно в меню Библиотеки, в разделе «Архивные серии»."
 
 msgid "Nothing left in {scopeName}"
 msgstr "В «{scopeName}» больше ничего"
@@ -2648,17 +2629,11 @@ msgstr "Восстановить {name}"
 msgid "Restore brings a section back in its place, with the cards archived alongside it."
 msgstr "Восстановление возвращает раздел на его место вместе с карточками, которые архивировали с ним."
 
-msgid "Restore brings a series back with the decks archived alongside it."
-msgstr "Восстановление возвращает серию вместе с колодами, архивированными вместе с ней."
-
 msgid "Restore import"
 msgstr "Восстановить импорт"
 
 msgid "Restore puts the cards you kept back in it"
 msgstr "Восстановление вернёт в него карточки, которые ты оставил"
-
-msgid "Restore puts the decks you kept back in it"
-msgstr "Восстановление вернёт в неё колоды, которые ты оставил"
 
 msgid "Restored"
 msgstr "Восстановлено"
@@ -3191,6 +3166,12 @@ msgstr "произношение"
 
 msgid "The screen you are on, the app version, your browser and your app language go with it."
 msgstr "Вместе с ним уйдут экран, на котором ты сейчас, версия приложения, браузер и язык приложения."
+
+msgid "The series is gone for good. Its decks and cards stay, and you can group them again in a new series."
+msgstr "Серия исчезнет навсегда. Колоды и карточки останутся, их можно будет собрать в новую серию."
+
+msgid "The series is gone for good. You can make a new one any time."
+msgstr "Серия исчезнет навсегда. Новую можно создать в любой момент."
 
 msgid "the source"
 msgstr "источник"

@@ -61,7 +61,9 @@ const SENTENCES: Sentences = {
   series: {
     create: "series_added",
     update: "series_edited",
-    archive: "series_archived",
+    // The row is archived so the audit trail keeps its name; the learner deleted it.
+    archive: "series_deleted",
+    // Nothing restores a series any more; rows from when something did still read.
     restore: "series_restored",
     reorder: null,
   },

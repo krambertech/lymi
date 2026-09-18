@@ -3,17 +3,16 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
-import { archiveDeck, createDeck, getDeck, listDecks, updateDeck } from "./decks";
+import { archiveDeck, createDeck, getDeck, listDecks, restoreDeck, updateDeck } from "./decks";
 import { join } from "./members";
 import { reviewDraw, reviewQueue } from "./review";
 import {
-  archiveSeries,
   createSeries,
+  deleteSeries,
   getSeries,
   listSeries,
   renameSeries,
   reorderSeries,
-  restoreSeries,
   setSeriesDecks,
 } from "./series";
 import { learner, testDb } from "./test-db";
@@ -251,14 +250,14 @@ describe("reviewing a series", () => {
   });
 });
 
-describe("archiving a series", () => {
-  it("can keep its decks in Library, and Restore regroups them", async () => {
+describe("deleting a series", () => {
+  it("can keep its decks in Library, loose and with no way back into it", async () => {
     const me = await person("Kateryna");
     const a = await deckWith(me, "A", ["tere"]);
     const series = await createSeries(me, { name: "S", deckIds: [a.id] });
 
     const loose = await createDeck(me, { name: "Loose deck" });
-    await archiveSeries(me, series.id, { decks: "keep" });
+    await deleteSeries(me, series.id, { decks: "keep" });
 
     expect(await listSeries(me)).toEqual([]);
     // A kept deck returns to its place by creation date, and a deck made afterwards goes last.
@@ -268,52 +267,40 @@ describe("archiving a series", () => {
       seriesId: null,
       due: 1,
     });
-    expect(await listSeries(me, { archived: true })).toMatchObject([
-      { id: series.id, archivedDecks: 0 },
-    ]);
+    await expect(getSeries(me, series.id)).rejects.toMatchObject({ code: "not_found" });
     await expect(updateDeck(me, a.id, { seriesId: series.id })).rejects.toMatchObject({
       code: "not_found",
     });
-
-    await restoreSeries(me, series.id);
-    expect((await getSeries(me, series.id)).deckIds).toEqual([a.id]);
-
-    // Taking a kept deck out while the series is archived means Restore leaves it out.
-    await archiveSeries(me, series.id, { decks: "keep" });
-    await updateDeck(me, a.id, { seriesId: null });
-    await restoreSeries(me, series.id);
-    expect((await getSeries(me, series.id)).deckIds).toEqual([]);
   });
 
-  it("can take its decks along, and Restore returns exactly those", async () => {
+  it("can archive its decks, and each comes back on its own, loose", async () => {
     const me = await person("Kateryna");
     const a = await deckWith(me, "A", ["tere"]);
     const b = await deckWith(me, "B", ["kass"]);
     const earlier = await deckWith(me, "Archived before", ["koer"]);
-    const series = await createSeries(me, {
-      name: "S",
-      deckIds: [a.id, b.id, earlier.id],
-    });
+    const series = await createSeries(me, { name: "S", deckIds: [a.id, b.id, earlier.id] });
     await archiveDeck(me, earlier.id);
 
-    await archiveSeries(me, series.id, { decks: "archive" });
-    await archiveSeries(me, series.id, { decks: "keep" });
+    await deleteSeries(me, series.id, { decks: "archive" });
+    // A second delete is harmless and archives nothing again.
+    await deleteSeries(me, series.id, { decks: "keep" });
 
     const names = (await listDecks(me)).map((d) => d.name);
     expect(names).not.toContain("A");
     expect(names).not.toContain("B");
     expect((await reviewDraw(me, { zone: "UTC" })).total).toBe(0);
-    expect(await listSeries(me, { archived: true })).toMatchObject([{ archivedDecks: 2 }]);
 
-    await restoreSeries(me, series.id);
-    await restoreSeries(me, series.id);
+    // Both the decks it took and one archived before it lose the pointer to a series that is gone.
+    await restoreDeck(me, a.id);
+    await restoreDeck(me, earlier.id);
+    const back = await listDecks(me);
+    expect(back.find((d) => d.id === a.id)).toMatchObject({ seriesId: null });
+    expect(back.find((d) => d.id === earlier.id)).toMatchObject({ seriesId: null });
+    expect(await listSeries(me)).toEqual([]);
 
-    expect((await getSeries(me, series.id)).deckIds).toEqual([a.id, b.id]);
-    expect((await listDecks(me)).map((d) => d.name)).not.toContain("Archived before");
     expect((await seriesAudits(me, series.id)).map((x) => x.action).sort()).toEqual([
       "archive",
       "create",
-      "restore",
     ]);
   });
 });

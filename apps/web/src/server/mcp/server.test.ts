@@ -24,8 +24,7 @@ vi.mock("../services", async () => {
     renameSeries: vi.fn(),
     setSeriesDecks: vi.fn(),
     reorderSeries: vi.fn(),
-    archiveSeries: vi.fn(),
-    restoreSeries: vi.fn(),
+    deleteSeries: vi.fn(),
     listSections: vi.fn(),
     createSection: vi.fn(),
     renameSection: vi.fn(),
@@ -136,10 +135,10 @@ describe("Lymi MCP server", () => {
       "archive_card_image",
       "archive_deck",
       "archive_section",
-      "archive_series",
       "create_deck",
       "create_section",
       "create_series",
+      "delete_series",
       "describe_card_image",
       "due_counts",
       "get_card",
@@ -158,7 +157,6 @@ describe("Lymi MCP server", () => {
       "restore_card_image",
       "restore_deck",
       "restore_section",
-      "restore_series",
       "search_cards",
       "set_card_image",
       "update_card",
@@ -359,8 +357,7 @@ describe("Lymi MCP server", () => {
       ["create_series", { name: "Estonian" }],
       ["update_series", { seriesId: "series-1", name: "Eesti" }],
       ["reorder_series", { seriesIds: ["series-1"] }],
-      ["archive_series", { seriesId: "series-1", decks: "keep" }],
-      ["restore_series", { seriesId: "series-1" }],
+      ["delete_series", { seriesId: "series-1", decks: "keep" }],
       ["create_section", { deckId: "deck-1", name: "Lesson 1" }],
       ["rename_section", { sectionId: "section-1", name: "Lesson 2" }],
       ["reorder_sections", { deckId: "deck-1", sectionIds: ["section-1"] }],
@@ -390,8 +387,7 @@ describe("Lymi MCP server", () => {
     expect(services.createSeries).not.toHaveBeenCalled();
     expect(services.renameSeries).not.toHaveBeenCalled();
     expect(services.reorderSeries).not.toHaveBeenCalled();
-    expect(services.archiveSeries).not.toHaveBeenCalled();
-    expect(services.restoreSeries).not.toHaveBeenCalled();
+    expect(services.deleteSeries).not.toHaveBeenCalled();
     expect(services.createSection).not.toHaveBeenCalled();
     expect(services.renameSection).not.toHaveBeenCalled();
     expect(services.reorderSections).not.toHaveBeenCalled();
@@ -409,8 +405,6 @@ describe("Lymi MCP server", () => {
       deckIds: ["deck-2", "deck-1"],
       total: 30,
       due: 4,
-      archivedDecks: 0,
-      archivedAt: null,
       createdAt: now,
       updatedAt: now,
     };
@@ -434,8 +428,6 @@ describe("Lymi MCP server", () => {
       deckIds: ["deck-2", "deck-1"],
       total: 30,
       due: 4,
-      archivedDecks: 0,
-      archivedAt: null,
       createdAt: now.toISOString(),
     });
 
@@ -513,22 +505,22 @@ describe("Lymi MCP server", () => {
     });
   });
 
-  it("archives a series only with an explicit choice about its decks", async () => {
-    services.archiveSeries.mockResolvedValue({ ok: true });
+  it("deletes a series only with an explicit choice about its decks", async () => {
+    services.deleteSeries.mockResolvedValue({ ok: true });
     const client = await connect("write");
 
     const missing = await client.callTool({
-      name: "archive_series",
+      name: "delete_series",
       arguments: { seriesId: "series-1" },
     });
     expect(missing.isError).toBe(true);
 
     const res = await client.callTool({
-      name: "archive_series",
+      name: "delete_series",
       arguments: { seriesId: "series-1", decks: "archive" },
     });
     expect(res.isError).toBeFalsy();
-    expect(services.archiveSeries).toHaveBeenCalledWith(expect.anything(), "series-1", {
+    expect(services.deleteSeries).toHaveBeenCalledWith(expect.anything(), "series-1", {
       decks: "archive",
     });
   });

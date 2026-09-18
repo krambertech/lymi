@@ -32,7 +32,7 @@ export const e2eAccounts = [
   "avatar",
   "avatar-other",
   "series",
-  "series-archive",
+  "series-delete",
   "series-drag",
   "anki-import",
   "sections",

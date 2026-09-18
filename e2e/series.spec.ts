@@ -66,9 +66,8 @@ test("a learner gathers decks into a series and reviews them together", async ({
     await expect(deckLink(page.locator("main"), outside)).toBeVisible();
   });
 
-  await test.step("create a series with two decks from Library's menu", async () => {
-    await page.getByRole("button", { name: "Library options", exact: true }).click();
-    await page.getByRole("menuitem", { name: "New series", exact: true }).click();
+  await test.step("create a series with two decks from Library", async () => {
+    await page.getByRole("button", { name: "New series", exact: true }).click();
     const sheet = dialog(page, "New series");
     await sheet.getByRole("button", { name: "Create series", exact: true }).click();
     await expect(sheet.getByText("Give the series a name.")).toBeVisible();
@@ -126,53 +125,55 @@ test("a learner gathers decks into a series and reviews them together", async ({
   });
 });
 
-test("archiving a series asks about its decks, and Restore brings them back", async ({
+test("deleting a series asks about its decks and does not come back", async ({
   page,
 }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "series-archive");
+  await startAsTestLearner(page, testInfo, "series-delete");
   const tag = testInfo.project.name;
-  const series = `Estonian ${tag}`;
-  const first = `A1 ${tag}`;
-  const second = `A2 ${tag}`;
-  const deckIds = [(await addDeck(page, first, 1)).deckId, (await addDeck(page, second, 1)).deckId];
-  const created = await page.request.post("/api/series", { data: { name: series, deckIds } });
-  expect(created.status()).toBe(201);
 
-  const archive = async (choice: RegExp) => {
-    await openLibrary(page);
-    await page.getByRole("button", { name: `Options for ${series}`, exact: true }).click();
-    await page.getByRole("menuitem", { name: "Archive series", exact: true }).click();
-    const ask = dialog(page, `Archive “${series}”?`);
-    await ask.getByRole("radio", { name: choice }).click();
-    await ask.getByRole("button", { name: "Archive series", exact: true }).click();
-    await expect(ask).toBeHidden();
-    await expect(seriesRegion(page, series)).toBeHidden();
+  const makeSeries = async (name: string, deckNames: string[]) => {
+    const deckIds = [];
+    for (const deckName of deckNames) deckIds.push((await addDeck(page, deckName, 1)).deckId);
+    const created = await page.request.post("/api/series", { data: { name, deckIds } });
+    expect(created.status()).toBe(201);
   };
 
-  const restore = async () => {
-    await page.getByRole("button", { name: "Library options", exact: true }).click();
-    await page.getByRole("menuitem", { name: "Archived series", exact: true }).click();
-    const list = dialog(page, "Archived series");
-    await list.getByRole("button", { name: "Restore", exact: true }).click();
-    await expect(list.getByText("No archived series.")).toBeVisible();
-    await list.getByRole("button", { name: "Close", exact: true }).click();
-    await expect(deckLink(seriesRegion(page, series), first)).toBeVisible();
-    await expect(deckLink(seriesRegion(page, series), second)).toBeVisible();
+  const remove = async (name: string, choice: RegExp) => {
+    await openLibrary(page);
+    await page.getByRole("button", { name: `Options for ${name}`, exact: true }).click();
+    await page.getByRole("menuitem", { name: "Delete series", exact: true }).click();
+    const ask = dialog(page, `Delete “${name}”?`);
+    await ask.getByRole("radio", { name: choice }).click();
+    await ask.getByRole("button", { name: "Delete series", exact: true }).click();
+    await expect(ask).toBeHidden();
+    await expect(seriesRegion(page, name)).toBeHidden();
   };
 
   await test.step("keeping the decks leaves them in Library without the series", async () => {
-    await archive(/^Keep the decks/);
-    await expect(deckLink(page.locator("main"), first)).toBeVisible();
-    await restore();
+    const name = `Kept ${tag}`;
+    const deck = `K1 ${tag}`;
+    await makeSeries(name, [deck]);
+    await remove(name, /^Keep the deck/);
+    await expect(deckLink(page.locator("main"), deck)).toBeVisible();
+    // Nothing brings the series back, and no menu offers to.
+    await page.reload();
+    await expect(seriesRegion(page, name)).toBeHidden();
+    await expect(page.getByRole("button", { name: "New series", exact: true })).toBeVisible();
   });
 
   await test.step("archiving the decks takes them out of Library and review", async () => {
-    await archive(/^Archive its 2 decks too/);
+    const name = `Gone ${tag}`;
+    const first = `A1 ${tag}`;
+    const second = `A2 ${tag}`;
+    await makeSeries(name, [first, second]);
+    await remove(name, /^Archive its 2 decks too/);
     await expect(deckLink(page.locator("main"), first)).toHaveCount(0);
-    const due = await page.request.get("/api/decks");
-    const names = ((await due.json()) as { name: string }[]).map((d) => d.name);
+    const active = await page.request.get("/api/decks");
+    const names = ((await active.json()) as { name: string }[]).map((d) => d.name);
     expect(names).not.toContain(first);
-    await restore();
+    // The decks are on Archived, each restorable on its own.
+    await page.goto("/archived");
+    await expect(page.getByRole("button", { name: `Restore ${first}`, exact: true })).toBeVisible();
   });
 });
 

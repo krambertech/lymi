@@ -101,8 +101,6 @@ export const series: Series[] = [
     deckIds: ["d2", "d1"],
     total: 105,
     due: 11,
-    archivedDecks: 0,
-    archivedAt: null,
     createdAt: new Date(now - 9 * day).toISOString(),
     updatedAt: new Date(now - 2 * day).toISOString(),
   },

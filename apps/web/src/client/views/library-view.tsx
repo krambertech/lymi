@@ -2,8 +2,6 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "@tanstack/react-router";
 import {
-  Archive,
-  ArchiveRestore,
   ArrowDown,
   ArrowUp,
   ChevronRight,
@@ -12,6 +10,7 @@ import {
   MoreHorizontal,
   Pencil,
   Plus,
+  Trash2,
 } from "lucide-react";
 import { type ReactNode, useMemo } from "react";
 import { AddMenu } from "../components/add-menu";
@@ -51,10 +50,9 @@ export interface LibraryProps {
   onImport?: (() => void) | undefined;
   onNewSeries?: (() => void) | undefined;
   onEditSeries?: ((series: Series) => void) | undefined;
-  onArchiveSeries?: ((series: Series) => void) | undefined;
+  onDeleteSeries?: ((series: Series) => void) | undefined;
   /** Move a series one place up or down among the series. */
   onMoveSeries?: ((series: Series, by: -1 | 1) => void) | undefined;
-  onShowArchivedSeries?: (() => void) | undefined;
   /** A series' whole deck list after a drag. Absent, decks cannot be dragged. */
   onSetSeriesDecks?: ((seriesId: string, deckIds: string[]) => void) | undefined;
   onRemoveFromSeries?: ((deckId: string) => void) | undefined;
@@ -88,9 +86,8 @@ export function LibraryView({
   onImport,
   onNewSeries,
   onEditSeries,
-  onArchiveSeries,
+  onDeleteSeries,
   onMoveSeries,
-  onShowArchivedSeries,
   onSetSeriesDecks,
   onRemoveFromSeries,
   name,
@@ -126,28 +123,12 @@ export function LibraryView({
       </Link>
     );
 
-  const libraryMenu = (onNewSeries || onShowArchivedSeries) && (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <IconButton label={t`Library options`}>
-            <MoreHorizontal />
-          </IconButton>
-        }
-      />
-      <DropdownMenuContent aria-label={t`Library options`} align="end">
-        <DropdownMenuItem onClick={onNewSeries} disabled={!onNewSeries}>
-          <Layers />
-          <Trans>New series</Trans>
-        </DropdownMenuItem>
-        {onShowArchivedSeries && (
-          <DropdownMenuItem onClick={onShowArchivedSeries}>
-            <ArchiveRestore />
-            <Trans>Archived series</Trans>
-          </DropdownMenuItem>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+  // One action, so a button rather than a menu: the menu existed to hold a second item.
+  const newSeriesButton = onNewSeries && (
+    <Button size="sm" onClick={onNewSeries}>
+      <Layers aria-hidden="true" />
+      <Trans>New series</Trans>
+    </Button>
   );
 
   const seriesHeader = (s: Series, inSeries: DeckSummary[]) => {
@@ -219,11 +200,11 @@ export function LibraryView({
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   variant="destructive"
-                  onClick={() => onArchiveSeries?.(s)}
-                  disabled={!onArchiveSeries}
+                  onClick={() => onDeleteSeries?.(s)}
+                  disabled={!onDeleteSeries}
                 >
-                  <Archive />
-                  <Trans>Archive series</Trans>
+                  <Trash2 />
+                  <Trans>Delete series</Trans>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -290,8 +271,7 @@ export function LibraryView({
             ? t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
             : undefined
         }
-        // Even with no decks left, archived series are still one menu away.
-        actions={decks ? libraryMenu : undefined}
+        actions={decks ? newSeriesButton : undefined}
       />
 
       {loading && (

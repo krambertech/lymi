@@ -76,7 +76,7 @@ export const decks = sqliteTable(
     position: integer("position").notNull().default(0),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
     ...timestamps,
-    /** The owner's series. Kept while the series is archived, so Restore regroups the deck. */
+    /** The owner's series. Cleared when that series is deleted, so it never dangles. */
     seriesId: text("series_id").references(() => series.id),
     /** The import that created the deck, if one did. */
     importId: text("import_id"),

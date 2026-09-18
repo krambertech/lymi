@@ -1,11 +1,11 @@
 import type {
-  SeriesArchiveInput,
   SeriesDecksInput,
+  SeriesDeleteInput,
   SeriesInput,
   SeriesOrderInput,
 } from "@lymi/core";
 import { newId } from "@lymi/core";
-import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
+import { and, asc, eq, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
@@ -21,56 +21,32 @@ const jsonIds = (ids: readonly string[]) => JSON.stringify(ids);
 
 /**
  * The caller's series in their order, each with its active decks in order and the counts of
- * those decks. Archived series come back only when asked for, with how many decks Restore returns.
+ * those decks. A deleted series is gone from every list; only the audit trail still names it.
  */
-export async function listSeries(
-  ctx: ServiceContext,
-  opts: { archived?: boolean | undefined } = {},
-) {
+export async function listSeries(ctx: ServiceContext) {
   const { db, userId } = ctx;
   const rows = await db
     .select()
     .from(schema.series)
-    .where(
-      and(
-        eq(schema.series.userId, userId),
-        opts.archived ? isNotNull(schema.series.archivedAt) : isNull(schema.series.archivedAt),
-      ),
-    )
+    .where(and(eq(schema.series.userId, userId), isNull(schema.series.archivedAt)))
     .orderBy(asc(schema.series.position), asc(schema.series.createdAt), asc(schema.series.id));
-  if (opts.archived) {
-    const withDecks = await db
-      .select({ seriesId: schema.decks.seriesId, count: sql<number>`count(*)` })
-      .from(schema.decks)
-      .innerJoin(schema.series, eq(schema.series.id, schema.decks.seriesId))
-      .where(and(eq(schema.decks.userId, userId), sql`decks.archived_at = series.archived_at`))
-      .groupBy(schema.decks.seriesId);
-    const archived = new Map(withDecks.map((row) => [row.seriesId, row.count]));
-    return rows.map(({ userId: _owner, revision: _revision, ...row }) => ({
-      ...row,
-      deckIds: [] as string[],
-      total: 0,
-      due: 0,
-      archivedDecks: archived.get(row.id) ?? 0,
-    }));
-  }
   // The same rows and counts Library shows, so a series always adds up to its decks.
   const decks = rows.length > 0 ? await listDecks(ctx) : [];
-  return rows.map(({ userId: _owner, revision: _revision, ...row }) => {
+  // Every listed series is active, so `archivedAt` would only ever be null.
+  return rows.map(({ userId: _owner, revision: _revision, archivedAt: _gone, ...row }) => {
     const inSeries = decks.filter((deck) => deck.seriesId === row.id);
     return {
       ...row,
       deckIds: inSeries.map((deck) => deck.id),
       total: inSeries.reduce((sum, deck) => sum + deck.total, 0),
       due: inSeries.reduce((sum, deck) => sum + deck.due, 0),
-      archivedDecks: 0,
     };
   });
 }
 
 export async function getSeries(ctx: ServiceContext, id: string) {
-  const row = await ownedSeries(ctx, id);
-  const found = (await listSeries(ctx, { archived: !!row.archivedAt })).find((s) => s.id === id);
+  await ownedSeries(ctx, id);
+  const found = (await listSeries(ctx)).find((s) => s.id === id);
   if (!found) throw notFound("Series");
   return found;
 }
@@ -258,15 +234,16 @@ export async function reorderSeries(ctx: ServiceContext, input: SeriesOrderInput
 }
 
 /**
- * Archive a series. Its decks either leave with it, stamped with the series' own `archived_at` so
- * Restore finds exactly them, or stay in Library without a series. Archiving twice is harmless.
+ * Delete a series for good. Its decks are either archived with it or stay in Library, and either
+ * way they stop naming it, so nothing points at a series no one can reach. Deleting twice is
+ * harmless.
  */
-export async function archiveSeries(ctx: ServiceContext, id: string, input: SeriesArchiveInput) {
+export async function deleteSeries(ctx: ServiceContext, id: string, input: SeriesDeleteInput) {
   const { db, userId } = ctx;
   const row = await ownedSeries(ctx, id);
   if (row.archivedAt) return { ok: true as const };
   const at = new Date();
-  // Only the write that archived the series moves its decks and lands in Activity.
+  // Only the write that removed the series moves its decks and lands in Activity.
   const landed: SQL = sql`${schema.series.id} = ${id} and ${schema.series.archivedAt} = ${at.getTime()}`;
   await runBatch(db, [
     db
@@ -279,6 +256,7 @@ export async function archiveSeries(ctx: ServiceContext, id: string, input: Seri
           isNull(schema.series.archivedAt),
         ),
       ),
+    // Archiving first, while the decks still name the series; clearing the pointer comes after.
     ...(input.decks === "archive"
       ? [
           db
@@ -293,46 +271,24 @@ export async function archiveSeries(ctx: ServiceContext, id: string, input: Seri
               ),
             ),
         ]
-      : // Kept decks keep `series_id` and their order, so Restore regroups them as they were.
-        []),
+      : []),
+    // Nothing brings the series back, so every deck of it loses the pointer, archived or not.
+    db
+      .update(schema.decks)
+      .set({ seriesId: null, position: 0, updatedAt: at })
+      .where(
+        and(
+          eq(schema.decks.seriesId, id),
+          eq(schema.decks.userId, userId),
+          sql`exists (select 1 from series where ${landed})`,
+        ),
+      ),
     auditStatementWhen(
       ctx,
       { entity: "series", action: "archive", id, details: input },
       schema.series,
       landed,
     ),
-  ]);
-  return { ok: true as const };
-}
-
-/** Bring a series back with the decks archived alongside it. Restoring twice is harmless. */
-export async function restoreSeries(ctx: ServiceContext, id: string) {
-  const { db, userId } = ctx;
-  const row = await ownedSeries(ctx, id);
-  if (!row.archivedAt) return { ok: true as const };
-  const at = row.archivedAt;
-  const now = new Date();
-  const stillArchived: SQL = sql`${schema.series.id} = ${id} and ${schema.series.userId} = ${userId} and ${schema.series.archivedAt} = ${at.getTime()}`;
-  await runBatch(db, [
-    // Decks and Activity first: both find the series by the archive time the last statement clears.
-    db
-      .update(schema.decks)
-      .set({ archivedAt: null, updatedAt: now })
-      .where(
-        and(
-          eq(schema.decks.seriesId, id),
-          eq(schema.decks.userId, userId),
-          eq(schema.decks.archivedAt, at),
-          sql`exists (select 1 from series where ${stillArchived})`,
-        ),
-      ),
-    auditStatementWhen(
-      ctx,
-      { entity: "series", action: "restore", id },
-      schema.series,
-      stillArchived,
-    ),
-    db.update(schema.series).set({ archivedAt: null, updatedAt: now }).where(stillArchived),
   ]);
   return { ok: true as const };
 }

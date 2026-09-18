@@ -17,6 +17,7 @@ export function useLeaveDeck(deckId: string, name: string | undefined) {
     mutationFn: () => api.leaveDeck(deckId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["decks"] });
+      qc.invalidateQueries({ queryKey: ["series"] });
       qc.invalidateQueries({ queryKey: ["queue"] });
       navigate({ to: "/library" });
       const deckName = name ?? t`Deck`;

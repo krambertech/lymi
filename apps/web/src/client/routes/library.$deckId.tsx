@@ -72,6 +72,9 @@ function DeckPage() {
   }, [openCardId, settled, qc]);
   const deck = decks.data?.find((d) => d.id === deckId);
   const isOwner = deck?.role === "owner";
+  // Only a deck that has arrived and is someone else's; while the list is in flight the screen
+  // must not label the owner's own deck as one they joined.
+  const isMember = !!deck && deck.role !== "owner";
   const series = useQuery({ ...seriesQuery, enabled: isOwner });
   const seriesActions = useSeriesActions();
   const [movingToSeries, setMovingToSeries] = useState(false);
@@ -237,7 +240,7 @@ function DeckPage() {
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
         onArchiveDeck={isOwner ? () => archiveDeck.mutate() : undefined}
-        onLeaveDeck={isOwner ? undefined : () => setLeaving(true)}
+        onLeaveDeck={isMember ? () => setLeaving(true) : undefined}
         onExport={isOwner ? () => setExporting(true) : undefined}
         onMoveToSeries={isOwner ? () => setMovingToSeries(true) : undefined}
         seriesName={series.data?.find((s) => s.id === deck?.seriesId)?.name}
@@ -394,7 +397,7 @@ function DeckPage() {
           setStartingEarly(null);
         }}
       />
-      {deck && !isOwner && (
+      {isMember && deck && (
         <LeaveDeckDialog
           open={leaving}
           onOpenChange={setLeaving}

@@ -1008,7 +1008,7 @@ msgstr "Картки збережуть дати повторення, які м
 msgid "Cards outside a section"
 msgstr "Картки поза розділами"
 
-msgid "Cards show up here as {owner} adds them, and join your reviews with them."
+msgid "Cards show up here as {owner} adds them, and join your reviews."
 msgstr "Картки з’являться тут, коли {owner} їх додасть, і приєднаються до твоїх повторень."
 
 msgid "Change"
@@ -1526,6 +1526,9 @@ msgstr "Усі картки"
 msgid "Every card is asked twice."
 msgstr "Кожну картку запитують двічі."
 
+msgid "Every deck you own, archived ones included, with your schedule and review history. A deck someone else shared with you is not in the file."
+msgstr "Кожна твоя колода, разом з архівними, з твоїм розкладом та історією повторень. Колоди, якими поділилися з тобою, у файл не потрапляють."
+
 msgid "Every deck, archived ones included, with your schedule and review history."
 msgstr "Усі колоди, зокрема архівні, з твоїм розкладом та історією повторень."
 
@@ -1934,9 +1937,6 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "У вивченні"
 
-msgid "Leave"
-msgstr "Вихід"
-
 msgid "Leave {name}?"
 msgstr "Вийти з {name}?"
 
@@ -1951,6 +1951,9 @@ msgstr "Вийти з повторення"
 
 msgid "Leave review or close a sheet"
 msgstr "Вийти з повторення або закрити панель"
+
+msgid "Leaving this deck"
+msgstr "Вихід із колоди"
 
 msgid "Left “{deckName}”"
 msgstr "Колода «{deckName}» більше не в Бібліотеці"

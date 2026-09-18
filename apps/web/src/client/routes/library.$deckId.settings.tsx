@@ -35,7 +35,8 @@ function DeckSettings() {
   const deck = decks.data?.find((d) => d.id === deckId);
   // The oldest card with a meaning, so the direction rows read the same way twice running.
   const isOwner = deck?.role === "owner";
-  useDocumentTitle(deck && !isOwner ? t`About this deck` : t`Deck settings`);
+  const isMember = !!deck && deck.role !== "owner";
+  useDocumentTitle(isMember ? t`About this deck` : t`Deck settings`);
   const joinLink = useQuery({ ...joinLinkQuery(deckId), enabled: isOwner });
   const sections = useQuery({ ...sectionsQuery(deckId), enabled: isOwner });
   const sectionActions = useSectionActions(deckId);
@@ -104,7 +105,7 @@ function DeckSettings() {
         saved={saved}
         error={save.isError ? errorMessage(save.error) : undefined}
         onArchive={isOwner ? () => archive.mutate() : undefined}
-        onLeave={isOwner ? undefined : () => setLeaving(true)}
+        onLeave={isMember ? () => setLeaving(true) : undefined}
         sections={
           isOwner
             ? {
@@ -143,7 +144,7 @@ function DeckSettings() {
             : undefined
         }
       />
-      {deck && !isOwner && (
+      {isMember && deck && (
         <LeaveDeckDialog
           open={leaving}
           onOpenChange={setLeaving}

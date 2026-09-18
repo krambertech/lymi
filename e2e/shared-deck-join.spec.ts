@@ -45,6 +45,9 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     expect(card.ok()).toBeTruthy();
 
     await page.goto(`/library/${deckId}/settings`);
+    // The screen first, then its state: a cold dev server can take longer to paint than the
+    // expect timeout, and a missing radio would otherwise read as the wrong sharing state.
+    await expect(page.getByRole("heading", { name: "Deck settings" })).toBeVisible();
     await expect(page.getByRole("radio", { name: /^Private/ })).toBeChecked();
     await choice(page, "link").click();
     const link = page.getByRole("status", { name: "Join link" });
@@ -168,6 +171,7 @@ test("an owner shares a deck and a classmate joins through the link", async ({
   let nextUrl = "";
   await test.step("turning the link off keeps the member and kills the URL", async () => {
     await page.goto(`/library/${deckId}/settings`);
+    await expect(page.getByRole("heading", { name: "Deck settings" })).toBeVisible();
     await choice(page, "private").click();
     await page
       .getByRole("group", { name: "Turn off the join link" })

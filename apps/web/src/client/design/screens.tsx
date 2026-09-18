@@ -593,6 +593,8 @@ export const SCREENS: Entry[] = [
                 reviews={m.wordReviews}
                 events={m.wordEvents}
                 onEdit={noop}
+                onArchive={noop}
+                onMove={noop}
                 onClose={noop}
                 decks={m.decks}
                 hasNext

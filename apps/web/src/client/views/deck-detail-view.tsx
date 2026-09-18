@@ -209,7 +209,7 @@ function OwnerLine({ deck }: { deck: DeckSummary }) {
 
 /** What a member sees in a shared deck with nothing in it yet. */
 function OwnerAddsCards({ owner }: { owner: string }) {
-  return <Trans>Cards show up here as {owner} adds them, and join your reviews with them.</Trans>;
+  return <Trans>Cards show up here as {owner} adds them, and join your reviews.</Trans>;
 }
 
 /** The parts under a deck's title, dot-separated, or nothing when there are none. */
@@ -887,7 +887,7 @@ export function DeckDetailView({
       <DropdownMenuContent aria-label={t`Deck options`} align="end">
         <DropdownMenuItem onClick={onSettings} disabled={!onSettings}>
           <Settings2 />
-          {onLeaveDeck ? <Trans>About this deck</Trans> : <Trans>Settings</Trans>}
+          {deck && deck.role !== "owner" ? <Trans>About this deck</Trans> : <Trans>Settings</Trans>}
         </DropdownMenuItem>
         {onMoveToSeries && (
           <DropdownMenuItem onClick={onMoveToSeries}>

@@ -331,7 +331,7 @@ function DeckAbout({
         </dl>
       </SettingsGroup>
 
-      <SettingsGroup title={t`Leave`}>
+      <SettingsGroup title={t`Leaving this deck`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="max-w-sm text-sm text-muted">
             <Trans>

@@ -28,7 +28,11 @@ export type ExportScope =
       onCsv: () => void;
       csvLeavesPictures: boolean;
     }
-  | { kind: "library" };
+  | {
+      kind: "library";
+      /** Decks someone else owns, which a file never carries out. Absent while the list loads. */
+      shared?: number | undefined;
+    };
 
 type Choice = ExportFormat | "csv";
 
@@ -216,6 +220,11 @@ export function ExportSheet({
               {scope.kind === "deck" ? (
                 <Trans>
                   Your own schedule and review history come with it. The deck stays as it is.
+                </Trans>
+              ) : scope.shared ? (
+                <Trans>
+                  Every deck you own, archived ones included, with your schedule and review history.
+                  A deck someone else shared with you is not in the file.
                 </Trans>
               ) : (
                 <Trans>

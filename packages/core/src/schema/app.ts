@@ -404,7 +404,7 @@ export const deckEditions = sqliteTable(
     revision: integer("revision").notNull().default(0),
     publishedAt: integer("published_at", { mode: "timestamp_ms" }),
     withdrawnAt: integer("withdrawn_at", { mode: "timestamp_ms" }),
-    /** The person who published it. Nothing publishes an edition on its own. */
+    /** The publisher account that published it. Nothing publishes an edition on its own. */
     publishedBy: text("published_by").references(() => user.id),
     ...timestamps,
   },
@@ -424,7 +424,7 @@ const localization = {
   status: text("status", { enum: LOCALIZATION_STATUSES }).notNull().default("draft"),
   /** The entity's `revision` when this text was written. Lower than the entity's now means stale. */
   sourceRevision: integer("source_revision").notNull(),
-  /** The person who signed it off. Only a person does, whatever the provenance. */
+  /** The publisher account that signed it off, in the app or through its own API key. */
   approvedBy: text("approved_by").references(() => user.id),
   approvedAt: integer("approved_at", { mode: "timestamp_ms" }),
   ...timestamps,

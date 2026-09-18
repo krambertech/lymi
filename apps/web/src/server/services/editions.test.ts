@@ -24,16 +24,32 @@ import { learner, testDb } from "./test-db";
 let db: Db;
 let dispose: () => Promise<void>;
 let lymi: ServiceContext;
+let mari: ServiceContext;
 let anna: ServiceContext;
 let bohdan: ServiceContext;
-const publishers = new Set(["lymi@lymi.test"]);
+const publishers = new Set(["lymi@lymi.test", "mari@lymi.test"]);
 
 beforeAll(async () => {
   ({ db, dispose } = await testDb());
   lymi = await learner(db, "lymi", "Lymi Publisher Account");
+  mari = await learner(db, "mari", "Mari, another publisher");
   anna = await learner(db, "anna", "Anna");
   bohdan = await learner(db, "bohdan", "Bohdan");
 }, 60_000);
+
+/** The same account calling with its own write-scoped key: actor `api`, named on every row. */
+function withKey(ctx: ServiceContext, name = "Release key"): ServiceContext {
+  return { ...ctx, actor: "api", client: `key-${ctx.userId}`, clientName: name };
+}
+
+/** Every audit row written against this deck, oldest first. */
+async function auditRows(deckId: string) {
+  return db
+    .select()
+    .from(schema.auditLog)
+    .where(and(eq(schema.auditLog.entity, "deck"), eq(schema.auditLog.entityId, deckId)))
+    .orderBy(schema.auditLog.createdAt);
+}
 
 afterAll(async () => {
   await dispose();
@@ -233,14 +249,14 @@ describe("what an edition may change", () => {
   });
 });
 
-describe("human approval", () => {
-  it("refuses an API key or an MCP client, and records the person who signed off", async () => {
+describe("signing off an edition", () => {
+  it("refuses an MCP client, an AI job and the system, and records who signed off", async () => {
     const deck = await estonian("approval");
     await importEdition(lymi, deck.deckId, "uk", ukrainian(deck), publishers);
-    for (const actor of ["api", "mcp", "ai"] as const) {
+    for (const actor of ["mcp", "ai", "system"] as const) {
       await expect(
         approveEdition({ ...lymi, actor }, deck.deckId, "uk", {}, publishers),
-      ).rejects.toThrow(/Only a person/);
+      ).rejects.toThrow(/Only a publisher/);
     }
     const report = await approveEdition(lymi, deck.deckId, "uk", {}, publishers);
     expect(report).toMatchObject({ missing: 0, stale: 0, ready: 4, blockers: [] });
@@ -282,6 +298,75 @@ describe("human approval", () => {
     await expect(
       importEdition(anna, deck.deckId, "uk", ukrainian(deck), publishers),
     ).rejects.toThrow();
+  });
+});
+
+describe("a publisher's API key", () => {
+  it("signs off and publishes an edition, and names the key in the log", async () => {
+    const deck = await estonian("key-release");
+    const key = withKey(lymi, "Lymi release key");
+    await importEdition(key, deck.deckId, "uk", ukrainian(deck), publishers);
+    const approved = await approveEdition(key, deck.deckId, "uk", {}, publishers);
+    expect(approved).toMatchObject({ status: "draft", missing: 0, stale: 0, blockers: [] });
+
+    const published = await publishEdition(key, deck.deckId, "uk", publishers);
+    expect(published).toMatchObject({ status: "published" });
+    await addPublishedDeck(bohdan, "key-release", "uk");
+    expect(meanings(await listDeckCards(bohdan, deck.deckId))["tere key-release"]).toBe("привіт");
+
+    // The key's own name is copied onto the row, so a revoked key stays named in Activity.
+    const rows = await auditRows(deck.deckId);
+    const byAction = new Map(rows.map((row) => [row.action, row]));
+    for (const action of ["approve_edition", "publish_edition"]) {
+      expect(byAction.get(action)).toMatchObject({
+        actor: "api",
+        userId: "lymi",
+        actorClient: "key-lymi",
+        actorClientName: "Lymi release key",
+      });
+    }
+    const [signedOff] = await db
+      .select()
+      .from(schema.cardLocalizations)
+      .where(eq(schema.cardLocalizations.cardId, deck.cardIds[0]));
+    expect(signedOff).toMatchObject({ status: "approved", approvedBy: "lymi" });
+  });
+
+  it("is refused to a learner who is not a publisher, and to a publisher who is not the owner", async () => {
+    const deck = await estonian("key-boundaries");
+    await importEdition(lymi, deck.deckId, "uk", ukrainian(deck), publishers);
+    await expect(approveEdition(withKey(anna), deck.deckId, "uk", {}, publishers)).rejects.toThrow(
+      /publishers/,
+    );
+    await expect(approveEdition(withKey(mari), deck.deckId, "uk", {}, publishers)).rejects.toThrow(
+      /not found/i,
+    );
+    await approveEdition(lymi, deck.deckId, "uk", {}, publishers);
+    await expect(publishEdition(withKey(anna), deck.deckId, "uk", publishers)).rejects.toThrow(
+      /publishers/,
+    );
+    await expect(publishEdition(withKey(mari), deck.deckId, "uk", publishers)).rejects.toThrow(
+      /not found/i,
+    );
+  });
+
+  it("cannot republish text a re-import put back into draft", async () => {
+    const deck = await estonian("key-reimport");
+    const key = withKey(lymi);
+    await importEdition(key, deck.deckId, "uk", ukrainian(deck), publishers);
+    await approveEdition(key, deck.deckId, "uk", {}, publishers);
+    await publishEdition(key, deck.deckId, "uk", publishers);
+
+    const changed = ukrainian(deck);
+    const reimported = await importEdition(
+      key,
+      deck.deckId,
+      "uk",
+      { ...changed, cards: changed.cards.map((card) => ({ ...card, meaning: "вітаю" })) },
+      publishers,
+    );
+    expect(reimported.missing).toBeGreaterThan(0);
+    await expect(publishEdition(key, deck.deckId, "uk", publishers)).rejects.toThrow(/not ready/);
   });
 });
 

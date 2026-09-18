@@ -39,7 +39,7 @@ type LocalizationRow = {
 } & Record<string, unknown>;
 
 /**
- * A unit is missing while no person has signed off text for every field it owes, and stale once
+ * A unit is missing while nobody has signed off text for every field it owes, and stale once
  * the canonical row has moved past the revision that text was written from. ADR 0015.
  */
 function unitState(
@@ -227,6 +227,18 @@ function notTheOriginal(
   }
 }
 
+/**
+ * Who may sign off and publish an edition: the publisher in the app, or a write-scoped API key of
+ * that same publisher account, so Lymi can release its own editions without a session. An MCP
+ * client, an AI job and the system never can, and the publisher and owner gates still apply.
+ * Amends ADR 0015.
+ */
+function assertEditorialActor(ctx: ServiceContext, what: string) {
+  if (ctx.actor !== "user" && ctx.actor !== "api") {
+    throw new ServiceError("forbidden", `Only a publisher, in the app or with an API key, ${what}`);
+  }
+}
+
 /** Every edition of the deck with how complete it is, plus what the original is written in. */
 export async function listEditions(ctx: ServiceContext, deckId: string): Promise<EditionsOut> {
   const { publication } = await publishedDeck(ctx, deckId, null);
@@ -398,8 +410,8 @@ function nulled<T extends Record<string, unknown>>(fields: T) {
 }
 
 /**
- * A person signs off an edition's text. Approving also moves the row to the canonical revision
- * as it stands now, because that is what the person read it against. ADR 0015.
+ * A publisher signs off an edition's text. Approving also moves the row to the canonical revision
+ * as it stands now, because that is the text being signed off. ADR 0015.
  */
 export async function approveEdition(
   ctx: ServiceContext,
@@ -408,10 +420,8 @@ export async function approveEdition(
   input: EditionApprovalInput,
   publishers: Set<string>,
 ): Promise<EditionOut> {
-  const { db, userId, actor } = ctx;
-  if (actor !== "user") {
-    throw new ServiceError("forbidden", "Only a person signs off an edition");
-  }
+  const { db, userId } = ctx;
+  assertEditorialActor(ctx, "signs off an edition");
   const { deck, publication } = await publishedDeck(ctx, deckId, publishers);
   notTheOriginal(publication, language);
   if (!(await editionRow(db, deckId, language))) throw new ServiceError("not_found", "No edition");
@@ -518,10 +528,8 @@ export async function publishEdition(
   language: string,
   publishers: Set<string>,
 ): Promise<EditionOut> {
-  const { db, userId, actor } = ctx;
-  if (actor !== "user") {
-    throw new ServiceError("forbidden", "Only a person publishes an edition");
-  }
+  const { db, userId } = ctx;
+  assertEditorialActor(ctx, "publishes an edition");
   const { deck, publication } = await publishedDeck(ctx, deckId, publishers);
   notTheOriginal(publication, language);
   if (deck.archivedAt) throw new ServiceError("invalid", "Restore the deck before publishing it");

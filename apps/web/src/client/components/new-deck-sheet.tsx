@@ -2,8 +2,10 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { DeckInput, type Directions } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { cn } from "cn";
 import { useRef, useState } from "react";
 import { api, type Deck, errorMessage } from "../lib/api";
+import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button } from "./button";
 import { DirectionCompact, LanguageField } from "./deck-fields";
@@ -61,6 +63,7 @@ export interface NewDeckFormProps {
 /** The sheet's body, on its own so it can be shown without the sheet around it. */
 export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: NewDeckFormProps) {
   const { t } = useLingui();
+  const desktop = useDesktop();
   const [name, setName] = useState("");
   const [language, setLanguage] = useState<string | null>(null);
   const [directions, setDirections] = useState<Directions>("recognition");
@@ -99,7 +102,8 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
       <Field>
         <FieldLabel>{t`Name`}</FieldLabel>
         <Input
-          autoFocus={!st}
+          // On touch the drawer settles first and the keyboard waits for a tap on the field.
+          autoFocus={!st && desktop}
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -121,7 +125,13 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
         error={invalid.defaultLanguage}
       />
       <DirectionCompact value={directions} onChange={setDirections} />
-      <div className="flex items-center gap-2 pt-1">
+      <div
+        className={cn(
+          "flex items-center gap-2 pt-1",
+          // In a drawer the actions stay at its foot, above the software keyboard.
+          !desktop && "sticky -bottom-5 -mx-4 -mb-5 bg-plate px-4 pt-3 pb-5",
+        )}
+      >
         <p className="flex-1 text-sm text-danger" role="status">
           {error}
         </p>

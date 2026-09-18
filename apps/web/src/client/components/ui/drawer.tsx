@@ -68,8 +68,11 @@ function DrawerOverlay({ className, ...props }: DrawerPrimitive.Backdrop.Props) 
   return (
     <DrawerPrimitive.Backdrop
       data-slot="drawer-overlay"
+      // Rendered when nested too, at the sheet's own level, so a nested drawer's scrim dims the
+      // drawer it rose from.
+      forceRender
       className={cn(
-        "fixed inset-0 z-(--z-backdrop) min-h-dvh bg-scrim opacity-[max(var(--drawer-overlay-min-opacity,0),calc(1-var(--drawer-swipe-progress)))] transition-opacity duration-450 ease-(--ease-drawer) select-none data-ending-style:pointer-events-none data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*320ms)] data-snap-points:[--drawer-overlay-min-opacity:0.5] data-starting-style:opacity-0 data-swiping:duration-0 supports-[-webkit-touch-callout:none]:absolute",
+        "fixed inset-0 z-(--z-sheet) min-h-dvh bg-scrim opacity-[max(var(--drawer-overlay-min-opacity,0),calc(1-var(--drawer-swipe-progress)))] transition-opacity duration-450 ease-(--ease-drawer) select-none data-ending-style:pointer-events-none data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*320ms)] data-snap-points:[--drawer-overlay-min-opacity:0.5] data-starting-style:opacity-0 data-swiping:duration-0 supports-[-webkit-touch-callout:none]:absolute",
         className,
       )}
       {...props}
@@ -109,15 +112,20 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
           data-snap-points={hasSnapPoints ? "" : undefined}
           className={cn(
             // Base.
-            "group/drawer-popup edge-2 pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-text transition-[transform,height,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
-            // Nested: the drawer behind keeps its height and its content, and steps back a little.
-            "data-nested-drawer-open:overflow-hidden data-nested-drawer-open:brightness-95",
+            "group/drawer-popup edge-2 pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-text transition-[transform,height,padding,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
+            // Keyboard: the software keyboard's height becomes bottom padding, so the foot of the
+            // drawer, and any footer pinned to it, sits above the keys; the safe area is under them.
+            "[--keyboard:var(--drawer-keyboard-inset,0px)] pb-[max(env(safe-area-inset-bottom),var(--keyboard))]",
+            // Nested: the drawer behind keeps its height and its content; the nested scrim dims it.
+            "data-nested-drawer-open:overflow-hidden",
             // Bleed: paint past the edge, so an overscroll never shows the page under the drawer.
             "after:pointer-events-none after:absolute after:bg-(--drawer-bleed-background,var(--color-plate)) data-[swipe-axis=x]:after:inset-y-0 data-[swipe-axis=x]:after:w-(--bleed) data-[swipe-axis=y]:after:inset-x-0 data-[swipe-axis=y]:after:h-(--bleed) data-[swipe-direction=down]:after:top-full data-[swipe-direction=left]:after:end-full data-[swipe-direction=right]:after:start-full data-[swipe-direction=up]:after:bottom-full",
-            // Sizing: edge to edge on a phone, and no wider than a short form on a tablet.
-            "[--drawer-content-height:var(--drawer-height,auto)] data-[swipe-axis=x]:[--drawer-content-width:75%] data-[swipe-axis=y]:[--drawer-content-max-height:85dvh] data-[swipe-axis=y]:data-snap-points:[--drawer-content-height:100dvh] data-[swipe-axis=x]:sm:[--drawer-content-width:24rem] data-[swipe-axis=y]:sm:mx-auto data-[swipe-axis=y]:sm:max-w-md",
-            // Stack.
-            "[--bleed:3rem] [--peek:1rem] [--stack-height:var(--drawer-height,0px)] [--stack-peek-offset:max(0px,calc((var(--nested-drawers)-var(--stack-progress))*var(--peek)))] [--stack-progress:clamp(0,var(--drawer-swipe-progress),1)] [--stack-scale-base:max(0,calc(1-(var(--nested-drawers)*var(--stack-step))))] [--stack-scale:clamp(0,calc(var(--stack-scale-base)+(var(--stack-step)*var(--stack-progress))),1)] [--stack-shrink:calc(1-var(--stack-scale))] [--stack-step:0.05]",
+            // Sizing: edge to edge on a phone, no wider than a short form on a tablet, and never
+            // taller than the room above the keyboard.
+            "[--drawer-content-height:var(--drawer-height,auto)] data-[swipe-axis=x]:[--drawer-content-width:75%] data-[swipe-axis=y]:[--drawer-content-max-height:calc(min(85dvh,100dvh-var(--keyboard)-env(safe-area-inset-top)-1rem)+var(--keyboard))] data-[swipe-axis=y]:data-snap-points:[--drawer-content-height:100dvh] data-[swipe-axis=x]:sm:[--drawer-content-width:24rem] data-[swipe-axis=y]:sm:mx-auto data-[swipe-axis=y]:sm:max-w-md",
+            // Stack: a nested drawer rises over a drawer that stays put, the way an action sheet
+            // sits over a sheet; the machinery keeps a step and a peek for a stack that wants them.
+            "[--bleed:3rem] [--peek:0px] [--stack-height:var(--drawer-height,0px)] [--stack-peek-offset:max(0px,calc((var(--nested-drawers)-var(--stack-progress))*var(--peek)))] [--stack-progress:clamp(0,var(--drawer-swipe-progress),1)] [--stack-scale-base:max(0,calc(1-(var(--nested-drawers)*var(--stack-step))))] [--stack-scale:clamp(0,calc(var(--stack-scale-base)+(var(--stack-step)*var(--stack-progress))),1)] [--stack-shrink:calc(1-var(--stack-scale))] [--stack-step:0]",
             // Transitions: a flick leaves faster than a slow drag.
             "data-ending-style:transform-(--closed-transform) data-ending-style:opacity-[0.9999] data-ending-style:duration-[calc(var(--drawer-swipe-strength)*320ms)] data-nested-drawer-swiping:duration-0 data-ending-style:data-nested-drawer-swiping:duration-[calc(var(--drawer-swipe-strength)*320ms)] data-starting-style:transform-(--closed-transform) data-swiping:duration-0 data-ending-style:data-swiping:duration-[calc(var(--drawer-swipe-strength)*320ms)]",
             // Axis: y.
@@ -139,7 +147,7 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
           {showSwipeHandle && <DrawerSwipeHandle />}
           <DrawerPrimitive.Content
             data-slot="drawer-content"
-            className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain rounded-[inherit] pb-safe select-text group-data-swiping/drawer-popup:select-none"
+            className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain rounded-[inherit] select-text group-data-swiping/drawer-popup:select-none"
           >
             {children}
           </DrawerPrimitive.Content>

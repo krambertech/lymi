@@ -410,7 +410,8 @@ export function CardForm({
       <FieldLabel aside={roomLeft(term, cardLimits.term)}>{t`Term`}</FieldLabel>
       <Input
         ref={termRef}
-        autoFocus={adding && !st}
+        // On touch the drawer settles first and the keyboard waits for a tap on the field.
+        autoFocus={adding && !st && !chips}
         maxLength={cardLimits.term ?? undefined}
         value={term}
         onChange={(e) => {
@@ -866,8 +867,11 @@ export function CardForm({
       <div
         className={cn(
           "flex items-center gap-2",
-          // The dialog scrolls as one on a short screen, and the actions stay in reach at its foot.
-          !chips && "sticky -bottom-5 -mx-5 -mb-5 bg-plate px-5 pt-3 pb-5",
+          // The sheet scrolls as one on a short screen, and the actions stay in reach at its foot,
+          // which in a drawer sits above the software keyboard.
+          chips
+            ? "sticky -bottom-5 -mx-4 -mb-5 bg-plate px-4 pt-3 pb-5"
+            : "sticky -bottom-5 -mx-5 -mb-5 bg-plate px-5 pt-3 pb-5",
         )}
       >
         {adding && onCreateMoreChange && (

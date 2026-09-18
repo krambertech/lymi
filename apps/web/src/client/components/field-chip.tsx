@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { cn } from "cn";
 import type { LucideIcon } from "lucide-react";
-import { forwardRef, type ReactNode, useEffect, useRef, useState } from "react";
+import { forwardRef, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import {
   Drawer,
@@ -10,6 +10,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
   DrawerVirtualKeyboardProvider,
+  useKeyboardHandoff,
 } from "./ui/drawer";
 
 interface Props {
@@ -22,6 +23,8 @@ interface Props {
   /** Shown in place of the icon once filled, such as the picture itself. */
   thumbnail?: ReactNode;
   invalid?: boolean | undefined;
+  /** Whether the field takes typing, so the keyboard rises with the drawer. */
+  keyboard?: boolean | undefined;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
@@ -39,18 +42,30 @@ export function FieldChip({
   valueText,
   thumbnail,
   invalid,
+  keyboard = true,
   open,
   onOpenChange,
   children,
 }: Props) {
   const filled = value !== undefined && value !== null && value !== "" && value !== false;
   const bodyRef = useRef<HTMLDivElement>(null);
+  const field = useCallback(
+    () => bodyRef.current?.querySelector<HTMLElement>("input:not([type=file]), textarea"),
+    [],
+  );
+  const handoff = useKeyboardHandoff(field);
   return (
-    <Drawer open={open} onOpenChange={onOpenChange} showSwipeHandle>
+    <Drawer
+      open={open}
+      onOpenChange={onOpenChange}
+      onOpenChangeComplete={keyboard ? handoff.handOff : undefined}
+      showSwipeHandle
+    >
       <DrawerTrigger
         render={
           <Chip
             icon={icon}
+            onClick={keyboard ? handoff.warmUp : undefined}
             thumbnail={filled ? thumbnail : undefined}
             filled={filled}
             aria-label={
@@ -64,13 +79,10 @@ export function FieldChip({
           </Chip>
         }
       />
+      {keyboard && handoff.input}
       <DrawerVirtualKeyboardProvider>
         {/* The field is why the drawer opened, so the keyboard comes up with it. */}
-        <DrawerContent
-          initialFocus={() =>
-            bodyRef.current?.querySelector<HTMLElement>("input:not([type=file]), textarea") ?? true
-          }
-        >
+        <DrawerContent initialFocus={keyboard ? handoff.initialFocus : () => field() ?? true}>
           <DrawerHeader className="px-4 pt-1">
             <DrawerTitle className="text-base">{label}</DrawerTitle>
           </DrawerHeader>

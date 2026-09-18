@@ -227,7 +227,13 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
       {...props}
     />
   ) : (
-    <DrawerTitle data-slot="dialog-title" className={className} {...props} />
+    // Pinned to the top of the drawer, so scrolling the form, or the keyboard revealing a field,
+    // never carries the title off the screen.
+    <DrawerTitle
+      data-slot="dialog-title"
+      className={cn("sticky top-0 z-10 -mx-4 -mt-2 bg-plate px-4 pt-2 pb-1", className)}
+      {...props}
+    />
   );
 }
 

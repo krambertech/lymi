@@ -107,16 +107,21 @@ export function ExploreDeckView({
           keeps the plain canvas it needs to read as the one thing to press. DESIGN.md, "Colour". */}
       <div className="grid items-start gap-7 @3xl:grid-cols-[minmax(0,1fr)_auto] @3xl:gap-12">
         <div className="grid justify-items-start gap-4">
-          <PageHeader
-            title={<span lang={deck.meaningLanguage}>{deck.name}</span>}
-            sub={
-              <span className="flex items-center gap-1.5">
-                <AppTile size={18} />
-                <Trans>By {deck.publisher}</Trans>
-              </span>
-            }
-            className="w-full pb-1 @3xl:pb-2"
-          />
+          {/* The title is set here rather than through `PageHeader`, whose padding separates a
+              header from the page below it and has nothing to separate inside this column. The
+              type matches it exactly, so the name still lands where every other screen's does. */}
+          <header>
+            <h1
+              lang={deck.meaningLanguage}
+              className="flex min-h-10 items-center text-2xl font-medium leading-[1.2] text-text"
+            >
+              {deck.name}
+            </h1>
+            <p className="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
+              <AppTile size={18} />
+              <Trans>By {deck.publisher}</Trans>
+            </p>
+          </header>
           <p lang={deck.meaningLanguage} className="max-w-[52ch] text-md text-pretty text-text-2">
             {deck.summary}
           </p>

@@ -1,7 +1,7 @@
-import type { PublicationInput } from "@lymi/core";
+import { newId, type PublicationInput } from "@lymi/core";
 import { listPublicCatalog, listPublicDeckSlugs, loadPublicDeck } from "@lymi/core/catalog";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import type { Db } from "../db";
+import { type Db, schema } from "../db";
 import { addCards, archiveCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck } from "./decks";
@@ -135,6 +135,63 @@ describe("loadPublicDeck", () => {
 });
 
 /** Explore's read of the whole catalogue. The second allowlist of ADR 0016. */
+/** Rows go in a few at a time: D1 binds 100 parameters to a statement, every column counted. */
+async function insertAll<T>(table: Parameters<Db["insert"]>[0], rows: T[], perStatement: number) {
+  for (let from = 0; from < rows.length; from += perStatement) {
+    // biome-ignore lint/suspicious/noExplicitAny: one helper for tables of different shapes.
+    await db.insert(table).values(rows.slice(from, from + perStatement) as any);
+  }
+}
+
+/**
+ * A published deck of `count` cards with a published Ukrainian edition of every one. The cards
+ * and their text are written straight to the tables: the service path costs about a second a
+ * card, and this test needs more cards than D1 will bind parameters for.
+ */
+async function wideUkrainianDeck(slug: string, count: number) {
+  const deck = await createDeck(lymi, { name: `Wide Estonian ${slug}`, defaultLanguage: "et" });
+  const cards = Array.from({ length: count }, (_, index) => ({
+    id: newId(),
+    userId: lymi.userId,
+    deckId: deck.id,
+    term: `${slug} ${index}`,
+    meaning: `word ${index}`,
+  }));
+  await insertAll(schema.cards, cards, 4);
+  await publishDeck(lymi, deck.id, input(slug), publishers);
+  await db.insert(schema.deckEditions).values({
+    id: newId(),
+    deckId: deck.id,
+    language: "uk",
+    status: "published",
+    revision: 1,
+    publishedAt: new Date(),
+  });
+  await db.insert(schema.deckLocalizations).values({
+    id: newId(),
+    deckId: deck.id,
+    language: "uk",
+    provenance: "human",
+    status: "approved",
+    sourceRevision: 1,
+    name: `Естонська ${slug}`,
+    summary: "Перші тижні в Естонії.",
+  });
+  await insertAll(
+    schema.cardLocalizations,
+    cards.map((card, index) => ({
+      id: newId(),
+      cardId: card.id,
+      language: "uk",
+      provenance: "human",
+      status: "approved",
+      sourceRevision: 1,
+      meaning: `слово ${index}`,
+    })),
+    6,
+  );
+}
+
 describe("listPublicCatalog", () => {
   it("carries a deck's shelf, its counts and one of its cards, and nothing private", async () => {
     const deck = await sectionedDeck("shelf");
@@ -186,4 +243,14 @@ describe("listPublicCatalog", () => {
     const again = (await listPublicCatalog(db)).find((row) => row.slug === "steady")?.card?.term;
     expect(again).toBe(first);
   });
+
+  it("reads an edition whose decks hold more cards than D1 binds parameters", async () => {
+    // The tray used to ask for every candidate card's text at once, a bound parameter apiece,
+    // and D1 stops a query at 100. Three decks of these put 102 on it. Explore's own 500.
+    for (const slug of ["cap-one", "cap-two", "cap-three"]) await wideUkrainianDeck(slug, 34);
+    const rows = await listPublicCatalog(db, "uk");
+    const row = rows.find((entry) => entry.slug === "cap-one");
+    expect(row).toMatchObject({ name: "Естонська cap-one", meaningLanguage: "uk", cardCount: 34 });
+    expect(row?.card?.meaning).toMatch(/^слово /);
+  }, 60_000);
 });

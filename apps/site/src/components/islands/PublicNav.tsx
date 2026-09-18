@@ -9,7 +9,7 @@ interface Props {
 
 /**
  * The marketing top bar for a page rendered per request, in the page's language. A published deck
- * admits anyone who adds it, so the bar leaves out Create an account and the page has one way in.
+ * admits anyone who adds it, so the bar leaves out Get started and the page has one way in.
  */
 export default function PublicNav({ locale }: Props) {
   return (

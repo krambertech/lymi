@@ -200,7 +200,7 @@ export function AssistantHero() {
         </p>
         <div className="mt-8 flex flex-wrap gap-2">
           <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Create an account</Trans>
+            <Trans>Get started</Trans>
           </a>
           <a href="#connect" className={buttonClass("ghost", "lg")}>
             <Trans>How to connect</Trans>

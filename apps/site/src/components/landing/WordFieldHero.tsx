@@ -284,7 +284,7 @@ export function WordFieldHero({ frames, label, lede }: Props) {
         </p>
         <div className="mt-9">
           <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Create an account</Trans>
+            <Trans>Get started</Trans>
           </a>
         </div>
       </div>

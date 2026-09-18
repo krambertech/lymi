@@ -102,7 +102,7 @@ test("the site keeps product APIs off its origin and sends /join to sign-up", as
 
   await page.goto(publicSite);
   await expect(
-    page.getByRole("link", { name: "Create an account", exact: true }).first(),
+    page.getByRole("link", { name: "Get started", exact: true }).first(),
   ).toHaveAttribute("href", `${e2eProductUrl}/login?mode=sign-up`);
 });
 

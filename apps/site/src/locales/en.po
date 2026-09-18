@@ -601,9 +601,6 @@ msgstr "Cosy"
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
-msgid "Create an account"
-msgstr "Create an account"
-
 msgid "Data Lymi receives"
 msgstr "Data Lymi receives"
 
@@ -855,6 +852,9 @@ msgstr "German"
 
 msgid "German A2 · Tuesdays"
 msgstr "German A2 · Tuesdays"
+
+msgid "Get started"
+msgstr "Get started"
 
 msgid "get up early"
 msgstr "get up early"

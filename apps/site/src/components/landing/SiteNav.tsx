@@ -13,7 +13,7 @@ import { isUseCasePage, MENU_USE_CASE_LINKS } from "./site-links";
 interface Props {
   openAppUrl: string;
   current?: LocalizedPage | undefined;
-  /** Where Create an account goes. A page that admits anyone, such as a published deck, passes
+  /** Where Get started goes. A page that admits anyone, such as a published deck, passes
    * null to leave the control out. */
   signUpHref?: string | null | undefined;
 }
@@ -211,7 +211,7 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
                 href={signUpHref}
                 className={buttonClass("secondary", "lg", "w-full")}
               >
-                <Trans>Create an account</Trans>
+                <Trans>Get started</Trans>
               </a>
             )}
           </div>
@@ -248,7 +248,7 @@ export function SiteNav({ openAppUrl, current, signUpHref = signUpUrl() }: Props
           </a>
           {signUpHref !== null && (
             <a href={signUpHref} className={buttonClass("ghost", "sm")}>
-              <Trans>Create an account</Trans>
+              <Trans>Get started</Trans>
             </a>
           )}
           <a href={openAppUrl} className={buttonClass("secondary", "sm", "ms-1")}>

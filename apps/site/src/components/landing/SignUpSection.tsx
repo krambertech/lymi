@@ -22,7 +22,7 @@ export function SignUpSection({ title, note }: Props) {
         </p>
         <div className="mt-8">
           <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Create an account</Trans>
+            <Trans>Get started</Trans>
           </a>
         </div>
         {note && <p className="mx-auto mt-8 max-w-[52ch] text-sm text-pretty text-muted">{note}</p>}

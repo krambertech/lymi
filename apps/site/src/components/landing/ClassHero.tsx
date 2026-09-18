@@ -128,7 +128,7 @@ export function ClassHero() {
         </p>
         <div className="mt-8 flex flex-wrap gap-2">
           <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Create an account</Trans>
+            <Trans>Get started</Trans>
           </a>
           <a href="#course" className={buttonClass("ghost", "lg")}>
             <Trans>How sections work</Trans>

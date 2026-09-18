@@ -23,7 +23,7 @@ export function Hero({ title, lede, cards, layout }: Props) {
         <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
         <div className="mt-8">
           <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Create an account</Trans>
+            <Trans>Get started</Trans>
           </a>
         </div>
       </div>

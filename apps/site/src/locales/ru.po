@@ -601,9 +601,6 @@ msgstr "Уютный"
 msgid "Cosy and convivial; good company"
 msgstr "Уютный и душевный; в хорошей компании"
 
-msgid "Create an account"
-msgstr "Создать аккаунт"
-
 msgid "Data Lymi receives"
 msgstr "Данные, которые получает Lymi"
 
@@ -855,6 +852,9 @@ msgstr "Немецкий"
 
 msgid "German A2 · Tuesdays"
 msgstr "Немецкий A2 · по вторникам"
+
+msgid "Get started"
+msgstr "Начать"
 
 msgid "get up early"
 msgstr "рано вставать"

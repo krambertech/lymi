@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, test } from "./test";
 
 /**
@@ -6,7 +6,7 @@ import { expect, test } from "./test";
  * read back by the learner's own address, which the send carries as its reply-to.
  */
 test("a learner can send feedback from the learner menu", async ({ page }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "feedback");
+  await startAsTestLearner(page, testInfo, "feedback", "/today");
   const state = (await (await page.request.get("/api/dev/state")).json()) as {
     user: { name: string; email: string };
   };

@@ -1,10 +1,10 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, test } from "./test";
 
 test("a local account email stays in the outbox and can be read by address", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "email-outbox");
+  await startAsTestLearner(page, testInfo, "email-outbox");
   const state = (await (await page.request.get("/api/dev/state")).json()) as {
     user: { email: string };
   };
@@ -30,7 +30,7 @@ test("a local account email stays in the outbox and can be read by address", asy
 });
 
 test("a signed-in non-operator cannot send an account email", async ({ page }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "email-non-operator");
+  await startAsTestLearner(page, testInfo, "email-non-operator");
 
   const response = await page.request.post("/api/email/test", {
     data: { to: "learner@example.com", language: "en" },

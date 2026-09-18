@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 function notifications(page: Page) {
@@ -21,7 +21,7 @@ async function addCard(page: Page, deckId: string, term: string, meaning: string
  * after the Undo toast is gone. Archived is that road back, for a whole deck and for one card.
  */
 test("a learner can restore a deck and a card from Archived", async ({ page }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "archived-page");
+  await startAsTestLearner(page, testInfo, "archived-page");
   const deckName = `Lista vecchia ${testInfo.project.name}`;
   const keptName = `Lezione ${testInfo.project.name}`;
   const term = "il tramonto";

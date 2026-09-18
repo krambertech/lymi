@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** A forgotten card returns within the review, and the same log gives the same next card anywhere, ADR 0019. */
@@ -43,7 +43,7 @@ async function gradeUntil(page: Page, card: string, attempts: number, limit: num
 }
 
 test("a forgotten card comes back in the same review", async ({ page }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "review-returns");
+  await startAsTestLearner(page, testInfo, "review-returns");
   await addDeck(page, "Returns", 10);
   await page.goto("/review");
   await expect(page.getByText("0 of 50", { exact: true })).toBeVisible();
@@ -72,7 +72,7 @@ test("grades that could not be sent still decide the next card after a reload", 
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
-  await signInAsTestLearner(page, testInfo, "review-queued");
+  await startAsTestLearner(page, testInfo, "review-queued");
   await addDeck(page, "Queued", 10);
   await page.goto("/review");
   await expect(page.getByText("0 of 50", { exact: true })).toBeVisible();
@@ -109,7 +109,7 @@ test("offline, grading still works, running out claims nothing, and it all syncs
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
-  await signInAsTestLearner(page, testInfo, "review-offline");
+  await startAsTestLearner(page, testInfo, "review-offline");
   await addDeck(page, "Offline", 3);
   await page.goto("/review");
   await expect(page.getByText("0 of 50", { exact: true })).toBeVisible();
@@ -144,7 +144,7 @@ test("a round from Today walks its own cards and ends with Round done", async ({
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
-  await signInAsTestLearner(page, testInfo, "review-round");
+  await startAsTestLearner(page, testInfo, "review-round");
   await addDeck(page, "Round", 4);
 
   await page.goto("/review");
@@ -165,7 +165,7 @@ test("a return missed in a deck review comes up in the all-decks review", async 
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
-  await signInAsTestLearner(page, testInfo, "review-scope");
+  await startAsTestLearner(page, testInfo, "review-scope");
   const first = await addDeck(page, "First", 6);
   await addDeck(page, "Second", 6);
 
@@ -185,7 +185,7 @@ test("midnight starts a new day, and yesterday's forgotten card comes first", as
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
   await page.clock.install({ time: new Date() });
-  await signInAsTestLearner(page, testInfo, "review-midnight");
+  await startAsTestLearner(page, testInfo, "review-midnight");
   await addDeck(page, "Midnight", 8);
   await page.goto("/review");
 

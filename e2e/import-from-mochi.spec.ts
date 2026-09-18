@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** The Mochi fixture made by `fixtures/generate.py`: 13 cards in 3 decks, 12 reviews, 4 pictures; one card has no term. */
@@ -12,7 +12,7 @@ function learnerMenu(page: Page) {
 
 test("a learner imports a Mochi export and finds it in Activity", async ({ page }, testInfo) => {
   test.setTimeout(120_000);
-  await signInAsTestLearner(page, testInfo, "mochi-import");
+  await startAsTestLearner(page, testInfo, "mochi-import", "/today");
 
   await test.step("open the Mochi import from Settings", async () => {
     await learnerMenu(page).click();

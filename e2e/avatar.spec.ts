@@ -1,5 +1,5 @@
 import { crc32, deflateSync } from "node:zlib";
-import { signInAsTestLearner } from "./auth";
+import { signInAsTestLearner, startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** A solid PNG with a lighter square in it, so a crop has something to move. */
@@ -42,8 +42,7 @@ async function pick(page: Page, name: string, mimeType: string, buffer: Buffer) 
 }
 
 test("a learner crops, saves and removes their own photo", async ({ page }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "avatar");
-  await page.goto("/settings");
+  await startAsTestLearner(page, testInfo, "avatar", "/settings");
   const face = account(page).getByRole("button", { name: "Change photo" });
   await expect(face).toBeVisible();
   await expect(photo(page)).toHaveCount(0);
@@ -142,8 +141,7 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
 test("another learner on the same browser never sees the previous photo", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "avatar");
-  await page.goto("/settings");
+  await startAsTestLearner(page, testInfo, "avatar", "/settings");
   const state = await page.evaluate(() => fetch("/api/avatar").then((r) => r.json()));
   const upload = await page.request.put("/api/avatar", {
     data: png(300, 300),
@@ -153,6 +151,8 @@ test("another learner on the same browser never sees the previous photo", async 
   await page.reload();
   await expect(photo(page)).toHaveAttribute("src", /^blob:/);
 
+  // The form is the subject here: signing in is what throws the previous learner's persisted
+  // cache away, so a restored session would prove nothing.
   await signInAsTestLearner(page, testInfo, "avatar-other");
   const requests: string[] = [];
   page.on("request", (r) => {

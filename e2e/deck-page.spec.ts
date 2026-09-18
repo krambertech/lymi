@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 async function addSection(page: Page, deckId: string, name: string) {
@@ -28,7 +28,7 @@ test("a learner can filter, sort and open the words in a deck", async ({
   page,
   isMobile,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "deck-page");
+  await startAsTestLearner(page, testInfo, "deck-page");
   const row = (term: string) =>
     page.getByRole("listitem").getByRole("button").filter({ hasText: term });
 
@@ -148,7 +148,7 @@ test("a learner can filter, sort and open the words in a deck", async ({
  * not reach offers Try again, and recovers on it. Issue #268.
  */
 test("a learner sees why a deck could not be opened", async ({ page }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "deck-page");
+  await startAsTestLearner(page, testInfo, "deck-page");
 
   // Each request retries once before the screen gives up, so both messages land after the default wait.
   const settles = { timeout: 20_000 };

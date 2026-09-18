@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** Waits for the sheet to offer the file, then checks the download route hands over a zip. */
@@ -20,7 +20,7 @@ test("a learner exports a deck and the library, and finds the files in Activity"
   page,
 }, testInfo) => {
   test.setTimeout(120_000);
-  await signInAsTestLearner(page, testInfo, "export");
+  await startAsTestLearner(page, testInfo, "export");
 
   const deckName = `Export ${testInfo.project.name}`;
   const deck = await page.request.post("/api/decks", {

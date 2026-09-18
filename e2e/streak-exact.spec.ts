@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, test } from "./test";
 
 /**
@@ -7,7 +7,7 @@ import { expect, test } from "./test";
  */
 test("the streak is exact beyond the seven days the lights show", async ({ page }, testInfo) => {
   test.setTimeout(180_000);
-  await signInAsTestLearner(page, testInfo, "core-learning");
+  await startAsTestLearner(page, testInfo, "core-learning");
   const post = async (path: string, data: unknown) => {
     const res = await page.request.post(path, { data });
     expect(res.ok(), `${path} failed with ${res.status()}`).toBeTruthy();

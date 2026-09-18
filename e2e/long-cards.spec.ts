@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** A card at every field limit stays readable and gradable on a small phone and a wide desktop. */
@@ -24,7 +24,7 @@ async function pageHoldsStill(page: Page) {
 test("a learner can read and grade a card at every field limit on any screen", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "long-cards");
+  await startAsTestLearner(page, testInfo, "long-cards");
   const deck = await page.request.post("/api/decks", {
     data: { name: `Long cards ${testInfo.project.name}`, defaultLanguage: "de" },
   });

@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** The deck list, and only that: sign-in and the rest of the screen still reach the server. */
@@ -24,7 +24,7 @@ test("a learner whose deck list fails sees an error they can retry", async ({
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "loading states, not rendering");
-  await signInAsTestLearner(page, testInfo, "library-offline");
+  await startAsTestLearner(page, testInfo, "library-offline");
   const deckName = `Lezione offline ${testInfo.project.name}`;
   const created = await page.request.post("/api/decks", {
     data: { name: deckName, defaultLanguage: "it" },

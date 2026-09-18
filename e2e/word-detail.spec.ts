@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 async function createDeck(page: Page, name: string): Promise<string> {
@@ -15,7 +15,7 @@ async function createDeck(page: Page, name: string): Promise<string> {
  * a field and see the source become the learner's, move it to another deck, and archive it.
  */
 test("a word opens, edits, moves and archives from its deck", async ({ page }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "word-detail");
+  await startAsTestLearner(page, testInfo, "word-detail");
   // The list under the word repeats the meaning, so checks are scoped to the visible article.
   const word = page.locator("article").filter({ visible: true });
   const shown = (text: string) => word.getByText(text, { exact: true });

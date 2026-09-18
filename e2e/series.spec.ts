@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Locator, type Page, test } from "./test";
 
 /** Series are optional: decks gather into one, review together, and leave or come back whole. */
@@ -45,7 +45,7 @@ async function openLibrary(page: Page) {
 test("a learner gathers decks into a series and reviews them together", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "series");
+  await startAsTestLearner(page, testInfo, "series");
   const tag = testInfo.project.name;
   const series = `Italian ${tag}`;
   const verbs = `Verbs ${tag}`;
@@ -129,7 +129,7 @@ test("a learner gathers decks into a series and reviews them together", async ({
 test("archiving a series asks about its decks, and Restore brings them back", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "series-archive");
+  await startAsTestLearner(page, testInfo, "series-archive");
   const tag = testInfo.project.name;
   const series = `Estonian ${tag}`;
   const first = `A1 ${tag}`;
@@ -181,7 +181,7 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
     isMobile,
     "A pointer drag; touch uses a long press and the menus cover the same moves.",
   );
-  await signInAsTestLearner(page, testInfo, "series-drag");
+  await startAsTestLearner(page, testInfo, "series-drag");
   const tag = testInfo.project.name;
   const series = `Drag ${tag}`;
   const inside = `Inside ${tag}`;

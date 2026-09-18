@@ -1,7 +1,7 @@
 import {
   createAccountThroughDevForm,
   expectNoAccountEmail,
-  signInAsTestLearner,
+  startAsTestLearner,
   submitDevSignUp,
 } from "./auth";
 import { type Browser, expect, type Page, type TestInfo, test } from "./test";
@@ -33,7 +33,7 @@ test("an owner shares a deck and a classmate joins through the link", async ({
   let joinUrl = "";
 
   await test.step("the owner turns on the join link", async () => {
-    await signInAsTestLearner(page, testInfo, "join-owner");
+    await startAsTestLearner(page, testInfo, "join-owner");
     const deck = await page.request.post("/api/decks", {
       data: { name: deckName, defaultLanguage: "et" },
     });

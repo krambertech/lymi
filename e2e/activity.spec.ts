@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, test } from "./test";
 
 /**
@@ -8,7 +8,7 @@ import { expect, test } from "./test";
 test("a key's cards land on Activity, open there and archive from the word", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "activity");
+  await startAsTestLearner(page, testInfo, "activity");
   let key = "";
   let deckId = "";
 

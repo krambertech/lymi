@@ -20,15 +20,17 @@ test("a learner adds a published deck from Explore without leaving the app", asy
   browser,
 }, testInfo) => {
   const suffix = `${testInfo.project.name}-r${testInfo.retry}-p${testInfo.repeatEachIndex}`;
-  const onShelf = { name: `Everyday Estonian ${suffix}`, slug: `app-estonian-${suffix}` };
-  const onPage = { name: `Driving theory ${suffix}`, slug: `app-driving-${suffix}` };
+  // Names and terms no other journey uses: one publisher account holds them all, and the
+  // duplicate rule would skip a card whose term another journey had already published.
+  const onShelf = { name: `Explore Estonian ${suffix}`, slug: `app-estonian-${suffix}` };
+  const onPage = { name: `Explore Driving ${suffix}`, slug: `app-driving-${suffix}` };
   const ids: Record<string, string> = {};
 
   await test.step("the publisher publishes two decks in different categories", async () => {
     await startAsTestLearner(page, testInfo, "publisher");
     const decks = [
-      { deck: onShelf, category: "languages", term: "tere hommikust", meaning: "good morning" },
-      { deck: onPage, category: "driving", term: "peatee", meaning: "priority road" },
+      { deck: onShelf, category: "languages", term: `hommikust ${suffix}`, meaning: "morning" },
+      { deck: onPage, category: "driving", term: `peatee ${suffix}`, meaning: "priority road" },
     ] as const;
     for (const { deck, category, term, meaning } of decks) {
       const created = await page.request.post("/api/decks", {
@@ -87,22 +89,17 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     await expect(learner.getByText("priority road", { exact: true })).toBeVisible();
   });
 
-  await test.step("adding from the deck's page opens it in Library", async () => {
-    await learner.getByRole("button", { name: "Add to your library" }).click();
-    await expect(learner).toHaveURL(new RegExp(`/library/${ids[onPage.slug]}$`));
-    await expect(learner.getByText("peatee", { exact: true })).toBeVisible();
-  });
-
-  await test.step("a reload finds both decks added and neither offered again", async () => {
+  await test.step("a reload keeps the added deck marked and still offers the other", async () => {
     await learner.goto("/explore");
-    for (const deck of [onShelf, onPage]) {
-      await expect(
-        tile(learner, deck.name).getByRole("link", { name: "In your library" }),
-      ).toBeVisible();
-      await expect(
-        tile(learner, deck.name).getByRole("button", { name: /to your library$/ }),
-      ).toHaveCount(0);
-    }
+    await expect(
+      tile(learner, onShelf.name).getByRole("link", { name: "In your library" }),
+    ).toBeVisible();
+    await expect(
+      tile(learner, onShelf.name).getByRole("button", { name: /to your library$/ }),
+    ).toHaveCount(0);
+    await expect(
+      tile(learner, onPage.name).getByRole("button", { name: /to your library$/ }),
+    ).toBeVisible();
   });
 
   await test.step("an unknown slug says so and offers the way back", async () => {
@@ -112,6 +109,15 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     ).toBeVisible();
     await learner.getByRole("link", { name: "Back to Explore" }).click();
     await expect(learner).toHaveURL(/\/explore$/);
+  });
+
+  // Last, because it leaves the app on another screen: nothing after it can race the router.
+  await test.step("adding from the deck's page opens it in Library", async () => {
+    await learner.goto(`/explore/${onPage.slug}`);
+    await learner.getByRole("button", { name: "Add to your library" }).click();
+    await learner.waitForURL(new RegExp(`/library/${ids[onPage.slug]}$`));
+    await expect(learner.getByRole("heading", { name: onPage.name, exact: true })).toBeVisible();
+    await expect(learner.getByText(`peatee ${suffix}`, { exact: true })).toBeVisible();
   });
 
   await learner.context().close();

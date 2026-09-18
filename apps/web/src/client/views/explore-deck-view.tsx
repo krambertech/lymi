@@ -1,14 +1,15 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { ExploreDeckOut } from "@lymi/core/catalog";
+import type { ExploreDeckOut, PublicDeckOut } from "@lymi/core/catalog";
 import { trayHue } from "@lymi/core/catalog";
 import { Link } from "@tanstack/react-router";
 import { Check, ChevronDown, Plus } from "lucide-react";
 import { Button, buttonClass } from "../components/button";
 import { DeckMeta } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
+import { AppTile } from "../components/logo";
 import type { StaticNav } from "../components/nav-link";
 import { Skeleton } from "../components/skeleton";
-import { BackButton, Page } from "./shell";
+import { BackButton, Page, PageHeader, TopBar } from "./shell";
 
 interface Props {
   data: ExploreDeckOut | undefined;
@@ -21,11 +22,31 @@ interface Props {
   st?: StaticNav;
 }
 
+type DeckCard = PublicDeckOut["sections"][number]["cards"][number];
+
+/** How many of the deck's own cards rest beside its name. */
+const HAND = 3;
+
 /**
- * One published deck without leaving the app. It shows what the public page shows — the same
- * projection, so the two cannot disagree — and stops there: a learner already inside Lymi does
- * not need the page that explains what Lymi is. The one thing to press is Add.
+ * A few cards from across the deck, one per section before a second from any: the hand shows the
+ * spread of what is inside rather than the first lesson. It follows the deck's own order, so one
+ * revision always shows the same three.
  */
+function handOf(deck: PublicDeckOut): DeckCard[] {
+  const groups = deck.sections
+    .map((section) => section.cards.filter((card) => card.meaning))
+    .filter((cards) => cards.length > 0);
+  const picked: DeckCard[] = [];
+  const deepest = Math.max(0, ...groups.map((cards) => cards.length));
+  for (let round = 0; round < deepest && picked.length < HAND; round++) {
+    for (const cards of groups) {
+      const card = cards[round];
+      if (card && picked.length < HAND) picked.push(card);
+    }
+  }
+  return picked;
+}
+
 export function ExploreDeckView({
   data,
   failed,
@@ -49,8 +70,8 @@ export function ExploreDeckView({
 
   if (missing || failed) {
     return (
-      <Page width="md">
-        <div className="mb-2 flex h-14 items-center">{back}</div>
+      <Page>
+        <TopBar back={back} nested />
         <ErrorState
           title={
             missing ? (
@@ -80,51 +101,47 @@ export function ExploreDeckView({
 
   if (!data) {
     return (
-      <Page width="md">
-        <div className="mb-2 flex h-14 items-center">{back}</div>
-        <div className="grid gap-3" aria-hidden="true">
-          <Skeleton className="h-9 w-2/3 rounded-sm" />
-          <Skeleton className="h-5 w-full rounded-sm" />
-          <Skeleton className="mt-3 h-10 w-40 rounded-md" />
-        </div>
+      <Page>
+        <TopBar back={back} nested />
+        <PageHeader title={<Skeleton className="h-8 w-56" />} />
+        <Skeleton className="h-12 w-52 rounded-md" />
       </Page>
     );
   }
 
   const { deck, deckId } = data;
   const sections = deck.sections.filter((section) => section.name !== null);
+  const hand = handOf(deck);
 
   return (
-    <Page width="md">
-      {/* The deck's own tray colour, poured behind its name and gone before the reading starts.
-          It runs out to the column's edges, so the negative margins undo the page's own padding.
-          Its surfaces are `over-tint`, so a hover darkens the colour rather than painting grey. */}
+    <Page>
+      {/* The deck's own tray colour, run out to the column's edges: the negative margins undo the
+          page's padding. `over-tint` turns the surfaces inside into translucent ink, so nothing
+          paints grey on the colour. */}
       <div
-        className="deck-hero-tint over-tint -mx-5 -mt-5 px-5 pt-5 pb-9 @3xl/shell:-mx-8 @3xl/shell:-mt-8 @3xl/shell:px-8 @3xl/shell:pt-8 @3xl/shell:pb-10"
+        className="deck-hero over-tint -mx-5 -mt-5 px-5 pt-5 pb-7 @3xl/shell:-mx-8 @3xl/shell:-mt-8 @3xl/shell:px-8 @3xl/shell:pt-8 @3xl/shell:pb-9"
         data-hue={trayHue(deck.slug)}
       >
-        <div className="mb-2 flex h-14 items-center">{back}</div>
-        <header>
-          <h1
-            lang={deck.meaningLanguage}
-            className="text-3xl font-medium leading-[1.1] tracking-[-0.03em] text-balance text-text"
-          >
-            {deck.name}
-          </h1>
-          <p className="mt-1.5 text-sm text-muted">
-            <Trans>By {deck.publisher}</Trans>
-          </p>
-          <p
-            lang={deck.meaningLanguage}
-            className="mt-4 max-w-[56ch] text-md text-pretty text-text-2"
-          >
-            {deck.summary}
-          </p>
-          <DeckMeta
-            deck={{ level: deck.level, cardCount: deck.cardCount, sectionCount: sections.length }}
-            className="mt-3 text-sm"
-          />
-          <div className="mt-6">
+        <TopBar back={back} nested />
+        <PageHeader
+          title={<span lang={deck.meaningLanguage}>{deck.name}</span>}
+          sub={
+            <span className="flex items-center gap-1.5">
+              <AppTile size={18} />
+              <Trans>By {deck.publisher}</Trans>
+            </span>
+          }
+          className="pb-5 @3xl:pb-6"
+        />
+        <div className="grid items-center gap-7 @3xl:grid-cols-[minmax(0,1fr)_auto] @3xl:gap-10">
+          <div className="grid justify-items-start gap-4">
+            <p lang={deck.meaningLanguage} className="max-w-[52ch] text-md text-pretty text-text-2">
+              {deck.summary}
+            </p>
+            <DeckMeta
+              deck={{ level: deck.level, cardCount: deck.cardCount, sectionCount: sections.length }}
+              className="text-sm"
+            />
             {deckId ? (
               <div className="flex flex-wrap items-center gap-3">
                 <Link
@@ -147,7 +164,22 @@ export function ExploreDeckView({
               </Button>
             )}
           </div>
-        </header>
+          {/* Decoration: every one of these cards is in the list further down, named there. */}
+          {hand.length > 0 && (
+            <div className="deck-hand" aria-hidden="true">
+              {hand.map((card, at) => (
+                <article key={card.term} className="deck-hand-card" data-at={at}>
+                  <p lang={deck.language ?? undefined} className="deck-tray-term">
+                    {card.term}
+                  </p>
+                  <p lang={deck.meaningLanguage} className="deck-tray-meaning">
+                    {card.meaning}
+                  </p>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="pt-8 @3xl/shell:pt-10">

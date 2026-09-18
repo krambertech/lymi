@@ -88,12 +88,14 @@ interface TileProps {
 export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
   const { t } = useLingui();
   return (
-    <div className="deck-tile grid gap-3.5">
+    // A card, not a group on the open canvas as on the public page: the press has to belong to
+    // something, and an Add button floating under a name reads as loose. DESIGN.md, "The tray".
+    <div className="deck-tile edge grid h-full content-start gap-3 rounded-xl bg-plate p-3">
       <Link
         to="/explore/$slug"
         params={{ slug: deck.slug }}
         disabled={!!st}
-        className="grid gap-3.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+        className="grid gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         <DeckTray
           slug={deck.slug}
@@ -102,7 +104,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
           language={deck.language}
           meaningLanguage={deck.meaningLanguage}
         />
-        <div className="grid gap-1">
+        <div className="grid gap-1 px-1">
           <h3
             lang={deck.meaningLanguage}
             className="text-lg font-medium leading-tight tracking-[-0.025em] text-balance text-text"
@@ -120,7 +122,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
           to="/library/$deckId"
           params={{ deckId: addedTo }}
           disabled={!!st}
-          className="inline-flex h-8 items-center gap-1.5 justify-self-start rounded-sm px-2.5 -ms-2.5 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
+          className="inline-flex h-8 items-center gap-1.5 justify-self-start rounded-sm px-2 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
         >
           <Check aria-hidden="true" className="text-state-known" />
           <Trans>In your library</Trans>

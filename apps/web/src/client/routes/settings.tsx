@@ -11,7 +11,7 @@ import { NotificationsSection } from "../components/notifications-section";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
-import { meQuery, settingsQuery } from "../lib/queries";
+import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
 import { SettingsView } from "../views/settings-view";
 
@@ -24,6 +24,8 @@ function SettingsRoute() {
   useDocumentTitle(t`Settings`);
   const me = useQuery(meQuery);
   const settings = useQuery(settingsQuery);
+  // Only to say what a library file leaves out, so it loads with the rest of the screen.
+  const decks = useQuery(decksQuery);
   const qc = useQueryClient();
   const language = useMutation({
     mutationFn: (appLanguage: AppLanguage) => api.updateSettings({ appLanguage }),
@@ -72,7 +74,14 @@ function SettingsRoute() {
       <NotificationsSection />
       <ConnectedAppsSection />
       <ApiKeysSection />
-      <ExportSheet open={exporting} onOpenChange={setExporting} scope={{ kind: "library" }} />
+      <ExportSheet
+        open={exporting}
+        onOpenChange={setExporting}
+        scope={{
+          kind: "library",
+          shared: decks.data?.filter((d) => d.role !== "owner").length,
+        }}
+      />
     </SettingsView>
   );
 }

@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { LeaveDeckDialog } from "../components/leave-deck-dialog";
 import {
   ArchivedSectionsDialog,
   ArchiveSectionDialog,
@@ -17,6 +18,7 @@ import {
   sectionsQuery,
 } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
+import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/deck-settings-view";
 
@@ -31,9 +33,10 @@ function DeckSettings() {
   const decks = useQuery(decksQuery);
   const cards = useQuery(deckCardsQuery(deckId));
   const deck = decks.data?.find((d) => d.id === deckId);
-  useDocumentTitle(t`Deck settings`);
   // The oldest card with a meaning, so the direction rows read the same way twice running.
   const isOwner = deck?.role === "owner";
+  const isMember = !!deck && deck.role !== "owner";
+  useDocumentTitle(isMember ? t`About this deck` : t`Deck settings`);
   const joinLink = useQuery({ ...joinLinkQuery(deckId), enabled: isOwner });
   const sections = useQuery({ ...sectionsQuery(deckId), enabled: isOwner });
   const sectionActions = useSectionActions(deckId);
@@ -63,6 +66,8 @@ function DeckSettings() {
   });
 
   const archive = useArchiveDeck(deckId, deck?.name);
+  const leave = useLeaveDeck(deckId, deck?.name);
+  const [leaving, setLeaving] = useState(false);
 
   const turnOn = useMutation({
     mutationFn: () => api.turnOnJoinLink(deckId),
@@ -99,7 +104,8 @@ function DeckSettings() {
         saving={save.isPending}
         saved={saved}
         error={save.isError ? errorMessage(save.error) : undefined}
-        onArchive={() => archive.mutate()}
+        onArchive={isOwner ? () => archive.mutate() : undefined}
+        onLeave={isMember ? () => setLeaving(true) : undefined}
         sections={
           isOwner
             ? {
@@ -138,6 +144,15 @@ function DeckSettings() {
             : undefined
         }
       />
+      {isMember && deck && (
+        <LeaveDeckDialog
+          open={leaving}
+          onOpenChange={setLeaving}
+          deckName={deck.name}
+          onLeave={() => leave.mutate()}
+          leaving={leave.isPending}
+        />
+      )}
       {isOwner && (
         <>
           <SectionNameDialog

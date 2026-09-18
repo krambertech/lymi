@@ -66,7 +66,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Import**: One file brought in from another app, such as an Anki package, a Mochi export or a Lymi file from another account. It is listed in Activity with its source, counts and warnings, and archiving it archives every card it added and each deck it made that is left empty; restore brings back exactly those. Each imported card keeps the source's id for it, so importing the same file again updates rather than duplicates. A recall from the source's log is history: it shows in Insights and never counts toward a daily goal or the streak. _Avoid_: Migration, sync, upload (for the thing itself)
 
-**Export**: One file the learner takes out of Lymi, for one deck or the whole library: an Anki package that Anki and Mochi open, or a Lymi file that Lymi imports back without loss. The server writes it, it downloads only with the learner's own session or key, and it is deleted a day after it is written. A shared deck exports with the learner's own schedule and history. A spreadsheet of one deck is written in the browser and is not an export in this sense. _Avoid_: Backup, download (for the thing itself), dump
+**Export**: One file the learner takes out of Lymi, for one deck or the whole library: an Anki package that Anki and Mochi open, or a Lymi file that Lymi imports back without loss. The server writes it, it downloads only with the learner's own session or key, and it is deleted a day after it is written. Only decks the learner owns are in it: a member never carries someone else's cards out of Lymi, and the library file leaves their shared decks out. A spreadsheet of one deck is written in the browser and is not an export in this sense. _Avoid_: Backup, download (for the thing itself), dump
 
 **Activity**: The list of what came into the learner's decks from outside the app — imports, and writes made by integrations and the AI — with the files they took out and who is in their shared decks: joins, leaves, removals, and the join link going on or off. Nothing lands unseen. Writes of one kind by one caller in one deck on one day are one row, which opens the cards it wrote so they can be inspected, edited or archived without leaving. _Avoid_: Review queue, inbox, approvals, history (for this screen)
 
@@ -88,7 +88,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Owner**: The learner whose deck it is. The only one who writes to it, for now. _Avoid_: Admin, creator, author
 
-**Member**: A learner who joined a shared deck. Studies it, cannot change it. _Avoid_: Subscriber, follower, student, collaborator
+**Member**: A learner who joined a shared deck. Studies it, cannot change it, and cannot export it. The deck page and About this deck name its owner, and Leave is the only move offered on it. _Avoid_: Subscriber, follower, student, collaborator
 
 **Role**: What a member may do in a shared deck: owner, editor, contributor, or learner. Only owner and learner exist in the interface yet.
 

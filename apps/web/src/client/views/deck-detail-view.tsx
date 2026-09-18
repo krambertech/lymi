@@ -9,6 +9,7 @@ import {
   Layers,
   ListFilter,
   ListTree,
+  LogOut,
   MoreHorizontal,
   Plug,
   Plus,
@@ -29,10 +30,12 @@ import {
   useRef,
   useState,
 } from "react";
+import { Avatar } from "../components/avatar";
 import { Button, buttonClass, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { NextStep, NextSteps } from "../components/next-steps";
+import { PublisherMark } from "../components/publisher-mark";
 import { SectionProgress } from "../components/section-progress";
 import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
@@ -87,12 +90,17 @@ export interface DeckDetailProps {
   cards: DeckRow[] | undefined;
   /** Where today's goal stands, for the line under the due count. */
   streak?: StreakSummary | undefined;
-  onAdd: () => void;
-  onArchive: (id: string) => void;
+  /** Adds a card. Absent for a member, who cannot write to someone else's deck. */
+  onAdd?: (() => void) | undefined;
+  /** Archives a card. Absent for a member. */
+  onArchive?: ((id: string) => void) | undefined;
   onReview?: (() => void) | undefined;
   onSettings?: (() => void) | undefined;
+  /** The owner's way out of their own deck. A member leaves instead. */
   onArchiveDeck?: (() => void) | undefined;
-  /** Opens the export sheet for this deck. */
+  /** The member's way out. Absent for the owner, who archives the deck instead. */
+  onLeaveDeck?: (() => void) | undefined;
+  /** Opens the export sheet for this deck. Absent for a member: a file would copy the deck out. */
   onExport?: (() => void) | undefined;
   /** Opens the series picker. Absent for a member, whose deck belongs to someone else's Library. */
   onMoveToSeries?: (() => void) | undefined;
@@ -182,6 +190,28 @@ export function exportCsv(deckName: string, rows: DeckRow[]) {
   URL.revokeObjectURL(url);
 }
 
+/** Whose deck this is, under its title, with the mark the Library card draws. */
+function OwnerLine({ deck }: { deck: DeckSummary }) {
+  const owner = deck.owner.name;
+  return (
+    <>
+      {deck.published ? (
+        <PublisherMark name={owner} src={deck.owner.avatarUrl} size={18} />
+      ) : (
+        <Avatar name={owner} size={18} />
+      )}
+      <span className="min-w-0 truncate">
+        <Trans>Shared by {owner}</Trans>
+      </span>
+    </>
+  );
+}
+
+/** What a member sees in a shared deck with nothing in it yet. */
+function OwnerAddsCards({ owner }: { owner: string }) {
+  return <Trans>Cards show up here as {owner} adds them, and join your reviews.</Trans>;
+}
+
 /** The parts under a deck's title, dot-separated, or nothing when there are none. */
 function subline(...parts: ReactNode[]) {
   const shown = parts.filter(Boolean);
@@ -247,7 +277,7 @@ function DeckPlates({
   cards: DeckRow[];
   streak?: StreakSummary | undefined;
   onReview?: (() => void) | undefined;
-  onAdd: () => void;
+  onAdd?: (() => void) | undefined;
   /** The row about sections under Today's, when the deck opens them in order. */
   section?: ReactNode;
 }) {
@@ -290,10 +320,12 @@ function DeckPlates({
                 <Trans>Review</Trans>
               </Button>
             ) : (
-              <Button onClick={onAdd} kbd="N" className="w-full @md/plates:w-auto">
-                <Plus aria-hidden="true" />
-                <Trans>Add card</Trans>
-              </Button>
+              onAdd && (
+                <Button onClick={onAdd} kbd="N" className="w-full @md/plates:w-auto">
+                  <Plus aria-hidden="true" />
+                  <Trans>Add card</Trans>
+                </Button>
+              )
             )}
           </div>
           {section}
@@ -609,6 +641,7 @@ export function DeckDetailView({
   onReview,
   onSettings,
   onArchiveDeck,
+  onLeaveDeck,
   onExport,
   onMoveToSeries,
   seriesName,
@@ -816,10 +849,14 @@ export function DeckDetailView({
       onEnrich={
         onEnrichCard && deck?.role === "owner" ? () => onEnrichCard(shownWord.card) : undefined
       }
-      onArchive={() => {
-        setOpen(null);
-        onArchive(shownWord.card.id);
-      }}
+      onArchive={
+        onArchive
+          ? () => {
+              setOpen(null);
+              onArchive(shownWord.card.id);
+            }
+          : undefined
+      }
       decks={decks}
       onMove={onMove ? (deckId) => onMove(shownWord.card.id, deckId) : undefined}
       onMoveToSection={
@@ -832,7 +869,7 @@ export function DeckDetailView({
     />
   );
 
-  const addButton = (
+  const addButton = onAdd && (
     <IconButton label={t`Add card`} onClick={onAdd}>
       <Plus />
     </IconButton>
@@ -850,7 +887,7 @@ export function DeckDetailView({
       <DropdownMenuContent aria-label={t`Deck options`} align="end">
         <DropdownMenuItem onClick={onSettings} disabled={!onSettings}>
           <Settings2 />
-          <Trans>Settings</Trans>
+          {deck && deck.role !== "owner" ? <Trans>About this deck</Trans> : <Trans>Settings</Trans>}
         </DropdownMenuItem>
         {onMoveToSeries && (
           <DropdownMenuItem onClick={onMoveToSeries}>
@@ -873,15 +910,24 @@ export function DeckDetailView({
             </DropdownMenuItem>
           </>
         )}
-        <DropdownMenuItem onClick={onExport} disabled={!deck || !onExport}>
-          <Download />
-          <Trans>Export</Trans>
-        </DropdownMenuItem>
+        {onExport && (
+          <DropdownMenuItem onClick={onExport} disabled={!deck}>
+            <Download />
+            <Trans>Export</Trans>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
-          <Archive />
-          <Trans>Archive</Trans>
-        </DropdownMenuItem>
+        {onLeaveDeck ? (
+          <DropdownMenuItem variant="destructive" onClick={onLeaveDeck}>
+            <LogOut />
+            <Trans>Leave deck</Trans>
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
+            <Archive />
+            <Trans>Archive</Trans>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -970,6 +1016,7 @@ export function DeckDetailView({
           sub={
             deck
               ? subline(
+                  deck.role !== "owner" && <OwnerLine deck={deck} />,
                   seriesName && (
                     // Marked, so a series named after the deck's language never reads as the language twice.
                     <>
@@ -1018,6 +1065,11 @@ export function DeckDetailView({
                   />
                 )
               }
+            />
+          ) : !onAdd ? (
+            <StartPanel
+              title={<Trans>No cards in {deck.name} yet</Trans>}
+              body={<OwnerAddsCards owner={deck.owner.name} />}
             />
           ) : (
             <StartPanel

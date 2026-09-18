@@ -222,8 +222,10 @@ export function CardForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   const owned = useMemo(() => decks?.filter((d) => d.role === "owner"), [decks]);
+  // A deck handed in that the learner does not own, such as the N key on a shared deck, is not
+  // one a card can go into, so the picker falls back rather than failing on submit.
   useEffect(() => {
-    if (deck || !owned?.length) return;
+    if (!owned?.length || (deck && owned.some((d) => d.id === deck))) return;
     const last = lastDeckId();
     setDeck(owned.find((d) => d.id === last)?.id ?? owned[0]?.id ?? "");
   }, [owned, deck]);

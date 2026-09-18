@@ -554,7 +554,7 @@ describe("exporting an Anki package", () => {
 });
 
 describe("a shared deck's export", () => {
-  it("holds the deck's cards and only the member's own history", async () => {
+  it("is refused for a member, and their library file leaves the deck out", async () => {
     const { italian, gatto } = await shared();
     const member = await fresh("Member");
     await join(member, italian.id);
@@ -565,19 +565,22 @@ describe("a shared deck's export", () => {
       reviewedAt: new Date(Date.now() - DAY),
     });
 
-    const { bytes, view } = await runExport(member, { format: "lymi", deckId: italian.id });
-    expect(view.counts).toMatchObject({ cards: 4, reviews: 1 });
-    const lines = new TextDecoder()
+    for (const format of ["lymi", "anki"] as const) {
+      await expect(
+        startExport(member, { format, deckId: italian.id }, async () => {}),
+      ).rejects.toThrow(/owner/i);
+    }
+
+    const own = await createDeck(member, { name: "Mine" });
+    await addCards(member, [{ deckId: own.id, term: "una parola", meaning: "a word" }]);
+    const { bytes, view } = await runExport(member, { format: "lymi" });
+    expect(view.counts).toMatchObject({ decks: 1, cards: 1, reviews: 0 });
+    const terms = new TextDecoder()
       .decode(await (await entries(bytes)).read("cards.jsonl"))
       .trim()
-      .split("\n");
-    const card = lines.map((line) => JSON.parse(line)).find((c) => c.term === "il gatto");
-    expect(
-      card.states.flatMap((s: { reviews: { rating: number }[] }) => s.reviews.map((r) => r.rating)),
-    ).toEqual([2]);
-
-    const anki = await runExport(member, { format: "anki", deckId: italian.id });
-    expect(anki.view.counts).toMatchObject({ reviews: 1 });
+      .split("\n")
+      .map((line) => JSON.parse(line).term);
+    expect(terms).toEqual(["una parola"]);
   }, 60_000);
 });
 

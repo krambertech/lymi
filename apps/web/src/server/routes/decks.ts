@@ -28,6 +28,7 @@ import {
   getJoinLink,
   getPublication,
   importEdition,
+  leave,
   listDeckCards,
   listDecks,
   listEditions,
@@ -128,6 +129,22 @@ decks.post(
     errors: [404],
   }),
   async (c) => c.json(await restoreDeck(ctxOf(c), c.req.param("id"))),
+);
+
+decks.post(
+  "/:id/leave",
+  describe({
+    tags: ["Decks"],
+    summary: "Leave a shared deck",
+    learnerOnly: true,
+    description:
+      "The member's own way out, from the app: any API key or token gets 403. The deck leaves " +
+      "Library; the cards stay with their owner and this learner's states and reviews are kept, " +
+      "so joining again resumes. The owner's deck itself is archived, not left.",
+    ok: { schema: OkOut, description: "Left" },
+    errors: [404],
+  }),
+  async (c) => c.json(await leave(ctxOf(c), c.req.param("id"))),
 );
 
 const JOIN_LINK =

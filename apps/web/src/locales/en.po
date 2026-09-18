@@ -986,6 +986,9 @@ msgstr "Cards keep the due dates they had in {app}."
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
 
+msgid "Cards show up here as {owner} adds them, and join your reviews."
+msgstr "Cards show up here as {owner} adds them, and join your reviews."
+
 msgid "Change"
 msgstr "Change"
 
@@ -1513,6 +1516,9 @@ msgstr "Every card"
 msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
 
+msgid "Every deck you own, archived ones included, with your schedule and review history. A deck someone else shared with you is not in the file."
+msgstr "Every deck you own, archived ones included, with your schedule and review history. A deck someone else shared with you is not in the file."
+
 msgid "Every deck, archived ones included, with your schedule and review history."
 msgstr "Every deck, archived ones included, with your schedule and review history."
 
@@ -1849,6 +1855,9 @@ msgstr "Keep key"
 msgid "Keep sharing"
 msgstr "Keep sharing"
 
+msgid "Keep studying"
+msgstr "Keep studying"
+
 msgid "Keep the description under 300 characters."
 msgstr "Keep the description under 300 characters."
 
@@ -1921,6 +1930,12 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "Learning"
 
+msgid "Leave {name}?"
+msgstr "Leave {name}?"
+
+msgid "Leave deck"
+msgstr "Leave deck"
+
 msgid "Leave out"
 msgstr "Leave out"
 
@@ -1929,6 +1944,12 @@ msgstr "Leave review"
 
 msgid "Leave review or close a sheet"
 msgstr "Leave review or close a sheet"
+
+msgid "Leaving this deck"
+msgstr "Leaving this deck"
+
+msgid "Left “{deckName}”"
+msgstr "Left “{deckName}”"
 
 msgid "Lesson"
 msgstr "Lesson"
@@ -2261,6 +2282,9 @@ msgstr "Not reviewed yet"
 msgid "Not saved. Try again."
 msgstr "Not saved. Try again."
 
+msgid "Not set"
+msgstr "Not set"
+
 msgid "Not started"
 msgstr "Not started"
 
@@ -2405,6 +2429,9 @@ msgstr "Other ways to add cards"
 
 msgid "own review"
 msgstr "own review"
+
+msgid "Owns this deck and writes its cards"
+msgstr "Owns this deck and writes its cards"
 
 msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
 msgstr "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
@@ -2861,6 +2888,9 @@ msgstr "Shared by {owner}"
 msgid "Shared by link"
 msgstr "Shared by link"
 
+msgid "Shared with you"
+msgstr "Shared with you"
+
 msgid "Sharing"
 msgstr "Sharing"
 
@@ -3127,6 +3157,9 @@ msgstr "the card"
 
 msgid "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
 msgstr "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
+
+msgid "The deck leaves Library and its cards stop coming up. Your reviews are kept, so joining again picks up where you left off."
+msgstr "The deck leaves Library and its cards stop coming up. Your reviews are kept, so joining again picks up where you left off."
 
 msgid "the example"
 msgstr "the example"
@@ -3529,6 +3562,9 @@ msgstr "You don’t need to do anything."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."
+
+msgid "You study the same cards {ownerName} does, on your own schedule. Your reviews and progress are yours, and nobody else sees them."
+msgstr "You study the same cards {ownerName} does, on your own schedule. Your reviews and progress are yours, and nobody else sees them."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "You were removed from this deck, so this link cannot add you back. Your reviews are kept."

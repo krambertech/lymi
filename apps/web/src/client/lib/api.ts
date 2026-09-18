@@ -308,6 +308,7 @@ export const api = {
     request<{ ok: true }>(`/api/decks/${id}/archive`, { method: "POST" }),
   restoreDeck: (id: string) =>
     request<{ ok: true }>(`/api/decks/${id}/restore`, { method: "POST" }),
+  leaveDeck: (id: string) => request<{ ok: true }>(`/api/decks/${id}/leave`, { method: "POST" }),
   series: () => request<Series[]>("/api/series"),
   createSeries: (body: SeriesInput) =>
     request<Series>("/api/series", { method: "POST", body: JSON.stringify(body) }),

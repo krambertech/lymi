@@ -32,7 +32,7 @@ import {
 import { auditStatement } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
-import { deckAccess, memberOf } from "./members";
+import { ownedDeck } from "./members";
 import { stateMode } from "./modes";
 import { effectiveSeriesId } from "./series-access";
 import { getSettings } from "./settings";
@@ -134,7 +134,7 @@ export async function startExport(
   start: StartExportRun,
 ) {
   const { db, userId, actor } = ctx;
-  const deck = input.deckId ? await deckAccess(ctx, input.deckId) : null;
+  const deck = input.deckId ? await ownedDeck(ctx, input.deckId) : null;
   const [running] = await db
     .select()
     .from(schema.exportFiles)
@@ -194,11 +194,14 @@ export async function startExport(
   return getExport(ctx, id);
 }
 
-/** The decks an export covers: one deck, or every deck the learner can see, archived ones too. */
+/**
+ * The decks an export covers: one deck, or every deck the learner owns, archived ones too. A
+ * deck someone else owns is never in a file, so a member cannot carry its cards out of Lymi.
+ */
 async function scopeDecks(ctx: ServiceContext, row: Export) {
   const { db, userId } = ctx;
   if (row.deckId) {
-    const deck = await deckAccess(ctx, row.deckId);
+    const deck = await ownedDeck(ctx, row.deckId);
     return [{ ...deck, seriesId: deck.seriesId }];
   }
   return db
@@ -207,7 +210,7 @@ async function scopeDecks(ctx: ServiceContext, row: Export) {
       seriesId: effectiveSeriesId(userId),
     })
     .from(schema.decks)
-    .where(memberOf(userId))
+    .where(eq(schema.decks.userId, userId))
     .orderBy(asc(schema.decks.createdAt), asc(schema.decks.id));
 }
 

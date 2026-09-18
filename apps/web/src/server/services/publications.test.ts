@@ -5,7 +5,7 @@ import { type Db, schema } from "../db";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck, listDecks } from "./decks";
-import { turnOnJoinLink } from "./invitations";
+import { previewJoin, turnOnJoinLink } from "./invitations";
 import { leave, removeMember } from "./members";
 import {
   addPublishedDeck,
@@ -14,6 +14,7 @@ import {
   previewPublication,
   publicationAdmits,
   publishDeck,
+  publisherAvatar,
   withdrawDeck,
 } from "./publications";
 import { learner, testDb } from "./test-db";
@@ -217,5 +218,62 @@ describe("the add page preview", () => {
       status: "invalid",
       deck: null,
     });
+  });
+});
+
+describe("the publisher's photo", () => {
+  /** The learner's own avatar row, which publishing is what makes readable in public. */
+  async function givePhoto(userId: string, version = "v1") {
+    await db
+      .insert(schema.userAvatars)
+      .values({ userId, customKey: `avatars/${userId}`, customVersion: version, customRevision: 1 })
+      .onConflictDoUpdate({
+        target: schema.userAvatars.userId,
+        set: { customKey: `avatars/${userId}`, customVersion: version },
+      });
+  }
+
+  it("is offered by the deck's slug, never by the account that owns it", async () => {
+    await givePhoto("lymi");
+    await publishedDeck("with-photo");
+    expect(await publisherAvatar(db, "with-photo")).toEqual({ key: "avatars/lymi", version: "v1" });
+    const preview = await previewPublication(db, "with-photo", null);
+    expect(preview.deck?.owner.avatarUrl).toBe(
+      "/api/public/decks/with-photo/publisher-avatar?v=v1",
+    );
+    // ADR 0016 keeps account identifiers off a public page, so the address carries the slug.
+    expect(JSON.stringify(preview)).not.toContain('"lymi"');
+    expect(preview.deck?.owner.avatarUrl).not.toContain("lymi");
+  });
+
+  it("stops the moment the deck stops being published", async () => {
+    await givePhoto("lymi");
+    const withdrawn = await publishedDeck("photo-withdrawn");
+    await withdrawDeck(lymi, withdrawn.id);
+    expect(await publisherAvatar(db, "photo-withdrawn")).toBeNull();
+
+    const archived = await publishedDeck("photo-archived");
+    await archiveDeck(lymi, archived.id);
+    expect(await publisherAvatar(db, "photo-archived")).toBeNull();
+
+    expect(await publisherAvatar(db, "never-published")).toBeNull();
+  });
+
+  it("is absent for a publisher who has no photo", async () => {
+    const deck = await createDeck(kateryna, { name: "No photo", defaultLanguage: "et" });
+    await addCards(kateryna, [{ deckId: deck.id, term: "tere none", meaning: "hello" }]);
+    await publishDeck(kateryna, deck.id, input("no-photo"), new Set(["kateryna@lymi.test"]));
+    expect(await publisherAvatar(db, "no-photo")).toBeNull();
+    const preview = await previewPublication(db, "no-photo", null);
+    expect(preview.deck?.owner.avatarUrl).toBeNull();
+  });
+
+  it("never rides on a join link, whose owner did not publish anything", async () => {
+    await givePhoto("kateryna");
+    const deck = await createDeck(kateryna, { name: "Shared", defaultLanguage: "et" });
+    await addCards(kateryna, [{ deckId: deck.id, term: "tere shared", meaning: "hello" }]);
+    const link = await turnOnJoinLink(kateryna, deck.id);
+    const preview = await previewJoin(db, link.token, null);
+    expect(preview.deck?.owner).toEqual({ name: "Kateryna", avatarUrl: null });
   });
 });

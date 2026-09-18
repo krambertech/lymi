@@ -11,6 +11,7 @@ import {
   decks,
   sectionLocalizations,
   sections,
+  userAvatars,
 } from "./schema/app";
 import { PUBLICATION_SLUG } from "./types";
 
@@ -33,6 +34,11 @@ export const PublicDeckOut = z.object({
   /** Every meaning language the deck can be read in, the original first. */
   editions: z.array(z.string()),
   publisher: z.string(),
+  /**
+   * The version of the publisher's photo, or null when they have none. Never an account id:
+   * the image is fetched by this deck's slug, so ADR 0016's boundary keeps holding.
+   */
+  publisherAvatar: z.string().nullable(),
   sources: z.array(z.object({ title: z.string(), url: z.string().optional() })),
   reviewedAt: z.iso.datetime().nullable(),
   revision: z.number().int(),
@@ -81,6 +87,7 @@ export interface PublicationRow {
   originalMeaningLanguage: string;
   editions: string[];
   publisher: string;
+  publisherAvatar: string | null;
   sources: { title: string; url?: string | undefined }[];
   reviewedAt: Date | null;
   revision: number;
@@ -109,6 +116,25 @@ export interface PublicMediaRow {
   description: string | null;
   width: number | null;
   height: number | null;
+}
+
+/**
+ * Which version of a learner's photo is the live one. A photo they chose themselves wins over
+ * the one Google supplied, and a key without a version is a half-written row rather than a photo.
+ */
+export function activeAvatarVersion(row: {
+  customKey?: string | null | undefined;
+  customVersion?: string | null | undefined;
+  googleVersion?: string | null | undefined;
+}): string | null {
+  if (row.customKey && row.customVersion) return row.customVersion;
+  return row.googleVersion ?? null;
+}
+
+/** Where a published deck's publisher photo is served, beside the deck's approved media. */
+export function publisherAvatarPath(slug: string, version: string): string {
+  const path = `/public/media/deck/${encodeURIComponent(slug)}/publisher-avatar`;
+  return `${path}?v=${encodeURIComponent(version)}`;
 }
 
 export function isPublicDeckSlug(slug: string | undefined): slug is string {
@@ -179,6 +205,7 @@ export function projectPublicDeck(
     originalMeaningLanguage: publication.originalMeaningLanguage,
     editions: publication.editions,
     publisher: publication.publisher,
+    publisherAvatar: publication.publisherAvatar,
     sources: publication.sources.map((source) => {
       const url = webUrl(source.url);
       return url ? { title: source.title, url } : { title: source.title };
@@ -229,9 +256,13 @@ export async function loadPublicDeck(
       deckName: decks.name,
       deckLanguage: decks.defaultLanguage,
       deckArchivedAt: decks.archivedAt,
+      customKey: userAvatars.customKey,
+      customVersion: userAvatars.customVersion,
+      googleVersion: userAvatars.googleVersion,
     })
     .from(deckPublications)
     .innerJoin(decks, eq(decks.id, deckPublications.deckId))
+    .leftJoin(userAvatars, eq(userAvatars.userId, decks.userId))
     .where(eq(deckPublications.slug, slug));
   if (!publication) return { status: "missing" };
   if (publication.status !== "published" || publication.deckArchivedAt) {
@@ -303,6 +334,7 @@ export async function loadPublicDeck(
       editions,
       summary: text?.summary ?? publication.summary,
       deckName: text?.name ?? publication.deckName,
+      publisherAvatar: activeAvatarVersion(publication),
     },
     sectionRows,
     cardRows,

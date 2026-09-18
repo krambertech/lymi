@@ -1,6 +1,6 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { PublicDeckOut } from "@lymi/core/catalog";
+import { type PublicDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
 import type { CSSProperties, ReactNode } from "react";
 import { type DeckCard, languageName } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
@@ -43,24 +43,59 @@ function useDate() {
     );
 }
 
+/**
+ * The publisher's photo over the mark it falls back to. This page is server-rendered with no
+ * island, so the fallback is layered rather than swapped on an error event: a photo that fails
+ * collapses to nothing and the mark behind it shows through.
+ */
+function PublisherMark({
+  publisher,
+  photo,
+  locale,
+}: {
+  publisher: string;
+  photo: string | null;
+  locale: string;
+}) {
+  const fallback =
+    publisher.trim().toLowerCase() === "lymi" ? (
+      <AppTile size={28} />
+    ) : (
+      <span
+        aria-hidden="true"
+        className="grid size-7 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
+      >
+        {publisher.trim().charAt(0).toLocaleUpperCase(locale)}
+      </span>
+    );
+  if (!photo) return <span className="shrink-0">{fallback}</span>;
+  return (
+    <span className="relative grid size-7 shrink-0 place-items-center">
+      {fallback}
+      <img
+        src={photo}
+        alt=""
+        width={28}
+        height={28}
+        className="edge absolute inset-0 size-7 rounded-full object-cover"
+      />
+    </span>
+  );
+}
+
 /** Who made the deck. A catalog card can show the same line. */
 export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
   const date = useDate();
   const publisher = deck.publisher;
+  // Served by the product Worker: the site Worker reads D1 but holds no image bucket.
+  const photo = deck.publisherAvatar
+    ? productUrl(publisherAvatarPath(deck.slug, deck.publisherAvatar))
+    : null;
   const checked = deck.reviewedAt ? date(deck.reviewedAt) : null;
   return (
     <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md">
-      {publisher.trim().toLowerCase() === "lymi" ? (
-        <AppTile size={28} />
-      ) : (
-        <span
-          aria-hidden="true"
-          className="grid size-7 shrink-0 place-items-center rounded-full bg-text text-sm font-semibold text-canvas"
-        >
-          {publisher.trim().charAt(0).toLocaleUpperCase(i18n.locale)}
-        </span>
-      )}
+      <PublisherMark publisher={publisher} photo={photo} locale={i18n.locale} />
       <span className="font-medium text-text">
         <Trans>By {publisher}</Trans>
       </span>

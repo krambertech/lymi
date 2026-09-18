@@ -188,13 +188,21 @@ test("the card list stops the previous pronunciation and reports playback failur
       (window as unknown as { __recordAudioEvent: (event: string) => void }).__recordAudioEvent(
         event,
       );
-    HTMLMediaElement.prototype.play = function () {
-      record(`play:${this.src}`);
-      return state.fail ? Promise.reject(new Error("Playback failed")) : Promise.resolve();
-    };
-    HTMLMediaElement.prototype.pause = function () {
-      record(`pause:${this.src}`);
-    };
+    class FakeAudio extends EventTarget {
+      constructor(readonly src: string) {
+        super();
+      }
+
+      play() {
+        record(`play:${this.src}`);
+        return state.fail ? Promise.reject(new Error("Playback failed")) : Promise.resolve();
+      }
+
+      pause() {
+        record(`pause:${this.src}`);
+      }
+    }
+    Object.defineProperty(window, "Audio", { value: FakeAudio });
   });
 
   await page.goto(`${publicSite}${pagePath}`);

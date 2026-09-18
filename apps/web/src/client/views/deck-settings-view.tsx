@@ -14,6 +14,7 @@ import {
   LanguageField,
   languageName,
 } from "../components/deck-fields";
+import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
 import { SettingsGroup } from "../components/settings-group";
@@ -294,7 +295,11 @@ function DeckAbout({
     <>
       <SettingsGroup title={t`Shared with you`}>
         <div className="flex items-center gap-2.5">
-          <Avatar name={ownerName} size={32} />
+          {deck.published ? (
+            <PublisherMark name={ownerName} src={deck.owner.avatarUrl} size={32} />
+          ) : (
+            <Avatar name={ownerName} size={32} />
+          )}
           <div className="grid min-w-0 gap-0.5">
             <p className="truncate text-base font-medium text-text">{ownerName}</p>
             <p className="text-sm text-muted">

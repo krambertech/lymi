@@ -35,6 +35,7 @@ import { Button, buttonClass, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { NextStep, NextSteps } from "../components/next-steps";
+import { PublisherMark } from "../components/publisher-mark";
 import { SectionProgress } from "../components/section-progress";
 import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
@@ -189,11 +190,16 @@ export function exportCsv(deckName: string, rows: DeckRow[]) {
   URL.revokeObjectURL(url);
 }
 
-/** Whose deck this is, under its title, in the same words the Library card uses. */
-function OwnerLine({ owner }: { owner: string }) {
+/** Whose deck this is, under its title, with the mark the Library card draws. */
+function OwnerLine({ deck }: { deck: DeckSummary }) {
+  const owner = deck.owner.name;
   return (
     <>
-      <Avatar name={owner} size={18} />
+      {deck.published ? (
+        <PublisherMark name={owner} src={deck.owner.avatarUrl} size={18} />
+      ) : (
+        <Avatar name={owner} size={18} />
+      )}
       <span className="min-w-0 truncate">
         <Trans>Shared by {owner}</Trans>
       </span>
@@ -1010,7 +1016,7 @@ export function DeckDetailView({
           sub={
             deck
               ? subline(
-                  deck.role !== "owner" && <OwnerLine owner={deck.owner.name} />,
+                  deck.role !== "owner" && <OwnerLine deck={deck} />,
                   seriesName && (
                     // Marked, so a series named after the deck's language never reads as the language twice.
                     <>

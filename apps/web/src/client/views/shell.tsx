@@ -7,6 +7,7 @@ import {
   BookMarked,
   ChartNoAxesColumn,
   ChevronLeft,
+  Compass,
   type LucideIcon,
   Search,
   Sun,
@@ -50,6 +51,8 @@ export const NAV: {
   // Exact, so a deck page lights only its own row under Decks.
   { to: "/library", label: msg`Library`, icon: BookMarked, exact: true },
   { to: "/insights", label: msg`Insights`, icon: ChartNoAxesColumn },
+  // Exact, so a deck opened from Explore lights only the row it is under.
+  { to: "/explore", label: msg`Explore`, icon: Compass, exact: true },
 ];
 
 interface SidebarProps {

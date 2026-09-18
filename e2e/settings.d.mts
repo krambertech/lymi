@@ -28,6 +28,7 @@ export type E2EAccount =
   | "avatar"
   | "avatar-other"
   | "deck-page"
+  | "explore"
   | "long-cards"
   | "series"
   | "series-archive"

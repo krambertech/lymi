@@ -1,4 +1,3 @@
-import { PUBLICATION_CATEGORIES } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { type Locale, locales } from "./routes";
 
@@ -13,33 +12,8 @@ export function explorePaths(): Record<Locale, string> {
   >;
 }
 
-/**
- * The shelves, in the order they appear, from the column's own list so the two cannot drift.
- * A deck sits on one shelf; a deck with no category gathers at the end, so publishing is never
- * blocked on choosing one. The headings themselves are in `explore-labels.ts`.
- */
-export const CATEGORY_ORDER: readonly string[] = PUBLICATION_CATEGORIES;
-export const UNCATEGORISED = "other";
-
-export interface Shelf {
-  key: string;
-  decks: PublicDeckSummary[];
-}
-
-/** Decks grouped into shelves, in category order, with uncategorised decks last. */
-export function shelvesOf(decks: readonly PublicDeckSummary[]): Shelf[] {
-  const byCategory = new Map<string, PublicDeckSummary[]>();
-  for (const deck of decks) {
-    const key =
-      deck.category && CATEGORY_ORDER.includes(deck.category) ? deck.category : UNCATEGORISED;
-    const shelf = byCategory.get(key);
-    if (shelf) shelf.push(deck);
-    else byCategory.set(key, [deck]);
-  }
-  return [...CATEGORY_ORDER, UNCATEGORISED]
-    .filter((key) => byCategory.has(key))
-    .map((key) => ({ key, decks: byCategory.get(key) as PublicDeckSummary[] }));
-}
+/** The shelves and their order live in core, so both Explores group decks the same way. */
+export { CATEGORY_ORDER, type Shelf, shelvesOf, UNCATEGORISED } from "@lymi/core/catalog";
 
 /** FNV-1a of everything the page shows, folded into one value for the ETag. */
 function hash(text: string): number {

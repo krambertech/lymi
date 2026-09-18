@@ -100,6 +100,19 @@ export const addPreviewQuery = (slug: string) =>
     retry: false,
     meta: { persist: false },
   });
+/** The catalogue changes when Lymi publishes, not when the learner reviews. */
+export const exploreQuery = queryOptions({
+  queryKey: ["explore"],
+  queryFn: api.explore,
+  staleTime: 5 * 60_000,
+});
+export const exploreDeckQuery = (slug: string) =>
+  queryOptions({
+    queryKey: ["explore", slug],
+    queryFn: () => api.exploreDeck(slug),
+    staleTime: 5 * 60_000,
+    retry: false,
+  });
 export const cardHistoryQuery = (cardId: string) =>
   queryOptions({
     queryKey: ["cards", cardId, "history"],

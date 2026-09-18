@@ -11,6 +11,7 @@ export * from "./draw";
 export * from "./editions";
 export * from "./email";
 export * from "./enrichment";
+export * from "./explore";
 export * from "./exports";
 export * from "./feedback";
 export * from "./imports";

@@ -47,6 +47,7 @@ import type {
   SettingsPatch,
   StreakOut,
 } from "@lymi/core";
+import type { ExploreDeckOut, ExploreOut } from "@lymi/core/catalog";
 import type {
   Card as CardRow,
   CardState as CardStateRow,
@@ -380,6 +381,10 @@ export const api = {
     request<JoinOut>(`/api/add/${encodeURIComponent(slug)}${edition(meaningLanguage)}`, {
       method: "POST",
     }),
+  /** Explore: the catalogue in the learner's meaning language, and what they already have. */
+  explore: () => request<ExploreOut>("/api/explore"),
+  exploreDeck: (slug: string) =>
+    request<ExploreDeckOut>(`/api/explore/${encodeURIComponent(slug)}`),
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>

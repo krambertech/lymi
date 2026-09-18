@@ -1624,6 +1624,13 @@ html:has(.deck-cards[open]) {
   .deck-tray-paper {
     transition: none;
   }
+  /* The resting transforms come first, so the hover rules below them stay the more specific pair. */
+  .deck-tray-paper[data-at="1"] {
+    transform: translate(7px, 5px) rotate(1.6deg);
+  }
+  .deck-tray-paper[data-at="2"] {
+    transform: translate(-6px, 9px) rotate(-2.2deg);
+  }
   .deck-tile:hover .deck-tray-card,
   .deck-tile:focus-visible .deck-tray-card,
   .deck-tile:hover .deck-tray-paper[data-at="1"],
@@ -1631,12 +1638,6 @@ html:has(.deck-cards[open]) {
   .deck-tile:hover .deck-tray-paper[data-at="2"],
   .deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
     transform: none;
-  }
-  .deck-tray-paper[data-at="1"] {
-    transform: translate(7px, 5px) rotate(1.6deg);
-  }
-  .deck-tray-paper[data-at="2"] {
-    transform: translate(-6px, 9px) rotate(-2.2deg);
   }
 }
 .deck-tray-section {

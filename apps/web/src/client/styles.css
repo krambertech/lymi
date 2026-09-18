@@ -962,3 +962,225 @@
 @utility pb-safe-nav {
   padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
 }
+
+/* The tray, as DESIGN.md describes it. The same block is in the site's `styles.css`, because
+   Explore is one surface in two apps and a deck must arrive at the same colour in both. */
+.deck-tray {
+  --cw: 150px;
+  /* Eight hues at one lightness and chroma. The amber band (60–95) is left out: amber means act,
+     and a tray is not a thing to press. At night the tray is darker than the card, so the card
+     still sits proud of it rather than sinking in. */
+  --tray-l: 0.958;
+  --tray-c: 0.042;
+  display: grid;
+  justify-items: center;
+  height: calc(var(--cw) * 1.12 * 0.66 + 16px);
+  padding-top: 16px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
+}
+[data-theme="dark"] .deck-tray {
+  --tray-l: 0.192;
+  --tray-c: 0.015;
+}
+/* Over a tint, an opaque grey surface reads as a patch stuck on the colour. Inside a tinted
+   area the two hover surfaces become translucent ink instead, so a hover or a chip darkens
+   whatever is actually behind it and works over any hue. */
+.over-tint {
+  --plate-2: color-mix(in oklch, var(--text) 7%, transparent);
+  --hover: color-mix(in oklch, var(--text) 12%, transparent);
+}
+[data-theme="dark"] .over-tint {
+  --plate-2: color-mix(in oklch, var(--text) 10%, transparent);
+  --hover: color-mix(in oklch, var(--text) 15%, transparent);
+}
+
+/* A deck's own page wears the colour of its tray, washed down from the top and gone by the time
+   the reading starts: press a lilac tray, land on a lilac page. It runs to both edges of the
+   column rather than the viewport, because the rail holds one side of the app's screen. */
+.deck-hero-tint {
+  position: relative;
+  isolation: isolate;
+}
+.deck-hero-tint::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-block: 0 -40%;
+  inset-inline: 0;
+  background: radial-gradient(
+    88% 86% at 50% 24%,
+    oklch(var(--tray-l) var(--tray-c) var(--tray-h)),
+    oklch(var(--tray-l) var(--tray-c) var(--tray-h) / 0.5) 48%,
+    transparent 80%
+  );
+  --tray-l: 0.955;
+  --tray-c: 0.045;
+  pointer-events: none;
+}
+[data-theme="dark"] .deck-hero-tint::before {
+  --tray-l: 0.205;
+  --tray-c: 0.017;
+}
+
+.deck-tray[data-hue="0"],
+.deck-hero-tint[data-hue="0"] {
+  --tray-h: 25;
+}
+.deck-tray[data-hue="1"],
+.deck-hero-tint[data-hue="1"] {
+  --tray-h: 110;
+}
+.deck-tray[data-hue="2"],
+.deck-hero-tint[data-hue="2"] {
+  --tray-h: 150;
+}
+.deck-tray[data-hue="3"],
+.deck-hero-tint[data-hue="3"] {
+  --tray-h: 195;
+}
+.deck-tray[data-hue="4"],
+.deck-hero-tint[data-hue="4"] {
+  --tray-h: 235;
+}
+.deck-tray[data-hue="5"],
+.deck-hero-tint[data-hue="5"] {
+  --tray-h: 280;
+}
+.deck-tray[data-hue="6"],
+.deck-hero-tint[data-hue="6"] {
+  --tray-h: 320;
+}
+.deck-tray[data-hue="7"],
+.deck-hero-tint[data-hue="7"] {
+  --tray-h: 350;
+}
+
+/* The card and the paper behind it: one blank sheet per further card the deck holds, at most
+   two, so the stack is the deck's own depth rather than a decoration. */
+.deck-tray-stack {
+  position: relative;
+  width: var(--cw);
+  height: calc(var(--cw) * 1.12);
+}
+.deck-tray-card,
+.deck-tray-paper {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--cw) * 0.1);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge);
+  transition: transform 260ms var(--ease-out);
+}
+.deck-tray-card {
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  padding: calc(var(--cw) * 0.085);
+  text-align: start;
+}
+.deck-tray-paper[data-at="1"] {
+  transform: translate(7px, 5px) rotate(1.6deg);
+}
+.deck-tray-paper[data-at="2"] {
+  transform: translate(-6px, 9px) rotate(-2.2deg);
+}
+.deck-tile:hover .deck-tray-card,
+.deck-tile:focus-visible .deck-tray-card {
+  transform: translateY(-5px);
+}
+.deck-tile:hover .deck-tray-paper[data-at="1"],
+.deck-tile:focus-visible .deck-tray-paper[data-at="1"] {
+  transform: translate(17px, 2px) rotate(5deg);
+}
+.deck-tile:hover .deck-tray-paper[data-at="2"],
+.deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
+  transform: translate(-16px, 6px) rotate(-6deg);
+}
+/* The spread is the movement; under reduced motion the cards simply sit where they rest. */
+@media (prefers-reduced-motion: reduce) {
+  .deck-tray-card,
+  .deck-tray-paper {
+    transition: none;
+  }
+  /* The resting transforms come first, so the hover rules below them stay the more specific pair. */
+  .deck-tray-paper[data-at="1"] {
+    transform: translate(7px, 5px) rotate(1.6deg);
+  }
+  .deck-tray-paper[data-at="2"] {
+    transform: translate(-6px, 9px) rotate(-2.2deg);
+  }
+  .deck-tile:hover .deck-tray-card,
+  .deck-tile:focus-visible .deck-tray-card,
+  .deck-tile:hover .deck-tray-paper[data-at="1"],
+  .deck-tile:focus-visible .deck-tray-paper[data-at="1"],
+  .deck-tile:hover .deck-tray-paper[data-at="2"],
+  .deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
+    transform: none;
+  }
+}
+
+.deck-tray-section {
+  font-size: max(0.6875rem, calc(var(--cw) * 0.054));
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.deck-tray-term {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-top: calc(var(--cw) * 0.06);
+  /* --t steps down for a long word, as the deck page's spread does; a compound would break mid-letter. */
+  font-size: max(1.0625rem, calc(var(--cw) * var(--t, 0.14)));
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  color: var(--text);
+}
+.deck-tray-meaning {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: auto;
+  padding-top: calc(var(--cw) * 0.06);
+  border-top: 1px solid var(--edge-2);
+  font-size: max(0.75rem, calc(var(--cw) * 0.074));
+  line-height: 1.3;
+  color: var(--text-2);
+}
+
+/* One shelf per category, scrolling sideways, so a category of forty decks lengthens one row
+   instead of burying the page. */
+.deck-shelf {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 216px;
+  gap: 22px;
+  align-items: start;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-block: 24px 10px;
+  padding-inline: 14px;
+  margin-inline: -14px;
+  scrollbar-width: thin;
+}
+.deck-tile {
+  scroll-snap-align: start;
+  border-radius: var(--radius-lg);
+}
+@media (max-width: 40rem) {
+  .deck-shelf {
+    grid-auto-columns: 182px;
+    gap: 18px;
+  }
+  .deck-tray {
+    --cw: 126px;
+  }
+}

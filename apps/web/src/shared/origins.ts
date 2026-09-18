@@ -14,6 +14,9 @@ const PROTECTED_PRODUCT_PATHS = [
   "/archived",
   "/insights",
   "/import",
+  // In-app Explore. `lymi.app/explore` is the public catalogue on the other origin; this one is
+  // the signed-in learner's, so it resumes after sign-in like any other screen. ADR 0008.
+  "/explore",
 ] as const;
 
 /**

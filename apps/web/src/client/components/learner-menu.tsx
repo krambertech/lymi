@@ -6,6 +6,7 @@ import {
   Archive,
   BookOpen,
   ChartNoAxesColumn,
+  Compass,
   Download,
   Keyboard,
   LogOut,
@@ -29,7 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-type Place = "/settings" | "/activity" | "/insights" | "/archived";
+type Place = "/settings" | "/activity" | "/insights" | "/explore" | "/archived";
 
 interface Props {
   name: string | undefined;
@@ -143,8 +144,18 @@ export function LearnerMenu({
           {/* Activity is behind You on every device: it is read when something is in question,
               not a destination the learner steers by. DESIGN.md, Layout. */}
           {place("/activity", <Activity aria-hidden="true" />, <Trans>Activity</Trans>)}
-          {variant === "phone" &&
-            place("/insights", <ChartNoAxesColumn aria-hidden="true" />, <Trans>Insights</Trans>)}
+          {variant === "phone" && (
+            <>
+              {place(
+                "/insights",
+                <ChartNoAxesColumn aria-hidden="true" />,
+                <Trans>Insights</Trans>,
+              )}
+              {/* The pill is drawn for two, so Explore rides here; Today's strip is the way in
+                  a learner actually sees. */}
+              {place("/explore", <Compass aria-hidden="true" />, <Trans>Explore</Trans>)}
+            </>
+          )}
           {place("/archived", <Archive aria-hidden="true" />, <Trans>Archived</Trans>)}
 
           <DropdownMenuSeparator />

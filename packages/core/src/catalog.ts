@@ -13,7 +13,7 @@ import {
   sections,
   userAvatars,
 } from "./schema/app";
-import { PUBLICATION_SLUG } from "./types";
+import { PUBLICATION_CATEGORIES, PUBLICATION_SLUG } from "./types";
 
 /**
  * What a public deck page may show, and nothing else. This is the security boundary of
@@ -617,4 +617,62 @@ function hash(text: string): number {
     h = Math.imul(h, 0x01000193);
   }
   return h >>> 0;
+}
+
+/**
+ * Eight hues, set as `.deck-tray[data-hue]` in both apps' `styles.css`. A deck's own is a pure
+ * function of its slug, so Explore on the site, the deck page and Explore in the product arrive
+ * at the same colour without storing one, and it does not move as the catalogue grows around it.
+ * DESIGN.md, "The tray".
+ */
+export const TRAY_HUES = 8;
+
+export function trayHue(slug: string): number {
+  return hash(slug) % TRAY_HUES;
+}
+
+/**
+ * Explore inside the product: the same rows the public page reads, plus the decks the learner
+ * already studies, so a row can lead to Library instead of adding a second time.
+ */
+export const ExploreOut = z.object({
+  decks: z.array(PublicDeckSummary),
+  /** Slug to the deck it is in Library, for every published deck the learner is a member of. */
+  added: z.record(z.string(), z.string()),
+});
+export type ExploreOut = z.infer<typeof ExploreOut>;
+
+/** One published deck in the app's chrome: the public projection, and where it sits in Library. */
+export const ExploreDeckOut = z.object({
+  deck: PublicDeckOut,
+  deckId: z.string().nullable(),
+});
+export type ExploreDeckOut = z.infer<typeof ExploreDeckOut>;
+
+/**
+ * The shelves, in the order they appear, from the column's own list so the two cannot drift.
+ * A deck sits on one shelf; a deck with no category gathers at the end, so publishing is never
+ * blocked on choosing one. Each app writes its own headings, because they are translated strings.
+ */
+export const CATEGORY_ORDER: readonly string[] = PUBLICATION_CATEGORIES;
+export const UNCATEGORISED = "other";
+
+export interface Shelf {
+  key: string;
+  decks: PublicDeckSummary[];
+}
+
+/** Decks grouped into shelves, in category order, with uncategorised decks last. */
+export function shelvesOf(decks: readonly PublicDeckSummary[]): Shelf[] {
+  const byCategory = new Map<string, PublicDeckSummary[]>();
+  for (const deck of decks) {
+    const key =
+      deck.category && CATEGORY_ORDER.includes(deck.category) ? deck.category : UNCATEGORISED;
+    const shelf = byCategory.get(key);
+    if (shelf) shelf.push(deck);
+    else byCategory.set(key, [deck]);
+  }
+  return [...CATEGORY_ORDER, UNCATEGORISED]
+    .filter((key) => byCategory.has(key))
+    .map((key) => ({ key, decks: byCategory.get(key) as PublicDeckSummary[] }));
 }

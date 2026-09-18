@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Locator, type Page, test } from "./test";
 
 /**
@@ -29,7 +29,7 @@ function dialog(page: Page, title: string | RegExp): Locator {
 test("a learner opens a deck's sections in order and the owner rearranges them", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "sections");
+  await startAsTestLearner(page, testInfo, "sections");
   const tag = testInfo.project.name;
   const deck = await page.request.post("/api/decks", {
     // Started by hand here, so the journey can show the ready moment; automatic has its own step.

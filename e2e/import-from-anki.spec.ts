@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** A real export from Anki 26.09, made by `fixtures/generate.py`: 10 cards, 3 decks, 11 reviews. */
@@ -29,7 +29,7 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
   page,
 }, testInfo) => {
   test.setTimeout(120_000);
-  await signInAsTestLearner(page, testInfo, "anki-import");
+  await startAsTestLearner(page, testInfo, "anki-import", "/today");
 
   await test.step("open the Anki import from Settings", async () => {
     await learnerMenu(page).click();

@@ -1,11 +1,11 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { e2eProductUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
 test("a learner can switch the app language and keep it after reload", async ({
   page,
 }, testInfo) => {
-  await signInAsTestLearner(page, testInfo, "language");
+  await startAsTestLearner(page, testInfo, "language");
 
   const picker = (name: string) => page.getByRole("combobox", { name, exact: true });
   // The interface switches before the server answers; the reload below must not outrun the save.

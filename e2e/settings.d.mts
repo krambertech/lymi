@@ -22,6 +22,7 @@ export type E2EAccount =
   | "review-round-crosses"
   | "review-deck-out"
   | "word-detail"
+  | "activity"
   | "language"
   | "join-owner"
   | "avatar"

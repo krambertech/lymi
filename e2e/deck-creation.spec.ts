@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Locator, type Page, test } from "./test";
 
 function sheet(page: Page, title: string): Locator {
@@ -59,8 +59,7 @@ async function createDeck(page: Page, name: string) {
 
 test.describe("deck and card creation", () => {
   test("validates, creates, opens, and persists a deck", async ({ page }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "deck-validation");
-    await page.goto("/library");
+    await startAsTestLearner(page, testInfo, "deck-validation", "/library");
     await waitForLibrary(page);
 
     // No decks yet, so the empty state is the way in.
@@ -116,7 +115,7 @@ test.describe("deck and card creation", () => {
   test("targets the current deck, resets capture, and skips a duplicate", async ({
     page,
   }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "card-selection");
+    await startAsTestLearner(page, testInfo, "card-selection");
 
     const firstName = `First ${testInfo.project.name}`;
     const secondName = `Second ${testInfo.project.name}`;
@@ -178,7 +177,7 @@ test.describe("deck and card creation", () => {
   });
 
   test("adds a card when the optional meaning is blank", async ({ page }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "optional-meaning");
+    await startAsTestLearner(page, testInfo, "optional-meaning");
     const name = `Optional meaning ${testInfo.project.name}`;
     await createDeck(page, name);
 
@@ -204,7 +203,7 @@ test.describe("deck and card creation", () => {
   test("adds a card with its optional fields and keeps the lesson's for the next one", async ({
     page,
   }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "more-fields");
+    await startAsTestLearner(page, testInfo, "more-fields");
     const name = `More fields ${testInfo.project.name}`;
     await createDeck(page, name);
 
@@ -273,7 +272,7 @@ test.describe("deck and card creation", () => {
   });
 
   test("brings back a card closed by mistake", async ({ page }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "more-fields");
+    await startAsTestLearner(page, testInfo, "more-fields");
     await createDeck(page, `Undo close ${testInfo.project.name}`);
 
     await page
@@ -296,7 +295,7 @@ test.describe("deck and card creation", () => {
   });
 
   test("offers the picture again when it did not go through", async ({ page }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "more-fields");
+    await startAsTestLearner(page, testInfo, "more-fields");
     await createDeck(page, `Picture retry ${testInfo.project.name}`);
 
     await page
@@ -341,7 +340,7 @@ test.describe("deck and card creation", () => {
   });
 
   test("rejects card creation into an archived deck", async ({ page }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "archived-deck");
+    await startAsTestLearner(page, testInfo, "archived-deck");
     const deckId = await createDeck(page, `Archived ${testInfo.project.name}`);
 
     await page.getByRole("button", { name: "Deck options", exact: true }).click();
@@ -359,7 +358,7 @@ test.describe("deck and card creation", () => {
   test("keeps creation controls reachable from 320px to wide desktop", async ({
     page,
   }, testInfo) => {
-    await signInAsTestLearner(page, testInfo, "responsive-creation");
+    await startAsTestLearner(page, testInfo, "responsive-creation");
     const name = `Long ${testInfo.project.name} ${"learning ".repeat(12)}`.slice(0, 80).trim();
     const deckId = await createDeck(page, name);
 

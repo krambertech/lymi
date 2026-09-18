@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
 /** The end of a review: what it says and offers depends on where the day stands. PRODUCT.md, "Daily Review Goal". */
@@ -53,7 +53,7 @@ test("at the goal a learner can review forgotten cards, take another round, or s
   // Tap-to-finish exists only under motion, and the suite's reduced motion makes the end instant,
   // so the first step alone plays the sequence for real and the rest stay quiet. docs/testing.md.
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await signInAsTestLearner(page, testInfo, "review-goal");
+  await startAsTestLearner(page, testInfo, "review-goal");
   await setGoal(page, 3);
   await addCards(page, await addDeck(page, "Goal"), "Goal", 16);
   await page.goto("/review");
@@ -107,7 +107,7 @@ test("the end works from the keyboard and without motion, and a short round ends
 }, testInfo) => {
   test.skip(browserName !== "chromium", "keyboard and logic, not rendering");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await signInAsTestLearner(page, testInfo, "review-goal-small");
+  await startAsTestLearner(page, testInfo, "review-goal-small");
   await setGoal(page, 3);
   const deckId = await addDeck(page, "Small");
 
@@ -162,7 +162,7 @@ test("a round left open past midnight gives way to the new day's goal", async ({
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await signInAsTestLearner(page, testInfo, "review-goal-midnight");
+  await startAsTestLearner(page, testInfo, "review-goal-midnight");
   await setGoal(page, 2);
   await addCards(page, await addDeck(page, "Midnight"), "Midnight", 14);
   // Motion starts native animations at the faked performance.now(), so time faked before this page loads delays every exit by that much.
@@ -207,7 +207,7 @@ test("a round from Today counts its own cards, and below the goal offers the res
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await signInAsTestLearner(page, testInfo, "review-round-below");
+  await startAsTestLearner(page, testInfo, "review-round-below");
   await setGoal(page, 5);
   await addCards(page, await addDeck(page, "Below"), "Below", 8);
 
@@ -243,7 +243,7 @@ test("a round that crosses the goal keeps going and says the goal is reached", a
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await signInAsTestLearner(page, testInfo, "review-round-crosses");
+  await startAsTestLearner(page, testInfo, "review-round-crosses");
   await setGoal(page, 5);
   await addCards(page, await addDeck(page, "Cross"), "Cross", 8);
 
@@ -279,7 +279,7 @@ test("a deck that runs out below the goal names itself and offers the other deck
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await signInAsTestLearner(page, testInfo, "review-deck-out");
+  await startAsTestLearner(page, testInfo, "review-deck-out");
   await setGoal(page, 10);
   const first = await addDeck(page, "Spanish");
   await addCards(page, first, "Spanish", 2);

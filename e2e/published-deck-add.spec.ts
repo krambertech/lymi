@@ -1,5 +1,5 @@
 import { expect, type TestInfo, test } from "@playwright/test";
-import { createAccountThroughDevForm, signInAsTestLearner } from "./auth";
+import { createAccountThroughDevForm, startAsTestLearner } from "./auth";
 
 /** An email on no allowlist and not a local persona, so only the published deck can admit it. */
 function stranger(testInfo: TestInfo, who: string) {
@@ -16,7 +16,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
   let deckId = "";
 
   await test.step("the publisher publishes a deck", async () => {
-    await signInAsTestLearner(page, testInfo, "publisher");
+    await startAsTestLearner(page, testInfo, "publisher");
     const deck = await page.request.post("/api/decks", {
       data: { name: deckName, defaultLanguage: "et" },
     });

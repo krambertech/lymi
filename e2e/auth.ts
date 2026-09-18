@@ -1,16 +1,62 @@
+import { type APIRequestContext, request } from "@playwright/test";
+import { e2eProductUrl } from "./ports.mjs";
 import { type E2EAccount, e2eEmail } from "./settings.mjs";
 import { expect, type Page, type TestInfo } from "./test";
 
 const password = "quiet-harbour-morning";
 
-/** Sign in to this scenario's disposable account, creating it on the first attempt. */
+/** The name the dev email form gives a new account, and so the label on the learner menu. */
+const learnerName = "Dev";
+
+type StoredSession = Awaited<ReturnType<APIRequestContext["storageState"]>>;
+
+/**
+ * One session per disposable account, established on first use and restored into every journey
+ * that account belongs to. The cache lives in this process alone, so it cannot outlast the D1
+ * and KV that `scripts/e2e-server.mjs` rebuilds on every run: a session from an earlier run,
+ * an earlier schema or an earlier auth configuration is never restored at all.
+ */
+const sessions = new Map<string, StoredSession>();
+
+/**
+ * Start already signed in as this scenario's disposable account, on the screen the journey is
+ * about. Pass `landOn` only when the first thing the journey does is look at a screen: a journey
+ * that seeds through the API first navigates itself, and rendering Today on the way costs it a
+ * screen it never reads.
+ *
+ * The session comes from the same email endpoints the form posts to, so the account, the
+ * allowlist and Better Auth are all real; only the walk through the form is skipped. A journey
+ * whose subject is arriving drives the form instead, through `signInAsTestLearner`.
+ */
+export async function startAsTestLearner(
+  page: Page,
+  testInfo: TestInfo,
+  account: E2EAccount,
+  landOn?: string,
+) {
+  const email = emailFor(testInfo, account);
+  const session = sessions.get(email) ?? (await establishSession(email));
+  sessions.set(email, session);
+  await page.context().addCookies(session.cookies);
+  if (!landOn) return;
+
+  await page.goto(landOn);
+  await expect
+    .poll(() => pathOf(page), {
+      message: `the restored session for ${email} did not open ${landOn}`,
+    })
+    .toBe(landOn);
+  if (landOn === "/today") await expectToday(page);
+}
+
+/** Sign in to this scenario's disposable account through the form, creating it on the first attempt. */
 export async function signInAsTestLearner(
   page: Page,
   testInfo: TestInfo,
   account: E2EAccount,
   returnTo = "/today",
 ) {
-  const email = e2eEmail(account, testInfo.project.name, testInfo.retry, testInfo.repeatEachIndex);
+  const email = emailFor(testInfo, account);
 
   await page.goto(`/login?${new URLSearchParams({ dev: "1", returnTo })}`);
   await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
@@ -40,20 +86,63 @@ export async function signInAsTestLearner(
     expect(signIn.ok(), `Sign in failed with HTTP ${signIn.status()}`).toBe(true);
   }
 
-  await expect
-    .poll(() => `${new URL(page.url()).pathname}${new URL(page.url()).search}`)
-    .toBe(returnTo);
-  if (returnTo === "/today") {
-    // The due card names the state: the count on an account with cards, nothing due, or the
-    // first-run line on a fresh one. Match it in any state, specific enough that another screen
-    // cannot pass.
-    await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
-    await expect(
-      page.getByRole("heading", {
-        level: 2,
-        name: /due|Getting started|Start with a deck|No cards yet|Nothing due/,
-      }),
-    ).toBeVisible();
+  await expect.poll(() => pathOf(page)).toBe(returnTo);
+  if (returnTo === "/today") await expectToday(page);
+}
+
+function emailFor(testInfo: TestInfo, account: E2EAccount) {
+  return e2eEmail(account, testInfo.project.name, testInfo.retry, testInfo.repeatEachIndex);
+}
+
+function pathOf(page: Page) {
+  const url = new URL(page.url());
+  return `${url.pathname}${url.search}`;
+}
+
+/**
+ * The due card names the state: the count on an account with cards, nothing due, or the
+ * first-run line on a fresh one. Match it in any state, specific enough that another screen
+ * cannot pass.
+ */
+async function expectToday(page: Page) {
+  await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      level: 2,
+      name: /due|Getting started|Start with a deck|No cards yet|Nothing due/,
+    }),
+  ).toBeVisible();
+}
+
+/**
+ * Establish the account's session through Better Auth's own email endpoints, creating the
+ * account on first use. Creating issues no session while verification is required, but a local
+ * address is created already confirmed, so the sign-in straight after succeeds.
+ */
+async function establishSession(email: string): Promise<StoredSession> {
+  const api = await request.newContext({
+    baseURL: e2eProductUrl,
+    // Better Auth trusts the product origin. A browser sends it, so this sends it too.
+    extraHTTPHeaders: { origin: e2eProductUrl },
+  });
+  try {
+    const signIn = () => api.post("/api/auth/sign-in/email", { data: { email, password } });
+
+    let response = await signIn();
+    if (response.status() === 401) {
+      const created = await api.post("/api/auth/sign-up/email", {
+        data: { email, password, name: learnerName },
+      });
+      expect(created.ok(), `Creating ${email} failed with HTTP ${created.status()}`).toBe(true);
+      response = await signIn();
+    }
+    expect(response.ok(), `Sign in as ${email} failed with HTTP ${response.status()}`).toBe(true);
+
+    const state = await api.storageState();
+    expect(state.cookies.length, `Sign in as ${email} set no cookie`).toBeGreaterThan(0);
+    return state;
+  } finally {
+    await api.dispose();
   }
 }
 

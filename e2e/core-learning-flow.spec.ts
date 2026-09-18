@@ -1,4 +1,4 @@
-import { signInAsTestLearner } from "./auth";
+import { signInAsTestLearner, startAsTestLearner } from "./auth";
 import { e2eSiteUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
@@ -25,7 +25,7 @@ test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
 
 test("a learner can capture and review a new word", async ({ page }, testInfo) => {
   await test.step("sign in to a disposable account", async () => {
-    await signInAsTestLearner(page, testInfo, "core-learning");
+    await startAsTestLearner(page, testInfo, "core-learning");
   });
 
   let deckId = "";

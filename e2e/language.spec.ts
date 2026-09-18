@@ -6,6 +6,10 @@ test("a learner can switch the app language and keep it after reload", async ({
   page,
 }, testInfo) => {
   await startAsTestLearner(page, testInfo, "language");
+  // An account that has never chosen a language has one seeded from the browser by the first
+  // screen that loads. Settle it here, so the learner's own change is the only write in flight.
+  const seeded = await page.request.patch("/api/settings", { data: { appLanguage: "en" } });
+  expect(seeded.ok(), `settling the language first failed with HTTP ${seeded.status()}`).toBe(true);
 
   const picker = (name: string) => page.getByRole("combobox", { name, exact: true });
   // The interface switches before the server answers; the reload below must not outrun the save.

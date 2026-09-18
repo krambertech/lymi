@@ -942,8 +942,8 @@
    light, which leans toward a pointer and settles back when there is none. --lx/--ly are written
    by the section; both fall back to the hook the lantern hangs on. */
 .signup-plate {
-  --lx: 50%;
-  --ly: 26%;
+  /* Where the light is, in pixels from the plate's top-left. The section writes both: the hook on
+     mount, then every frame while a pointer moves. Before it does, the pool is transparent. */
   --reach: 20rem;
   position: relative;
   isolation: isolate;
@@ -952,11 +952,13 @@
 .signup-pool {
   position: absolute;
   z-index: -1;
-  top: var(--ly);
-  left: var(--lx);
+  top: 0;
+  left: 0;
   width: calc(var(--reach) * 2);
   height: calc(var(--reach) * 2);
-  translate: -50% -50%;
+  /* Moved with `translate` alone, so following a pointer never costs a layout. */
+  margin: calc(var(--reach) * -1) 0 0 calc(var(--reach) * -1);
+  translate: calc(var(--lx, 0) * 1px) calc(var(--ly, 0) * 1px);
   pointer-events: none;
   opacity: 0;
   border-radius: 50%;

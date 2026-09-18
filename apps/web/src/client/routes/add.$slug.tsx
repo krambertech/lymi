@@ -88,7 +88,11 @@ function Add() {
     mutationFn: () => api.addPublishedDeck(slug, chosen),
     onMutate: () => setFailed(null),
     onSuccess: async ({ deckId }) => {
-      await qc.invalidateQueries({ queryKey: ["decks"] });
+      // Explore holds which decks are already the learner's, so it is stale the moment this lands.
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["decks"] }),
+        qc.invalidateQueries({ queryKey: ["explore"] }),
+      ]);
       navigate({ to: "/library/$deckId", params: { deckId } });
     },
     onError: (err) => {

@@ -13,6 +13,8 @@ import { ConnectedView } from "../views/connected-view";
 import { ConsentView } from "../views/consent-view";
 import { DeckDetailView } from "../views/deck-detail-view";
 import { DeckSettingsView } from "../views/deck-settings-view";
+import { ExploreDeckView } from "../views/explore-deck-view";
+import { ExploreView } from "../views/explore-view";
 import { InsightsView } from "../views/insights-view";
 import { LibraryView } from "../views/library-view";
 import { LoginView } from "../views/login-view";
@@ -947,6 +949,90 @@ export const SCREENS: Entry[] = [
               email="ada@example.com"
               password="thunder-oyster-lamp"
             />
+          </PhoneShot>
+        </div>
+      </div>
+    ),
+  },
+  {
+    slug: "explore",
+    name: "Explore",
+    source: "views/explore-view.tsx",
+    note: "Every deck Lymi publishes, inside the app. A shelf per category, each scrolling sideways, so a category of forty decks lengthens one row instead of burying the page. A deck is one of its own cards in a tray, in a hue hashed from its slug alone — eight of them, so two side by side is the price of a colour that never moves as the catalogue grows. The tray sits inside a card here, unlike the public page, because the Add on it has to belong to something; Add is secondary, because a shelf of decks has no single thing to press. A deck already in Library says so and leads there.",
+    Demo: () => (
+      <div className="grid gap-10">
+        <Shot caption="Desktop, Explore" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={760}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                docsUrl="https://lymi.app/docs"
+                onAdd={noop}
+                static={{ path: "/explore" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <ExploreView
+                  data={{ decks: m.catalogue, added: m.catalogueAdded }}
+                  onAdd={noop}
+                  st={{ path: "/explore" }}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="On the phone" initial="dark" path="/explore">
+            <ExploreView
+              data={{ decks: m.catalogue, added: m.catalogueAdded }}
+              onAdd={noop}
+              st={{ path: "/explore" }}
+            />
+          </PhoneShot>
+          <PhoneShot caption="Before the first deck is published" initial="light" path="/explore">
+            <ExploreView data={{ decks: [], added: {} }} onAdd={noop} st={{ path: "/explore" }} />
+          </PhoneShot>
+        </div>
+      </div>
+    ),
+  },
+  {
+    slug: "explore-deck",
+    name: "A published deck",
+    source: "views/explore-deck-view.tsx",
+    note: "One published deck without leaving the app, on the same column and title as every other screen. Its colour stays on its tray rather than washing the page: a band of it ended on an arbitrary edge against the rail and put amber on a coloured ground, where amber stops reading as the one thing to press. The tray here shows its card whole and hugs the text, because one cropped card standing alone reads as a fault instead of a shelf. Sections say what opens first; every card is one disclosure away, since the full list is what a learner checks before committing.",
+    Demo: () => (
+      <div className="grid gap-10">
+        <Shot caption="Desktop, a deck the learner has not added" initial="light">
+          {(t) => (
+            <Desktop theme={t} height={760}>
+              <Sidebar
+                decks={m.decks}
+                name={m.me.name}
+                docsUrl="https://lymi.app/docs"
+                onAdd={noop}
+                static={{ path: "/explore" }}
+              />
+              <main className="@container flex min-w-0 flex-1 flex-col">
+                <ExploreDeckView
+                  data={{ deck: m.publicDeck, deckId: null }}
+                  onAdd={noop}
+                  st={{ path: "/explore" }}
+                />
+              </main>
+            </Desktop>
+          )}
+        </Shot>
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
+          <PhoneShot caption="Already in the library" initial="dark" path="/explore">
+            <ExploreDeckView
+              data={{ deck: m.publicDeck, deckId: "d2" }}
+              onAdd={noop}
+              st={{ path: "/explore" }}
+            />
+          </PhoneShot>
+          <PhoneShot caption="Withdrawn since the link was shared" initial="light" path="/explore">
+            <ExploreDeckView data={undefined} missing onAdd={noop} st={{ path: "/explore" }} />
           </PhoneShot>
         </div>
       </div>

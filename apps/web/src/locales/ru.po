@@ -19,6 +19,9 @@ msgstr ", ещё не открыт"
 msgid "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
 msgstr "«{deckName}» будет повторяться вместе с другими колодами серии и стоять рядом с ними в Библиотеке."
 
+msgid "“{name}” is in your library"
+msgstr "«{name}» в твоей библиотеке"
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "В «{term}» нечего дополнять."
 
@@ -72,9 +75,9 @@ msgstr "{0, plural, one {# карточка пропущена: в ней нет
 msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 msgstr "{0, plural, one {# карточка из архива Mochi попадёт в архив.} few {# карточки из архива Mochi попадут в архив.} many {# карточек из архива Mochi попадут в архив.} other {# карточки из архива Mochi попадут в архив.}}"
 
+#. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
 #. placeholder {0}: deck.total
-#. placeholder {0}: s.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
@@ -86,6 +89,10 @@ msgstr "{0, plural, one {# карточка} few {# карточки} many {# к
 #. placeholder {0}: s.archivedDecks
 msgid "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
 msgstr "{0, plural, one {Вместе с ней вернётся # колода} few {Вместе с ней вернутся # колоды} many {Вместе с ней вернутся # колод} other {Вместе с ней вернутся # колоды}}"
+
+#. placeholder {0}: shelf.decks.length
+msgid "{0, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
 
 #. placeholder {0}: inSeries.length
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
@@ -129,6 +136,10 @@ msgstr "{0, plural, one {# повторение, цель {1}} few {# повто
 #. placeholder {1}: day(start)
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}} с {1}"
+
+#. placeholder {0}: deck.sectionCount
+msgid "{0, plural, one {# section} other {# sections}}"
+msgstr "{0, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
 
 #. placeholder {0}: preview.audio
 msgid "{0, plural, one {# sound is left out. Lymi says words out loud itself.} other {# sounds are left out. Lymi says words out loud itself.}}"
@@ -439,6 +450,9 @@ msgstr "{filled, plural, one {заполнено: #} few {заполнено: #}
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан на # повторении, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} few {Показатель запоминания основан на # повторениях, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} many {Показатель запоминания основан на # повторениях, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.} other {Показатель запоминания основан на # повторения, поэтому один неудачный вечер заметно его меняет. Через несколько недель он стабилизируется.}}"
 
+msgid "{label} decks"
+msgstr "Колоды: {label}"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, дальше через {schedules}"
 
@@ -615,6 +629,10 @@ msgstr "Активность"
 msgid "Add"
 msgstr "Добавить"
 
+#. placeholder {0}: deck.name
+msgid "Add “{0}” to your library"
+msgstr "Добавить «{0}» в библиотеку"
+
 msgid "Add {name} to Lymi"
 msgstr "Добавь колоду «{name}» в Lymi"
 
@@ -665,6 +683,9 @@ msgstr "Добавить в {deckName}"
 
 msgid "Add to Lymi"
 msgstr "Добавить в Lymi"
+
+msgid "Add to your library"
+msgstr "Добавить в библиотеку"
 
 msgid "Add with Google"
 msgstr "Добавить через Google"
@@ -722,6 +743,9 @@ msgstr "Все сразу"
 
 msgid "Allow"
 msgstr "Разрешить"
+
+msgid "Already in your library"
+msgstr "Уже в твоей библиотеке"
 
 msgid "Also adds, edits and archives them."
 msgstr "Также добавляет, редактирует и архивирует их."
@@ -889,6 +913,9 @@ msgstr "снова позже сегодня"
 msgid "back the same day"
 msgstr "снова в тот же день"
 
+msgid "Back to Explore"
+msgstr "Назад в каталог"
+
 msgid "Back to sign in"
 msgstr "Назад ко входу"
 
@@ -924,6 +951,10 @@ msgstr "Возвращает каждую карточку, которую до�
 
 msgid "Bug"
 msgstr "Ошибка"
+
+#. placeholder {0}: deck.publisher
+msgid "By {0}"
+msgstr "Автор: {0}"
 
 msgid "by {who}"
 msgstr "автор: {who}"
@@ -973,6 +1004,9 @@ msgstr "Карточки из этой колоды"
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Карточки сохранят даты повторения, которые были в {app}."
+
+msgid "Cards outside a section"
+msgstr "Карточки вне разделов"
 
 msgid "Change"
 msgstr "Изменить"
@@ -1191,6 +1225,9 @@ msgstr "Не удалось загрузить Архив"
 msgid "Couldn’t load archived series. Try again."
 msgstr "Не удалось загрузить архивные серии. Попробуй ещё раз."
 
+msgid "Couldn’t load Explore"
+msgstr "Не удалось загрузить каталог"
+
 msgid "Couldn’t load Insights"
 msgstr "Не удалось загрузить Обзор"
 
@@ -1199,6 +1236,9 @@ msgstr "Не удалось загрузить Библиотеку"
 
 msgid "Couldn’t load more."
 msgstr "Не удалось загрузить больше."
+
+msgid "Couldn’t load the deck"
+msgstr "Не удалось загрузить колоду"
 
 msgid "Couldn’t load the picture"
 msgstr "Не удалось загрузить изображение"
@@ -1332,6 +1372,9 @@ msgstr "Колоды"
 msgid "Decks and cards you archived. Restore puts them back."
 msgstr "Колоды и карточки в твоём архиве. «Восстановить» возвращает их назад."
 
+msgid "Decks from Lymi, checked card by card. Add one and it starts in your library, in your language."
+msgstr "Колоды от Lymi, проверенные карточка за карточкой. Добавь любую — она встанет в твою библиотеку, на твоём языке."
+
 msgid "Decks to review"
 msgstr "Колоды к повторению"
 
@@ -1386,6 +1429,9 @@ msgstr "Перетащи фото или двигай его клавишами 
 
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Перетащи, чтобы подвинуть фото. Чтобы изменить масштаб, сведи или разведи пальцы или используй ползунок."
+
+msgid "Driving"
+msgstr "Вождение"
 
 msgid "Drop or paste a picture"
 msgstr "Перетащи или вставь изображение"
@@ -1471,6 +1517,9 @@ msgstr "Enter после каждого"
 msgid "Enter an email address, like you@example.com."
 msgstr "Введи адрес почты, например you@example.com."
 
+msgid "Every card"
+msgstr "Все карточки"
+
 msgid "Every card is asked twice."
 msgstr "Каждая карточка задаётся дважды."
 
@@ -1497,6 +1546,12 @@ msgstr "Новый пример: «{value}»"
 
 msgid "Example from lesson"
 msgstr "Пример с урока"
+
+msgid "Exams and tests"
+msgstr "Экзамены и тесты"
+
+msgid "Explore"
+msgstr "Каталог"
 
 msgid "Export"
 msgstr "Экспортировать"
@@ -1600,6 +1655,9 @@ msgstr "С урока"
 
 msgid "Front and back"
 msgstr "Лицевая и обратная сторона"
+
+msgid "Geography"
+msgstr "География"
 
 msgid "Getting a card ready…"
 msgstr "Готовим карточку…"
@@ -1730,6 +1788,9 @@ msgstr "В Mochi открой колоду, открой её меню <0>…</0
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "В другом аккаунте открой меню колоды и выбери <0>Экспортировать</0> или выбери <1>Экспортировать библиотеку</1> в Настройках."
 
+msgid "In your library"
+msgstr "В твоей библиотеке"
+
 msgid "Insights"
 msgstr "Обзор"
 
@@ -1760,6 +1821,9 @@ msgstr "Он появится в конце. Перемести в него ка
 
 msgid "It may have been archived, or shared with you and then removed."
 msgstr "Возможно, её архивировали или доступ к ней для тебя закрыли."
+
+msgid "It may have been withdrawn. Explore has everything Lymi publishes now."
+msgstr "Возможно, её сняли с публикации. В каталоге есть всё, что Lymi публикует сейчас."
 
 msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
 msgstr "Он три дня ждал подтверждения, поэтому файл удалён. Начни заново."
@@ -1934,6 +1998,9 @@ msgstr "Главная Lymi"
 msgid "Lymi is in a private beta."
 msgstr "Lymi в закрытой бете."
 
+msgid "Lymi is writing the first decks. Until then, make your own deck and share it with anyone."
+msgstr "Lymi пишет первые колоды. А пока сделай свою и поделись ею с кем угодно."
+
 msgid "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
 msgstr "Lymi принимает не больше {FEEDBACK_DAILY_LIMIT} сообщений в сутки с одного аккаунта. Попробуй завтра."
 
@@ -1981,6 +2048,9 @@ msgstr "По месяцам"
 
 msgid "More about this card"
 msgstr "Больше о карточке"
+
+msgid "More decks"
+msgstr "Другие колоды"
 
 msgid "More fields"
 msgstr "Больше полей"
@@ -2255,6 +2325,9 @@ msgstr "На сегодня больше ничего."
 msgid "Nothing matches “{query}”"
 msgstr "Ничего не найдено по запросу «{query}»"
 
+msgid "Nothing published yet"
+msgstr "Пока ничего не опубликовано"
+
 msgid "Nothing was added, and the file was deleted."
 msgstr "Ничего не добавлено, а файл удалён."
 
@@ -2309,8 +2382,14 @@ msgstr "Эту колоду изучаешь только ты."
 msgid "Only your name is shared, never your progress."
 msgstr "Видно только твоё имя, а прогресс — нет."
 
+msgid "Open"
+msgstr "Открыть"
+
 msgid "Open deck"
 msgstr "Открыть колоду"
+
+msgid "Open in Library"
+msgstr "Открыть в Библиотеке"
 
 msgid "Open Library"
 msgstr "Открыть Библиотеку"
@@ -2691,6 +2770,9 @@ msgstr "Сказать {0}"
 
 msgid "Schedule"
 msgstr "Расписание"
+
+msgid "Science"
+msgstr "Наука"
 
 msgid "Search"
 msgstr "Поиск"
@@ -3164,6 +3246,9 @@ msgstr "Эта колода больше не опубликована"
 msgid "This deck is no longer published."
 msgstr "Эта колода больше не опубликована."
 
+msgid "This deck is not published"
+msgstr "Эта колода не опубликована"
+
 msgid "This file has no review history, so every card starts as new."
 msgstr "В этом файле нет истории повторений, поэтому каждая карточка начнётся как новая."
 
@@ -3392,6 +3477,9 @@ msgstr "Что на изображении, без ответа. Без опис
 msgid "What this is about"
 msgstr "О чём это"
 
+msgid "What you learn, in order"
+msgstr "Что учишь, по порядку"
+
 msgid "When it’s back"
 msgstr "Когда вернётся"
 
@@ -3403,6 +3491,9 @@ msgstr "Дни, когда были повторения"
 
 msgid "Who can join this deck"
 msgstr "Кто может присоединиться к этой колоде"
+
+msgid "Work and study"
+msgstr "Работа и учёба"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, что хочешь рассказать Lymi."
@@ -3460,6 +3551,9 @@ msgstr "Через эту ссылку нельзя присоединиться
 
 msgid "You don’t need to do anything."
 msgstr "Ничего делать не нужно."
+
+msgid "You start with the first section. The next opens as you learn this one."
+msgstr "Ты начинаешь с первого раздела. Следующий откроется, когда выучишь этот."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "Тебя убрали из этой колоды, поэтому эта ссылка не добавит тебя снова. Твои повторения сохранены."

@@ -1,5 +1,7 @@
 # Explore
 
+Explore is one catalogue in two places: the public page a visitor lands on, and the screen a signed-in learner browses. Both read the same projection, so neither can say something the other does not. Everything below describes the public page, and **In the product** at the end says what changes inside Lymi.
+
 `lymi.app/explore` is where a visitor finds a published deck without knowing its address. It renders on the public Worker from a strict projection, carries no learner data, and is localized at `/uk/explore` and `/ru/explore` like every other public page. [ADR 0016](../adr/0016-public-catalog-pages-render-on-the-public-worker.md) owns the origin boundary.
 
 ## The page
@@ -33,3 +35,21 @@ A category is a column on the publication, from a closed list in `packages/core/
 ## What it costs to be wrong
 
 A deck appears here only while its own page answers 200, from the same conditions, so the two can never disagree: withdrawing a deck or archiving it takes it off this page within the five minutes the cache holds. The response's validator changes with the catalogue's content, the locale and the Worker version, and never with who is asking.
+
+## In the product
+
+A signed-in learner reaches the same catalogue at `my.lymi.app/explore`, under Insights in the rail. On a phone it sits in the learner menu, because the pill is drawn for two destinations. `GET /api/explore` returns the same `PublicDeckSummary` rows the public page reads, in the learner's own meaning language, plus the deck in Library for each published deck they already study.
+
+The shelves and the tray are the public page's. What is added is one press: **Add** on a tile joins the deck and leaves the learner on the shelf, with a toast that offers to open it; the tile then reads **In your library** and leads there. Add is secondary here rather than amber, because a shelf of decks has no single thing to press.
+
+The one departure from the public page is that a tile here **is a card**, where the public page sets the deck's name on the open canvas below its tray. The press is why: a button under a name on bare canvas belongs to nothing and reads as loose, so the group it acts on has to be a surface. The tray keeps its hue inside that card, with its corners stepped down by the card's padding.
+
+`/explore/<slug>` is the deck in the app's chrome, on the same column and the same title as every other screen: the name, the publisher under it behind the app's mark, the summary, the counts and **Add to your library**, with one of the deck's own cards in its tray beside them. Under that come the sections in order and every card under a closed disclosure per section.
+
+The deck's colour lives on that tray and nowhere else. A full-bleed band of it was drawn first and rejected: against the rail it ended on an arbitrary edge, and it put an amber button on a coloured ground, where amber stops reading as the one thing to press. The tray is also the object the learner just pressed on the shelf, so the same card in the same colour meets them here.
+
+The tray on this page shows its card **whole**, where a tray on a shelf cuts it at two thirds. A row of cropped cards reads as a shelf; one cropped card on its own reads as a rendering fault.
+
+Amber lives on this page and nowhere else in Explore, because this page does have one thing to press; pressing it opens the deck in Library, since a learner who opened the page came for that deck. Search, the shelf filters and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
+
+A deck is still shared as `lymi.app/explore/<slug>` and never as a product address, so a link works for someone who has no account. A signed-out visitor who opens the product address is sent to sign in and lands here afterwards, like any other screen behind authentication.

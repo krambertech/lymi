@@ -94,6 +94,8 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Published deck**: A shared deck anyone can add from its public page, without a link from the owner. Only Lymi's publishers publish. Withdrawing it stops new adds; members keep studying. Its add page says **Add to Lymi**. ADR 0020. _Avoid_: Public deck (in copy), catalog deck, template, marketplace
 
+**Explore**: Where a learner finds a published deck. One catalogue in two places: `lymi.app/explore`, the page a visitor lands on, and Explore in the app, under Insights in the rail and in the learner menu on a phone, where one press adds a deck to Library. Both read the same rows, so neither can say something the other does not. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
+
 **Edition**: One meaning-language version of a published deck. The deck's own fields are its original edition, and every further edition is a localization of the meaning side. All editions share the same terms, ordering, pictures, sources and review modes, so they are one deck rather than translated copies. A learner picks an edition when they add the deck and keeps it; changing the app language never moves it. ADR 0015. _Avoid_: Translation, version, variant, locale, copy
 
 **Localization**: The text of one series, deck, section or card in one edition, with who wrote it, whether a publisher has signed it off, and the revision of the original it was written from. Only signed-off text reaches a reader. Text written before the original changed is **stale**, and an edition that is stale or unfinished cannot be published. _Avoid_: Translation row, string, i18n, override

@@ -19,6 +19,9 @@ msgstr ", not open yet"
 msgid "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
 msgstr "“{deckName}” is reviewed with the other decks in its series and shows with them in Library."
 
+msgid "“{name}” is in your library"
+msgstr "“{name}” is in your library"
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "“{term}” has nothing left to fill in."
 
@@ -72,9 +75,9 @@ msgstr "{0, plural, one {# card is left out: it has no term.} other {# cards are
 msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 msgstr "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 
+#. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
 #. placeholder {0}: deck.total
-#. placeholder {0}: s.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
 
@@ -86,6 +89,10 @@ msgstr "{0, plural, one {# card} other {# cards}} · {1}"
 #. placeholder {0}: s.archivedDecks
 msgid "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
 msgstr "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
+
+#. placeholder {0}: shelf.decks.length
+msgid "{0, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {# deck} other {# decks}}"
 
 #. placeholder {0}: inSeries.length
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
@@ -129,6 +136,10 @@ msgstr "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 #. placeholder {1}: day(start)
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# review} other {# reviews}} since {1}"
+
+#. placeholder {0}: deck.sectionCount
+msgid "{0, plural, one {# section} other {# sections}}"
+msgstr "{0, plural, one {# section} other {# sections}}"
 
 #. placeholder {0}: preview.audio
 msgid "{0, plural, one {# sound is left out. Lymi says words out loud itself.} other {# sounds are left out. Lymi says words out loud itself.}}"
@@ -439,6 +450,9 @@ msgstr "{filled, plural, one {# filled} other {# filled}}"
 msgid "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 msgstr "{graded, plural, one {Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks.} other {Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks.}}"
 
+msgid "{label} decks"
+msgstr "{label} decks"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
 
@@ -615,6 +629,10 @@ msgstr "Activity"
 msgid "Add"
 msgstr "Add"
 
+#. placeholder {0}: deck.name
+msgid "Add “{0}” to your library"
+msgstr "Add “{0}” to your library"
+
 msgid "Add {name} to Lymi"
 msgstr "Add {name} to Lymi"
 
@@ -665,6 +683,9 @@ msgstr "Add to {deckName}"
 
 msgid "Add to Lymi"
 msgstr "Add to Lymi"
+
+msgid "Add to your library"
+msgstr "Add to your library"
 
 msgid "Add with Google"
 msgstr "Add with Google"
@@ -722,6 +743,9 @@ msgstr "All at once"
 
 msgid "Allow"
 msgstr "Allow"
+
+msgid "Already in your library"
+msgstr "Already in your library"
 
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
@@ -889,6 +913,9 @@ msgstr "back later today"
 msgid "back the same day"
 msgstr "back the same day"
 
+msgid "Back to Explore"
+msgstr "Back to Explore"
+
 msgid "Back to sign in"
 msgstr "Back to sign in"
 
@@ -924,6 +951,10 @@ msgstr "Brings back every card this import added and the decks it made."
 
 msgid "Bug"
 msgstr "Bug"
+
+#. placeholder {0}: deck.publisher
+msgid "By {0}"
+msgstr "By {0}"
 
 msgid "by {who}"
 msgstr "by {who}"
@@ -973,6 +1004,9 @@ msgstr "Cards from this deck"
 
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Cards keep the due dates they had in {app}."
+
+msgid "Cards outside a section"
+msgstr "Cards outside a section"
 
 msgid "Change"
 msgstr "Change"
@@ -1191,6 +1225,9 @@ msgstr "Couldn’t load Archived"
 msgid "Couldn’t load archived series. Try again."
 msgstr "Couldn’t load archived series. Try again."
 
+msgid "Couldn’t load Explore"
+msgstr "Couldn’t load Explore"
+
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
 
@@ -1199,6 +1236,9 @@ msgstr "Couldn’t load Library"
 
 msgid "Couldn’t load more."
 msgstr "Couldn’t load more."
+
+msgid "Couldn’t load the deck"
+msgstr "Couldn’t load the deck"
 
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
@@ -1332,6 +1372,9 @@ msgstr "Decks"
 msgid "Decks and cards you archived. Restore puts them back."
 msgstr "Decks and cards you archived. Restore puts them back."
 
+msgid "Decks from Lymi, checked card by card. Add one and it starts in your library, in your language."
+msgstr "Decks from Lymi, checked card by card. Add one and it starts in your library, in your language."
+
 msgid "Decks to review"
 msgstr "Decks to review"
 
@@ -1386,6 +1429,9 @@ msgstr "Drag or use the arrow keys to move the photo."
 
 msgid "Drag to move the photo. Pinch or use the slider to zoom."
 msgstr "Drag to move the photo. Pinch or use the slider to zoom."
+
+msgid "Driving"
+msgstr "Driving"
 
 msgid "Drop or paste a picture"
 msgstr "Drop or paste a picture"
@@ -1471,6 +1517,9 @@ msgstr "Enter after each"
 msgid "Enter an email address, like you@example.com."
 msgstr "Enter an email address, like you@example.com."
 
+msgid "Every card"
+msgstr "Every card"
+
 msgid "Every card is asked twice."
 msgstr "Every card is asked twice."
 
@@ -1497,6 +1546,12 @@ msgstr "Example changed to “{value}”"
 
 msgid "Example from lesson"
 msgstr "Example from lesson"
+
+msgid "Exams and tests"
+msgstr "Exams and tests"
+
+msgid "Explore"
+msgstr "Explore"
 
 msgid "Export"
 msgstr "Export"
@@ -1600,6 +1655,9 @@ msgstr "From the lesson"
 
 msgid "Front and back"
 msgstr "Front and back"
+
+msgid "Geography"
+msgstr "Geography"
 
 msgid "Getting a card ready…"
 msgstr "Getting a card ready…"
@@ -1730,6 +1788,9 @@ msgstr "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export dec
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 
+msgid "In your library"
+msgstr "In your library"
+
 msgid "Insights"
 msgstr "Insights"
 
@@ -1760,6 +1821,9 @@ msgstr "It goes at the end. Move cards into it from the list."
 
 msgid "It may have been archived, or shared with you and then removed."
 msgstr "It may have been archived, or shared with you and then removed."
+
+msgid "It may have been withdrawn. Explore has everything Lymi publishes now."
+msgstr "It may have been withdrawn. Explore has everything Lymi publishes now."
 
 msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
 msgstr "It waited three days without being confirmed, so its file was deleted. Start it again."
@@ -1934,6 +1998,9 @@ msgstr "Lymi home"
 msgid "Lymi is in a private beta."
 msgstr "Lymi is in a private beta."
 
+msgid "Lymi is writing the first decks. Until then, make your own deck and share it with anyone."
+msgstr "Lymi is writing the first decks. Until then, make your own deck and share it with anyone."
+
 msgid "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
 msgstr "Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again tomorrow."
 
@@ -1981,6 +2048,9 @@ msgstr "Month by month"
 
 msgid "More about this card"
 msgstr "More about this card"
+
+msgid "More decks"
+msgstr "More decks"
 
 msgid "More fields"
 msgstr "More fields"
@@ -2255,6 +2325,9 @@ msgstr "Nothing left today."
 msgid "Nothing matches “{query}”"
 msgstr "Nothing matches “{query}”"
 
+msgid "Nothing published yet"
+msgstr "Nothing published yet"
+
 msgid "Nothing was added, and the file was deleted."
 msgstr "Nothing was added, and the file was deleted."
 
@@ -2309,8 +2382,14 @@ msgstr "Only you study this deck."
 msgid "Only your name is shared, never your progress."
 msgstr "Only your name is shared, never your progress."
 
+msgid "Open"
+msgstr "Open"
+
 msgid "Open deck"
 msgstr "Open deck"
+
+msgid "Open in Library"
+msgstr "Open in Library"
 
 msgid "Open Library"
 msgstr "Open Library"
@@ -2691,6 +2770,9 @@ msgstr "Say {0}"
 
 msgid "Schedule"
 msgstr "Schedule"
+
+msgid "Science"
+msgstr "Science"
 
 msgid "Search"
 msgstr "Search"
@@ -3164,6 +3246,9 @@ msgstr "This deck is no longer published"
 msgid "This deck is no longer published."
 msgstr "This deck is no longer published."
 
+msgid "This deck is not published"
+msgstr "This deck is not published"
+
 msgid "This file has no review history, so every card starts as new."
 msgstr "This file has no review history, so every card starts as new."
 
@@ -3392,6 +3477,9 @@ msgstr "What the picture shows, without the answer. Picture review needs it."
 msgid "What this is about"
 msgstr "What this is about"
 
+msgid "What you learn, in order"
+msgstr "What you learn, in order"
+
 msgid "When it’s back"
 msgstr "When it’s back"
 
@@ -3403,6 +3491,9 @@ msgstr "Which days you reviewed"
 
 msgid "Who can join this deck"
 msgstr "Who can join this deck"
+
+msgid "Work and study"
+msgstr "Work and study"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
@@ -3460,6 +3551,9 @@ msgstr "You cannot join this deck through this link."
 
 msgid "You don’t need to do anything."
 msgstr "You don’t need to do anything."
+
+msgid "You start with the first section. The next opens as you learn this one."
+msgstr "You start with the first section. The next opens as you learn this one."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "You were removed from this deck, so this link cannot add you back. Your reviews are kept."

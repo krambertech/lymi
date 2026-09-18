@@ -13,10 +13,8 @@ interface Props {
 
 /** Where the lantern hangs, in percent of the plate. The light is cast from here and stays here. */
 const REST = { x: 50, y: 26 };
-/** How far the pool leans toward a pointer, in percent of the plate. A lean, never a chase. */
-const LEAN = { x: 7, y: 5 };
-/** How much of the distance the light closes each frame. Slow enough to trail the pointer. */
-const FOLLOW = 0.06;
+/** How much of the distance the light closes each frame. Enough to trail a pointer, not chase it. */
+const FOLLOW = 0.12;
 
 /**
  * The page's one conversion, and the one place the lantern is lit. The wick catches the first time
@@ -48,9 +46,9 @@ export function SignUpSection({ title, note }: Props) {
     return () => watch.disconnect();
   }, []);
 
-  // The light leans toward a pointer without the lantern leaving its hook: a lamp answers a hand
-  // near it, it does not follow one. A coarse pointer cannot hover, and a pointer-led glow is the
-  // motion someone who asked for less of it does not want, so both leave the light where it hangs.
+  // The light goes where the reader looks, while the lantern stays on its hook. A coarse pointer
+  // cannot hover, and a glow that tracks a pointer is the motion someone who asked for less of it
+  // does not want, so both leave the light hanging over the headline.
   useEffect(() => {
     const el = plate.current;
     if (!el || still) return;
@@ -73,12 +71,10 @@ export function SignUpSection({ title, note }: Props) {
     const run = () => {
       if (!frame) frame = requestAnimationFrame(step);
     };
-    const lean = (event: PointerEvent) => {
+    const lead = (event: PointerEvent) => {
       const box = el.getBoundingClientRect();
-      const awayX = ((event.clientX - box.left) / box.width) * 100 - REST.x;
-      const awayY = ((event.clientY - box.top) / box.height) * 100 - REST.y;
-      target.x = REST.x + Math.max(-1, Math.min(1, awayX / 50)) * LEAN.x;
-      target.y = REST.y + Math.max(-1, Math.min(1, awayY / 50)) * LEAN.y;
+      target.x = ((event.clientX - box.left) / box.width) * 100;
+      target.y = ((event.clientY - box.top) / box.height) * 100;
       run();
     };
     const settle = () => {
@@ -87,11 +83,11 @@ export function SignUpSection({ title, note }: Props) {
       run();
     };
 
-    el.addEventListener("pointermove", lean);
+    el.addEventListener("pointermove", lead);
     el.addEventListener("pointerleave", settle);
     return () => {
       cancelAnimationFrame(frame);
-      el.removeEventListener("pointermove", lean);
+      el.removeEventListener("pointermove", lead);
       el.removeEventListener("pointerleave", settle);
     };
   }, [still]);

@@ -6,8 +6,18 @@ import { requiresAppPreview } from "./app-preview-impact.mjs";
 import { requiresE2E } from "./e2e-impact.mjs";
 import { requiresSitePreview } from "./site-preview-impact.mjs";
 
+// Each shard pays the whole `scripts/e2e-server.mjs` setup, so the wall clock it saves runs out
+// well before the runner minutes it spends. Three is measured, not a law. docs/testing.md.
+export const e2eShardCount = 3;
+
+const shardMatrix = JSON.stringify(Array.from({ length: e2eShardCount }, (_, index) => index + 1));
+
+function shardedPlan(plan) {
+  return { ...plan, shards: e2eShardCount, shardMatrix };
+}
+
 function fullPlan(reason) {
-  return {
+  return shardedPlan({
     runE2E: true,
     browsers: "chromium webkit",
     playwrightArgs: "",
@@ -16,7 +26,7 @@ function fullPlan(reason) {
     runAppPreview: false,
     runSitePreview: false,
     reason,
-  };
+  });
 }
 
 export function createCiPlan({ eventName, changedPaths = [], manualE2E = true }) {
@@ -24,7 +34,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
     const runAppPreview = requiresAppPreview(changedPaths);
     const runSitePreview = requiresSitePreview(changedPaths);
     if (!requiresE2E(changedPaths)) {
-      return {
+      return shardedPlan({
         runE2E: false,
         browsers: "",
         playwrightArgs: "",
@@ -33,10 +43,10 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
         runAppPreview,
         runSitePreview,
         reason: "This pull request changes no production-affecting paths.",
-      };
+      });
     }
 
-    return {
+    return shardedPlan({
       runE2E: true,
       browsers: "chromium",
       playwrightArgs: "--project=chromium",
@@ -45,11 +55,11 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
       runAppPreview,
       runSitePreview,
       reason: "This pull request changes production-affecting paths.",
-    };
+    });
   }
 
   if (eventName === "workflow_dispatch" && !manualE2E) {
-    return {
+    return shardedPlan({
       runE2E: false,
       browsers: "",
       playwrightArgs: "",
@@ -58,7 +68,7 @@ export function createCiPlan({ eventName, changedPaths = [], manualE2E = true })
       runAppPreview: false,
       runSitePreview: false,
       reason: "The manually dispatched run explicitly disabled browser E2E.",
-    };
+    });
   }
 
   if (eventName === "push") {
@@ -82,6 +92,8 @@ function writeGitHubOutputs(plan) {
 
   const outputs = {
     run_e2e: String(plan.runE2E),
+    shards: String(plan.shards),
+    shard_matrix: plan.shardMatrix,
     browsers: plan.browsers,
     playwright_args: plan.playwrightArgs,
     coverage: plan.coverage,
@@ -107,7 +119,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   });
   writeGitHubOutputs(plan);
   process.stdout.write(
-    `CI plan: ${plan.coverage}; deployment package check ${
+    `CI plan: ${plan.coverage}${
+      plan.runE2E ? ` across ${plan.shards} shards` : ""
+    }; deployment package check ${
       plan.runDeployCheck ? "enabled" : "skipped"
     }; app preview ${plan.runAppPreview ? "enabled" : "skipped"}; public-site preview ${
       plan.runSitePreview ? "enabled" : "skipped"

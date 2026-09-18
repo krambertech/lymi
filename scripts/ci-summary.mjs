@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import { appendFileSync } from "node:fs";
+import { appendFileSync, readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const labels = {
@@ -15,8 +16,62 @@ function outcome(value) {
   return labels[value] ?? labels.unknown;
 }
 
-function browserOutcome(env, value) {
-  return env.BROWSER_RESULT === "skipped" ? labels.skipped : outcome(value);
+export function readShardOutcomes(directory) {
+  let names;
+  try {
+    names = readdirSync(directory);
+  } catch {
+    return [];
+  }
+
+  return names
+    .filter((name) => name.endsWith(".json"))
+    .map((name) => JSON.parse(readFileSync(join(directory, name), "utf8")))
+    .sort((first, second) => first.shard - second.shard);
+}
+
+function count(value) {
+  return typeof value === "number" ? String(value) : "—";
+}
+
+function renderShards(env, shardOutcomes) {
+  if (env.RUN_E2E !== "true") return [];
+
+  const shards = Number(env.SHARDS) || shardOutcomes.length;
+  if (!shards) return [];
+
+  const rows = [];
+  for (let shard = 1; shard <= shards; shard += 1) {
+    const record = shardOutcomes.find((candidate) => candidate.shard === shard);
+    rows.push(
+      `| ${shard} of ${shards} | ${outcome(record?.outcome)} | ${count(record?.passed)} | ${count(record?.failed)} | ${count(record?.flaky)} | ${count(record?.skipped)} |`,
+    );
+  }
+
+  const total = (key) => shardOutcomes.reduce((sum, record) => sum + (record[key] ?? 0), 0);
+  const reported = shardOutcomes.filter((record) => record.reported).length;
+
+  const failures = shardOutcomes
+    .filter((record) => record.failures?.length)
+    .flatMap((record) => [
+      "",
+      `Failed in shard ${record.shard} of ${record.shards}:`,
+      "",
+      ...record.failures.map((failure) => `- \`${failure}\``),
+      ...(record.truncatedFailures ? [`- and ${record.truncatedFailures} more in this shard`] : []),
+    ]);
+
+  return [
+    "### Browser E2E shards",
+    "",
+    "| Shard | Result | Passed | Failed | Flaky | Skipped |",
+    "| --- | --- | --- | --- | --- | --- |",
+    ...rows,
+    "",
+    `**Across ${reported} of ${shards} shards:** ${total("passed")} passed, ${total("failed")} failed, ${total("flaky")} flaky, ${total("skipped")} skipped.`,
+    ...failures,
+    "",
+  ];
 }
 
 export function ciFailures(env) {
@@ -36,7 +91,7 @@ export function ciFailures(env) {
   return failures;
 }
 
-export function renderCiSummary(env) {
+export function renderCiSummary(env, shardOutcomes = []) {
   const coverage = env.COVERAGE || "Not selected";
   const reason =
     env.PLAN_REASON || "An earlier gate stopped before the coverage plan was selected.";
@@ -70,7 +125,7 @@ export function renderCiSummary(env) {
     "| --- | --- |",
     `| Coverage plan | ${outcome(env.PLAN_RESULT)} |`,
     `| Quality checks | ${outcome(env.QUALITY_RESULT)} |`,
-    `| Browser E2E | ${outcome(env.BROWSER_RESULT)} |`,
+    `| Browser E2E (all shards) | ${outcome(env.BROWSER_RESULT)} |`,
     "",
     "| Gate | Outcome |",
     "| --- | --- |",
@@ -85,10 +140,8 @@ export function renderCiSummary(env) {
     `| Unit tests | ${outcome(env.TEST_OUTCOME)} |`,
     `| Product deployment package | ${outcome(env.DEPLOY_PRODUCT_OUTCOME)} |`,
     `| Public-site deployment package | ${outcome(env.DEPLOY_SITE_OUTCOME)} |`,
-    `| Browser dependencies | ${browserOutcome(env, env.BROWSER_DEPENDENCIES_OUTCOME)} |`,
-    `| Browser installation | ${browserOutcome(env, env.BROWSERS_OUTCOME)} |`,
-    `| Browser E2E | ${browserOutcome(env, env.E2E_OUTCOME)} |`,
     "",
+    ...renderShards(env, shardOutcomes),
     "A green Chromium pull-request run is not full cross-browser evidence. Chromium + WebKit run on every push to `main` and through `/e2e`.",
     "",
   ].join("\n");
@@ -98,7 +151,10 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   if (!process.env.GITHUB_STEP_SUMMARY) {
     throw new Error("GITHUB_STEP_SUMMARY is required");
   }
-  appendFileSync(process.env.GITHUB_STEP_SUMMARY, renderCiSummary(process.env));
+  appendFileSync(
+    process.env.GITHUB_STEP_SUMMARY,
+    renderCiSummary(process.env, readShardOutcomes(process.env.SHARD_OUTCOMES_DIR ?? "")),
+  );
 
   const failures = ciFailures(process.env);
   if (failures.length > 0) {

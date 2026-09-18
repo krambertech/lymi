@@ -9,6 +9,7 @@ test("requires E2E for production behavior and harness changes", () => {
   assert.equal(requiresE2E(["packages/core/src/fsrs.ts"]), true);
   assert.equal(requiresE2E(["playwright.config.ts"]), true);
   assert.equal(requiresE2E(["scripts/ci-plan.mjs"]), true);
+  assert.equal(requiresE2E(["scripts/e2e-shard-outcome.mjs"]), true);
   assert.equal(requiresE2E(["scripts/check-deployment.mjs"]), true);
   assert.equal(requiresE2E(["scripts/check-migrations.mjs"]), true);
   assert.equal(requiresE2E(["scripts/check-schema-drift.mjs"]), true);

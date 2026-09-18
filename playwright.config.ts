@@ -14,7 +14,13 @@ export default defineConfig({
   // per test, but the server is not: concurrent workers starve it. docs/testing.md.
   workers: 1,
   reporter: process.env.CI
-    ? [["github"], ["html", { open: "never" }]]
+    ? // The JSON report is what `scripts/e2e-shard-outcome.mjs` reads, so a red gate can name the
+      // shard and its tests once the shards have gone their separate ways.
+      [
+        ["github"],
+        ["html", { open: "never" }],
+        ["json", { outputFile: "test-results/results.json" }],
+      ]
     : [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: e2eProductUrl,

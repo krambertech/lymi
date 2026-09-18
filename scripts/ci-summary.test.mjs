@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { ciFailures, renderCiSummary } from "./ci-summary.mjs";
+import { ciFailures, readShardOutcomes, renderCiSummary } from "./ci-summary.mjs";
 
 test("the summary makes browser coverage and failed gates explicit", () => {
   const summary = renderCiSummary({
@@ -23,9 +23,6 @@ test("the summary makes browser coverage and failed gates explicit", () => {
     TEST_OUTCOME: "skipped",
     DEPLOY_PRODUCT_OUTCOME: "skipped",
     DEPLOY_SITE_OUTCOME: "skipped",
-    BROWSER_DEPENDENCIES_OUTCOME: "success",
-    BROWSERS_OUTCOME: "skipped",
-    E2E_OUTCOME: "skipped",
   });
 
   assert.match(summary, /\*\*Browser coverage:\*\* Chromium/);
@@ -86,4 +83,87 @@ test("the summary says a draft pull request waits for review before its app prev
     summary,
     /\*\*Product-app preview:\*\* Skipped until the pull request is ready for review/,
   );
+});
+
+test("the summary names the shard and the tests behind a red browser gate", () => {
+  const summary = renderCiSummary(
+    {
+      COVERAGE: "Chromium",
+      RUN_E2E: "true",
+      SHARDS: "3",
+      PLAN_RESULT: "success",
+      QUALITY_RESULT: "success",
+      BROWSER_RESULT: "failure",
+    },
+    [
+      {
+        shard: 1,
+        shards: 3,
+        outcome: "success",
+        reported: true,
+        passed: 21,
+        failed: 0,
+        flaky: 0,
+        skipped: 0,
+        failures: [],
+      },
+      {
+        shard: 2,
+        shards: 3,
+        outcome: "failure",
+        reported: true,
+        passed: 19,
+        failed: 1,
+        flaky: 0,
+        skipped: 0,
+        failures: ["deck-creation.spec.ts:42 — a learner can add a card"],
+        truncatedFailures: 0,
+      },
+      {
+        shard: 3,
+        shards: 3,
+        outcome: "success",
+        reported: true,
+        passed: 21,
+        failed: 0,
+        flaky: 0,
+        skipped: 0,
+        failures: [],
+      },
+    ],
+  );
+
+  assert.match(summary, /\| Browser E2E \(all shards\) \| Failed \|/);
+  assert.match(summary, /\| 2 of 3 \| Failed \| 19 \| 1 \| 0 \| 0 \|/);
+  assert.match(summary, /\*\*Across 3 of 3 shards:\*\* 61 passed, 1 failed/);
+  assert.match(summary, /Failed in shard 2 of 3:/);
+  assert.match(summary, /a learner can add a card/);
+});
+
+test("a shard that never reported is named rather than silently missing", () => {
+  const summary = renderCiSummary({ RUN_E2E: "true", SHARDS: "3", BROWSER_RESULT: "cancelled" }, [
+    {
+      shard: 1,
+      shards: 3,
+      outcome: "success",
+      reported: true,
+      passed: 21,
+      failed: 0,
+      flaky: 0,
+      skipped: 0,
+      failures: [],
+    },
+  ]);
+
+  assert.match(summary, /\| 2 of 3 \| Not reached \| — \| — \| — \| — \|/);
+  assert.match(summary, /\*\*Across 1 of 3 shards:\*\*/);
+});
+
+test("a run with no browser coverage renders no shard table", () => {
+  const summary = renderCiSummary({ RUN_E2E: "false", SHARDS: "3" }, []);
+  assert.doesNotMatch(summary, /Browser E2E shards/);
+});
+
+test("missing shard outcomes read as none rather than throwing", () => {
+  assert.deepEqual(readShardOutcomes("scripts/no-such-directory"), []);
 });

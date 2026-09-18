@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createCiPlan } from "./ci-plan.mjs";
+import { createCiPlan, e2eShardCount } from "./ci-plan.mjs";
 
 test("production pull requests run Chromium and a deployment package check", () => {
   const plan = createCiPlan({
@@ -72,4 +72,28 @@ test("shared changes can schedule both previews", () => {
 
   assert.equal(plan.runAppPreview, true);
   assert.equal(plan.runSitePreview, true);
+});
+
+test("every plan carries the shard count and a matrix the workflow can expand", () => {
+  for (const eventName of ["pull_request", "push", "workflow_dispatch"]) {
+    const plan = createCiPlan({
+      eventName,
+      changedPaths: ["apps/web/src/client/routes/today.tsx"],
+    });
+    assert.equal(plan.shards, e2eShardCount);
+    assert.deepEqual(
+      JSON.parse(plan.shardMatrix),
+      Array.from({ length: e2eShardCount }, (_, index) => index + 1),
+    );
+  }
+});
+
+test("a plan that runs no browser E2E still offers a matrix the workflow can expand", () => {
+  const plan = createCiPlan({
+    eventName: "pull_request",
+    changedPaths: ["docs/proposals/shared-decks.md"],
+  });
+
+  assert.equal(plan.runE2E, false);
+  assert.ok(JSON.parse(plan.shardMatrix).length > 0);
 });

@@ -980,25 +980,6 @@
   border-radius: var(--radius-lg);
   background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
 }
-/* The deck's own page shows one tray alone, so its card is not cut: a row of cropped cards reads
-   as a shelf, but one cropped card reads as a rendering fault. Shown whole it also has to hug its
-   text — the shelf's fixed ratio is sized for a card two thirds of which is visible, so at full
-   height a short term leaves a void above the meaning. */
-.deck-tray[data-size="lg"] {
-  --cw: 168px;
-  height: auto;
-  padding-block: 20px;
-}
-.deck-tray[data-size="lg"] .deck-tray-stack {
-  height: auto;
-}
-.deck-tray[data-size="lg"] .deck-tray-card {
-  position: relative;
-  min-height: calc(var(--cw) * 0.78);
-}
-.deck-tray[data-size="lg"] .deck-tray-meaning {
-  margin-top: calc(var(--cw) * 0.14);
-}
 [data-theme="dark"] .deck-tray {
   --tray-l: 0.192;
   --tray-c: 0.015;
@@ -1137,6 +1118,26 @@
   font-size: max(0.75rem, calc(var(--cw) * 0.074));
   line-height: 1.3;
   color: var(--text-2);
+}
+
+/* The deck's own page shows one tray alone, so its card is not cut: a row of cropped cards reads
+   as a shelf, but one cropped card reads as a rendering fault. Shown whole it also has to hug its
+   text — the shelf's fixed ratio is sized for a card two thirds of which is visible, so at full
+   height a short term leaves a void above the meaning. */
+.deck-tray[data-size="lg"] {
+  --cw: 168px;
+  height: auto;
+  padding-block: 20px;
+}
+.deck-tray[data-size="lg"] .deck-tray-stack {
+  height: auto;
+}
+.deck-tray[data-size="lg"] .deck-tray-card {
+  position: relative;
+  min-height: calc(var(--cw) * 0.78);
+}
+.deck-tray[data-size="lg"] .deck-tray-meaning {
+  margin-top: calc(var(--cw) * 0.14);
 }
 
 /* One shelf per category, scrolling sideways, so a category of forty decks lengthens one row

@@ -102,19 +102,21 @@ export function ExploreDeckView({
   return (
     <Page>
       <TopBar back={back} nested />
-      <PageHeader
-        title={<span lang={deck.meaningLanguage}>{deck.name}</span>}
-        sub={
-          <span className="flex items-center gap-1.5">
-            <AppTile size={18} />
-            <Trans>By {deck.publisher}</Trans>
-          </span>
-        }
-      />
-      {/* The deck's colour lives on its tray and nowhere else, so amber keeps the plain canvas it
-          needs to read as the one thing to press. DESIGN.md, "The tray" and "Colour". */}
+      {/* The name is inside the column, so the tray beside it starts level with the title rather
+          than below the header. The deck's colour lives on that tray and nowhere else, so amber
+          keeps the plain canvas it needs to read as the one thing to press. DESIGN.md, "Colour". */}
       <div className="grid items-start gap-7 @3xl:grid-cols-[minmax(0,1fr)_auto] @3xl:gap-12">
         <div className="grid justify-items-start gap-4">
+          <PageHeader
+            title={<span lang={deck.meaningLanguage}>{deck.name}</span>}
+            sub={
+              <span className="flex items-center gap-1.5">
+                <AppTile size={18} />
+                <Trans>By {deck.publisher}</Trans>
+              </span>
+            }
+            className="w-full pb-1 @3xl:pb-2"
+          />
           <p lang={deck.meaningLanguage} className="max-w-[52ch] text-md text-pretty text-text-2">
             {deck.summary}
           </p>

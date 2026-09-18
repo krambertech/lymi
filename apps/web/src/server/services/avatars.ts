@@ -2,8 +2,8 @@ import type { AvatarOut } from "@lymi/core";
 import { IMAGE_LIMITS } from "@lymi/core";
 import { and, eq, isNull, lt, or } from "@lymi/core/db";
 import type { UserAvatar } from "@lymi/core/schema";
-import { audit } from "../audit";
 import { schema } from "../db";
+import { audit } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { normalizeSquareImage, readAtMost } from "./images";
 
@@ -89,13 +89,7 @@ export async function uploadAvatar(
     throw staleChoice();
   }
   if (previous.customKey) await discard(storage, previous.customKey);
-  await audit(ctx.db, {
-    userId: ctx.userId,
-    actor: ctx.actor,
-    action: "avatar.upload",
-    entity: "account",
-    entityId: ctx.userId,
-  });
+  await audit(ctx, { entity: "account", action: "avatar.upload", id: ctx.userId });
   return describeAvatar(updated);
 }
 
@@ -127,13 +121,7 @@ export async function removeAvatar(
     .returning();
   if (!updated) throw staleChoice();
   await discard(storage, previous.customKey);
-  await audit(ctx.db, {
-    userId: ctx.userId,
-    actor: ctx.actor,
-    action: "avatar.remove",
-    entity: "account",
-    entityId: ctx.userId,
-  });
+  await audit(ctx, { entity: "account", action: "avatar.remove", id: ctx.userId });
   return describeAvatar(updated);
 }
 
@@ -194,13 +182,10 @@ export async function importGoogleAvatar(
     return "skipped";
   }
   if (previous.googleKey) await discard(storage, previous.googleKey);
-  await audit(ctx.db, {
-    userId: ctx.userId,
-    actor: "system",
-    action: "avatar.google_refresh",
-    entity: "account",
-    entityId: ctx.userId,
-  });
+  await audit(
+    { ...ctx, actor: "system" },
+    { entity: "account", action: "avatar.google_refresh", id: ctx.userId },
+  );
   return "stored";
 }
 

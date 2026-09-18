@@ -20,7 +20,6 @@ import {
 } from "@lymi/core";
 import { and, asc, desc, eq, getTableColumns, isNotNull, lt, sql } from "@lymi/core/db";
 import type { Card, CardImage, Deck, Export } from "@lymi/core/schema";
-import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
 import { AnkiCollection, ankiPlaceholder, MAX_ANKI_COLLECTION_BYTES } from "../exports/anki";
 import {
@@ -30,6 +29,7 @@ import {
   ZipSegment,
   ZipTooLarge,
 } from "../exports/zip";
+import { auditStatement } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import { deckAccess, memberOf } from "./members";
@@ -167,13 +167,11 @@ export async function startExport(
       objectKey: `exports/${crypto.randomUUID()}`,
       createdBy: actor,
     }),
-    auditStatement(db, {
-      userId,
-      actor,
-      action: "create",
+    auditStatement(ctx, {
       entity: "export",
-      entityId: id,
-      payload: { format: input.format, deckId: deck?.id ?? null },
+      action: "create",
+      id,
+      details: { format: input.format, deckId: deck?.id ?? null },
     }),
   ]);
   try {
@@ -633,13 +631,11 @@ export async function finishExport(
         updatedAt: now,
       })
       .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting"))),
-    auditStatement(ctx.db, {
-      userId: ctx.userId,
-      actor: ctx.actor,
-      action: "complete",
+    auditStatement(ctx, {
       entity: "export",
-      entityId: id,
-      payload: { format: row.format, deckId: row.deckId, ...counts, missing: end.missing },
+      action: "complete",
+      id,
+      details: { format: row.format, deckId: row.deckId, ...counts, missing: end.missing },
     }),
   ]);
   await deleteObjects(bucket, `${row.objectKey}.records/`);

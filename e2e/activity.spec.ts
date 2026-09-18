@@ -32,15 +32,24 @@ test("a key's cards land on Activity, open there and archive from the word", asy
       });
       expect(card.ok()).toBeTruthy();
     }
+    const section = await page.request.post(`/api/decks/${deckId}/sections`, {
+      headers: { "x-api-key": key },
+      data: { name: "Lesson 1" },
+    });
+    expect(section.ok()).toBeTruthy();
   });
 
   const row = page.getByRole("button", { name: /Added 2 cards to Activity deck/ });
 
-  await test.step("one row says what the key did today", async () => {
+  await test.step("one row says what the key did today, and every row names the key", async () => {
     await page.goto("/activity");
     await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
     await expect(row).toContainText("Lesson notes script");
     await expect(row).toHaveAttribute("aria-expanded", "false");
+    // A section is not a card, and its row must still say which key made it.
+    await expect(
+      page.getByRole("listitem").filter({ hasText: /Made the section Lesson 1 in Activity deck/ }),
+    ).toContainText("Lesson notes script");
   });
 
   await test.step("the keyboard opens the row and the cards it wrote", async () => {

@@ -2,6 +2,7 @@ import type { ActivityEntryOut, ActivityKind } from "@lymi/core";
 import { and, desc, eq, inArray, lt, ne, notInArray, or, type SQL } from "@lymi/core/db";
 import type { AuditEntry } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import type { AuditAction, AuditEntity } from "./audit";
 import { selectIn } from "./batch";
 import { clientNames } from "./connected-apps";
 import type { ServiceContext } from "./context";
@@ -15,36 +16,111 @@ import { reviewZone } from "./review-days";
  * of a shared deck. The learner's own edits stay in a card's history. docs/design/activity.md.
  */
 
-/** Sharing events. They are the learner's own writes, and they belong on this screen. */
-const PEOPLE_ACTIONS = [
-  "join",
-  "leave",
-  "remove_member",
-  "turn_on_join_link",
-  "turn_off_join_link",
-];
-
-/** The entities Activity has a sentence for. */
-const ENTITIES = ["card", "deck", "series", "section", "import", "export"];
+type Sentences = { [E in AuditEntity]: Record<AuditAction<E>, ActivityKind | null> };
 
 /**
- * Writes with no sentence of their own. Caching a card's audio is the AI's work but not a change
- * to the card, and naming it an edit on the one screen that says nothing lands unseen would lie.
- * They are cut in SQL, so a page is never full of rows the reader then drops.
+ * What Activity says about each kind of write, one entry per event the audit module can record,
+ * so a new event fails to compile until this screen has decided on it. Null is deliberate: the
+ * write is recorded and not shown. Caching a card's audio is the AI's work but not a change to
+ * the card, and naming it an edit on the one screen that says nothing lands unseen would lie.
  */
-const UNSAID_ACTIONS = [
-  "generate_audio",
-  "set_image",
-  "update_image",
-  "archive_image",
-  "restore_image",
-  "reorder",
-  "move",
-  "start",
-  "publish",
-  "update_publication",
-  "withdraw_publication",
-];
+const SENTENCES: Sentences = {
+  card: {
+    create: "cards_added",
+    update: "cards_edited",
+    enrich: "cards_enriched",
+    archive: "cards_archived",
+    restore: "cards_restored",
+    generate_audio: null,
+    set_image: null,
+    update_image: null,
+    archive_image: null,
+    restore_image: null,
+  },
+  deck: {
+    create: "deck_added",
+    update: "deck_edited",
+    archive: "deck_archived",
+    restore: "deck_restored",
+    join: "member_joined",
+    leave: "member_left",
+    remove_member: "member_removed",
+    turn_on_join_link: "link_on",
+    turn_off_join_link: "link_off",
+    import_edition: null,
+    approve_edition: null,
+    publish_edition: null,
+    update_edition: null,
+    withdraw_edition: null,
+    publish: null,
+    update_publication: null,
+    withdraw_publication: null,
+  },
+  series: {
+    create: "series_added",
+    update: "series_edited",
+    archive: "series_archived",
+    restore: "series_restored",
+    reorder: null,
+  },
+  section: {
+    create: "section_added",
+    update: "section_edited",
+    archive: "section_archived",
+    restore: "section_restored",
+    reorder: null,
+    move: null,
+    start: null,
+  },
+  import: {
+    create: "import",
+    complete: "import",
+    cancel: "import",
+    archive: "import",
+    restore: "import",
+  },
+  export: { create: "export", complete: "export" },
+  review: { grade: null, undo_grade: null },
+  account: {
+    "avatar.upload": null,
+    "avatar.remove": null,
+    "avatar.google_refresh": null,
+    send_transactional_email: null,
+    send_feedback: null,
+    retire_unproved_password: null,
+  },
+};
+
+/** Sharing events. They are the learner's own writes, and they belong on this screen. */
+const PEOPLE_KINDS = new Set<ActivityKind>([
+  "member_joined",
+  "member_left",
+  "member_removed",
+  "link_on",
+  "link_off",
+]);
+
+const entries = (entity: AuditEntity) =>
+  Object.entries(SENTENCES[entity]) as [string, ActivityKind | null][];
+
+/** The entities Activity has a sentence for. */
+const ENTITIES = (Object.keys(SENTENCES) as AuditEntity[]).filter((entity) =>
+  entries(entity).some(([, kind]) => kind),
+);
+
+/** Writes with no sentence on any entity, cut in SQL so no page is only rows the reader drops. */
+const UNSAID_ACTIONS = (() => {
+  const said = new Set<string>();
+  const unsaid = new Set<string>();
+  for (const entity of ENTITIES) {
+    for (const [action, kind] of entries(entity)) (kind ? said : unsaid).add(action);
+  }
+  return [...unsaid].filter((action) => !said.has(action));
+})();
+
+const PEOPLE_ACTIONS = entries("deck").flatMap(([action, kind]) =>
+  kind && PEOPLE_KINDS.has(kind) ? [action] : [],
+);
 
 /** A file the learner moved is their own act, and it belongs on this screen whoever moved it. */
 const FILES = ["import", "export"];
@@ -181,45 +257,15 @@ function parseCursor(cursor: string | undefined): { at: Date; id: string } | nul
   return id && Number.isFinite(ms) ? { at: new Date(ms), id } : null;
 }
 
-const CARD_KINDS: Record<string, ActivityKind> = {
-  create: "cards_added",
-  update: "cards_edited",
-  archive: "cards_archived",
-  restore: "cards_restored",
-};
-
-const THING_VERBS: Record<string, "added" | "edited" | "archived" | "restored"> = {
-  create: "added",
-  update: "edited",
-  archive: "archived",
-  restore: "restored",
-};
-
-const PEOPLE_KINDS: Record<string, ActivityKind> = {
-  join: "member_joined",
-  leave: "member_left",
-  remove_member: "member_removed",
-  turn_on_join_link: "link_on",
-  turn_off_join_link: "link_off",
-};
-
-/** What the row's sentence is about. A write with no sentence for it is left out. */
+/** What the row's sentence is about. A write this reader has no sentence for is left out. */
 function kindOf(row: Row): ActivityKind | null {
-  if (row.entity === "import") return "import";
-  if (row.entity === "export") return "export";
-  const people = PEOPLE_KINDS[row.action];
-  if (people) return row.entity === "deck" ? people : null;
-  if (row.entity === "card") {
-    if (row.action === "update" && row.actor === "ai") return "cards_enriched";
-    // No fallback: a write this reader has no sentence for is left out rather than called an edit.
-    return CARD_KINDS[row.action] ?? null;
+  // Before enrichment had its own action, the AI's fill-in was an update by the AI.
+  if (row.entity === "card" && row.action === "update" && row.actor === "ai") {
+    return "cards_enriched";
   }
-  const verb = THING_VERBS[row.action];
-  if (!verb) return null;
-  if (row.entity === "deck") return `deck_${verb}`;
-  if (row.entity === "series") return `series_${verb}`;
-  if (row.entity === "section") return `section_${verb}`;
-  return null;
+  const table: Record<string, ActivityKind | null> | undefined =
+    SENTENCES[row.entity as AuditEntity];
+  return table?.[row.action] ?? null;
 }
 
 /**
@@ -432,10 +478,12 @@ async function present(ctx: ServiceContext, groups: Group[]): Promise<Entry[]> {
   return entries;
 }
 
-/** The deck a card write named, from the payload the service kept. */
+/** The deck a card write named. Rows from before the key existed carry it only on an add. */
 function landedIn(row: Row): string | null {
-  const payload = row.payload as { deckId?: unknown } | null;
-  return payload && typeof payload.deckId === "string" ? payload.deckId : null;
+  const payload = row.payload as { landedIn?: unknown; deckId?: unknown } | null;
+  if (!payload) return null;
+  if (typeof payload.landedIn === "string") return payload.landedIn;
+  return row.action === "create" && typeof payload.deckId === "string" ? payload.deckId : null;
 }
 
 /** The member a people row is about, from the payload its service wrote. */

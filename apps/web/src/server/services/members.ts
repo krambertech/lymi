@@ -1,8 +1,8 @@
 import type { MemberRole } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
-import { audit, auditStatementWhen } from "../audit";
-import { type Db, schema } from "../db";
+import { schema } from "../db";
+import { audit, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { deckModes, stateStatementsForLearner } from "./modes";
@@ -95,7 +95,7 @@ export async function ownedDeck(ctx: ServiceContext, deckId: string) {
  * clears the block. The join lands in the owner's Activity.
  */
 export async function join(
-  { db, userId, actor, client, clientName }: ServiceContext,
+  ctx: ServiceContext,
   deckId: string,
   opts: {
     invitationId?: string | undefined;
@@ -104,6 +104,7 @@ export async function join(
     meaningLanguage?: string | undefined;
   } = {},
 ) {
+  const { db, userId } = ctx;
   const [deck] = await db
     .select({ id: schema.decks.id, userId: schema.decks.userId })
     .from(schema.decks)
@@ -192,16 +193,13 @@ export async function join(
     membership,
     ...stateStatementsForLearner(db, deckId, userId, now),
     auditStatementWhen(
-      db,
+      { ...ctx, userId: deck.userId },
       {
-        userId: deck.userId,
-        actor,
-        client,
-        clientName,
-        action: "join",
         entity: "deck",
-        entityId: deckId,
-        payload: { memberId: userId, ...(via && { via }) },
+        action: "join",
+        id: deckId,
+        memberId: userId,
+        ...(via ? { details: { via } } : {}),
       },
       schema.deckMembers,
       and(
@@ -227,7 +225,8 @@ export async function join(
 }
 
 /** Stop studying a deck. The states and reviews stay, so rejoining resumes. */
-export async function leave({ db, userId, actor }: ServiceContext, deckId: string) {
+export async function leave(ctx: ServiceContext, deckId: string) {
+  const { db, userId } = ctx;
   const result = await db
     .update(schema.deckMembers)
     .set({ removedAt: new Date(), removedBy: "self", updatedAt: new Date() })
@@ -245,21 +244,17 @@ export async function leave({ db, userId, actor }: ServiceContext, deckId: strin
     .from(schema.decks)
     .where(eq(schema.decks.id, deckId));
   if (deck) {
-    await audit(db, {
-      userId: deck.userId,
-      actor,
-      action: "leave",
-      entity: "deck",
-      entityId: deckId,
-      payload: { memberId: userId },
-    });
+    await audit(
+      { ...ctx, userId: deck.userId },
+      { entity: "deck", action: "leave", id: deckId, memberId: userId },
+    );
   }
   return { ok: true as const };
 }
 
 /** Take a member out of a deck and keep them out until invited back by name. */
 export async function removeMember(ctx: ServiceContext, deckId: string, memberId: string) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   await ownedDeck(ctx, deckId);
   const result = await db
     .update(schema.deckMembers)
@@ -273,14 +268,7 @@ export async function removeMember(ctx: ServiceContext, deckId: string, memberId
     )
     .returning({ id: schema.deckMembers.id });
   if (result.length === 0) throw notFound("Member");
-  await audit(db, {
-    userId,
-    actor,
-    action: "remove_member",
-    entity: "deck",
-    entityId: deckId,
-    payload: { memberId },
-  });
+  await audit(ctx, { entity: "deck", action: "remove_member", id: deckId, memberId });
   return { ok: true as const };
 }
 

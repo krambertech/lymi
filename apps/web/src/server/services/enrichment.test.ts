@@ -192,7 +192,7 @@ describe("enrichCards", () => {
     expect(second.example).toBe("Magari!");
 
     const history = await cardHistory(ctx, ids[0] as string);
-    const enrichments = history.events.filter((e) => e.actor === "ai" && e.action === "update");
+    const enrichments = history.events.filter((e) => e.actor === "ai" && e.action === "enrich");
     expect(enrichments).toHaveLength(1);
     expect(Object.keys(enrichments[0]?.payload as object)).toContain("meaning");
   });
@@ -308,9 +308,10 @@ describe("enrichCards", () => {
 
     // Activity names what landed, not what was attempted.
     const history = await cardHistory(ctx, added.card.id);
-    const enriched = history.events.filter((e) => e.actor === "ai" && e.action === "update");
+    const enriched = history.events.filter((e) => e.actor === "ai" && e.action === "enrich");
     expect(enriched).toHaveLength(1);
-    expect(Object.keys(enriched[0]?.payload as object)).toEqual(["example"]);
+    const { landedIn: _deck, ...fields } = (enriched[0]?.payload ?? {}) as Record<string, unknown>;
+    expect(Object.keys(fields)).toEqual(["example"]);
   });
 
   it("marks the cards failed when the queue refuses the run, and the add still succeeds", async () => {

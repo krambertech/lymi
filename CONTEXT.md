@@ -56,6 +56,8 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Actor**: Who made a write: the learner in the app, the API, an MCP client, the AI, or the system.
 
+**Audit row**: The record of one write: its actor, the connected app behind it and that app's name at the time, what was written and what happened to it. Every write leaves one, and Activity reads them and nothing else, so a write with no audit row is the bug to look for when something lands unseen. _Avoid_: Log entry, event (in copy), history
+
 **Scope**: What a key or OAuth grant may do: read, or read and write. Reviews are never writable by an integration.
 
 **Connected app**: An MCP client the learner let in on the consent screen, listed in Settings. The grant behind it is an OAuth consent; "connected app" is what the learner is shown, because the client is the thing they recognise. _Avoid_: Integration (that is the actor), authorized client, OAuth client (in the interface)

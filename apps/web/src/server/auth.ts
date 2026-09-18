@@ -9,12 +9,12 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
-import { audit } from "./audit";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
 import { allowedEmails, type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
 import { type Admission, admissionFrom, attributes, cookieName } from "./join-cookie";
+import { audit } from "./services/audit";
 import {
   avatarRow,
   hasGoogleAvatar,
@@ -363,14 +363,15 @@ async function dropCredentialAccount(db: Db, userId: string): Promise<void> {
 async function retireUnprovedPassword(db: Db, userId: string): Promise<void> {
   if (!(await hasCredentialAccount(db, userId))) return;
   await dropCredentialAccount(db, userId);
-  await audit(db, {
-    userId,
-    actor: "user",
-    action: "retire_unproved_password",
-    entity: "account",
-    entityId: userId,
-    payload: { reason: "google_proved_the_address" },
-  });
+  await audit(
+    { db, userId, actor: "user" },
+    {
+      entity: "account",
+      action: "retire_unproved_password",
+      id: userId,
+      details: { reason: "google_proved_the_address" },
+    },
+  );
 }
 
 export type Auth = ReturnType<typeof createAuth>;

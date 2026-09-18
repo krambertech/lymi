@@ -1,8 +1,8 @@
 import type { JoinPreviewOut, PublicationInput, PublicationOut } from "@lymi/core";
 import { newId, PUBLICATION_SLUG } from "@lymi/core";
 import { and, eq, isNull, sql } from "@lymi/core/db";
-import { auditStatement } from "../audit";
 import { type Db, schema } from "../db";
+import { auditStatement } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
 import { addableEditions } from "./editions";
@@ -62,7 +62,7 @@ export async function publishDeck(
   input: PublicationInput,
   publishers: Set<string>,
 ) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   await assertPublisher(ctx, publishers);
   const deck = await ownedDeck(ctx, deckId);
   if (deck.archivedAt) throw new ServiceError("invalid", "Restore the deck before publishing it");
@@ -137,13 +137,11 @@ export async function publishDeck(
               .where(eq(schema.decks.id, deckId)),
           ]
         : []),
-      auditStatement(db, {
-        userId,
-        actor,
-        action: existing?.status === "published" ? "update_publication" : "publish",
+      auditStatement(ctx, {
         entity: "deck",
-        entityId: deckId,
-        payload: { slug: input.slug },
+        action: existing?.status === "published" ? "update_publication" : "publish",
+        id: deckId,
+        details: { slug: input.slug },
       }),
     ]);
   } catch (err) {
@@ -157,7 +155,7 @@ export async function publishDeck(
 
 /** Take a deck off its public page. Members keep studying it; nobody new can add it. */
 export async function withdrawDeck(ctx: ServiceContext, deckId: string) {
-  const { db, userId, actor } = ctx;
+  const { db } = ctx;
   await ownedDeck(ctx, deckId);
   const existing = await publicationOf(db, deckId);
   if (!existing) throw new ServiceError("not_found", "This deck is not published");
@@ -173,13 +171,11 @@ export async function withdrawDeck(ctx: ServiceContext, deckId: string) {
         updatedAt: now,
       })
       .where(eq(schema.deckPublications.id, existing.id)),
-    auditStatement(db, {
-      userId,
-      actor,
-      action: "withdraw_publication",
+    auditStatement(ctx, {
       entity: "deck",
-      entityId: deckId,
-      payload: { slug: existing.slug },
+      action: "withdraw_publication",
+      id: deckId,
+      details: { slug: existing.slug },
     }),
   ]);
   return publicationOf(db, deckId);

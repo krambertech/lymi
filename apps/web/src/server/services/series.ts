@@ -6,8 +6,8 @@ import type {
 } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
-import { auditStatement, auditStatementWhen } from "../audit";
 import { type Db, schema } from "../db";
+import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { listDecks } from "./decks";
@@ -130,7 +130,7 @@ function placeDecks(
 }
 
 export async function createSeries(ctx: ServiceContext, input: SeriesInput) {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   const deckIds = input.deckIds ?? [];
   await ownedActiveDecks(ctx, deckIds);
   const [last] = await db
@@ -141,20 +141,13 @@ export async function createSeries(ctx: ServiceContext, input: SeriesInput) {
   await runBatch(db, [
     db.insert(schema.series).values({ id, userId, name: input.name, position: last?.next ?? 0 }),
     ...(deckIds.length > 0 ? [placeDecks(db, userId, id, deckIds, new Date())] : []),
-    auditStatement(db, {
-      userId,
-      actor,
-      action: "create",
-      entity: "series",
-      entityId: id,
-      payload: input,
-    }),
+    auditStatement(ctx, { entity: "series", action: "create", id, details: input }),
   ]);
   return getSeries(ctx, id);
 }
 
 export async function renameSeries(ctx: ServiceContext, id: string, name: string) {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   const row = await ownedSeries(ctx, id);
   if (row.name !== name) {
     await runBatch(db, [
@@ -163,14 +156,7 @@ export async function renameSeries(ctx: ServiceContext, id: string, name: string
         // A rename is text an edition translates, so every edition of it goes stale.
         .set({ name, revision: sql`revision + 1`, updatedAt: new Date() })
         .where(and(eq(schema.series.id, id), eq(schema.series.userId, userId))),
-      auditStatement(db, {
-        userId,
-        actor,
-        action: "update",
-        entity: "series",
-        entityId: id,
-        payload: { name },
-      }),
+      auditStatement(ctx, { entity: "series", action: "update", id, details: { name } }),
     ]);
   }
   return getSeries(ctx, id);
@@ -182,7 +168,7 @@ export async function renameSeries(ctx: ServiceContext, id: string, name: string
  * changes nothing and adds nothing to Activity.
  */
 export async function setSeriesDecks(ctx: ServiceContext, id: string, input: SeriesDecksInput) {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   await activeSeries(ctx, id);
   const listed = await ownedActiveDecks(ctx, input.deckIds);
   const members = await db
@@ -218,13 +204,11 @@ export async function setSeriesDecks(ctx: ServiceContext, id: string, input: Ser
         ),
       ),
     ...(input.deckIds.length > 0 ? [placeDecks(db, userId, id, input.deckIds, now)] : []),
-    auditStatement(db, {
-      userId,
-      actor,
-      action: "update",
+    auditStatement(ctx, {
       entity: "series",
-      entityId: id,
-      payload: { deckIds: input.deckIds },
+      action: "update",
+      id,
+      details: { deckIds: input.deckIds },
     }),
   ]);
   return getSeries(ctx, id);
@@ -232,7 +216,7 @@ export async function setSeriesDecks(ctx: ServiceContext, id: string, input: Ser
 
 /** Put every active series in a new order. The list must name each of them once, or 409. */
 export async function reorderSeries(ctx: ServiceContext, input: SeriesOrderInput) {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   const current = await db
     .select({ id: schema.series.id, position: schema.series.position })
     .from(schema.series)
@@ -262,13 +246,11 @@ export async function reorderSeries(ctx: ServiceContext, input: SeriesOrderInput
             sql`${schema.series.id} in (select value from json_each(${list}))`,
           ),
         ),
-      auditStatement(db, {
-        userId,
-        actor,
-        action: "reorder",
+      auditStatement(ctx, {
         entity: "series",
-        entityId: input.seriesIds[0] ?? userId,
-        payload: input,
+        action: "reorder",
+        id: input.seriesIds[0] ?? userId,
+        details: input,
       }),
     ]);
   }
@@ -280,7 +262,7 @@ export async function reorderSeries(ctx: ServiceContext, input: SeriesOrderInput
  * Restore finds exactly them, or stay in Library without a series. Archiving twice is harmless.
  */
 export async function archiveSeries(ctx: ServiceContext, id: string, input: SeriesArchiveInput) {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   const row = await ownedSeries(ctx, id);
   if (row.archivedAt) return { ok: true as const };
   const at = new Date();
@@ -314,8 +296,8 @@ export async function archiveSeries(ctx: ServiceContext, id: string, input: Seri
       : // Kept decks keep `series_id` and their order, so Restore regroups them as they were.
         []),
     auditStatementWhen(
-      db,
-      { userId, actor, action: "archive", entity: "series", entityId: id, payload: input },
+      ctx,
+      { entity: "series", action: "archive", id, details: input },
       schema.series,
       landed,
     ),
@@ -325,7 +307,7 @@ export async function archiveSeries(ctx: ServiceContext, id: string, input: Seri
 
 /** Bring a series back with the decks archived alongside it. Restoring twice is harmless. */
 export async function restoreSeries(ctx: ServiceContext, id: string) {
-  const { db, userId, actor } = ctx;
+  const { db, userId } = ctx;
   const row = await ownedSeries(ctx, id);
   if (!row.archivedAt) return { ok: true as const };
   const at = row.archivedAt;
@@ -345,8 +327,8 @@ export async function restoreSeries(ctx: ServiceContext, id: string) {
         ),
       ),
     auditStatementWhen(
-      db,
-      { userId, actor, action: "restore", entity: "series", entityId: id },
+      ctx,
+      { entity: "series", action: "restore", id },
       schema.series,
       stillArchived,
     ),

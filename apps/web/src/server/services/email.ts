@@ -3,11 +3,11 @@ import { msg } from "@lingui/core/macro";
 import type { FeedbackKind } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
-import { audit } from "../audit";
 import type { Db } from "../db";
 import { schema } from "../db";
 import type { Bindings } from "../env";
 import { serverI18n } from "../i18n";
+import { audit } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 
 export type TransactionalEmailKind =
@@ -346,13 +346,11 @@ export async function sendTransactionalEmail(
     }
   }
 
-  await audit(ctx.db, {
-    userId: ctx.userId,
-    actor: ctx.actor,
-    action: "send_transactional_email",
+  await audit(ctx, {
     entity: "account",
-    entityId: ctx.userId,
-    payload: { kind: input.kind, delivery },
+    action: "send_transactional_email",
+    id: ctx.userId,
+    details: { kind: input.kind, delivery },
   });
   return { delivery };
 }

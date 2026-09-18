@@ -107,6 +107,39 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     );
   });
 
+  await test.step("the deck is read-only for the member, in the interface and the API", async () => {
+    const owner = (await (await page.request.get("/api/me")).json()) as { name: string };
+    await classmate.goto(`/library/${deckId}`);
+    await expect(classmate.getByText(`Shared by ${owner.name}`)).toBeVisible();
+    await expect(classmate.getByRole("button", { name: "Add card" })).toHaveCount(0);
+
+    await classmate.getByRole("button", { name: "Deck options" }).first().click();
+    const menu = classmate.getByRole("menu", { name: "Deck options" });
+    await expect(menu.getByRole("menuitem")).toHaveText(["About this deck", "Leave deck"]);
+    await classmate.keyboard.press("Escape");
+
+    await classmate.getByText("tere hommikust", { exact: true }).click();
+    await expect(classmate.getByRole("button", { name: "Card options" })).toHaveCount(0);
+    await expect(classmate.getByRole("button", { name: "Edit card" })).toHaveCount(0);
+    await classmate.keyboard.press("Escape");
+
+    await classmate.goto(`/library/${deckId}/settings`);
+    await expect(classmate.getByRole("heading", { name: "About this deck" })).toBeVisible();
+    await expect(classmate.getByRole("textbox", { name: "Name" })).toHaveCount(0);
+    await expect(classmate.getByText("Owns this deck and writes its cards")).toBeVisible();
+
+    // The screen hides them; the routes refuse them, so a stale tab or a script gets the same answer.
+    for (const path of [`/api/decks/${deckId}/archive`, `/api/cards`]) {
+      expect((await classmate.request.post(path, { data: { deckId, term: "x" } })).status()).toBe(
+        403,
+      );
+    }
+    const file = await classmate.request.post("/api/exports", {
+      data: { format: "anki", deckId },
+    });
+    expect(file.status()).toBe(403);
+  });
+
   await test.step("the owner's Activity says the link went on and who joined", async () => {
     await page.goto("/activity");
     await expect(
@@ -166,6 +199,25 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     ).toBeVisible();
     await expect(stranger.getByRole("button", { name: "Dev sign-in" })).toHaveCount(0);
     await stranger.context().close();
+  });
+
+  await test.step("the member leaves, and the owner's Activity says so", async () => {
+    await classmate.goto(`/library/${deckId}`);
+    await classmate.getByRole("button", { name: "Deck options" }).first().click();
+    await classmate.getByRole("menuitem", { name: "Leave deck" }).click();
+    await expect(classmate.getByRole("heading", { name: `Leave ${deckName}?` })).toBeVisible();
+    await classmate.getByRole("button", { name: "Leave deck", exact: true }).click();
+
+    await expect(classmate).toHaveURL(/\/library$/);
+    await expect(classmate.getByRole("main").getByRole("link", { name: deckName })).toHaveCount(0);
+    await expect(classmate.getByText(`Left “${deckName}”`)).toBeVisible();
+    expect((await classmate.request.get(`/api/decks/${deckId}`)).status()).toBe(404);
+
+    const member = (await (await classmate.request.get("/api/me")).json()) as { name: string };
+    await page.goto("/activity");
+    await expect(
+      page.getByRole("link", { name: new RegExp(`${member.name} left ${deckName}`) }),
+    ).toBeVisible();
   });
 
   await classmate.context().close();

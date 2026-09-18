@@ -4,6 +4,7 @@ import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/reac
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import { ExportSheet } from "../components/export-sheet";
+import { LeaveDeckDialog } from "../components/leave-deck-dialog";
 import {
   MoveToSectionDialog,
   SectionNameDialog,
@@ -26,6 +27,7 @@ import {
 } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { useArchiveDeck } from "../lib/use-archive-deck";
+import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
 import { DeckDetailView, type DeckFailure, exportCsv } from "../views/deck-detail-view";
@@ -216,6 +218,8 @@ function DeckPage() {
     },
   });
   const archiveDeck = useArchiveDeck(deckId, deck?.name);
+  const leaveDeck = useLeaveDeck(deckId, deck?.name);
+  const [leaving, setLeaving] = useState(false);
 
   return (
     <>
@@ -227,12 +231,14 @@ function DeckPage() {
         // Held until the sections arrive, so a sectioned deck never flashes in another order.
         cards={sections.isPending ? undefined : cards.data}
         streak={streak.data}
-        onAdd={() => add.openCard(deckId)}
-        onArchive={(id) => archive.mutate(id)}
+        // Every write below is the owner's; a member reads the deck and leaves it. ADR 0011.
+        onAdd={isOwner ? () => add.openCard(deckId) : undefined}
+        onArchive={isOwner ? (id) => archive.mutate(id) : undefined}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
-        onArchiveDeck={() => archiveDeck.mutate()}
-        onExport={() => setExporting(true)}
+        onArchiveDeck={isOwner ? () => archiveDeck.mutate() : undefined}
+        onLeaveDeck={isOwner ? undefined : () => setLeaving(true)}
+        onExport={isOwner ? () => setExporting(true) : undefined}
         onMoveToSeries={isOwner ? () => setMovingToSeries(true) : undefined}
         seriesName={series.data?.find((s) => s.id === deck?.seriesId)?.name}
         openCardId={openCardId ?? null}
@@ -241,13 +247,17 @@ function DeckPage() {
         reviews={history.data?.reviews}
         events={events}
         onPlayAudio={playAudio}
-        onEditCard={(card) => setEditingId(card.id)}
-        onEnrichCard={(card) => enrich.mutate(card)}
+        onEditCard={isOwner ? (card) => setEditingId(card.id) : undefined}
+        onEnrichCard={isOwner ? (card) => enrich.mutate(card) : undefined}
         decks={decks.data}
-        onMove={(id, toDeck) => {
-          setOpen(null);
-          save.mutate({ id, patch: { deckId: toDeck } });
-        }}
+        onMove={
+          isOwner
+            ? (id, toDeck) => {
+                setOpen(null);
+                save.mutate({ id, patch: { deckId: toDeck } });
+              }
+            : undefined
+        }
         sections={sectionList}
         progress={deck?.sectionProgression === "open" ? null : sections.data?.progress}
         onStartSection={startSection}
@@ -384,7 +394,16 @@ function DeckPage() {
           setStartingEarly(null);
         }}
       />
-      {deck && (
+      {deck && !isOwner && (
+        <LeaveDeckDialog
+          open={leaving}
+          onOpenChange={setLeaving}
+          deckName={deck.name}
+          onLeave={() => leaveDeck.mutate()}
+          leaving={leaveDeck.isPending}
+        />
+      )}
+      {deck && isOwner && (
         <ExportSheet
           open={exporting}
           onOpenChange={setExporting}

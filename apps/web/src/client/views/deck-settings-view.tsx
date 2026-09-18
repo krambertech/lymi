@@ -2,11 +2,18 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Directions, SectionProgression } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { Archive, Check, Link2Off, Share } from "lucide-react";
-import { useEffect, useId, useRef, useState } from "react";
+import { Archive, Check, Link2Off, LogOut, Share } from "lucide-react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { Avatar } from "../components/avatar";
 import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
-import { type DirectionExample, DirectionField, LanguageField } from "../components/deck-fields";
+import {
+  type DirectionExample,
+  DirectionField,
+  directionLabel,
+  LanguageField,
+  languageName,
+} from "../components/deck-fields";
 import { RadioCard } from "../components/radio-card";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
 import { SettingsGroup } from "../components/settings-group";
@@ -37,6 +44,8 @@ export interface DeckSettingsProps {
   saved?: boolean | undefined;
   error?: string | undefined;
   onArchive?: (() => void) | undefined;
+  /** A member's way out of the deck. Absent for the owner, who archives it instead. */
+  onLeave?: (() => void) | undefined;
   /** The owner's section controls. Absent for a member, who cannot change them. */
   sections?: SectionManagerProps | undefined;
   /** The owner's join-link controls. Absent for a member, who cannot share the deck. */
@@ -70,11 +79,13 @@ export function DeckSettingsView({
   saved,
   error,
   onArchive,
+  onLeave,
   sections,
   sharing,
   static: st,
 }: DeckSettingsProps) {
   const { t } = useLingui();
+  const reading = !!deck && deck.role !== "owner";
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -105,7 +116,7 @@ export function DeckSettingsView({
   const pending = useRef<{ name: string; description: string; deck: DeckSummary } | null>(null);
   const saveRef = useRef(onSave);
   saveRef.current = onSave;
-  pending.current = deck ? { name, description, deck } : null;
+  pending.current = deck && !reading ? { name, description, deck } : null;
   useEffect(
     () => () => {
       const p = pending.current;
@@ -141,20 +152,22 @@ export function DeckSettingsView({
         }
       />
       <PageHeader
-        title={t`Deck settings`}
+        title={reading ? t`About this deck` : t`Deck settings`}
         actions={
-          <p className="min-h-5 text-sm text-muted" role="status">
-            {error ? (
-              <span className="text-danger">{error}</span>
-            ) : saving ? (
-              t`Saving…`
-            ) : saved ? (
-              <span className="enter-fade inline-flex items-center gap-1.5">
-                <Check className="size-4" aria-hidden="true" />
-                <Trans>Saved</Trans>
-              </span>
-            ) : null}
-          </p>
+          reading ? undefined : (
+            <p className="min-h-5 text-sm text-muted" role="status">
+              {error ? (
+                <span className="text-danger">{error}</span>
+              ) : saving ? (
+                t`Saving…`
+              ) : saved ? (
+                <span className="enter-fade inline-flex items-center gap-1.5">
+                  <Check className="size-4" aria-hidden="true" />
+                  <Trans>Saved</Trans>
+                </span>
+              ) : null}
+            </p>
+          )
         }
       />
 
@@ -166,7 +179,9 @@ export function DeckSettingsView({
         </div>
       )}
 
-      {deck && (
+      {deck && reading && <DeckAbout deck={deck} example={example} onLeave={onLeave} />}
+
+      {deck && !reading && (
         <>
           <SettingsGroup title={t`Deck`}>
             <Field>
@@ -241,6 +256,91 @@ export function DeckSettingsView({
         </>
       )}
     </Page>
+  );
+}
+
+/** One fact about the deck, label beside value, for a member who reads rather than decides. */
+function Fact({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="grid gap-0.5 border-t border-edge py-3 first:border-t-0 first:pt-0 sm:grid-cols-[12rem_1fr] sm:items-baseline sm:gap-4">
+      <dt className="text-sm text-muted">{label}</dt>
+      <dd className="text-base text-text">{children}</dd>
+    </div>
+  );
+}
+
+/**
+ * What a member sees where the owner has settings. Nothing on this deck is theirs to change, so
+ * the screen states the facts and offers the one move they have: leaving.
+ */
+function DeckAbout({
+  deck,
+  example,
+  onLeave,
+}: {
+  deck: DeckSummary;
+  example?: DirectionExample | undefined;
+  onLeave?: (() => void) | undefined;
+}) {
+  const { t, i18n } = useLingui();
+  const ownerName = deck.owner.name;
+  const direction =
+    example?.meaning && deck.directions === "recognition"
+      ? t`See ${example.term} → recall “${example.meaning}”`
+      : example?.meaning && deck.directions === "production"
+        ? t`See “${example.meaning}” → recall ${example.term}`
+        : undefined;
+  return (
+    <>
+      <SettingsGroup title={t`Shared with you`}>
+        <div className="flex items-center gap-2.5">
+          <Avatar name={ownerName} size={32} />
+          <div className="grid min-w-0 gap-0.5">
+            <p className="truncate text-base font-medium text-text">{ownerName}</p>
+            <p className="text-sm text-muted">
+              <Trans>Owns this deck and writes its cards</Trans>
+            </p>
+          </div>
+        </div>
+        <p className="max-w-[60ch] text-sm text-muted">
+          <Trans>
+            You study the same cards {ownerName} does, on your own schedule. Your reviews and
+            progress are yours, and nobody else sees them.
+          </Trans>
+        </p>
+      </SettingsGroup>
+
+      <SettingsGroup title={t`Deck`}>
+        <dl className="grid">
+          {deck.description && <Fact label={t`Description`}>{deck.description}</Fact>}
+          <Fact label={t`Language`}>
+            {deck.defaultLanguage ? languageName(deck.defaultLanguage) : t`Not set`}
+          </Fact>
+          <Fact label={t`How you are asked`}>
+            <span className="grid gap-0.5">
+              <span>{directionLabel(deck.directions)}</span>
+              {direction && <span className="text-sm text-muted">{direction}</span>}
+            </span>
+          </Fact>
+          <Fact label={t`Cards`}>{i18n.number(deck.total)}</Fact>
+        </dl>
+      </SettingsGroup>
+
+      <SettingsGroup title={t`Leave`}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="max-w-sm text-sm text-muted">
+            <Trans>
+              The deck leaves Library and its cards stop coming up. Your reviews are kept, so
+              joining again picks up where you left off.
+            </Trans>
+          </p>
+          <Button variant="danger" onClick={onLeave} aria-disabled={!onLeave}>
+            <LogOut aria-hidden="true" />
+            <Trans>Leave deck</Trans>
+          </Button>
+        </div>
+      </SettingsGroup>
+    </>
   );
 }
 

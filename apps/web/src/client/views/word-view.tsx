@@ -489,41 +489,47 @@ export function WordView({
       <IconButton label={t`Next card`} size={size} onClick={onNext} aria-disabled={!hasNext}>
         <ArrowDown />
       </IconButton>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <IconButton label={t`Card options`} size={size}>
-              <MoreHorizontal />
-            </IconButton>
-          }
-        />
-        <DropdownMenuContent aria-label={t`Card options`} align="end">
-          {onEnrich && needsEnrichment(card) && (
-            <DropdownMenuItem onClick={onEnrich} disabled={filling}>
-              <Sparkle />
-              <Trans>Enrich</Trans>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuItem
-            onClick={() => setMoving(true)}
-            disabled={!onMove || elsewhere.length === 0}
-          >
-            <FolderInput />
-            <Trans>Move to…</Trans>
-          </DropdownMenuItem>
-          {onMoveToSection && (
-            <DropdownMenuItem onClick={onMoveToSection}>
-              <ListTree />
-              <Trans>Move to section…</Trans>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive" onClick={onArchive} disabled={!onArchive}>
-            <Archive />
-            <Trans>Archive</Trans>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {/* Every item here writes the card, so a member of a shared deck gets no menu at all. */}
+      {(onMove || onMoveToSection || onArchive || onEnrich) && (
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <IconButton label={t`Card options`} size={size}>
+                <MoreHorizontal />
+              </IconButton>
+            }
+          />
+          <DropdownMenuContent aria-label={t`Card options`} align="end">
+            {onEnrich && needsEnrichment(card) && (
+              <DropdownMenuItem onClick={onEnrich} disabled={filling}>
+                <Sparkle />
+                <Trans>Enrich</Trans>
+              </DropdownMenuItem>
+            )}
+            {onMove && (
+              <DropdownMenuItem onClick={() => setMoving(true)} disabled={elsewhere.length === 0}>
+                <FolderInput />
+                <Trans>Move to…</Trans>
+              </DropdownMenuItem>
+            )}
+            {onMoveToSection && (
+              <DropdownMenuItem onClick={onMoveToSection}>
+                <ListTree />
+                <Trans>Move to section…</Trans>
+              </DropdownMenuItem>
+            )}
+            {onArchive && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem variant="destructive" onClick={onArchive}>
+                  <Archive />
+                  <Trans>Archive</Trans>
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
       {onClose && (
         <IconButton label={t`Close`} size={size} onClick={onClose}>
           <X />

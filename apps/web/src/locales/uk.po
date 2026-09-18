@@ -1008,6 +1008,9 @@ msgstr "Картки збережуть дати повторення, які м
 msgid "Cards outside a section"
 msgstr "Картки поза розділами"
 
+msgid "Cards show up here as {owner} adds them, and join your reviews with them."
+msgstr "Картки з’являться тут, коли {owner} їх додасть, і приєднаються до твоїх повторень."
+
 msgid "Change"
 msgstr "Змінити"
 
@@ -1856,6 +1859,9 @@ msgstr "Залишити ключ"
 msgid "Keep sharing"
 msgstr "Не вимикати"
 
+msgid "Keep studying"
+msgstr "Продовжити вчити"
+
 msgid "Keep the description under 300 characters."
 msgstr "Опис має бути коротшим за 300 символів."
 
@@ -1928,6 +1934,15 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "У вивченні"
 
+msgid "Leave"
+msgstr "Вихід"
+
+msgid "Leave {name}?"
+msgstr "Вийти з {name}?"
+
+msgid "Leave deck"
+msgstr "Вийти з колоди"
+
 msgid "Leave out"
 msgstr "Пропустити"
 
@@ -1936,6 +1951,9 @@ msgstr "Вийти з повторення"
 
 msgid "Leave review or close a sheet"
 msgstr "Вийти з повторення або закрити панель"
+
+msgid "Left “{deckName}”"
+msgstr "Колода «{deckName}» більше не в Бібліотеці"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -2274,6 +2292,9 @@ msgstr "Ще не повторювались"
 msgid "Not saved. Try again."
 msgstr "Не збережено. Спробуй ще раз."
 
+msgid "Not set"
+msgstr "Не вказано"
+
 msgid "Not started"
 msgstr "Ще не почато"
 
@@ -2421,6 +2442,9 @@ msgstr "Інші способи додати картки"
 
 msgid "own review"
 msgstr "власне повторення"
+
+msgid "Owns this deck and writes its cards"
+msgstr "Веде цю колоду й пише її картки"
 
 msgid "Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order."
 msgstr "Частини колоди, наприклад по одному уроку. Усі, хто вчить колоду, бачать їх у такому порядку."
@@ -2886,6 +2910,9 @@ msgstr "Від {owner}"
 msgid "Shared by link"
 msgstr "Доступ за посиланням"
 
+msgid "Shared with you"
+msgstr "Поділилися з тобою"
+
 msgid "Sharing"
 msgstr "Спільний доступ"
 
@@ -3155,6 +3182,9 @@ msgstr "картку"
 
 msgid "The deck leaves Library and its cards stop coming up. Nothing is deleted, and Restore puts it back."
 msgstr "Колода зникне з Бібліотеки, а її картки перестануть з’являтися. Нічого не видаляється, а «Відновити» поверне її."
+
+msgid "The deck leaves Library and its cards stop coming up. Your reviews are kept, so joining again picks up where you left off."
+msgstr "Колода зникне з Бібліотеки, а її картки перестануть з’являтися. Твої повторення збережуться, тож якщо приєднаєшся знову, продовжиш з того ж місця."
 
 msgid "the example"
 msgstr "приклад"
@@ -3554,6 +3584,9 @@ msgstr "Нічого робити не потрібно."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."
+
+msgid "You study the same cards {ownerName} does, on your own schedule. Your reviews and progress are yours, and nobody else sees them."
+msgstr "Ти вчиш ті самі картки, що й {ownerName}, але у своєму темпі. Твої повторення та прогрес належать лише тобі, і більше ніхто їх не бачить."
 
 msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
 msgstr "Тебе прибрали з цієї колоди, тому це посилання не додасть тебе знову. Твої повторення збережено."

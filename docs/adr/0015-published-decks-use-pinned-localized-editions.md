@@ -21,6 +21,8 @@ The selected meaning language is stored on the published membership and cannot b
 
 Published content is live. Corrections apply automatically and never rewrite reviews. New future sections follow ordinary progression. New cards or material term or meaning changes behind a member's current position wait for **Review changes** before becoming learning-eligible. The member always sees current content; Lymi records changes and acknowledgements rather than retaining historical deck snapshots.
 
+Amended on 18 September 2026: a first-party publisher may sign off and publish an edition with their own write-scoped API key as well as from a signed-in session, so Lymi-authored editions do not wait on a human session. The key must belong to the deck's owner and that owner must be a publisher; MCP clients, AI jobs, read-only keys and other accounts still cannot. Importing text still lands drafts, an incomplete or stale edition is still refused, and the audit trail records an approval by a key as an API actor with the key's identity rather than as a human review.
+
 ## Considered options
 
 - Store each localization as a separate deck. Rejected because structure, corrections, sources, and progression would drift.
@@ -34,5 +36,5 @@ Published content is live. Corrections apply automatically and never rewrite rev
 - Adding a published deck grants access rather than copying cards or running duplicate detection. A matching personal card may coexist as ADR 0011 already permits.
 - Stable card identities preserve personal schedules through corrections and moves; a fundamentally different prompt or answer receives a new card identity.
 - Revision and acknowledgement writes must be append-only or otherwise auditable, idempotent under retries, and safe while an owner edits and members review concurrently.
-- Public AI assistance may fill drafts without overwriting human work, but an authorized human publishes every first-party or community edition.
+- Public AI assistance may fill drafts without overwriting signed-off work, but an authorized publisher approves and publishes every first-party or community edition.
 - The interface must distinguish the app language from a published deck's pinned meaning language without introducing another global setting.

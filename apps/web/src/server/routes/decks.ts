@@ -228,7 +228,7 @@ decks.delete(
 );
 
 const EDITION =
-  "A meaning-language edition of a published deck. The deck's own fields are the original edition; another edition is typed localizations of them, signed off by a person before anyone reads it. Only Lymi's publishers, and only decks they own. ADR 0015.";
+  "A meaning-language edition of a published deck. The deck's own fields are the original edition; another edition is typed localizations of them, signed off before anyone reads it. Only Lymi's publishers, and only decks they own, from the app or with their own write-scoped key. ADR 0015.";
 
 /** The language in the path, checked the same way a body field would be. */
 function editionLanguage(value: string | undefined) {
@@ -276,7 +276,7 @@ decks.post(
   describe({
     tags: ["Decks"],
     summary: "Sign off an edition's text",
-    description: `${EDITION} A person signs it off against the text as it stands now; an empty body signs off the whole edition. An API key or an MCP client cannot.`,
+    description: `${EDITION} It is signed off against the text as it stands now; an empty body signs off the whole edition. An MCP client cannot, and neither can a read-only key.`,
     ok: { schema: EditionOut, description: "Where the edition stands now" },
     errors: [400, 404],
   }),

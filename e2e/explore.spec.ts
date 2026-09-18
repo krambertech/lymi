@@ -97,7 +97,7 @@ test("the header links to Explore, and the page keeps its shelves at phone width
   await expect(page.getByRole("searchbox", { name: "Search decks" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Languages", exact: true })).toBeVisible();
 
-  // The shelf scrolls sideways rather than pushing the page wider than the window.
+  // The shelf wraps rather than pushing the page wider than the window.
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );

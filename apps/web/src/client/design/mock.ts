@@ -15,7 +15,11 @@ import type { WordEvent } from "../views/word-view";
 const now = Date.now();
 const day = 86_400_000;
 
-const mine = { role: "owner" as const, owner: { id: "u1", name: "Kateryna" } };
+const mine = {
+  role: "owner" as const,
+  owner: { id: "u1", name: "Kateryna", avatarUrl: null },
+  published: false,
+};
 
 export const decks: DeckSummary[] = [
   {
@@ -80,7 +84,8 @@ export const decks: DeckSummary[] = [
     due: 5,
     archivedAt: null,
     role: "learner",
-    owner: { id: "u2", name: "Liis" },
+    owner: { id: "u2", name: "Liis", avatarUrl: null },
+    published: false,
   },
 ];
 

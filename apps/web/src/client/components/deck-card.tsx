@@ -3,6 +3,7 @@ import { Avatar } from "./avatar";
 import { languageName } from "./deck-fields";
 import { DueCount } from "./due-count";
 import { NavLink, type StaticNav } from "./nav-link";
+import { PublisherMark } from "./publisher-mark";
 
 export interface DeckCardProps {
   id: string;
@@ -14,6 +15,10 @@ export interface DeckCardProps {
   next?: string | null | undefined;
   /** The owner's name on a deck the learner joined. An owned deck names nobody. */
   owner?: string | null | undefined;
+  /** Whether the deck is published, which is what makes its owner a publisher. */
+  published?: boolean | undefined;
+  /** The publisher's photo, on a published deck. A deck shared by link keeps the letter. */
+  publisherPhoto?: string | null | undefined;
   /** Instructions a screen reader reads with the link, such as how to drag the deck. */
   describedBy?: string | undefined;
   st?: StaticNav;
@@ -32,6 +37,8 @@ export function DeckCard({
   total,
   next,
   owner,
+  published,
+  publisherPhoto,
   describedBy,
   st,
 }: DeckCardProps) {
@@ -73,7 +80,11 @@ export function DeckCard({
       </span>
       {owner && (
         <span className="mt-1.5 flex min-w-0 items-center gap-1.5 text-sm text-text-2">
-          <Avatar name={owner} size={18} />
+          {published ? (
+            <PublisherMark name={owner} src={publisherPhoto} size={18} />
+          ) : (
+            <Avatar name={owner} size={18} />
+          )}
           <span className="min-w-0 truncate">
             <Trans>Shared by {owner}</Trans>
           </span>

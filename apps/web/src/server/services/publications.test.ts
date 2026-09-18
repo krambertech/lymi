@@ -5,7 +5,7 @@ import { type Db, schema } from "../db";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck, listDecks } from "./decks";
-import { previewJoin, turnOnJoinLink } from "./invitations";
+import { joinThroughLink, previewJoin, turnOnJoinLink } from "./invitations";
 import { leave, removeMember } from "./members";
 import {
   addPublishedDeck,
@@ -275,5 +275,42 @@ describe("the publisher's photo", () => {
     const link = await turnOnJoinLink(kateryna, deck.id);
     const preview = await previewJoin(db, link.token, null);
     expect(preview.deck?.owner).toEqual({ name: "Kateryna", avatarUrl: null });
+  });
+
+  it("names the publisher on every deck in the learner's Library", async () => {
+    await givePhoto("lymi");
+    await publishedDeck("in-library");
+    await addPublishedDeck(anna, "in-library");
+
+    const added = (await listDecks(anna)).find((d) => d.name === "Deck in-library");
+    expect(added).toMatchObject({
+      published: true,
+      owner: { name: "Lymi", avatarUrl: "/public/media/deck/in-library/publisher-avatar?v=v1" },
+    });
+    expect(added?.owner.avatarUrl).not.toContain("lymi/");
+  });
+
+  it("leaves a deck joined by link with its owner's letter", async () => {
+    await givePhoto("kateryna");
+    const deck = await createDeck(kateryna, { name: "By link", defaultLanguage: "et" });
+    await addCards(kateryna, [{ deckId: deck.id, term: "tere link", meaning: "hello" }]);
+    const link = await turnOnJoinLink(kateryna, deck.id);
+    await joinThroughLink(marko, link.token);
+
+    const joined = (await listDecks(marko)).find((d) => d.id === deck.id);
+    expect(joined).toMatchObject({
+      published: false,
+      owner: { name: "Kateryna", avatarUrl: null },
+    });
+  });
+
+  it("stops serving the photo once the deck is archived, as its public page does", async () => {
+    await givePhoto("lymi");
+    const deck = await publishedDeck("archived-in-library");
+    await addPublishedDeck(anna, "archived-in-library");
+    await archiveDeck(lymi, deck.id);
+
+    const seen = (await listDecks(anna, { archived: true })).find((d) => d.id === deck.id);
+    expect(seen).toMatchObject({ published: true, owner: { avatarUrl: null } });
   });
 });

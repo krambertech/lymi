@@ -50,7 +50,11 @@ const services = vi.mocked(await import("../services"));
 
 const now = new Date("2026-09-12T10:00:00.000Z");
 
-const owned = { role: "owner" as const, owner: { id: "user-1", name: "Kateryna" } };
+const owned = {
+  role: "owner" as const,
+  owner: { id: "user-1", name: "Kateryna", avatarUrl: null },
+  published: false,
+};
 
 const deck: Awaited<ReturnType<typeof getDeck>> = {
   id: "deck-1",

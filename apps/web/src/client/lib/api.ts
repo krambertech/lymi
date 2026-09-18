@@ -169,7 +169,10 @@ export type DeckSummary = Pick<
   archivedAt: string | null;
   /** The learner's role in the deck and who owns it. Only the owner writes. ADR 0011. */
   role: MemberRole;
-  owner: { id: string; name: string };
+  /** `avatarUrl` is the publisher's photo, which only a published deck has. */
+  owner: { id: string; name: string; avatarUrl: string | null };
+  /** True while the deck is published, which makes its owner its publisher. */
+  published: boolean;
 };
 /** A card a search matched, with the name of the deck it sits in. */
 export type CardHit = Card & { deckName: string };

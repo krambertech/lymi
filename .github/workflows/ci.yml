@@ -28,6 +28,8 @@ jobs:
     outputs:
       title_outcome: ${{ steps.title.outcome }}
       run_e2e: ${{ steps.coverage.outputs.run_e2e }}
+      shards: ${{ steps.coverage.outputs.shards }}
+      shard_matrix: ${{ steps.coverage.outputs.shard_matrix }}
       browsers: ${{ steps.coverage.outputs.browsers }}
       playwright_args: ${{ steps.coverage.outputs.playwright_args }}
       coverage: ${{ steps.coverage.outputs.coverage }}
@@ -141,18 +143,20 @@ jobs:
         run: pnpm --filter @lymi/site run deploy:check
 
   browser_e2e:
-    name: browser E2E (${{ needs.plan.outputs.coverage }})
+    name: browser E2E (${{ needs.plan.outputs.coverage }}) ${{ matrix.shard }}/${{ needs.plan.outputs.shards }}
     needs: plan
     if: needs.plan.outputs.run_e2e == 'true'
     runs-on: ubuntu-latest
-    # A safety net, not a budget: the parallel suite finishes well inside this.
+    # A safety net, not a budget: one shard finishes well inside this.
     timeout-minutes: 30
     permissions:
       contents: read
-    outputs:
-      dependencies_outcome: ${{ steps.dependencies.outcome }}
-      browsers_outcome: ${{ steps.browsers.outcome }}
-      e2e_outcome: ${{ steps.e2e.outcome }}
+    strategy:
+      # A shard that fails still leaves the others to report, so the summary can name every
+      # failing test rather than only the first shard to go red.
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.shard_matrix) }}
     steps:
       - uses: actions/checkout@v5
 
@@ -172,15 +176,40 @@ jobs:
         id: browsers
         run: pnpm exec playwright install --with-deps --only-shell ${{ needs.plan.outputs.browsers }}
 
-      - name: Run browser E2E (${{ needs.plan.outputs.coverage }})
+      - name: Run browser E2E shard ${{ matrix.shard }} of ${{ needs.plan.outputs.shards }}
         id: e2e
-        run: pnpm test:e2e ${{ needs.plan.outputs.playwright_args }}
+        run: >-
+          pnpm test:e2e ${{ needs.plan.outputs.playwright_args }}
+          --shard=${{ matrix.shard }}/${{ needs.plan.outputs.shards }}
+
+      - name: Record shard outcome
+        if: ${{ !cancelled() }}
+        env:
+          SHARD: ${{ matrix.shard }}
+          SHARDS: ${{ needs.plan.outputs.shards }}
+          E2E_OUTCOME: ${{ steps.e2e.outcome }}
+          # The browser install runs last of the setup steps, so anything earlier that broke
+          # leaves it skipped rather than successful.
+          SETUP_OUTCOME: ${{ steps.browsers.outcome }}
+        run: >-
+          node scripts/e2e-shard-outcome.mjs
+          test-results/results.json
+          shard-outcomes/shard-${{ matrix.shard }}.json
+
+      - name: Upload shard outcome
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: e2e-shard-outcome-${{ matrix.shard }}
+          path: shard-outcomes
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Upload E2E diagnostics
         if: ${{ !cancelled() && steps.e2e.outcome == 'failure' }}
         uses: actions/upload-artifact@v6
         with:
-          name: e2e-diagnostics
+          name: e2e-diagnostics-shard-${{ matrix.shard }}
           path: |
             playwright-report
             test-results
@@ -193,12 +222,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
+      actions: read
       contents: read
     steps:
       - uses: actions/checkout@v5
 
+      - name: Collect shard outcomes
+        if: needs.plan.outputs.run_e2e == 'true'
+        uses: actions/download-artifact@v6
+        with:
+          pattern: e2e-shard-outcome-*
+          merge-multiple: true
+          path: shard-outcomes
+
       - name: Summarize CI evidence
         env:
+          SHARDS: ${{ needs.plan.outputs.shards }}
+          SHARD_OUTCOMES_DIR: shard-outcomes
           COVERAGE: ${{ needs.plan.outputs.coverage }}
           PLAN_REASON: ${{ needs.plan.outputs.reason }}
           SITE_PREVIEW: ${{ needs.plan.outputs.run_site_preview }}
@@ -219,9 +259,6 @@ jobs:
           TEST_OUTCOME: ${{ needs.quality.outputs.test_outcome }}
           DEPLOY_PRODUCT_OUTCOME: ${{ needs.quality.outputs.deploy_product_outcome }}
           DEPLOY_SITE_OUTCOME: ${{ needs.quality.outputs.deploy_site_outcome }}
-          BROWSER_DEPENDENCIES_OUTCOME: ${{ needs.browser_e2e.outputs.dependencies_outcome }}
-          BROWSERS_OUTCOME: ${{ needs.browser_e2e.outputs.browsers_outcome }}
-          E2E_OUTCOME: ${{ needs.browser_e2e.outputs.e2e_outcome }}
         run: node scripts/ci-summary.mjs
 
   site_preview:

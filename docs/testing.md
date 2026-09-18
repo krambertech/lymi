@@ -70,9 +70,13 @@ The pure-function tests next to them need no database and stay that way.
 
 ## CI policy
 
-`pnpm verify` is the canonical local base gate. CI keeps those commands in one quality job and the same fail-fast order, with formatting and lint, migration safety, build, TypeScript, and unit tests as distinct steps. A short planning job selects coverage first, then the quality job and required browser E2E run in parallel. A final check reports every gate and fails unless the plan, quality job and required browser job succeeded.
+`pnpm verify` is the canonical local base gate. CI keeps those commands in one quality job and the same fail-fast order, with formatting and lint, migration safety, build, TypeScript, and unit tests as distinct steps. A short planning job selects coverage first, then the quality job and required browser E2E run in parallel. A final check reports every gate and fails unless the plan, quality job and every browser shard succeeded.
 
-A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so queued pushes to `main` used to cancel each other before either started and neither commit was verified; superseding the older run verifies the newest commit instead. The browser job's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
+The browser job is a matrix of Playwright shards, each a separate runner with its own checkout, dev server, Workers and D1. Playwright assigns tests to shards by file, so a spec whose tests share an account still lands whole in one shard and the per-test account keying holds. `e2eShardCount` in `scripts/ci-plan.mjs` owns the count and the matrix reads it from the plan. Three was measured on 2026-09-18: the cross-browser run on `main` took 19 minutes as one job, and each shard pays the same 61 seconds of `scripts/e2e-server.mjs` setup before its share of the tests, so a fourth shard buys less than it costs in runner minutes. The matrix does not fail fast, because a summary that names every failing shard is worth the minutes the others spend finishing.
+
+Sharding is not the same lever as `workers`, which stays at one for the reason above: a shard has its own server and D1, where a second worker would share them.
+
+A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so queued pushes to `main` used to cancel each other before either started and neither commit was verified; superseding the older run verifies the newest commit instead. A shard's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
 
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 
@@ -87,7 +91,9 @@ Every run writes a final summary with its selected browser coverage and the outc
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository. A newer commit cancels an obsolete in-progress run.
 
-Failed browser runs retain screenshots, video from the retry, a Playwright trace, and the HTML report as a GitHub Actions artifact for seven days. Successful runs retain no browser artifacts.
+Every shard uploads a small `e2e-shard-outcome-<n>` artifact, and the final check downloads them all so the run summary carries a row per shard, the combined pass count, and the file, line and title of every failing test. `scripts/e2e-shard-outcome.mjs` builds that record from the JSON report that the shared Playwright config writes on CI. A shard whose browser install or dependency step broke is recorded as a failure rather than a skip, so the table never reads as a deliberate exclusion.
+
+A failed shard also retains screenshots, video from the retry, a Playwright trace, and the HTML report as `e2e-diagnostics-shard-<n>` for seven days. Successful shards retain no browser artifacts.
 
 ## Delivery checks
 

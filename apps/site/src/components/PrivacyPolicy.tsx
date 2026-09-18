@@ -27,12 +27,12 @@ function PrivacyPolicyContent() {
         <Trans>Data Lymi receives</Trans>
       </h2>
       <h3>
-        <Trans>Beta access requests</Trans>
+        <Trans>Access requests from the private beta</Trans>
       </h3>
       <p>
         <Trans>
-          If you request access, we store your email address, where on the site you made the
-          request, and when you made it. Requesting access does not create an account.
+          While Lymi was private, we stored the email address of anyone who asked for access, where
+          on the site they asked, and when. We no longer collect these, and anyone can sign up.
         </Trans>
       </p>
 
@@ -149,11 +149,6 @@ function PrivacyPolicyContent() {
         </li>
         <li>
           <Trans>
-            To manage private-beta access and email people who asked to hear when a place opens.
-          </Trans>
-        </li>
-        <li>
-          <Trans>
             To meet legal obligations and protect the rights and safety of Lymi and its users.
           </Trans>
         </li>
@@ -216,9 +211,7 @@ function PrivacyPolicyContent() {
       </h2>
       <ul>
         <li>
-          <Trans>
-            Beta access requests stay until you ask us to remove them or the beta list is retired.
-          </Trans>
+          <Trans>Access requests from the private beta stay until you ask us to remove them.</Trans>
         </li>
         <li>
           <Trans>

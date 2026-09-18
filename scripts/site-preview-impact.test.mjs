@@ -21,7 +21,7 @@ test("skips product-only, documentation, and agent-only changes", () => {
 
 test("requires a preview when a pull request mixes site and unrelated changes", () => {
   assert.equal(
-    requiresSitePreview(["docs/README.md", "apps/site/src/components/BetaSignup.tsx"]),
+    requiresSitePreview(["docs/README.md", "apps/site/src/components/landing/SignUpSection.tsx"]),
     true,
   );
 });

@@ -6,11 +6,11 @@ import { ApiConnections } from "./ApiConnections";
 import { ClassHero } from "./ClassHero";
 import { FeatureSection } from "./FeatureSection";
 import { JoinLinkDemo } from "./JoinLinkDemo";
-import { JoinSection } from "./JoinSection";
 import { LibraryDemo } from "./LibraryDemo";
 import { Questions } from "./Questions";
 import { RightMoment } from "./RightMoment";
 import { SeriesDemo } from "./SeriesDemo";
+import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 import { type UseCase, UseCases } from "./UseCases";
@@ -196,9 +196,8 @@ export function TeachersView() {
           ]}
         />
 
-        <JoinSection
+        <SignUpSection
           title={<Trans>Bring Lymi to your next class.</Trans>}
-          source="teachers"
           note={
             <Trans>
               Sections and the deck library are rolling out during the beta. We’ll tell you when

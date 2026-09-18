@@ -9,16 +9,6 @@ import { type TestBindings, testDb } from "./services/test-db";
 /** Loopback, so every message this file sends lands in the readable outbox. */
 const PRODUCT_URL = "http://127.0.0.1:4998";
 const PASSWORD = "a-good-enough-password";
-const INVITED = [
-  "ada@lymi.test",
-  "grace@lymi.test",
-  "hedy@lymi.test",
-  "mary@lymi.test",
-  "rosalind@lymi.test",
-  "katherine@lymi.test",
-  "dorothy@lymi.test",
-];
-
 let db: Db;
 let env: Bindings;
 let dispose: () => Promise<void>;
@@ -31,7 +21,6 @@ beforeAll(async () => {
     ...bindings,
     PRODUCT_URL,
     PUBLIC_SITE_URL: PRODUCT_URL,
-    ALLOWED_EMAILS: INVITED.join(","),
     BETTER_AUTH_SECRET: "a-test-secret-that-is-long-enough-for-better-auth",
     GOOGLE_CLIENT_ID: "client-id",
     GOOGLE_CLIENT_SECRET: "client-secret",
@@ -205,14 +194,17 @@ describe("creating an account with an email and a password", () => {
     expect((await signIn(email)).status).toBe(200);
   });
 
-  it("refuses an address that has no invitation without saying so, and sends nothing", async () => {
+  it("takes any address: sign-up is open to everyone", async () => {
     const email = "stranger@lymi.test";
-    const refused = await signUp(email);
+    const created = await signUp(email);
 
-    expect(refused.status).toBe(200);
-    expect(await refused.json()).toMatchObject({ token: null });
-    await expect(usersWith(email)).resolves.toEqual([]);
-    expect(latestLocalEmail(email)).toBeNull();
+    expect(created.status).toBe(200);
+    await expect(usersWith(email)).resolves.toHaveLength(1);
+    expect(latestLocalEmail(email)).toMatchObject({ kind: "verify-email" });
+    expect((await signIn(email)).status).toBe(403);
+
+    await openLastLink(email, signUpCookieFrom(created));
+    expect((await signIn(email)).status).toBe(200);
   });
 });
 

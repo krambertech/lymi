@@ -4,6 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Braces, Check, LoaderCircle } from "lucide-react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { AssistantMark } from "./AssistantMarks";
@@ -198,8 +199,8 @@ export function AssistantHero() {
           </Trans>
         </p>
         <div className="mt-8 flex flex-wrap gap-2">
-          <a href="#join" className={buttonClass("primary", "lg")}>
-            <Trans>Request access</Trans>
+          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+            <Trans>Get started</Trans>
           </a>
           <a href="#connect" className={buttonClass("ghost", "lg")}>
             <Trans>How to connect</Trans>

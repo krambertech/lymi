@@ -29,3 +29,8 @@ export function productUrl(path = "/"): string {
 export function publicMediaUrl(id: string): string {
   return productUrl(`/public/media/${encodeURIComponent(id)}`);
 }
+
+/** The product's sign-up form. Every Get started on the site points here. */
+export function signUpUrl(): string {
+  return productUrl("/login?mode=sign-up");
+}

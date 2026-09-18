@@ -1023,8 +1023,8 @@ msgstr "Change photo"
 msgid "Changes discarded"
 msgstr "Changes discarded"
 
-msgid "Check {address}. If it can have a Lymi account, a link is on the way."
-msgstr "Check {address}. If it can have a Lymi account, a link is on the way."
+msgid "Check {address}. A message is on the way with the next step."
+msgstr "Check {address}. A message is on the way with the next step."
 
 msgid "Check {address}. If it has a Lymi password, a link is on the way. It works for one hour."
 msgstr "Check {address}. If it has a Lymi password, a link is on the way. It works for one hour."
@@ -1825,6 +1825,9 @@ msgstr "It may have been archived, or shared with you and then removed."
 msgid "It may have been withdrawn. Explore has everything Lymi publishes now."
 msgstr "It may have been withdrawn. Explore has everything Lymi publishes now."
 
+msgid "It takes a minute, and Lymi is free to use."
+msgstr "It takes a minute, and Lymi is free to use."
+
 msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
 msgstr "It waited three days without being confirmed, so its file was deleted. Start it again."
 
@@ -1995,8 +1998,8 @@ msgstr "Lymi file"
 msgid "Lymi home"
 msgstr "Lymi home"
 
-msgid "Lymi is in a private beta."
-msgstr "Lymi is in a private beta."
+msgid "Lymi is in public beta."
+msgstr "Lymi is in public beta."
 
 msgid "Lymi is writing the first decks. Until then, make your own deck and share it with anyone."
 msgstr "Lymi is writing the first decks. Until then, make your own deck and share it with anyone."
@@ -2630,9 +2633,6 @@ msgstr "Replace the picture"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
-msgid "Request access"
-msgstr "Request access"
-
 msgid "Reset your Lymi password"
 msgstr "Reset your Lymi password"
 
@@ -2937,8 +2937,8 @@ msgstr "Sign out"
 msgid "Sign out and lose them"
 msgstr "Sign out and lose them"
 
-msgid "Sign-in didn’t finish. Try again, or request access."
-msgstr "Sign-in didn’t finish. Try again, or request access."
+msgid "Sign-in didn’t finish. Try again, or use another account."
+msgstr "Sign-in didn’t finish. Try again, or use another account."
 
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
@@ -3023,9 +3023,6 @@ msgstr "Stay signed in"
 msgctxt "daily goal"
 msgid "Steady"
 msgstr "Steady"
-
-msgid "Still need access?"
-msgstr "Still need access?"
 
 msgid "Stop selecting"
 msgstr "Stop selecting"
@@ -3215,9 +3212,6 @@ msgstr "Theme"
 
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
-
-msgid "This account hasn’t been invited. Try another, or request access."
-msgstr "This account hasn’t been invited. Try another, or request access."
 
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
@@ -3409,14 +3403,8 @@ msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgid "Use link"
 msgstr "Use link"
 
-msgid "Use the account that received your invitation."
-msgstr "Use the account that received your invitation."
-
 msgid "Use the deck’s"
 msgstr "Use the deck’s"
-
-msgid "Use the email address that received your invitation."
-msgstr "Use the email address that received your invitation."
 
 msgid "Use these fields"
 msgstr "Use these fields"
@@ -3459,6 +3447,9 @@ msgstr "Weak"
 msgid "week of {0}"
 msgstr "week of {0}"
 
+msgid "Welcome back."
+msgstr "Welcome back."
+
 msgid "What comes across"
 msgstr "What comes across"
 
@@ -3467,6 +3458,9 @@ msgstr "What happens to its cards"
 
 msgid "What happens to its decks"
 msgstr "What happens to its decks"
+
+msgid "What is Lymi?"
+msgstr "What is Lymi?"
 
 msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
 msgstr "What it adds lands at once and is labelled. You can edit or archive any of it."

@@ -147,7 +147,7 @@ async function establishSession(email: string): Promise<StoredSession> {
 }
 
 /** Ask the dev email form to create an account, without waiting for what it leads to. */
-export async function submitDevSignUp(page: Page, email: string) {
+async function submitDevSignUp(page: Page, email: string) {
   await page.getByRole("button", { name: "Dev sign-in", exact: true }).click();
   const panel = page.getByRole("form", { name: "Dev sign-in" });
   await panel.getByRole("textbox", { name: "Email", exact: true }).fill(email);
@@ -184,13 +184,4 @@ async function confirmationLink(page: Page, email: string): Promise<string> {
   const link = /https?:\/\/\S+/.exec(message?.text ?? "")?.[0];
   expect(link, "no link in the confirmation email").toBeDefined();
   return link as string;
-}
-
-/**
- * Nothing was sent to this address. A sign-up the allowlist refused answers exactly like one
- * it accepted, so the outbox is where the difference shows.
- */
-export async function expectNoAccountEmail(page: Page, email: string) {
-  const response = await page.request.post("/api/dev/outbox", { data: { to: email } });
-  expect(response.status(), `an email reached ${email}`).toBe(404);
 }

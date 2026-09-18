@@ -61,6 +61,5 @@ export function e2eInboxEmail(
   retry: number,
   repeat: number,
 ): string;
-export const e2eAllowedEmails: readonly string[];
 export const e2eOperatorEmails: readonly string[];
 export const e2ePublisherEmails: readonly string[];

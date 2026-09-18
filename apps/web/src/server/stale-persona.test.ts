@@ -24,7 +24,6 @@ beforeAll(async () => {
     PRODUCT_URL,
     PUBLIC_SITE_URL: PRODUCT_URL,
     APP_PREVIEW: "true",
-    ALLOWED_EMAILS: "",
     BETTER_AUTH_SECRET: "a-test-secret-that-is-long-enough-for-better-auth",
     EMAIL: {
       send: async () => {

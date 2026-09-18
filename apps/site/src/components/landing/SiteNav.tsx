@@ -4,6 +4,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { useEffect, useId, useRef, useState } from "react";
 import { explorePath } from "../../lib/explore";
+import { signUpUrl } from "../../lib/origins";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { Lockup } from "../Logo";
@@ -12,9 +13,9 @@ import { isUseCasePage, MENU_USE_CASE_LINKS } from "./site-links";
 interface Props {
   openAppUrl: string;
   current?: LocalizedPage | undefined;
-  /** Where Request access goes. A page without its own join section sends it to /join, and a page
-   * that admits anyone, such as a published deck, passes null to leave it out. */
-  joinHref?: string | null | undefined;
+  /** Where Get started goes. A page that admits anyone, such as a published deck, passes
+   * null to leave the control out. */
+  signUpHref?: string | null | undefined;
 }
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
@@ -109,10 +110,10 @@ const unlockScroll = () => {
 interface PhoneMenuProps {
   openAppUrl: string;
   current: LocalizedPage | undefined;
-  joinHref: string | null;
+  signUpHref: string | null;
 }
 
-function PhoneMenu({ openAppUrl, current, joinHref }: PhoneMenuProps) {
+function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
   const { t, i18n } = useLingui();
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -204,13 +205,13 @@ function PhoneMenu({ openAppUrl, current, joinHref }: PhoneMenuProps) {
             <a onClick={close} href={openAppUrl} className={buttonClass("primary", "lg", "w-full")}>
               <Trans>Open Lymi</Trans>
             </a>
-            {joinHref !== null && (
+            {signUpHref !== null && (
               <a
                 onClick={close}
-                href={joinHref}
+                href={signUpHref}
                 className={buttonClass("secondary", "lg", "w-full")}
               >
-                <Trans>Request access</Trans>
+                <Trans>Get started</Trans>
               </a>
             )}
           </div>
@@ -221,7 +222,7 @@ function PhoneMenu({ openAppUrl, current, joinHref }: PhoneMenuProps) {
 }
 
 /** The marketing pages' top bar. On a phone its links move into a full-screen menu. */
-export function SiteNav({ openAppUrl, current, joinHref = "#join" }: Props) {
+export function SiteNav({ openAppUrl, current, signUpHref = signUpUrl() }: Props) {
   const { t, i18n } = useLingui();
 
   return (
@@ -245,9 +246,9 @@ export function SiteNav({ openAppUrl, current, joinHref = "#join" }: Props) {
           <a href="/docs" className={buttonClass("ghost", "sm")}>
             <Trans>Docs</Trans>
           </a>
-          {joinHref !== null && (
-            <a href={joinHref} className={buttonClass("ghost", "sm")}>
-              <Trans>Request access</Trans>
+          {signUpHref !== null && (
+            <a href={signUpHref} className={buttonClass("ghost", "sm")}>
+              <Trans>Get started</Trans>
             </a>
           )}
           <a href={openAppUrl} className={buttonClass("secondary", "sm", "ms-1")}>
@@ -258,7 +259,7 @@ export function SiteNav({ openAppUrl, current, joinHref = "#join" }: Props) {
           <a href={openAppUrl} className={buttonClass("secondary", "md")}>
             <Trans>Open Lymi</Trans>
           </a>
-          <PhoneMenu openAppUrl={openAppUrl} current={current} joinHref={joinHref} />
+          <PhoneMenu openAppUrl={openAppUrl} current={current} signUpHref={signUpHref} />
         </div>
       </nav>
     </MotionConfig>

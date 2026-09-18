@@ -22,7 +22,6 @@ beforeAll(async () => {
     ...bindings,
     PRODUCT_URL,
     PUBLIC_SITE_URL: PRODUCT_URL,
-    ALLOWED_EMAILS: EMAIL,
     BETTER_AUTH_SECRET: "a-test-secret-that-is-long-enough-for-better-auth",
     GOOGLE_CLIENT_ID: "client-id",
     GOOGLE_CLIENT_SECRET: "client-secret",

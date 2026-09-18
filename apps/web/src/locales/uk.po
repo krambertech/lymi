@@ -1023,8 +1023,8 @@ msgstr "Змінити фото"
 msgid "Changes discarded"
 msgstr "Зміни скасовано"
 
-msgid "Check {address}. If it can have a Lymi account, a link is on the way."
-msgstr "Перевір {address}. Якщо на цю адресу можна створити акаунт Lymi, посилання вже в дорозі."
+msgid "Check {address}. A message is on the way with the next step."
+msgstr "Перевір {address}. Лист із наступним кроком уже в дорозі."
 
 msgid "Check {address}. If it has a Lymi password, a link is on the way. It works for one hour."
 msgstr "Перевір {address}. Якщо в цієї адреси є пароль Lymi, посилання вже в дорозі. Воно діє одну годину."
@@ -1825,6 +1825,9 @@ msgstr "Можливо, її архівували або доступ до не�
 msgid "It may have been withdrawn. Explore has everything Lymi publishes now."
 msgstr "Можливо, її зняли з публікації. У каталозі є все, що Lymi публікує зараз."
 
+msgid "It takes a minute, and Lymi is free to use."
+msgstr "Це займе хвилину, і Lymi безкоштовний."
+
 msgid "It waited three days without being confirmed, so its file was deleted. Start it again."
 msgstr "Він три дні чекав на підтвердження, тому файл видалено. Почни заново."
 
@@ -1995,8 +1998,8 @@ msgstr "Файл Lymi"
 msgid "Lymi home"
 msgstr "Головна Lymi"
 
-msgid "Lymi is in a private beta."
-msgstr "Lymi у приватній беті."
+msgid "Lymi is in public beta."
+msgstr "Lymi у відкритій беті."
 
 msgid "Lymi is writing the first decks. Until then, make your own deck and share it with anyone."
 msgstr "Lymi пише перші колоди. А поки що зроби власну й поділися нею з ким завгодно."
@@ -2630,9 +2633,6 @@ msgstr "Замінити зображення"
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
 
-msgid "Request access"
-msgstr "Попросити доступ"
-
 msgid "Reset your Lymi password"
 msgstr "Новий пароль для Lymi"
 
@@ -2937,8 +2937,8 @@ msgstr "Вийти"
 msgid "Sign out and lose them"
 msgstr "Вийти і втратити їх"
 
-msgid "Sign-in didn’t finish. Try again, or request access."
-msgstr "Вхід не завершився. Спробуй ще раз або попроси доступ."
+msgid "Sign-in didn’t finish. Try again, or use another account."
+msgstr "Вхід не завершився. Спробуй ще раз або зайди з іншого акаунта."
 
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Вхід не завершено. Спробуй ще раз."
@@ -3023,9 +3023,6 @@ msgstr "Залишитися в застосунку"
 msgctxt "daily goal"
 msgid "Steady"
 msgstr "Рівно"
-
-msgid "Still need access?"
-msgstr "Досі потрібен доступ?"
 
 msgid "Stop selecting"
 msgstr "Завершити вибір"
@@ -3215,9 +3212,6 @@ msgstr "Тема"
 
 msgid "There is no deck at this address"
 msgstr "За цією адресою немає колоди"
-
-msgid "This account hasn’t been invited. Try another, or request access."
-msgstr "Цей акаунт не має запрошення. Спробуй інший або попроси доступ."
 
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
@@ -3409,14 +3403,8 @@ msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} симв
 msgid "Use link"
 msgstr "Використати посилання"
 
-msgid "Use the account that received your invitation."
-msgstr "Скористайся акаунтом, який отримав запрошення."
-
 msgid "Use the deck’s"
 msgstr "Повернути як у колоді"
-
-msgid "Use the email address that received your invitation."
-msgstr "Скористайся адресою пошти, яка отримала запрошення."
 
 msgid "Use these fields"
 msgstr "Використати ці поля"
@@ -3459,6 +3447,9 @@ msgstr "Слабкий"
 msgid "week of {0}"
 msgstr "тиждень від {0}"
 
+msgid "Welcome back."
+msgstr "З поверненням."
+
 msgid "What comes across"
 msgstr "Що перенесеться"
 
@@ -3467,6 +3458,9 @@ msgstr "Що буде з його картками"
 
 msgid "What happens to its decks"
 msgstr "Що буде з колодами"
+
+msgid "What is Lymi?"
+msgstr "Що таке Lymi?"
 
 msgid "What it adds lands at once and is labelled. You can edit or archive any of it."
 msgstr "Усе додане з’являється одразу й має позначку. Будь-що з цього можна редагувати або архівувати."

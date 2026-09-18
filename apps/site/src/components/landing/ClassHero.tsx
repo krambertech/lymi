@@ -4,6 +4,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Check } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
+import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { appear, EASE, usePlayback } from "./playback";
 
@@ -126,8 +127,8 @@ export function ClassHero() {
           </Trans>
         </p>
         <div className="mt-8 flex flex-wrap gap-2">
-          <a href="#join" className={buttonClass("primary", "lg")}>
-            <Trans>Request access</Trans>
+          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+            <Trans>Get started</Trans>
           </a>
           <a href="#course" className={buttonClass("ghost", "lg")}>
             <Trans>How sections work</Trans>

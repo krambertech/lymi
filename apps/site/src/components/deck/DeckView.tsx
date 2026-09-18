@@ -261,8 +261,8 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
         </div>
         <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-muted">
           <Trans>
-            Lymi is a flashcard app: it brings each card back right before you’d forget it. Free
-            during the beta.
+            Lymi is a flashcard app: it brings each card back right before you’d forget it. Free to
+            use.
           </Trans>
         </p>
         {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
@@ -277,7 +277,7 @@ export function DeckHowItWorks({ locale }: LocaleProps) {
     {
       key: "add",
       title: <Trans>Add the deck</Trans>,
-      body: <Trans>Sign in with Google and it joins your Library. Free during the beta.</Trans>,
+      body: <Trans>Sign in with Google and it joins your Library, free.</Trans>,
     },
     {
       key: "recall",

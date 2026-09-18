@@ -5,7 +5,6 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import type { BetaSource } from "../../lib/api";
 import { productUrl } from "../../lib/origins";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
@@ -17,7 +16,6 @@ import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { HandOfCards } from "./HandOfCards";
 import { Hero } from "./Hero";
 import { WORD_FRAMES, type WordFrame } from "./hero-words";
-import { JoinSection } from "./JoinSection";
 import {
   ESTONIAN,
   ESTONIAN_HAND,
@@ -32,6 +30,7 @@ import { type Question, Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
 import { SharedDeckDemo } from "./SharedDeckDemo";
+import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 import { WordFieldHero } from "./WordFieldHero";
@@ -62,7 +61,6 @@ interface PageProps {
   classDeck: { name: MessageDescriptor; language: string; cards: SampleCard[] };
   questions: Question[];
   joinTitle: ReactNode;
-  source: BetaSource;
 }
 
 /** The notes photographed into cards, with the assistants that can do the reading. */
@@ -230,7 +228,7 @@ function LanguagePage(props: PageProps) {
 
         <Questions title={<Trans>Questions before you start.</Trans>} items={props.questions} />
 
-        <JoinSection title={props.joinTitle} source={props.source} />
+        <SignUpSection title={props.joinTitle} />
       </main>
 
       <SiteFooter openAppUrl={openAppUrl} page={props.page} />
@@ -263,7 +261,7 @@ function commonQuestions(): Question[] {
     {
       id: "cost",
       question: <Trans>What does it cost?</Trans>,
-      answer: <Trans>Nothing during the private beta.</Trans>,
+      answer: <Trans>Nothing. Lymi is free to use.</Trans>,
     },
   ];
 }
@@ -352,7 +350,6 @@ export function LanguagesView() {
         ...commonQuestions(),
       ]}
       joinTitle={<Trans>Keep the words from your next lesson.</Trans>}
-      source="languages"
     />
   );
 }
@@ -458,10 +455,7 @@ export function EstonianView() {
           ]}
         />
 
-        <JoinSection
-          title={<Trans>Keep the Estonian from your next class.</Trans>}
-          source="estonian"
-        />
+        <SignUpSection title={<Trans>Keep the Estonian from your next class.</Trans>} />
       </main>
 
       <SiteFooter openAppUrl={openAppUrl} page="estonian" />

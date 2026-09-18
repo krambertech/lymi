@@ -1,39 +1,16 @@
 /// <reference path="../worker-configuration.d.ts" />
+/// <reference types="astro/client" />
 
 import { handle } from "@astrojs/cloudflare/handler";
-import { BetaSignupInput } from "@lymi/core";
-import { createDb } from "./db";
 import { movedDeckPath } from "./lib/deck-page";
-import { BetaSignupUnavailable, joinBeta } from "./services/beta";
+import { signUpUrl } from "./lib/origins";
 
 function json(body: unknown, status = 200): Response {
   return Response.json(body, { status });
 }
 
-async function joinBetaRequest(request: Request, env: Env): Promise<Response> {
-  if (!/^application\/json\b/i.test(request.headers.get("content-type") ?? "")) {
-    return json({ error: "Send a JSON body with content-type: application/json" }, 400);
-  }
-
-  let input: unknown;
-  try {
-    input = await request.json();
-  } catch {
-    return json({ error: "The signup body is not valid JSON" }, 400);
-  }
-
-  const parsed = BetaSignupInput.safeParse(input);
-  if (!parsed.success) {
-    return json({ error: "Enter a valid email address", issues: parsed.error.issues }, 400);
-  }
-
-  try {
-    return json(await joinBeta(createDb(env.DB), parsed.data));
-  } catch (error) {
-    if (error instanceof BetaSignupUnavailable) return json({ error: error.message }, 503);
-    throw error;
-  }
-}
+/** The waiting list the private beta ran on. Its links are shared, so they now open sign-up. */
+const JOIN_PATHS = /^(?:\/(?:uk|ru))?\/join\/?$/;
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -52,11 +29,9 @@ export default {
       });
     }
 
-    if (url.pathname === "/api/beta" && request.method === "POST") {
-      return joinBetaRequest(request, env);
-    }
-
     if (url.pathname.startsWith("/api/")) return json({ error: "Not found" }, 404);
+
+    if (JOIN_PATHS.test(url.pathname)) return Response.redirect(signUpUrl(), 301);
 
     // A deck used to live at /decks/<slug>. Those links are already shared, so they move rather
     // than break, and a search engine is told the address is permanent.

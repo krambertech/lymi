@@ -9,11 +9,11 @@ import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
 import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
-import { JoinSection } from "./JoinSection";
 import { PracticeChat } from "./PracticeChat";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
 import { SendAnything } from "./SendAnything";
+import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 
@@ -174,12 +174,12 @@ export function AssistantsView() {
             {
               id: "cost",
               question: <Trans>What does it cost?</Trans>,
-              answer: <Trans>Nothing during the private beta.</Trans>,
+              answer: <Trans>Nothing. Lymi is free to use.</Trans>,
             },
           ]}
         />
 
-        <JoinSection title={<Trans>Bring your assistant to Lymi.</Trans>} source="assistants" />
+        <SignUpSection title={<Trans>Bring your assistant to Lymi.</Trans>} />
       </main>
 
       <SiteFooter openAppUrl={openAppUrl} page="assistants" />

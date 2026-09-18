@@ -52,7 +52,6 @@ export function makePreviewConfig(base, { names, previewUrl, databaseId, namespa
     vars: {
       PUBLIC_SITE_URL: "https://lymi.app",
       PRODUCT_URL: previewUrl,
-      ALLOWED_EMAILS: "",
       OPERATOR_EMAILS: "",
       APP_PREVIEW: "true",
     },

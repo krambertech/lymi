@@ -25,6 +25,8 @@ interface TrayProps {
   card: PublicDeckSummary["card"];
   language: string | null;
   meaningLanguage: string;
+  /** "lg" is the deck's own page, where one tray stands alone rather than in a row. */
+  size?: "lg" | undefined;
   className?: string | undefined;
 }
 
@@ -39,14 +41,22 @@ export function DeckTray({
   card,
   language,
   meaningLanguage,
+  size,
   className,
 }: TrayProps) {
   const hue = trayHue(slug);
   if (!card) {
-    return <div className={clsx("deck-tray", className)} data-hue={hue} aria-hidden="true" />;
+    return (
+      <div
+        className={clsx("deck-tray", className)}
+        data-hue={hue}
+        data-size={size}
+        aria-hidden="true"
+      />
+    );
   }
   return (
-    <div className={clsx("deck-tray", className)} data-hue={hue}>
+    <div className={clsx("deck-tray", className)} data-hue={hue} data-size={size}>
       <div className="deck-tray-stack">
         {Array.from({ length: paperFor(cardCount) }, (_, at) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
@@ -89,13 +99,15 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
   const { t } = useLingui();
   return (
     // A card, not a group on the open canvas as on the public page: the press has to belong to
-    // something, and an Add button floating under a name reads as loose. DESIGN.md, "The tray".
-    <div className="deck-tile edge grid h-full content-start gap-3 rounded-xl bg-plate p-3">
+    // something, and an Add button floating under a name reads as loose. The tray runs to the
+    // card's own edges and the card clips it, so the two corners are concentric by construction
+    // rather than by a radius that has to be kept in step with the padding.
+    <div className="deck-tile edge grid h-full content-start overflow-hidden rounded-xl bg-plate">
       <Link
         to="/explore/$slug"
         params={{ slug: deck.slug }}
         disabled={!!st}
-        className="grid gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        className="grid gap-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
         <DeckTray
           slug={deck.slug}
@@ -103,8 +115,9 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
           card={deck.card}
           language={deck.language}
           meaningLanguage={deck.meaningLanguage}
+          className="rounded-none"
         />
-        <div className="grid gap-1 px-1">
+        <div className="grid gap-1 px-3.5">
           <h3
             lang={deck.meaningLanguage}
             className="text-lg font-medium leading-tight tracking-[-0.025em] text-balance text-text"
@@ -117,28 +130,29 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
           <DeckMeta deck={deck} />
         </div>
       </Link>
-      {addedTo ? (
-        <Link
-          to="/library/$deckId"
-          params={{ deckId: addedTo }}
-          disabled={!!st}
-          className="inline-flex h-8 items-center gap-1.5 justify-self-start rounded-sm px-2 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
-        >
-          <Check aria-hidden="true" className="text-state-known" />
-          <Trans>In your library</Trans>
-        </Link>
-      ) : (
-        <Button
-          size="sm"
-          onClick={onAdd}
-          loading={adding}
-          aria-label={t`Add “${deck.name}” to your library`}
-          className="justify-self-start"
-        >
-          <Plus aria-hidden="true" />
-          <Trans>Add</Trans>
-        </Button>
-      )}
+      <div className="px-3.5 pb-3.5 pt-3.5">
+        {addedTo ? (
+          <Link
+            to="/library/$deckId"
+            params={{ deckId: addedTo }}
+            disabled={!!st}
+            className="inline-flex h-8 items-center gap-1.5 rounded-sm px-2 -ms-2 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
+          >
+            <Check aria-hidden="true" className="text-state-known" />
+            <Trans>In your library</Trans>
+          </Link>
+        ) : (
+          <Button
+            size="sm"
+            onClick={onAdd}
+            loading={adding}
+            aria-label={t`Add “${deck.name}” to your library`}
+          >
+            <Plus aria-hidden="true" />
+            <Trans>Add</Trans>
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

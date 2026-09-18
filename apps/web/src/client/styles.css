@@ -980,6 +980,13 @@
   border-radius: var(--radius-lg);
   background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
 }
+/* The deck's own page shows one tray alone, so its card sets larger and is not cut: a row of
+   cropped cards reads as a shelf, but one cropped card reads as a rendering fault. */
+.deck-tray[data-size="lg"] {
+  --cw: 184px;
+  height: auto;
+  padding-block: 20px;
+}
 [data-theme="dark"] .deck-tray {
   --tray-l: 0.192;
   --tray-c: 0.015;
@@ -996,92 +1003,28 @@
   --hover: color-mix(in oklch, var(--text) 15%, transparent);
 }
 
-/* A deck's own page wears the colour of its tray as one band behind its name: press a lilac tray,
-   land on a lilac page. It is a flat fill that ends on a rule, not a wash that fades out — a
-   gradient with no edge reads as a rendering fault rather than a decision. */
-.deck-hero {
-  /* Less chroma than a tray: the same colour over a whole band reads far louder than over 216 px. */
-  --tray-l: 0.968;
-  --tray-c: 0.026;
-  background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
-  border-bottom: 1px solid var(--edge);
-}
-[data-theme="dark"] .deck-hero {
-  --tray-l: 0.188;
-  --tray-c: 0.012;
-}
-
-/* A few of the deck's own cards beside its name, so the page shows what is inside before the
-   reading starts. They rest at a slight tilt and do not move: this is a still life, not a deck
-   to press. */
-.deck-hand {
-  display: flex;
-  justify-content: center;
-  padding-block: 4px;
-}
-.deck-hand-card {
-  --cw: 128px;
-  display: flex;
-  flex-direction: column;
-  width: var(--cw);
-  min-height: calc(var(--cw) * 0.84);
-  padding: calc(var(--cw) * 0.085);
-  border-radius: calc(var(--cw) * 0.1);
-  background: var(--plate);
-  box-shadow: 0 0 0 1px var(--edge);
-  text-align: start;
-}
-/* They overlap at the shoulder only, so no card hides another's meaning. */
-.deck-hand-card:not(:first-child) {
-  margin-inline-start: calc(var(--cw) * -0.16);
-}
-.deck-hand-card[data-at="0"] {
-  transform: rotate(-4deg);
-}
-.deck-hand-card[data-at="1"] {
-  transform: translateY(-6px);
-  z-index: 1;
-}
-.deck-hand-card[data-at="2"] {
-  transform: rotate(4deg);
-  z-index: 2;
-}
-@media (max-width: 40rem) {
-  .deck-hand-card {
-    --cw: 108px;
-  }
-}
-
-.deck-tray[data-hue="0"],
-.deck-hero[data-hue="0"] {
+.deck-tray[data-hue="0"] {
   --tray-h: 25;
 }
-.deck-tray[data-hue="1"],
-.deck-hero[data-hue="1"] {
+.deck-tray[data-hue="1"] {
   --tray-h: 110;
 }
-.deck-tray[data-hue="2"],
-.deck-hero[data-hue="2"] {
+.deck-tray[data-hue="2"] {
   --tray-h: 150;
 }
-.deck-tray[data-hue="3"],
-.deck-hero[data-hue="3"] {
+.deck-tray[data-hue="3"] {
   --tray-h: 195;
 }
-.deck-tray[data-hue="4"],
-.deck-hero[data-hue="4"] {
+.deck-tray[data-hue="4"] {
   --tray-h: 235;
 }
-.deck-tray[data-hue="5"],
-.deck-hero[data-hue="5"] {
+.deck-tray[data-hue="5"] {
   --tray-h: 280;
 }
-.deck-tray[data-hue="6"],
-.deck-hero[data-hue="6"] {
+.deck-tray[data-hue="6"] {
   --tray-h: 320;
 }
-.deck-tray[data-hue="7"],
-.deck-hero[data-hue="7"] {
+.deck-tray[data-hue="7"] {
   --tray-h: 350;
 }
 
@@ -1194,18 +1137,20 @@
   align-items: start;
   overflow-x: auto;
   scroll-snap-type: x proximity;
-  padding-block: 24px 10px;
+  padding-block: 24px 4px;
   padding-inline: 14px;
   margin-inline: -14px;
-  scrollbar-width: thin;
+  /* No bar: a shelf usually fits, and a track drawn under every category is chrome the page does
+     not need. It still scrolls by wheel, trackpad, touch and keyboard. */
+  scrollbar-width: none;
+}
+.deck-shelf::-webkit-scrollbar {
+  display: none;
 }
 .deck-tile {
   scroll-snap-align: start;
 }
-/* Inside the tile the tray is inset by the card's padding, so its corners step down to match. */
-.deck-tile .deck-tray {
-  border-radius: calc(var(--radius-lg) - 12px);
-}
+
 @media (max-width: 40rem) {
   .deck-shelf {
     grid-auto-columns: 200px;

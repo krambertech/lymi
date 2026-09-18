@@ -1372,8 +1372,8 @@ msgstr "Колоди"
 msgid "Decks and cards you archived. Restore puts them back."
 msgstr "Колоди та картки у твоєму архіві. «Відновити» повертає їх назад."
 
-msgid "Decks Lymi writes and checks card by card. Add one and it joins your library with its own schedule, in your language."
-msgstr "Колоди, які Lymi пише й перевіряє картка за карткою. Додай будь-яку — вона стане у твою бібліотеку з власним розкладом, твоєю мовою."
+msgid "Decks from Lymi, checked card by card. Add one and it starts in your library, in your language."
+msgstr "Колоди від Lymi, перевірені картка за карткою. Додай будь-яку — вона стане у твою бібліотеку, твоєю мовою."
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"

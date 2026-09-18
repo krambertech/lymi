@@ -78,8 +78,8 @@ export function ExploreView({
       <PageHeader title={<Trans>Explore</Trans>}>
         <p className="mt-2 max-w-[52ch] text-base text-text-2">
           <Trans>
-            Decks Lymi writes and checks card by card. Add one and it joins your library with its
-            own schedule, in your language.
+            Decks from Lymi, checked card by card. Add one and it starts in your library, in your
+            language.
           </Trans>
         </p>
       </PageHeader>

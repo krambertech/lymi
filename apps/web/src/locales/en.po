@@ -1372,8 +1372,8 @@ msgstr "Decks"
 msgid "Decks and cards you archived. Restore puts them back."
 msgstr "Decks and cards you archived. Restore puts them back."
 
-msgid "Decks Lymi writes and checks card by card. Add one and it joins your library with its own schedule, in your language."
-msgstr "Decks Lymi writes and checks card by card. Add one and it joins your library with its own schedule, in your language."
+msgid "Decks from Lymi, checked card by card. Add one and it starts in your library, in your language."
+msgstr "Decks from Lymi, checked card by card. Add one and it starts in your library, in your language."
 
 msgid "Decks to review"
 msgstr "Decks to review"

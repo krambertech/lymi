@@ -118,6 +118,9 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     await learner.goto(`/explore/${onPage.slug}`);
     await learner.getByRole("button", { name: "Add to your library" }).click();
     await learner.waitForURL(new RegExp(`/library/${ids[onPage.slug]}$`));
+    // Library's own filter, which the page it came from does not have: the deck's name and its
+    // cards both appear on either page, so neither proves the new screen has taken over.
+    await expect(learner.getByRole("button", { name: "Filter", exact: true })).toBeVisible();
     await expect(learner.getByRole("heading", { name: onPage.name, exact: true })).toBeVisible();
     await expect(learner.getByText(`peatee ${suffix}`, { exact: true })).toBeVisible();
   });

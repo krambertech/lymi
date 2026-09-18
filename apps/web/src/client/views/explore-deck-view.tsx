@@ -1,10 +1,9 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { ExploreDeckOut, PublicDeckOut } from "@lymi/core/catalog";
-import { trayHue } from "@lymi/core/catalog";
 import { Link } from "@tanstack/react-router";
 import { Check, ChevronDown, Plus } from "lucide-react";
 import { Button, buttonClass } from "../components/button";
-import { DeckMeta } from "../components/deck-tray";
+import { DeckMeta, DeckTray } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
 import { AppTile } from "../components/logo";
 import type { StaticNav } from "../components/nav-link";
@@ -22,29 +21,16 @@ interface Props {
   st?: StaticNav;
 }
 
-type DeckCard = PublicDeckOut["sections"][number]["cards"][number];
-
-/** How many of the deck's own cards rest beside its name. */
-const HAND = 3;
-
 /**
- * A few cards from across the deck, one per section before a second from any: the hand shows the
- * spread of what is inside rather than the first lesson. It follows the deck's own order, so one
- * revision always shows the same three.
+ * The card this deck's tray shows: the first with a meaning, named with its section. It is the
+ * tray the learner pressed on the shelf, so the same card meets them here in the same colour.
  */
-function handOf(deck: PublicDeckOut): DeckCard[] {
-  const groups = deck.sections
-    .map((section) => section.cards.filter((card) => card.meaning))
-    .filter((cards) => cards.length > 0);
-  const picked: DeckCard[] = [];
-  const deepest = Math.max(0, ...groups.map((cards) => cards.length));
-  for (let round = 0; round < deepest && picked.length < HAND; round++) {
-    for (const cards of groups) {
-      const card = cards[round];
-      if (card && picked.length < HAND) picked.push(card);
-    }
+function trayCardOf(deck: PublicDeckOut) {
+  for (const section of deck.sections) {
+    const card = section.cards.find((each) => each.meaning);
+    if (card) return { term: card.term, meaning: card.meaning ?? "", section: section.name };
   }
-  return picked;
+  return null;
 }
 
 export function ExploreDeckView({
@@ -111,78 +97,67 @@ export function ExploreDeckView({
 
   const { deck, deckId } = data;
   const sections = deck.sections.filter((section) => section.name !== null);
-  const hand = handOf(deck);
+  const trayCard = trayCardOf(deck);
 
   return (
     <Page>
-      {/* The deck's own tray colour, run out to the column's edges: the negative margins undo the
-          page's padding. `over-tint` turns the surfaces inside into translucent ink, so nothing
-          paints grey on the colour. */}
-      <div
-        className="deck-hero over-tint -mx-5 -mt-5 px-5 pt-5 pb-7 @3xl/shell:-mx-8 @3xl/shell:-mt-8 @3xl/shell:px-8 @3xl/shell:pt-8 @3xl/shell:pb-9"
-        data-hue={trayHue(deck.slug)}
-      >
-        <TopBar back={back} nested />
-        <PageHeader
-          title={<span lang={deck.meaningLanguage}>{deck.name}</span>}
-          sub={
-            <span className="flex items-center gap-1.5">
-              <AppTile size={18} />
-              <Trans>By {deck.publisher}</Trans>
-            </span>
-          }
-          className="pb-5 @3xl:pb-6"
-        />
-        <div className="grid items-center gap-7 @3xl:grid-cols-[minmax(0,1fr)_auto] @3xl:gap-10">
-          <div className="grid justify-items-start gap-4">
-            <p lang={deck.meaningLanguage} className="max-w-[52ch] text-md text-pretty text-text-2">
-              {deck.summary}
-            </p>
-            <DeckMeta
-              deck={{ level: deck.level, cardCount: deck.cardCount, sectionCount: sections.length }}
-              className="text-sm"
-            />
-            {deckId ? (
-              <div className="flex flex-wrap items-center gap-3">
-                <Link
-                  to="/library/$deckId"
-                  params={{ deckId }}
-                  disabled={!!st}
-                  className={buttonClass("secondary")}
-                >
-                  <Trans>Open in Library</Trans>
-                </Link>
-                <p className="flex items-center gap-1.5 text-sm text-text-2 [&_svg]:size-4">
-                  <Check aria-hidden="true" className="text-state-known" />
-                  <Trans>Already in your library</Trans>
-                </p>
-              </div>
-            ) : (
-              <Button variant="primary" size="lg" onClick={onAdd} loading={adding}>
-                <Plus aria-hidden="true" />
-                <Trans>Add to your library</Trans>
-              </Button>
-            )}
-          </div>
-          {/* Decoration: every one of these cards is in the list further down, named there. */}
-          {hand.length > 0 && (
-            <div className="deck-hand" aria-hidden="true">
-              {hand.map((card, at) => (
-                <article key={card.term} className="deck-hand-card" data-at={at}>
-                  <p lang={deck.language ?? undefined} className="deck-tray-term">
-                    {card.term}
-                  </p>
-                  <p lang={deck.meaningLanguage} className="deck-tray-meaning">
-                    {card.meaning}
-                  </p>
-                </article>
-              ))}
+      <TopBar back={back} nested />
+      <PageHeader
+        title={<span lang={deck.meaningLanguage}>{deck.name}</span>}
+        sub={
+          <span className="flex items-center gap-1.5">
+            <AppTile size={18} />
+            <Trans>By {deck.publisher}</Trans>
+          </span>
+        }
+      />
+      {/* The deck's colour lives on its tray and nowhere else, so amber keeps the plain canvas it
+          needs to read as the one thing to press. DESIGN.md, "The tray" and "Colour". */}
+      <div className="grid items-start gap-7 @3xl:grid-cols-[minmax(0,1fr)_auto] @3xl:gap-12">
+        <div className="grid justify-items-start gap-4">
+          <p lang={deck.meaningLanguage} className="max-w-[52ch] text-md text-pretty text-text-2">
+            {deck.summary}
+          </p>
+          <DeckMeta
+            deck={{ level: deck.level, cardCount: deck.cardCount, sectionCount: sections.length }}
+            className="text-sm"
+          />
+          {deckId ? (
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to="/library/$deckId"
+                params={{ deckId }}
+                disabled={!!st}
+                className={buttonClass("secondary")}
+              >
+                <Trans>Open in Library</Trans>
+              </Link>
+              <p className="flex items-center gap-1.5 text-sm text-text-2 [&_svg]:size-4">
+                <Check aria-hidden="true" className="text-state-known" />
+                <Trans>Already in your library</Trans>
+              </p>
             </div>
+          ) : (
+            <Button variant="primary" size="lg" onClick={onAdd} loading={adding}>
+              <Plus aria-hidden="true" />
+              <Trans>Add to your library</Trans>
+            </Button>
           )}
         </div>
+        {trayCard && (
+          <DeckTray
+            slug={deck.slug}
+            cardCount={deck.cardCount}
+            card={trayCard}
+            language={deck.language}
+            meaningLanguage={deck.meaningLanguage}
+            size="lg"
+            className="w-full rounded-xl @3xl:w-[312px]"
+          />
+        )}
       </div>
 
-      <div className="pt-8 @3xl/shell:pt-10">
+      <div className="pt-9 @3xl/shell:pt-11">
         {sections.length > 0 && (
           <section aria-labelledby="deck-path" className="pb-9">
             <h2 id="deck-path" className="text-lg font-medium text-text">

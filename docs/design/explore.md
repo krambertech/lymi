@@ -44,9 +44,11 @@ The shelves and the tray are the public page's. What is added is one press: **Ad
 
 The one departure from the public page is that a tile here **is a card**, where the public page sets the deck's name on the open canvas below its tray. The press is why: a button under a name on bare canvas belongs to nothing and reads as loose, so the group it acts on has to be a surface. The tray keeps its hue inside that card, with its corners stepped down by the card's padding.
 
-`/explore/<slug>` is the deck in the app's chrome, on the same column and the same title as every other screen: a band of the deck's own tray colour holds the back link, the name, the publisher under it behind the app's mark, the summary, the counts, **Add to your library** in amber, and a few of the deck's real cards fanned beside them. Under the band come the sections in order and every card under a closed disclosure per section.
+`/explore/<slug>` is the deck in the app's chrome, on the same column and the same title as every other screen: the name, the publisher under it behind the app's mark, the summary, the counts and **Add to your library**, with one of the deck's own cards in its tray beside them. Under that come the sections in order and every card under a closed disclosure per section.
 
-The band is a **flat fill that ends on a rule**, not the public page's pool fading into the reading. A wash with no edge reads as a rendering fault rather than a decision once it sits against a rail and a column. It carries less chroma than a tray, because the same colour over a band reads far louder than over 216 px.
+The deck's colour lives on that tray and nowhere else. A full-bleed band of it was drawn first and rejected: against the rail it ended on an arbitrary edge, and it put an amber button on a coloured ground, where amber stops reading as the one thing to press. The tray is also the object the learner just pressed on the shelf, so the same card in the same colour meets them here.
+
+The tray on this page shows its card **whole**, where a tray on a shelf cuts it at two thirds. A row of cropped cards reads as a shelf; one cropped card on its own reads as a rendering fault.
 
 Amber lives on this page and nowhere else in Explore, because this page does have one thing to press; pressing it opens the deck in Library, since a learner who opened the page came for that deck. Search, the shelf filters and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
 

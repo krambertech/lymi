@@ -11,9 +11,9 @@ import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
 import { Hero } from "./Hero";
 import { ImportDemo } from "./ImportDemo";
-import { JoinSection } from "./JoinSection";
 import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
+import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 import { SOURCE_CODE_URL } from "./site-links";
@@ -174,7 +174,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
           <ImportDemo />
         </FeatureSection>
 
-        <JoinSection title={<Trans>Join the free beta.</Trans>} source="landing" />
+        <SignUpSection title={<Trans>Start your first deck.</Trans>} />
       </main>
 
       <SiteFooter openAppUrl={openAppUrl} page="landing" />

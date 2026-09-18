@@ -2,14 +2,9 @@
 
 How to get Lymi's MCP server at `https://my.lymi.app/mcp` through ChatGPT plugin review and into the Claude connector directory. Neither directory needs an interactive UI. Issue [#83](https://github.com/krambertech/lymi/issues/83) tracks the work, and the public tool docs are at [lymi.app/docs/mcp](https://lymi.app/docs/mcp).
 
-## Submission is blocked on accounts
+## Accounts
 
-**A reviewer cannot sign in today.** Production sign-in is Google only, and `databaseHooks.user.create` in `apps/web/src/server/auth.ts` refuses any email outside `ALLOWED_EMAILS` unless it arrives through a join link. Submission waits for:
-
-- A public account path. Opening sign-up needs per-learner rate and cost limits, because card audio comes from a paid speech API.
-- The privacy policy, terms and support page from [#82](https://github.com/krambertech/lymi/issues/82). Both portals ask for a privacy policy URL.
-
-Until then, run the checks below on a custom connector with an allowlisted account.
+A reviewer can now sign in: sign-up is open to anyone, with Google or an email address and a password. Card audio comes from a paid speech API, so watch per-learner cost as public traffic arrives.
 
 ## What each directory checks
 

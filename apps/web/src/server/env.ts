@@ -83,10 +83,6 @@ export function withServedOrigin<T extends { PRODUCT_URL: string; PUBLIC_SITE_UR
 /** Persona accounts end in this domain. They exist only in a local D1. */
 export const DEV_EMAIL_DOMAIN = "@lymi.local";
 
-export function allowedEmails(env: Bindings): Set<string> {
-  return emailSet(env.ALLOWED_EMAILS);
-}
-
 /** Accounts that may exercise operational capabilities such as a production email smoke test. */
 export function operatorEmails(env: Bindings): Set<string> {
   return emailSet(env.OPERATOR_EMAILS);

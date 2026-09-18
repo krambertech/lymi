@@ -903,7 +903,7 @@ export const SCREENS: Entry[] = [
               mode="sign-up"
               notice={{
                 title: "Check your inbox",
-                body: "If ada@example.com can create a Lymi account, a link to confirm it is on the way. Open it to finish.",
+                body: "Check ada@example.com. A message is on the way with the next step.",
                 actions: (
                   <>
                     <Button size="sm" variant="secondary">
@@ -924,13 +924,6 @@ export const SCREENS: Entry[] = [
             <LoginView
               onGoogle={noop}
               error="That email and password don’t match. Try again, or reset your password."
-            />
-          </PhoneShot>
-          <PhoneShot caption="Not on the invite list" initial="light" path="/login" bare>
-            <LoginView
-              onGoogle={noop}
-              blocked
-              error="This account has not been invited. Request an invitation, or try another account."
             />
           </PhoneShot>
           <PhoneShot caption="A password a guesser opens with" initial="dark" path="/login" bare>

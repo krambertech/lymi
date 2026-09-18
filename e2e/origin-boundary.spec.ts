@@ -86,44 +86,24 @@ test("each origin exposes only its own route and indexing contract", async ({ pa
   await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
 });
 
-test("the public Worker owns beta signup without exposing product APIs", async ({
+test("the site keeps product APIs off its origin and sends /join to sign-up", async ({
   page,
   request,
-}, testInfo) => {
-  const run = `${testInfo.project.name}-r${testInfo.retry}-p${testInfo.repeatEachIndex}`;
-  const email = `separate-deployments-${run}@example.com`;
-  const first = await request.post(`${publicSite}/api/beta`, {
-    data: { email, source: "landing" },
-  });
-  expect(first.status()).toBe(200);
-  expect(await first.json()).toEqual({ alreadyOn: false });
-
-  const duplicate = await request.post(`${publicSite}/api/beta`, {
-    data: { email, source: "join" },
-  });
-  expect(duplicate.status()).toBe(200);
-  expect(await duplicate.json()).toEqual({ alreadyOn: true });
-
+}) => {
   const productApi = await request.get(`${publicSite}/api/decks`);
   expect(productApi.status()).toBe(404);
 
-  const uiEmail = `separate-deployments-ui-${run}@example.com`;
-  await page.goto(`${publicSite}/join/`);
-  await expect(page.getByRole("link", { name: "privacy policy" })).toHaveAttribute(
-    "href",
-    "/privacy",
-  );
-  // The form submits once its island hydrates, and Astro drops `ssr` from the island then; with
-  // the immutable asset cache a click can otherwise land first. No accessible state marks it.
-  await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
-  await page.getByRole("textbox", { name: "Email address" }).fill(uiEmail);
-  const signup = page.waitForResponse(
-    (response) =>
-      response.request().method() === "POST" && response.url() === `${publicSite}/api/beta`,
-  );
-  await page.getByRole("button", { name: "Request access" }).click();
-  expect((await signup).status()).toBe(200);
-  await expect(page.getByRole("status")).toContainText("Request received.");
+  // The waiting list the private beta ran on. Its links are shared, so they open sign-up now.
+  for (const path of ["/join", "/uk/join", "/ru/join"]) {
+    const moved = await request.get(`${publicSite}${path}`, { maxRedirects: 0 });
+    expect(moved.status()).toBe(301);
+    expect(moved.headers().location).toBe(`${e2eProductUrl}/login?mode=sign-up`);
+  }
+
+  await page.goto(publicSite);
+  await expect(
+    page.getByRole("link", { name: "Create an account", exact: true }).first(),
+  ).toHaveAttribute("href", `${e2eProductUrl}/login?mode=sign-up`);
 });
 
 test("clearing an installed product origin recovers from stale browser storage", async ({

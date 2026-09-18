@@ -12,7 +12,7 @@ flowchart LR
     Public[Prerendered landing + docs]
     Islands[React islands]
     Catalog[Published deck pages\nrendered per request]
-    Beta[Website API\n/api/beta + /api/health]
+    Health[Website API\n/api/health]
   end
   subgraph Product["apps/web (Vite + React + Hono)"]
     UI[TanStack Router + Query]
@@ -34,7 +34,6 @@ flowchart LR
   KV[(KV, sessions cache)]
 
   Public --> Islands
-  Beta -->|beta signups only| D1
   Catalog -->|public projection, read only| D1
   UI --> Assets
   UI -->|fetch, session cookie| API
@@ -60,7 +59,7 @@ flowchart LR
 
 ### Clients: prerendered Astro website plus a client-rendered React PWA
 
-The public site at `lymi.app` is rendered by Astro. Landing, Join and documentation are prerendered and ship useful HTML and canonical metadata before JavaScript runs; interactive React components hydrate as islands. Explore (`/explore`) and published deck pages (`/explore/<slug>`), in each locale, and the deck sitemap are the only routes Astro renders per request, from the public projection of D1 in `packages/core/src/catalog.ts` ([ADR 0016](adr/0016-public-catalog-pages-render-on-the-public-worker.md)). A narrow Worker serves the assets, those pages, beta signup and a versioned health endpoint. It has no product shell, authentication or PWA behavior.
+The public site at `lymi.app` is rendered by Astro. Landing and documentation are prerendered and ship useful HTML and canonical metadata before JavaScript runs; interactive React components hydrate as islands. Explore (`/explore`) and published deck pages (`/explore/<slug>`), in each locale, and the deck sitemap are the only routes Astro renders per request, from the public projection of D1 in `packages/core/src/catalog.ts` ([ADR 0016](adr/0016-public-catalog-pages-render-on-the-public-worker.md)). A narrow Worker serves the assets, those pages, the legacy redirects and a versioned health endpoint. It has no product shell, authentication or PWA behavior.
 
 The signed-in product at `my.lymi.app` is still a client-rendered single-page PWA. It sits behind a login, so a static shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train. `/today` is the product home and `/app` redirects there. The product root sends a valid session to Today and a signed-out visitor to sign-in, preserving safe product deep links through authentication.
 
@@ -116,7 +115,7 @@ Later option: a Durable Object per user holding its own SQLite, which turns sync
 
 ### Auth: Better Auth on the Worker
 
-Better Auth runs on Workers, supports D1 natively as of 1.5, and does social login plus sessions, API keys for the public API, and an Expo plugin for the React Native app later. Two ways in: Continue with Google, and an email address with a password. `ALLOWED_EMAILS`, a working join link and a published deck gate both the same way, so who may create an account does not depend on which door they use.
+Better Auth runs on Workers, supports D1 natively as of 1.5, and does social login plus sessions, API keys for the public API, and an Expo plugin for the React Native app later. Two ways in: Continue with Google, and an email address with a password. Sign-up is open to anyone: Lymi is in public beta, and no allowlist stands in front of either door.
 
 Known issue to watch: a reported bug where sessions expire after five minutes with D1 and KV. Test session refresh before relying on it.
 
@@ -228,7 +227,7 @@ The Anki package is Anki's legacy container, `collection.anki21` with a placehol
 lymi/
   apps/site         Public deployable: Astro site + narrow Worker
     src/pages       Landing, Join, documentation, published decks, metadata and public files
-    src/worker.ts   Beta signup and health, then Astro's handler
+    src/worker.ts   Health and legacy redirects, then Astro's handler
   apps/web          Product deployable: Vite React PWA client + Hono Worker
     src/client      Routes, components, styles (Tailwind v4 tokens from DESIGN.md)
     src/server      Hono app, Better Auth, API and MCP routes, product asset fallback

@@ -23,7 +23,6 @@ function envWith(secret: unknown): Bindings {
     PRODUCT_URL,
     PUBLIC_SITE_URL: PRODUCT_URL,
     APP_PREVIEW: "true",
-    ALLOWED_EMAILS: "",
     BETTER_AUTH_SECRET: secret,
     EMAIL: { send: async () => {} },
   } as unknown as Bindings;

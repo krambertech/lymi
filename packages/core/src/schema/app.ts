@@ -828,9 +828,8 @@ export type Import = typeof imports.$inferSelect;
 export type Export = typeof exportFiles.$inferSelect;
 
 /**
- * Someone who asked to be told when Lymi opens up. Deliberately unconnected to `user`:
- * joining the list is an expression of interest, not an account, and it grants no access.
- * Nothing here is a learner's data, so these writes are not in the audit log.
+ * The private beta's waiting list, closed now that anyone can sign up. Nothing writes it; the
+ * rows stay so an address can still be found and removed when someone asks.
  */
 export const betaSignups = sqliteTable(
   "beta_signups",

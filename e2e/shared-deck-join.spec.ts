@@ -1,14 +1,9 @@
-import {
-  createAccountThroughDevForm,
-  expectNoAccountEmail,
-  startAsTestLearner,
-  submitDevSignUp,
-} from "./auth";
+import { createAccountThroughDevForm, startAsTestLearner } from "./auth";
 import { type Browser, expect, type Page, type TestInfo, test } from "./test";
 
 /**
- * A classmate's email that is on no allowlist and is not a local persona, so only the join
- * link can let it create an account. One per project and retry, like the allowlisted accounts.
+ * A classmate's email: not a local persona, so it has to confirm its address like a real one.
+ * One per project and retry, like every other account in the suite.
  */
 function outsider(testInfo: TestInfo, who: string) {
   return `e2e-${who}-${testInfo.project.name}-r${testInfo.retry}@example.test`;
@@ -65,17 +60,6 @@ test("an owner shares a deck and a classmate joins through the link", async ({
   });
 
   const classmate = await signedOutPage(browser);
-
-  await test.step("a signed-out classmate cannot create an account without the link", async () => {
-    const uninvited = outsider(testInfo, "uninvited");
-    await classmate.goto("/login?dev=1");
-    await submitDevSignUp(classmate, uninvited);
-
-    // The refusal is silent by design, so the proof is that nothing was created or sent.
-    await expectNoAccountEmail(classmate, uninvited);
-    await expect(classmate).toHaveURL(/\/login/);
-    expect((await classmate.request.get("/api/me")).status()).toBe(401);
-  });
 
   await test.step("the join link admits the classmate and lands them in the deck", async () => {
     await classmate.goto(`${joinUrl}?dev=1`);

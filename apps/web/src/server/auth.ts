@@ -6,14 +6,13 @@ import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { APIError } from "better-auth/api";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
-import { allowedEmails, type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
-import { type Admission, admissionFrom, attributes, cookieName } from "./join-cookie";
+import { type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
+import { admissionFrom, attributes, cookieName } from "./join-cookie";
 import { audit } from "./services/audit";
 import {
   avatarRow,
@@ -23,8 +22,8 @@ import {
 } from "./services/avatars";
 import { ServiceError } from "./services/context";
 import { accountEmailLanguage, sendAccountEmail } from "./services/email";
-import { joinLinkAdmits, joinThroughLink } from "./services/invitations";
-import { addPublishedDeck, publicationAdmits } from "./services/publications";
+import { joinThroughLink } from "./services/invitations";
+import { addPublishedDeck } from "./services/publications";
 import {
   signedUpHere,
   signUpCookieAttributes,
@@ -42,7 +41,6 @@ export function createAuth(
   db: Db,
   waitUntil?: ((work: Promise<unknown>) => void) | undefined,
 ) {
-  const allowed = allowedEmails(env);
   const dev = devToolsEnabled(env);
   // A hook that has to call an endpoint of the instance it belongs to. Every hook runs long
   // after this function returns, so the holder is always filled by the time one reads it.
@@ -233,20 +231,11 @@ export function createAuth(
     databaseHooks: {
       user: {
         create: {
-          // The allowlist. Only these accounts, or someone who arrived through a working join
-          // link or a published deck, can create a user. ADR 0011 and ADR 0020.
-          before: async (user, context) => {
-            const email = user.email.toLowerCase();
-            // Persona accounts need no entry in .dev.vars; they cannot exist outside a local D1.
-            const persona = dev && email.endsWith(DEV_EMAIL_DOMAIN);
-            // A persona has no inbox, so it is born confirmed and signs in with its fixed password.
-            if (persona) return { data: { ...user, emailVerified: true } };
-            if (allowed.has(email)) return { data: user };
-            const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
-            if (admission && (await admits(db, admission))) return { data: user };
-            throw new APIError("FORBIDDEN", {
-              message: "This is a private app. Your account is not on the list.",
-            });
+          // Anyone may sign up. A persona has no inbox, so it is born confirmed and signs in
+          // with its fixed password; everybody else confirms their address first.
+          before: async (user) => {
+            if (isPersona(user.email)) return { data: { ...user, emailVerified: true } };
+            return { data: user };
           },
           // Remember the browser that signed up, so confirming from it keeps its password.
           after: async (user, context) => {
@@ -428,12 +417,6 @@ async function googlePictureOf(db: Db, userId: string): Promise<string | null> {
     .from(schema.account)
     .where(and(eq(schema.account.userId, userId), eq(schema.account.providerId, "google")));
   return account?.idToken ? pictureFromIdToken(account.idToken) : null;
-}
-
-function admits(db: Db, admission: Admission): Promise<boolean> {
-  return admission.kind === "link"
-    ? joinLinkAdmits(db, admission.token)
-    : publicationAdmits(db, admission.slug);
 }
 
 function headersOf(context: GenericEndpointContext | null): Headers | undefined {

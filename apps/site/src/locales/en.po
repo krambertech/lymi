@@ -241,6 +241,12 @@ msgstr "a word that makes a question"
 msgid "Accents that land between the beats"
 msgstr "Accents that land between the beats"
 
+msgid "Access requests from the private beta"
+msgstr "Access requests from the private beta"
+
+msgid "Access requests from the private beta stay until you ask us to remove them."
+msgstr "Access requests from the private beta stay until you ask us to remove them."
+
 msgid "Account and learning data stay while your account is active and are removed when we complete an account-deletion request, except where law requires a longer period."
 msgstr "Account and learning data stay while your account is active and are removed when we complete an account-deletion request, except where law requires a longer period."
 
@@ -330,9 +336,6 @@ msgstr "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “d
 
 msgid "Already in your deck, so it’s skipped"
 msgstr "Already in your deck, so it’s skipped"
-
-msgid "Already invited?"
-msgstr "Already invited?"
 
 msgid "Also called the frequency illusion."
 msgstr "Also called the frequency illusion."
@@ -426,12 +429,6 @@ msgstr "Back to {name}"
 
 msgid "Back to Lymi"
 msgstr "Back to Lymi"
-
-msgid "Beta access requests"
-msgstr "Beta access requests"
-
-msgid "Beta access requests stay until you ask us to remove them or the beta list is retired."
-msgstr "Beta access requests stay until you ask us to remove them or the beta list is retired."
 
 msgid "Biology"
 msgstr "Biology"
@@ -604,6 +601,9 @@ msgstr "Cosy"
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
+msgid "Create an account"
+msgstr "Create an account"
+
 msgid "Data Lymi receives"
 msgstr "Data Lymi receives"
 
@@ -706,9 +706,6 @@ msgstr "Eesti · word"
 msgid "Effortless grace"
 msgstr "Effortless grace"
 
-msgid "Email address"
-msgstr "Email address"
-
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "English has no õ. Say “o” without rounding your lips."
 
@@ -720,9 +717,6 @@ msgstr "Enjoy your meal!"
 
 msgid "Enjoying the moment"
 msgstr "Enjoying the moment"
-
-msgid "Enter an email address like you@example.com."
-msgstr "Enter an email address like you@example.com."
 
 msgid "Español"
 msgstr "Español"
@@ -1003,10 +997,6 @@ msgstr "Ice, jää, plus edge, äär: four ä in a row."
 msgid "idea"
 msgstr "idea"
 
-#. placeholder {0}: email.trim()
-msgid "If a place opens, we’ll email <0>{0}</0>. Nothing to do until then."
-msgstr "If a place opens, we’ll email <0>{0}</0>. Nothing to do until then."
-
 msgid "If a story shows a gun early on, it should go off later"
 msgstr "If a story shows a gun early on, it should go off later"
 
@@ -1021,9 +1011,6 @@ msgstr "If you create an API key, we store the key record, its name, permissions
 
 msgid "If you enable review reminders, we store a push endpoint, browser-generated encryption keys, your reminder time and time zone, and delivery state. Reminder notifications contain a due-card count, not card text."
 msgstr "If you enable review reminders, we store a push endpoint, browser-generated encryption keys, your reminder time and time zone, and delivery state. Reminder notifications contain a due-card count, not card text."
-
-msgid "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
-msgstr "If you request access, we store your email address, where on the site you made the request, and when you made it. Requesting access does not create an account."
 
 msgid "If you sign in with an email address and a password, we store the address and a hash of the password, never the password itself. We also store short-lived records for confirming an address and resetting a password, and counts of recent sign-in, sign-up, resend and reset attempts by address and IP address, so those requests can be rate limited."
 msgstr "If you sign in with an email address and a password, we store the address and a hash of the password, never the password itself. We also store short-lived records for confirming an address and resetting a password, and counts of recent sign-in, sign-up, resend and reset attempts by address and IP address, so those requests can be rate limited."
@@ -1108,9 +1095,6 @@ msgstr "Japanese 1 · Mondays"
 
 msgid "Join link"
 msgstr "Join link"
-
-msgid "Join the free beta."
-msgstr "Join the free beta."
 
 msgid "Just the right amount: not too much, not too little"
 msgstr "Just the right amount: not too much, not too little"
@@ -1283,11 +1267,11 @@ msgstr "Lymi is a flashcard app: it brings each card back right before you’d f
 msgid "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
 msgstr "Lymi is an open-source flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free in beta."
 
+msgid "Lymi is in public beta, and it is free while it is there."
+msgstr "Lymi is in public beta, and it is free while it is there."
+
 msgid "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
 msgstr "Lymi is open source and has a public API. Add cards from a phone shortcut or a spreadsheet, or show what’s due on your own site."
-
-msgid "Lymi is private for now. Leave your email and we’ll write when a place opens."
-msgstr "Lymi is private for now. Leave your email and we’ll write when a place opens."
 
 msgid "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
 msgstr "Lymi is provided by Krambertech OÜ, an Estonian private limited company. In this policy, “Lymi”, “we” and “us” refer to Krambertech OÜ. Contact us at <0>hello@lymi.app</0>."
@@ -1443,11 +1427,11 @@ msgstr "Not “I want well”. It’s how you accept a coffee."
 msgid "Notes"
 msgstr "Notes"
 
-msgid "Nothing during the private beta."
-msgstr "Nothing during the private beta."
-
 msgid "Nothing here by that name."
 msgstr "Nothing here by that name."
+
+msgid "Nothing while Lymi is in public beta."
+msgstr "Nothing while Lymi is in public beta."
 
 msgid "noun"
 msgstr "noun"
@@ -1654,18 +1638,6 @@ msgstr "Replay pronunciation"
 msgid "Replay this line"
 msgstr "Replay this line"
 
-msgid "Request access"
-msgstr "Request access"
-
-msgid "Request access · Lymi"
-msgstr "Request access · Lymi"
-
-msgid "Request access to the Lymi private beta."
-msgstr "Request access to the Lymi private beta."
-
-msgid "Request received."
-msgstr "Request received."
-
 msgid "Reveal the meaning, then grade the recall."
 msgstr "Reveal the meaning, then grade the recall."
 
@@ -1798,9 +1770,6 @@ msgstr "Show the meaning"
 msgid "sight (to see)"
 msgstr "sight (to see)"
 
-msgid "Sign in"
-msgstr "Sign in"
-
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Sign in and let it add cards. Then send it your notes."
 
@@ -1869,6 +1838,9 @@ msgstr "Start here"
 
 msgid "Start with a ready-made course."
 msgstr "Start with a ready-made course."
+
+msgid "Start your first deck."
+msgstr "Start your first deck."
 
 msgid "station"
 msgstr "station"
@@ -1981,9 +1953,6 @@ msgstr "Thanks! See you!"
 msgid "That chess term you just used, add it to my deck."
 msgstr "That chess term you just used, add it to my deck."
 
-msgid "The beta list is temporarily unavailable. Your email was not saved. Try again later."
-msgstr "The beta list is temporarily unavailable. Your email was not saved. Try again later."
-
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "The browning that gives seared, baked and toasted food its flavour"
 
@@ -2043,9 +2012,6 @@ msgstr "The phrase your tutor typed in the chat, the word you looked up twice in
 
 msgid "The player would pass, if chess allowed it."
 msgstr "The player would pass, if chess allowed it."
-
-msgid "The private beta is free. Leave your email and we’ll write when a place opens."
-msgstr "The private beta is free. Leave your email and we’ll write when a place opens."
 
 msgid "The push behind ragtime, funk and reggae."
 msgstr "The push behind ragtime, funk and reggae."
@@ -2125,9 +2091,6 @@ msgstr "to go"
 msgid "To go, please."
 msgstr "To go, please."
 
-msgid "To manage private-beta access and email people who asked to hear when a place opens."
-msgstr "To manage private-beta access and email people who asked to hear when a place opens."
-
 msgid "To meet"
 msgstr "To meet"
 
@@ -2160,9 +2123,6 @@ msgstr "To stop"
 
 msgid "Tonight"
 msgstr "Tonight"
-
-msgid "Too many attempts. Wait a minute, then try again."
-msgstr "Too many attempts. Wait a minute, then try again."
 
 msgid "Try a few cards"
 msgstr "Try a few cards"
@@ -2209,9 +2169,6 @@ msgstr "Two euros ten."
 msgid "Type the term. AI fills in the rest."
 msgstr "Type the term. AI fills in the rest."
 
-msgid "Unable to reach the beta list. Check your connection and try again."
-msgstr "Unable to reach the beta list. Check your connection and try again."
-
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Unfinished tasks stay on your mind more than finished ones"
 
@@ -2236,9 +2193,6 @@ msgstr "verb"
 msgid "Waiting for your notes"
 msgstr "Waiting for your notes"
 
-msgid "We already have your request."
-msgstr "We already have your request."
-
 msgid "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
 msgstr "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
 
@@ -2247,9 +2201,6 @@ msgstr "We store the decks and cards you create or join. A card can include a te
 
 msgid "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
 msgstr "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
-
-msgid "We use your email only for this access request. It does not create an account. Read the <0>privacy policy</0>."
-msgstr "We use your email only for this access request. It does not create an account. Read the <0>privacy policy</0>."
 
 msgid "Weather"
 msgstr "Weather"
@@ -2310,6 +2261,9 @@ msgstr "Which assistants work?"
 
 msgid "Which languages can I learn?"
 msgstr "Which languages can I learn?"
+
+msgid "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
+msgstr "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
 
 msgid "Who is responsible"
 msgstr "Who is responsible"

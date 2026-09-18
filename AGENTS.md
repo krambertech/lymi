@@ -6,7 +6,7 @@ A vocabulary app for one learner. Read [`CONTEXT.md`](CONTEXT.md) before naming 
 
 [`README.md`](README.md) has the layout and the commands. [`docs/stack.md`](docs/stack.md) has every technical decision with the alternative that lost, so read it before proposing a different shape. [`PRODUCT.md`](PRODUCT.md) is who it is for; [`DESIGN.md`](DESIGN.md) holds the system-wide visual and interaction rules and links to feature design in `docs/design`.
 
-Two deployables: `apps/site` is the Astro public site plus its narrow beta/health Worker; `apps/web` is the Vite React product and Hono Worker. `packages/core` is what both Workers and a future React Native app import unchanged — Drizzle schema, Zod types, FSRS. Anything the product client and server both need lives there.
+Two deployables: `apps/site` is the Astro public site plus its narrow health-and-redirects Worker; `apps/web` is the Vite React product and Hono Worker. `packages/core` is what both Workers and a future React Native app import unchanged — Drizzle schema, Zod types, FSRS. Anything the product client and server both need lives there.
 
 ## Testing locally
 

@@ -1,7 +1,6 @@
 /** Public pages every locale gets: English at the path, the others under their own prefix. */
 export const localizedPages = {
   landing: "/",
-  join: "/join",
   languages: "/languages",
   estonian: "/languages/estonian",
   assistants: "/ai-assistants",

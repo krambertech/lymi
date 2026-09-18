@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import type { FieldLanguage, WordFrame } from "./hero-words";
 
@@ -282,8 +283,8 @@ export function WordFieldHero({ frames, label, lede }: Props) {
           {lede}
         </p>
         <div className="mt-9">
-          <a href="#join" className={buttonClass("primary", "lg")}>
-            <Trans>Request access</Trans>
+          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+            <Trans>Create an account</Trans>
           </a>
         </div>
       </div>

@@ -53,16 +53,11 @@ export const Route = createFileRoute("/login")({
  *
  * Better Auth's OAuth callback redirects to `errorCallbackURL` with `?error=<code>`, where the
  * code is one of a fixed set or the message of an APIError with its spaces turned into
- * underscores (better-auth/dist/api/routes/callback.mjs). The allowlist in server/auth.ts
- * throws such an APIError, so its message arrives here underscored.
+ * underscores (better-auth/dist/api/routes/callback.mjs).
  */
-const BLOCKED = new Set([
-  // What the allowlist message becomes on the way here. Keep the two in step.
-  "This_is_a_private_app._Your_account_is_not_on_the_list.",
+const RETRYABLE = new Set([
   "signup_disabled",
   "unable_to_create_user",
-]);
-const RETRYABLE = new Set([
   "state_not_found",
   "invalid_callback_request",
   "no_code",
@@ -73,34 +68,12 @@ const RETRYABLE = new Set([
 /** What Better Auth redirects a spent or forged confirmation link back with. */
 const STALE_LINK = new Set(["TOKEN_EXPIRED", "INVALID_TOKEN", "USER_NOT_FOUND"]);
 
-interface SignInIssue {
-  message: MessageDescriptor;
-  blocked: boolean;
-}
-
-function issueFor(code: string | undefined): SignInIssue | null {
+function issueFor(code: string | undefined): MessageDescriptor | null {
   if (!code) return null;
-  if (STALE_LINK.has(code)) {
-    return {
-      message: msg`That link no longer works. Sign in to get a new one.`,
-      blocked: false,
-    };
-  }
-  if (BLOCKED.has(code) || /not.on.the.list/i.test(code)) {
-    return {
-      message: msg`This account hasn’t been invited. Try another, or request access.`,
-      blocked: true,
-    };
-  }
-  if (RETRYABLE.has(code)) {
-    return { message: msg`Sign-in didn’t finish. Try again.`, blocked: false };
-  }
-  // An unknown code is more often a blocked account than a blip, so do not promise a retry
-  // will work.
-  return {
-    message: msg`Sign-in didn’t finish. Try again, or request access.`,
-    blocked: false,
-  };
+  if (STALE_LINK.has(code)) return msg`That link no longer works. Sign in to get a new one.`;
+  if (RETRYABLE.has(code)) return msg`Sign-in didn’t finish. Try again.`;
+  // An unknown code is rarer than a blip, and there is nothing more useful to say about it.
+  return msg`Sign-in didn’t finish. Try again, or use another account.`;
 }
 
 /**
@@ -225,7 +198,7 @@ function Login() {
       body: needsConfirming ? (
         <Trans>Check {address}. If it still needs confirming, a link is on the way.</Trans>
       ) : (
-        <Trans>Check {address}. If it can have a Lymi account, a link is on the way.</Trans>
+        <Trans>Check {address}. A message is on the way with the next step.</Trans>
       ),
       actions: (
         <>
@@ -378,9 +351,8 @@ function Login() {
       passwordError={passwordError}
       notice={notice ?? undefined}
       // The door's own failure: a Google attempt, or a callback that came back refused.
-      error={googleFailed ?? (issue ? i18n._(issue.message) : undefined)}
+      error={googleFailed ?? (issue ? i18n._(issue) : undefined)}
       formError={failed ?? undefined}
-      blocked={!googleFailed && issue?.blocked}
       onGoogle={async () => {
         setBusy(true);
         clearMessages();

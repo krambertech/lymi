@@ -48,8 +48,6 @@ export interface LoginProps {
   error?: ReactNode | undefined;
   /** A failure of the form below the rule. It sits with the fields, not with Google. */
   formError?: ReactNode | undefined;
-  /** A valid account that simply has no invitation. This is a path, not a failure. */
-  blocked?: boolean | undefined;
   /** The message under the email box, such as an address that is not an address. */
   emailError?: ReactNode | undefined;
   /** The message under the password box, such as one that is too short. */
@@ -59,7 +57,7 @@ export interface LoginProps {
   children?: ReactNode | undefined;
 }
 
-/** The front door. Authentication stays focused; requesting an invitation has its own route. */
+/** The front door. Anyone may create an account; the panel only asks which form to show. */
 export function LoginView({
   mode = "sign-in",
   onModeChange,
@@ -74,7 +72,6 @@ export function LoginView({
   app,
   error,
   formError,
-  blocked = false,
   emailError,
   passwordError,
   notice,
@@ -91,7 +88,7 @@ export function LoginView({
     <AuthFrame
       footer={
         <div className="w-full">
-          <AccessNote blocked={blocked} />
+          <AccessNote />
           {children}
         </div>
       }
@@ -123,20 +120,16 @@ export function LoginView({
               {mode === "forgot" ? (
                 <Trans>We’ll email you a link to set a new one.</Trans>
               ) : mode === "sign-up" ? (
-                <Trans>Use the email address that received your invitation.</Trans>
+                <Trans>It takes a minute, and Lymi is free while it is in beta.</Trans>
               ) : (
-                <Trans>Use the account that received your invitation.</Trans>
+                <Trans>Welcome back.</Trans>
               )}
             </p>
           </div>
         )}
 
         {error && (
-          <AuthNotice
-            role={blocked ? "status" : "alert"}
-            tone={blocked ? "neutral" : "danger"}
-            className="mt-6"
-          >
+          <AuthNotice role="alert" tone="danger" className="mt-6">
             {error}
           </AuthNotice>
         )}
@@ -270,19 +263,19 @@ export function LoginView({
 }
 
 /**
- * Who may have an account at all, which is a different question from which form is open. It
- * sits under the panel rather than inside it, so it reads as the terms of the door rather
- * than a second thing to press.
+ * What the app is, which is a different question from which form is open. It sits under the
+ * panel rather than inside it, so it reads as the terms of the door rather than a second
+ * thing to press.
  */
-function AccessNote({ blocked }: { blocked: boolean }) {
+function AccessNote() {
   return (
     <p className="mt-6 text-center text-sm text-muted">
-      {blocked ? <Trans>Still need access?</Trans> : <Trans>Lymi is in a private beta.</Trans>}{" "}
+      <Trans>Lymi is in public beta.</Trans>{" "}
       <a
-        href={publicSiteUrl("/join")}
+        href={publicSiteUrl()}
         className="rounded-sm text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-current"
       >
-        <Trans>Request access</Trans>
+        <Trans>What is Lymi?</Trans>
       </a>
     </p>
   );

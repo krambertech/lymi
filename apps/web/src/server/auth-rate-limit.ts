@@ -17,9 +17,9 @@ interface Limits {
   /** `on-success`: an attempt that worked costs nothing, so guessing cannot lock an owner out. */
   spare?: "on-success";
   /**
-   * Hold every answer for at least this long. Sign-up refuses an address with no invitation
-   * before any email work and admits one after a send, so the bodies are identical but the
-   * clock is not. A floor above the slower path removes the difference. Issue 251.
+   * Hold every answer for at least this long. Sign-up on a taken address does different work
+   * from sign-up on a free one, so the bodies are identical but the clock is not. A floor
+   * above the slower path removes the difference. Issue 251.
    */
   floorMs?: number;
 }

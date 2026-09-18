@@ -13,8 +13,8 @@ interface Props {
 
 /** Where the lantern hangs, in percent of the plate. The light is cast from here and stays here. */
 const REST = { x: 50, y: 26 };
-/** How much of the distance the light closes each frame. Enough to trail a pointer, not chase it. */
-const FOLLOW = 0.12;
+/** How much of the distance the light closes each frame. Low, so the light has weight behind it. */
+const FOLLOW = 0.045;
 
 /**
  * The page's one conversion, and the one place the lantern is lit. The wick catches the first time

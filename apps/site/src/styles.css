@@ -944,7 +944,7 @@
 .signup-plate {
   --lx: 50%;
   --ly: 26%;
-  --reach: 17rem;
+  --reach: 20rem;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -960,11 +960,15 @@
   pointer-events: none;
   opacity: 0;
   border-radius: 50%;
+  /* Soft all the way out: no stop the eye can find, and a blur over it so the edge is weather
+     rather than a shape. One element, so the cost stays where it can be seen. */
+  filter: blur(32px);
   background: radial-gradient(
     closest-side,
-    var(--glow),
-    color-mix(in oklab, var(--glow) 36%, transparent) 46%,
-    transparent
+    color-mix(in oklab, var(--glow) 88%, transparent),
+    color-mix(in oklab, var(--glow) 52%, transparent) 34%,
+    color-mix(in oklab, var(--glow) 20%, transparent) 62%,
+    transparent 88%
   );
 }
 /* The wick catches, and the room it lights opens after it. */

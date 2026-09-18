@@ -135,8 +135,8 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
       return <Trans>Made the series {name}</Trans>;
     case "series_edited":
       return <Trans>Edited the series {name}</Trans>;
-    case "series_archived":
-      return <Trans>Archived the series {name}</Trans>;
+    case "series_deleted":
+      return <Trans>Deleted the series {name}</Trans>;
     case "series_restored":
       return <Trans>Restored the series {name}</Trans>;
     case "section_added":

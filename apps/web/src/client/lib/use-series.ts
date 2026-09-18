@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import type { SeriesArchiveInput, SeriesInput } from "@lymi/core";
+import type { SeriesDeleteInput, SeriesInput } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { api, type DeckSummary, errorMessage, type Series } from "./api";
@@ -150,31 +150,24 @@ export function useSeriesActions() {
     onSettled: refresh,
   });
 
-  const restore = useMutation({
-    mutationFn: (series: Pick<Series, "id" | "name">) => api.restoreSeries(series.id),
-    onSuccess: (_r, series) => toast.close(`archive-series-${series.id}`),
-    onError: (error) => failed("restore-series", error),
-    onSettled: refresh,
-  });
-
-  const archive = useMutation({
-    mutationFn: ({ series, decks }: { series: Series } & SeriesArchiveInput) =>
-      api.archiveSeries(series.id, { decks }),
+  const remove = useMutation({
+    mutationFn: ({ series, decks }: { series: Series } & SeriesDeleteInput) =>
+      api.deleteSeries(series.id, { decks }),
+    // Deleting is final, so the toast reports it rather than offering an Undo the server has not.
     onSuccess: (_r, { series, decks }) => {
       const seriesName = series.name;
       const count = series.deckIds.length;
       toast.add({
-        id: `archive-series-${series.id}`,
+        id: `delete-series-${series.id}`,
         title:
           decks === "archive" && count > 0
-            ? t`Archived “${seriesName}” and its decks`
-            : t`Archived “${seriesName}”`,
-        actionProps: { children: t`Undo`, onClick: () => restore.mutate(series) },
+            ? t`Deleted “${seriesName}” and archived its decks`
+            : t`Deleted “${seriesName}”`,
       });
     },
-    onError: (error) => failed("archive-series", error),
+    onError: (error) => failed("delete-series", error),
     onSettled: refresh,
   });
 
-  return { create, rename, setDecks, moveDeck, reorder, archive, restore };
+  return { create, rename, setDecks, moveDeck, reorder, remove };
 }

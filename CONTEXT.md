@@ -14,7 +14,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Library**: The screen holding every deck. The decks are decks; Library is where they are. _Avoid_: Decks (as a screen name), collections, my decks
 
-**Series**: An owner's optional, ordered group of their own decks, reviewed together. A deck is in at most one series, and a deck without one works as it always has. A member of a shared deck never sees the owner's series. Archiving a series asks whether its decks leave with it; Restore brings back the series with every deck that left with it and puts back the decks that stayed. _Avoid_: Course, collection, folder, playlist, group
+**Series**: An owner's optional, ordered group of their own decks, reviewed together. A deck is in at most one series, and a deck without one works as it always has. A member of a shared deck never sees the owner's series. Deleting a series asks whether its decks are archived with it or stay in Library; the series itself is gone for good, and grouping those decks again means making a new one. _Avoid_: Course, collection, folder, playlist, group
 
 **Section**: An optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. A card is in at most one section of its own deck, and a card without one works as it always has. The owner chooses how sections open for everyone studying the deck. By default each learner starts with the first, and the next opens automatically once every card of the current section has come up and 80% are Known. The owner can instead make it **ready** at that point, for the learner to **Start**, or open every section at once. **Start anyway** opens a later section early, with every section before it. A section never locks again, and a card the learner already started always stays in review. _Avoid_: Lesson (for the grouping), chapter, unit, module, level
 
@@ -78,7 +78,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Inspect**: Looking over a card an integration added, and optionally editing or archiving it. _Avoid_: Review, approve
 
-**Archive**: Hiding a card or deck without destroying it. The only kind of removal the app has. Restore undoes it. _Avoid_: Delete, remove, trash
+**Archive**: Hiding a card or deck without destroying it. Restore undoes it. Everything a learner writes is archived rather than deleted, so this is the word for removing cards, decks and sections. _Avoid_: Delete, remove, trash
+
+**Delete**: Removing a series for good. A series is a grouping and holds no writing of its own, so nothing a learner made is lost and there is nothing to restore. The only delete the app has; never use the word for a card, deck or section.
 
 ### Sharing
 

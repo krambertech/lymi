@@ -71,11 +71,6 @@ export const archivedCardsQuery = queryOptions({
   queryFn: api.archivedCards,
   staleTime: 0,
 });
-export const archivedSeriesQuery = queryOptions({
-  queryKey: ["series", "archived"],
-  queryFn: api.archivedSeries,
-  staleTime: 0,
-});
 /** Join links are capabilities, so neither query is written to the persisted cache. */
 export const joinLinkQuery = (deckId: string) =>
   queryOptions({

@@ -19,7 +19,7 @@ import {
   SectionArchiveInput,
   SectionInput,
   SectionOrderInput,
-  SeriesArchiveInput,
+  SeriesDeleteInput,
   SeriesInput,
   SeriesOrderInput,
   SettingsPatch,
@@ -35,11 +35,11 @@ import {
   archiveCardImage,
   archiveDeck,
   archiveSection,
-  archiveSeries,
   type CardView,
   createDeck,
   createSection,
   createSeries,
+  deleteSeries,
   describeCardImage,
   getDeck,
   getSeries,
@@ -58,7 +58,6 @@ import {
   restoreCardImage,
   restoreDeck,
   restoreSection,
-  restoreSeries,
   reviewRounds,
   ServiceError,
   searchCards,
@@ -389,17 +388,13 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "List series",
       description:
-        "The learner's series in order, each with its decks in order and their card and due counts. Set archived to true for archived series, for example to find one to restore.",
-      inputSchema: z.object({
-        archived: z.boolean().optional().describe("Archived series instead of active ones"),
-      }),
+        "The learner's series in order, each with its decks in order and their card and due counts.",
+      inputSchema: z.object({}),
       outputSchema: SeriesListOut,
       ...readTool,
     },
-    ({ archived }) =>
-      run("list_series", async () =>
-        result({ series: (await listSeries(ctx, { archived })).map(seriesOut) }),
-      ),
+    () =>
+      run("list_series", async () => result({ series: (await listSeries(ctx)).map(seriesOut) })),
   );
 
   server.registerTool(
@@ -471,37 +466,19 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   );
 
   server.registerTool(
-    "archive_series",
+    "delete_series",
     {
-      title: "Archive a series",
+      title: "Delete a series",
       description:
-        'Hide a series. With decks "archive" its decks leave Library and review with it; with "keep" they stay, without a series. Ask the learner which they want. restore_series undoes either. Needs write.',
-      inputSchema: z.object({ seriesId: z.string().min(1) }).extend(SeriesArchiveInput.shape),
+        'Delete a series. It is gone for good, so ask the learner first, and ask which they want for its decks: with decks "archive" they are archived with it, and with "keep" they stay in Library without a series. Either way the decks and their cards survive. Needs write.',
+      inputSchema: z.object({ seriesId: z.string().min(1) }).extend(SeriesDeleteInput.shape),
       outputSchema: OkOut,
-      ...writeTool({ idempotent: true }),
+      ...writeTool({ idempotent: true, overwrites: true }),
     },
     ({ seriesId, decks }) =>
-      run("archive_series", async () => {
+      run("delete_series", async () => {
         denyReads(principal);
-        await archiveSeries(ctx, seriesId, { decks });
-        return result({ ok: true });
-      }),
-  );
-
-  server.registerTool(
-    "restore_series",
-    {
-      title: "Restore a series",
-      description:
-        "Bring an archived series back, with the decks archived alongside it. Find archived series with list_series and archived set to true. Needs write.",
-      inputSchema: z.object({ seriesId: z.string().min(1) }),
-      outputSchema: OkOut,
-      ...writeTool({ idempotent: true }),
-    },
-    ({ seriesId }) =>
-      run("restore_series", async () => {
-        denyReads(principal);
-        await restoreSeries(ctx, seriesId);
+        await deleteSeries(ctx, seriesId, { decks });
         return result({ ok: true });
       }),
   );
@@ -835,8 +812,9 @@ const readTool = {
 };
 
 /**
- * Archive is reversible, so only an edit that replaces text with no way back is destructive.
- * A tool is idempotent only when repeating it adds nothing to Activity.
+ * Destructive means there is no way back: an edit that replaces text, or a delete. Archive stays
+ * non-destructive because Restore undoes it. A tool is idempotent only when repeating it adds
+ * nothing to Activity.
  */
 function writeTool({
   idempotent,
@@ -1165,11 +1143,9 @@ const OkOut = z.object({ ok: z.literal(true) });
 const SeriesItemOut = z.object({
   id: z.string(),
   name: z.string(),
-  deckIds: z.array(z.string()).describe("Its decks in order. Empty while archived."),
+  deckIds: z.array(z.string()).describe("Its decks in order"),
   total: z.number().int(),
   due: z.number().int(),
-  archivedDecks: z.number().int().describe("Decks restore_series brings back with it"),
-  archivedAt: Timestamp.nullable(),
   createdAt: Timestamp,
 });
 
@@ -1232,8 +1208,6 @@ function seriesOut(series: Awaited<ReturnType<typeof listSeries>>[number]) {
     deckIds: series.deckIds,
     total: series.total,
     due: series.due,
-    archivedDecks: series.archivedDecks,
-    archivedAt: series.archivedAt ? series.archivedAt.toISOString() : null,
     createdAt: series.createdAt.toISOString(),
   };
 }

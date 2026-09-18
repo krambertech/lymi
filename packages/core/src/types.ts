@@ -343,14 +343,14 @@ export const SeriesOrderInput = z.object({
 });
 export type SeriesOrderInput = z.infer<typeof SeriesOrderInput>;
 
-/** What happens to a series' active decks when it is archived. */
-export const SeriesArchiveInput = z.object({
+/** What happens to a series' active decks when it is deleted. */
+export const SeriesDeleteInput = z.object({
   decks: z.enum(["archive", "keep"]).meta({
     description:
-      "archive: the decks leave Library and review with the series. keep: they stay, without a series.",
+      "archive: the decks are archived, and restoring them is up to the learner. keep: they stay in Library, without a series.",
   }),
 });
-export type SeriesArchiveInput = z.infer<typeof SeriesArchiveInput>;
+export type SeriesDeleteInput = z.infer<typeof SeriesDeleteInput>;
 
 const SectionName = z
   .string()

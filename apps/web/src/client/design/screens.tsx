@@ -518,7 +518,6 @@ export const SCREENS: Entry[] = [
             <LibraryView
               decks={m.decks}
               next={{ d3: "Monday" }}
-              archivedCount={2}
               name={m.me.name}
               streakButton={<StreakButton variant="phone" summary={m.streak} />}
               docsUrl="https://lymi.app/docs"
@@ -532,7 +531,7 @@ export const SCREENS: Entry[] = [
               name={m.me.name}
               onNewSeries={noop}
               onEditSeries={noop}
-              onArchiveSeries={noop}
+              onDeleteSeries={noop}
               streakButton={<StreakButton variant="phone" summary={m.streak} />}
               docsUrl="https://lymi.app/docs"
               static={{ path: "/library" }}
@@ -614,7 +613,6 @@ export const SCREENS: Entry[] = [
                 <LibraryView
                   decks={m.decks}
                   next={{ d3: "Monday" }}
-                  archivedCount={2}
                   static={{ path: "/library" }}
                 />
               </main>
@@ -744,7 +742,7 @@ export const SCREENS: Entry[] = [
                 static={{ path: "/library" }}
               />
               <main className="@container relative flex min-w-0 flex-1 flex-col">
-                <LibraryView decks={m.decks} archivedCount={9} static={{ path: "/library" }} />
+                <LibraryView decks={m.decks} static={{ path: "/library" }} />
                 <div className="absolute inset-0 grid place-items-center bg-scrim">
                   <SheetPreview shape="dialog" title="New deck" className="w-[min(92%,440px)]">
                     <NewDeckForm onCancel={noop} onSubmit={() => undefined} static />

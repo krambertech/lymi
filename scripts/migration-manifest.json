@@ -99,6 +99,10 @@
     {
       "name": "0024_free_vapor.sql",
       "sha256": "f61d033486fb345851534ee5de57cbe87e623b51405fa4f71ce3a0ee664f6928"
+    },
+    {
+      "name": "0025_release_archived_series_decks.sql",
+      "sha256": "55d0095510e066bb51f177102022b6c796906eb996f051c2465de1ea1c50a330"
     }
   ]
 }

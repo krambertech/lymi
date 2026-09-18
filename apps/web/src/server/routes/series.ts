@@ -1,7 +1,7 @@
 import {
   OkOut,
-  SeriesArchiveInput,
   SeriesDecksInput,
+  SeriesDeleteInput,
   SeriesInput,
   SeriesOrderInput,
   SeriesOut,
@@ -12,24 +12,16 @@ import { z } from "zod";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
-  archiveSeries,
   createSeries,
+  deleteSeries,
   getSeries,
   listSeries,
   renameSeries,
   reorderSeries,
-  restoreSeries,
   setSeriesDecks,
 } from "../services";
 
 export const series = new Hono<AppEnv>();
-
-const ListQuery = z.object({
-  archived: z
-    .stringbool()
-    .optional()
-    .meta({ description: "Archived series instead of active ones. Off by default." }),
-});
 
 series.get(
   "/",
@@ -41,8 +33,7 @@ series.get(
     ok: { schema: z.array(SeriesOut), description: "Series" },
     errors: [400],
   }),
-  query(ListQuery, "query"),
-  async (c) => c.json(await listSeries(ctxOf(c), c.req.valid("query"))),
+  async (c) => c.json(await listSeries(ctxOf(c))),
 );
 
 series.post(
@@ -111,29 +102,16 @@ series.put(
   async (c) => c.json(await setSeriesDecks(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
 );
 
-series.post(
-  "/:id/archive",
+series.delete(
+  "/:id",
   describe({
     tags: ["Series"],
-    summary: "Archive a series",
+    summary: "Delete a series",
     description:
-      "Needs the write scope. `decks: archive` takes its decks out of Library and review with it; `decks: keep` leaves them in Library without a series. Undo with restore. Archiving twice is harmless.",
-    ok: { schema: OkOut, description: "Archived" },
+      "Needs the write scope. The series is gone for good; make a new one to group the decks again. `decks=archive` archives its decks with it, and restoring them is a separate write; `decks=keep` leaves them in Library without a series. Deleting twice is harmless.",
+    ok: { schema: OkOut, description: "Deleted" },
     errors: [400, 404],
   }),
-  body(SeriesArchiveInput, "archive"),
-  async (c) => c.json(await archiveSeries(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
-);
-
-series.post(
-  "/:id/restore",
-  describe({
-    tags: ["Series"],
-    summary: "Restore a series",
-    description:
-      "Needs the write scope. Brings the series back, with every deck archived alongside it and every deck kept out of it regrouped.",
-    ok: { schema: OkOut, description: "Restored" },
-    errors: [404],
-  }),
-  async (c) => c.json(await restoreSeries(ctxOf(c), c.req.param("id"))),
+  query(SeriesDeleteInput, "decks"),
+  async (c) => c.json(await deleteSeries(ctxOf(c), c.req.param("id"), c.req.valid("query"))),
 );

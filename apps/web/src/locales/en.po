@@ -86,10 +86,6 @@ msgstr "{0, plural, one {# card} other {# cards}}"
 msgid "{0, plural, one {# card} other {# cards}} · {1}"
 msgstr "{0, plural, one {# card} other {# cards}} · {1}"
 
-#. placeholder {0}: s.archivedDecks
-msgid "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
-msgstr "{0, plural, one {# deck comes back with it} other {# decks come back with it}}"
-
 #. placeholder {0}: shelf.decks.length
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# deck} other {# decks}}"
@@ -348,8 +344,8 @@ msgstr "{count, plural, one {Archive its card too} other {Archive its # cards to
 msgid "{count, plural, one {Archive its deck too} other {Archive its # decks too}}"
 msgstr "{count, plural, one {Archive its deck too} other {Archive its # decks too}}"
 
-msgid "{count, plural, one {It leaves Library and stops coming up in review until you restore the series.} other {They leave Library and stop coming up in review until you restore the series.}}"
-msgstr "{count, plural, one {It leaves Library and stops coming up in review until you restore the series.} other {They leave Library and stop coming up in review until you restore the series.}}"
+msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+msgstr "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
 
 msgid "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
 msgstr "{count, plural, one {It leaves the deck and stops coming up in review until you restore the section.} other {They leave the deck and stop coming up in review until you restore the section.}}"
@@ -807,9 +803,6 @@ msgstr "Archive"
 msgid "Archive “{sectionName}”?"
 msgstr "Archive “{sectionName}”?"
 
-msgid "Archive “{seriesName}”?"
-msgstr "Archive “{seriesName}”?"
-
 msgid "Archive {sectionName}"
 msgstr "Archive {sectionName}"
 
@@ -821,9 +814,6 @@ msgstr "Archive import"
 
 msgid "Archive section"
 msgstr "Archive section"
-
-msgid "Archive series"
-msgstr "Archive series"
 
 msgid "Archive the picture"
 msgstr "Archive the picture"
@@ -846,29 +836,17 @@ msgstr "Archived “{sectionName}”"
 msgid "Archived “{sectionName}” and its cards"
 msgstr "Archived “{sectionName}” and its cards"
 
-msgid "Archived “{seriesName}”"
-msgstr "Archived “{seriesName}”"
-
-msgid "Archived “{seriesName}” and its decks"
-msgstr "Archived “{seriesName}” and its decks"
-
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 
 msgid "Archived sections"
 msgstr "Archived sections"
 
-msgid "Archived series"
-msgstr "Archived series"
-
 msgid "Archived the deck {deck}"
 msgstr "Archived the deck {deck}"
 
 msgid "Archived the section {name} in {deck}"
 msgstr "Archived the section {name} in {deck}"
-
-msgid "Archived the series {name}"
-msgstr "Archived the series {name}"
 
 msgid "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
 msgstr "Archives every card this import added, and each deck it made that has no other cards. Nothing is deleted, and you can restore it."
@@ -1222,9 +1200,6 @@ msgstr "Couldn’t load Activity"
 msgid "Couldn’t load Archived"
 msgstr "Couldn’t load Archived"
 
-msgid "Couldn’t load archived series. Try again."
-msgstr "Couldn’t load archived series. Try again."
-
 msgid "Couldn’t load Explore"
 msgstr "Couldn’t load Explore"
 
@@ -1381,8 +1356,23 @@ msgstr "Decks to review"
 msgid "Decks you make can go in a series. Decks you joined stay on their own."
 msgstr "Decks you make can go in a series. Decks you joined stay on their own."
 
+msgid "Delete “{seriesName}”?"
+msgstr "Delete “{seriesName}”?"
+
+msgid "Delete series"
+msgstr "Delete series"
+
 msgid "Deleted"
 msgstr "Deleted"
+
+msgid "Deleted “{seriesName}”"
+msgstr "Deleted “{seriesName}”"
+
+msgid "Deleted “{seriesName}” and archived its decks"
+msgstr "Deleted “{seriesName}” and archived its decks"
+
+msgid "Deleted the series {name}"
+msgstr "Deleted the series {name}"
 
 msgid "Deny"
 msgstr "Deny"
@@ -1955,9 +1945,6 @@ msgstr "Let this app use your Lymi?"
 msgid "Library"
 msgstr "Library"
 
-msgid "Library options"
-msgstr "Library options"
-
 msgid "Light"
 msgstr "Light"
 
@@ -2189,9 +2176,6 @@ msgstr "No apps connected"
 msgid "No archived sections."
 msgstr "No archived sections."
 
-msgid "No archived series."
-msgstr "No archived series."
-
 msgid "No card keeps slipping"
 msgstr "No card keeps slipping"
 
@@ -2309,9 +2293,6 @@ msgstr "Nothing in it yet"
 
 msgid "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
 msgstr "Nothing is deleted. Restore it from Archived sections in the deck’s menu."
-
-msgid "Nothing is deleted. Restore it from Archived series in Library’s menu."
-msgstr "Nothing is deleted. Restore it from Archived series in Library’s menu."
 
 msgid "Nothing left in {scopeName}"
 msgstr "Nothing left in {scopeName}"
@@ -2648,17 +2629,11 @@ msgstr "Restore {name}"
 msgid "Restore brings a section back in its place, with the cards archived alongside it."
 msgstr "Restore brings a section back in its place, with the cards archived alongside it."
 
-msgid "Restore brings a series back with the decks archived alongside it."
-msgstr "Restore brings a series back with the decks archived alongside it."
-
 msgid "Restore import"
 msgstr "Restore import"
 
 msgid "Restore puts the cards you kept back in it"
 msgstr "Restore puts the cards you kept back in it"
-
-msgid "Restore puts the decks you kept back in it"
-msgstr "Restore puts the decks you kept back in it"
 
 msgid "Restored"
 msgstr "Restored"
@@ -3191,6 +3166,12 @@ msgstr "the pronunciation"
 
 msgid "The screen you are on, the app version, your browser and your app language go with it."
 msgstr "The screen you are on, the app version, your browser and your app language go with it."
+
+msgid "The series is gone for good. Its decks and cards stay, and you can group them again in a new series."
+msgstr "The series is gone for good. Its decks and cards stay, and you can group them again in a new series."
+
+msgid "The series is gone for good. You can make a new one any time."
+msgstr "The series is gone for good. You can make a new one any time."
 
 msgid "the source"
 msgstr "the source"

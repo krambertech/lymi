@@ -40,8 +40,8 @@ import type {
   SectionInput,
   SectionOut,
   SectionsOut,
-  SeriesArchiveInput,
   SeriesDecksInput,
+  SeriesDeleteInput,
   SeriesInput,
   SeriesOut,
   SettingsPatch,
@@ -309,7 +309,6 @@ export const api = {
   restoreDeck: (id: string) =>
     request<{ ok: true }>(`/api/decks/${id}/restore`, { method: "POST" }),
   series: () => request<Series[]>("/api/series"),
-  archivedSeries: () => request<Series[]>("/api/series?archived=true"),
   createSeries: (body: SeriesInput) =>
     request<Series>("/api/series", { method: "POST", body: JSON.stringify(body) }),
   renameSeries: (id: string, name: string) =>
@@ -321,13 +320,8 @@ export const api = {
       method: "PUT",
       body: JSON.stringify({ seriesIds }),
     }),
-  archiveSeries: (id: string, body: SeriesArchiveInput) =>
-    request<{ ok: true }>(`/api/series/${id}/archive`, {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  restoreSeries: (id: string) =>
-    request<{ ok: true }>(`/api/series/${id}/restore`, { method: "POST" }),
+  deleteSeries: (id: string, { decks }: SeriesDeleteInput) =>
+    request<{ ok: true }>(`/api/series/${id}?decks=${decks}`, { method: "DELETE" }),
   sections: (deckId: string) => request<Sections>(`/api/decks/${deckId}/sections`),
   archivedSections: (deckId: string) =>
     request<Sections>(`/api/decks/${deckId}/sections?archived=true`),

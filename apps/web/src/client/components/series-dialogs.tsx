@@ -2,7 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { SeriesInput } from "@lymi/core";
 import { clsx } from "clsx";
 import { ArrowDown, ArrowUp, Check, Plus } from "lucide-react";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button, IconButton } from "./button";
@@ -226,155 +226,83 @@ export function SeriesForm({
   );
 }
 
-interface ArchiveSeriesDialogProps {
+interface DeleteSeriesDialogProps {
   series: Series | null;
   onOpenChange: (open: boolean) => void;
-  onArchive: (decks: "archive" | "keep") => void;
+  onDelete: (decks: "archive" | "keep") => void;
 }
 
 /**
- * Archiving a series with decks in it is the one place the app asks before archiving, because the
- * learner has to say what happens to the decks; either way Restore undoes it.
+ * Deleting a series is the one write the app cannot undo, so it always asks, and when the series
+ * holds decks the learner also says whether they go too. The decks and their cards survive either
+ * way; only the grouping is lost.
  */
-export function ArchiveSeriesDialog({ series, onOpenChange, onArchive }: ArchiveSeriesDialogProps) {
+export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSeriesDialogProps) {
   const { t } = useLingui();
   const [choice, setChoice] = useState<"archive" | "keep">("keep");
   const name = useId();
   const seriesName = series?.name ?? "";
   const count = series?.deckIds.length ?? 0;
+  // Keyed on the series, not on closing: Cancel and Delete close it from the parent, which never
+  // reaches `onOpenChange`, and a remembered Archive would take the next series' decks unasked.
+  useEffect(() => {
+    if (series) setChoice("keep");
+  }, [series]);
   return (
-    <Dialog
-      open={!!series}
-      onOpenChange={(open) => {
-        if (!open) setChoice("keep");
-        onOpenChange(open);
-      }}
-    >
+    <Dialog open={!!series} onOpenChange={onOpenChange}>
       <DialogContent className="w-[min(92vw,460px)]">
         <DialogHeader>
-          <DialogTitle>{t`Archive “${seriesName}”?`}</DialogTitle>
+          <DialogTitle>{t`Delete “${seriesName}”?`}</DialogTitle>
           <DialogDescription>
-            <Trans>Nothing is deleted. Restore it from Archived series in Library’s menu.</Trans>
+            {count > 0 ? (
+              <Trans>
+                The series is gone for good. Its decks and cards stay, and you can group them again
+                in a new series.
+              </Trans>
+            ) : (
+              <Trans>The series is gone for good. You can make a new one any time.</Trans>
+            )}
           </DialogDescription>
         </DialogHeader>
-        <RadioGroup<"archive" | "keep">
-          aria-label={t`What happens to its decks`}
-          name={name}
-          value={choice}
-          onValueChange={setChoice}
-        >
-          <RadioCard
-            value="keep"
-            title={<Plural value={count} one="Keep the deck" other="Keep the decks" />}
-            description={
-              <Plural
-                value={count}
-                one="It stays in Library without a series, and keeps coming up in review."
-                other="They stay in Library without a series, and keep coming up in review."
-              />
-            }
-          />
-          <RadioCard
-            value="archive"
-            title={
-              <Plural value={count} one="Archive its deck too" other="Archive its # decks too" />
-            }
-            description={
-              <Plural
-                value={count}
-                one="It leaves Library and stops coming up in review until you restore the series."
-                other="They leave Library and stop coming up in review until you restore the series."
-              />
-            }
-          />
-        </RadioGroup>
+        {count > 0 && (
+          <RadioGroup<"archive" | "keep">
+            aria-label={t`What happens to its decks`}
+            name={name}
+            value={choice}
+            onValueChange={setChoice}
+          >
+            <RadioCard
+              value="keep"
+              title={<Plural value={count} one="Keep the deck" other="Keep the decks" />}
+              description={
+                <Plural
+                  value={count}
+                  one="It stays in Library without a series, and keeps coming up in review."
+                  other="They stay in Library without a series, and keep coming up in review."
+                />
+              }
+            />
+            <RadioCard
+              value="archive"
+              title={
+                <Plural value={count} one="Archive its deck too" other="Archive its # decks too" />
+              }
+              description={
+                <Plural
+                  value={count}
+                  one="It leaves Library and stops coming up in review. Restore it from Archived."
+                  other="They leave Library and stop coming up in review. Restore them from Archived."
+                />
+              }
+            />
+          </RadioGroup>
+        )}
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             <Trans>Cancel</Trans>
           </Button>
-          <Button variant="danger" onClick={() => onArchive(choice)}>
-            <Trans>Archive series</Trans>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-interface ArchivedSeriesDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  /** Undefined while loading. */
-  series: Series[] | undefined;
-  onRestore: (series: Series) => void;
-  restoring?: string | undefined;
-  error?: string | undefined;
-}
-
-export function ArchivedSeriesDialog({
-  open,
-  onOpenChange,
-  series,
-  onRestore,
-  restoring,
-  error,
-}: ArchivedSeriesDialogProps) {
-  const { t } = useLingui();
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,460px)]">
-        <DialogHeader>
-          <DialogTitle>{t`Archived series`}</DialogTitle>
-          <DialogDescription>
-            <Trans>Restore brings a series back with the decks archived alongside it.</Trans>
-          </DialogDescription>
-        </DialogHeader>
-        {error ? (
-          <p className="text-sm text-danger" role="alert">
-            {error}
-          </p>
-        ) : series === undefined ? (
-          <div className="grid gap-2" aria-hidden="true">
-            <div className="h-14 animate-pulse rounded-md bg-plate-2" />
-            <div className="h-14 animate-pulse rounded-md bg-plate-2" />
-          </div>
-        ) : series.length === 0 ? (
-          <p className="text-base text-text-2">
-            <Trans>No archived series.</Trans>
-          </p>
-        ) : (
-          <ul className="grid gap-px">
-            {series.map((s) => (
-              <li key={s.id} className="flex min-h-14 items-center gap-3 rounded-md px-2.5">
-                <span className="grid min-w-0 flex-1">
-                  <span className="truncate text-base font-medium">{s.name}</span>
-                  <span className="text-sm text-muted">
-                    {s.archivedDecks > 0 ? (
-                      <Plural
-                        value={s.archivedDecks}
-                        one="# deck comes back with it"
-                        other="# decks come back with it"
-                      />
-                    ) : (
-                      <Trans>Restore puts the decks you kept back in it</Trans>
-                    )}
-                  </span>
-                </span>
-                <Button
-                  size="sm"
-                  loading={restoring === s.id}
-                  aria-disabled={!!restoring}
-                  onClick={() => !restoring && onRestore(s)}
-                >
-                  <Trans>Restore</Trans>
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
-        <DialogFooter>
-          <Button onClick={() => onOpenChange(false)}>
-            <Trans>Close</Trans>
+          <Button variant="danger" onClick={() => onDelete(count > 0 ? choice : "keep")}>
+            <Trans>Delete series</Trans>
           </Button>
         </DialogFooter>
       </DialogContent>

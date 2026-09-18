@@ -126,18 +126,12 @@ export const SeriesOut = z
     id: z.string(),
     name: z.string(),
     position: z.number().int(),
-    deckIds: z
-      .array(z.string())
-      .meta({ description: "Its active decks in order. Empty while the series is archived." }),
+    deckIds: z.array(z.string()).meta({ description: "Its active decks in order" }),
     total: z.number().int().meta({ description: "Active cards across its active decks" }),
     due: z
       .number()
       .int()
       .meta({ description: "Cards that can be reviewed today across its active decks" }),
-    archivedDecks: z.number().int().meta({
-      description: "Decks archived with the series, which Restore brings back. 0 while active.",
-    }),
-    archivedAt: Timestamp.nullable(),
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })
@@ -346,7 +340,7 @@ export const ActivityKind = z.enum([
   "deck_restored",
   "series_added",
   "series_edited",
-  "series_archived",
+  "series_deleted",
   "series_restored",
   "section_added",
   "section_edited",

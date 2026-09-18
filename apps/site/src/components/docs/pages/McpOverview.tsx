@@ -116,12 +116,8 @@ export function McpOverview() {
             def: "Your series: ordered groups of your own decks that you review together. Create one, rename it, set its decks in order, or reorder them all.",
           },
           {
-            term: (
-              <>
-                <code>archive_series</code>, <code>restore_series</code>
-              </>
-            ),
-            def: "Hide a series, with its decks or leaving them in Library, and bring it back.",
+            term: <code>delete_series</code>,
+            def: "Delete a series for good, archiving its decks with it or leaving them in Library.",
           },
           {
             term: (

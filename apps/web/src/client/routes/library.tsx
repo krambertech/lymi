@@ -2,18 +2,14 @@ import { useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import {
-  ArchivedSeriesDialog,
-  ArchiveSeriesDialog,
-  SeriesSheet,
-} from "../components/series-dialogs";
+import { DeleteSeriesDialog, SeriesSheet } from "../components/series-dialogs";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { errorMessage, type Series } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import {
-  archivedSeriesQuery,
+  archivedDecksQuery,
   deckCardsQuery,
   decksQuery,
   meQuery,
@@ -41,6 +37,13 @@ function DeckList() {
   const decks = useQuery(decksQuery);
   const series = useQuery(seriesQuery);
   const me = useQuery(meQuery);
+  // Deleting a series can archive decks, so Library says where they went. Only the count is used,
+  // and an archive write invalidates ["decks"], so the list need not be refetched on every visit.
+  const archivedCount = useQuery({
+    ...archivedDecksQuery,
+    staleTime: 5 * 60_000,
+    select: (decks) => decks.length,
+  });
   const leave = useSignOut();
   const add = useAddCard();
   const navigate = useNavigate();
@@ -48,9 +51,7 @@ function DeckList() {
   const actions = useSeriesActions();
   // `null` is the new-series sheet; a series is that series' edit sheet.
   const [editing, setEditing] = useState<Series | null | undefined>(undefined);
-  const [archiving, setArchiving] = useState<Series | null>(null);
-  const [showArchived, setShowArchived] = useState(false);
-  const archived = useQuery({ ...archivedSeriesQuery, enabled: showArchived });
+  const [deleting, setDeleting] = useState<Series | null>(null);
 
   // Fetched here and persisted, so a deck opens offline after a visit to Library.
   useEffect(() => {
@@ -70,17 +71,13 @@ function DeckList() {
         onRetry={() => void decks.refetch()}
         retrying={decks.isFetching}
         series={series.data}
+        archivedCount={archivedCount.data}
         onAdd={() => add.openCard()}
         onCreateDeck={add.openDeck}
         onImport={() => void navigate({ to: "/settings", hash: "import" })}
         onNewSeries={() => setEditing(null)}
         onEditSeries={setEditing}
-        onArchiveSeries={(s) =>
-          // Without decks there is nothing to decide, so Undo stands in for the question.
-          s.deckIds.length > 0
-            ? setArchiving(s)
-            : actions.archive.mutate({ series: s, decks: "keep" })
-        }
+        onDeleteSeries={setDeleting}
         onMoveSeries={(s, by) => {
           const ids = (series.data ?? []).map((x) => x.id);
           const from = ids.indexOf(s.id);
@@ -90,7 +87,6 @@ function DeckList() {
           ids.splice(to, 0, s.id);
           actions.reorder.mutate(ids);
         }}
-        onShowArchivedSeries={() => setShowArchived(true)}
         onSetSeriesDecks={(id, deckIds) => {
           const target = series.data?.find((s) => s.id === id);
           const arrived = decks.data?.find((d) => deckIds.includes(d.id) && d.seriesId !== id);
@@ -168,21 +164,13 @@ function DeckList() {
           }
         }}
       />
-      <ArchiveSeriesDialog
-        series={archiving}
-        onOpenChange={(open) => !open && setArchiving(null)}
-        onArchive={(choice) => {
-          if (archiving) actions.archive.mutate({ series: archiving, decks: choice });
-          setArchiving(null);
+      <DeleteSeriesDialog
+        series={deleting}
+        onOpenChange={(open) => !open && setDeleting(null)}
+        onDelete={(choice) => {
+          if (deleting) actions.remove.mutate({ series: deleting, decks: choice });
+          setDeleting(null);
         }}
-      />
-      <ArchivedSeriesDialog
-        open={showArchived}
-        onOpenChange={setShowArchived}
-        series={archived.data}
-        error={archived.isError ? t`Couldn’t load archived series. Try again.` : undefined}
-        restoring={actions.restore.isPending ? actions.restore.variables?.id : undefined}
-        onRestore={(s) => actions.restore.mutate(s)}
       />
     </>
   );

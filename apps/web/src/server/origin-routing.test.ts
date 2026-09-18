@@ -40,6 +40,8 @@ describe("product origin routing", () => {
     "/sw.js",
     "/robots.txt",
     "/join/AbCdEfGhIjKlMnOpQrStUvWxYz012345",
+    "/public/media/approval_1",
+    "/public/media/deck/everyday-estonian/publisher-avatar?v=1",
   ])("keeps the product contract on my.lymi.app: %s", (path) => {
     expect(decision(`https://my.lymi.app${path}`)).toEqual({
       kind: "continue",
@@ -62,7 +64,7 @@ describe("product origin routing", () => {
     });
   });
 
-  it.each(["/public-landing", "/sitemap.xml", "/apiish", "/unknown"])(
+  it.each(["/public-landing", "/sitemap.xml", "/apiish", "/public", "/unknown"])(
     "does not turn unknown public-looking paths into the product shell: %s",
     (path) => {
       expect(decision(`https://my.lymi.app${path}`)).toEqual({ kind: "not-found", status: 404 });

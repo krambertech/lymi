@@ -16,6 +16,7 @@ const publication = (over: Partial<PublicationRow> = {}): PublicationRow => ({
   originalMeaningLanguage: "en",
   editions: ["en"],
   publisher: "Lymi",
+  publisherAvatar: null,
   sources: [{ title: "EKI A1 word list", url: "https://www.eki.ee/" }],
   reviewedAt: new Date("2026-09-01T00:00:00.000Z"),
   revision: 3,

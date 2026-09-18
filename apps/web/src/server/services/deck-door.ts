@@ -13,6 +13,8 @@ export interface DoorDeck {
   ownerId: string;
   /** The name the page shows as the deck's source: the owner, or the publisher. */
   shownOwner: string;
+  /** A published deck's publisher photo. Null on a join link, whose owner stays private. */
+  shownOwnerAvatarUrl?: string | null | undefined;
   archivedAt: Date | null;
 }
 
@@ -82,7 +84,7 @@ async function deckPreview(db: Db, deck: DoorDeck): Promise<NonNullable<JoinPrev
   return {
     name: deck.name,
     total: stats?.total ?? 0,
-    owner: { name: deck.shownOwner },
+    owner: { name: deck.shownOwner, avatarUrl: deck.shownOwnerAvatarUrl ?? null },
     language: deck.language,
     lastAddedAt: stats?.lastAddedAt ? new Date(stats.lastAddedAt).toISOString() : null,
     samples,

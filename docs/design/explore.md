@@ -18,6 +18,14 @@ Search narrows what is already on the page: the deck's name, summary, level, the
 
 A search with no match shows the lantern with its flame out — the search looked here and found nothing — says so, suggests a word from a card or a language, and offers the way back to everything.
 
+## The publisher's mark
+
+A published deck's byline is the publisher: their photo where they have one, the lantern tile where the publisher is Lymi, and one letter on a dark plate otherwise. The deck's page on `lymi.app` and the add page on `my.lymi.app` draw the same mark, because a visitor crosses from one to the other in a single press and the source of the deck must not change face on the way.
+
+Publishing is what makes the photo public. The address carries the deck's slug rather than the account — `/public/media/deck/<slug>/publisher-avatar?v=<version>` on the product Worker, which is the only Worker holding the image bucket — so no account identifier reaches a public page and [ADR 0016](../adr/0016-public-catalog-pages-render-on-the-public-worker.md)'s boundary holds. Withdrawing or archiving the deck stops the photo with the page, and the response is `no-store` for the same reason a deck's approved media is: a cached copy would outlive the withdrawal. A join link never carries one: sharing a deck with a classmate is not publishing, and its owner's photo stays private.
+
+The public page is server-rendered with no island, so it layers the mark behind the photo rather than swapping on an error; a photo that fails to load collapses and the mark shows through.
+
 ## Categories
 
 A category is a column on the publication, from a closed list in `packages/core/src/types.ts`. It is closed because each one is a heading a translator writes and a visitor learns; adding a shelf is a deliberate change, not a typo in a publish call. A deck sits on one shelf. A deck with no category, or one naming a category that has since gone, gathers under **More decks** at the end, so publishing is never blocked on choosing a shelf, and a shelf with nothing on it never renders.

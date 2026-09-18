@@ -1,5 +1,6 @@
 import type { JoinPreviewOut, PublicationInput, PublicationOut } from "@lymi/core";
 import { newId, PUBLICATION_SLUG } from "@lymi/core";
+import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { auditStatement } from "./audit";
@@ -186,6 +187,7 @@ async function publicationBySlug(db: Db, slug: string) {
   const [row] = await db
     .select({
       id: schema.deckPublications.id,
+      slug: schema.deckPublications.slug,
       status: schema.deckPublications.status,
       publisher: schema.deckPublications.publisher,
       deckId: schema.decks.id,
@@ -194,11 +196,45 @@ async function publicationBySlug(db: Db, slug: string) {
       deckArchivedAt: schema.decks.archivedAt,
       ownerId: schema.decks.userId,
       meaningLanguage: schema.deckPublications.meaningLanguage,
+      customKey: schema.userAvatars.customKey,
+      customVersion: schema.userAvatars.customVersion,
+      googleVersion: schema.userAvatars.googleVersion,
     })
     .from(schema.deckPublications)
     .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
+    .leftJoin(schema.userAvatars, eq(schema.userAvatars.userId, schema.decks.userId))
     .where(eq(schema.deckPublications.slug, slug));
   return row ?? null;
+}
+
+/**
+ * The publisher's photo for a published deck, by the deck's slug. Publishing is what makes it
+ * public, so a withdrawn or archived deck stops serving it and no account id is ever the key.
+ */
+export async function publisherAvatar(
+  db: Db,
+  slug: string,
+): Promise<{ key: string; version: string } | null> {
+  const publication = await publicationBySlug(db, slug);
+  if (!publication || publication.status !== "published" || publication.deckArchivedAt) return null;
+  const [row] = await db
+    .select()
+    .from(schema.userAvatars)
+    .where(eq(schema.userAvatars.userId, publication.ownerId));
+  const version = activeAvatarVersion(row ?? {});
+  if (!row || !version) return null;
+  const key = row.customKey && row.customVersion ? row.customKey : row.googleKey;
+  return key ? { key, version } : null;
+}
+
+function avatarUrlOf(publication: {
+  slug: string;
+  customKey: string | null;
+  customVersion: string | null;
+  googleVersion: string | null;
+}): string | null {
+  const version = activeAvatarVersion(publication);
+  return version ? publisherAvatarPath(publication.slug, version) : null;
 }
 
 /** True when the slug names a published deck that is not archived. */
@@ -220,6 +256,7 @@ export async function previewPublication(
     language: publication.deckLanguage,
     ownerId: publication.ownerId,
     shownOwner: publication.publisher,
+    shownOwnerAvatarUrl: avatarUrlOf(publication),
     archivedAt: publication.deckArchivedAt,
   };
   const preview = await previewDoor(db, deck, publication?.status === "withdrawn", viewerId);

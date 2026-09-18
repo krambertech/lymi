@@ -10,6 +10,7 @@ import { CardStream } from "../components/card-stream";
 import { languageName } from "../components/deck-fields";
 import { Lockup } from "../components/logo";
 import { PublicPolicyLinks } from "../components/public-policy-links";
+import { PublisherMark } from "../components/publisher-mark";
 import { Skeleton } from "../components/skeleton";
 import { publicSiteUrl } from "../lib/origins";
 
@@ -110,7 +111,11 @@ function LiveLink({
     <div className="mx-auto grid w-full max-w-[26rem] grid-cols-[minmax(0,1fr)] @4xl:max-w-none @4xl:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] @4xl:grid-rows-[auto_auto] @4xl:gap-x-20">
       <div className="grid justify-items-center text-center @4xl:col-start-1 @4xl:row-start-1 @4xl:self-end @4xl:justify-items-start @4xl:text-start">
         <p className="flex items-center gap-2 text-md text-text-2">
-          <Avatar name={deck.owner.name} size={24} />
+          {published ? (
+            <PublisherMark name={deck.owner.name} src={deck.owner.avatarUrl} size={24} />
+          ) : (
+            <Avatar name={deck.owner.name} size={24} />
+          )}
           {viewer === "owner" ? (
             <Trans>Your deck</Trans>
           ) : published ? (

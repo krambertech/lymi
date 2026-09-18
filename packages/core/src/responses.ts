@@ -835,7 +835,14 @@ export const JoinPreviewOut = z
       .object({
         name: z.string(),
         total: z.number().int(),
-        owner: z.object({ name: z.string() }),
+        owner: z.object({
+          name: z.string(),
+          /**
+           * Where the publisher's photo is served, or null. A published deck only: publishing
+           * is the deliberate act that makes it public, and a join link never carries one.
+           */
+          avatarUrl: z.string().nullable().default(null),
+        }),
         language: z.string().nullable(),
         lastAddedAt: Timestamp.nullable(),
         samples: z.array(z.object({ term: z.string(), meaning: z.string().nullable() })).meta({

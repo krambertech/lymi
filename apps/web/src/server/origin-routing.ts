@@ -119,6 +119,8 @@ export function decideOriginRoute(
     isAddPagePath(url.pathname) ||
     url.pathname === "/_preview" ||
     atOrBelow(url.pathname, "/api") ||
+    // A published deck's approved media and publisher photo, embedded from lymi.app.
+    atOrBelow(url.pathname, "/public/media") ||
     atOrBelow(url.pathname, "/mcp") ||
     atOrBelow(url.pathname, "/.well-known") ||
     url.pathname === "/robots.txt" ||

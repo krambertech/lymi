@@ -841,28 +841,19 @@
   color: var(--text-2);
 }
 
-/* The closing invitation: the lantern lit over its own pool of light, the one glow on the page.
-   The pool is still, because a section at the foot of a long page should not animate unseen. */
-.signup-plate {
+/* TEMPORARY mockup styles for the closing-invitation directions. Delete with SignUpMockups.tsx. */
+.mock-plate {
   position: relative;
   isolation: isolate;
-  /* The plate is the room the lantern lights, so the pool stops at its edge. */
   overflow: hidden;
 }
-.signup-light {
-  position: relative;
-  display: block;
-  width: 4.5rem;
-  height: 4.5rem;
-  margin-inline: auto;
-}
-.signup-pool {
+.mock-pool {
   position: absolute;
   z-index: -1;
-  top: 56%;
+  top: 5.5rem;
   left: 50%;
-  width: 17rem;
-  height: 17rem;
+  width: 30rem;
+  height: 30rem;
   translate: -50% -50%;
   pointer-events: none;
   border-radius: 50%;
@@ -872,6 +863,136 @@
     color-mix(in oklab, var(--glow) 38%, transparent) 45%,
     transparent
   );
+}
+.mock-pool-wide {
+  width: 44rem;
+  height: 44rem;
+}
+.mock-pool-high {
+  top: 3rem;
+  width: 42rem;
+  height: 42rem;
+}
+.mock-light {
+  position: relative;
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-inline: auto;
+}
+.mock-amber {
+  background: var(--amber);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--amber-ink) 14%, transparent);
+}
+.mock-amber .lantern {
+  color: var(--amber-ink);
+}
+.mock-amber-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  padding-inline: 1.5rem;
+  border-radius: 0.75rem;
+  background: var(--amber-ink);
+  color: var(--amber);
+  font-weight: 500;
+  transition: opacity 160ms var(--ease-out);
+}
+.mock-amber-action:hover {
+  opacity: 0.88;
+}
+.mock-field {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+}
+.mock-field-word {
+  position: absolute;
+  translate: -50% -50%;
+  color: var(--faint);
+  opacity: 0.6;
+  white-space: nowrap;
+}
+.mock-fan {
+  position: relative;
+  height: 12rem;
+  max-width: 1040px;
+  margin-inline: auto;
+}
+.mock-fan-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 11.5rem;
+  transform-origin: 50% 130%;
+}
+.mock-fan-lantern {
+  position: absolute;
+  z-index: 20;
+  top: -1.5rem;
+  left: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  translate: -50% 0;
+}
+
+/* The closing invitation. The lantern hangs over the headline and throws the page's one pool of
+   light, which leans toward a pointer and settles back when there is none. --lx/--ly are written
+   by the section; both fall back to the hook the lantern hangs on. */
+.signup-plate {
+  --lx: 50%;
+  --ly: 26%;
+  --reach: 17rem;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.signup-pool {
+  position: absolute;
+  z-index: -1;
+  top: var(--ly);
+  left: var(--lx);
+  width: calc(var(--reach) * 2);
+  height: calc(var(--reach) * 2);
+  translate: -50% -50%;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    var(--glow),
+    color-mix(in oklab, var(--glow) 36%, transparent) 46%,
+    transparent
+  );
+}
+/* The wick catches, and the room it lights opens after it. */
+.signup-plate[data-lit] .signup-pool {
+  animation: signup-bloom 1400ms var(--ease-out) 260ms both;
+}
+@keyframes signup-bloom {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+/* The lantern hangs where it hangs. Only the light it throws answers a pointer. */
+.signup-lamp {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 0 auto 2rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .signup-plate[data-lit] .signup-pool {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* The end of the deck page's hand, borrowed from the end of a review: the lantern lights the room

@@ -133,6 +133,11 @@ export default defineConfig({
             exclude: [...configDefaults.exclude, "**/*.browser.test.tsx"],
             // Service tests run against a real local D1, and a busy CI runner can take several seconds per test.
             testTimeout: 15_000,
+            // One local runtime per worker rather than one per file: `test-db.ts` holds it on the
+            // `globalThis` the files of a worker share. The setup file gives back what isolation
+            // paid for, a module registry and stubbed globals per file. docs/testing.md.
+            isolate: false,
+            setupFiles: ["src/test/unit-setup.ts"],
           },
         },
         {

@@ -54,7 +54,19 @@ WebKit does not focus a button that is clicked, so a test about focus return ope
 
 ## Service tests on a real D1
 
-`apps/web/src/server/services/test-db.ts` boots wrangler's local runtime in memory, applies every migration, and returns the same `Db` the Worker uses. Service tests that need rows, such as `members.test.ts`, take one database per file and give each test its own deck. The pure-function tests next to them need no database and stay that way.
+`apps/web/src/server/services/test-db.ts` returns the same `Db` the Worker uses: wrangler's local runtime, in memory, with every migration applied. One runtime serves every service test. The first `testDb()` in a worker boots it; each later call empties its tables, its KV namespace and its R2 buckets and hands the same bindings back, so a file still starts on an empty database. A boot cost about 1.3 seconds on a developer's machine and grew with every migration; emptying costs about 20 milliseconds and does not.
+
+A test owns only the rows it writes and never reads another's. Separate databases per file made that true by accident; it is now the only isolation there is, and shuffling the file order is the check:
+
+```bash
+pnpm --filter @lymi/web exec vitest run --project unit --sequence.shuffle.files
+```
+
+`testDb({ before: "0012_" })` boots a private runtime stopped short of that migration and adds `migrate` and `migrateFrom`, which is what a migration test such as `review-modes.test.ts` needs.
+
+One runtime for many files means the `unit` project runs with `isolate: false`, so the files in a worker share a module registry and a `globalThis`. `src/test/unit-setup.ts` empties the module registry before each file and unstubs globals after it, so a mocked module or a stubbed global belongs to the file that made it; the runtime survives because it is held on `globalThis` rather than in module scope. Any other process-wide state a test reaches for is that test's to clean up.
+
+The pure-function tests next to them need no database and stay that way.
 
 ## CI policy
 

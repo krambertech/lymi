@@ -1,6 +1,7 @@
 import { and, asc, eq, inArray, isNotNull, isNull, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
+import { selectIn } from "./db";
 import { livePublicationMedia } from "./publication-media";
 import {
   cardLocalizations,
@@ -463,57 +464,75 @@ async function publishedEditions(
 ): Promise<Map<string, ShownEdition>> {
   const shown = new Map<string, ShownEdition>();
   if (!language) return shown;
-  const published = await db
-    .select({ deckId: deckEditions.deckId })
-    .from(deckEditions)
-    .where(
-      and(
-        inArray(deckEditions.deckId, deckIds),
-        eq(deckEditions.language, language),
-        eq(deckEditions.status, "published"),
+  const published = await selectIn(deckIds, (slice) =>
+    db
+      .select({ deckId: deckEditions.deckId })
+      .from(deckEditions)
+      .where(
+        and(
+          inArray(deckEditions.deckId, slice),
+          eq(deckEditions.language, language),
+          eq(deckEditions.status, "published"),
+        ),
       ),
-    );
+  );
   if (published.length === 0) return shown;
   const wanted = published.map((row) => row.deckId);
-  const text = await db
-    .select({
-      deckId: deckLocalizations.deckId,
-      name: deckLocalizations.name,
-      summary: deckLocalizations.summary,
-    })
-    .from(deckLocalizations)
-    .where(
-      and(
-        inArray(deckLocalizations.deckId, wanted),
-        eq(deckLocalizations.language, language),
-        eq(deckLocalizations.status, "approved"),
+  const text = await selectIn(wanted, (slice) =>
+    db
+      .select({
+        deckId: deckLocalizations.deckId,
+        name: deckLocalizations.name,
+        summary: deckLocalizations.summary,
+      })
+      .from(deckLocalizations)
+      .where(
+        and(
+          inArray(deckLocalizations.deckId, slice),
+          eq(deckLocalizations.language, language),
+          eq(deckLocalizations.status, "approved"),
+        ),
       ),
-    );
+  );
   const byDeck = new Map(text.map((row) => [row.deckId, row]));
   for (const deckId of wanted) shown.set(deckId, { language, deck: byDeck.get(deckId) });
   return shown;
 }
 
 async function cardCounts(db: CatalogDb, deckIds: string[]): Promise<Map<string, number>> {
-  const rows = await db
-    .select({ deckId: cards.deckId, count: sql<number>`count(*)` })
-    .from(cards)
-    .where(and(inArray(cards.deckId, deckIds), isNull(cards.archivedAt)))
-    .groupBy(cards.deckId);
+  const rows = await selectIn(deckIds, (slice) =>
+    db
+      .select({ deckId: cards.deckId, count: sql<number>`count(*)` })
+      .from(cards)
+      .where(and(inArray(cards.deckId, slice), isNull(cards.archivedAt)))
+      .groupBy(cards.deckId),
+  );
   return new Map(rows.map((row) => [row.deckId, Number(row.count)]));
 }
 
 async function sectionCounts(db: CatalogDb, deckIds: string[]): Promise<Map<string, number>> {
-  const rows = await db
-    .select({ deckId: sections.deckId, count: sql<number>`count(*)` })
-    .from(sections)
-    .where(and(inArray(sections.deckId, deckIds), isNull(sections.archivedAt)))
-    .groupBy(sections.deckId);
+  const rows = await selectIn(deckIds, (slice) =>
+    db
+      .select({ deckId: sections.deckId, count: sql<number>`count(*)` })
+      .from(sections)
+      .where(and(inArray(sections.deckId, slice), isNull(sections.archivedAt)))
+      .groupBy(sections.deckId),
+  );
   return new Map(rows.map((row) => [row.deckId, Number(row.count)]));
 }
 
 /** How many of a deck's cards the tray chooses between. */
 const TRAY_CANDIDATES = 40;
+
+interface CandidateCard {
+  cardId: string;
+  term: string;
+  meaning: string | null;
+  sectionName: string | null;
+}
+
+/** The card a deck's tray shows, before its edition's own words are read. */
+type TrayCard = CandidateCard & { meaning: string };
 
 /**
  * One card per deck for its tray, drawn from the deck's own revision rather than at random, so
@@ -526,6 +545,48 @@ async function sampleCards(
   language: string | undefined,
 ): Promise<Map<string, PublicDeckSummary["card"]>> {
   const deckIds = rows.map((row) => row.deckId);
+  const candidates = await selectIn(deckIds, (slice) => trayCandidates(db, slice));
+
+  const byDeck = new Map<string, CandidateCard[]>();
+  for (const card of candidates) {
+    const list = byDeck.get(card.deckId);
+    if (list) list.push(card);
+    else byDeck.set(card.deckId, [card]);
+  }
+  const picked = new Map<string, TrayCard>();
+  for (const row of rows) {
+    const list = byDeck.get(row.deckId);
+    if (!list || list.length === 0) continue;
+    // Prefer a card short enough to read at a glance on a tray, as the deck page's spread does.
+    const glanceable = list.filter(
+      (card) => card.term.length <= 22 && (card.meaning?.length ?? 0) <= 40,
+    );
+    const from = glanceable.length > 0 ? glanceable : list;
+    const card = from[hash(`${row.slug}:${row.revision}:tray`) % from.length];
+    if (!card?.meaning) continue;
+    picked.set(row.deckId, { ...card, meaning: card.meaning });
+  }
+
+  // Only the card each tray shows is localized: binding every candidate carried one parameter
+  // per card, which went past D1's cap of 100 once a few decks were published.
+  const localized = await localizedSamples(db, picked, editionOf, language);
+  const chosen = new Map<string, PublicDeckSummary["card"]>();
+  for (const [deckId, card] of picked) {
+    const text = localized.get(card.cardId);
+    chosen.set(deckId, {
+      term: text?.term ?? card.term,
+      meaning: text?.meaning ?? card.meaning,
+      section: card.sectionName,
+    });
+  }
+  return chosen;
+}
+
+/** The first cards of each deck in the slice, which the tray then chooses between. */
+async function trayCandidates(
+  db: CatalogDb,
+  deckIds: string[],
+): Promise<(CandidateCard & { deckId: string })[]> {
   // One card per deck is wanted, so only the first few of each are read. Without the cap this
   // query would carry every card of every published deck to render one tray apiece.
   const ranked = db
@@ -542,7 +603,7 @@ async function sampleCards(
     .from(cards)
     .where(and(inArray(cards.deckId, deckIds), isNull(cards.archivedAt), isNotNull(cards.meaning)))
     .as("ranked");
-  const candidates = await db
+  return db
     .select({
       deckId: ranked.deckId,
       cardId: ranked.cardId,
@@ -554,58 +615,35 @@ async function sampleCards(
     .leftJoin(sections, and(eq(sections.id, ranked.sectionId), isNull(sections.archivedAt)))
     .where(sql`${ranked.place} <= ${TRAY_CANDIDATES}`)
     .orderBy(asc(ranked.place));
-
-  const localized = await localizedSamples(db, candidates, editionOf, language);
-  const byDeck = new Map<string, typeof candidates>();
-  for (const card of candidates) {
-    const list = byDeck.get(card.deckId);
-    if (list) list.push(card);
-    else byDeck.set(card.deckId, [card]);
-  }
-  const chosen = new Map<string, PublicDeckSummary["card"]>();
-  for (const row of rows) {
-    const list = byDeck.get(row.deckId);
-    if (!list || list.length === 0) continue;
-    // Prefer a card short enough to read at a glance on a tray, as the deck page's spread does.
-    const glanceable = list.filter(
-      (card) => card.term.length <= 22 && (card.meaning?.length ?? 0) <= 40,
-    );
-    const from = glanceable.length > 0 ? glanceable : list;
-    const card = from[hash(`${row.slug}:${row.revision}:tray`) % from.length];
-    if (!card?.meaning) continue;
-    const text = localized.get(card.cardId);
-    chosen.set(row.deckId, {
-      term: text?.term ?? card.term,
-      meaning: text?.meaning ?? card.meaning,
-      section: card.sectionName,
-    });
-  }
-  return chosen;
 }
 
 /** The chosen cards' approved text in the edition each deck is shown in. ADR 0015. */
 async function localizedSamples(
   db: CatalogDb,
-  candidates: readonly { deckId: string; cardId: string }[],
+  picked: ReadonlyMap<string, TrayCard>,
   editionOf: Map<string, ShownEdition>,
   language: string | undefined,
 ): Promise<Map<string, { term: string | null; meaning: string | null }>> {
-  const wanted = candidates.filter((card) => editionOf.has(card.deckId)).map((card) => card.cardId);
-  if (wanted.length === 0 || !language) return new Map();
-  const rows = await db
-    .select({
-      cardId: cardLocalizations.cardId,
-      term: cardLocalizations.term,
-      meaning: cardLocalizations.meaning,
-    })
-    .from(cardLocalizations)
-    .where(
-      and(
-        inArray(cardLocalizations.cardId, wanted),
-        eq(cardLocalizations.language, language),
-        eq(cardLocalizations.status, "approved"),
+  if (!language) return new Map();
+  const wanted = [...picked]
+    .filter(([deckId]) => editionOf.has(deckId))
+    .map(([, card]) => card.cardId);
+  const rows = await selectIn(wanted, (slice) =>
+    db
+      .select({
+        cardId: cardLocalizations.cardId,
+        term: cardLocalizations.term,
+        meaning: cardLocalizations.meaning,
+      })
+      .from(cardLocalizations)
+      .where(
+        and(
+          inArray(cardLocalizations.cardId, slice),
+          eq(cardLocalizations.language, language),
+          eq(cardLocalizations.status, "approved"),
+        ),
       ),
-    );
+  );
   return new Map(rows.map((row) => [row.cardId, row]));
 }
 

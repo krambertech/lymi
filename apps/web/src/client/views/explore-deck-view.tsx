@@ -208,8 +208,9 @@ export function ExploreDeckView({
       <div className="mx-auto w-full max-w-(--column) px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-9 @3xl/shell:px-8 @3xl/shell:pt-[calc(env(safe-area-inset-top)+2rem)] @3xl/shell:pb-11">
         {bar}
         <div className="grid items-center gap-6 @4xl:grid-cols-[minmax(0,1fr)_auto] @4xl:gap-10">
-          <div className="grid justify-items-start">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-2">
+          {/* Centred while it stacks under the hand, level with the column once they sit side by side. */}
+          <div className="grid justify-items-center text-center @4xl:justify-items-start @4xl:text-start">
+            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-text-2 @4xl:justify-start">
               <p className="flex items-center gap-2">
                 {/* Served by the deck's slug rather than the account. ADR 0016. */}
                 <PublisherMark
@@ -249,7 +250,7 @@ export function ExploreDeckView({
                 <Trans>In Library</Trans>
               </p>
             )}
-            <div className="mt-6 flex w-full">
+            <div className="mt-6 flex w-full justify-center @4xl:justify-start">
               {deckId ? (
                 <Link
                   ref={open}

@@ -1180,9 +1180,8 @@
   --gap: calc(var(--cw) * 0.7);
   position: relative;
   isolation: isolate;
-  /* Level with the text when it stacks above it; the 12 px either side is room for the tilt. */
-  justify-self: start;
-  margin-inline-start: -12px;
+  /* The 12 px either side is room for the tilt. */
+  justify-self: center;
   width: calc(var(--cw) + var(--gap) * 2 + 24px);
   height: calc(var(--cw) * 1.12 + 32px);
 }
@@ -1190,7 +1189,6 @@
   .deck-hand {
     --cw: 140px;
     --gap: 100px;
-    margin-inline-start: 0;
   }
 }
 .deck-hand-card {

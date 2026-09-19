@@ -1128,36 +1128,15 @@
   margin-top: calc(var(--cw) * 0.14);
 }
 
-/* One shelf per category, scrolling sideways, so a category of forty decks lengthens one row
-   instead of burying the page. */
+/* A shelf wraps, so every deck in a category is on the page at once and nothing hides behind a
+   sideways scroll. The 216 px floor makes a phone one tile wide rather than two slim ones. */
 .deck-shelf {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 240px;
+  grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
   gap: 22px;
-  align-items: start;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
   padding-block: 24px 4px;
-  padding-inline: 14px;
-  margin-inline: -14px;
-  /* No bar: a shelf usually fits, and a track drawn under every category is chrome the page does
-     not need. It still scrolls by wheel, trackpad, touch and keyboard. */
-  scrollbar-width: none;
 }
-.deck-shelf::-webkit-scrollbar {
-  display: none;
-}
-.deck-tile {
-  scroll-snap-align: start;
-}
-
-@media (max-width: 40rem) {
-  .deck-shelf {
-    grid-auto-columns: 200px;
-    gap: 18px;
-  }
-  .deck-tray {
-    --cw: 126px;
-  }
+/* In a tile the tray runs to the card's edges and the card clips it, so the tray keeps no corners of its own. */
+.deck-tile .deck-tray {
+  border-radius: 0;
 }

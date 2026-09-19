@@ -102,12 +102,12 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
     // something, and an Add button floating under a name reads as loose. The tray runs to the
     // card's own edges and the card clips it, so the two corners are concentric by construction
     // rather than by a radius that has to be kept in step with the padding.
-    <div className="deck-tile edge grid h-full content-start overflow-hidden rounded-xl bg-plate">
+    <div className="deck-tile edge grid h-full grid-rows-[1fr_auto] overflow-hidden rounded-xl bg-plate">
       <Link
         to="/explore/$slug"
         params={{ slug: deck.slug }}
         disabled={!!st}
-        className="grid gap-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        className="grid content-start gap-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
         <DeckTray
           slug={deck.slug}
@@ -115,7 +115,6 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
           card={deck.card}
           language={deck.language}
           meaningLanguage={deck.meaningLanguage}
-          className="rounded-none"
         />
         <div className="grid gap-1 px-3.5">
           <h3

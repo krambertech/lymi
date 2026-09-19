@@ -37,6 +37,7 @@ import { deckSections, sections } from "./routes/sections";
 import { series } from "./routes/series";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
+import { catchUpStates } from "./services/modes";
 
 export type AppEnv = {
   Bindings: Bindings;
@@ -183,6 +184,14 @@ app.get(
     return c.json({ id, name, email });
   },
 );
+
+// A member's states catch up to their decks before anything that reads progress. ADR 0022.
+for (const path of ["decks", "series", "sections", "cards", "review", "stats", "exports"]) {
+  app.use(`/api/${path}/*`, async (c, next) => {
+    await catchUpStates(c.get("db"), c.get("user").id);
+    await next();
+  });
+}
 
 app.route("/api/decks", decks);
 app.route("/api/email", email);

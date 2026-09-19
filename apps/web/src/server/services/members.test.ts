@@ -5,6 +5,7 @@ import { addCards, archiveCard, getCard, restoreCard, searchCards, updateCard } 
 import type { ServiceContext } from "./context";
 import { createDeck, listDeckCards, listDecks, updateDeck } from "./decks";
 import { join, leave, listMembers, removeMember } from "./members";
+import { catchUpStates } from "./modes";
 import { gradeCard, reviewQueue } from "./review";
 import { insights } from "./stats";
 import { learner, testDb } from "./test-db";
@@ -128,7 +129,10 @@ describe("a member studies the owner's deck", () => {
   });
 });
 
-describe("what the owner changes reaches every member", () => {
+/** What every request that reads progress does first. ADR 0022. */
+const nextRequest = (ctx: ServiceContext, now?: Date) => catchUpStates(db, ctx.userId, now);
+
+describe("what the owner changes reaches every member on their next request", () => {
   it("joining while the owner adds a card leaves a complete learner state", async () => {
     const { deck } = await sharedDeck("Kool", []);
 
@@ -136,19 +140,69 @@ describe("what the owner changes reaches every member", () => {
       join(anna, deck.id),
       addCards(kateryna, [{ deckId: deck.id, term: "õpik" }]),
     ]);
+    await nextRequest(anna);
 
     expect(await dueFor(anna, deck.id)).toBe(1);
     expect(await dueFor(kateryna, deck.id)).toBe(1);
   });
 
-  it("a new card is new for the member", async () => {
+  it("a new card writes only the owner's state until the member comes back", async () => {
     const { deck } = await sharedDeck("Toit", ["leib"]);
     await join(anna, deck.id);
 
     await addCards(kateryna, [{ deckId: deck.id, term: "piim" }]);
 
-    expect(await dueFor(anna, deck.id)).toBe(2);
     expect(await dueFor(kateryna, deck.id)).toBe(2);
+    expect(await dueStatesFor(anna, deck.id)).toBe(1);
+    await nextRequest(anna);
+    expect(await dueFor(anna, deck.id)).toBe(2);
+  });
+
+  it("a caught-up card counts as added when the owner added it, not when the member came back", async () => {
+    const { deck } = await sharedDeck("Puu", []);
+    await join(anna, deck.id);
+    const [outcome] = await addCards(kateryna, [{ deckId: deck.id, term: "kask" }]);
+    if (outcome?.status !== "added") throw new Error("not added");
+
+    await nextRequest(anna, new Date(Date.now() + 30 * 86_400_000));
+
+    const [state] = await db
+      .select({ createdAt: schema.cardStates.createdAt, due: schema.cardStates.due })
+      .from(schema.cardStates)
+      .where(
+        and(eq(schema.cardStates.cardId, outcome.card.id), eq(schema.cardStates.userId, "anna")),
+      );
+    const [card] = await db
+      .select({ createdAt: schema.cards.createdAt })
+      .from(schema.cards)
+      .where(eq(schema.cards.id, outcome.card.id));
+    expect(state?.createdAt).toEqual(card?.createdAt);
+    expect(state?.due).toEqual(card?.createdAt);
+  });
+
+  it("a member who is caught up matches the deck's version and stays that way", async () => {
+    const { deck } = await sharedDeck("Tee", ["sild"]);
+    await join(anna, deck.id);
+    const versions = async () => {
+      const [row] = await db
+        .select({ deck: schema.decks.statesVersion, member: schema.deckMembers.statesVersion })
+        .from(schema.deckMembers)
+        .innerJoin(schema.decks, eq(schema.decks.id, schema.deckMembers.deckId))
+        .where(and(eq(schema.deckMembers.deckId, deck.id), eq(schema.deckMembers.userId, "anna")));
+      return row;
+    };
+    const joined = await versions();
+    expect(joined?.member).toBe(joined?.deck);
+
+    await addCards(kateryna, [{ deckId: deck.id, term: "jõgi" }]);
+    const behind = await versions();
+    expect(behind?.member).toBeLessThan(behind?.deck ?? 0);
+
+    await nextRequest(anna);
+    await nextRequest(anna);
+    const caughtUp = await versions();
+    expect(caughtUp?.member).toBe(caughtUp?.deck);
+    expect(await dueFor(anna, deck.id)).toBe(2);
   });
 
   it("a deck direction turned on gives the member the missing states", async () => {
@@ -156,6 +210,7 @@ describe("what the owner changes reaches every member", () => {
     await join(anna, deck.id);
 
     await updateDeck(kateryna, deck.id, { directions: "both" });
+    await nextRequest(anna);
 
     expect(await dueStatesFor(anna, deck.id)).toBe(4);
     expect(await dueStatesFor(kateryna, deck.id)).toBe(4);
@@ -174,6 +229,8 @@ describe("what the owner changes reaches every member", () => {
       kateryna,
       terms.map((term) => ({ deckId: deck.id, term })),
     );
+    await nextRequest(anna);
+    await nextRequest(marko);
 
     expect(outcomes.every((o) => o.status === "added")).toBe(true);
     expect(await dueStatesFor(kateryna, deck.id)).toBe(60);
@@ -188,6 +245,7 @@ describe("what the owner changes reaches every member", () => {
     await join(anna, deck.id);
 
     await updateCard(kateryna, first.id, { directions: "both" });
+    await nextRequest(anna);
 
     expect(await dueStatesFor(anna, deck.id)).toBe(2);
   });
@@ -198,6 +256,7 @@ describe("what the owner changes reaches every member", () => {
     if (!first) throw new Error("no card");
     await join(anna, deck.id);
     await updateCard(kateryna, first.id, { directions: "both" });
+    await nextRequest(anna);
     await db
       .delete(schema.cardStates)
       .where(
@@ -209,6 +268,7 @@ describe("what the owner changes reaches every member", () => {
       );
 
     await updateCard(kateryna, first.id, { directions: "both" });
+    await nextRequest(anna);
 
     expect(await dueStatesFor(anna, deck.id)).toBe(2);
   });
@@ -221,6 +281,7 @@ describe("what the owner changes reaches every member", () => {
     await join(anna, deck.id);
 
     await restoreCard(kateryna, first.id);
+    await nextRequest(anna);
 
     expect(await dueFor(anna, deck.id)).toBe(1);
   });

@@ -59,6 +59,7 @@ erDiagram
     int archived_at "nullable"
     text import_id "nullable, the import that made it"
     text external_id "nullable, the source's key"
+    int states_version "raised when members may lack a state"
   }
   sections {
     text id PK
@@ -158,6 +159,7 @@ erDiagram
     int joined_at
     int removed_at "nullable, never deleted"
     text removed_by "nullable: owner | self"
+    int states_version "the deck version this member's states match"
   }
   deck_invitations {
     text id PK
@@ -291,7 +293,7 @@ Unless `decks.section_progression` is `open`, each learner opens sections in ord
 
 ### Shared decks
 
-A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_members` row. Leaving or being removed sets `removed_at` and keeps the row; `removed_by = 'owner'` blocks the join link until a named invitation. `card_states` is unique per `(card_id, user_id, direction)`, so each learner of a shared card has their own schedule. Every read goes through `memberOf` in `services/members.ts`; every write to a deck's content requires the owner. [ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md).
+A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_members` row. Leaving or being removed sets `removed_at` and keeps the row; `removed_by = 'owner'` blocks the join link until a named invitation. `card_states` is unique per `(card_id, user_id, direction)`, so each learner of a shared card has their own schedule. A change to the cards writes the owner's states at once and raises `decks.states_version`; a member whose `deck_members.states_version` is behind gets their missing states on their next request that reads progress ([ADR 0022](adr/0022-a-member-catches-up-on-card-states-at-their-next-request.md)). Every read goes through `memberOf` in `services/members.ts`; every write to a deck's content requires the owner. [ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md).
 
 A deck has at most one unrevoked `deck_invitations` link, enforced by a partial unique index. Turning the link off sets `revoked_at` for good, and turning it on again inserts a new row with a new token. The token is a capability: it appears in the join URL and nowhere else, never in audit payloads, logs or error messages. `/join/<token>` is rendered by the product Worker; it shows up to three recent cards, and its title and Open Graph tags carry none. A signed-out visitor's link rides through sign-in in a ten-minute HttpOnly cookie, and `session.create.after` completes the membership. Repeated joins make one membership and one audit row.
 
@@ -335,7 +337,7 @@ Nothing about a review is stored. `services/draw.ts` loads every asked state due
 
 ### Review modes
 
-A review mode is a cue and a target: `term_to_meaning` (recognition), `meaning_to_term` (production), `image_to_term` or `image_to_meaning`. Picture modes are set on cards only; a deck refuses them. The API sends a list of `{ cue, target }` as `reviewModes` on decks and cards, and a card's list overrides its deck's. Each mode a card is asked in gets its own `card_states` row with its own schedule, because recognising and producing are different skills. Turning a mode on creates the missing rows due now; turning one off leaves them uncounted (ADR 0007). A picture mode is asked only while the card has an active picture with a description. A card whose list holds only picture modes stores the text mode with the same target in `directions` and is asked in it until it has such a picture; that fallback is never asked beside the picture mode. ADR 0014 is the decision. A card asked in several modes starts them one at a time, meaning → term first, and only one of its modes is reviewed on any day (ADR 0019).
+A review mode is a cue and a target: `term_to_meaning` (recognition), `meaning_to_term` (production), `image_to_term` or `image_to_meaning`. Picture modes are set on cards only; a deck refuses them. The API sends a list of `{ cue, target }` as `reviewModes` on decks and cards, and a card's list overrides its deck's. Each mode a card is asked in gets its own `card_states` row with its own schedule, because recognising and producing are different skills. Turning a mode on creates the missing rows due now, for members at their next request; turning one off leaves them uncounted (ADR 0007). A picture mode is asked only while the card has an active picture with a description. A card whose list holds only picture modes stores the text mode with the same target in `directions` and is asked in it until it has such a picture; that fallback is never asked beside the picture mode. ADR 0014 is the decision. A card asked in several modes starts them one at a time, meaning → term first, and only one of its modes is reviewed on any day (ADR 0019).
 
 The move from directions is expand and contract, and it is in the expand phase. `decks.directions` stores a deck's list, since a text-mode list maps one-to-one onto it, and `cards.directions` stores a card's text modes. `cards.review_modes` adds a card's order and picture modes, and `effectiveModes` in `packages/core/src/modes.ts` heals a list an older Worker left stale by writing only `directions`. A legacy `directions` write replaces a card's text modes and keeps its picture modes. `directions` stays in the API as the legacy spelling. `card_states.direction` and `reviews.direction` stay the identity a grade finds: `recognition` and `production` for text modes, the mode key for picture modes, so the legacy unique index covers every mode; `mode` is written beside them and read as `coalesce(mode, mapping of direction)`, so a row an older Worker writes during a deploy still reads correctly. Migration 0012 adds `mode` and backfills it idempotently without touching schedules or review facts. Grades may name `mode` or the legacy `direction`, so queued offline grades replay onto the same schedule. Queue items carry `direction` for text modes only, so an app from before modes cannot grade a picture mode as its text sibling.
 

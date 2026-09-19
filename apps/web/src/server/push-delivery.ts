@@ -3,6 +3,7 @@ import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { serverI18n } from "./i18n";
 import { drawableCount } from "./services/draw";
+import { catchUpStates } from "./services/modes";
 
 interface ReminderCandidate {
   id: string;
@@ -35,8 +36,10 @@ type CountDrawable = (userId: string, zone: string, now: Date) => Promise<number
 
 const countWith =
   (db: ReturnType<typeof createDb>): CountDrawable =>
-  (userId, zone, now) =>
-    drawableCount({ db, userId, actor: "system" }, { now, zone });
+  async (userId, zone, now) => {
+    await catchUpStates(db, userId, now);
+    return drawableCount({ db, userId, actor: "system" }, { now, zone });
+  };
 
 /** Local date and wall-clock time at an instant, including daylight-saving changes. */
 export function reminderMoment(now: Date, timezone: string): ReminderMoment {

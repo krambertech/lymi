@@ -111,7 +111,7 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
     .where(and(eq(schema.decks.id, deckId), memberOf(userId)));
   if (!row) throw notFound("Deck");
   const role: MemberRole = row.deck.userId === userId ? "owner" : (row.memberRole ?? "learner");
-  const { revision: _revision, ...deck } = row.deck;
+  const { revision: _revision, statesVersion: _statesVersion, ...deck } = row.deck;
   const publisher = publisherOf({ ...row, archivedAt: row.deck.archivedAt });
   return {
     ...deck,
@@ -234,6 +234,7 @@ export async function join(
               createdAt: sql`${at}`.as("created_at"),
               updatedAt: sql`${at}`.as("updated_at"),
               meaningLanguage: sql`${opts.meaningLanguage ?? null}`.as("meaning_language"),
+              statesVersion: sql`0`.as("states_version"),
             })
             // One row, so the guard decides whether the insert writes anything at all.
             .from(sql`(select 1)`)

@@ -115,6 +115,10 @@
     {
       "name": "0028_guard_publisher_account.sql",
       "sha256": "c2f11afb145ba41b665fecac3319f566d93d41fa3a6dbeb45395926cb1c2874b"
+    },
+    {
+      "name": "0029_majestic_newton_destine.sql",
+      "sha256": "1e1f4f304ab10e762386278c12005c12264ebfa5ae4c727ef0e3fdf40291674e"
     }
   ]
 }

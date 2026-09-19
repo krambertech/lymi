@@ -15,7 +15,7 @@ import {
   stateDirection,
   TEXT_MODES,
 } from "@lymi/core";
-import { type SQL, sql } from "@lymi/core/db";
+import { and, eq, gt, isNull, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { ServiceError } from "./context";
@@ -49,15 +49,18 @@ export function askedSql(
 
 type Statement = Parameters<Db["batch"]>[0][number];
 
-/** Insert every missing asked state, one statement per mode, never replacing an existing one. */
+/**
+ * Insert every missing asked state, one statement per mode, never replacing an existing one.
+ * `added` is when each state counts as added, which the draw's new-card odds read.
+ */
 function stateInserts(
   db: Db,
   where: SQL,
   learners: SQL,
   now: Date,
   keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
+  added: SQL = sql`${now.getTime()}`,
 ): Statement[] {
-  const due = now.getTime();
   const fsrs = serializeState(emptyState(now));
   return keys.map((key) => {
     const direction = stateDirection(key);
@@ -65,7 +68,7 @@ function stateInserts(
       .insert(schema.cardStates)
       .select(
         sql`select lower(hex(randomblob(10))), cards.id, learners.user_id, ${direction},
-          ${due}, 0, ${fsrs}, null, ${due}, ${due}, ${key}
+          ${added}, 0, ${fsrs}, null, ${added}, ${added}, ${key}
         from cards join decks on decks.id = cards.deck_id
         join (${learners}) as learners on learners.deck_id = decks.id
         where ${where} and ${sql.raw(askedSql(`'${direction}'`))}`,
@@ -74,32 +77,51 @@ function stateInserts(
   });
 }
 
-/** One deck's owner and active members, so a statement never scans every deck. */
-function deckLearners(deckId: SQL) {
-  return sql`select id as deck_id, user_id from decks where id = ${deckId}
-    union all
-    select deck_id, user_id from deck_members where deck_id = ${deckId} and removed_at is null`;
+/**
+ * Only the owners get states when cards change; members catch up on their next request, so one
+ * card never writes a row per member. `decks` selects the changed decks. ADR 0022.
+ */
+function ownerStateInserts(
+  db: Db,
+  where: SQL,
+  decks: SQL,
+  now: Date,
+  keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
+): Statement[] {
+  return [
+    ...stateInserts(
+      db,
+      where,
+      sql`select id as deck_id, user_id from decks where id in ${decks}`,
+      now,
+      keys,
+    ),
+    db
+      .update(schema.decks)
+      .set({ statesVersion: sql`${schema.decks.statesVersion} + 1` })
+      .where(sql`${schema.decks.id} in ${decks}`),
+  ];
 }
 
-/** One card's states for everyone who studies its deck, as membership stands inside the batch. */
+/** One card's states for its deck's owner, as the card stands inside the batch. */
 export function stateStatementsForCard(
   db: Db,
   cardId: string,
   now = new Date(),
   keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
 ): Statement[] {
-  return stateInserts(
+  return ownerStateInserts(
     db,
     sql`cards.id = ${cardId}`,
-    deckLearners(sql`(select deck_id from cards where id = ${cardId})`),
+    sql`(select deck_id from cards where id = ${cardId})`,
     now,
     keys,
   );
 }
 
 /**
- * Missing states for many cards at once, for everyone who studies their decks. `cardIds` is a
- * JSON array bound as one parameter, so a large import stays within D1's parameter limit.
+ * Missing states for many cards at once. `cardIds` is a JSON array bound as one parameter, so
+ * a large import stays within D1's parameter limit.
  */
 export function stateStatementsForCards(
   db: Db,
@@ -107,13 +129,10 @@ export function stateStatementsForCards(
   now = new Date(),
   keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
 ): Statement[] {
-  const decks = sql`(select distinct deck_id from cards where id in (select value from json_each(${cardIds})))`;
-  return stateInserts(
+  return ownerStateInserts(
     db,
     sql`cards.id in (select value from json_each(${cardIds}))`,
-    sql`select id as deck_id, user_id from decks where id in ${decks}
-      union all
-      select deck_id, user_id from deck_members where deck_id in ${decks} and removed_at is null`,
+    sql`(select distinct deck_id from cards where id in (select value from json_each(${cardIds})))`,
     now,
     keys,
   );
@@ -121,31 +140,62 @@ export function stateStatementsForCards(
 
 /** States for every card that follows the deck, after the deck's modes change. */
 export function stateStatementsForDeck(db: Db, deckId: string, now = new Date()): Statement[] {
-  return stateInserts(
+  return ownerStateInserts(
     db,
     sql`cards.deck_id = ${deckId} and cards.directions is null and cards.archived_at is null`,
-    deckLearners(sql`${deckId}`),
+    sql`(select ${deckId})`,
     now,
   );
 }
 
-/** Every card state, archived cards included, for one learner joining a deck. */
+/**
+ * Every card state, archived cards included, for one member of a deck, then the deck version
+ * they now match. A state counts as added when its card was, or when they joined if later.
+ */
 export function stateStatementsForLearner(
   db: Db,
   deckId: string,
   userId: string,
   now = new Date(),
 ): Statement[] {
-  return stateInserts(
-    db,
-    sql`cards.deck_id = ${deckId} and exists (
-      select 1 from deck_members
-      where deck_members.deck_id = ${deckId} and deck_members.user_id = ${userId}
-        and deck_members.removed_at is null
-    )`,
-    sql`select ${deckId} as deck_id, ${userId} as user_id`,
-    now,
+  const member = and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, userId));
+  return [
+    ...stateInserts(
+      db,
+      sql`cards.deck_id = ${deckId}`,
+      sql`select deck_id, user_id, joined_at from deck_members
+        where deck_id = ${deckId} and user_id = ${userId} and removed_at is null`,
+      now,
+      REVIEW_MODE_KEYS,
+      sql`max(cards.created_at, learners.joined_at)`,
+    ),
+    db
+      .update(schema.deckMembers)
+      .set({
+        statesVersion: sql`(select states_version from decks where id = ${deckId})`,
+      })
+      .where(and(member, isNull(schema.deckMembers.removedAt))),
+  ];
+}
+
+/** Bring the learner's states up to every deck they are a member of. ADR 0022. */
+export async function catchUpStates(db: Db, userId: string, now = new Date()): Promise<void> {
+  const behind = await db
+    .select({ deckId: schema.deckMembers.deckId })
+    .from(schema.deckMembers)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckMembers.deckId))
+    .where(
+      and(
+        eq(schema.deckMembers.userId, userId),
+        isNull(schema.deckMembers.removedAt),
+        gt(schema.decks.statesVersion, schema.deckMembers.statesVersion),
+      ),
+    );
+  if (behind.length === 0) return;
+  const [first, ...rest] = behind.flatMap(({ deckId }) =>
+    stateStatementsForLearner(db, deckId, userId, now),
   );
+  if (first) await db.batch([first, ...rest]);
 }
 
 /** A state or review's mode, including rows an older Worker wrote without one. */

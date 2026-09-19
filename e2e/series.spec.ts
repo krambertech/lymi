@@ -67,7 +67,8 @@ test("a learner gathers decks into a series and reviews them together", async ({
   });
 
   await test.step("create a series with two decks from Library", async () => {
-    await page.getByRole("button", { name: "New series", exact: true }).click();
+    await page.getByRole("button", { name: "Library options", exact: true }).click();
+    await page.getByRole("menuitem", { name: "New series", exact: true }).click();
     const sheet = dialog(page, "New series");
     await sheet.getByRole("button", { name: "Create series", exact: true }).click();
     await expect(sheet.getByText("Give the series a name.")).toBeVisible();
@@ -158,7 +159,7 @@ test("deleting a series asks about its decks and does not come back", async ({
     // Nothing brings the series back, and no menu offers to.
     await page.reload();
     await expect(seriesRegion(page, name)).toBeHidden();
-    await expect(page.getByRole("button", { name: "New series", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Library options", exact: true })).toBeVisible();
   });
 
   await test.step("archiving the decks takes them out of Library and review", async () => {

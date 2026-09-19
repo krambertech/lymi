@@ -190,6 +190,9 @@ msgstr "Не плутай з англійським embarrassed: «збенте�
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "Гладка накладка на дверях підказує «штовхай», ручка — «тягни»."
 
+msgid "A full flashcard in seconds."
+msgstr "Готова флеш-картка за кілька секунд."
+
 msgid "A hobby"
 msgstr "Хобі"
 
@@ -306,9 +309,6 @@ msgstr "Коли дізнаєшся щось нове, починаєш помі
 
 msgid "AI"
 msgstr "AI"
-
-msgid "AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
-msgstr "AI додає значення, приклад і вимову. Твого тексту він не змінює, а все, що написав сам, позначає."
 
 msgid "AI assistants"
 msgstr "AI-асистенти"
@@ -444,6 +444,9 @@ msgstr "Спробуй Lymi на наступному уроці."
 
 msgid "Bring your assistant to Lymi."
 msgstr "Підключи свого асистента до Lymi."
+
+msgid "Bring your existing decks."
+msgstr "Перенеси свої колоди."
 
 msgid "Bring your favourite AI along."
 msgstr "Твій улюблений AI теж знадобиться."
@@ -667,9 +670,6 @@ msgstr "Картки за мене пише AI?"
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Зробити двічі — те саме, що зробити один раз"
 
-msgid "Don’t start from scratch."
-msgstr "Не починай з нуля."
-
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
 
@@ -787,6 +787,9 @@ msgstr "Колоди"
 msgid "Explore decks"
 msgstr "Переглянути колоди"
 
+msgid "Export any deck to Anki, with its pictures and review history."
+msgstr "Експортуй будь-яку колоду в Anki разом із картинками та історією повторень."
+
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "На цьому почутті тримається фаду — тужлива португальська пісня."
 
@@ -826,8 +829,14 @@ msgstr "Не пам’ятаю"
 msgid "Français · phrase"
 msgstr "Français · фраза"
 
+msgid "Free"
+msgstr "Безкоштовно"
+
 msgid "Free flashcard decks — languages, exams and more · Lymi"
 msgstr "Безкоштовні колоди флеш-карток — мови, іспити й не тільки · Lymi"
+
+msgid "Free, open source, and yours"
+msgstr "Безкоштовно, відкрито й твоє"
 
 msgid "French"
 msgstr "Французька"
@@ -966,9 +975,6 @@ msgstr "Скільки карток чекає на мене сьогодні?"
 
 msgid "How sections work"
 msgstr "Як працюють розділи"
-
-msgid "How spaced repetition works."
-msgstr "Як працює інтервальне повторення."
 
 msgid "How to connect"
 msgstr "Як підключити"
@@ -1246,6 +1252,9 @@ msgstr "Lymi · Флеш-картки з інтервальним повторе
 msgid "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 msgstr "Lymi спершу питає, а потім показує відповідь. Спроба пригадати закріплює краще, ніж перечитування, — це показали <0>Редіґер і Карпіке у 2006 році</0>."
 
+msgid "Lymi costs nothing. No trial, and no payment details to sign up."
+msgstr "Lymi нічого не коштує. Ні пробного періоду, ні платіжних даних для реєстрації."
+
 msgid "Lymi for language learning"
 msgstr "Lymi для вивчення мов"
 
@@ -1285,8 +1294,8 @@ msgstr "Lymi саме пише перші колоди. А поки що зро�
 msgid "Lymi schedules every card around it."
 msgstr "Саме на цьому принципі Lymi будує розклад повторень."
 
-msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
-msgstr "Lymi планує повторення за FSRS — цей алгоритм є і в Anki, тож ритм буде знайомим. Змінюється все довкола: картку можна додати за кілька секунд, а асистент додасть цілий урок. Імпорту з Anki поки немає."
+msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their review history."
+msgstr "Lymi планує повторення за FSRS — цей алгоритм є і в Anki, тож ритм буде знайомим. Змінюється все довкола: картку можна додати за кілька секунд, а асистент додасть цілий урок. Колоди з Anki переносяться разом з історією повторень."
 
 msgid "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
 msgstr "Lymi використовує файл cookie автентифікації, щоб зберігати вхід до системи. Публічний сайт і застосунок також використовують локальне сховище браузера для налаштувань і роботи без мережі. Ми не використовуємо рекламні файли cookie."
@@ -1465,6 +1474,9 @@ msgstr "Відкрити Lymi"
 
 msgid "Open menu"
 msgstr "Відкрити меню"
+
+msgid "Open source"
+msgstr "Відкритий код"
 
 msgid "Open the deck"
 msgstr "Відкрити колоду"
@@ -1649,6 +1661,9 @@ msgstr "Повторюй кілька хвилин на день"
 
 msgid "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
 msgstr "Поки існує обліковий запис, історія повторень лише доповнюється, щоб розклад і запис навчання залишалися точними. Скасування створює окремий запис, а не переписує початкове повторення."
+
+msgid "Review less, remember longer."
+msgstr "Повторюй менше, пам’ятай довше."
 
 msgid "Reviewed with Lymi"
 msgstr "З повтореннями в Lymi"
@@ -1962,6 +1977,9 @@ msgstr "Підрум’янювання, що надає смаку смажен
 msgid "The cards from this page will land here."
 msgstr "Картки з цієї сторінки з’являться тут."
 
+msgid "The code is public on GitHub, so anyone can see how Lymi works."
+msgstr "Код відкритий на GitHub, тож кожен може подивитися, як працює Lymi."
+
 msgid "the day before"
 msgstr "напередодні"
 
@@ -2169,8 +2187,8 @@ msgstr "два"
 msgid "Two euros ten."
 msgstr "Два євро десять центів."
 
-msgid "Type the term. AI fills in the rest."
-msgstr "Введи термін. Решту допише AI."
+msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
+msgstr "Введи термін — AI додасть значення, приклад і вимову. Твого тексту він не змінює, а все, що написав сам, позначає."
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершені справи тримаються в пам’яті краще за завершені"
@@ -2375,6 +2393,9 @@ msgstr "Асистент може читати твої колоди. Попро
 
 msgid "Your choices and rights"
 msgstr "Твій вибір і права"
+
+msgid "Your data is yours"
+msgstr "Твої дані — твої"
 
 msgid "Your own app"
 msgstr "Власний застосунок"

@@ -343,7 +343,8 @@ export function LanguagesView() {
             <Trans>
               Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will
               feel familiar. What changes is the work around it: a card takes seconds to add, and
-              your assistant can add a whole lesson. There is no Anki import yet.
+              your assistant can add a whole lesson. Your Anki decks import with their review
+              history.
             </Trans>
           ),
         },

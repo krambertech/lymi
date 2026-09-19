@@ -26,6 +26,7 @@ import type {
   JoinLinkOut,
   JoinOut,
   JoinPreviewOut,
+  MemberOut,
   MemberRole,
   PushEndpointInput,
   PushSubscriptionInput,
@@ -177,6 +178,8 @@ export type DeckSummary = Pick<
 };
 /** A card a search matched, with the name of the deck it sits in. */
 export type CardHit = Card & { deckName: string };
+/** Someone studying a deck they do not own. The owner is not one of these. */
+export type Member = MemberOut;
 /** A deck's section with the learner's standing in it. */
 export type Section = SectionOut;
 /** A deck's sections in order and where the learner is. */
@@ -356,6 +359,11 @@ export const api = {
     request<JoinLinkOut>(`/api/decks/${deckId}/join-link`, { method: "POST" }),
   turnOffJoinLink: (deckId: string) =>
     request<{ ok: true }>(`/api/decks/${deckId}/join-link`, { method: "DELETE" }),
+  members: (deckId: string) => request<Member[]>(`/api/decks/${deckId}/members`),
+  removeMember: (deckId: string, memberId: string) =>
+    request<{ ok: true }>(`/api/decks/${deckId}/members/${encodeURIComponent(memberId)}`, {
+      method: "DELETE",
+    }),
   joinPreview: (token: string) => request<JoinPreviewOut>(`/api/join/${encodeURIComponent(token)}`),
   /** Holds the link in a short-lived cookie so the sign-in that follows joins the deck. */
   holdJoinLink: (token: string) =>

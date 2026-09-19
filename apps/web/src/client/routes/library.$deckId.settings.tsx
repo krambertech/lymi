@@ -3,18 +3,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { LeaveDeckDialog } from "../components/leave-deck-dialog";
+import { RemoveMemberDialog } from "../components/member-dialogs";
 import {
   ArchivedSectionsDialog,
   ArchiveSectionDialog,
   SectionNameDialog,
 } from "../components/section-dialogs";
-import { api, errorMessage, type Section } from "../lib/api";
+import { api, errorMessage, type Member, type Section } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import {
   archivedSectionsQuery,
   deckCardsQuery,
   decksQuery,
   joinLinkQuery,
+  membersQuery,
   sectionsQuery,
 } from "../lib/queries";
 import { useArchiveDeck } from "../lib/use-archive-deck";
@@ -68,6 +70,22 @@ function DeckSettings() {
   const archive = useArchiveDeck(deckId, deck?.name);
   const leave = useLeaveDeck(deckId, deck?.name);
   const [leaving, setLeaving] = useState(false);
+  // Asked for whenever the owner is on the screen, so the group is there before anyone joins.
+  const members = useQuery({ ...membersQuery(deckId), enabled: isOwner });
+  const [removing, setRemoving] = useState<Member | null>(null);
+
+  const remove = useMutation({
+    mutationFn: (member: Member) => api.removeMember(deckId, member.userId),
+    onSuccess: async () => {
+      setRemoving(null);
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["decks", deckId, "members"] }),
+        // The Sharing card counts members, and the removal is an Activity row.
+        qc.invalidateQueries({ queryKey: ["decks", deckId, "join-link"] }),
+        qc.invalidateQueries({ queryKey: ["activity"] }),
+      ]);
+    },
+  });
 
   const turnOn = useMutation({
     mutationFn: () => api.turnOnJoinLink(deckId),
@@ -130,6 +148,16 @@ function DeckSettings() {
               }
             : undefined
         }
+        members={
+          isOwner
+            ? {
+                members: members.data,
+                onRemove: setRemoving,
+                removing: remove.isPending ? remove.variables?.userId : undefined,
+                error: members.isError ? t`Couldn’t load the members. Try again.` : undefined,
+              }
+            : undefined
+        }
         sharing={
           isOwner
             ? {
@@ -143,6 +171,17 @@ function DeckSettings() {
               }
             : undefined
         }
+      />
+      <RemoveMemberDialog
+        member={removing}
+        onOpenChange={(open) => {
+          if (open) return;
+          setRemoving(null);
+          remove.reset();
+        }}
+        onRemove={() => removing && remove.mutate(removing)}
+        pending={remove.isPending}
+        error={remove.isError ? t`Couldn’t remove the member. Try again.` : undefined}
       />
       {isMember && deck && (
         <LeaveDeckDialog

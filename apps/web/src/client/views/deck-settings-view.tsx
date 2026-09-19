@@ -2,10 +2,10 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Directions, SectionProgression } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { Archive, Check, Link2Off, LogOut, Share } from "lucide-react";
+import { Archive, Check, Link2Off, LogOut, MoreHorizontal, Share, UserMinus } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { Avatar } from "../components/avatar";
-import { Button } from "../components/button";
+import { Button, IconButton } from "../components/button";
 import { CopyField } from "../components/copy-field";
 import {
   type DirectionExample,
@@ -19,11 +19,17 @@ import { RadioCard } from "../components/radio-card";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
 import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Textarea } from "../components/ui/textarea";
-import type { DeckSummary } from "../lib/api";
+import type { DeckSummary, Member } from "../lib/api";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
 
 /** What the screen can change. The same shape the deck endpoint takes. */
@@ -49,9 +55,20 @@ export interface DeckSettingsProps {
   onLeave?: (() => void) | undefined;
   /** The owner's section controls. Absent for a member, who cannot change them. */
   sections?: SectionManagerProps | undefined;
+  /** The owner's member list. Absent for a member, who never sees who else joined. ADR 0011. */
+  members?: MembersProps | undefined;
   /** The owner's join-link controls. Absent for a member, who cannot share the deck. */
   sharing?: SharingProps | undefined;
   static?: StaticNav;
+}
+
+export interface MembersProps {
+  /** Undefined while loading. Empty when nobody has joined. */
+  members: Member[] | undefined;
+  onRemove: (member: Member) => void;
+  /** The member the removal is running for, so only their row shows it. */
+  removing?: string | undefined;
+  error?: string | undefined;
 }
 
 export interface SharingProps {
@@ -83,6 +100,7 @@ export function DeckSettingsView({
   onLeave,
   sections,
   sharing,
+  members,
   static: st,
 }: DeckSettingsProps) {
   const { t } = useLingui();
@@ -238,6 +256,8 @@ export function DeckSettingsView({
             </SettingsGroup>
           )}
 
+          {members && <MembersGroup {...members} />}
+
           {sharing && <SharingGroup {...sharing} />}
 
           <SettingsGroup title={t`Archive`}>
@@ -346,6 +366,88 @@ function DeckAbout({
         </div>
       </SettingsGroup>
     </>
+  );
+}
+
+/**
+ * Who studies the deck, for the owner alone. It says when each person joined and nothing about
+ * what they have reviewed: the group shares the material, each person owns their learning.
+ * ADR 0011.
+ */
+function MembersGroup({ members, onRemove, removing, error }: MembersProps) {
+  const { t } = useLingui();
+  return (
+    <SettingsGroup
+      title={t`Members`}
+      description={t`People who joined this deck. You see when they joined, never what they have studied.`}
+    >
+      {error ? (
+        <p className="text-sm text-danger" role="alert">
+          {error}
+        </p>
+      ) : members === undefined ? (
+        <div className="grid gap-2">
+          <Skeleton className="h-12" />
+          <Skeleton className="h-12" />
+        </div>
+      ) : members.length === 0 ? (
+        <p className="text-sm text-muted">
+          <Trans>Nobody has joined yet. Share the join link to bring someone in.</Trans>
+        </p>
+      ) : (
+        <ul aria-label={t`Members`} className="edge overflow-hidden rounded-lg bg-plate">
+          {members.map((member) => (
+            <MemberRow
+              key={member.userId}
+              member={member}
+              removing={removing === member.userId}
+              onRemove={() => onRemove(member)}
+            />
+          ))}
+        </ul>
+      )}
+    </SettingsGroup>
+  );
+}
+
+function MemberRow({
+  member,
+  removing,
+  onRemove,
+}: {
+  member: Member;
+  removing: boolean;
+  onRemove: () => void;
+}) {
+  const { t, i18n } = useLingui();
+  const joined = i18n.date(member.joinedAt, { day: "numeric", month: "short" });
+  return (
+    <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
+      <Avatar name={member.name} size={36} />
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-base font-medium text-text">{member.name}</p>
+        <p className="text-sm text-muted tabular-nums">
+          <Trans>joined {joined}</Trans>
+        </p>
+      </div>
+      {/* One quiet trigger per row: the only action takes something away, and a red button on
+          every line drowns the names, which are what the owner came to read. */}
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <IconButton label={t`Options for ${member.name}`} size="sm" aria-disabled={removing}>
+              <MoreHorizontal />
+            </IconButton>
+          }
+        />
+        <DropdownMenuContent aria-label={t`Options for ${member.name}`} align="end">
+          <DropdownMenuItem variant="destructive" onClick={onRemove}>
+            <UserMinus />
+            <Trans>Remove from deck</Trans>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </li>
   );
 }
 

@@ -156,11 +156,12 @@ export function ExploreDeckView({
     if (arrived) open.current?.focus({ preventScroll: true });
   }, [arrived]);
 
+  // Kept on a desktop too: the rail marks Explore, but a deck page has no other way back.
   const back = { label: t`Explore`, to: "/explore" };
 
   if (missing || failed) {
     return (
-      <Screen back={back} ownTitle>
+      <Screen back={back} backOnDesktop ownTitle>
         <ErrorState
           title={
             missing ? (
@@ -190,7 +191,7 @@ export function ExploreDeckView({
 
   if (!data) {
     return (
-      <Screen title={undefined} back={back}>
+      <Screen title={undefined} back={back} backOnDesktop>
         <Skeleton className="h-12 w-52 rounded-md" />
       </Screen>
     );
@@ -298,7 +299,7 @@ export function ExploreDeckView({
   );
 
   return (
-    <Screen back={back} ownTitle cover={cover}>
+    <Screen back={back} backOnDesktop ownTitle cover={cover}>
       <div className="@3xl/shell:-mt-1">
         {sections.length > 0 && (
           <section aria-labelledby="deck-path" className="pb-9">

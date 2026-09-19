@@ -47,7 +47,7 @@ test("a forgotten card comes back in the same review", async ({ page }, testInfo
   await startAsTestLearner(page, testInfo, "review-returns");
   await addDeck(page, "Returns", 10);
   await page.goto("/review");
-  await expect(page.getByText(/^0 of \d+$/)).toBeVisible();
+  await expect(page.getByText("0 of 10", { exact: true })).toBeVisible();
 
   const forgotten = await currentCard(page);
   await test.step("forget a card", async () => {
@@ -76,7 +76,7 @@ test("grades that could not be sent still decide the next card after a reload", 
   await startAsTestLearner(page, testInfo, "review-queued");
   await addDeck(page, "Queued", 10);
   await page.goto("/review");
-  await expect(page.getByText(/^0 of \d+$/)).toBeVisible();
+  await expect(page.getByText("0 of 10", { exact: true })).toBeVisible();
 
   // The connection drops for grades only, so the page itself can still reload.
   await page.route("**/api/review/grade", (route) => route.abort("internetdisconnected"));
@@ -113,7 +113,7 @@ test("offline, grading still works, running out claims nothing, and it all syncs
   await startAsTestLearner(page, testInfo, "review-offline");
   await addDeck(page, "Offline", 3);
   await page.goto("/review");
-  await expect(page.getByText(/^0 of \d+$/)).toBeVisible();
+  await expect(page.getByText("0 of 3", { exact: true })).toBeVisible();
 
   await context.setOffline(true);
   await test.step("grade every card with the browser offline", async () => {

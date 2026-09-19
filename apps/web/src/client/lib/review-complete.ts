@@ -49,6 +49,28 @@ export function streakWith(summary: StreakOut, attempts: number, counts: boolean
   };
 }
 
+/**
+ * The streak as it stood earlier today, from a summary that may count today already: the run and
+ * today's light are taken back when today was not satisfied then, so the end can show them turn.
+ */
+export function streakAsOf(
+  summary: StreakOut,
+  attempts: number,
+  satisfiedThen: boolean,
+): StreakOut {
+  const now = streakWith(summary, attempts, false);
+  if (satisfiedThen || !satisfied(summary.today.outcome)) return now;
+  const outcome = "open";
+  return {
+    ...now,
+    current: Math.max(0, now.current - 1),
+    today: { ...now.today, outcome },
+    days: now.days.map((d) =>
+      d.date === now.today.date ? { ...d, satisfied: false, outcome } : d,
+    ),
+  };
+}
+
 /** The cards Review forgotten walks: each mode whose latest grade today is Forgot, once. */
 export function forgottenRound(data: DrawData, state: DrawState, deckId?: string): Drawn[] {
   return roundOrder(drawCards(data), state.log, state.day, { deckId, round: "forgotten" });

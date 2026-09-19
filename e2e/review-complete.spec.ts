@@ -209,19 +209,23 @@ test("a review left open past midnight gives way to the new day's goal", async (
   await page.goto("/review");
 
   // After the jump past midnight a rolled count would never leave, and keyboard grades do not roll it.
-  await gradeWithKey(page, "3", "1 of 2");
-  await gradeWithKey(page, "3", "2 of 2");
-  await expect(heading(page, "Daily goal reached")).toBeVisible();
-  await page.keyboard.press("Tab");
-  await page.keyboard.press("Enter");
-  await gradeWithKey(page, "3", "1 of 12");
+  await test.step("the first day reaches its goal and continues", async () => {
+    await gradeWithKey(page, "3", "1 of 2");
+    await gradeWithKey(page, "3", "2 of 2");
+    await expect(heading(page, "Daily goal reached")).toBeVisible();
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Enter");
+    await gradeWithKey(page, "3", "1 of 12");
+  });
 
-  await page.clock.fastForward("24:00:00");
-  await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
-  await gradeWithKey(page, "3", "1 of 2");
-  await gradeWithKey(page, "3", "2 of 2");
-  await expect(heading(page, "Daily goal reached")).toBeVisible();
-  await expect(page.getByText(/^2\s*reviews today$/)).toBeVisible();
+  await test.step("past midnight the new day's goal review takes over", async () => {
+    await page.clock.fastForward("24:00:00");
+    await expect(page.getByText("0 of 2", { exact: true })).toBeVisible();
+    await gradeWithKey(page, "3", "1 of 2");
+    await gradeWithKey(page, "3", "2 of 2");
+    await expect(heading(page, "Daily goal reached")).toBeVisible();
+    await expect(page.getByText(/^2\s*reviews today$/)).toBeVisible();
+  });
 });
 
 /** Grade the card on screen by keyboard and wait for the header to read `after`. */

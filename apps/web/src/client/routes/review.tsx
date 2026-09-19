@@ -36,6 +36,7 @@ import {
   forgottenRound,
   type Offer,
   reviewEnd,
+  streakAsOf,
   streakWith,
 } from "../lib/review-complete";
 import { drawState, reviewItem, stateBefore } from "../lib/review-draw";
@@ -84,7 +85,7 @@ type Leg = { date: string; from: number } & (
 );
 
 /** Where the last end screen left the day, or where it stood when the page opened. */
-type Mark = { attempts: number; satisfied: boolean; graded: number };
+type Mark = { attempts: number; satisfied: boolean };
 
 const gradedKey = (item: Pick<QueueItem, "card" | "mode">) =>
   drawKey(item.card.id, modeKey(item.mode));
@@ -191,7 +192,6 @@ function Review() {
         attempts >= data.goal ||
         (today?.date === state.day.date &&
           (today.outcome === "goal_met" || today.outcome === "exhausted")),
-      graded: done,
     });
     setLegCards(NO_LEG_CARDS);
     setPaused(false);
@@ -199,7 +199,7 @@ function Review() {
     if (round && roundItems) setLeg({ ...base, kind: "today", size: roundItems.length });
     else
       setLeg({ ...base, kind: "draw", until: !scoped && attempts < data.goal ? data.goal : null });
-  }, [round, roundItems, leg, data, state, streakSettled, today, scoped, done]);
+  }, [round, roundItems, leg, data, state, streakSettled, today, scoped]);
 
   const drawLeg = leg?.kind === "draw" ? leg : null;
   const until = drawLeg?.until ?? null;
@@ -301,15 +301,20 @@ function Review() {
   );
   // An empty draw waits for a fetch begun after the last grade, so the heading never changes once shown.
   const checking =
-    stopped && !paused && left === 0 && !confirmed && !(unreachable && !draw.isFetching);
+    stopped &&
+    !paused &&
+    (left === 0 || (!!drawLeg && !atStop)) &&
+    !confirmed &&
+    !(unreachable && !draw.isFetching);
   useEffect(() => {
     if (checking && !unreachable && !draw.isFetching) void draw.refetch();
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
   // The end waits for the last grades to land, so a refusal never takes back an end already shown.
   const landing = sending > 0 && !unreachable;
   // A scoped end names its deck or series and weighs the decks outside it, so it waits for them.
+  // The persisted list can predate this visit, so it waits for this mount's fetch like the draw.
   const decksLoading =
-    (scoped && !decks.data && decks.fetchStatus === "fetching") ||
+    (scoped && !decks.isFetchedAfterMount && decks.fetchStatus === "fetching") ||
     (!!series && !seriesList.data && seriesList.fetchStatus === "fetching");
   const result = useMemo(
     () =>
@@ -367,17 +372,18 @@ function Review() {
         : streak.data,
     [streak.data, attempts, counts],
   );
-  // Frozen once the draw runs dry, before the grade's streak refetch can fill the light early.
+  // The week as the last end screen left it, which the streak refetch after each grade has already moved on.
   const markFrom = mark?.attempts;
+  const markSatisfied = !!mark?.satisfied;
   const before = useMemo(
     () => ({
       week:
         streak.data && markFrom !== undefined
-          ? streakWith(streak.data, markFrom, false)
+          ? streakAsOf(streak.data, markFrom, markSatisfied)
           : streak.data,
       lantern: lanternFor(streak.data),
     }),
-    [streak.data, markFrom],
+    [streak.data, markFrom, markSatisfied],
   );
   const [held, setHeld] = useState(before);
   const frozen = stopped || (exhausted && !!held.week);
@@ -389,9 +395,10 @@ function Review() {
   const moveOn = (attempts: number) => {
     // The pressed button fades out for a moment, and while it holds focus Space would not reach the card.
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
-    setMark({ attempts, satisfied: !!mark?.satisfied || !!end?.satisfied, graded: done });
+    const satisfied = !!mark?.satisfied || !!end?.satisfied;
+    setMark({ attempts, satisfied });
     setHeld({
-      week: streak.data && streakWith(streak.data, attempts, false),
+      week: streak.data && streakAsOf(streak.data, attempts, satisfied),
       lantern: lanternFor(streak.data),
     });
     setPaused(false);
@@ -532,11 +539,11 @@ function Review() {
     [revealed, current, data, state, leg, drawLeg, invalidateReviewData, qc, t],
   );
 
-  // Leaving mid-stretch ends on the success screen, unless nothing was graded since the last one.
+  // Leaving mid-stretch ends on the success screen, unless nothing was added since the last one.
   const leave = useCallback(() => {
-    if (current && mark && done > mark.graded) setPaused(true);
+    if (current && mark && attempts !== undefined && attempts > mark.attempts) setPaused(true);
     else void navigate({ to: "/today" });
-  }, [current, mark, done, navigate]);
+  }, [current, mark, attempts, navigate]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

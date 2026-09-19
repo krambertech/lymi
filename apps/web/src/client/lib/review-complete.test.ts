@@ -9,6 +9,7 @@ import {
   emberCount,
   forgottenRound,
   reviewEnd,
+  streakAsOf,
   streakWith,
 } from "./review-complete";
 import { drawState, type LocalGrade } from "./review-draw";
@@ -119,6 +120,27 @@ describe("the streak once today counts", () => {
     expect(after.days).toEqual([
       { date: "2026-09-13", attempts: 2, goal: 5, satisfied: true, outcome: "exhausted" },
     ]);
+  });
+});
+
+describe("the streak as of the last end screen", () => {
+  const counted = summary({
+    outcome: "goal_met",
+    current: 4,
+    longest: 4,
+    days: [{ date: "2026-09-13", attempts: 5, goal: 5, satisfied: true, outcome: "goal_met" }],
+  });
+
+  it("takes today back out when the refetch counts it already, so the end can show it turn", () => {
+    const then = streakAsOf(counted, 3, false);
+    expect(then.current).toBe(3);
+    expect(then.today).toMatchObject({ attempts: 3, outcome: "open" });
+    expect(then.days.at(-1)).toMatchObject({ attempts: 3, satisfied: false, outcome: "open" });
+  });
+
+  it("keeps today when it already counted at the last screen", () => {
+    expect(streakAsOf(counted, 5, true).current).toBe(4);
+    expect(streakAsOf(summary(), 2, false).current).toBe(3);
   });
 });
 

@@ -303,6 +303,31 @@ async function simulateReviews(
   await runBatched(db, statements);
 }
 
+const ENRICHED_SOURCES = {
+  meaning: "meaningSource",
+  example: "exampleSource",
+  pronunciation: "pronunciationSource",
+} as const;
+
+export type EnrichedField = keyof typeof ENRICHED_SOURCES;
+
+/**
+ * Marks fields of one card as written by the enrichment, which is the only writer of "ai" and
+ * needs a vendor key, so a screen can show the AI badge without one.
+ */
+export async function markEnriched(
+  { db, userId }: ServiceContext,
+  cardId: string,
+  fields: readonly EnrichedField[],
+): Promise<boolean> {
+  const rows = await db
+    .update(schema.cards)
+    .set(Object.fromEntries(fields.map((field) => [ENRICHED_SOURCES[field], "ai"])))
+    .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, userId)))
+    .returning({ id: schema.cards.id });
+  return rows.length > 0;
+}
+
 /**
  * Make exactly `count` cards due now, or every card. Cards with the most history come due
  * first, so the queue shows real intervals rather than a row of new cards. Everything else

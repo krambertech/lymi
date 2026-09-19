@@ -9,7 +9,7 @@ import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "
 import { devToolsEnabled } from "../env";
 import { body, describe, query } from "../http";
 import type { AppEnv } from "../index";
-import { devCounts, resetAccount, seedPersona, setDue } from "../services/dev";
+import { devCounts, markEnriched, resetAccount, seedPersona, setDue } from "../services/dev";
 import { latestLocalEmail } from "../services/email";
 import { getSettings } from "../services/settings";
 
@@ -179,6 +179,20 @@ dev.post("/due", describe({ hide: true, open: true }), body(DueBody, "due"), asy
   const due = await setDue(ctx, c.req.valid("json").count);
   return c.json({ due, counts: await devCounts(ctx) });
 });
+
+const EnrichedBody = z.object({
+  fields: z.array(z.enum(["meaning", "example", "pronunciation"])).min(1),
+});
+
+dev.post(
+  "/cards/:id/enriched",
+  describe({ hide: true, open: true }),
+  body(EnrichedBody, "enriched"),
+  async (c) => {
+    const marked = await markEnriched(ctxOf(c), c.req.param("id"), c.req.valid("json").fields);
+    return marked ? c.json({ ok: true }) : c.json({ error: "Card not found" }, 404);
+  },
+);
 
 /**
  * Sign the persona's account in through Better Auth's own email flow, creating it on first

@@ -26,10 +26,15 @@ test("a word opens, edits, moves and archives from its deck", async ({ page }, t
   let cardId = "";
   await test.step("add a word whose meaning the AI wrote", async () => {
     const res = await page.request.post("/api/cards", {
-      data: { deckId: first, term, meaning: "to hurry", meaningSource: "ai", language: "it" },
+      data: { deckId: first, term, meaning: "to hurry", language: "it" },
     });
     expect(res.ok()).toBeTruthy();
     cardId = ((await res.json()) as { card: { id: string } }).card.id;
+    // Only the enrichment writes "ai", and it needs a vendor key, so the dev route stands in.
+    const enriched = await page.request.post(`/api/dev/cards/${cardId}/enriched`, {
+      data: { fields: ["meaning"] },
+    });
+    expect(enriched.ok()).toBeTruthy();
   });
 
   await test.step("open it from the list", async () => {

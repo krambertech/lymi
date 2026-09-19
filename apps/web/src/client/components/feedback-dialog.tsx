@@ -71,7 +71,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
                 <Check className="size-4" />
               </span>
               <p className="text-base text-text-2 text-pretty">
-                <Trans>Thank you. A reply comes to your email.</Trans>
+                <Trans>Thank you. Replies come to your email.</Trans>
               </p>
             </div>
             <DialogFooter>
@@ -169,8 +169,8 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
               </Field>
               <p className="text-sm text-muted text-pretty">
                 <Trans>
-                  The screen you are on, the app version, your browser and your app language go with
-                  it.
+                  Lymi also gets the screen you are on, the app version, your browser and your app
+                  language.
                 </Trans>
               </p>
               {send.isError && (
@@ -180,17 +180,16 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
                 >
                   <span className="flex items-center gap-2 font-medium text-danger">
                     <CircleAlert className="size-4 shrink-0" aria-hidden="true" />
-                    {overDailyLimit ? t`Couldn’t send this one` : t`Couldn’t send your feedback`}
+                    {t`Couldn’t send your feedback`}
                   </span>
                   <p className="text-pretty">
                     {overDailyLimit ? (
                       <Trans>
-                        Lymi takes {FEEDBACK_DAILY_LIMIT} messages a day from one account. Try again
-                        tomorrow.
+                        You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow.
                       </Trans>
                     ) : (
                       <Trans>
-                        Your message is kept, so try again, or write to{" "}
+                        Your message is still here. Try again, or write to{" "}
                         <a className="font-medium underline" href="mailto:hello@lymi.app">
                           hello@lymi.app
                         </a>

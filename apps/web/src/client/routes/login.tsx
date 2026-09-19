@@ -196,7 +196,7 @@ function Login() {
     return {
       title: again ? <Trans>Sent again</Trans> : <Trans>Check your inbox</Trans>,
       body: needsConfirming ? (
-        <Trans>Check {address}. If it still needs confirming, a link is on the way.</Trans>
+        <Trans>If {address} isn’t confirmed yet, a confirmation link is on the way.</Trans>
       ) : (
         <Trans>Check {address}. A message is on the way with the next step.</Trans>
       ),
@@ -289,7 +289,7 @@ function Login() {
       title: <Trans>Check your inbox</Trans>,
       body: (
         <Trans>
-          Check {address}. If it has a Lymi password, a link is on the way. It works for one hour.
+          If {address} has a Lymi password, a reset link is on the way. It works for one hour.
         </Trans>
       ),
       actions: (

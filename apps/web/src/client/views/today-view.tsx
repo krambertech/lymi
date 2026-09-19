@@ -281,7 +281,7 @@ function DueHeading({
         </h2>
         <p className="text-md text-text-2">
           {noDecks ? (
-            <Trans>Make one for each course or topic. Every card goes in a deck.</Trans>
+            <Trans>Make one for each course or topic.</Trans>
           ) : (
             <Trans>Add cards from your last lesson, then review them here.</Trans>
           )}
@@ -290,7 +290,7 @@ function DueHeading({
     );
   }
   if (due === 0) {
-    // Not "Nothing left today": a round below can still have cards to review.
+    // Not "You’re done for today": a round below can still have cards to review.
     return (
       <h2 className="text-2xl font-medium leading-tight">
         <Trans>Nothing due</Trans>
@@ -334,7 +334,7 @@ function Rounds({
       round: "forgotten" as const,
       mark: "forgot" as const,
       count: rounds.forgotten,
-      label: t`Forgot today`,
+      label: t`Forgotten today`,
       detail: t`Graded Forgot today`,
       empty: t`Nothing forgotten today`,
       action: t`Review forgotten`,
@@ -345,17 +345,17 @@ function Rounds({
       count: rounds.new,
       label: t`New cards`,
       detail: t`Not reviewed yet`,
-      empty: t`Add some from your next lesson`,
+      empty: t`Add cards from your next lesson`,
       action: t`Review new`,
     },
     {
       round: "slipping" as const,
       mark: undefined,
       count: rounds.slipping,
-      label: t`Keeps slipping`,
+      label: t`Often forgotten`,
       detail: t`Forgotten ${SLIPPING_LAPSES} or more times`,
-      empty: t`No card keeps slipping`,
-      action: t`Review slipping`,
+      empty: t`No cards you keep forgetting`,
+      action: t`Review often forgotten`,
     },
   ];
   const tile =
@@ -387,7 +387,7 @@ function Rounds({
   return (
     <section aria-labelledby="today-more" className="grid gap-2.5">
       <h2 id="today-more" className="flex min-h-8 items-center px-1 text-lg font-medium">
-        <Trans>More to review</Trans>
+        <Trans>Also on your list</Trans>
       </h2>
       <ul className="grid gap-3 @3xl:grid-cols-3 @3xl:gap-4">
         {tiles.map((item) => (

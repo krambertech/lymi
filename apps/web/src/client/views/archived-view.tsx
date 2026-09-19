@@ -46,7 +46,7 @@ export function ArchivedView({
     <Page width="md">
       <PageHeader
         title={t`Archived`}
-        sub={t`Decks and cards you archived. Restore puts them back.`}
+        sub={t`Restore brings an archived deck or card back to Library.`}
       />
       {error && loading ? (
         <ErrorState title={t`Couldn’t load Archived`} onRetry={onRetry} retrying={retrying} />
@@ -60,7 +60,7 @@ export function ArchivedView({
         <EmptySection
           icon={<Archive />}
           title={t`Nothing archived`}
-          body={t`Archiving hides a card or deck. Nothing is deleted, and Restore puts it back.`}
+          body={t`Archiving hides a card or deck without deleting it.`}
         />
       ) : (
         <div className="grid gap-8">

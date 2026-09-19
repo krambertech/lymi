@@ -27,7 +27,7 @@ test("a learner can send feedback from the learner menu", async ({ page }, testI
   });
 
   const sent = page.getByRole("dialog", { name: "Feedback sent" });
-  await expect(sent.getByText("A reply comes to your email.", { exact: false })).toBeVisible();
+  await expect(sent.getByText("Replies come to your email.", { exact: false })).toBeVisible();
 
   await sent.getByRole("button", { name: "Close", exact: true }).click();
   await expect(sent).toBeHidden();

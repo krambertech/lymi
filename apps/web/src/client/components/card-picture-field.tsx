@@ -234,9 +234,9 @@ export function CardPictureField({
     );
   const caption =
     value.kind === "file"
-      ? t`${formatSize(value.file.size, i18n.locale)} · sent with the card`
+      ? t`${formatSize(value.file.size, i18n.locale)} · uploads when you save`
       : value.kind === "link"
-        ? t`Copied with the card`
+        ? t`Copied when you save`
         : null;
 
   return (

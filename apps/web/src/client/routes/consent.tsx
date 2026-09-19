@@ -84,7 +84,7 @@ function Consent() {
       setError(
         !res.error.status || res.error.status >= 500
           ? unreachable
-          : t`Something went wrong. Try again from the app.`,
+          : t`Couldn’t save your choice. Try again from the app.`,
       );
       return;
     }

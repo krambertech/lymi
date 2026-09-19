@@ -144,7 +144,7 @@ export function AccountSection({
       return t`Your photo was changed somewhere else. Check it, then try again.`;
     }
     if (error instanceof ApiError && error.status === 400) {
-      return t`That image couldn’t be used. Choose a still JPEG, PNG or WebP image.`;
+      return t`Couldn’t use that image. Choose a still JPEG, PNG or WebP image.`;
     }
     if (error instanceof ApiError && error.status === 0) {
       return t`Couldn’t reach Lymi. Check your connection and try again.`;
@@ -241,7 +241,7 @@ export function AccountSection({
       case "too_small":
         return t`That image is too small. Choose one at least 16 pixels wide.`;
       default:
-        return t`That file couldn’t be opened. Choose a JPEG, PNG or WebP image.`;
+        return t`Couldn’t open that file. Choose a JPEG, PNG or WebP image.`;
     }
   };
 

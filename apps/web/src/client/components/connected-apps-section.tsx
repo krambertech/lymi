@@ -29,7 +29,7 @@ export function ConnectedAppsSection() {
   return (
     <SettingsGroup
       title={t`Connected apps`}
-      description={t`Assistants that signed in to Lymi, such as Claude or ChatGPT.`}
+      description={t`AI apps connected to your Lymi account (Claude, ChatGPT, …).`}
     >
       {apps.isPending && <Skeleton className="h-14 w-full" />}
 
@@ -37,7 +37,7 @@ export function ConnectedAppsSection() {
         <EmptySection
           icon={<Plug />}
           title={t`No apps connected`}
-          body={t`Add Lymi as an MCP server in Claude or ChatGPT and sign in when it asks.`}
+          body={t`Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked.`}
           action={
             <a href={publicSiteUrl("/docs/mcp")} className={buttonClass("secondary")}>
               <Trans>How to connect</Trans>
@@ -60,8 +60,8 @@ export function ConnectedAppsSection() {
           </ul>
           <p className="max-w-[60ch] text-sm text-muted">
             <Trans>
-              Read lists decks and cards. Read and write also adds, edits and archives them. Access
-              is chosen when the app signs in; disconnect and sign in again to change it.
+              Read lists decks and cards. Read and write also adds, edits and archives them. You
+              choose access when the app signs in. To change it, disconnect and sign in again.
             </Trans>
           </p>
         </>

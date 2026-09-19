@@ -46,7 +46,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Round**: A review of a chosen set beside the day's draw: another round of up to 10 eligible cards, or one of Today's groups, new cards, forgotten today or slipping. Each card comes once, and every grade counts like any review. _Avoid_: Session, quiz, practice
 
-**Slipping card**: A card forgotten at least 4 times in at least 6 reviews. Insights lists them; Today offers them as a round. _Avoid_: Leech (in copy), stuck card, hard card
+**Slipping card**: A card forgotten at least 4 times in at least 6 reviews. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
 
 **Review day**: One learner-local date measured against its goal. It is open until satisfied, then goal met or exhausted; a day Lymi confirms had nothing eligible is nothing due. The day boundary follows the review timezone. _Avoid_: Session, day (in the API)
 

@@ -208,7 +208,7 @@ export function useTodayStatus(summary: StreakSummary | undefined): string {
     case "goal_met":
       return t`Daily goal reached.`;
     case "exhausted":
-      return t`Nothing left today.`;
+      return t`You’re done for today.`;
     case "nothing_due":
       return t`Nothing due today, so your streak is safe.`;
     default: {
@@ -312,17 +312,14 @@ export function StreakPanel({
             )}
             {goalStatus === "error" && (
               <span className="text-danger">
-                <Trans>Not saved. Try again.</Trans>
+                <Trans>Couldn’t save. Try again.</Trans>
               </span>
             )}
           </p>
           {close}
         </div>
         <p className="text-sm text-text-2">
-          <Trans>
-            How many reviews keep your streak each day. Every grade counts, including Forgot and a
-            card you see again.
-          </Trans>
+          <Trans>How many reviews a day keep your streak. Every grade counts, even Forgot.</Trans>
         </p>
         <GoalPicker value={summary.goal} onChange={(n) => onGoalChange?.(n)} />
       </div>
@@ -333,7 +330,7 @@ export function StreakPanel({
     today.outcome === "goal_met"
       ? t`Daily goal reached.`
       : today.outcome === "exhausted"
-        ? t`Nothing left today.`
+        ? t`You’re done for today.`
         : today.outcome === "nothing_due"
           ? t`Nothing due today, so your streak is safe.`
           : current > 0

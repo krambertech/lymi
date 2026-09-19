@@ -92,7 +92,7 @@ export function ExportProgress({ item, onRetry }: { item: Export; onRetry: () =>
         </div>
         <p className="text-base text-text-2 text-pretty">
           <Trans>
-            Writing {fileName}. You can close this: the file waits in Activity for a day.
+            Writing {fileName}. You can close this. The file stays in Activity for a day.
           </Trans>
         </p>
       </div>
@@ -129,11 +129,9 @@ export function ExportProgress({ item, onRetry }: { item: Export; onRetry: () =>
     <div className="grid gap-3" role="alert">
       <p className="text-base text-text">
         {item.status === "expired" ? (
-          <Trans>
-            This file was deleted a day after it was written. Export again to get a new one.
-          </Trans>
+          <Trans>This file expired after a day. Export again to get a new one.</Trans>
         ) : item.failure === "too_large" ? (
-          <Trans>This is too much for one file. Export one deck at a time instead.</Trans>
+          <Trans>Couldn’t fit this in one file. Export one deck at a time instead.</Trans>
         ) : (
           <Trans>Couldn’t write the file. Try again.</Trans>
         )}
@@ -208,7 +206,7 @@ export function ExportSheet({
   };
   const current = exportId && (!writing || slow) ? item.data : undefined;
   const deckName = scope.kind === "deck" ? scope.deckName : "";
-  const title = scope.kind === "deck" ? t`Export ${deckName}` : t`Export your library`;
+  const title = scope.kind === "deck" ? t`Export ${deckName}` : t`Export library`;
 
   return (
     <Dialog open={open} onOpenChange={close}>
@@ -219,12 +217,12 @@ export function ExportSheet({
             <DialogDescription>
               {scope.kind === "deck" ? (
                 <Trans>
-                  Your own schedule and review history come with it. The deck stays as it is.
+                  Includes your schedule and review history. Exporting doesn’t change the deck.
                 </Trans>
               ) : scope.shared ? (
                 <Trans>
                   Every deck you own, archived ones included, with your schedule and review history.
-                  A deck someone else shared with you is not in the file.
+                  Decks shared with you aren’t included.
                 </Trans>
               ) : (
                 <Trans>

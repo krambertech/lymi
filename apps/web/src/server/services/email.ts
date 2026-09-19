@@ -198,7 +198,7 @@ function compose(
           i18n._(msg`Set a new password for your Lymi account:`),
           { link: required(params.url, kind) },
           i18n._(
-            msg`The link works for one hour. If you didn’t ask for a new password, ignore this email. Nothing has changed.`,
+            msg`The link works for one hour. If you didn’t ask for a new password, ignore this email. Your password hasn’t changed.`,
           ),
           signature,
         ],
@@ -211,11 +211,11 @@ function compose(
         blocks: [
           hello,
           i18n._(
-            msg`${it.ownerName} is studying ${it.deckName} on Lymi and wants you in it. It holds ${plural(it.cards, { one: "# card", other: "# cards" })}. You would review them on your own schedule, and ${it.ownerName} would not see how you are doing.`,
+            msg`${it.ownerName} invited you to study ${it.deckName} on Lymi. It has ${plural(it.cards, { one: "# card", other: "# cards" })}. You review them on your own schedule, and ${it.ownerName} doesn’t see your progress.`,
           ),
           { link: required(params.url, kind) },
           i18n._(
-            msg`This invitation is for this address only. If you were not expecting it, ignore this email.`,
+            msg`This invitation only works for this email address. If you weren’t expecting it, ignore this email.`,
           ),
           signature,
         ],
@@ -229,7 +229,7 @@ function compose(
           i18n._(
             msg`Someone tried to create a Lymi account with this address. You already have one, so nothing changed.`,
           ),
-          i18n._(msg`Sign in here. You can ask for a new password on that page:`),
+          i18n._(msg`Sign in here, or reset your password from the same page:`),
           { link: required(params.url, kind) },
           signature,
         ],

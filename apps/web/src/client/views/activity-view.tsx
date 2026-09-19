@@ -62,7 +62,7 @@ function StatusChip({ item }: { item: Import }) {
     case "inspecting":
       return <Chip>{t`Reading`}</Chip>;
     case "ready":
-      return <Chip>{t`Waiting for you`}</Chip>;
+      return <Chip>{t`Ready to import`}</Chip>;
     case "importing":
       return <Chip>{t`Importing`}</Chip>;
     case "failed":
@@ -526,8 +526,8 @@ export function ActivityView({
         // nothing landed unseen. It says what the screen is for and asks for nothing.
         <EmptySection
           icon={<ActivityIcon />}
-          title={t`Nothing yet`}
-          body={t`Apps, the AI, imports, exports and the people in your shared decks all show up here.`}
+          title={t`No activity yet`}
+          body={t`Changes from AI apps, imports, AI enrichment and shared decks show up here.`}
         />
       ) : (
         <div className="grid gap-6">

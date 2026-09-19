@@ -159,8 +159,8 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run }:
                           : t`${day}: goal reached, ${reviews}`
                         : entry?.outcome === "exhausted"
                           ? isToday
-                            ? t`Today, ${day}: nothing left, ${reviews}`
-                            : t`${day}: nothing left, ${reviews}`
+                            ? t`Today, ${day}: all due cards reviewed, ${reviews}`
+                            : t`${day}: all due cards reviewed, ${reviews}`
                           : isToday
                             ? t`Today, ${day}: ${reviews}`
                             : on

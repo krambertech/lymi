@@ -71,7 +71,9 @@ test.describe("deck and card creation", () => {
     await page.keyboard.press("n");
     const addCard = sheet(page, "Add a card");
     await expect(addCard).toBeVisible();
-    await expect(addCard.getByText("Create a deck first.", { exact: false })).toBeVisible();
+    await expect(
+      addCard.getByText("Create a deck to add this card to.", { exact: false }),
+    ).toBeVisible();
     await addCard.getByRole("button", { name: "New deck", exact: true }).click();
 
     let dialog = sheet(page, "New deck");

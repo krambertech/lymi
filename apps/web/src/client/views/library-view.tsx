@@ -233,7 +233,7 @@ export function LibraryView({
     <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-lg border border-dashed border-edge-2 px-4 py-3">
       <p className="max-w-sm text-sm text-text-2">
         {onSetSeriesDecks ? (
-          <Trans>Drag decks here, or choose which decks this series holds.</Trans>
+          <Trans>Drag decks here to add them to this series.</Trans>
         ) : (
           <Trans>No decks in this series yet.</Trans>
         )}
@@ -294,7 +294,7 @@ export function LibraryView({
       {decks && decks.length === 0 && (
         <StartPanel
           title={<Trans>No decks yet</Trans>}
-          body={<Trans>Make one for each course or topic. Every card goes in a deck.</Trans>}
+          body={<Trans>Make one for each course or topic.</Trans>}
           action={
             <Button
               variant="primary"
@@ -322,10 +322,10 @@ export function LibraryView({
                 </span>
                 <span className="grid min-w-0 flex-1 gap-0.5">
                   <span className="text-md font-medium">
-                    <Trans>Import cards</Trans>
+                    <Trans>Import decks</Trans>
                   </span>
                   <span className="text-sm text-muted">
-                    <Trans>Bring your decks from Anki or Mochi with their review history.</Trans>
+                    <Trans>Decks from Anki or Mochi, with their review history.</Trans>
                   </span>
                 </span>
                 <Go />

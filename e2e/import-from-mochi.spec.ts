@@ -22,7 +22,7 @@ test("a learner imports a Mochi export and finds it in Activity", async ({ page 
       page.getByRole("heading", { name: "Import from Mochi", exact: true }),
     ).toBeVisible();
     await expect(
-      page.getByRole("link", { name: "Something went wrong? Read the guide", exact: true }),
+      page.getByRole("link", { name: "Stuck? Read the guide", exact: true }),
     ).toHaveAttribute("href", /\/docs\/import-from-mochi$/);
   });
 
@@ -35,7 +35,7 @@ test("a learner imports a Mochi export and finds it in Activity", async ({ page 
     });
     await expect(page.getByText("Cards keep the due dates they had in Mochi.")).toBeVisible();
     await expect(
-      page.getByText("1 card has no --- line, so it comes across with a term and no meaning."),
+      page.getByText("1 card has no --- line, so it’s imported with a term and no meaning."),
     ).toBeVisible();
   });
 
@@ -49,7 +49,7 @@ test("a learner imports a Mochi export and finds it in Activity", async ({ page 
     await expect(page.getByRole("heading", { name: "Imported 12 cards", exact: true })).toBeVisible(
       { timeout: 60_000 },
     );
-    await expect(page.getByText("12 past reviews came across.")).toBeVisible();
+    await expect(page.getByText("12 past reviews were imported.")).toBeVisible();
   });
 
   await test.step("the decks are in Library and the import is in Activity", async () => {

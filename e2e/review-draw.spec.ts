@@ -122,7 +122,7 @@ test("offline, grading still works, running out claims nothing, and it all syncs
     await expect(
       page.getByRole("heading", { name: "Couldn’t check for more cards" }),
     ).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Nothing left today" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeHidden();
   });
 
   await test.step("the queued grades reach the server once the connection returns", async () => {
@@ -135,7 +135,7 @@ test("offline, grading still works, running out claims nothing, and it all syncs
       )
       .toBe(3);
     // The paused check resumes with the connection and confirms the day.
-    await expect(page.getByRole("heading", { name: "Nothing left today" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
   });
 });
 

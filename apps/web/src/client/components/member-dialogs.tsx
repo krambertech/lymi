@@ -43,8 +43,7 @@ export function RemoveMemberDialog({
           <DialogTitle>{t`Remove ${name}?`}</DialogTitle>
           <DialogDescription>
             <Trans>
-              They lose this deck and the join link will not let them back. Their reviews stay, but
-              there is no way to add them again yet.
+              They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept.
             </Trans>
           </DialogDescription>
         </DialogHeader>
@@ -55,7 +54,7 @@ export function RemoveMemberDialog({
         )}
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Cancel</Trans>
+            <Trans>Keep member</Trans>
           </Button>
           <Button variant="danger" onClick={onRemove} loading={pending} aria-disabled={pending}>
             <Trans>Remove member</Trans>
@@ -137,10 +136,7 @@ export function CancelInvitationDialog({
         <DialogHeader>
           <DialogTitle>{t`Cancel the invitation to ${email}?`}</DialogTitle>
           <DialogDescription>
-            <Trans>
-              The link in the message they were sent stops working. You can invite them again
-              whenever you like.
-            </Trans>
+            <Trans>Their invitation link stops working. You can invite them again any time.</Trans>
           </DialogDescription>
         </DialogHeader>
         {error && (
@@ -201,12 +197,12 @@ export function InviteDialog({
     if (pending) return;
     const typed = email.trim();
     if (!typed) {
-      setRefused(t`Type the email address you want to invite.`);
+      setRefused(t`Enter an email address.`);
       return;
     }
     const parsed = InviteInput.shape.email.safeParse(typed);
     if (!parsed.success) {
-      setRefused(t`That does not look like an email address.`);
+      setRefused(t`Enter a full email address, like anna@example.com.`);
       return;
     }
     setRefused(undefined);
@@ -222,8 +218,8 @@ export function InviteDialog({
           <DialogTitle>{t`Invite by email`}</DialogTitle>
           <DialogDescription>
             <Trans>
-              They get a message from Lymi with a link only their address can use. They can study
-              the deck, never change it.
+              They get an email with a link only they can use. They can study the deck but not
+              change it.
             </Trans>
           </DialogDescription>
         </DialogHeader>

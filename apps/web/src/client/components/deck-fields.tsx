@@ -143,7 +143,7 @@ export function LanguageField({ value, onChange, label, description, error }: La
       </Combobox>
       {description !== null && (
         <FieldDescription>
-          {description ?? t`The language this deck’s cards are in. It fills in on every new card.`}
+          {description ?? t`New cards in this deck get this language.`}
         </FieldDescription>
       )}
       <FieldError>{error}</FieldError>
@@ -226,8 +226,7 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
       <p id={noteId} className="pt-1 text-sm text-muted">
         {total ? (
           <Trans>
-            Adding a way asks every card in the deck that way, starting now. Taking one away keeps
-            its progress; it just stops being asked.
+            Adding a way asks every card that way from now on. Removing one keeps its progress.
           </Trans>
         ) : (
           <Trans>You can change this later. It applies to every card in the deck.</Trans>
@@ -253,12 +252,12 @@ export function DirectionCompact({
   return (
     <div className="grid gap-1.5">
       <span className="text-sm font-medium text-text-2">
-        <Trans>How you are asked</Trans>
+        <Trans>How cards are asked</Trans>
       </span>
       <Segmented
         value={value}
         onChange={onChange}
-        label={t`How you are asked`}
+        label={t`How cards are asked`}
         options={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.short) }))}
       />
       <p className="text-sm text-muted">{current && i18n._(current.blurb)}</p>

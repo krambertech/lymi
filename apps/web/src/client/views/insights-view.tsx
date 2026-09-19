@@ -77,7 +77,7 @@ export function InsightsView({
     return (
       <Segmented
         size="sm"
-        label={t`How far back the recall figure looks`}
+        label={t`Recall period`}
         value={period}
         onChange={onPeriod}
         options={[
@@ -132,7 +132,7 @@ export function InsightsView({
         <StartPanel
           className="mb-3"
           title={<Trans>Insights start after your first review</Trans>}
-          body={<Trans>Add cards and review them, and these fill in.</Trans>}
+          body={<Trans>Add cards and review them to see your progress here.</Trans>}
           action={
             onAdd && (
               <Button variant="primary" onClick={onAdd} kbd="N" className="justify-self-start">
@@ -260,7 +260,7 @@ export function InsightsView({
           }
           note={
             recall.rate === null
-              ? t`Nothing has come back for a second look yet, so there is nothing honest to report.`
+              ? t`No recall data yet. Review more cards to see how you’re doing.`
               : t`${recall.passed} remembered, ${recall.failed} forgotten.`
           }
         />
@@ -272,13 +272,13 @@ export function InsightsView({
           figure={<RunStrip days={consistency.days} />}
           note={
             consistency.lit === 0
-              ? t`No reviews yet. Each block here will be a day.`
+              ? t`No reviews yet. Each day you review adds a block.`
               : consistency.longestRun > 1
                 ? t`${plural(consistency.longestRun, {
-                    one: "Longest run # day. Unbroken stretches join up.",
-                    other: "Longest run # days. Unbroken stretches join up.",
+                    one: "Longest stretch: # day in a row.",
+                    other: "Longest stretch: # days in a row.",
                   })}`
-                : t`Each block is a day. They join up when you keep going.`
+                : t`Each block is one day you reviewed.`
           }
         />
 
@@ -300,7 +300,7 @@ export function InsightsView({
              in an app that writes plain lines. */
           note={
             dueSoon === 0
-              ? t`Nothing comes back in the next seven days.`
+              ? t`Nothing due in the next seven days.`
               : busiestIsToday
                 ? t`${plural(busiest.count, {
                     one: "Today is the busiest day, with # card.",
@@ -334,7 +334,7 @@ export function InsightsView({
         <section className="edge mt-3 overflow-hidden rounded-xl bg-plate">
           <div className="flex items-baseline justify-between gap-3 px-5 pt-5 pb-3">
             <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
-              <Trans>Keeps slipping</Trans>
+              <Trans>Often forgotten</Trans>
             </h2>
             <span className="text-xs text-muted">
               <Trans>Forgotten {leeches.lapses}+ times</Trans>
@@ -371,8 +371,8 @@ export function InsightsView({
         <p className="mt-5 px-1 text-sm text-muted">
           <Plural
             value={graded}
-            one="Recall is drawn from # review, which is few enough that one bad evening moves it. It settles down after a few weeks."
-            other="Recall is drawn from # reviews, which is few enough that one bad evening moves it. It settles down after a few weeks."
+            one="Recall is based on only # review, so it can swing a lot for the first few weeks."
+            other="Recall is based on only # reviews, so it can swing a lot for the first few weeks."
           />
         </p>
       )}

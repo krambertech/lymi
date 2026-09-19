@@ -62,7 +62,7 @@ function Add() {
     if (err instanceof ApiError && err.status === 403) {
       return t`You cannot add this deck.`;
     }
-    return t`Could not add the deck. Check your connection and try again.`;
+    return t`Couldn’t add the deck. Check your connection and try again.`;
   };
 
   const hold = useMutation({

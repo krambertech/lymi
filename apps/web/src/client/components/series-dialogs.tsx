@@ -141,9 +141,9 @@ export function SeriesForm({
         <FieldLegend>{t`Decks`}</FieldLegend>
         <p className="text-sm text-text-2">
           {own.length === 0 ? (
-            <Trans>Decks you make can go in a series. Decks you joined stay on their own.</Trans>
+            <Trans>No decks of your own yet. Only decks you create can go in a series.</Trans>
           ) : (
-            <Trans>A series is reviewed together, and its decks show in this order.</Trans>
+            <Trans>Review these decks together, in this order.</Trans>
           )}
         </p>
         {own.length > 0 && (
@@ -255,12 +255,9 @@ export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSer
           <DialogTitle>{t`Delete “${seriesName}”?`}</DialogTitle>
           <DialogDescription>
             {count > 0 ? (
-              <Trans>
-                The series is gone for good. Its decks and cards stay, and you can group them again
-                in a new series.
-              </Trans>
+              <Trans>You can’t undo this. Its decks and cards aren’t deleted either way.</Trans>
             ) : (
-              <Trans>The series is gone for good. You can make a new one any time.</Trans>
+              <Trans>You can’t undo this.</Trans>
             )}
           </DialogDescription>
         </DialogHeader>
@@ -357,10 +354,7 @@ export function MoveToSeriesDialog({
         <DialogHeader>
           <DialogTitle>{t`Move to series`}</DialogTitle>
           <DialogDescription>
-            <Trans>
-              “{deckName}” is reviewed with the other decks in its series and shows with them in
-              Library.
-            </Trans>
+            <Trans>“{deckName}” is reviewed with the other decks in its series.</Trans>
           </DialogDescription>
         </DialogHeader>
         <ul className="edge overflow-hidden rounded-lg bg-plate">

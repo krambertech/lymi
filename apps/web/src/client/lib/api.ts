@@ -112,7 +112,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     // Status 0 is what the grade outbox reads as offline.
     throw new ApiError(0, unreachable());
   }
-  if (res.status === 401) throw new ApiError(401, t`Sign in required`);
+  if (res.status === 401) throw new ApiError(401, t`Sign in to continue.`);
   if (!res.ok) {
     const body = (await res.json().catch(() => null)) as { issues?: unknown } | null;
     throw new ApiError(res.status, failureMessage(res.status, body), body?.issues);

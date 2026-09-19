@@ -136,7 +136,7 @@ export function StreakPage() {
               ),
             },
             {
-              label: "Nothing left today",
+              label: "You’re done for today",
               note: "Every available review done below the goal. It counts, and the modal says why.",
               render: () => (
                 <div className="flex flex-wrap items-center gap-8">

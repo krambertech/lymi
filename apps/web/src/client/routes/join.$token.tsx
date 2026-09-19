@@ -55,7 +55,7 @@ function Join() {
 
   const describe = (err: unknown) => {
     if (err instanceof ApiError && err.status === 404) {
-      return t`This join link stopped working. Ask for a new one.`;
+      return t`This join link stopped working. Ask the owner for a new one.`;
     }
     if (err instanceof ApiError && err.status === 403) {
       const invited = refusalDetail(err, "invitedEmail");
@@ -63,7 +63,7 @@ function Join() {
         ? t`This invitation was sent to ${invited}. Sign in with that address to join.`
         : t`You cannot join this deck through this link.`;
     }
-    return t`Could not join. Check your connection and try again.`;
+    return t`Couldn’t join the deck. Check your connection and try again.`;
   };
 
   const hold = useMutation({

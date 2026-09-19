@@ -198,7 +198,7 @@ export function NotificationsSection() {
   return (
     <SettingsGroup
       title={t`Daily reminder`}
-      description={t`A notification on this device when cards are due.`}
+      description={t`Notify you on this device when cards are due.`}
     >
       {!reminderAvailable ? (
         <p className="text-base text-muted">
@@ -220,7 +220,7 @@ export function NotificationsSection() {
             <FieldContent className="gap-0.5">
               {/* Stretched over the row, so a tap on the bell or the sentence flips the switch too. */}
               <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
-                <Trans>Send a daily reminder</Trans>
+                <Trans>Daily reminder</Trans>
               </FieldLabel>
               <FieldDescription>
                 {needsInstall

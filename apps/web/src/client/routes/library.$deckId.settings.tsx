@@ -110,19 +110,19 @@ function DeckSettings() {
       case "owner":
         return t`This deck is already yours.`;
       case "member":
-        return t`They are already studying this deck.`;
+        return t`They’re already in this deck.`;
       case "removed":
-        return t`You removed them from this deck, and there is no way to add them again yet.`;
+        return t`You removed them from this deck, so you can’t invite them again.`;
       case "invited":
-        return t`They already have an invitation waiting.`;
+        return t`They already have a pending invitation.`;
       case "full":
         return plural(PENDING_INVITATION_LIMIT, {
-          one: "# person is waiting on an invitation. Cancel it, or wait for them to join.",
-          other: "# people are waiting on an invitation. Cancel one, or wait for someone to join.",
+          one: "You already have # pending invitation. Cancel it, or wait for them to join.",
+          other: "You already have # pending invitations. Cancel one, or wait for someone to join.",
         });
     }
     if (error instanceof ApiError && error.status === 429) {
-      return t`Too many invitations went out recently. Try again later.`;
+      return t`Couldn’t send the invitation. Too many went out recently, so try again later.`;
     }
     return errorMessage(error);
   };
@@ -170,11 +170,11 @@ function DeckSettings() {
     },
   });
   const sharingError = turnOn.isError
-    ? t`Could not turn on the join link. Try again.`
+    ? t`Couldn’t turn on the join link. Try again.`
     : turnOff.isError
-      ? t`Could not turn off the join link. Try again.`
+      ? t`Couldn’t turn off the join link. Try again.`
       : joinLink.isError
-        ? t`Could not load the join link.`
+        ? t`Couldn’t load the join link. Try again.`
         : undefined;
 
   return (

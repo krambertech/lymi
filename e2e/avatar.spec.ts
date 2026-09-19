@@ -56,8 +56,8 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
     "image/png",
     Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>'),
   );
-  await expect(page.getByRole("alert").filter({ hasText: "couldn’t be opened" })).toHaveText(
-    "That file couldn’t be opened. Choose a JPEG, PNG or WebP image.",
+  await expect(page.getByRole("alert").filter({ hasText: "Couldn’t open that file" })).toHaveText(
+    "Couldn’t open that file. Choose a JPEG, PNG or WebP image.",
   );
   await expect(page.getByRole("heading", { name: "Position your photo" })).toHaveCount(0);
 

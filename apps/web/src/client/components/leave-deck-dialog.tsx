@@ -35,8 +35,8 @@ export function LeaveDeckDialog({ open, onOpenChange, deckName, onLeave, leaving
           <DialogTitle>{t`Leave ${name}?`}</DialogTitle>
           <DialogDescription>
             <Trans>
-              The deck leaves Library and its cards stop coming up. Your reviews are kept, so
-              joining again picks up where you left off.
+              The deck leaves Library and its cards stop coming up in review. If you join again,
+              your reviews are still there.
             </Trans>
           </DialogDescription>
         </DialogHeader>

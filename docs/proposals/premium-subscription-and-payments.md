@@ -38,6 +38,7 @@ Explore a merchant-of-record provider before direct payment processing so intern
 
 - Which capability is valuable enough to introduce a paid plan?
 - What should remain free, and should free use include a small AI or audio allowance?
+- The sign-up screen says "Lymi is free to use". Which wording replaces it once a paid plan exists?
 - What price and billing interval feel fair after tax and transaction costs?
 - What happens during cancellation, payment failure, refund, or provider downtime?
 - Is a merchant of record worth its higher fee at Lymi's scale?

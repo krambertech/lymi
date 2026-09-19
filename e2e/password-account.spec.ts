@@ -64,7 +64,7 @@ test("a forgotten password is reset from the email, and the old one stops workin
   await page.goto("/login");
   await page.getByRole("button", { name: "Forgot your password?", exact: true }).click();
   await page.getByRole("textbox", { name: "Email", exact: true }).fill(email);
-  await page.getByRole("button", { name: "Send the link", exact: true }).click();
+  await page.getByRole("button", { name: "Send reset link", exact: true }).click();
   await expect(page.getByText("Check your inbox")).toBeVisible();
 
   await page.goto(await linkFrom(page, email, "reset-password"));

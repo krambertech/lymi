@@ -331,13 +331,13 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
               <p className="w-0 min-w-full text-sm text-muted">
                 {pictureOnly ? (
                   <Trans>
-                    No description yet. Picture review waits for one, so this card is asked without
-                    its picture.
+                    No description yet. Picture review needs one, so this card is asked without its
+                    picture.
                   </Trans>
                 ) : pictureReview ? (
                   <Trans>
-                    No description yet. Picture review waits for one, so this card is asked in its
-                    other modes.
+                    No description yet. Picture review needs one, so this card is asked in its other
+                    modes.
                   </Trans>
                 ) : (
                   <Trans>No description yet.</Trans>
@@ -348,11 +348,9 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
         ) : (
           <p className="text-sm text-muted">
             {pictureOnly ? (
-              <Trans>This card has no picture yet, so it is asked without one.</Trans>
+              <Trans>No picture yet, so this card is asked without one.</Trans>
             ) : (
-              <Trans>
-                Picture review is on, but this card has no picture. It is asked in its other modes.
-              </Trans>
+              <Trans>No picture yet, so this card is asked in its other modes.</Trans>
             )}
           </p>
         )}
@@ -701,7 +699,7 @@ export function WordView({
         </h2>
         {started.length === 0 ? (
           <p className="text-sm text-text-2">
-            <Trans>Not asked yet. It joins the next review.</Trans>
+            <Trans>Not reviewed yet. It comes up in your next review.</Trans>
           </p>
         ) : (
           <>
@@ -752,8 +750,8 @@ export function WordView({
                               <span className="block text-muted">
                                 <Plural
                                   value={fsrs.lapses}
-                                  one="Forgot once"
-                                  other="Forgot # times"
+                                  one="Forgotten once"
+                                  other="Forgotten # times"
                                 />
                               </span>
                             )}
@@ -811,7 +809,7 @@ export function WordView({
             ))}
             {history.length === 0 && (
               <li className="text-sm text-muted">
-                <Trans>Nothing yet.</Trans>
+                <Trans>No history yet.</Trans>
               </li>
             )}
           </ol>

@@ -432,7 +432,7 @@ export const CARD_LIMITS = {
 } as const;
 
 export const CardInput = z.object({
-  deckId: z.string().min(1, "Choose a deck for it to go in."),
+  deckId: z.string().min(1, "Choose a deck."),
   term: z
     .string()
     .trim()

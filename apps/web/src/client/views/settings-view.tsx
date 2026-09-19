@@ -78,7 +78,7 @@ export function SettingsView({
 
       <SettingsGroup
         title={t`Language`}
-        description={t`For the interface, and for the meanings the AI writes.`}
+        description={t`App language, and the language AI uses for meanings.`}
       >
         {language ? (
           // The group's title already says Language; the field's label names the picker for
@@ -114,7 +114,7 @@ export function SettingsView({
         )}
       </SettingsGroup>
 
-      <SettingsGroup title={t`Theme`} description={t`System follows your device.`}>
+      <SettingsGroup title={t`Theme`} description={t`Match your device.`}>
         <Segmented
           value={theme}
           onChange={onTheme}
@@ -128,7 +128,7 @@ export function SettingsView({
       <SettingsGroup
         id="export"
         title={t`Export`}
-        description={t`Take every deck out with its pictures, schedule and review history, as a Lymi file or an Anki package.`}
+        description={t`Export all decks (pictures, schedule, review history) as a Lymi file or Anki package.`}
       >
         <Button
           variant="secondary"
@@ -144,7 +144,7 @@ export function SettingsView({
       <SettingsGroup
         id="import"
         title={t`Import`}
-        description={t`Bring your decks from another app with their pictures, tags and review history. The other app stays as it is.`}
+        description={t`Import decks from another app. Pictures, tags and review history come with them. Your other app is unchanged.`}
       >
         <ImportSources sourceLink={importLink} />
       </SettingsGroup>

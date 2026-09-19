@@ -84,13 +84,13 @@ export function reminderIsDue(
 export async function reminderCopy(due: number, locale = "en") {
   const i18n = await serverI18n(locale);
   return {
-    title: due === 1 ? i18n._(msg`One card is ready`) : i18n._(msg`A few cards are ready`),
-    body: i18n._(
+    title: i18n._(
       msg`${plural(due, {
-        one: "One card is waiting when you have a moment.",
-        other: "# cards are waiting when you have a moment.",
+        one: "# card to review",
+        other: "# cards to review",
       })}`,
     ),
+    body: i18n._(msg`Review whenever you have a moment.`),
   };
 }
 

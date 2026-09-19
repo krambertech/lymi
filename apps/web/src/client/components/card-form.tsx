@@ -306,7 +306,7 @@ export function CardForm({
     const errors: FieldErrors = parsed.success
       ? {}
       : fieldErrors(parsed.error, {
-          deckId: t`Choose a deck for it to go in.`,
+          deckId: t`Choose a deck.`,
           term: values.term ? t`Keep the term under 500 characters.` : t`Type the term.`,
           meaning: t`Keep the meaning under 2000 characters.`,
           pronunciation: t`Keep the pronunciation under 200 characters.`,
@@ -486,7 +486,7 @@ export function CardForm({
         <Plus aria-hidden="true" />
         <Trans>New deck</Trans>
       </Button>
-      <FieldDescription>{t`Create a deck first. This card goes in it.`}</FieldDescription>
+      <FieldDescription>{t`Create a deck to add this card to.`}</FieldDescription>
     </FieldSet>
   ) : (
     <Field>

@@ -20,6 +20,7 @@ import {
   useEffect,
   useId,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -48,7 +49,7 @@ export interface ReviewHeaderProps {
   /** Today's accepted grades in every scope, Forgot and returns included. */
   attempts: number;
   goal: number;
-  /** A round's own progress, which the track and count show instead of the goal's. */
+  /** A stretch's own progress, which the track and count show instead of the goal's. */
   round?: { done: number; size: number } | undefined;
   /** Roll the count when it changes. Off when the grade came from the keyboard. */
   animateCount?: boolean | undefined;
@@ -113,7 +114,7 @@ export function ReviewHeader({
       >
         <Progress
           value={size ? Math.min(1, done / size) : 0}
-          label={round ? t`Round progress` : t`Daily goal progress`}
+          label={round ? t`Review progress` : t`Daily goal progress`}
           className="min-w-0 flex-1"
         />
         <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
@@ -954,12 +955,9 @@ export interface ReviewCompleteProps {
   end: EndScreen;
   /** Today's attempts in every scope. */
   attempts: number;
-  goal: number;
-  /** Today's attempts when this stretch of the review began, where the count rolls up from. */
+  /** Today's attempts at the last end screen, or when the review opened, where the count rolls up from. */
   from?: number | undefined;
-  /** Attempts in this stretch, the large number when the end counts the round. */
-  roundCount?: number | undefined;
-  /** The deck or series a scoped review is of, which Nothing left names when the end is about it alone. */
+  /** The deck or series a scoped review is of, which Nothing left names. */
   scopeName?: string | undefined;
   /** The streak with this review in it. */
   streak?: StreakSummary | undefined;
@@ -968,8 +966,10 @@ export interface ReviewCompleteProps {
   /** The flame the lantern had in the header, so it rises from there rather than from rest. */
   lanternFrom?: number | "out" | "brand" | undefined;
   onOffer?: ((offer: Offer) => void) | undefined;
-  /** Done, and for nothing due, Add cards before it. */
-  actions?: ReactNode | undefined;
+  /** Done, as a link or a button in the given weight. */
+  done: (variant: "primary" | "secondary") => ReactNode;
+  /** The primary action when nothing is due. */
+  addCards?: ReactNode | undefined;
   /** Move focus to the heading, so it is announced and Tab starts at the choices. */
   focusOnMount?: boolean | undefined;
 }
@@ -988,37 +988,38 @@ const AT = {
   actionStep: 90,
 } as const;
 
+/** The last ember leaves by then, however many there are. */
+const EMBERS_SPREAD_MS = 1400;
+/** Steps through [0, 1) by a golden ratio, so embers never bunch however many there are. */
+const spread = (i: number, step: number) => (i * step) % 1;
+
 /** Embers off the flame: where each drifts to, when it leaves and how long it lasts. */
-const EMBERS = [
-  { x: -16, y: -118, at: 0, dur: 1500, size: 5 },
-  { x: 12, y: -150, at: 90, dur: 1800, size: 4 },
-  { x: -4, y: -184, at: 200, dur: 2200, size: 3.5 },
-  { x: 24, y: -108, at: 300, dur: 1400, size: 4.5 },
-  { x: -26, y: -150, at: 420, dur: 1800, size: 3 },
-  { x: 6, y: -132, at: 540, dur: 1600, size: 4 },
-  { x: -10, y: -96, at: 680, dur: 1300, size: 3.5 },
-  { x: 18, y: -170, at: 800, dur: 2000, size: 3 },
-  { x: -18, y: -124, at: 950, dur: 1500, size: 4 },
-] as const;
+function embersOf(n: number) {
+  return Array.from({ length: n }, (_, i) => ({
+    x: Math.round((spread(i + 1, 0.618034) - 0.5) * 56),
+    y: -Math.round(96 + spread(i + 1, 0.754878) * 90),
+    at: Math.round((i * Math.min(EMBERS_SPREAD_MS, 110 * n)) / n),
+    dur: Math.round(1300 + spread(i + 1, 0.56984) * 900),
+    size: 3 + Math.round(spread(i + 1, 0.414214) * 4) / 2,
+  }));
+}
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
 /** The `.seq` rise in `styles.css`. */
 const RISE_MS = 560;
-const EMBERS_END = AT.embers + Math.max(...EMBERS.map((e) => e.at + e.dur));
 
 /** The end of a review, played as one sequence that any tap or key finishes; DESIGN.md, "Motion". */
 export function ReviewComplete({
   end: screen,
   attempts,
-  goal,
   from = attempts,
-  roundCount = 0,
   scopeName,
   streak,
   streakBefore = streak,
   lanternFrom,
   onOffer,
-  actions,
+  done,
+  addCards,
   focusOnMount = false,
 }: ReviewCompleteProps) {
   const { t } = useLingui();
@@ -1030,33 +1031,31 @@ export function ReviewComplete({
   const instant = reduce || skipped;
 
   const counted = screen.heading !== "nothing_due";
-  const byRound = screen.count === "round";
-  const count = byRound ? roundCount : attempts;
-  const celebrating = screen.celebration !== "none";
   const week = landed ? streak : streakBefore;
   const days = week ? lastDays(week) : undefined;
   const flame = week ? streakFlameFor(week) : "lit";
-  const lit = !!streak && streak.current > 0;
-  // Only the goal's own stretch ticks the run; any other end shows the run as it stands.
-  const run = screen.celebration === "full" ? week?.current : (streak ?? week)?.current;
-  const ways = screen.offers.map((offer) => {
-    const n = offer.count;
-    const name = offer.kind === "deck" ? offer.name : "";
-    const label =
-      offer.kind === "forgotten"
-        ? t`${plural(n, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`
-        : offer.kind === "deck"
-          ? t`${plural(n, { one: `Review # card in ${name}`, other: `Review # cards in ${name}` })}`
-          : t`${plural(n, { one: "Review # more card", other: "Review # more cards" })}`;
-    return {
-      key: offer.kind === "deck" ? `deck-${offer.id}` : offer.kind,
+  const lit = !lanternFor(streak).out;
+  const embers = useMemo(
+    () => (lit && !reduce ? embersOf(screen.embers) : []),
+    [lit, reduce, screen.embers],
+  );
+  // Only the day turning ticks the run; any other end shows the run as it stands.
+  const run = screen.streak ? week?.current : (streak ?? week)?.current;
+  const proceed = screen.offers.find((o) => o.kind === "continue");
+  const ways = screen.offers
+    .filter((offer) => !(offer.kind === "continue" && screen.continueLeads))
+    .map((offer) => ({
+      key: offer.kind,
       icon: offer.kind === "forgotten" ? <StateIcon state="forgot" className="size-4" /> : null,
-      label,
+      label:
+        offer.kind === "forgotten"
+          ? t`${plural(offer.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`
+          : t`Continue`,
       onClick: () => onOffer?.(offer),
-    };
-  });
+    }));
   const actionsAt = AT.actions + ways.length * AT.actionStep;
-  const end = Math.max(actionsAt + RISE_MS, celebrating && lit && !reduce ? EMBERS_END : 0);
+  const embersEnd = AT.embers + Math.max(0, ...embers.map((e) => e.at + e.dur));
+  const end = Math.max(actionsAt + RISE_MS, embers.length ? embersEnd : 0);
 
   useEffect(() => {
     if (focusOnMount) heading.current?.focus({ preventScroll: true });
@@ -1103,7 +1102,7 @@ export function ReviewComplete({
               aria-hidden="true"
               className={clsx(
                 "light-pool pointer-events-none absolute -inset-[85%] -z-10 rounded-full",
-                !celebrating && "opacity-50",
+                !embers.length && "opacity-50",
               )}
               style={at(AT.pool)}
             >
@@ -1111,9 +1110,9 @@ export function ReviewComplete({
             </div>
           )}
           <Lantern className="size-full" {...lanternFor(streak)} from={lanternFrom} flicker glow />
-          {celebrating && lit && !reduce && (
+          {embers.length > 0 && (
             <div aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[52%]">
-              {EMBERS.map((e) => (
+              {embers.map((e) => (
                 <i
                   key={e.at}
                   className="ember absolute -ms-0.5 -mt-0.5 block rounded-full bg-flame-core shadow-[0_0_4px_1px_var(--amber),0_0_10px_var(--glow)]"
@@ -1142,18 +1141,20 @@ export function ReviewComplete({
         >
           {screen.heading === "goal_reached" ? (
             <Trans>Daily goal reached</Trans>
-          ) : screen.heading === "nothing_left" ? (
-            !screen.namesDeck ? (
-              <Trans>You’re done for today</Trans>
-            ) : scopeName ? (
+          ) : screen.heading === "day_done" ? (
+            <Trans>You’re done for today</Trans>
+          ) : screen.heading === "scope_done" ? (
+            scopeName ? (
               <Trans>Nothing left in {scopeName}</Trans>
             ) : (
               <Trans>Nothing left in this deck</Trans>
             )
           ) : screen.heading === "nothing_due" ? (
             <Trans>Nothing due</Trans>
-          ) : (
+          ) : screen.heading === "round_done" ? (
             <Trans>Round done</Trans>
+          ) : (
+            <Trans>Review done</Trans>
           )}
         </h2>
 
@@ -1163,19 +1164,10 @@ export function ReviewComplete({
               className="seq-count block text-6xl font-medium leading-none tracking-[-0.04em] text-text @3xl:text-7xl"
               style={at(AT.count)}
             >
-              <CountUp
-                from={byRound ? 0 : from}
-                to={count}
-                delay={AT.countRoll}
-                instant={instant}
-              />
+              <CountUp from={from} to={attempts} delay={AT.countRoll} instant={instant} />
             </span>
             <span className="seq text-md text-text-2" style={at(AT.count + 80)}>
-              {byRound ? (
-                <Plural value={count} one="review in this round" other="reviews in this round" />
-              ) : (
-                <Plural value={count} one="review today" other="reviews today" />
-              )}
+              <Plural value={attempts} one="review today" other="reviews today" />
             </span>
           </p>
         ) : (
@@ -1193,17 +1185,14 @@ export function ReviewComplete({
               dates={days.dates}
               size="lg"
               sequence={AT.lights}
-              flare={landed && !reduce && celebrating}
+              flare={landed && !reduce && screen.streak}
             />
             <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
               <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
               <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
                 <span
                   key={run}
-                  className={clsx(
-                    "block",
-                    landed && !reduce && screen.celebration === "full" && "streak-tick",
-                  )}
+                  className={clsx("block", landed && !reduce && screen.streak && "streak-tick")}
                 >
                   {run}
                 </span>
@@ -1213,18 +1202,24 @@ export function ReviewComplete({
           </div>
         )}
 
-        {/* A round's own count is the large number, so the day it belongs to sits here. */}
-        {counted && byRound && (
+        {/* While Continue leads, what is left of the day sits under its lights. */}
+        {screen.nudge && (
           <p
             className="seq mt-4 max-w-[32ch] text-pretty text-sm text-muted"
             style={at(AT.run + 120)}
           >
-            {attempts >= goal ? (
-              <Plural value={attempts} one="# review today" other="# reviews today" />
+            {screen.nudge.kind === "goal" ? (
+              <Plural
+                value={screen.nudge.count}
+                one="# more review to your daily goal"
+                other="# more reviews to your daily goal"
+              />
             ) : (
-              <Trans>
-                {attempts} of {goal} reviews today
-              </Trans>
+              <Plural
+                value={screen.nudge.count}
+                one="# more card and you’re done for today"
+                other="# more cards and you’re done for today"
+              />
             )}
           </p>
         )}
@@ -1233,7 +1228,7 @@ export function ReviewComplete({
         <div
           className={clsx("mt-6 grid w-full gap-2.5 @3xl:mt-8", !instant && "pointer-events-none")}
         >
-          {/* One shape for every way on, the count said in words so it never reads as a shortcut; Done is the amber one. */}
+          {/* One shape for every way on, the count said in words so it never reads as a shortcut; the primary sits last. */}
           {ways.map((way, i) => (
             <button
               key={way.key}
@@ -1246,11 +1241,27 @@ export function ReviewComplete({
               {way.label}
             </button>
           ))}
-          {actions && (
-            <div className="seq grid gap-2" style={at(actionsAt)}>
-              {actions}
-            </div>
-          )}
+          <div className="seq grid gap-2" style={at(actionsAt)}>
+            {!counted ? (
+              <>
+                {addCards}
+                {done("secondary")}
+              </>
+            ) : screen.continueLeads && proceed ? (
+              <>
+                {done("secondary")}
+                <button
+                  type="button"
+                  onClick={() => onOffer?.(proceed)}
+                  className={buttonClass("primary", "lg", "w-full")}
+                >
+                  <Trans>Continue</Trans>
+                </button>
+              </>
+            ) : (
+              done("primary")
+            )}
+          </div>
         </div>
       </div>
     </section>

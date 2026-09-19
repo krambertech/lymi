@@ -9,7 +9,7 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults, type TestProjectConfiguration } from "vitest/config";
 import type { BrowserInstanceOption } from "vitest/node";
-import { e2eOperatorEmails, e2ePublisherEmails } from "../../e2e/settings.mjs";
+import { e2ePublisherEmails } from "../../e2e/settings.mjs";
 
 const isE2E = process.env.LYMI_E2E === "1";
 const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";
@@ -65,7 +65,6 @@ export default defineConfig({
               vars: {
                 PUBLIC_SITE_URL: "http://localhost:4174",
                 PRODUCT_URL: "http://localhost:4173",
-                OPERATOR_EMAILS: e2eOperatorEmails.join(","),
                 PUBLISHER_EMAILS: e2ePublisherEmails.join(","),
                 BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
                 GOOGLE_CLIENT_ID: "e2e-client-id",

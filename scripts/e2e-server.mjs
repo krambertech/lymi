@@ -14,7 +14,6 @@ import {
   e2eSitePort,
   e2eSiteUrl,
 } from "../e2e/ports.mjs";
-import { e2eOperatorEmails } from "../e2e/settings.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const web = resolve(root, "apps/web");
@@ -78,7 +77,6 @@ mkdirSync(productPackageState, { recursive: true });
 const testVars = [
   `PUBLIC_SITE_URL=${e2eSiteUrl}`,
   `PRODUCT_URL=${e2eProductUrl}`,
-  `OPERATOR_EMAILS=${e2eOperatorEmails.join(",")}`,
   "BETTER_AUTH_SECRET=lymi-e2e-secret-at-least-thirty-two-characters",
   "GOOGLE_CLIENT_ID=e2e-client-id",
   "GOOGLE_CLIENT_SECRET=e2e-client-secret",
@@ -224,7 +222,6 @@ generatedProductConfig.vars = {
   ...generatedProductConfig.vars,
   PUBLIC_SITE_URL: e2eSiteUrl,
   PRODUCT_URL: e2eProductPackageUrl,
-  OPERATOR_EMAILS: e2eOperatorEmails.join(","),
 };
 generatedProductConfig.routes = [];
 writeFileSync(productPackageConfig, JSON.stringify(generatedProductConfig));
@@ -233,7 +230,6 @@ writeFileSync(
   [
     `PUBLIC_SITE_URL=${e2eSiteUrl}`,
     `PRODUCT_URL=${e2eProductPackageUrl}`,
-    `OPERATOR_EMAILS=${e2eOperatorEmails.join(",")}`,
     "BETTER_AUTH_SECRET=lymi-e2e-secret-at-least-thirty-two-characters",
     "GOOGLE_CLIENT_ID=e2e-client-id",
     "GOOGLE_CLIENT_SECRET=e2e-client-secret",

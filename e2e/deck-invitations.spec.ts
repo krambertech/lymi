@@ -1,9 +1,4 @@
-import {
-  createAccountThroughDevForm,
-  expectNoAccountEmail,
-  signInAsTestLearner,
-  submitDevSignUp,
-} from "./auth";
+import { createAccountThroughDevForm, signInAsTestLearner } from "./auth";
 import { type Browser, expect, type Page, type TestInfo, test } from "./test";
 
 /**
@@ -103,16 +98,23 @@ test("an owner invites somebody by name and only they can come in", async ({
     expect(asOwner.status()).toBe(403);
     expect(await asOwner.text()).toContain(invited);
 
-    // A signed-out stranger holding the link cannot make an account on a different address.
+    // Sign-up is open, so a stranger holding the link gets an account; the deck is what the
+    // invitation withholds. They land signed in with an empty Library.
     const wrong = await signedOutPage(browser);
     await wrong.goto(`${invitationUrl}?dev=1`);
     await wrong.getByRole("button", { name: "Dev sign-in", exact: true }).click();
     // The join page navigates to sign-in; the form only exists once that lands.
     await expect(wrong).toHaveURL(/\/login\?dev=1/);
-    await submitDevSignUp(wrong, stranger);
-    // The refusal is silent by design, so the proof is that nothing was created or sent.
-    await expectNoAccountEmail(wrong, stranger);
-    expect((await wrong.request.get("/api/me")).status()).toBe(401);
+    await createAccountThroughDevForm(wrong, stranger);
+    expect((await wrong.request.get("/api/me")).ok()).toBeTruthy();
+
+    const refused = await wrong.request.post(`/api/join/${invitationUrl.split("/").at(-1)}`, {
+      headers: { "content-type": "application/json" },
+    });
+    expect(refused.status()).toBe(403);
+    expect(await refused.text()).toContain(invited);
+    const theirs = (await (await wrong.request.get("/api/decks")).json()) as { id: string }[];
+    expect(theirs.map((d) => d.id)).not.toContain(deckId);
     await wrong.context().close();
   });
 

@@ -403,7 +403,7 @@ describe("inviting one person by name", () => {
     await cancelInvitation(kateryna, deck.id, first.id);
 
     expect(await listInvitations(kateryna, deck.id)).toEqual([]);
-    expect(await joinLinkAdmits(db, token, "anna@lymi.test")).toBe(false);
+    expect(await joinLinkAdmits(db, token)).toBe(false);
     await expect(joinThroughLink(anna, token)).rejects.toThrow("This join link does not work");
     await expect(cancelInvitation(kateryna, deck.id, first.id)).rejects.toThrow(
       "Invitation not found",

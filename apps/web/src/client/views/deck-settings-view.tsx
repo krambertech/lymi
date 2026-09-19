@@ -14,6 +14,7 @@ import {
   LanguageField,
   languageName,
 } from "../components/deck-fields";
+import { TurnOffLinkDialog } from "../components/member-dialogs";
 import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
@@ -512,7 +513,6 @@ function SharingGroup({
   const { t } = useLingui();
   const name = useId();
   const [confirming, setConfirming] = useState(false);
-  const keep = useRef<HTMLButtonElement>(null);
   const shared = Boolean(link) || pending === "on";
   const canShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
 
@@ -520,9 +520,6 @@ function SharingGroup({
   useEffect(() => {
     if (!link) setConfirming(false);
   }, [link]);
-  useEffect(() => {
-    if (confirming) keep.current?.focus();
-  }, [confirming]);
 
   return (
     <SettingsGroup title={t`Sharing`}>
@@ -576,56 +573,30 @@ function SharingGroup({
                 ) : (
                   <Skeleton className="h-10" />
                 )}
-                {confirming ? (
-                  <fieldset
-                    aria-label={t`Turn off the join link`}
-                    className="enter-fade grid gap-3 rounded-md bg-plate-2 p-4"
-                  >
-                    <p className="grid gap-1 text-sm text-text-2">
-                      <span className="text-base font-medium text-text">
-                        <Trans>Turn off the join link?</Trans>
-                      </span>
-                      <Trans>
-                        The link stops working for good. People who joined stay in the deck, and
-                        sharing again makes a new link.
-                      </Trans>
-                    </p>
-                    <div className="flex flex-wrap gap-2">
+                {link && (
+                  <div className="flex flex-wrap gap-2">
+                    {canShare && (
                       <Button
-                        variant="danger"
-                        onClick={onTurnOff}
-                        loading={pending === "off"}
-                        aria-disabled={pending !== undefined}
+                        onClick={() => {
+                          void navigator.share({ title: deckName, url: link.url }).catch(() => {});
+                        }}
                       >
-                        <Trans>Turn off link</Trans>
+                        <Share aria-hidden="true" />
+                        <Trans>Share link</Trans>
                       </Button>
-                      <Button ref={keep} variant="ghost" onClick={() => setConfirming(false)}>
-                        <Trans>Keep sharing</Trans>
-                      </Button>
-                    </div>
-                  </fieldset>
-                ) : (
-                  link && (
-                    <div className="flex flex-wrap gap-2">
-                      {canShare && (
-                        <Button
-                          onClick={() => {
-                            void navigator
-                              .share({ title: deckName, url: link.url })
-                              .catch(() => {});
-                          }}
-                        >
-                          <Share aria-hidden="true" />
-                          <Trans>Share link</Trans>
-                        </Button>
-                      )}
-                      <Button onClick={() => setConfirming(true)}>
-                        <Link2Off aria-hidden="true" />
-                        <Trans>Turn off link</Trans>
-                      </Button>
-                    </div>
-                  )
+                    )}
+                    <Button onClick={() => setConfirming(true)}>
+                      <Link2Off aria-hidden="true" />
+                      <Trans>Turn off link</Trans>
+                    </Button>
+                  </div>
                 )}
+                <TurnOffLinkDialog
+                  open={confirming}
+                  onOpenChange={setConfirming}
+                  onTurnOff={onTurnOff}
+                  pending={pending === "off"}
+                />
               </div>
             )}
           </div>

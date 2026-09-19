@@ -3400,9 +3400,6 @@ msgstr "Попробуй ещё раз с более стабильным сое
 msgid "Turn off link"
 msgstr "Выключить ссылку"
 
-msgid "Turn off the join link"
-msgstr "Выключить ссылку для присоединения"
-
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
 

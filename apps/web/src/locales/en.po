@@ -3400,9 +3400,6 @@ msgstr "Try again on a steadier connection, and keep Lymi open until the upload 
 msgid "Turn off link"
 msgstr "Turn off link"
 
-msgid "Turn off the join link"
-msgstr "Turn off the join link"
-
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
 

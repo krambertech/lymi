@@ -142,9 +142,8 @@ function Sparks({ fed, out }: { fed: number; out: boolean }) {
       {bursts.map((id) => {
         const set = FLAME_SPARKS[id % FLAME_SPARKS.length] ?? FLAME_SPARKS[0];
         const last = set.length - 1;
-        // Decoration with no accessible name, so the review journey finds it by test id.
         return (
-          <g key={id} data-testid="lantern-spark">
+          <g key={id}>
             {set.map((e, i) => (
               // A zero-length round-capped stroke that does not scale: a dot of the same px at any size.
               <motion.path

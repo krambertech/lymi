@@ -1,10 +1,14 @@
-import { Link } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { createContext, type ReactNode, useContext, useRef } from "react";
+import { useShellWide } from "../../lib/shell-width";
 import { BackButton, Page, PageHeader, TileLockup, TopBar } from "../../views/shell";
+import { NavLink } from "../nav-link";
 import { Skeleton } from "../skeleton";
-import { TabActions, useStaticLinks } from "./shell-chrome";
+import { TabActions, useShellChrome } from "./shell-chrome";
 
-/** Back names the screen above: a place to link to, or an action when there is no route. */
+/**
+ * Back names the screen above: a place to link to, or an action when there is no route. With
+ * neither, it is the name alone, for the moment before the screen knows where back goes.
+ */
 export type ScreenBack =
   | {
       label: string;
@@ -12,7 +16,8 @@ export type ScreenBack =
       params?: Record<string, string> | undefined;
       hash?: string | undefined;
     }
-  | { label: string; onClick: () => void };
+  | { label: string; onClick: () => void }
+  | { label: string; to?: undefined; onClick?: undefined };
 
 interface Props {
   /** A tab opens with the lockup and the learner's controls; a page opens with its way back. */
@@ -21,13 +26,13 @@ interface Props {
   title?: ReactNode | undefined;
   sub?: ReactNode | undefined;
   back?: ScreenBack | undefined;
-  /** The screen's own controls, written once: in the bar on a phone, beside the title on a desktop. */
+  /** The screen's own controls, mounted once: in the bar on a phone, beside the title on a desktop. */
   actions?: ReactNode | undefined;
   /** A short line beside the title at every width, such as Saved. */
   status?: ReactNode | undefined;
   /** Keep the way back on a desktop, for a screen whose parent is not a row in the rail. */
   backOnDesktop?: boolean | undefined;
-  /** Stands in for the bar on a phone, such as a search field. Wrap it in `ScreenBar`. */
+  /** Stands in for the bar, such as a search field. Wrap it in `ScreenBar`. */
   bar?: ReactNode | undefined;
   /** The view draws its own title inside its column, so the header is left out. */
   ownTitle?: boolean | undefined;
@@ -38,29 +43,37 @@ interface Props {
 }
 
 function Back({ back }: { back: ScreenBack }) {
-  const st = useStaticLinks();
-  if ("onClick" in back) return <BackButton label={back.label} onClick={back.onClick} />;
-  const { to, params, hash } = back;
+  const st = useShellChrome()?.static;
+  if ("onClick" in back && back.onClick) {
+    return <BackButton label={back.label} onClick={back.onClick} />;
+  }
+  const link = "to" in back && back.to !== undefined ? back : undefined;
   return (
     <BackButton label={back.label}>
       {(className, content) =>
-        st ? (
-          <a href={to} onClick={(e) => e.preventDefault()} className={className}>
+        link ? (
+          <NavLink to={link.to} params={link.params} hash={link.hash} className={className} st={st}>
             {content}
-          </a>
+          </NavLink>
         ) : (
-          <Link to={to} params={params ?? {}} {...(hash ? { hash } : {})} className={className}>
-            {content}
-          </Link>
+          <span className={className}>{content}</span>
         )
       }
     </BackButton>
   );
 }
 
+/** Whether the bar a `ScreenBar` stands in for stays on a desktop. */
+const BarOnDesktop = createContext(false);
+
 /** A replacement bar at the bar's own size, so the title under it never moves. */
 export function ScreenBar({ children }: { children: ReactNode }) {
-  return <TopBar back={<div className="flex min-w-0 flex-1 items-center gap-2">{children}</div>} />;
+  return (
+    <TopBar
+      nested={useContext(BarOnDesktop)}
+      back={<div className="flex min-w-0 flex-1 items-center gap-2">{children}</div>}
+    />
+  );
 }
 
 /** One screen: the column, the bar and the title, in the same place every time. */
@@ -79,19 +92,20 @@ export function Screen({
   children,
 }: Props) {
   const tab = kind === "tab";
+  const root = useRef<HTMLDivElement>(null);
+  // Mounted in one slot, never hidden in two: a second copy would double every menu, shortcut and query inside.
+  const wide = useShellWide(root);
+  // A tab's bar is the learner's, so its own controls sit beside the title at every width.
+  const beside = tab || wide;
   return (
-    <Page width={width}>
-      {bar ?? (
+    <Page ref={root} width={width}>
+      {bar ? (
+        <BarOnDesktop value={backOnDesktop}>{bar}</BarOnDesktop>
+      ) : (
         <TopBar
           nested={!tab && backOnDesktop}
           back={tab ? <TileLockup size="bar" /> : back && <Back back={back} />}
-          actions={
-            tab ? (
-              <TabActions />
-            ) : actions ? (
-              <span className="flex items-center gap-1 @3xl/shell:hidden">{actions}</span>
-            ) : undefined
-          }
+          actions={tab ? <TabActions /> : beside ? undefined : actions}
         />
       )}
       {!ownTitle && (
@@ -99,18 +113,10 @@ export function Screen({
           title={title ?? <Skeleton className="h-8 w-44" />}
           sub={sub}
           actions={
-            // A tab's bar is the learner's, so its own controls sit beside the title at every width.
-            tab || !actions ? (
-              (status || actions) && (
-                <>
-                  {status}
-                  {actions}
-                </>
-              )
-            ) : (
+            (status || (beside && actions)) && (
               <>
                 {status}
-                <span className="hidden items-center gap-1.5 @3xl/shell:flex">{actions}</span>
+                {beside && actions}
               </>
             )
           }

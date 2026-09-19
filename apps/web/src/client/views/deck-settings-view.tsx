@@ -175,7 +175,8 @@ export function DeckSettingsView({
       back={
         deck
           ? { label: deck.name, to: "/library/$deckId", params: { deckId: deck.id } }
-          : { label: t`Library`, to: "/library" }
+          : // Inert until the deck is known, so an early tap never lands on the wrong screen.
+            { label: t`Deck` }
       }
       status={
         reading ? undefined : (

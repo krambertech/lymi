@@ -11,6 +11,7 @@ export type StaticNav = { path: string } | undefined;
 interface Props {
   to: string;
   params?: Record<string, string> | undefined;
+  hash?: string | undefined;
   /** Match the path exactly. Needed for "/", which prefixes everything. */
   exact?: boolean | undefined;
   className: string;
@@ -20,9 +21,13 @@ interface Props {
 }
 
 /** A router link, or a dead anchor carrying the same classes on the design page. */
-export function NavLink({ to, params, exact, className, st, describedBy, children }: Props) {
+export function NavLink({ to, params, hash, exact, className, st, describedBy, children }: Props) {
   if (st) {
-    const href = params ? to.replace("$deckId", params.deckId ?? "") : to;
+    const path = Object.entries(params ?? {}).reduce(
+      (filled, [name, value]) => filled.replace(`$${name}`, value),
+      to,
+    );
+    const href = hash ? `${path}#${hash}` : path;
     return (
       <a
         href={href}
@@ -39,6 +44,7 @@ export function NavLink({ to, params, exact, className, st, describedBy, childre
     <Link
       to={to}
       params={params ?? {}}
+      {...(hash ? { hash } : {})}
       activeOptions={{ exact: !!exact }}
       className={className}
       aria-describedby={describedBy}

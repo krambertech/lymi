@@ -12,7 +12,7 @@ import {
   Search,
   Sun,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 import { AddMenu } from "../components/add-menu";
 import { IconButton } from "../components/button";
 import { DueCount } from "../components/due-count";
@@ -301,7 +301,9 @@ export function Page({
   children,
   width = "full",
   className,
+  ref,
 }: {
+  ref?: Ref<HTMLDivElement> | undefined;
   children: ReactNode;
   /** "md" for reading screens, "full" for Today, Library and a deck. */
   width?: "md" | "full" | undefined;
@@ -309,6 +311,7 @@ export function Page({
 }) {
   return (
     <div
+      ref={ref}
       className={clsx(
         "mx-auto flex w-full flex-1 flex-col px-5 pt-5 pb-safe-nav @3xl/shell:px-8 @3xl/shell:pb-12 @3xl/shell:pt-8",
         width === "md" ? "max-w-2xl" : "max-w-(--column)",

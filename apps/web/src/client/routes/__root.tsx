@@ -8,7 +8,7 @@ import {
   useNavigate,
 } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
 import { ShellChrome } from "../components/layout/shell-chrome";
@@ -186,22 +186,31 @@ function Shell() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate, onReview, bare, add, activeDeckId]);
 
+  const signedIn = me.isSuccess;
+  const learnerName = me.data?.name;
+  const learnerEmail = me.data?.email;
+  const { openCard, openDeck } = add;
+  const { signOut, busy: signingOut } = leave;
+  // One object until something in it changes, so a query tick does not re-render every screen's bar.
+  const chrome = useMemo(
+    () => ({
+      streak: signedIn ? <Streak variant="phone" /> : undefined,
+      name: learnerName,
+      email: learnerEmail,
+      docsUrl: publicSiteUrl("/docs"),
+      onAddCard: () => openCard(),
+      onCreateDeck: openDeck,
+      onSignOut: signOut,
+      signingOut,
+    }),
+    [signedIn, learnerName, learnerEmail, openCard, openDeck, signOut, signingOut],
+  );
+
   if (bare) return <Outlet />;
 
   return (
     <LearnerAvatarProvider enabled={me.isSuccess}>
-      <ShellChrome
-        value={{
-          streak: me.isSuccess ? <Streak variant="phone" /> : undefined,
-          name: me.data?.name,
-          email: me.data?.email,
-          docsUrl: publicSiteUrl("/docs"),
-          onAddCard: () => add.openCard(),
-          onCreateDeck: add.openDeck,
-          onSignOut: leave.signOut,
-          signingOut: leave.busy,
-        }}
-      >
+      <ShellChrome value={chrome}>
         <AppShell
           // A session closes the app around it. The phone already hid its pill during review; the
           // rail stayed up with search, capture, every deck and the profile, which made focus a

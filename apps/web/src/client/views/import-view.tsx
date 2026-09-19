@@ -55,7 +55,7 @@ function Shell({
   children: ReactNode;
 }) {
   return (
-    <Screen title={title} sub={sub} width="md" back={back} backOnDesktop>
+    <Screen title={title} sub={sub} width="md" back={back} backOnDesktop={!!back}>
       <div className="grid gap-6">{children}</div>
     </Screen>
   );

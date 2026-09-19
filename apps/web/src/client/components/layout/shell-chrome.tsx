@@ -25,11 +25,6 @@ export function useShellChrome() {
   return useContext(ShellChromeContext);
 }
 
-/** True on the design page, where a way back is a plain anchor and never leaves the page. */
-export function useStaticLinks() {
-  return !!useContext(ShellChromeContext)?.static;
-}
-
 /** The end of a tab's bar: streak, capture, avatar. */
 export function TabActions() {
   const chrome = useShellChrome();

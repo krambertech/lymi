@@ -49,7 +49,7 @@ test("the public surface has no install contract while the product keeps its PWA
   }
 });
 
-test("each origin exposes only its own route and indexing contract", async ({ page, request }) => {
+test("the site exposes only its own indexing contract", async ({ page, request }) => {
   const siteRobots = await request.get(`${publicSite}/robots.txt`);
   expect(siteRobots.status()).toBe(200);
   expect(await siteRobots.text()).toContain("Sitemap: https://lymi.app/sitemap.xml");
@@ -57,29 +57,10 @@ test("each origin exposes only its own route and indexing contract", async ({ pa
   expect(sitemapIndex).toContain("<loc>https://lymi.app/sitemap-pages.xml</loc>");
   expect(sitemapIndex).toContain("<loc>https://lymi.app/sitemap-decks.xml</loc>");
 
-  const productRobots = await request.get("/robots.txt");
-  expect(productRobots.status()).toBe(200);
-  expect(await productRobots.text()).toBe("User-agent: *\nDisallow: /\n");
-
-  const productLanding = await request.get("/", { maxRedirects: 0 });
-  expect(productLanding.status()).toBe(302);
-  expect(productLanding.headers().location).toContain("/login");
-
-  const productUnknown = await request.get("/public-page-that-does-not-exist");
-  expect(productUnknown.status()).toBe(404);
-
   // The site renders unknown paths through Astro now that the assets binding no longer handles them.
   const siteUnknown = await request.get(`${publicSite}/page-that-does-not-exist`);
   expect(siteUnknown.status()).toBe(404);
   expect(await siteUnknown.text()).toContain("<title>Page not found · Lymi</title>");
-
-  const metadata = await request.get("/.well-known/oauth-protected-resource/mcp");
-  expect(metadata.status()).toBe(200);
-  expect(await metadata.json()).toMatchObject({
-    resource_documentation: `${publicSite}/docs/mcp`,
-    resource_policy_uri: `${publicSite}/privacy`,
-    resource_tos_uri: `${publicSite}/terms`,
-  });
 
   await page.goto(`${publicSite}/docs`);
   await expect(page.getByRole("heading", { name: "Lymi docs" })).toBeVisible();

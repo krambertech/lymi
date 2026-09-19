@@ -40,8 +40,6 @@ export const e2eAccounts = [
   "mochi-import",
   "export",
   "publisher",
-  "email-outbox",
-  "email-non-operator",
   "password-account",
   "password-reset",
   "feedback",
@@ -64,13 +62,6 @@ export function e2eEmail(account, project, retry, repeat) {
 export const e2ePublisherEmails = e2eProjects.flatMap((project) =>
   e2eRetries.flatMap((retry) =>
     e2eRepeats.map((repeat) => e2eEmail("publisher", project, retry, repeat)),
-  ),
-);
-
-/** Accounts that may exercise operator-only routes in browser tests. */
-export const e2eOperatorEmails = e2eProjects.flatMap((project) =>
-  e2eRetries.flatMap((retry) =>
-    e2eRepeats.map((repeat) => e2eEmail("email-outbox", project, retry, repeat)),
   ),
 );
 

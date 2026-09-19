@@ -37,17 +37,16 @@ test("the privacy policy names email delivery in every supported language", asyn
   }
 });
 
-test("a localized page's footer opens the matching privacy policy", async ({ page }) => {
+test("a localized page's footer links to the matching privacy policy", async ({ request }) => {
   const pages = [
     { path: "/uk/", privacy: "/uk/privacy" },
     { path: "/ru/", privacy: "/ru/privacy" },
   ] as const;
 
   for (const entry of pages) {
-    await page.goto(`${publicSite}${entry.path}`);
-    const link = page.locator(`footer a[href="${entry.privacy}"]`);
-    await expect(link).toBeVisible();
-    await link.click();
-    await expect(page).toHaveURL(`${publicSite}${entry.privacy}/`);
+    const html = await (await request.get(`${publicSite}${entry.path}`)).text();
+    const footer = html.slice(html.indexOf("<footer"), html.indexOf("</footer>"));
+    expect(footer).toContain(`href="${entry.privacy}"`);
+    expect((await request.get(`${publicSite}${entry.privacy}`)).ok()).toBe(true);
   }
 });

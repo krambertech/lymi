@@ -85,7 +85,7 @@ A journey earns its place by proving something no lower layer can see:
 - Focus and keyboard order across screens; inside one component it is a component test.
 - The browser's own facts: its locale, JavaScript off, media playback.
 - The two origins together: an email or site link landing in the product, or a redirect between them.
-- A binding the route harness does not run, today a Workflow; this reason shrinks as `test-app.ts` grows.
+- A runtime feature the route harness does not have, today a Workflow or `HTMLRewriter`, which only workerd provides; this reason shrinks as `test-app.ts` grows.
 - One canonical path per critical learner outcome, named under Canonical coverage.
 
 A journey does not earn its place for a status code, a validation message or a permission, which are route tests; for a screen that lists or edits rows, which is a service test for the rule and a component test for the primitive, because the canonical journeys already prove that lists and forms render; for a second scenario of a journey that exists, which is a case in the service or route test; or for a public page's HTML, headers and metadata, which is a `request`-only test with no `page` and costs a fraction of a second. The site has no component or route layer, so a site interaction is a journey and site HTML is a `request`-only test.
@@ -169,7 +169,7 @@ Each Worker exposes its Cloudflare version ID, deployment timestamp and optional
 
 `apps/web/src/server/test-app.ts` drives the product app in Node on the shared local D1, through the same fetch handler Workers calls: origin routing, preview access, authentication, validation and each route's own guards run as they do in production, with no browser and no Vite server. `testApp()` hands back the bindings, `fetch(path, { as })` for a request as a signed-in learner, and `signUp(handle)` for a confirmed `@lymi.local` account. `operators` names the addresses `OPERATOR_EMAILS` grants. Work a route defers with `waitUntil` finishes before `fetch` returns, so an audit row is there to read.
 
-A route test proves the contract: the status and body for a signed-out caller, a learner, an operator and a learner on another learner's row, and a response parsed with its Zod schema from `packages/core/src/types.ts` rather than restated. A business rule belongs in the service test beneath it and a screen in a journey above it. `app.test.ts` owns the product origin's route and indexing boundary and `routes/email.test.ts` the operator test email; both moved down from journeys and are the pattern for the next endpoint.
+A route test proves the contract: the status and body for a signed-out caller, a learner, an operator and a learner on another learner's row, and a response parsed with its Zod schema from `packages/core/src/types.ts` rather than restated. A business rule belongs in the service test beneath it and a screen in a journey above it. `app.test.ts` owns the product origin's route and indexing boundary. Under `routes/`, `email`, `feedback`, `activity`, `archived`, `streak` and `add` hold contracts that moved down from journeys and are the pattern for the next endpoint. The join and add door pages render through `HTMLRewriter`, so their HTML stays a `request`-only step in a journey.
 
 The app lives in `app.ts` and the Worker entry in `index.ts`, because the entry re-exports the Workflows and `cloudflare:workers` exists only in the Worker runtime.
 

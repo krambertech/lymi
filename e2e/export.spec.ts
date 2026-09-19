@@ -58,7 +58,7 @@ test("a learner exports a deck and the library, and finds the files in Activity"
     // A deck's phone top bar has a way back instead of the learner menu, so Settings opens directly.
     await page.goto("/settings");
     await page.getByRole("button", { name: "Export library", exact: true }).click();
-    const sheet = page.getByRole("dialog", { name: "Export your library", exact: true });
+    const sheet = page.getByRole("dialog", { name: "Export library", exact: true });
     await expect(sheet.getByRole("radio", { name: "Anki package" })).toBeChecked();
     await expect(sheet.getByRole("radio", { name: "Spreadsheet" })).toHaveCount(0);
     await sheet.getByRole("button", { name: "Export", exact: true }).click();
@@ -77,6 +77,6 @@ test("a learner exports a deck and the library, and finds the files in Activity"
       page.getByRole("link", { name: /^Download lymi-library-.*\.apkg$/ }),
     ).toBeVisible();
     // Activity is a log, so it carries no import action of its own; Settings holds that.
-    await expect(page.getByRole("link", { name: "Import cards", exact: true })).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Import decks", exact: true })).toHaveCount(0);
   });
 });

@@ -474,7 +474,7 @@ export const SCREENS: Entry[] = [
             attempts={7}
             deckName="Lesson 14"
           />
-          <ReviewEndShot caption="Nothing left today" initial="light" from={2} attempts={7} />
+          <ReviewEndShot caption="You’re done for today" initial="light" from={2} attempts={7} />
           <ReviewEndShot caption="Nothing due" initial="light" from={0} attempts={0} />
           <Shot caption="Desktop, review" initial="light">
             {(t) => (

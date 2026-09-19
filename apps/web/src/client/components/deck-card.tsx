@@ -67,7 +67,7 @@ export function DeckCard({
           </>
         )}
         {total === 0 ? (
-          <Trans>Nothing in it yet</Trans>
+          <Trans>No cards yet</Trans>
         ) : (
           <Plural value={total} one="# card" other="# cards" />
         )}

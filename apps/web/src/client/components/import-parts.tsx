@@ -57,17 +57,17 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
     case "unrecognized":
       if (source === "lymi") {
         return {
-          title: msg`Lymi couldn’t read this file`,
+          title: msg`Couldn’t read this file`,
           body: msg`Choose the .zip file Lymi exports as a Lymi file, without unzipping it.`,
         };
       }
       return source === "mochi"
         ? {
-            title: msg`Lymi couldn’t read this file`,
+            title: msg`Couldn’t read this file`,
             body: msg`Export it again from Mochi as a .mochi file, then choose that file.`,
           }
         : {
-            title: msg`Lymi couldn’t read this file`,
+            title: msg`Couldn’t read this file`,
             body: msg`Export it again from Anki as an Anki Deck Package (.apkg), then choose that file.`,
           };
     case "damaged":
@@ -77,7 +77,7 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
       };
     case "too_large":
       return {
-        title: msg`This collection is too large to import at once`,
+        title: msg`This file is too large to import at once`,
         body:
           source === "mochi"
             ? msg`In Mochi, export one deck at a time instead of everything.`
@@ -87,18 +87,18 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
       };
     case "upload_incomplete":
       return {
-        title: msg`The upload didn’t finish`,
-        body: msg`Try again on a steadier connection, and keep Lymi open until the upload is done.`,
+        title: msg`Couldn’t finish the upload`,
+        body: msg`Try again on a steadier connection and keep Lymi open until the upload finishes.`,
       };
     case "expired":
       return {
-        title: msg`This import was closed`,
-        body: msg`It waited three days without being confirmed, so its file was deleted. Start it again.`,
+        title: msg`This import expired`,
+        body: msg`It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over.`,
       };
     default:
       return {
-        title: msg`The import stopped`,
-        body: msg`Something went wrong on Lymi’s side. Cards added before it stopped are in your decks.`,
+        title: msg`Couldn’t finish the import`,
+        body: msg`Something went wrong on Lymi’s side. Choose the same file again to add the missing cards.`,
       };
   }
 }
@@ -452,7 +452,7 @@ export function LanguagesDialog({
         <DialogDescription>
           <Trans>
             {app} doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to
-            find words you already have and to say words out loud.
+            find cards you already have and to read terms aloud.
           </Trans>
         </DialogDescription>
         <form

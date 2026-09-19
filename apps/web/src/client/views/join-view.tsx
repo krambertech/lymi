@@ -200,7 +200,7 @@ function LiveLink({
         {viewer === "member" && (
           <AuthNotice tone="success" role="status" className="mt-9 @4xl:mt-8">
             {published ? (
-              <Trans>This deck is already in your Library.</Trans>
+              <Trans>This deck is already in Library.</Trans>
             ) : (
               <Trans>You are already in this deck.</Trans>
             )}

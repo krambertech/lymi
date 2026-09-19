@@ -68,15 +68,15 @@ test("a learner adds a published deck from Explore without leaving the app", asy
   });
 
   await test.step("adding from a shelf keeps the learner on Explore and marks that tile", async () => {
-    await learner.getByRole("button", { name: `Add “${onShelf.name}” to your library` }).click();
-    await expect(learner.getByText(`“${onShelf.name}” is in your library`)).toBeVisible();
+    await learner.getByRole("button", { name: `Add “${onShelf.name}” to Library` }).click();
+    await expect(learner.getByText(`Added “${onShelf.name}” to Library`)).toBeVisible();
     await expect(learner).toHaveURL(/\/explore$/);
     await expect(
-      tile(learner, onShelf.name).getByRole("link", { name: "In your library" }),
+      tile(learner, onShelf.name).getByRole("link", { name: "In Library" }),
     ).toBeVisible();
     // The deck it did not touch still offers its own press.
     await expect(
-      tile(learner, onPage.name).getByRole("button", { name: /to your library$/ }),
+      tile(learner, onPage.name).getByRole("button", { name: /to Library$/ }),
     ).toBeVisible();
   });
 
@@ -94,13 +94,13 @@ test("a learner adds a published deck from Explore without leaving the app", asy
   await test.step("a reload keeps the added deck marked and still offers the other", async () => {
     await learner.goto("/explore");
     await expect(
-      tile(learner, onShelf.name).getByRole("link", { name: "In your library" }),
+      tile(learner, onShelf.name).getByRole("link", { name: "In Library" }),
     ).toBeVisible();
     await expect(
-      tile(learner, onShelf.name).getByRole("button", { name: /to your library$/ }),
+      tile(learner, onShelf.name).getByRole("button", { name: /to Library$/ }),
     ).toHaveCount(0);
     await expect(
-      tile(learner, onPage.name).getByRole("button", { name: /to your library$/ }),
+      tile(learner, onPage.name).getByRole("button", { name: /to Library$/ }),
     ).toBeVisible();
   });
 
@@ -116,7 +116,7 @@ test("a learner adds a published deck from Explore without leaving the app", asy
   // Last, because it leaves the app on another screen: nothing after it can race the router.
   await test.step("adding from the deck's page opens it in Library", async () => {
     await learner.goto(`/explore/${onPage.slug}`);
-    await learner.getByRole("button", { name: "Add to your library" }).click();
+    await learner.getByRole("button", { name: "Add to Library" }).click();
     await learner.waitForURL(new RegExp(`/library/${ids[onPage.slug]}$`));
     // Library's own filter, which the page it came from does not have: the deck's name and its
     // cards both appear on either page, so neither proves the new screen has taken over.

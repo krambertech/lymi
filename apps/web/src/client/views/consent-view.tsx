@@ -77,12 +77,12 @@ export function ConsentView({
               <p className="max-w-[32ch] text-center text-sm text-muted">
                 {claimed ? (
                   <Trans>
-                    It calls itself “{claimed}”. Lymi cannot check that. The address above is the
-                    part that is checked.
+                    It calls itself “{claimed}”, but Lymi can’t confirm that. Only the address above
+                    is checked.
                   </Trans>
                 ) : (
                   <Trans>
-                    Lymi does not recognise this app. Check the address is one you meant to use.
+                    Lymi doesn’t recognise this app. Allow it only if you trust the address above.
                   </Trans>
                 )}
               </p>
@@ -100,7 +100,7 @@ export function ConsentView({
                 <Trans>See your decks and cards</Trans>
               </span>
               <span className="text-sm text-muted">
-                <Trans>List, search and read them. Any connector needs this.</Trans>
+                <Trans>List, search and read them. Every AI app needs this.</Trans>
               </span>
             </span>
             <span className="mt-1 shrink-0 text-sm text-muted">
@@ -123,7 +123,8 @@ export function ConsentView({
                   </FieldLabel>
                   <FieldDescription>
                     <Trans>
-                      What it adds lands at once and is labelled. You can edit or archive any of it.
+                      Changes appear right away and are listed in Activity. You can edit or archive
+                      any card.
                     </Trans>
                   </FieldDescription>
                 </FieldContent>
@@ -138,7 +139,7 @@ export function ConsentView({
 
         <div className="mt-4 border-t border-edge pt-4">
           <p className="text-sm font-medium text-text-2">
-            <Trans>Never, whatever you choose</Trans>
+            <Trans>Never allowed</Trans>
           </p>
           <ul className="mt-1.5 grid gap-1">
             {never.map((what) => (
@@ -184,7 +185,7 @@ export function ConsentView({
         {email && (
           <p className="text-center text-sm text-muted">
             <Trans>
-              Granting as <span className="text-text-2">{email}</span>
+              Signed in as <span className="text-text-2">{email}</span>
             </Trans>
           </p>
         )}

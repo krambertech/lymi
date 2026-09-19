@@ -68,7 +68,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
 
   await test.step("opening the add page again changes nothing", async () => {
     await visitor.goto(`/add/${slug}`);
-    await expect(visitor.getByText("This deck is already in your Library.")).toBeVisible();
+    await expect(visitor.getByText("This deck is already in Library.")).toBeVisible();
     await expect(visitor.getByRole("link", { name: "Open deck" })).toBeVisible();
     const again = await visitor.request.post(`/api/add/${slug}`, {
       headers: { "content-type": "application/json" },

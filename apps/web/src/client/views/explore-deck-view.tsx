@@ -84,7 +84,7 @@ export function ExploreDeckView({
           }
           body={
             missing ? (
-              <Trans>It may have been withdrawn. Explore has everything Lymi publishes now.</Trans>
+              <Trans>It may have been withdrawn. Find other decks in Explore.</Trans>
             ) : undefined
           }
           onRetry={missing ? undefined : onRetry}
@@ -165,13 +165,13 @@ export function ExploreDeckView({
               </Link>
               <p className="flex items-center gap-1.5 text-sm text-text-2 [&_svg]:size-4">
                 <Check aria-hidden="true" className="text-state-known" />
-                <Trans>Already in your library</Trans>
+                <Trans>Already in Library</Trans>
               </p>
             </div>
           ) : (
             <Button variant="primary" size="lg" onClick={onAdd} loading={adding}>
               <Plus aria-hidden="true" />
-              <Trans>Add to your library</Trans>
+              <Trans>Add to Library</Trans>
             </Button>
           )}
         </div>

@@ -275,8 +275,8 @@ function GroupList({
               <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-plate-2 px-4 py-3">
                 <p className="min-w-0 flex-1 basis-48 text-base text-text-2">
                   <Trans>
-                    <span className="font-medium text-text">{section.name} is ready.</span> Its
-                    cards join your reviews once you start it.
+                    <span className="font-medium text-text">{section.name} is ready.</span> Start it
+                    to review its cards.
                   </Trans>
                 </p>
                 <Button size="sm" onClick={() => onStart(section)}>
@@ -297,7 +297,7 @@ function GroupList({
             {group.rows.length === 0 ? (
               <p className="rounded-lg border border-dashed border-edge-2 px-5 py-4 text-base text-muted">
                 {movable ? (
-                  <Trans>No cards yet. Drag cards here, or select some and move them.</Trans>
+                  <Trans>No cards yet. Drag cards here, or select cards and move them.</Trans>
                 ) : (
                   <Trans>No cards yet.</Trans>
                 )}

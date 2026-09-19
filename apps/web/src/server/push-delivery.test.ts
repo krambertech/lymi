@@ -71,31 +71,26 @@ describe("review reminder delivery", () => {
   });
 
   it("uses the right reminder plurals in every app language", async () => {
-    const bodies = {
-      en: [
-        "One card is waiting when you have a moment.",
-        "2 cards are waiting when you have a moment.",
-        "5 cards are waiting when you have a moment.",
-        "21 cards are waiting when you have a moment.",
-      ],
+    const titles = {
+      en: ["1 card to review", "2 cards to review", "5 cards to review", "21 cards to review"],
       uk: [
-        "1 картка чекає, коли матимеш хвилинку.",
-        "2 картки чекають, коли матимеш хвилинку.",
-        "5 карток чекають, коли матимеш хвилинку.",
-        "21 картка чекає, коли матимеш хвилинку.",
+        "1 картка для повторення",
+        "2 картки для повторення",
+        "5 карток для повторення",
+        "21 картка для повторення",
       ],
       ru: [
-        "1 карточка ждёт, когда у тебя будет минутка.",
-        "2 карточки ждут, когда у тебя будет минутка.",
-        "5 карточек ждут, когда у тебя будет минутка.",
-        "21 карточка ждёт, когда у тебя будет минутка.",
+        "1 карточка для повторения",
+        "2 карточки для повторения",
+        "5 карточек для повторения",
+        "21 карточка для повторения",
       ],
     } as const;
-    for (const [locale, expected] of Object.entries(bodies)) {
+    for (const [locale, expected] of Object.entries(titles)) {
       const actual = await Promise.all([1, 2, 5, 21].map((due) => reminderCopy(due, locale)));
-      expect(actual.map((copy) => copy.body)).toEqual(expected);
+      expect(actual.map((copy) => copy.title)).toEqual(expected);
     }
-    expect((await reminderCopy(3, "xx")).title).toBe("A few cards are ready");
+    expect((await reminderCopy(3, "xx")).body).toBe("Review whenever you have a moment.");
   });
 
   it("claims the local date and sends one reminder", async () => {

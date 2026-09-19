@@ -90,10 +90,10 @@ export function ImportStartView({
     // Checked before anything is sent, with the same limits the server applies.
     const problem = !FILE_NAME[source].test(file.name)
       ? source === "mochi"
-        ? t`Choose the .mochi file Mochi exports.`
+        ? t`This isn’t a .mochi file. Choose the file you exported from Mochi.`
         : source === "lymi"
-          ? t`Choose the .zip file Lymi exports.`
-          : t`Choose the .apkg or .colpkg file Anki exports.`
+          ? t`This isn’t a .zip file. Choose the file you exported from Lymi.`
+          : t`This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki.`
       : file.size > MAX_IMPORT_BYTES
         ? t`This file is larger than 1 GB. Export one deck at a time.`
         : file.size === 0
@@ -109,13 +109,13 @@ export function ImportStartView({
       <p className="-mt-4 max-w-[60ch] text-md text-text-2 text-pretty">
         {source === "lymi" ? (
           <Trans>
-            Bring decks from another Lymi account with their pictures, tags and review history. Your
-            cards keep the due dates they had.
+            Import decks from another Lymi account, with their pictures, tags and review history.
+            Cards keep their due dates.
           </Trans>
         ) : (
           <Trans>
-            Bring your decks across with their pictures, tags and review history. Your cards keep
-            the due dates they had, and {app} stays as it is.
+            Import your decks with their pictures, tags and review history. Cards keep their due
+            dates, and {app} is unchanged.
           </Trans>
         )}
       </p>
@@ -208,9 +208,9 @@ export function ImportStartView({
           className="justify-self-start text-base font-medium text-text underline underline-offset-4"
         >
           {source !== "anki" ? (
-            <Trans>Something went wrong? Read the guide</Trans>
+            <Trans>Stuck? Read the guide</Trans>
           ) : (
-            <Trans>On a phone, or something went wrong? Read the guide</Trans>
+            <Trans>On a phone, or stuck? Read the guide</Trans>
           )}
         </a>
       </section>
@@ -255,7 +255,7 @@ const MOCHI_STEPS = [
     id: "everything",
     node: (
       <Trans>
-        To bring every deck at once, open{" "}
+        To export every deck at once, open{" "}
         <strong className="font-medium text-text">Settings</strong> and choose{" "}
         <strong className="font-medium text-text">Export everything</strong> instead.
       </Trans>
@@ -316,7 +316,7 @@ export function ImportWorkingView({
       <Shell title={t`Import from ${app}`} sub={sub} back={back}>
         <section className="edge grid gap-3 rounded-xl bg-plate p-5">
           <h2 className="text-lg font-medium">
-            <Trans>The upload stopped part way</Trans>
+            <Trans>The upload stopped partway</Trans>
           </h2>
           <p className="text-base text-text-2">
             {t`${Math.round((item.upload.received / item.upload.parts) * 100)}% of the file arrived. Choose the same file to send the rest.`}
@@ -374,7 +374,7 @@ export function ImportWorkingView({
         : t`Reading your file`;
   const detail =
     item.status === "importing"
-      ? t`You can close Lymi now. The import keeps going, and your decks appear in Library when it’s done.`
+      ? t`You can close Lymi now. Your decks appear in Library when the import finishes.`
       : uploadingNow && upload.status !== "joining"
         ? t`${fileSize(upload.sent, i18n.locale)} of ${fileSize(upload.total, i18n.locale)}. Keep Lymi open until the upload finishes.`
         : t`This takes a few seconds for most files. Nothing is added to your decks yet.`;
@@ -542,8 +542,8 @@ export function ImportPreviewView({
         <div className="-mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-text-2">
           <p className="text-pretty">
             {plural(restNotes, {
-              one: "# more note, of a less common kind, comes across as it is.",
-              other: "# more notes, of less common kinds, come across as they are.",
+              one: "# more note of a less common kind is imported as it is.",
+              other: "# more notes of less common kinds are imported as they are.",
             })}
           </p>
           <Button variant="ghost" size="sm" className="-ms-3" onClick={() => setShowRest(true)}>
@@ -554,7 +554,7 @@ export function ImportPreviewView({
 
       <section aria-labelledby="coming-across" className="grid gap-3">
         <h2 id="coming-across" className="text-md font-medium">
-          <Trans>What comes across</Trans>
+          <Trans>In this import</Trans>
         </h2>
         <div className="edge grid grid-cols-3 rounded-xl bg-plate">
           <Figure value={preview?.added} label={t`new cards`} loading={previewLoading} />
@@ -603,9 +603,8 @@ export function ImportPreviewView({
             {preview.existing > 0 && (
               <Line tone="good">
                 {plural(preview.existing, {
-                  one: "# card came across in an earlier import. It isn’t added again; only its empty fields are filled.",
-                  other:
-                    "# cards came across in an earlier import. They aren’t added again; only their empty fields are filled.",
+                  one: "# card was in an earlier import. Only its empty fields are filled.",
+                  other: "# cards were in an earlier import. Only their empty fields are filled.",
                 })}
               </Line>
             )}
@@ -614,8 +613,8 @@ export function ImportPreviewView({
                 <details className="group">
                   <summary className="cursor-pointer list-none underline-offset-4 hoverable:hover:underline [&::-webkit-details-marker]:hidden">
                     {plural(preview.duplicates, {
-                      one: "# term is already in Lymi, so it’s skipped.",
-                      other: "# terms are already in Lymi, so they’re skipped.",
+                      one: "# card is already in your decks, so it’s skipped.",
+                      other: "# cards are already in your decks, so they’re skipped.",
                     })}
                   </summary>
                   <ul className="mt-2 grid gap-1 text-sm">
@@ -668,17 +667,17 @@ export function ImportPreviewView({
             {preview.audio > 0 && (
               <Line tone="skip">
                 {plural(preview.audio, {
-                  one: "# sound is left out. Lymi says words out loud itself.",
-                  other: "# sounds are left out. Lymi says words out loud itself.",
+                  one: "# sound is skipped. Lymi reads terms aloud itself.",
+                  other: "# sounds are skipped. Lymi reads terms aloud itself.",
                 })}
               </Line>
             )}
             {oneSided > 0 && (
               <Line tone="skip">
                 {plural(oneSided, {
-                  one: "# card has no --- line, so it comes across with a term and no meaning.",
+                  one: "# card has no --- line, so it’s imported with a term and no meaning.",
                   other:
-                    "# cards have no --- line, so they come across with a term and no meaning.",
+                    "# cards have no --- line, so they’re imported with a term and no meaning.",
                 })}
               </Line>
             )}
@@ -686,12 +685,12 @@ export function ImportPreviewView({
               <Line tone="skip">
                 {item.source !== "anki"
                   ? plural(preview.skipped, {
-                      one: "# card is left out: it has no term.",
-                      other: "# cards are left out: they have no term.",
+                      one: "# card has no term, so it’s skipped.",
+                      other: "# cards have no term, so they’re skipped.",
                     })
                   : plural(preview.unsupported + preview.skipped, {
-                      one: "# note is left out: it’s image occlusion or has no term.",
-                      other: "# notes are left out: they’re image occlusion or have no term.",
+                      one: "# note is image occlusion or has no term, so it’s skipped.",
+                      other: "# notes are image occlusion or have no term, so they’re skipped.",
                     })}
               </Line>
             )}
@@ -720,9 +719,9 @@ export function ImportPreviewView({
           <span className={clsx("text-sm", missingLanguage > 0 ? "text-text-2" : "text-muted")}>
             {missingLanguage > 0
               ? plural(missingLanguage, {
-                  one: "# deck has no language yet. Choose one so Lymi can find duplicates and say words.",
+                  one: "# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.",
                   other:
-                    "# decks have no language yet. Choose one so Lymi can find duplicates and say words.",
+                    "# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.",
                 })
               : languagesLine(summary.decks, choices.languages, i18n.locale, t`No language`)}
           </span>
@@ -749,7 +748,10 @@ export function ImportPreviewView({
               setCheckError(
                 asked.length === 1
                   ? t`Check that the card looks right first.`
-                  : t`Check each kind of card first. ${unchecked} still to check.`,
+                  : plural(unchecked, {
+                      one: "Check # more kind of card first.",
+                      other: "Check # more kinds of card first.",
+                    }),
               );
               const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
               document
@@ -860,16 +862,16 @@ export function ImportDoneView({
             {counts.reviews > 0 && (
               <Line tone="good">
                 {plural(counts.reviews, {
-                  one: "# past review came across.",
-                  other: "# past reviews came across.",
+                  one: "# past review was imported.",
+                  other: "# past reviews were imported.",
                 })}
               </Line>
             )}
             {counts.pictures > 0 && (
               <Line tone="good">
                 {plural(counts.pictures, {
-                  one: "# picture came across.",
-                  other: "# pictures came across.",
+                  one: "# picture was imported.",
+                  other: "# pictures were imported.",
                 })}
               </Line>
             )}
@@ -884,16 +886,16 @@ export function ImportDoneView({
             {counts.duplicates > 0 && (
               <Line tone="skip">
                 {plural(counts.duplicates, {
-                  one: "# term was already in Lymi and was skipped.",
-                  other: "# terms were already in Lymi and were skipped.",
+                  one: "# card was already in your decks and was skipped.",
+                  other: "# cards were already in your decks and were skipped.",
                 })}
               </Line>
             )}
             {counts.picturesSkipped > 0 && (
               <Line tone="skip">
                 {plural(counts.picturesSkipped, {
-                  one: "# picture couldn’t be read and was left out.",
-                  other: "# pictures couldn’t be read and were left out.",
+                  one: "# picture couldn’t be read and was skipped.",
+                  other: "# pictures couldn’t be read and were skipped.",
                 })}
               </Line>
             )}

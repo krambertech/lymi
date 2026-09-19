@@ -273,10 +273,10 @@ function TapHint() {
       {/* Touch wording on a phone, the shortcut where there is a keyboard to press it with. */}
       <p className="flex items-center gap-2 text-center text-sm font-medium">
         <span className="@2xl:hidden">
-          <Trans>Tap the card when you have it</Trans>
+          <Trans>Recall the answer, then tap the card</Trans>
         </span>
         <span className="hidden @2xl:inline">
-          <Trans>Reveal the card when you have it</Trans>
+          <Trans>Recall the answer, then reveal the card</Trans>
         </span>
         <span className="hidden @2xl:inline-flex">
           <Kbd>Space</Kbd>
@@ -1105,7 +1105,7 @@ export function ReviewComplete({
             <Trans>Daily goal reached</Trans>
           ) : screen.heading === "nothing_left" ? (
             !screen.namesDeck ? (
-              <Trans>Nothing left today</Trans>
+              <Trans>You’re done for today</Trans>
             ) : scopeName ? (
               <Trans>Nothing left in {scopeName}</Trans>
             ) : (
@@ -1141,7 +1141,7 @@ export function ReviewComplete({
           </p>
         ) : (
           <p className="seq mt-2 max-w-[32ch] text-pretty text-md text-text-2" style={at(AT.count)}>
-            <Trans>Come back later, or add something new.</Trans>
+            <Trans>Come back later, or add new cards.</Trans>
           </p>
         )}
 

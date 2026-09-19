@@ -58,7 +58,7 @@ export function ApiKeysSection() {
     <SettingsGroup
       id="api-keys"
       title={t`API keys`}
-      description={t`For scripts and curl. An assistant signs in instead, under Connected apps.`}
+      description={t`For scripts and curl. For AI apps, use Connected apps instead.`}
     >
       {fresh && (
         <FreshKey
@@ -88,7 +88,7 @@ export function ApiKeysSection() {
         <EmptySection
           icon={<KeyRound />}
           title={t`No keys yet`}
-          body={t`A key lets a script or curl read your decks, or add to them.`}
+          body={t`Lets a script read or add to your decks.`}
           action={
             <>
               <Button variant="primary" onClick={() => setMaking(true)}>
@@ -96,7 +96,7 @@ export function ApiKeysSection() {
                 <Trans>New key</Trans>
               </Button>
               <a href={publicSiteUrl("/docs/quickstart")} className={buttonClass("secondary")}>
-                <Trans>Read the quickstart</Trans>
+                <Trans>Quickstart</Trans>
               </a>
             </>
           }
@@ -305,7 +305,7 @@ function FreshKey({
         <Lantern className="size-8 shrink-0" glow fed={fed} />
         <p className="text-base text-text">
           <Trans>
-            <span className="font-medium">{name}</span> is ready. Copy it now. It is not shown
+            <span className="font-medium">{name}</span> is ready. Copy it now. You won’t see it
             again.
           </Trans>
         </p>

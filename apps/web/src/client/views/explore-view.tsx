@@ -77,10 +77,7 @@ export function ExploreView({
       {/* No count here: each shelf below counts its own, as it does on the public page. */}
       <PageHeader title={<Trans>Explore</Trans>}>
         <p className="mt-2 max-w-[52ch] text-base text-text-2">
-          <Trans>
-            Decks from Lymi, checked card by card. Add one and it starts in your library, in your
-            language.
-          </Trans>
+          <Trans>Ready-made decks from Lymi. Add one to study it in your language.</Trans>
         </p>
       </PageHeader>
 
@@ -108,10 +105,7 @@ export function ExploreView({
           icon={<Compass />}
           title={<Trans>Nothing published yet</Trans>}
           body={
-            <Trans>
-              Lymi is writing the first decks. Until then, make your own deck and share it with
-              anyone.
-            </Trans>
+            <Trans>Lymi is writing the first decks. Until then, make your own in Library.</Trans>
           }
         />
       ) : (

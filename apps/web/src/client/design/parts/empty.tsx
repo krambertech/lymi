@@ -127,7 +127,7 @@ export const empty: Group = {
                 <StartPanel
                   className="w-full"
                   title="No decks yet"
-                  body="Make one for each course or topic. Every card goes in a deck."
+                  body="Make one for each course or topic."
                   action={
                     <Button variant="primary" className="justify-self-start">
                       New deck
@@ -180,7 +180,7 @@ export const empty: Group = {
                   <EmptySection
                     icon={<KeyRound />}
                     title="No keys yet"
-                    body="A key lets a script or curl read your decks, or add to them."
+                    body="Lets a script read or add to your decks."
                     action={<Button variant="primary">New key</Button>}
                   />
                 </div>

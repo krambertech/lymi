@@ -60,11 +60,13 @@ test("an owner invites somebody by name and only they can come in", async ({
     // Never disabled: pressing it says what is missing instead of going dead.
     await expect(send).toBeEnabled();
     await send.click();
-    await expect(dialog.getByText("Type the email address you want to invite.")).toBeVisible();
+    await expect(dialog.getByText("Enter an email address.")).toBeVisible();
 
     await dialog.getByRole("textbox", { name: "Email address" }).fill("not-an-email");
     await send.click();
-    await expect(dialog.getByText("That does not look like an email address.")).toBeVisible();
+    await expect(
+      dialog.getByText("Enter a full email address, like anna@example.com."),
+    ).toBeVisible();
     await expect(dialog).toBeVisible();
   });
 
@@ -83,7 +85,7 @@ test("an owner invites somebody by name and only they can come in", async ({
     const again = page.getByRole("dialog");
     await again.getByRole("textbox", { name: "Email address" }).fill(invited);
     await again.getByRole("button", { name: "Send invitation" }).click();
-    await expect(again.getByText("They already have an invitation waiting.")).toBeVisible();
+    await expect(again.getByText("They already have a pending invitation.")).toBeVisible();
     await again.getByRole("button", { name: "Cancel", exact: true }).click();
     await expect(again).toBeHidden();
 
@@ -199,7 +201,7 @@ test("an owner invites somebody by name and only they can come in", async ({
     await page.getByRole("button", { name: `Options for ${name}` }).click();
     await page.getByRole("menuitem", { name: "Remove from deck" }).click();
     const confirm = page.getByRole("dialog");
-    await expect(confirm).toContainText("there is no way to add them again yet");
+    await expect(confirm).toContainText("can’t rejoin, by link or invitation");
     await confirm.getByRole("button", { name: "Remove member", exact: true }).click();
 
     await expect(people.getByRole("listitem")).toHaveCount(1);

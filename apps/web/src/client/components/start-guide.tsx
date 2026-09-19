@@ -42,7 +42,7 @@ export function StartGuide({
       body: (
         <>
           <p className="text-md text-text-2">
-            <Trans>Make one for each course or topic. Every card goes in a deck.</Trans>
+            <Trans>Make one for each course or topic.</Trans>
           </p>
           <Button
             variant="primary"

@@ -31,7 +31,7 @@ export function useAddPublishedDeck({ land }: { land: "library" | "here" }) {
       }
       toast.add({
         id: `added-${deckId}`,
-        title: t`“${name}” is in your library`,
+        title: t`Added “${name}” to Library`,
         actionProps: {
           children: t`Open`,
           onClick: () => navigate({ to: "/library/$deckId", params: { deckId } }),
@@ -43,8 +43,8 @@ export function useAddPublishedDeck({ land }: { land: "library" | "here" }) {
         type: "error",
         title:
           error instanceof ApiError && error.status === 404
-            ? t`This deck is no longer published.`
-            : t`Could not add the deck. Check your connection and try again.`,
+            ? t`Couldn’t add the deck. It’s no longer published.`
+            : t`Couldn’t add the deck. Check your connection and try again.`,
       });
     },
   });

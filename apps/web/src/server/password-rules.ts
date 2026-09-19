@@ -1,4 +1,9 @@
-import { MIN_PASSWORD_LENGTH, type PasswordProblem, passwordProblem } from "@lymi/core";
+import {
+  MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  type PasswordProblem,
+  passwordProblem,
+} from "@lymi/core";
 import type { MiddlewareHandler } from "hono";
 import type { AppEnv } from "./index";
 
@@ -46,7 +51,7 @@ function messageFor(problem: PasswordProblem): string {
     case "too-short":
       return `Use at least ${MIN_PASSWORD_LENGTH} characters.`;
     case "too-long":
-      return "That password is too long.";
+      return `Use at most ${MAX_PASSWORD_LENGTH} characters.`;
     case "too-common":
       return "That password is too easy to guess. Try another.";
     case "from-address":

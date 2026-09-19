@@ -43,9 +43,9 @@ export function ConnectedView({ app, scopes, refused, action }: ConnectedProps) 
       <p className="max-w-[34ch] text-md text-text-2">
         {refused ? (
           appName ? (
-            <Trans>Nothing was shared. You can start again from {appName} whenever you like.</Trans>
+            <Trans>Nothing was shared. You can try again from {appName}.</Trans>
           ) : (
-            <Trans>Nothing was shared. You can start again from the app whenever you like.</Trans>
+            <Trans>Nothing was shared. You can try again from the app.</Trans>
           )
         ) : scopes?.write ? (
           <Trans>It can read your cards, and add, edit and archive them.</Trans>

@@ -48,7 +48,7 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
     await expect(page.getByText("il gatto", { exact: true })).toBeVisible();
     await expect(page.getByText("Cards keep the due dates they had in Anki.")).toBeVisible();
     await expect(
-      page.getByText("1 sound is left out. Lymi says words out loud itself."),
+      page.getByText("1 sound is skipped. Lymi reads terms aloud itself."),
     ).toBeVisible();
     await expect(page.getByText("Italian and Japanese", { exact: true })).toBeVisible();
   });
@@ -56,7 +56,7 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
   await test.step("importing waits until every kind of card is confirmed", async () => {
     const importButton = page.getByRole("button", { name: "Import 10 cards", exact: true });
     await importButton.click();
-    await expect(page.getByText("Check each kind of card first. 4 still to check.")).toBeVisible();
+    await expect(page.getByText("Check 4 more kinds of card first.")).toBeVisible();
     await confirmEveryCard(page);
     await importButton.click();
     await expect(page.getByRole("heading", { name: "Imported 10 cards", exact: true })).toBeVisible(
@@ -64,8 +64,8 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
         timeout: 60_000,
       },
     );
-    await expect(page.getByText("11 past reviews came across.")).toBeVisible();
-    await expect(page.getByText("2 pictures came across.")).toBeVisible();
+    await expect(page.getByText("11 past reviews were imported.")).toBeVisible();
+    await expect(page.getByText("2 pictures were imported.")).toBeVisible();
   });
 
   await test.step("the decks are in Library and the import is in Activity", async () => {
@@ -103,9 +103,7 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
     await page.goto("/import/anki");
     await chooseFile(page);
     await expect(
-      page.getByText(
-        "10 cards came across in an earlier import. They aren’t added again; only their empty fields are filled.",
-      ),
+      page.getByText("10 cards were in an earlier import. Only their empty fields are filled."),
     ).toBeVisible({ timeout: 30_000 });
     await expect(page.getByRole("button", { name: "Update 10 cards", exact: true })).toBeVisible();
   });

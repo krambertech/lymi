@@ -102,7 +102,7 @@ export function LoginView({
               <Trans>Continue to {appName}</Trans>
             </h1>
             <p className="mt-2 max-w-[36ch] text-md text-text-2">
-              <Trans>Sign in before choosing what it may do.</Trans>
+              <Trans>Sign in, then choose what it can do.</Trans>
             </p>
           </div>
         ) : (
@@ -120,7 +120,7 @@ export function LoginView({
               {mode === "forgot" ? (
                 <Trans>We’ll email you a link to set a new one.</Trans>
               ) : mode === "sign-up" ? (
-                <Trans>It takes a minute, and Lymi is free to use.</Trans>
+                <Trans>Lymi is free to use.</Trans>
               ) : (
                 <Trans>Welcome back.</Trans>
               )}
@@ -234,7 +234,7 @@ export function LoginView({
                 {mode === "sign-up" ? (
                   <Trans>Create account</Trans>
                 ) : mode === "forgot" ? (
-                  <Trans>Send the link</Trans>
+                  <Trans>Send reset link</Trans>
                 ) : (
                   <Trans>Sign in</Trans>
                 )}

@@ -245,16 +245,16 @@ export function DeckSettingsView({
                 placeholder={t`Cards from Marco’s Tuesday lessons.`}
                 className="min-h-20"
               />
-              <FieldDescription>{t`A note to yourself about what is in here.`}</FieldDescription>
+              <FieldDescription>{t`What’s in this deck. Members see it too.`}</FieldDescription>
             </Field>
             <LanguageField
               value={deck.defaultLanguage}
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}
-              description={t`The language this deck’s cards are in. It starts every new card, and pronunciation and AI need it to work. Meanings are written in your meaning language, which follows the app language in Settings.`}
+              description={t`The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language.`}
             />
           </SettingsGroup>
 
-          <SettingsGroup title={t`How you are asked`}>
+          <SettingsGroup title={t`How cards are asked`}>
             <DirectionField
               value={deck.directions}
               onChange={(directions) => onSave({ directions })}
@@ -267,7 +267,7 @@ export function DeckSettingsView({
             <SettingsGroup
               id="sections"
               title={t`Sections`}
-              description={t`Parts of the deck, such as one lesson each. Everyone studying the deck sees them in this order.`}
+              description={t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
             >
               <SectionManager {...sections} />
               {sections.sections.length > 0 && <ProgressionField deck={deck} onSave={onSave} />}
@@ -282,8 +282,8 @@ export function DeckSettingsView({
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="max-w-sm text-sm text-muted">
                 <Trans>
-                  The deck leaves Library and its cards stop coming up. Nothing is deleted, and
-                  Restore puts it back.
+                  The deck leaves Library and its cards stop coming up in review. Restore brings it
+                  back.
                 </Trans>
               </p>
               <Button variant="danger" onClick={onArchive} aria-disabled={!onArchive}>
@@ -347,8 +347,8 @@ function DeckAbout({
         </div>
         <p className="max-w-[60ch] text-sm text-muted">
           <Trans>
-            You study the same cards {ownerName} does, on your own schedule. Your reviews and
-            progress are yours, and nobody else sees them.
+            You study the same cards as {ownerName}, on your own schedule. Nobody else sees your
+            reviews or progress.
           </Trans>
         </p>
       </SettingsGroup>
@@ -359,7 +359,7 @@ function DeckAbout({
           <Fact label={t`Language`}>
             {deck.defaultLanguage ? languageName(deck.defaultLanguage) : t`Not set`}
           </Fact>
-          <Fact label={t`How you are asked`}>
+          <Fact label={t`How cards are asked`}>
             <span className="grid gap-0.5">
               <span>{directionLabel(deck.directions)}</span>
               {direction && <span className="text-sm text-muted">{direction}</span>}
@@ -373,8 +373,8 @@ function DeckAbout({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="max-w-sm text-sm text-muted">
             <Trans>
-              The deck leaves Library and its cards stop coming up. Your reviews are kept, so
-              joining again picks up where you left off.
+              The deck leaves Library and its cards stop coming up in review. If you join again,
+              your reviews are still there.
             </Trans>
           </p>
           <Button variant="danger" onClick={onLeave} aria-disabled={!onLeave}>
@@ -408,7 +408,7 @@ function MembersGroup({
   return (
     <SettingsGroup
       title={t`People`}
-      description={t`Everyone studying this deck. You see whether they joined, never what they have studied.`}
+      description={t`Everyone studying this deck. You see whether they joined, not their reviews.`}
     >
       {error ? (
         <p className="text-sm text-danger" role="alert">
@@ -636,7 +636,7 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
           <RadioCard
             value="private"
             title={t`Private`}
-            description={t`Nobody new can join unless you invite them. Anyone already studying the deck stays.`}
+            description={t`Only people you invite can join. Current members stay.`}
           />
           <div
             className={clsx(

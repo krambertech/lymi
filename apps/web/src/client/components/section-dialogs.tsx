@@ -275,7 +275,7 @@ export function ArchivedSectionsDialog({
                         other="# cards come back with it"
                       />
                     ) : (
-                      <Trans>Restore puts the cards you kept back in it</Trans>
+                      <Trans>The cards you kept move back into it</Trans>
                     )}
                   </span>
                 </span>
@@ -486,8 +486,8 @@ export function StartEarlyDialog({ target: given, onOpenChange, onStart }: Start
             />{" "}
             <Plural
               value={cards}
-              one="# card joins your reviews."
-              other="# cards join your reviews."
+              one="# card is added to your reviews."
+              other="# cards are added to your reviews."
             />
           </DialogDescription>
         </DialogHeader>

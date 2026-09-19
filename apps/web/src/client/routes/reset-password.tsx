@@ -56,7 +56,7 @@ function ResetPassword() {
         if (res.error.status === 429)
           setFailed(i18n._(tooManyAttempts(minutesUntilRetry(res.error))));
         else if (res.error.code === "PASSWORD_TOO_LONG")
-          setPasswordError(t`That password is too long.`);
+          setPasswordError(i18n._(passwordMessage("too-long")));
         else if (res.error.code === "INVALID_TOKEN")
           setFailed(t`That reset link no longer works. Ask for a new one.`);
         else setFailed(t`Couldn’t reach Lymi. Check your connection and try again.`);

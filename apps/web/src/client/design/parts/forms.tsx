@@ -173,7 +173,7 @@ export const forms: Group = {
                     <Plus aria-hidden="true" />
                     New deck
                   </Button>
-                  <FieldDescription>Create a deck first. This card goes in it.</FieldDescription>
+                  <FieldDescription>Create a deck to add this card to.</FieldDescription>
                 </FieldSet>
               ),
             },
@@ -510,7 +510,7 @@ export const forms: Group = {
                 render: () => (
                   <Field orientation="horizontal" disabled className={`${box} gap-4`}>
                     <FieldContent className="gap-0.5">
-                      <FieldLabel className="text-base text-text">Send a daily reminder</FieldLabel>
+                      <FieldLabel className="text-base text-text">Daily reminder</FieldLabel>
                       <FieldDescription>
                         Notifications are blocked. Allow them in your browser settings.
                       </FieldDescription>

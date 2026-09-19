@@ -66,9 +66,9 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
     await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
     await page.getByRole("button", { name: "Good" }).click();
 
-    await expect(page.getByRole("heading", { name: "Nothing left today" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
     await page.reload();
     // The day keeps its outcome: everything was reviewed, which is not the same as nothing due.
-    await expect(page.getByRole("heading", { name: "Nothing left today" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
   });
 });

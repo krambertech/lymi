@@ -209,7 +209,7 @@ function OwnerLine({ deck }: { deck: DeckSummary }) {
 
 /** What a member sees in a shared deck with nothing in it yet. */
 function OwnerAddsCards({ owner }: { owner: string }) {
-  return <Trans>Cards show up here as {owner} adds them, and join your reviews.</Trans>;
+  return <Trans>Cards appear here when {owner} adds them.</Trans>;
 }
 
 /** The parts under a deck's title, dot-separated, or nothing when there are none. */
@@ -305,7 +305,7 @@ function DeckPlates({
                 <Plural value={due} one="card to review now" other="cards to review now" />
               </p>
               {next ? (
-                <p className="text-sm text-muted">{t`The next card is back ${next}.`}</p>
+                <p className="text-sm text-muted">{t`Next card due ${next}.`}</p>
               ) : (
                 status && <p className="text-sm text-muted">{status}</p>
               )}
@@ -407,7 +407,7 @@ function ListTools({
   const dueName = { today: t`Due today`, week: t`Due this week` };
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
-    due: t`When it’s back`,
+    due: t`Due date`,
     added: t`Recently added`,
     az: t`A–Z`,
   };
@@ -603,7 +603,7 @@ function SelectionToolbar({
         className="me-auto min-w-0 truncate ps-1 text-base font-medium tabular-nums"
         aria-live="polite"
       >
-        <Plural value={count} _0="Choose cards" one="# selected" other="# selected" />
+        <Plural value={count} _0="Select cards" one="# selected" other="# selected" />
       </p>
       <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
         {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
@@ -953,7 +953,7 @@ export function DeckDetailView({
         {failure === "gone" ? (
           <ErrorState
             title={t`This deck is no longer here`}
-            body={t`It may have been archived, or shared with you and then removed.`}
+            body={t`It may have been archived, or you were removed from it.`}
             action={toLibrary(buttonClass("primary"), t`Open Library`)}
           />
         ) : (
@@ -1172,7 +1172,7 @@ export function DeckDetailView({
         {/* The search and the filter stay in view, so no match is a line, not a screen. */}
         {shown && shown.length === 0 && cards && cards.length > 0 && (
           <NoResults
-            title={query ? t`Nothing matches “${query}”` : t`No cards match these filters`}
+            title={query ? t`No cards match “${query}”` : t`No cards match these filters`}
             detail={query ? <Trans>Search looks at the term and the meaning.</Trans> : undefined}
             action={
               filtered ? (

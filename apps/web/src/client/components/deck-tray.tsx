@@ -139,14 +139,14 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
             className="inline-flex h-8 items-center gap-1.5 rounded-sm px-2 -ms-2 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
           >
             <Check aria-hidden="true" className="text-state-known" />
-            <Trans>In your library</Trans>
+            <Trans>In Library</Trans>
           </Link>
         ) : (
           <Button
             size="sm"
             onClick={onAdd}
             loading={adding}
-            aria-label={t`Add “${deck.name}” to your library`}
+            aria-label={t`Add “${deck.name}” to Library`}
           >
             <Plus aria-hidden="true" />
             <Trans>Add</Trans>

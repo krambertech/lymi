@@ -742,9 +742,6 @@ msgstr "All at once"
 msgid "Allow"
 msgstr "Allow"
 
-msgid "Already in Library"
-msgstr "Already in Library"
-
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
 

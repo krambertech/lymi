@@ -19,14 +19,43 @@ function termStep(term: string): number {
   return longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14;
 }
 
+/** A card's section, term and meaning as a tray draws them, sized by the `--cw` around it. */
+export function TrayCardFace({
+  card,
+  language,
+  meaningLanguage,
+}: {
+  card: NonNullable<PublicDeckSummary["card"]>;
+  language: string | null;
+  meaningLanguage: string;
+}) {
+  return (
+    <>
+      {card.section && (
+        <p lang={meaningLanguage} className="deck-tray-section">
+          {card.section}
+        </p>
+      )}
+      <p
+        lang={language ?? undefined}
+        className="deck-tray-term"
+        style={{ "--t": termStep(card.term) } as CSSProperties}
+      >
+        {card.term}
+      </p>
+      <p lang={meaningLanguage} className="deck-tray-meaning">
+        {card.meaning}
+      </p>
+    </>
+  );
+}
+
 interface TrayProps {
   slug: string;
   cardCount: number;
   card: PublicDeckSummary["card"];
   language: string | null;
   meaningLanguage: string;
-  /** "lg" is the deck's own page, where one tray stands alone rather than in a row. */
-  size?: "lg" | undefined;
   className?: string | undefined;
 }
 
@@ -41,39 +70,21 @@ export function DeckTray({
   card,
   language,
   meaningLanguage,
-  size,
   className,
 }: TrayProps) {
   const hue = trayHue(slug);
   if (!card) {
-    return (
-      <div
-        className={clsx("deck-tray", className)}
-        data-hue={hue}
-        data-size={size}
-        aria-hidden="true"
-      />
-    );
+    return <div className={clsx("deck-tray", className)} data-hue={hue} aria-hidden="true" />;
   }
   return (
-    <div className={clsx("deck-tray", className)} data-hue={hue} data-size={size}>
+    <div className={clsx("deck-tray", className)} data-hue={hue}>
       <div className="deck-tray-stack">
         {Array.from({ length: paperFor(cardCount) }, (_, at) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
           <span key={at} className="deck-tray-paper" data-at={at + 1} aria-hidden="true" />
         ))}
-        <article className="deck-tray-card" style={{ "--t": termStep(card.term) } as CSSProperties}>
-          {card.section && (
-            <p lang={meaningLanguage} className="deck-tray-section">
-              {card.section}
-            </p>
-          )}
-          <p lang={language ?? undefined} className="deck-tray-term">
-            {card.term}
-          </p>
-          <p lang={meaningLanguage} className="deck-tray-meaning">
-            {card.meaning}
-          </p>
+        <article className="deck-tray-card">
+          <TrayCardFace card={card} language={language} meaningLanguage={meaningLanguage} />
         </article>
       </div>
     </div>
@@ -92,8 +103,7 @@ interface TileProps {
 /**
  * A deck on a shelf: its card in a tray, its name, and the one press that adds it. The name is
  * the largest thing in the group and the card's term sets smaller than it. Add is secondary
- * here rather than amber — a shelf of decks has no single thing to press, and the deck's own
- * page is where the amber button lives. DESIGN.md, "Colour".
+ * here rather than amber — a shelf of decks has no single thing to press. DESIGN.md, "Colour".
  */
 export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
   const { t } = useLingui();
@@ -156,12 +166,15 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
   );
 }
 
-/** Level, cards and sections, in that order, on one line. */
+/** Cards and sections, in that order, on one line. */
 export function DeckMeta({
   deck,
+  size = "xs",
   className,
 }: {
-  deck: Pick<PublicDeckSummary, "level" | "cardCount" | "sectionCount">;
+  deck: Pick<PublicDeckSummary, "cardCount" | "sectionCount">;
+  /** "sm" is the deck's own page, where the line sits beside the byline in its tone. */
+  size?: "xs" | "sm" | undefined;
   className?: string | undefined;
 }) {
   const dot = (
@@ -172,16 +185,11 @@ export function DeckMeta({
   return (
     <p
       className={clsx(
-        "flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted tabular-nums",
+        "flex flex-wrap items-center gap-x-1.5 gap-y-1 tabular-nums",
+        size === "sm" ? "text-sm text-text-2" : "text-xs text-muted",
         className,
       )}
     >
-      {deck.level && (
-        <>
-          <span>{deck.level}</span>
-          {dot}
-        </>
-      )}
       <span>
         <Plural value={deck.cardCount} one="# card" other="# cards" />
       </span>

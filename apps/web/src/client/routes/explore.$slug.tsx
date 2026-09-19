@@ -14,8 +14,8 @@ function ExploreDeck() {
   const { slug } = Route.useParams();
   const { data, error, isError, isFetching, refetch } = useQuery(exploreDeckQuery(slug));
   useDocumentTitle(data?.deck.name);
-  // The learner opened this deck on purpose, so adding it takes them to it.
-  const add = useAddPublishedDeck({ land: "library" });
+  // The page itself shows the deck arriving in Library, so no toast repeats it.
+  const add = useAddPublishedDeck({ announce: "page" });
   return (
     <ExploreDeckView
       data={data}
@@ -29,6 +29,7 @@ function ExploreDeck() {
         add.mutate({ slug, name: data.deck.name, edition: data.deck.meaningLanguage })
       }
       adding={add.isPending}
+      added={add.isSuccess}
     />
   );
 }

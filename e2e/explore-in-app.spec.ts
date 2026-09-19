@@ -12,8 +12,8 @@ const tile = (page: Page, name: string) =>
 
 /**
  * Explore inside the product: a learner finds a published deck without leaving Lymi and adds it
- * in one press. Adding from a shelf leaves them browsing; adding from the deck's own page opens
- * it in Library. Issue #106, ADR 0016, ADR 0020.
+ * in one press. Adding leaves them where they pressed: a shelf raises a toast, and the deck's own page
+ * offers the deck in Library. Issue #106, ADR 0016, ADR 0020.
  */
 test("a learner adds a published deck from Explore without leaving the app", async ({
   page,
@@ -114,9 +114,13 @@ test("a learner adds a published deck from Explore without leaving the app", asy
   });
 
   // Last, because it leaves the app on another screen: nothing after it can race the router.
-  await test.step("adding from the deck's page opens it in Library", async () => {
+  await test.step("adding from the deck's page keeps the learner there and offers the deck", async () => {
     await learner.goto(`/explore/${onPage.slug}`);
     await learner.getByRole("button", { name: "Add to Library" }).click();
+    const open = learner.getByRole("link", { name: "Open in Library" });
+    await expect(open).toBeVisible();
+    await expect(learner).toHaveURL(new RegExp(`/explore/${onPage.slug}$`));
+    await open.click();
     await learner.waitForURL(new RegExp(`/library/${ids[onPage.slug]}$`));
     // Library's own filter, which the page it came from does not have: the deck's name and its
     // cards both appear on either page, so neither proves the new screen has taken over.

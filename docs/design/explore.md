@@ -44,12 +44,12 @@ The shelves and the tray are the public page's. What is added is one press: **Ad
 
 The one departure from the public page is that a tile here **is a card**, where the public page sets the deck's name on the open canvas below its tray. The press is why: a button under a name on bare canvas belongs to nothing and reads as loose, so the group it acts on has to be a surface. The tray keeps its hue inside that card, with its corners stepped down by the card's padding.
 
-`/explore/<slug>` is the deck in the app's chrome, on the same column and the same title as every other screen: the name, the publisher under it behind the app's mark, the summary, the counts and **Add to your library**, with one of the deck's own cards in its tray beside them. Under that come the sections in order and every card under a closed disclosure per section.
+`/explore/<slug>` is the deck in the app's chrome, on the same column as every other screen. Its header is one line naming the publisher behind their mark and the deck's card and section counts, then the name, the summary and **Add to Library**, with a hand of up to three of the deck's cards beside them on desktop and above them on a phone. The hand takes one card per section before a second from any, so it shows the deck's range. Under the header come the sections in order and every card under a closed disclosure per section. The product shows no level.
 
-The deck's colour lives on that tray and nowhere else. A full-bleed band of it was drawn first and rejected: against the rail it ended on an arbitrary edge, and it put an amber button on a coloured ground, where amber stops reading as the one thing to press. The tray is also the object the learner just pressed on the shelf, so the same card in the same colour meets them here.
+The deck's colour is the ground of the whole header, back included: a band from the rail to the window's edge and up under the status bar, with its text on the page's own column. Add is white on it rather than amber, because amber on a coloured ground stops reading as the thing to press.
 
-The tray on this page shows its card **whole**, where a tray on a shelf cuts it at two thirds. A row of cropped cards reads as a shelf; one cropped card on its own reads as a rendering fault.
+Adding leaves the learner on the page. The fan gathers into one squared stack under a check and the button becomes **Open in Library**, so the page itself says the deck arrived and no toast repeats it. A deck already in Library opens as that stack. Under reduced motion the stack and the check are simply there.
 
-Amber lives on this page and nowhere else in Explore, because this page does have one thing to press; pressing it opens the deck in Library, since a learner who opened the page came for that deck. Search, the shelf filters and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
+Search, the shelf filters and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
 
 A deck is still shared as `lymi.app/explore/<slug>` and never as a product address, so a link works for someone who has no account. A signed-out visitor who opens the product address is sent to sign in and lands here afterwards, like any other screen behind authentication.

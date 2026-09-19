@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
-import { BookMarked, Bookmark, Loader2, Pointer, Tag, Volume2, X } from "lucide-react";
+import { BookMarked, ListTree, Loader2, Pointer, Signpost, Tag, Volume2, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -310,6 +310,8 @@ export interface ReviewCardProps {
   item: QueueItem;
   /** The deck the card came from, named first on the card. A review can mix every deck. */
   deck?: { name: string; language?: string | null | undefined } | undefined;
+  /** The deck's section the card is in, named after the deck. */
+  section?: string | undefined;
   revealed: boolean;
   animateReveal?: boolean | undefined;
   /** The words fade in as the card arrives. Off when the grade before it came from the keyboard. */
@@ -409,6 +411,7 @@ function measureFit(els: FitElements) {
 export function ReviewCard({
   item,
   deck,
+  section,
   revealed,
   animateReveal = true,
   animateIn = false,
@@ -489,6 +492,13 @@ export function ReviewCard({
 
   const step = fit.step;
   const hasExtras = !!(card.example || card.notes);
+  const languageCode =
+    card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
+      ? card.language.toUpperCase()
+      : null;
+  const tail = [mode.cue === "image" ? i18n._(modeLabel(mode)) : null, languageCode].filter(
+    (part): part is string => !!part,
+  );
   // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
   const aiMeaning = card.meaningSource === "ai";
   const aiExample = card.exampleSource === "ai" && !!card.example;
@@ -636,7 +646,7 @@ export function ReviewCard({
               {card.source && (
                 <Chip size="sm" className="min-w-0 max-w-full">
                   {/* The editor's icons for these fields, so a source and a tag read apart. */}
-                  <Bookmark className="size-3 shrink-0" aria-hidden="true" />
+                  <Signpost className="size-3 shrink-0" aria-hidden="true" />
                   <span className="sr-only">{t`Source`}</span>
                   <span className="truncate">{card.source}</span>
                 </Chip>
@@ -696,19 +706,26 @@ export function ReviewCard({
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  {/* The mode keeps its width: it says what is being asked, and the review does not
-                      depend on the deck name, so on a narrow phone the name truncates first. */}
+                  {/* The section is the news, so on a narrow phone the deck name truncates first. */}
                   <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
-                  <span aria-hidden="true">·</span>
                 </>
               )}
-              <span className="max-w-full shrink-0 truncate">
-                {i18n._(modeLabel(mode))}
-                {/* The deck implies its language, so the code shows only for a card that differs. */}
-                {card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase() && (
-                  <span> · {card.language.toUpperCase()}</span>
-                )}
-              </span>
+              {section && (
+                <>
+                  {deck && <span aria-hidden="true">·</span>}
+                  <ListTree className="size-3.5 shrink-0" aria-hidden="true" />
+                  <span className="sr-only">{t`Section`}</span>
+                  <span className="min-w-0 max-w-[60%] shrink-0 truncate">{section}</span>
+                </>
+              )}
+              {/* A text cue says what to recall by itself; only a picture needs its mode named.
+                  The deck implies its language, so the code shows only for a card that differs. */}
+              {tail.length > 0 && (
+                <>
+                  {(deck || section) && <span aria-hidden="true">·</span>}
+                  <span className="max-w-full shrink-0 truncate">{tail.join(" · ")}</span>
+                </>
+              )}
             </span>
             <StateChip state={item.fsrsState} size="lg" inReview />
           </div>

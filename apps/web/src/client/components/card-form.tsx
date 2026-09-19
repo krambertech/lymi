@@ -14,7 +14,6 @@ import { cn } from "cn";
 import {
   AlertCircle,
   AudioLines,
-  Bookmark,
   Check,
   ChevronDown,
   Image as ImageIcon,
@@ -22,6 +21,7 @@ import {
   NotebookPen,
   Plus,
   Settings2,
+  Signpost,
   Tag,
   TextQuote,
 } from "lucide-react";
@@ -754,7 +754,7 @@ export function CardForm({
               {pronunciationField}
             </FieldChip>
             <FieldChip
-              icon={Bookmark}
+              icon={Signpost}
               label={t`Source`}
               value={source.trim()}
               invalid={!!invalid.source}

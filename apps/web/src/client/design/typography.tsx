@@ -86,7 +86,7 @@ const SCALE: {
     size: "12 / 1.4",
     weight: "500",
     use: "Chips, table headers, section eyebrows.",
-    sample: "Recognition · it",
+    sample: "Lezione 3 · it",
   },
   {
     name: "2xs",

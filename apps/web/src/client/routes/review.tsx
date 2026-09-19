@@ -22,7 +22,14 @@ import { usePrefetchPictures } from "../lib/card-images";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
 import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
-import { decksQuery, drawQuery, queueQuery, seriesQuery, streakQuery } from "../lib/queries";
+import {
+  decksQuery,
+  drawQuery,
+  queueQuery,
+  sectionsQuery,
+  seriesQuery,
+  streakQuery,
+} from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import {
   drawableUpTo,
@@ -215,6 +222,15 @@ function Review() {
       ? seriesList.data?.find((s) => s.id === series)?.name
       : undefined;
   const currentDeck = current ? decks.data?.find((d) => d.id === current.card.deckId) : undefined;
+  // The draw carries the section's id alone; its name comes from the deck's own list, cached per deck.
+  const sectionId = current?.card.sectionId ?? null;
+  const sections = useQuery({
+    ...sectionsQuery(current?.card.deckId ?? ""),
+    enabled: !!sectionId,
+  });
+  const sectionName = sectionId
+    ? sections.data?.sections.find((s) => s.id === sectionId)?.name
+    : undefined;
   const hint = useRevealHint(current ? `${current.stateId}-${done}` : undefined, revealed);
   usePrefetchPictures(drawLeg ? (state?.upcoming ?? []) : listLeft, 0);
 
@@ -645,6 +661,7 @@ function Review() {
                   language: currentDeck.defaultLanguage ?? null,
                 }
               }
+              section={sectionName}
               revealed={revealed}
               animateReveal={animateReveal}
               animateIn={animateNextCard}

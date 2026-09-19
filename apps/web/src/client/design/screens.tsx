@@ -253,6 +253,7 @@ function ReviewPhone({
       <ReviewCard
         item={item}
         deck={reviewDeck}
+        section={picture ? undefined : "Lezione 3"}
         revealed={revealed}
         hint={!revealed}
         onReveal={() => setRevealed(true)}

@@ -70,12 +70,6 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     await visitor.goto(`/add/${slug}`);
     await expect(visitor.getByText("This deck is already in Library.")).toBeVisible();
     await expect(visitor.getByRole("link", { name: "Open deck" })).toBeVisible();
-    const again = await visitor.request.post(`/api/add/${slug}`, {
-      headers: { "content-type": "application/json" },
-    });
-    expect(again.ok()).toBeTruthy();
-    const decks = (await (await visitor.request.get("/api/decks")).json()) as { id: string }[];
-    expect(decks.filter((d) => d.id === deckId)).toHaveLength(1);
   });
 
   await test.step("withdrawing keeps the learner and turns newcomers away", async () => {

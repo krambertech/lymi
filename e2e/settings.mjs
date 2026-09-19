@@ -6,7 +6,6 @@ export const e2eAccounts = [
   "optional-meaning",
   "more-fields",
   "archived-deck",
-  "archived-page",
   "library-offline",
   "responsive-creation",
   "long-cards",
@@ -23,10 +22,8 @@ export const e2eAccounts = [
   "review-round-crosses",
   "review-deck-out",
   "word-detail",
-  "activity",
   "deck-page",
   "explore",
-  "explore-edition",
   "language",
   "join-owner",
   "invite-owner",
@@ -42,7 +39,6 @@ export const e2eAccounts = [
   "publisher",
   "password-account",
   "password-reset",
-  "feedback",
 ];
 
 export const e2eProjects = ["chromium", "webkit"];

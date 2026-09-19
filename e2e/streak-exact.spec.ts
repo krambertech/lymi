@@ -2,10 +2,13 @@ import { startAsTestLearner } from "./auth";
 import { expect, test } from "./test";
 
 /**
- * Nine consecutive backdated days, each meeting a goal of one review. A run counted from a
- * seven-day window would say 7.
+ * The streak is a place: on a phone it rises over the whole screen, a wide window centres it, a
+ * reload keeps it open and Back closes it. Nine backdated days make the card and the lights say
+ * different numbers; that the count is exact is `routes/streak.test.ts`.
  */
-test("the streak is exact beyond the seven days the lights show", async ({ page }, testInfo) => {
+test("the streak opens as a place, survives a reload and closes on Back", async ({
+  page,
+}, testInfo) => {
   test.setTimeout(180_000);
   await startAsTestLearner(page, testInfo, "core-learning");
   const post = async (path: string, data: unknown) => {
@@ -47,12 +50,6 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
       reviewedAt: when.toISOString(),
     });
   }
-  const hist = (await (
-    await page.request.get(`/api/review/history?days=7&tz=${new Date().getTimezoneOffset()}`)
-  ).json()) as { days: number[]; streak: number };
-  expect(hist.days).toHaveLength(7);
-  expect(hist.streak).toBe(9);
-
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/today");
@@ -62,13 +59,6 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   const card = page.getByRole("button", { name: /^Streak: 9 days in a row\. / });
   await expect(card).toBeVisible();
   await expect(card.getByRole("img", { name: /Reviewed on 7 of the last 7 days: / })).toBeVisible();
-
-  const streak = (await (
-    await page.request.get(`/api/stats/streak?tz=${encodeURIComponent(zone)}`)
-  ).json()) as { current: number; longest: number; today: { goal: number; outcome: string } };
-  // The account is shared with the core flow, which may already have finished today at its own goal.
-  expect(streak).toMatchObject({ current: 9, longest: 9 });
-  expect(["goal_met", "exhausted"]).toContain(streak.today.outcome);
 
   // Today counted either way: at its goal, or with nothing left to review.
   const finished = /Daily goal reached\.|You’re done for today\./;

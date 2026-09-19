@@ -32,6 +32,12 @@ export function movedDeckPath(pathname: string): string | null {
   return deckPath(match[2] as string, locale);
 }
 
+/** The product's add page for a `/add/<slug>` link typed or shared with the wrong domain. */
+export function productAddPath(pathname: string): string | null {
+  const match = /^\/add\/([a-z0-9]+(?:-[a-z0-9]+)*)\/?$/.exec(pathname);
+  return match ? `/add/${match[1]}` : null;
+}
+
 /** The deck's own link preview, rendered by the Worker beside the page. */
 export function deckSharePath(slug: string, locale: Locale): string {
   return `${deckPath(slug, locale)}/share.png`;

@@ -106,6 +106,15 @@ app.use("/api/auth/*", limitCredentialRequests);
 app.use("/api/auth/*", requireStrongPassword);
 app.on(["GET", "POST"], "/api/auth/*", (c) => c.get("auth").handler(c.req.raw));
 
+// Without a live session, Explore is the site's public catalogue; the redirect is temporary
+// because it depends on the session.
+app.on("GET", ["/explore", "/explore/*"], async (c, next) => {
+  if (await c.get("auth").api.getSession({ headers: c.req.raw.headers })) return next();
+  const url = new URL(c.req.url);
+  const destination = new URL(`${url.pathname}${url.search}`, canonicalOrigins(c.env).publicSite);
+  return c.redirect(destination.toString(), 302);
+});
+
 // A deck's join page. Signed-out classmates land here from a chat, so it sits before
 // authentication and renders its own state. ADR 0011.
 app.get("/join/:token", joinPage);

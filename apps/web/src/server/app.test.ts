@@ -31,6 +31,24 @@ describe("the product origin", () => {
     expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
   });
 
+  it("sends Explore to the site without a live session", async () => {
+    const stale = {
+      ...learner,
+      cookie: learner.cookie.replace(/session_token=[^;]+/, "session_token=gone"),
+    };
+    expect(stale.cookie).not.toBe(learner.cookie);
+    for (const as of [undefined, stale]) {
+      for (const path of ["/explore", "/explore/everyday-estonian?edition=uk"]) {
+        const response = await app.fetch(path, { as });
+        expect(response.status, path).toBe(302);
+        expect(response.headers.get("location"), path).toBe(`${PUBLIC_SITE_URL}${path}`);
+      }
+    }
+
+    const signedIn = await app.fetch("/explore/everyday-estonian", { as: learner });
+    expect(signedIn.headers.get("location")).toBeNull();
+  });
+
   it("refuses a path that belongs to no surface", async () => {
     const response = await app.fetch("/public-page-that-does-not-exist");
     expect(response.status).toBe(404);

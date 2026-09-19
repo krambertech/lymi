@@ -2,8 +2,8 @@
 /// <reference types="astro/client" />
 
 import { handle } from "@astrojs/cloudflare/handler";
-import { movedDeckPath } from "./lib/deck-page";
-import { signUpUrl } from "./lib/origins";
+import { movedDeckPath, productAddPath } from "./lib/deck-page";
+import { productUrl, signUpUrl } from "./lib/origins";
 
 function json(body: unknown, status = 200): Response {
   return Response.json(body, { status });
@@ -37,6 +37,9 @@ export default {
     // than break, and a search engine is told the address is permanent.
     const moved = movedDeckPath(url.pathname);
     if (moved) return Response.redirect(new URL(moved + url.search, url).toString(), 301);
+
+    const add = productAddPath(url.pathname);
+    if (add) return Response.redirect(productUrl(add + url.search), 301);
 
     return handle(request, env, ctx);
   },

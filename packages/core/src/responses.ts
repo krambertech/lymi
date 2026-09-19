@@ -351,6 +351,8 @@ export const ActivityKind = z.enum([
   "member_joined",
   "member_left",
   "member_removed",
+  "invitation_sent",
+  "invitation_cancelled",
   "link_on",
   "link_off",
 ]);
@@ -808,6 +810,16 @@ export const MemberOut = z
   })
   .meta({ id: "Member" });
 export type MemberOut = z.infer<typeof MemberOut>;
+
+/** Somebody asked into the deck who has not joined. Owner only: it is an address they typed. */
+export const InvitationOut = z
+  .object({
+    id: z.string(),
+    email: z.string(),
+    invitedAt: Timestamp.meta({ description: "When the invitation was sent" }),
+  })
+  .meta({ id: "Invitation" });
+export type InvitationOut = z.infer<typeof InvitationOut>;
 
 export const PublicationOut = z
   .object({

@@ -183,6 +183,13 @@
       "when": 1789768883755,
       "tag": "0025_release_archived_series_decks",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "6",
+      "when": 1789806782830,
+      "tag": "0026_closed_meltdown",
+      "breakpoints": true
     }
   ]
 }

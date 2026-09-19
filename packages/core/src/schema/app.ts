@@ -323,11 +323,16 @@ export const deckInvitations = sqliteTable(
     deckId: text("deck_id")
       .notNull()
       .references(() => decks.id, { onDelete: "cascade" }),
-    kind: text("kind", { enum: ["link"] })
+    /** `link` admits anyone who opens it; `named` admits one address and nobody else. */
+    kind: text("kind", { enum: ["link", "named"] })
       .notNull()
       .default("link"),
+    /** Who the named invitation is for, lowercased. Null on a link. */
+    email: text("email"),
     /** A capability: never log it, audit it or put it in an error message. */
     token: text("token").notNull(),
+    /** When the invited address joined. A named invitation admits once. */
+    acceptedAt: integer("accepted_at", { mode: "timestamp_ms" }),
     revokedAt: integer("revoked_at", { mode: "timestamp_ms" }),
     ...timestamps,
   },
@@ -336,6 +341,11 @@ export const deckInvitations = sqliteTable(
     uniqueIndex("deck_invitations_active_link_idx")
       .on(t.deckId)
       .where(sql`kind = 'link' and revoked_at is null`),
+    // One open invitation per address per deck, so inviting twice cannot make two rows.
+    uniqueIndex("deck_invitations_active_named_idx")
+      .on(t.deckId, t.email)
+      .where(sql`kind = 'named' and revoked_at is null and accepted_at is null`),
+    index("deck_invitations_deck_idx").on(t.deckId, t.kind),
   ],
 );
 

@@ -77,6 +77,12 @@ export const ReviewModes = z
   );
 
 /** What a learner may do in a deck. Only `owner` and `learner` are granted today. ADR 0011. */
+/** Ask one address into a deck. Lowercased here so a repeat cannot make a second invitation. */
+export const InviteInput = z.object({
+  email: z.string().trim().toLowerCase().email().max(254),
+});
+export type InviteInput = z.infer<typeof InviteInput>;
+
 export const MemberRole = z.enum(["owner", "editor", "contributor", "learner"]);
 export type MemberRole = z.infer<typeof MemberRole>;
 

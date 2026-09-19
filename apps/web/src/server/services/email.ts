@@ -1,5 +1,5 @@
 import type { I18n } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
+import { msg, plural } from "@lingui/core/macro";
 import type { FeedbackKind } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
@@ -17,6 +17,7 @@ export type TransactionalEmailKind =
   | "existing-account"
   | "google-account"
   | "reset-google-account"
+  | "deck-invitation"
   | "feedback";
 export type TransactionalEmailLanguage = "en" | "uk" | "ru";
 
@@ -34,10 +35,19 @@ export interface FeedbackEmailData {
   language: string;
 }
 
+/** Who asked somebody into which deck, so the message can say it without naming a card. */
+export interface DeckInvitationEmailData {
+  deckName: string;
+  ownerName: string;
+  /** Active cards, so the reader knows the size of what they are being handed. */
+  cards: number;
+}
+
 /** What a message needs beyond its kind: an account kind's one link, or a learner's note. */
 export interface TransactionalEmailParams {
   url?: string;
   feedback?: FeedbackEmailData;
+  invitation?: DeckInvitationEmailData;
 }
 
 export interface TransactionalEmailInput extends TransactionalEmailParams {
@@ -193,6 +203,24 @@ function compose(
           signature,
         ],
       };
+    case "deck-invitation": {
+      const it = params.invitation;
+      if (!it) throw new Error("The deck invitation email needs the deck it is for");
+      return {
+        subject: i18n._(msg`${it.ownerName} shared a deck with you`),
+        blocks: [
+          hello,
+          i18n._(
+            msg`${it.ownerName} is studying ${it.deckName} on Lymi and wants you in it. It holds ${plural(it.cards, { one: "# card", other: "# cards" })}. You would review them on your own schedule, and ${it.ownerName} would not see how you are doing.`,
+          ),
+          { link: required(params.url, kind) },
+          i18n._(
+            msg`This invitation is for this address only. If you were not expecting it, ignore this email.`,
+          ),
+          signature,
+        ],
+      };
+    }
     case "existing-account":
       return {
         subject: i18n._(msg`You already have a Lymi account`),
@@ -312,6 +340,7 @@ export async function sendTransactionalEmail(
   const message = await renderTransactionalEmail(input.kind, input.language, {
     ...(input.url ? { url: input.url } : {}),
     ...(input.feedback ? { feedback: input.feedback } : {}),
+    ...(input.invitation ? { invitation: input.invitation } : {}),
   });
   let delivery: "provider" | "outbox";
   if (isLoopbackUrl(env.PRODUCT_URL)) {

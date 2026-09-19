@@ -87,6 +87,14 @@ export const membersQuery = (deckId: string) =>
     staleTime: 0,
     meta: { persist: false },
   });
+/** Owner only, and never persisted: an address the owner typed is not this device's to keep. */
+export const invitationsQuery = (deckId: string) =>
+  queryOptions({
+    queryKey: ["decks", deckId, "invitations"],
+    queryFn: () => api.invitations(deckId),
+    staleTime: 0,
+    meta: { persist: false },
+  });
 export const joinPreviewQuery = (token: string) =>
   queryOptions({
     queryKey: ["join", token],

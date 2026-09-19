@@ -2,10 +2,21 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Directions, SectionProgression } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import { Archive, Check, Link2Off, LogOut, MoreHorizontal, Share, UserMinus } from "lucide-react";
+import {
+  Archive,
+  Check,
+  Link2Off,
+  LogOut,
+  MailX,
+  MoreHorizontal,
+  Share,
+  UserMinus,
+  UserPlus,
+} from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { Avatar } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
+import { Chip } from "../components/chip";
 import { CopyField } from "../components/copy-field";
 import {
   type DirectionExample,
@@ -14,7 +25,7 @@ import {
   LanguageField,
   languageName,
 } from "../components/deck-fields";
-import { TurnOffLinkDialog } from "../components/member-dialogs";
+import { InviteDialog, TurnOffLinkDialog } from "../components/member-dialogs";
 import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
@@ -30,7 +41,7 @@ import { Field, FieldContent, FieldDescription, FieldLabel } from "../components
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Textarea } from "../components/ui/textarea";
-import type { DeckSummary, Member } from "../lib/api";
+import type { DeckSummary, Invitation, Member } from "../lib/api";
 import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
 
 /** What the screen can change. The same shape the deck endpoint takes. */
@@ -64,11 +75,19 @@ export interface DeckSettingsProps {
 }
 
 export interface MembersProps {
+  /** The deck's writer, who is not a member row and cannot be removed. */
+  owner: { name: string };
   /** Undefined while loading. Empty when nobody has joined. */
   members: Member[] | undefined;
+  /** Addresses asked in who have not joined. Undefined while loading. */
+  invitations: Invitation[] | undefined;
+  /** Opens the invite dialog; the dialog owns the address and what is wrong with it. */
+  onInvite: () => void;
   onRemove: (member: Member) => void;
   /** The member the removal is running for, so only their row shows it. */
   removing?: string | undefined;
+  onCancelInvite: (invitation: Invitation) => void;
+  cancelling?: string | undefined;
   error?: string | undefined;
 }
 
@@ -371,32 +390,48 @@ function DeckAbout({
 }
 
 /**
- * Who studies the deck, for the owner alone. It says when each person joined and nothing about
- * what they have reviewed: the group shares the material, each person owns their learning.
- * ADR 0011.
+ * Everyone in the deck, for the owner alone: the writer, whoever joined, and whoever was asked
+ * and has not. One list, because the question an owner has is whether somebody is in yet. It
+ * says nothing about what anyone has reviewed. ADR 0011.
  */
-function MembersGroup({ members, onRemove, removing, error }: MembersProps) {
+function MembersGroup({
+  owner,
+  members,
+  invitations,
+  onInvite,
+  onRemove,
+  removing,
+  onCancelInvite,
+  cancelling,
+  error,
+}: MembersProps) {
   const { t } = useLingui();
+  const loading = members === undefined || invitations === undefined;
   return (
     <SettingsGroup
-      title={t`Members`}
-      description={t`People who joined this deck. You see when they joined, never what they have studied.`}
+      title={t`People`}
+      description={t`Everyone studying this deck. You see whether they joined, never what they have studied.`}
     >
       {error ? (
         <p className="text-sm text-danger" role="alert">
           {error}
         </p>
-      ) : members === undefined ? (
+      ) : loading ? (
         <div className="grid gap-2">
           <Skeleton className="h-12" />
           <Skeleton className="h-12" />
         </div>
-      ) : members.length === 0 ? (
-        <p className="text-sm text-muted">
-          <Trans>Nobody has joined yet. Share the join link to bring someone in.</Trans>
-        </p>
       ) : (
-        <ul aria-label={t`Members`} className="edge overflow-hidden rounded-lg bg-plate">
+        <ul aria-label={t`People`} className="edge overflow-hidden rounded-lg bg-plate">
+          <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
+            <Avatar name={owner.name} size={36} />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-base font-medium text-text">{owner.name}</p>
+            </div>
+            <Chip size="sm">
+              <Trans>Owner</Trans>
+            </Chip>
+          </li>
           {members.map((member) => (
             <MemberRow
               key={member.userId}
@@ -405,9 +440,78 @@ function MembersGroup({ members, onRemove, removing, error }: MembersProps) {
               onRemove={() => onRemove(member)}
             />
           ))}
+          {invitations.map((invitation) => (
+            <InvitationRow
+              key={invitation.id}
+              invitation={invitation}
+              cancelling={cancelling === invitation.id}
+              onCancel={() => onCancelInvite(invitation)}
+            />
+          ))}
         </ul>
       )}
+      <div className="flex flex-wrap items-center gap-2">
+        <Button size="sm" onClick={onInvite}>
+          <UserPlus aria-hidden="true" />
+          <Trans>Invite</Trans>
+        </Button>
+      </div>
     </SettingsGroup>
+  );
+}
+
+/**
+ * Somebody asked in who has not joined. The dashed mark and the chip say the same thing twice,
+ * because a row that differs only by its date reads as a member at a glance.
+ */
+function InvitationRow({
+  invitation,
+  cancelling,
+  onCancel,
+}: {
+  invitation: Invitation;
+  cancelling: boolean;
+  onCancel: () => void;
+}) {
+  const { t, i18n } = useLingui();
+  const invited = i18n.date(invitation.invitedAt, { day: "numeric", month: "short" });
+  return (
+    <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge px-3.5 py-3 last:border-b-0">
+      <span
+        aria-hidden="true"
+        className="grid size-9 place-items-center rounded-full border border-dashed border-edge-2 text-sm font-medium text-faint"
+      >
+        {invitation.email.slice(0, 1).toUpperCase()}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-base font-medium text-text">{invitation.email}</p>
+        <p className="text-sm text-muted tabular-nums">
+          <Trans>invited {invited}</Trans>
+        </p>
+      </div>
+      <Chip size="sm">
+        <Trans>Not joined yet</Trans>
+      </Chip>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <IconButton
+              label={t`Options for ${invitation.email}`}
+              size="sm"
+              aria-disabled={cancelling}
+            >
+              <MoreHorizontal />
+            </IconButton>
+          }
+        />
+        <DropdownMenuContent aria-label={t`Options for ${invitation.email}`} align="end">
+          <DropdownMenuItem variant="destructive" onClick={onCancel}>
+            <MailX />
+            <Trans>Cancel invitation</Trans>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </li>
   );
 }
 
@@ -522,7 +626,7 @@ function SharingGroup({
   }, [link]);
 
   return (
-    <SettingsGroup title={t`Sharing`}>
+    <SettingsGroup title={t`Visibility`}>
       {link === undefined && !pending ? (
         <div className="grid gap-2">
           <Skeleton className="h-[74px]" />
@@ -541,18 +645,8 @@ function SharingGroup({
         >
           <RadioCard
             value="private"
-            title={members === 0 ? t`Private` : t`Link off`}
-            description={
-              members === 0 ? (
-                t`Only you study this deck.`
-              ) : (
-                <Plural
-                  value={members}
-                  one="Nobody new can join. The one person who joined keeps studying."
-                  other="Nobody new can join. The # people who joined keep studying."
-                />
-              )
-            }
+            title={t`Private`}
+            description={t`Nobody new can join unless you invite them. Anyone already studying the deck stays.`}
           />
           <div
             className={clsx(
@@ -563,7 +657,7 @@ function SharingGroup({
             <RadioCard
               bare
               value="link"
-              title={t`Shared by link`}
+              title={t`Anyone with the link`}
               description={t`Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress.`}
             />
             {shared && (

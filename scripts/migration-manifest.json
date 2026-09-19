@@ -103,6 +103,10 @@
     {
       "name": "0025_release_archived_series_decks.sql",
       "sha256": "55d0095510e066bb51f177102022b6c796906eb996f051c2465de1ea1c50a330"
+    },
+    {
+      "name": "0026_closed_meltdown.sql",
+      "sha256": "e1f2480b0555f7df66b06f04232dd00f3d95abcd3b1cf31812f74eda0df0ee64"
     }
   ]
 }

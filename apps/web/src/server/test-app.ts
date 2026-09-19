@@ -25,7 +25,9 @@ const PASSWORD = "route-test-password-1234";
  * origin routing, preview access, authentication, validation and each route's own guards.
  * A loopback product writes email to the outbox and confirms `@lymi.local` accounts itself.
  */
-export async function testApp(options: { operators?: string[] } = {}): Promise<TestApp> {
+export async function testApp(
+  options: { operators?: string[]; publishers?: string[] } = {},
+): Promise<TestApp> {
   const { db, env: bindings } = await testDb();
   const env = {
     ...bindings,
@@ -35,7 +37,7 @@ export async function testApp(options: { operators?: string[] } = {}): Promise<T
     GOOGLE_CLIENT_ID: "",
     GOOGLE_CLIENT_SECRET: "",
     OPERATOR_EMAILS: (options.operators ?? []).join(","),
-    PUBLISHER_EMAILS: "",
+    PUBLISHER_EMAILS: (options.publishers ?? []).join(","),
     CF_VERSION_METADATA: { id: "test", tag: "test", timestamp: new Date(0).toISOString() },
     EMAIL: {
       send: async () => {
@@ -90,10 +92,14 @@ export async function testApp(options: { operators?: string[] } = {}): Promise<T
   return { env, db, fetch, signUp };
 }
 
-export function json(body: unknown): RequestInit {
+/** A JSON request. `headers` adds to the content type, so a key can ride along. */
+export function json(
+  body: unknown,
+  init: { method?: string; headers?: Record<string, string> } = {},
+): RequestInit {
   return {
-    method: "POST",
-    headers: { "content-type": "application/json" },
+    method: init.method ?? "POST",
+    headers: { "content-type": "application/json", ...init.headers },
     body: JSON.stringify(body),
   };
 }

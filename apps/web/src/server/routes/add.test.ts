@@ -1,7 +1,16 @@
-import { AddCardOutcomeOut, ApiKeyCreatedOut, DeckOut, JoinOut, JoinPreviewOut } from "@lymi/core";
+import {
+  AddCardOutcomeOut,
+  ApiKeyCreatedOut,
+  DeckOut,
+  DeckSummaryOut,
+  JoinOut,
+  JoinPreviewOut,
+} from "@lymi/core";
 import { ExploreOut } from "@lymi/core/catalog";
+import { eq, sql } from "@lymi/core/db";
 import { beforeAll, describe, expect, it } from "vitest";
 import { z } from "zod";
+import { schema } from "../db";
 import { json, type Session, type TestApp, testApp } from "../test-app";
 
 /**
@@ -114,6 +123,34 @@ describe("a published deck", () => {
     expect(refused.status).toBe(404);
     expect(await refused.json()).toEqual({ error: "This deck is not published" });
     expect((await libraryOf(visitor)).some((deck) => deck.id === deckId)).toBe(true);
+  });
+});
+
+describe("a card the publisher adds later", () => {
+  it("reaches a learner's Library on their next request, not on the publisher's write", async () => {
+    const { deckId } = await publish("Everyday Latvian", "everyday-latvian", "sveiki", "hello");
+    const learner = await app.signUp("returning");
+    expect(
+      (await app.fetch("/api/add/everyday-latvian", { method: "POST", as: learner })).status,
+    ).toBe(200);
+
+    const card = await app.fetch("/api/cards", {
+      ...json({ deckId, term: "paldies", meaning: "thank you" }),
+      as: publisher,
+    });
+    expect(card.status).toBe(201);
+    const [{ count } = { count: 0 }] = await app.db
+      .select({ count: sql<number>`count(*)` })
+      .from(schema.cardStates)
+      .where(eq(schema.cardStates.userId, learner.userId));
+    expect(count).toBe(1);
+
+    const library = await app.fetch("/api/decks", { as: learner });
+    const deck = z
+      .array(DeckSummaryOut.pick({ id: true, due: true }))
+      .parse(await library.json())
+      .find((d) => d.id === deckId);
+    expect(deck?.due).toBe(2);
   });
 });
 

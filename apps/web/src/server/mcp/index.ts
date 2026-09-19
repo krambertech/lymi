@@ -5,6 +5,7 @@ import type { Db } from "../db";
 import type { Bindings } from "../env";
 import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
+import { catchUpStates } from "../services/modes";
 import { buildMcpServer, type McpPrincipal } from "./server";
 
 /** The scopes an MCP client is told to ask for. offline_access buys it a refresh token. */
@@ -23,6 +24,7 @@ export function handleMcpRequest(
     async (req, claims) => {
       const principal = await authorizeMcpClaims(claims, deps);
       if (principal instanceof Response) return principal;
+      await catchUpStates(deps.db, principal.ctx.userId);
       return handleVerifiedMcpRequest(req, principal, deps.env);
     },
     { resource: mcpResource(deps.env), challengeScopes: MCP_CHALLENGE_SCOPES },

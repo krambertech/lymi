@@ -90,6 +90,8 @@ export const decks = sqliteTable(
       .notNull()
       .default("automatic"),
     ...revision,
+    /** Rises when a card may need a state its members lack; a member behind it catches up. ADR 0022. */
+    statesVersion: integer("states_version").notNull().default(0),
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
@@ -304,6 +306,8 @@ export const deckMembers = sqliteTable(
      * on a published deck added in its original language. The app language never moves it. ADR 0015.
      */
     meaningLanguage: text("meaning_language"),
+    /** The deck's `states_version` this member's states last caught up to. ADR 0022. */
+    statesVersion: integer("states_version").notNull().default(0),
   },
   (t) => [
     uniqueIndex("deck_members_deck_user_idx").on(t.deckId, t.userId),

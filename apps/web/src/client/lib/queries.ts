@@ -79,6 +79,14 @@ export const joinLinkQuery = (deckId: string) =>
     staleTime: 0,
     meta: { persist: false },
   });
+/** Owner only, and never persisted: who studies a deck is not this device's to keep. */
+export const membersQuery = (deckId: string) =>
+  queryOptions({
+    queryKey: ["decks", deckId, "members"],
+    queryFn: () => api.members(deckId),
+    staleTime: 0,
+    meta: { persist: false },
+  });
 export const joinPreviewQuery = (token: string) =>
   queryOptions({
     queryKey: ["join", token],

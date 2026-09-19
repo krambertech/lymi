@@ -1218,6 +1218,9 @@ msgstr "Couldn’t load more."
 msgid "Couldn’t load the deck"
 msgstr "Couldn’t load the deck"
 
+msgid "Couldn’t load the members. Try again."
+msgstr "Couldn’t load the members. Try again."
+
 msgid "Couldn’t load the picture"
 msgstr "Couldn’t load the picture"
 
@@ -1238,6 +1241,9 @@ msgstr "Couldn’t reach Lymi. Check your connection and try again."
 
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
+
+msgid "Couldn’t remove the member. Try again."
+msgstr "Couldn’t remove the member. Try again."
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
@@ -1842,6 +1848,9 @@ msgstr "Join link"
 msgid "Join with Google"
 msgstr "Join with Google"
 
+msgid "joined {joined}"
+msgstr "joined {joined}"
+
 msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
 msgstr "JPEG, PNG, WebP or still GIF, up to 10 MB."
 
@@ -2047,6 +2056,9 @@ msgstr "Meaning changed to “{value}”"
 
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
+
+msgid "Members"
+msgstr "Members"
 
 msgid "Message"
 msgstr "Message"
@@ -2264,6 +2276,9 @@ msgstr "Nobody can add it while it is archived."
 msgid "Nobody can join it while it is archived."
 msgstr "Nobody can join it while it is archived."
 
+msgid "Nobody has joined yet. Share the join link to bring someone in."
+msgstr "Nobody has joined yet. Share the join link to bring someone in."
+
 msgid "Nobody new can add it."
 msgstr "Nobody new can add it."
 
@@ -2414,6 +2429,10 @@ msgstr "Open your browser menu and choose Install Lymi. Not every browser offers
 msgid "Optional"
 msgstr "Optional"
 
+#. placeholder {0}: member.name
+msgid "Options for {0}"
+msgstr "Options for {0}"
+
 msgid "Options for {sectionName}"
 msgstr "Options for {sectionName}"
 
@@ -2456,6 +2475,9 @@ msgstr "Pause the cards"
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "People who added it keep studying it, but nobody new can add it."
+
+msgid "People who joined this deck. You see when they joined, never what they have studied."
+msgstr "People who joined this deck. You see when they joined, never what they have studied."
 
 msgid "Photo"
 msgstr "Photo"
@@ -2617,8 +2639,17 @@ msgctxt "photo"
 msgid "Remove"
 msgstr "Remove"
 
+msgid "Remove {name}?"
+msgstr "Remove {name}?"
+
 msgid "Remove filter: {label}"
 msgstr "Remove filter: {label}"
+
+msgid "Remove from deck"
+msgstr "Remove from deck"
+
+msgid "Remove member"
+msgstr "Remove member"
 
 msgid "Remove the tag {tag}"
 msgstr "Remove the tag {tag}"
@@ -3227,6 +3258,9 @@ msgstr "Theme"
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
 
+msgid "They lose this deck and the join link will not let them back. Their reviews stay, but there is no way to add them again yet."
+msgstr "They lose this deck and the join link will not let them back. Their reviews stay, but there is no way to add them again yet."
+
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
 
@@ -3365,9 +3399,6 @@ msgstr "Try again on a steadier connection, and keep Lymi open until the upload 
 
 msgid "Turn off link"
 msgstr "Turn off link"
-
-msgid "Turn off the join link"
-msgstr "Turn off the join link"
 
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"

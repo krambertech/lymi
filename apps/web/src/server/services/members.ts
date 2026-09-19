@@ -320,9 +320,12 @@ export async function removeMember(ctx: ServiceContext, deckId: string, memberId
   return { ok: true as const };
 }
 
-/** Active members of a deck with when they joined. Any member may see who else is in. */
+/**
+ * Active members of a deck with when they joined. Owner only: a member sees the owner's name
+ * and nobody else's. ADR 0011. The owner is not in the list; they are the deck's `owner`.
+ */
 export async function listMembers(ctx: ServiceContext, deckId: string) {
-  await deckAccess(ctx, deckId);
+  await ownedDeck(ctx, deckId);
   return ctx.db
     .select({
       userId: schema.deckMembers.userId,

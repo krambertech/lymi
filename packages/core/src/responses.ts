@@ -795,6 +795,20 @@ export const JoinLinkOut = z
   .meta({ id: "JoinLink" });
 export type JoinLinkOut = z.infer<typeof JoinLinkOut>;
 
+/**
+ * One person studying someone else's deck. The owner is not a member row: they are the deck's
+ * `owner`. Nothing here describes what a member has studied, which stays private to them.
+ */
+export const MemberOut = z
+  .object({
+    userId: z.string(),
+    name: z.string(),
+    role: MemberRole,
+    joinedAt: Timestamp.meta({ description: "When they joined, or last rejoined" }),
+  })
+  .meta({ id: "Member" });
+export type MemberOut = z.infer<typeof MemberOut>;
+
 export const PublicationOut = z
   .object({
     publication: z

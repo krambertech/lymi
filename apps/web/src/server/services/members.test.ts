@@ -278,3 +278,59 @@ describe("leaving and being removed", () => {
     expect(audits).toHaveLength(1);
   });
 });
+
+describe("who may see the member list", () => {
+  it("is the owner alone, and it names nobody who left or was removed", async () => {
+    const { deck } = await sharedDeck("Klass", ["kutse"]);
+    await join(anna, deck.id);
+    await join(marko, deck.id);
+
+    // A member sees the owner's name on the deck and nothing about the others. ADR 0011.
+    await expect(listMembers(anna, deck.id)).rejects.toThrow(forbidden);
+    expect(await listMembers(kateryna, deck.id)).toMatchObject([
+      { userId: "anna", name: "Anna", role: "learner" },
+      { userId: "marko", name: "Marko", role: "learner" },
+    ]);
+
+    await leave(anna, deck.id);
+    await removeMember(kateryna, deck.id, "marko");
+    expect(await listMembers(kateryna, deck.id)).toEqual([]);
+  });
+
+  it("is refused to someone outside the deck entirely", async () => {
+    const { deck } = await sharedDeck("Privaatne", ["saladus"]);
+
+    await expect(listMembers(marko, deck.id)).rejects.toThrow("Deck not found");
+  });
+
+  it("removing the same member twice removes them once and says so", async () => {
+    const { deck } = await sharedDeck("Kodu", ["maja"]);
+    await join(anna, deck.id);
+
+    await removeMember(kateryna, deck.id, "anna");
+    await expect(removeMember(kateryna, deck.id, "anna")).rejects.toThrow("Member not found");
+    const audits = await db
+      .select({ id: schema.auditLog.id })
+      .from(schema.auditLog)
+      .where(
+        and(eq(schema.auditLog.action, "remove_member"), eq(schema.auditLog.entityId, deck.id)),
+      );
+    expect(audits).toHaveLength(1);
+  });
+
+  it("a removed member cannot go on grading the cards they had open", async () => {
+    const { deck, cards } = await sharedDeck("Turg", ["õun", "pirn"]);
+    const first = cards[0];
+    const second = cards[1];
+    if (!first || !second) throw new Error("no cards");
+    await join(anna, deck.id);
+    await gradeCard(anna, { cardId: first.id, direction: "recognition", rating: 3 });
+
+    await removeMember(kateryna, deck.id, "anna");
+
+    // The card is still on their screen; the next grade must not land.
+    await expect(
+      gradeCard(anna, { cardId: second.id, direction: "recognition", rating: 3 }),
+    ).rejects.toThrow("Card not found");
+  });
+});

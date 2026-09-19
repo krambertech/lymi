@@ -158,7 +158,7 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await expect(page.getByRole("heading", { name: "Deck settings" })).toBeVisible();
     await choice(page, "private").click();
     await page
-      .getByRole("group", { name: "Turn off the join link" })
+      .getByRole("dialog")
       .getByRole("button", { name: "Turn off link", exact: true })
       .click();
     await expect(page.getByRole("radio", { name: /^Link off/ })).toBeChecked();

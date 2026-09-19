@@ -1218,6 +1218,9 @@ msgstr "Не вдалося завантажити більше."
 msgid "Couldn’t load the deck"
 msgstr "Не вдалося завантажити колоду"
 
+msgid "Couldn’t load the members. Try again."
+msgstr "Не вдалося завантажити учасників. Спробуй ще раз."
+
 msgid "Couldn’t load the picture"
 msgstr "Не вдалося завантажити зображення"
 
@@ -1238,6 +1241,9 @@ msgstr "Не вдалося зв’язатися з Lymi. Перевір з’�
 
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не вдалося зв’язатися із сервісом входу. Перевір з’єднання й повтори спробу."
+
+msgid "Couldn’t remove the member. Try again."
+msgstr "Не вдалося вилучити учасника. Спробуй ще раз."
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання й повтори спробу."
@@ -1842,6 +1848,9 @@ msgstr "Посилання для приєднання"
 msgid "Join with Google"
 msgstr "Приєднатися через Google"
 
+msgid "joined {joined}"
+msgstr "у колоді з {joined}"
+
 msgid "JPEG, PNG, WebP or still GIF, up to 10 MB."
 msgstr "JPEG, PNG, WebP або статичний GIF, до 10 МБ."
 
@@ -2047,6 +2056,9 @@ msgstr "Нове значення: «{value}»"
 
 msgid "Meaning from lesson"
 msgstr "Значення з уроку"
+
+msgid "Members"
+msgstr "Учасники"
 
 msgid "Message"
 msgstr "Повідомлення"
@@ -2264,6 +2276,9 @@ msgstr "Поки колода в архіві, її ніхто не може д�
 msgid "Nobody can join it while it is archived."
 msgstr "Поки колода в архіві, до неї ніхто не може приєднатися."
 
+msgid "Nobody has joined yet. Share the join link to bring someone in."
+msgstr "Ще ніхто не приєднався. Поділися посиланням для приєднання, щоб когось запросити."
+
 msgid "Nobody new can add it."
 msgstr "Нові люди вже не можуть її додати."
 
@@ -2414,6 +2429,10 @@ msgstr "Відкрий меню браузера і вибери «Встано�
 msgid "Optional"
 msgstr "Необов’язково"
 
+#. placeholder {0}: member.name
+msgid "Options for {0}"
+msgstr "Дії для {0}"
+
 msgid "Options for {sectionName}"
 msgstr "Параметри «{sectionName}»"
 
@@ -2456,6 +2475,9 @@ msgstr "Зупинити картки"
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "Хто вже додав колоду, далі її вчить, але нові люди додати її не можуть."
+
+msgid "People who joined this deck. You see when they joined, never what they have studied."
+msgstr "Люди, які приєдналися до цієї колоди. Ти бачиш, коли вони приєдналися, і ніколи — що вони вчили."
 
 msgid "Photo"
 msgstr "Фото"
@@ -2617,8 +2639,17 @@ msgctxt "photo"
 msgid "Remove"
 msgstr "Прибрати"
 
+msgid "Remove {name}?"
+msgstr "Вилучити {name}?"
+
 msgid "Remove filter: {label}"
 msgstr "Прибрати фільтр: {label}"
+
+msgid "Remove from deck"
+msgstr "Вилучити з колоди"
+
+msgid "Remove member"
+msgstr "Вилучити учасника"
 
 msgid "Remove the tag {tag}"
 msgstr "Прибрати тег {tag}"
@@ -3227,6 +3258,9 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "За цією адресою немає колоди"
 
+msgid "They lose this deck and the join link will not let them back. Their reviews stay, but there is no way to add them again yet."
+msgstr "Людина втратить доступ до колоди, і посилання для приєднання більше її не впустить. Її повторення залишаться, але повернути її до колоди поки що неможливо."
+
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
 
@@ -3365,9 +3399,6 @@ msgstr "Спробуй ще раз зі стабільнішим з’єднан
 
 msgid "Turn off link"
 msgstr "Вимкнути посилання"
-
-msgid "Turn off the join link"
-msgstr "Вимкнути посилання для приєднання"
 
 msgid "Turn off the join link?"
 msgstr "Вимкнути посилання для приєднання?"

@@ -9,6 +9,7 @@ import {
   EditionsOut,
   JoinLinkOut,
   LanguageTag,
+  MemberOut,
   OkOut,
   PublicationInput,
   PublicationMediaOut,
@@ -32,10 +33,12 @@ import {
   listDeckCards,
   listDecks,
   listEditions,
+  listMembers,
   listPublicationMedia,
   publicationOut,
   publishDeck,
   publishEdition,
+  removeMember,
   restoreDeck,
   revokePublicationMedia,
   turnOffJoinLink,
@@ -145,6 +148,38 @@ decks.post(
     errors: [404],
   }),
   async (c) => c.json(await leave(ctxOf(c), c.req.param("id"))),
+);
+
+const MEMBERS =
+  "Owner only, from the app: any API key or token gets 403. A member sees the deck's owner " +
+  "and never the other members. Nothing here says what anyone has studied.";
+
+decks.get(
+  "/:id/members",
+  describe({
+    tags: ["Decks"],
+    summary: "List a deck's members",
+    learnerOnly: true,
+    description: `${MEMBERS} The owner is not in the list; the deck's \`owner\` names them.`,
+    ok: { schema: z.array(MemberOut), description: "People studying the deck" },
+    errors: [404],
+  }),
+  async (c) => c.json(await listMembers(ctxOf(c), c.req.param("id"))),
+);
+
+decks.delete(
+  "/:id/members/:memberId",
+  describe({
+    tags: ["Decks"],
+    summary: "Remove a member from a deck",
+    learnerOnly: true,
+    description:
+      `${MEMBERS} Their states and reviews stay, but the join link never readmits them and ` +
+      "there is no other way back yet.",
+    ok: { schema: OkOut, description: "Removed" },
+    errors: [404],
+  }),
+  async (c) => c.json(await removeMember(ctxOf(c), c.req.param("id"), c.req.param("memberId"))),
 );
 
 const JOIN_LINK =

@@ -111,6 +111,10 @@
     {
       "name": "0027_learner_owns_integration_text.sql",
       "sha256": "10b2be38a50406eb8a876b1b6145c90e547410f4d70176842f7486eb583f0fd3"
+    },
+    {
+      "name": "0028_guard_publisher_account.sql",
+      "sha256": "c2f11afb145ba41b665fecac3319f566d93d41fa3a6dbeb45395926cb1c2874b"
     }
   ]
 }

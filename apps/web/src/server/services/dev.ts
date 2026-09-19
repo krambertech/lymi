@@ -1,6 +1,6 @@
 import { type Actor, emptyState, type Rating, schedule, serializeState } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
 import { personaEmail } from "../dev/personas";
 import { addCards } from "./cards";
@@ -57,6 +57,19 @@ export async function resetAccount({ db, userId }: ServiceContext): Promise<void
     db.delete(schema.series).where(eq(schema.series.userId, userId)),
     db.delete(schema.auditLog).where(eq(schema.auditLog.userId, userId)),
     db.delete(schema.userSettings).where(eq(schema.userSettings.userId, userId)),
+  ]);
+}
+
+/** Publications go first, because the database refuses to delete an account that owns one. */
+export async function deletePersonaAccount(db: Db, email: string): Promise<void> {
+  const owned = db
+    .select({ id: schema.decks.id })
+    .from(schema.decks)
+    .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
+    .where(eq(schema.user.email, email));
+  await db.batch([
+    db.delete(schema.deckPublications).where(inArray(schema.deckPublications.deckId, owned)),
+    db.delete(schema.user).where(eq(schema.user.email, email)),
   ]);
 }
 

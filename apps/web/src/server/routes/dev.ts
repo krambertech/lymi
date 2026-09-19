@@ -1,15 +1,21 @@
-import { eq } from "@lymi/core/db";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
 import { devPersonaCookieName } from "../../shared/cookies";
 import { safeProductReturnPath } from "../../shared/origins";
 import type { Auth } from "../auth";
-import { type Db, schema } from "../db";
+import type { Db } from "../db";
 import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
 import { devToolsEnabled } from "../env";
 import { body, describe, query } from "../http";
 import type { AppEnv } from "../index";
-import { devCounts, markEnriched, resetAccount, seedPersona, setDue } from "../services/dev";
+import {
+  deletePersonaAccount,
+  devCounts,
+  markEnriched,
+  resetAccount,
+  seedPersona,
+  setDue,
+} from "../services/dev";
 import { latestLocalEmail } from "../services/email";
 import { getSettings } from "../services/settings";
 
@@ -225,7 +231,7 @@ async function signInPersona(auth: Auth, db: Db, persona: Persona) {
 
   // The account is there and its password is not this one, so the fixture is stale.
   console.warn(`Rebuilding ${email}: its stored password predates the current fixture.`);
-  await db.delete(schema.user).where(eq(schema.user.email, email));
+  await deletePersonaAccount(db, email);
   const rebuilt = await auth.api.signUpEmail({
     body: { email, password: DEV_PASSWORD, name: persona.name },
     asResponse: true,

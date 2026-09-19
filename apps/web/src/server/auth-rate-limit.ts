@@ -2,7 +2,7 @@ import type { MiddlewareHandler } from "hono";
 import { isLoopbackUrl } from "../shared/origins";
 import type { AppEnv } from "./index";
 
-interface Budget {
+export interface Budget {
   /** How many requests the window allows. */
   max: number;
   /** How long the window lasts, in seconds. */
@@ -95,7 +95,7 @@ export const limitCredentialRequests: MiddlewareHandler<AppEnv> = async (c, next
   for (const { key, budget } of keyed) await count(c.env.SESSIONS, key, budget);
 };
 
-function tooManyRequests(retryAfter: number) {
+export function tooManyRequests(retryAfter: number) {
   return Response.json(
     { error: "Too many attempts. Try again later.", retryAfter },
     { status: 429, headers: { "retry-after": String(retryAfter) } },
@@ -103,7 +103,11 @@ function tooManyRequests(retryAfter: number) {
 }
 
 /** The seconds to wait when this window has no room left, or null when the request fits. */
-async function windowFull(kv: KVNamespace, key: string, budget: Budget): Promise<number | null> {
+export async function windowFull(
+  kv: KVNamespace,
+  key: string,
+  budget: Budget,
+): Promise<number | null> {
   const now = Math.floor(Date.now() / 1000);
   const entry = parse(await kv.get(key));
   if (!entry || entry.resetAt <= now || entry.count < budget.max) return null;
@@ -111,7 +115,7 @@ async function windowFull(kv: KVNamespace, key: string, budget: Budget): Promise
 }
 
 /** Record one attempt against the window, opening a new one when the last has run out. */
-async function count(kv: KVNamespace, key: string, budget: Budget): Promise<void> {
+export async function count(kv: KVNamespace, key: string, budget: Budget): Promise<void> {
   const now = Math.floor(Date.now() / 1000);
   const entry = parse(await kv.get(key));
   const open = entry && entry.resetAt > now;

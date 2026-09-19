@@ -1,4 +1,4 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions, SectionProgression } from "@lymi/core";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
@@ -25,7 +25,7 @@ import {
   LanguageField,
   languageName,
 } from "../components/deck-fields";
-import { InviteDialog, TurnOffLinkDialog } from "../components/member-dialogs";
+import { TurnOffLinkDialog } from "../components/member-dialogs";
 import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
@@ -37,7 +37,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
-import { Field, FieldContent, FieldDescription, FieldLabel } from "../components/ui/field";
+import { Field, FieldDescription, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Textarea } from "../components/ui/textarea";
@@ -95,8 +95,6 @@ export interface SharingProps {
   deckName: string;
   /** Undefined while loading; null while sharing is off. */
   link: { url: string } | null | undefined;
-  /** People who joined and are still in. Turning the link off does not remove them. */
-  members: number;
   onTurnOn: () => void;
   onTurnOff: () => void;
   pending?: "on" | "off" | undefined;
@@ -605,15 +603,7 @@ function ProgressionField({
  * other choices on the screen, and the link lives under the option that made it. Going back to
  * private kills the URL for good, so that one asks first.
  */
-function SharingGroup({
-  deckName,
-  link,
-  members,
-  onTurnOn,
-  onTurnOff,
-  pending,
-  error,
-}: SharingProps) {
+function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: SharingProps) {
   const { t } = useLingui();
   const name = useId();
   const [confirming, setConfirming] = useState(false);

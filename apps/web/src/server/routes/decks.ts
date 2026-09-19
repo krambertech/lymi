@@ -22,6 +22,7 @@ import { z } from "zod";
 import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
+import { limitInvitationSends } from "../invitation-rate-limit";
 import {
   approveEdition,
   approvePublicationMedia,
@@ -52,7 +53,11 @@ import {
   withdrawEdition,
 } from "../services";
 import { ServiceError } from "../services/context";
-import { accountEmailLanguage, sendTransactionalEmail } from "../services/email";
+import {
+  accountEmailLanguage,
+  addressEmailLanguage,
+  sendTransactionalEmail,
+} from "../services/email";
 import { cancelInvitation } from "../services/invitations";
 
 export const decks = new Hono<AppEnv>();
@@ -217,27 +222,24 @@ decks.post(
     ok: { status: 201, schema: InvitationOut, description: "The invitation" },
     errors: [400, 404, 409],
   }),
+  limitInvitationSends,
   body(InviteInput, "invitation"),
   async (c) => {
     const ctx = ctxOf(c);
-    const deckId = c.req.param("id");
-    const language = await accountEmailLanguage(ctx.db, ctx.userId, c.req.raw);
-    const { id } = await inviteByEmail(
-      ctx,
-      deckId,
-      c.req.valid("json").email,
-      async (to, token, deck) => {
-        await sendTransactionalEmail(ctx, c.env, {
-          kind: "deck-invitation",
-          to,
-          language,
-          url: new URL(`/join/${token}`, c.env.PRODUCT_URL).toString(),
-          invitation: { deckName: deck.name, ownerName: deck.owner, cards: deck.cards },
-        });
-      },
-    );
-    const written = (await listInvitations(ctx, deckId)).find((row) => row.id === id);
-    if (!written) throw new ServiceError("conflict", "They already have an invitation waiting");
+    const { email } = c.req.valid("json");
+    // Written in the reader's language when they have an account, else in the owner's.
+    const language =
+      (await addressEmailLanguage(ctx.db, email)) ??
+      (await accountEmailLanguage(ctx.db, ctx.userId, c.req.raw));
+    const written = await inviteByEmail(ctx, c.req.param("id"), email, async (to, token, deck) => {
+      await sendTransactionalEmail(ctx, c.env, {
+        kind: "deck-invitation",
+        to,
+        language,
+        url: new URL(`/join/${token}`, c.env.PRODUCT_URL).toString(),
+        invitation: { deckName: deck.name, ownerName: deck.owner, cards: deck.cards },
+      });
+    });
     return c.json(written, 201);
   },
 );

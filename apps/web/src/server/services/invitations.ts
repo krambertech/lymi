@@ -1,5 +1,5 @@
-import type { JoinPreviewOut } from "@lymi/core";
-import { newId } from "@lymi/core";
+import type { InviteRefusal, JoinPreviewOut } from "@lymi/core";
+import { newId, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { and, eq, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { audit, auditStatementWhen } from "./audit";
@@ -187,21 +187,14 @@ export async function joinThroughLink(ctx: ServiceContext, token: string) {
       });
     }
   }
+  // Joining spends the named invitation, so the address cannot hand its link on to somebody else.
   const { role } = await join(ctx, link.deckId, { invitationId: link.id });
-  if (link.kind === "named" && !link.acceptedAt) {
-    // Spent, so the address cannot hand its link on to somebody else.
-    await ctx.db
-      .update(schema.deckInvitations)
-      .set({ acceptedAt: new Date(), updatedAt: new Date() })
-      .where(
-        and(eq(schema.deckInvitations.id, link.id), isNull(schema.deckInvitations.acceptedAt)),
-      );
-  }
   return { deckId: link.deckId, role };
 }
 
-/** How many people may be waiting on an invitation at once, so the field cannot send in bulk. */
-export const PENDING_INVITATION_LIMIT = 20;
+function refused(code: "invalid" | "conflict", message: string, reason: InviteRefusal) {
+  return new ServiceError(code, message, { reason });
+}
 
 /** Invitations nobody has accepted yet, oldest first. Owner only. */
 export async function listInvitations(ctx: ServiceContext, deckId: string) {
@@ -251,30 +244,36 @@ export async function inviteByEmail(
     .from(schema.user)
     .where(eq(schema.user.id, userId));
   if (owner?.email.toLowerCase() === email) {
-    throw new ServiceError("invalid", "This deck is already yours");
+    throw refused("invalid", "This deck is already yours", "owner");
   }
 
-  const [member] = await db
-    .select({ id: schema.deckMembers.id })
+  const [membership] = await db
+    .select({ removedAt: schema.deckMembers.removedAt, removedBy: schema.deckMembers.removedBy })
     .from(schema.deckMembers)
     .innerJoin(schema.user, eq(schema.user.id, schema.deckMembers.userId))
-    .where(
-      and(
-        eq(schema.deckMembers.deckId, deckId),
-        sql`lower(${schema.user.email}) = ${email}`,
-        isNull(schema.deckMembers.removedAt),
-      ),
+    .where(and(eq(schema.deckMembers.deckId, deckId), sql`lower(${schema.user.email}) = ${email}`));
+  if (membership && !membership.removedAt) {
+    throw refused("conflict", "They are already studying this deck", "member");
+  }
+  // Removal is for good, so the message would carry a link its reader cannot use. Somebody
+  // who left is welcome back, and the invitation is how the owner says so.
+  if (membership?.removedBy === "owner") {
+    throw refused(
+      "conflict",
+      "You removed them from this deck, and nothing lets them back yet",
+      "removed",
     );
-  if (member) throw new ServiceError("conflict", "They are already studying this deck");
+  }
 
   const waiting = await listInvitations(ctx, deckId);
   if (waiting.some((row) => row.email === email)) {
-    throw new ServiceError("conflict", "They already have an invitation waiting");
+    throw refused("conflict", "They already have an invitation waiting", "invited");
   }
   if (waiting.length >= PENDING_INVITATION_LIMIT) {
-    throw new ServiceError(
+    throw refused(
       "invalid",
       `That is ${PENDING_INVITATION_LIMIT} invitations waiting. Cancel one, or wait for someone to join.`,
+      "full",
     );
   }
 
@@ -296,10 +295,10 @@ export async function inviteByEmail(
   ]);
 
   const [written] = await db
-    .select({ token: schema.deckInvitations.token })
+    .select({ token: schema.deckInvitations.token, invitedAt: schema.deckInvitations.createdAt })
     .from(schema.deckInvitations)
     .where(eq(schema.deckInvitations.id, id));
-  if (!written) throw new ServiceError("conflict", "They already have an invitation waiting");
+  if (!written) throw refused("conflict", "They already have an invitation waiting", "invited");
 
   // The deck row carries no counts, so the message asks for the one number it names.
   const [counted] = await db
@@ -314,7 +313,7 @@ export async function inviteByEmail(
     owner: deck.owner.name,
     cards: counted?.cards ?? 0,
   });
-  return { id, email };
+  return { id, email, invitedAt: written.invitedAt };
 }
 
 /** Take back an invitation nobody has accepted. Its link stops working. Owner only. */

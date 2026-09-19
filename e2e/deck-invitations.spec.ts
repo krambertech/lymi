@@ -29,6 +29,8 @@ test("an owner invites somebody by name and only they can come in", async ({
   page,
   browser,
 }, testInfo) => {
+  // One journey across three browsers and an account sign-up, so it takes the long budget.
+  test.setTimeout(120_000);
   const deckName = `Invitations ${testInfo.project.name}`;
   const invited = outsider(testInfo, "invited");
   const stranger = outsider(testInfo, "stranger");
@@ -79,6 +81,15 @@ test("an owner invites somebody by name and only they can come in", async ({
     await expect(row).toContainText(invited);
     await expect(row).toContainText("Not joined yet");
 
+    // Asking the same address again is refused in the owner's words, not a generic failure.
+    await page.getByRole("button", { name: "Invite", exact: true }).click();
+    const again = page.getByRole("dialog");
+    await again.getByRole("textbox", { name: "Email address" }).fill(invited);
+    await again.getByRole("button", { name: "Send invitation" }).click();
+    await expect(again.getByText("They already have an invitation waiting.")).toBeVisible();
+    await again.getByRole("button", { name: "Cancel", exact: true }).click();
+    await expect(again).toBeHidden();
+
     const owner = ((await (await page.request.get("/api/me")).json()) as { name: string }).name;
     const message = await invitationLink(page, invited);
     expect(message.subject).toBe(`${owner} shared a deck with you`);
@@ -113,6 +124,12 @@ test("an owner invites somebody by name and only they can come in", async ({
     });
     expect(refused.status()).toBe(403);
     expect(await refused.text()).toContain(invited);
+    // The page names whom it was for, so the fix is plain: sign in with that address.
+    await wrong.goto(invitationUrl);
+    await wrong.getByRole("button", { name: "Join", exact: true }).click();
+    await expect(
+      wrong.getByText(`This invitation was sent to ${invited}. Sign in with that address to join.`),
+    ).toBeVisible();
     const theirs = (await (await wrong.request.get("/api/decks")).json()) as { id: string }[];
     expect(theirs.map((d) => d.id)).not.toContain(deckId);
     await wrong.context().close();

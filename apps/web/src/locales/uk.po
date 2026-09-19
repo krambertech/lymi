@@ -526,6 +526,9 @@ msgstr "{others, plural, one {Попередній розділ теж почн�
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запам’ятано: {passed}, забуто: {failed}"
 
+msgid "{PENDING_INVITATION_LIMIT, plural, one {# person is waiting on an invitation. Cancel it, or wait for them to join.} other {# people are waiting on an invitation. Cancel one, or wait for someone to join.}}"
+msgstr "{PENDING_INVITATION_LIMIT, plural, one {# людина чекає на запрошення. Скасуй його або зачекай, поки вона приєднається.} few {# людини чекають на запрошення. Скасуй одне або зачекай, поки хтось приєднається.} many {# людей чекають на запрошення. Скасуй одне або зачекай, поки хтось приєднається.} other {# людини чекають на запрошення. Скасуй одне або зачекай, поки хтось приєднається.}}"
+
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оцінка з офлайн-повторення ще не дійшла до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти її.} few {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} many {# оцінок з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.} other {# оцінки з офлайн-повторень ще не дійшли до Lymi. Вийди, коли знову будеш онлайн, щоб зберегти їх.}}"
 
@@ -3306,6 +3309,12 @@ msgstr "Тема"
 msgid "There is no deck at this address"
 msgstr "За цією адресою немає колоди"
 
+msgid "They already have an invitation waiting."
+msgstr "Ця людина вже має запрошення."
+
+msgid "They are already studying this deck."
+msgstr "Ця людина вже вивчає цю колоду."
+
 msgid "They get a message from Lymi with a link only their address can use. They can study the deck, never change it."
 msgstr "Людина отримає від Lymi лист із посиланням, яке працює лише для її адреси. Вона зможе вивчати колоду, але не змінювати її."
 
@@ -3326,6 +3335,9 @@ msgstr "Ця колекція завелика, щоб імпортувати ї
 
 msgid "This deck is already in your Library."
 msgstr "Ця колода вже є в твоїй Бібліотеці."
+
+msgid "This deck is already yours."
+msgstr "Ця колода вже твоя."
 
 msgid "This deck is archived"
 msgstr "Ця колода в архіві"
@@ -3368,6 +3380,9 @@ msgstr "Цей імпорт закрито"
 
 msgid "This invitation is for this address only. If you were not expecting it, ignore this email."
 msgstr "Це запрошення лише для цієї адреси. Якщо ти його не чекав, просто проігноруй цей лист."
+
+msgid "This invitation was sent to {invited}. Sign in with that address to join."
+msgstr "Це запрошення надіслано на {invited}. Увійди з цією адресою, щоб приєднатися."
 
 msgid "This is too much for one file. Export one deck at a time instead."
 msgstr "Це забагато для одного файлу. Експортуй колоди по одній."
@@ -3431,6 +3446,9 @@ msgstr "Забагато спроб. Спробуй ще через {minutes, pl
 
 msgid "Too many attempts. Try again later."
 msgstr "Забагато спроб. Спробуй трохи згодом."
+
+msgid "Too many invitations went out recently. Try again later."
+msgstr "Останнім часом надіслано забагато запрошень. Спробуй пізніше."
 
 msgid "Took “{deckName}” out of its series"
 msgstr "«{deckName}» вийнято з серії"
@@ -3650,6 +3668,9 @@ msgstr "Через це посилання не можна приєднатис�
 
 msgid "You don’t need to do anything."
 msgstr "Нічого робити не потрібно."
+
+msgid "You removed them from this deck, and there is no way to add them again yet."
+msgstr "Доступ до колоди для цієї людини закрито, і повернути її поки що неможливо."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."

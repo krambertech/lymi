@@ -526,6 +526,9 @@ msgstr "{others, plural, one {The section before it starts too, so sections stay
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "{passed} remembered, {failed} forgotten"
 
+msgid "{PENDING_INVITATION_LIMIT, plural, one {# person is waiting on an invitation. Cancel it, or wait for them to join.} other {# people are waiting on an invitation. Cancel one, or wait for someone to join.}}"
+msgstr "{PENDING_INVITATION_LIMIT, plural, one {# person is waiting on an invitation. Cancel it, or wait for them to join.} other {# people are waiting on an invitation. Cancel one, or wait for someone to join.}}"
+
 msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 
@@ -3306,6 +3309,12 @@ msgstr "Theme"
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
 
+msgid "They already have an invitation waiting."
+msgstr "They already have an invitation waiting."
+
+msgid "They are already studying this deck."
+msgstr "They are already studying this deck."
+
 msgid "They get a message from Lymi with a link only their address can use. They can study the deck, never change it."
 msgstr "They get a message from Lymi with a link only their address can use. They can study the deck, never change it."
 
@@ -3326,6 +3335,9 @@ msgstr "This collection is too large to import at once"
 
 msgid "This deck is already in your Library."
 msgstr "This deck is already in your Library."
+
+msgid "This deck is already yours."
+msgstr "This deck is already yours."
 
 msgid "This deck is archived"
 msgstr "This deck is archived"
@@ -3368,6 +3380,9 @@ msgstr "This import was closed"
 
 msgid "This invitation is for this address only. If you were not expecting it, ignore this email."
 msgstr "This invitation is for this address only. If you were not expecting it, ignore this email."
+
+msgid "This invitation was sent to {invited}. Sign in with that address to join."
+msgstr "This invitation was sent to {invited}. Sign in with that address to join."
 
 msgid "This is too much for one file. Export one deck at a time instead."
 msgstr "This is too much for one file. Export one deck at a time instead."
@@ -3431,6 +3446,9 @@ msgstr "Too many attempts. Try again in {minutes, plural, one {# minute} other {
 
 msgid "Too many attempts. Try again later."
 msgstr "Too many attempts. Try again later."
+
+msgid "Too many invitations went out recently. Try again later."
+msgstr "Too many invitations went out recently. Try again later."
 
 msgid "Took “{deckName}” out of its series"
 msgstr "Took “{deckName}” out of its series"
@@ -3650,6 +3668,9 @@ msgstr "You cannot join this deck through this link."
 
 msgid "You don’t need to do anything."
 msgstr "You don’t need to do anything."
+
+msgid "You removed them from this deck, and there is no way to add them again yet."
+msgstr "You removed them from this deck, and there is no way to add them again yet."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."

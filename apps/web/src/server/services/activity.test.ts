@@ -8,7 +8,13 @@ import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { startExport } from "./exports";
-import { turnOffJoinLink, turnOnJoinLink } from "./invitations";
+import {
+  cancelInvitation,
+  inviteByEmail,
+  listInvitations,
+  turnOffJoinLink,
+  turnOnJoinLink,
+} from "./invitations";
 import { join, leave, removeMember } from "./members";
 import { setReviewTimezone } from "./review-days";
 import { createSection } from "./sections";
@@ -143,6 +149,28 @@ describe("the people of a shared deck", () => {
     for (const kind of ["member_joined", "member_left", "member_removed"]) {
       expect(rows.find((row) => row.kind === kind)?.person).toBe("Maryna");
     }
+  });
+
+  it("names each invited address on its own row", async () => {
+    const deck = await createDeck(kateryna, { name: "Estonian A1", defaultLanguage: "et" });
+    const send = async () => {};
+    await inviteByEmail(kateryna, deck.id, "anna@example.test", send);
+    await inviteByEmail(kateryna, deck.id, "marko@example.test", send);
+
+    const [first] = await listInvitations(kateryna, deck.id);
+    if (!first) throw new Error("no invitation");
+    await cancelInvitation(kateryna, deck.id, first.id);
+
+    const rows = await inDeck(deck.id);
+    const sent = rows.filter((row) => row.kind === "invitation_sent");
+    expect(sent.map((row) => row.person).sort()).toEqual([
+      "anna@example.test",
+      "marko@example.test",
+    ]);
+    expect(sent.every((row) => row.count === 1)).toBe(true);
+    expect(rows.find((row) => row.kind === "invitation_cancelled")?.person).toBe(
+      "anna@example.test",
+    );
   });
 
   it("keeps a deck's people to its owner", async () => {

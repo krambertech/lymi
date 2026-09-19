@@ -1,4 +1,6 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -13,7 +15,15 @@ import {
   ArchiveSectionDialog,
   SectionNameDialog,
 } from "../components/section-dialogs";
-import { api, errorMessage, type Invitation, type Member, type Section } from "../lib/api";
+import {
+  ApiError,
+  api,
+  errorMessage,
+  type Invitation,
+  type Member,
+  refusalDetail,
+  type Section,
+} from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import {
   archivedSectionsQuery,
@@ -93,6 +103,31 @@ function DeckSettings() {
       ]);
     },
   });
+
+  /** The server says why in English and for integrations; the owner reads it in their language. */
+  const inviteRefusal = (error: unknown): string => {
+    switch (refusalDetail(error, "reason") as InviteRefusal | null) {
+      case "owner":
+        return t`This deck is already yours.`;
+      case "member":
+        return t`They are already studying this deck.`;
+      case "removed":
+        return t`You removed them from this deck, and there is no way to add them again yet.`;
+      case "invited":
+        return t`They already have an invitation waiting.`;
+      case "full":
+        return plural(PENDING_INVITATION_LIMIT, {
+          one: "# person is waiting on an invitation. Cancel it, or wait for them to join.",
+          other: "# people are waiting on an invitation. Cancel one, or wait for someone to join.",
+        });
+      case null:
+        break;
+    }
+    if (error instanceof ApiError && error.status === 429) {
+      return t`Too many invitations went out recently. Try again later.`;
+    }
+    return errorMessage(error);
+  };
 
   const cancelInvite = useMutation({
     mutationFn: (invitation: Invitation) => api.cancelInvitation(deckId, invitation.id),
@@ -202,7 +237,6 @@ function DeckSettings() {
             ? {
                 deckName: deck.name,
                 link: joinLink.data?.link,
-                members: joinLink.data?.members ?? 0,
                 onTurnOn: () => turnOn.mutate(),
                 onTurnOff: () => turnOff.mutate(),
                 pending: turnOn.isPending ? "on" : turnOff.isPending ? "off" : undefined,
@@ -219,8 +253,9 @@ function DeckSettings() {
           invite.reset();
         }}
         onInvite={(email) => invite.mutate(email)}
+        onChange={() => invite.isError && invite.reset()}
         pending={invite.isPending}
-        error={invite.isError ? errorMessage(invite.error) : undefined}
+        error={invite.isError ? inviteRefusal(invite.error) : undefined}
       />
       <CancelInvitationDialog
         invitation={cancelling}

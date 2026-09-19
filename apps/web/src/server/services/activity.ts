@@ -102,6 +102,8 @@ const PEOPLE_KINDS = new Set<ActivityKind>([
   "member_joined",
   "member_left",
   "member_removed",
+  "invitation_sent",
+  "invitation_cancelled",
   "link_on",
   "link_off",
 ]);
@@ -280,7 +282,13 @@ function kindOf(row: Row): ActivityKind | null {
  */
 function groupKey(row: Row, kind: ActivityKind, day: string): string {
   const caller = `${row.actor}:${row.actorClient ?? ""}`;
-  const one = kind.startsWith("cards_") ? "" : row.entityId;
+  // Cards group across decks. Invitations group per address, or a class asked in one sitting
+  // would be one row naming only the last of them.
+  const one = kind.startsWith("cards_")
+    ? ""
+    : kind.startsWith("invitation_")
+      ? `${row.entityId}|${invitedAddress(row) ?? ""}`
+      : row.entityId;
   return `${day}|${caller}|${kind}|${one}`;
 }
 

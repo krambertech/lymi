@@ -76,13 +76,19 @@ export const ReviewModes = z
     "List each review mode once.",
   );
 
-/** What a learner may do in a deck. Only `owner` and `learner` are granted today. ADR 0011. */
 /** Ask one address into a deck. Lowercased here so a repeat cannot make a second invitation. */
 export const InviteInput = z.object({
   email: z.string().trim().toLowerCase().email().max(254),
 });
 export type InviteInput = z.infer<typeof InviteInput>;
 
+/** How many people may be waiting on an invitation to one deck at once. ADR 0011. */
+export const PENDING_INVITATION_LIMIT = 20;
+
+/** Why an invitation was refused, in the response's `issues`, so the app can say it in the learner's language. */
+export type InviteRefusal = "owner" | "member" | "removed" | "invited" | "full";
+
+/** What a learner may do in a deck. Only `owner` and `learner` are granted today. ADR 0011. */
 export const MemberRole = z.enum(["owner", "editor", "contributor", "learner"]);
 export type MemberRole = z.infer<typeof MemberRole>;
 

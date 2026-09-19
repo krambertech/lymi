@@ -1,7 +1,7 @@
 import type { I18n } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import type { FeedbackKind } from "@lymi/core";
-import { eq } from "@lymi/core/db";
+import { eq, sql } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
 import type { Db } from "../db";
 import { schema } from "../db";
@@ -437,6 +437,19 @@ export async function accountEmailLanguage(
     .from(schema.userSettings)
     .where(eq(schema.userSettings.userId, userId));
   return row?.appLanguage ? emailLanguage(row.appLanguage) : languageFromRequest(request);
+}
+
+/** The interface language of the account at an address, or null when nobody has one. */
+export async function addressEmailLanguage(
+  db: Db,
+  email: string,
+): Promise<TransactionalEmailLanguage | null> {
+  const [row] = await db
+    .select({ appLanguage: schema.userSettings.appLanguage })
+    .from(schema.user)
+    .innerJoin(schema.userSettings, eq(schema.userSettings.userId, schema.user.id))
+    .where(sql`lower(${schema.user.email}) = ${email.toLowerCase()}`);
+  return row?.appLanguage ? emailLanguage(row.appLanguage) : null;
 }
 
 /**

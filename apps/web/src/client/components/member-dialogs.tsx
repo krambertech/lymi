@@ -165,6 +165,8 @@ interface InviteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onInvite: (email: string) => void;
+  /** The owner is typing again, so what the server said about the last address can go. */
+  onChange?: (() => void) | undefined;
   pending?: boolean | undefined;
   /** What the server refused, which only it can know: already a member, already invited, full. */
   error?: string | undefined;
@@ -175,7 +177,14 @@ interface InviteDialogProps {
  * list. The button is never disabled: pressing it with nothing typed says what is missing,
  * which teaches more than a control that cannot be pressed.
  */
-export function InviteDialog({ open, onOpenChange, onInvite, pending, error }: InviteDialogProps) {
+export function InviteDialog({
+  open,
+  onOpenChange,
+  onInvite,
+  onChange,
+  pending,
+  error,
+}: InviteDialogProps) {
   const { t } = useLingui();
   const fieldId = useId();
   const [email, setEmail] = useState("");
@@ -236,6 +245,7 @@ export function InviteDialog({ open, onOpenChange, onInvite, pending, error }: I
               onChange={(event) => {
                 setEmail(event.target.value);
                 setRefused(undefined);
+                onChange?.();
               }}
               placeholder={t`anna@example.com`}
               aria-invalid={message ? true : undefined}

@@ -1,3 +1,4 @@
+import { PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
@@ -12,7 +13,6 @@ import {
   joinLinkAdmits,
   joinThroughLink,
   listInvitations,
-  PENDING_INVITATION_LIMIT,
   previewJoin,
   turnOffJoinLink,
   turnOnJoinLink,
@@ -345,6 +345,37 @@ describe("inviting one person by name", () => {
       conflict,
     );
     expect(mail.sent).toHaveLength(0);
+  });
+
+  it("refuses somebody the owner removed, and welcomes back somebody who left", async () => {
+    const { deck, token } = await sharedDeck("Eemaldatud");
+    const mail = outbox();
+    await joinThroughLink(anna, token);
+    await removeMember(kateryna, deck.id, anna.userId);
+    await joinThroughLink(marko, token);
+    await leave(marko, deck.id);
+
+    // A message would carry a link the door refuses, so none goes out.
+    await expect(inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send)).rejects.toThrow(
+      conflict,
+    );
+    expect(mail.sent).toHaveLength(0);
+
+    await inviteByEmail(kateryna, deck.id, "marko@lymi.test", mail.send);
+    const invitation = mail.sent[0]?.token;
+    if (!invitation) throw new Error("no token");
+    await joinThroughLink(marko, invitation);
+    expect((await listDecks(marko)).map((d) => d.id)).toContain(deck.id);
+  });
+
+  it("is spent when the address it names joins through the join link instead", async () => {
+    const { deck, token } = await sharedDeck("Kõrvalt");
+    const mail = outbox();
+    await inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send);
+
+    await joinThroughLink(anna, token);
+    expect(await listInvitations(kateryna, deck.id)).toEqual([]);
+    expect(await listMembers(kateryna, deck.id)).toHaveLength(1);
   });
 
   it("stops at the limit and counts only the people still waiting", async () => {

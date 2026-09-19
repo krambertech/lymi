@@ -4,9 +4,9 @@ import { publisherAvatarPath, trayHue } from "@lymi/core/catalog";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ArrowRight, Check, ChevronDown, Plus } from "lucide-react";
-import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useRef } from "react";
 import { Button, buttonClass } from "../components/button";
-import { DeckMeta, termStep } from "../components/deck-tray";
+import { DeckMeta, TrayCardFace } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
 import type { StaticNav } from "../components/nav-link";
@@ -21,6 +21,8 @@ interface Props {
   onRetry?: (() => void) | undefined;
   onAdd: () => void;
   adding?: boolean | undefined;
+  /** This page's own press added the deck, so its arrival plays rather than a refetch's. */
+  added?: boolean | undefined;
   st?: StaticNav;
 }
 
@@ -41,11 +43,7 @@ function keyed<T>(items: readonly T[], nameOf: (item: T) => string): { item: T; 
 
 type HandCard = { term: string; meaning: string; section: string | null };
 
-/**
- * Up to three cards for the hand beside the name, one per section before a second from any, so
- * the hand shows the deck's range. The first is the card on the shelf's tray and lies on top, so
- * the card the learner pressed meets them here.
- */
+// One card per section before a second from any, so three cards show the deck's range.
 function handOf(deck: PublicDeckOut): HandCard[] {
   const hand: HandCard[] = [];
   const sections = deck.sections.map((section) => ({
@@ -65,8 +63,7 @@ function handOf(deck: PublicDeckOut): HandCard[] {
   return hand;
 }
 
-// Where each card of a hand of one, two or three lies: its step from the middle, its drop and its
-// tilt. The first card is the one on top, so it sits in the middle and highest.
+// Step from the middle, drop and tilt for a hand of one, two or three; the first lies on top.
 const FANS: [number, number, number][][] = [
   [[0, 0, -2]],
   [
@@ -79,19 +76,14 @@ const FANS: [number, number, number][][] = [
     [1, 22, 6],
   ],
 ];
-// The same cards squared into a deck once it is in Library, as the tray's paper sits behind its card.
+// The same cards squared into a stack once the deck is in Library.
 const STACK: [number, number, number][] = [
   [0, 0, -1],
   [-7, 8, -3],
   [8, 6, 2.5],
 ];
 
-/**
- * The deck's cards fanned out beside its name. Once the deck is in Library they gather into one
- * squared stack under a check, which is the change the learner watches when they add it: the
- * fan is a deck being browsed, the stack is a deck that is theirs. The list under the header
- * says the same cards to a screen reader, so the hand is hidden from one.
- */
+// Hidden from a screen reader, which reads the same cards in the list below.
 function DeckHand({
   deck,
   cards,
@@ -120,24 +112,17 @@ function DeckHand({
           "--sx": `${x}px`,
           "--sy": `${y}px`,
           "--sr": `${r}deg`,
-          "--t": termStep(card.term),
           zIndex: cards.length - at,
           transitionDelay: `${at * 40}ms`,
         } as CSSProperties;
         return (
           // biome-ignore lint/suspicious/noArrayIndexKey: a fixed hand; a term can repeat.
           <div key={at} className="deck-hand-card" style={style}>
-            {card.section && (
-              <p lang={deck.meaningLanguage} className="deck-tray-section">
-                {card.section}
-              </p>
-            )}
-            <p lang={deck.language ?? undefined} className="deck-tray-term">
-              {card.term}
-            </p>
-            <p lang={deck.meaningLanguage} className="deck-tray-meaning">
-              {card.meaning}
-            </p>
+            <TrayCardFace
+              card={card}
+              language={deck.language}
+              meaningLanguage={deck.meaningLanguage}
+            />
             {at === 0 && (
               <span className="deck-hand-seal">
                 <Check strokeWidth={2.5} />
@@ -158,18 +143,13 @@ export function ExploreDeckView({
   onRetry,
   onAdd,
   adding,
+  added,
   st,
 }: Props) {
   const { t } = useLingui();
-  // A deck that arrives in Library while the page is open plays its arrival; one that was
-  // already there when the page opened simply is.
   const deckId = data?.deckId;
-  const [seen, setSeen] = useState(deckId);
-  const [arrived, setArrived] = useState(false);
-  if (seen !== deckId) {
-    setSeen(deckId);
-    if (seen === null && deckId) setArrived(true);
-  }
+  // The refetch that brings the deck in lands before the press settles, so either state counts.
+  const arrived = (adding || added) === true && !!deckId;
   const open = useRef<HTMLAnchorElement>(null);
   // The pressed button is gone, so focus moves to the press that replaces it.
   useEffect(() => {
@@ -221,20 +201,16 @@ export function ExploreDeckView({
   const sections = deck.sections.filter((section) => section.name !== null);
   const hand = handOf(deck);
 
-  // The deck's colour is the ground of its whole header, back included, as its tray is on the
-  // shelf: it runs from the rail to the window's edge, its text on the column. docs/design/explore.md.
+  // The deck's colour runs under its whole header, back included. docs/design/explore.md.
   const cover = (bar: ReactNode) => (
     <div className="deck-cover" data-hue={trayHue(deck.slug)}>
-      <div className="mx-auto w-full max-w-(--column) px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-9 @3xl/shell:px-8 @3xl/shell:pt-8 @3xl/shell:pb-11">
+      <div className="mx-auto w-full max-w-(--column) px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-9 @3xl/shell:px-8 @3xl/shell:pt-[calc(env(safe-area-inset-top)+2rem)] @3xl/shell:pb-11">
         {bar}
         <div className="grid items-center gap-6 @4xl:grid-cols-[minmax(0,1fr)_auto] @4xl:gap-10">
           <div className="grid justify-items-start">
-            {/* Who made it and how big it is on one line above the name, so the column reads
-                  source, name, promise, press, with nothing between the name and its summary. */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-2">
               <p className="flex items-center gap-2">
-                {/* The photo is served by this Worker beside the deck's own media, so the path
-                      is the deck's slug rather than anything naming the account. ADR 0016. */}
+                {/* Served by the deck's slug rather than the account. ADR 0016. */}
                 <PublisherMark
                   name={deck.publisher}
                   src={
@@ -251,7 +227,7 @@ export function ExploreDeckView({
               </span>
               <DeckMeta
                 deck={{ cardCount: deck.cardCount, sectionCount: sections.length }}
-                className="text-sm text-text-2"
+                size="sm"
               />
             </div>
             <h1
@@ -266,12 +242,18 @@ export function ExploreDeckView({
             >
               {deck.summary}
             </p>
+            {/* The check that says so is drawn in the hand, which a screen reader skips. */}
+            {deckId && (
+              <p className="sr-only">
+                <Trans>In Library</Trans>
+              </p>
+            )}
             <div className="mt-6 flex w-full">
-              {data.deckId ? (
+              {deckId ? (
                 <Link
                   ref={open}
                   to="/library/$deckId"
-                  params={{ deckId: data.deckId }}
+                  params={{ deckId }}
                   disabled={!!st}
                   className={buttonClass("secondary", "lg", "deck-cover-action w-full @md:w-auto")}
                 >
@@ -306,7 +288,7 @@ export function ExploreDeckView({
             <DeckHand
               deck={deck}
               cards={hand}
-              gathered={!!data.deckId}
+              gathered={!!deckId}
               className="-order-1 @4xl:order-none"
             />
           )}

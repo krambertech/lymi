@@ -29,6 +29,7 @@ function ExploreDeck() {
         add.mutate({ slug, name: data.deck.name, edition: data.deck.meaningLanguage })
       }
       adding={add.isPending}
+      added={add.isSuccess}
     />
   );
 }

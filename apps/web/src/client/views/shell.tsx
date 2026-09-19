@@ -267,8 +267,9 @@ export function TileLockup({
   );
 }
 
+// `screen-back` lets a screen that colours its header retint the hover.
 const backClass =
-  "-ms-2.5 inline-flex h-11 min-w-11 max-w-[65%] items-center gap-0.5 rounded-sm pe-2.5 ps-1 text-md text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-2 hoverable:hover:text-text [&_svg]:size-[22px] [&_svg]:shrink-0";
+  "screen-back -ms-2.5 inline-flex h-11 min-w-11 max-w-[65%] items-center gap-0.5 rounded-sm pe-2.5 ps-1 text-md text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-2 hoverable:hover:text-text [&_svg]:size-[22px] [&_svg]:shrink-0";
 
 /** Back to the screen above, named, so a card says which deck it returns to. */
 export function BackButton({

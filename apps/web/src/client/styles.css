@@ -1116,10 +1116,7 @@
   color: var(--text-2);
 }
 
-/* A deck's own page: its tray's colour becomes the ground of the whole header, from the rail to
-   the window's edge and up under the status bar. It holds less chroma than a tray, because the
-   same colour over a header reads louder than over a tile. At night it sits between the canvas
-   and a plate, so the cards still stand proud of it. */
+/* A deck page's header on its tray's hue, with less chroma because a header reads louder than a tile. */
 .deck-cover {
   --tray-l: 0.958;
   --tray-c: 0.034;
@@ -1133,16 +1130,17 @@
   --tray-l: 0.19;
   --tray-c: 0.03;
 }
-/* A back press on the ground darkens it in its own hue rather than laying grey over it. */
-.deck-cover header > a:hover {
-  background: oklch(from var(--ground) calc(l - 0.035) calc(c + 0.012) h);
-}
-[data-theme="dark"] .deck-cover header > a:hover {
-  background: oklch(from var(--ground) calc(l + 0.05) c h);
+/* Back darkens in the ground's own hue rather than laying grey over it. */
+@media (hover: hover) and (pointer: fine) {
+  .deck-cover .screen-back:hover {
+    background: oklch(from var(--ground) calc(l - 0.035) calc(c + 0.012) h);
+  }
+  [data-theme="dark"] .deck-cover .screen-back:hover {
+    background: oklch(from var(--ground) calc(l + 0.05) c h);
+  }
 }
 
-/* The one press on the header is white rather than amber: amber on a coloured ground stops reading
-   as the thing to press, and white is the ground's own plate. At night white is the room's ink. */
+/* White rather than amber, which stops reading as the thing to press on a coloured ground. */
 .deck-cover-action {
   background: var(--plate);
   color: var(--text);
@@ -1176,8 +1174,7 @@
   }
 }
 
-/* The hand: up to three of the deck's cards fanned beside its name. Once the deck is in Library
-   they gather into a squared stack and the check lands on top. */
+/* Up to three of the deck's cards, fanned until the deck is in Library and stacked under a check after. */
 .deck-hand {
   --cw: min(128px, 34cqw);
   --gap: calc(var(--cw) * 0.7);

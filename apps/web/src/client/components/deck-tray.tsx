@@ -14,9 +14,40 @@ function paperFor(cardCount: number): number {
 }
 
 /** A long compound would break mid-letter at the full size, so the term steps down first. */
-export function termStep(term: string): number {
+function termStep(term: string): number {
   const longest = Math.max(...term.split(/\s+/).map((word) => word.length));
   return longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14;
+}
+
+/** A card's section, term and meaning as a tray draws them, sized by the `--cw` around it. */
+export function TrayCardFace({
+  card,
+  language,
+  meaningLanguage,
+}: {
+  card: NonNullable<PublicDeckSummary["card"]>;
+  language: string | null;
+  meaningLanguage: string;
+}) {
+  return (
+    <>
+      {card.section && (
+        <p lang={meaningLanguage} className="deck-tray-section">
+          {card.section}
+        </p>
+      )}
+      <p
+        lang={language ?? undefined}
+        className="deck-tray-term"
+        style={{ "--t": termStep(card.term) } as CSSProperties}
+      >
+        {card.term}
+      </p>
+      <p lang={meaningLanguage} className="deck-tray-meaning">
+        {card.meaning}
+      </p>
+    </>
+  );
 }
 
 interface TrayProps {
@@ -52,18 +83,8 @@ export function DeckTray({
           // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
           <span key={at} className="deck-tray-paper" data-at={at + 1} aria-hidden="true" />
         ))}
-        <article className="deck-tray-card" style={{ "--t": termStep(card.term) } as CSSProperties}>
-          {card.section && (
-            <p lang={meaningLanguage} className="deck-tray-section">
-              {card.section}
-            </p>
-          )}
-          <p lang={language ?? undefined} className="deck-tray-term">
-            {card.term}
-          </p>
-          <p lang={meaningLanguage} className="deck-tray-meaning">
-            {card.meaning}
-          </p>
+        <article className="deck-tray-card">
+          <TrayCardFace card={card} language={language} meaningLanguage={meaningLanguage} />
         </article>
       </div>
     </div>
@@ -82,8 +103,7 @@ interface TileProps {
 /**
  * A deck on a shelf: its card in a tray, its name, and the one press that adds it. The name is
  * the largest thing in the group and the card's term sets smaller than it. Add is secondary
- * here rather than amber — a shelf of decks has no single thing to press, and the deck's own
- * page is where the amber button lives. DESIGN.md, "Colour".
+ * here rather than amber — a shelf of decks has no single thing to press. DESIGN.md, "Colour".
  */
 export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
   const { t } = useLingui();
@@ -149,9 +169,12 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
 /** Cards and sections, in that order, on one line. */
 export function DeckMeta({
   deck,
+  size = "xs",
   className,
 }: {
   deck: Pick<PublicDeckSummary, "cardCount" | "sectionCount">;
+  /** "sm" is the deck's own page, where the line sits beside the byline in its tone. */
+  size?: "xs" | "sm" | undefined;
   className?: string | undefined;
 }) {
   const dot = (
@@ -163,7 +186,8 @@ export function DeckMeta({
     <p
       className={clsx(
         "flex flex-wrap items-center gap-x-1.5 gap-y-1 tabular-nums",
-        className ?? "text-xs text-muted",
+        size === "sm" ? "text-sm text-text-2" : "text-xs text-muted",
+        className,
       )}
     >
       <span>

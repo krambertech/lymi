@@ -5,7 +5,9 @@ Lymi uses a small set of Playwright journeys to prove that the browser, Worker, 
 ## Commands
 
 ```bash
-pnpm verify           # canonical base gate: check, build, typecheck, test
+pnpm verify:changed   # push gate: static checks on everything, tests for what changed
+pnpm verify           # full gate: check, build, typecheck, every test on every instance
+pnpm test:watch       # save gate: the unit project and desktop Chromium in watch mode
 pnpm test             # unit tests and the CI impact rules
 pnpm test:e2e         # Chromium desktop and an iPhone-sized WebKit browser
 pnpm test:e2e:chromium # Chromium desktop only
@@ -39,9 +41,42 @@ Six journeys keep driving the form, because arriving is their subject: the deep 
 
 The journeys run one at a time. They share a single Vite dev server, a single Worker and a single D1, and only the accounts are keyed per test: `e2eEmail` in `e2e/settings.mjs` keys one by test, project, retry and repeat. Three workers were tried on 2026-09-16 and 49 of 63 Chromium tests failed, every one of them a signed-in journey whose screen never mounted inside the expect budget while the tests that touch no account passed. Parallel journeys need a backend per worker, or a served build in place of the dev server, before the worker count is worth raising again.
 
+## What runs when
+
+The closer a change is to shipping, the more runs. Every test still runs in every browser before a commit reaches production; the gate decides where.
+
+| Check | Save | Push | Pull request | Main |
+| --- | --- | --- | --- | --- |
+| Biome, interface strings, migration safety, TypeScript | — | all | all | all |
+| Production build and deployment boundaries | — | on handover | yes | yes |
+| Unit and service tests | changed graph | changed graph | all | all |
+| Component tests, desktop Chromium | changed graph | changed graph | all | all |
+| Component tests, touch Chromium and WebKit | — | — | when the diff reaches the primitives | all |
+| Journeys | — | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
+| Deployment package dry runs | — | — | production-affecting diffs | both |
+
+- **Save** is `pnpm test:watch`: Vitest watch mode on the `unit` project and the `desktop` component instance. A save reruns the tests that import what changed.
+- **Push** is `pnpm verify:changed`: the static checks on everything, then `vitest run --changed` against the merge base with `origin/main` in each workspace, with component tests on desktop Chromium. `scripts/verify-changed.mjs` lists the steps.
+- **Pull request** and **Main** run `pnpm verify` in CI's `quality` job, with the component instances and journeys that `scripts/ci-plan.mjs` selects.
+
+`scripts/test-plan.mjs` owns two path lists, and both gates read it. A diff that reaches `components/ui/`, a `*.browser.test.tsx` file or `design/forced-states.tsx` needs every component instance: the primitives adapt to the device, and nothing else can break the touch shape. A diff that reaches a file the tests depend on without importing it, such as a migration, a `.po` catalog, `styles.css`, the test setup or a workspace config, hands over to the full gate, because `vitest --changed` follows imports and would miss it. Add a path to that list when a test starts depending on one.
+
+`LYMI_COMPONENT_INSTANCES` names the component instances to run, comma-separated from `desktop`, `touch` and `touch-webkit`; unset runs all three, and an unknown name fails the run. Workers Builds keeps `pnpm verify` as its build command, so production still fails closed on the full gate.
+
+## Where a test goes
+
+Write a test at the cheapest layer that can observe the behaviour.
+
+| Layer | Question | Runs in |
+| --- | --- | --- |
+| Unit | Is it a pure function of its inputs? FSRS, the draw, a formatter, the CI plan. | Node, milliseconds a file |
+| Service | Does it persist, authorize or audit? | Node on the shared local D1, about 20 ms a test |
+| Component | Does it depend on focus, pointer, layout or device shape? | A real browser, desktop and touch from one file |
+| Journey | Does it cross screens, origins, the service worker or offline? | Playwright against the full stack, about 10 s a test |
+
 ## Component tests in real browsers
 
-Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components` project in `apps/web/vite.config.ts`. Each test runs three times: desktop Chromium at 1280 px with a fine pointer, and Chromium and WebKit as a 390 px touch device. A test reads `inject("machine")` to know which shape to expect, so one file proves both shapes of an adaptive component. `pnpm test` runs them after the unit tests, so the browsers must be installed. Workers Builds sets `WORKERS_CI=1` and has no browsers, so the production build skips this project and relies on GitHub CI, which runs it before merge:
+Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components` project in `apps/web/vite.config.ts`. Each test runs three times: desktop Chromium at 1280 px with a fine pointer, and Chromium and WebKit as a 390 px touch device. A test reads `inject("machine")` to know which shape to expect, so one file proves both shapes of an adaptive component. `pnpm test` runs them after the unit tests, so the browsers must be installed. A pull request runs the `desktop` instance unless its diff reaches the primitives; `main` runs all three. Workers Builds sets `WORKERS_CI=1` and has no browsers, so the production build skips this project and relies on GitHub CI, which runs it before merge:
 
 ```bash
 pnpm exec playwright install chromium webkit
@@ -81,13 +116,14 @@ A newer run supersedes an older one on every branch, `main` included. Only one r
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 
 - Pull requests without production-affecting paths run the base gate only.
+- Pull requests run the component tests on desktop Chromium. A diff that reaches the UI primitives, their tests or the specimen harness adds touch Chromium and WebKit, and the quality job installs only the browsers it runs.
 - Production-affecting pull requests add a deployment-package dry run and Chromium E2E.
-- Every push to `main` and `/e2e` command runs Chromium and WebKit plus the deployment-package dry run.
+- Every push to `main` and `/e2e` command runs Chromium and WebKit journeys, every component instance, and the deployment-package dry run.
 - A manually dispatched workflow runs the full policy by default and can explicitly skip browser E2E.
 - Public-site pull requests upload a preview after the quality job passes without waiting for browser E2E. The stable `pr-<number>` alias follows the pull request across new commits and appears as GitHub's View deployment link and in the job summary.
 - Product-affecting pull requests provision an isolated app preview after quality passes. Drafts and changes that touch only `*.test.ts` or `*.test.tsx` files get none; marking a draft ready for review deploys it. GitHub's View deployment link establishes the preview capability, signs in a synthetic learner and opens seeded data; the same link follows later commits.
 
-Every run writes a final summary with its selected browser coverage and the outcome of each job and gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
+Every run writes a final summary with its selected browser and component coverage and the outcome of each job and gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository. A newer commit cancels an obsolete in-progress run.
 

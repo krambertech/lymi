@@ -73,7 +73,7 @@ A conflict in app code means two changes touched the same lines. Resolve it only
 
 ```bash
 git rebase --continue         # repeat conflict resolution and continue as needed
-pnpm verify
+pnpm verify:changed
 git push --force-with-lease
 gh pr view --json mergeable,mergeStateStatus
 ```

@@ -10,7 +10,7 @@ The goal is to supervise the initial automated pipeline until the PR is review-r
 
 ## Respond
 
-- When the branch caused a failure and the correction is mechanical and within scope, inspect the logs, fix it, rerun the relevant focused check and `pnpm verify`, push, and resume watching.
+- When the branch caused a failure and the correction is mechanical and within scope, inspect the logs, fix it, rerun the relevant focused check and `pnpm verify:changed`, push, and resume watching.
 - Stop as blocked when a correction needs a product decision or new authorization, the failure is unrelated infrastructure, or the same attempted correction fails again.
 - Resolve conflicts through the `sync-with-main` workflow, preserving its recovery rules.
 - Address factual, in-scope automated feedback and reverify the change. Summarize substantive or scope-changing feedback for the user instead of deciding it silently.

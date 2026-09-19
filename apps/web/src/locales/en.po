@@ -427,6 +427,9 @@ msgstr "{deck} is back where it was."
 msgid "{deck} is over {place}."
 msgstr "{deck} is over {place}."
 
+msgid "{done} of {size}"
+msgstr "{done} of {size}"
+
 msgid "{due, plural, one {# card to review} other {# cards to review}}"
 msgstr "{due, plural, one {# card to review} other {# cards to review}}"
 
@@ -548,9 +551,6 @@ msgstr "{unchecked, plural, one {Check # more kind of card first.} other {Check 
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
-
-msgid "<0/> of {size}"
-msgstr "<0/> of {size}"
 
 #. placeholder {0}: section.name
 msgid "<0>{0} is ready.</0> Start it to review its cards."

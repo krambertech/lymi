@@ -117,9 +117,15 @@ export function ReviewHeader({
           className="min-w-0 flex-1"
         />
         <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
-          <Trans>
-            <RollingCount value={done} animate={animateCount} /> of {size}
-          </Trans>
+          {/* The slash is read aloud as a fraction, so a screen reader gets the sentence instead. */}
+          <span aria-hidden="true">
+            <RollingCount value={done} animate={animateCount} />/{size}
+          </span>
+          <span className="sr-only">
+            <Trans>
+              {done} of {size}
+            </Trans>
+          </span>
         </span>
       </motion.span>
       {/* Quiet but not small: a 40 px circle with a 52 px hit area, pulled out so the X sits on the card edge. */}

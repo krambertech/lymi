@@ -301,13 +301,15 @@ There is no second cut for small sizes. The rods and the flame are exactly what 
 
 The geometry lives in `components/lantern-geometry.tsx` and nowhere else. `Lantern`, `Lockup` and `scripts/brand.mjs` all draw from it, so the mark cannot drift between the app and its assets.
 
-The lantern's flame shows the learner's day. It is out exactly when there is no streak, for a new learner or after a day that ended short of its goal; nothing due, an ended session and an unfinished morning never put it out. Reviews still count toward the goal while it is out, but they do not feed it, and the flame catches when today's goal is met.
+The lantern's flame shows how far today has come. It is out only when there is nothing to show: no streak and no review yet today, for a new learner or on the morning after a day that ended short of its goal. The first accepted review lights it small, it grows through the day, and it is full at the goal. A live streak keeps its lit flame from the start of the day. Nothing due, an ended session and an unfinished morning never put it out. Whether the streak is alive is the number's job, never the flame's.
 
-While it is lit the flame is one continuous size, not a set of states. `Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak, and `fed` goes up by one for every accepted review. `lanternFor` in `lib/flame.ts` turns the streak summary into those props. A screen never asks the lantern to celebrate. The live version, with a day to play through, is the Lantern page of `/design`.
+While it is lit the flame is one continuous size, not a set of states. `Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak and no review yet today, and `fed` goes up by one for every accepted review. `lanternFor` in `lib/flame.ts` turns the streak summary into those props. A screen never asks the lantern to celebrate. The live version, with a day to play through, is the Lantern page of `/design`.
 
 The flame starts each day at 0.72× the brand flame and grows with progress to 1.02× just before the goal. Height carries the growth and width follows at half the rate. Growth stops short of full so that reaching the goal is a rise of its own, to 1.16×, where the flame stays for the rest of the day. The halo's width follows the flame, from 0.7× the brand halo at the start of a day to 1.7× at the goal. A confirmed nothing-due day holds the start-of-day flame: alive, not grown.
 
 Every accepted review feeds the flame, and Forgot feeds it exactly as Easy does. A feed is a breath: the flame draws up and thin and the halo swells, then both settle at the new size. Reviews close together flow into one long breath, because each breath starts from wherever the last one is rather than from rest.
+
+A breath alone is too quiet to see at 44 px while the eye is on the card, so every feed also throws a spark: two or three amber embers leave the top of the hood, where a real lantern vents, and drift up past the bail as they fade. They are drawn over the metal and hold their pixel size at any lantern size, 2.5 to 3.5 px, so they read in the review header. Grades take three sets of embers in turn, so a run of grades never repeats one picture, and at most three sets are in the air at once. The first review of a day with no streak lights the flame and sparks in the same moment. The spark never delays the next card; it is decoration on the grade, not a step in it.
 
 The brand lantern, on login, the app icon and public pages, omits `progress` and shows the one canonical flame. It never shows a learner's state. Empty screens use it too, because an empty screen says nothing about the streak. An error never does: a calm lit lantern cannot say that something failed.
 
@@ -315,17 +317,17 @@ Carried, the body swings from the bail. App launch and pull to refresh.
 
 ## The flame
 
-`Flame` is the flame on its own, beside the streak number in the streak pill and the streak modal, at 16 to 44 px. It says one thing: whether the learner's streak is alive. It is not a gauge, a progress ring or a celebration, and it is never a brand mark. The live version is the Flame page of `/design`.
+`Flame` is the flame on its own, beside the streak number in the streak pill and the streak modal, at 16 to 44 px. It says how far today has come, in the lantern's words: out, lit or full. Whether the streak is alive is the number beside it. It is not a gauge, a progress ring or a celebration, and it is never a brand mark. The live version is the Flame page of `/design`.
 
 It has three states and nothing between them, because growth between reviews would be unreadable at 16 px and restless on a mark that is on every screen:
 
-- **Out** when there is no streak, for a new learner or after a day that ended short of its goal. Nothing due, an ended session and an unfinished morning never put it out. It shows the lantern's ember scaled to the flame's height, because the ember as drawn is a speck at this size.
-- **Lit** while a streak is alive and today's goal is still open, or nothing is due: the brand flame, held still.
+- **Out** when there is no streak and no review yet today, for a new learner or on the morning after a day that ended short of its goal. Nothing due, an ended session and an unfinished morning never put it out. It shows the lantern's ember scaled to the flame's height, because the ember as drawn is a speck at this size.
+- **Lit** from the first review of the day until the goal, or all day on a live streak, including a day with nothing due: the brand flame, held still.
 - **Full** once today's goal is met or every available review is done: 1.16× the brand flame, and flickering.
 
 `streakFlameFor` in `lib/flame.ts` reads the state from the streak summary. Every grade counts toward the goal the same, so no grade changes the flame more than another.
 
-It moves on the lantern's springs from `FLAME_MOTION`: out to full is the catch, lit to full the rise, full to lit a settle, and lit to out the slow going out. Under reduced motion it jumps to the new state without flickering, and the three states still read apart: an ember, the brand flame, a taller flame.
+It moves on the lantern's springs from `FLAME_MOTION`: out to lit at the first review is the catch, lit to full the rise, full to lit a settle, and lit to out the slow going out. It never sparks; the spark belongs to the lantern in the review header. Under reduced motion it jumps to the new state without flickering, and the three states still read apart: an ember, the brand flame, a taller flame.
 
 `Flame` crops to the flame's exact bounds in `components/lantern-geometry.tsx`, so its tip sits on the top edge of its box and a full or flickering flame grows past it. The drawing overflows its box rather than being cropped: a clipped tip is the one thing that makes the mark look broken.
 
@@ -370,9 +372,9 @@ The end of a review is the other choreographed moment, and the one place the int
 
 The flame flickers on a 2.6 s loop because a flame does, and three things move on that one loop: the flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both. A flame that changes size under a halo that holds still is the thing that reads as fake. The flicker multiplies whatever size the flame has, so a small flame flickers small.
 
-The flame's own changes are springs from Motion, so a movement that is interrupted keeps its speed instead of starting over. A settle after a review takes 900 ms. A breath goes in over 280 ms and out over 900 ms. The rise at the goal takes 1.4 s with a breath 1.6 times as deep. Catching from out takes 700 ms and is the one movement with a trace of overshoot, bounce 0.12. Going out takes 1.6 s, so it reads as a fire dying down rather than a switch. The values live in `FLAME_MOTION` in `lib/flame.ts`, and the design system reads them from there. Carried, the body rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
+The flame's own changes are springs from Motion, so a movement that is interrupted keeps its speed instead of starting over. A settle after a review takes 900 ms. A breath goes in over 280 ms and out over 900 ms. The rise at the goal takes 1.4 s with a breath 1.6 times as deep. Catching from out takes 700 ms and is the one movement with a trace of overshoot, bounce 0.12. Going out takes 1.6 s, so it reads as a fire dying down rather than a switch. A spark's embers travel on a 620 ms spring and fade over the same 620 ms, the second and third leaving 50 to 120 ms after the first. The values live in `FLAME_MOTION` in `lib/flame.ts`, and the design system reads them from there. Carried, the body rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
 
-Under `prefers-reduced-motion` the flame holds still and takes each new size and halo at once, with no breath; reveal, completion, card, toast, spinner and the phone drawer crossfade with no travel, the grade strip closes at once, the pointing hand appears without tapping, the list hover fades in on the row under the pointer instead of sliding, a segmented plate fades in at its new option, a switch thumb takes its new place at once, a radio dot and a tick fade in where they are, and the skeleton stops shimmering. The glow stays, because a glow is a state, not a movement.
+Under `prefers-reduced-motion` the flame holds still and takes each new size and halo at once, with no breath and no spark; reveal, completion, card, toast, spinner and the phone drawer crossfade with no travel, the grade strip closes at once, the pointing hand appears without tapping, the list hover fades in on the row under the pointer instead of sliding, a segmented plate fades in at its new option, a switch thumb takes its new place at once, a radio dot and a tick fade in where they are, and the skeleton stops shimmering. The glow stays, because a glow is a state, not a movement.
 
 ## Layout
 

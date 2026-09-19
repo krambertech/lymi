@@ -338,6 +338,7 @@ function Review() {
 
   const counts = !!end?.satisfied;
   const attempts = state?.attempts;
+  // Today as this screen's grades leave it, so the header's flame lights with the grade, not the refetch.
   const streakNow = useMemo(
     () =>
       streak.data && attempts !== undefined
@@ -549,7 +550,7 @@ function Review() {
         goal={data?.goal ?? 0}
         animateCount={animateNextCard}
         round={leg && drawLeg?.kind !== "goal" ? { done: legDone, size: legSize } : undefined}
-        streak={streak.data}
+        streak={streakNow}
         complete={!!end}
         onClose={() => navigate({ to: "/today" })}
       />

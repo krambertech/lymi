@@ -41,12 +41,12 @@ const STATES: { state: StreakFlameState; name: string; note: string }[] = [
   {
     state: "out",
     name: "Out",
-    note: "No streak. The lantern's ember, scaled to the flame's height.",
+    note: "No streak and no review yet today. The lantern's ember, scaled to the flame's height.",
   },
   {
     state: "lit",
     name: "Lit",
-    note: "A streak with today's goal still open, or nothing due. The brand flame, held still.",
+    note: "Today's goal still open after the first review, or all day on a streak, nothing due included. The brand flame, held still.",
   },
   {
     state: "full",
@@ -73,7 +73,8 @@ function summary(
 /** Each streak situation, read through `streakFlameFor`, so the table is the code's answer. */
 const SITUATIONS: [string, StreakOut][] = [
   ["A new learner", summary(0, 0, "open")],
-  ["A day that ended short of its goal, with reviews since", summary(0, 4, "open")],
+  ["The morning after a day that ended short of its goal", summary(0, 0, "open")],
+  ["No streak, after today's first review", summary(0, 1, "open")],
   ["A streak, today's goal still open", summary(6, 4, "open")],
   ["A streak, nothing due today", summary(6, 0, "nothing_due")],
   ["Today's goal met", summary(7, 10, "goal_met")],
@@ -100,14 +101,14 @@ const MOVEMENTS: {
   {
     name: "Catch",
     timing: spec(FLAME_MOTION.catch),
-    note: "Out to full, when today's goal starts a new streak. The one movement with a trace of overshoot.",
+    note: "Out to lit, at the first review of a day with no streak. The one movement with a trace of overshoot.",
     from: "out",
-    to: "full",
+    to: "lit",
   },
   {
     name: "Rise",
     timing: spec(FLAME_MOTION.rise),
-    note: "Lit to full, when today's goal is met on a streak. Once a day, and it stays.",
+    note: "Lit to full, when today's goal is met. Once a day, and it stays.",
     from: "lit",
     to: "full",
   },
@@ -121,7 +122,7 @@ const MOVEMENTS: {
   {
     name: "Go out",
     timing: spec(FLAME_MOTION.goOut),
-    note: "The streak has broken. Slow, so it dies down rather than switches off.",
+    note: "A new day opens with no streak and no review yet. Slow, so it dies down rather than switches off.",
     from: "lit",
     to: "out",
   },
@@ -206,7 +207,7 @@ export function FlamePage() {
   return (
     <Doc
       title="Flame"
-      lede="The flame on its own, beside the streak number in the pill and the streak modal. It says one thing: whether the learner's streak is alive. It is small, it is on every screen, and it is never a gauge."
+      lede="The flame on its own, beside the streak number in the pill and the streak modal. It says where today stands in the lantern's words: out, lit or full. Whether the streak is alive is the number's job. It is small, it is on every screen, and it is never a gauge."
     >
       <Sub
         title="States"
@@ -226,7 +227,7 @@ export function FlamePage() {
 
       <Sub
         title="When each state shows"
-        note="streakFlameFor reads the streak summary. No streak, no flame, whatever today holds; a nothing-due day keeps the flame without growing it; every grade counts toward the goal the same."
+        note="streakFlameFor reads the streak summary. It is out only with no streak and no review yet today; the first review lights it; a nothing-due day keeps a streak's flame without growing it; every grade counts toward the goal the same."
       >
         <div className="edge overflow-hidden rounded-lg bg-plate">
           {SITUATIONS.map(([label, s]) => {
@@ -314,7 +315,7 @@ export function FlamePage() {
       <Sub title="Don’t">
         <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
           {[
-            "Don’t grow it with each review. That is the lantern’s job.",
+            "Don’t grow it or spark it with each review. That is the lantern’s job.",
             "Don’t put it out for nothing due, an ended session or an unfinished morning.",
             "Don’t give it movements of its own. Change its state and let it move.",
             "Don’t use it as a brand mark. It always shows a learner’s streak.",

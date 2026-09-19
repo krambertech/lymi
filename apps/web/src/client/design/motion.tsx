@@ -60,6 +60,11 @@ const TIMINGS: [string, string, string][] = [
     "Every accepted review, whatever the grade. Reviews close together flow into one breath.",
   ],
   [
+    "Spark",
+    `spring ${ms(FLAME_MOTION.spark)}, fading over the same`,
+    "Every accepted review: two or three embers leave the lantern's hood, so the feed reads at a glance in the review header.",
+  ],
+  [
     "Rise",
     `spring ${ms(FLAME_MOTION.rise)} to full height`,
     "The daily goal reached. Once a day, and it stays.",

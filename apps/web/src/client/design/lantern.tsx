@@ -82,14 +82,14 @@ function reviewed(d: Day, count: number, goal: number): Day {
 }
 
 function describe(day: Day, goal: number) {
-  if (day.streak === 0)
-    return "Out. No streak, no flame. Reviews still count, and the flame catches when today’s goal is met.";
+  if (day.streak === 0 && day.reviewed === 0)
+    return "Out. No streak and no review yet today. The first review lights it.";
   if (day.nothingDue)
     return "Nothing due. The small flame stays alive: the streak is kept, not grown.";
-  if (day.reviewed === 0) return "The start of a day. Small and steady.";
+  if (day.reviewed === 0) return "The start of a day on a streak. Small and steady.";
   if (day.reviewed >= goal)
     return "Goal reached. The flame stands full and settled. More reviews still feed it.";
-  return "Tending. Each review adds a little, whatever the grade.";
+  return "Tending. Each review sparks and adds a little, whatever the grade.";
 }
 
 /** A learner's day, played by hand: the component driven the way Today and Review drive it. */
@@ -126,7 +126,7 @@ function DayAtTheLantern() {
             <Sizes
               hero="size-40"
               progress={day.nothingDue ? 0 : Math.min(day.reviewed / target, 1)}
-              out={day.streak === 0}
+              out={day.streak === 0 && day.reviewed === 0}
               fed={fed}
               flicker={!reduced}
               glow
@@ -255,6 +255,12 @@ const MOVEMENTS: Movement[] = [
     render: (run) => <Lantern className="size-24" progress={0.4} fed={run} flicker glow />,
   },
   {
+    name: "Spark",
+    timing: `${spec(FLAME_MOTION.spark)}, fading over the same`,
+    note: "Every feed throws two or three embers out of the hood. The breath is too quiet to catch while reading a card; the spark is not. The embers keep their pixel size, so here at the header's 44 px they read as they do in review.",
+    render: (run) => <Lantern className="size-11" progress={0.4} fed={run} flicker glow />,
+  },
+  {
     name: "Reviews close together",
     timing: "each breath starts from the last",
     note: "A fast run of grades reads as one long breath, never a stutter of restarts.",
@@ -271,13 +277,13 @@ const MOVEMENTS: Movement[] = [
   {
     name: "Catch",
     timing: spec(FLAME_MOTION.catch),
-    note: "Out to alive, when today’s goal starts a new streak. The wick takes; the only movement with a trace of overshoot.",
-    render: (run) => <Lantern key={run} className="size-24" from="out" progress={1} flicker glow />,
+    note: "Out to alive, at the first review of a day with no streak. The wick takes and sparks; the only movement with a trace of overshoot.",
+    render: (run) => <FirstReview key={run} />,
   },
   {
     name: "Go out",
     timing: spec(FLAME_MOTION.goOut),
-    note: "The streak has broken. Slow, so it dies down rather than switches off. Learners mostly see the result, not the movement.",
+    note: "A new day opens with no streak and no review yet. Slow, so it dies down rather than switches off. Learners mostly see the result, not the movement.",
     render: (run) => <Lantern key={run} className="size-24" from={0.4} out flicker glow />,
   },
   {
@@ -295,6 +301,16 @@ const MOVEMENTS: Movement[] = [
     loops: true,
   },
 ];
+
+/** Mounts out, then takes the day's first review on the next frame, the way a grade lights it. */
+function FirstReview() {
+  const [fed, setFed] = useState(0);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setFed(1));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+  return <Lantern className="size-24" out={fed === 0} progress={fed / 10} fed={fed} flicker glow />;
+}
 
 function Burst({ run }: { run: number }) {
   const [fed, setFed] = useState(0);
@@ -339,9 +355,9 @@ function MovementCard({ m }: { m: Movement }) {
   );
 }
 
-/** One sequence twice: three reviews, then the goal. What survives without movement is the meaning. */
+/** One sequence twice: the first review, two more, then the goal. What survives without movement is the meaning. */
 function ReducedSideBySide() {
-  const start = { out: false, progress: 0, fed: 0 };
+  const start = { out: true, progress: 0, fed: 0 };
   const [step, setStep] = useState(start);
   const timeline = useTimeline();
   const play = () => {
@@ -392,8 +408,8 @@ const PROPS: [string, string, string][] = [
     "number, 0 to 1",
     "Today's accepted reviews over the daily goal. Omit it for the brand flame.",
   ],
-  ["out", "boolean", "There is no streak. Never set it for nothing due."],
-  ["fed", "number", "Add one per accepted review. Every change is a breath."],
+  ["out", "boolean", "No streak and no review yet today. Never set it for nothing due."],
+  ["fed", "number", "Add one per accepted review. Every change is a breath and a spark."],
   [
     "from",
     'number | "brand" | "out"',
@@ -408,11 +424,11 @@ export function LanternPage() {
   return (
     <Doc
       title="Lantern"
-      lede="The flame is the continuity of remembering. Repetition keeps it alive, so it starts each day small, grows a little with every review whatever the grade, and stands full when the daily goal is reached. It goes out only when the streak breaks. It is one fire the whole time: nothing on this page swaps a drawing."
+      lede="The flame is how far today has come. Repetition keeps it alive, so it starts each day small, grows and sparks with every review whatever the grade, and stands full when the daily goal is reached. It is out only when there is no streak and no review yet today, and the first review lights it. It is one fire the whole time: nothing on this page swaps a drawing."
     >
       <Sub
         title="A day at the lantern"
-        note="The component, driven the way Today and Review drive it. Start with no streak, grade cards up to the goal, then move to the next day. Try a nothing-due day and a day that ends short of the goal."
+        note="The component, driven the way Today and Review drive it. Start with no streak and grade one card to light it, grade up to the goal, then move to the next day. Try a nothing-due day and a day that ends short of the goal."
       >
         <DayAtTheLantern />
       </Sub>
@@ -425,12 +441,12 @@ export function LanternPage() {
           items={[
             {
               label: "Out",
-              note: "No streak: a new learner, or a day that ended short of its goal. An ember in unlit glass. Reviews still count and the flame catches at the goal.",
+              note: "No streak and no review yet today: a new learner, or the morning after a day that ended short of its goal. An ember in unlit glass. The first review lights it.",
               render: () => <Sizes out glow />,
             },
             {
               label: "Start of the day",
-              note: "Small and steady before the first review. A confirmed nothing-due day stays here: alive, not grown.",
+              note: "Small and steady: a streak before its first review, or a day with no streak after its first. A confirmed nothing-due day stays here: alive, not grown.",
               render: () => <Sizes progress={0} flicker glow />,
             },
             {
@@ -504,7 +520,7 @@ export function LanternPage() {
       <Sub title="Don’t">
         <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
           {[
-            "Don’t reward a grade. Forgot feeds the flame exactly as Easy does.",
+            "Don’t reward a grade. Forgot feeds and sparks the flame exactly as Easy does.",
             "Don’t put the flame out for nothing due, an ended session or an unfinished morning.",
             "Don’t read it as a gauge. No numbers on or beside the lantern, no ticks, no fill.",
             "Don’t add a celebration at the goal. The rise is the whole of it.",

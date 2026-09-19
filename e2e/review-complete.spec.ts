@@ -62,8 +62,13 @@ test("at the goal a learner can review forgotten cards, take another round, or s
   await page.goto("/review");
 
   const forgotten = await currentCard(page);
-  await test.step("the third attempt reaches the goal, whatever its grade", async () => {
+  await test.step("a grade sparks on the lantern without holding the next card back", async () => {
     await grade(page, "Forgot");
+    await expect(page.getByTestId("lantern-spark").first()).toBeAttached();
+    expect(await currentCard(page)).not.toBe(forgotten);
+  });
+
+  await test.step("the third attempt reaches the goal, whatever its grade", async () => {
     await grade(page, "Good");
     await grade(page, "Good");
     await expect(heading(page, "Daily goal reached")).toBeVisible();

@@ -65,15 +65,32 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 
 ## Where a test goes
 
-Write a test at the cheapest layer that can observe the behaviour.
+Write a test at the cheapest layer that can observe the behaviour. A feature owes a service test for every rule it adds, a route test for every endpoint it adds or changes, and a component test when it adds or changes a primitive in `components/ui`. It owes a journey only when it changes one of the outcomes below or adds a new one. A journey is the exception, chosen for a named reason, and a pull request that adds one names the reason.
 
-| Layer | Question | Runs in |
+| Layer | Question | Costs |
 | --- | --- | --- |
-| Unit | Is it a pure function of its inputs? FSRS, the draw, a formatter, the CI plan. | Node, milliseconds a file |
-| Service | Does it persist, authorize or audit? | Node on the shared local D1, about 20 ms a test |
-| Route | Is it the HTTP contract: what a route accepts and refuses, who may call it, what it answers? | Node through the Worker's fetch handler, well under a second a test |
-| Component | Does it depend on focus, pointer, layout or device shape? | A real browser, desktop and touch from one file |
-| Journey | Does it cross screens, origins, the service worker or offline? | Playwright against the full stack, about 10 s a test |
+| Unit | Is it a pure function of its inputs? FSRS, the draw, a formatter, the CI plan. | Milliseconds a file, in Node |
+| Service | Does it persist, authorize or audit? | About 20 ms a test on the shared local D1 |
+| Route | Is it the HTTP contract: what a route accepts and refuses, who may call it, what it answers? | A few hundred milliseconds a test through the Worker's fetch handler |
+| Component | Does it depend on focus, pointer, layout or device shape inside one component? | One to five seconds a file, once per browser instance |
+| Journey | Does it prove one of the reasons below? | About ten seconds a test on CI, plus a minute of server setup per shard |
+
+A journey earns its place by proving something no lower layer can see:
+
+- Offline behaviour and what survives it: the grade outbox, a queue that replays, a cached shell, a request that fails and is retried.
+- The service worker, the manifest and installability.
+- Persistence across a reload, a sign-out, or a second learner on the same browser.
+- A clock crossing midnight in a live client.
+- A gesture: a drawer swiped away, a drag along a list.
+- Focus and keyboard order across screens; inside one component it is a component test.
+- The browser's own facts: its locale, JavaScript off, media playback.
+- The two origins together: an email or site link landing in the product, or a redirect between them.
+- A binding the route harness does not run, today a Workflow; this reason shrinks as `test-app.ts` grows.
+- One canonical path per critical learner outcome, named under Canonical coverage.
+
+A journey does not earn its place for a status code, a validation message or a permission, which are route tests; for a screen that lists or edits rows, which is a service test for the rule and a component test for the primitive, because the canonical journeys already prove that lists and forms render; for a second scenario of a journey that exists, which is a case in the service or route test; or for a public page's HTML, headers and metadata, which is a `request`-only test with no `page` and costs a fraction of a second. The site has no component or route layer, so a site interaction is a journey and site HTML is a `request`-only test.
+
+To decline a journey in review, point at the list: a test that proves none of the reasons belongs lower. To add one, name the reason in its title or leading comment.
 
 ## Component tests in real browsers
 
@@ -189,7 +206,7 @@ The consent is remembered per client and learner, so a second authorize goes str
 4. Review and grade the due card.
 5. Reload and confirm the persisted result.
 
-Keep this path real. Use accessible roles and labels, do not mock Lymi's own APIs, do not use fixed sleeps, and do not add test-only application routes. Prefer public APIs for setup that is not the behavior under test. Add focused journeys only when they protect another critical user outcome that the canonical path cannot express clearly.
+Keep this path real. Use accessible roles and labels, do not mock Lymi's own APIs, do not use fixed sleeps, and do not add test-only application routes. Prefer public APIs for setup that is not the behavior under test. A new journey needs one of the reasons under Where a test goes, or a critical learner outcome the canonical path cannot express, named here.
 
 `e2e/deck-creation.spec.ts` owns deck and card creation: validation, routing and persistence, deck targeting, duplicate handling, optional meanings, archived-deck protection, and responsive controls from 320 px phone layouts through wide desktop. Each scenario, browser project, retry, and repeat up to `--repeat-each=10` has its own learner account so one test cannot inherit another test's data.
 

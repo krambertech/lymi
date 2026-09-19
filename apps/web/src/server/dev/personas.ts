@@ -1,4 +1,10 @@
-import type { Actor, AppLanguage, Directions, FieldSource, PublicationCategory } from "@lymi/core";
+import type {
+  Actor,
+  AppLanguage,
+  Directions,
+  PublicationCategory,
+  StatedFieldSource,
+} from "@lymi/core";
 
 /**
  * The learners a local developer can become. Each is one account in the local D1, named
@@ -78,8 +84,8 @@ export interface PersonaCard {
   language?: string | null;
   tags?: string[];
   source?: string;
-  meaningSource?: FieldSource;
-  exampleSource?: FieldSource;
+  meaningSource?: StatedFieldSource;
+  exampleSource?: StatedFieldSource;
   /** The deck section it goes in, by name. */
   section?: string;
   /** Who added it. `mcp` and `api` cards show up in Activity. */
@@ -247,7 +253,6 @@ const ARRIVALS: PersonaCard[] = [
     term: "il sopralluogo",
     meaning: "the site inspection",
     source: "Lezione 14 transcript",
-    meaningSource: "ai",
     createdBy: "mcp",
     introducedDaysAgo: 0,
   },
@@ -257,7 +262,6 @@ const ARRIVALS: PersonaCard[] = [
     example: "Devo sbrigare alcune commissioni.",
     source: "Lezione 14 transcript",
     meaningSource: "lesson",
-    exampleSource: "ai",
     createdBy: "mcp",
     introducedDaysAgo: 0,
   },
@@ -265,7 +269,6 @@ const ARRIVALS: PersonaCard[] = [
     term: "la commissione",
     meaning: "the errand",
     source: "Lezione 14 transcript",
-    meaningSource: "ai",
     createdBy: "mcp",
     introducedDaysAgo: 0,
   },

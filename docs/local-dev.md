@@ -92,6 +92,7 @@ The panel and the CLI use these. They sit under `/api/dev`, outside the OpenAPI 
 | `POST /api/dev/seed` `{ persona? }` | Empties the account and loads a persona's data. |
 | `POST /api/dev/reset` | Empties the account. |
 | `POST /api/dev/due` `{ count: n \| "all" }` | Makes exactly `count` cards due now and moves the rest to tomorrow or later. |
+| `POST /api/dev/cards/<id>/enriched` `{ fields }` | Marks the card's `meaning`, `example` or `pronunciation` as written by the enrichment, so the AI badge shows without a vendor key. |
 | `POST /api/dev/outbox` `{ to }` | The last account email sent to that address, so a confirmation or reset link can be opened without a real inbox. |
 
 Seeding goes through the same services as the app and the API, so decks and cards carry audit rows and scheduling state. The review history is then replayed through the real scheduler in memory and written back in one go. The same persona seeds the same grades every time.

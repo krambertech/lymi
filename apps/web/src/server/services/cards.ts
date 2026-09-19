@@ -1,4 +1,4 @@
-import type { CardInput, CardPatch, CardSearchInput } from "@lymi/core";
+import type { CardInput, CardPatch, CardSearchInput, StatedFieldSource } from "@lymi/core";
 import { needsEnrichment, newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
@@ -391,6 +391,12 @@ export async function cardHistory(ctx: ServiceContext, id: string) {
   };
 }
 
+/** A field's source after an edit: as stated, or the learner's when only the text was sent. */
+function sourceAfter(text: string | undefined, stated: StatedFieldSource | undefined) {
+  if (stated !== undefined || text === undefined) return stated;
+  return text ? ("manual" as const) : null;
+}
+
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
   const { db, userId } = ctx;
   const current = await ownedCard(ctx, id);
@@ -417,6 +423,12 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
   const { reviewModes, directions: _legacy, ...fields } = patch;
+  // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
+  const sources = {
+    meaningSource: sourceAfter(patch.meaning, patch.meaningSource),
+    exampleSource: sourceAfter(patch.example, patch.exampleSource),
+    pronunciationSource: sourceAfter(patch.pronunciation, patch.pronunciationSource),
+  };
   const modes = resolveCardModes(
     patch,
     current.directions ? (current.reviewModeKeys ?? null) : null,
@@ -425,6 +437,7 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
     .update(schema.cards)
     .set({
       ...fields,
+      ...sources,
       ...(modes ?? {}),
       ...section,
       ...bumped("card", patch, current),

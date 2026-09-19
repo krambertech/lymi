@@ -1,14 +1,16 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { deckPath, deckPaths, deckStructuredData, jsonForScript, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
+import { deckPath, deckPaths, deckSharePath, deckStructuredData, jsonForScript, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { localizedPath } from "../../lib/routes";
+import { deckBreadcrumbs } from "../../lib/structured-data";
 import { trayHue } from "../../lib/tray";
 import type { DeckPage } from "../../lib/public-deck";
 import PublicNav from "../islands/PublicNav";
 import DeckSections from "../islands/DeckSections";
 import DeckStack from "../islands/DeckStack";
-import { deckDescription, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
+import { EXPLORE_NAME } from "../explore/explore-meta";
+import { deckDescription, deckShareText, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
 import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, editionOf } from "./DeckView";
 
 interface Props {
@@ -24,6 +26,7 @@ const deck = page.status === 200 ? page.deck : null;
 const path = deck ? sectionPath(deck) : null;
 const stack = deck ? stackCards(deck) : [];
 const edition = deck ? editionOf(deck) : undefined;
+const share = deck ? deckShareText(i18n, deck) : null;
 ---
 
 {
@@ -33,12 +36,20 @@ const edition = deck ? editionOf(deck) : undefined;
       description={deckDescription(i18n, page.deck)}
       canonicalPath={deckPath(slug, locale)}
       alternatePaths={paths}
+      shareImagePath={deckSharePath(slug, locale)}
+      shareImageAlt={share?.alt}
     >
       <script
         slot="head"
         is:inline
         type="application/ld+json"
         set:html={jsonForScript(deckStructuredData(page.deck, locale))}
+      />
+      <script
+        slot="head"
+        is:inline
+        type="application/ld+json"
+        set:html={jsonForScript(deckBreadcrumbs(page.deck, locale, i18n._(EXPLORE_NAME)))}
       />
       <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
         <header class="deck-hero-tint over-tint" data-hue={trayHue(slug)}>

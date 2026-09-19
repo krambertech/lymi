@@ -11,3 +11,6 @@ export function exploreTitle(i18n: I18n): string {
 export function exploreDescription(i18n: I18n): string {
   return i18n._(DESCRIPTION);
 }
+
+/** Explore's name where a page points back at it, the same word the navigation uses. */
+export const EXPLORE_NAME = msg`Explore`;

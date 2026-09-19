@@ -27,6 +27,25 @@ test("a visitor finds a published deck on Explore, by shelf and by a word on a c
         `<link rel="alternate" hreflang="${lang}" href="https://lymi.app${path}">`,
       );
     }
+    // The catalogue as a list of the resources its deck pages describe.
+    const jsonLd = html.match(/<script type="application\/ld\+json">(.*?)<\/script>/)?.[1];
+    expect(JSON.parse(jsonLd ?? "{}")).toMatchObject({
+      "@type": "CollectionPage",
+      url: "https://lymi.app/explore",
+      mainEntity: {
+        "@type": "ItemList",
+        numberOfItems: 2,
+        itemListElement: expect.arrayContaining([
+          expect.objectContaining({
+            item: expect.objectContaining({
+              "@type": "LearningResource",
+              url: "https://lymi.app/explore/evening-estonian",
+              name: "Evening Estonian",
+            }),
+          }),
+        ]),
+      },
+    });
     // Complete with JavaScript off: both live decks and both shelves.
     for (const text of ["Evening Estonian", "Estonian road signs", "Languages", "Driving"]) {
       expect(html).toContain(text);

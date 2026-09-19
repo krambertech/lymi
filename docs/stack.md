@@ -59,7 +59,7 @@ flowchart LR
 
 ### Clients: prerendered Astro website plus a client-rendered React PWA
 
-The public site at `lymi.app` is rendered by Astro. Landing and documentation are prerendered and ship useful HTML and canonical metadata before JavaScript runs; interactive React components hydrate as islands. Explore (`/explore`) and published deck pages (`/explore/<slug>`), in each locale, and the deck sitemap are the only routes Astro renders per request, from the public projection of D1 in `packages/core/src/catalog.ts` ([ADR 0016](adr/0016-public-catalog-pages-render-on-the-public-worker.md)). A narrow Worker serves the assets, those pages, the legacy redirects and a versioned health endpoint. It has no product shell, authentication or PWA behavior.
+The public site at `lymi.app` is rendered by Astro. Landing and documentation are prerendered and ship useful HTML and canonical metadata before JavaScript runs; interactive React components hydrate as islands. Explore (`/explore`), published deck pages (`/explore/<slug>`) and their preview images (`/explore/<slug>/share.png`), in each locale, and the runtime sitemap that lists Explore and every deck are the only routes Astro renders per request, from the public projection of D1 in `packages/core/src/catalog.ts` ([ADR 0016](adr/0016-public-catalog-pages-render-on-the-public-worker.md)). A narrow Worker serves the assets, those pages, the legacy redirects and a versioned health endpoint. It has no product shell, authentication or PWA behavior.
 
 The signed-in product at `my.lymi.app` is still a client-rendered single-page PWA. It sits behind a login, so a static shell remains the right fit for fast offline starts. TanStack Router gives typed routes and a proper mobile navigation model. TanStack Query, with its IndexedDB persister, is the cache that makes the review screen usable on a train. `/today` is the product home and `/app` redirects there. The product root sends a valid session to Today and a signed-out visitor to sign-in, preserving safe product deep links through authentication.
 
@@ -104,6 +104,12 @@ The public `lymi-site` Worker is built by `@astrojs/cloudflare`. Assets and prer
 Alternative considered: Cloudflare Pages plus Functions for the website. A Worker with static assets keeps both deployments on the same platform, supplies version metadata and supports the narrow beta action without another service.
 
 Alternative considered for deck pages: a prerendered shell per locale that the Worker fills from D1 with `HTMLRewriter`. It keeps the build fully static, but every title, description, JSON-LD block and card row would be written twice, once in Astro and once as string rewriting in the Worker, and localized copy would have to be shipped to the Worker separately. The Cloudflare adapter renders the same Astro and React components per request and keeps every other page prerendered.
+
+### Preview images: resvg on the site Worker
+
+A deck page's `og:image` is its own: the Worker renders an SVG of the lockup, the deck's name, its facts and a pool of its tray hue to PNG with `@resvg/resvg-wasm`, and answers it with the page's cache rules and a validator of the same content hash. The renderer is a 2.5 MB Wasm module in the bundle; Onest travels beside it as a TTF from Google Fonts (`src/fonts`, OFL), because resvg reads no woff2 and the Worker has no system fonts. The SVG builder in `lib/deck-share.ts` measures and wraps the name itself, since resvg breaks no lines; its widths are estimates, so it errs wide.
+
+Alternatives considered: rendering at publish time into R2 from the product Worker, which puts an image pipeline on the write path for a file nobody may ever fetch, and Browser Rendering, which is a paid binding and slower per image than a page. A generic site image for every deck was the state before; it gave a shared deck no name in the preview.
 
 ### Data: D1 with Drizzle
 

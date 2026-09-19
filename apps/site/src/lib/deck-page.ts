@@ -32,6 +32,11 @@ export function movedDeckPath(pathname: string): string | null {
   return deckPath(match[2] as string, locale);
 }
 
+/** The deck's own link preview, rendered by the Worker beside the page. */
+export function deckSharePath(slug: string, locale: Locale): string {
+  return `${deckPath(slug, locale)}/share.png`;
+}
+
 export function deckPaths(slug: string): Record<Locale, string> {
   return Object.fromEntries(locales.map((locale) => [locale, deckPath(slug, locale)])) as Record<
     Locale,
@@ -230,35 +235,6 @@ export function deckStructuredData(deck: PublicDeckOut, locale: Locale) {
     }),
     isPartOf: { "@type": "WebSite", name: "Lymi", url: `${SITE}/` },
   };
-}
-
-/** Every published deck in each locale, with its alternates so search engines pair them. */
-export function deckSitemap(decks: readonly { slug: string; updatedAt: Date }[]): string {
-  const alternates = (slug: string) =>
-    [
-      ...locales.map(
-        (locale) =>
-          `    <xhtml:link rel="alternate" hreflang="${locale}" href="${SITE}${deckPath(slug, locale)}"/>`,
-      ),
-      `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${deckPath(slug, "en")}"/>`,
-    ].join("\n");
-  return [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
-    ...decks.flatMap(({ slug, updatedAt }) =>
-      locales.map((locale) =>
-        [
-          "  <url>",
-          `    <loc>${SITE}${deckPath(slug, locale)}</loc>`,
-          `    <lastmod>${updatedAt.toISOString()}</lastmod>`,
-          alternates(slug),
-          "  </url>",
-        ].join("\n"),
-      ),
-    ),
-    "</urlset>",
-    "",
-  ].join("\n");
 }
 
 /** JSON for a `<script>` element: `<` is escaped so a card cannot close the element. */

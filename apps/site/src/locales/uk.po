@@ -104,6 +104,9 @@ msgstr "{name} · {language} мова, рівень {level} · Lymi"
 msgid "{name} · Flashcards · Lymi"
 msgstr "{name} · Флеш-картки · Lymi"
 
+msgid "{name} on Lymi: {facts}"
+msgstr "{name} у Lymi: {facts}"
+
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# картка переноситься з картинкою.} few {# картки переносяться з картинками.} many {# карток переносяться з картинками.} other {# картки переносяться з картинками.}}"
 

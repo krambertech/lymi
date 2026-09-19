@@ -9,7 +9,7 @@ export const localizedPages = {
 } as const;
 export type LocalizedPage = keyof typeof localizedPages;
 
-/** Pages rendered per request from the database, in every locale; the runtime sitemap lists them. */
+/** Pages rendered per request from the database, in every locale; `sitemap-decks.xml` lists them. */
 export const localizedRuntimePages = ["/explore", "/explore/[slug]"] as const;
 
 export const locales = ["en", "uk", "ru"] as const;
@@ -41,10 +41,3 @@ export function localizedPath(page: LocalizedPage, locale: string): string {
   if (locale === "en" || !(locales as readonly string[]).includes(locale)) return path;
   return path === "/" ? `/${locale}/` : `/${locale}${path}`;
 }
-
-export const sitemapPaths = [
-  ...locales.flatMap((locale) =>
-    (Object.keys(localizedPages) as LocalizedPage[]).map((page) => localizedPath(page, locale)),
-  ),
-  ...englishOnlyPaths,
-];

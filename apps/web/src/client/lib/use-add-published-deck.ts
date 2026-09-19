@@ -9,11 +9,10 @@ import { ApiError, api } from "./api";
  * it pressed was read in, so the deck lands in Library saying what Explore said: the server pins
  * nothing when it is told nothing, and a membership's edition is never chosen again. ADR 0015.
  *
- * `land` decides where the press leaves the learner: pressing Add on a deck's own page means
- * they want that deck, so it opens in Library; pressing it in a list means they are still
- * browsing, so the list stays put and a toast says where the deck went.
+ * The learner always stays where they pressed. `announce` says who tells them it worked: a shelf
+ * raises a toast that offers the deck, while a deck's own page shows the change itself.
  */
-export function useAddPublishedDeck({ land }: { land: "library" | "here" }) {
+export function useAddPublishedDeck({ announce }: { announce: "toast" | "page" }) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -25,10 +24,7 @@ export function useAddPublishedDeck({ land }: { land: "library" | "here" }) {
         qc.invalidateQueries({ queryKey: ["decks"] }),
         qc.invalidateQueries({ queryKey: ["explore"] }),
       ]);
-      if (land === "library") {
-        navigate({ to: "/library/$deckId", params: { deckId } });
-        return;
-      }
+      if (announce === "page") return;
       toast.add({
         id: `added-${deckId}`,
         title: t`Added “${name}” to Library`,

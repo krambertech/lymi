@@ -742,9 +742,6 @@ msgstr "Усі одразу"
 msgid "Allow"
 msgstr "Дозволити"
 
-msgid "Already in Library"
-msgstr "Уже в Бібліотеці"
-
 msgid "Also adds, edits and archives them."
 msgstr "Також додає, редагує й архівує їх."
 

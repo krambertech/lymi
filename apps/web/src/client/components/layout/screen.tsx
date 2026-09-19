@@ -36,6 +36,8 @@ interface Props {
   bar?: ReactNode | undefined;
   /** The view draws its own title inside its column, so the header is left out. */
   ownTitle?: boolean | undefined;
+  /** Draws a full-width header around the bar, outside the column, such as a published deck's colour. */
+  cover?: ((bar: ReactNode) => ReactNode) | undefined;
   /** Under the title, inside the header: a lede, a status line. */
   lede?: ReactNode | undefined;
   width?: "md" | "full" | undefined;
@@ -87,6 +89,7 @@ export function Screen({
   backOnDesktop = false,
   bar,
   ownTitle = false,
+  cover,
   lede,
   width,
   children,
@@ -97,34 +100,38 @@ export function Screen({
   const wide = useShellWide(root);
   // A tab's bar is the learner's, so its own controls sit beside the title at every width.
   const beside = tab || wide;
+  const topBar = bar ? (
+    <BarOnDesktop value={backOnDesktop}>{bar}</BarOnDesktop>
+  ) : (
+    <TopBar
+      nested={!tab && backOnDesktop}
+      back={tab ? <TileLockup size="bar" /> : back && <Back back={back} />}
+      actions={tab ? <TabActions /> : beside ? undefined : actions}
+    />
+  );
   return (
-    <Page ref={root} width={width}>
-      {bar ? (
-        <BarOnDesktop value={backOnDesktop}>{bar}</BarOnDesktop>
-      ) : (
-        <TopBar
-          nested={!tab && backOnDesktop}
-          back={tab ? <TileLockup size="bar" /> : back && <Back back={back} />}
-          actions={tab ? <TabActions /> : beside ? undefined : actions}
-        />
-      )}
-      {!ownTitle && (
-        <PageHeader
-          title={title ?? <Skeleton className="h-8 w-44" />}
-          sub={sub}
-          actions={
-            (status || (beside && actions)) && (
-              <>
-                {status}
-                {beside && actions}
-              </>
-            )
-          }
-        >
-          {lede}
-        </PageHeader>
-      )}
-      {children}
-    </Page>
+    <>
+      {cover?.(topBar)}
+      <Page ref={root} width={width}>
+        {!cover && topBar}
+        {!ownTitle && (
+          <PageHeader
+            title={title ?? <Skeleton className="h-8 w-44" />}
+            sub={sub}
+            actions={
+              (status || (beside && actions)) && (
+                <>
+                  {status}
+                  {beside && actions}
+                </>
+              )
+            }
+          >
+            {lede}
+          </PageHeader>
+        )}
+        {children}
+      </Page>
+    </>
   );
 }

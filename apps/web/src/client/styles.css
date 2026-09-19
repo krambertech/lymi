@@ -984,28 +984,36 @@
   --tray-l: 0.192;
   --tray-c: 0.015;
 }
-.deck-tray[data-hue="0"] {
+.deck-tray[data-hue="0"],
+.deck-cover[data-hue="0"] {
   --tray-h: 25;
 }
-.deck-tray[data-hue="1"] {
+.deck-tray[data-hue="1"],
+.deck-cover[data-hue="1"] {
   --tray-h: 110;
 }
-.deck-tray[data-hue="2"] {
+.deck-tray[data-hue="2"],
+.deck-cover[data-hue="2"] {
   --tray-h: 150;
 }
-.deck-tray[data-hue="3"] {
+.deck-tray[data-hue="3"],
+.deck-cover[data-hue="3"] {
   --tray-h: 195;
 }
-.deck-tray[data-hue="4"] {
+.deck-tray[data-hue="4"],
+.deck-cover[data-hue="4"] {
   --tray-h: 235;
 }
-.deck-tray[data-hue="5"] {
+.deck-tray[data-hue="5"],
+.deck-cover[data-hue="5"] {
   --tray-h: 280;
 }
-.deck-tray[data-hue="6"] {
+.deck-tray[data-hue="6"],
+.deck-cover[data-hue="6"] {
   --tray-h: 320;
 }
-.deck-tray[data-hue="7"] {
+.deck-tray[data-hue="7"],
+.deck-cover[data-hue="7"] {
   --tray-h: 350;
 }
 
@@ -1108,24 +1116,159 @@
   color: var(--text-2);
 }
 
-/* The deck's own page shows one tray alone, so its card is not cut: a row of cropped cards reads
-   as a shelf, but one cropped card reads as a rendering fault. Shown whole it also has to hug its
-   text — the shelf's fixed ratio is sized for a card two thirds of which is visible, so at full
-   height a short term leaves a void above the meaning. */
-.deck-tray[data-size="lg"] {
-  --cw: 168px;
-  height: auto;
-  padding-block: 20px;
+/* A deck's own page: its tray's colour becomes the ground of the whole header, from the rail to
+   the window's edge and up under the status bar. It holds less chroma than a tray, because the
+   same colour over a header reads louder than over a tile. At night it sits between the canvas
+   and a plate, so the cards still stand proud of it. */
+.deck-cover {
+  --tray-l: 0.958;
+  --tray-c: 0.034;
+  --ground: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
+  /* Up under the status bar; the element's own top padding adds the inset back. */
+  margin-top: calc(env(safe-area-inset-top) * -1);
+  overflow: clip;
+  background: var(--ground);
 }
-.deck-tray[data-size="lg"] .deck-tray-stack {
-  height: auto;
+[data-theme="dark"] .deck-cover {
+  --tray-l: 0.19;
+  --tray-c: 0.03;
 }
-.deck-tray[data-size="lg"] .deck-tray-card {
+/* A back press on the ground darkens it in its own hue rather than laying grey over it. */
+.deck-cover header > a:hover {
+  background: oklch(from var(--ground) calc(l - 0.035) calc(c + 0.012) h);
+}
+[data-theme="dark"] .deck-cover header > a:hover {
+  background: oklch(from var(--ground) calc(l + 0.05) c h);
+}
+
+/* The one press on the header is white rather than amber: amber on a coloured ground stops reading
+   as the thing to press, and white is the ground's own plate. At night white is the room's ink. */
+.deck-cover-action {
+  background: var(--plate);
+  color: var(--text);
+}
+/* Hover keeps the white and strengthens the edge, as every control's hover does. */
+@media (hover: hover) and (pointer: fine) {
+  .deck-cover-action:hover {
+    background: var(--plate);
+    box-shadow: 0 0 0 1px var(--edge-2);
+  }
+}
+[data-theme="dark"] .deck-cover-action {
+  background: var(--text);
+  color: var(--canvas);
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-theme="dark"] .deck-cover-action:hover {
+    background: color-mix(in oklch, var(--text) 88%, var(--canvas));
+    box-shadow: none;
+  }
+}
+.deck-cover-enter {
+  animation: deck-cover-enter 320ms var(--ease-out) both;
+}
+@keyframes deck-cover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(2px);
+  }
+}
+
+/* The hand: up to three of the deck's cards fanned beside its name. Once the deck is in Library
+   they gather into a squared stack and the check lands on top. */
+.deck-hand {
+  --cw: min(128px, 34cqw);
+  --gap: calc(var(--cw) * 0.7);
   position: relative;
-  min-height: calc(var(--cw) * 0.78);
+  isolation: isolate;
+  /* Level with the text when it stacks above it; the 12 px either side is room for the tilt. */
+  justify-self: start;
+  margin-inline-start: -12px;
+  width: calc(var(--cw) + var(--gap) * 2 + 24px);
+  height: calc(var(--cw) * 1.12 + 32px);
 }
-.deck-tray[data-size="lg"] .deck-tray-meaning {
-  margin-top: calc(var(--cw) * 0.14);
+@container (min-width: 56rem) {
+  .deck-hand {
+    --cw: 140px;
+    --gap: 100px;
+    margin-inline-start: 0;
+  }
+}
+.deck-hand-card {
+  position: absolute;
+  top: 4px;
+  left: calc(50% - var(--cw) / 2);
+  display: flex;
+  flex-direction: column;
+  width: var(--cw);
+  aspect-ratio: 1 / 1.12;
+  padding: calc(var(--cw) * 0.085);
+  border-radius: calc(var(--cw) * 0.1);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge);
+  text-align: start;
+  transform: translate(calc(var(--step) * var(--gap)), var(--drop)) rotate(var(--tilt));
+  transition: transform 560ms var(--ease-out);
+}
+.deck-hand[data-gathered] .deck-hand-card {
+  transform: translate(var(--sx), calc(var(--sy) + 8px)) rotate(var(--sr));
+}
+.deck-hand-card .deck-tray-meaning {
+  margin-top: auto;
+}
+.deck-hand-seal {
+  position: absolute;
+  top: -10px;
+  inset-inline-end: -10px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--state-known);
+  color: var(--plate);
+  box-shadow: 0 0 0 3px var(--ground);
+  opacity: 0;
+  scale: 0.4;
+  transition:
+    opacity 180ms var(--ease-out),
+    scale 320ms var(--ease-out);
+}
+[data-theme="dark"] .deck-hand-seal {
+  color: var(--canvas);
+}
+.deck-hand-seal svg {
+  width: 17px;
+  height: 17px;
+}
+.deck-hand-seal path {
+  stroke-dasharray: 23;
+  stroke-dashoffset: 23;
+  transition: stroke-dashoffset 300ms var(--ease-out);
+}
+.deck-hand[data-gathered] .deck-hand-seal {
+  opacity: 1;
+  scale: 1;
+  transition-delay: 340ms;
+}
+.deck-hand[data-gathered] .deck-hand-seal path {
+  stroke-dashoffset: 0;
+  transition-delay: 460ms;
+}
+/* The stack and the check are the state; under reduced motion they are simply there. */
+@media (prefers-reduced-motion: reduce) {
+  .deck-hand-card,
+  .deck-hand-seal,
+  .deck-hand-seal path,
+  .deck-hand[data-gathered] .deck-hand-seal,
+  .deck-hand[data-gathered] .deck-hand-seal path {
+    transition: none;
+  }
+  .deck-cover-enter {
+    animation: none;
+  }
 }
 
 /* A shelf wraps, so every deck in a category is on the page at once and nothing hides behind a

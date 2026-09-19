@@ -22,7 +22,7 @@ function Catalogue() {
   useDocumentTitle(t`Explore`);
   const { data, isError, isFetching, refetch } = useQuery(exploreQuery);
   // Browsing, so a press adds the deck and leaves the shelf where it is.
-  const add = useAddPublishedDeck({ land: "here" });
+  const add = useAddPublishedDeck({ announce: "toast" });
   return (
     <ExploreView
       data={data}

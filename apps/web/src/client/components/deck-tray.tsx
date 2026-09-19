@@ -14,7 +14,7 @@ function paperFor(cardCount: number): number {
 }
 
 /** A long compound would break mid-letter at the full size, so the term steps down first. */
-function termStep(term: string): number {
+export function termStep(term: string): number {
   const longest = Math.max(...term.split(/\s+/).map((word) => word.length));
   return longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14;
 }
@@ -25,8 +25,6 @@ interface TrayProps {
   card: PublicDeckSummary["card"];
   language: string | null;
   meaningLanguage: string;
-  /** "lg" is the deck's own page, where one tray stands alone rather than in a row. */
-  size?: "lg" | undefined;
   className?: string | undefined;
 }
 
@@ -41,22 +39,14 @@ export function DeckTray({
   card,
   language,
   meaningLanguage,
-  size,
   className,
 }: TrayProps) {
   const hue = trayHue(slug);
   if (!card) {
-    return (
-      <div
-        className={clsx("deck-tray", className)}
-        data-hue={hue}
-        data-size={size}
-        aria-hidden="true"
-      />
-    );
+    return <div className={clsx("deck-tray", className)} data-hue={hue} aria-hidden="true" />;
   }
   return (
-    <div className={clsx("deck-tray", className)} data-hue={hue} data-size={size}>
+    <div className={clsx("deck-tray", className)} data-hue={hue}>
       <div className="deck-tray-stack">
         {Array.from({ length: paperFor(cardCount) }, (_, at) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
@@ -156,12 +146,12 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
   );
 }
 
-/** Level, cards and sections, in that order, on one line. */
+/** Cards and sections, in that order, on one line. */
 export function DeckMeta({
   deck,
   className,
 }: {
-  deck: Pick<PublicDeckSummary, "level" | "cardCount" | "sectionCount">;
+  deck: Pick<PublicDeckSummary, "cardCount" | "sectionCount">;
   className?: string | undefined;
 }) {
   const dot = (
@@ -172,16 +162,10 @@ export function DeckMeta({
   return (
     <p
       className={clsx(
-        "flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted tabular-nums",
-        className,
+        "flex flex-wrap items-center gap-x-1.5 gap-y-1 tabular-nums",
+        className ?? "text-xs text-muted",
       )}
     >
-      {deck.level && (
-        <>
-          <span>{deck.level}</span>
-          {dot}
-        </>
-      )}
       <span>
         <Plural value={deck.cardCount} one="# card" other="# cards" />
       </span>

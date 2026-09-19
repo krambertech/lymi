@@ -1,10 +1,12 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { ExploreDeckOut, PublicDeckOut } from "@lymi/core/catalog";
-import { publisherAvatarPath } from "@lymi/core/catalog";
+import { publisherAvatarPath, trayHue } from "@lymi/core/catalog";
 import { Link } from "@tanstack/react-router";
-import { Check, ChevronDown, Plus } from "lucide-react";
+import { clsx } from "clsx";
+import { ArrowRight, Check, ChevronDown, Plus } from "lucide-react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 import { Button, buttonClass } from "../components/button";
-import { DeckMeta, DeckTray } from "../components/deck-tray";
+import { DeckMeta, termStep } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
 import type { StaticNav } from "../components/nav-link";
@@ -37,16 +39,115 @@ function keyed<T>(items: readonly T[], nameOf: (item: T) => string): { item: T; 
   });
 }
 
+type HandCard = { term: string; meaning: string; section: string | null };
+
 /**
- * The card this deck's tray shows: the first with a meaning, named with its section. It is the
- * tray the learner pressed on the shelf, so the same card meets them here in the same colour.
+ * Up to three cards for the hand beside the name, one per section before a second from any, so
+ * the hand shows the deck's range. The first is the card on the shelf's tray and lies on top, so
+ * the card the learner pressed meets them here.
  */
-function trayCardOf(deck: PublicDeckOut) {
-  for (const section of deck.sections) {
-    const card = section.cards.find((each) => each.meaning);
-    if (card) return { term: card.term, meaning: card.meaning ?? "", section: section.name };
+function handOf(deck: PublicDeckOut): HandCard[] {
+  const hand: HandCard[] = [];
+  const sections = deck.sections.map((section) => ({
+    name: section.name,
+    cards: section.cards.filter((card) => card.meaning),
+  }));
+  for (let round = 0; hand.length < 3; round++) {
+    const taken = hand.length;
+    for (const section of sections) {
+      const card = section.cards[round];
+      if (card && hand.length < 3) {
+        hand.push({ term: card.term, meaning: card.meaning ?? "", section: section.name });
+      }
+    }
+    if (hand.length === taken) break;
   }
-  return null;
+  return hand;
+}
+
+// Where each card of a hand of one, two or three lies: its step from the middle, its drop and its
+// tilt. The first card is the one on top, so it sits in the middle and highest.
+const FANS: [number, number, number][][] = [
+  [[0, 0, -2]],
+  [
+    [0.4, 0, 3],
+    [-0.4, 14, -4],
+  ],
+  [
+    [0, 0, 1],
+    [-1, 18, -7],
+    [1, 22, 6],
+  ],
+];
+// The same cards squared into a deck once it is in Library, as the tray's paper sits behind its card.
+const STACK: [number, number, number][] = [
+  [0, 0, -1],
+  [-7, 8, -3],
+  [8, 6, 2.5],
+];
+
+/**
+ * The deck's cards fanned out beside its name. Once the deck is in Library they gather into one
+ * squared stack under a check, which is the change the learner watches when they add it: the
+ * fan is a deck being browsed, the stack is a deck that is theirs. The list under the header
+ * says the same cards to a screen reader, so the hand is hidden from one.
+ */
+function DeckHand({
+  deck,
+  cards,
+  gathered,
+  className,
+}: {
+  deck: PublicDeckOut;
+  cards: HandCard[];
+  gathered: boolean;
+  className?: string | undefined;
+}) {
+  const fan = FANS[cards.length - 1] ?? [];
+  return (
+    <div
+      className={clsx("deck-hand", className)}
+      data-gathered={gathered || undefined}
+      aria-hidden="true"
+    >
+      {cards.map((card, at) => {
+        const [step, drop, tilt] = fan[at] ?? [0, 0, 0];
+        const [x, y, r] = STACK[at] ?? [0, 0, 0];
+        const style = {
+          "--step": step,
+          "--drop": `${drop}px`,
+          "--tilt": `${tilt}deg`,
+          "--sx": `${x}px`,
+          "--sy": `${y}px`,
+          "--sr": `${r}deg`,
+          "--t": termStep(card.term),
+          zIndex: cards.length - at,
+          transitionDelay: `${at * 40}ms`,
+        } as CSSProperties;
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: a fixed hand; a term can repeat.
+          <div key={at} className="deck-hand-card" style={style}>
+            {card.section && (
+              <p lang={deck.meaningLanguage} className="deck-tray-section">
+                {card.section}
+              </p>
+            )}
+            <p lang={deck.language ?? undefined} className="deck-tray-term">
+              {card.term}
+            </p>
+            <p lang={deck.meaningLanguage} className="deck-tray-meaning">
+              {card.meaning}
+            </p>
+            {at === 0 && (
+              <span className="deck-hand-seal">
+                <Check strokeWidth={2.5} />
+              </span>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export function ExploreDeckView({
@@ -60,6 +161,21 @@ export function ExploreDeckView({
   st,
 }: Props) {
   const { t } = useLingui();
+  // A deck that arrives in Library while the page is open plays its arrival; one that was
+  // already there when the page opened simply is.
+  const deckId = data?.deckId;
+  const [seen, setSeen] = useState(deckId);
+  const [arrived, setArrived] = useState(false);
+  if (seen !== deckId) {
+    setSeen(deckId);
+    if (seen === null && deckId) setArrived(true);
+  }
+  const open = useRef<HTMLAnchorElement>(null);
+  // The pressed button is gone, so focus moves to the press that replaces it.
+  useEffect(() => {
+    if (arrived) open.current?.focus({ preventScroll: true });
+  }, [arrived]);
+
   const back = { label: t`Explore`, to: "/explore" };
 
   if (missing || failed) {
@@ -100,83 +216,108 @@ export function ExploreDeckView({
     );
   }
 
-  const { deck, deckId } = data;
+  const { deck } = data;
+  const { name } = deck;
   const sections = deck.sections.filter((section) => section.name !== null);
-  const trayCard = trayCardOf(deck);
+  const hand = handOf(deck);
 
-  return (
-    <Screen back={back} ownTitle>
-      {/* The name is inside the column, so the tray beside it starts level with the title rather
-          than below the header. The deck's colour lives on that tray and nowhere else, so amber
-          keeps the plain canvas it needs to read as the one thing to press. DESIGN.md, "Colour". */}
-      <div className="grid items-start gap-7 @3xl:grid-cols-[minmax(0,1fr)_auto] @3xl:gap-12">
-        <div className="grid justify-items-start gap-4">
-          {/* The title is set here rather than through `PageHeader`, whose padding separates a
-              header from the page below it and has nothing to separate inside this column. The
-              type matches it exactly, so the name still lands where every other screen's does. */}
-          <header>
+  // The deck's colour is the ground of its whole header, back included, as its tray is on the
+  // shelf: it runs from the rail to the window's edge, its text on the column. docs/design/explore.md.
+  const cover = (bar: ReactNode) => (
+    <div className="deck-cover" data-hue={trayHue(deck.slug)}>
+      <div className="mx-auto w-full max-w-(--column) px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-9 @3xl/shell:px-8 @3xl/shell:pt-8 @3xl/shell:pb-11">
+        {bar}
+        <div className="grid items-center gap-6 @4xl:grid-cols-[minmax(0,1fr)_auto] @4xl:gap-10">
+          <div className="grid justify-items-start">
+            {/* Who made it and how big it is on one line above the name, so the column reads
+                  source, name, promise, press, with nothing between the name and its summary. */}
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-2">
+              <p className="flex items-center gap-2">
+                {/* The photo is served by this Worker beside the deck's own media, so the path
+                      is the deck's slug rather than anything naming the account. ADR 0016. */}
+                <PublisherMark
+                  name={deck.publisher}
+                  src={
+                    deck.publisherAvatar
+                      ? publisherAvatarPath(deck.slug, deck.publisherAvatar)
+                      : null
+                  }
+                  size={20}
+                />
+                <Trans>By {deck.publisher}</Trans>
+              </p>
+              <span aria-hidden="true" className="text-faint">
+                ·
+              </span>
+              <DeckMeta
+                deck={{ cardCount: deck.cardCount, sectionCount: sections.length }}
+                className="text-sm text-text-2"
+              />
+            </div>
             <h1
               lang={deck.meaningLanguage}
-              className="flex min-h-10 items-center text-2xl font-medium leading-[1.2] text-text"
+              className="mt-3 text-2xl font-medium leading-[1.2] tracking-[-0.02em] text-balance text-text @4xl:text-[1.875rem] @4xl:leading-[1.15]"
             >
               {deck.name}
             </h1>
-            <p className="mt-2 flex items-center gap-2 text-sm text-muted">
-              {/* The photo is served by this Worker beside the deck's own media, so the path is
-                  the deck's slug rather than anything naming the account. ADR 0016. */}
-              <PublisherMark
-                name={deck.publisher}
-                src={
-                  deck.publisherAvatar ? publisherAvatarPath(deck.slug, deck.publisherAvatar) : null
-                }
-                size={20}
-              />
-              <Trans>By {deck.publisher}</Trans>
+            <p
+              lang={deck.meaningLanguage}
+              className="mt-2.5 max-w-[52ch] text-md text-pretty text-text-2"
+            >
+              {deck.summary}
             </p>
-          </header>
-          <p lang={deck.meaningLanguage} className="max-w-[52ch] text-md text-pretty text-text-2">
-            {deck.summary}
-          </p>
-          <DeckMeta
-            deck={{ level: deck.level, cardCount: deck.cardCount, sectionCount: sections.length }}
-            className="text-sm"
-          />
-          {deckId ? (
-            <div className="flex flex-wrap items-center gap-3">
-              <Link
-                to="/library/$deckId"
-                params={{ deckId }}
-                disabled={!!st}
-                className={buttonClass("secondary")}
-              >
-                <Trans>Open in Library</Trans>
-              </Link>
-              <p className="flex items-center gap-1.5 text-sm text-text-2 [&_svg]:size-4">
-                <Check aria-hidden="true" className="text-state-known" />
-                <Trans>Already in Library</Trans>
-              </p>
+            <div className="mt-6 flex w-full">
+              {data.deckId ? (
+                <Link
+                  ref={open}
+                  to="/library/$deckId"
+                  params={{ deckId: data.deckId }}
+                  disabled={!!st}
+                  className={buttonClass("secondary", "lg", "deck-cover-action w-full @md:w-auto")}
+                >
+                  <span
+                    className={clsx(
+                      "inline-flex items-center gap-2",
+                      arrived && "deck-cover-enter",
+                    )}
+                  >
+                    <Trans>Open in Library</Trans>
+                    <ArrowRight aria-hidden="true" className="rtl:-scale-x-100" />
+                  </span>
+                </Link>
+              ) : (
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  onClick={onAdd}
+                  loading={adding}
+                  className="deck-cover-action w-full @md:w-auto"
+                >
+                  <Plus aria-hidden="true" />
+                  <Trans>Add to Library</Trans>
+                </Button>
+              )}
             </div>
-          ) : (
-            <Button variant="primary" size="lg" onClick={onAdd} loading={adding}>
-              <Plus aria-hidden="true" />
-              <Trans>Add to Library</Trans>
-            </Button>
+            <p role="status" className="sr-only">
+              {arrived && <Trans>Added “{name}” to Library</Trans>}
+            </p>
+          </div>
+          {hand.length > 0 && (
+            <DeckHand
+              deck={deck}
+              cards={hand}
+              gathered={!!data.deckId}
+              className="-order-1 @4xl:order-none"
+            />
           )}
         </div>
-        {trayCard && (
-          <DeckTray
-            slug={deck.slug}
-            cardCount={deck.cardCount}
-            card={trayCard}
-            language={deck.language}
-            meaningLanguage={deck.meaningLanguage}
-            size="lg"
-            className="w-full rounded-xl @3xl:w-[312px]"
-          />
-        )}
       </div>
+    </div>
+  );
 
-      <div className="pt-9 @3xl/shell:pt-11">
+  return (
+    <Screen back={back} ownTitle cover={cover}>
+      <div className="@3xl/shell:-mt-1">
         {sections.length > 0 && (
           <section aria-labelledby="deck-path" className="pb-9">
             <h2 id="deck-path" className="text-lg font-medium text-text">

@@ -968,7 +968,7 @@ export const SCREENS: Entry[] = [
     slug: "explore-deck",
     name: "A published deck",
     source: "views/explore-deck-view.tsx",
-    note: "One published deck without leaving the app, on the same column and title as every other screen. Its colour stays on its tray rather than washing the page: a band of it ended on an arbitrary edge against the rail and put amber on a coloured ground, where amber stops reading as the one thing to press. The tray here shows its card whole and hugs the text, because one cropped card standing alone reads as a fault instead of a shelf. Sections say what opens first; every card is one disclosure away, since the full list is what a learner checks before committing.",
+    note: "One published deck without leaving the app. The deck's colour is the ground of the whole header, back included, from the rail to the window's edge. Add is white on it because amber on a coloured ground stops reading as the thing to press. A hand of up to three cards sits beside the name on desktop and above it on a phone; adding gathers it into one stack under a check and keeps the learner on the page. Sections say what opens first; every card is one disclosure away, since the full list is what a learner checks before committing.",
     Demo: () => (
       <div className="grid gap-10">
         <Shot caption="Desktop, a deck the learner has not added" initial="light">

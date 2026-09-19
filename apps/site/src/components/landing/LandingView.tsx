@@ -1,11 +1,13 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { Gift, GitFork, KeyRound } from "lucide-react";
 import { productUrl } from "../../lib/origins";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { AssistantChat } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
+import { Assurances } from "./Assurances";
 import { USE_CASE_CARDS } from "./cards";
 import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
@@ -77,7 +79,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         <UseCases title={<Trans>For anything you’re learning.</Trans>} items={useCases} />
 
         <RightMoment
-          title={<Trans>How spaced repetition works.</Trans>}
+          title={<Trans>Review less, remember longer.</Trans>}
           body={
             <Trans>
               Remember a card, and Lymi waits longer before showing it again. Forget it, and it
@@ -101,11 +103,11 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
 
         <FeatureSection
           demoFirst
-          title={<Trans>Type the term. AI fills in the rest.</Trans>}
+          title={<Trans>A full flashcard in seconds.</Trans>}
           body={
             <Trans>
-              AI adds the meaning, an example and the pronunciation. It never changes what you
-              typed, and everything it wrote is marked.
+              Type the term, and AI adds the meaning, an example and the pronunciation. It never
+              changes what you typed, and everything it wrote is marked.
             </Trans>
           }
         >
@@ -153,7 +155,7 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         </FeatureSection>
 
         <FeatureSection
-          title={<Trans>Don’t start from scratch.</Trans>}
+          title={<Trans>Bring your existing decks.</Trans>}
           body={
             <Trans>
               Import your flashcards from Anki or Mochi. Decks, pictures and review history come
@@ -173,6 +175,30 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
         >
           <ImportDemo />
         </FeatureSection>
+
+        <Assurances
+          label={<Trans>Free, open source, and yours</Trans>}
+          items={[
+            {
+              id: "free",
+              icon: Gift,
+              title: <Trans>Free</Trans>,
+              body: <Trans>Lymi costs nothing. No trial, and no payment details to sign up.</Trans>,
+            },
+            {
+              id: "open-source",
+              icon: GitFork,
+              title: <Trans>Open source</Trans>,
+              body: <Trans>The code is public on GitHub, so anyone can see how Lymi works.</Trans>,
+            },
+            {
+              id: "your-data",
+              icon: KeyRound,
+              title: <Trans>Your data is yours</Trans>,
+              body: <Trans>Export any deck to Anki, with its pictures and review history.</Trans>,
+            },
+          ]}
+        />
 
         <SignUpSection title={<Trans>Start learning</Trans>} />
       </main>

@@ -190,6 +190,9 @@ msgstr "A false friend. Embarrassed is avergonzado."
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "A flat plate on a door says push; a handle says pull."
 
+msgid "A full flashcard in seconds."
+msgstr "A full flashcard in seconds."
+
 msgid "A hobby"
 msgstr "A hobby"
 
@@ -306,9 +309,6 @@ msgstr "After you learn something new, you start noticing it everywhere"
 
 msgid "AI"
 msgstr "AI"
-
-msgid "AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
-msgstr "AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 
 msgid "AI assistants"
 msgstr "AI assistants"
@@ -444,6 +444,9 @@ msgstr "Bring Lymi to your next class."
 
 msgid "Bring your assistant to Lymi."
 msgstr "Bring your assistant to Lymi."
+
+msgid "Bring your existing decks."
+msgstr "Bring your existing decks."
 
 msgid "Bring your favourite AI along."
 msgstr "Bring your favourite AI along."
@@ -667,9 +670,6 @@ msgstr "Does the AI write my cards?"
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Doing it twice has the same effect as doing it once"
 
-msgid "Don’t start from scratch."
-msgstr "Don’t start from scratch."
-
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Don’t take down a fence until you know why it was put up"
 
@@ -787,6 +787,9 @@ msgstr "Explore"
 msgid "Explore decks"
 msgstr "Explore decks"
 
+msgid "Export any deck to Anki, with its pictures and review history."
+msgstr "Export any deck to Anki, with its pictures and review history."
+
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "Fado, Portugal’s mournful song, is built on it."
 
@@ -826,8 +829,14 @@ msgstr "Forgot"
 msgid "Français · phrase"
 msgstr "Français · phrase"
 
+msgid "Free"
+msgstr "Free"
+
 msgid "Free flashcard decks — languages, exams and more · Lymi"
 msgstr "Free flashcard decks — languages, exams and more · Lymi"
+
+msgid "Free, open source, and yours"
+msgstr "Free, open source, and yours"
 
 msgid "French"
 msgstr "French"
@@ -966,9 +975,6 @@ msgstr "How many are waiting for me tonight?"
 
 msgid "How sections work"
 msgstr "How sections work"
-
-msgid "How spaced repetition works."
-msgstr "How spaced repetition works."
 
 msgid "How to connect"
 msgstr "How to connect"
@@ -1246,6 +1252,9 @@ msgstr "Lymi · Flashcard app with spaced repetition"
 msgid "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 msgstr "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 
+msgid "Lymi costs nothing. No trial, and no payment details to sign up."
+msgstr "Lymi costs nothing. No trial, and no payment details to sign up."
+
 msgid "Lymi for language learning"
 msgstr "Lymi for language learning"
 
@@ -1285,8 +1294,8 @@ msgstr "Lymi is writing the first decks now. In the meantime you can make your o
 msgid "Lymi schedules every card around it."
 msgstr "Lymi schedules every card around it."
 
-msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
-msgstr "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. There is no Anki import yet."
+msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their review history."
+msgstr "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their review history."
 
 msgid "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
 msgstr "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
@@ -1465,6 +1474,9 @@ msgstr "Open Lymi"
 
 msgid "Open menu"
 msgstr "Open menu"
+
+msgid "Open source"
+msgstr "Open source"
 
 msgid "Open the deck"
 msgstr "Open the deck"
@@ -1649,6 +1661,9 @@ msgstr "Review a few minutes a day"
 
 msgid "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
 msgstr "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
+
+msgid "Review less, remember longer."
+msgstr "Review less, remember longer."
 
 msgid "Reviewed with Lymi"
 msgstr "Reviewed with Lymi"
@@ -1962,6 +1977,9 @@ msgstr "The browning that gives seared, baked and toasted food its flavour"
 msgid "The cards from this page will land here."
 msgstr "The cards from this page will land here."
 
+msgid "The code is public on GitHub, so anyone can see how Lymi works."
+msgstr "The code is public on GitHub, so anyone can see how Lymi works."
+
 msgid "the day before"
 msgstr "the day before"
 
@@ -2169,8 +2187,8 @@ msgstr "two"
 msgid "Two euros ten."
 msgstr "Two euros ten."
 
-msgid "Type the term. AI fills in the rest."
-msgstr "Type the term. AI fills in the rest."
+msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
+msgstr "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Unfinished tasks stay on your mind more than finished ones"
@@ -2375,6 +2393,9 @@ msgstr "Your assistant can read your decks. Ask it for a conversation that uses 
 
 msgid "Your choices and rights"
 msgstr "Your choices and rights"
+
+msgid "Your data is yours"
+msgstr "Your data is yours"
 
 msgid "Your own app"
 msgstr "Your own app"

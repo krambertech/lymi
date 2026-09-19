@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { identifyApp } from "../components/app-mark";
 import { Button } from "../components/button";
 import { CardForm } from "../components/card-form";
+import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckForm } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
 import { StreakButton } from "../components/streak";
@@ -24,6 +25,7 @@ import { SettingsView } from "../views/settings-view";
 import { Sidebar } from "../views/shell";
 import { TodayView } from "../views/today-view";
 import { WordView } from "../views/word-view";
+import { designChrome } from "./chrome";
 import { Desktop, type FrameTheme, Phone, useFrameTheme } from "./frame";
 import * as m from "./mock";
 import type { Entry } from "./parts/types";
@@ -283,10 +285,7 @@ export const SCREENS: Entry[] = [
               decks={m.decks}
               streak={m.streak}
               streakCard={<StreakButton variant="card" summary={m.streak} />}
-              streakButton={<StreakButton variant="phone" summary={m.streak} />}
               rounds={m.rounds}
-              name={m.me.name}
-              docsUrl="https://lymi.app/docs"
               static={{ path: "/today" }}
             />
           </PhoneShot>
@@ -296,43 +295,33 @@ export const SCREENS: Entry[] = [
               series={m.series}
               streak={m.streak}
               streakCard={<StreakButton variant="card" summary={m.streak} />}
-              streakButton={<StreakButton variant="phone" summary={m.streak} />}
               rounds={m.rounds}
-              name={m.me.name}
-              docsUrl="https://lymi.app/docs"
               static={{ path: "/today" }}
             />
           </PhoneShot>
           <PhoneShot caption="Nothing due" initial="light" path="/today">
-            <TodayView
-              decks={m.quietDecks}
-              streak={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
-              streakCard={
-                <StreakButton
-                  variant="card"
-                  summary={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
-                />
-              }
-              streakButton={
-                <StreakButton
-                  variant="phone"
-                  summary={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
-                />
-              }
-              rounds={{ forgotten: 9, new: 0, slipping: 0 }}
-              name={m.me.name}
-              docsUrl="https://lymi.app/docs"
-              static={{ path: "/today" }}
-            />
+            <ShellChrome
+              value={designChrome("/today", m.streakFrom(m.streakDaysOpen.map((n) => n * 2)))}
+            >
+              <TodayView
+                decks={m.quietDecks}
+                streak={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
+                streakCard={
+                  <StreakButton
+                    variant="card"
+                    summary={m.streakFrom(m.streakDaysOpen.map((n) => n * 2))}
+                  />
+                }
+                rounds={{ forgotten: 9, new: 0, slipping: 0 }}
+                static={{ path: "/today" }}
+              />
+            </ShellChrome>
           </PhoneShot>
           <PhoneShot caption="First run" initial="light" path="/today">
             <TodayView
               connectUrl="https://lymi.app/docs/mcp"
               decks={[]}
               streak={m.streakFrom(m.noHistory)}
-              streakButton={<StreakButton variant="phone" summary={m.streakFrom(m.noHistory)} />}
-              name={m.me.name}
-              docsUrl="https://lymi.app/docs"
               static={{ path: "/today" }}
             />
           </PhoneShot>
@@ -354,8 +343,6 @@ export const SCREENS: Entry[] = [
                   streak={m.streak}
                   streakCard={<StreakButton variant="card" summary={m.streak} />}
                   rounds={m.rounds}
-                  name={m.me.name}
-                  docsUrl="https://lymi.app/docs"
                   static={{ path: "/today" }}
                 />
               </main>
@@ -515,25 +502,15 @@ export const SCREENS: Entry[] = [
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2 @5xl:grid-cols-3">
           <PhoneShot caption="Library" initial="light" path="/library">
-            <LibraryView
-              decks={m.decks}
-              next={{ d3: "Monday" }}
-              name={m.me.name}
-              streakButton={<StreakButton variant="phone" summary={m.streak} />}
-              docsUrl="https://lymi.app/docs"
-              static={{ path: "/library" }}
-            />
+            <LibraryView decks={m.decks} next={{ d3: "Monday" }} static={{ path: "/library" }} />
           </PhoneShot>
           <PhoneShot caption="With a series" initial="dark" path="/library">
             <LibraryView
               decks={m.decksInSeries}
               series={m.series}
-              name={m.me.name}
               onNewSeries={noop}
               onEditSeries={noop}
               onDeleteSeries={noop}
-              streakButton={<StreakButton variant="phone" summary={m.streak} />}
-              docsUrl="https://lymi.app/docs"
               static={{ path: "/library" }}
             />
           </PhoneShot>
@@ -729,7 +706,6 @@ export const SCREENS: Entry[] = [
               }}
               onSave={noop}
               saved
-              static={{ path: "/library" }}
             />
           </PhoneShot>
         </div>
@@ -773,7 +749,6 @@ export const SCREENS: Entry[] = [
                   }}
                   onSave={noop}
                   onArchive={noop}
-                  static={{ path: "/library/d3" }}
                 />
               </main>
             </Desktop>

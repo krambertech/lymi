@@ -2031,6 +2031,9 @@ msgstr "Ключ позволяет скрипту читать колоды и�
 msgid "Library"
 msgstr "Библиотека"
 
+msgid "Library options"
+msgstr "Параметры библиотеки"
+
 msgid "Light"
 msgstr "Светлая"
 
@@ -3134,6 +3137,9 @@ msgstr "Завершить выбор"
 
 msgid "Stopped"
 msgstr "Остановлен"
+
+msgid "Streak"
+msgstr "Дни подряд"
 
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"

@@ -261,7 +261,8 @@ export function TileLockup({
     <span className={clsx("flex items-center gap-2.5", className)}>
       {/* On the bar the tile sits on the canvas, which in the dark room is the tile's own colour. */}
       <AppTile size={tile} title="Lymi" className={size === "bar" ? "edge" : undefined} />
-      <Wordmark size={word} className="text-text" />
+      {/* The phone's bar holds the tile alone: the wordmark read as a second title over the screen's own. */}
+      {size === "rail" && <Wordmark size={word} className="text-text" />}
     </span>
   );
 }
@@ -283,7 +284,7 @@ export function BackButton({
 }) {
   const content = (
     <>
-      <ChevronLeft aria-hidden="true" />
+      <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
       <span className="truncate">{label}</span>
     </>
   );

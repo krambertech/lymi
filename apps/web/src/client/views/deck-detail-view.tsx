@@ -34,6 +34,7 @@ import { Avatar } from "../components/avatar";
 import { Button, buttonClass, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
+import { Screen, ScreenBar } from "../components/layout/screen";
 import { NextStep, NextSteps } from "../components/next-steps";
 import { PublisherMark } from "../components/publisher-mark";
 import { SectionProgress } from "../components/section-progress";
@@ -67,7 +68,7 @@ import {
   rowState,
 } from "../lib/deck-list";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
-import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
+import type { StaticNav } from "./shell";
 import { type WordEvent, WordView } from "./word-view";
 
 /** A menu row greys its icons, so a state's mark takes its own colour back. */
@@ -943,13 +944,12 @@ export function DeckDetailView({
         {content}
       </Link>
     );
-  const backToLibrary = <BackButton label={t`Library`}>{toLibrary}</BackButton>;
+  const backToLibrary = { label: t`Library`, to: "/library" };
 
   // A deck that could not be loaded takes the whole screen, so no skeleton is left waiting under it.
   if (failure) {
     return (
-      <Page>
-        <TopBar back={backToLibrary} />
+      <Screen back={backToLibrary} ownTitle>
         {failure === "gone" ? (
           <ErrorState
             title={t`This deck is no longer here`}
@@ -959,7 +959,7 @@ export function DeckDetailView({
         ) : (
           <ErrorState title={t`Couldn’t load this deck`} onRetry={onRetry} retrying={retrying} />
         )}
-      </Page>
+      </Screen>
     );
   }
 
@@ -968,76 +968,71 @@ export function DeckDetailView({
 
   return (
     <div ref={rootRef} className="flex min-h-0 flex-1">
-      <Page>
-        {/* Search opens in place of the bar on the phone; desktop keeps it beside the tools. */}
-        {searchOpen ? (
-          <header className="-mt-2 mb-2 flex h-14 items-center gap-2 @3xl/shell:hidden">
-            <div className="relative min-w-0 flex-1">
-              <Search
-                className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
-                aria-hidden="true"
-              />
-              <Input
-                autoFocus
-                enterKeyHint="search"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") closeSearch();
-                }}
-                placeholder={t`Search this deck`}
-                aria-label={t`Search this deck`}
-                autoComplete="off"
-                className="w-full ps-9"
-              />
-            </div>
-            <Button variant="ghost" onClick={closeSearch}>
-              <Trans>Cancel</Trans>
-            </Button>
-          </header>
-        ) : (
-          <TopBar
-            back={backToLibrary}
-            actions={
-              <>
-                {cards && cards.length > 0 && (
-                  <IconButton label={t`Search this deck`} onClick={() => setSearchOpen(true)}>
-                    <Search />
-                  </IconButton>
-                )}
-                {addButton}
-                {deckMenu}
-              </>
-            }
-          />
-        )}
-        <PageHeader
-          title={deck ? deck.name : <Skeleton className="h-8 w-40" />}
-          sub={
-            deck
-              ? subline(
-                  deck.role !== "owner" && <OwnerLine deck={deck} />,
-                  seriesName && (
-                    // Marked, so a series named after the deck's language never reads as the language twice.
-                    <>
-                      <Layers className="size-3.5 shrink-0" aria-hidden="true" />
-                      <span className="sr-only">{t`Series`}</span>
-                      <span>{seriesName}</span>
-                    </>
-                  ),
-                  deck.defaultLanguage ? languageName(deck.defaultLanguage) : null,
-                  deck.directions !== "recognition" ? directionLabel(deck.directions) : null,
-                )
-              : undefined
-          }
-          actions={
-            <span className="hidden items-center gap-1.5 @3xl/shell:flex">
-              {addButton}
-              {deckMenu}
-            </span>
-          }
-        />
-
+      <Screen
+        title={deck?.name}
+        back={backToLibrary}
+        sub={
+          deck
+            ? subline(
+                deck.role !== "owner" && <OwnerLine deck={deck} />,
+                seriesName && (
+                  // Marked, so a series named after the deck's language never reads as the language twice.
+                  <>
+                    <Layers className="size-3.5 shrink-0" aria-hidden="true" />
+                    <span className="sr-only">{t`Series`}</span>
+                    <span>{seriesName}</span>
+                  </>
+                ),
+                deck.defaultLanguage ? languageName(deck.defaultLanguage) : null,
+                deck.directions !== "recognition" ? directionLabel(deck.directions) : null,
+              )
+            : undefined
+        }
+        actions={
+          <>
+            {/* Desktop keeps search beside the list tools, where "/" lands. */}
+            {cards && cards.length > 0 && (
+              <IconButton
+                label={t`Search this deck`}
+                onClick={() => setSearchOpen(true)}
+                className="@3xl/shell:hidden"
+              >
+                <Search />
+              </IconButton>
+            )}
+            {addButton}
+            {deckMenu}
+          </>
+        }
+        bar={
+          searchOpen ? (
+            <ScreenBar>
+              <div className="relative min-w-0 flex-1">
+                <Search
+                  className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+                  aria-hidden="true"
+                />
+                <Input
+                  autoFocus
+                  enterKeyHint="search"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") closeSearch();
+                  }}
+                  placeholder={t`Search this deck`}
+                  aria-label={t`Search this deck`}
+                  autoComplete="off"
+                  className="w-full ps-9"
+                />
+              </div>
+              <Button variant="ghost" onClick={closeSearch}>
+                <Trans>Cancel</Trans>
+              </Button>
+            </ScreenBar>
+          ) : undefined
+        }
+      >
         {/* While the phone searches, the list is the answer, so the plates step aside. */}
         <div className={clsx(searchOpen && "hidden @3xl/shell:block")}>
           {deck === undefined || cards === undefined ? (
@@ -1183,7 +1178,7 @@ export function DeckDetailView({
             }
           />
         )}
-      </Page>
+      </Screen>
 
       {/* Beside the list: sticky, with its own scroll, so J and K walk the list while the page follows. */}
       {open && beside && (

@@ -3,6 +3,7 @@ import { Brand } from "./brand";
 import { Colour } from "./colour";
 import { FlamePage } from "./flame";
 import { LanternPage } from "./lantern";
+import { Layout } from "./layout";
 import { Motion } from "./motion";
 import { actions } from "./parts/actions";
 import { charts, streak } from "./parts/charts";
@@ -10,6 +11,7 @@ import { empty } from "./parts/empty";
 import { feedback } from "./parts/feedback";
 import { combobox, forms, select } from "./parts/forms";
 import { labels } from "./parts/labels";
+import { layout } from "./parts/layout";
 import { lists, table } from "./parts/lists";
 import { navigation } from "./parts/navigation";
 import { menu, overlays } from "./parts/overlays";
@@ -38,6 +40,7 @@ export const FOUNDATIONS: Foundation[] = [
   { slug: "colour", title: "Colour", source: "design/colour.tsx", Page: Colour },
   { slug: "typography", title: "Typography", source: "design/typography.tsx", Page: Typography },
   { slug: "space", title: "Space and shape", source: "design/space.tsx", Page: Space },
+  { slug: "layout", title: "Layout", source: "design/layout.tsx", Page: Layout },
   { slug: "motion", title: "Motion", source: "design/motion.tsx", Page: Motion },
   { slug: "voice", title: "Voice", source: "design/voice.tsx", Page: Voice },
 ];
@@ -55,6 +58,7 @@ export const GROUPS: Group[] = [
   lists,
   table,
   navigation,
+  layout,
   streak,
   charts,
 ];

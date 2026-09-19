@@ -4,9 +4,9 @@ import { Archive } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "../components/button";
 import { EmptySection, ErrorState } from "../components/empty-state";
+import { Screen } from "../components/layout/screen";
 import { Skeleton } from "../components/skeleton";
 import type { CardHit, DeckSummary } from "../lib/api";
-import { Page, PageHeader } from "./shell";
 
 export interface ArchivedProps {
   /** Undefined while loading. */
@@ -43,11 +43,12 @@ export function ArchivedView({
   const loading = decks === undefined || cards === undefined;
   const nothing = !loading && decks.length === 0 && cards.length === 0;
   return (
-    <Page width="md">
-      <PageHeader
-        title={t`Archived`}
-        sub={t`Restore brings an archived deck or card back to Library.`}
-      />
+    <Screen
+      title={t`Archived`}
+      sub={t`Restore brings an archived deck or card back to Library.`}
+      width="md"
+      back={{ label: t`Today`, to: "/today" }}
+    >
       {error && loading ? (
         <ErrorState title={t`Couldn’t load Archived`} onRetry={onRetry} retrying={retrying} />
       ) : loading ? (
@@ -95,7 +96,7 @@ export function ArchivedView({
           )}
         </div>
       )}
-    </Page>
+    </Screen>
   );
 }
 

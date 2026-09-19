@@ -3,14 +3,18 @@ import { clsx } from "clsx";
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { IconButton } from "../components/button";
+import { ShellChrome } from "../components/layout/shell-chrome";
 import { AppTile, Wordmark } from "../components/logo";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import { setTheme } from "../lib/theme";
+import { designChrome } from "./chrome";
 import { DocLink } from "./doc-link";
 import { useForcedStates, useSystemMotion } from "./forced-states";
 import { ROOM_THEMES, usePageTheme } from "./frame";
 import { IconToggle } from "./icon-toggle";
 import { type DocRef, FOUNDATIONS, GROUPS, SCREENS } from "./registry";
+
+const DESIGN_CHROME = designChrome();
 
 const heading = "mx-2.5 mb-1.5 text-xs font-medium uppercase tracking-[0.06em] text-muted";
 const item =
@@ -54,7 +58,9 @@ export function DesignLayout() {
           <IconToggle label="Theme" value={theme} onChange={setTheme} options={ROOM_THEMES} />
         </header>
         <main className="@container mx-auto w-full max-w-[1120px] flex-1 px-5 pt-8 pb-16 @3xl/shell:px-10">
-          <Outlet />
+          <ShellChrome value={DESIGN_CHROME}>
+            <Outlet />
+          </ShellChrome>
         </main>
       </div>
 

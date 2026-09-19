@@ -1,5 +1,6 @@
+import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useSearch } from "@tanstack/react-router";
+import { useLocation, useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   StreakButton,
@@ -8,6 +9,7 @@ import {
   StreakPlace as StreakPlaceView,
   type StreakSummary,
 } from "../components/streak";
+import { NAV } from "../views/shell";
 import { api, type Settings } from "./api";
 import { settingsQuery, streakQuery } from "./queries";
 
@@ -152,10 +154,15 @@ export function StreakPlace() {
   const streak = useQuery(streakQuery);
   const goal = useDailyGoal();
   const [open, setOpen] = useStreakOpen();
+  const { t, i18n } = useLingui();
+  const { pathname } = useLocation();
+  // The streak opens from a tab's bar, so back names that tab; from a link onto any other screen it says Back.
+  const tab = NAV.find((n) => pathname === n.to);
   if (!streak.data) return null;
   return (
     <StreakPlaceView
       open={open}
+      returnsTo={tab ? i18n._(tab.label) : t`Back`}
       onOpenChange={setOpen}
       summary={streak.data}
       onGoalChange={goal.change}

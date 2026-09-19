@@ -24,10 +24,10 @@ import { Button, buttonClass } from "../components/button";
 import { Chip } from "../components/chip";
 import { EmptySection, ErrorState } from "../components/empty-state";
 import { SOURCE_NAMES } from "../components/import-parts";
+import { Screen } from "../components/layout/screen";
 import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
 import type { ActivityCard, ActivityEntry, Export, Import } from "../lib/api";
-import { Page, PageHeader } from "./shell";
 
 /** The verb of a row, which is what its mark says. The sentence says what the verb was done to. */
 const KIND_ICONS: Record<string, LucideIcon> = {
@@ -509,10 +509,9 @@ export function ActivityView({
     : [];
 
   return (
-    <Page width="md">
-      {/* No action in the header: Activity is a log of what happened, and importing starts in
-          Settings. The empty state still offers it, because there it teaches the screen. */}
-      <PageHeader title={t`Activity`} />
+    // No action in the header: Activity is a log of what happened, and importing starts in
+    // Settings. The empty state still offers it, because there it teaches the screen.
+    <Screen title={t`Activity`} width="md" back={{ label: t`Today`, to: "/today" }}>
       {error && !entries ? (
         <ErrorState title={t`Couldn’t load Activity`} onRetry={onRetry} retrying={retrying} />
       ) : !entries ? (
@@ -581,7 +580,7 @@ export function ActivityView({
           </div>
         </div>
       )}
-    </Page>
+    </Screen>
   );
 }
 

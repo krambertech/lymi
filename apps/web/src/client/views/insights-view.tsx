@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
+import { Screen } from "../components/layout/screen";
 import { MonthBars } from "../components/month-bars";
 import { RecallTally } from "../components/recall-tally";
 import { RunStrip } from "../components/run-strip";
@@ -16,7 +17,6 @@ import { StateIcon, stateMarks } from "../components/state-mark";
 import { addDays } from "../components/streak-calendar";
 import { TREND_MIN_POINTS, TrendLine } from "../components/trend-line";
 import { deviceTimezone } from "../lib/api";
-import { Page, PageHeader } from "./shell";
 
 export type Period = "30" | "90" | "0";
 
@@ -91,22 +91,20 @@ export function InsightsView({
 
   if (failed) {
     return (
-      <Page>
-        <PageHeader title={t`Insights`} />
+      <Screen kind="tab" title={t`Insights`}>
         <ErrorState
           title={t`Couldn’t load Insights`}
           onRetry={onRetry}
           retrying={busy}
           className="flex-1"
         />
-      </Page>
+      </Screen>
     );
   }
 
   if (!data) {
     return (
-      <Page>
-        <PageHeader title={t`Insights`} />
+      <Screen kind="tab" title={t`Insights`}>
         {/* Same heights the plates settle at, so the screen does not jump when they land. */}
         <div className="grid gap-3 @3xl:grid-cols-2">
           {[0, 1, 2, 3].map((i) => (
@@ -114,7 +112,7 @@ export function InsightsView({
           ))}
         </div>
         <Skeleton className="mt-3 h-[105px] rounded-xl" />
-      </Page>
+      </Screen>
     );
   }
 
@@ -127,8 +125,7 @@ export function InsightsView({
     const today = localDate(new Date(), deviceTimezone());
     const week = Array.from({ length: 7 }, (_, i) => ({ date: addDays(today, i), count: 0 }));
     return (
-      <Page>
-        <PageHeader title={t`Insights`} />
+      <Screen kind="tab" title={t`Insights`}>
         <StartPanel
           className="mb-3"
           title={<Trans>Insights start after your first review</Trans>}
@@ -181,7 +178,7 @@ export function InsightsView({
             note={t`How many cards come back this week`}
           />
         </div>
-      </Page>
+      </Screen>
     );
   }
 
@@ -213,19 +210,18 @@ export function InsightsView({
   const monthLit = months.reduce((n, m) => n + m.lit, 0);
 
   return (
-    <Page>
-      <PageHeader
-        title={t`Insights`}
-        sub={
-          daysAllTime > 0
-            ? t`${plural(daysAllTime, {
-                one: "# day since your first review",
-                other: "# days since your first review",
-              })}`
-            : undefined
-        }
-      />
-
+    <Screen
+      kind="tab"
+      title={t`Insights`}
+      sub={
+        daysAllTime > 0
+          ? t`${plural(daysAllTime, {
+              one: "# day since your first review",
+              other: "# days since your first review",
+            })}`
+          : undefined
+      }
+    >
       <div
         className={clsx(
           "grid gap-3 transition-opacity duration-150 @3xl:grid-cols-2",
@@ -376,7 +372,7 @@ export function InsightsView({
           />
         </p>
       )}
-    </Page>
+    </Screen>
   );
 }
 

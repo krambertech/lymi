@@ -489,7 +489,10 @@ export function ReviewCard({
 
   const step = fit.step;
   const hasExtras = !!(card.example || card.notes);
-  const chips = !!(card.meaningSource || (card.exampleSource && card.example) || card.source);
+  // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
+  const aiMeaning = card.meaningSource === "ai";
+  const aiExample = card.exampleSource === "ai" && !!card.example;
+  const chips = aiMeaning || aiExample || !!card.source || card.tags.length > 0;
 
   const audio = (className?: string) =>
     onPlayAudio && (
@@ -628,14 +631,23 @@ export function ReviewCard({
           )}
           {chips && (
             <motion.div variants={answerLine} className="mt-1 flex flex-wrap gap-1.5">
-              {card.meaningSource && <SourceChip source={card.meaningSource} field="meaning" />}
-              {card.exampleSource && card.example && (
-                <SourceChip source={card.exampleSource} field="example" />
-              )}
+              {aiMeaning && <SourceChip source="ai" field="meaning" compact />}
+              {aiExample && <SourceChip source="ai" field="example" compact />}
               {card.source && (
                 <Chip size="sm" className="min-w-0 max-w-full">
                   <span className="truncate">{card.source}</span>
                 </Chip>
+              )}
+              {card.tags.length > 0 && (
+                <ul className="flex min-w-0 flex-wrap gap-1.5" aria-label={t`Tags`}>
+                  {card.tags.map((tag) => (
+                    <li key={tag} className="min-w-0 max-w-full">
+                      <Chip size="sm" className="min-w-0 max-w-full">
+                        <span className="truncate">{tag}</span>
+                      </Chip>
+                    </li>
+                  ))}
+                </ul>
               )}
             </motion.div>
           )}

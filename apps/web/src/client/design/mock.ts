@@ -167,6 +167,7 @@ export const cards: Card[] = [
     pronunciation: "/zbriˈɡarsi/",
     example: "Non c’è fretta, ma sbrigati se vuoi prendere il treno.",
     exampleSource: "ai",
+    tags: ["verbs", "reflexive"],
   }),
   card({
     id: "c2",

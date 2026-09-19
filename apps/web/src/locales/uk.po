@@ -95,9 +95,17 @@ msgstr "{0, plural, one {# колода} few {# колоди} many {# колод
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
+#. placeholder {0}: screen.nudge.count
+msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
+msgstr "{0, plural, one {Ще # картка — і на сьогодні все} few {Ще # картки — і на сьогодні все} many {Ще # карток — і на сьогодні все} other {Ще # картки — і на сьогодні все}}"
+
 #. placeholder {0}: entry.count - entry.cards.length
 msgid "{0, plural, one {# more card in this deck} other {# more cards in this deck}}"
 msgstr "{0, plural, one {ще # картка в цій колоді} few {ще # картки в цій колоді} many {ще # карток у цій колоді} other {ще # картки в цій колоді}}"
+
+#. placeholder {0}: screen.nudge.count
+msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
+msgstr "{0, plural, one {Ще # повторення до денної мети} few {Ще # повторення до денної мети} many {Ще # повторень до денної мети} other {Ще # повторення до денної мети}}"
 
 #. placeholder {0}: preview.unsupported + preview.skipped
 msgid "{0, plural, one {# note is image occlusion or has no term, so it’s skipped.} other {# notes are image occlusion or have no term, so they’re skipped.}}"
@@ -180,6 +188,10 @@ msgstr "{0, plural, one {Мова # колоди} few {Мови # колод} ma
 #. placeholder {0}: consistency.longestRun
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Найбільше днів поспіль: #.} few {Найбільше днів поспіль: #.} many {Найбільше днів поспіль: #.} other {Найбільше днів поспіль: #.}}"
+
+#. placeholder {0}: offer.count
+msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
+msgstr "{0, plural, one {Повторити # забуту картку} few {Повторити # забуті картки} many {Повторити # забутих карток} other {Повторити # забутої картки}}"
 
 #. placeholder {0}: Number(draft) || 0
 msgid "{0, plural, one {review} other {reviews}}"
@@ -324,11 +336,8 @@ msgstr "Застосунок {appName} не підключено"
 msgid "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
 msgstr "{archivedCount, plural, one {# архівна колода} few {# архівні колоди} many {# архівних колод} other {# архівної колоди}}"
 
-msgid "{attempts, plural, one {# review today} other {# reviews today}}"
-msgstr "{attempts, plural, one {# повторення сьогодні} few {# повторення сьогодні} many {# повторень сьогодні} other {# повторення сьогодні}}"
-
-msgid "{attempts} of {goal} reviews today"
-msgstr "{attempts} із {goal} повторень сьогодні"
+msgid "{attempts, plural, one {review today} other {reviews today}}"
+msgstr "{attempts, plural, one {повторення сьогодні} few {повторення сьогодні} many {повторень сьогодні} other {повторення сьогодні}}"
 
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# картку буде додано до повторень.} few {# картки буде додано до повторень.} many {# карток буде додано до повторень.} other {# картки буде додано до повторень.}}"
@@ -372,12 +381,6 @@ msgstr "{count, plural, one {Залишити колоду} few {Залишит�
 
 msgid "{count, plural, one {Move # card to} other {Move # cards to}}"
 msgstr "{count, plural, one {Перемістити # картку до} few {Перемістити # картки до} many {Перемістити # карток до} other {Перемістити # картки до}}"
-
-msgid "{count, plural, one {review in this round} other {reviews in this round}}"
-msgstr "{count, plural, one {повторення в цьому раунді} few {повторення в цьому раунді} many {повторень у цьому раунді} other {повторення в цьому раунді}}"
-
-msgid "{count, plural, one {review today} other {reviews today}}"
-msgstr "{count, plural, one {повторення сьогодні} few {повторення сьогодні} many {повторень сьогодні} other {повторення сьогодні}}"
 
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
@@ -489,15 +492,6 @@ msgstr "{months, plural, one {Через # місяць} few {Через # мі�
 
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
-
-msgid "{n, plural, one {Review # card in {name}} other {Review # cards in {name}}}"
-msgstr "{n, plural, one {Повторити # картку з колоди {name}} few {Повторити # картки з колоди {name}} many {Повторити # карток з колоди {name}} other {Повторити # картки з колоди {name}}}"
-
-msgid "{n, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
-msgstr "{n, plural, one {Повторити # забуту картку} few {Повторити # забуті картки} many {Повторити # забутих карток} other {Повторити # забутої картки}}"
-
-msgid "{n, plural, one {Review # more card} other {Review # more cards}}"
-msgstr "{n, plural, one {Повторити ще # картку} few {Повторити ще # картки} many {Повторити ще # карток} other {Повторити ще # картки}}"
 
 msgid "{name} · Lymi"
 msgstr "{name} · Lymi"
@@ -1141,6 +1135,9 @@ msgstr "Підключені застосунки"
 
 msgid "Consistency"
 msgstr "Послідовність"
+
+msgid "Continue"
+msgstr "Продовжити"
 
 msgid "Continue to {appName}"
 msgstr "Продовжити в {appName}"
@@ -2797,6 +2794,9 @@ msgstr "Відкрити картку"
 msgid "Review"
 msgstr "Повторення"
 
+msgid "Review done"
+msgstr "Повторення завершено"
+
 msgid "Review forgotten"
 msgstr "Повторити забуті"
 
@@ -2808,6 +2808,9 @@ msgstr "Повторити часто забувані"
 
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Повторюй у своєму темпі. Нові картки з’являються, щойно їх додають."
+
+msgid "Review progress"
+msgstr "Прогрес повторення"
 
 msgid "Review them"
 msgstr "Повтори їх"
@@ -2844,9 +2847,6 @@ msgstr "Відкликати ключ"
 
 msgid "Round done"
 msgstr "Раунд завершено"
-
-msgid "Round progress"
-msgstr "Прогрес раунду"
 
 msgid "Same as the deck"
 msgstr "Як у колоді"

@@ -21,6 +21,8 @@ export const e2eAccounts = [
   "review-round-below",
   "review-round-crosses",
   "review-deck-out",
+  "review-leave",
+  "review-deck-past",
   "word-detail",
   "deck-page",
   "explore",

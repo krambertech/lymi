@@ -8,7 +8,7 @@ import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckForm } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
 import { StreakButton } from "../components/streak";
-import { reviewEnd, type Stretch, streakWith } from "../lib/review-complete";
+import { type Ending, reviewEnd, type Stretch, streakWith } from "../lib/review-complete";
 import { ActivityView } from "../views/activity-view";
 import { ConnectedView } from "../views/connected-view";
 import { ConsentView } from "../views/consent-view";
@@ -126,19 +126,23 @@ function ConsentDemo({ app }: { app: typeof CLAUDE }) {
 function ReviewEndShot({
   caption,
   initial,
-  stretch = "goal",
+  stretch = "day",
+  ending = "empty",
   from,
   attempts,
   left = 0,
+  elsewhere = 0,
   forgotten = 0,
   deckName,
 }: {
   caption: string;
   initial: "light" | "dark";
   stretch?: Stretch | undefined;
+  ending?: Ending | undefined;
   from: number;
   attempts: number;
   left?: number | undefined;
+  elsewhere?: number | undefined;
   forgotten?: number | undefined;
   deckName?: string | undefined;
 }) {
@@ -148,21 +152,23 @@ function ReviewEndShot({
   const goal = 10;
   const result = reviewEnd({
     stretch,
+    ending,
     goal,
     from,
     attempts,
     satisfiedBefore: from >= goal,
     left,
     confirmed: true,
-    scoped: !!deckName,
+    elsewhere,
     forgotten,
-    otherDecks: deckName ? m.decks.filter((d) => d.name !== deckName) : [],
   });
   const end = result === "unchecked" ? null : result;
   const past = m.history.slice(0, 6);
   const before = m.streakFrom([...past, from]);
   const after = streakWith(before, attempts, !!end?.satisfied);
-  const round = stretch === "goal" ? undefined : { done: attempts - from, size: attempts - from };
+  const toGoal = stretch === "day" && from < goal;
+  const size = attempts - from + left;
+  const round = toGoal ? undefined : { done: attempts - from, size };
   const replay = () => {
     setEnded(false);
     window.setTimeout(() => {
@@ -188,8 +194,8 @@ function ReviewEndShot({
         <div className="relative flex min-h-0 flex-1 flex-col px-4 pb-3">
           <ReviewHeader
             attempts={ended ? attempts : from}
-            goal={goal}
-            round={round && (ended ? round : { ...round, done: round.size - 1 })}
+            goal={toGoal ? Math.min(goal, attempts + left) : goal}
+            round={round && (ended ? round : { ...round, done: round.done - 1 })}
             streak={ended ? after : before}
             complete={ended && !!end}
           />
@@ -198,27 +204,19 @@ function ReviewEndShot({
               key={run}
               end={end}
               attempts={attempts}
-              goal={goal}
               from={from}
-              roundCount={attempts - from}
               scopeName={deckName}
               streak={after}
               streakBefore={before}
-              actions={
-                end.heading === "nothing_due" ? (
-                  <>
-                    <Button variant="primary" size="lg" className="w-full">
-                      Add cards
-                    </Button>
-                    <Button variant="secondary" size="lg" className="w-full">
-                      Done
-                    </Button>
-                  </>
-                ) : (
-                  <Button variant="primary" size="lg" className="w-full">
-                    Done
-                  </Button>
-                )
+              done={(variant) => (
+                <Button variant={variant} size="lg" className="w-full">
+                  Done
+                </Button>
+              )}
+              addCards={
+                <Button variant="primary" size="lg" className="w-full">
+                  Add cards
+                </Button>
               }
             />
           ) : (
@@ -418,25 +416,44 @@ export const SCREENS: Entry[] = [
     slug: "session-done",
     name: "End of session",
     source: "views/review-view.tsx",
-    note: "The lantern leaves the header for the middle and rises to full on the way. The count rolls up by what the review added, today’s light fills and the run ticks; a round that reaches the goal fills the light without the tick, and an end that changes nothing about the day stays quiet. Each way on is a row that says what it holds; Done is the one primary action.",
+    note: "The lantern leaves the header for the middle and rises to full on the way. The count rolls up from where the last end left the day, and embers rise in proportion to what was added; today’s light flares and the run ticks only when the day turns. Each way on is a row that says what it holds; the primary sits last, Continue while the day is open and Done once it is met.",
     Demo: () => (
       <div className="grid gap-10">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-8 @3xl:grid-cols-2">
           <ReviewEndShot
             caption="Daily goal reached"
             initial="dark"
+            ending="goal"
             from={0}
             attempts={10}
             left={12}
             forgotten={3}
           />
           <ReviewEndShot
-            caption="A round reaches the goal"
+            caption="Left below the goal"
             initial="light"
-            stretch="list"
-            from={7}
-            attempts={12}
+            ending="left"
+            from={0}
+            attempts={4}
             left={12}
+          />
+          <ReviewEndShot
+            caption="A deck crosses the goal and runs out"
+            initial="dark"
+            stretch="scope"
+            from={6}
+            attempts={14}
+            elsewhere={12}
+            deckName="Lesson 14"
+          />
+          <ReviewEndShot
+            caption="Nothing left in a deck, below the goal"
+            initial="light"
+            stretch="scope"
+            from={2}
+            attempts={7}
+            elsewhere={12}
+            deckName="Lesson 14"
           />
           <ReviewEndShot
             caption="Round done, below the goal"
@@ -448,21 +465,17 @@ export const SCREENS: Entry[] = [
             forgotten={1}
           />
           <ReviewEndShot
-            caption="Round done, goal already met"
+            caption="The rest of the day, done"
             initial="light"
-            stretch="more"
             from={10}
-            attempts={20}
-            left={8}
+            attempts={16}
           />
           <ReviewEndShot
-            caption="Nothing left in a deck"
+            caption="You’re done for today, below the goal"
             initial="dark"
             from={2}
             attempts={7}
-            deckName="Lesson 14"
           />
-          <ReviewEndShot caption="You’re done for today" initial="light" from={2} attempts={7} />
           <ReviewEndShot caption="Nothing due" initial="light" from={0} attempts={0} />
           <Shot caption="Desktop, review" initial="light">
             {(t) => (

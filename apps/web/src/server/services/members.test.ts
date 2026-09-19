@@ -164,7 +164,8 @@ describe("what the owner changes reaches every member on their next request", ()
     const [outcome] = await addCards(kateryna, [{ deckId: deck.id, term: "kask" }]);
     if (outcome?.status !== "added") throw new Error("not added");
 
-    await nextRequest(anna, new Date(Date.now() + 30 * 86_400_000));
+    const later = new Date(Date.now() + 30 * 86_400_000);
+    await nextRequest(anna, later);
 
     const [state] = await db
       .select({ createdAt: schema.cardStates.createdAt, due: schema.cardStates.due })
@@ -177,7 +178,7 @@ describe("what the owner changes reaches every member on their next request", ()
       .from(schema.cards)
       .where(eq(schema.cards.id, outcome.card.id));
     expect(state?.createdAt).toEqual(card?.createdAt);
-    expect(state?.due).toEqual(card?.createdAt);
+    expect(state?.due).toEqual(later);
   });
 
   it("a member who is caught up matches the deck's version and stays that way", async () => {
@@ -203,6 +204,20 @@ describe("what the owner changes reaches every member on their next request", ()
     const caughtUp = await versions();
     expect(caughtUp?.member).toBe(caughtUp?.deck);
     expect(await dueFor(anna, deck.id)).toBe(2);
+  });
+
+  it("a member behind on many decks catches up on all of them in more than one batch", async () => {
+    const decks = [];
+    for (let i = 0; i < 12; i++) {
+      const { deck } = await sharedDeck(`Kursus ${i}`, [`sõna ${i}`]);
+      await join(marko, deck.id);
+      await addCards(kateryna, [{ deckId: deck.id, term: `uus ${i}` }]);
+      decks.push(deck);
+    }
+
+    await nextRequest(marko);
+
+    for (const deck of decks) expect(await dueFor(marko, deck.id)).toBe(2);
   });
 
   it("a deck direction turned on gives the member the missing states", async () => {

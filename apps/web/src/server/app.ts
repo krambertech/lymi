@@ -186,7 +186,17 @@ app.get(
 );
 
 // A member's states catch up to their decks before anything that reads progress. ADR 0022.
-for (const path of ["decks", "series", "sections", "cards", "review", "stats", "exports"]) {
+for (const path of [
+  "decks",
+  "series",
+  "sections",
+  "cards",
+  "review",
+  "stats",
+  "exports",
+  // A goal change settles today against the queue.
+  "settings",
+]) {
   app.use(`/api/${path}/*`, async (c, next) => {
     await catchUpStates(c.get("db"), c.get("user").id);
     await next();

@@ -624,7 +624,7 @@ export async function writeChunk<Note>(
   }
   if (cardRows.length > 0) {
     const ids = JSON.stringify(cardRows.map((c) => (c as { id: string }).id));
-    // The imported modes have their states; this adds any other mode the deck asks, and every member's.
+    // The imported modes have their states; this adds any other mode the deck asks.
     statements.push(...stateStatementsForCards(db, ids, now, TEXT_MODES));
     for (const part of jsonParts(auditRows)) {
       statements.push(

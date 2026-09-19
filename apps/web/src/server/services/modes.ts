@@ -18,6 +18,7 @@ import {
 import { and, eq, gt, isNull, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { runInBatches } from "./batch";
 import { ServiceError } from "./context";
 
 /** Review modes on the server; the expand-phase storage rules are in docs/data-model.md (ADR 0014). */
@@ -51,7 +52,7 @@ type Statement = Parameters<Db["batch"]>[0][number];
 
 /**
  * Insert every missing asked state, one statement per mode, never replacing an existing one.
- * `added` is when each state counts as added, which the draw's new-card odds read.
+ * `added` is the `created_at` the draw's new-card odds read; the state is due from `now`.
  */
 function stateInserts(
   db: Db,
@@ -61,6 +62,7 @@ function stateInserts(
   keys: readonly ReviewModeKey[] = REVIEW_MODE_KEYS,
   added: SQL = sql`${now.getTime()}`,
 ): Statement[] {
+  const due = now.getTime();
   const fsrs = serializeState(emptyState(now));
   return keys.map((key) => {
     const direction = stateDirection(key);
@@ -68,7 +70,7 @@ function stateInserts(
       .insert(schema.cardStates)
       .select(
         sql`select lower(hex(randomblob(10))), cards.id, learners.user_id, ${direction},
-          ${added}, 0, ${fsrs}, null, ${added}, ${added}, ${key}
+          ${due}, 0, ${fsrs}, null, ${added}, ${due}, ${key}
         from cards join decks on decks.id = cards.deck_id
         join (${learners}) as learners on learners.deck_id = decks.id
         where ${where} and ${sql.raw(askedSql(`'${direction}'`))}`,
@@ -191,11 +193,10 @@ export async function catchUpStates(db: Db, userId: string, now = new Date()): P
         gt(schema.decks.statesVersion, schema.deckMembers.statesVersion),
       ),
     );
-  if (behind.length === 0) return;
-  const [first, ...rest] = behind.flatMap(({ deckId }) =>
-    stateStatementsForLearner(db, deckId, userId, now),
+  await runInBatches(
+    db,
+    behind.map(({ deckId }) => stateStatementsForLearner(db, deckId, userId, now)),
   );
-  if (first) await db.batch([first, ...rest]);
 }
 
 /** A state or review's mode, including rows an older Worker wrote without one. */

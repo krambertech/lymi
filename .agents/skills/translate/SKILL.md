@@ -72,5 +72,5 @@ Add a row when a durable product term appears.
 
 ## Verify and hand off
 
-1. Run `pnpm verify`.
+1. Run `pnpm verify:changed`.
 2. In the pull request or handoff, list uncertain translations and the strongest alternative considered.

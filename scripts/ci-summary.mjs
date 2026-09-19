@@ -115,6 +115,8 @@ export function renderCiSummary(env, shardOutcomes = []) {
     "",
     `**Browser coverage:** ${coverage}`,
     "",
+    `**Component coverage:** ${env.COMPONENT_COVERAGE || "Not selected"}`,
+    "",
     `**Public-site preview:** ${sitePreview}`,
     "",
     `**Product-app preview:** ${appPreview}`,
@@ -142,7 +144,7 @@ export function renderCiSummary(env, shardOutcomes = []) {
     `| Public-site deployment package | ${outcome(env.DEPLOY_SITE_OUTCOME)} |`,
     "",
     ...renderShards(env, shardOutcomes),
-    "A green Chromium pull-request run is not full cross-browser evidence. Chromium + WebKit run on every push to `main` and through `/e2e`.",
+    "A green Chromium pull-request run is not full cross-browser evidence. Chromium + WebKit journeys and every component instance run on every push to `main`; `/e2e` forces the journeys.",
     "",
   ].join("\n");
 }

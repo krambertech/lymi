@@ -15,6 +15,10 @@ pnpm --filter @lymi/web dev --port 5241
 
 If `pnpm db:migrate` fails with "table already exists" or a migration name it has never seen, the local D1 was built from another branch. `pnpm local db:fresh` moves it aside and applies every migration again. Nothing in that directory is production data.
 
+## Run tests while you work
+
+`pnpm test:watch` runs the product's Vitest in watch mode on the `unit` project and the desktop Chromium component instance. A save reruns only the tests that import what changed, and no other browser starts. Before a push, `pnpm verify:changed` adds the static checks; [`docs/testing.md`](testing.md) has what runs at each gate.
+
 ## Become a persona
 
 Open this URL in a browser and you are signed in and on Today:

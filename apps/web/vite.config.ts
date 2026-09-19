@@ -8,18 +8,35 @@ import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults, type TestProjectConfiguration } from "vitest/config";
+import type { BrowserInstanceOption } from "vitest/node";
 import { e2eOperatorEmails, e2ePublisherEmails } from "../../e2e/settings.mjs";
 
 const isE2E = process.env.LYMI_E2E === "1";
 const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";
 // Workers Builds has no Playwright browsers; GitHub CI runs the component tests before merge.
 const isWorkersBuild = process.env.WORKERS_CI === "1";
+// `pnpm verify:changed` and the CI plan name the browser instances a change needs. docs/testing.md.
+const requestedInstances = process.env.LYMI_COMPONENT_INSTANCES
+  ? process.env.LYMI_COMPONENT_INSTANCES.split(",").filter(Boolean)
+  : undefined;
 
 /**
  * Stamped into the persisted query cache. Any rebuild discards a cache written by an older
  * build, so a payload that gained a field can never hydrate into code that reads it.
  */
 const buildId = Date.now().toString(36);
+
+function selectInstances(instances: BrowserInstanceOption[]): BrowserInstanceOption[] {
+  if (!requestedInstances) return instances;
+  const known = instances.flatMap((instance) => (instance.name ? [instance.name] : []));
+  const unknown = requestedInstances.filter((name) => !known.includes(name));
+  if (unknown.length > 0) {
+    throw new Error(`LYMI_COMPONENT_INSTANCES names no component instance: ${unknown.join(", ")}`);
+  }
+  return instances.filter(
+    (instance) => instance.name !== undefined && requestedInstances.includes(instance.name),
+  );
+}
 
 export default defineConfig({
   define: {
@@ -179,7 +196,7 @@ export default defineConfig({
               // A part that is still moving is not clickable, and `forced-states` rewrites the
               // motion queries into `data-motion`, so the specimens still prove both. docs/testing.md.
               provider: playwright({ contextOptions: { reducedMotion: "reduce" } }),
-              instances: [
+              instances: selectInstances([
                 {
                   name: "desktop",
                   browser: "chromium",
@@ -204,7 +221,7 @@ export default defineConfig({
                   }),
                   provide: { machine: "touch" },
                 },
-              ],
+              ]),
             },
           },
         },

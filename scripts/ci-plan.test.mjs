@@ -17,6 +17,39 @@ test("production pull requests run Chromium and a deployment package check", () 
   assert.equal(plan.runSitePreview, false);
 });
 
+test("pull requests run the component tests on desktop Chromium unless they reach the primitives", () => {
+  const screen = createCiPlan({
+    eventName: "pull_request",
+    changedPaths: ["apps/web/src/client/routes/today.tsx"],
+  });
+  assert.equal(screen.componentInstances, "desktop");
+  assert.equal(screen.componentBrowsers, "chromium");
+  assert.equal(screen.componentCoverage, "desktop Chromium");
+
+  const primitive = createCiPlan({
+    eventName: "pull_request",
+    changedPaths: ["apps/web/src/client/components/ui/dialog.tsx"],
+  });
+  assert.equal(primitive.componentInstances, "desktop,touch,touch-webkit");
+  assert.equal(primitive.componentBrowsers, "chromium webkit");
+
+  const docs = createCiPlan({
+    eventName: "pull_request",
+    changedPaths: ["docs/testing.md"],
+  });
+  assert.equal(docs.componentInstances, "desktop");
+});
+
+test("main and manual runs keep every component instance", () => {
+  for (const eventName of ["push", "workflow_dispatch"]) {
+    const plan = createCiPlan({ eventName });
+    assert.equal(plan.componentInstances, "desktop,touch,touch-webkit", eventName);
+    assert.equal(plan.componentBrowsers, "chromium webkit", eventName);
+  }
+  const optedOut = createCiPlan({ eventName: "workflow_dispatch", manualE2E: false });
+  assert.equal(optedOut.componentInstances, "desktop,touch,touch-webkit");
+});
+
 test("public-site pull requests schedule a preview after the base gates", () => {
   const plan = createCiPlan({
     eventName: "pull_request",

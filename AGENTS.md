@@ -17,10 +17,10 @@ Start the product with the `lymi` entry in `.claude/launch.json` (port 5241, or 
 For branch creation, syncing with `main`, commit messages, pull request titles, and merging, follow [`docs/git-workflow.md`](docs/git-workflow.md).
 
 ```bash
-pnpm verify
+pnpm verify:changed
 ```
 
-`pnpm verify` runs formatting and lint checks, the production build, typechecking, and unit tests in that order. The build generates the git-ignored `routeTree.gen.ts` that typechecking needs in a fresh clone. `pnpm fix` writes the Biome fixes. CI runs the same base gate on every pull request ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)), so a failure here is a failure there.
+`pnpm verify:changed` runs formatting, lint, interface-string and migration checks and typechecking on everything, then only the tests affected by the files changed against `origin/main`, with component tests on desktop Chromium. It hands over to `pnpm verify`, the full gate, when the diff touches configuration the tests depend on. `pnpm fix` writes the Biome fixes. CI runs every test on every pull request and every browser on `main` ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)); [`docs/testing.md`](docs/testing.md) has what runs at each gate.
 
 For a production-affecting change, also run `pnpm deploy:check` and the proportional browser gate: `pnpm test:e2e:chromium` normally, or `pnpm test:e2e` when WebKit, mobile, PWA, navigation, caching, focus, touch, sheet, or dialog behavior is at risk. Report each result separately. A passing Chromium run is not full cross-browser evidence.
 

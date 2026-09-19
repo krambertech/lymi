@@ -45,14 +45,16 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ## Common commands
 
 ```bash
-pnpm verify       # canonical base gate: check, i18n:check, build, typecheck, test
+pnpm verify:changed # push gate: static checks, then the tests the change affects
+pnpm verify       # full gate: check, i18n:check, build, typecheck, test
 pnpm check        # Biome lint + format check
 pnpm build        # production build
 pnpm fix          # Biome, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs
 pnpm i18n:check   # fails when a string was added without extracting
 pnpm typecheck    # tsc across the workspace
-pnpm test         # Vitest
+pnpm test         # Vitest, every test on every browser instance
+pnpm test:watch   # Vitest watch mode: unit project and desktop Chromium
 pnpm test:e2e     # Playwright against isolated local Cloudflare bindings
 pnpm test:e2e:chromium # faster Chromium-only browser gate
 pnpm test:e2e:ui  # Playwright's interactive runner

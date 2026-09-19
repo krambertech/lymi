@@ -5,6 +5,12 @@ import { pathToFileURL } from "node:url";
 import { requiresAppPreview } from "./app-preview-impact.mjs";
 import { requiresE2E } from "./e2e-impact.mjs";
 import { requiresSitePreview } from "./site-preview-impact.mjs";
+import {
+  allComponentInstances,
+  componentBrowsers,
+  describeComponentInstances,
+  selectComponentInstances,
+} from "./test-plan.mjs";
 
 // Each shard pays the whole `scripts/e2e-server.mjs` setup, so the wall clock it saves runs out
 // well before the runner minutes it spends. Three is measured, not a law. docs/testing.md.
@@ -16,59 +22,81 @@ function shardedPlan(plan) {
   return { ...plan, shards: e2eShardCount, shardMatrix };
 }
 
+function withComponentInstances(plan, instances) {
+  return {
+    ...plan,
+    componentInstances: instances.join(","),
+    componentBrowsers: componentBrowsers(instances),
+    componentCoverage: describeComponentInstances(instances),
+  };
+}
+
 function fullPlan(reason) {
-  return shardedPlan({
-    runE2E: true,
-    browsers: "chromium webkit",
-    playwrightArgs: "",
-    coverage: "Chromium + WebKit",
-    runDeployCheck: true,
-    runAppPreview: false,
-    runSitePreview: false,
-    reason,
-  });
+  return withComponentInstances(
+    shardedPlan({
+      runE2E: true,
+      browsers: "chromium webkit",
+      playwrightArgs: "",
+      coverage: "Chromium + WebKit",
+      runDeployCheck: true,
+      runAppPreview: false,
+      runSitePreview: false,
+      reason,
+    }),
+    allComponentInstances,
+  );
 }
 
 export function createCiPlan({ eventName, changedPaths = [], manualE2E = true }) {
   if (eventName === "pull_request") {
     const runAppPreview = requiresAppPreview(changedPaths);
     const runSitePreview = requiresSitePreview(changedPaths);
+    const instances = selectComponentInstances(changedPaths);
     if (!requiresE2E(changedPaths)) {
-      return shardedPlan({
+      return withComponentInstances(
+        shardedPlan({
+          runE2E: false,
+          browsers: "",
+          playwrightArgs: "",
+          coverage: "No browser E2E",
+          runDeployCheck: false,
+          runAppPreview,
+          runSitePreview,
+          reason: "This pull request changes no production-affecting paths.",
+        }),
+        instances,
+      );
+    }
+
+    return withComponentInstances(
+      shardedPlan({
+        runE2E: true,
+        browsers: "chromium",
+        playwrightArgs: "--project=chromium",
+        coverage: "Chromium",
+        runDeployCheck: true,
+        runAppPreview,
+        runSitePreview,
+        reason: "This pull request changes production-affecting paths.",
+      }),
+      instances,
+    );
+  }
+
+  if (eventName === "workflow_dispatch" && !manualE2E) {
+    return withComponentInstances(
+      shardedPlan({
         runE2E: false,
         browsers: "",
         playwrightArgs: "",
         coverage: "No browser E2E",
-        runDeployCheck: false,
-        runAppPreview,
-        runSitePreview,
-        reason: "This pull request changes no production-affecting paths.",
-      });
-    }
-
-    return shardedPlan({
-      runE2E: true,
-      browsers: "chromium",
-      playwrightArgs: "--project=chromium",
-      coverage: "Chromium",
-      runDeployCheck: true,
-      runAppPreview,
-      runSitePreview,
-      reason: "This pull request changes production-affecting paths.",
-    });
-  }
-
-  if (eventName === "workflow_dispatch" && !manualE2E) {
-    return shardedPlan({
-      runE2E: false,
-      browsers: "",
-      playwrightArgs: "",
-      coverage: "No browser E2E",
-      runDeployCheck: true,
-      runAppPreview: false,
-      runSitePreview: false,
-      reason: "The manually dispatched run explicitly disabled browser E2E.",
-    });
+        runDeployCheck: true,
+        runAppPreview: false,
+        runSitePreview: false,
+        reason: "The manually dispatched run explicitly disabled browser E2E.",
+      }),
+      allComponentInstances,
+    );
   }
 
   if (eventName === "push") {
@@ -97,6 +125,9 @@ function writeGitHubOutputs(plan) {
     browsers: plan.browsers,
     playwright_args: plan.playwrightArgs,
     coverage: plan.coverage,
+    component_instances: plan.componentInstances,
+    component_browsers: plan.componentBrowsers,
+    component_coverage: plan.componentCoverage,
     run_deploy_check: String(plan.runDeployCheck),
     run_app_preview: String(plan.runAppPreview),
     run_site_preview: String(plan.runSitePreview),
@@ -121,7 +152,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   process.stdout.write(
     `CI plan: ${plan.coverage}${
       plan.runE2E ? ` across ${plan.shards} shards` : ""
-    }; deployment package check ${
+    }; component tests on ${plan.componentCoverage}; deployment package check ${
       plan.runDeployCheck ? "enabled" : "skipped"
     }; app preview ${plan.runAppPreview ? "enabled" : "skipped"}; public-site preview ${
       plan.runSitePreview ? "enabled" : "skipped"

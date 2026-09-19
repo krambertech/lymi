@@ -1,10 +1,11 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { queueItem } from "../design/mock";
+import { queueItem, queueItemPicture } from "../design/mock";
 import type { QueueItem } from "../lib/api";
 import { ReviewCard } from "./review-view";
 
@@ -63,4 +64,38 @@ test("the learner's own text carries no chip and no tags means no list", async (
   expect(card.textContent).not.toContain("by you");
   expect(card.textContent).not.toContain("AI");
   expect(card.querySelectorAll(".rounded-full")).toHaveLength(1);
+});
+
+test("the head names the deck and the section, and the mode only for a picture", async () => {
+  // The picture loads through Query, so the picture card needs a client.
+  await render(
+    <QueryClientProvider client={new QueryClient()}>
+      <I18nProvider i18n={i18n}>
+        <ReviewCard
+          item={item({ language: "it" })}
+          deck={{ name: "Verbi", language: "it" }}
+          section="Lezione 3"
+          revealed={false}
+          onReveal={noop}
+        />
+        <ReviewCard
+          item={{ ...queueItemPicture, card: { ...queueItemPicture.card, language: "et" } }}
+          deck={{ name: "Driving", language: "it" }}
+          revealed={false}
+          onReveal={noop}
+        />
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+
+  const text = page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
+  expect(text).toContain("Verbi");
+  expect(text).toContain("Section");
+  expect(text).toContain("Lezione 3");
+  expect(text).not.toContain("Recognition card");
+  expect(text).not.toMatch(/Recognition(?! card)|Production/);
+
+  const picture = page.getByRole("region", { name: "Picture card" }).element().textContent ?? "";
+  expect(picture).toContain("Picture → meaning");
+  expect(picture).toContain("ET");
 });

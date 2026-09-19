@@ -107,6 +107,10 @@
     {
       "name": "0026_closed_meltdown.sql",
       "sha256": "e1f2480b0555f7df66b06f04232dd00f3d95abcd3b1cf31812f74eda0df0ee64"
+    },
+    {
+      "name": "0027_learner_owns_integration_text.sql",
+      "sha256": "10b2be38a50406eb8a876b1b6145c90e547410f4d70176842f7486eb583f0fd3"
     }
   ]
 }

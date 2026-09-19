@@ -1,11 +1,10 @@
-import type { CardInput } from "@lymi/core";
 import { Client } from "@modelcontextprotocol/client";
 import { InMemoryTransport } from "@modelcontextprotocol/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Db } from "../db";
 import type { CardView, getDeck } from "../services";
 import { ServiceError } from "../services/context";
-import { buildMcpServer, type McpPrincipal, withAiSourceDefaults } from "./server";
+import { buildMcpServer, type McpPrincipal } from "./server";
 
 vi.mock("../services", async () => {
   const context = await import("../services/context");
@@ -331,11 +330,12 @@ describe("Lymi MCP server", () => {
       term: "Sbrigarsi",
       existing: { id: "card-1", deckName: "Italian" },
     });
-    // The first meaning was the assistant's own; the second said it came from the lesson.
+    // The first meaning was the assistant's own and lands as the learner's; the second said it
+    // came from the lesson. Neither is "ai": that badge is Lymi's own enrichment.
     expect(services.addCards).toHaveBeenCalledWith(
       expect.anything(),
       [
-        { deckId: "deck-1", term: "sbrigarsi", meaning: "to hurry up", meaningSource: "ai" },
+        { deckId: "deck-1", term: "sbrigarsi", meaning: "to hurry up" },
         { deckId: "deck-1", term: "Sbrigarsi", meaning: "hurry", meaningSource: "lesson" },
       ],
       undefined,
@@ -566,7 +566,7 @@ describe("Lymi MCP server", () => {
     expect(res.structuredContent).toMatchObject({ period: 90, recall: { rate: null } });
   });
 
-  it("labels an edited meaning or example as ai, and refuses manual from an assistant", async () => {
+  it("passes an edit through without inventing a source, and refuses ai from an assistant", async () => {
     services.updateCard.mockResolvedValue({ ...card, meaning: "to rush" });
     const client = await connect("write");
 
@@ -582,16 +582,15 @@ describe("Lymi MCP server", () => {
     expect(edit.isError).toBeFalsy();
     expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", {
       meaning: "to rush",
-      meaningSource: "ai",
       example: "Sbrigati!",
       exampleSource: "lesson",
     });
 
     for (const [name, args] of [
-      ["update_card", { cardId: "card-1", meaning: "x", meaningSource: "manual" }],
+      ["update_card", { cardId: "card-1", meaning: "x", meaningSource: "ai" }],
       [
         "add_cards",
-        { cards: [{ deckId: "deck-1", term: "t", example: "e", exampleSource: "manual" }] },
+        { cards: [{ deckId: "deck-1", term: "t", example: "e", exampleSource: "ai" }] },
       ],
     ] as const) {
       const res = await client.callTool({ name, arguments: args });
@@ -754,35 +753,5 @@ describe("Lymi MCP server", () => {
 
     expect(res.isError).toBe(true);
     expect(services.addCards).not.toHaveBeenCalled();
-  });
-});
-
-describe("withAiSourceDefaults", () => {
-  it("labels text the assistant wrote as ai, and leaves a stated source alone", () => {
-    expect(
-      withAiSourceDefaults<CardInput>({ deckId: "d", term: "t", meaning: "m", example: "e" }),
-    ).toEqual({
-      deckId: "d",
-      term: "t",
-      meaning: "m",
-      example: "e",
-      meaningSource: "ai",
-      exampleSource: "ai",
-    });
-    expect(
-      withAiSourceDefaults<CardInput>({
-        deckId: "d",
-        term: "t",
-        meaning: "m",
-        meaningSource: "lesson",
-      }),
-    ).toEqual({ deckId: "d", term: "t", meaning: "m", meaningSource: "lesson" });
-  });
-
-  it("does not invent a source for a field that is not there", () => {
-    expect(withAiSourceDefaults<CardInput>({ deckId: "d", term: "t" })).toEqual({
-      deckId: "d",
-      term: "t",
-    });
   });
 });

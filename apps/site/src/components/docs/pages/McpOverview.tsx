@@ -181,10 +181,10 @@ export function McpOverview() {
       />
       <p>
         The assistant does the extraction. It reads the lesson you share, decides which terms are
-        worth a card and sends them in one batch. A meaning, example or pronunciation it wrote
-        itself is labelled <code>ai</code> on the card, so you can always tell its text from the
-        lesson’s. Lymi then fills whatever is still empty — meaning, example, pronunciation and
-        language — and labels that text <code>ai</code> too. Nothing already on a card is
+        worth a card and sends them in one batch. It says which fields it took from the lesson;
+        anything it composed itself is recorded as yours, and Activity shows the app that sent it.
+        Lymi then fills whatever is still empty — meaning, example, pronunciation and language — and
+        that text alone is labelled <code>ai</code> on the card. Nothing already on a card is
         overwritten.
       </p>
       <p>

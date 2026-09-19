@@ -12,6 +12,17 @@ export type Rating = z.infer<typeof Rating>;
 export const FieldSource = z.enum(["lesson", "ai", "manual"]);
 export type FieldSource = z.infer<typeof FieldSource>;
 
+/**
+ * What a caller may say about a field it sends. "ai" is Lymi's own enrichment and nothing else,
+ * so the AI badge only ever marks text the app filled in; what an integration writes is the
+ * learner's, whoever composed it, and Activity names the app that sent it.
+ */
+export const StatedFieldSource = FieldSource.exclude(["ai"]).meta({
+  description:
+    '"lesson" when the text is in the material, "manual" otherwise. Left out, text is recorded as "manual". Only Lymi\'s own enrichment writes "ai".',
+});
+export type StatedFieldSource = z.infer<typeof StatedFieldSource>;
+
 /** Where a card's enrichment stands. Null once nothing is outstanding. */
 export const EnrichmentStatus = z.enum(["working", "failed"]);
 export type EnrichmentStatus = z.infer<typeof EnrichmentStatus>;
@@ -460,9 +471,9 @@ export const CardInput = z.object({
   reviewModes: ReviewModes.nullable()
     .optional()
     .meta({ description: "Overrides the deck's review modes. Null follows the deck." }),
-  meaningSource: FieldSource.optional(),
-  exampleSource: FieldSource.optional(),
-  pronunciationSource: FieldSource.optional(),
+  meaningSource: StatedFieldSource.optional(),
+  exampleSource: StatedFieldSource.optional(),
+  pronunciationSource: StatedFieldSource.optional(),
   sectionId: z.string().min(1).nullable().optional().meta({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",

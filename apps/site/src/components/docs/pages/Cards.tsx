@@ -24,17 +24,17 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   {
     name: "meaningSource",
     type: '"lesson" | "ai" | "manual"',
-    note: "Who wrote the meaning. Set ai when a model did.",
+    note: "Where the meaning came from. Send lesson or manual; ai is Lymi's own enrichment.",
   },
   {
     name: "exampleSource",
     type: '"lesson" | "ai" | "manual"',
-    note: "Who wrote the example.",
+    note: "Where the example came from.",
   },
   {
     name: "pronunciationSource",
     type: '"lesson" | "ai" | "manual"',
-    note: "Who wrote the pronunciation.",
+    note: "Where the pronunciation came from.",
   },
   {
     name: "enrichmentStatus",
@@ -96,13 +96,13 @@ export function Cards() {
         </tbody>
       </Table>
 
-      <Note title="Say when a model wrote it">
-        If you generate a meaning, example or pronunciation with an AI, set the matching{" "}
-        <code>meaningSource</code>, <code>exampleSource</code> or <code>pronunciationSource</code>{" "}
-        to <code>"ai"</code>. Those fields carry a small AI badge wherever they appear, so
-        machine-written text is never mistaken for the lesson. Nothing else is marked: a field from
-        the lesson or typed by hand carries no badge. Send a meaning with no source and it is
-        recorded as <code>manual</code>.
+      <Note title="Say when the lesson wrote it">
+        Set <code>meaningSource</code>, <code>exampleSource</code> or{" "}
+        <code>pronunciationSource</code> to <code>"lesson"</code> when the text is in the learner's
+        material. Anything else you send, including text a model generated for you, is recorded as{" "}
+        <code>manual</code>: it is the learner's card, and Activity names the app that wrote it.{" "}
+        <code>"ai"</code> is refused; it marks only what Lymi's own enrichment fills in, and that is
+        the one source that carries the AI badge.
       </Note>
 
       <H2>Lymi fills what you leave empty</H2>

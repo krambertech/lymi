@@ -191,8 +191,6 @@ async function library(ctx: ServiceContext) {
       meaning: "the cat",
       pronunciation: "il ˈɡat.to",
       example: "Il gatto dorme.",
-      exampleSource: "ai",
-      pronunciationSource: "ai",
       notes: "Masculine.\nPlural: i gatti",
       tags: ["animals", "lesson one"],
       source: "Lesson 14",
@@ -227,6 +225,11 @@ async function library(ctx: ServiceContext) {
     (typeof cards)[0],
     (typeof cards)[0],
   ];
+  // Only the app's own enrichment writes "ai", so stand in for it to see the badge round-trip.
+  await ctx.db
+    .update(schema.cards)
+    .set({ exampleSource: "ai", pronunciationSource: "ai" })
+    .where(eq(schema.cards.id, gatto.id));
   const pictures = { bucket: env.PRIVATE_IMAGES, images: env.IMAGES };
   await uploadCardImage(
     ctx,

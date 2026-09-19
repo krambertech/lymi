@@ -93,7 +93,7 @@ const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each 
 
 Start with list_decks. It names the decks, their languages and the language meanings are written in.
 
-When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material, "ai" when you wrote it. If a field is missing, leave it out rather than guessing; the learner can fill it in later.
+When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later.
 
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
 
@@ -230,10 +230,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Add cards",
       description:
-        'Add one or many cards, across any decks, in one call. A term already in the learner\'s decks is skipped, never rejected, and the result names the existing card. Fields you wrote yourself are labelled "ai" unless you say they came from the lesson, so the learner never mistakes your text for the material. Needs write.',
+        'Add one or many cards, across any decks, in one call. A term already in the learner\'s decks is skipped, never rejected, and the result names the existing card. Say meaningSource "lesson" when the meaning is in the material, so the learner can tell it from text you composed. Needs write.',
       inputSchema: z.object({
         cards: z
-          .array(McpCardInput)
+          .array(CardInput)
           .min(1)
           .max(200)
           .describe("Up to 200 cards. Outcomes come back in the same order."),
@@ -244,7 +244,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     ({ cards }) =>
       run("add_cards", async () => {
         denyReads(principal);
-        const outcomes = await addCards(ctx, cards.map(withAiSourceDefaults), principal.enrichment);
+        const outcomes = await addCards(ctx, cards, principal.enrichment);
         return result({
           added: outcomes.filter((o) => o.status === "added").length,
           skipped: outcomes.filter((o) => o.status === "skipped").length,
@@ -266,15 +266,15 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Edit a card",
       description:
-        'Change fields on one card. Send only what changes; a field left out keeps its text. A meaning or example you change is labelled "ai" unless you say it came from the lesson. Setting deckId moves the card. Needs write.',
-      inputSchema: z.object({ cardId: z.string().min(1) }).extend(McpCardPatch.shape),
+        "Change fields on one card. Send only what changes; a field left out keeps its text. A meaning or example you change becomes the learner's unless you say it came from the lesson. Setting deckId moves the card. Needs write.",
+      inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardPatch.shape),
       outputSchema: CardOut,
       ...writeTool({ idempotent: false, overwrites: true }),
     },
     ({ cardId, ...patch }) =>
       run("update_card", async () => {
         denyReads(principal);
-        return result(cardOut(await updateCard(ctx, cardId, withAiSourceDefaults(patch))));
+        return result(cardOut(await updateCard(ctx, cardId, patch)));
       }),
   );
 
@@ -846,38 +846,6 @@ function imagesOf(principal: McpPrincipal): CardImageStorage {
   return principal.images;
 }
 
-/** What a field's text can come from over MCP. "manual" is the learner's own hand, never a model's. */
-const McpFieldSource = z.enum(["lesson", "ai"]);
-
-type SourcedFields = {
-  meaning?: string | undefined;
-  meaningSource?: FieldSource | undefined;
-  example?: string | undefined;
-  exampleSource?: FieldSource | undefined;
-  pronunciation?: string | undefined;
-  pronunciationSource?: FieldSource | undefined;
-};
-
-/**
- * Over MCP the caller is an assistant, so a meaning or example it sends without saying
- * where it came from is its own text. Labelled "ai" so the app never shows it as the lesson's.
- * Applies to an add and to an edit alike: changing the text changes where it came from.
- */
-export function withAiSourceDefaults<T extends SourcedFields>(input: T): T {
-  return {
-    ...input,
-    ...(input.meaning !== undefined && input.meaningSource === undefined
-      ? { meaningSource: "ai" as const }
-      : {}),
-    ...(input.example !== undefined && input.exampleSource === undefined
-      ? { exampleSource: "ai" as const }
-      : {}),
-    ...(input.pronunciation !== undefined && input.pronunciationSource === undefined
-      ? { pronunciationSource: "ai" as const }
-      : {}),
-  };
-}
-
 /** A ServiceError speaks to the assistant; any other error may carry SQL and learner data. */
 async function runTool(
   tool: string,
@@ -925,21 +893,6 @@ function failure(message: string): CallToolResult {
 // Output carries the learner's text and the ids a follow-up call needs, not bookkeeping.
 
 const Timestamp = z.iso.datetime();
-
-const sourceFields = {
-  meaningSource: McpFieldSource.optional().describe(
-    '"lesson" when the meaning is in the material, "ai" when you wrote it. Defaults to "ai".',
-  ),
-  exampleSource: McpFieldSource.optional().describe(
-    '"lesson" when the example is in the material, "ai" when you wrote it. Defaults to "ai".',
-  ),
-  pronunciationSource: McpFieldSource.optional().describe(
-    '"lesson" when the pronunciation is in the material, "ai" when you wrote it. Defaults to "ai".',
-  ),
-};
-
-const McpCardInput = CardInput.extend(sourceFields);
-const McpCardPatch = CardPatch.extend(sourceFields);
 
 const CardOut = z.object({
   id: z.string(),

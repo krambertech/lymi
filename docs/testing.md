@@ -49,7 +49,7 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 | --- | --- | --- | --- | --- |
 | Biome, interface strings, migration safety, TypeScript | — | all | all | all |
 | Production build and deployment boundaries | — | on handover | yes | yes |
-| Unit and service tests | changed graph | changed graph | all | all |
+| Unit, service and route tests | changed graph | changed graph | all | all |
 | Component tests, desktop Chromium | changed graph | changed graph | all | all |
 | Component tests, touch Chromium and WebKit | — | — | when the diff reaches the primitives | all |
 | Journeys | — | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
@@ -71,6 +71,7 @@ Write a test at the cheapest layer that can observe the behaviour.
 | --- | --- | --- |
 | Unit | Is it a pure function of its inputs? FSRS, the draw, a formatter, the CI plan. | Node, milliseconds a file |
 | Service | Does it persist, authorize or audit? | Node on the shared local D1, about 20 ms a test |
+| Route | Is it the HTTP contract: what a route accepts and refuses, who may call it, what it answers? | Node through the Worker's fetch handler, well under a second a test |
 | Component | Does it depend on focus, pointer, layout or device shape? | A real browser, desktop and touch from one file |
 | Journey | Does it cross screens, origins, the service worker or offline? | Playwright against the full stack, about 10 s a test |
 
@@ -147,6 +148,14 @@ Committed migrations are immutable production history. `pnpm db:generate` create
 
 Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. A successful build page without these active-version checks is not deployment evidence.
 
+## Route tests through the Worker's fetch handler
+
+`apps/web/src/server/test-app.ts` drives the product app in Node on the shared local D1, through the same fetch handler Workers calls: origin routing, preview access, authentication, validation and each route's own guards run as they do in production, with no browser and no Vite server. `testApp()` hands back the bindings, `fetch(path, { as })` for a request as a signed-in learner, and `signUp(handle)` for a confirmed `@lymi.local` account. `operators` names the addresses `OPERATOR_EMAILS` grants. Work a route defers with `waitUntil` finishes before `fetch` returns, so an audit row is there to read.
+
+A route test proves the contract: the status and body for a signed-out caller, a learner, an operator and a learner on another learner's row, and a response parsed with its Zod schema from `packages/core/src/types.ts` rather than restated. A business rule belongs in the service test beneath it and a screen in a journey above it. `app.test.ts` owns the product origin's route and indexing boundary and `routes/email.test.ts` the operator test email; both moved down from journeys and are the pattern for the next endpoint.
+
+The app lives in `app.ts` and the Worker entry in `index.ts`, because the entry re-exports the Workflows and `cloudflare:workers` exists only in the Worker runtime.
+
 ## MCP sign-in on the local server
 
 The OAuth flow cannot be driven by a real MCP client against `localhost`: clients identify themselves with a Client ID Metadata Document, and `cimd-fetch.ts` only accepts one on a public HTTPS host. A pre-registered native client in the local D1 stands in for it. The rows live only in `.wrangler/state`, so nothing in the repo changes.
@@ -194,4 +203,4 @@ Keep this path real. Use accessible roles and labels, do not mock Lymi's own API
 
 `e2e/public-deck-page.spec.ts` owns a published deck's public page, read from the site's fixture decks: the page carries its cache headers, its content ETag and a 304, title, canonical and alternate links, JSON-LD, sitemap entry and every card in its HTML, and none of the fixture's private fields; a visitor sees the publisher, reads the sections in order, opens every card in the view that `#cards` also opens and Back closes, turns each card of the hand once to the lantern's ending, and without JavaScript still gets the deck, its sections and a dealt hand; the Ukrainian page carries its own chrome, an unknown deck or locale is 404, and a withdrawn or archived deck is 410 and absent from the sitemap. The site and product keep separate local D1 state, because two local runtimes sharing one crash on `SQLITE_BUSY` ([workers-sdk#14916](https://github.com/cloudflare/workers-sdk/issues/14916)); publishing through the product is covered by `published-deck-add.spec.ts` and the service tests.
 
-`e2e/origin-boundary.spec.ts` proves that each local Worker exposes only its own routes, metadata and beta boundary, and documents the one-time stale-site-data recovery. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.
+`e2e/origin-boundary.spec.ts` proves that the site has no install contract while the product keeps its PWA, that the site exposes only its own indexing and keeps product APIs off its origin, and documents the one-time stale-site-data recovery; the product origin's own boundary is `app.test.ts`. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.

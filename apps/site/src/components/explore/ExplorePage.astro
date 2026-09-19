@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { jsonForScript } from "../../lib/deck-page";
 import { explorePaths, explorePath } from "../../lib/explore";
 import { pageI18n } from "../../lib/i18n";
 import type { ExplorePage } from "../../lib/public-catalog";
+import { exploreStructuredData } from "../../lib/structured-data";
 import ExploreCatalog from "../islands/ExploreCatalog";
 import PublicNav from "../islands/PublicNav";
 import { ExploreEmpty, ExploreFooter, ExploreHeading } from "./ExploreView";
@@ -16,14 +18,17 @@ const { page } = Astro.props;
 const { locale, decks } = page;
 const i18n = pageI18n(locale);
 const paths = explorePaths();
+const title = exploreTitle(i18n);
+const description = exploreDescription(i18n);
 ---
 
-<BaseLayout
-  title={exploreTitle(i18n)}
-  description={exploreDescription(i18n)}
-  canonicalPath={explorePath(locale)}
-  alternatePaths={paths}
->
+<BaseLayout title={title} description={description} canonicalPath={explorePath(locale)} alternatePaths={paths}>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={jsonForScript(exploreStructuredData(decks, locale, { name: title, description }))}
+  />
   <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
     <header class="explore-hero over-tint">
       <PublicNav client:load locale={locale} />

@@ -32,13 +32,29 @@ test("anyone can read a published deck's page, see its sections and cards, and t
         `<link rel="alternate" hreflang="${lang}" href="https://lymi.app${path}">`,
       );
     }
-    const jsonLd = html.match(/<script type="application\/ld\+json">(.*?)<\/script>/)?.[1];
-    expect(JSON.parse(jsonLd ?? "{}")).toMatchObject({
+    const jsonLd = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(
+      (match) => JSON.parse(match[1] ?? "{}"),
+    );
+    expect(jsonLd[0]).toMatchObject({
       "@type": "LearningResource",
       name: "Evening Estonian",
       educationalLevel: { name: "A1" },
       teaches: "Estonian vocabulary",
     });
+    expect(jsonLd[1]).toMatchObject({
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { position: 1, name: "Explore", item: "https://lymi.app/explore" },
+        { position: 2, name: "Evening Estonian", item: `https://lymi.app${pagePath}` },
+      ],
+    });
+    // The deck's own preview, rendered beside the page.
+    expect(html).toContain(
+      `<meta property="og:image" content="https://lymi.app${pagePath}/share.png">`,
+    );
+    expect(html).toContain(
+      '<meta property="og:image:alt" content="Evening Estonian on Lymi: Estonian · A1 · 5 cards">',
+    );
     // Folded away on the page, but in the HTML for search.
     for (const text of ["head ööd", "good night", "üks kohv, palun", "one coffee, please"]) {
       expect(html).toContain(text);
@@ -50,6 +66,31 @@ test("anyone can read a published deck's page, see its sections and cards, and t
       headers: { "if-none-match": response.headers().etag ?? "" },
     });
     expect(again.status()).toBe(304);
+  });
+
+  await test.step("the preview image is a PNG with the page's cache rules, and none for an unknown deck", async () => {
+    const image = await request.get(`${publicSite}${pagePath}/share.png`);
+    expect(image.status()).toBe(200);
+    expect(image.headers()["content-type"]).toBe("image/png");
+    expect(image.headers()["cache-control"]).toBe("public, max-age=300");
+    expect(image.headers().etag).toMatch(/share-evening-estonian-[a-z0-9]+-en-/);
+    const png = await image.body();
+    expect(png.subarray(0, 8)).toEqual(
+      Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    );
+    // Width and height live in the IHDR chunk.
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+    const again = await request.get(`${publicSite}${pagePath}/share.png`, {
+      headers: { "if-none-match": image.headers().etag ?? "" },
+    });
+    expect(again.status()).toBe(304);
+    expect((await request.get(`${publicSite}/uk${pagePath}/share.png`)).status()).toBe(200);
+    expect((await request.get(`${publicSite}/explore/never-published/share.png`)).status()).toBe(
+      404,
+    );
+    expect((await request.get(`${publicSite}/explore/withdrawn-estonian/share.png`)).status()).toBe(
+      410,
+    );
   });
 
   await test.step("a visitor sees who made the deck and the way to add it", async () => {
@@ -153,6 +194,8 @@ test("anyone can read a published deck's page, see its sections and cards, and t
 
     const sitemap = await (await request.get(`${publicSite}/sitemap-decks.xml`)).text();
     expect(sitemap).toContain(`<loc>https://lymi.app/uk${pagePath}</loc>`);
+    expect(sitemap).toContain("<loc>https://lymi.app/explore</loc>");
+    expect(sitemap).toContain('hreflang="uk" href="https://lymi.app/uk/explore"');
     expect(sitemap).not.toContain("withdrawn-estonian");
     expect(sitemap).not.toContain("archived-estonian");
   });

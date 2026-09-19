@@ -11,10 +11,12 @@ interface Props {
   localizedPage?: LocalizedPage | undefined;
   /** The same page in each locale, for a page rendered per request rather than a fixed route. */
   alternatePaths?: Record<Locale, string> | undefined;
+  /** A page's own preview image, in place of the site's. */
+  shareImagePath?: string | undefined;
   shareImageAlt?: string | undefined;
 }
 
-const { title, description, canonicalPath, localizedPage, alternatePaths, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
+const { title, description, canonicalPath, localizedPage, alternatePaths, shareImagePath, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
 const alternates: Record<Locale, string> | undefined =
   alternatePaths ??
   (localizedPage && {
@@ -24,8 +26,8 @@ const alternates: Record<Locale, string> | undefined =
   });
 const site = Astro.site ?? "https://lymi.app";
 const canonical = new URL(canonicalPath, site).toString();
-// Rendered by scripts/icons.sh from the brand geometry.
-const shareImage = new URL("/share.png", site).toString();
+// The site's image is rendered by scripts/icons.sh from the brand geometry.
+const shareImage = new URL(shareImagePath ?? "/share.png", site).toString();
 const locale = Astro.currentLocale ?? "en";
 ---
 

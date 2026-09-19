@@ -104,6 +104,9 @@ msgstr "{name} · {language} vocabulary, level {level} · Lymi"
 msgid "{name} · Flashcards · Lymi"
 msgstr "{name} · Flashcards · Lymi"
 
+msgid "{name} on Lymi: {facts}"
+msgstr "{name} on Lymi: {facts}"
+
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 

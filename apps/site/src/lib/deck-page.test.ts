@@ -4,7 +4,6 @@ import {
   deckContentHash,
   deckEtag,
   deckPaths,
-  deckSitemap,
   deckStructuredData,
   etagMatches,
   jsonForScript,
@@ -229,18 +228,6 @@ describe("deckStructuredData", () => {
     expect(jsonForScript({ name: "</script><script>alert(1)</script>" })).not.toContain(
       "</script>",
     );
-  });
-});
-
-describe("deckSitemap", () => {
-  it("lists every locale of each deck with its alternates", () => {
-    const xml = deckSitemap([{ slug: "everyday-estonian", updatedAt: new Date(0) }]);
-    for (const path of Object.values(deckPaths("everyday-estonian"))) {
-      expect(xml).toContain(`<loc>https://lymi.app${path}</loc>`);
-    }
-    expect(xml.match(/<url>/g)).toHaveLength(3);
-    expect(xml).toContain('hreflang="x-default" href="https://lymi.app/explore/everyday-estonian"');
-    expect(deckSitemap([])).toContain("<urlset");
   });
 });
 

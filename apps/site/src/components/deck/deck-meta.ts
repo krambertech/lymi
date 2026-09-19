@@ -39,3 +39,21 @@ export const UNAVAILABLE_TITLE = msg`This deck is no longer published · Lymi`;
 export const UNAVAILABLE_BLURB = msg`Its publisher took it off Lymi’s public pages.`;
 export const MISSING_TITLE = msg`No deck at this address · Lymi`;
 export const MISSING_BLURB = msg`The link may have a typo, or this deck was never published.`;
+
+/** What the deck's link preview says, in the page language: its name, its facts and who made it. */
+export function deckShareText(
+  i18n: I18n,
+  deck: PublicDeckOut,
+): { name: string; facts: string; byline: string; alt: string } {
+  const name = deck.name;
+  const publisher = deck.publisher;
+  const language = languageName(deck.language, i18n.locale, { label: true });
+  const cards = i18n._(msg`${plural(deck.cardCount, { one: "# card", other: "# cards" })}`);
+  const facts = [language, deck.level, cards].filter(Boolean).join(" · ");
+  return {
+    name,
+    facts,
+    byline: i18n._(msg`By ${publisher}`),
+    alt: i18n._(msg`${name} on Lymi: ${facts}`),
+  };
+}

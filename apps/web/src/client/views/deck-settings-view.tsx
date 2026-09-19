@@ -1,6 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Directions, SectionProgression } from "@lymi/core";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -25,6 +24,7 @@ import {
   LanguageField,
   languageName,
 } from "../components/deck-fields";
+import { Screen } from "../components/layout/screen";
 import { TurnOffLinkDialog } from "../components/member-dialogs";
 import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
@@ -42,7 +42,6 @@ import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Textarea } from "../components/ui/textarea";
 import type { DeckSummary, Invitation, Member } from "../lib/api";
-import { BackButton, Page, PageHeader, type StaticNav, TopBar } from "./shell";
 
 /** What the screen can change. The same shape the deck endpoint takes. */
 export interface DeckSettingsPatch {
@@ -71,7 +70,6 @@ export interface DeckSettingsProps {
   members?: MembersProps | undefined;
   /** The owner's join-link controls. Absent for a member, who cannot share the deck. */
   sharing?: SharingProps | undefined;
-  static?: StaticNav;
 }
 
 export interface MembersProps {
@@ -119,7 +117,6 @@ export function DeckSettingsView({
   sections,
   sharing,
   members,
-  static: st,
 }: DeckSettingsProps) {
   const { t } = useLingui();
   const reading = !!deck && deck.role !== "owner";
@@ -171,43 +168,33 @@ export function DeckSettingsView({
   );
 
   return (
-    <Page width="md">
-      <TopBar
-        nested
-        back={
-          <BackButton label={deck?.name ?? t`Deck`}>
-            {(className, content) =>
-              st || !deck ? (
-                <span className={className}>{content}</span>
-              ) : (
-                <Link to="/library/$deckId" params={{ deckId: deck.id }} className={className}>
-                  {content}
-                </Link>
-              )
-            }
-          </BackButton>
-        }
-      />
-      <PageHeader
-        title={reading ? t`About this deck` : t`Deck settings`}
-        actions={
-          reading ? undefined : (
-            <p className="min-h-5 text-sm text-muted" role="status">
-              {error ? (
-                <span className="text-danger">{error}</span>
-              ) : saving ? (
-                t`Saving…`
-              ) : saved ? (
-                <span className="enter-fade inline-flex items-center gap-1.5">
-                  <Check className="size-4" aria-hidden="true" />
-                  <Trans>Saved</Trans>
-                </span>
-              ) : null}
-            </p>
-          )
-        }
-      />
-
+    <Screen
+      title={reading ? t`About this deck` : t`Deck settings`}
+      width="md"
+      backOnDesktop
+      back={
+        deck
+          ? { label: deck.name, to: "/library/$deckId", params: { deckId: deck.id } }
+          : // Inert until the deck is known, so an early tap never lands on the wrong screen.
+            { label: t`Deck` }
+      }
+      status={
+        reading ? undefined : (
+          <p className="min-h-5 text-sm text-muted" role="status">
+            {error ? (
+              <span className="text-danger">{error}</span>
+            ) : saving ? (
+              t`Saving…`
+            ) : saved ? (
+              <span className="enter-fade inline-flex items-center gap-1.5">
+                <Check className="size-4" aria-hidden="true" />
+                <Trans>Saved</Trans>
+              </span>
+            ) : null}
+          </p>
+        )
+      }
+    >
       {!deck && (
         <div className="grid gap-3 pt-2">
           <Skeleton className="h-10" />
@@ -294,7 +281,7 @@ export function DeckSettingsView({
           </SettingsGroup>
         </>
       )}
-    </Page>
+    </Screen>
   );
 }
 

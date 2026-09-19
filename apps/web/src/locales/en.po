@@ -2031,6 +2031,9 @@ msgstr "Lets a script read or add to your decks."
 msgid "Library"
 msgstr "Library"
 
+msgid "Library options"
+msgstr "Library options"
+
 msgid "Light"
 msgstr "Light"
 
@@ -3134,6 +3137,9 @@ msgstr "Stop selecting"
 
 msgid "Stopped"
 msgstr "Stopped"
+
+msgid "Streak"
+msgstr "Streak"
 
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"

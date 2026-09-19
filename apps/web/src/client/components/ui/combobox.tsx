@@ -460,7 +460,7 @@ function ComboboxItem({ value, disabled, className, children }: ItemProps) {
       value={value}
       disabled={disabled}
       className={cn(
-        "relative flex h-11 w-full cursor-default items-center gap-2 rounded-sm px-2.5 text-start text-[1rem] text-text-2 outline-none select-none md:h-10 md:text-base data-selected:text-text data-highlighted:bg-hover data-highlighted:text-text data-disabled:opacity-45 [[data-hovering]_&]:data-highlighted:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "relative flex h-11 w-full cursor-default items-center gap-2.5 rounded-sm px-2.5 text-start text-[1rem] text-text outline-none select-none md:h-10 md:text-base data-highlighted:bg-hover data-highlighted:text-text data-disabled:opacity-45 [[data-hovering]_&]:data-highlighted:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0",
         // Pressed feedback for a row under a finger, where there is no hover.
         shape === "touch" && "active:bg-hover",
         className,

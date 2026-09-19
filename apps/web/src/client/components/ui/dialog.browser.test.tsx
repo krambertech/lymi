@@ -124,7 +124,7 @@ describe("Dialog", () => {
   test(
     desktop
       ? "as a place, is still a centred dialog, named by its own heading"
-      : "as a place, rises over the whole screen, named by its own heading",
+      : "as a place, arrives from the end edge over the whole screen, named by its own heading",
     async () => {
       await render(
         <Dialog kind="place" defaultOpen>
@@ -141,9 +141,9 @@ describe("Dialog", () => {
         expect(popup.getBoundingClientRect().width).toBeCloseTo(400, 0);
       } else {
         expect(popup.dataset.slot).toBe("drawer-popup");
-        expect(popup.dataset.swipeDirection).toBe("down");
+        expect(popup.dataset.swipeDirection).toBe("right");
         await expect
-          .poll(() => popup.getBoundingClientRect().top, { timeout: 5000 })
+          .poll(() => popup.getBoundingClientRect().left, { timeout: 5000 })
           .toBeCloseTo(0, 0);
         const box = popup.getBoundingClientRect();
         expect(box.width).toBeCloseTo(window.innerWidth, 0);

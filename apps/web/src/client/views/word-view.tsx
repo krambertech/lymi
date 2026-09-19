@@ -25,7 +25,6 @@ import {
   Plus,
   Sparkle,
   Volume2,
-  X,
 } from "lucide-react";
 import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
 import { IconButton } from "../components/button";
@@ -34,6 +33,7 @@ import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { GRADES, GradeMark, Mark } from "../components/grade";
+import { PlaceBar } from "../components/layout/place-bar";
 import { ReviewTimeline } from "../components/review-timeline";
 import { Skeleton } from "../components/skeleton";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
@@ -528,20 +528,12 @@ export function WordView({
           </DropdownMenuContent>
         </DropdownMenu>
       )}
-      {onClose && (
-        <IconButton label={t`Close`} size={size} onClick={onClose}>
-          <X />
-        </IconButton>
-      )}
     </>
   );
 
   return (
     <article className="@container flex min-w-0 flex-col gap-6">
-      <div className="flex min-h-10 items-center justify-between gap-2">
-        <span className="truncate text-sm text-muted">{deckName}</span>
-        <div className="flex items-center gap-1">{controls}</div>
-      </div>
+      <PlaceBar label={deckName} actions={controls} onClose={onClose} />
 
       <header className="grid gap-1.5">
         <h1

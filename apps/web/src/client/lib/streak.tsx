@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -9,6 +10,7 @@ import {
   type StreakSummary,
 } from "../components/streak";
 import { api, type Settings } from "./api";
+import { useScreenName } from "./document-title";
 import { settingsQuery, streakQuery } from "./queries";
 
 type GoalStatus = StreakPanelProps["goalStatus"];
@@ -152,10 +154,14 @@ export function StreakPlace() {
   const streak = useQuery(streakQuery);
   const goal = useDailyGoal();
   const [open, setOpen] = useStreakOpen();
+  const { t } = useLingui();
+  // Back names the screen under the streak, whichever screen opened it; until that screen has a name it says Back.
+  const under = useScreenName();
   if (!streak.data) return null;
   return (
     <StreakPlaceView
       open={open}
+      returnsTo={under ?? t`Back`}
       onOpenChange={setOpen}
       summary={streak.data}
       onGoalChange={goal.change}

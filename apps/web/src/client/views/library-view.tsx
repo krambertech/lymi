@@ -13,12 +13,11 @@ import {
   Trash2,
 } from "lucide-react";
 import { type ReactNode, useMemo } from "react";
-import { AddMenu } from "../components/add-menu";
 import { Button, IconButton } from "../components/button";
 import { DeckCard } from "../components/deck-card";
 import { DueCount } from "../components/due-count";
 import { ErrorState } from "../components/empty-state";
-import { LearnerMenu } from "../components/learner-menu";
+import { Screen } from "../components/layout/screen";
 import { LibraryBoard } from "../components/library-board";
 import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
@@ -32,7 +31,7 @@ import {
 } from "../components/ui/dropdown-menu";
 import type { DeckSummary, Series } from "../lib/api";
 import { groupDecks } from "../lib/library-groups";
-import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
+import type { StaticNav } from "./shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
@@ -45,7 +44,6 @@ export interface LibraryProps {
   /** When each deck's next card comes back, keyed by deck id. E.g. "Monday". */
   next?: Record<string, string> | undefined;
   archivedCount?: number | undefined;
-  onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
   onImport?: (() => void) | undefined;
   onNewSeries?: (() => void) | undefined;
@@ -56,14 +54,6 @@ export interface LibraryProps {
   /** A series' whole deck list after a drag. Absent, decks cannot be dragged. */
   onSetSeriesDecks?: ((seriesId: string, deckIds: string[]) => void) | undefined;
   onRemoveFromSeries?: ((deckId: string) => void) | undefined;
-  /** The learner, for the avatar that opens their menu on the phone. */
-  name?: string | undefined;
-  email?: string | undefined;
-  docsUrl?: string | undefined;
-  onSignOut?: (() => void | Promise<void>) | undefined;
-  signingOut?: boolean | undefined;
-  /** The streak pill, beside capture on the phone. The rail carries it on desktop. */
-  streakButton?: ReactNode | undefined;
   static?: StaticNav;
 }
 
@@ -81,7 +71,6 @@ export function LibraryView({
   series,
   next,
   archivedCount,
-  onAdd,
   onCreateDeck,
   onImport,
   onNewSeries,
@@ -90,12 +79,6 @@ export function LibraryView({
   onMoveSeries,
   onSetSeriesDecks,
   onRemoveFromSeries,
-  name,
-  email,
-  docsUrl,
-  onSignOut,
-  signingOut,
-  streakButton,
   static: st,
 }: LibraryProps) {
   const { t } = useLingui();
@@ -123,12 +106,40 @@ export function LibraryView({
       </Link>
     );
 
-  // One action, so a button rather than a menu: the menu existed to hold a second item.
-  const newSeriesButton = onNewSeries && (
-    <Button size="sm" onClick={onNewSeries}>
-      <Layers aria-hidden="true" />
-      <Trans>New series</Trans>
-    </Button>
+  // Quiet on purpose: making a deck or a series is occasional, and the decks are what Library is for.
+  const libraryMenu = (onCreateDeck || onNewSeries || onImport) && (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <IconButton label={t`Library options`}>
+            <MoreHorizontal aria-hidden="true" />
+          </IconButton>
+        }
+      />
+      <DropdownMenuContent aria-label={t`Library options`} align="end">
+        {onCreateDeck && (
+          <DropdownMenuItem onClick={onCreateDeck}>
+            <Plus />
+            <Trans>New deck</Trans>
+          </DropdownMenuItem>
+        )}
+        {onNewSeries && (
+          <DropdownMenuItem onClick={onNewSeries}>
+            <Layers />
+            <Trans>New series</Trans>
+          </DropdownMenuItem>
+        )}
+        {onImport && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={onImport}>
+              <FileUp />
+              <Trans>Import decks</Trans>
+            </DropdownMenuItem>
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 
   const seriesHeader = (s: Series, inSeries: DeckSummary[]) => {
@@ -245,35 +256,16 @@ export function LibraryView({
   );
 
   return (
-    <Page>
-      <TopBar
-        back={<TileLockup size="bar" />}
-        actions={
-          <>
-            {streakButton}
-            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-            <LearnerMenu
-              variant="phone"
-              name={name}
-              email={email}
-              docsUrl={docsUrl ?? "/"}
-              onSignOut={onSignOut}
-              signingOut={signingOut}
-              static={st}
-            />
-          </>
-        }
-      />
-      <PageHeader
-        title={t`Library`}
-        sub={
-          decks
-            ? t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
-            : undefined
-        }
-        actions={decks ? newSeriesButton : undefined}
-      />
-
+    <Screen
+      kind="tab"
+      title={t`Library`}
+      sub={
+        decks
+          ? t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(total, { one: "# card", other: "# cards" })}`
+          : undefined
+      }
+      actions={decks ? libraryMenu : undefined}
+    >
       {loading && (
         <div className="grid gap-3 @3xl:grid-cols-2">
           <Skeleton className="h-[118px] rounded-lg" />
@@ -395,6 +387,6 @@ export function LibraryView({
           </To>
         </section>
       ) : null}
-    </Page>
+    </Screen>
   );
 }

@@ -25,12 +25,12 @@ import {
   SOURCE_NAMES,
   type Summary,
 } from "../components/import-parts";
+import { Screen, type ScreenBack } from "../components/layout/screen";
 import { Progress } from "../components/progress";
 import { Skeleton } from "../components/skeleton";
 import type { Import, ImportPreview } from "../lib/api";
 import { splitNoteTypes } from "../lib/import-note-types";
 import type { UploadState } from "../lib/import-uploads";
-import { Page, PageHeader } from "./shell";
 
 const ACCEPT: Record<ImportSource, string> = {
   anki: ".apkg,.colpkg",
@@ -51,15 +51,13 @@ function Shell({
 }: {
   title: string;
   sub?: ReactNode;
-  back?: ReactNode;
+  back?: ScreenBack | undefined;
   children: ReactNode;
 }) {
   return (
-    <Page width="md">
-      {back}
-      <PageHeader title={title} sub={sub} />
+    <Screen title={title} sub={sub} width="md" back={back} backOnDesktop={!!back}>
       <div className="grid gap-6">{children}</div>
-    </Page>
+    </Screen>
   );
 }
 
@@ -77,7 +75,7 @@ export function ImportStartView({
   pending?: boolean | undefined;
   error?: string | undefined;
   guideUrl: string;
-  back?: ReactNode;
+  back?: ScreenBack | undefined;
 }) {
   const { t } = useLingui();
   const input = useRef<HTMLInputElement>(null);
@@ -303,7 +301,7 @@ export function ImportWorkingView({
   onResume: (file: File) => void;
   onCancel: () => void;
   cancelling?: boolean | undefined;
-  back?: ReactNode;
+  back?: ScreenBack | undefined;
 }) {
   const { t, i18n } = useLingui();
   const input = useRef<HTMLInputElement>(null);
@@ -493,7 +491,7 @@ export function ImportPreviewView({
   confirmError?: string | undefined;
   onCancel: () => void;
   cancelling?: boolean | undefined;
-  back?: ReactNode;
+  back?: ScreenBack | undefined;
 }) {
   const { t, i18n } = useLingui();
   const [checked, setChecked] = useState<Set<string>>(new Set());
@@ -823,7 +821,7 @@ export function ImportDoneView({
   restoring?: boolean | undefined;
   actionError?: string | undefined;
   openLibrary: ReactNode;
-  back?: ReactNode;
+  back?: ScreenBack | undefined;
 }) {
   const { t, i18n } = useLingui();
   const counts = item.counts;
@@ -962,7 +960,7 @@ export function ImportStoppedView({
   guideUrl: string;
   onArchive: () => void;
   archiving?: boolean | undefined;
-  back?: ReactNode;
+  back?: ScreenBack | undefined;
 }) {
   const { t, i18n } = useLingui();
   const added = item.counts?.added ?? 0;

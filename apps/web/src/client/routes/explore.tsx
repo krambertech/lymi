@@ -1,12 +1,9 @@
 import { useLingui } from "@lingui/react/macro";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
-import { useAddCard } from "../lib/add-card";
 import { useDocumentTitle } from "../lib/document-title";
-import { publicSiteUrl } from "../lib/origins";
-import { exploreQuery, meQuery } from "../lib/queries";
+import { exploreQuery } from "../lib/queries";
 import { useAddPublishedDeck } from "../lib/use-add-published-deck";
-import { useSignOut } from "../lib/use-sign-out";
 import { ExploreView } from "../views/explore-view";
 
 export const Route = createFileRoute("/explore")({
@@ -24,9 +21,6 @@ function Catalogue() {
   const { t } = useLingui();
   useDocumentTitle(t`Explore`);
   const { data, isError, isFetching, refetch } = useQuery(exploreQuery);
-  const me = useQuery(meQuery);
-  const leave = useSignOut();
-  const capture = useAddCard();
   // Browsing, so a press adds the deck and leaves the shelf where it is.
   const add = useAddPublishedDeck({ land: "here" });
   return (
@@ -37,13 +31,6 @@ function Catalogue() {
       onRetry={() => void refetch()}
       onAdd={(deck) => add.mutate(deck)}
       adding={add.isPending ? add.variables?.slug : undefined}
-      name={me.data?.name}
-      email={me.data?.email}
-      docsUrl={publicSiteUrl("/docs")}
-      onAddCard={() => capture.openCard()}
-      onCreateDeck={capture.openDeck}
-      onSignOut={leave.signOut}
-      signingOut={leave.busy}
     />
   );
 }

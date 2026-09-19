@@ -6,10 +6,10 @@ import { Check, ChevronDown, Plus } from "lucide-react";
 import { Button, buttonClass } from "../components/button";
 import { DeckMeta, DeckTray } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
+import { Screen } from "../components/layout/screen";
 import type { StaticNav } from "../components/nav-link";
 import { PublisherMark } from "../components/publisher-mark";
 import { Skeleton } from "../components/skeleton";
-import { BackButton, Page, PageHeader, TopBar } from "./shell";
 
 interface Props {
   data: ExploreDeckOut | undefined;
@@ -60,20 +60,11 @@ export function ExploreDeckView({
   st,
 }: Props) {
   const { t } = useLingui();
-  const back = (
-    <BackButton label={t`Explore`}>
-      {(className, content) => (
-        <Link to="/explore" disabled={!!st} className={className}>
-          {content}
-        </Link>
-      )}
-    </BackButton>
-  );
+  const back = { label: t`Explore`, to: "/explore" };
 
   if (missing || failed) {
     return (
-      <Page>
-        <TopBar back={back} nested />
+      <Screen back={back} ownTitle>
         <ErrorState
           title={
             missing ? (
@@ -97,17 +88,15 @@ export function ExploreDeckView({
             ) : undefined
           }
         />
-      </Page>
+      </Screen>
     );
   }
 
   if (!data) {
     return (
-      <Page>
-        <TopBar back={back} nested />
-        <PageHeader title={<Skeleton className="h-8 w-56" />} />
+      <Screen title={undefined} back={back}>
         <Skeleton className="h-12 w-52 rounded-md" />
-      </Page>
+      </Screen>
     );
   }
 
@@ -116,8 +105,7 @@ export function ExploreDeckView({
   const trayCard = trayCardOf(deck);
 
   return (
-    <Page>
-      <TopBar back={back} nested />
+    <Screen back={back} ownTitle>
       {/* The name is inside the column, so the tray beside it starts level with the title rather
           than below the header. The deck's colour lives on that tray and nowhere else, so amber
           keeps the plain canvas it needs to read as the one thing to press. DESIGN.md, "Colour". */}
@@ -257,6 +245,6 @@ export function ExploreDeckView({
           </div>
         </section>
       </div>
-    </Page>
+    </Screen>
   );
 }

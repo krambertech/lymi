@@ -16,8 +16,8 @@ import {
 
 /*
  * shadcn's Dialog, in the shape of the machine: centred on a desktop, a drawer from the bottom edge
- * on a touch device, for a form and a question alike. A place, such as the streak, rises over the
- * whole screen on touch instead, and may stand at the end edge on a desktop as a side sheet. Every
+ * on a touch device, for a form and a question alike. A place, such as the streak, is a page
+ * on touch and arrives from the end edge, and may stand at the end edge on a desktop as a side sheet. Every
  * part below renders both shapes, so a call site never
  * asks which machine it is on. Lymi drops the generated corner close button: its dialogs end in
  * explicit actions. ADR 0017.
@@ -27,6 +27,22 @@ type Shape = "desktop" | "touch";
 type Kind = "moment" | "place";
 
 const DialogShapeContext = React.createContext<{ shape: Shape; kind: Kind } | null>(null);
+
+export type PlaceShape = "screen" | "sheet" | "dialog" | "inline";
+
+const PlaceShapeContext = React.createContext<PlaceShape>("inline");
+
+/** The shape the content around a part took; "inline" outside any Dialog, such as a panel beside a list. */
+function usePlaceShape() {
+  return React.useContext(PlaceShapeContext);
+}
+
+/** The drawer's directions are physical, so the end edge is read from the document as the place opens. */
+function endEdge() {
+  return typeof document !== "undefined" && document.documentElement.dir === "rtl"
+    ? "left"
+    : "right";
+}
 
 function useDialogContext(part: string) {
   const context = React.useContext(DialogShapeContext);
@@ -70,7 +86,8 @@ function Dialog({
           {children}
         </DialogPrimitive.Root>
       ) : kind === "place" ? (
-        <Drawer open={open} onOpenChange={setOpen}>
+        // A place is a page on touch, so it arrives from the end edge and a swipe toward that edge goes back.
+        <Drawer open={open} onOpenChange={setOpen} swipeDirection={endEdge()}>
           {children}
         </Drawer>
       ) : (
@@ -127,13 +144,13 @@ function DialogContent({
       <DrawerContent
         {...focus}
         // The whole screen, edge to edge on a tablet too, with square corners that meet the display's own.
-        className="data-[swipe-direction=down]:rounded-none data-[swipe-axis=y]:[--drawer-content-height:100dvh] data-[swipe-axis=y]:[--drawer-content-max-height:100dvh] data-[swipe-axis=y]:sm:max-w-none"
+        className="data-[swipe-direction=left]:rounded-none data-[swipe-direction=right]:rounded-none data-[swipe-axis=x]:[--drawer-content-width:100%] data-[swipe-axis=x]:sm:[--drawer-content-width:100%]"
       >
         <div
           data-slot="dialog-content"
           className="mx-auto grid w-full max-w-md min-w-0 grid-cols-[minmax(0,1fr)] gap-4 px-5 pt-[max(env(safe-area-inset-top),16px)] pb-5"
         >
-          {children}
+          <PlaceShapeContext.Provider value="screen">{children}</PlaceShapeContext.Provider>
         </div>
       </DrawerContent>
     );
@@ -171,7 +188,7 @@ function DialogContent({
             className,
           )}
         >
-          {children}
+          <PlaceShapeContext.Provider value="sheet">{children}</PlaceShapeContext.Provider>
         </DialogPrimitive.Popup>
       </DialogPrimitive.Portal>
     );
@@ -188,7 +205,7 @@ function DialogContent({
           className,
         )}
       >
-        {children}
+        <PlaceShapeContext.Provider value="dialog">{children}</PlaceShapeContext.Provider>
       </DialogPrimitive.Popup>
     </DialogPrimitive.Portal>
   );
@@ -258,4 +275,5 @@ export {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  usePlaceShape,
 };

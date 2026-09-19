@@ -3,14 +3,12 @@ import type { ExploreOut } from "@lymi/core/catalog";
 import { shelvesOf } from "@lymi/core/catalog";
 import { Compass } from "lucide-react";
 import { useMemo } from "react";
-import { AddMenu } from "../components/add-menu";
 import { DeckTile } from "../components/deck-tray";
 import { EmptySection, ErrorState } from "../components/empty-state";
-import { LearnerMenu } from "../components/learner-menu";
+import { Screen } from "../components/layout/screen";
 import type { StaticNav } from "../components/nav-link";
 import { Skeleton } from "../components/skeleton";
 import { shelfLabel } from "../lib/explore";
-import { Page, PageHeader, TileLockup, TopBar } from "./shell";
 
 interface Props {
   data: ExploreOut | undefined;
@@ -20,14 +18,6 @@ interface Props {
   onAdd: (deck: { slug: string; name: string; edition: string }) => void;
   /** The slug currently being added, so only its own tile waits. */
   adding?: string | undefined;
-  /** The phone bar carries the learner, since the rail that usually does is not there. */
-  name?: string | undefined;
-  email?: string | undefined;
-  docsUrl?: string | undefined;
-  onAddCard?: (() => void) | undefined;
-  onCreateDeck?: (() => void) | undefined;
-  onSignOut?: (() => void | Promise<void>) | undefined;
-  signingOut?: boolean | undefined;
   st?: StaticNav;
 }
 
@@ -36,51 +26,21 @@ interface Props {
  * as its decks need. It reads the same projection as `lymi.app/explore`, so the two can never
  * disagree. ADR 0016, `docs/design/explore.md`.
  */
-export function ExploreView({
-  data,
-  failed,
-  busy,
-  onRetry,
-  onAdd,
-  adding,
-  name,
-  email,
-  docsUrl,
-  onAddCard,
-  onCreateDeck,
-  onSignOut,
-  signingOut,
-  st,
-}: Props) {
+export function ExploreView({ data, failed, busy, onRetry, onAdd, adding, st }: Props) {
   const { i18n, t } = useLingui();
   const shelves = useMemo(() => shelvesOf(data?.decks ?? []), [data?.decks]);
 
   return (
-    <Page>
-      <TopBar
-        back={<TileLockup size="bar" />}
-        actions={
-          <>
-            <AddMenu onAddCard={onAddCard ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-            <LearnerMenu
-              variant="phone"
-              name={name}
-              email={email}
-              docsUrl={docsUrl ?? "/"}
-              onSignOut={onSignOut}
-              signingOut={signingOut}
-              static={st}
-            />
-          </>
-        }
-      />
-      {/* No count here: each shelf below counts its own, as it does on the public page. */}
-      <PageHeader title={<Trans>Explore</Trans>}>
+    // No count here: each shelf below counts its own, as it does on the public page.
+    <Screen
+      kind="tab"
+      title={<Trans>Explore</Trans>}
+      lede={
         <p className="mt-2 max-w-[52ch] text-base text-text-2">
           <Trans>Ready-made decks from Lymi. Add one to study it in your language.</Trans>
         </p>
-      </PageHeader>
-
+      }
+    >
       {failed ? (
         <ErrorState
           title={<Trans>Couldn’t load Explore</Trans>}
@@ -146,6 +106,6 @@ export function ExploreView({
           );
         })
       )}
-    </Page>
+    </Screen>
   );
 }

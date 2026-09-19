@@ -230,7 +230,7 @@ export const overlays: Group = {
           items={[
             {
               label: "Open",
-              note: "Centred on a desktop. On touch a drawer over the whole screen with square corners and a close button; a swipe down closes it too.",
+              note: "Centred on a desktop, ending in a close button. On touch a page over the whole screen with square corners: it arrives from the end edge and leaves by back, or by a swipe toward that edge.",
               render: () => <DeviceFrames specimen="place" />,
             },
           ]}

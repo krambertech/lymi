@@ -2031,6 +2031,9 @@ msgstr "Дає скрипту читати твої колоди й додава
 msgid "Library"
 msgstr "Бібліотека"
 
+msgid "Library options"
+msgstr "Параметри бібліотеки"
+
 msgid "Light"
 msgstr "Світла"
 
@@ -3134,6 +3137,9 @@ msgstr "Завершити вибір"
 
 msgid "Stopped"
 msgstr "Зупинено"
+
+msgid "Streak"
+msgstr "Дні поспіль"
 
 #. placeholder {0}: summary.current
 msgid "Streak: {0, plural, one {# day in a row} other {# days in a row}}"

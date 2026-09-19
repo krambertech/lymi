@@ -1,10 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { buttonClass } from "../components/button";
 import { ErrorState } from "../components/empty-state";
 import { type Choices, SOURCE_NAMES } from "../components/import-parts";
+import { Screen, type ScreenBack } from "../components/layout/screen";
 import { toast } from "../components/ui/toast";
 import { api, errorMessage, type Import } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
@@ -17,7 +18,6 @@ import {
   ImportStoppedView,
   ImportWorkingView,
 } from "../views/import-view";
-import { BackButton, Page, TopBar } from "../views/shell";
 
 export const Route = createFileRoute("/import/$importId")({
   component: ImportRoute,
@@ -86,34 +86,22 @@ function ImportRoute() {
     },
   });
 
-  const back = (
-    <TopBar
-      nested
-      back={
-        <BackButton label={t`Activity`}>
-          {(className, content) => (
-            <Link to="/activity" className={className}>
-              {content}
-            </Link>
-          )}
-        </BackButton>
-      }
-    />
-  );
+  const back = { label: t`Activity`, to: "/activity" };
 
   if (!item) {
     return query.isError ? (
-      <Page width="md">
-        {back}
+      <Screen width="md" back={back} backOnDesktop ownTitle>
         <ErrorState
           title={t`Couldn’t load this import`}
           body={errorMessage(query.error)}
           onRetry={() => void query.refetch()}
           retrying={query.isFetching}
         />
-      </Page>
+      </Screen>
     ) : (
-      <Page width="md">{back}</Page>
+      <Screen title={undefined} width="md" back={back} backOnDesktop>
+        {null}
+      </Screen>
     );
   }
 
@@ -192,7 +180,7 @@ function Ready({
   cancelling,
 }: {
   item: Import;
-  back: ReactNode;
+  back: ScreenBack;
   onCancel: () => void;
   cancelling: boolean;
 }) {

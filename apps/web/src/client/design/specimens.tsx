@@ -46,6 +46,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { StreakPlaceScene, WordPlaceScene } from "./layout-scenes";
 import { streak } from "./mock";
 import { noop } from "./parts/types";
 
@@ -329,6 +330,13 @@ export const SPECIMENS = {
   form: { name: "A form", height: 520, touchHeight: 640, Scene: FormScene },
   nested: { name: "A list over a form", height: 480, touchHeight: 640, Scene: NestedScene },
   place: { name: "The streak place", height: 760, touchHeight: 844, Scene: PlaceScene },
+  "place-word": { name: "A word as a place", height: 560, touchHeight: 844, Scene: WordPlaceScene },
+  "place-views": {
+    name: "A place with a view inside it",
+    height: 560,
+    touchHeight: 844,
+    Scene: StreakPlaceScene,
+  },
   select: { name: "An open select", height: 360, touchHeight: 520, Scene: SelectScene },
   combobox: { name: "An open combobox", height: 420, touchHeight: 640, Scene: ComboboxScene },
 } satisfies Record<string, Specimen>;

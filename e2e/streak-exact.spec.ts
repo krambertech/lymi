@@ -73,7 +73,7 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   // Today counted either way: at its goal, or with nothing left to review.
   const finished = /Daily goal reached\.|You’re done for today\./;
 
-  // The phone opens the streak as a place rising over the whole screen.
+  // The phone opens the streak as a page from the end edge, over the whole screen.
   await card.click();
   const modal = page.getByRole("dialog");
   await expect(page).toHaveURL(/[?&]streak=true/);
@@ -91,9 +91,10 @@ test("the streak is exact beyond the seven days the lights show", async ({ page 
   };
   expect(settings.dailyGoal).toBe(50);
   // Today was already met, so the higher goal applies from tomorrow.
-  await modal.getByRole("button", { name: "Back to streak" }).click();
+  // A place on the phone leaves by back: the goal names the streak above it, the streak names Today under it.
+  await modal.getByRole("button", { name: "Streak", exact: true }).click();
   await expect(modal.getByText(finished)).toBeVisible();
-  await modal.getByRole("button", { name: "Close" }).click();
+  await modal.getByRole("button", { name: "Today", exact: true }).click();
   await expect(modal).toBeHidden();
   await expect(page).not.toHaveURL(/streak=/);
 

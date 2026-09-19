@@ -53,7 +53,7 @@ export function Phone({
     <div
       data-theme={theme}
       className={clsx(
-        "@container edge-2 relative mx-auto flex h-[800px] w-full max-w-[390px] flex-col overflow-hidden rounded-[44px] bg-canvas text-text",
+        "@container/shell edge-2 relative mx-auto flex h-[800px] w-full max-w-[390px] flex-col overflow-hidden rounded-[44px] bg-canvas text-text",
         className,
       )}
     >
@@ -157,7 +157,8 @@ export function Sub({
   note?: ReactNode | undefined;
   /** The component's file, for its edit link. */
   source?: string | undefined;
-  children: ReactNode;
+  /** Left out for a rule that needs no picture. */
+  children?: ReactNode | undefined;
 }) {
   return (
     <section

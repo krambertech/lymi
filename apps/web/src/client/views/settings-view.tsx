@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
 import { Button } from "../components/button";
 import { ImportSources } from "../components/import-parts";
+import { Screen } from "../components/layout/screen";
 import { Segmented } from "../components/segmented";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
@@ -20,7 +21,6 @@ import {
 } from "../components/ui/select";
 import type { Me } from "../lib/api";
 import type { ThemeChoice } from "../lib/theme";
-import { Page, PageHeader } from "./shell";
 
 export interface SettingsProps {
   me: Me | undefined;
@@ -71,9 +71,7 @@ export function SettingsView({
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
-    <Page width="md">
-      <PageHeader title={t`Settings`} />
-
+    <Screen title={t`Settings`} width="md" back={{ label: t`Today`, to: "/today" }}>
       {account ?? <AccountGroup name={me?.name} email={me?.email} />}
 
       <SettingsGroup
@@ -148,6 +146,6 @@ export function SettingsView({
       >
         <ImportSources sourceLink={importLink} />
       </SettingsGroup>
-    </Page>
+    </Screen>
   );
 }

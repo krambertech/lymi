@@ -7,17 +7,8 @@ import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { errorMessage, type Series } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { publicSiteUrl } from "../lib/origins";
-import {
-  archivedDecksQuery,
-  deckCardsQuery,
-  decksQuery,
-  meQuery,
-  seriesQuery,
-} from "../lib/queries";
-import { Streak } from "../lib/streak";
+import { archivedDecksQuery, deckCardsQuery, decksQuery, seriesQuery } from "../lib/queries";
 import { useSeriesActions } from "../lib/use-series";
-import { useSignOut } from "../lib/use-sign-out";
 import { LibraryView } from "../views/library-view";
 
 export const Route = createFileRoute("/library")({
@@ -36,7 +27,6 @@ function DeckList() {
   useDocumentTitle(t`Library`);
   const decks = useQuery(decksQuery);
   const series = useQuery(seriesQuery);
-  const me = useQuery(meQuery);
   // Deleting a series can archive decks, so Library says where they went. Only the count is used,
   // and an archive write invalidates ["decks"], so the list need not be refetched on every visit.
   const archivedCount = useQuery({
@@ -44,7 +34,6 @@ function DeckList() {
     staleTime: 5 * 60_000,
     select: (decks) => decks.length,
   });
-  const leave = useSignOut();
   const add = useAddCard();
   const navigate = useNavigate();
   const qc = useQueryClient();
@@ -72,7 +61,6 @@ function DeckList() {
         retrying={decks.isFetching}
         series={series.data}
         archivedCount={archivedCount.data}
-        onAdd={() => add.openCard()}
         onCreateDeck={add.openDeck}
         onImport={() => void navigate({ to: "/settings", hash: "import" })}
         onNewSeries={() => setEditing(null)}
@@ -123,12 +111,6 @@ function DeckList() {
           const deck = decks.data?.find((d) => d.id === deckId);
           if (deck) actions.moveDeck.mutate({ deck, seriesId: null });
         }}
-        name={me.data?.name}
-        email={me.data?.email}
-        docsUrl={publicSiteUrl("/docs")}
-        onSignOut={leave.signOut}
-        signingOut={leave.busy}
-        streakButton={<Streak variant="phone" />}
       />
       <SeriesSheet
         open={editing !== undefined}

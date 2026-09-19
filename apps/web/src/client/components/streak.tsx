@@ -2,28 +2,13 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { StreakOut } from "@lymi/core";
 import { clsx } from "clsx";
-import {
-  CalendarCheck,
-  Check,
-  ChevronLeft,
-  type LucideIcon,
-  Pencil,
-  Trophy,
-  X,
-} from "lucide-react";
-import {
-  type ReactNode,
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { CalendarCheck, Check, type LucideIcon, Pencil, Trophy } from "lucide-react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { streakFlameFor } from "../lib/flame";
 import { IconButton } from "./button";
 import { Flame } from "./flame";
 import { GoalPicker } from "./goal-picker";
+import { PlaceBar } from "./layout/place-bar";
 import { SevenLights } from "./seven-lights";
 import { Skeleton } from "./skeleton";
 import { addDays, StreakCalendar } from "./streak-calendar";
@@ -238,8 +223,10 @@ export interface StreakPanelProps {
   goalStatus?: "saving" | "saved" | "error" | undefined;
   titleId?: string | undefined;
   className?: string | undefined;
-  /** The place's close button, placed at the end of the panel's first line. */
-  close?: ReactNode | undefined;
+  /** Given when the panel is a place, and it then opens with the place's bar. */
+  onClose?: (() => void) | undefined;
+  /** The screen under the place, which back names on a phone. */
+  returnsTo?: string | undefined;
 }
 
 /**
@@ -252,7 +239,8 @@ export function StreakPanel({
   onGoalChange,
   goalStatus,
   titleId,
-  close,
+  onClose,
+  returnsTo,
   className,
 }: StreakPanelProps) {
   const { t } = useLingui();
@@ -260,7 +248,7 @@ export function StreakPanel({
   const [month, setMonth] = useState(summary.today.date.slice(0, 7));
   const [drawRun, setDrawRun] = useState(true);
   const editRef = useRef<HTMLButtonElement>(null);
-  const backRef = useRef<HTMLButtonElement>(null);
+  const goalTitleRef = useRef<HTMLHeadingElement>(null);
   const { current, today } = summary;
   const done = satisfied(today.outcome);
   const flame = streakFlameFor(summary);
@@ -285,39 +273,39 @@ export function StreakPanel({
   useLayoutEffect(() => {
     if (shownView.current === view) return;
     shownView.current = view;
-    (view === "goal" ? backRef : editRef).current?.focus();
+    (view === "goal" ? goalTitleRef : editRef).current?.focus();
   }, [view]);
 
   if (view === "goal") {
     return (
       <div className={clsx("enter-fade grid gap-4", className)}>
-        <div className="-ms-2 flex min-h-8 items-center gap-1">
-          <IconButton
-            ref={backRef}
-            label={t`Back to streak`}
-            size="sm"
-            onClick={() => setView("streak")}
-          >
-            <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
-          </IconButton>
-          <h2 id={titleId} className="flex-1 text-md font-medium text-text">
-            <Trans>Daily goal</Trans>
-          </h2>
-          <p className="min-h-5 text-sm text-muted" role="status">
-            {goalStatus === "saved" && (
-              <span className="enter-fade inline-flex items-center gap-1.5">
-                <Check className="size-4" aria-hidden="true" />
-                <Trans>Saved</Trans>
-              </span>
-            )}
-            {goalStatus === "error" && (
-              <span className="text-danger">
-                <Trans>Couldn’t save. Try again.</Trans>
-              </span>
-            )}
-          </p>
-          {close}
-        </div>
+        <PlaceBar
+          back={{ label: t`Streak`, name: t`Back to streak`, onClick: () => setView("streak") }}
+          onClose={onClose}
+          status={
+            <p className="min-h-5 text-sm text-muted" role="status">
+              {goalStatus === "saved" && (
+                <span className="enter-fade inline-flex items-center gap-1.5">
+                  <Check className="size-4" aria-hidden="true" />
+                  <Trans>Saved</Trans>
+                </span>
+              )}
+              {goalStatus === "error" && (
+                <span className="text-danger">
+                  <Trans>Couldn’t save. Try again.</Trans>
+                </span>
+              )}
+            </p>
+          }
+        />
+        <h2
+          ref={goalTitleRef}
+          id={titleId}
+          tabIndex={-1}
+          className="text-xl font-medium text-text outline-none"
+        >
+          <Trans>Daily goal</Trans>
+        </h2>
         <p className="text-sm text-text-2">
           <Trans>How many reviews a day keep your streak. Every grade counts, even Forgot.</Trans>
         </p>
@@ -339,6 +327,7 @@ export function StreakPanel({
 
   return (
     <div className={clsx("grid gap-5", className)}>
+      {onClose && <PlaceBar label={t`Streak`} returnsTo={returnsTo} onClose={onClose} />}
       <header className="flex items-center gap-3.5">
         <Flame className="h-11 w-9" state={flame} flicker={flame === "full"} />
         <div className="grid min-w-0">
@@ -354,8 +343,6 @@ export function StreakPanel({
           </h2>
           <p className="mt-1.5 text-sm text-text-2">{status}</p>
         </div>
-        {/* Pulled out by the button's own padding, so the glyph sits on the card's edge below. */}
-        {close && <div className="-me-2 -mt-1 ms-auto self-start">{close}</div>}
       </header>
 
       <div className="grid gap-2.5 rounded-lg bg-plate-2 p-3.5 ps-4">
@@ -484,17 +471,16 @@ export function StreakButton({ summary, variant, className, onOpen }: StreakButt
   );
 }
 
-export interface StreakPlaceProps extends Omit<StreakPanelProps, "titleId" | "close"> {
+export interface StreakPlaceProps extends Omit<StreakPanelProps, "titleId" | "onClose"> {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 /**
- * What the flame opens, as a place: centred over the page on a desktop, rising over the whole screen
- * on touch. Each opening is a fresh panel: this month, the run drawing in, the streak view first.
+ * What the flame opens, as a place: centred over the page on a desktop, a page from the end edge on
+ * touch. Each opening is a fresh panel: this month, the run drawing in, the streak view first.
  */
 export function StreakPlace({ open, onOpenChange, ...panel }: StreakPlaceProps) {
-  const { t } = useLingui();
   const titleId = useId();
   return (
     <Dialog kind="place" open={open} onOpenChange={onOpenChange}>
@@ -504,15 +490,7 @@ export function StreakPlace({ open, onOpenChange, ...panel }: StreakPlaceProps) 
         // The run, not its first control: opened from a link, a focused control would show its tooltip at once.
         initialFocus={() => document.getElementById(titleId)}
       >
-        <StreakPanel
-          titleId={titleId}
-          close={
-            <IconButton label={t`Close`} size="sm" onClick={() => onOpenChange(false)}>
-              <X aria-hidden="true" />
-            </IconButton>
-          }
-          {...panel}
-        />
+        <StreakPanel titleId={titleId} onClose={() => onOpenChange(false)} {...panel} />
       </DialogContent>
     </Dialog>
   );

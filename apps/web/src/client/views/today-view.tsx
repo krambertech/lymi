@@ -5,12 +5,11 @@ import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ChevronRight, Plus } from "lucide-react";
 import type { ReactNode } from "react";
-import { AddMenu } from "../components/add-menu";
 import { Button, buttonClass } from "../components/button";
 import { DueCount } from "../components/due-count";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
-import { LearnerMenu } from "../components/learner-menu";
+import { Screen } from "../components/layout/screen";
 import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
 import { StartGuide } from "../components/start-guide";
@@ -19,7 +18,7 @@ import type { StreakSummary } from "../components/streak";
 import type { DeckSummary, Series } from "../lib/api";
 import { lanternFor } from "../lib/flame";
 import { groupDecks } from "../lib/library-groups";
-import { Page, PageHeader, type StaticNav, TileLockup, TopBar } from "./shell";
+import type { StaticNav } from "./shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
@@ -28,22 +27,14 @@ export interface TodayProps {
   streak: StreakSummary | undefined;
   /** The streak card beside the due card. A slot, so the design page can pass a static one. */
   streakCard?: ReactNode | undefined;
-  /** The streak pill, beside capture on the phone. The rail carries it on desktop. */
-  streakButton?: ReactNode | undefined;
   /** How many cards each round holds. Missing offline, which hides the rounds. */
   rounds?: RoundsOut | undefined;
-  /** The learner, for the avatar that opens their menu on the phone. */
-  name?: string | undefined;
-  email?: string | undefined;
-  docsUrl?: string | undefined;
   /** How to connect an assistant, offered until the learner has cards. */
   connectUrl?: string | undefined;
   /** An assistant is already connected, so the first run does not offer to connect one. */
   connected?: boolean | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
-  onSignOut?: (() => void | Promise<void>) | undefined;
-  signingOut?: boolean | undefined;
   static?: StaticNav;
 }
 
@@ -60,17 +51,11 @@ export function TodayView({
   series,
   streak,
   streakCard,
-  streakButton,
   rounds,
-  name,
-  email,
-  docsUrl,
   connectUrl,
   connected,
   onAdd,
   onCreateDeck,
-  onSignOut,
-  signingOut,
   static: st,
 }: TodayProps) {
   const { t } = useLingui();
@@ -105,28 +90,7 @@ export function TodayView({
   const [onlyDeck] = decks?.length === 1 ? decks : [];
 
   return (
-    <Page>
-      {/* The rail carries capture and the learner on desktop, so this row is the phone's. */}
-      <TopBar
-        back={<TileLockup size="bar" />}
-        actions={
-          <>
-            {streakButton}
-            <AddMenu onAddCard={onAdd ?? (() => {})} onCreateDeck={onCreateDeck} align="end" />
-            <LearnerMenu
-              variant="phone"
-              name={name}
-              email={email}
-              docsUrl={docsUrl ?? "/"}
-              onSignOut={onSignOut}
-              signingOut={signingOut}
-              static={st}
-            />
-          </>
-        }
-      />
-      <PageHeader title={<Trans>Today</Trans>} className="pb-4 @3xl:pb-6" />
-
+    <Screen kind="tab" title={<Trans>Today</Trans>}>
       {guiding ? (
         <StartGuide
           decks={decks.length}
@@ -257,7 +221,7 @@ export function TodayView({
           )}
         </div>
       )}
-    </Page>
+    </Screen>
   );
 }
 

@@ -8,9 +8,10 @@ import {
   useNavigate,
 } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
+import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckSheet } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
 import { Toaster } from "../components/ui/toast";
@@ -185,36 +186,58 @@ function Shell() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate, onReview, bare, add, activeDeckId]);
 
+  const signedIn = me.isSuccess;
+  const learnerName = me.data?.name;
+  const learnerEmail = me.data?.email;
+  const { openCard, openDeck } = add;
+  const { signOut, busy: signingOut } = leave;
+  // One object until something in it changes, so a query tick does not re-render every screen's bar.
+  const chrome = useMemo(
+    () => ({
+      streak: signedIn ? <Streak variant="phone" /> : undefined,
+      name: learnerName,
+      email: learnerEmail,
+      docsUrl: publicSiteUrl("/docs"),
+      onAddCard: () => openCard(),
+      onCreateDeck: openDeck,
+      onSignOut: signOut,
+      signingOut,
+    }),
+    [signedIn, learnerName, learnerEmail, openCard, openDeck, signOut, signingOut],
+  );
+
   if (bare) return <Outlet />;
 
   return (
     <LearnerAvatarProvider enabled={me.isSuccess}>
-      <AppShell
-        // A session closes the app around it. The phone already hid its pill during review; the
-        // rail stayed up with search, capture, every deck and the profile, which made focus a
-        // phone-only idea. Both go now, and both come back when the session ends.
-        sidebar={
-          onReview ? undefined : (
-            <Sidebar
-              decks={decks.data}
-              series={series.data}
-              name={me.data?.name}
-              email={me.data?.email}
-              docsUrl={publicSiteUrl("/docs")}
-              onAdd={() => add.openCard()}
-              onCreateDeck={add.openDeck}
-              onSignOut={leave.signOut}
-              signingOut={leave.busy}
-              streak={me.isSuccess ? <Streak variant="rail" /> : undefined}
-              className="hidden @3xl/shell:flex"
-            />
-          )
-        }
-        nav={onReview ? undefined : <PillNav />}
-        fill={onReview}
-      >
-        <Outlet />
-      </AppShell>
+      <ShellChrome value={chrome}>
+        <AppShell
+          // A session closes the app around it. The phone already hid its pill during review; the
+          // rail stayed up with search, capture, every deck and the profile, which made focus a
+          // phone-only idea. Both go now, and both come back when the session ends.
+          sidebar={
+            onReview ? undefined : (
+              <Sidebar
+                decks={decks.data}
+                series={series.data}
+                name={me.data?.name}
+                email={me.data?.email}
+                docsUrl={publicSiteUrl("/docs")}
+                onAdd={() => add.openCard()}
+                onCreateDeck={add.openDeck}
+                onSignOut={leave.signOut}
+                signingOut={leave.busy}
+                streak={me.isSuccess ? <Streak variant="rail" /> : undefined}
+                className="hidden @3xl/shell:flex"
+              />
+            )
+          }
+          nav={onReview ? undefined : <PillNav />}
+          fill={onReview}
+        >
+          <Outlet />
+        </AppShell>
+      </ShellChrome>
       <AddCardSheet
         open={add.open === "card"}
         onOpenChange={(v) => (v ? add.openCard() : add.close("card"))}

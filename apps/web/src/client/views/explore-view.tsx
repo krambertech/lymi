@@ -32,9 +32,9 @@ interface Props {
 }
 
 /**
- * Explore in the app: every deck Lymi publishes, a shelf per category, each scrolling sideways so
- * a category of forty decks lengthens one row instead of burying the page. It reads the same
- * projection as `lymi.app/explore`, so the two can never disagree. ADR 0016, `docs/design/explore.md`.
+ * Explore in the app: every deck Lymi publishes, a shelf per category that wraps into as many rows
+ * as its decks need. It reads the same projection as `lymi.app/explore`, so the two can never
+ * disagree. ADR 0016, `docs/design/explore.md`.
  */
 export function ExploreView({
   data,
@@ -90,9 +90,9 @@ export function ExploreView({
       ) : !data ? (
         <div className="grid gap-3" aria-hidden="true">
           <Skeleton className="h-8 w-44 rounded-sm" />
-          <div className="flex gap-[22px] overflow-hidden pt-5">
+          <div className="deck-shelf">
             {[0, 1, 2].map((at) => (
-              <div key={at} className="grid w-[216px] shrink-0 gap-3.5">
+              <div key={at} className="grid gap-3.5">
                 <Skeleton className="h-[127px] w-full rounded-lg" />
                 <Skeleton className="h-5 w-3/4 rounded-sm" />
                 <Skeleton className="h-4 w-full rounded-sm" />

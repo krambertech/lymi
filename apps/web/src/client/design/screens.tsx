@@ -951,7 +951,7 @@ export const SCREENS: Entry[] = [
     slug: "explore",
     name: "Explore",
     source: "views/explore-view.tsx",
-    note: "Every deck Lymi publishes, inside the app. A shelf per category, each scrolling sideways, so a category of forty decks lengthens one row instead of burying the page. A deck is one of its own cards in a tray, in a hue hashed from its slug alone — eight of them, so two side by side is the price of a colour that never moves as the catalogue grows. The tray sits inside a card here, unlike the public page, because the Add on it has to belong to something; Add is secondary, because a shelf of decks has no single thing to press. A deck already in Library says so and leads there.",
+    note: "Every deck Lymi publishes, inside the app. A shelf per category, wrapping into as many rows as its decks need, so every deck is on the page. A deck is one of its own cards in a tray, in a hue hashed from its slug alone — eight of them, so two side by side is the price of a colour that never moves as the catalogue grows. The tray sits inside a card here, unlike the public page, because the Add on it has to belong to something; Add is secondary, because a shelf of decks has no single thing to press. A deck already in Library says so and leads there.",
     Demo: () => (
       <div className="grid gap-10">
         <Shot caption="Desktop, Explore" initial="light">

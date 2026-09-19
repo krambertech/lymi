@@ -47,6 +47,8 @@ const SENTENCES: Sentences = {
     join: "member_joined",
     leave: "member_left",
     remove_member: "member_removed",
+    invite: "invitation_sent",
+    cancel_invite: "invitation_cancelled",
     turn_on_join_link: "link_on",
     turn_off_join_link: "link_off",
     import_edition: null,
@@ -100,6 +102,8 @@ const PEOPLE_KINDS = new Set<ActivityKind>([
   "member_joined",
   "member_left",
   "member_removed",
+  "invitation_sent",
+  "invitation_cancelled",
   "link_on",
   "link_off",
 ]);
@@ -278,7 +282,10 @@ function kindOf(row: Row): ActivityKind | null {
  */
 function groupKey(row: Row, kind: ActivityKind, day: string): string {
   const caller = `${row.actor}:${row.actorClient ?? ""}`;
-  const one = kind.startsWith("cards_") ? "" : row.entityId;
+  let one = row.entityId;
+  if (kind.startsWith("cards_")) one = "";
+  // Per address, or a class invited in one sitting would be one row naming only the last of them.
+  if (kind.startsWith("invitation_")) one = `${row.entityId}|${invitedAddress(row) ?? ""}`;
   return `${day}|${caller}|${kind}|${one}`;
 }
 
@@ -471,13 +478,14 @@ async function present(ctx: ServiceContext, groups: Group[]): Promise<Entry[]> {
 
     const where = deck.get(newest.entityId);
     if (!where) continue;
-    const who = memberOf(newest);
-    entries.push({
-      ...base,
-      deck: naming(where),
-      // Member names are the owner's to see, and only the owner's decks raise people rows.
-      person: who && where.userId === userId ? (member.get(who)?.name ?? null) : null,
-    });
+    // Member names and invited addresses are the owner's to see, and only their decks raise
+    // people rows.
+    let person: string | null = null;
+    if (where.userId === userId) {
+      const who = memberOf(newest);
+      person = invitedAddress(newest) ?? (who ? (member.get(who)?.name ?? null) : null);
+    }
+    entries.push({ ...base, deck: naming(where), person });
   }
   return entries;
 }
@@ -494,6 +502,12 @@ function landedIn(row: Row): string | null {
 function memberOf(row: Row): string | null {
   const payload = row.payload as { memberId?: unknown } | null;
   return payload && typeof payload.memberId === "string" ? payload.memberId : null;
+}
+
+/** An invitation names an address rather than an account, because nobody has joined yet. */
+function invitedAddress(row: Row): string | null {
+  const payload = row.payload as { email?: unknown } | null;
+  return payload && typeof payload.email === "string" ? payload.email : null;
 }
 
 /** Names for the OAuth clients and the API keys behind a page's writes, the learner's own only. */

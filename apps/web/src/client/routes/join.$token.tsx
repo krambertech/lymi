@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { ApiError, api } from "../lib/api";
+import { ApiError, api, refusalDetail } from "../lib/api";
 import { signInWithGoogle } from "../lib/auth";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { joinPreviewQuery } from "../lib/queries";
@@ -58,7 +58,10 @@ function Join() {
       return t`This join link stopped working. Ask for a new one.`;
     }
     if (err instanceof ApiError && err.status === 403) {
-      return t`You cannot join this deck through this link.`;
+      const invited = refusalDetail(err, "invitedEmail");
+      return invited
+        ? t`This invitation was sent to ${invited}. Sign in with that address to join.`
+        : t`You cannot join this deck through this link.`;
     }
     return t`Could not join. Check your connection and try again.`;
   };

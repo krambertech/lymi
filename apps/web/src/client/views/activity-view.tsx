@@ -10,6 +10,8 @@ import {
   Link2Off,
   Link as LinkIcon,
   type LucideIcon,
+  Mail,
+  MailX,
   Pencil,
   Plus,
   Sparkle,
@@ -39,6 +41,8 @@ const KIND_ICONS: Record<string, LucideIcon> = {
   member_joined: UserPlus,
   member_left: UserMinus,
   member_removed: UserMinus,
+  invitation_sent: Mail,
+  invitation_cancelled: MailX,
   link_on: LinkIcon,
   link_off: Link2Off,
 };
@@ -173,6 +177,18 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
       return (
         <Trans>
           {name} left {deck}
+        </Trans>
+      );
+    case "invitation_sent":
+      return (
+        <Trans>
+          Invited {name} to {deck}
+        </Trans>
+      );
+    case "invitation_cancelled":
+      return (
+        <Trans>
+          Cancelled the invitation to {name} for {deck}
         </Trans>
       );
     case "member_removed":

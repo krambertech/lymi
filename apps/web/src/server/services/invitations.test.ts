@@ -1,3 +1,4 @@
+import { PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
@@ -5,10 +6,13 @@ import { addCards, archiveCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck, listDecks, restoreDeck } from "./decks";
 import {
+  cancelInvitation,
   getJoinLink,
+  inviteByEmail,
   isJoinToken,
   joinLinkAdmits,
   joinThroughLink,
+  listInvitations,
   previewJoin,
   turnOffJoinLink,
   turnOnJoinLink,
@@ -51,6 +55,8 @@ const auditRows = (deckId: string, action: string) =>
     .where(and(eq(schema.auditLog.entityId, deckId), eq(schema.auditLog.action, action)));
 
 const forbidden = expect.objectContaining({ code: "forbidden" });
+const conflict = expect.objectContaining({ code: "conflict" });
+const invalid = expect.objectContaining({ code: "invalid" });
 const notFound = expect.objectContaining({ code: "not_found" });
 
 describe("the owner controls one join link", () => {
@@ -272,5 +278,195 @@ describe("joining through the link", () => {
   it("a malformed token admits nobody", async () => {
     expect(await joinLinkAdmits(db, "not-a-token")).toBe(false);
     await expect(joinThroughLink(marko, "not-a-token")).rejects.toThrow(notFound);
+  });
+});
+
+describe("inviting one person by name", () => {
+  /** The message the route would send, captured so a test can read the token out of it. */
+  function outbox() {
+    const sent: {
+      to: string;
+      token: string;
+      deck: { name: string; owner: string; cards: number };
+    }[] = [];
+    const send = async (
+      to: string,
+      token: string,
+      deck: { name: string; owner: string; cards: number },
+    ) => {
+      sent.push({ to, token, deck });
+    };
+    return { sent, send };
+  }
+
+  it("writes one invitation, names the deck's size, and lists it as waiting", async () => {
+    // Its own words: the duplicate rule is per learner, so shared terms would be skipped here.
+    const { deck } = await sharedDeck("Klass", ["kutse", "sõber"]);
+    const mail = outbox();
+
+    await inviteByEmail(kateryna, deck.id, "Anna@Example.Test", mail.send);
+
+    expect(mail.sent).toHaveLength(1);
+    expect(mail.sent[0]).toMatchObject({
+      to: "anna@example.test",
+      deck: { name: "Klass", owner: "Kateryna", cards: 2 },
+    });
+    expect(await listInvitations(kateryna, deck.id)).toMatchObject([
+      { email: "anna@example.test" },
+    ]);
+    const rows = await db
+      .select({ id: schema.auditLog.id })
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.action, "invite"), eq(schema.auditLog.entityId, deck.id)));
+    expect(rows).toHaveLength(1);
+  });
+
+  it("refuses a second invitation to the same address, whatever its case", async () => {
+    const { deck } = await sharedDeck("Kaks");
+    const mail = outbox();
+    await inviteByEmail(kateryna, deck.id, "anna@example.test", mail.send);
+
+    await expect(inviteByEmail(kateryna, deck.id, "ANNA@example.test", mail.send)).rejects.toThrow(
+      conflict,
+    );
+    expect(mail.sent).toHaveLength(1);
+    expect(await listInvitations(kateryna, deck.id)).toHaveLength(1);
+  });
+
+  it("refuses to invite the owner or somebody already studying the deck", async () => {
+    const { deck, token } = await sharedDeck("Juba");
+    const mail = outbox();
+    await joinThroughLink(anna, token);
+
+    await expect(inviteByEmail(kateryna, deck.id, "kateryna@lymi.test", mail.send)).rejects.toThrow(
+      invalid,
+    );
+    await expect(inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send)).rejects.toThrow(
+      conflict,
+    );
+    expect(mail.sent).toHaveLength(0);
+  });
+
+  it("refuses somebody the owner removed, and welcomes back somebody who left", async () => {
+    const { deck, token } = await sharedDeck("Eemaldatud");
+    const mail = outbox();
+    await joinThroughLink(anna, token);
+    await removeMember(kateryna, deck.id, anna.userId);
+    await joinThroughLink(marko, token);
+    await leave(marko, deck.id);
+
+    // A message would carry a link the door refuses, so none goes out.
+    await expect(inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send)).rejects.toThrow(
+      conflict,
+    );
+    expect(mail.sent).toHaveLength(0);
+
+    await inviteByEmail(kateryna, deck.id, "marko@lymi.test", mail.send);
+    const invitation = mail.sent[0]?.token;
+    if (!invitation) throw new Error("no token");
+    await joinThroughLink(marko, invitation);
+    expect((await listDecks(marko)).map((d) => d.id)).toContain(deck.id);
+  });
+
+  it("is spent when the address it names joins through the join link instead", async () => {
+    const { deck, token } = await sharedDeck("Kõrvalt");
+    const mail = outbox();
+    await inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send);
+
+    await joinThroughLink(anna, token);
+    expect(await listInvitations(kateryna, deck.id)).toEqual([]);
+    expect(await listMembers(kateryna, deck.id)).toHaveLength(1);
+  });
+
+  it("stops at the limit and counts only the people still waiting", async () => {
+    const { deck } = await sharedDeck("Palju");
+    const mail = outbox();
+    for (let i = 0; i < PENDING_INVITATION_LIMIT; i += 1) {
+      await inviteByEmail(kateryna, deck.id, `person${i}@example.test`, mail.send);
+    }
+
+    await expect(
+      inviteByEmail(kateryna, deck.id, "one-too-many@example.test", mail.send),
+    ).rejects.toThrow(invalid);
+
+    // Cancelling one makes room again, so the cap never blocks a real group for good.
+    const waiting = await listInvitations(kateryna, deck.id);
+    const first = waiting[0];
+    if (!first) throw new Error("no invitation");
+    await cancelInvitation(kateryna, deck.id, first.id);
+    await expect(
+      inviteByEmail(kateryna, deck.id, "one-too-many@example.test", mail.send),
+    ).resolves.toMatchObject({ email: "one-too-many@example.test" });
+  });
+
+  it("admits the address it names and refuses every other account", async () => {
+    const { deck } = await sharedDeck("Ainult");
+    const mail = outbox();
+    await inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send);
+    const token = mail.sent[0]?.token;
+    if (!token) throw new Error("no token");
+
+    // The sign-in hold runs before anybody has said who they are, so it must not ask.
+    expect(await joinLinkAdmits(db, token)).toBe(true);
+
+    // Marko holds the link but it was not written for him, and the refusal names who it is for.
+    await expect(joinThroughLink(marko, token)).rejects.toThrow(forbidden);
+    await expect(joinThroughLink(marko, token)).rejects.toThrow("anna@lymi.test");
+    expect((await listDecks(marko)).map((d) => d.id)).not.toContain(deck.id);
+
+    await joinThroughLink(anna, token);
+    expect((await listDecks(anna)).map((d) => d.id)).toContain(deck.id);
+    // Spent: it leaves the waiting list, and the hold refuses it from here on.
+    expect(await listInvitations(kateryna, deck.id)).toEqual([]);
+    expect(await joinLinkAdmits(db, token)).toBe(false);
+  });
+
+  it("a cancelled invitation stops working and leaves the list", async () => {
+    const { deck } = await sharedDeck("Tühistatud");
+    const mail = outbox();
+    await inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send);
+    const token = mail.sent[0]?.token;
+    if (!token) throw new Error("no token");
+
+    const waiting = await listInvitations(kateryna, deck.id);
+    const first = waiting[0];
+    if (!first) throw new Error("no invitation");
+    await cancelInvitation(kateryna, deck.id, first.id);
+
+    expect(await listInvitations(kateryna, deck.id)).toEqual([]);
+    expect(await joinLinkAdmits(db, token)).toBe(false);
+    await expect(joinThroughLink(anna, token)).rejects.toThrow("This join link does not work");
+    await expect(cancelInvitation(kateryna, deck.id, first.id)).rejects.toThrow(
+      "Invitation not found",
+    );
+  });
+
+  it("is the owner's alone to send, list and cancel", async () => {
+    const { deck, token } = await sharedDeck("Omanik");
+    const mail = outbox();
+    await joinThroughLink(anna, token);
+    await inviteByEmail(kateryna, deck.id, "marko@lymi.test", mail.send);
+
+    await expect(listInvitations(anna, deck.id)).rejects.toThrow(forbidden);
+    await expect(inviteByEmail(anna, deck.id, "keegi@example.test", mail.send)).rejects.toThrow(
+      forbidden,
+    );
+    const waiting = await listInvitations(kateryna, deck.id);
+    const first = waiting[0];
+    if (!first) throw new Error("no invitation");
+    await expect(cancelInvitation(anna, deck.id, first.id)).rejects.toThrow(forbidden);
+    expect(mail.sent).toHaveLength(1);
+  });
+
+  it("cannot be sent for an archived deck", async () => {
+    const { deck } = await sharedDeck("Arhiivis");
+    const mail = outbox();
+    await archiveDeck(kateryna, deck.id);
+
+    await expect(inviteByEmail(kateryna, deck.id, "anna@example.test", mail.send)).rejects.toThrow(
+      invalid,
+    );
+    expect(mail.sent).toHaveLength(0);
+    await restoreDeck(kateryna, deck.id);
   });
 });

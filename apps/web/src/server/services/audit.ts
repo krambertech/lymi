@@ -42,6 +42,13 @@ export type AuditEvent =
       memberId: string;
       details?: Details;
     }
+  | {
+      entity: "deck";
+      action: "invite" | "cancel_invite";
+      id: string;
+      email: string;
+      details?: Details;
+    }
   | { entity: "deck"; action: "turn_on_join_link" | "turn_off_join_link"; id: string }
   | { entity: "series"; action: Change | "reorder"; id: string; details?: Details }
   | {
@@ -134,6 +141,7 @@ function payloadOf(event: AuditEvent): Record<string, unknown> | null {
   const ids = {
     ...("deckId" in event ? { landedIn: event.deckId } : {}),
     ...("memberId" in event ? { memberId: event.memberId } : {}),
+    ...("email" in event ? { email: event.email } : {}),
   };
   if (!details && Object.keys(ids).length === 0) return null;
   return { ...details, ...ids };

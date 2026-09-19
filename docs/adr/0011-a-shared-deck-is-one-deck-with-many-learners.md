@@ -21,13 +21,15 @@ A copy is a snapshot. A deck that grows after every lesson makes a snapshot stal
 
 The owner sees who is a member and when they joined. The owner sees nothing about a member's reviews.
 
-## The deck's invitation admits the account
+## The deck's invitation admits one address to the deck
 
-Sign-in is Google only. The `user.create.before` hook in `apps/web/src/server/auth.ts` refuses any email not in `ALLOWED_EMAILS`. That gate stays. A second gate opens next to it. An email with an unrevoked named invitation may create an account. So may anyone who reaches sign-in from a valid join link.
+Sign-up is open, so an invitation grants access to one deck and never to Lymi itself. It was the second gate beside `ALLOWED_EMAILS` while the beta was private; opening sign-up ended that, and nothing about a deck's door changed with it.
 
-A deck has one join link. The owner can turn it off. A deck can also have named invitations, one per Google email. Lymi sends no email; the owner passes the link on.
+A deck has one join link. The owner can turn it off. A deck can also have named invitations, one per email address.
 
-Turning the link off removes nobody. Removing a member takes the deck out of their Library and blocks them: the join link no longer admits them, and only a named invitation from the owner lets them back. Leaving is different. A member who leaves can rejoin through the link. In both cases their states and reviews stay, so a return resumes where they were.
+A named invitation is a join link scoped to one address, so the token, the sign-in cookie and the join page are the same machinery. It admits that address and no other, and is spent when they join. Lymi sends it, as one more kind on the transactional email path, in the three interface languages. An owner may have twenty unaccepted invitations per deck at once, because the field sends mail in their name, and Lymi sends at most sixty invitations a day for one owner and three a day to one address, so cancelling and inviting again cannot flood a mailbox. The message is written in the reader's app language when they have an account, else in the owner's. Joining spends the invitation for that address however the learner came in, so People never lists somebody as waiting who is already there.
+
+Turning the link off removes nobody. Removing a member takes the deck out of their Library and blocks them for good: the join link no longer admits them, and nothing yet lets them back, not even a named invitation, so inviting a removed address is refused rather than sent. Leaving is different. A member who leaves can rejoin through the link. In both cases their states and reviews stay, so a return resumes where they were.
 
 The join page is `my.lymi.app/join/<token>`. The product Worker renders it on the server with Open Graph tags. It shows the deck's name, owner, card count, and language, a few cards drawn at random as examples, and one button. The title and Open Graph tags name the deck, owner, and count but no cards, so a chat's link preview shows none. A link that was turned off gets a page that says so. The exact path `/join` on the product origin keeps redirecting to the public site's beta page.
 
@@ -45,6 +47,7 @@ A learner reads the deck and grades their own states. Every write to the deck's 
 - **Keep `ALLOWED_EMAILS` and add classmates by hand.** Rejected. Every invitation would edit a production secret.
 - **Render the join page on `lymi.app`.** Rejected. Sign-in and sessions live only on `my.lymi.app` under [ADR 0008](0008-public-website-and-product-use-separate-origins.md).
 - **A `shared_decks` table next to `decks`.** Rejected. One table lets Library, the queue, and the API treat a shared deck as a deck.
+- **Let the owner deliver a named invitation by hand.** Reversed 19 September 2026. Lymi already sends account mail in all three languages, so an invitation it does not send is one the owner has to carry to a chat, which is what the join link is already for.
 - **Show no cards before joining.** Rejected 13 September 2026. Anyone with the link can join and see every card, so hiding them protected only the chat preview, which stays card-free, and left the page with nothing to show a classmate what they would study.
 - **Show the owner how many cards each member knows.** Rejected. That is a classroom product with consent questions this decision does not take on.
 
@@ -57,4 +60,4 @@ A learner reads the deck and grades their own states. Every write to the deck's 
 - Members cannot pause, annotate, or change the direction of a shared card.
 - A join appends to the owner's audit log and shows in their Activity.
 - Deck responses carry the caller's role and the owner's name, so Library and MCP tools know whose deck it is and whether they may write.
-- Ending the beta means removing `ALLOWED_EMAILS`. Invitations remain the way in.
+- The beta ended and `ALLOWED_EMAILS` is gone. An invitation now opens one deck, not an account.

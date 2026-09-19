@@ -2,7 +2,7 @@ import type { MemberRole } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import { audit, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -166,7 +166,10 @@ export async function join(
     .where(and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, userId)));
   const now = new Date();
   if (existing && !existing.removedAt) {
-    await runBatch(db, stateStatementsForLearner(db, deckId, userId, now));
+    await runBatch(db, [
+      ...stateStatementsForLearner(db, deckId, userId, now),
+      spendNamedInvitations(db, deckId, userId, now),
+    ]);
     return { ok: true as const, role: existing.role };
   }
   if (existing?.removedBy === "owner") {
@@ -269,7 +272,27 @@ export async function join(
         ? new ServiceError("not_found", "This deck is not published")
         : notFound("Deck");
   }
+  await spendNamedInvitations(db, deckId, userId, now);
   return { ok: true as const, role: "learner" as const };
+}
+
+/**
+ * A named invitation is spent by the address it names joining, however they came in, so People
+ * never shows somebody as waiting who is already there. Runs only once the join has landed.
+ */
+function spendNamedInvitations(db: Db, deckId: string, userId: string, now: Date) {
+  return db
+    .update(schema.deckInvitations)
+    .set({ acceptedAt: now, updatedAt: now })
+    .where(
+      and(
+        eq(schema.deckInvitations.deckId, deckId),
+        eq(schema.deckInvitations.kind, "named"),
+        isNull(schema.deckInvitations.revokedAt),
+        isNull(schema.deckInvitations.acceptedAt),
+        sql`${schema.deckInvitations.email} = (select lower(${schema.user.email}) from ${schema.user} where ${schema.user.id} = ${userId})`,
+      ),
+    );
 }
 
 /** Stop studying a deck. The states and reviews stay, so rejoining resumes. */

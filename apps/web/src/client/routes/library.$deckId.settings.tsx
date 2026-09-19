@@ -1,20 +1,35 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { LeaveDeckDialog } from "../components/leave-deck-dialog";
-import { RemoveMemberDialog } from "../components/member-dialogs";
+import {
+  CancelInvitationDialog,
+  InviteDialog,
+  RemoveMemberDialog,
+} from "../components/member-dialogs";
 import {
   ArchivedSectionsDialog,
   ArchiveSectionDialog,
   SectionNameDialog,
 } from "../components/section-dialogs";
-import { api, errorMessage, type Member, type Section } from "../lib/api";
+import {
+  ApiError,
+  api,
+  errorMessage,
+  type Invitation,
+  type Member,
+  refusalDetail,
+  type Section,
+} from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import {
   archivedSectionsQuery,
   deckCardsQuery,
   decksQuery,
+  invitationsQuery,
   joinLinkQuery,
   membersQuery,
   sectionsQuery,
@@ -72,7 +87,56 @@ function DeckSettings() {
   const [leaving, setLeaving] = useState(false);
   // Asked for whenever the owner is on the screen, so the group is there before anyone joins.
   const members = useQuery({ ...membersQuery(deckId), enabled: isOwner });
+  const invitations = useQuery({ ...invitationsQuery(deckId), enabled: isOwner });
   const [removing, setRemoving] = useState<Member | null>(null);
+  const [inviting, setInviting] = useState(false);
+  const [cancelling, setCancelling] = useState<Invitation | null>(null);
+
+  const invite = useMutation({
+    mutationFn: (email: string) => api.invite(deckId, email),
+    onSuccess: async () => {
+      // The dialog closes only once the invitation lands, so a refusal keeps what was typed.
+      setInviting(false);
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["decks", deckId, "invitations"] }),
+        qc.invalidateQueries({ queryKey: ["activity"] }),
+      ]);
+    },
+  });
+
+  // The server's reason is English and for integrations; the owner reads it in their language.
+  const inviteRefusal = (error: unknown): string => {
+    switch (refusalDetail(error, "reason") as InviteRefusal | null) {
+      case "owner":
+        return t`This deck is already yours.`;
+      case "member":
+        return t`They are already studying this deck.`;
+      case "removed":
+        return t`You removed them from this deck, and there is no way to add them again yet.`;
+      case "invited":
+        return t`They already have an invitation waiting.`;
+      case "full":
+        return plural(PENDING_INVITATION_LIMIT, {
+          one: "# person is waiting on an invitation. Cancel it, or wait for them to join.",
+          other: "# people are waiting on an invitation. Cancel one, or wait for someone to join.",
+        });
+    }
+    if (error instanceof ApiError && error.status === 429) {
+      return t`Too many invitations went out recently. Try again later.`;
+    }
+    return errorMessage(error);
+  };
+
+  const cancelInvite = useMutation({
+    mutationFn: (invitation: Invitation) => api.cancelInvitation(deckId, invitation.id),
+    onSuccess: async () => {
+      setCancelling(null);
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["decks", deckId, "invitations"] }),
+        qc.invalidateQueries({ queryKey: ["activity"] }),
+      ]);
+    },
+  });
 
   const remove = useMutation({
     mutationFn: (member: Member) => api.removeMember(deckId, member.userId),
@@ -151,10 +215,18 @@ function DeckSettings() {
         members={
           isOwner
             ? {
+                owner: deck.owner,
                 members: members.data,
+                invitations: invitations.data,
+                onInvite: () => setInviting(true),
                 onRemove: setRemoving,
+                onCancelInvite: setCancelling,
+                cancelling: cancelInvite.isPending ? cancelInvite.variables?.id : undefined,
                 removing: remove.isPending ? remove.variables?.userId : undefined,
-                error: members.isError ? t`Couldn’t load the members. Try again.` : undefined,
+                error:
+                  members.isError || invitations.isError
+                    ? t`Couldn’t load the people in this deck. Try again.`
+                    : undefined,
               }
             : undefined
         }
@@ -163,7 +235,6 @@ function DeckSettings() {
             ? {
                 deckName: deck.name,
                 link: joinLink.data?.link,
-                members: joinLink.data?.members ?? 0,
                 onTurnOn: () => turnOn.mutate(),
                 onTurnOff: () => turnOff.mutate(),
                 pending: turnOn.isPending ? "on" : turnOff.isPending ? "off" : undefined,
@@ -171,6 +242,29 @@ function DeckSettings() {
               }
             : undefined
         }
+      />
+      <InviteDialog
+        open={inviting}
+        onOpenChange={(open) => {
+          if (open) return;
+          setInviting(false);
+          invite.reset();
+        }}
+        onInvite={(email) => invite.mutate(email)}
+        onChange={() => invite.isError && invite.reset()}
+        pending={invite.isPending}
+        error={invite.isError ? inviteRefusal(invite.error) : undefined}
+      />
+      <CancelInvitationDialog
+        invitation={cancelling}
+        onOpenChange={(open) => {
+          if (open) return;
+          setCancelling(null);
+          cancelInvite.reset();
+        }}
+        onCancel={() => cancelling && cancelInvite.mutate(cancelling)}
+        pending={cancelInvite.isPending}
+        error={cancelInvite.isError ? t`Couldn’t cancel the invitation. Try again.` : undefined}
       />
       <RemoveMemberDialog
         member={removing}

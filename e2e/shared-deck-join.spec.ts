@@ -161,8 +161,9 @@ test("an owner shares a deck and a classmate joins through the link", async ({
       .getByRole("dialog")
       .getByRole("button", { name: "Turn off link", exact: true })
       .click();
-    await expect(page.getByRole("radio", { name: /^Link off/ })).toBeChecked();
-    await expect(page.getByText("The one person who joined keeps studying.")).toBeVisible();
+    await expect(page.getByRole("radio", { name: /^Private/ })).toBeChecked();
+    // The people who joined are in the list above, so the choice no longer counts them.
+    await expect(page.getByRole("list", { name: "People" }).getByRole("listitem")).toHaveCount(2);
     await expect(page.getByText(joinUrl)).toHaveCount(0);
 
     expect((await page.request.get(joinUrl)).status()).toBe(410);

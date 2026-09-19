@@ -1,9 +1,9 @@
-import type { JoinPreviewOut } from "@lymi/core";
-import { newId } from "@lymi/core";
+import type { InviteRefusal, JoinPreviewOut } from "@lymi/core";
+import { newId, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { and, eq, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
-import { auditStatementWhen } from "./audit";
-import { type ServiceContext, ServiceError } from "./context";
+import { audit, auditStatementWhen } from "./audit";
+import { notFound, type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
 import { join, ownedDeck } from "./members";
 
@@ -117,6 +117,9 @@ async function linkByToken(db: Db, token: string) {
   const [row] = await db
     .select({
       id: schema.deckInvitations.id,
+      kind: schema.deckInvitations.kind,
+      email: schema.deckInvitations.email,
+      acceptedAt: schema.deckInvitations.acceptedAt,
       revokedAt: schema.deckInvitations.revokedAt,
       deckId: schema.decks.id,
       deckName: schema.decks.name,
@@ -132,10 +135,15 @@ async function linkByToken(db: Db, token: string) {
   return row ?? null;
 }
 
-/** True when the token belongs to a link that is on, for a deck that is not archived. */
+/**
+ * True when the token could still let somebody in, whoever they turn out to be. The sign-in
+ * hold asks this, before anybody has said who they are; a named invitation's address is
+ * checked later, in `joinThroughLink`.
+ */
 export async function joinLinkAdmits(db: Db, token: string): Promise<boolean> {
   const link = await linkByToken(db, token);
-  return Boolean(link && !link.revokedAt && !link.deckArchivedAt);
+  if (!link || link.revokedAt || link.deckArchivedAt) return false;
+  return link.kind !== "named" || !link.acceptedAt;
 }
 
 /** What the join page may show this viewer while the link works, and nothing once it does not. */
@@ -158,13 +166,176 @@ export async function previewJoin(
 
 /**
  * Join the deck a working link points to. Repeats are safe; a learner the owner removed is
- * refused, and a link that is off or on an archived deck admits nobody.
+ * refused, and a link that is off or on an archived deck admits nobody. A named invitation
+ * admits only the address it names, so a learner signed in as somebody else is told which.
  */
 export async function joinThroughLink(ctx: ServiceContext, token: string) {
   const link = await linkByToken(ctx.db, token);
   if (!link || link.revokedAt || link.deckArchivedAt) {
     throw new ServiceError("not_found", "This join link does not work");
   }
+  if (link.kind === "named") {
+    const [caller] = await ctx.db
+      .select({ email: schema.user.email })
+      .from(schema.user)
+      .where(eq(schema.user.id, ctx.userId));
+    const invited = link.email ?? "";
+    if (caller?.email.toLowerCase() !== invited) {
+      // Naming the address is the point: otherwise the refusal reads as a broken link.
+      throw new ServiceError("forbidden", `This invitation is for ${invited}`, {
+        invitedEmail: invited,
+      });
+    }
+  }
+  // Joining spends the named invitation, so the address cannot hand its link on to somebody else.
   const { role } = await join(ctx, link.deckId, { invitationId: link.id });
   return { deckId: link.deckId, role };
+}
+
+function refused(code: "invalid" | "conflict", message: string, reason: InviteRefusal) {
+  return new ServiceError(code, message, { reason });
+}
+
+/** Invitations nobody has accepted yet, oldest first. Owner only. */
+export async function listInvitations(ctx: ServiceContext, deckId: string) {
+  await ownedDeck(ctx, deckId);
+  return ctx.db
+    .select({
+      id: schema.deckInvitations.id,
+      email: schema.deckInvitations.email,
+      invitedAt: schema.deckInvitations.createdAt,
+    })
+    .from(schema.deckInvitations)
+    .where(
+      and(
+        eq(schema.deckInvitations.deckId, deckId),
+        eq(schema.deckInvitations.kind, "named"),
+        isNull(schema.deckInvitations.revokedAt),
+        isNull(schema.deckInvitations.acceptedAt),
+      ),
+    )
+    .orderBy(schema.deckInvitations.createdAt);
+}
+
+/**
+ * Ask one address into the deck and send them the message. The invitation is a join link
+ * scoped to that address, so the token, the sign-in cookie and the join page are the machinery
+ * that already exists. ADR 0011.
+ */
+export async function inviteByEmail(
+  ctx: ServiceContext,
+  deckId: string,
+  rawEmail: string,
+  send: (
+    to: string,
+    token: string,
+    deck: { name: string; owner: string; cards: number },
+  ) => Promise<void>,
+) {
+  const { db, userId } = ctx;
+  const deck = await ownedDeck(ctx, deckId);
+  if (deck.archivedAt) {
+    throw new ServiceError("invalid", "Restore the deck before inviting anyone");
+  }
+  const email = rawEmail.trim().toLowerCase();
+
+  const [owner] = await db
+    .select({ email: schema.user.email })
+    .from(schema.user)
+    .where(eq(schema.user.id, userId));
+  if (owner?.email.toLowerCase() === email) {
+    throw refused("invalid", "This deck is already yours", "owner");
+  }
+
+  const [membership] = await db
+    .select({ removedAt: schema.deckMembers.removedAt, removedBy: schema.deckMembers.removedBy })
+    .from(schema.deckMembers)
+    .innerJoin(schema.user, eq(schema.user.id, schema.deckMembers.userId))
+    .where(and(eq(schema.deckMembers.deckId, deckId), sql`lower(${schema.user.email}) = ${email}`));
+  if (membership && !membership.removedAt) {
+    throw refused("conflict", "They are already studying this deck", "member");
+  }
+  // Removal is for good, so the message would carry a link the door refuses; a leaver may return.
+  if (membership?.removedBy === "owner") {
+    throw refused(
+      "conflict",
+      "You removed them from this deck, and nothing lets them back yet",
+      "removed",
+    );
+  }
+
+  const waiting = await listInvitations(ctx, deckId);
+  if (waiting.some((row) => row.email === email)) {
+    throw refused("conflict", "They already have an invitation waiting", "invited");
+  }
+  if (waiting.length >= PENDING_INVITATION_LIMIT) {
+    throw refused(
+      "invalid",
+      `That is ${PENDING_INVITATION_LIMIT} invitations waiting. Cancel one, or wait for someone to join.`,
+      "full",
+    );
+  }
+
+  const id = newId();
+  const token = newJoinToken();
+  // The partial unique index settles a race: the second insert does nothing and gets no audit.
+  await db.batch([
+    db
+      .insert(schema.deckInvitations)
+      .values({ id, deckId, kind: "named", email, token })
+      .onConflictDoNothing(),
+    auditStatementWhen(
+      ctx,
+      { entity: "deck", action: "invite", id: deckId, email },
+      schema.deckInvitations,
+      eq(schema.deckInvitations.id, id),
+    ),
+  ]);
+
+  const [written] = await db
+    .select({ token: schema.deckInvitations.token, invitedAt: schema.deckInvitations.createdAt })
+    .from(schema.deckInvitations)
+    .where(eq(schema.deckInvitations.id, id));
+  if (!written) throw refused("conflict", "They already have an invitation waiting", "invited");
+
+  const [counted] = await db
+    .select({ cards: sql<number>`count(*)` })
+    .from(schema.cards)
+    .where(and(eq(schema.cards.deckId, deckId), isNull(schema.cards.archivedAt)));
+
+  // Sending is last: a row with no message can be cancelled and resent, a message with no row cannot.
+  await send(email, token, {
+    name: deck.name,
+    owner: deck.owner.name,
+    cards: counted?.cards ?? 0,
+  });
+  return { id, email, invitedAt: written.invitedAt };
+}
+
+/** Take back an invitation nobody has accepted. Its link stops working. Owner only. */
+export async function cancelInvitation(ctx: ServiceContext, deckId: string, invitationId: string) {
+  const { db } = ctx;
+  await ownedDeck(ctx, deckId);
+  const now = new Date();
+  const [row] = await db
+    .update(schema.deckInvitations)
+    .set({ revokedAt: now, updatedAt: now })
+    .where(
+      and(
+        eq(schema.deckInvitations.id, invitationId),
+        eq(schema.deckInvitations.deckId, deckId),
+        eq(schema.deckInvitations.kind, "named"),
+        isNull(schema.deckInvitations.revokedAt),
+        isNull(schema.deckInvitations.acceptedAt),
+      ),
+    )
+    .returning({ email: schema.deckInvitations.email });
+  if (!row) throw notFound("Invitation");
+  await audit(ctx, {
+    entity: "deck",
+    action: "cancel_invite",
+    id: deckId,
+    email: row.email ?? "",
+  });
+  return { ok: true as const };
 }

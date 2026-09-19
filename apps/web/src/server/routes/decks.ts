@@ -7,6 +7,8 @@ import {
   EditionImportInput,
   EditionOut,
   EditionsOut,
+  InvitationOut,
+  InviteInput,
   JoinLinkOut,
   LanguageTag,
   MemberOut,
@@ -20,6 +22,7 @@ import { z } from "zod";
 import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
+import { limitInvitationSends } from "../invitation-rate-limit";
 import {
   approveEdition,
   approvePublicationMedia,
@@ -29,10 +32,12 @@ import {
   getJoinLink,
   getPublication,
   importEdition,
+  inviteByEmail,
   leave,
   listDeckCards,
   listDecks,
   listEditions,
+  listInvitations,
   listMembers,
   listPublicationMedia,
   publicationOut,
@@ -48,6 +53,12 @@ import {
   withdrawEdition,
 } from "../services";
 import { ServiceError } from "../services/context";
+import {
+  accountEmailLanguage,
+  addressEmailLanguage,
+  sendTransactionalEmail,
+} from "../services/email";
+import { cancelInvitation } from "../services/invitations";
 
 export const decks = new Hono<AppEnv>();
 
@@ -180,6 +191,70 @@ decks.delete(
     errors: [404],
   }),
   async (c) => c.json(await removeMember(ctxOf(c), c.req.param("id"), c.req.param("memberId"))),
+);
+
+const INVITATIONS =
+  "Owner only, from the app: any API key or token gets 403. An invitation is a join link " +
+  "scoped to one address, so it admits that account and no other, once.";
+
+decks.get(
+  "/:id/invitations",
+  describe({
+    tags: ["Decks"],
+    summary: "List a deck's open invitations",
+    learnerOnly: true,
+    description: `${INVITATIONS} Only invitations nobody has accepted or cancelled are listed.`,
+    ok: { schema: z.array(InvitationOut), description: "People who have not joined yet" },
+    errors: [404],
+  }),
+  async (c) => c.json(await listInvitations(ctxOf(c), c.req.param("id"))),
+);
+
+decks.post(
+  "/:id/invitations",
+  describe({
+    tags: ["Decks"],
+    summary: "Invite somebody to a deck",
+    learnerOnly: true,
+    description:
+      `${INVITATIONS} Lymi sends them the message. Inviting somebody already studying the deck, ` +
+      "or already invited, is a conflict rather than a second invitation.",
+    ok: { status: 201, schema: InvitationOut, description: "The invitation" },
+    errors: [400, 404, 409],
+  }),
+  limitInvitationSends,
+  body(InviteInput, "invitation"),
+  async (c) => {
+    const ctx = ctxOf(c);
+    const { email } = c.req.valid("json");
+    const language =
+      (await addressEmailLanguage(ctx.db, email)) ??
+      (await accountEmailLanguage(ctx.db, ctx.userId, c.req.raw));
+    const written = await inviteByEmail(ctx, c.req.param("id"), email, async (to, token, deck) => {
+      await sendTransactionalEmail(ctx, c.env, {
+        kind: "deck-invitation",
+        to,
+        language,
+        url: new URL(`/join/${token}`, c.env.PRODUCT_URL).toString(),
+        invitation: { deckName: deck.name, ownerName: deck.owner, cards: deck.cards },
+      });
+    });
+    return c.json(written, 201);
+  },
+);
+
+decks.delete(
+  "/:id/invitations/:invitationId",
+  describe({
+    tags: ["Decks"],
+    summary: "Cancel an invitation",
+    learnerOnly: true,
+    description: `${INVITATIONS} Its link stops working. An invitation already accepted is not found.`,
+    ok: { schema: OkOut, description: "Cancelled" },
+    errors: [404],
+  }),
+  async (c) =>
+    c.json(await cancelInvitation(ctxOf(c), c.req.param("id"), c.req.param("invitationId"))),
 );
 
 const JOIN_LINK =

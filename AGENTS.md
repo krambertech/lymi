@@ -40,7 +40,7 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 **Server layering.** `routes/*` parse, describe for OpenAPI, and return; `services/*` hold the logic and own the database; `db.ts` and the schema sit underneath. A route that reaches past a service into Drizzle is a layering break. Every write goes through `services/audit.ts`, which takes the actor and the connected app from the service context — the Activity screen exists so nothing an integration does lands unseen.
 
-**Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path.
+**Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `client/lib/api`, `client/lib/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel, and callers keep importing `@/lib/api`.
 
 ## Concise writing
 

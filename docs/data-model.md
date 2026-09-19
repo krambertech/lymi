@@ -1,6 +1,6 @@
 # Data model and API
 
-Reference for what is in D1 and what the API returns. Source of truth is `packages/core/src/schema` for tables, `packages/core/src/types.ts` for request bodies and `packages/core/src/responses.ts` for responses. This page describes; it does not decide.
+Reference for what is in D1 and what the API returns. Source of truth is `packages/core/src/schema` for tables, `packages/core/src/types.ts` for request bodies and `packages/core/src/responses` for responses. This page describes; it does not decide.
 
 ## Entities
 
@@ -375,7 +375,7 @@ Decks can mix languages or hold non-vocabulary cards. `cards.language` is nullab
 
 ## API
 
-The API is documented by the running app: [`lymi.app/docs`](https://lymi.app/docs) is the documentation site, [`lymi.app/docs/api`](https://lymi.app/docs/api) its reference, and [`my.lymi.app/api/openapi.json`](https://my.lymi.app/api/openapi.json) the OpenAPI 3.1 document the reference renders. The OpenAPI document is generated from the route descriptions in `apps/web/src/server/routes` and the Zod schemas in `packages/core/src/types.ts` (request bodies) and `packages/core/src/responses.ts` (responses), so it cannot drift from the code. This page keeps only what the document does not say.
+The API is documented by the running app: [`lymi.app/docs`](https://lymi.app/docs) is the documentation site, [`lymi.app/docs/api`](https://lymi.app/docs/api) its reference, and [`my.lymi.app/api/openapi.json`](https://my.lymi.app/api/openapi.json) the OpenAPI 3.1 document the reference renders. The OpenAPI document is generated from the route descriptions in `apps/web/src/server/routes` and the Zod schemas in `packages/core/src/types.ts` (request bodies) and `packages/core/src/responses` (responses), so it cannot drift from the code. This page keeps only what the document does not say.
 
 Three ways in, one shape on the server. A session cookie is the learner in the app, actor `user`, scope `write`. An `x-api-key` header is a personal key, actor `api`, with the key's scope. An OAuth bearer token is an MCP client, actor `mcp`. `apps/web/src/server/principal.ts` resolves all three into `{ user, actor, scope }`.
 

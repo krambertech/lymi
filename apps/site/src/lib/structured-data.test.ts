@@ -1,6 +1,8 @@
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
-import { deckBreadcrumbs, exploreStructuredData } from "./structured-data";
+import { LANGUAGES_QUESTIONS, TEACHERS_QUESTIONS } from "../components/landing/faq";
+import { pageI18n } from "./i18n";
+import { deckBreadcrumbs, exploreStructuredData, faqPage, marketingPage } from "./structured-data";
 
 const deck = (over: Partial<PublicDeckSummary> = {}): PublicDeckSummary => ({
   slug: "everyday-estonian",
@@ -84,5 +86,84 @@ describe("exploreStructuredData", () => {
     expect(data.mainEntity.itemListElement[0]?.item.url).toBe(
       "https://lymi.app/ru/explore/everyday-estonian",
     );
+  });
+});
+
+describe("marketingPage", () => {
+  const i18n = pageI18n("en");
+
+  it("answers each question with the sentence the page shows", () => {
+    const faq = faqPage(TEACHERS_QUESTIONS, i18n, {
+      name: "Lymi for teachers",
+      path: "/teachers",
+    });
+    expect(faq).toMatchObject({
+      "@type": "FAQPage",
+      "@id": "https://lymi.app/teachers#faq",
+      inLanguage: "en",
+    });
+    expect(faq.mainEntity).toHaveLength(TEACHERS_QUESTIONS.length);
+    expect(faq.mainEntity[0]).toEqual({
+      "@type": "Question",
+      name: i18n._(TEACHERS_QUESTIONS[0].question),
+      acceptedAnswer: { "@type": "Answer", text: i18n._(TEACHERS_QUESTIONS[0].answer) },
+    });
+  });
+
+  it("translates the questions with the rest of the page", () => {
+    const uk = pageI18n("uk");
+    const faq = faqPage(TEACHERS_QUESTIONS, uk, {
+      name: "Lymi для вчителів",
+      path: "/uk/teachers",
+    });
+    expect(faq.inLanguage).toBe("uk");
+    expect(faq.mainEntity[0].name).toBe(uk._(TEACHERS_QUESTIONS[0].question));
+    expect(faq.mainEntity[0].name).not.toBe(i18n._(TEACHERS_QUESTIONS[0].question));
+  });
+
+  it("names the product as free, open source and the same entity on every page", () => {
+    const [app, faq] = marketingPage({
+      name: "Lymi for language learning",
+      description: "Keep the words.",
+      path: "/languages",
+      i18n,
+      questions: LANGUAGES_QUESTIONS,
+    });
+    expect(app).toMatchObject({
+      "@type": "SoftwareApplication",
+      "@id": "https://lymi.app/#app",
+      url: "https://lymi.app/languages",
+      isAccessibleForFree: true,
+      sameAs: ["https://github.com/krambertech/lymi"],
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    });
+    expect(faq).toMatchObject({ "@type": "FAQPage" });
+  });
+
+  it("declares the organization and the site on the homepage only", () => {
+    const home = marketingPage({
+      name: "Lymi",
+      description: "A flashcard app.",
+      path: "/",
+      i18n,
+      entity: true,
+    });
+    expect(home.map((data) => data["@type"])).toEqual([
+      "Organization",
+      "WebSite",
+      "SoftwareApplication",
+    ]);
+    expect(home[0]).toMatchObject({ sameAs: ["https://github.com/krambertech/lymi"] });
+    expect(home[1]).toMatchObject({ publisher: { "@id": "https://lymi.app/#organization" } });
+  });
+
+  it("leaves the FAQ out of a page that asks nothing", () => {
+    const data = marketingPage({
+      name: "Estonian",
+      description: "Estonian vocabulary.",
+      path: "/languages/estonian",
+      i18n,
+    });
+    expect(data.map((entry) => entry["@type"])).toEqual(["SoftwareApplication"]);
   });
 });

@@ -15,6 +15,7 @@ Lymi has two permanent origins and two independent Cloudflare Workers. `lymi-sit
 | `lymi.app/uk/*`, `lymi.app/ru/*` | `apps/site` | Ukrainian and Russian editions of every public page except privacy, terms, support and documentation. |
 | `lymi.app/privacy`, `/terms`, `/support` | `apps/site` | Public privacy, service terms and support information. |
 | `lymi.app/docs/*` | `apps/site` | Public documentation, MCP setup and API reference. |
+| `lymi.app/llms.txt` | `apps/site` | Plain-text description of Lymi for an assistant reading the site, with the pages worth following. |
 | `lymi.app/api/health` | `apps/site` Worker | Public deployment identity and active version. |
 | `my.lymi.app/` | `apps/web` | Session-aware product entry. A valid session opens Today; otherwise it opens sign-in. |
 | `my.lymi.app/app`, `/today`, `/library`, `/review`, `/you`, `/activity`, `/archived`, `/insights` | `apps/web` | Product screens. Private data requires authentication. |
@@ -35,6 +36,12 @@ Every public marketing page ships in English, Ukrainian and Russian. English liv
 `apps/site/src/lib/routes.ts` lists the translated pages, the English-only paths and the pages rendered per request. The sitemap, the `hreflang` alternates, the footer language links and the links between pages all read from it. `/sitemap.xml` is a prerendered index of `/sitemap-pages.xml`, built from that list, and `/sitemap-decks.xml`, which lists every published deck in each locale at request time.
 
 A published deck page translates its own chrome, title, description and structured data, while the deck's name, summary, sections and cards stay in the deck's one meaning language.
+
+## Structured data and llms.txt
+
+`apps/site/src/lib/structured-data.ts` builds every page's JSON-LD. A marketing page declares the `SoftwareApplication`, which carries the same `@id`, the AGPL licence and the repository in `sameAs` wherever it appears, and a `FAQPage` built from the same message descriptors the page renders, so a rich-result answer can never differ from the visible one. The homepage adds the `Organization` and the `WebSite`. The questions live in `apps/site/src/components/landing/questions.ts` as plain strings; a question that needs a link puts it beside the answer rather than inside it.
+
+`/llms.txt` gives an assistant one definition of Lymi, taken word for word from the homepage description, and the URLs worth following. It holds no count, and `llms.test.ts` fails when one appears.
 
 Use case pages sit under one **Use cases** menu in the header rather than as links of their own, so the header stays the same width as pages are added. `apps/site/src/components/landing/site-links.ts` lists them in menu order, with a narrower page such as Estonian under its broader one; the header menu, the phone menu and the footer all read that list. Privacy, terms and support use the same header. `routes.test.ts` fails when a page in `src/pages` is on neither list, when a translated page lacks a locale, or when the sitemap misses a page, so a new public page needs its `/uk/` and `/ru/` files or a place on the English-only list before `pnpm verify` passes.
 

@@ -83,8 +83,8 @@ export function StreakPage() {
           ))}
         </div>
         <p className="text-base text-text-2">
-          The pill and the modal carry the streak's flame, which says whether the streak is alive.
-          Its states are on{" "}
+          The pill and the modal carry the flame, which says how far today has come; the number says
+          whether the streak is alive. Its states are on{" "}
           <DocLink to={{ kind: "page", page: "flame" }} className={link}>
             Flame
           </DocLink>

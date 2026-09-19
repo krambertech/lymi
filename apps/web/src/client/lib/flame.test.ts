@@ -10,7 +10,7 @@ import {
 } from "./flame";
 
 describe("flameSize", () => {
-  it("is out only when the streak has broken", () => {
+  it("is out only when told", () => {
     expect(flameSize(0.5, true)).toBe(FLAME_SIZE.out);
     expect(flameSize(0)).toBeGreaterThan(FLAME_SIZE.out);
   });
@@ -48,9 +48,14 @@ describe("lanternFor", () => {
     days: [],
   });
 
-  it("has no flame without a streak, however much today holds", () => {
+  it("is out only with no streak and no review yet today", () => {
     expect(lanternFor(summary(0, 0))).toEqual({ out: true, progress: 0 });
-    expect(lanternFor(summary(0, 49))).toEqual({ out: true, progress: 0 });
+  });
+
+  it("lights on the first review without a streak and grows toward the goal", () => {
+    expect(lanternFor(summary(0, 1))).toEqual({ out: false, progress: 0.02 });
+    expect(lanternFor(summary(0, 49))).toEqual({ out: false, progress: 0.98 });
+    expect(lanternFor(summary(1, 50, "goal_met"))).toEqual({ out: false, progress: 1 });
   });
 
   it("grows with today's attempts while a streak is alive", () => {
@@ -88,7 +93,8 @@ describe("streakFlameFor", () => {
 
   const cases: [string, StreakOut, StreakFlameState][] = [
     ["a new learner", summary(0, 0), "out"],
-    ["no streak with reviews short of the goal", summary(0, 49), "out"],
+    ["no streak after the first review", summary(0, 1), "lit"],
+    ["no streak with reviews short of the goal", summary(0, 49), "lit"],
     ["a streak with today's goal open", summary(4, 0), "lit"],
     ["a streak partway to the goal", summary(4, 30), "lit"],
     ["the goal met, starting a streak", summary(1, 50, "goal_met"), "full"],

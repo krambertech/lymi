@@ -1,7 +1,13 @@
 import { clsx } from "clsx";
-import { interpolate, type MotionStyle, motion, useTransform } from "motion/react";
-import type { CSSProperties } from "react";
-import { FLAME_SIZE, flameSize } from "../lib/flame";
+import {
+  interpolate,
+  type MotionStyle,
+  motion,
+  useReducedMotionConfig,
+  useTransform,
+} from "motion/react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
+import { FLAME_MOTION, FLAME_SIZE, FLAME_SPARKS, flameSize } from "../lib/flame";
 import { useFlame } from "../lib/use-flame";
 import {
   draw,
@@ -28,9 +34,9 @@ interface Props {
    * the learner's: login, the app icon, public pages.
    */
   progress?: number | undefined;
-  /** There is no streak. The only time the flame is out, never for nothing due; reviews feed nothing until it catches. */
+  /** No streak and no review yet today. The only time the flame is out, never for nothing due. */
   out?: boolean | undefined;
-  /** Bump by one for every accepted review, whatever the grade. Each change feeds the flame. */
+  /** Bump by one for every accepted review, whatever the grade. Each change feeds the flame and throws a spark. */
   fed?: number | undefined;
   /** The condition to grow from on mount, so an arriving lantern continues the one before it. */
   from?: number | "brand" | "out" | undefined;
@@ -103,6 +109,68 @@ export function Lantern({
         </motion.g>
         {LANTERN_FRAME.map((s, i) => draw(s, `frame-${i}`))}
       </g>
+      <Sparks fed={fed} out={out} />
     </svg>
+  );
+}
+
+/** Where the embers leave the lantern: the top of the hood, where a real one vents. */
+const VENT = { x: 60, y: 38 } as const;
+
+/**
+ * The embers each grade throws up out of the hood, drawn over the metal. The breath says the
+ * flame was fed; the spark says so at a glance.
+ */
+function Sparks({ fed, out }: { fed: number; out: boolean }) {
+  const reduce = useReducedMotionConfig() ?? false;
+  const [bursts, setBursts] = useState<number[]>([]);
+  const lastFed = useRef(fed);
+  const nextId = useRef(0);
+
+  useEffect(() => {
+    if (fed === lastFed.current) return;
+    lastFed.current = fed;
+    if (reduce || out) return;
+    const id = nextId.current++;
+    // Three sets at most are ever in the air, however fast the grades come.
+    setBursts((b) => [...b.slice(-2), id]);
+  }, [fed, out, reduce]);
+
+  const { visualDuration } = FLAME_MOTION.spark;
+  return (
+    <g className="lantern-sparks">
+      {bursts.map((id) => {
+        const set = FLAME_SPARKS[id % FLAME_SPARKS.length] ?? FLAME_SPARKS[0];
+        const last = set.length - 1;
+        return (
+          <g key={id}>
+            {set.map((e, i) => (
+              // A zero-length round-capped stroke that does not scale: a dot of the same px at any size.
+              <motion.path
+                key={e.at}
+                d={`M${VENT.x} ${VENT.y}h0`}
+                stroke="var(--amber)"
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+                initial={{ x: 0, y: 0, opacity: 0, strokeWidth: e.px }}
+                animate={{ x: e.x, y: e.y, opacity: [0, 1, 1, 0], strokeWidth: e.px * 0.5 }}
+                transition={{
+                  default: { ...FLAME_MOTION.spark, delay: e.at / 1000 },
+                  opacity: {
+                    duration: visualDuration,
+                    times: [0, 0.1, 0.5, 1],
+                    ease: "easeOut",
+                    delay: e.at / 1000,
+                  },
+                }}
+                onAnimationComplete={() => {
+                  if (i === last) setBursts((b) => b.filter((x) => x !== id));
+                }}
+              />
+            ))}
+          </g>
+        );
+      })}
+    </g>
   );
 }

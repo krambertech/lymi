@@ -22,10 +22,32 @@ export const FLAME_MOTION = {
   goOut: spring(1.6),
   breathIn: spring(0.28),
   breathOut: spring(0.9),
+  spark: spring(0.62),
 } as const;
 
 /** How deep a breath goes: one review, and the goal. */
 export const FLAME_BREATH = { feed: 1, rise: 1.6 } as const;
+
+/**
+ * The embers a grade throws up out of the hood: where each drifts to in the lantern's 120 unit
+ * box, how long after the grade it leaves in ms, and its size in px, which holds at any lantern
+ * size. Grades take the sets in turn, so a run of them never repeats one picture.
+ */
+export const FLAME_SPARKS = [
+  [
+    { x: -12, y: -34, at: 0, px: 3.5 },
+    { x: 9, y: -42, at: 70, px: 3 },
+  ],
+  [
+    { x: 6, y: -38, at: 0, px: 3.5 },
+    { x: -15, y: -28, at: 50, px: 3 },
+    { x: 17, y: -24, at: 120, px: 2.5 },
+  ],
+  [
+    { x: -3, y: -44, at: 0, px: 3.5 },
+    { x: 14, y: -31, at: 80, px: 3 },
+  ],
+] as const;
 
 /** Where the flame stands for a day's progress. Undefined progress is the brand flame. */
 export function flameSize(progress: number | undefined, out = false): number {
@@ -38,15 +60,15 @@ export function flameSize(progress: number | undefined, out = false): number {
 }
 
 /**
- * What the lantern shows for a streak. No run is no flame, whatever today holds, so the flame
- * catches when today's goal starts the run again; with a run, today's attempts grow it to full.
+ * What the lantern shows for a day. The flame is out only with no streak and no review yet
+ * today, so the first review lights it; from there today's attempts grow it to full at the goal.
  */
 export function lanternFor(summary: StreakOut | undefined): {
   out: boolean;
   progress: number | undefined;
 } {
   if (!summary) return { out: false, progress: undefined };
-  if (summary.current === 0) return { out: true, progress: 0 };
+  if (summary.current === 0 && summary.today.attempts === 0) return { out: true, progress: 0 };
   if (summary.today.outcome === "goal_met" || summary.today.outcome === "exhausted")
     return { out: false, progress: 1 };
   const { attempts, goal } = summary.today;

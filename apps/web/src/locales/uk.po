@@ -427,6 +427,9 @@ msgstr "{deck} повернулася на своє місце."
 msgid "{deck} is over {place}."
 msgstr "{deck} над «{place}»."
 
+msgid "{done} of {size}"
+msgstr "{done} із {size}"
+
 msgid "{due, plural, one {# card to review} other {# cards to review}}"
 msgstr "{due, plural, one {# картка для повторення} few {# картки для повторення} many {# карток для повторення} other {# картки для повторення}}"
 
@@ -548,9 +551,6 @@ msgstr "{unchecked, plural, one {Спершу перевір ще # вид ка�
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
-
-msgid "<0/> of {size}"
-msgstr "<0/> із {size}"
 
 #. placeholder {0}: section.name
 msgid "<0>{0} is ready.</0> Start it to review its cards."

@@ -786,6 +786,10 @@
     opacity: 0.8;
   }
 }
+/* A grade's spark: embers out of the lantern's hood, wearing the flame's glow. */
+.lantern-sparks {
+  filter: drop-shadow(0 0 3px var(--glow));
+}
 /* Embers lift off the flame as it rises: a handful, once. */
 .ember {
   opacity: 0;

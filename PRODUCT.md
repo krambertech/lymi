@@ -64,13 +64,13 @@ Today also offers three rounds beside the day's draw: **New cards**, which start
 
 Three words: warm, calm, quick.
 
-The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. Its flame is the continuity of remembering: repetition keeps it alive, so it goes out only when the streak breaks. What it shows in the signed-in product is in `DESIGN.md`, under "The lantern" and "The flame".
+The name is cut from lyhty, the Finnish word for lantern. The symbol is a storm lantern, the kind you carry. Its flame is the continuity of remembering: repetition keeps it alive, so it is out only when there is no streak and no review yet today, and the first review lights it again. What it shows in the signed-in product is in `DESIGN.md`, under "The lantern" and "The flame".
 
 Brand-only appearances do not expose learner state. The app icon, login, and public surfaces use one canonical healthy flame. That is the emotional register: a small warm light you bring with you, not a coach, not a game, not a productivity dashboard.
 
 Voice is plain and friendly. It says "Daily goal reached" when the chosen number is complete and "Nothing left today" when no useful reviews remain, not "Congratulations!" It counts cards, not points. It never nags. Undo is everywhere, because cheap mistakes are most of what "delightful" means in a review app.
 
-Playfulness is allowed in four places, each tied to honest product state: the flame growing after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. Everywhere else the interface is quiet. The lantern is the only thing that glows; every other surface is flat with one hairline edge.
+Playfulness is allowed in four places, each tied to honest product state: the flame growing and sparking after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. Everywhere else the interface is quiet. The lantern is the only thing that glows; every other surface is flat with one hairline edge.
 
 ## Anti-references
 
@@ -94,7 +94,7 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 
 - WCAG 2.2 AA is the floor. Body text meets 4.5:1 in both themes, including muted text and placeholders.
 - Light and dark themes are both first-class. The app follows the OS unless the user picks one. Dark is a warm room lit by the lantern, not black.
-- All motion respects `prefers-reduced-motion`. The flame's flicker, its breath after a review, and its rise at the goal each have a still alternative: the flame takes its new size and halo at once.
+- All motion respects `prefers-reduced-motion`. The flame's flicker, its breath and spark after a review, and its rise at the goal each have a still alternative: the flame takes its new size and halo at once, and no spark plays.
 - Everything works from the keyboard on desktop: grading (1 to 4), reveal (Space), add (N), review (R), search (/).
 - Tap targets are at least 44 px on the phone. Grade buttons are 72 px tall.
 - Inputs are 16 px or larger so iOS does not zoom.

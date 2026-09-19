@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
-import { BookMarked, Loader2, Pointer, Volume2, X } from "lucide-react";
+import { BookMarked, Bookmark, Loader2, Pointer, Tag, Volume2, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -635,6 +635,9 @@ export function ReviewCard({
               {aiExample && <SourceChip source="ai" field="example" compact />}
               {card.source && (
                 <Chip size="sm" className="min-w-0 max-w-full">
+                  {/* The editor's icons for these fields, so a source and a tag read apart. */}
+                  <Bookmark className="size-3 shrink-0" aria-hidden="true" />
+                  <span className="sr-only">{t`Source`}</span>
                   <span className="truncate">{card.source}</span>
                 </Chip>
               )}
@@ -643,6 +646,7 @@ export function ReviewCard({
                   {card.tags.map((tag) => (
                     <li key={tag} className="min-w-0 max-w-full">
                       <Chip size="sm" className="min-w-0 max-w-full">
+                        <Tag className="size-3 shrink-0" aria-hidden="true" />
                         <span className="truncate">{tag}</span>
                       </Chip>
                     </li>

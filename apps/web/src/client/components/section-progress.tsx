@@ -73,8 +73,8 @@ export function SectionProgress({
     detail = (
       <Plural
         value={current.notStarted}
-        one={`${nextName} opens once the last card of ${currentName} comes up in review.`}
-        other={`${nextName} opens once the last # cards of ${currentName} come up in review.`}
+        one={`The next section opens once the last card of this section comes up in review.`}
+        other={`The next section opens once the last # cards of this section come up in review.`}
       />
     );
   } else {
@@ -82,8 +82,8 @@ export function SectionProgress({
     detail = (
       <Plural
         value={current.total}
-        one={`${nextName} opens when you know ${needed} of # card.`}
-        other={`${nextName} opens when you know ${needed} of # cards.`}
+        one={`The next section opens when you know ${needed} of # card.`}
+        other={`The next section opens when you know ${needed} of # cards.`}
       />
     );
   }

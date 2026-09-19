@@ -50,7 +50,7 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
   await test.step("only the first section is in review, and the rest can be read", async () => {
     await page.goto(`/library/${deckId}`);
     await expect(today).toContainText(/2\s*cards to review now/);
-    await expect(today).toContainText("Numbers opens when you know 2 of 2 cards.");
+    await expect(today).toContainText("The next section opens when you know 2 of 2 cards.");
     await expect(heading("Greetings")).toBeVisible();
     await expect(heading("Numbers")).toHaveAccessibleName(/not open yet/);
     await expect(row("leib")).toContainText("Not in review yet");
@@ -69,11 +69,11 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
     await today.getByRole("button", { name: "Start Numbers", exact: true }).click();
     await expect(page.getByText("Started Numbers", { exact: true })).toBeVisible();
     await expect(today).toContainText(/1\s*card to review now/);
-    await expect(today).toContainText("Food opens when you know 1 of 1 card.");
+    await expect(today).toContainText("The next section opens when you know 1 of 1 card.");
 
     // A retry from another device changes nothing.
     await page.reload();
-    await expect(today).toContainText("Food opens when you know 1 of 1 card.");
+    await expect(today).toContainText("The next section opens when you know 1 of 1 card.");
   });
 
   await test.step("Go to finds the current section in a long list", async () => {

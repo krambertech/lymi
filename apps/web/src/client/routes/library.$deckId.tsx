@@ -140,6 +140,8 @@ function DeckPage() {
       params: { deckId },
       search: id ? { card: id } : {},
       replace: !!openCardId,
+      // The card opens over the list, so the list keeps its scroll position.
+      resetScroll: false,
     });
   const playAudio = (card: Card) => {
     toast.close("audio");

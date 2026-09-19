@@ -17,11 +17,11 @@ import {
   Check,
   ChevronDown,
   Image as ImageIcon,
+  Library,
   Link2,
   NotebookPen,
   Plus,
   Settings2,
-  Signpost,
   Tag,
   TextQuote,
 } from "lucide-react";
@@ -754,7 +754,7 @@ export function CardForm({
               {pronunciationField}
             </FieldChip>
             <FieldChip
-              icon={Signpost}
+              icon={Library}
               label={t`Source`}
               value={source.trim()}
               invalid={!!invalid.source}

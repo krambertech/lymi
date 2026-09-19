@@ -19,6 +19,7 @@ import { clsx } from "clsx";
 import { Check, Lock, MapPin, MoreHorizontal, PencilLine, Plus, Settings2 } from "lucide-react";
 import { type ButtonHTMLAttributes, type ReactNode, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/button";
+import { SectionRing } from "../components/section-ring";
 import { StateIcon, stateMarks } from "../components/state-mark";
 import {
   DropdownMenu,
@@ -393,7 +394,11 @@ function SectionHeading({
   const sectionName = section?.name ?? "";
   return (
     <div className="flex min-h-11 flex-wrap items-center gap-x-2 gap-y-1 px-1 pt-6 pb-2">
-      {locked && <Lock className="size-4 shrink-0 text-muted" aria-hidden="true" />}
+      {locked ? (
+        <Lock className="size-4 shrink-0 text-muted" aria-hidden="true" />
+      ) : (
+        section && <SectionRing known={section.known} total={section.total} />
+      )}
       <h2
         id={section ? sectionAnchor(section.id) : undefined}
         tabIndex={section ? -1 : undefined}

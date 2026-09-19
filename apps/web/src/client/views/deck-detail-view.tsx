@@ -8,13 +8,13 @@ import {
   KeyRound,
   Layers,
   ListFilter,
-  ListTree,
   LogOut,
   MoreHorizontal,
   Plug,
   Plus,
   Search,
   Settings2,
+  Signpost,
   SquareCheck,
   X,
 } from "lucide-react";
@@ -899,7 +899,7 @@ export function DeckDetailView({
         {sectionActions && (
           <>
             <DropdownMenuItem onClick={sectionActions.onCreate}>
-              <ListTree />
+              <Signpost />
               <Trans>New section</Trans>
             </DropdownMenuItem>
             <DropdownMenuItem

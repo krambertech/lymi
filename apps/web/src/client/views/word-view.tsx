@@ -18,11 +18,11 @@ import {
   ChevronRight,
   FolderInput,
   Image as ImageIcon,
-  ListTree,
   type LucideIcon,
   MoreHorizontal,
   Pencil,
   Plus,
+  Signpost,
   Sparkle,
   Volume2,
 } from "lucide-react";
@@ -512,7 +512,7 @@ export function WordView({
             )}
             {onMoveToSection && (
               <DropdownMenuItem onClick={onMoveToSection}>
-                <ListTree />
+                <Signpost />
                 <Trans>Move to section…</Trans>
               </DropdownMenuItem>
             )}

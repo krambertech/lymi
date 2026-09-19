@@ -32,14 +32,6 @@ msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
-#. placeholder {0}: current.notStarted
-msgid "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
-msgstr "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
-
-#. placeholder {0}: current.total
-msgid "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
-msgstr "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
-
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
@@ -200,6 +192,14 @@ msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 #. placeholder {0}: others + 1
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, one {Start section} other {Start # sections}}"
+
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+msgstr "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
 
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
@@ -3659,6 +3659,9 @@ msgstr "You cannot join this deck through this link."
 
 msgid "You don’t need to do anything."
 msgstr "You don’t need to do anything."
+
+msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
+msgstr "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "You removed them from this deck, so you can’t invite them again."

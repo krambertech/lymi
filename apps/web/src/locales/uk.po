@@ -32,14 +32,6 @@ msgstr "{0, plural, =0 {Картки потрапили в колоди, які 
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} з # повторення} few {{2} з # повторень} many {{2} з # повторень} other {{2} з # повторення}}"
 
-#. placeholder {0}: current.notStarted
-msgid "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
-msgstr "{0, plural, =1 {{nextName} відкриється, щойно остання картка з «{currentName}» з’явиться в повторенні.} one {{nextName} відкриється, щойно ще # картка з «{currentName}» з’явиться в повторенні.} few {{nextName} відкриється, щойно останні # картки з «{currentName}» з’являться в повтореннях.} many {{nextName} відкриється, щойно останні # карток з «{currentName}» з’являться в повтореннях.} other {{nextName} відкриється, щойно останні # картки з «{currentName}» з’являться в повтореннях.}}"
-
-#. placeholder {0}: current.total
-msgid "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
-msgstr "{0, plural, one {{nextName} відкриється, коли ти засвоїш {needed} з # картки.} few {{nextName} відкриється, коли ти засвоїш {needed} з # карток.} many {{nextName} відкриється, коли ти засвоїш {needed} з # карток.} other {{nextName} відкриється, коли ти засвоїш {needed} з # картки.}}"
-
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# архівна картка прийде в архів.} few {# архівні картки прийдуть в архів.} many {# архівних карток прийдуть в архів.} other {# архівної картки прийдуть в архів.}}"
@@ -200,6 +192,14 @@ msgstr "{0, plural, one {Показати ще # старіший запис} fe
 #. placeholder {0}: others + 1
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, =1 {Почати розділ} one {Почати # розділ} few {Почати # розділи} many {Почати # розділів} other {Почати # розділу}}"
+
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+msgstr "{0, plural, =1 {Наступний розділ відкриється, щойно остання картка цього розділу з’явиться в повторенні.} one {Наступний розділ відкриється, щойно ще # картка цього розділу з’явиться в повторенні.} few {Наступний розділ відкриється, щойно останні # картки цього розділу з’являться в повтореннях.} many {Наступний розділ відкриється, щойно останні # карток цього розділу з’являться в повтореннях.} other {Наступний розділ відкриється, щойно останні # картки цього розділу з’являться в повтореннях.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {Наступний розділ відкриється, коли ти засвоїш {needed} з # картки.} few {Наступний розділ відкриється, коли ти засвоїш {needed} з # карток.} many {Наступний розділ відкриється, коли ти засвоїш {needed} з # карток.} other {Наступний розділ відкриється, коли ти засвоїш {needed} з # картки.}}"
 
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
@@ -3659,6 +3659,9 @@ msgstr "Через це посилання не можна приєднатис�
 
 msgid "You don’t need to do anything."
 msgstr "Нічого робити не потрібно."
+
+msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
+msgstr "Засвоєно {knownN} з {total, plural, one {# картки} few {# карток} many {# карток} other {# картки}}"
 
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "Цю людину вилучено з колоди, тож запросити її знову не можна."

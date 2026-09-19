@@ -142,6 +142,12 @@ function Shell() {
   useEffect(() => {
     if (me.isError && me.error instanceof ApiError && me.error.status === 401 && !bare) {
       const returnTo = `${window.location.pathname}${window.location.search}`;
+      // The Worker already sends a signed-out Explore visit to the site; this covers a shell the
+      // service worker served.
+      if (/^\/explore(?:\/|$)/.test(window.location.pathname)) {
+        window.location.replace(publicSiteUrl(returnTo));
+        return;
+      }
       navigate({ to: "/login", search: { returnTo } });
     }
   }, [me.isError, me.error, bare, navigate]);

@@ -52,4 +52,4 @@ Adding leaves the learner on the page. The fan gathers into one squared stack un
 
 Search, the shelf filters and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
 
-A deck is still shared as `lymi.app/explore/<slug>` and never as a product address, so a link works for someone who has no account. A signed-out visitor who opens the product address is sent to sign in and lands here afterwards, like any other screen behind authentication.
+A deck is still shared as `lymi.app/explore/<slug>` and never as a product address, so a link works for someone who has no account. A visitor without a live session who opens `my.lymi.app/explore` or `my.lymi.app/explore/<slug>` is sent to the same path and query on `lymi.app` with a temporary redirect, because the answer depends on the session; a signed-in learner stays on the product page.

@@ -9,6 +9,7 @@ import {
   jsonForScript,
   languageName,
   movedDeckPath,
+  productAddPath,
   SPREAD_SIZE,
   STACK_SIZE,
   sectionPath,
@@ -241,6 +242,25 @@ describe("movedDeckPath", () => {
   it("leaves every other address alone", () => {
     for (const path of ["/explore", "/explore/everyday-estonian", "/decks", "/api/decks/x", "/"]) {
       expect(movedDeckPath(path)).toBeNull();
+    }
+  });
+});
+
+describe("productAddPath", () => {
+  it("names the product's add page for a deck", () => {
+    expect(productAddPath("/add/everyday-estonian")).toBe("/add/everyday-estonian");
+    expect(productAddPath("/add/everyday-estonian/")).toBe("/add/everyday-estonian");
+  });
+
+  it("leaves every other address alone", () => {
+    for (const path of [
+      "/add",
+      "/add/",
+      "/uk/add/everyday-estonian",
+      "/add/a/b",
+      "/add/Bad_Slug",
+    ]) {
+      expect(productAddPath(path)).toBeNull();
     }
   });
 });

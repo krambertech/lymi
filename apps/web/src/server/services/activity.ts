@@ -282,13 +282,10 @@ function kindOf(row: Row): ActivityKind | null {
  */
 function groupKey(row: Row, kind: ActivityKind, day: string): string {
   const caller = `${row.actor}:${row.actorClient ?? ""}`;
-  // Cards group across decks. Invitations group per address, or a class asked in one sitting
-  // would be one row naming only the last of them.
-  const one = kind.startsWith("cards_")
-    ? ""
-    : kind.startsWith("invitation_")
-      ? `${row.entityId}|${invitedAddress(row) ?? ""}`
-      : row.entityId;
+  let one = row.entityId;
+  if (kind.startsWith("cards_")) one = "";
+  // Per address, or a class invited in one sitting would be one row naming only the last of them.
+  if (kind.startsWith("invitation_")) one = `${row.entityId}|${invitedAddress(row) ?? ""}`;
   return `${day}|${caller}|${kind}|${one}`;
 }
 
@@ -481,18 +478,14 @@ async function present(ctx: ServiceContext, groups: Group[]): Promise<Entry[]> {
 
     const where = deck.get(newest.entityId);
     if (!where) continue;
-    const who = memberOf(newest);
-    const invited = invitedAddress(newest);
-    entries.push({
-      ...base,
-      deck: naming(where),
-      // Member names and invited addresses are the owner's to see, and only their decks
-      // raise people rows.
-      person:
-        where.userId !== userId
-          ? null
-          : (invited ?? (who ? (member.get(who)?.name ?? null) : null)),
-    });
+    // Member names and invited addresses are the owner's to see, and only their decks raise
+    // people rows.
+    let person: string | null = null;
+    if (where.userId === userId) {
+      const who = memberOf(newest);
+      person = invitedAddress(newest) ?? (who ? (member.get(who)?.name ?? null) : null);
+    }
+    entries.push({ ...base, deck: naming(where), person });
   }
   return entries;
 }

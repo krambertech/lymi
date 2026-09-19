@@ -46,7 +46,6 @@ export type AuditEvent =
       entity: "deck";
       action: "invite" | "cancel_invite";
       id: string;
-      /** The address the owner typed, which is theirs to read back in their own Activity. */
       email: string;
       details?: Details;
     }

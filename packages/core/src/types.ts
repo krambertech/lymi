@@ -85,7 +85,7 @@ export type InviteInput = z.infer<typeof InviteInput>;
 /** How many people may be waiting on an invitation to one deck at once. ADR 0011. */
 export const PENDING_INVITATION_LIMIT = 20;
 
-/** Why an invitation was refused, in the response's `issues`, so the app can say it in the learner's language. */
+/** Why an invitation was refused, carried in `issues` so the app can say it in the learner's language. */
 export type InviteRefusal = "owner" | "member" | "removed" | "invited" | "full";
 
 /** What a learner may do in a deck. Only `owner` and `learner` are granted today. ADR 0011. */

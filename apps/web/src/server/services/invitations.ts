@@ -255,8 +255,7 @@ export async function inviteByEmail(
   if (membership && !membership.removedAt) {
     throw refused("conflict", "They are already studying this deck", "member");
   }
-  // Removal is for good, so the message would carry a link its reader cannot use. Somebody
-  // who left is welcome back, and the invitation is how the owner says so.
+  // Removal is for good, so the message would carry a link the door refuses; a leaver may return.
   if (membership?.removedBy === "owner") {
     throw refused(
       "conflict",
@@ -289,7 +288,6 @@ export async function inviteByEmail(
       ctx,
       { entity: "deck", action: "invite", id: deckId, email },
       schema.deckInvitations,
-      // The row exists only if this insert won the race.
       eq(schema.deckInvitations.id, id),
     ),
   ]);
@@ -300,14 +298,12 @@ export async function inviteByEmail(
     .where(eq(schema.deckInvitations.id, id));
   if (!written) throw refused("conflict", "They already have an invitation waiting", "invited");
 
-  // The deck row carries no counts, so the message asks for the one number it names.
   const [counted] = await db
     .select({ cards: sql<number>`count(*)` })
     .from(schema.cards)
     .where(and(eq(schema.cards.deckId, deckId), isNull(schema.cards.archivedAt)));
 
-  // Sending is last: a message that goes out for an invitation that was not written is worse
-  // than a row with no message, which the owner can cancel and send again.
+  // Sending is last: a row with no message can be cancelled and resent, a message with no row cannot.
   await send(email, token, {
     name: deck.name,
     owner: deck.owner.name,

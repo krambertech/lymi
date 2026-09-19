@@ -1,10 +1,7 @@
 import { createAccountThroughDevForm, signInAsTestLearner } from "./auth";
 import { type Browser, expect, type Page, type TestInfo, test } from "./test";
 
-/**
- * A classmate's address that is on no allowlist and is not a local persona, so only the
- * invitation written for it can let it create an account. One per project, retry and repeat.
- */
+/** A classmate's address that is not a local persona. One per project, retry and repeat. */
 function outsider(testInfo: TestInfo, who: string) {
   const { name } = testInfo.project;
   return `e2e-${who}-${name}-r${testInfo.retry}-p${testInfo.repeatEachIndex}@example.test`;

@@ -148,9 +148,9 @@ export function errorMessage(error: unknown): string {
 
 /** One string the server attached to its refusal, such as why, or whom a link was for. */
 export function refusalDetail(error: unknown, key: string): string | null {
-  const issues = error instanceof ApiError ? error.issues : null;
-  if (!issues || typeof issues !== "object" || !(key in issues)) return null;
-  const value = (issues as Record<string, unknown>)[key];
+  const issues =
+    error instanceof ApiError ? (error.issues as Record<string, unknown> | null) : null;
+  const value = issues?.[key];
   return typeof value === "string" && value ? value : null;
 }
 

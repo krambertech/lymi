@@ -227,7 +227,6 @@ decks.post(
   async (c) => {
     const ctx = ctxOf(c);
     const { email } = c.req.valid("json");
-    // Written in the reader's language when they have an account, else in the owner's.
     const language =
       (await addressEmailLanguage(ctx.db, email)) ??
       (await accountEmailLanguage(ctx.db, ctx.userId, c.req.raw));

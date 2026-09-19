@@ -104,7 +104,7 @@ function DeckSettings() {
     },
   });
 
-  /** The server says why in English and for integrations; the owner reads it in their language. */
+  // The server's reason is English and for integrations; the owner reads it in their language.
   const inviteRefusal = (error: unknown): string => {
     switch (refusalDetail(error, "reason") as InviteRefusal | null) {
       case "owner":
@@ -120,8 +120,6 @@ function DeckSettings() {
           one: "# person is waiting on an invitation. Cancel it, or wait for them to join.",
           other: "# people are waiting on an invitation. Cancel one, or wait for someone to join.",
         });
-      case null:
-        break;
     }
     if (error instanceof ApiError && error.status === 429) {
       return t`Too many invitations went out recently. Try again later.`;

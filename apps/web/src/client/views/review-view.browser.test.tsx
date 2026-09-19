@@ -18,7 +18,7 @@ const item = (card: Partial<QueueItem["card"]>): QueueItem => ({
   card: { ...queueItem.card, ...card },
 });
 
-test("a revealed card shows its tags and marks only what the AI wrote", async () => {
+test("a revealed card shows its source, not its tags, and marks only what the AI wrote", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <ReviewCard
@@ -35,19 +35,16 @@ test("a revealed card shows its tags and marks only what the AI wrote", async ()
     </I18nProvider>,
   );
 
-  const tags = page.getByRole("list", { name: "Tags" }).element();
-  expect(Array.from(tags.querySelectorAll("li"), (li) => li.textContent)).toEqual([
-    "verbs",
-    "reflexive",
-  ]);
+  expect(page.getByRole("list", { name: "Tags" }).elements()).toHaveLength(0);
   const card = page.getByRole("region", { name: /Recognition card/ }).element();
   expect(card.textContent).toContain("AI meaning");
   expect(card.textContent).toContain("Lesson 14");
+  expect(card.textContent).not.toContain("verbs");
   expect(card.textContent).not.toContain("from lesson");
   expect(card.textContent).not.toContain("by you");
 });
 
-test("the learner's own text carries no chip and no tags means no list", async () => {
+test("the learner's own text and no source carry no chip", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <ReviewCard
@@ -60,7 +57,6 @@ test("the learner's own text carries no chip and no tags means no list", async (
   );
 
   const card = page.getByRole("region", { name: /Recognition card/ }).element();
-  expect(page.getByRole("list", { name: "Tags" }).elements()).toHaveLength(0);
   expect(card.textContent).not.toContain("by you");
   expect(card.textContent).not.toContain("AI");
   expect(card.querySelectorAll(".rounded-full")).toHaveLength(1);

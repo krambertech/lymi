@@ -32,14 +32,6 @@ msgstr "{0, plural, =0 {Карточки попали в колоды, кото�
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
 
-#. placeholder {0}: current.notStarted
-msgid "{0, plural, one {{nextName} opens once the last card of {currentName} comes up in review.} other {{nextName} opens once the last # cards of {currentName} come up in review.}}"
-msgstr "{0, plural, =1 {{nextName} откроется, как только последняя карточка из «{currentName}» появится в повторении.} one {{nextName} откроется, как только ещё # карточка из «{currentName}» появится в повторении.} few {{nextName} откроется, как только последние # карточки из «{currentName}» появятся в повторениях.} many {{nextName} откроется, как только последние # карточек из «{currentName}» появятся в повторениях.} other {{nextName} откроется, как только последние # карточки из «{currentName}» появятся в повторениях.}}"
-
-#. placeholder {0}: current.total
-msgid "{0, plural, one {{nextName} opens when you know {needed} of # card.} other {{nextName} opens when you know {needed} of # cards.}}"
-msgstr "{0, plural, one {{nextName} откроется, когда ты выучишь {needed} из # карточки.} few {{nextName} откроется, когда ты выучишь {needed} из # карточек.} many {{nextName} откроется, когда ты выучишь {needed} из # карточек.} other {{nextName} откроется, когда ты выучишь {needed} из # карточки.}}"
-
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# карточка из архива попадёт в архив.} few {# карточки из архива попадут в архив.} many {# карточек из архива попадут в архив.} other {# карточки из архива попадут в архив.}}"
@@ -200,6 +192,14 @@ msgstr "{0, plural, one {Показать ещё # старую запись} fe
 #. placeholder {0}: others + 1
 msgid "{0, plural, one {Start section} other {Start # sections}}"
 msgstr "{0, plural, =1 {Начать раздел} one {Начать # раздел} few {Начать # раздела} many {Начать # разделов} other {Начать # раздела}}"
+
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+msgstr "{0, plural, =1 {Следующий раздел откроется, как только последняя карточка этого раздела появится в повторении.} one {Следующий раздел откроется, как только ещё # карточка этого раздела появится в повторении.} few {Следующий раздел откроется, как только последние # карточки этого раздела появятся в повторениях.} many {Следующий раздел откроется, как только последние # карточек этого раздела появятся в повторениях.} other {Следующий раздел откроется, как только последние # карточки этого раздела появятся в повторениях.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {Следующий раздел откроется, когда ты выучишь {needed} из # карточки.} few {Следующий раздел откроется, когда ты выучишь {needed} из # карточек.} many {Следующий раздел откроется, когда ты выучишь {needed} из # карточек.} other {Следующий раздел откроется, когда ты выучишь {needed} из # карточки.}}"
 
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
@@ -3659,6 +3659,9 @@ msgstr "Через эту ссылку нельзя присоединиться
 
 msgid "You don’t need to do anything."
 msgstr "Ничего делать не нужно."
+
+msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
+msgstr "Выучено {knownN} из {total, plural, one {# карточки} few {# карточек} many {# карточек} other {# карточки}}"
 
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "Этот человек исключён из колоды, поэтому пригласить его снова нельзя."

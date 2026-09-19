@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
-import { BookMarked, ListTree, Loader2, Pointer, Signpost, Tag, Volume2, X } from "lucide-react";
+import { BookMarked, Library, Loader2, Pointer, Signpost, Volume2, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -508,7 +508,7 @@ export function ReviewCard({
   // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
   const aiMeaning = card.meaningSource === "ai";
   const aiExample = card.exampleSource === "ai" && !!card.example;
-  const chips = aiMeaning || aiExample || !!card.source || card.tags.length > 0;
+  const chips = aiMeaning || aiExample || !!card.source;
 
   const audio = (className?: string) =>
     onPlayAudio && (
@@ -651,23 +651,10 @@ export function ReviewCard({
               {aiExample && <SourceChip source="ai" field="example" compact />}
               {card.source && (
                 <Chip size="sm" className="min-w-0 max-w-full">
-                  {/* The editor's icons for these fields, so a source and a tag read apart. */}
-                  <Signpost className="size-3 shrink-0" aria-hidden="true" />
+                  <Library className="size-3 shrink-0" aria-hidden="true" />
                   <span className="sr-only">{t`Source`}</span>
                   <span className="truncate">{card.source}</span>
                 </Chip>
-              )}
-              {card.tags.length > 0 && (
-                <ul className="flex min-w-0 flex-wrap gap-1.5" aria-label={t`Tags`}>
-                  {card.tags.map((tag) => (
-                    <li key={tag} className="min-w-0 max-w-full">
-                      <Chip size="sm" className="min-w-0 max-w-full">
-                        <Tag className="size-3 shrink-0" aria-hidden="true" />
-                        <span className="truncate">{tag}</span>
-                      </Chip>
-                    </li>
-                  ))}
-                </ul>
               )}
             </motion.div>
           )}
@@ -719,7 +706,7 @@ export function ReviewCard({
               {section && (
                 <>
                   {deck && <span aria-hidden="true">·</span>}
-                  <ListTree className="size-3.5 shrink-0" aria-hidden="true" />
+                  <Signpost className="size-3.5 shrink-0" aria-hidden="true" />
                   <span className="sr-only">{t`Section`}</span>
                   <span className="min-w-0 max-w-[60%] shrink-0 truncate">{section}</span>
                 </>

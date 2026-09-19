@@ -33,6 +33,9 @@ jobs:
       browsers: ${{ steps.coverage.outputs.browsers }}
       playwright_args: ${{ steps.coverage.outputs.playwright_args }}
       coverage: ${{ steps.coverage.outputs.coverage }}
+      component_instances: ${{ steps.coverage.outputs.component_instances }}
+      component_browsers: ${{ steps.coverage.outputs.component_browsers }}
+      component_coverage: ${{ steps.coverage.outputs.component_coverage }}
       run_deploy_check: ${{ steps.coverage.outputs.run_deploy_check }}
       run_app_preview: ${{ steps.coverage.outputs.run_app_preview }}
       run_site_preview: ${{ steps.coverage.outputs.run_site_preview }}
@@ -123,13 +126,16 @@ jobs:
         id: typecheck
         run: pnpm typecheck
 
-      # The component tests in `pnpm test` run the primitives in real Chromium and WebKit.
-      - name: Install component test browsers
+      # The component tests in `pnpm test` run the primitives in real browsers. The plan names
+      # the instances the diff needs; a push to `main` runs all three. docs/testing.md.
+      - name: Install component test browsers (${{ needs.plan.outputs.component_coverage }})
         id: component_browsers
-        run: pnpm exec playwright install --with-deps --only-shell chromium webkit
+        run: pnpm exec playwright install --with-deps --only-shell ${{ needs.plan.outputs.component_browsers }}
 
       - name: Run unit and component tests
         id: test
+        env:
+          LYMI_COMPONENT_INSTANCES: ${{ needs.plan.outputs.component_instances }}
         run: pnpm test
 
       - name: Check product deployment package
@@ -240,6 +246,7 @@ jobs:
           SHARDS: ${{ needs.plan.outputs.shards }}
           SHARD_OUTCOMES_DIR: shard-outcomes
           COVERAGE: ${{ needs.plan.outputs.coverage }}
+          COMPONENT_COVERAGE: ${{ needs.plan.outputs.component_coverage }}
           PLAN_REASON: ${{ needs.plan.outputs.reason }}
           SITE_PREVIEW: ${{ needs.plan.outputs.run_site_preview }}
           APP_PREVIEW: ${{ needs.plan.outputs.run_app_preview }}

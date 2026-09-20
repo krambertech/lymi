@@ -50,7 +50,12 @@ export async function authorizeMcpClaims(
   deps: {
     db: Db;
     env: ProductOrigin &
-      Partial<Pick<Bindings, "PRIVATE_IMAGES" | "IMAGES" | "OPENAI_API_KEY" | "ENRICH_WORKFLOW">>;
+      Partial<
+        Pick<
+          Bindings,
+          "PRIVATE_IMAGES" | "IMAGES" | "OPENAI_API_KEY" | "ENRICH_WORKFLOW" | "EVENTS"
+        >
+      >;
   },
 ): Promise<McpPrincipal | Response> {
   const userId = typeof claims.sub === "string" ? claims.sub : null;
@@ -70,6 +75,7 @@ export async function authorizeMcpClaims(
       db: deps.db,
       userId,
       actor: "mcp",
+      analytics: deps.env.EVENTS,
       client: clientId,
       ...(named ? { clientName: named } : {}),
     },

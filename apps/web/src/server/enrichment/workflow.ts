@@ -11,6 +11,7 @@ import {
   failEnrichment,
   settleEnrichment,
 } from "../services";
+import { track } from "../services/analytics";
 
 const STEP = {
   retries: { limit: 3, delay: "5 seconds", backoff: "exponential" },
@@ -42,12 +43,17 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         );
         return;
       }
-      const ctx = enrichmentContext(db, params);
+      const ctx = enrichmentContext(db, params, this.env.EVENTS);
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {
           await step.do(`cards ${index}`, STEP, () => enrichCards(ctx, ids, provider));
         } catch {
           await step.do(`fail ${index}`, STEP, () => failEnrichment(db, params.userId, ids));
+          track(this.env.EVENTS, {
+            name: "enrichment_finished",
+            outcome: "failed",
+            count: ids.length,
+          });
         }
       }
     } finally {

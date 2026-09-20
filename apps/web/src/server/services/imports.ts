@@ -18,6 +18,7 @@ import { anki } from "../imports/anki";
 import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
 import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
+import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import type { CardImageStorage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -376,7 +377,10 @@ export async function confirmImport(
     })
     .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "ready")))
     .returning({ id: schema.imports.id });
-  if (claimed) await start({ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "write" });
+  if (claimed) {
+    await start({ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "write" });
+    track(ctx.analytics, { name: "import_started", adapter: work.row.source, outcome: "started" });
+  }
   return getImport(ctx, id);
 }
 
@@ -431,11 +435,18 @@ export async function finishImport(
       details: { added: counts.added, existing: counts.existing, duplicates: counts.duplicates },
     }),
   ]);
+  track(ctx.analytics, { name: "import_finished", adapter: row.source, outcome: "done" });
   await deleteFiles(uploads, row);
 }
 
 /** Stops an import with a reason and deletes its file. Cards a failed write already added stay. */
-export async function failImport(db: Db, id: string, failure: ImportFailure, uploads: R2Bucket) {
+export async function failImport(
+  db: Db,
+  id: string,
+  failure: ImportFailure,
+  uploads: R2Bucket,
+  analytics?: AnalyticsWriter,
+) {
   const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
   if (!row || row.status === "done" || row.status === "failed" || row.status === "cancelled")
     return;
@@ -444,6 +455,7 @@ export async function failImport(db: Db, id: string, failure: ImportFailure, upl
     .update(schema.imports)
     .set({ status: "failed", failure, finishedAt: now, updatedAt: now })
     .where(eq(schema.imports.id, id));
+  track(analytics, { name: "import_finished", adapter: row.source, outcome: "failed" });
   await deleteFiles(uploads, row);
 }
 
@@ -525,7 +537,11 @@ export function failureOf(err: unknown): ImportFailure {
 }
 
 /** The service context a background step acts in: the learner and actor that started the run. */
-export function runContext(db: Db, params: ImportRunParams): ServiceContext {
+export function runContext(
+  db: Db,
+  params: ImportRunParams,
+  analytics?: AnalyticsWriter,
+): ServiceContext {
   if (!params.userId) throw notFound("Import");
-  return { db, userId: params.userId, actor: params.actor };
+  return { db, userId: params.userId, actor: params.actor, analytics };
 }

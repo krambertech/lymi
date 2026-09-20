@@ -153,6 +153,12 @@ Rate limits are per address as well as per caller. Better Auth's own limiter cou
 
 Transactional email has a daily ceiling of its own in KV, under the provider's quota, so a spread of machines inside the per-caller budgets cannot spend the day's allowance and leave a real learner's reset undelivered.
 
+### Analytics: aggregate usage in Workers Analytics Engine
+
+The product Worker writes request counts, status classes and timings to `lymi_requests`, and fixed product action labels and counts to `lymi_events`. Route patterns replace requested paths, and neither dataset receives account identifiers, client names, card content or query strings. Two datasets keep high request volume from sampling product actions under the same index. The bindings are optional in local development and omitted from product previews, whose activity is synthetic.
+
+Cloudflare is already the hosting provider, so Analytics Engine adds no processor. PostHog, GA4, Plausible and self-hosted Umami remain options if a later product question needs richer analysis; this setup does not collect learner-level funnels or session replay. Browser Web Analytics is not configured, so page views and referrers are outside these metrics.
+
 ### Transactional email: Cloudflare Email Service from the product Worker
 
 The product Worker sends account email through a restricted Cloudflare Email Service binding from `notifications@lymi.app`, with replies going to `hello@lymi.app`. Services name the message kind, recipient and app language, and a kind may carry data and its own reply-to, which learner feedback uses to send a learner's note to `hello@lymi.app` answerable to them. The email boundary renders both plain text and simple HTML from the same English-source Lingui catalog as the product, except a message written for Lymi rather than for a learner, whose scaffolding is English in every locale. Loopback development writes to an in-memory outbox instead of contacting Cloudflare, and browser tests read that outbox through a development-only route. The hidden production smoke test is learner-session only and further restricted by `OPERATOR_EMAILS`; every successful send records its kind and delivery path in the audit trail without the recipient or body.

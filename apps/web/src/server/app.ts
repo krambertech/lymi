@@ -1,6 +1,7 @@
 import type { Actor, Scope } from "@lymi/core";
 import { MeOut } from "@lymi/core";
 import { Hono } from "hono";
+import { routePath } from "hono/route";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { limitCredentialRequests } from "./auth-rate-limit";
 import { createDb, type Db } from "./db";
@@ -37,6 +38,7 @@ import { deckSections, sections } from "./routes/sections";
 import { series } from "./routes/series";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
+import { recordRequest } from "./services/analytics";
 import { catchUpStates } from "./services/modes";
 
 export type AppEnv = {
@@ -87,6 +89,33 @@ app.use("*", async (c, next) => {
     createAuth(c.env, db, (work) => c.executionCtx.waitUntil(work)),
   );
   await next();
+});
+
+app.use("*", async (c, next) => {
+  const path = c.req.path;
+  if (!(path.startsWith("/api/") || path === "/mcp" || path.startsWith("/public/"))) {
+    return next();
+  }
+  const start = performance.now();
+  await next();
+  try {
+    const route = routePath(c);
+    const actor = c.get("actor");
+    recordRequest(c.env.REQUESTS, {
+      route: c.res.status === 404 ? "unmatched" : route || "unmatched",
+      method: c.req.method,
+      status: c.res.status,
+      durationMs: performance.now() - start,
+      actor:
+        actor === "user" || actor === "api"
+          ? actor
+          : route === "/mcp" && c.res.status < 400
+            ? "mcp"
+            : "anon",
+    });
+  } catch {
+    // Measurement cannot change the response.
+  }
 });
 
 app.get("/api/health", describe({ hide: true }), (c) =>

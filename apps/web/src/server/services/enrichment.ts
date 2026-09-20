@@ -11,6 +11,7 @@ import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
+import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import type { ServiceContext } from "./context";
@@ -29,8 +30,12 @@ export type EnrichRunParams = {
 };
 
 /** Enrichment acts as the AI, so every fill lands in Activity under that actor. */
-export function enrichmentContext(db: Db, params: EnrichRunParams): ServiceContext {
-  return { db, userId: params.userId, actor: "ai" };
+export function enrichmentContext(
+  db: Db,
+  params: EnrichRunParams,
+  analytics?: AnalyticsWriter,
+): ServiceContext {
+  return { db, userId: params.userId, actor: "ai", analytics };
 }
 
 type Fillable = Pick<Card, EnrichedField>;
@@ -267,6 +272,11 @@ export async function enrichCards(
   }
   const [firstRow, ...restRows] = rows;
   if (firstRow) await db.batch([firstRow, ...restRows]);
+  track(ctx.analytics, {
+    name: "enrichment_finished",
+    outcome: rows.length ? "enriched" : "empty",
+    count: rows.length,
+  });
   return { enriched: rows.length };
 }
 

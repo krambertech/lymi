@@ -21,6 +21,7 @@ export function ctxOf(c: Context<AppEnv>): ServiceContext {
     db: c.get("db"),
     userId: c.get("user").id,
     actor: c.get("actor"),
+    analytics: c.env?.EVENTS,
     client: c.get("client"),
     clientName: c.get("clientName"),
   };

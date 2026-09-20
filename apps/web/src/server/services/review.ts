@@ -17,6 +17,7 @@ import {
 } from "@lymi/core";
 import { and, eq, gte, ne } from "@lymi/core/db";
 import { schema } from "../db";
+import { track } from "./analytics";
 import { audit } from "./audit";
 import { presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
@@ -318,6 +319,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       },
     );
   if (!stored) return duplicate();
+  track(ctx.analytics, { name: "review_graded", mode: key, grade: rating });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.
   if (state.state === 0 || result.card.state === 2) await advance();
   await audit(ctx, {

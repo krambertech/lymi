@@ -67,6 +67,8 @@ export function makePreviewConfig(base, { names, previewUrl, databaseId, namespa
       ...workflow,
       name: `${names.workerName}-${workflow.name.replace(/^lymi-/, "")}`,
     })),
+    // Preview activity is synthetic, and bindings are optional to the product Worker.
+    analytics_engine_datasets: undefined,
     d1_databases: [
       {
         binding: "DB",

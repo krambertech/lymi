@@ -20,6 +20,7 @@ import type { Import } from "@lymi/core/schema";
 import { type BatchStatement, batchStatements } from "../batch";
 import { schema } from "../db";
 import type { ImportChoices, SourceAdapter, SourceSummary } from "../imports/adapter";
+import { track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
@@ -642,6 +643,9 @@ export async function writeChunk<Note>(
 
   const results = await batchStatements(db, statements);
   const moved = results.at(-1)?.meta.changes === 1;
+  const addedCount = counts.added - ((row.counts as ImportCounts | null)?.added ?? 0);
+  if (moved && addedCount > 0)
+    track(ctx.analytics, { name: "card_added", count: addedCount, source: "import" });
   return { pictures: moved ? pictures : [] };
 }
 

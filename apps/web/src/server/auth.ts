@@ -13,6 +13,7 @@ import type { Db } from "./db";
 import { schema } from "./db";
 import { type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
 import { admissionFrom, attributes, cookieName } from "./join-cookie";
+import { track } from "./services/analytics";
 import { audit } from "./services/audit";
 import {
   avatarRow,
@@ -239,6 +240,7 @@ export function createAuth(
           },
           // Remember the browser that signed up, so confirming from it keeps its password.
           after: async (user, context) => {
+            track(env.EVENTS, { name: "signed_up" });
             if (user.emailVerified) return;
             context?.setCookie(
               signUpCookieName(env.PRODUCT_URL),
@@ -266,6 +268,7 @@ export function createAuth(
           // Finish a join or an add that sign-in interrupted. A refused one still signs the
           // learner in; the join or add page then says why.
           after: async (session, context) => {
+            track(env.EVENTS, { name: "signed_in" });
             if (isGoogleCallback(context)) {
               // An unproved password was set by whoever typed the address first, who need not
               // be its owner, so Google's proof retires it. A password the owner had already
@@ -275,7 +278,12 @@ export function createAuth(
             }
             const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
             if (!admission) return;
-            const ctx = { db, userId: session.userId, actor: "user" as const };
+            const ctx = {
+              db,
+              userId: session.userId,
+              actor: "user" as const,
+              analytics: env.EVENTS,
+            };
             try {
               if (admission.kind === "link") await joinThroughLink(ctx, admission.token);
               else {

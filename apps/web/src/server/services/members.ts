@@ -3,6 +3,7 @@ import { newId } from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
+import { track } from "./analytics";
 import { audit, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -263,7 +264,11 @@ export async function join(
   ]);
 
   const [after] = await db
-    .select({ removedAt: schema.deckMembers.removedAt })
+    .select({
+      id: schema.deckMembers.id,
+      joinedAt: schema.deckMembers.joinedAt,
+      removedAt: schema.deckMembers.removedAt,
+    })
     .from(schema.deckMembers)
     .where(and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, userId)));
   if (!after || after.removedAt) {
@@ -274,6 +279,9 @@ export async function join(
         : notFound("Deck");
   }
   await spendNamedInvitations(db, deckId, userId, now);
+  if (after.id === membershipId && after.joinedAt.getTime() === now.getTime()) {
+    track(ctx.analytics, { name: "deck_joined" });
+  }
   return { ok: true as const, role: "learner" as const };
 }
 

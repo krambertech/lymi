@@ -428,27 +428,30 @@ export const streakDaysOpen: number[] = [...streakDays.slice(0, -1), 0];
 export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com" };
 
 /**
- * Month totals the way the server builds them: the denominator is the calendar month's
- * elapsed days, so a fixture can never show a shape the product cannot produce.
+ * The day grid the way the server builds it: sparse, with an attempt count against the goal
+ * the day was measured by, so a fixture can never show a shape the product cannot produce.
  */
-function monthsFrom(days: { date: string; lit: boolean }[]) {
+function activityFrom(days: { date: string; lit: boolean }[], goal: number) {
   const today = new Date(now).toISOString().slice(0, 10);
-  const out: { month: string; lit: number; days: number }[] = [];
-  for (const d of days) {
-    const month = d.date.slice(0, 7);
-    const last = out.at(-1);
-    if (last?.month === month) {
-      if (d.lit) last.lit++;
-      continue;
-    }
-    const [y, m] = month.split("-").map(Number);
-    const elapsed =
-      month === today.slice(0, 7)
-        ? Number(today.slice(8, 10))
-        : new Date(Date.UTC(y ?? 1970, m ?? 1, 0)).getUTCDate();
-    out.push({ month, lit: d.lit ? 1 : 0, days: elapsed });
-  }
-  return out;
+  const counts = [58, 12, 91, 50, 31, 74, 25, 63, 44, 105];
+  return {
+    today,
+    goal,
+    firstDay: days.find((d) => d.lit)?.date ?? null,
+    days: days
+      .filter((d) => d.lit && d.date <= today)
+      .map((d, i) => {
+        const attempts = counts[i % counts.length] ?? goal;
+        const satisfied = attempts >= goal;
+        return {
+          date: d.date,
+          attempts,
+          goal,
+          satisfied,
+          outcome: (satisfied ? "goal_met" : "open") as "goal_met" | "open",
+        };
+      }),
+  };
 }
 
 /** Insights, at the point where there is enough history for every block to say something. */
@@ -488,7 +491,7 @@ export const insights: InsightsOut = {
     litAllTime: insightDays.filter((d) => d.lit).length,
     daysAllTime: insightDays.length,
   },
-  months: monthsFrom(insightDays),
+  activity: activityFrom(insightDays, 50),
   cards: { total: 340, new: 62, learning: 41, known: 237 },
   forecast: Array.from({ length: 7 }, (_, i) => ({
     date: new Date(now + i * day).toISOString().slice(0, 10),
@@ -572,7 +575,7 @@ export const thinInsights: InsightsOut = {
     daysAllTime: 5,
   },
   /* Built the way the server builds it, so the frame follows today rather than drifting. */
-  months: monthsFrom(thinDays.slice(-5)),
+  activity: activityFrom(thinDays.slice(-5), 50),
   cards: { total: 18, new: 11, learning: 7, known: 0 },
   forecast: Array.from({ length: 7 }, (_, i) => ({
     date: new Date(now + i * day).toISOString().slice(0, 10),

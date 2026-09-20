@@ -14,8 +14,9 @@ export interface Day {
  * capsule is a run whose length you can see. Same material as `SevenLights` — the lantern
  * glass, amber when lit — at the size a month needs.
  *
- * Lit or unlit and nothing else. Grading a day by how many cards it held turns a habit
- * picture into a scoreboard, and makes a heavy Tuesday look better than a steady one.
+ * Lit or unlit and nothing else: over thirty days, grading a day by how many cards it held
+ * makes a heavy Tuesday look better than a steady week. The day grid on the same screen does
+ * grade, because how much is the question it is there to answer.
  */
 export function RunStrip({
   days,

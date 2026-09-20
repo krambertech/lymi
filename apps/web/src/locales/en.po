@@ -397,6 +397,9 @@ msgstr "{day}: {n} reviewed"
 msgid "{day}: {reviews}"
 msgstr "{day}: {reviews}"
 
+msgid "{day}: {reviews}, from an import"
+msgstr "{day}: {reviews}, from an import"
+
 msgid "{day}: {reviews}, goal missed"
 msgstr "{day}: {reviews}, goal missed"
 
@@ -414,6 +417,9 @@ msgstr "{day}: not yet"
 
 msgid "{day}: nothing due"
 msgstr "{day}: nothing due"
+
+msgid "{day}: nothing left, {reviews}"
+msgstr "{day}: nothing left, {reviews}"
 
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# day} other {# days}}"
@@ -466,12 +472,6 @@ msgstr "{label} decks"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
 
-msgid "{label}: {lit} of {days, plural, one {# day} other {# days}}"
-msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}}"
-
-msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
-msgstr "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
-
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {# character left} other {# characters left}}"
 
@@ -480,9 +480,6 @@ msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.} other {# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.}}"
 msgstr "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.} other {# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.}}"
-
-msgid "{monthLit, plural, one {# day reviewed} other {# days reviewed}}"
-msgstr "{monthLit, plural, one {# day reviewed} other {# days reviewed}}"
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# month} other {# months}}"
@@ -528,6 +525,9 @@ msgstr "{queued, plural, one {# grade from an offline review is still waiting to
 
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
+
+msgid "{reviewedAllTime, plural, one {# review in all} other {# reviews in all}}"
+msgstr "{reviewedAllTime, plural, one {# review in all} other {# reviews in all}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
@@ -1349,11 +1349,11 @@ msgstr "Daily reminder"
 msgid "Dark"
 msgstr "Dark"
 
+msgid "Day by day"
+msgstr "Day by day"
+
 msgid "Days reviewed"
 msgstr "Days reviewed"
-
-msgid "Days reviewed each month"
-msgstr "Days reviewed each month"
 
 msgid "Deck"
 msgstr "Deck"
@@ -1475,6 +1475,9 @@ msgstr "Each block is one day you reviewed."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Each section opens once you know most of the one before it."
+
+msgid "Earlier months"
+msgstr "Earlier months"
 
 msgid "Easy"
 msgstr "Easy"
@@ -1973,6 +1976,9 @@ msgstr "Languages"
 msgid "Later"
 msgstr "Later"
 
+msgid "Later months"
+msgstr "Later months"
+
 msgid "Later today"
 msgstr "Later today"
 
@@ -2115,9 +2121,6 @@ msgstr "Message"
 
 msgid "Mode"
 msgstr "Mode"
-
-msgid "Month by month"
-msgstr "Month by month"
 
 msgid "More about this card"
 msgstr "More about this card"
@@ -2836,6 +2839,9 @@ msgstr "Reviews"
 msgid "Reviews a day"
 msgstr "Reviews a day"
 
+msgid "Reviews by day, one column a week. {total, plural, one {# review} other {# reviews}} in all."
+msgstr "Reviews by day, one column a week. {total, plural, one {# review} other {# reviews}} in all."
+
 msgid "Revoke"
 msgstr "Revoke"
 
@@ -3417,6 +3423,12 @@ msgstr "Today"
 msgid "Today, {day}: {reviews}"
 msgstr "Today, {day}: {reviews}"
 
+msgid "Today, {day}: {reviews} of {its}"
+msgstr "Today, {day}: {reviews} of {its}"
+
+msgid "Today, {day}: {reviews}, from an import"
+msgstr "Today, {day}: {reviews}, from an import"
+
 msgid "Today, {day}: all due cards reviewed, {reviews}"
 msgstr "Today, {day}: all due cards reviewed, {reviews}"
 
@@ -3428,6 +3440,9 @@ msgstr "Today, {day}: no reviews yet"
 
 msgid "Today, {day}: nothing due"
 msgstr "Today, {day}: nothing due"
+
+msgid "Today, {day}: nothing left, {reviews}"
+msgstr "Today, {day}: nothing left, {reviews}"
 
 msgid "Today’s goal"
 msgstr "Today’s goal"

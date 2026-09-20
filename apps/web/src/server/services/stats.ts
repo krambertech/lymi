@@ -5,7 +5,9 @@ import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
 import { memberOf } from "./members";
+import { type Outcome, type StreakDay, streakDays } from "./review-days";
 import { waitingCardsSql } from "./sections";
+import { getSettings } from "./settings";
 import { lapsesSql, reviewCountSql, slippingHaving, slippingReviewsWhere } from "./slipping";
 
 /**
@@ -23,15 +25,6 @@ export interface DayLight {
   /** Local YYYY-MM-DD. */
   date: string;
   lit: boolean;
-}
-
-export interface MonthTotal {
-  /** Local YYYY-MM. */
-  month: string;
-  /** Days with at least one review. */
-  lit: number;
-  /** Days in the month that have happened. The current month counts up to today. */
-  days: number;
 }
 
 export type Period = 30 | 90 | 0;
@@ -184,33 +177,75 @@ export function longestRun(days: DayLight[]): number {
   return best;
 }
 
-/**
- * Roll days up per month, newest month last. Only months that have days are included.
- *
- * The denominator is the calendar month's elapsed days, not the days since the first
- * review, so every bar is drawn against the same frame and a learner's first day cannot
- * fill its month. The current month counts to today.
- */
-export function byMonth(days: DayLight[], today: string): MonthTotal[] {
-  const out: MonthTotal[] = [];
-  for (const d of days) {
-    const month = d.date.slice(0, 7);
-    const last = out.at(-1);
-    if (last?.month === month) {
-      if (d.lit) last.lit++;
-    } else {
-      out.push({ month, lit: d.lit ? 1 : 0, days: elapsedInMonth(month, today) });
-    }
-  }
-  return out;
+/** One local day of the grid: how much it held, and what it was measured against. */
+export interface DayActivity {
+  /** Local YYYY-MM-DD. */
+  date: string;
+  /** Accepted recall attempts, imported history included. */
+  attempts: number;
+  /** The goal that day was measured against. Null before goals, and for an imported day. */
+  goal: number | null;
+  /** The day counted toward a streak. An imported day never does. */
+  satisfied: boolean;
+  /** How the day ended, so met and exhausted keep their own sentences. Null before goals. */
+  outcome: Outcome | null;
 }
 
-/** Days of `month` that have happened: all of them, or the day of the month today is. */
-function elapsedInMonth(month: string, today: string): number {
-  const [y, m] = month.split("-").map(Number);
-  if (month === today.slice(0, 7)) return Number(today.slice(8, 10));
-  // Day zero of the next month is the last day of this one.
-  return new Date(Date.UTC(y ?? 1970, m ?? 1, 0)).getUTCDate();
+/**
+ * Every local day that held an attempt, oldest first, sparse: a day with nothing is absent
+ * rather than a zero.
+ *
+ * The streak's own count leaves an imported recall out, because it was never measured against
+ * a goal. Insights lights the day it landed on, so the grid adds those attempts back on top and
+ * the two counts are deliberately different.
+ */
+export async function activity(ctx: ServiceContext, fmt: LocalDateFormatter) {
+  const [days, imported] = await Promise.all([
+    streakDays(ctx, fmt),
+    // Quarter hours, as the streak's own pre-goal count does: no bucket straddles a local
+    // midnight in any zone, and the query stays bounded by sessions rather than by reviews.
+    // An imported recall cannot be undone, so there is no undo to discount here.
+    ctx.db
+      .select({ at: sql<number>`min(${schema.reviews.reviewedAt})`, n: sql<number>`count(*)` })
+      .from(schema.reviews)
+      .where(and(eq(schema.reviews.userId, ctx.userId), eq(schema.reviews.source, "import")))
+      .groupBy(sql`${schema.reviews.reviewedAt} / 900000`),
+  ]);
+
+  return withImported(days, imported, fmt);
+}
+
+/** Folds imported attempts onto the streak's days. Split out so the merge can be tested alone. */
+export function withImported(
+  days: StreakDay[],
+  imported: { at: number; n: number }[],
+  fmt: LocalDateFormatter,
+): DayActivity[] {
+  const byDate = new Map<string, DayActivity>(
+    days.map((d) => [
+      d.date,
+      {
+        date: d.date,
+        attempts: d.attempts,
+        goal: d.goal,
+        satisfied: d.satisfied,
+        outcome: d.outcome,
+      },
+    ]),
+  );
+  for (const r of imported) {
+    const date = fmt.format(new Date(r.at));
+    const d = byDate.get(date) ?? {
+      date,
+      attempts: 0,
+      goal: null,
+      satisfied: false,
+      outcome: null,
+    };
+    d.attempts += r.n;
+    byDate.set(date, d);
+  }
+  return [...byDate.values()].sort((a, b) => a.date.localeCompare(b.date));
 }
 
 /** Cards by FSRS state, plus the ones that have no state yet because nothing asked them. */
@@ -321,9 +356,9 @@ async function leeches({ db, userId }: ServiceContext, limit: number) {
 }
 
 /**
- * Everything Insights shows. `period` scopes retention only: the lights and the month bars
- * are always the whole history, because "since you started" is the only window that makes
- * sense for them and a five-column strip is not a picture.
+ * Everything Insights shows. `period` scopes retention only: the lights and the day grid are
+ * always the whole history, because "since you started" is the only window that makes sense
+ * for them and a five-column strip is not a picture.
  */
 export async function insights(
   ctx: ServiceContext,
@@ -333,9 +368,11 @@ export async function insights(
   const period = opts.period ?? 30;
   const since = period === 0 ? null : new Date(Date.now() - period * DAY_MS);
 
-  const [recall, days, cards, due, keepsComingBack] = await Promise.all([
+  const [recall, days, grid, settings, cards, due, keepsComingBack] = await Promise.all([
     retention(ctx, since, fmt, period === 0 ? "month" : "week"),
     lights(ctx, fmt),
+    activity(ctx, fmt),
+    getSettings(ctx),
     collection(ctx),
     forecast(ctx, fmt),
     leeches(ctx, 10),
@@ -361,8 +398,14 @@ export async function insights(
       litAllTime: days.filter((d) => d.lit).length,
       daysAllTime: days.length,
     },
-    /** Twelve months at most. Older than that and the strip stops being readable. */
-    months: byMonth(days, today).slice(-12),
+    activity: {
+      today,
+      /** The reference a day with no goal of its own is drawn against. */
+      goal: settings.dailyGoal,
+      /** Where paging back stops. Null until there is a first review to page back to. */
+      firstDay: days[0]?.date ?? null,
+      days: grid,
+    },
     cards,
     forecast: due,
     leeches: {

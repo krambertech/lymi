@@ -35,10 +35,10 @@ export const LIGHT_STEP_MS = 70;
  * the week's own busiest day with a floor under it, so a quiet week is not flattered into looking
  * heavy and one big Tuesday does not wash the rest of the week out.
  *
- * Seven days grade; the thirty-day strip in Insights deliberately does not. Over a month,
- * shading by volume makes a habit picture into a scoreboard and rewards one heavy day over a
- * steady stretch. Over a week it is the difference between "I turned up" and "I turned up and
- * reviewed everything", which is a thing the learner already knows and likes seeing.
+ * Seven days grade, and so does the Insights day grid, which reuses these steps; the
+ * thirty-day strip between them deliberately does not. Over a week a step is the difference
+ * between "I turned up" and "I turned up and reviewed everything", which is a thing the
+ * learner already knows and likes seeing.
  */
 function level(
   n: number,
@@ -62,7 +62,7 @@ function level(
  * lightness as an unlit day, so "a little" and "nothing" become one picture. Mixing toward the
  * neutral plate separates them but turns the low step to mud.
  */
-const FILL: Record<1 | 2 | 3, string> = {
+export const LIGHT_FILL: Record<1 | 2 | 3, string> = {
   1: "bg-[color-mix(in_oklab,var(--amber)_45%,var(--glass))]",
   2: "bg-[color-mix(in_oklab,var(--amber)_75%,var(--glass))]",
   3: "bg-amber",
@@ -164,7 +164,7 @@ export function SevenLights({
                   "absolute inset-x-0 bottom-0 block transition-[height,background-color]",
                   flare ? "duration-700 ease-out" : "duration-300",
                   l === 0 ? "h-0" : HEIGHT[l],
-                  FILL[l === 0 ? 1 : l],
+                  LIGHT_FILL[l === 0 ? 1 : l],
                 )}
               />
             </i>

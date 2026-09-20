@@ -4,9 +4,9 @@ import { type InsightsOut, localDate } from "@lymi/core";
 import { clsx } from "clsx";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
+import { DayGrid } from "../components/day-grid";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
-import { MonthBars } from "../components/month-bars";
 import { RecallTally } from "../components/recall-tally";
 import { RunStrip } from "../components/run-strip";
 import { Segmented } from "../components/segmented";
@@ -44,8 +44,8 @@ function parseLocal(date: string): Date {
 
 /**
  * The one screen where charts belong, and the only one where looking at them is a choice.
- * Four numbers, each with the sentence that makes it mean something, then the months, then
- * the cards that keep slipping.
+ * Four numbers, each with the sentence that makes it mean something, then every day since the
+ * first review, then the cards that keep slipping.
  *
  * Every figure draws in ink except the lights, which stay amber because they are the
  * streak's lights. A chart series in amber would make this the one screen where the accent
@@ -116,7 +116,7 @@ export function InsightsView({
     );
   }
 
-  const { recall, consistency, months, cards, forecast, leeches } = data;
+  const { recall, consistency, activity, cards, forecast, leeches } = data;
   const { daysAllTime } = consistency;
   const nothingYet = daysAllTime === 0 && cards.total === 0;
 
@@ -207,7 +207,7 @@ export function InsightsView({
   );
   const busiestIsToday = busiest.date === forecast[0]?.date;
   const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
-  const monthLit = months.reduce((n, m) => n + m.lit, 0);
+  const reviewedAllTime = activity.days.reduce((n, d) => n + d.attempts, 0);
 
   return (
     <Screen
@@ -310,19 +310,25 @@ export function InsightsView({
         />
       </div>
 
-      {months.length > 0 && (
+      {activity.firstDay && (
         <section className="edge mt-3 flex flex-col gap-4 rounded-xl bg-plate p-5">
-          <div className="flex items-baseline justify-between gap-3">
-            <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
-              <Trans>Month by month</Trans>
-            </h2>
-            {/* A count, not a ratio. Each bar carries its own denominator; summing them
-                would total calendar days from before the learner had an account. */}
-            <span className="text-xs text-muted tabular-nums">
-              <Plural value={monthLit} one="# day reviewed" other="# days reviewed" />
-            </span>
-          </div>
-          <MonthBars months={months} />
+          <DayGrid
+            days={activity.days}
+            today={activity.today}
+            firstDay={activity.firstDay}
+            goal={activity.goal}
+            header={
+              <>
+                <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
+                  <Trans>Day by day</Trans>
+                </h2>
+                {/* Every review the history holds, not the span on screen, which moves as you page. */}
+                <span className="ms-auto text-xs text-muted tabular-nums">
+                  <Plural value={reviewedAllTime} one="# review in all" other="# reviews in all" />
+                </span>
+              </>
+            }
+          />
         </section>
       )}
 

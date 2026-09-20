@@ -1,4 +1,4 @@
-import { MonthBars } from "../../components/month-bars";
+import { DayGrid } from "../../components/day-grid";
 import { RecallTally } from "../../components/recall-tally";
 import { RunStrip } from "../../components/run-strip";
 import { SevenLights } from "../../components/seven-lights";
@@ -270,21 +270,35 @@ export const charts: Group = {
       ),
     },
     {
-      slug: "month-bars",
-      name: "Month bars",
-      source: "components/month-bars.tsx",
-      note: "One bar per month, filled by the share of days with a review. Whether the habit holds across seasons. Twelve at most.",
+      slug: "day-grid",
+      name: "Day grid",
+      source: "components/day-grid.tsx",
+      note: "Every day since the first review, a column a week. The one figure that grades a day by how much it held, in three steps against that day's own goal; a ring marks a day that counted without filling. It scrolls sideways and rests at the start of a month.",
       Demo: () => (
         <Variants
           items={[
             {
-              label: "Five months",
-              note: "The current month counts up to today.",
-              render: () => <MonthBars months={insights.months} className="w-full" />,
+              label: "Four months",
+              note: "Opens on today. Hover, tap or read a day and the line under it says what the day held.",
+              render: () => (
+                <DayGrid
+                  days={insights.activity.days}
+                  today={insights.activity.today}
+                  firstDay={insights.activity.firstDay ?? insights.activity.today}
+                  goal={insights.activity.goal}
+                />
+              ),
             },
             {
-              label: "The first month",
-              render: () => <MonthBars months={thinInsights.months} className="w-full" />,
+              label: "The first week",
+              render: () => (
+                <DayGrid
+                  days={thinInsights.activity.days}
+                  today={thinInsights.activity.today}
+                  firstDay={thinInsights.activity.firstDay ?? thinInsights.activity.today}
+                  goal={thinInsights.activity.goal}
+                />
+              ),
             },
           ]}
         />

@@ -526,9 +526,6 @@ msgstr "{queued, plural, one {# grade from an offline review is still waiting to
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 
-msgid "{reviewedAllTime, plural, one {# review in all} other {# reviews in all}}"
-msgstr "{reviewedAllTime, plural, one {# review in all} other {# reviews in all}}"
-
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 

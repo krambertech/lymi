@@ -526,9 +526,6 @@ msgstr "{queued, plural, one {# оцінка з офлайн-повторенн�
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {Ще # запис рідшого виду буде імпортовано як є.} few {Ще # записи рідших видів буде імпортовано як є.} many {Ще # записів рідших видів буде імпортовано як є.} other {Ще # запису рідших видів буде імпортовано як є.}}"
 
-msgid "{reviewedAllTime, plural, one {# review in all} other {# reviews in all}}"
-msgstr "{reviewedAllTime, plural, one {# повторення загалом} few {# повторення загалом} many {# повторень загалом} other {# повторення загалом}}"
-
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 

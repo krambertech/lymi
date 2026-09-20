@@ -279,7 +279,7 @@ export const charts: Group = {
           items={[
             {
               label: "Four months in the year",
-              note: "Opens on today, inside a year whatever the history holds. Hover a day, or read it, and it says what the day held.",
+              note: "Opens on today, inside a year whatever the history holds. A day veils under the pointer and says what it held.",
               render: () => (
                 <DayGrid
                   days={insights.activity.days}

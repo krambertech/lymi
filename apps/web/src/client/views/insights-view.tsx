@@ -207,7 +207,6 @@ export function InsightsView({
   );
   const busiestIsToday = busiest.date === forecast[0]?.date;
   const dueSoon = forecast.reduce((n, d) => n + d.count, 0);
-  const reviewedAllTime = activity.days.reduce((n, d) => n + d.attempts, 0);
 
   return (
     <Screen
@@ -318,15 +317,9 @@ export function InsightsView({
             firstDay={activity.firstDay}
             goal={activity.goal}
             header={
-              <>
-                <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
-                  <Trans>Day by day</Trans>
-                </h2>
-                {/* Every review the history holds, not the span on screen, which moves as you page. */}
-                <span className="ms-auto text-xs text-muted tabular-nums">
-                  <Plural value={reviewedAllTime} one="# review in all" other="# reviews in all" />
-                </span>
-              </>
+              <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
+                <Trans>Day by day</Trans>
+              </h2>
             }
           />
         </section>

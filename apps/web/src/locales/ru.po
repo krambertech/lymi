@@ -397,6 +397,9 @@ msgstr "{day}: повторено {n}"
 msgid "{day}: {reviews}"
 msgstr "{day}: {reviews}"
 
+msgid "{day}: {reviews}, from an import"
+msgstr "{day}: {reviews}, из импорта"
+
 msgid "{day}: {reviews}, goal missed"
 msgstr "{day}: {reviews}, цель не достигнута"
 
@@ -466,12 +469,6 @@ msgstr "Колоды: {label}"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, дальше через {schedules}"
 
-msgid "{label}: {lit} of {days, plural, one {# day} other {# days}}"
-msgstr "{label}: {lit} из {days, plural, one {# дня} few {# дней} many {# дней} other {# дня}}"
-
-msgid "{label}: {lit} of {days, plural, one {# day} other {# days}} so far"
-msgstr "{label}: пока {lit} из {days, plural, one {# дня} few {# дней} many {# дней} other {# дня}}"
-
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {остался # символ} few {осталось # символа} many {осталось # символов} other {осталось # символа}}"
 
@@ -480,9 +477,6 @@ msgstr "До сегодняшней цели: {left, plural, one {# повтор
 
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.} other {# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.}}"
 msgstr "{missingLanguage, plural, one {У # колоды пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил термины.} few {У # колод пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил термины.} many {У # колод пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил термины.} other {У # колоды пока нет языка. Выбери его, чтобы Lymi находил дубликаты и произносил термины.}}"
-
-msgid "{monthLit, plural, one {# day reviewed} other {# days reviewed}}"
-msgstr "{monthLit, plural, one {# день с повторениями} few {# дня с повторениями} many {# дней с повторениями} other {# дня с повторениями}}"
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# месяц} few {# месяца} many {# месяцев} other {# месяца}}"
@@ -1349,11 +1343,11 @@ msgstr "Ежедневное напоминание"
 msgid "Dark"
 msgstr "Тёмная"
 
+msgid "Day by day"
+msgstr "День за днём"
+
 msgid "Days reviewed"
 msgstr "Дней с повторениями"
-
-msgid "Days reviewed each month"
-msgstr "Дни с повторениями по месяцам"
 
 msgid "Deck"
 msgstr "Колода"
@@ -1475,6 +1469,9 @@ msgstr "Каждый блок — день с повторениями."
 
 msgid "Each section opens once you know most of the one before it."
 msgstr "Каждый раздел открывается, как только выучена большая часть предыдущего."
+
+msgid "Earlier months"
+msgstr "Предыдущие месяцы"
 
 msgid "Easy"
 msgstr "Легко"
@@ -1973,6 +1970,9 @@ msgstr "Языки"
 msgid "Later"
 msgstr "Позже"
 
+msgid "Later months"
+msgstr "Следующие месяцы"
+
 msgid "Later today"
 msgstr "Позже сегодня"
 
@@ -2115,9 +2115,6 @@ msgstr "Сообщение"
 
 msgid "Mode"
 msgstr "Режим"
-
-msgid "Month by month"
-msgstr "По месяцам"
 
 msgid "More about this card"
 msgstr "Больше о карточке"
@@ -2836,6 +2833,9 @@ msgstr "Повторения"
 msgid "Reviews a day"
 msgstr "Повторений в день"
 
+msgid "Reviews by day, one column a week. {total, plural, one {# review} other {# reviews}} in all."
+msgstr "Повторения по дням, один столбец — неделя. Всего {total, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}."
+
 msgid "Revoke"
 msgstr "Отозвать"
 
@@ -3416,6 +3416,12 @@ msgstr "Сегодня"
 
 msgid "Today, {day}: {reviews}"
 msgstr "Сегодня, {day}: {reviews}"
+
+msgid "Today, {day}: {reviews} of {goal}"
+msgstr "Сегодня, {day}: {reviews} из {goal}"
+
+msgid "Today, {day}: {reviews}, from an import"
+msgstr "Сегодня, {day}: {reviews}, из импорта"
 
 msgid "Today, {day}: all due cards reviewed, {reviews}"
 msgstr "Сегодня, {day}: все карточки повторены, {reviews}"

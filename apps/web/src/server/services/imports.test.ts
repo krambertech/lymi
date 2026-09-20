@@ -173,8 +173,11 @@ describe("importing a Mochi export", () => {
     expect((await card(ctx, "ciao")).directions).toBe("both");
 
     const view = await insights(ctx, { period: 0, zone: "UTC" });
-    // Grades on 1, 2, 3, 4 and 5 January light those five days.
-    expect(view.months.find((m) => m.month === "2026-01")?.lit).toBe(5);
+    // Grades on 1, 2, 3, 4 and 5 January light those five days, and none of them can count
+    // toward a goal: an imported recall was never measured against one.
+    const imported = view.activity.days.filter((d) => d.date.startsWith("2026-01"));
+    expect(imported).toHaveLength(5);
+    expect(imported.every((d) => d.attempts > 0 && !d.satisfied && d.goal === null)).toBe(true);
   });
 
   it("adds nothing twice, leaves today alone, and archives exactly what it added", async () => {
@@ -309,7 +312,7 @@ describe("importing an Anki package", () => {
 
     const view = await insights(ctx, { period: 0, zone: "UTC" });
     // Grades on 11, 12, 13, 14, 15 and 17 January light those six days.
-    expect(view.months.find((m) => m.month === "2026-01")?.lit).toBe(6);
+    expect(view.activity.days.filter((d) => d.date.startsWith("2026-01"))).toHaveLength(6);
     expect(view.recall.passed + view.recall.failed).toBeGreaterThan(0);
 
     const ciao = await card(ctx, "ciao");

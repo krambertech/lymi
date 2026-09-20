@@ -5,7 +5,7 @@ import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
 import { audit } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { addDays, dateFormatter, daysBetween } from "./days";
+import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { drawableCount } from "./draw";
 import { ensureSettings, getSettings } from "./settings";
 
@@ -379,7 +379,31 @@ export async function streak(ctx: ServiceContext, opts: { zone?: string | undefi
   const zone = await reviewZone(ctx, opts.zone);
   const fmt = dateFormatter(zone);
   const settings = await getSettings(ctx);
+  const list = await streakDays(ctx, fmt);
+  const today = fmt.format(new Date());
+  const todayDay = list.find((d) => d.date === today);
 
+  return {
+    today: {
+      date: today,
+      attempts: todayDay?.attempts ?? 0,
+      goal: todayDay?.goal ?? settings.dailyGoal,
+      outcome: todayDay?.outcome ?? ("open" as const),
+    },
+    goal: settings.dailyGoal,
+    ...summariseStreak(list, today),
+    days: list,
+  };
+}
+
+/**
+ * Every day that had an attempt or a nothing-due confirmation, oldest first. Insights reads it
+ * too, so the streak and the day grid can never disagree about what a day was.
+ */
+export async function streakDays(
+  ctx: ServiceContext,
+  fmt: LocalDateFormatter,
+): Promise<StreakDay[]> {
   const [rows, counted, legacy] = await Promise.all([
     ctx.db.select().from(schema.reviewDays).where(eq(schema.reviewDays.userId, ctx.userId)),
     ctx.db
@@ -439,18 +463,5 @@ export async function streak(ctx: ServiceContext, opts: { zone?: string | undefi
     });
   }
 
-  const today = fmt.format(new Date());
-  const todayRow = rows.find((r) => r.date === today);
-  const list = [...days.values()].sort((a, b) => a.date.localeCompare(b.date));
-  return {
-    today: {
-      date: today,
-      attempts: todayRow ? (attemptsByDay.get(todayRow.id) ?? 0) : 0,
-      goal: todayRow?.goal ?? settings.dailyGoal,
-      outcome: todayRow?.outcome ?? ("open" as const),
-    },
-    goal: settings.dailyGoal,
-    ...summariseStreak(list, today),
-    days: list,
-  };
+  return [...days.values()].sort((a, b) => a.date.localeCompare(b.date));
 }

@@ -19,6 +19,7 @@ import {
   undoReview,
 } from "./review-days";
 import { getSettings, updateSettings } from "./settings";
+import { insights } from "./stats";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -257,7 +258,31 @@ describe("the review zone", () => {
 
     expect(graded.day.date).toBe("2026-01-16");
   });
+
+  it("draws the grid in the review zone, not the one the caller reports", async () => {
+    const { ctx, cards } = await setup(10, ["neljateist"]);
+    const [a] = cards;
+    if (!a) throw new Error("no cards");
+    await setReviewTimezone(ctx, { mode: "manual", timezone: "Europe/Helsinki" });
+    await grade(ctx, a.id, 3, new Date("2026-01-15T22:30:00Z"));
+
+    // Kiritimati is nineteen hours from New York, so a grid built in the reported zone would
+    // put today on a different cell from the day rows it draws.
+    await setReviewTimezone(ctx, { mode: "manual", timezone: "Pacific/Kiritimati" });
+    const view = await insights(ctx, { period: 0, zone: "America/New_York" });
+
+    expect(view.activity.today).toBe(inZone(new Date(), "Pacific/Kiritimati"));
+    expect(view.activity.days.map((d) => d.date)).toContain("2026-01-16");
+  });
 });
+
+const inZone = (at: Date, timeZone: string) =>
+  new Intl.DateTimeFormat("en-CA", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(at);
 
 describe("history from before goals", () => {
   it("still counts a reviewed day as a streak day", async () => {

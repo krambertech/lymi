@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { byMonth, type DayLight, lastThirty, longestRun } from "./stats";
+import type { StreakDay } from "./review-days";
+import { type DayLight, lastThirty, longestRun, withImported } from "./stats";
 
 const day = (date: string, lit: boolean): DayLight => ({ date, lit });
 
@@ -28,40 +29,72 @@ describe("longestRun", () => {
   });
 });
 
-describe("byMonth", () => {
-  it("counts the calendar month, so joining late does not fill the bar", () => {
-    const days = [
-      day("2026-05-30", true),
-      day("2026-05-31", false),
-      day("2026-06-01", true),
-      day("2026-06-02", true),
-    ];
+describe("withImported", () => {
+  const helsinki = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Helsinki",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const streakDay = (
+    date: string,
+    attempts: number,
+    extra: Partial<StreakDay> = {},
+  ): StreakDay => ({
+    date,
+    attempts,
+    goal: 50,
+    satisfied: attempts >= 50,
+    outcome: attempts >= 50 ? "goal_met" : "open",
+    ...extra,
+  });
 
-    // May is over, so it is judged against all 31 of its days; June counts to today.
-    expect(byMonth(days, "2026-06-02")).toEqual([
-      { month: "2026-05", lit: 1, days: 31 },
-      { month: "2026-06", lit: 2, days: 2 },
+  it("lights a day the import filled and never lets it count toward a goal", () => {
+    const days = withImported([], [{ at: Date.parse("2026-01-15T10:00:00Z"), n: 214 }], helsinki);
+
+    expect(days).toEqual([
+      { date: "2026-01-15", attempts: 214, goal: null, satisfied: false, outcome: null },
     ]);
   });
 
-  it("does not let a first review fill its month", () => {
-    expect(byMonth([day("2026-09-16", true)], "2026-09-16")).toEqual([
-      { month: "2026-09", lit: 1, days: 16 },
-    ]);
+  it("adds imported attempts onto a day the learner also reviewed, keeping how it ended", () => {
+    const days = withImported(
+      [streakDay("2026-01-15", 60)],
+      [{ at: Date.parse("2026-01-15T10:00:00Z"), n: 12 }],
+      helsinki,
+    );
+
+    expect(days[0]).toEqual({
+      date: "2026-01-15",
+      attempts: 72,
+      goal: 50,
+      satisfied: true,
+      outcome: "goal_met",
+    });
   });
 
-  it("counts February's real length in a leap year", () => {
-    expect(byMonth([day("2024-02-03", true)], "2024-04-01")[0]?.days).toBe(29);
+  it("files an imported bucket by the learner's local day, not the UTC one", () => {
+    // 22:30 UTC is already the next day in Helsinki, which is +2 in January.
+    const days = withImported([], [{ at: Date.parse("2026-01-15T22:30:00Z"), n: 3 }], helsinki);
+
+    expect(days[0]?.date).toBe("2026-01-16");
   });
 
-  it("keeps months in order and does not merge a month that comes back", () => {
-    expect(
-      byMonth([day("2026-05-01", true), day("2026-06-01", true)], "2026-06-01").map((m) => m.month),
-    ).toEqual(["2026-05", "2026-06"]);
+  it("keeps days in date order however the buckets arrive", () => {
+    const days = withImported(
+      [streakDay("2026-01-20", 50)],
+      [
+        { at: Date.parse("2026-01-18T10:00:00Z"), n: 4 },
+        { at: Date.parse("2026-01-02T10:00:00Z"), n: 7 },
+      ],
+      helsinki,
+    );
+
+    expect(days.map((d) => d.date)).toEqual(["2026-01-02", "2026-01-18", "2026-01-20"]);
   });
 
-  it("is empty when there is no history", () => {
-    expect(byMonth([], "2026-06-02")).toEqual([]);
+  it("is empty when there is no history at all", () => {
+    expect(withImported([], [], helsinki)).toEqual([]);
   });
 });
 
@@ -104,13 +137,14 @@ describe("date bucketing", () => {
     expect(helsinki.format(new Date("2026-07-15T21:30:00Z"))).toBe("2026-07-16");
   });
 
-  it("counts the days a month spans without a timezone shifting them", () => {
-    const days: DayLight[] = [];
-    for (let d = 1; d <= 31; d++) {
-      days.push(day(`2026-03-${String(d).padStart(2, "0")}`, d % 2 === 0));
-    }
-
-    // March is when Europe changes its clocks; the month still has 31 days.
-    expect(byMonth(days, "2026-04-01")).toEqual([{ month: "2026-03", lit: 15, days: 31 }]);
+  it("files an imported bucket on the right side of a clock change", () => {
+    // Europe changes its clocks on 29 March 2026: Helsinki is +2 before and +3 after, so the
+    // same wall time either side of it belongs to a different UTC hour.
+    expect(
+      withImported([], [{ at: Date.parse("2026-03-28T22:30:00Z"), n: 1 }], helsinki)[0]?.date,
+    ).toBe("2026-03-29");
+    expect(
+      withImported([], [{ at: Date.parse("2026-03-29T21:30:00Z"), n: 1 }], helsinki)[0]?.date,
+    ).toBe("2026-03-30");
   });
 });

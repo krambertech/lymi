@@ -546,7 +546,7 @@ describe("Lymi MCP server", () => {
       period: 90,
       recall: { passed: 0, failed: 0, rate: null, series: [] },
       consistency: { days: [], lit: 0, longestRun: 0, litAllTime: 0, daysAllTime: 0 },
-      months: [],
+      activity: { today: "2026-09-18", goal: 50, firstDay: null, days: [] },
       cards: { total: 0, new: 0, learning: 0, known: 0 },
       forecast: [],
       leeches: { lapses: 4, reviews: 6, cards: [] },

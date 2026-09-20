@@ -41,18 +41,44 @@ export const InsightsOut = z
       litAllTime: z.number().int(),
       daysAllTime: z.number().int().meta({ description: "Days since the first review" }),
     }),
-    months: z
-      .array(
-        z.object({
-          month: z.string().meta({ description: "Local YYYY-MM" }),
-          lit: z.number().int(),
-          days: z.number().int().meta({
-            description:
-              "Elapsed days of the calendar month; the current month counts to today. Not days since the first review, so every bar shares one frame.",
+    activity: z.object({
+      today: LocalDate.meta({
+        description:
+          "Today in the review timezone, so the grid's boundary between done and not yet is the server's own.",
+      }),
+      firstDay: LocalDate.nullable().meta({
+        description: "The first day with a review, where paging back stops. Null before any.",
+      }),
+      goal: z.number().int().meta({
+        description:
+          "The learner's current daily goal, which a day carrying no goal of its own is drawn against.",
+      }),
+      days: z
+        .array(
+          z.object({
+            date: LocalDate,
+            attempts: z.number().int().meta({
+              description:
+                "Accepted recall attempts, imported history included. The streak's own count leaves imports out, so the two differ by design.",
+            }),
+            goal: z.number().int().nullable().meta({
+              description:
+                "The goal the day was measured against. Null before goals, and imported.",
+            }),
+            satisfied: z.boolean().meta({
+              description: "The day counted toward a streak. An imported day never does.",
+            }),
+            outcome: ReviewDayOutcome.nullable().meta({
+              description:
+                "How the day ended, so a day that met its goal keeps its own sentence. Null before goals, and for a day that is only imported history.",
+            }),
           }),
+        )
+        .meta({
+          description:
+            "Every day that held an attempt, oldest first. Sparse: a day with nothing is absent rather than a zero.",
         }),
-      )
-      .meta({ description: "Up to twelve months, oldest first" }),
+    }),
     cards: z.object({
       total: z.number().int(),
       new: z.number().int(),

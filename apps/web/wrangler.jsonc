@@ -30,7 +30,7 @@
     // Comma-separated. Accounts that may exercise operational capabilities.
     "OPERATOR_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com",
     // Comma-separated. Accounts that may publish decks they own to the public catalog. ADR 0020.
-    "PUBLISHER_EMAILS": ""
+    "PUBLISHER_EMAILS": "library@lymi.app"
   },
   "d1_databases": [
     {

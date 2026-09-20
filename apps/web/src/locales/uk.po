@@ -418,9 +418,6 @@ msgstr "{day}: ще попереду"
 msgid "{day}: nothing due"
 msgstr "{day}: нічого повторювати"
 
-msgid "{day}: nothing left, {reviews}"
-msgstr "{day}: усе повторено, {reviews}"
-
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
 
@@ -3420,8 +3417,8 @@ msgstr "Сьогодні"
 msgid "Today, {day}: {reviews}"
 msgstr "Сьогодні, {day}: {reviews}"
 
-msgid "Today, {day}: {reviews} of {its}"
-msgstr "Сьогодні, {day}: {reviews} з {its}"
+msgid "Today, {day}: {reviews} of {goal}"
+msgstr "Сьогодні, {day}: {reviews} з {goal}"
 
 msgid "Today, {day}: {reviews}, from an import"
 msgstr "Сьогодні, {day}: {reviews}, з імпорту"
@@ -3437,9 +3434,6 @@ msgstr "Сьогодні, {day}: ще без повторень"
 
 msgid "Today, {day}: nothing due"
 msgstr "Сьогодні, {day}: нічого повторювати"
-
-msgid "Today, {day}: nothing left, {reviews}"
-msgstr "Сьогодні, {day}: усе повторено, {reviews}"
 
 msgid "Today’s goal"
 msgstr "Мета на сьогодні"

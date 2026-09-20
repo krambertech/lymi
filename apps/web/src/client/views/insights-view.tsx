@@ -4,7 +4,7 @@ import { type InsightsOut, localDate } from "@lymi/core";
 import { clsx } from "clsx";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
-import { DayGrid } from "../components/day-grid";
+import { DAY_GRID_HEIGHT, DayGrid } from "../components/day-grid";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
 import { RecallTally } from "../components/recall-tally";
@@ -111,7 +111,10 @@ export function InsightsView({
             <Skeleton key={i} className={PLATE_SLOT} />
           ))}
         </div>
-        <Skeleton className="mt-3 h-[105px] rounded-xl" />
+        {/* The grid and the `p-5` of the plate it sits on, so what follows does not jump. */}
+        <div className="mt-3" style={{ height: DAY_GRID_HEIGHT + 40 }}>
+          <Skeleton className="h-full rounded-xl" />
+        </div>
       </Screen>
     );
   }

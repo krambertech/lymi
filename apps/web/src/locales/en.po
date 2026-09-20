@@ -418,9 +418,6 @@ msgstr "{day}: not yet"
 msgid "{day}: nothing due"
 msgstr "{day}: nothing due"
 
-msgid "{day}: nothing left, {reviews}"
-msgstr "{day}: nothing left, {reviews}"
-
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# day} other {# days}}"
 
@@ -3420,8 +3417,8 @@ msgstr "Today"
 msgid "Today, {day}: {reviews}"
 msgstr "Today, {day}: {reviews}"
 
-msgid "Today, {day}: {reviews} of {its}"
-msgstr "Today, {day}: {reviews} of {its}"
+msgid "Today, {day}: {reviews} of {goal}"
+msgstr "Today, {day}: {reviews} of {goal}"
 
 msgid "Today, {day}: {reviews}, from an import"
 msgstr "Today, {day}: {reviews}, from an import"
@@ -3437,9 +3434,6 @@ msgstr "Today, {day}: no reviews yet"
 
 msgid "Today, {day}: nothing due"
 msgstr "Today, {day}: nothing due"
-
-msgid "Today, {day}: nothing left, {reviews}"
-msgstr "Today, {day}: nothing left, {reviews}"
 
 msgid "Today’s goal"
 msgstr "Today’s goal"

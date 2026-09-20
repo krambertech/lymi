@@ -7,7 +7,7 @@ import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useSta
 import { IconButton } from "./button";
 import { LIGHT_FILL } from "./seven-lights";
 import { addDays } from "./streak-calendar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { createTooltipHandle, Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 type Day = InsightsOut["activity"]["days"][number];
 
@@ -25,11 +25,24 @@ const CELL = 28;
 const GAP = 4;
 const MONTH_ROW = 20;
 
+/**
+ * What the grid settles at, so a skeleton can hold its place and the section under it never
+ * jumps: the header row, the gap under it, and a field of seven cells under the month band.
+ */
+export const DAY_GRID_HEIGHT = 32 + 6 + (2 * GAP + (GAP + MONTH_ROW) + 7 * CELL + 7 * GAP);
+
 /** The shortest field: a year of weeks, which is the span the picture is read against. */
 const YEAR_WEEKS = 52;
 
 /** Any Monday, for naming the weekday rows without reaching for a real date in the data. */
 const A_MONDAY = "2026-09-07";
+
+/**
+ * One popup for the whole field. A root per cell costs about ten times the mount of a plain
+ * button, and a year is 371 cells before any history is added, so the cells share this handle
+ * and each carries its own sentence as the payload.
+ */
+const tip = createTooltipHandle<string>();
 
 /**
  * Where a day sits between nothing and its goal, in the seven lights' three steps and for the
@@ -138,8 +151,8 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
     }
     if (entry?.outcome === "exhausted") {
       return isToday
-        ? t`Today, ${day}: nothing left, ${reviews}`
-        : t`${day}: nothing left, ${reviews}`;
+        ? t`Today, ${day}: all due cards reviewed, ${reviews}`
+        : t`${day}: all due cards reviewed, ${reviews}`;
     }
     // No goal of its own: history from before goals, or a day an import filled in.
     if (entry?.goal == null) {
@@ -148,9 +161,12 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
         ? t`Today, ${day}: ${reviews}, from an import`
         : t`${day}: ${reviews}, from an import`;
     }
-    const its = entry.goal;
-    if (isToday) return t`Today, ${day}: ${reviews} of ${its}`;
-    return t`${day}: ${reviews}, goal missed`;
+    const goal = entry.goal;
+    if (isToday) return t`Today, ${day}: ${reviews} of ${goal}`;
+    // Imported recalls are counted here but were never measured, so a day they push past its
+    // goal keeps the count and drops the verdict rather than calling a full cell missed.
+    if (n < goal) return t`${day}: ${reviews}, goal missed`;
+    return t`${day}: ${reviews}`;
   };
 
   const sync = useCallback(() => {
@@ -186,9 +202,14 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
   const page = (back: boolean) => {
     const el = scroller.current;
     if (!el) return;
-    const stops = [...el.querySelectorAll<HTMLElement>("th[data-month]")].map(
-      (th) => th.offsetLeft,
-    );
+    // How far the field has to travel from its own start edge to bring each month there, which
+    // in a right-to-left scroller is measured from the right. `scrollLeft` counts the same way
+    // once its sign is dropped, so the two are comparable in either direction.
+    const rtl = getComputedStyle(el).direction === "rtl";
+    const months = [...el.querySelectorAll<HTMLElement>("th[data-month]")];
+    const stops = months
+      .map((th) => (rtl ? el.scrollWidth - th.offsetLeft - th.offsetWidth : th.offsetLeft))
+      .sort((a, b) => a - b);
     if (stops.length === 0) return;
     const left = Math.abs(el.scrollLeft);
     // A cell of slack, so the month already at the edge counts as where we are, not as a step.
@@ -196,10 +217,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
     while (here + 1 < stops.length && (stops[here + 1] ?? 0) <= left + CELL) here++;
     const to = back ? Math.max(0, here - 1) : Math.min(stops.length - 1, here + 1);
     const target = stops[to] ?? 0;
-    el.scrollTo({
-      left: getComputedStyle(el).direction === "rtl" ? -target : target,
-      behavior: "smooth",
-    });
+    el.scrollTo({ left: rtl ? -target : target, behavior: "smooth" });
   };
 
   const total = days.reduce((n, d) => n + d.attempts, 0);
@@ -287,43 +305,44 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                     const entry = byDate.get(date);
                     const future = date > today;
                     const l = future ? 0 : level(entry, goal);
-                    // Counted without filling: nothing left to do, or nothing due at all.
-                    const kept = !future && !!entry?.satisfied && l < 3;
+                    // Counted without filling: nothing left to do, or nothing due at all. The
+                    // streak keeps a nothing-due day the same way, so the grid rings it too.
+                    const kept =
+                      !future && (!!entry?.satisfied || entry?.outcome === "nothing_due") && l < 3;
                     const say = sentence(date);
                     return (
                       <td key={date} className="p-0">
                         {/* The popup repeats the cell's own accessible name, so it is hidden
                             from assistive technology and the label is what a reader gets. */}
-                        <Tooltip>
-                          <TooltipTrigger
-                            render={
-                              <button
-                                type="button"
-                                // Out of the tab order: a year of history would be a year of tab
-                                // stops, and each cell's label is what a reader needs from it.
-                                tabIndex={-1}
-                                aria-label={say}
-                                className={clsx(
-                                  "relative block size-7 cursor-default rounded-[6px_6px_8px_8px]",
-                                  // Hover veils the cell in ink, which is light in the dark room, so
-                                  // every state answers the pointer without a second ring beside the
-                                  // ones that already mean today and a day kept.
-                                  "after:absolute after:inset-0 after:rounded-[inherit] after:bg-text after:opacity-0 after:transition-opacity after:duration-150 hover:after:opacity-10",
-                                  future
-                                    ? // Dashed is this system's mark for "not here yet", so a day
-                                      // still to come never reads as a day that was missed.
-                                      "border border-dashed border-edge-2"
-                                    : l === 0
-                                      ? "edge-inset bg-plate-2"
-                                      : LIGHT_FILL[l],
-                                  kept && "shadow-[inset_0_0_0_1.5px_var(--amber)]",
-                                  date === today && "outline-1 outline-offset-2 outline-text-2",
-                                )}
-                              />
-                            }
-                          />
-                          <TooltipContent>{say}</TooltipContent>
-                        </Tooltip>
+                        <TooltipTrigger
+                          handle={tip}
+                          payload={say}
+                          render={
+                            <button
+                              type="button"
+                              // Out of the tab order: a year of history would be a year of tab
+                              // stops, and each cell's label is what a reader needs from it.
+                              tabIndex={-1}
+                              aria-label={say}
+                              className={clsx(
+                                "relative block size-7 cursor-default rounded-[6px_6px_8px_8px]",
+                                // Hover veils the cell in ink, which is light in the dark room, so
+                                // every state answers the pointer without a second ring beside the
+                                // ones that already mean today and a day kept.
+                                "after:absolute after:inset-0 after:rounded-[inherit] after:bg-text after:opacity-0 after:transition-opacity after:duration-150 hover:after:opacity-10",
+                                future
+                                  ? // Dashed is this system's mark for "not here yet", so a day
+                                    // still to come never reads as a day that was missed.
+                                    "border border-dashed border-edge-2"
+                                  : l === 0
+                                    ? "edge-inset bg-plate-2"
+                                    : LIGHT_FILL[l],
+                                kept && "shadow-[inset_0_0_0_1.5px_var(--amber)]",
+                                date === today && "outline-1 outline-offset-2 outline-text-2",
+                              )}
+                            />
+                          }
+                        />
                       </td>
                     );
                   })}
@@ -331,6 +350,10 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
               ))}
             </tbody>
           </table>
+          {/* The field's one popup, which every cell opens with its own sentence. */}
+          <Tooltip handle={tip}>
+            {({ payload }) => <TooltipContent>{payload}</TooltipContent>}
+          </Tooltip>
         </div>
       </div>
     </div>

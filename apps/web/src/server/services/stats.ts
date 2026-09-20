@@ -5,7 +5,7 @@ import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
 import { memberOf } from "./members";
-import { type Outcome, type StreakDay, streakDays } from "./review-days";
+import { type Outcome, reviewZone, type StreakDay, streakDays } from "./review-days";
 import { waitingCardsSql } from "./sections";
 import { getSettings } from "./settings";
 import { lapsesSql, reviewCountSql, slippingHaving, slippingReviewsWhere } from "./slipping";
@@ -114,7 +114,7 @@ async function retention(
 
 /**
  * One entry per local day from the first review to today. Feeds both the thirty-day strip
- * and the month bars, so the two can never disagree about what a day was.
+ * and the all-time counts, so the two can never disagree about what a day was.
  */
 async function lights(
   { db, userId }: ServiceContext,
@@ -364,7 +364,9 @@ export async function insights(
   ctx: ServiceContext,
   opts: { period?: Period | undefined; zone?: string | undefined } = {},
 ) {
-  const fmt = dateFormatter(opts.zone ?? "UTC");
+  // The same zone the streak resolves, because the grid draws the streak's own day rows and a
+  // manual review timezone would otherwise put today on a different cell from the row it holds.
+  const fmt = dateFormatter(await reviewZone(ctx, opts.zone));
   const period = opts.period ?? 30;
   const since = period === 0 ? null : new Date(Date.now() - period * DAY_MS);
 

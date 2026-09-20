@@ -55,13 +55,13 @@ export const PublicDeckOut = z.object({
           meaning: z.string().nullable(),
           image: z
             .object({
-              id: z.string(),
+              cardId: z.string(),
               description: z.string(),
               width: z.number().int(),
               height: z.number().int(),
             })
             .optional(),
-          audio: z.object({ id: z.string() }).optional(),
+          audio: z.object({ cardId: z.string() }).optional(),
         }),
       ),
     }),
@@ -111,12 +111,11 @@ export interface CardRow {
 }
 
 export interface PublicMediaRow {
-  id: string;
   cardId: string;
-  kind: "image" | "audio";
   description: string | null;
   width: number | null;
   height: number | null;
+  hasAudio: number;
 }
 
 /**
@@ -169,19 +168,22 @@ export function projectPublicDeck(
   const groups = new Map<string | null, PublicDeckOut["sections"][number]>();
   const mediaByCard = new Map<
     string,
-    { image?: PublicDeckOut["sections"][number]["cards"][number]["image"]; audio?: { id: string } }
+    {
+      image?: PublicDeckOut["sections"][number]["cards"][number]["image"];
+      audio?: { cardId: string };
+    }
   >();
   for (const media of mediaRows) {
     const entry = mediaByCard.get(media.cardId) ?? {};
-    if (media.kind === "image" && media.description && media.width && media.height) {
+    if (media.description && media.width && media.height) {
       entry.image = {
-        id: media.id,
+        cardId: media.cardId,
         description: media.description,
         width: media.width,
         height: media.height,
       };
     }
-    if (media.kind === "audio") entry.audio = { id: media.id };
+    if (media.hasAudio) entry.audio = { cardId: media.cardId };
     mediaByCard.set(media.cardId, entry);
   }
   for (const section of sectionRows) groups.set(section.id, { name: section.name, cards: [] });

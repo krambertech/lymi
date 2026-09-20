@@ -43,10 +43,10 @@ export default function DeckStack({ locale, cards, termLanguage, total, addUrl }
         language: termLanguage ?? undefined,
         term: card.term,
         meaning: card.meaning,
-        audio: card.audio ? publicMediaUrl(card.audio.id) : null,
+        audio: card.audio ? publicMediaUrl(card.audio.cardId, "audio") : null,
         image: card.image
           ? {
-              url: publicMediaUrl(card.image.id),
+              url: publicMediaUrl(card.image.cardId, "image"),
               description: card.image.description,
               width: card.image.width,
               height: card.image.height,

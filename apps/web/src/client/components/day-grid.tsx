@@ -238,7 +238,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
         >
           {Array.from({ length: 7 }, (_, i) => (
             <span key={addDays(A_MONDAY, i)} className="flex h-7 items-center justify-end pe-0.5">
-              {i % 2 === 0 && i < 6 ? weekdayNarrow.format(asDate(addDays(A_MONDAY, i))) : ""}
+              {weekdayNarrow.format(asDate(addDays(A_MONDAY, i)))}
             </span>
           ))}
         </div>

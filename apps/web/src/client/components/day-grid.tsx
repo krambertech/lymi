@@ -20,9 +20,10 @@ const dow = (date: string) => (asDate(date).getUTCDay() + 6) % 7;
 const daysBetween = (from: string, to: string) =>
   Math.round((asDate(to).getTime() - asDate(from).getTime()) / 86_400_000);
 
-/** The cell and the space beside it, in px, because the paging arithmetic needs them as numbers. */
+/** The cell, the space beside it and the month row, in px: the arithmetic needs them as numbers. */
 const CELL = 28;
 const GAP = 4;
+const MONTH_ROW = 20;
 
 /** The shortest field: a year of weeks, which is the span the picture is read against. */
 const YEAR_WEEKS = 52;
@@ -230,11 +231,16 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
       </div>
 
       <div className="flex items-start gap-1.5">
-        {/* Outside the scroller, so the weekdays stay put while the months move under them. */}
+        {/* Outside the scroller, so the weekdays stay put while the months move under them. The
+            padding is everything standing above the first cell inside it: the scroller's own,
+            the month row, and the table's spacing either side of that row. */}
         <div
           aria-hidden="true"
-          className="grid shrink-0 gap-1 pt-7 text-2xs text-faint"
-          style={{ gridTemplateRows: `repeat(7, ${CELL}px)` }}
+          className="grid shrink-0 gap-1 text-2xs text-faint"
+          style={{
+            gridTemplateRows: `repeat(7, ${CELL}px)`,
+            paddingTop: GAP + GAP + MONTH_ROW + GAP,
+          }}
         >
           {Array.from({ length: 7 }, (_, i) => (
             <span key={addDays(A_MONDAY, i)} className="flex h-7 items-center justify-end pe-0.5">
@@ -260,8 +266,9 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                     scope="colgroup"
                     colSpan={g.span}
                     data-month={g.month ?? undefined}
+                    style={{ height: MONTH_ROW }}
                     className={clsx(
-                      "h-5 p-0 text-start align-middle text-2xs font-normal whitespace-nowrap",
+                      "p-0 text-start align-middle text-2xs font-normal whitespace-nowrap",
                       g.month === today.slice(0, 7) ? "font-medium text-text-2" : "text-muted",
                       // The start of a month is where a swipe comes to rest.
                       g.month && "snap-start",

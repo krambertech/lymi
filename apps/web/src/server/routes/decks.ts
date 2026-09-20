@@ -14,7 +14,6 @@ import {
   MemberOut,
   OkOut,
   PublicationInput,
-  PublicationMediaOut,
   PublicationOut,
 } from "@lymi/core";
 import { Hono } from "hono";
@@ -25,7 +24,6 @@ import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
 import {
   approveEdition,
-  approvePublicationMedia,
   archiveDeck,
   createDeck,
   getDeck,
@@ -39,13 +37,11 @@ import {
   listEditions,
   listInvitations,
   listMembers,
-  listPublicationMedia,
   publicationOut,
   publishDeck,
   publishEdition,
   removeMember,
   restoreDeck,
-  revokePublicationMedia,
   turnOffJoinLink,
   turnOnJoinLink,
   updateDeck,
@@ -356,73 +352,6 @@ decks.delete(
   }),
   async (c) =>
     c.json(publicationOut(c.env.PRODUCT_URL, await withdrawDeck(ctxOf(c), c.req.param("id")))),
-);
-
-const PUBLIC_MEDIA =
-  "Only a signed-in Lymi publisher who owns this published deck may approve its current picture or stored pronunciation for public use. The approval applies to this exact asset; replacing it needs a new approval.";
-
-const publicMediaKind = (value: string | undefined) => {
-  if (value === "image" || value === "audio") return value;
-  throw new ServiceError("invalid", "Choose image or audio");
-};
-
-decks.get(
-  "/:id/public-media",
-  describe({
-    tags: ["Decks"],
-    summary: "List approved public media",
-    description: PUBLIC_MEDIA,
-    learnerOnly: true,
-    ok: { schema: z.array(PublicationMediaOut), description: "Current approvals" },
-    errors: [404],
-  }),
-  async (c) =>
-    c.json(await listPublicationMedia(ctxOf(c), c.req.param("id"), publisherEmails(c.env))),
-);
-
-decks.put(
-  "/:id/cards/:cardId/public-media/:kind",
-  describe({
-    tags: ["Decks"],
-    summary: "Approve public picture or pronunciation",
-    description: `${PUBLIC_MEDIA} Play generated pronunciation once before approving it.`,
-    learnerOnly: true,
-    ok: { schema: PublicationMediaOut, description: "The approved asset" },
-    errors: [400, 404, 409],
-  }),
-  async (c) =>
-    c.json(
-      await approvePublicationMedia(
-        ctxOf(c),
-        c.req.param("id"),
-        c.req.param("cardId"),
-        publicMediaKind(c.req.param("kind")),
-        publisherEmails(c.env),
-        { images: c.env.PRIVATE_IMAGES, audio: c.env.AUDIO },
-      ),
-    ),
-);
-
-decks.delete(
-  "/:id/cards/:cardId/public-media/:kind",
-  describe({
-    tags: ["Decks"],
-    summary: "Revoke public picture or pronunciation",
-    description: PUBLIC_MEDIA,
-    learnerOnly: true,
-    ok: { schema: OkOut, description: "The approval was removed" },
-    errors: [400, 404],
-  }),
-  async (c) =>
-    c.json(
-      await revokePublicationMedia(
-        ctxOf(c),
-        c.req.param("id"),
-        c.req.param("cardId"),
-        publicMediaKind(c.req.param("kind")),
-        publisherEmails(c.env),
-      ),
-    ),
 );
 
 const EDITION =

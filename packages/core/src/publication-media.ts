@@ -1,68 +1,53 @@
-import { and, eq, isNotNull, isNull, or, sql } from "drizzle-orm";
+import { and, eq, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
-import { cardImages, cards, deckPublications, decks, publicationMedia } from "./schema/app";
+import { cardImages, cards, deckPublications, decks } from "./schema/app";
 
 // biome-ignore lint/suspicious/noExplicitAny: both Workers pass their own typed D1 database.
 type MediaDb = BaseSQLiteDatabase<"async", any, any>;
 
-type Scope =
-  | { approvalId: string; publicationId?: never }
-  | { publicationId: string; approvalId?: never };
+type Scope = { publicationId: string; cardId?: never } | { cardId: string; publicationId?: never };
 
-/** The same live-approval predicate serves the public page, publisher list, and byte route. */
+/**
+ * A published deck's pictures and stored pronunciation, live for as long as the publication,
+ * the card and the asset are. The same predicate serves the public page and the byte route;
+ * only the delivery view selects R2 keys, which never reach a public response.
+ */
 export function livePublicationMedia(
   db: MediaDb,
   scope: Scope,
-  view: "public" | "publisher" | "delivery" = "public",
+  view: "public" | "delivery" = "public",
 ) {
   return db
     .select({
-      ...publicMediaFields,
-      approvedAt: view === "publisher" ? publicationMedia.approvedAt : sql<null>`null`,
-      objectKey:
-        view === "delivery"
-          ? sql<string>`case when ${publicationMedia.kind} = 'image' then ${cardImages.objectKey} else ${publicationMedia.audioKey} end`
-          : sql<null>`null`,
+      cardId: cards.id,
+      description: cardImages.description,
+      width: cardImages.width,
+      height: cardImages.height,
+      hasAudio: sql<number>`case when ${cards.audioKey} is null then 0 else 1 end`,
+      imageKey: view === "delivery" ? cardImages.objectKey : sql<null>`null`,
+      audioKey: view === "delivery" ? cards.audioKey : sql<null>`null`,
     })
-    .from(publicationMedia)
-    .innerJoin(deckPublications, eq(deckPublications.id, publicationMedia.publicationId))
-    .innerJoin(decks, eq(decks.id, deckPublications.deckId))
-    .innerJoin(cards, and(eq(cards.id, publicationMedia.cardId), eq(cards.deckId, decks.id)))
+    .from(cards)
+    .innerJoin(decks, eq(decks.id, cards.deckId))
+    .innerJoin(deckPublications, eq(deckPublications.deckId, decks.id))
     .leftJoin(
       cardImages,
       and(
-        eq(cardImages.id, publicationMedia.imageId),
         eq(cardImages.cardId, cards.id),
         eq(cardImages.status, "active"),
+        // The page needs a description to render the picture, so bytes without one stay private.
         isNotNull(cardImages.description),
+        ne(cardImages.description, ""),
       ),
     )
     .where(
       and(
-        scope.approvalId ? eq(publicationMedia.id, scope.approvalId) : undefined,
-        scope.publicationId ? eq(publicationMedia.publicationId, scope.publicationId) : undefined,
-        isNull(publicationMedia.revokedAt),
+        scope.publicationId ? eq(deckPublications.id, scope.publicationId) : undefined,
+        scope.cardId ? eq(cards.id, scope.cardId) : undefined,
         eq(deckPublications.status, "published"),
         isNull(decks.archivedAt),
         isNull(cards.archivedAt),
-        or(
-          and(eq(publicationMedia.kind, "image"), isNotNull(cardImages.id)),
-          and(
-            eq(publicationMedia.kind, "audio"),
-            isNotNull(publicationMedia.audioKey),
-            eq(publicationMedia.audioKey, cards.audioKey),
-          ),
-        ),
+        or(isNotNull(cardImages.id), isNotNull(cards.audioKey)),
       ),
     );
 }
-
-/** These are the only media fields the public site may select. */
-export const publicMediaFields = {
-  id: publicationMedia.id,
-  cardId: publicationMedia.cardId,
-  kind: publicationMedia.kind,
-  description: cardImages.description,
-  width: cardImages.width,
-  height: cardImages.height,
-};

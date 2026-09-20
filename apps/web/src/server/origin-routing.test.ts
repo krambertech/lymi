@@ -40,7 +40,7 @@ describe("product origin routing", () => {
     "/sw.js",
     "/robots.txt",
     "/join/AbCdEfGhIjKlMnOpQrStUvWxYz012345",
-    "/public/media/approval_1",
+    "/public/media/card/card_1/image",
     "/public/media/deck/everyday-estonian/publisher-avatar?v=1",
   ])("keeps the product contract on my.lymi.app: %s", (path) => {
     expect(decision(`https://my.lymi.app${path}`)).toEqual({

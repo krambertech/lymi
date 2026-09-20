@@ -123,6 +123,12 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     // A card with no meaning keeps its place and says so.
     await expect(view.getByRole("term").filter({ hasText: "kohupiim" })).toBeVisible();
     await expect(view.getByText("No meaning yet")).toBeAttached();
+    // A card's picture is public with the deck, addressed by the card rather than an approval.
+    const picture = view.getByRole("img", { name: "A lamp lit in a dark window" });
+    await expect(picture).toHaveAttribute(
+      "src",
+      `${e2eProductUrl}/public/media/card/e2e-card-3/image`,
+    );
     await page.keyboard.press("Escape");
     await expect(view).toBeHidden();
     await expect(page).not.toHaveURL(/#cards$/);

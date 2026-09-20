@@ -26,8 +26,8 @@ export function productUrl(path = "/"): string {
   return new URL(path, PRODUCT_ORIGIN).toString();
 }
 
-export function publicMediaUrl(id: string): string {
-  return productUrl(`/public/media/${encodeURIComponent(id)}`);
+export function publicMediaUrl(cardId: string, kind: "image" | "audio"): string {
+  return productUrl(`/public/media/card/${encodeURIComponent(cardId)}/${kind}`);
 }
 
 /** The product's sign-up form. Every Get started on the site points here. */

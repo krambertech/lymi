@@ -36,8 +36,6 @@ const SENTENCES: Sentences = {
     update_image: null,
     archive_image: null,
     restore_image: null,
-    approve_public_media: null,
-    revoke_public_media: null,
   },
   deck: {
     create: "deck_added",

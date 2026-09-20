@@ -268,7 +268,7 @@ function CardsView({
       }
       audio.current?.pause();
       setFailedAudio(null);
-      const clip = new Audio(publicMediaUrl(id));
+      const clip = new Audio(publicMediaUrl(id, "audio"));
       audio.current = clip;
       setPlaying(id);
       const done = () => {
@@ -477,14 +477,14 @@ function CardsView({
                               <button
                                 type="button"
                                 aria-label={
-                                  playing === card.audio.id
+                                  playing === card.audio.cardId
                                     ? t`Stop pronunciation`
                                     : t`Play pronunciation`
                                 }
-                                onClick={() => card.audio && toggleAudio(card.audio.id)}
+                                onClick={() => card.audio && toggleAudio(card.audio.cardId)}
                                 className="inline-flex size-8 shrink-0 items-center justify-center rounded-full edge text-text-2 hoverable:hover:bg-hover"
                               >
-                                {playing === card.audio.id ? (
+                                {playing === card.audio.cardId ? (
                                   <Square
                                     aria-hidden="true"
                                     className="size-3"
@@ -496,7 +496,7 @@ function CardsView({
                               </button>
                             )}
                           </span>
-                          {failedAudio === card.audio?.id && (
+                          {failedAudio === card.audio?.cardId && (
                             <span
                               role="status"
                               className="mt-1 block text-sm font-normal text-danger"
@@ -506,7 +506,7 @@ function CardsView({
                           )}
                           {card.image && (
                             <img
-                              src={publicMediaUrl(card.image.id)}
+                              src={publicMediaUrl(card.image.cardId, "image")}
                               alt={card.image.description}
                               width={card.image.width}
                               height={card.image.height}

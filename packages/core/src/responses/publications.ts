@@ -31,16 +31,6 @@ export const PublicationOut = z
   .meta({ id: "Publication" });
 export type PublicationOut = z.infer<typeof PublicationOut>;
 
-export const PublicationMediaOut = z
-  .object({
-    id: z.string(),
-    cardId: z.string(),
-    kind: z.enum(["image", "audio"]),
-    approvedAt: Timestamp,
-  })
-  .meta({ id: "PublicationMedia" });
-export type PublicationMediaOut = z.infer<typeof PublicationMediaOut>;
-
 /** How complete one edition is, and what is holding it back. Owner only. */
 export const EditionOut = z
   .object({

@@ -1294,8 +1294,8 @@ msgstr "Lymi is writing the first decks now. In the meantime you can make your o
 msgid "Lymi schedules every card around it."
 msgstr "Lymi schedules every card around it."
 
-msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their review history."
-msgstr "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their review history."
+msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over."
+msgstr "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over."
 
 msgid "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
 msgstr "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."

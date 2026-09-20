@@ -9,6 +9,7 @@ import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
 import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
+import { ASSISTANTS_QUESTIONS } from "./faq";
 import { PracticeChat } from "./PracticeChat";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
@@ -140,43 +141,7 @@ export function AssistantsView() {
 
         <Questions
           title={<Trans>Questions before you connect.</Trans>}
-          items={[
-            {
-              id: "which",
-              question: <Trans>Which assistants work?</Trans>,
-              answer: (
-                <Trans>
-                  Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP
-                  can connect too.
-                </Trans>
-              ),
-            },
-            {
-              id: "wrong",
-              question: <Trans>What if it gets something wrong?</Trans>,
-              answer: (
-                <Trans>
-                  Anything your assistant writes is marked AI on the card, so you can check it and
-                  fix it in Lymi.
-                </Trans>
-              ),
-            },
-            {
-              id: "privacy",
-              question: <Trans>Does Lymi see my chats?</Trans>,
-              answer: (
-                <Trans>
-                  No. Lymi only gets what your assistant sends it, like the cards it adds. The rest
-                  of the conversation stays with your assistant.
-                </Trans>
-              ),
-            },
-            {
-              id: "cost",
-              question: <Trans>What does it cost?</Trans>,
-              answer: <Trans>Nothing. Lymi is free to use.</Trans>,
-            },
-          ]}
+          items={ASSISTANTS_QUESTIONS}
         />
 
         <SignUpSection title={<Trans>Bring your assistant to Lymi.</Trans>} />

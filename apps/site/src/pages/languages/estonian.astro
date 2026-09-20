@@ -5,6 +5,7 @@ import { SHARE_IMAGE_ALT } from "../../components/landing/LandingView";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { pageI18n } from "../../lib/i18n";
 import { localizedPath } from "../../lib/routes";
+import { marketingPage } from "../../lib/structured-data";
 
 const locale = Astro.currentLocale ?? "en";
 const i18n = pageI18n(locale);
@@ -13,17 +14,12 @@ const description = i18n._(ESTONIAN_BLURB);
 const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
 const path = localizedPath("estonian", locale);
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Lymi",
-  applicationCategory: "EducationalApplication",
-  operatingSystem: "Web",
+const structuredData = marketingPage({
+  name: title,
   description,
-  url: new URL(path, "https://lymi.app").toString(),
-  inLanguage: locale,
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-};
+  path,
+  i18n,
+});
 ---
 
 <BaseLayout

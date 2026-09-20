@@ -13,6 +13,7 @@ import { ConversationScenes } from "./ConversationScenes";
 import type { SampleCard } from "./cards";
 import { ESTONIAN_SCENES } from "./estonian-scenes";
 import { FeatureSection, SectionTitle } from "./FeatureSection";
+import { ESTONIAN_QUESTIONS, LANGUAGES_QUESTIONS, type Question } from "./faq";
 import { HandOfCards } from "./HandOfCards";
 import { Hero } from "./Hero";
 import { WORD_FRAMES, type WordFrame } from "./hero-words";
@@ -26,7 +27,7 @@ import {
   MIXED_HAND,
 } from "./language-cards";
 import { NotesToCards } from "./NotesToCards";
-import { type Question, Questions } from "./Questions";
+import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
 import { SharedDeckDemo } from "./SharedDeckDemo";
@@ -246,26 +247,6 @@ const classCards = (language: LearningLanguage): SampleCard[] => [
   ),
 ];
 
-function commonQuestions(): Question[] {
-  return [
-    {
-      id: "phone",
-      question: <Trans>Does it work on my phone?</Trans>,
-      answer: (
-        <Trans>
-          Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your
-          home screen. Your cards and progress are the same on both.
-        </Trans>
-      ),
-    },
-    {
-      id: "cost",
-      question: <Trans>What does it cost?</Trans>,
-      answer: <Trans>Nothing. Lymi is free to use.</Trans>,
-    },
-  ];
-}
-
 /** The page for anyone learning a language from lessons, tutors and reading. */
 export function LanguagesView() {
   const { t } = useLingui();
@@ -315,41 +296,7 @@ export function LanguagesView() {
         },
       ]}
       classDeck={{ name: spanish.classDeck.name, language: "es", cards: classCards(spanish) }}
-      questions={[
-        {
-          id: "which-languages",
-          question: <Trans>Which languages can I learn?</Trans>,
-          answer: (
-            <Trans>
-              Any language you can type, in any script. Lymi can say most widely taught languages
-              aloud.
-            </Trans>
-          ),
-        },
-        {
-          id: "ai",
-          question: <Trans>Does the AI write my cards?</Trans>,
-          answer: (
-            <Trans>
-              Only when you ask your assistant to. Anything it writes on a card is marked AI, so you
-              can always tell it from your own notes.
-            </Trans>
-          ),
-        },
-        {
-          id: "anki",
-          question: <Trans>What if I already use Anki?</Trans>,
-          answer: (
-            <Trans>
-              Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will
-              feel familiar. What changes is the work around it: a card takes seconds to add, and
-              your assistant can add a whole lesson. Your Anki decks import with their review
-              history.
-            </Trans>
-          ),
-        },
-        ...commonQuestions(),
-      ]}
+      questions={LANGUAGES_QUESTIONS}
       joinTitle={<Trans>Keep the words from your next lesson.</Trans>}
     />
   );
@@ -424,37 +371,7 @@ export function EstonianView() {
           />
         </FeatureSection>
 
-        <Questions
-          title={<Trans>Questions before you start.</Trans>}
-          items={[
-            {
-              id: "audio",
-              question: <Trans>Can Lymi say Estonian words aloud?</Trans>,
-              answer: <Trans>Yes. Press play on any card to hear it in Estonian.</Trans>,
-            },
-            {
-              id: "letters",
-              question: <Trans>Does it keep õ, ä, ö and ü apart?</Trans>,
-              answer: (
-                <Trans>
-                  Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are
-                  two different cards.
-                </Trans>
-              ),
-            },
-            {
-              id: "class",
-              question: <Trans>Can my class use it together?</Trans>,
-              answer: (
-                <Trans>
-                  Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins
-                  gets each new card as it’s added.
-                </Trans>
-              ),
-            },
-            ...commonQuestions(),
-          ]}
-        />
+        <Questions title={<Trans>Questions before you start.</Trans>} items={ESTONIAN_QUESTIONS} />
 
         <SignUpSection title={<Trans>Keep the Estonian from your next class.</Trans>} />
       </main>

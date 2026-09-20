@@ -3,32 +3,30 @@ import LandingPage from "../components/islands/LandingPage";
 import { LANDING_BLURB, LANDING_TITLE, SHARE_IMAGE_ALT } from "../components/landing/LandingView";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { pageI18n } from "../lib/i18n";
+import { marketingPage } from "../lib/structured-data";
+import { localizedPath } from "../lib/routes";
 
 const locale = Astro.currentLocale ?? "en";
 const i18n = pageI18n(locale);
 const title = i18n._(LANDING_TITLE);
 const description = i18n._(LANDING_BLURB);
 const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
+const path = localizedPath("landing", locale);
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Lymi",
-  applicationCategory: "EducationalApplication",
-  operatingSystem: "Web",
+const structuredData = marketingPage({
+  name: title,
   description,
-  url: "https://lymi.app/",
-  inLanguage: locale,
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-};
+  path,
+  i18n,
+  entity: true,
+});
 ---
 
-<BaseLayout title={title} description={description} canonicalPath="/" localizedPage="landing" shareImageAlt={shareImageAlt}>
+<BaseLayout title={title} description={description} canonicalPath={path} localizedPage="landing" shareImageAlt={shareImageAlt}>
   <script
     slot="head"
     is:inline
     type="application/ld+json"
-    data-landing-structured-data="true"
     set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
   />
   <LandingPage client:load locale={locale} />

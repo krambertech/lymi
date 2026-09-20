@@ -1294,8 +1294,8 @@ msgstr "Lymi саме пише перші колоди. А поки що зро�
 msgid "Lymi schedules every card around it."
 msgstr "Саме на цьому принципі Lymi будує розклад повторень."
 
-msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their review history."
-msgstr "Lymi планує повторення за FSRS — цей алгоритм є і в Anki, тож ритм буде знайомим. Змінюється все довкола: картку можна додати за кілька секунд, а асистент додасть цілий урок. Колоди з Anki переносяться разом з історією повторень."
+msgid "Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over."
+msgstr "Lymi планує повторення за FSRS — цей алгоритм є і в Anki, тож ритм буде знайомим. Змінюється все довкола: картку можна додати за кілька секунд, а асистент додасть цілий урок. Колоди з Anki переносяться разом з картками, тегами, зображеннями та історією повторень, тож вивчене не починається спочатку."
 
 msgid "Lymi uses an authentication cookie to keep you signed in. The public site and app also use local browser storage for preferences and offline product behavior. We do not use advertising cookies."
 msgstr "Lymi використовує файл cookie автентифікації, щоб зберігати вхід до системи. Публічний сайт і застосунок також використовують локальне сховище браузера для налаштувань і роботи без мережі. Ми не використовуємо рекламні файли cookie."

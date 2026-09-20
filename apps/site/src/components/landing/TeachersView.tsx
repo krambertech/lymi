@@ -5,6 +5,7 @@ import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { ClassHero } from "./ClassHero";
 import { FeatureSection } from "./FeatureSection";
+import { TEACHERS_QUESTIONS } from "./faq";
 import { JoinLinkDemo } from "./JoinLinkDemo";
 import { LibraryDemo } from "./LibraryDemo";
 import { Questions } from "./Questions";
@@ -150,51 +151,7 @@ export function TeachersView() {
           <LibraryDemo />
         </FeatureSection>
 
-        <Questions
-          title={<Trans>Questions from teachers.</Trans>}
-          items={[
-            {
-              id: "edit",
-              question: <Trans>Can learners change the deck?</Trans>,
-              answer: (
-                <Trans>
-                  No. Only you add and edit cards. Learners review them, and each keeps their own
-                  schedule and history.
-                </Trans>
-              ),
-            },
-            {
-              id: "progress",
-              question: <Trans>Can I see how each learner is doing?</Trans>,
-              answer: (
-                <Trans>
-                  No. Each learner’s reviews stay private to them. Lymi is a place to practise, not
-                  to be graded.
-                </Trans>
-              ),
-            },
-            {
-              id: "subjects",
-              question: <Trans>Is it only for languages?</Trans>,
-              answer: (
-                <Trans>
-                  No. A card can hold anything worth remembering: a term, a date, a formula, a
-                  chord. Language cards can also be said aloud.
-                </Trans>
-              ),
-            },
-            {
-              id: "size",
-              question: <Trans>Is it for schools?</Trans>,
-              answer: (
-                <Trans>
-                  It’s made for tutors and small classes. There are no rosters, assignments or
-                  grades.
-                </Trans>
-              ),
-            },
-          ]}
-        />
+        <Questions title={<Trans>Questions from teachers.</Trans>} items={TEACHERS_QUESTIONS} />
 
         <SignUpSection
           title={<Trans>Bring Lymi to your next class.</Trans>}

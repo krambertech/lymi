@@ -1,6 +1,8 @@
 import type { Scope } from "@lymi/core";
 import {
   AppLanguage,
+  CardArchiveInput,
+  CardEditsInput,
   CardImageImportInput,
   CardImagePatch,
   CardInput,
@@ -14,6 +16,7 @@ import {
   IMAGE_LIMITS,
   ImageDescription,
   InsightsOut,
+  ResponseShape,
   ReviewMode,
   RoundsOut,
   SectionArchiveInput,
@@ -33,6 +36,7 @@ import {
   addCards,
   archiveCard,
   archiveCardImage,
+  archiveCards,
   archiveDeck,
   archiveSection,
   type CardView,
@@ -65,7 +69,9 @@ import {
   setSeriesDecks,
   showCard,
   streak,
+  terseOutcome,
   updateCard,
+  updateCards,
   updateDeck,
   updateSettings,
   uploadCardImage,
@@ -96,6 +102,8 @@ Start with list_decks. It names the decks, their languages and the language mean
 When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later.
 
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
+
+To change or archive many cards, send them in one update_cards or archive_cards call, up to 200 at a time, rather than one call per card. Each card succeeds or fails on its own, and the result says which. Set response to "terse" on add_cards, update_card or update_cards when you only need each card's id and status back.
 
 A card may have one picture, set with set_card_image from a public link or base64 bytes. Give it a description of what the picture shows that never names the term or meaning: it is what a screen reader says and what review shows if the picture cannot load. Picture review modes (cue "image") are set on each card with update_card or add_cards, never on a deck, and ask only while the card has a described picture. A road sign would be reviewModes [{ "cue": "image", "target": "meaning" }]; until it has a described picture, a card of picture modes only is asked in the text mode with the same target instead.
 
@@ -237,11 +245,12 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           .min(1)
           .max(200)
           .describe("Up to 200 cards. Outcomes come back in the same order."),
+        response: ResponseShape.optional(),
       }),
       outputSchema: AddCardsOut,
       ...writeTool({ idempotent: true }),
     },
-    ({ cards }) =>
+    ({ cards, response }) =>
       run("add_cards", async () => {
         denyReads(principal);
         const outcomes = await addCards(ctx, cards, principal.enrichment);
@@ -249,13 +258,15 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           added: outcomes.filter((o) => o.status === "added").length,
           skipped: outcomes.filter((o) => o.status === "skipped").length,
           results: outcomes.map((o) =>
-            o.status === "added"
-              ? { status: "added" as const, card: cardOut(o.card) }
-              : {
-                  status: "skipped" as const,
-                  term: o.term,
-                  existing: { ...cardOut(o.existing), deckName: o.deckName },
-                },
+            response === "terse"
+              ? terseOutcome(o)
+              : o.status === "added"
+                ? { status: "added" as const, card: cardOut(o.card) }
+                : {
+                    status: "skipped" as const,
+                    term: o.term,
+                    existing: { ...cardOut(o.existing), deckName: o.deckName },
+                  },
           ),
         });
       }),
@@ -267,14 +278,48 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Edit a card",
       description:
         "Change fields on one card. Send only what changes; a field left out keeps its text. A meaning or example you change becomes the learner's unless you say it came from the lesson. Setting deckId moves the card. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardPatch.shape),
-      outputSchema: CardOut,
+      inputSchema: z
+        .object({ cardId: z.string().min(1) })
+        .extend(CardPatch.shape)
+        .extend({ response: ResponseShape.optional() }),
+      outputSchema: UpdateCardOut,
       ...writeTool({ idempotent: false, overwrites: true }),
     },
-    ({ cardId, ...patch }) =>
+    ({ cardId, response, ...patch }) =>
       run("update_card", async () => {
         denyReads(principal);
-        return result(cardOut(await updateCard(ctx, cardId, patch)));
+        const card = await updateCard(ctx, cardId, patch);
+        return result(
+          response === "terse" ? terseOutcome({ status: "updated", card }) : cardOut(card),
+        );
+      }),
+  );
+
+  server.registerTool(
+    "update_cards",
+    {
+      title: "Edit many cards",
+      description:
+        "Change fields on up to 200 cards in one call, each with its cardId and only the fields that change, by the same rules as update_card. Each card succeeds or fails on its own: one that is missing or refused comes back as an error, and the rest still change. Outcomes come back in the same order. Needs write.",
+      inputSchema: CardEditsInput.extend({ response: ResponseShape.optional() }),
+      outputSchema: UpdateCardsOut,
+      ...writeTool({ idempotent: false, overwrites: true }),
+    },
+    ({ cards, response }) =>
+      run("update_cards", async () => {
+        denyReads(principal);
+        const outcomes = await updateCards(ctx, cards);
+        return result({
+          updated: outcomes.filter((o) => o.status === "updated").length,
+          failed: outcomes.filter((o) => o.status === "error").length,
+          results: outcomes.map((o) =>
+            response === "terse"
+              ? terseOutcome(o)
+              : o.status === "updated"
+                ? { status: "updated" as const, card: cardOut(o.card) }
+                : o,
+          ),
+        });
       }),
   );
 
@@ -293,6 +338,28 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         denyReads(principal);
         await archiveCard(ctx, cardId);
         return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
+    "archive_cards",
+    {
+      title: "Archive many cards",
+      description:
+        "Hide up to 200 cards in one call, each the way archive_card does. Each card succeeds or fails on its own: one that is missing or refused comes back as an error, and the rest are still archived. Outcomes come back in the same order. Needs write.",
+      inputSchema: CardArchiveInput,
+      outputSchema: ArchiveCardsOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ cardIds }) =>
+      run("archive_cards", async () => {
+        denyReads(principal);
+        const outcomes = await archiveCards(ctx, cardIds);
+        return result({
+          archived: outcomes.filter((o) => o.status === "archived").length,
+          failed: outcomes.filter((o) => o.status === "error").length,
+          results: outcomes.map(terseOutcome),
+        });
       }),
   );
 
@@ -1076,19 +1143,51 @@ const DueOut = z.object({
   rounds: z.object(RoundsOut.shape),
 });
 
+/** A card write reduced to its id and status, when a call asks for a terse response. */
+const TerseOut = z.object({
+  id: z.string().describe("The card written; for a skipped add, the existing card"),
+  status: z.enum(["added", "skipped", "updated", "archived", "error"]),
+  error: z.string().optional().describe("Why the card was not written"),
+});
+
 const AddCardsOut = z.object({
   added: z.number().int(),
   skipped: z.number().int(),
   results: z.array(
-    z.discriminatedUnion("status", [
+    z.union([
       z.object({ status: z.literal("added"), card: CardOut }),
       z.object({
         status: z.literal("skipped"),
         term: z.string(),
         existing: CardOut.extend({ deckName: z.string() }),
       }),
+      TerseOut,
     ]),
   ),
+});
+
+/** The card after the edit, or only its id and status when the call asked for terse. */
+const UpdateCardOut = CardOut.partial().extend({
+  id: z.string(),
+  status: z.literal("updated").optional().describe("Only in a terse response"),
+});
+
+const UpdateCardsOut = z.object({
+  updated: z.number().int(),
+  failed: z.number().int(),
+  results: z.array(
+    z.union([
+      z.object({ status: z.literal("updated"), card: CardOut }),
+      z.object({ status: z.literal("error"), cardId: z.string(), error: z.string() }),
+      TerseOut,
+    ]),
+  ),
+});
+
+const ArchiveCardsOut = z.object({
+  archived: z.number().int(),
+  failed: z.number().int(),
+  results: z.array(TerseOut),
 });
 
 const OkOut = z.object({ ok: z.literal(true) });

@@ -8,8 +8,11 @@ import { buildMcpServer, type McpPrincipal } from "./server";
 
 vi.mock("../services", async () => {
   const context = await import("../services/context");
+  const { terseOutcome } =
+    await vi.importActual<typeof import("../services/cards")>("../services/cards");
   return {
     ...context,
+    terseOutcome,
     listDecks: vi.fn(),
     getDeck: vi.fn(),
     listDeckCards: vi.fn(),
@@ -35,7 +38,9 @@ vi.mock("../services", async () => {
     showCard: vi.fn(),
     addCards: vi.fn(),
     updateCard: vi.fn(),
+    updateCards: vi.fn(),
     archiveCard: vi.fn(),
+    archiveCards: vi.fn(),
     restoreCard: vi.fn(),
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
@@ -132,6 +137,7 @@ describe("Lymi MCP server", () => {
       "add_cards",
       "archive_card",
       "archive_card_image",
+      "archive_cards",
       "archive_deck",
       "archive_section",
       "create_deck",
@@ -159,6 +165,7 @@ describe("Lymi MCP server", () => {
       "search_cards",
       "set_card_image",
       "update_card",
+      "update_cards",
       "update_deck",
       "update_series",
       "update_settings",
@@ -342,13 +349,134 @@ describe("Lymi MCP server", () => {
     );
   });
 
+  it("returns only ids and statuses when an add asks for terse", async () => {
+    services.addCards.mockResolvedValue([
+      { status: "added", card },
+      { status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
+    ]);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "add_cards",
+      arguments: {
+        cards: [
+          { deckId: "deck-1", term: "sbrigarsi" },
+          { deckId: "deck-1", term: "Sbrigarsi" },
+        ],
+        response: "terse",
+      },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(res.structuredContent).toEqual({
+      added: 1,
+      skipped: 1,
+      results: [
+        { id: "card-1", status: "added" },
+        { id: "card-1", status: "skipped" },
+      ],
+    });
+  });
+
+  it("edits many cards in one call and reports each card's outcome in order", async () => {
+    services.updateCards.mockResolvedValue([
+      { status: "updated", card: { ...card, source: null } },
+      { status: "error", cardId: "card-2", error: "Card not found" },
+    ]);
+    const client = await connect("write");
+    const cards = [
+      { cardId: "card-1", source: "" },
+      { cardId: "card-2", source: "" },
+    ];
+
+    const full = await client.callTool({ name: "update_cards", arguments: { cards } });
+    expect(full.isError).toBeFalsy();
+    expect(services.updateCards).toHaveBeenCalledWith(expect.anything(), cards);
+    expect(full.structuredContent).toMatchObject({
+      updated: 1,
+      failed: 1,
+      results: [
+        { status: "updated", card: { id: "card-1", term: "sbrigarsi" } },
+        { status: "error", cardId: "card-2", error: "Card not found" },
+      ],
+    });
+
+    const terse = await client.callTool({
+      name: "update_cards",
+      arguments: { cards, response: "terse" },
+    });
+    expect(terse.structuredContent).toEqual({
+      updated: 1,
+      failed: 1,
+      results: [
+        { id: "card-1", status: "updated" },
+        { id: "card-2", status: "error", error: "Card not found" },
+      ],
+    });
+  });
+
+  it("returns only the id and status of a single edit that asks for terse", async () => {
+    services.updateCard.mockResolvedValue(card);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "update_card",
+      arguments: { cardId: "card-1", source: "", response: "terse" },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", { source: "" });
+    expect(res.structuredContent).toEqual({ id: "card-1", status: "updated" });
+  });
+
+  it("archives many cards in one call and reports each card's outcome in order", async () => {
+    services.archiveCards.mockResolvedValue([
+      { status: "archived", cardId: "card-1" },
+      { status: "error", cardId: "card-2", error: "Card not found" },
+    ]);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "archive_cards",
+      arguments: { cardIds: ["card-1", "card-2"] },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(res.structuredContent).toEqual({
+      archived: 1,
+      failed: 1,
+      results: [
+        { id: "card-1", status: "archived" },
+        { id: "card-2", status: "error", error: "Card not found" },
+      ],
+    });
+  });
+
+  it("refuses a bulk edit that lists a card twice or sends more than 200", async () => {
+    const client = await connect("write");
+    const twice = await client.callTool({
+      name: "update_cards",
+      arguments: { cards: [{ cardId: "card-1" }, { cardId: "card-1" }] },
+    });
+    const tooMany = await client.callTool({
+      name: "archive_cards",
+      arguments: { cardIds: Array.from({ length: 201 }, (_, i) => `card-${i}`) },
+    });
+    expect(twice.isError).toBe(true);
+    expect(tooMany.isError).toBe(true);
+    expect(services.updateCards).not.toHaveBeenCalled();
+    expect(services.archiveCards).not.toHaveBeenCalled();
+  });
+
   it("refuses every write on a read-only token and says how to fix it", async () => {
     const client = await connect("read");
 
     for (const [name, args] of [
       ["add_cards", { cards: [{ deckId: "deck-1", term: "ciao" }] }],
       ["update_card", { cardId: "card-1", meaning: "hi" }],
+      ["update_cards", { cards: [{ cardId: "card-1", meaning: "hi" }] }],
       ["archive_card", { cardId: "card-1" }],
+      ["archive_cards", { cardIds: ["card-1"] }],
       ["restore_card", { cardId: "card-1" }],
       ["create_deck", { name: "Spanish" }],
       ["update_deck", { deckId: "deck-1", name: "Italiano" }],
@@ -378,7 +506,9 @@ describe("Lymi MCP server", () => {
     }
     expect(services.addCards).not.toHaveBeenCalled();
     expect(services.updateCard).not.toHaveBeenCalled();
+    expect(services.updateCards).not.toHaveBeenCalled();
     expect(services.archiveCard).not.toHaveBeenCalled();
+    expect(services.archiveCards).not.toHaveBeenCalled();
     expect(services.restoreCard).not.toHaveBeenCalled();
     expect(services.createDeck).not.toHaveBeenCalled();
     expect(services.updateDeck).not.toHaveBeenCalled();

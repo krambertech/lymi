@@ -1,4 +1,11 @@
-import type { CardInput, CardPatch, CardSearchInput, StatedFieldSource } from "@lymi/core";
+import type {
+  CardEditInput,
+  CardInput,
+  CardPatch,
+  CardSearchInput,
+  StatedFieldSource,
+  TerseCardOutcomeOut,
+} from "@lymi/core";
 import { needsEnrichment, newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
@@ -12,7 +19,6 @@ import { type EnrichmentQueue, queueEnrichment } from "./enrichment";
 import { memberOf } from "./members";
 import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
 import { bumped } from "./revisions";
-import { activeSectionOf } from "./sections";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -305,10 +311,40 @@ export async function showCard(ctx: ServiceContext, id: string): Promise<CardVie
 /** The card, or forbidden when the learner can see it but does not own it. */
 export async function ownedCard(ctx: ServiceContext, id: string) {
   const card = await getCard(ctx, id);
-  if (card.userId !== ctx.userId) {
+  assertOwner(ctx, card);
+  return card;
+}
+
+function assertOwner({ userId }: ServiceContext, card: Card) {
+  if (card.userId !== userId) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
   }
-  return card;
+}
+
+/** The listed cards the learner can see, by id, in one query per slice of ids. */
+async function visibleCards({ db, userId }: ServiceContext, ids: readonly string[]) {
+  const rows = await selectIn([...new Set(ids)], (slice) =>
+    db
+      .select({ card: schema.cards })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(and(inArray(schema.cards.id, slice), memberOf(userId))),
+  );
+  return new Map(rows.map((row) => [row.card.id, row.card]));
+}
+
+/** A card a bulk write refused, and the message a single write would have thrown. */
+export type CardWriteError = { status: "error"; cardId: string; error: string };
+
+/** Runs one card's checks; a refusal becomes that card's outcome instead of failing the others. */
+function refusalOf(cardId: string, check: () => void): CardWriteError | null {
+  try {
+    check();
+    return null;
+  } catch (err) {
+    if (err instanceof ServiceError) return { status: "error", cardId, error: err.message };
+    throw err;
+  }
 }
 
 /**
@@ -398,17 +434,101 @@ function sourceAfter(text: string | undefined, stated: StatedFieldSource | undef
 }
 
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
+  const edit = { ...patch, cardId: id };
+  const lookups = await editLookups(ctx, [edit]);
+  await runInBatches(ctx.db, [editStatements(ctx, lookups, edit, new Date())]);
+  return showCard(ctx, id);
+}
+
+export type EditCardOutcome = { status: "updated"; card: CardView } | CardWriteError;
+
+/**
+ * Edit many cards, each exactly as `updateCard` would, with its own audit row. A card that is
+ * missing, not the learner's, or refused its deck or section reports why and the rest still land.
+ * Outcomes come back in the order of the edits.
+ */
+export async function updateCards(
+  ctx: ServiceContext,
+  edits: CardEditInput[],
+): Promise<EditCardOutcome[]> {
   const { db, userId } = ctx;
-  const current = await ownedCard(ctx, id);
-  if (patch.deckId && patch.deckId !== current.deckId) {
-    const [deck] = await db
-      .select({ id: schema.decks.id })
-      .from(schema.decks)
-      .where(and(eq(schema.decks.id, patch.deckId), eq(schema.decks.userId, userId)));
-    if (!deck) throw notFound("Deck");
+  if (edits.length === 0) return [];
+  const lookups = await editLookups(ctx, edits);
+  const now = new Date();
+  const groups: Statement[][] = [];
+  const refusals = edits.map((edit) =>
+    refusalOf(edit.cardId, () => groups.push(editStatements(ctx, lookups, edit, now))),
+  );
+  await runInBatches(db, groups);
+  const written = await visibleCards(
+    ctx,
+    edits.filter((_, index) => !refusals[index]).map((edit) => edit.cardId),
+  );
+  const views = new Map(
+    (await presentCards(db, [...written.values()], userId)).map((view) => [view.id, view]),
+  );
+  return edits.map(
+    (edit, index) =>
+      refusals[index] ?? { status: "updated", card: views.get(edit.cardId) as CardView },
+  );
+}
+
+type EditLookups = {
+  cards: Map<string, Card>;
+  ownedDecks: Set<string>;
+  sectionDecks: Map<string, string>;
+};
+
+/** Every card, target deck and section a set of edits names, read once for the whole set. */
+async function editLookups(ctx: ServiceContext, edits: CardEditInput[]): Promise<EditLookups> {
+  const { db, userId } = ctx;
+  const deckIds = [...new Set(edits.flatMap((edit) => (edit.deckId ? [edit.deckId] : [])))];
+  const sectionIds = [
+    ...new Set(edits.flatMap((edit) => (edit.sectionId ? [edit.sectionId] : []))),
+  ];
+  const [cards, decks, sections] = await Promise.all([
+    visibleCards(
+      ctx,
+      edits.map((edit) => edit.cardId),
+    ),
+    selectIn(deckIds, (ids) =>
+      db
+        .select({ id: schema.decks.id })
+        .from(schema.decks)
+        .where(and(inArray(schema.decks.id, ids), eq(schema.decks.userId, userId))),
+    ),
+    selectIn(sectionIds, (ids) =>
+      db
+        .select({ id: schema.sections.id, deckId: schema.sections.deckId })
+        .from(schema.sections)
+        .where(and(inArray(schema.sections.id, ids), isNull(schema.sections.archivedAt))),
+    ),
+  ]);
+  return {
+    cards,
+    ownedDecks: new Set(decks.map((deck) => deck.id)),
+    sectionDecks: new Map(sections.map((section) => [section.id, section.deckId])),
+  };
+}
+
+/** One card's edit and its audit row, or the ServiceError that refuses it. */
+function editStatements(
+  ctx: ServiceContext,
+  lookups: EditLookups,
+  { cardId: id, ...patch }: CardEditInput,
+  now: Date,
+): Statement[] {
+  const { db } = ctx;
+  const current = lookups.cards.get(id);
+  if (!current) throw notFound("Card");
+  assertOwner(ctx, current);
+  if (patch.deckId && patch.deckId !== current.deckId && !lookups.ownedDecks.has(patch.deckId)) {
+    throw notFound("Deck");
   }
   const deckId = patch.deckId ?? current.deckId;
-  if (patch.sectionId) await activeSectionOf(ctx, deckId, patch.sectionId);
+  if (patch.sectionId && lookups.sectionDecks.get(patch.sectionId) !== deckId) {
+    throw notFound("Section");
+  }
   // A section belongs to one deck, so a card that changes deck leaves its section unless given one there.
   const section =
     patch.sectionId !== undefined
@@ -443,17 +563,14 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       ...bumped("card", patch, current),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
-      updatedAt: new Date(),
+      updatedAt: now,
     })
     .where(eq(schema.cards.id, id));
-  await runInBatches(db, [
-    [
-      update,
-      ...(modes || patch.deckId !== undefined ? stateStatementsForCard(db, id) : []),
-      auditStatement(ctx, { entity: "card", action: "update", id, deckId, details: patch }),
-    ],
-  ]);
-  return showCard(ctx, id);
+  return [
+    update,
+    ...(modes || patch.deckId !== undefined ? stateStatementsForCard(db, id, now) : []),
+    auditStatement(ctx, { entity: "card", action: "update", id, deckId, details: patch }),
+  ];
 }
 
 /** Archive, never delete. Undo is `restoreCard`. */
@@ -465,23 +582,73 @@ export function restoreCard(ctx: ServiceContext, id: string) {
   return setArchived(ctx, id, null);
 }
 
+export type ArchiveCardOutcome = { status: "archived"; cardId: string } | CardWriteError;
+
+/**
+ * Archive many cards, each exactly as `archiveCard` would, with its own audit row. A card that is
+ * missing or not the learner's reports why and the rest are still archived. Outcomes come back in
+ * the order of the ids.
+ */
+export async function archiveCards(
+  ctx: ServiceContext,
+  ids: readonly string[],
+): Promise<ArchiveCardOutcome[]> {
+  const cards = await visibleCards(ctx, ids);
+  const archivedAt = new Date();
+  const groups: Statement[][] = [];
+  const outcomes = ids.map(
+    (id) =>
+      refusalOf(id, () => groups.push(archiveStatements(ctx, cards, id, archivedAt))) ?? {
+        status: "archived" as const,
+        cardId: id,
+      },
+  );
+  await runInBatches(ctx.db, groups);
+  return outcomes;
+}
+
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
+  const cards = await visibleCards(ctx, [id]);
+  await runInBatches(ctx.db, [archiveStatements(ctx, cards, id, archivedAt)]);
+}
+
+/** One card's archive or restore and its audit row, or the ServiceError that refuses it. */
+function archiveStatements(
+  ctx: ServiceContext,
+  cards: Map<string, Card>,
+  id: string,
+  archivedAt: Date | null,
+): Statement[] {
   const { db } = ctx;
-  const current = await ownedCard(ctx, id);
-  const update = db
-    .update(schema.cards)
-    .set({ archivedAt, updatedAt: new Date() })
-    .where(eq(schema.cards.id, id));
-  await runInBatches(db, [
-    [
-      update,
-      ...(archivedAt === null ? stateStatementsForCard(db, id) : []),
-      auditStatement(ctx, {
-        entity: "card",
-        action: archivedAt ? "archive" : "restore",
-        id,
-        deckId: current.deckId,
-      }),
-    ],
-  ]);
+  const current = cards.get(id);
+  if (!current) throw notFound("Card");
+  assertOwner(ctx, current);
+  const now = new Date();
+  return [
+    db.update(schema.cards).set({ archivedAt, updatedAt: now }).where(eq(schema.cards.id, id)),
+    ...(archivedAt === null ? stateStatementsForCard(db, id, now) : []),
+    auditStatement(ctx, {
+      entity: "card",
+      action: archivedAt ? "archive" : "restore",
+      id,
+      deckId: current.deckId,
+    }),
+  ];
+}
+
+/** A card write reduced to the card's id and what happened to it, for a `terse` response. */
+export function terseOutcome(
+  outcome: AddCardOutcome | EditCardOutcome | ArchiveCardOutcome,
+): TerseCardOutcomeOut {
+  switch (outcome.status) {
+    case "added":
+    case "updated":
+      return { id: outcome.card.id, status: outcome.status };
+    case "skipped":
+      return { id: outcome.existing.id, status: "skipped" };
+    case "archived":
+      return { id: outcome.cardId, status: "archived" };
+    case "error":
+      return { id: outcome.cardId, status: "error", error: outcome.error };
+  }
 }

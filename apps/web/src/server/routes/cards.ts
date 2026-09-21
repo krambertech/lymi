@@ -1,6 +1,8 @@
 import {
   AddCardOutcomeOut,
   AddCardsOut,
+  CardArchiveInput,
+  CardEditsInput,
   CardHistoryOut,
   CardHitOut,
   CardInput,
@@ -8,7 +10,11 @@ import {
   CardPatch,
   CardSearchQuery,
   CardsInput,
+  EditCardsOut,
   OkOut,
+  ResponseShapeQuery,
+  TerseCardOutcomeOut,
+  TerseCardsOut,
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -18,16 +24,26 @@ import {
   addCard,
   addCards,
   archiveCard,
+  archiveCards,
   cardHistory,
   enrichmentQueue,
   requestEnrichment,
   restoreCard,
   searchCards,
   showCard,
+  terseOutcome,
   updateCard,
+  updateCards,
 } from "../services";
 
 export const cards = new Hono<AppEnv>();
+
+const TERSE =
+  "`response=terse` returns only each card's id and status, and the message of any error.";
+
+const PARTIAL =
+  "Each card succeeds or fails on its own: one that is missing, not yours, or refused comes back as an error, and the rest still change. " +
+  "Each change is its own entry in Activity.";
 
 const DUPLICATE_RULE =
   "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks. " +
@@ -80,15 +96,54 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add many cards",
-    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE}`,
-    ok: { schema: AddCardsOut, description: "One outcome per card sent" },
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE} ${TERSE}`,
+    ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
     errors: [400, 404],
   }),
+  query(ResponseShapeQuery, "query"),
   body(CardsInput, "cards"),
-  async (c) =>
-    c.json({
-      results: await addCards(ctxOf(c), c.req.valid("json").cards, enrichmentQueue(c.env)),
-    }),
+  async (c) => {
+    const outcomes = await addCards(ctxOf(c), c.req.valid("json").cards, enrichmentQueue(c.env));
+    const terse = c.req.valid("query").response === "terse";
+    return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });
+  },
+);
+
+cards.patch(
+  "/batch",
+  describe({
+    tags: ["Cards"],
+    summary: "Edit many cards",
+    description: `Needs the write scope. Up to 200 cards, each with its \`cardId\` and only the fields to change. Outcomes come back in the same order. ${PARTIAL} ${TERSE}`,
+    ok: {
+      schema: z.union([EditCardsOut, TerseCardsOut]),
+      description: "One outcome per card sent",
+    },
+    errors: [400],
+  }),
+  query(ResponseShapeQuery, "query"),
+  body(CardEditsInput, "edits"),
+  async (c) => {
+    const outcomes = await updateCards(ctxOf(c), c.req.valid("json").cards);
+    const terse = c.req.valid("query").response === "terse";
+    return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });
+  },
+);
+
+cards.post(
+  "/archive",
+  describe({
+    tags: ["Cards"],
+    summary: "Archive many cards",
+    description: `Needs the write scope. Up to 200 card ids. Hides each card without destroying it; restore brings one back. Outcomes come back in the same order. ${PARTIAL}`,
+    ok: { schema: TerseCardsOut, description: "One outcome per card sent" },
+    errors: [400],
+  }),
+  body(CardArchiveInput, "archive"),
+  async (c) => {
+    const outcomes = await archiveCards(ctxOf(c), c.req.valid("json").cardIds);
+    return c.json({ results: outcomes.map(terseOutcome) });
+  },
 );
 
 cards.get(
@@ -121,12 +176,20 @@ cards.patch(
     tags: ["Cards"],
     summary: "Edit a card",
     description:
-      "Needs the write scope. Send only the fields to change. Setting `deckId` moves the card.",
-    ok: { schema: CardOut, description: "The card after the edit" },
+      "Needs the write scope. Send only the fields to change. Setting `deckId` moves the card. `response=terse` returns only the card's id and status.",
+    ok: {
+      schema: z.union([CardOut, TerseCardOutcomeOut]),
+      description: "The card after the edit",
+    },
     errors: [400, 404],
   }),
+  query(ResponseShapeQuery, "query"),
   body(CardPatch, "patch"),
-  async (c) => c.json(await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+  async (c) => {
+    const card = await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"));
+    const terse = c.req.valid("query").response === "terse";
+    return c.json(terse ? terseOutcome({ status: "updated", card }) : card);
+  },
 );
 
 cards.post(

@@ -169,3 +169,37 @@ export type AddCardOutcomeOut = z.infer<typeof AddCardOutcomeOut>;
 export const AddCardsOut = z
   .object({ results: z.array(AddCardOutcomeOut) })
   .meta({ id: "AddCardsResult" });
+
+/** One outcome per card in a bulk edit. A card that fails says why and leaves the others alone. */
+export const EditCardOutcomeOut = z
+  .discriminatedUnion("status", [
+    z.object({ status: z.literal("updated"), card: CardOut }),
+    z.object({
+      status: z.literal("error"),
+      cardId: z.string().meta({ description: "The card id that was sent" }),
+      error: z.string().meta({ description: "Why this card was not changed" }),
+    }),
+  ])
+  .meta({ id: "EditCardOutcome" });
+export type EditCardOutcomeOut = z.infer<typeof EditCardOutcomeOut>;
+
+export const EditCardsOut = z
+  .object({ results: z.array(EditCardOutcomeOut) })
+  .meta({ id: "EditCardsResult" });
+
+/** A card write reduced to the card's id and what happened to it. */
+export const TerseCardOutcomeOut = z
+  .object({
+    id: z.string().meta({
+      description:
+        "The card written. For a skipped add, the existing card; for an error, the id that was sent.",
+    }),
+    status: z.enum(["added", "skipped", "updated", "archived", "error"]),
+    error: z.string().optional().meta({ description: "Why the card was not written" }),
+  })
+  .meta({ id: "TerseCardOutcome" });
+export type TerseCardOutcomeOut = z.infer<typeof TerseCardOutcomeOut>;
+
+export const TerseCardsOut = z
+  .object({ results: z.array(TerseCardOutcomeOut) })
+  .meta({ id: "TerseCardsResult" });

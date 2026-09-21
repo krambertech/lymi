@@ -83,11 +83,14 @@ export const CardHitOut = CardOut.extend({
 
 /** How a page of search results says where it stands. The REST route and the MCP tool share it. */
 export const CardSearchPaging = {
-  next: z
-    .string()
-    .nullable()
-    .meta({ description: "Pass as `after` for the next page. Null on the last page." }),
-  total: z.number().int().meta({ description: "How many cards match, across every page" }),
+  nextCursor: z.string().nullable().meta({
+    description:
+      "Pass as `cursor` for the next page. Null on the last page. A page can be short or even empty while this is set.",
+  }),
+  total: z.number().int().nullable().meta({
+    description:
+      "How many cards match, across every page. Null when not known exactly: on every page after the first of a search that matches text, and when that search reads its 5,000-card limit.",
+  }),
 };
 
 /** One page of a card search. */

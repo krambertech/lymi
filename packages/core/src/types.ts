@@ -517,7 +517,11 @@ export const CardSearchInput = z.object({
       "Only cards with exactly this term, ignoring case and spacing, the way duplicates are matched",
   }),
   deckId: z.string().min(1).optional(),
-  sectionId: z.string().min(1).optional().meta({ description: "Only cards in this section" }),
+  sectionId: z
+    .string()
+    .min(1)
+    .optional()
+    .meta({ description: "Only cards in this section. An archived section has none." }),
   language: LanguageTag.optional(),
   archived: z
     .boolean()
@@ -530,11 +534,13 @@ export const CardSearchInput = z.object({
     .max(200)
     .optional()
     .meta({ description: "At most this many per page, newest first. 50 by default." }),
-  after: z
+  cursor: z
     .string()
-    .regex(/^\d+\.\S+$/, "Pass the `next` value from the previous page.")
+    .regex(/^\d{1,16}\.[\w-]{1,64}$/, "Pass the `nextCursor` value from the previous page.")
     .optional()
-    .meta({ description: "The `next` value from the previous page, to read the one after it" }),
+    .meta({
+      description: "The `nextCursor` value from the previous page, to read the one after it",
+    }),
 });
 export type CardSearchInput = z.infer<typeof CardSearchInput>;
 

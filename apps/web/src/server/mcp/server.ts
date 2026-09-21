@@ -185,7 +185,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Search cards",
       description:
-        "Find cards by text in the term, meaning, example or notes, in one deck, one section or all of them. Leave the query empty to list the newest cards. Use term to match one term exactly, ignoring case, however many other cards contain it. Set archived to true to look through archived cards, for example to find one to restore. Results come a page at a time: pass next as after until next is null. A text search can return a short page before the end.",
+        "Find cards by text in the term, meaning, example or notes, in one deck, one section or all of them. Leave the query empty to list the newest cards. Use term to match one term exactly, ignoring case, however many other cards contain it. Set archived to true to look through archived cards, for example to find one to restore. Results come a page at a time: pass nextCursor as cursor. A page can be short or even empty; keep going until nextCursor is null. total is null when it is not known exactly.",
       inputSchema: CardSearchInput,
       outputSchema: SearchOut,
       ...readTool,
@@ -195,7 +195,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         const page = await searchCards(ctx, search);
         return result({
           cards: page.cards.map((row) => ({ ...cardOut(row.card), deckName: row.deckName })),
-          next: page.next,
+          nextCursor: page.nextCursor,
           total: page.total,
         });
       }),

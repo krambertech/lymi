@@ -79,7 +79,11 @@ describe("Archived", () => {
 
     expect((await searchCards(ctx, {})).cards.map((row) => row.card.id)).toEqual([added.card.id]);
     await archiveDeck(ctx, shelved.id);
-    expect(await searchCards(ctx, {})).toEqual({ cards: [], next: null, total: 0 });
-    expect(await searchCards(ctx, { archived: true })).toEqual({ cards: [], next: null, total: 0 });
+    expect(await searchCards(ctx, {})).toEqual({ cards: [], nextCursor: null, total: 0 });
+    expect(await searchCards(ctx, { archived: true })).toEqual({
+      cards: [],
+      nextCursor: null,
+      total: 0,
+    });
   });
 });

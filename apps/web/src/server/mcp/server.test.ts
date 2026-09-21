@@ -922,7 +922,7 @@ describe("Lymi MCP server", () => {
   it("passes search filters through and names each card's deck", async () => {
     services.searchCards.mockResolvedValue({
       cards: [{ card, deckName: "Italian" }],
-      next: "1700000000000.card-1",
+      nextCursor: "1700000000000.card-1",
       total: 7,
     });
     const client = await connect("read");
@@ -936,7 +936,7 @@ describe("Lymi MCP server", () => {
         sectionId: "section-1",
         archived: true,
         limit: 5,
-        after: "1700000000001.card-2",
+        cursor: "1700000000001.card-2",
       },
     });
 
@@ -948,11 +948,11 @@ describe("Lymi MCP server", () => {
       sectionId: "section-1",
       archived: true,
       limit: 5,
-      after: "1700000000001.card-2",
+      cursor: "1700000000001.card-2",
     });
     expect(res.structuredContent).toEqual({
       cards: [expect.objectContaining({ id: "card-1", deckName: "Italian" })],
-      next: "1700000000000.card-1",
+      nextCursor: "1700000000000.card-1",
       total: 7,
     });
   });
@@ -960,7 +960,7 @@ describe("Lymi MCP server", () => {
   it("rejects a cursor this search did not hand out", async () => {
     const client = await connect("read");
 
-    const res = await client.callTool({ name: "search_cards", arguments: { after: "page-2" } });
+    const res = await client.callTool({ name: "search_cards", arguments: { cursor: "page-2" } });
 
     expect(res.isError).toBe(true);
     expect(services.searchCards).not.toHaveBeenCalled();

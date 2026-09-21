@@ -114,10 +114,10 @@ export function Cards() {
       <p>
         A card sent with <code>enrich: true</code> is enriched in the background: meaning, example,
         pronunciation and language, written in the learner's meaning language. Without it, a card
-        from an API key or an assistant stays exactly as sent. It fills only what is empty, so any
-        text you send is kept exactly as you sent it, whatever its source. A field you clear while
-        the job runs stays clear. Each filled field is recorded as <code>"ai"</code> and carries the
-        badge.
+        from an API key or an assistant stays exactly as sent. It fills only fields never set, so
+        any text you send is kept exactly as you sent it, whatever its source, and a field sent or
+        saved as <code>""</code> stays empty. Each filled field is recorded as <code>"ai"</code> and
+        carries the badge.
       </p>
       <p>
         While a job is outstanding the card reads <code>enrichmentStatus: "working"</code>, and{" "}

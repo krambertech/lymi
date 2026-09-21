@@ -380,6 +380,38 @@ describe("enrichCards", () => {
     expect(card.enrichmentStatus).toBeNull();
   });
 
+  it("keeps a field cleared before its wave started empty, and reopens it on request", async () => {
+    const ctx = await learner(db, "enrich-wave", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const [added] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: deck.id, term: "ema", example: "Ema on kodus." })],
+      queue,
+    );
+    if (added?.status !== "added") throw new Error("not added");
+    // The agent clears the example long before the run reaches this card.
+    await updateCard(ctx, added.card.id, CardPatch.parse({ example: "" }));
+    const reply = {
+      cards: [
+        {
+          id: added.card.id,
+          meaning: "mother",
+          example: "Minu ema on õpetaja.",
+          pronunciation: null,
+          language: null,
+        },
+      ],
+    };
+    await enrichCards({ ...ctx, actor: "ai" }, [added.card.id], fakeProvider(reply));
+    expect((await showCard(ctx, added.card.id)).example).toBe("");
+
+    // Asking for enrichment is changing their mind: the blank field is open to fill again.
+    const asked = await requestEnrichment(ctx, added.card.id, queue);
+    expect(asked.example).toBeNull();
+    await enrichCards({ ...ctx, actor: "ai" }, [added.card.id], fakeProvider(reply));
+    expect((await showCard(ctx, added.card.id)).example).toBe("Minu ema on õpetaja.");
+  });
+
   it("marks the cards failed when the queue refuses the run, and the add still succeeds", async () => {
     const ctx = await learner(db, "enrich-6", "Kateryna");
     const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });

@@ -7,7 +7,14 @@ import type {
   StatedFieldSource,
   TerseCardOutcomeOut,
 } from "@lymi/core";
-import { needsEnrichment, newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
+import {
+  ENRICHED_FIELDS,
+  needsEnrichment,
+  newId,
+  normaliseTerm,
+  TEXT_MODES,
+  unsetFields,
+} from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
@@ -56,7 +63,7 @@ export async function addCard(
  * batch, are skipped and reported. Order of outcomes matches order of inputs. Only the
  * deck's owner adds; a member gets forbidden, a stranger not found.
  *
- * Given an enrichment queue, every added card that asks for enrichment and has an empty field
+ * Given an enrichment queue, every added card that asks for enrichment and has a field never set
  * starts at `working` and one background run fills it. Without one, the cards stay exactly as
  * they arrived. ADR 0002.
  */
@@ -171,7 +178,7 @@ export async function addCards(
       updatedAt: now,
       revision: 1,
     };
-    if (enrichment && wantsEnrichment(input, actor) && needsEnrichment(card)) {
+    if (enrichment && wantsEnrichment(input, actor) && unsetFields(card).length > 0) {
       card.enrichmentStatus = "working";
       enriching.push(id);
     }
@@ -440,14 +447,26 @@ export async function requestEnrichment(
   // `updatedAt` moves because the card did, and because the screen stops waiting on a card
   // that has said `working` for too long: a card added months ago must not read as stale.
   const working = { enrichmentStatus: "working" as const, updatedAt: new Date() };
+  // Asking is the learner changing their mind about a field they cleared, so blank becomes unset.
+  const reopened = Object.fromEntries(
+    ENRICHED_FIELDS.filter((field) => card[field] !== null && !card[field]?.trim()).map((field) => [
+      field,
+      null,
+    ]),
+  );
   await db
     .update(schema.cards)
-    .set(working)
+    .set({ ...working, ...reopened })
     .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
   const queued = await queueEnrichment(db, userId, [id], enrichment);
   return presentCard(
     db,
-    { ...card, ...working, ...(queued ? {} : { enrichmentStatus: "failed" as const }) },
+    {
+      ...card,
+      ...working,
+      ...reopened,
+      ...(queued ? {} : { enrichmentStatus: "failed" as const }),
+    },
     userId,
   );
 }

@@ -59,6 +59,7 @@ import {
   renameSeries,
   reorderSections,
   reorderSeries,
+  requestEnrichment,
   restoreCard,
   restoreCardImage,
   restoreCards,
@@ -397,6 +398,23 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           failed: outcomes.filter((o) => o.status === "error").length,
           results: outcomes,
         });
+      }),
+  );
+
+  server.registerTool(
+    "enrich_card",
+    {
+      title: "Enrich a card",
+      description:
+        'Ask Lymi to fill a card\'s empty meaning, example, pronunciation and language with AI, including fields cleared on purpose. The card comes back at enrichmentStatus "working"; read it with get_card to see the text land. A card with nothing left to fill is refused. Needs write.',
+      inputSchema: z.object({ cardId: z.string().min(1) }),
+      outputSchema: CardOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ cardId }) =>
+      run("enrich_card", async () => {
+        denyReads(principal);
+        return result(cardOut(await requestEnrichment(ctx, cardId, principal.enrichment ?? null)));
       }),
   );
 

@@ -2,9 +2,9 @@ import {
   CARD_LIMITS,
   ENRICHED_FIELDS,
   type EnrichedField,
-  emptyFields,
   LanguageTag,
   newId,
+  unsetFields,
 } from "@lymi/core";
 import { and, eq, inArray, isNull, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
@@ -92,12 +92,12 @@ export type EnrichmentWrite = {
 };
 
 /**
- * The write for one card: only fields that are empty now, only values the model gave, each
+ * The write for one card: only fields never set, only values the model gave, each
  * text field labelled `ai`. Language carries no source, because nothing in the interface
  * reads a language tag as lesson content.
  */
 export function enrichmentWrite(card: Fillable, filled: Filled): EnrichmentWrite {
-  const empty = new Set(emptyFields(card));
+  const empty = new Set(unsetFields(card));
   const write: EnrichmentWrite = {};
   const meaning = filled.meaning?.trim();
   if (meaning && empty.has("meaning")) {
@@ -144,7 +144,7 @@ async function askProvider(
       term: card.term,
       language: card.language,
       meaning: card.meaning,
-      needs: emptyFields(card),
+      needs: unsetFields(card),
     })),
   });
   const reply = Reply.safeParse(
@@ -169,16 +169,9 @@ function stillWorking(userId: string, cardId: string): SQL {
   ) as SQL;
 }
 
-/**
- * True in SQL when the column still holds the empty value the run read. A field cleared during
- * the run changed from null to "", so the clear stands as the caller's decision.
- */
-function unchangedEmpty(field: EnrichedField, read: string | null): SQL {
-  const column = schema.cards[field];
-  return and(
-    or(isNull(column), eq(sql`trim(${column})`, "")),
-    read === null ? isNull(column) : eq(column, read),
-  ) as SQL;
+/** True in SQL when the field was never set, so a clear made at any point before the write stands. */
+function unsetColumn(field: EnrichedField): SQL {
+  return isNull(schema.cards[field]);
 }
 
 /**
@@ -197,8 +190,8 @@ function landed(after: Card | undefined, write: EnrichmentWrite): EnrichedField[
 
 /**
  * Fill one run of cards and settle their status. The model takes seconds, so every write
- * carries its own emptiness test: a learner who types into a shimmering field between the read
- * and the write keeps what they typed, and the field stays theirs. Each card that gains a field
+ * carries its own test that the field is still unset: a learner who types into or clears a
+ * shimmering field before the write keeps what they did, and the field stays theirs. Each card that gains a field
  * gets one audit row naming the fields that actually landed, which Activity renders as
  * "Enriched …".
  */
@@ -227,13 +220,13 @@ export async function enrichCards(
       if (value === undefined) continue;
       const source = field === "language" ? {} : { [SOURCE_COLUMN[field]]: "ai" as const };
       // Filling an empty field is text an edition translates, so its localization goes stale.
-      // The write is guarded by `unchangedEmpty`, so the revision only moves when the fill lands.
+      // The write is guarded by `unsetColumn`, so the revision only moves when the fill lands.
       const stale = field === "language" ? {} : { revision: sql`revision + 1` };
       writes.push(
         db
           .update(schema.cards)
           .set({ [field]: value, ...source, ...stale, updatedAt: now })
-          .where(and(stillWorking(userId, card.id), unchangedEmpty(field, card[field]))),
+          .where(and(stillWorking(userId, card.id), unsetColumn(field))),
       );
     }
     // After that card's fields, so each write still sees `working`.

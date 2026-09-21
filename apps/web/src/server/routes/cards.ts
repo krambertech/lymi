@@ -53,7 +53,7 @@ const DUPLICATE_RULE =
   "Re-running the same call is safe.";
 
 const ENRICH_RULE =
-  "Empty fields are filled with AI in the background only for a card sent with `enrich: true`; an API key gets none by default.";
+  "With an API key, fields left out stay empty unless the card sets `enrich: true`; the learner's own adds in the app enrich by default. A field sent as an empty string is never filled.";
 
 cards.get(
   "/",
@@ -205,8 +205,8 @@ cards.post(
     tags: ["Cards"],
     summary: "Enrich a card",
     description:
-      "Needs the write scope. Asks the AI to fill the card's empty fields, the same way an add does: " +
-      "only meaning, example, pronunciation and language, only where they hold no text, and meanings in the learner's meaning language. " +
+      "Needs the write scope. Asks the AI to fill the card's empty fields: " +
+      "only meaning, example, pronunciation and language, only where they hold no text, including fields cleared on purpose, and meanings in the learner's meaning language. " +
       'The card comes back at `enrichmentStatus: "working"`; poll it to watch the text land. ' +
       "Only the card's owner may ask, and a card with nothing left to fill is refused with 400.",
     ok: { schema: CardOut, description: "The card, now working" },

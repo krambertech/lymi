@@ -163,6 +163,10 @@ export function McpOverview() {
             def: "Hide one card or up to 200, and bring them back, schedule intact.",
           },
           {
+            term: <code>enrich_card</code>,
+            def: "Ask Lymi to fill a card's empty meaning, example, pronunciation and language.",
+          },
+          {
             term: <code>due_counts</code>,
             def: "How many cards are waiting, in total, per deck and per series, and how many are in each Today round: forgotten today, new and slipping.",
           },
@@ -188,7 +192,8 @@ export function McpOverview() {
         The assistant does the extraction. It reads the lesson you share, decides which terms are
         worth a card and sends them in one batch. It says which fields it took from the lesson;
         anything it composed itself is recorded as yours, and Activity shows the app that sent it.
-        Lymi then fills whatever is still empty — meaning, example, pronunciation and language — and
+        Lymi fills the empty meaning, example, pronunciation and language only on cards the
+        assistant sends with <code>enrich: true</code>, or later with <code>enrich_card</code>, and
         that text alone is labelled <code>ai</code> on the card. Nothing already on a card is
         overwritten.
       </p>

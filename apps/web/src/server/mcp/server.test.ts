@@ -43,6 +43,7 @@ vi.mock("../services", async () => {
     archiveCards: vi.fn(),
     restoreCard: vi.fn(),
     restoreCards: vi.fn(),
+    requestEnrichment: vi.fn(),
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
     insights: vi.fn(),
@@ -147,6 +148,7 @@ describe("Lymi MCP server", () => {
       "delete_series",
       "describe_card_image",
       "due_counts",
+      "enrich_card",
       "get_card",
       "get_deck",
       "get_insights",
@@ -501,6 +503,29 @@ describe("Lymi MCP server", () => {
     expect(tooMany.isError).toBe(true);
     expect(services.updateCards).not.toHaveBeenCalled();
     expect(services.archiveCards).not.toHaveBeenCalled();
+  });
+
+  it("passes the add's enrich choice through and enriches one card on request", async () => {
+    services.addCards.mockResolvedValue([{ id: "card-1", status: "added", card }]);
+    services.requestEnrichment.mockResolvedValue({ ...card, enrichmentStatus: "working" });
+    const client = await connect("write");
+
+    await client.callTool({
+      name: "add_cards",
+      arguments: { cards: [{ deckId: "deck-1", term: "sbrigarsi", enrich: true }] },
+    });
+    expect(services.addCards).toHaveBeenCalledWith(
+      expect.anything(),
+      [{ deckId: "deck-1", term: "sbrigarsi", enrich: true }],
+      undefined,
+    );
+
+    const res = await client.callTool({ name: "enrich_card", arguments: { cardId: "card-1" } });
+    expect(res.isError).toBeFalsy();
+    expect((res.structuredContent as { enrichmentStatus: string }).enrichmentStatus).toBe(
+      "working",
+    );
+    expect(services.requestEnrichment).toHaveBeenCalledWith(expect.anything(), "card-1", null);
   });
 
   it("refuses every write on a read-only token and says how to fix it", async () => {

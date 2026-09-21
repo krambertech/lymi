@@ -14,3 +14,8 @@ export function emptyFields(card: Fillable): EnrichedField[] {
 export function needsEnrichment(card: Fillable): boolean {
   return emptyFields(card).length > 0;
 }
+
+/** Which fields were never set. A run fills only these: a stored "" is a deliberate clear. */
+export function unsetFields(card: Fillable): EnrichedField[] {
+  return ENRICHED_FIELDS.filter((field) => card[field] == null);
+}

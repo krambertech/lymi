@@ -95,22 +95,26 @@ for x in results:
       </p>
       <p>
         Two things follow. Keep your source list as the source of truth, and let Lymi decide what is
-        new. And if you do want to change an existing card, use{" "}
-        <code>PATCH /api/cards/&#123;id&#125;</code> with the id the skip gave you, rather than
-        adding it again.
+        new. And if you do want to change existing cards, send them to{" "}
+        <code>PATCH /api/cards/batch</code> with the ids the skips gave you, rather than adding them
+        again. Each card succeeds or fails on its own; send again only the ones that come back as
+        errors. <code>?response=terse</code> returns only each card’s id and status.
       </p>
       <Code
         lang="js"
         label="Update instead of re-adding"
-        code={`for (const r of results) {
-  if (r.status !== "skipped" || r.existing.meaning) continue;
-  await fetch(\`\${process.env.LYMI_URL}/api/cards/\${r.existing.id}\`, {
+        code={`const edits = results
+  .filter((r) => r.status === "skipped" && !r.existing.meaning)
+  .map((r) => ({ cardId: r.existing.id, meaning: meaningFor(r.term) }));
+
+if (edits.length > 0) {
+  await fetch(\`\${process.env.LYMI_URL}/api/cards/batch?response=terse\`, {
     method: "PATCH",
     headers: {
       "x-api-key": process.env.LYMI_KEY,
       "content-type": "application/json",
     },
-    body: JSON.stringify({ meaning: meaningFor(r.term) }),
+    body: JSON.stringify({ cards: edits }),
   });
 }`}
       />

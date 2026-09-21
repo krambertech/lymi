@@ -1,6 +1,8 @@
 import type { Scope } from "@lymi/core";
 import {
   AppLanguage,
+  CardArchiveInput,
+  CardEditsInput,
   CardImageImportInput,
   CardImagePatch,
   CardInput,
@@ -14,6 +16,7 @@ import {
   IMAGE_LIMITS,
   ImageDescription,
   InsightsOut,
+  ResponseShape,
   ReviewMode,
   RoundsOut,
   SectionArchiveInput,
@@ -26,6 +29,7 @@ import {
   SLIPPING_LAPSES,
   SLIPPING_REVIEWS,
   StreakOut,
+  TerseCardOutcomeOut,
 } from "@lymi/core";
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
@@ -33,6 +37,7 @@ import {
   addCards,
   archiveCard,
   archiveCardImage,
+  archiveCards,
   archiveDeck,
   archiveSection,
   type CardView,
@@ -56,6 +61,7 @@ import {
   reorderSeries,
   restoreCard,
   restoreCardImage,
+  restoreCards,
   restoreDeck,
   restoreSection,
   reviewRounds,
@@ -65,7 +71,9 @@ import {
   setSeriesDecks,
   showCard,
   streak,
+  terseOutcome,
   updateCard,
+  updateCards,
   updateDeck,
   updateSettings,
   uploadCardImage,
@@ -96,6 +104,8 @@ Start with list_decks. It names the decks, their languages and the language mean
 When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later.
 
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
+
+To change, archive or restore many cards, send them in one update_cards, archive_cards or restore_cards call, up to 200 at a time, rather than one call per card. Each card succeeds or fails on its own and the result says which, with an error code. A card whose save failed comes back as unavailable with nothing on it changed; send only those again. Set response to "terse" on add_cards or update_cards when you only need each card's id and status back.
 
 A card may have one picture, set with set_card_image from a public link or base64 bytes. Give it a description of what the picture shows that never names the term or meaning: it is what a screen reader says and what review shows if the picture cannot load. Picture review modes (cue "image") are set on each card with update_card or add_cards, never on a deck, and ask only while the card has a described picture. A road sign would be reviewModes [{ "cue": "image", "target": "meaning" }]; until it has a described picture, a card of picture modes only is asked in the text mode with the same target instead.
 
@@ -237,11 +247,12 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           .min(1)
           .max(200)
           .describe("Up to 200 cards. Outcomes come back in the same order."),
+        response: ResponseShape.optional(),
       }),
       outputSchema: AddCardsOut,
       ...writeTool({ idempotent: true }),
     },
-    ({ cards }) =>
+    ({ cards, response }) =>
       run("add_cards", async () => {
         denyReads(principal);
         const outcomes = await addCards(ctx, cards, principal.enrichment);
@@ -249,13 +260,16 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           added: outcomes.filter((o) => o.status === "added").length,
           skipped: outcomes.filter((o) => o.status === "skipped").length,
           results: outcomes.map((o) =>
-            o.status === "added"
-              ? { status: "added" as const, card: cardOut(o.card) }
-              : {
-                  status: "skipped" as const,
-                  term: o.term,
-                  existing: { ...cardOut(o.existing), deckName: o.deckName },
-                },
+            response === "terse"
+              ? terseOutcome(o)
+              : o.status === "added"
+                ? { id: o.id, status: "added" as const, card: cardOut(o.card) }
+                : {
+                    id: o.id,
+                    status: "skipped" as const,
+                    term: o.term,
+                    existing: { ...cardOut(o.existing), deckName: o.deckName },
+                  },
           ),
         });
       }),
@@ -279,6 +293,34 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   );
 
   server.registerTool(
+    "update_cards",
+    {
+      title: "Edit many cards",
+      description:
+        "Change fields on up to 200 cards in one call, each with its cardId and only the fields that change, by the same rules as update_card. Each card succeeds or fails on its own: one that is missing, refused or could not be saved comes back as an error with a code, and the rest still change. Outcomes come back in the same order. Needs write.",
+      inputSchema: CardEditsInput.extend({ response: ResponseShape.optional() }),
+      outputSchema: UpdateCardsOut,
+      ...writeTool({ idempotent: false, overwrites: true }),
+    },
+    ({ cards, response }) =>
+      run("update_cards", async () => {
+        denyReads(principal);
+        const outcomes = await updateCards(ctx, cards);
+        return result({
+          updated: outcomes.filter((o) => o.status === "updated").length,
+          failed: outcomes.filter((o) => o.status === "error").length,
+          results: outcomes.map((o) =>
+            response === "terse"
+              ? terseOutcome(o)
+              : o.status === "updated"
+                ? { id: o.id, status: "updated" as const, card: cardOut(o.card) }
+                : o,
+          ),
+        });
+      }),
+  );
+
+  server.registerTool(
     "archive_card",
     {
       title: "Archive a card",
@@ -297,6 +339,28 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   );
 
   server.registerTool(
+    "archive_cards",
+    {
+      title: "Archive many cards",
+      description:
+        "Hide up to 200 cards in one call, each the way archive_card does. A card already archived is left as it is. Each card succeeds or fails on its own: one that is missing, refused or could not be saved comes back as an error with a code, and the rest are still archived. Outcomes come back in the same order. Needs write.",
+      inputSchema: CardArchiveInput,
+      outputSchema: ArchiveCardsOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ cardIds }) =>
+      run("archive_cards", async () => {
+        denyReads(principal);
+        const outcomes = await archiveCards(ctx, cardIds);
+        return result({
+          archived: outcomes.filter((o) => o.status === "archived").length,
+          failed: outcomes.filter((o) => o.status === "error").length,
+          results: outcomes,
+        });
+      }),
+  );
+
+  server.registerTool(
     "restore_card",
     {
       title: "Restore a card",
@@ -311,6 +375,28 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         denyReads(principal);
         await restoreCard(ctx, cardId);
         return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
+    "restore_cards",
+    {
+      title: "Restore many cards",
+      description:
+        "Bring back up to 200 archived cards in one call, each the way restore_card does. A card that is already active is left as it is. Each card succeeds or fails on its own: one that is missing, refused or could not be saved comes back as an error with a code, and the rest are still restored. Outcomes come back in the same order. Needs write.",
+      inputSchema: CardArchiveInput,
+      outputSchema: RestoreCardsOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ cardIds }) =>
+      run("restore_cards", async () => {
+        denyReads(principal);
+        const outcomes = await restoreCards(ctx, cardIds);
+        return result({
+          restored: outcomes.filter((o) => o.status === "restored").length,
+          failed: outcomes.filter((o) => o.status === "error").length,
+          results: outcomes,
+        });
       }),
   );
 
@@ -1076,18 +1162,61 @@ const DueOut = z.object({
   rounds: z.object(RoundsOut.shape),
 });
 
+/** A card write reduced to its id and status, when a call asks for a terse response. */
+const TerseOut = z.object(TerseCardOutcomeOut.shape);
+
+/** Why one card in a bulk write was left alone. */
+const WriteErrorOut = z.object({
+  id: z.string(),
+  status: z.literal("error"),
+  code: TerseCardOutcomeOut.shape.code
+    .unwrap()
+    .describe("unavailable: saving failed, nothing on the card changed, and it can be sent again"),
+  error: z.string(),
+});
+
 const AddCardsOut = z.object({
   added: z.number().int(),
   skipped: z.number().int(),
   results: z.array(
-    z.discriminatedUnion("status", [
-      z.object({ status: z.literal("added"), card: CardOut }),
+    z.union([
+      z.object({ id: z.string(), status: z.literal("added"), card: CardOut }),
       z.object({
+        id: z.string().describe("The existing card"),
         status: z.literal("skipped"),
         term: z.string(),
         existing: CardOut.extend({ deckName: z.string() }),
       }),
+      TerseOut,
     ]),
+  ),
+});
+
+const UpdateCardsOut = z.object({
+  updated: z.number().int(),
+  failed: z.number().int(),
+  results: z.array(
+    z.union([
+      z.object({ id: z.string(), status: z.literal("updated"), card: CardOut }),
+      WriteErrorOut,
+      TerseOut,
+    ]),
+  ),
+});
+
+const ArchiveCardsOut = z.object({
+  archived: z.number().int(),
+  failed: z.number().int(),
+  results: z.array(
+    z.union([z.object({ id: z.string(), status: z.literal("archived") }), WriteErrorOut]),
+  ),
+});
+
+const RestoreCardsOut = z.object({
+  restored: z.number().int(),
+  failed: z.number().int(),
+  results: z.array(
+    z.union([z.object({ id: z.string(), status: z.literal("restored") }), WriteErrorOut]),
   ),
 });
 

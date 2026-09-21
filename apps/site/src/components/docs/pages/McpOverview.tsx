@@ -146,16 +146,21 @@ export function McpOverview() {
             def: "One or many cards in a call. A duplicate is skipped, never rejected, and the result names the existing card.",
           },
           {
-            term: <code>update_card</code>,
-            def: "Change fields on a card, or move it to another deck.",
+            term: (
+              <>
+                <code>update_card</code>, <code>update_cards</code>
+              </>
+            ),
+            def: "Change fields on one card or up to 200, or move them to another deck. In a bulk edit, each card succeeds or fails on its own and the result says which.",
           },
           {
             term: (
               <>
-                <code>archive_card</code>, <code>restore_card</code>
+                <code>archive_card</code>, <code>archive_cards</code>, <code>restore_card</code>,{" "}
+                <code>restore_cards</code>
               </>
             ),
-            def: "Hide a card and bring it back, schedule intact.",
+            def: "Hide one card or up to 200, and bring them back, schedule intact.",
           },
           {
             term: <code>due_counts</code>,

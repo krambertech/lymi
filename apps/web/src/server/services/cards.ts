@@ -1,26 +1,37 @@
-import type { CardInput, CardPatch, CardSearchInput, StatedFieldSource } from "@lymi/core";
+import type {
+  CardEditInput,
+  CardInput,
+  CardPatch,
+  CardSearchInput,
+  StatedFieldSource,
+  TerseCardOutcomeOut,
+} from "@lymi/core";
 import { needsEnrichment, newId, normaliseTerm, TEXT_MODES } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import { auditStatement } from "./audit";
-import { runInBatches, type Statement, selectIn } from "./batch";
+import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, editionText, inEdition, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { type EnrichmentQueue, queueEnrichment } from "./enrichment";
 import { memberOf } from "./members";
-import { presentModeRow, resolveCardModes, stateStatementsForCard } from "./modes";
+import {
+  presentModeRow,
+  resolveCardModes,
+  stateStatementsForCard,
+  stateStatementsForCards,
+} from "./modes";
 import { bumped } from "./revisions";
-import { activeSectionOf } from "./sections";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
  * caller learns which card already holds the term and in which deck. See ADR 0004.
  */
 export type AddCardOutcome =
-  | { status: "added"; card: CardView }
-  | { status: "skipped"; term: string; existing: CardView; deckName: string };
+  | { id: string; status: "added"; card: CardView }
+  | { id: string; status: "skipped"; term: string; existing: CardView; deckName: string };
 
 /** One card. Same rule as the batch, one outcome. */
 export async function addCard(
@@ -194,7 +205,9 @@ export async function addCards(
   );
   return outcomes.map((outcome, index) => {
     const card = views[index] as CardView;
-    return outcome.status === "added" ? { status: "added", card } : { ...outcome, existing: card };
+    return outcome.status === "added"
+      ? { id: card.id, status: "added", card }
+      : { ...outcome, id: card.id, existing: card };
   });
 }
 
@@ -305,10 +318,94 @@ export async function showCard(ctx: ServiceContext, id: string): Promise<CardVie
 /** The card, or forbidden when the learner can see it but does not own it. */
 export async function ownedCard(ctx: ServiceContext, id: string) {
   const card = await getCard(ctx, id);
-  if (card.userId !== ctx.userId) {
+  assertOwner(ctx, card);
+  return card;
+}
+
+function assertOwner({ userId }: ServiceContext, card: Card) {
+  if (card.userId !== userId) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
   }
-  return card;
+}
+
+/** The listed cards the learner can see, by id, in one query per slice of ids. */
+async function visibleCards({ db, userId }: ServiceContext, ids: readonly string[]) {
+  const rows = await selectIn([...new Set(ids)], (slice) =>
+    db
+      .select({ card: schema.cards })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(and(inArray(schema.cards.id, slice), memberOf(userId))),
+  );
+  return new Map(rows.map((row) => [row.card.id, row.card]));
+}
+
+/** A card a bulk write left alone, with the code and message a single write would have thrown. */
+export type CardWriteError = {
+  id: string;
+  status: "error";
+  code: ServiceError["code"];
+  error: string;
+};
+
+/** Runs one card's checks; a refusal becomes that card's outcome instead of failing the others. */
+function refusalOf(id: string, check: () => void): CardWriteError | null {
+  try {
+    check();
+    return null;
+  } catch (err) {
+    if (err instanceof ServiceError) {
+      return { id, status: "error", code: err.code, error: err.message };
+    }
+    throw err;
+  }
+}
+
+/** One card's write and its audit row, and whether the card's review states need adding after it. */
+type CardWrite = { id: string; statements: Statement[]; states: boolean };
+
+/**
+ * Cards per D1 batch. Each costs two statements, and the batch adds one set of state statements
+ * for all of them, which keeps a batch under the fifty `runInBatches` allows.
+ */
+export const CARDS_PER_BATCH = 20;
+
+/** The writes, then the missing review states of every card that needs them, in one statement per mode. */
+function batchOf(db: Db, writes: CardWrite[], now: Date): Statement[] {
+  const stated = writes.filter((write) => write.states).map((write) => write.id);
+  return [
+    ...writes.flatMap((write) => write.statements),
+    ...(stated.length > 0 ? stateStatementsForCards(db, JSON.stringify(stated), now) : []),
+  ];
+}
+
+/**
+ * Runs a bulk write CARDS_PER_BATCH cards at a time and returns the ids of cards whose batch
+ * failed. A D1 batch is atomic, so those cards are untouched, and the later batches still run.
+ */
+async function runCardWrites(db: Db, writes: CardWrite[], now: Date): Promise<Set<string>> {
+  const failed = new Set<string>();
+  for (let i = 0; i < writes.length; i += CARDS_PER_BATCH) {
+    const slice = writes.slice(i, i + CARDS_PER_BATCH);
+    try {
+      await runBatch(db, batchOf(db, slice, now));
+    } catch (err) {
+      console.error("Bulk card write failed", {
+        error: err instanceof Error ? err.name : typeof err,
+      });
+      for (const write of slice) failed.add(write.id);
+    }
+  }
+  return failed;
+}
+
+function writeFailed(id: string): CardWriteError {
+  return {
+    id,
+    status: "error",
+    code: "unavailable",
+    error: "Lymi could not save this card. Nothing on it changed; try it again.",
+  };
 }
 
 /**
@@ -398,17 +495,104 @@ function sourceAfter(text: string | undefined, stated: StatedFieldSource | undef
 }
 
 export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
+  const edit = { ...patch, cardId: id };
+  const lookups = await editLookups(ctx, [edit]);
+  const now = new Date();
+  await runBatch(ctx.db, batchOf(ctx.db, [editWrite(ctx, lookups, edit, now)], now));
+  return showCard(ctx, id);
+}
+
+export type EditCardOutcome = { id: string; status: "updated"; card: CardView } | CardWriteError;
+
+/**
+ * Edit many cards, each as `updateCard` would, with its own audit row. A card that is missing, not
+ * the learner's, or refused its deck or section reports why, and so does a card whose batch failed
+ * to save; the rest still land. Outcomes come back in the order of the edits.
+ */
+export async function updateCards(
+  ctx: ServiceContext,
+  edits: CardEditInput[],
+): Promise<EditCardOutcome[]> {
   const { db, userId } = ctx;
-  const current = await ownedCard(ctx, id);
-  if (patch.deckId && patch.deckId !== current.deckId) {
-    const [deck] = await db
-      .select({ id: schema.decks.id })
-      .from(schema.decks)
-      .where(and(eq(schema.decks.id, patch.deckId), eq(schema.decks.userId, userId)));
-    if (!deck) throw notFound("Deck");
+  if (edits.length === 0) return [];
+  const lookups = await editLookups(ctx, edits);
+  const now = new Date();
+  const writes: CardWrite[] = [];
+  const refusals = edits.map((edit) =>
+    refusalOf(edit.cardId, () => writes.push(editWrite(ctx, lookups, edit, now))),
+  );
+  const failed = await runCardWrites(db, writes, now);
+  const written = await visibleCards(
+    ctx,
+    writes.filter((write) => !failed.has(write.id)).map((write) => write.id),
+  );
+  const views = new Map(
+    (await presentCards(db, [...written.values()], userId)).map((view) => [view.id, view]),
+  );
+  return edits.map(({ cardId: id }, index) => {
+    const refused = refusals[index];
+    if (refused) return refused;
+    const card = views.get(id);
+    return failed.has(id) || !card ? writeFailed(id) : { id, status: "updated", card };
+  });
+}
+
+type EditLookups = {
+  cards: Map<string, Card>;
+  ownedDecks: Set<string>;
+  sectionDecks: Map<string, string>;
+};
+
+/** Every card, target deck and section a set of edits names, read once for the whole set. */
+async function editLookups(ctx: ServiceContext, edits: CardEditInput[]): Promise<EditLookups> {
+  const { db, userId } = ctx;
+  const deckIds = [...new Set(edits.flatMap((edit) => (edit.deckId ? [edit.deckId] : [])))];
+  const sectionIds = [
+    ...new Set(edits.flatMap((edit) => (edit.sectionId ? [edit.sectionId] : []))),
+  ];
+  const [cards, decks, sections] = await Promise.all([
+    visibleCards(
+      ctx,
+      edits.map((edit) => edit.cardId),
+    ),
+    selectIn(deckIds, (ids) =>
+      db
+        .select({ id: schema.decks.id })
+        .from(schema.decks)
+        .where(and(inArray(schema.decks.id, ids), eq(schema.decks.userId, userId))),
+    ),
+    selectIn(sectionIds, (ids) =>
+      db
+        .select({ id: schema.sections.id, deckId: schema.sections.deckId })
+        .from(schema.sections)
+        .where(and(inArray(schema.sections.id, ids), isNull(schema.sections.archivedAt))),
+    ),
+  ]);
+  return {
+    cards,
+    ownedDecks: new Set(decks.map((deck) => deck.id)),
+    sectionDecks: new Map(sections.map((section) => [section.id, section.deckId])),
+  };
+}
+
+/** One card's edit and its audit row, or the ServiceError that refuses it. */
+function editWrite(
+  ctx: ServiceContext,
+  lookups: EditLookups,
+  { cardId: id, ...patch }: CardEditInput,
+  now: Date,
+): CardWrite {
+  const { db } = ctx;
+  const current = lookups.cards.get(id);
+  if (!current) throw notFound("Card");
+  assertOwner(ctx, current);
+  if (patch.deckId && patch.deckId !== current.deckId && !lookups.ownedDecks.has(patch.deckId)) {
+    throw notFound("Deck");
   }
   const deckId = patch.deckId ?? current.deckId;
-  if (patch.sectionId) await activeSectionOf(ctx, deckId, patch.sectionId);
+  if (patch.sectionId && lookups.sectionDecks.get(patch.sectionId) !== deckId) {
+    throw notFound("Section");
+  }
   // A section belongs to one deck, so a card that changes deck leaves its section unless given one there.
   const section =
     patch.sectionId !== undefined
@@ -443,39 +627,93 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: CardPat
       ...bumped("card", patch, current),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
-      updatedAt: new Date(),
+      updatedAt: now,
     })
     .where(eq(schema.cards.id, id));
-  await runInBatches(db, [
-    [
+  return {
+    id,
+    statements: [
       update,
-      ...(modes || patch.deckId !== undefined ? stateStatementsForCard(db, id) : []),
       auditStatement(ctx, { entity: "card", action: "update", id, deckId, details: patch }),
     ],
-  ]);
-  return showCard(ctx, id);
+    states: modes !== undefined || patch.deckId !== undefined,
+  };
 }
 
-/** Archive, never delete. Undo is `restoreCard`. */
+/** Archive, never delete. Undo is `restoreCard`. Archiving an archived card changes nothing. */
 export function archiveCard(ctx: ServiceContext, id: string) {
   return setArchived(ctx, id, new Date());
 }
 
+/** Restoring an active card changes nothing. */
 export function restoreCard(ctx: ServiceContext, id: string) {
   return setArchived(ctx, id, null);
 }
 
+export type ArchiveCardOutcome = { id: string; status: "archived" | "restored" } | CardWriteError;
+
+/**
+ * Archive many cards, each as `archiveCard` would, with its own audit row. A card that is missing,
+ * not the learner's, or in a batch that failed to save reports why; the rest are still archived.
+ * Outcomes come back in the order of the ids.
+ */
+export function archiveCards(ctx: ServiceContext, ids: readonly string[]) {
+  return setArchivedMany(ctx, ids, new Date());
+}
+
+/** Restore many cards, each as `restoreCard` would, by the same rules as `archiveCards`. */
+export function restoreCards(ctx: ServiceContext, ids: readonly string[]) {
+  return setArchivedMany(ctx, ids, null);
+}
+
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
-  const { db } = ctx;
-  const current = await ownedCard(ctx, id);
-  const update = db
-    .update(schema.cards)
-    .set({ archivedAt, updatedAt: new Date() })
-    .where(eq(schema.cards.id, id));
-  await runInBatches(db, [
-    [
-      update,
-      ...(archivedAt === null ? stateStatementsForCard(db, id) : []),
+  const cards = await visibleCards(ctx, [id]);
+  const write = archiveWrite(ctx, cards, id, archivedAt);
+  if (write) await runBatch(ctx.db, batchOf(ctx.db, [write], new Date()));
+}
+
+async function setArchivedMany(
+  ctx: ServiceContext,
+  ids: readonly string[],
+  archivedAt: Date | null,
+): Promise<ArchiveCardOutcome[]> {
+  const cards = await visibleCards(ctx, ids);
+  const now = new Date();
+  const writes: CardWrite[] = [];
+  const refusals = ids.map((id) =>
+    refusalOf(id, () => {
+      const write = archiveWrite(ctx, cards, id, archivedAt);
+      if (write) writes.push(write);
+    }),
+  );
+  const failed = await runCardWrites(ctx.db, writes, now);
+  const status = archivedAt ? ("archived" as const) : ("restored" as const);
+  return ids.map(
+    (id, index) => refusals[index] ?? (failed.has(id) ? writeFailed(id) : { id, status }),
+  );
+}
+
+/**
+ * One card's archive or restore and its audit row, nothing when the card is already there, or the
+ * ServiceError that refuses it.
+ */
+function archiveWrite(
+  ctx: ServiceContext,
+  cards: Map<string, Card>,
+  id: string,
+  archivedAt: Date | null,
+): CardWrite | null {
+  const current = cards.get(id);
+  if (!current) throw notFound("Card");
+  assertOwner(ctx, current);
+  if ((current.archivedAt === null) === (archivedAt === null)) return null;
+  return {
+    id,
+    statements: [
+      ctx.db
+        .update(schema.cards)
+        .set({ archivedAt, updatedAt: new Date() })
+        .where(eq(schema.cards.id, id)),
       auditStatement(ctx, {
         entity: "card",
         action: archivedAt ? "archive" : "restore",
@@ -483,5 +721,30 @@ async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | n
         deckId: current.deckId,
       }),
     ],
-  ]);
+    states: archivedAt === null,
+  };
+}
+
+/** A card write reduced to the card's id and what happened to it, for a `terse` response. */
+export function terseOutcome(
+  outcome: AddCardOutcome | EditCardOutcome | ArchiveCardOutcome,
+): TerseCardOutcomeOut {
+  switch (outcome.status) {
+    case "added":
+      return {
+        id: outcome.id,
+        status: "added",
+        enrichmentStatus: outcome.card.enrichmentStatus,
+      };
+    case "skipped":
+      return {
+        id: outcome.id,
+        status: "skipped",
+        enrichmentStatus: outcome.existing.enrichmentStatus,
+      };
+    case "error":
+      return { id: outcome.id, status: "error", code: outcome.code, error: outcome.error };
+    default:
+      return { id: outcome.id, status: outcome.status };
+  }
 }

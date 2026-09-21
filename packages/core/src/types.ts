@@ -544,6 +544,38 @@ export const CardPatch = CardInput.partial()
   });
 export type CardPatch = z.infer<typeof CardPatch>;
 
+/** One card's edit in a bulk edit: which card, and the fields to change on it. */
+export const CardEditInput = CardPatch.extend({ cardId: z.string().min(1) });
+export type CardEditInput = z.infer<typeof CardEditInput>;
+
+/** A bulk edit. Each card succeeds or fails on its own. */
+export const CardEditsInput = z.object({
+  cards: z
+    .array(CardEditInput)
+    .min(1)
+    .max(200)
+    .refine(
+      (edits) => new Set(edits.map((edit) => edit.cardId)).size === edits.length,
+      "List each card once.",
+    ),
+});
+export type CardEditsInput = z.infer<typeof CardEditsInput>;
+
+/** A bulk archive or restore. Each card succeeds or fails on its own. */
+export const CardArchiveInput = z.object({
+  cardIds: CardIds.min(1, "Choose at least one card.").max(200),
+});
+export type CardArchiveInput = z.infer<typeof CardArchiveInput>;
+
+/** How much a card write sends back: every card in full, or only each card's id and status. */
+export const ResponseShape = z.enum(["full", "terse"]).meta({
+  description:
+    "full, the default, returns each card. terse returns only each card's id and status, an add's enrichmentStatus, and an error's code and message.",
+});
+export type ResponseShape = z.infer<typeof ResponseShape>;
+
+export const ResponseShapeQuery = z.object({ response: ResponseShape.optional() });
+
 /**
  * One grade names its review mode. `direction` is the form grades took before review modes,
  * still accepted so an older app or a queued offline grade replays onto the same schedule.

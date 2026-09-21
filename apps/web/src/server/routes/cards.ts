@@ -1,6 +1,9 @@
 import {
   AddCardOutcomeOut,
   AddCardsOut,
+  ArchiveCardsOut,
+  CardArchiveInput,
+  CardEditsInput,
   CardHistoryOut,
   CardHitOut,
   CardInput,
@@ -8,7 +11,10 @@ import {
   CardPatch,
   CardSearchQuery,
   CardsInput,
+  EditCardsOut,
   OkOut,
+  ResponseShapeQuery,
+  TerseCardsOut,
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -18,16 +24,28 @@ import {
   addCard,
   addCards,
   archiveCard,
+  archiveCards,
   cardHistory,
   enrichmentQueue,
   requestEnrichment,
   restoreCard,
+  restoreCards,
   searchCards,
   showCard,
+  terseOutcome,
   updateCard,
+  updateCards,
 } from "../services";
 
 export const cards = new Hono<AppEnv>();
+
+const TERSE =
+  "`response=terse` returns only each card's id and status, an add's `enrichmentStatus`, and an error's code and message.";
+
+const PARTIAL =
+  "Each card succeeds or fails on its own. One that is missing, not yours or refused comes back as an error with the code a single write would answer; " +
+  "one whose save failed comes back as `unavailable` with nothing on it changed, and can be sent again. " +
+  "Every card that changes gets its own entry in Activity.";
 
 const DUPLICATE_RULE =
   "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks. " +
@@ -80,15 +98,64 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add many cards",
-    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE}`,
-    ok: { schema: AddCardsOut, description: "One outcome per card sent" },
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE} ${TERSE}`,
+    ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
     errors: [400, 404],
   }),
+  query(ResponseShapeQuery, "query"),
   body(CardsInput, "cards"),
-  async (c) =>
-    c.json({
-      results: await addCards(ctxOf(c), c.req.valid("json").cards, enrichmentQueue(c.env)),
-    }),
+  async (c) => {
+    const outcomes = await addCards(ctxOf(c), c.req.valid("json").cards, enrichmentQueue(c.env));
+    const terse = c.req.valid("query").response === "terse";
+    return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });
+  },
+);
+
+cards.patch(
+  "/batch",
+  describe({
+    tags: ["Cards"],
+    summary: "Edit many cards",
+    description: `Needs the write scope. Up to 200 cards, each with its \`cardId\` and only the fields to change. Outcomes come back in the same order. ${PARTIAL} ${TERSE}`,
+    ok: {
+      schema: z.union([EditCardsOut, TerseCardsOut]),
+      description: "One outcome per card sent",
+    },
+    errors: [400],
+  }),
+  query(ResponseShapeQuery, "query"),
+  body(CardEditsInput, "edits"),
+  async (c) => {
+    const outcomes = await updateCards(ctxOf(c), c.req.valid("json").cards);
+    const terse = c.req.valid("query").response === "terse";
+    return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });
+  },
+);
+
+cards.post(
+  "/archive",
+  describe({
+    tags: ["Cards"],
+    summary: "Archive many cards",
+    description: `Needs the write scope. Up to 200 card ids. Hides each card without destroying it. A card already archived is left as it is and still reported as archived. Outcomes come back in the same order. ${PARTIAL}`,
+    ok: { schema: ArchiveCardsOut, description: "One outcome per card sent" },
+    errors: [400],
+  }),
+  body(CardArchiveInput, "archive"),
+  async (c) => c.json({ results: await archiveCards(ctxOf(c), c.req.valid("json").cardIds) }),
+);
+
+cards.post(
+  "/restore",
+  describe({
+    tags: ["Cards"],
+    summary: "Restore many cards",
+    description: `Needs the write scope. Up to 200 card ids. Brings each archived card back with its schedule intact. A card that is already active is left as it is and still reported as restored. Outcomes come back in the same order. ${PARTIAL}`,
+    ok: { schema: ArchiveCardsOut, description: "One outcome per card sent" },
+    errors: [400],
+  }),
+  body(CardArchiveInput, "restore"),
+  async (c) => c.json({ results: await restoreCards(ctxOf(c), c.req.valid("json").cardIds) }),
 );
 
 cards.get(
@@ -150,7 +217,8 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Archive a card",
-    description: "Needs the write scope. Hides the card without destroying it. Undo with restore.",
+    description:
+      "Needs the write scope. Hides the card without destroying it. Undo with restore. Archiving an archived card changes nothing.",
     ok: { schema: OkOut, description: "Archived" },
     errors: [404],
   }),
@@ -165,7 +233,8 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Restore a card",
-    description: "Needs the write scope. Brings an archived card back with its schedule intact.",
+    description:
+      "Needs the write scope. Brings an archived card back with its schedule intact. Restoring an active card changes nothing.",
     ok: { schema: OkOut, description: "Restored" },
     errors: [404],
   }),

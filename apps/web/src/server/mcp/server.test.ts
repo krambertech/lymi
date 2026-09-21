@@ -8,8 +8,11 @@ import { buildMcpServer, type McpPrincipal } from "./server";
 
 vi.mock("../services", async () => {
   const context = await import("../services/context");
+  const { terseOutcome } =
+    await vi.importActual<typeof import("../services/cards")>("../services/cards");
   return {
     ...context,
+    terseOutcome,
     listDecks: vi.fn(),
     getDeck: vi.fn(),
     listDeckCards: vi.fn(),
@@ -35,8 +38,11 @@ vi.mock("../services", async () => {
     showCard: vi.fn(),
     addCards: vi.fn(),
     updateCard: vi.fn(),
+    updateCards: vi.fn(),
     archiveCard: vi.fn(),
+    archiveCards: vi.fn(),
     restoreCard: vi.fn(),
+    restoreCards: vi.fn(),
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
     insights: vi.fn(),
@@ -132,6 +138,7 @@ describe("Lymi MCP server", () => {
       "add_cards",
       "archive_card",
       "archive_card_image",
+      "archive_cards",
       "archive_deck",
       "archive_section",
       "create_deck",
@@ -154,11 +161,13 @@ describe("Lymi MCP server", () => {
       "reorder_series",
       "restore_card",
       "restore_card_image",
+      "restore_cards",
       "restore_deck",
       "restore_section",
       "search_cards",
       "set_card_image",
       "update_card",
+      "update_cards",
       "update_deck",
       "update_series",
       "update_settings",
@@ -306,8 +315,8 @@ describe("Lymi MCP server", () => {
 
   it("adds cards through the service layer and reports duplicates as skipped", async () => {
     services.addCards.mockResolvedValue([
-      { status: "added", card },
-      { status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
+      { id: "card-1", status: "added", card },
+      { id: "card-1", status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
     ]);
     const client = await connect("write");
 
@@ -325,7 +334,9 @@ describe("Lymi MCP server", () => {
     const out = res.structuredContent as { added: number; skipped: number; results: unknown[] };
     expect(out.added).toBe(1);
     expect(out.skipped).toBe(1);
+    expect(out.results[0]).toMatchObject({ id: "card-1", status: "added", card: { id: "card-1" } });
     expect(out.results[1]).toMatchObject({
+      id: "card-1",
       status: "skipped",
       term: "Sbrigarsi",
       existing: { id: "card-1", deckName: "Italian" },
@@ -342,14 +353,167 @@ describe("Lymi MCP server", () => {
     );
   });
 
+  it("returns only ids, statuses and enrichment when an add asks for terse", async () => {
+    services.addCards.mockResolvedValue([
+      {
+        id: "card-2",
+        status: "added",
+        card: { ...card, id: "card-2", enrichmentStatus: "working" },
+      },
+      { id: "card-1", status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
+    ]);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "add_cards",
+      arguments: {
+        cards: [
+          { deckId: "deck-1", term: "sbrigarsi" },
+          { deckId: "deck-1", term: "Sbrigarsi" },
+        ],
+        response: "terse",
+      },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(res.structuredContent).toEqual({
+      added: 1,
+      skipped: 1,
+      results: [
+        { id: "card-2", status: "added", enrichmentStatus: "working" },
+        { id: "card-1", status: "skipped", enrichmentStatus: null },
+      ],
+    });
+  });
+
+  it("edits many cards in one call and reports each card's outcome in order", async () => {
+    services.updateCards.mockResolvedValue([
+      { id: "card-1", status: "updated", card: { ...card, source: null } },
+      { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
+    ]);
+    const client = await connect("write");
+    const cards = [
+      { cardId: "card-1", source: "" },
+      { cardId: "card-2", source: "" },
+    ];
+
+    const full = await client.callTool({ name: "update_cards", arguments: { cards } });
+    expect(full.isError).toBeFalsy();
+    expect(services.updateCards).toHaveBeenCalledWith(expect.anything(), cards);
+    expect(full.structuredContent).toMatchObject({
+      updated: 1,
+      failed: 1,
+      results: [
+        { id: "card-1", status: "updated", card: { id: "card-1", term: "sbrigarsi" } },
+        { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
+      ],
+    });
+
+    const terse = await client.callTool({
+      name: "update_cards",
+      arguments: { cards, response: "terse" },
+    });
+    expect(terse.structuredContent).toEqual({
+      updated: 1,
+      failed: 1,
+      results: [
+        { id: "card-1", status: "updated" },
+        { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
+      ],
+    });
+  });
+
+  it("keeps a single edit's answer the whole card, with no terse option", async () => {
+    services.updateCard.mockResolvedValue(card);
+    const client = await connect("write");
+    const { tools } = await client.listTools();
+    const input = tools.find((t) => t.name === "update_card")?.inputSchema.properties ?? {};
+    expect(Object.keys(input)).not.toContain("response");
+
+    const res = await client.callTool({
+      name: "update_card",
+      arguments: { cardId: "card-1", source: "" },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", { source: "" });
+    expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
+  });
+
+  it("archives many cards in one call and reports each card's outcome in order", async () => {
+    services.archiveCards.mockResolvedValue([
+      { id: "card-1", status: "archived" },
+      { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
+    ]);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "archive_cards",
+      arguments: { cardIds: ["card-1", "card-2"] },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(res.structuredContent).toEqual({
+      archived: 1,
+      failed: 1,
+      results: [
+        { id: "card-1", status: "archived" },
+        { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
+      ],
+    });
+  });
+
+  it("restores many cards in one call and reports each card's outcome in order", async () => {
+    services.restoreCards.mockResolvedValue([
+      { id: "card-1", status: "restored" },
+      { id: "card-2", status: "error", code: "unavailable", error: "Try again." },
+    ]);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "restore_cards",
+      arguments: { cardIds: ["card-1", "card-2"] },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.restoreCards).toHaveBeenCalledWith(expect.anything(), ["card-1", "card-2"]);
+    expect(res.structuredContent).toEqual({
+      restored: 1,
+      failed: 1,
+      results: [
+        { id: "card-1", status: "restored" },
+        { id: "card-2", status: "error", code: "unavailable", error: "Try again." },
+      ],
+    });
+  });
+
+  it("refuses a bulk edit that lists a card twice or sends more than 200", async () => {
+    const client = await connect("write");
+    const twice = await client.callTool({
+      name: "update_cards",
+      arguments: { cards: [{ cardId: "card-1" }, { cardId: "card-1" }] },
+    });
+    const tooMany = await client.callTool({
+      name: "archive_cards",
+      arguments: { cardIds: Array.from({ length: 201 }, (_, i) => `card-${i}`) },
+    });
+    expect(twice.isError).toBe(true);
+    expect(tooMany.isError).toBe(true);
+    expect(services.updateCards).not.toHaveBeenCalled();
+    expect(services.archiveCards).not.toHaveBeenCalled();
+  });
+
   it("refuses every write on a read-only token and says how to fix it", async () => {
     const client = await connect("read");
 
     for (const [name, args] of [
       ["add_cards", { cards: [{ deckId: "deck-1", term: "ciao" }] }],
       ["update_card", { cardId: "card-1", meaning: "hi" }],
+      ["update_cards", { cards: [{ cardId: "card-1", meaning: "hi" }] }],
       ["archive_card", { cardId: "card-1" }],
+      ["archive_cards", { cardIds: ["card-1"] }],
       ["restore_card", { cardId: "card-1" }],
+      ["restore_cards", { cardIds: ["card-1"] }],
       ["create_deck", { name: "Spanish" }],
       ["update_deck", { deckId: "deck-1", name: "Italiano" }],
       ["archive_deck", { deckId: "deck-1" }],
@@ -378,8 +542,11 @@ describe("Lymi MCP server", () => {
     }
     expect(services.addCards).not.toHaveBeenCalled();
     expect(services.updateCard).not.toHaveBeenCalled();
+    expect(services.updateCards).not.toHaveBeenCalled();
     expect(services.archiveCard).not.toHaveBeenCalled();
+    expect(services.archiveCards).not.toHaveBeenCalled();
     expect(services.restoreCard).not.toHaveBeenCalled();
+    expect(services.restoreCards).not.toHaveBeenCalled();
     expect(services.createDeck).not.toHaveBeenCalled();
     expect(services.updateDeck).not.toHaveBeenCalled();
     expect(services.archiveDeck).not.toHaveBeenCalled();
@@ -602,7 +769,9 @@ describe("Lymi MCP server", () => {
 
   it("describes notes as the Markdown subset and passes the source through unchanged", async () => {
     const notes = "**hea aeg** → *head aega*\n\n- hea → head\n- aeg → aega";
-    services.addCards.mockResolvedValue([{ status: "added", card: { ...card, notes } }]);
+    services.addCards.mockResolvedValue([
+      { id: "card-1", status: "added", card: { ...card, notes } },
+    ]);
     services.updateCard.mockResolvedValue({ ...card, notes });
     const client = await connect("write");
 

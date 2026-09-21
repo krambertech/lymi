@@ -57,7 +57,8 @@ const ENRICH_RULE =
   "With an API key, fields left out stay empty unless the card sets `enrich: true`; the learner's own adds in the app enrich by default. A field sent as an empty string is never filled.";
 
 const PAGING =
-  "Results come a page at a time: pass `next` as `after` until `next` is null. When text is matched in memory (the free-text `query`, and text conditions on fields other than the term), a page can come back short before the end.";
+  "Results come a page at a time: pass `nextCursor` as `cursor`. A page can be short or even empty; keep going until the cursor is null. " +
+  "`total` is null when it is not known exactly: on every page after the first of a search that matches text in memory, and when that search reads its 5,000-card limit.";
 
 const searchPage = (page: Awaited<ReturnType<typeof searchCards>>) => ({
   cards: page.cards.map((row) => ({
@@ -65,7 +66,7 @@ const searchPage = (page: Awaited<ReturnType<typeof searchCards>>) => ({
     deckName: row.deckName,
     ...(row.stats ? { stats: row.stats } : {}),
   })),
-  next: page.next,
+  nextCursor: page.nextCursor,
   total: page.total,
 });
 
@@ -76,7 +77,7 @@ cards.get(
     summary: "Search cards",
     description:
       "Cards matching text in the term, meaning, example or notes, newest first, each with its deck's name. " +
-      "Leave `query` out to list the newest cards. `term` matches one term exactly, ignoring case. `archived=true` looks through archived cards instead. " +
+      "Leave `query` out to list the newest cards. `term` matches one term exactly, ignoring case. `sectionId` matches an active section. `archived=true` looks through archived cards instead. " +
       `The same search as POST /api/cards/search, with its simple filters as query parameters. ${PAGING}`,
     ok: { schema: CardSearchOut, description: "One page of matching cards" },
     errors: [400],

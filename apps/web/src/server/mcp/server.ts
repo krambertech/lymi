@@ -191,7 +191,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Find cards by free text, or by a filter on any card field and on the learner's own review history. Filter fields combine with AND; use in for alternatives, as in sectionId: { in: [...] } or reviews.lastRating: { in: [1, 2] }. Dates take an ISO timestamp or a duration from now such as -P30D. " +
         'The cards forgotten most in the last month: filter: { reviews: { since: "-P30D", lapses: { gte: 1 } } }, sort: [{ field: "lapses", direction: "desc" }], stats: true. ' +
         'Cards with an AI-written example: filter: { exampleSource: { eq: "ai" } }. ' +
-        "stats adds each card's review record, overall and per review mode. Set archived to true to look through archived cards. Results come a page at a time: pass next as after until next is null; a search that matches text can return a short page before the end.",
+        "stats adds each card's review record, overall and per review mode. Set archived to true to look through archived cards. Results come a page at a time: pass nextCursor as cursor. A page can be short or even empty; keep going until nextCursor is null. total is null when it is not known exactly.",
       inputSchema: CardSearchInput,
       outputSchema: SearchOut,
       ...readTool,
@@ -205,7 +205,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
             deckName: row.deckName,
             ...(row.stats ? { stats: statsOut(row.stats) } : {}),
           })),
-          next: page.next,
+          nextCursor: page.nextCursor,
           total: page.total,
         });
       }),

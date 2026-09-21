@@ -1,15 +1,15 @@
-import { CardInput, type CardSearchInput, type CardSortField } from "@lymi/core";
-import { eq } from "@lymi/core/db";
+import { CardInput, type CardSearchInput, type CardSortField, newId } from "@lymi/core";
+import { and, eq, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
-import { type CardSearchHit, searchCards } from "./card-search";
-import { addCards } from "./cards";
+import { type CardSearchHit, SEARCH_SCAN_LIMIT, searchCards } from "./card-search";
+import { addCards, archiveCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { join } from "./members";
 import { gradeCard } from "./review";
 import { undoReview } from "./review-days";
-import { createSection } from "./sections";
+import { archiveSection, createSection } from "./sections";
 import { learner, testDb } from "./test-db";
 
 const DAY = 86_400_000;
@@ -40,22 +40,46 @@ async function add(ctx: ServiceContext, deckId: string, cards: (string | Partial
 
 async function everyPage(ctx: ServiceContext, search: CardSearchInput) {
   const hits: CardSearchHit[] = [];
-  const totals: number[] = [];
-  let after: string | undefined;
+  const totals: (number | null)[] = [];
+  let cursor: string | undefined;
   for (let page = 0; page < 30; page++) {
-    const result = await searchCards(ctx, { ...search, ...(after ? { after } : {}) });
+    const result = await searchCards(ctx, { ...search, ...(cursor ? { cursor } : {}) });
     hits.push(...result.cards);
     totals.push(result.total);
-    if (!result.next) {
+    if (!result.nextCursor) {
       return { hits, ids: hits.map((hit) => hit.card.id), totals, pages: page + 1 };
     }
-    after = result.next;
+    cursor = result.nextCursor;
   }
   throw new Error("search never reached its last page");
 }
 
 const ids = async (ctx: ServiceContext, search: CardSearchInput) =>
   new Set((await everyPage(ctx, search)).ids);
+
+/** Pins a uk edition of the deck for the member, with approved text for one card. */
+async function pinEdition(
+  member: ServiceContext,
+  deckId: string,
+  cardId: string,
+  text: { term?: string; meaning?: string },
+) {
+  await db
+    .update(schema.deckMembers)
+    .set({ meaningLanguage: "uk" })
+    .where(
+      and(eq(schema.deckMembers.deckId, deckId), eq(schema.deckMembers.userId, member.userId)),
+    );
+  await db.insert(schema.cardLocalizations).values({
+    id: newId(),
+    cardId,
+    language: "uk",
+    ...text,
+    provenance: "human",
+    status: "approved",
+    sourceRevision: 1,
+  });
+}
 
 describe("card search paging", () => {
   it("returns every card exactly once across pages, even when cards share a timestamp", async () => {
@@ -79,7 +103,7 @@ describe("card search paging", () => {
     expect(listed.totals).toEqual([7, 7, 7]);
   });
 
-  it("pages a text search the same way, counting every match", async () => {
+  it("pages a text search, with a total on the first page only", async () => {
     const ctx = await learner(db, "paging-2", "Kateryna");
     const deck = await createDeck(ctx, { name: "Estonian", defaultLanguage: "et" });
     const cards = await add(ctx, deck.id, ["maja", "majas", "majad", "kass", "koer", "majake"]);
@@ -89,10 +113,54 @@ describe("card search paging", () => {
 
     expect(listed.ids).toHaveLength(houses.length);
     expect(new Set(listed.ids)).toEqual(new Set(houses));
-    expect(listed.totals.every((total) => total === houses.length)).toBe(true);
+    expect(listed.totals).toEqual([4, null]);
   });
 
-  it("filters to one section", async () => {
+  it("pages archived cards by when they were archived, every card once", async () => {
+    const ctx = await learner(db, "paging-archived", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Estonian", defaultLanguage: "et" });
+    const cards = await add(ctx, deck.id, ["üks", "kaks", "kolm", "neli", "viis"]);
+    for (const card of cards) await archiveCard(ctx, card.id);
+
+    const listed = await everyPage(ctx, { archived: true, limit: 2 });
+
+    expect(listed.ids).toEqual(cards.map((card) => card.id).reverse());
+    expect(listed.totals).toEqual([5, 5, 5]);
+  });
+
+  it("carries a text scan on past its row limit with short and empty pages", async () => {
+    const ctx = await learner(db, "paging-scan", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Big", defaultLanguage: "et" });
+    const [needle] = await add(ctx, deck.id, ["haruldane"]);
+    if (!needle) throw new Error("not added");
+    await db
+      .update(schema.cards)
+      .set({ createdAt: new Date(Date.now() - 30 * DAY) })
+      .where(eq(schema.cards.id, needle.id));
+    // Newer filler than the scan reads in one call, written in one statement.
+    const base = Date.now() - DAY;
+    await db.run(sql`
+      with recursive n(i) as (select 1 union all select i + 1 from n where i < ${SEARCH_SCAN_LIMIT + 10})
+      insert into cards (id, user_id, deck_id, term, normalized_term, created_at, updated_at)
+      select ${`${newId()}-`} || i, ${ctx.userId}, ${deck.id}, 'sõna ' || i, 'sõna ' || i,
+        ${base} + i, ${base} + i
+      from n`);
+
+    const first = await searchCards(ctx, { query: "haruldane" });
+    expect(first.cards).toEqual([]);
+    expect(first.total).toBeNull();
+    expect(first.nextCursor).not.toBeNull();
+
+    const second = await searchCards(ctx, {
+      query: "haruldane",
+      ...(first.nextCursor ? { cursor: first.nextCursor } : {}),
+    });
+    expect(second.cards.map((row) => row.card.id)).toEqual([needle.id]);
+    expect(second.total).toBeNull();
+    expect(second.nextCursor).toBeNull();
+  }, 60_000);
+
+  it("filters to an active section only", async () => {
     const ctx = await learner(db, "paging-3", "Kateryna");
     const deck = await createDeck(ctx, { name: "Estonian", defaultLanguage: "et" });
     const [tere, head, aitah] = await add(ctx, deck.id, ["tere", "head aega", "aitäh"]);
@@ -103,13 +171,20 @@ describe("card search paging", () => {
     });
 
     const found = await searchCards(ctx, { sectionId: greetings.id });
-
     expect(new Set(found.cards.map((row) => row.card.id))).toEqual(new Set([tere.id, head.id]));
     expect(found.total).toBe(2);
-    expect(found.next).toBeNull();
-    expect(
-      await ids(ctx, { filter: { deckId: { eq: deck.id }, sectionId: { null: true } } }),
-    ).toEqual(new Set([aitah.id]));
+    expect(found.nextCursor).toBeNull();
+    const loose = { filter: { deckId: { eq: deck.id }, sectionId: { null: true } } };
+    expect(await ids(ctx, loose)).toEqual(new Set([aitah.id]));
+
+    // Keeping the cards leaves their section id set; the archived section still has none.
+    await archiveSection(ctx, greetings.id, { cards: "keep" });
+    expect(await searchCards(ctx, { sectionId: greetings.id })).toEqual({
+      cards: [],
+      nextCursor: null,
+      total: 0,
+    });
+    expect(await ids(ctx, loose)).toEqual(new Set([tere.id, head.id, aitah.id]));
   });
 
   it("finds a card by its exact term when newer cards containing it fill the page", async () => {
@@ -130,14 +205,76 @@ describe("card search paging", () => {
     const byTerm = await searchCards(ctx, { term: "  EMA ", limit: 3 });
     expect(byTerm.cards.map((row) => row.card.id)).toEqual([ema.id]);
     expect(byTerm.total).toBe(1);
-    expect(byTerm.next).toBeNull();
+    expect(byTerm.nextCursor).toBeNull();
   });
 
-  it("refuses a cursor it did not hand out", async () => {
+  it("matches the text a member reads in their pinned edition", async () => {
+    const owner = await learner(db, "edition-owner", "Kateryna");
+    const member = await learner(db, "edition-member", "Olena");
+    const deck = await createDeck(owner, { name: "Pere", defaultLanguage: "et" });
+    const [ema] = await add(owner, deck.id, [{ term: "ema", meaning: "mother" }, "isa"]);
+    if (!ema) throw new Error("not added");
+    await join(member, deck.id);
+    await pinEdition(member, deck.id, ema.id, { term: "Мама", meaning: "Мати" });
+
+    const onScreen = await searchCards(member, { term: "мама" });
+    expect(onScreen.cards.map((row) => row.card.id)).toEqual([ema.id]);
+    expect(onScreen.cards[0]?.card.term).toBe("Мама");
+    expect((await searchCards(member, { term: "ema" })).cards).toEqual([]);
+    expect(await ids(member, { filter: { term: { startsWith: "МА" } } })).toEqual(
+      new Set([ema.id]),
+    );
+    expect(await ids(member, { filter: { meaning: { eq: "мати" } } })).toEqual(new Set([ema.id]));
+    expect(await ids(member, { filter: { meaning: { eq: "mother" } } })).toEqual(new Set());
+    expect(await ids(owner, { filter: { meaning: { eq: "mother" } } })).toEqual(new Set([ema.id]));
+    expect((await searchCards(owner, { term: "ema" })).cards.map((row) => row.card.id)).toEqual([
+      ema.id,
+    ]);
+  });
+
+  it("refuses a cursor it did not hand out, or one that decodes to nonsense", async () => {
     const ctx = await learner(db, "paging-5", "Kateryna");
-    await expect(searchCards(ctx, { after: "page-2" })).rejects.toMatchObject({
-      code: "invalid",
-    });
+    const deck = await createDeck(ctx, { name: "Estonian", defaultLanguage: "et" });
+    await add(ctx, deck.id, ["üks", "kaks"]);
+    const first = await searchCards(ctx, { limit: 1 });
+    if (!first.nextCursor) throw new Error("no next page");
+    const [sorted, searched] = JSON.parse(
+      atob(first.nextCursor.replace(/-/g, "+").replace(/_/g, "/")),
+    ) as [string, string];
+    const forged = (values: unknown[], id = "abc") =>
+      btoa(JSON.stringify([sorted, searched, values, id]))
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+    for (const cursor of [
+      "page-2",
+      forged([-5]),
+      forged([9e15]),
+      forged(["soon"]),
+      forged([null]),
+      forged([1_700_000_000_000], "a b"),
+    ]) {
+      await expect(searchCards(ctx, { limit: 1, cursor })).rejects.toMatchObject({
+        code: "invalid",
+      });
+    }
+    expect((await searchCards(ctx, { limit: 1, cursor: forged([Date.now()]) })).cards).toHaveLength(
+      1,
+    );
+  });
+
+  it("refuses a cursor from a search with another query or filter", async () => {
+    const ctx = await learner(db, "paging-6", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Estonian", defaultLanguage: "et" });
+    await add(ctx, deck.id, ["üks", "kaks", "kolm"]);
+    const first = await searchCards(ctx, { deckId: deck.id, limit: 1 });
+    if (!first.nextCursor) throw new Error("no next page");
+    await expect(
+      searchCards(ctx, { deckId: deck.id, query: "k", limit: 1, cursor: first.nextCursor }),
+    ).rejects.toMatchObject({ message: expect.stringContaining("different query or filter") });
+    expect(
+      (await searchCards(ctx, { deckId: deck.id, limit: 1, cursor: first.nextCursor })).cards,
+    ).toHaveLength(1);
   });
 });
 
@@ -176,11 +313,8 @@ describe("filters on card fields", () => {
     ids(ctx, { filter, limit: 2, ...extra });
   const named = (...names: string[]) => new Set(names.map((name) => card[name]));
 
-  it("compares ids with eq, neq, in, nin and null", async () => {
+  it("compares ids with eq, in, nin and null", async () => {
     expect(await find({ deckId: { eq: other } })).toEqual(named("ode"));
-    expect(await find({ deckId: { neq: other } })).toEqual(
-      named("mother", "father", "sister", "brother"),
-    );
     expect(await find({ deckId: { in: [other, "missing"] } })).toEqual(named("ode"));
     expect(await find({ deckId: { nin: [deckId] } })).toEqual(named("ode"));
     expect(await find({ language: { eq: "et" } })).toEqual(named("ode"));
@@ -190,12 +324,10 @@ describe("filters on card fields", () => {
   it("compares the term in SQL by its folded key", async () => {
     expect(await find({ term: { eq: "МАТИ" } })).toEqual(named("mother"));
     expect(await find({ term: { startsWith: "Бр" } })).toEqual(named("brother"));
-    expect(await find({ term: { endsWith: "ТРА" } })).toEqual(named("sister"));
     expect(await find({ term: { contains: "ать" } })).toEqual(named("father"));
     expect(await find({ term: { in: ["брат", "Õde"] } })).toEqual(named("brother", "ode"));
-    expect(await find({ deckId: { eq: deckId }, term: { notContains: "а" } })).toEqual(new Set());
-    expect(await find({ deckId: { eq: deckId }, term: { nin: ["мати", "батько"] } })).toEqual(
-      named("sister", "brother"),
+    expect(await find({ deckId: { eq: deckId }, term: { null: false } })).toEqual(
+      named("mother", "father", "sister", "brother"),
     );
   });
 
@@ -208,7 +340,7 @@ describe("filters on card fields", () => {
     );
     const sisters = await everyPage(ctx, { filter: { meaning: { eq: "sister" } }, limit: 1 });
     expect(sisters.ids).toHaveLength(2);
-    expect(sisters.totals).toEqual([2, 2]);
+    expect(sisters.totals).toEqual([2, null]);
   });
 
   it("treats null on text as empty", async () => {
@@ -220,11 +352,9 @@ describe("filters on card fields", () => {
     );
   });
 
-  it("matches tags with some and every", async () => {
+  it("matches a tag with some", async () => {
     expect(await find({ tags: { some: { eq: "family" } } })).toEqual(named("mother", "father"));
-    expect(await find({ deckId: { eq: deckId }, tags: { every: { eq: "family" } } })).toEqual(
-      named("father", "sister", "brother"),
-    );
+    expect(await find({ tags: { some: { startsWith: "CO" } } })).toEqual(named("mother"));
   });
 
   it("compares field sources, with null for none", async () => {
@@ -242,6 +372,7 @@ describe("filters on card fields", () => {
       named("mother", "sister", "brother"),
     );
     const cutoff = new Date(Date.now() - 2 * DAY).toISOString();
+    expect(await find({ createdAt: { gt: "-P1M", lt: "-P2D" } })).toEqual(named("father"));
     expect(await find({ createdAt: { lte: cutoff } })).toEqual(named("father"));
     expect(await find({ updatedAt: { gt: "P1D" } })).toEqual(new Set());
   });
@@ -370,12 +501,42 @@ describe("review history", () => {
     expect(await find({ reviews: { lastReviewedAt: { gte: "-P3D" } } })).toEqual(named("ode"));
     expect(await find({ reviews: { lastReviewedAt: { null: true } } })).toEqual(named("laps"));
     expect(await find({ reviews: { slipping: { eq: true } } })).toEqual(named("ema"));
+    expect(await find({ reviews: { lapseRate: { lte: 0 }, count: { gte: 1 } } })).toEqual(
+      named("isa"),
+    );
     expect(await find({ reviews: { mode: "meaning_to_term", count: { gte: 1 } } })).toEqual(
       named("ema"),
     );
     expect(await find({ dueAt: { null: false } })).toEqual(
       named("ema", "isa", "vend", "ode", "laps"),
     );
+  });
+
+  it("takes the chosen mode's due date for dueAt in the filter, the sort and stats", async () => {
+    const reviews = { mode: "term_to_meaning" as const };
+    const listed = await everyPage(owner, {
+      filter: { deckId: { eq: deckId }, reviews },
+      sort: [{ field: "dueAt", direction: "asc" }],
+      stats: true,
+      limit: 2,
+    });
+    const ema = listed.hits.find((hit) => hit.card.id === card.ema)?.stats;
+    const recognition = ema?.modes.find((mode) => mode.mode.cue === "term")?.dueAt;
+    const production = ema?.modes.find((mode) => mode.mode.cue === "meaning")?.dueAt;
+    if (!recognition || !production) throw new Error("no due dates");
+    expect(recognition.getTime()).not.toBe(production.getTime());
+    expect(ema?.dueAt).toEqual(recognition);
+
+    const dues = listed.hits.map((hit) => hit.stats?.dueAt?.getTime() ?? null);
+    const known = dues.filter((due) => due !== null);
+    expect(dues.slice(0, known.length)).toEqual([...known].sort((a, b) => a - b));
+
+    const exactly = (due: Date) => ({ gte: due.toISOString(), lte: due.toISOString() });
+    expect(await find({ reviews, dueAt: exactly(recognition) })).toEqual(named("ema"));
+    const soonest = recognition < production ? recognition : production;
+    const later = recognition < production ? production : recognition;
+    expect(await find({ dueAt: exactly(soonest) })).toEqual(named("ema"));
+    expect(await find({ dueAt: exactly(later) })).toEqual(new Set());
   });
 
   const sortValue = (hit: CardSearchHit, field: CardSortField): number | string | null => {
@@ -442,12 +603,12 @@ describe("review history", () => {
       sort: [{ field: "lapses", direction: "desc" }],
       limit: 1,
     });
-    if (!first.next) throw new Error("no next page");
+    if (!first.nextCursor) throw new Error("no next page");
     await expect(
       searchCards(owner, {
         filter: { deckId: { eq: deckId } },
         sort: [{ field: "dueAt", direction: "asc" }],
-        after: first.next,
+        cursor: first.nextCursor,
       }),
     ).rejects.toMatchObject({
       code: "invalid",

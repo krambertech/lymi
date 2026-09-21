@@ -17,6 +17,31 @@ const List = <T extends z.ZodType>(item: T) => z.array(item).min(1).max(100);
 const DURATION =
   /^([-+])?P(?!$)(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)W)?(?:(\d+)D)?(?:T(?=\d)(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/;
 const Timestamp = z.iso.datetime({ offset: true });
+/** The longest duration a DateValue may name, in years. */
+const MAX_DURATION_YEARS = 100;
+
+function durationParts(value: string) {
+  const match = DURATION.exec(value);
+  if (!match) return null;
+  const [, sign, ...parts] = match;
+  const [years, months, weeks, days, hours, minutes, seconds] = parts.map((part) =>
+    Number(part ?? 0),
+  ) as [number, number, number, number, number, number, number];
+  return { by: sign === "-" ? -1 : 1, years, months, weeks, days, hours, minutes, seconds };
+}
+
+function withinBound(value: string): boolean {
+  const parts = durationParts(value);
+  if (!parts) return true;
+  const { years, months, weeks, days, hours, minutes, seconds } = parts;
+  const inDays =
+    years * 365.25 +
+    months * 30.44 +
+    weeks * 7 +
+    days +
+    (hours + (minutes + seconds / 60) / 60) / 24;
+  return inDays <= MAX_DURATION_YEARS * 365.25;
+}
 
 /** A moment: an ISO 8601 timestamp, or an ISO 8601 duration from now, as Linear takes them. */
 export const DateValue = z
@@ -25,81 +50,73 @@ export const DateValue = z
     (value) => DURATION.test(value) || Timestamp.safeParse(value).success,
     'Use an ISO timestamp like "2026-09-01T00:00:00Z" or a duration from now like "-P30D".',
   )
-  .meta({
-    description:
-      'An ISO timestamp, or an ISO 8601 duration from now: "-P30D" is 30 days ago, "P1W" a week ahead.',
-  });
+  .refine(withinBound, `Keep a duration within ${MAX_DURATION_YEARS} years.`);
 
-/** The moment a DateValue names, measured from `now`. */
+/**
+ * The moment a DateValue names, measured from `now`. Years and months move by the calendar and
+ * keep the day where the target month has it, else its last day: 31 March less P1M is the end
+ * of February.
+ */
 export function resolveDateValue(value: string, now: Date): Date {
-  const match = DURATION.exec(value);
-  if (!match) return new Date(value);
-  const [, sign, years, months, weeks, days, hours, minutes, seconds] = match;
-  const by = sign === "-" ? -1 : 1;
-  const n = (part: string | undefined) => by * Number(part ?? 0);
+  const parts = durationParts(value);
+  if (!parts) return new Date(value);
+  const { by, years, months, weeks, days, hours, minutes, seconds } = parts;
   const at = new Date(now);
-  at.setUTCFullYear(at.getUTCFullYear() + n(years), at.getUTCMonth() + n(months));
-  at.setUTCDate(at.getUTCDate() + n(weeks) * 7 + n(days));
-  at.setTime(at.getTime() + ((n(hours) * 60 + n(minutes)) * 60 + n(seconds)) * 1000);
+  const month = at.getUTCMonth() + by * (years * 12 + months);
+  const year = at.getUTCFullYear() + Math.floor(month / 12);
+  const monthOfYear = ((month % 12) + 12) % 12;
+  const lastDay = new Date(Date.UTC(year, monthOfYear + 1, 0)).getUTCDate();
+  at.setUTCFullYear(year, monthOfYear, Math.min(at.getUTCDate(), lastDay));
+  at.setUTCDate(at.getUTCDate() + by * (weeks * 7 + days));
+  at.setTime(at.getTime() + by * ((hours * 60 + minutes) * 60 + seconds) * 1000);
   return at;
 }
 
 export const IdComparator = z.strictObject({
   eq: Id.optional(),
-  neq: Id.optional(),
   in: List(Id).optional(),
   nin: List(Id).optional(),
-  null: z.boolean().optional().meta({ description: "True: has none. False: has one." }),
+  null: z.boolean().optional(),
 });
 export type IdComparator = z.infer<typeof IdComparator>;
 
-export const StringComparator = z
-  .strictObject({
-    eq: Text.optional(),
-    neq: Text.optional(),
-    in: List(Text).optional(),
-    nin: List(Text).optional(),
-    contains: Text.optional(),
-    notContains: Text.optional(),
-    startsWith: Text.optional(),
-    endsWith: Text.optional(),
-    null: z.boolean().optional().meta({ description: "True: empty. False: has text." }),
-  })
-  .meta({
-    description:
-      "Compared ignoring case and repeated spaces, the way duplicate terms are matched. Accents count.",
-  });
+export const StringComparator = z.strictObject({
+  eq: Text.optional(),
+  in: List(Text).optional(),
+  contains: Text.optional(),
+  startsWith: Text.optional(),
+  null: z.boolean().optional(),
+});
 export type StringComparator = z.infer<typeof StringComparator>;
 
 export const NumberComparator = z.strictObject({
   eq: z.number().optional(),
-  neq: z.number().optional(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
   gte: z.number().optional(),
-  in: List(z.number()).optional(),
-  nin: List(z.number()).optional(),
+  lte: z.number().optional(),
 });
 export type NumberComparator = z.infer<typeof NumberComparator>;
 
+export const GradeComparator = z.strictObject({
+  eq: z.number().int().min(1).max(4).optional(),
+  in: List(z.number().int().min(1).max(4)).optional(),
+});
+export type GradeComparator = z.infer<typeof GradeComparator>;
+
 export const DateComparator = z.strictObject({
-  eq: DateValue.optional(),
   lt: DateValue.optional(),
   lte: DateValue.optional(),
   gt: DateValue.optional(),
   gte: DateValue.optional(),
-  null: z.boolean().optional().meta({ description: "True: has none. False: has one." }),
+  null: z.boolean().optional(),
 });
 export type DateComparator = z.infer<typeof DateComparator>;
 
 const enumComparator = <T extends z.ZodEnum>(values: T) =>
   z.strictObject({
     eq: values.optional(),
-    neq: values.optional(),
     in: List(values).optional(),
     nin: List(values).optional(),
-    null: z.boolean().optional().meta({ description: "True: has none. False: has one." }),
+    null: z.boolean().optional(),
   });
 
 export const SourceComparator = enumComparator(FieldSource);
@@ -112,13 +129,15 @@ export const ReviewFilter = z
     since: DateValue.optional().meta({
       description: "Count only reviews at or after this moment. Left out: all time.",
     }),
-    mode: ReviewModeKey.optional().meta({ description: "Count only reviews in this review mode" }),
+    mode: ReviewModeKey.optional().meta({
+      description: "Count only reviews in this review mode, and take its due date for dueAt",
+    }),
     count: NumberComparator.optional().meta({ description: "Grades counted" }),
     lapses: NumberComparator.optional().meta({ description: "Forgot grades counted" }),
     lapseRate: NumberComparator.optional().meta({
       description: "Forgot grades per grade, 0 to 1. A card never reviewed has none.",
     }),
-    lastRating: NumberComparator.optional().meta({
+    lastRating: GradeComparator.optional().meta({
       description: "The latest grade: 1 Forgot, 2 Hard, 3 Good, 4 Easy",
     }),
     lastReviewedAt: DateComparator.optional(),
@@ -138,7 +157,9 @@ export type ReviewFilter = z.infer<typeof ReviewFilter>;
 export const CardFilter = z
   .strictObject({
     deckId: IdComparator.optional(),
-    sectionId: IdComparator.optional(),
+    sectionId: IdComparator.optional().meta({
+      description: "An active section of the card's deck",
+    }),
     language: IdComparator.optional().meta({ description: "The card's language tag" }),
     term: StringComparator.optional(),
     meaning: StringComparator.optional(),
@@ -149,7 +170,6 @@ export const CardFilter = z
     tags: z
       .strictObject({
         some: StringComparator.optional().meta({ description: "At least one tag matches" }),
-        every: StringComparator.optional().meta({ description: "Every tag matches" }),
       })
       .optional(),
     meaningSource: SourceComparator.optional(),
@@ -161,13 +181,16 @@ export const CardFilter = z
     createdAt: DateComparator.optional(),
     updatedAt: DateComparator.optional(),
     dueAt: DateComparator.optional().meta({
-      description: "When the card's soonest asked review mode is due for the learner",
+      description:
+        "When the card is next due for the learner: in reviews.mode when set, else its soonest asked mode",
     }),
     reviews: ReviewFilter.optional(),
   })
   .meta({
     description:
-      "Conditions on cards. Every field given must match: they combine with AND. For alternatives within a field use in, as in sectionId: { in: [...] } or reviews.lastRating: { in: [1, 2] }. At most 50 comparisons.",
+      "Conditions on cards. Every field given must match: they combine with AND. For alternatives within a field use in, as in sectionId: { in: [...] } or reviews.lastRating: { in: [1, 2] }. At most 50 comparisons. " +
+      "Text compares ignoring case and repeated spaces, the way duplicate terms match, against the text the learner reads; accents count. " +
+      'null: true means none or empty. nin also keeps cards with none. Dates take an ISO timestamp or an ISO 8601 duration from now: "-P30D" is 30 days ago, "P1W" a week ahead.',
   });
 export type CardFilter = z.infer<typeof CardFilter>;
 
@@ -231,7 +254,9 @@ const SearchFields = {
     .optional()
     .meta({ description: "Archived cards instead of active ones. Off by default." }),
   deckId: Id.optional().meta({ description: "Shorthand for filter.deckId.eq" }),
-  sectionId: Id.optional().meta({ description: "Shorthand for filter.sectionId.eq" }),
+  sectionId: Id.optional().meta({
+    description: "Shorthand for filter.sectionId.eq, an active section",
+  }),
   term: z
     .string()
     .trim()
@@ -251,14 +276,14 @@ const SearchFields = {
     .max(200)
     .optional()
     .meta({ description: "At most this many per page. 50 by default." }),
-  after: z
+  cursor: z
     .string()
-    .regex(/^[\w-]+$/, "Pass the `next` value from the previous page.")
+    .regex(/^[\w-]+$/, "Pass the `nextCursor` value from the previous page.")
     .max(2000)
     .optional()
     .meta({
       description:
-        "The `next` value from the previous page. Keep the same filter and sort while paging.",
+        "The `nextCursor` value from the previous page. Keep the same query, filter and sort while paging.",
     }),
 };
 

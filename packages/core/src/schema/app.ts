@@ -578,6 +578,8 @@ export const reviews = sqliteTable(
   (t) => [
     index("reviews_card_idx").on(t.cardId, t.reviewedAt),
     index("reviews_day_idx").on(t.reviewDayId),
+    /** A learner's grades in a window, for the review counts card search filters and sorts on. */
+    index("reviews_user_reviewed_idx").on(t.userId, t.reviewedAt),
   ],
 );
 

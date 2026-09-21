@@ -98,15 +98,19 @@ const ReviewRecord = {
 
 /**
  * The learner's own record of one card, from their accepted grades only: never another member's,
- * never an undone one, and only since `reviewedSince` when the search set it.
+ * never an undone one. The overall record counts the reviews `filter.reviews.since` and
+ * `filter.reviews.mode` select; the per-mode records count every mode since `since`.
  */
 export const CardReviewStatsOut = z
   .object({
     ...ReviewRecord,
-    dueAt: ReviewRecord.dueAt.meta({ description: "When its soonest asked review mode is due" }),
-    modes: z
-      .array(z.object({ mode: ReviewMode, ...ReviewRecord }))
-      .meta({ description: "The same record for each review mode asked or graded" }),
+    dueAt: ReviewRecord.dueAt.meta({
+      description:
+        "When it is next due: in reviews.mode when the filter set one, else its soonest asked mode",
+    }),
+    modes: z.array(z.object({ mode: ReviewMode, ...ReviewRecord })).meta({
+      description: "The same record for each review mode asked or graded, since reviews.since",
+    }),
   })
   .meta({ id: "CardReviewStats" });
 export type CardReviewStatsOut = z.infer<typeof CardReviewStatsOut>;

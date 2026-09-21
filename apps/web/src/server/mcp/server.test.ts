@@ -922,7 +922,7 @@ describe("Lymi MCP server", () => {
   it("passes search filters through and names each card's deck", async () => {
     services.searchCards.mockResolvedValue({
       cards: [{ card, deckName: "Italian" }],
-      next: "1700000000000.card-1",
+      nextCursor: "1700000000000.card-1",
       total: 7,
     });
     const client = await connect("read");
@@ -936,7 +936,7 @@ describe("Lymi MCP server", () => {
         sectionId: "section-1",
         archived: true,
         limit: 5,
-        after: "c2Vjb25kLXBhZ2U",
+        cursor: "c2Vjb25kLXBhZ2U",
       },
     });
 
@@ -948,11 +948,11 @@ describe("Lymi MCP server", () => {
       sectionId: "section-1",
       archived: true,
       limit: 5,
-      after: "c2Vjb25kLXBhZ2U",
+      cursor: "c2Vjb25kLXBhZ2U",
     });
     expect(res.structuredContent).toEqual({
       cards: [expect.objectContaining({ id: "card-1", deckName: "Italian" })],
-      next: "1700000000000.card-1",
+      nextCursor: "1700000000000.card-1",
       total: 7,
     });
   });
@@ -960,7 +960,7 @@ describe("Lymi MCP server", () => {
   it("rejects a cursor this search did not hand out", async () => {
     const client = await connect("read");
 
-    const res = await client.callTool({ name: "search_cards", arguments: { after: "page 2" } });
+    const res = await client.callTool({ name: "search_cards", arguments: { cursor: "page 2" } });
 
     expect(res.isError).toBe(true);
     expect(services.searchCards).not.toHaveBeenCalled();
@@ -984,7 +984,7 @@ describe("Lymi MCP server", () => {
           stats: { ...record, modes: [{ mode: { cue: "term", target: "meaning" }, ...record }] },
         },
       ],
-      next: null,
+      nextCursor: null,
       total: 1,
     });
     const client = await connect("read");
@@ -1015,31 +1015,20 @@ describe("Lymi MCP server", () => {
 
   it("refuses a filter with more than 50 comparisons before any service runs", async () => {
     const client = await connect("read");
-    const ids = Array.from({ length: 51 }, (_, i) => `deck-${i}`);
-    const filter = Object.fromEntries(
-      ["deckId", "sectionId", "language"].map((field, i) => [
-        field,
-        { eq: ids[i], neq: ids[i + 1], null: false },
-      ]),
-    );
-    const many = { ...filter, createdAt: { gte: "-P1D" } };
+    const ids = { eq: "a", in: ["b"], nin: ["c"], null: false };
+    const text = { eq: "a", in: ["b"], contains: "c", startsWith: "d", null: false };
+    const source = { eq: "ai", in: ["lesson"], nin: ["manual"], null: false } as const;
+    // 3 × 4 + 6 × 5 + 3 × 4 = 54 comparisons.
     const big = {
-      ...many,
-      reviews: {
-        count: { gte: 1, lte: 99, neq: 5, gt: 0, lt: 100, in: [1, 2], nin: [3], eq: 4 },
-        lapses: { gte: 1, lte: 99, neq: 5, gt: 0, lt: 100, in: [1, 2], nin: [3], eq: 4 },
-        lapseRate: { gte: 0, lte: 1, neq: 0.5, gt: 0, lt: 1, in: [0.1], nin: [0.2], eq: 0.3 },
-        lastRating: { gte: 1, lte: 4, neq: 2, gt: 0, lt: 5, in: [1], nin: [3], eq: 1 },
-      },
-      term: { eq: "a", neq: "b", contains: "c", notContains: "d", startsWith: "e", endsWith: "f" },
-      meaning: {
-        eq: "a",
-        neq: "b",
-        contains: "c",
-        notContains: "d",
-        startsWith: "e",
-        endsWith: "f",
-      },
+      deckId: ids,
+      sectionId: ids,
+      language: ids,
+      ...Object.fromEntries(
+        ["term", "meaning", "example", "pronunciation", "notes", "source"].map((f) => [f, text]),
+      ),
+      meaningSource: source,
+      exampleSource: source,
+      pronunciationSource: source,
     };
 
     const res = await client.callTool({ name: "search_cards", arguments: { filter: big } });

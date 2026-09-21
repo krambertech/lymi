@@ -89,7 +89,10 @@ export function McpOverview() {
             term: <code>list_decks</code>,
             def: "Every active deck with its card and due counts, plus the language your meanings are written in.",
           },
-          { term: <code>get_deck</code>, def: "One deck and its cards, newest first, up to 200." },
+          {
+            term: <code>get_deck</code>,
+            def: "One deck and its cards, newest first, up to 200. For a bigger deck, page through search_cards.",
+          },
           {
             term: <code>create_deck</code>,
             def: "A new deck, with a default language for the cards added to it.",
@@ -138,7 +141,7 @@ export function McpOverview() {
           },
           {
             term: <code>search_cards</code>,
-            def: "Cards matching text, or a filter on any card field and on your own review history, such as the cards you forgot most this month. Sorted, a page at a time, and with each card's review record on request. Can look through archived cards.",
+            def: "Cards matching text, one exact term, a deck or an active section, or a filter on any card field and on your own review history, such as the cards you forgot most this month. Sorted, with each card's review record on request. Can look through archived cards. Results come a page at a time: pass nextCursor back as cursor until it is null, since a page can be short or even empty. total is null when it is not known exactly.",
           },
           { term: <code>get_card</code>, def: "One card, with everything written on it." },
           {

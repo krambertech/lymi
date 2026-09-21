@@ -1,0 +1,1 @@
+CREATE INDEX `reviews_user_reviewed_idx` ON `reviews` (`user_id`,`reviewed_at`);

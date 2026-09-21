@@ -7,12 +7,15 @@ import { memberOf } from "./members";
 export const lapsesSql = sql<number>`sum(case when ${schema.reviews.rating} = 1 then 1 else 0 end)`;
 export const reviewCountSql = sql<number>`count(${schema.reviews.id})`;
 
+/** The learner's own accepted grades. The caller left-joins `review_undos` on the review. */
+export const countedReviewsWhere = (userId: string) =>
+  and(eq(schema.reviews.userId, userId), isNull(schema.reviewUndos.reviewId));
+
 /** Accepted reviews of active cards: an undone grade never makes a card slip. */
 export const slippingReviewsWhere = (userId: string) =>
   and(
-    eq(schema.reviews.userId, userId),
+    countedReviewsWhere(userId),
     memberOf(userId),
-    isNull(schema.reviewUndos.reviewId),
     isNull(schema.cards.archivedAt),
     isNull(schema.decks.archivedAt),
   );

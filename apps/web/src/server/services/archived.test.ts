@@ -1,7 +1,8 @@
 import { CardInput } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { Db } from "../db";
-import { addCards, archiveCard, searchCards } from "./cards";
+import { searchCards } from "./card-search";
+import { addCards, archiveCard } from "./cards";
 import { archiveDeck, createDeck, listDecks, restoreDeck } from "./decks";
 import { learner, testDb } from "./test-db";
 

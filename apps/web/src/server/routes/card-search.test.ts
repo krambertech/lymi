@@ -20,35 +20,82 @@ beforeAll(async () => {
   }
 }, 60_000);
 
-async function page(path: string) {
-  const response = await app.fetch(path, { as: learner });
+async function page(response: Response) {
   expect(response.status).toBe(200);
   return CardSearchOut.parse(await response.json());
 }
 
-describe("card search over the query string", () => {
-  it("filters and pages with query parameters", async () => {
-    expect((await page(`/api/cards?deckId=${deckId}&term=EMA`)).cards.map((c) => c.term)).toEqual([
-      "ema",
-    ]);
+describe("card search over REST", () => {
+  it("answers the query string and the POST filter with the same page", async () => {
+    const byQuery = await page(
+      await app.fetch(`/api/cards?deckId=${deckId}&term=EMA&limit=5`, { as: learner }),
+    );
+    const byFilter = await page(
+      await app.fetch("/api/cards/search", {
+        ...json({ filter: { deckId: { eq: deckId }, term: { eq: "EMA" } }, limit: 5 }),
+        as: learner,
+      }),
+    );
 
-    const terms: string[] = [];
-    let cursor: string | null = null;
-    do {
-      const next: Awaited<ReturnType<typeof page>> = await page(
-        `/api/cards?deckId=${deckId}&limit=3${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`,
-      );
-      terms.push(...next.cards.map((card) => card.term));
-      expect(next.total).toBe(4);
-      cursor = next.nextCursor;
-    } while (cursor);
-    expect(terms.sort()).toEqual(["ema", "emakeel", "isa", "tema"]);
+    expect(byQuery.cards.map((card) => card.term)).toEqual(["ema"]);
+    expect(byFilter).toEqual(byQuery);
   });
 
-  it("answers 400 for a cursor it did not hand out", async () => {
-    for (const cursor of ["page-2", "9999999999999999.abc"]) {
-      const response = await app.fetch(`/api/cards?cursor=${cursor}`, { as: learner });
-      expect(response.status).toBe(400);
-    }
+  it("sorts, pages and adds review stats from the POST body", async () => {
+    const first = await page(
+      await app.fetch("/api/cards/search", {
+        ...json({
+          filter: { term: { contains: "ema" } },
+          sort: [{ field: "term", direction: "asc" }],
+          stats: true,
+          limit: 2,
+        }),
+        as: learner,
+      }),
+    );
+    expect(first.cards.map((card) => card.term)).toEqual(["ema", "emakeel"]);
+    expect(first.total).toBe(3);
+    // A new card has no grades yet, and its asked mode is due.
+    expect(first.cards[0]?.stats).toMatchObject({
+      reviewCount: 0,
+      lapses: 0,
+      lastRating: null,
+      modes: [
+        { mode: { cue: "term", target: "meaning" }, reviewCount: 0, dueAt: expect.any(String) },
+      ],
+    });
+
+    const second = await page(
+      await app.fetch("/api/cards/search", {
+        ...json({
+          filter: { term: { contains: "ema" } },
+          sort: [{ field: "term", direction: "asc" }],
+          limit: 2,
+          after: first.next,
+        }),
+        as: learner,
+      }),
+    );
+    expect(second.cards.map((card) => card.term)).toEqual(["tema"]);
+    expect(second.next).toBeNull();
+  });
+
+  it("refuses an unknown filter field instead of ignoring it", async () => {
+    const response = await app.fetch("/api/cards/search", {
+      ...json({ filter: { deck: { eq: deckId } } }),
+      as: learner,
+    });
+    expect(response.status).toBe(400);
+  });
+
+  it("documents both routes in the OpenAPI document", async () => {
+    const response = await app.fetch("/api/openapi.json", {});
+    expect(response.status).toBe(200);
+    const document = (await response.json()) as {
+      paths: Record<string, Record<string, { parameters?: { name: string }[] }>>;
+    };
+    const names = document.paths["/api/cards"]?.get?.parameters?.map((p) => p.name) ?? [];
+    expect(names).toEqual(expect.arrayContaining(["query", "term", "deckId", "after", "stats"]));
+    expect(document.paths["/api/cards/search"]?.post).toBeDefined();
   });
 });

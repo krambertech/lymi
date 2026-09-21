@@ -922,7 +922,7 @@ describe("Lymi MCP server", () => {
   it("passes search filters through and names each card's deck", async () => {
     services.searchCards.mockResolvedValue({
       cards: [{ card, deckName: "Italian" }],
-      nextCursor: "1700000000000.card-1",
+      next: "1700000000000.card-1",
       total: 7,
     });
     const client = await connect("read");
@@ -936,7 +936,7 @@ describe("Lymi MCP server", () => {
         sectionId: "section-1",
         archived: true,
         limit: 5,
-        cursor: "1700000000001.card-2",
+        after: "c2Vjb25kLXBhZ2U",
       },
     });
 
@@ -948,11 +948,11 @@ describe("Lymi MCP server", () => {
       sectionId: "section-1",
       archived: true,
       limit: 5,
-      cursor: "1700000000001.card-2",
+      after: "c2Vjb25kLXBhZ2U",
     });
     expect(res.structuredContent).toEqual({
       cards: [expect.objectContaining({ id: "card-1", deckName: "Italian" })],
-      nextCursor: "1700000000000.card-1",
+      next: "1700000000000.card-1",
       total: 7,
     });
   });
@@ -960,10 +960,105 @@ describe("Lymi MCP server", () => {
   it("rejects a cursor this search did not hand out", async () => {
     const client = await connect("read");
 
-    const res = await client.callTool({ name: "search_cards", arguments: { cursor: "page-2" } });
+    const res = await client.callTool({ name: "search_cards", arguments: { after: "page 2" } });
 
     expect(res.isError).toBe(true);
     expect(services.searchCards).not.toHaveBeenCalled();
+  });
+
+  it("takes a structured filter, sort and stats, and sends each card's review record", async () => {
+    const reviewed = new Date("2026-09-10T08:00:00.000Z");
+    const record = {
+      reviewCount: 3,
+      lapses: 2,
+      lastRating: 1,
+      lastReviewedAt: reviewed,
+      dueAt: null,
+      slipping: false,
+    };
+    services.searchCards.mockResolvedValue({
+      cards: [
+        {
+          card,
+          deckName: "Italian",
+          stats: { ...record, modes: [{ mode: { cue: "term", target: "meaning" }, ...record }] },
+        },
+      ],
+      next: null,
+      total: 1,
+    });
+    const client = await connect("read");
+    const search = {
+      filter: {
+        exampleSource: { eq: "ai" },
+        sectionId: { in: ["section-1", "section-2"] },
+        reviews: { since: "-P30D", lapses: { gte: 1 }, lastRating: { in: [1, 2] } },
+      },
+      sort: [{ field: "lapses", direction: "desc" }],
+      stats: true,
+    };
+
+    const res = await client.callTool({ name: "search_cards", arguments: search });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.searchCards).toHaveBeenCalledWith(expect.anything(), search);
+    const out = { ...record, lastReviewedAt: reviewed.toISOString() };
+    expect(res.structuredContent).toMatchObject({
+      cards: [
+        {
+          id: "card-1",
+          stats: { ...out, modes: [{ mode: { cue: "term", target: "meaning" }, ...out }] },
+        },
+      ],
+    });
+  });
+
+  it("refuses a filter with more than 50 comparisons before any service runs", async () => {
+    const client = await connect("read");
+    const ids = Array.from({ length: 51 }, (_, i) => `deck-${i}`);
+    const filter = Object.fromEntries(
+      ["deckId", "sectionId", "language"].map((field, i) => [
+        field,
+        { eq: ids[i], neq: ids[i + 1], null: false },
+      ]),
+    );
+    const many = { ...filter, createdAt: { gte: "-P1D" } };
+    const big = {
+      ...many,
+      reviews: {
+        count: { gte: 1, lte: 99, neq: 5, gt: 0, lt: 100, in: [1, 2], nin: [3], eq: 4 },
+        lapses: { gte: 1, lte: 99, neq: 5, gt: 0, lt: 100, in: [1, 2], nin: [3], eq: 4 },
+        lapseRate: { gte: 0, lte: 1, neq: 0.5, gt: 0, lt: 1, in: [0.1], nin: [0.2], eq: 0.3 },
+        lastRating: { gte: 1, lte: 4, neq: 2, gt: 0, lt: 5, in: [1], nin: [3], eq: 1 },
+      },
+      term: { eq: "a", neq: "b", contains: "c", notContains: "d", startsWith: "e", endsWith: "f" },
+      meaning: {
+        eq: "a",
+        neq: "b",
+        contains: "c",
+        notContains: "d",
+        startsWith: "e",
+        endsWith: "f",
+      },
+    };
+
+    const res = await client.callTool({ name: "search_cards", arguments: { filter: big } });
+
+    expect(res.isError).toBe(true);
+    expect(JSON.stringify(res.content)).toContain("at most 50 comparisons");
+    expect(services.searchCards).not.toHaveBeenCalled();
+  });
+
+  it("describes search_cards with a schema that has no references, so strict clients accept it", async () => {
+    const client = await connect("read");
+
+    const { tools } = await client.listTools();
+    const schema = JSON.stringify(tools.find((tool) => tool.name === "search_cards")?.inputSchema);
+
+    expect(schema).toContain('"filter"');
+    expect(schema).not.toContain("$ref");
+    expect(schema).not.toContain("$defs");
+    expect(schema).not.toContain("definitions");
   });
 
   it("rejects a batch the schema does not allow before any service runs", async () => {

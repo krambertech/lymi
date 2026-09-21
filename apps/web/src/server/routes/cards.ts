@@ -8,6 +8,7 @@ import {
   CardInput,
   CardOut,
   CardPatch,
+  CardSearchInput,
   CardSearchOut,
   CardSearchQuery,
   CardsInput,
@@ -55,6 +56,19 @@ const DUPLICATE_RULE =
 const ENRICH_RULE =
   "With an API key, fields left out stay empty unless the card sets `enrich: true`; the learner's own adds in the app enrich by default. A field sent as an empty string is never filled.";
 
+const PAGING =
+  "Results come a page at a time: pass `next` as `after` until `next` is null. When text is matched in memory (the free-text `query`, and text conditions on fields other than the term), a page can come back short before the end.";
+
+const searchPage = (page: Awaited<ReturnType<typeof searchCards>>) => ({
+  cards: page.cards.map((row) => ({
+    ...row.card,
+    deckName: row.deckName,
+    ...(row.stats ? { stats: row.stats } : {}),
+  })),
+  next: page.next,
+  total: page.total,
+});
+
 cards.get(
   "/",
   describe({
@@ -62,21 +76,30 @@ cards.get(
     summary: "Search cards",
     description:
       "Cards matching text in the term, meaning, example or notes, newest first, each with its deck's name. " +
-      "Leave `query` out to list the newest cards. `term` matches one term exactly, ignoring case. `sectionId` matches an active section. `archived=true` looks through archived cards instead. " +
-      "Results come a page at a time: pass `nextCursor` as `cursor` until `nextCursor` is null. A page can be short or even empty before the end; keep going until the cursor is null. " +
-      "`total` is null when it is not known exactly.",
+      "Leave `query` out to list the newest cards. `term` matches one term exactly, ignoring case. `archived=true` looks through archived cards instead. " +
+      `The same search as POST /api/cards/search, with its simple filters as query parameters. ${PAGING}`,
     ok: { schema: CardSearchOut, description: "One page of matching cards" },
     errors: [400],
   }),
   query(CardSearchQuery, "search"),
-  async (c) => {
-    const page = await searchCards(ctxOf(c), c.req.valid("query"));
-    return c.json({
-      cards: page.cards.map((row) => ({ ...row.card, deckName: row.deckName })),
-      nextCursor: page.nextCursor,
-      total: page.total,
-    });
-  },
+  async (c) => c.json(searchPage(await searchCards(ctxOf(c), c.req.valid("query")))),
+);
+
+cards.post(
+  "/search",
+  describe({
+    tags: ["Cards"],
+    summary: "Search cards with a filter",
+    description:
+      "Search with a structured filter on any card field and on the learner's review history, a sort, and each card's review record when `stats` is true. " +
+      "Filter fields combine with AND; `in` covers alternatives, as in `sectionId: { in: [...] }`. " +
+      `Dates take an ISO timestamp or a duration from now, like "-P30D". Needs only the read scope. ${PAGING}`,
+    ok: { schema: CardSearchOut, description: "One page of matching cards" },
+    errors: [400],
+    readScope: true,
+  }),
+  body(CardSearchInput, "search"),
+  async (c) => c.json(searchPage(await searchCards(ctxOf(c), c.req.valid("json")))),
 );
 
 cards.post(

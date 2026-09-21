@@ -504,52 +504,6 @@ export const CardsInput = z.object({
 });
 export type CardsInput = z.infer<typeof CardsInput>;
 
-/** What a card search filters on. Every field is optional; none narrows past the learner. */
-export const CardSearchInput = z.object({
-  query: z
-    .string()
-    .trim()
-    .max(200)
-    .optional()
-    .meta({ description: "Matched against the term, meaning, example and notes" }),
-  term: z.string().trim().min(1).max(CARD_LIMITS.term).optional().meta({
-    description:
-      "Only cards with exactly this term, ignoring case and spacing, the way duplicates are matched",
-  }),
-  deckId: z.string().min(1).optional(),
-  sectionId: z
-    .string()
-    .min(1)
-    .optional()
-    .meta({ description: "Only cards in this section. An archived section has none." }),
-  language: LanguageTag.optional(),
-  archived: z
-    .boolean()
-    .optional()
-    .meta({ description: "Archived cards instead of active ones. Off by default." }),
-  limit: z
-    .number()
-    .int()
-    .min(1)
-    .max(200)
-    .optional()
-    .meta({ description: "At most this many per page, newest first. 50 by default." }),
-  cursor: z
-    .string()
-    .regex(/^\d{1,16}\.[\w-]{1,64}$/, "Pass the `nextCursor` value from the previous page.")
-    .optional()
-    .meta({
-      description: "The `nextCursor` value from the previous page, to read the one after it",
-    }),
-});
-export type CardSearchInput = z.infer<typeof CardSearchInput>;
-
-/** The same search as a query string, where booleans and numbers arrive as text. */
-export const CardSearchQuery = CardSearchInput.extend({
-  archived: z.stringbool().optional(),
-  limit: z.coerce.number().int().min(1).max(200).optional(),
-});
-
 /** A page of Activity: where to carry on from, and how many audit rows to read. */
 export const ActivityQuery = z.object({
   cursor: z.string().min(1).optional(),

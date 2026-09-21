@@ -7,6 +7,7 @@ import {
   CardImagePatch,
   CardInput,
   CardPatch,
+  CardReviewStatsOut,
   CardSearchInput,
   CardSearchPaging,
   CardSectionInput,
@@ -41,6 +42,7 @@ import {
   archiveCards,
   archiveDeck,
   archiveSection,
+  type CardReviewStats,
   type CardView,
   createDeck,
   createSection,
@@ -56,6 +58,7 @@ import {
   listDecks,
   listSections,
   listSeries,
+  type ReviewRecord,
   renameSection,
   renameSeries,
   reorderSections,
@@ -185,7 +188,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Search cards",
       description:
-        "Find cards by text in the term, meaning, example or notes, in one deck, one section or all of them. Leave the query empty to list the newest cards. Use term to match one term exactly, ignoring case, however many other cards contain it. Set archived to true to look through archived cards, for example to find one to restore. Results come a page at a time: pass nextCursor as cursor. A page can be short or even empty; keep going until nextCursor is null. total is null when it is not known exactly.",
+        "Find cards by free text, or by a filter on any card field and on the learner's own review history. Filter fields combine with AND; use in for alternatives, as in sectionId: { in: [...] } or reviews.lastRating: { in: [1, 2] }. Dates take an ISO timestamp or a duration from now such as -P30D. " +
+        'The cards forgotten most in the last month: filter: { reviews: { since: "-P30D", lapses: { gte: 1 } } }, sort: [{ field: "lapses", direction: "desc" }], stats: true. ' +
+        'Cards with an AI-written example: filter: { exampleSource: { eq: "ai" } }. ' +
+        "stats adds each card's review record, overall and per review mode. Set archived to true to look through archived cards. Results come a page at a time: pass next as after until next is null; a search that matches text can return a short page before the end.",
       inputSchema: CardSearchInput,
       outputSchema: SearchOut,
       ...readTool,
@@ -194,8 +200,12 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       run("search_cards", async () => {
         const page = await searchCards(ctx, search);
         return result({
-          cards: page.cards.map((row) => ({ ...cardOut(row.card), deckName: row.deckName })),
-          nextCursor: page.nextCursor,
+          cards: page.cards.map((row) => ({
+            ...cardOut(row.card),
+            deckName: row.deckName,
+            ...(row.stats ? { stats: statsOut(row.stats) } : {}),
+          })),
+          next: page.next,
           total: page.total,
         });
       }),
@@ -1040,6 +1050,18 @@ const CardOut = z.object({
 });
 type CardOut = z.infer<typeof CardOut>;
 
+function statsOut(stats: CardReviewStats): CardReviewStatsOut {
+  const record = (r: ReviewRecord) => ({
+    reviewCount: r.reviewCount,
+    lapses: r.lapses,
+    lastRating: r.lastRating,
+    lastReviewedAt: r.lastReviewedAt ? r.lastReviewedAt.toISOString() : null,
+    dueAt: r.dueAt ? r.dueAt.toISOString() : null,
+    slipping: r.slipping,
+  });
+  return { ...record(stats), modes: stats.modes.map((m) => ({ mode: m.mode, ...record(m) })) };
+}
+
 function cardOut(card: CardView): CardOut {
   return {
     id: card.id,
@@ -1170,7 +1192,7 @@ const DeckWithCardsOut = z.object({
 });
 
 const SearchOut = z.object({
-  cards: z.array(CardOut.extend({ deckName: z.string() })),
+  cards: z.array(CardOut.extend({ deckName: z.string(), stats: CardReviewStatsOut.optional() })),
   ...CardSearchPaging,
 });
 

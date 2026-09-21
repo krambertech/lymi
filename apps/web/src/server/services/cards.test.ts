@@ -2,6 +2,7 @@ import { CardInput, CardPatch } from "@lymi/core";
 import { and, eq, inArray } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
+import { searchCards } from "./card-search";
 import {
   addCards,
   archiveCard,
@@ -11,7 +12,6 @@ import {
   matchesSearch,
   restoreCard,
   restoreCards,
-  searchCards,
   showCard,
   terseOutcome,
   updateCard,

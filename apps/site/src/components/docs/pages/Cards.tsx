@@ -254,12 +254,18 @@ export function Cards() {
 curl -X POST "$LYMI_URL/api/cards/0mtoyiymrvqpdz02hlv/restore" -H "x-api-key: $LYMI_KEY"`}
       />
       <p>
-        To archive many cards at once, send up to 200 ids to <code>POST /api/cards/archive</code> as{" "}
-        <code>cardIds</code>. <code>PATCH /api/cards/batch</code> edits up to 200 cards the same
-        way, each with its <code>cardId</code> and the fields to change. Each card succeeds or fails
-        on its own, and the response gives one outcome per card, in order. Add{" "}
-        <code>?response=terse</code> to a batch add or an edit to get back only each card’s id and
-        status.
+        For many cards at once, send up to 200 ids as <code>cardIds</code> to{" "}
+        <code>POST /api/cards/archive</code> or <code>POST /api/cards/restore</code>. A card already
+        in the state you asked for is left alone. <code>PATCH /api/cards/batch</code> edits up to
+        200 cards, each with its <code>cardId</code> and the fields to change.
+      </p>
+      <p>
+        The response gives one outcome per card, in order, each with the card’s <code>id</code>. A
+        card that is missing, not yours or refused comes back as an error with a <code>code</code>{" "}
+        and a message, and the rest still change. If a save fails partway, the cards it held come
+        back as <code>unavailable</code> with nothing on them changed, so you can send just those
+        again. Add <code>?response=terse</code> to a batch add or a batch edit to get back only each
+        card’s id and status.
       </p>
 
       <NextLinks

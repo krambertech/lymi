@@ -1,4 +1,11 @@
-import { AddCardsOut, CardOut, DeckOut, EditCardsOut, TerseCardsOut } from "@lymi/core";
+import {
+  AddCardsOut,
+  ArchiveCardsOut,
+  CardOut,
+  DeckOut,
+  EditCardsOut,
+  TerseCardsOut,
+} from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
 import { json, type Session, type TestApp, testApp } from "../test-app";
 
@@ -54,10 +61,11 @@ describe("bulk card writes", () => {
     expect(response.status).toBe(200);
     const { results } = EditCardsOut.parse(await response.json());
     expect(results.map((outcome) => outcome.status)).toEqual(["updated", "error", "updated"]);
-    expect(results[0]).toMatchObject({ card: { id: first, source: "" } });
+    expect(results[0]).toMatchObject({ id: first, card: { id: first, source: "" } });
     expect(results[1]).toEqual({
+      id: "no-such-card",
       status: "error",
-      cardId: "no-such-card",
+      code: "not_found",
       error: "Card not found",
     });
   });
@@ -73,25 +81,20 @@ describe("bulk card writes", () => {
       { id: first, status: "updated" },
     ]);
 
-    const one = await app.fetch(`/api/cards/${first}?response=terse`, {
-      ...json({ meaning: "so" }, { method: "PATCH" }),
-      as: learner,
-    });
-    expect(one.status).toBe(200);
-    expect(await one.json()).toEqual({ id: first, status: "updated" });
-
     const added = TerseCardsOut.parse(await addTerms(["allora", "dunque"], "?response=terse"));
-    expect(added.results[0]).toEqual({ id: first, status: "skipped" });
-    expect(added.results[1]).toMatchObject({ status: "added" });
+    expect(added.results[0]).toEqual({ id: first, status: "skipped", enrichmentStatus: null });
+    expect(added.results[1]).toMatchObject({ status: "added", enrichmentStatus: null });
   });
 
-  it("keeps the full card as the default answer to a single edit", async () => {
+  it("answers a single edit with the whole card, whatever the query asks", async () => {
     const [first] = await ids(["quindi"]);
-    const response = await app.fetch(`/api/cards/${first}`, {
+    const response = await app.fetch(`/api/cards/${first}?response=terse`, {
       ...json({ meaning: "so" }, { method: "PATCH" }),
       as: learner,
     });
-    expect(CardOut.parse(await response.json()).meaning).toBe("so");
+    const body = await response.json();
+    expect(CardOut.parse(body).meaning).toBe("so");
+    expect(body).not.toHaveProperty("status");
   });
 
   it("archives many cards, reporting a missing one without failing the rest", async () => {
@@ -103,13 +106,25 @@ describe("bulk card writes", () => {
     });
 
     expect(response.status).toBe(200);
-    expect(TerseCardsOut.parse(await response.json()).results).toEqual([
+    expect(ArchiveCardsOut.parse(await response.json()).results).toEqual([
       { id: first, status: "archived" },
-      { id: "no-such-card", status: "error", error: "Card not found" },
+      { id: "no-such-card", status: "error", code: "not_found", error: "Card not found" },
       { id: second, status: "archived" },
     ]);
     const card = await app.fetch(`/api/cards/${first}`, { as: learner });
     expect(CardOut.parse(await card.json()).archivedAt).not.toBeNull();
+
+    const restored = await app.fetch("/api/cards/restore", {
+      ...json({ cardIds: [first, second] }),
+      as: learner,
+    });
+    expect(restored.status).toBe(200);
+    expect(ArchiveCardsOut.parse(await restored.json()).results).toEqual([
+      { id: first, status: "restored" },
+      { id: second, status: "restored" },
+    ]);
+    const back = await app.fetch(`/api/cards/${first}`, { as: learner });
+    expect(CardOut.parse(await back.json()).archivedAt).toBeNull();
   });
 
   it("refuses a bulk edit that lists a card twice", async () => {

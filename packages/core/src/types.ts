@@ -561,7 +561,7 @@ export const CardEditsInput = z.object({
 });
 export type CardEditsInput = z.infer<typeof CardEditsInput>;
 
-/** A bulk archive. Each card succeeds or fails on its own. */
+/** A bulk archive or restore. Each card succeeds or fails on its own. */
 export const CardArchiveInput = z.object({
   cardIds: CardIds.min(1, "Choose at least one card.").max(200),
 });
@@ -570,7 +570,7 @@ export type CardArchiveInput = z.infer<typeof CardArchiveInput>;
 /** How much a card write sends back: every card in full, or only each card's id and status. */
 export const ResponseShape = z.enum(["full", "terse"]).meta({
   description:
-    "full, the default, returns each card. terse returns only each card's id and status, and the message of any error.",
+    "full, the default, returns each card. terse returns only each card's id and status, an add's enrichmentStatus, and an error's code and message.",
 });
 export type ResponseShape = z.infer<typeof ResponseShape>;
 

@@ -42,6 +42,7 @@ vi.mock("../services", async () => {
     archiveCard: vi.fn(),
     archiveCards: vi.fn(),
     restoreCard: vi.fn(),
+    restoreCards: vi.fn(),
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
     insights: vi.fn(),
@@ -160,6 +161,7 @@ describe("Lymi MCP server", () => {
       "reorder_series",
       "restore_card",
       "restore_card_image",
+      "restore_cards",
       "restore_deck",
       "restore_section",
       "search_cards",
@@ -313,8 +315,8 @@ describe("Lymi MCP server", () => {
 
   it("adds cards through the service layer and reports duplicates as skipped", async () => {
     services.addCards.mockResolvedValue([
-      { status: "added", card },
-      { status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
+      { id: "card-1", status: "added", card },
+      { id: "card-1", status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
     ]);
     const client = await connect("write");
 
@@ -332,7 +334,9 @@ describe("Lymi MCP server", () => {
     const out = res.structuredContent as { added: number; skipped: number; results: unknown[] };
     expect(out.added).toBe(1);
     expect(out.skipped).toBe(1);
+    expect(out.results[0]).toMatchObject({ id: "card-1", status: "added", card: { id: "card-1" } });
     expect(out.results[1]).toMatchObject({
+      id: "card-1",
       status: "skipped",
       term: "Sbrigarsi",
       existing: { id: "card-1", deckName: "Italian" },
@@ -349,10 +353,14 @@ describe("Lymi MCP server", () => {
     );
   });
 
-  it("returns only ids and statuses when an add asks for terse", async () => {
+  it("returns only ids, statuses and enrichment when an add asks for terse", async () => {
     services.addCards.mockResolvedValue([
-      { status: "added", card },
-      { status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
+      {
+        id: "card-2",
+        status: "added",
+        card: { ...card, id: "card-2", enrichmentStatus: "working" },
+      },
+      { id: "card-1", status: "skipped", term: "Sbrigarsi", existing: card, deckName: "Italian" },
     ]);
     const client = await connect("write");
 
@@ -372,16 +380,16 @@ describe("Lymi MCP server", () => {
       added: 1,
       skipped: 1,
       results: [
-        { id: "card-1", status: "added" },
-        { id: "card-1", status: "skipped" },
+        { id: "card-2", status: "added", enrichmentStatus: "working" },
+        { id: "card-1", status: "skipped", enrichmentStatus: null },
       ],
     });
   });
 
   it("edits many cards in one call and reports each card's outcome in order", async () => {
     services.updateCards.mockResolvedValue([
-      { status: "updated", card: { ...card, source: null } },
-      { status: "error", cardId: "card-2", error: "Card not found" },
+      { id: "card-1", status: "updated", card: { ...card, source: null } },
+      { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
     ]);
     const client = await connect("write");
     const cards = [
@@ -396,8 +404,8 @@ describe("Lymi MCP server", () => {
       updated: 1,
       failed: 1,
       results: [
-        { status: "updated", card: { id: "card-1", term: "sbrigarsi" } },
-        { status: "error", cardId: "card-2", error: "Card not found" },
+        { id: "card-1", status: "updated", card: { id: "card-1", term: "sbrigarsi" } },
+        { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
       ],
     });
 
@@ -410,29 +418,32 @@ describe("Lymi MCP server", () => {
       failed: 1,
       results: [
         { id: "card-1", status: "updated" },
-        { id: "card-2", status: "error", error: "Card not found" },
+        { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
       ],
     });
   });
 
-  it("returns only the id and status of a single edit that asks for terse", async () => {
+  it("keeps a single edit's answer the whole card, with no terse option", async () => {
     services.updateCard.mockResolvedValue(card);
     const client = await connect("write");
+    const { tools } = await client.listTools();
+    const input = tools.find((t) => t.name === "update_card")?.inputSchema.properties ?? {};
+    expect(Object.keys(input)).not.toContain("response");
 
     const res = await client.callTool({
       name: "update_card",
-      arguments: { cardId: "card-1", source: "", response: "terse" },
+      arguments: { cardId: "card-1", source: "" },
     });
 
     expect(res.isError).toBeFalsy();
     expect(services.updateCard).toHaveBeenCalledWith(expect.anything(), "card-1", { source: "" });
-    expect(res.structuredContent).toEqual({ id: "card-1", status: "updated" });
+    expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
   });
 
   it("archives many cards in one call and reports each card's outcome in order", async () => {
     services.archiveCards.mockResolvedValue([
-      { status: "archived", cardId: "card-1" },
-      { status: "error", cardId: "card-2", error: "Card not found" },
+      { id: "card-1", status: "archived" },
+      { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
     ]);
     const client = await connect("write");
 
@@ -447,7 +458,31 @@ describe("Lymi MCP server", () => {
       failed: 1,
       results: [
         { id: "card-1", status: "archived" },
-        { id: "card-2", status: "error", error: "Card not found" },
+        { id: "card-2", status: "error", code: "not_found", error: "Card not found" },
+      ],
+    });
+  });
+
+  it("restores many cards in one call and reports each card's outcome in order", async () => {
+    services.restoreCards.mockResolvedValue([
+      { id: "card-1", status: "restored" },
+      { id: "card-2", status: "error", code: "unavailable", error: "Try again." },
+    ]);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "restore_cards",
+      arguments: { cardIds: ["card-1", "card-2"] },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(services.restoreCards).toHaveBeenCalledWith(expect.anything(), ["card-1", "card-2"]);
+    expect(res.structuredContent).toEqual({
+      restored: 1,
+      failed: 1,
+      results: [
+        { id: "card-1", status: "restored" },
+        { id: "card-2", status: "error", code: "unavailable", error: "Try again." },
       ],
     });
   });
@@ -478,6 +513,7 @@ describe("Lymi MCP server", () => {
       ["archive_card", { cardId: "card-1" }],
       ["archive_cards", { cardIds: ["card-1"] }],
       ["restore_card", { cardId: "card-1" }],
+      ["restore_cards", { cardIds: ["card-1"] }],
       ["create_deck", { name: "Spanish" }],
       ["update_deck", { deckId: "deck-1", name: "Italiano" }],
       ["archive_deck", { deckId: "deck-1" }],
@@ -510,6 +546,7 @@ describe("Lymi MCP server", () => {
     expect(services.archiveCard).not.toHaveBeenCalled();
     expect(services.archiveCards).not.toHaveBeenCalled();
     expect(services.restoreCard).not.toHaveBeenCalled();
+    expect(services.restoreCards).not.toHaveBeenCalled();
     expect(services.createDeck).not.toHaveBeenCalled();
     expect(services.updateDeck).not.toHaveBeenCalled();
     expect(services.archiveDeck).not.toHaveBeenCalled();
@@ -732,7 +769,9 @@ describe("Lymi MCP server", () => {
 
   it("describes notes as the Markdown subset and passes the source through unchanged", async () => {
     const notes = "**hea aeg** → *head aega*\n\n- hea → head\n- aeg → aega";
-    services.addCards.mockResolvedValue([{ status: "added", card: { ...card, notes } }]);
+    services.addCards.mockResolvedValue([
+      { id: "card-1", status: "added", card: { ...card, notes } },
+    ]);
     services.updateCard.mockResolvedValue({ ...card, notes });
     const client = await connect("write");
 

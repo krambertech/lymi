@@ -1,12 +1,16 @@
 import { CardInput, CardPatch } from "@lymi/core";
-import { and, eq } from "@lymi/core/db";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { and, eq, inArray } from "@lymi/core/db";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import {
   addCards,
+  archiveCard,
   archiveCards,
+  CARDS_PER_BATCH,
   foldForSearch,
   matchesSearch,
+  restoreCard,
+  restoreCards,
   searchCards,
   showCard,
   terseOutcome,
@@ -205,21 +209,21 @@ describe("bulk edits and archives", () => {
       { cardId: third as string, source: "", meaning: "then" },
     ]);
 
-    expect(outcomes.map((outcome) => outcome.status)).toEqual([
-      "updated",
-      "error",
-      "error",
-      "error",
-      "updated",
-    ]);
+    expect(outcomes[0]).toMatchObject({ id: first, status: "updated", card: { id: first } });
     expect(outcomes[1]).toEqual({
+      id: "no-such-card",
       status: "error",
-      cardId: "no-such-card",
+      code: "not_found",
       error: "Card not found",
     });
-    expect(outcomes[2]).toMatchObject({ cardId: theirs, error: "Card not found" });
-    expect(outcomes[3]).toMatchObject({ cardId: second, error: "Section not found" });
+    expect(outcomes[2]).toMatchObject({ id: theirs, status: "error", code: "not_found" });
+    expect(outcomes[3]).toMatchObject({
+      id: second,
+      code: "not_found",
+      error: "Section not found",
+    });
     expect(outcomes[4]).toMatchObject({
+      id: third,
       card: { id: third, source: "", meaning: "then", meaningSource: "manual" },
     });
     expect((await showCard(ctx, second as string)).source).toBe("Lezione 3");
@@ -231,9 +235,9 @@ describe("bulk edits and archives", () => {
 
     expect(outcomes.map(terseOutcome)).toEqual([
       { id: first, status: "updated" },
-      { id: "no-such-card", status: "error", error: "Card not found" },
-      { id: theirs, status: "error", error: "Card not found" },
-      { id: second, status: "error", error: "Section not found" },
+      { id: "no-such-card", status: "error", code: "not_found", error: "Card not found" },
+      { id: theirs, status: "error", code: "not_found", error: "Card not found" },
+      { id: second, status: "error", code: "not_found", error: "Section not found" },
       { id: third, status: "updated" },
     ]);
   });
@@ -245,25 +249,132 @@ describe("bulk edits and archives", () => {
     });
   });
 
-  it("archives every card it can, reports the rest, and audits each archive", async () => {
+  it("reports the cards of a batch that failed to save and still writes the later batches", async () => {
+    const ctx = await learner(db, "bulk-fail-1", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const terms = Array.from({ length: CARDS_PER_BATCH + 5 }, (_, i) => `parola ${i}`);
+    const ids = (await addTerms(ctx, deck.id, terms)) as string[];
+    const batch = vi
+      .spyOn(db, "batch")
+      .mockImplementationOnce(() => Promise.reject(new Error("D1 is unavailable")));
+
+    const outcomes = await updateCards(
+      ctx,
+      ids.map((cardId) => ({ cardId, source: "" })),
+    );
+    batch.mockRestore();
+
+    const lost = ids.slice(0, CARDS_PER_BATCH);
+    const saved = ids.slice(CARDS_PER_BATCH);
+    expect(outcomes.slice(0, CARDS_PER_BATCH)).toEqual(
+      lost.map((id) => ({
+        id,
+        status: "error",
+        code: "unavailable",
+        error: expect.stringContaining("try it again"),
+      })),
+    );
+    expect(outcomes.slice(CARDS_PER_BATCH).map((o) => [o.id, o.status])).toEqual(
+      saved.map((id) => [id, "updated"]),
+    );
+    expect((await showCard(ctx, lost[0] as string)).source).toBe("Lezione 3");
+    expect((await showCard(ctx, saved[0] as string)).source).toBe("");
+    const rows = await auditRows(ctx, "update");
+    expect(rows.map((row) => row.entityId).sort()).toEqual([...saved].sort());
+  });
+
+  it("moves many cards to another deck with review states set per batch, not per card", async () => {
+    const ctx = await learner(db, "bulk-move-1", "Kateryna");
+    const from = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const to = await createDeck(ctx, { name: "Lezione 4", defaultLanguage: "it" });
+    const terms = Array.from({ length: CARDS_PER_BATCH + 5 }, (_, i) => `frase ${i}`);
+    const ids = (await addTerms(ctx, from.id, terms)) as string[];
+    const version = async () =>
+      (
+        await db
+          .select({ v: schema.decks.statesVersion })
+          .from(schema.decks)
+          .where(eq(schema.decks.id, to.id))
+      )[0]?.v ?? 0;
+    const before = await version();
+    const batch = vi.spyOn(db, "batch");
+
+    const outcomes = await updateCards(
+      ctx,
+      ids.map((cardId) => ({
+        cardId,
+        deckId: to.id,
+        reviewModes: [{ cue: "meaning" as const, target: "term" as const }],
+      })),
+    );
+
+    const sizes = batch.mock.calls.map(([statements]) => statements.length);
+    batch.mockRestore();
+    expect(outcomes.every((o) => o.status === "updated")).toBe(true);
+    expect(sizes).toHaveLength(2);
+    expect(Math.max(...sizes)).toBeLessThanOrEqual(50);
+    // One version bump per batch that touched the deck, not one per card.
+    expect((await version()) - before).toBe(2);
+    const states = await db
+      .select({ cardId: schema.cardStates.cardId, mode: schema.cardStates.mode })
+      .from(schema.cardStates)
+      .where(and(eq(schema.cardStates.userId, ctx.userId), inArray(schema.cardStates.cardId, ids)));
+    const produced = new Set(
+      states.filter((s) => s.mode === "meaning_to_term").map((s) => s.cardId),
+    );
+    expect(produced.size).toBe(ids.length);
+  });
+
+  it("archives every card it can, reports the rest, and audits each archive once", async () => {
     const ctx = await learner(db, "bulk-archive-1", "Kateryna");
     const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
-    const [first, second] = await addTerms(ctx, deck.id, ["ormai", "magari"]);
+    const [first, second] = (await addTerms(ctx, deck.id, ["ormai", "magari"])) as string[];
 
     const outcomes = await archiveCards(ctx, [first as string, "no-such-card", second as string]);
 
-    expect(outcomes.map(terseOutcome)).toEqual([
+    expect(outcomes).toEqual([
       { id: first, status: "archived" },
-      { id: "no-such-card", status: "error", error: "Card not found" },
+      { id: "no-such-card", status: "error", code: "not_found", error: "Card not found" },
       { id: second, status: "archived" },
     ]);
-    expect((await showCard(ctx, first as string)).archivedAt).not.toBeNull();
-    expect((await showCard(ctx, second as string)).archivedAt).not.toBeNull();
+    const archivedAt = (await showCard(ctx, first as string)).archivedAt;
+    expect(archivedAt).not.toBeNull();
+
+    // Archiving again reports the same and changes nothing: no new date, no new Activity row.
+    expect(await archiveCards(ctx, [first as string])).toEqual([{ id: first, status: "archived" }]);
+    await archiveCard(ctx, first as string);
+    expect((await showCard(ctx, first as string)).archivedAt).toEqual(archivedAt);
     const rows = await auditRows(ctx, "archive");
     expect(rows.map((row) => row.entityId).sort()).toEqual([first, second].sort());
   });
 
-  it("reduces an add to the card's id, the existing card's when skipped", async () => {
+  it("restores many cards with their schedules, and leaves an active card alone", async () => {
+    const ctx = await learner(db, "bulk-restore-1", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const [archived, active] = (await addTerms(ctx, deck.id, ["ormai", "magari"])) as string[];
+    await archiveCards(ctx, [archived as string]);
+    const activeUpdatedAt = (await showCard(ctx, active as string)).updatedAt;
+
+    const outcomes = await restoreCards(ctx, [archived as string, active as string, "nope"]);
+
+    expect(outcomes).toEqual([
+      { id: archived, status: "restored" },
+      { id: active, status: "restored" },
+      { id: "nope", status: "error", code: "not_found", error: "Card not found" },
+    ]);
+    expect((await showCard(ctx, archived as string)).archivedAt).toBeNull();
+    expect((await showCard(ctx, active as string)).updatedAt).toEqual(activeUpdatedAt);
+    await restoreCard(ctx, active as string);
+    const rows = await auditRows(ctx, "restore");
+    expect(rows.map((row) => row.entityId)).toEqual([archived]);
+    const states = await db
+      .select({ cardId: schema.cardStates.cardId })
+      .from(schema.cardStates)
+      .where(eq(schema.cardStates.cardId, archived as string));
+    expect(states.length).toBeGreaterThan(0);
+  });
+
+  it("reduces an add to the card's id and enrichment, the existing card's when skipped", async () => {
     const ctx = await learner(db, "bulk-terse-1", "Kateryna");
     const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
     const [existing] = await addTerms(ctx, deck.id, ["ormai"]);
@@ -273,9 +384,11 @@ describe("bulk edits and archives", () => {
       CardInput.parse({ deckId: deck.id, term: "magari" }),
     ]);
 
+    expect(outcomes[0]).toMatchObject({ id: existing, status: "skipped" });
     const [skipped, added] = outcomes.map(terseOutcome);
-    expect(skipped).toEqual({ id: existing, status: "skipped" });
-    expect(added).toMatchObject({ status: "added" });
+    expect(skipped).toEqual({ id: existing, status: "skipped", enrichmentStatus: null });
+    expect(added).toMatchObject({ status: "added", enrichmentStatus: null });
     expect(added?.id).not.toBe(existing);
+    expect(added?.id).toBe(outcomes[1]?.id);
   });
 });

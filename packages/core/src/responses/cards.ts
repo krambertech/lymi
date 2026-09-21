@@ -152,11 +152,28 @@ export const CardHistoryOut = z
   .meta({ id: "CardHistory" });
 export type CardHistoryOut = z.infer<typeof CardHistoryOut>;
 
+const OutcomeId = z.string().meta({
+  description:
+    "The card the outcome is about. For a skipped add, the existing card; for an error, the id that was sent.",
+});
+
+/** Why one card in a bulk write was left alone. */
+const CardWriteErrorOut = z.object({
+  id: OutcomeId,
+  status: z.literal("error"),
+  code: z.enum(["not_found", "forbidden", "invalid", "conflict", "unavailable"]).meta({
+    description:
+      "not_found, forbidden or invalid, as a single write would answer; unavailable when saving failed and the card can be sent again",
+  }),
+  error: z.string().meta({ description: "Why this card was not changed, in plain words" }),
+});
+
 /** One outcome per card sent. A duplicate is skipped, never rejected. See ADR 0004. */
 export const AddCardOutcomeOut = z
   .discriminatedUnion("status", [
-    z.object({ status: z.literal("added"), card: CardOut }),
+    z.object({ id: OutcomeId, status: z.literal("added"), card: CardOut }),
     z.object({
+      id: OutcomeId,
       status: z.literal("skipped"),
       term: z.string().meta({ description: "The term that was sent" }),
       existing: CardOut.meta({ description: "The active card that already holds this term" }),
@@ -173,12 +190,8 @@ export const AddCardsOut = z
 /** One outcome per card in a bulk edit. A card that fails says why and leaves the others alone. */
 export const EditCardOutcomeOut = z
   .discriminatedUnion("status", [
-    z.object({ status: z.literal("updated"), card: CardOut }),
-    z.object({
-      status: z.literal("error"),
-      cardId: z.string().meta({ description: "The card id that was sent" }),
-      error: z.string().meta({ description: "Why this card was not changed" }),
-    }),
+    z.object({ id: OutcomeId, status: z.literal("updated"), card: CardOut }),
+    CardWriteErrorOut,
   ])
   .meta({ id: "EditCardOutcome" });
 export type EditCardOutcomeOut = z.infer<typeof EditCardOutcomeOut>;
@@ -187,14 +200,28 @@ export const EditCardsOut = z
   .object({ results: z.array(EditCardOutcomeOut) })
   .meta({ id: "EditCardsResult" });
 
+/** One outcome per card in a bulk archive or restore. */
+export const ArchiveCardOutcomeOut = z
+  .discriminatedUnion("status", [
+    z.object({ id: OutcomeId, status: z.literal("archived") }),
+    z.object({ id: OutcomeId, status: z.literal("restored") }),
+    CardWriteErrorOut,
+  ])
+  .meta({ id: "ArchiveCardOutcome" });
+
+export const ArchiveCardsOut = z
+  .object({ results: z.array(ArchiveCardOutcomeOut) })
+  .meta({ id: "ArchiveCardsResult" });
+
 /** A card write reduced to the card's id and what happened to it. */
 export const TerseCardOutcomeOut = z
   .object({
-    id: z.string().meta({
-      description:
-        "The card written. For a skipped add, the existing card; for an error, the id that was sent.",
+    id: OutcomeId,
+    status: z.enum(["added", "skipped", "updated", "archived", "restored", "error"]),
+    enrichmentStatus: EnrichmentStatus.nullable().optional().meta({
+      description: "On an add: set while the AI is filling the card, null once it settles",
     }),
-    status: z.enum(["added", "skipped", "updated", "archived", "error"]),
+    code: CardWriteErrorOut.shape.code.optional(),
     error: z.string().optional().meta({ description: "Why the card was not written" }),
   })
   .meta({ id: "TerseCardOutcome" });

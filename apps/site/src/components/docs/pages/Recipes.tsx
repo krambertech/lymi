@@ -97,8 +97,8 @@ for x in results:
         Two things follow. Keep your source list as the source of truth, and let Lymi decide what is
         new. And if you do want to change existing cards, send them to{" "}
         <code>PATCH /api/cards/batch</code> with the ids the skips gave you, rather than adding them
-        again. Each card succeeds or fails on its own, and <code>?response=terse</code> returns only
-        each card’s id and status.
+        again. Each card succeeds or fails on its own; send again only the ones that come back as
+        errors. <code>?response=terse</code> returns only each card’s id and status.
       </p>
       <Code
         lang="js"

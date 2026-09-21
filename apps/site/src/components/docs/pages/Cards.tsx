@@ -37,6 +37,11 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     note: "Where the pronunciation came from.",
   },
   {
+    name: "enrich",
+    type: "boolean",
+    note: "Write-only. true asks Lymi to fill the empty fields after the add. Off by default for API keys and MCP clients.",
+  },
+  {
     name: "enrichmentStatus",
     type: '"working" | "failed" | null',
     note: "Read-only. Set while Lymi is filling the card's empty fields, and null once it settles.",
@@ -105,12 +110,14 @@ export function Cards() {
         the one source that carries the AI badge.
       </Note>
 
-      <H2>Lymi fills what you leave empty</H2>
+      <H2>Lymi fills what you leave empty, when asked</H2>
       <p>
-        A card added with fields missing enriches itself in the background: meaning, example,
-        pronunciation and language, written in the learner's meaning language. It fills only what is
-        empty, so any text you send is kept exactly as you sent it, whatever its source. Each filled
-        field is recorded as <code>"ai"</code> and carries the badge.
+        A card sent with <code>enrich: true</code> is enriched in the background: meaning, example,
+        pronunciation and language, written in the learner's meaning language. Without it, a card
+        from an API key or an assistant stays exactly as sent. It fills only what is empty, so any
+        text you send is kept exactly as you sent it, whatever its source. A field you clear while
+        the job runs stays clear. Each filled field is recorded as <code>"ai"</code> and carries the
+        badge.
       </p>
       <p>
         While a job is outstanding the card reads <code>enrichmentStatus: "working"</code>, and{" "}

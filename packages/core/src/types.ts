@@ -478,6 +478,10 @@ export const CardInput = z.object({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",
   }),
+  enrich: z.boolean().optional().meta({
+    description:
+      "Fill the empty meaning, example, pronunciation and language with AI after the add. Off by default for API keys and MCP clients; on for the learner in the app.",
+  }),
 });
 export type CardInput = z.infer<typeof CardInput>;
 
@@ -538,7 +542,7 @@ export const ActivityQuery = z.object({
 export type ActivityQuery = z.infer<typeof ActivityQuery>;
 
 export const CardPatch = CardInput.partial()
-  .omit({ deckId: true })
+  .omit({ deckId: true, enrich: true })
   .extend({
     deckId: z.string().min(1).optional(),
   });

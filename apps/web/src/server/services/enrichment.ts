@@ -169,10 +169,16 @@ function stillWorking(userId: string, cardId: string): SQL {
   ) as SQL;
 }
 
-/** True in SQL when the column holds no text, by the same rule `emptyFields` uses in memory. */
-function emptyColumn(field: EnrichedField): SQL {
+/**
+ * True in SQL when the column still holds the empty value the run read. A field cleared during
+ * the run changed from null to "", so the clear stands as the caller's decision.
+ */
+function unchangedEmpty(field: EnrichedField, read: string | null): SQL {
   const column = schema.cards[field];
-  return or(isNull(column), eq(sql`trim(${column})`, "")) as SQL;
+  return and(
+    or(isNull(column), eq(sql`trim(${column})`, "")),
+    read === null ? isNull(column) : eq(column, read),
+  ) as SQL;
 }
 
 /**
@@ -221,13 +227,13 @@ export async function enrichCards(
       if (value === undefined) continue;
       const source = field === "language" ? {} : { [SOURCE_COLUMN[field]]: "ai" as const };
       // Filling an empty field is text an edition translates, so its localization goes stale.
-      // The write is guarded by `emptyColumn`, so the revision only moves when the fill lands.
+      // The write is guarded by `unchangedEmpty`, so the revision only moves when the fill lands.
       const stale = field === "language" ? {} : { revision: sql`revision + 1` };
       writes.push(
         db
           .update(schema.cards)
           .set({ [field]: value, ...source, ...stale, updatedAt: now })
-          .where(and(stillWorking(userId, card.id), emptyColumn(field))),
+          .where(and(stillWorking(userId, card.id), unchangedEmpty(field, card[field]))),
       );
     }
     // After that card's fields, so each write still sees `working`.

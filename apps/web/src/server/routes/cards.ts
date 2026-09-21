@@ -52,6 +52,9 @@ const DUPLICATE_RULE =
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
   "Re-running the same call is safe.";
 
+const ENRICH_RULE =
+  "Empty fields are filled with AI in the background only for a card sent with `enrich: true`; an API key gets none by default.";
+
 cards.get(
   "/",
   describe({
@@ -75,7 +78,7 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add a card",
-    description: `Needs the write scope. 201 when added, 200 when skipped as a duplicate. ${DUPLICATE_RULE}`,
+    description: `Needs the write scope. 201 when added, 200 when skipped as a duplicate. ${DUPLICATE_RULE} ${ENRICH_RULE}`,
     ok: [
       { status: 201, schema: AddCardOutcomeOut, description: "Added" },
       {
@@ -98,7 +101,7 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add many cards",
-    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE} ${TERSE}`,
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
     ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
     errors: [400, 404],
   }),

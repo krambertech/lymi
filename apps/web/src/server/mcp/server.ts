@@ -101,7 +101,7 @@ const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each 
 
 Start with list_decks. It names the decks, their languages and the language meanings are written in.
 
-When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later.
+When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later. Lymi fills empty fields with AI only for a card sent with enrich true, so ask for it only when the learner wants those fields written for them.
 
 A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
 
@@ -240,7 +240,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Add cards",
       description:
-        'Add one or many cards, across any decks, in one call. A term already in the learner\'s decks is skipped, never rejected, and the result names the existing card. Say meaningSource "lesson" when the meaning is in the material, so the learner can tell it from text you composed. Needs write.',
+        'Add one or many cards, across any decks, in one call. A term already in the learner\'s decks is skipped, never rejected, and the result names the existing card. Say meaningSource "lesson" when the meaning is in the material, so the learner can tell it from text you composed. Empty fields stay empty unless a card sets enrich to true. Needs write.',
       inputSchema: z.object({
         cards: z
           .array(CardInput)

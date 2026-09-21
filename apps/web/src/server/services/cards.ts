@@ -1,4 +1,5 @@
 import type {
+  Actor,
   CardEditInput,
   CardInput,
   CardPatch,
@@ -33,6 +34,11 @@ export type AddCardOutcome =
   | { id: string; status: "added"; card: CardView }
   | { id: string; status: "skipped"; term: string; existing: CardView; deckName: string };
 
+/** Only the learner in the app enriches unless asked; an integration opts in per card. */
+function wantsEnrichment(input: CardInput, actor: Actor): boolean {
+  return input.enrich ?? actor === "user";
+}
+
 /** One card. Same rule as the batch, one outcome. */
 export async function addCard(
   ctx: ServiceContext,
@@ -50,8 +56,9 @@ export async function addCard(
  * batch, are skipped and reported. Order of outcomes matches order of inputs. Only the
  * deck's owner adds; a member gets forbidden, a stranger not found.
  *
- * Given an enrichment queue, every added card with an empty field starts at `working` and one
- * background run fills it. Without one, the cards stay exactly as they arrived. ADR 0002.
+ * Given an enrichment queue, every added card that asks for enrichment and has an empty field
+ * starts at `working` and one background run fills it. Without one, the cards stay exactly as
+ * they arrived. ADR 0002.
  */
 export async function addCards(
   ctx: ServiceContext,
@@ -164,7 +171,7 @@ export async function addCards(
       updatedAt: now,
       revision: 1,
     };
-    if (enrichment && needsEnrichment(card)) {
+    if (enrichment && wantsEnrichment(input, actor) && needsEnrichment(card)) {
       card.enrichmentStatus = "working";
       enriching.push(id);
     }

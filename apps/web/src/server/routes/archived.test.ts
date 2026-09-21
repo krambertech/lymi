@@ -1,4 +1,4 @@
-import { AddCardOutcomeOut, CardHitOut, DeckOut, DeckSummaryOut } from "@lymi/core";
+import { AddCardOutcomeOut, CardSearchOut, DeckOut, DeckSummaryOut } from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
 import { z } from "zod";
 import { json, type Session, type TestApp, testApp } from "../test-app";
@@ -15,7 +15,6 @@ let keptDeck: string;
 let sunset: string;
 
 const Decks = z.array(DeckSummaryOut);
-const Cards = z.array(CardHitOut);
 
 async function createDeck(name: string) {
   const response = await app.fetch("/api/decks", {
@@ -46,7 +45,7 @@ async function names(path: string) {
 async function archivedTerms() {
   const response = await app.fetch("/api/cards?archived=true", { as: learner });
   expect(response.status).toBe(200);
-  return Cards.parse(await response.json()).map((card) => [card.term, card.deckName]);
+  return CardSearchOut.parse(await response.json()).cards.map((card) => [card.term, card.deckName]);
 }
 
 beforeAll(async () => {

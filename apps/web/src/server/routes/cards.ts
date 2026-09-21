@@ -5,10 +5,10 @@ import {
   CardArchiveInput,
   CardEditsInput,
   CardHistoryOut,
-  CardHitOut,
   CardInput,
   CardOut,
   CardPatch,
+  CardSearchOut,
   CardSearchQuery,
   CardsInput,
   EditCardsOut,
@@ -17,7 +17,6 @@ import {
   TerseCardsOut,
 } from "@lymi/core";
 import { Hono } from "hono";
-import { z } from "zod";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
@@ -62,14 +61,19 @@ cards.get(
     summary: "Search cards",
     description:
       "Cards matching text in the term, meaning, example or notes, newest first, each with its deck's name. " +
-      "Leave `query` out to list the newest cards. `archived=true` looks through archived cards instead.",
-    ok: { schema: z.array(CardHitOut), description: "Matching cards" },
+      "Leave `query` out to list the newest cards. `term` matches one term exactly, ignoring case. `archived=true` looks through archived cards instead. " +
+      "Results come a page at a time: pass `next` as `after` until `next` is null. A text search can return a short page before the end.",
+    ok: { schema: CardSearchOut, description: "One page of matching cards" },
     errors: [400],
   }),
   query(CardSearchQuery, "search"),
   async (c) => {
-    const rows = await searchCards(ctxOf(c), c.req.valid("query"));
-    return c.json(rows.map((row) => ({ ...row.card, deckName: row.deckName })));
+    const page = await searchCards(ctxOf(c), c.req.valid("query"));
+    return c.json({
+      cards: page.cards.map((row) => ({ ...row.card, deckName: row.deckName })),
+      next: page.next,
+      total: page.total,
+    });
   },
 );
 

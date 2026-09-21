@@ -88,7 +88,7 @@ describe("Markdown notes", () => {
     expect((await showCard(ctx, added.card.id)).notes).toBe(html);
 
     await updateCard(ctx, added.card.id, CardPatch.parse({ notes }));
-    const found = await searchCards(ctx, { query: "hea aeg → head aega" });
+    const found = (await searchCards(ctx, { query: "hea aeg → head aega" })).cards;
     expect(found.map((row) => row.card.id)).toEqual([added.card.id]);
   });
 });

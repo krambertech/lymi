@@ -8,6 +8,7 @@ import {
   CardInput,
   CardPatch,
   CardSearchInput,
+  CardSearchPaging,
   CardSectionInput,
   DeckInput,
   Directions,
@@ -159,7 +160,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_deck",
     {
       title: "Get a deck",
-      description: `One deck and its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, or to find one card, use search_cards.`,
+      description: `One deck and its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, page through search_cards with its deckId; to find one card, search by its term.`,
       inputSchema: z.object({ deckId: z.string().min(1) }),
       outputSchema: DeckWithCardsOut,
       ...readTool,
@@ -184,16 +185,18 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Search cards",
       description:
-        "Find cards by text in the term, meaning, example or notes, in one deck or all of them. Leave the query empty to list the newest cards. Set archived to true to look through archived cards, for example to find one to restore.",
+        "Find cards by text in the term, meaning, example or notes, in one deck, one section or all of them. Leave the query empty to list the newest cards. Use term to match one term exactly, ignoring case, however many other cards contain it. Set archived to true to look through archived cards, for example to find one to restore. Results come a page at a time: pass next as after until next is null. A text search can return a short page before the end.",
       inputSchema: CardSearchInput,
       outputSchema: SearchOut,
       ...readTool,
     },
     (search) =>
       run("search_cards", async () => {
-        const rows = await searchCards(ctx, search);
+        const page = await searchCards(ctx, search);
         return result({
-          cards: rows.map((row) => ({ ...cardOut(row.card), deckName: row.deckName })),
+          cards: page.cards.map((row) => ({ ...cardOut(row.card), deckName: row.deckName })),
+          next: page.next,
+          total: page.total,
         });
       }),
   );
@@ -1166,7 +1169,10 @@ const DeckWithCardsOut = z.object({
   cards: z.array(CardOut.extend({ dueAt: Timestamp.nullable() })),
 });
 
-const SearchOut = z.object({ cards: z.array(CardOut.extend({ deckName: z.string() })) });
+const SearchOut = z.object({
+  cards: z.array(CardOut.extend({ deckName: z.string() })),
+  ...CardSearchPaging,
+});
 
 const DueOut = z.object({
   dueNow: z.number().int(),

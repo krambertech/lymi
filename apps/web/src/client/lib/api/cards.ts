@@ -45,7 +45,8 @@ export type AddCardOutcome =
   | { status: "skipped"; term: string; existing: Card; deckName: string };
 
 export const cardsApi = {
-  archivedCards: () => request<CardHit[]>("/api/cards?archived=true"),
+  archivedCards: async () =>
+    (await request<{ cards: CardHit[] }>("/api/cards?archived=true")).cards,
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>

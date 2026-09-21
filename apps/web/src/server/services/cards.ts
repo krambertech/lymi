@@ -15,7 +15,19 @@ import {
   TEXT_MODES,
   unsetFields,
 } from "@lymi/core";
-import { and, asc, desc, eq, inArray, isNotNull, isNull } from "@lymi/core/db";
+import {
+  and,
+  asc,
+  count,
+  desc,
+  eq,
+  inArray,
+  isNotNull,
+  isNull,
+  lt,
+  or,
+  type SQL,
+} from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
@@ -236,8 +248,15 @@ function dupKey(language: string | null, normalizedTerm: string): string {
 
 export const SEARCH_LIMIT = 200;
 
+/** One page of a search: the cards, where the next page starts, and how many match in all. */
+export type CardSearchPage = {
+  cards: { card: CardView; deckName: string }[];
+  next: string | null;
+  total: number;
+};
+
 /**
- * Cards matching a search, newest first, each with the name of the deck it is in.
+ * Cards matching a search, newest first, a page at a time, each with the name of the deck it is in.
  *
  * The filters run in SQL; the text match runs here. SQLite's `lower()` folds ASCII only, so
  * a LIKE on the stored text would miss "Привіт" for "привіт" and "École" for "école". The
@@ -246,50 +265,142 @@ export const SEARCH_LIMIT = 200;
  * at SEARCH_SCAN_LIMIT so a query can never read without bound. A persisted folded column
  * is the upgrade if the collection outgrows that.
  *
+ * Pages are keyed on the time and the id, so a card added between calls never shifts one already
+ * read. A text search scans from the cursor, so a page can come back short with a `next` that
+ * carries the scan on, and its `total` counts matches among the first SEARCH_SCAN_LIMIT rows.
+ *
  * Active means the card and its deck are both unarchived: archiving a deck hides its cards
  * without touching them, so a card-only check would surface cards the learner cannot see.
  * `archived` returns only cards archived on their own, in a deck that is still active, because
  * those are the ones restore can bring back; a card inside an archived deck returns with its deck.
+ * Archived cards are ordered by when they were archived.
  */
-export async function searchCards({ db, userId }: ServiceContext, search: CardSearchInput) {
+export async function searchCards(
+  { db, userId }: ServiceContext,
+  search: CardSearchInput,
+): Promise<CardSearchPage> {
   const limit = Math.min(Math.max(search.limit ?? 50, 1), SEARCH_LIMIT);
   const needle = foldForSearch(search.query ?? "");
-  const rows = await db
-    .select({ card: schema.cards, deckName: schema.decks.name })
-    .from(schema.cards)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .where(
-      and(
-        memberOf(userId),
-        search.archived
-          ? and(isNotNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt))
-          : and(isNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt)),
-        search.deckId ? eq(schema.cards.deckId, search.deckId) : undefined,
-        search.language ? eq(schema.cards.language, search.language) : undefined,
-      ),
-    )
-    .orderBy(search.archived ? desc(schema.cards.archivedAt) : desc(schema.cards.createdAt))
-    .limit(needle ? SEARCH_SCAN_LIMIT : limit);
+  const at = search.archived ? schema.cards.archivedAt : schema.cards.createdAt;
+  const filters = and(
+    memberOf(userId),
+    search.archived
+      ? and(isNotNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt))
+      : and(isNull(schema.cards.archivedAt), isNull(schema.decks.archivedAt)),
+    search.deckId ? eq(schema.cards.deckId, search.deckId) : undefined,
+    search.sectionId ? eq(schema.cards.sectionId, search.sectionId) : undefined,
+    search.language ? eq(schema.cards.language, search.language) : undefined,
+    search.term ? eq(schema.cards.normalizedTerm, normaliseTerm(search.term)) : undefined,
+  );
+  const after = parseSearchCursor(search.after);
+  const fromCursor = and(
+    filters,
+    after ? or(lt(at, after.at), and(eq(at, after.at), lt(schema.cards.id, after.id))) : undefined,
+  );
+  const newestFirst = [desc(at), desc(schema.cards.id)];
+  const present = async (rows: { card: Card; deckName: string }[]) => {
+    const cards = await presentCards(
+      db,
+      rows.map((row) => row.card),
+      userId,
+    );
+    return rows.map((row, index) => ({ card: cards[index] as CardView, deckName: row.deckName }));
+  };
+
+  if (!needle) {
+    const [rows, counted] = await Promise.all([
+      db
+        .select({ card: schema.cards, deckName: schema.decks.name, at })
+        .from(schema.cards)
+        .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+        .where(fromCursor)
+        .orderBy(...newestFirst)
+        .limit(limit + 1),
+      db
+        .select({ total: count() })
+        .from(schema.cards)
+        .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+        .where(filters),
+    ]);
+    const page = rows.slice(0, limit);
+    const last = page.at(-1);
+    return {
+      cards: await present(page),
+      next: rows.length > limit && last ? searchCursor(last.at, last.card.id) : null,
+      total: counted[0]?.total ?? 0,
+    };
+  }
+
+  // Only the fields the match reads, so a scan of thousands of rows stays small.
+  const scan = (where: SQL | undefined) =>
+    db
+      .select({
+        id: schema.cards.id,
+        deckId: schema.cards.deckId,
+        normalizedTerm: schema.cards.normalizedTerm,
+        meaning: schema.cards.meaning,
+        example: schema.cards.example,
+        notes: schema.cards.notes,
+        at,
+      })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(where)
+      .orderBy(...newestFirst)
+      .limit(SEARCH_SCAN_LIMIT + 1);
   // Matched against the edition the learner reads the deck in, so a search finds the words on
   // their screen. A learner who pinned none pays one indexed lookup that returns nothing.
-  const editions = needle
-    ? await editionText(
-        db,
-        userId,
-        rows.map((row) => row.card),
-      )
-    : new Map();
-  const matched = needle
-    ? rows
-        .filter((row) => matchesSearch(inEdition(row.card, editions.get(row.card.id)), needle))
-        .slice(0, limit)
-    : rows;
-  const cards = await presentCards(
-    db,
-    matched.map((row) => row.card),
-    userId,
+  const matching = async (rows: Awaited<ReturnType<typeof scan>>) => {
+    const read = rows.slice(0, SEARCH_SCAN_LIMIT);
+    const editions = await editionText(db, userId, read);
+    return read.filter((row) => matchesSearch(inEdition(row, editions.get(row.id)), needle));
+  };
+
+  const [scanned, fromStart] = await Promise.all([
+    scan(fromCursor),
+    after ? scan(filters) : undefined,
+  ]);
+  const [found, all] = await Promise.all([
+    matching(scanned),
+    fromStart ? matching(fromStart) : undefined,
+  ]);
+  const hits = found.slice(0, limit);
+  const lastHit = hits.at(-1);
+  const lastRead = scanned.at(SEARCH_SCAN_LIMIT - 1);
+  const next =
+    found.length > limit && lastHit
+      ? searchCursor(lastHit.at, lastHit.id)
+      : scanned.length > SEARCH_SCAN_LIMIT && lastRead
+        ? searchCursor(lastRead.at, lastRead.id)
+        : null;
+
+  const order = new Map(hits.map((hit, index) => [hit.id, index]));
+  const rows = await selectIn(
+    hits.map((hit) => hit.id),
+    (ids) =>
+      db
+        .select({ card: schema.cards, deckName: schema.decks.name })
+        .from(schema.cards)
+        .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+        .where(inArray(schema.cards.id, ids)),
   );
-  return matched.map((row, index) => ({ card: cards[index] as CardView, deckName: row.deckName }));
+  rows.sort((a, b) => (order.get(a.card.id) ?? 0) - (order.get(b.card.id) ?? 0));
+  return { cards: await present(rows), next, total: (all ?? found).length };
+}
+
+function searchCursor(at: Date | null, id: string): string {
+  return `${at?.getTime() ?? 0}.${id}`;
+}
+
+function parseSearchCursor(cursor: string | undefined): { at: Date; id: string } | null {
+  if (!cursor) return null;
+  const dot = cursor.indexOf(".");
+  const ms = Number(cursor.slice(0, dot));
+  const id = cursor.slice(dot + 1);
+  if (dot < 1 || !id || !Number.isFinite(ms)) {
+    throw new ServiceError("invalid", "Pass the `next` value from the previous page as `after`.");
+  }
+  return { at: new Date(ms), id };
 }
 
 /** The most rows one text search reads before matching. */

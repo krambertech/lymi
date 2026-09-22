@@ -25,11 +25,5 @@ export function DocLink({ to, className, onClick, children }: Props) {
           {children}
         </Link>
       );
-    case "screen":
-      return (
-        <Link to="/design/screens/$screen" params={{ screen: to.screen }} {...shared}>
-          {children}
-        </Link>
-      );
   }
 }

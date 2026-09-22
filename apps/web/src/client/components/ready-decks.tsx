@@ -41,14 +41,14 @@ export function ReadyDecks({ decks, onAdd, adding, st }: Props) {
       <p className="max-w-[54ch] px-1 text-sm text-text-2">
         <Trans>Decks from Lymi. Add one to study it in your language.</Trans>
       </p>
-      <ul className="deck-strip -mx-5 mt-1 px-5 @3xl/shell:-mx-8 @3xl/shell:px-8">
+      <ul className="deck-row -mx-5 mt-1 px-5 @3xl/shell:-mx-8 @3xl/shell:px-8">
         {decks.map((deck) => (
           <li key={deck.slug}>
             <DeckTile
               deck={deck}
               addedTo={null}
               onAdd={() =>
-                // The edition this row was read in, so Library says what the strip said.
+                // The edition this row was read in, so Library says what the row said.
                 onAdd({ slug: deck.slug, name: deck.name, edition: deck.meaningLanguage })
               }
               adding={adding === deck.slug}

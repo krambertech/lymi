@@ -16,8 +16,8 @@ import { Streak } from "../lib/streak";
 import { useAddPublishedDeck } from "../lib/use-add-published-deck";
 import { isGuiding, TodayView } from "../views/today-view";
 
-/** How many published decks the strip carries before Explore takes over. */
-const STRIP_DECKS = 8;
+/** How many published decks the row carries before Explore takes over. */
+const READY_DECKS = 8;
 
 export const Route = createFileRoute("/today")({
   component: Today,
@@ -38,7 +38,7 @@ function Today() {
   const explore = useQuery({ ...exploreQuery, enabled: guiding });
   const ready = explore.data?.decks
     .filter((deck) => !explore.data.added[deck.slug])
-    .slice(0, STRIP_DECKS);
+    .slice(0, READY_DECKS);
   const add = useAddCard();
   // On Today the deck lands in Library while the learner stays, so the toast is what says so.
   const addDeck = useAddPublishedDeck({ announce: "toast" });

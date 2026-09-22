@@ -314,10 +314,10 @@
   border-radius: 0;
 }
 
-/* The strip on Today: the same tiles in a row that scrolls sideways, bleeding to the screen's
-   edges so the deck past the fold is cut rather than hidden. The column fits three, and the
-   fourth peeking is what says the row carries more. */
-.deck-strip {
+/* Ready-made decks under Today's guide: the same tiles in a row that scrolls sideways, bleeding
+   to the screen's edges so the deck past the fold is cut rather than hidden. The column fits
+   three, and the fourth peeking is what says the row carries more. */
+.deck-row {
   display: flex;
   gap: 18px;
   /* Room for a tile's focus ring and its hover spread, which the scroller would clip. */
@@ -326,17 +326,31 @@
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
   scroll-padding-inline: 20px;
-  scrollbar-width: none;
+  scrollbar-width: thin;
 }
-@container shell (min-width: 48rem) {
-  .deck-strip {
-    scroll-padding-inline: 32px;
+/* A finger finds the swipe; a mouse without a sideways wheel needs the bar to know the row scrolls. */
+@media (pointer: coarse) {
+  .deck-row {
+    scrollbar-width: none;
+  }
+  .deck-row::-webkit-scrollbar {
+    display: none;
   }
 }
-.deck-strip::-webkit-scrollbar {
-  display: none;
+@container shell (min-width: 48rem) {
+  .deck-row {
+    scroll-padding-inline: 32px;
+    /* The gutter ends in open canvas on a wide window, so a tile fades there instead of being sliced. */
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 32px,
+      black calc(100% - 32px),
+      transparent
+    );
+  }
 }
-.deck-strip > li {
+.deck-row > li {
   flex: 0 0 15rem;
   scroll-snap-align: start;
 }

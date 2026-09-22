@@ -47,7 +47,7 @@ export interface TodayProps {
 
 type ReviewSearch = { deck?: string; series?: string; round?: Round };
 
-/** Until the first review, Today is the getting started guide. Undefined while the streak loads. */
+/** Until the first review, Today is the getting started guide. False while the streak is unread. */
 export function isGuiding(streak: StreakSummary | undefined): boolean {
   return !!streak && streak.reviewedDays === 0 && streak.today.attempts === 0;
 }
@@ -103,11 +103,6 @@ export function TodayView({
   const guiding = !!decks && isGuiding(streak);
   const [onlyDeck] = decks?.length === 1 ? decks : [];
 
-  // Only under the guide: a learner past their first review has Today's own work to get on with.
-  const strip = ready && ready.length > 0 && onAddDeck && (
-    <ReadyDecks decks={ready} onAdd={onAddDeck} adding={addingDeck} st={st} />
-  );
-
   return (
     <Screen kind="tab" title={<Trans>Today</Trans>}>
       {guiding ? (
@@ -121,7 +116,10 @@ export function TodayView({
             onCreateDeck={onCreateDeck}
             st={st}
           />
-          {strip}
+          {/* Only under the guide: a learner past their first review has their own work to get on with. */}
+          {ready && ready.length > 0 && onAddDeck && (
+            <ReadyDecks decks={ready} onAdd={onAddDeck} adding={addingDeck} st={st} />
+          )}
         </div>
       ) : (
         <div className="grid gap-8 @3xl:gap-10">

@@ -52,6 +52,9 @@ const DUPLICATE_RULE =
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
   "Re-running the same call is safe.";
 
+const ENRICH_RULE =
+  "With an API key, fields left out stay empty unless the card sets `enrich: true`; the learner's own adds in the app enrich by default. A field sent as an empty string is never filled.";
+
 cards.get(
   "/",
   describe({
@@ -75,7 +78,7 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add a card",
-    description: `Needs the write scope. 201 when added, 200 when skipped as a duplicate. ${DUPLICATE_RULE}`,
+    description: `Needs the write scope. 201 when added, 200 when skipped as a duplicate. ${DUPLICATE_RULE} ${ENRICH_RULE}`,
     ok: [
       { status: 201, schema: AddCardOutcomeOut, description: "Added" },
       {
@@ -98,7 +101,7 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add many cards",
-    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE} ${TERSE}`,
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
     ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
     errors: [400, 404],
   }),
@@ -202,8 +205,8 @@ cards.post(
     tags: ["Cards"],
     summary: "Enrich a card",
     description:
-      "Needs the write scope. Asks the AI to fill the card's empty fields, the same way an add does: " +
-      "only meaning, example, pronunciation and language, only where they hold no text, and meanings in the learner's meaning language. " +
+      "Needs the write scope. Asks the AI to fill the card's empty fields: " +
+      "only meaning, example, pronunciation and language, only where they hold no text, including fields cleared on purpose, and meanings in the learner's meaning language. " +
       'The card comes back at `enrichmentStatus: "working"`; poll it to watch the text land. ' +
       "Only the card's owner may ask, and a card with nothing left to fill is refused with 400.",
     ok: { schema: CardOut, description: "The card, now working" },

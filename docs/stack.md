@@ -167,7 +167,7 @@ FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline)
 
 **The server does not extract vocabulary from lessons. The MCP client does.** Claude Desktop or Codex already holds the transcript and a model, so it reads the lesson and calls `add_cards`. That keeps the Worker's AI to one job, enrichment: fill the empty fields on a card (meaning, example, pronunciation, language) and leave every field that already has text alone.
 
-Enrichment runs in the background after any add that leaves fields empty, whether the card came from the web quick-capture sheet or from an integration. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
+Enrichment runs in the background after an add that leaves fields unset. The learner's adds in the app enrich by default; an API key or MCP client asks per card with `enrich: true`, because an agent tending a deck in bulk should not get text it did not ask for. A field stored as `""` is a deliberate clear and is never filled by a run; asking to enrich that card reopens it. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
 
 One Cloudflare Workflow per add batch does the work, alongside the import and export workflows, asking for about ten cards per model call so a lesson lands in waves rather than all at once. `cards.enrichment_status` is `working` or `failed` while a job is outstanding and null otherwise, and the reads that already load cards carry it, so each empty field can hold its space until the text lands. A run that gives up leaves its cards at `failed` and the add itself still succeeds; with no OpenAI key configured no run is queued at all and the cards stay exactly as they arrived.
 
@@ -268,7 +268,7 @@ Persona accounts under `@lymi.local` are created already confirmed and send no c
 - Integrations (5 September 2026): MCP clients are Claude Desktop and Codex first, so OAuth from day one via `@better-auth/mcp`. Personal API keys via the `apiKey` plugin. Two scopes, `read` and `write`.
 - Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
 - Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.
-- The server enriches, the MCP client extracts. Enrichment is automatic, background, fills only empty fields.
+- The server enriches, the MCP client extracts. Enrichment is background and fills only empty fields; on by default in the app, opt-in per card for integrations (21 September 2026).
 - App language (12 September 2026): one per-user setting, seeded from the browser, drives the interface, push copy and the meaning language. Ukrainian and Russian first. ADR 0013.
 - Interface text is English source in the code, translated through Lingui `.po` catalogs, extracted in `pnpm verify`, drafted by the agent on the PR. ADR 0012.
 - Integrations never grade reviews.

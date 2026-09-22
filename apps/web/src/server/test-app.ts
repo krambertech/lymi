@@ -26,7 +26,7 @@ const PASSWORD = "route-test-password-1234";
  * A loopback product writes email to the outbox and confirms `@lymi.local` accounts itself.
  */
 export async function testApp(
-  options: { operators?: string[]; publishers?: string[] } = {},
+  options: { operators?: string[]; publishers?: string[]; env?: Partial<Bindings> } = {},
 ): Promise<TestApp> {
   const { db, env: bindings } = await testDb();
   const env = {
@@ -44,6 +44,7 @@ export async function testApp(
         throw new Error("A loopback product writes to the outbox and never reaches the provider");
       },
     },
+    ...options.env,
   } as unknown as Bindings;
 
   const fetch: TestApp["fetch"] = async (path, init = {}) => {

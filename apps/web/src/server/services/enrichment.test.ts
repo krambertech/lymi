@@ -231,6 +231,36 @@ describe("enrichCards", () => {
     expect(added.card.enrichmentStatus).toBeNull();
   });
 
+  it("leaves an integration's card unenriched unless the card asks", async () => {
+    const ctx = await learner(db, "enrich-mcp", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const statuses = async (actor: "mcp" | "api") =>
+      (
+        await addCards(
+          { ...ctx, actor },
+          [
+            CardInput.parse({ deckId: deck.id, term: `pere ${actor}` }),
+            CardInput.parse({ deckId: deck.id, term: `ema ${actor}`, enrich: true }),
+          ],
+          queue,
+        )
+      ).map((o) => (o.status === "added" ? o.card.enrichmentStatus : "skipped"));
+    expect(await statuses("mcp")).toEqual([null, "working"]);
+    expect(await statuses("api")).toEqual([null, "working"]);
+  });
+
+  it("lets the learner in the app turn enrichment off for one card", async () => {
+    const ctx = await learner(db, "enrich-off", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const [added] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: deck.id, term: "isa", enrich: false })],
+      queue,
+    );
+    if (added?.status !== "added") throw new Error("not added");
+    expect(added.card.enrichmentStatus).toBeNull();
+  });
+
   it("ends a card that gives up at failed rather than working", async () => {
     const ctx = await learner(db, "enrich-4", "Kateryna");
     const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
@@ -312,6 +342,74 @@ describe("enrichCards", () => {
     expect(enriched).toHaveLength(1);
     const { landedIn: _deck, ...fields } = (enriched[0]?.payload ?? {}) as Record<string, unknown>;
     expect(Object.keys(fields)).toEqual(["example"]);
+  });
+
+  it("keeps a field cleared while the model was thinking empty", async () => {
+    const ctx = await learner(db, "enrich-clear", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const [added] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: deck.id, term: "pere" })],
+      queue,
+    );
+    if (added?.status !== "added") throw new Error("not added");
+
+    const provider: TextProvider = {
+      provider: "openai",
+      model: "test",
+      complete: async () => {
+        await updateCard(ctx, added.card.id, CardPatch.parse({ example: "" }));
+        return {
+          cards: [
+            {
+              id: added.card.id,
+              meaning: "family",
+              example: "Minu pere on suur.",
+              pronunciation: null,
+              language: null,
+            },
+          ],
+        };
+      },
+    };
+    await enrichCards({ ...ctx, actor: "ai" }, [added.card.id], provider);
+
+    const card = await showCard(ctx, added.card.id);
+    expect(card.example).toBeFalsy();
+    expect(card.meaning).toBe("family");
+    expect(card.enrichmentStatus).toBeNull();
+  });
+
+  it("keeps a field cleared before its wave started empty, and reopens it on request", async () => {
+    const ctx = await learner(db, "enrich-wave", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const [added] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: deck.id, term: "ema", example: "Ema on kodus." })],
+      queue,
+    );
+    if (added?.status !== "added") throw new Error("not added");
+    // The agent clears the example long before the run reaches this card.
+    await updateCard(ctx, added.card.id, CardPatch.parse({ example: "" }));
+    const reply = {
+      cards: [
+        {
+          id: added.card.id,
+          meaning: "mother",
+          example: "Minu ema on õpetaja.",
+          pronunciation: null,
+          language: null,
+        },
+      ],
+    };
+    await enrichCards({ ...ctx, actor: "ai" }, [added.card.id], fakeProvider(reply));
+    expect((await showCard(ctx, added.card.id)).example).toBe("");
+
+    // Asking for enrichment is changing their mind: the blank field is open to fill again.
+    const asked = await requestEnrichment(ctx, added.card.id, queue);
+    expect(asked.example).toBeNull();
+    await enrichCards({ ...ctx, actor: "ai" }, [added.card.id], fakeProvider(reply));
+    expect((await showCard(ctx, added.card.id)).example).toBe("Minu ema on õpetaja.");
   });
 
   it("marks the cards failed when the queue refuses the run, and the add still succeeds", async () => {

@@ -22,7 +22,7 @@ Then note, per row: does a shared element exist on both sides? Does the route co
 
 ## Step 2 — copy the CSS
 
-Take the complete recipe set from [`css-recipes.md`](css-recipes.md) into `apps/web/src/client/styles.css`, below the token blocks. Copy all of it, including reduced motion, before tuning a single duration.
+Take the complete recipe set from [`css-recipes.md`](css-recipes.md) into `apps/web/src/client/styles/view-transitions.css`, imported from `styles.css` beside the other feature files. Copy all of it, including reduced motion, before tuning a single duration.
 
 ## Step 3 — type the router
 

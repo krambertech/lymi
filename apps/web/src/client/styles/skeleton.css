@@ -1,0 +1,27 @@
+/* Skeleton: holds the shape, shimmers only if motion is welcome. The radius sits in a layer so a
+   `rounded-*` utility can give the loaded shape. */
+@layer components {
+  .skeleton {
+    border-radius: var(--radius-xs);
+  }
+}
+.skeleton {
+  background: var(--plate-2);
+  position: relative;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--shimmer), transparent);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}

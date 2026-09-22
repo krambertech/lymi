@@ -1,0 +1,104 @@
+.flame {
+  /* Scale from the base of the flame itself, not the centre of the drawing. */
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: var(--flame-anim, none);
+}
+/* The bright centre beats slightly out of phase with the flame around it. A
+   flame whose every part moves together reads as a picture of a flame. */
+.flame-core {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: var(--core-anim, none);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lantern-flicker .flame {
+    --flame-anim: flicker 2.6s ease-in-out infinite;
+  }
+  .lantern-flicker .flame-core {
+    --core-anim: flame-core 2.6s ease-in-out infinite;
+  }
+  /* The halo breathes on the same loop. A flame that changes size under a halo
+     that holds still is the thing that reads as fake. */
+  .lantern-flicker.glow {
+    animation: halo 2.6s ease-in-out infinite;
+  }
+  /* Carried: the body swings from the bail's pivot and the bail counters it. */
+  .lantern-carry .lantern-body {
+    transform-box: fill-box;
+    transform-origin: 50% 18%;
+    animation: carry 2.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+  .lantern-carry .lantern-bail {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: carry-bail 2.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+}
+/* The import's working bar, while how long is left is not known. */
+@keyframes import-sweep {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 300% 0;
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  30% {
+    transform: scaleY(1.07) scaleX(0.97) translateX(0.4px);
+  }
+  55% {
+    transform: scaleY(0.965) scaleX(1.03);
+  }
+  80% {
+    transform: scaleY(1.05) scaleX(0.98) translateX(-0.4px);
+  }
+}
+@keyframes flame-core {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  35% {
+    transform: scaleY(1.12) scaleX(0.93);
+  }
+  70% {
+    transform: scaleY(0.94) scaleX(1.06);
+  }
+}
+@keyframes halo {
+  0%,
+  100% {
+    --glow-breath: 1;
+  }
+  30% {
+    --glow-breath: 1.43;
+  }
+  62% {
+    --glow-breath: 0.79;
+  }
+}
+@keyframes carry {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+@keyframes carry-bail {
+  0%,
+  100% {
+    transform: rotate(3.5deg);
+  }
+  50% {
+    transform: rotate(-3.5deg);
+  }
+}

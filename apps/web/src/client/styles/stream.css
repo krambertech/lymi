@@ -1,0 +1,37 @@
+/* The join page's cards drift past. A track holds its cards twice, so half its length plus half
+   a gap lands the second copy exactly where the first began. */
+.stream-up {
+  animation: stream-up var(--stream-duration) linear infinite;
+}
+.stream-across {
+  animation: stream-across var(--stream-duration) linear infinite;
+}
+.stream-across:dir(rtl) {
+  animation-direction: reverse;
+}
+.stream-paused .stream-up,
+.stream-paused .stream-across {
+  animation-play-state: paused;
+}
+@media (hover: hover) and (pointer: fine) {
+  .stream:hover .stream-up,
+  .stream:hover .stream-across {
+    animation-play-state: paused;
+  }
+}
+@keyframes stream-up {
+  to {
+    transform: translateY(calc(-50% - var(--stream-gap) / 2));
+  }
+}
+@keyframes stream-across {
+  to {
+    transform: translateX(calc(-50% - var(--stream-gap) / 2));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stream-up,
+  .stream-across {
+    animation: none;
+  }
+}

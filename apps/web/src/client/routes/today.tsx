@@ -7,12 +7,13 @@ import { publicSiteUrl } from "../lib/origins";
 import {
   connectedAppsQuery,
   decksQuery,
+  exploreQuery,
   roundsQuery,
   seriesQuery,
   streakQuery,
 } from "../lib/queries";
 import { Streak } from "../lib/streak";
-import { TodayView } from "../views/today-view";
+import { isGuiding, TodayView } from "../views/today-view";
 
 export const Route = createFileRoute("/today")({
   component: Today,
@@ -28,6 +29,10 @@ function Today() {
   const rounds = useQuery(roundsQuery);
   const firstRun = decks.data?.every((d) => d.total === 0) ?? false;
   const apps = useQuery({ ...connectedAppsQuery, enabled: firstRun });
+  // Only the guide offers ready-made decks, so nobody past it pays for the catalogue read.
+  const guiding = isGuiding(streak.data);
+  const explore = useQuery({ ...exploreQuery, enabled: guiding });
+  const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
   const add = useAddCard();
   return (
     <TodayView
@@ -40,6 +45,13 @@ function Today() {
       connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
+      failed={(decks.isError && !decks.data) || (streak.isError && !streak.data)}
+      onRetry={() => {
+        void decks.refetch();
+        void streak.refetch();
+      }}
+      retrying={decks.isFetching || streak.isFetching}
+      ready={ready}
     />
   );
 }

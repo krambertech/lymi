@@ -13,6 +13,20 @@ function paperFor(cardCount: number): number {
   return Math.min(Math.max(cardCount - 1, 0), 2);
 }
 
+/** Step from the middle, drop and tilt for a hand of one, two or three cards; the first lies on top. */
+export const HAND_FANS: [number, number, number][][] = [
+  [[0, 0, -2]],
+  [
+    [0.4, 0, 3],
+    [-0.4, 14, -4],
+  ],
+  [
+    [0, 0, 1],
+    [-1, 18, -7],
+    [1, 22, 6],
+  ],
+];
+
 /** A long compound would break mid-letter at the full size, so the term steps down first. */
 function termStep(term: string): number {
   const longest = Math.max(...term.split(/\s+/).map((word) => word.length));

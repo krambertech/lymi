@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 import { ArrowRight, Check, ChevronDown, Plus } from "lucide-react";
 import { type CSSProperties, type ReactNode, useEffect, useRef } from "react";
 import { Button, buttonClass } from "../components/button";
-import { DeckMeta, TrayCardFace } from "../components/deck-tray";
+import { DeckMeta, HAND_FANS, TrayCardFace } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
 import type { StaticNav } from "../components/nav-link";
@@ -63,19 +63,6 @@ function handOf(deck: PublicDeckOut): HandCard[] {
   return hand;
 }
 
-// Step from the middle, drop and tilt for a hand of one, two or three; the first lies on top.
-const FANS: [number, number, number][][] = [
-  [[0, 0, -2]],
-  [
-    [0.4, 0, 3],
-    [-0.4, 14, -4],
-  ],
-  [
-    [0, 0, 1],
-    [-1, 18, -7],
-    [1, 22, 6],
-  ],
-];
 // The same cards squared into a stack once the deck is in Library.
 const STACK: [number, number, number][] = [
   [0, 0, -1],
@@ -95,7 +82,7 @@ function DeckHand({
   gathered: boolean;
   className?: string | undefined;
 }) {
-  const fan = FANS[cards.length - 1] ?? [];
+  const fan = HAND_FANS[cards.length - 1] ?? [];
   return (
     <div
       className={clsx("deck-hand", className)}

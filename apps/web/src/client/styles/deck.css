@@ -20,35 +20,43 @@
   --tray-c: 0.015;
 }
 .deck-tray[data-hue="0"],
-.deck-cover[data-hue="0"] {
+.deck-cover[data-hue="0"],
+.deck-banner[data-hue="0"] {
   --tray-h: 25;
 }
 .deck-tray[data-hue="1"],
-.deck-cover[data-hue="1"] {
+.deck-cover[data-hue="1"],
+.deck-banner[data-hue="1"] {
   --tray-h: 110;
 }
 .deck-tray[data-hue="2"],
-.deck-cover[data-hue="2"] {
+.deck-cover[data-hue="2"],
+.deck-banner[data-hue="2"] {
   --tray-h: 150;
 }
 .deck-tray[data-hue="3"],
-.deck-cover[data-hue="3"] {
+.deck-cover[data-hue="3"],
+.deck-banner[data-hue="3"] {
   --tray-h: 195;
 }
 .deck-tray[data-hue="4"],
-.deck-cover[data-hue="4"] {
+.deck-cover[data-hue="4"],
+.deck-banner[data-hue="4"] {
   --tray-h: 235;
 }
 .deck-tray[data-hue="5"],
-.deck-cover[data-hue="5"] {
+.deck-cover[data-hue="5"],
+.deck-banner[data-hue="5"] {
   --tray-h: 280;
 }
 .deck-tray[data-hue="6"],
-.deck-cover[data-hue="6"] {
+.deck-cover[data-hue="6"],
+.deck-banner[data-hue="6"] {
   --tray-h: 320;
 }
 .deck-tray[data-hue="7"],
-.deck-cover[data-hue="7"] {
+.deck-cover[data-hue="7"],
+.deck-banner[data-hue="7"] {
   --tray-h: 350;
 }
 
@@ -312,4 +320,16 @@
 /* In a tile the tray runs to the card's edges and the card clips it, so the tray keeps no corners of its own. */
 .deck-tile .deck-tray {
   border-radius: 0;
+}
+
+/* Ready-made decks under Today's guide, on the first offered deck's tray colour at a header's
+   chroma, as a deck's own page is. */
+.deck-banner {
+  --tray-l: 0.958;
+  --tray-c: 0.034;
+  background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
+}
+[data-theme="dark"] .deck-banner {
+  --tray-l: 0.19;
+  --tray-c: 0.03;
 }

@@ -908,6 +908,9 @@ msgstr "Both ways"
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Brings back every card this import added and the decks it made."
 
+msgid "Browse ready-made decks"
+msgstr "Browse ready-made decks"
+
 msgid "Bug"
 msgstr "Bug"
 
@@ -1220,6 +1223,9 @@ msgstr "Couldn’t load this deck"
 msgid "Couldn’t load this import"
 msgstr "Couldn’t load this import"
 
+msgid "Couldn’t load Today"
+msgstr "Couldn’t load Today"
+
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
 
@@ -1366,6 +1372,9 @@ msgstr "Decks"
 
 msgid "Decks from Anki or Mochi, with their review history."
 msgstr "Decks from Anki or Mochi, with their review history."
+
+msgid "Decks from Lymi. Add one to study it in your language."
+msgstr "Decks from Lymi. Add one to study it in your language."
 
 msgid "Decks to review"
 msgstr "Decks to review"
@@ -3109,6 +3118,9 @@ msgstr "Start review"
 
 msgid "Start with a deck"
 msgstr "Start with a deck"
+
+msgid "Start with a ready-made deck"
+msgstr "Start with a ready-made deck"
 
 msgid "Started {sectionName}"
 msgstr "Started {sectionName}"

@@ -908,6 +908,9 @@ msgstr "Обидва способи"
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Повертає кожну картку, яку додав цей імпорт, і створені ним колоди."
 
+msgid "Browse ready-made decks"
+msgstr "Переглянути готові колоди"
+
 msgid "Bug"
 msgstr "Помилка"
 
@@ -1220,6 +1223,9 @@ msgstr "Не вдалося завантажити цю колоду"
 msgid "Couldn’t load this import"
 msgstr "Не вдалося завантажити цей імпорт"
 
+msgid "Couldn’t load Today"
+msgstr "Не вдалося завантажити екран «Сьогодні»"
+
 msgid "Couldn’t load your cards"
 msgstr "Не вдалося завантажити картки"
 
@@ -1366,6 +1372,9 @@ msgstr "Колоди"
 
 msgid "Decks from Anki or Mochi, with their review history."
 msgstr "Колоди з Anki чи Mochi разом з історією повторень."
+
+msgid "Decks from Lymi. Add one to study it in your language."
+msgstr "Колоди від Lymi. Додай одну — вивчай її своєю мовою."
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
@@ -3109,6 +3118,9 @@ msgstr "Почати повторення"
 
 msgid "Start with a deck"
 msgstr "Почни з колоди"
+
+msgid "Start with a ready-made deck"
+msgstr "Почни з готової колоди"
 
 msgid "Started {sectionName}"
 msgstr "Розпочато «{sectionName}»"

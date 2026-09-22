@@ -908,6 +908,9 @@ msgstr "Оба способа"
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Возвращает каждую карточку, которую добавил этот импорт, и созданные им колоды."
 
+msgid "Browse ready-made decks"
+msgstr "Посмотреть готовые колоды"
+
 msgid "Bug"
 msgstr "Ошибка"
 
@@ -1220,6 +1223,9 @@ msgstr "Не удалось загрузить эту колоду"
 msgid "Couldn’t load this import"
 msgstr "Не удалось загрузить этот импорт"
 
+msgid "Couldn’t load Today"
+msgstr "Не удалось загрузить экран «Сегодня»"
+
 msgid "Couldn’t load your cards"
 msgstr "Не удалось загрузить карточки"
 
@@ -1366,6 +1372,9 @@ msgstr "Колоды"
 
 msgid "Decks from Anki or Mochi, with their review history."
 msgstr "Колоды из Anki или Mochi вместе с историей повторений."
+
+msgid "Decks from Lymi. Add one to study it in your language."
+msgstr "Колоды от Lymi. Добавь одну — учи её на своём языке."
 
 msgid "Decks to review"
 msgstr "Колоды к повторению"
@@ -3109,6 +3118,9 @@ msgstr "Начать повторение"
 
 msgid "Start with a deck"
 msgstr "Начни с колоды"
+
+msgid "Start with a ready-made deck"
+msgstr "Начни с готовой колоды"
 
 msgid "Started {sectionName}"
 msgstr "Начат раздел «{sectionName}»"

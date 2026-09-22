@@ -1,20 +1,10 @@
 import type { InsightsOut } from "@lymi/core";
-import type { PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
+import { identifyApp } from "../components/app-mark";
 import type { StreakSummary } from "../components/streak";
-import type {
-  ActivityEntry,
-  Card,
-  CardState,
-  DeckSummary,
-  QueueItem,
-  Review,
-  Section,
-  Series,
-} from "../lib/api";
-import type { WordEvent } from "../views/word-view";
+import type { Card, CardState, DeckSummary, QueueItem, Series } from "../lib/api";
 
-const now = Date.now();
-const day = 86_400_000;
+export const now = Date.now();
+export const day = 86_400_000;
 
 const mine = {
   role: "owner" as const,
@@ -90,8 +80,6 @@ export const decks: DeckSummary[] = [
   },
 ];
 
-export const quietDecks: DeckSummary[] = decks.map((d) => ({ ...d, due: 0 }));
-
 /** Two of the learner's decks gathered into one series, reviewed together. */
 export const series: Series[] = [
   {
@@ -109,9 +97,6 @@ export const series: Series[] = [
 export const decksInSeries: DeckSummary[] = decks.map((d) =>
   d.id === "d1" || d.id === "d2" ? { ...d, seriesId: "s1" } : d,
 );
-
-/** Today's rounds on a morning with cards due. */
-export const rounds = { forgotten: 3, new: 12, slipping: 5 };
 
 export const history = [4, 12, 0, 9, 15, 7, 11];
 
@@ -258,110 +243,6 @@ export const deckCards: { card: Card; state: CardState | null }[] = [
   { card: byId("c7"), state: state("c7", 2, 64 * day, 8) },
 ];
 
-const section = (id: string, name: string, position: number, over: Partial<Section>): Section => ({
-  id,
-  deckId: "d1",
-  name,
-  position,
-  total: 0,
-  known: 0,
-  notStarted: 0,
-  knownNeeded: 0,
-  status: "open",
-  archivedCards: 0,
-  archivedAt: null,
-  createdAt: new Date(now - (10 - position) * day).toISOString(),
-  updatedAt: new Date(now - day).toISOString(),
-  ...over,
-});
-
-/** A deck of three lessons: the first known, the learner on the second, the third still locked. */
-export const sections: Section[] = [
-  section("s1", "Lezione 11", 0, { total: 3, known: 3, knownNeeded: 3 }),
-  section("s2", "Lezione 12", 1, { total: 2, known: 0, knownNeeded: 2 }),
-  section("s3", "Lezione 13", 2, { total: 2, notStarted: 2, knownNeeded: 2, status: "locked" }),
-];
-export const sectionProgress = { currentId: "s2", nextId: "s3", ready: false };
-
-/** The same deck once the second lesson is known well enough to go on. */
-export const readySections: Section[] = sections.map((s) =>
-  s.id === "s2" ? { ...s, known: 2 } : s.id === "s3" ? { ...s, status: "ready" } : s,
-);
-export const readyProgress = { ...sectionProgress, ready: true };
-
-const sectionOfCard: Record<string, string> = {
-  c3: "s1",
-  c5: "s1",
-  c7: "s1",
-  c1: "s2",
-  c6: "s2",
-  c2: "s3",
-  c4: "s3",
-};
-export const deckCardsInSections = deckCards.map((row) => ({
-  ...row,
-  card: { ...row.card, sectionId: sectionOfCard[row.card.id] ?? null },
-}));
-
-function review(
-  id: string,
-  daysAgo: number,
-  rating: number,
-  state: number,
-  elapsedDays: number,
-  scheduledDays: number,
-): Review {
-  return {
-    id,
-    userId: "u1",
-    cardId: "c6",
-    cardStateId: "s-c6",
-    direction: "recognition",
-    mode: { cue: "term", target: "meaning" },
-    rating,
-    state,
-    elapsedDays,
-    scheduledDays,
-    stabilityAfter: 4,
-    difficultyAfter: 6.1,
-    reviewDayId: null,
-    stateBefore: null,
-    reviewedAt: new Date(now - daysAgo * day),
-    source: "web",
-  };
-}
-
-/** One word's life: four reviews, newest first, and how it arrived. */
-export const wordReviews: Review[] = [
-  review("r4", 0, 3, 3, 2, 4),
-  review("r3", 2, 2, 1, 1, 2),
-  review("r2", 3, 1, 2, 3, 0),
-  review("r1", 6, 3, 0, 0, 3),
-];
-export const wordEvents: WordEvent[] = [
-  {
-    id: "e3",
-    at: new Date(now - 4 * day),
-    kind: "edited",
-    text: "Meaning changed to “to take it personally”",
-    actor: "by you",
-  },
-  {
-    id: "e2",
-    at: new Date(now - 9 * day),
-    kind: "enriched",
-    text: "Enriched the example and the pronunciation",
-    actor: "by the AI",
-  },
-  {
-    id: "e1",
-    at: new Date(now - 9 * day),
-    kind: "added",
-    text: "Card added, meaning from the lesson",
-    actor: "by Claude",
-  },
-];
-
 export const queueItem: QueueItem = {
   card: byId("c1"),
   mode: { cue: "term", target: "meaning" },
@@ -419,13 +300,16 @@ export const queueItemPicture: QueueItem = {
   fsrsState: 1,
 };
 
-/** Ninety quiet days: nothing reviewed, for the first-run screen. */
-export const noHistory: number[] = Array(90).fill(0);
-
 /** Today still open, yesterday reviewed: the streak holds. */
 export const streakDaysOpen: number[] = [...streakDays.slice(0, -1), 0];
 
 export const me = { id: "u1", name: "Kateryna", email: "kateryna@example.com" };
+
+/** The deck `queueItem` and its siblings belong to. */
+export const reviewDeck = { name: "Italian with Giulia", language: "it" };
+
+/** An MCP client Lymi recognises, for the sign-in and consent screens. */
+export const claude = identifyApp("https://claude.ai/oauth/client", "Claude");
 
 /**
  * The day grid the way the server builds it: sparse, with an attempt count against the goal
@@ -625,231 +509,3 @@ export function streakFrom(counts: number[], goal = 10): StreakSummary {
 
 /** The streak panel's data: a run up to today with a gap before it. */
 export const streak = streakFrom(streakDays.map((n) => n * 2));
-
-const entry = (over: Partial<ActivityEntry> & Pick<ActivityEntry, "id" | "kind" | "at">) =>
-  ({
-    group: over.id,
-    day: over.at.slice(0, 10),
-    actor: "mcp",
-    app: null,
-    count: 1,
-    deck: null,
-    person: null,
-    cards: [],
-    import: null,
-    export: null,
-    ...over,
-  }) satisfies ActivityEntry;
-
-const italian = { id: "d1", name: "Italian with Giulia", archived: false };
-const estonian = { id: "d3", name: "Estonian A2", archived: false };
-
-/** A card as an Activity row lists it: where it is now, and whether that deck can be opened. */
-const wrote = (id: string, term: string, meaning: string, deck = italian) => ({
-  id,
-  term,
-  meaning,
-  archived: false,
-  deckId: deck.id,
-  deckArchived: deck.archived,
-});
-
-/** The learner-local day the sample week is read on, so its newest rows say Today. */
-export const activityToday = new Date(now).toISOString().slice(0, 10);
-
-/** A week of Activity: an app, the AI, an import, a key and the people of a shared deck. */
-export const activity: ActivityEntry[] = [
-  entry({
-    id: "a1",
-    kind: "cards_added",
-    at: new Date(now - 2 * 3_600_000).toISOString(),
-    app: "Claude",
-    count: 6,
-    deck: italian,
-    cards: [
-      wrote("c1", "affrettarsi", "to hurry"),
-      wrote("c2", "il pendolare", "commuter"),
-      wrote("c3", "sbrigarsi", "to get a move on"),
-    ],
-  }),
-  entry({
-    id: "a2",
-    kind: "cards_enriched",
-    at: new Date(now - 4 * 3_600_000).toISOString(),
-    actor: "ai",
-    count: 12,
-    deck: italian,
-    cards: [wrote("c4", "la bolletta", "the bill"), wrote("c5", "il vicolo", "the alley")],
-  }),
-  entry({
-    id: "a3",
-    kind: "member_joined",
-    at: new Date(now - 7 * 3_600_000).toISOString(),
-    actor: "user",
-    deck: estonian,
-    person: "Maryna",
-  }),
-  entry({
-    id: "a4",
-    kind: "import",
-    at: new Date(now - day).toISOString(),
-    actor: "user",
-    import: {
-      id: "i1",
-      source: "anki",
-      fileName: "italian-deck.apkg",
-      byteSize: 4_200_000,
-      status: "done",
-      failure: null,
-      summary: null,
-      choices: null,
-      counts: {
-        added: 214,
-        existing: 0,
-        duplicates: 0,
-        duplicateExamples: [],
-        skipped: 12,
-        archived: 0,
-        shortened: 0,
-        reviews: 1_900,
-        pictures: 8,
-        picturesSkipped: 0,
-        decks: 3,
-      },
-      progress: { written: 3, chunks: 3 },
-      upload: { partBytes: 4_000_000, parts: 2, received: 2 },
-      createdBy: "user",
-      createdAt: new Date(now - day).toISOString(),
-      updatedAt: new Date(now - day).toISOString(),
-      finishedAt: new Date(now - day).toISOString(),
-      archivedAt: null,
-    },
-  }),
-  entry({
-    id: "a5",
-    kind: "cards_archived",
-    at: new Date(now - day - 3_600_000).toISOString(),
-    actor: "api",
-    app: "Lesson notes script",
-    count: 2,
-    deck: italian,
-    cards: [{ ...wrote("c6", "la spesa", "the shopping"), archived: true }],
-  }),
-  entry({
-    id: "a5b",
-    kind: "export",
-    at: new Date(now - 2 * day).toISOString(),
-    actor: "user",
-    export: {
-      id: "e1",
-      format: "lymi",
-      deckId: null,
-      fileName: "lymi-library-2026-09-14.zip",
-      status: "done",
-      failure: null,
-      byteSize: 2_400_000,
-      counts: { cards: 431, decks: 4, reviews: 3_180, pictures: 12, sounds: 0 },
-      downloadUrl: "/api/exports/e1/file",
-      createdBy: "user",
-      createdAt: new Date(now - 2 * day).toISOString(),
-      finishedAt: new Date(now - 2 * day).toISOString(),
-      expiresAt: new Date(now - day).toISOString(),
-    },
-  }),
-  entry({
-    id: "a6",
-    kind: "link_on",
-    at: new Date(now - 3 * day).toISOString(),
-    actor: "user",
-    deck: estonian,
-  }),
-  entry({
-    id: "a7",
-    kind: "deck_added",
-    at: new Date(now - 5 * day).toISOString(),
-    app: "Claude",
-    deck: { id: "d4", name: "Phrases from the news", archived: false },
-  }),
-];
-
-/**
- * Explore's catalogue: one deck per shelf plus two on the first, so the gallery shows a shelf
- * with more than one deck, a deck already added, and a slug from each end of the eight hues.
- */
-export const catalogue: PublicDeckSummary[] = [
-  {
-    slug: "everyday-estonian",
-    name: "Everyday Estonian",
-    summary: "Words and phrases for your first weeks in Estonia.",
-    level: "A1",
-    category: "languages",
-    language: "et",
-    meaningLanguage: "en",
-    cardCount: 99,
-    sectionCount: 8,
-    card: { term: "paremale", meaning: "to the right", section: "Getting around" },
-  },
-  {
-    slug: "everyday-finnish",
-    name: "Everyday Finnish",
-    summary: "Home, work and the shop, in the words people use.",
-    level: "A1",
-    category: "languages",
-    language: "fi",
-    meaningLanguage: "en",
-    cardCount: 64,
-    sectionCount: 5,
-    card: { term: "maito", meaning: "milk", section: "Kaupassa" },
-  },
-  {
-    slug: "driving-theory-estonia",
-    name: "Driving theory, Estonia",
-    summary: "Signs, right of way and the questions the test repeats.",
-    level: null,
-    category: "driving",
-    language: "et",
-    meaningLanguage: "en",
-    cardCount: 42,
-    sectionCount: 3,
-    card: { term: "ülekäigurada", meaning: "pedestrian crossing", section: "Märgid" },
-  },
-];
-
-export const catalogueAdded: Record<string, string> = { "everyday-finnish": "d2" };
-
-/** One published deck in the app's chrome, with a section that has no name at the end. */
-export const publicDeck: PublicDeckOut = {
-  slug: "everyday-estonian",
-  name: "Everyday Estonian",
-  summary: "Words and phrases for your first weeks in Estonia.",
-  level: "A1",
-  language: "et",
-  meaningLanguage: "en",
-  originalMeaningLanguage: "en",
-  editions: ["en", "uk"],
-  publisher: "Lymi",
-  publisherAvatar: null,
-  sources: [{ title: "EKI A1 word list", url: "https://www.eki.ee/" }],
-  reviewedAt: null,
-  revision: 3,
-  publishedAt: "2026-09-01T09:00:00.000Z",
-  cardCount: 99,
-  sections: [
-    {
-      name: "Greetings",
-      cards: [
-        { term: "tere", meaning: "hello" },
-        { term: "aitäh", meaning: "thank you" },
-        { term: "head aega", meaning: "goodbye" },
-      ],
-    },
-    {
-      name: "In the shop",
-      cards: [
-        { term: "leib", meaning: "bread" },
-        { term: "piim", meaning: "milk" },
-      ],
-    },
-    { name: null, cards: [{ term: "buss", meaning: "bus" }] },
-  ],
-};

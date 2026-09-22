@@ -10,6 +10,11 @@ export interface Entry {
   Demo: ComponentType;
 }
 
+/** One file under `design/screens`; the gallery sorts screens by `order`. */
+export interface Screen extends Entry {
+  order: number;
+}
+
 export interface Group {
   slug: string;
   title: string;

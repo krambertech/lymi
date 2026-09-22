@@ -15,14 +15,22 @@ import { layout } from "./parts/layout";
 import { lists, table } from "./parts/lists";
 import { navigation } from "./parts/navigation";
 import { menu, overlays } from "./parts/overlays";
-import type { Group } from "./parts/types";
-import { SCREENS } from "./screens";
+import type { Group, Screen } from "./parts/types";
 import { Space } from "./space";
 import { StreakPage } from "./streak";
 import { Typography } from "./typography";
 import { Voice } from "./voice";
 
-export { SCREENS };
+/** Every screen, one file each under `screens/`, in the order their `order` fields give. */
+export const SCREENS: Screen[] = Object.values(
+  import.meta.glob<Screen>("./screens/*.tsx", { eager: true, import: "screen" }),
+).sort((a, b) => a.order - b.order);
+
+for (const [i, s] of SCREENS.entries()) {
+  const clash = SCREENS.slice(0, i).find((t) => t.order === s.order || t.slug === s.slug);
+  if (clash)
+    throw new Error(`Design screens "${clash.slug}" and "${s.slug}" share an order or slug`);
+}
 
 export interface Foundation {
   slug: string;

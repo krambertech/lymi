@@ -908,6 +908,9 @@ msgstr "Оба способа"
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Возвращает каждую карточку, которую добавил этот импорт, и созданные им колоды."
 
+msgid "Browse ready-made decks"
+msgstr "Посмотреть готовые колоды"
+
 msgid "Bug"
 msgstr "Ошибка"
 
@@ -2665,9 +2668,6 @@ msgstr "Читаем твой файл"
 msgid "Ready to import"
 msgstr "Готов к импорту"
 
-msgid "Ready-made decks"
-msgstr "Готовые колоды"
-
 msgid "Ready-made decks from Lymi. Add one to study it in your language."
 msgstr "Готовые колоды от Lymi. Добавь одну — учи её на своём языке."
 
@@ -3118,6 +3118,9 @@ msgstr "Начать повторение"
 
 msgid "Start with a deck"
 msgstr "Начни с колоды"
+
+msgid "Start with a ready-made deck"
+msgstr "Начни с готовой колоды"
 
 msgid "Started {sectionName}"
 msgstr "Начат раздел «{sectionName}»"

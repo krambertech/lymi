@@ -20,35 +20,43 @@
   --tray-c: 0.015;
 }
 .deck-tray[data-hue="0"],
-.deck-cover[data-hue="0"] {
+.deck-cover[data-hue="0"],
+.deck-banner[data-hue="0"] {
   --tray-h: 25;
 }
 .deck-tray[data-hue="1"],
-.deck-cover[data-hue="1"] {
+.deck-cover[data-hue="1"],
+.deck-banner[data-hue="1"] {
   --tray-h: 110;
 }
 .deck-tray[data-hue="2"],
-.deck-cover[data-hue="2"] {
+.deck-cover[data-hue="2"],
+.deck-banner[data-hue="2"] {
   --tray-h: 150;
 }
 .deck-tray[data-hue="3"],
-.deck-cover[data-hue="3"] {
+.deck-cover[data-hue="3"],
+.deck-banner[data-hue="3"] {
   --tray-h: 195;
 }
 .deck-tray[data-hue="4"],
-.deck-cover[data-hue="4"] {
+.deck-cover[data-hue="4"],
+.deck-banner[data-hue="4"] {
   --tray-h: 235;
 }
 .deck-tray[data-hue="5"],
-.deck-cover[data-hue="5"] {
+.deck-cover[data-hue="5"],
+.deck-banner[data-hue="5"] {
   --tray-h: 280;
 }
 .deck-tray[data-hue="6"],
-.deck-cover[data-hue="6"] {
+.deck-cover[data-hue="6"],
+.deck-banner[data-hue="6"] {
   --tray-h: 320;
 }
 .deck-tray[data-hue="7"],
-.deck-cover[data-hue="7"] {
+.deck-cover[data-hue="7"],
+.deck-banner[data-hue="7"] {
   --tray-h: 350;
 }
 
@@ -323,43 +331,14 @@
   border-radius: 0;
 }
 
-/* Ready-made decks under Today's guide: the same tiles in a row that scrolls sideways, bleeding
-   to the screen's edges so the deck past the fold is cut rather than hidden. The column fits
-   three, and the fourth peeking is what says the row carries more. */
-.deck-row {
-  display: flex;
-  gap: 18px;
-  /* Room for a tile's focus ring and its hover spread, which the scroller would clip. */
-  padding-block: 6px 8px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scroll-padding-inline: 20px;
-  scrollbar-width: thin;
+/* Ready-made decks under Today's guide, on the first offered deck's tray colour at a header's
+   chroma, as a deck's own page is. */
+.deck-banner {
+  --tray-l: 0.958;
+  --tray-c: 0.034;
+  background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
 }
-/* A finger finds the swipe; a mouse without a sideways wheel needs the bar to know the row scrolls. */
-@media (pointer: coarse) {
-  .deck-row {
-    scrollbar-width: none;
-  }
-  .deck-row::-webkit-scrollbar {
-    display: none;
-  }
-}
-@container shell (min-width: 48rem) {
-  .deck-row {
-    scroll-padding-inline: 32px;
-    /* The gutter ends in open canvas on a wide window, so a tile fades there instead of being sliced. */
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 32px,
-      black calc(100% - 32px),
-      transparent
-    );
-  }
-}
-.deck-row > li {
-  flex: 0 0 15rem;
-  scroll-snap-align: start;
+[data-theme="dark"] .deck-banner {
+  --tray-l: 0.19;
+  --tray-c: 0.03;
 }

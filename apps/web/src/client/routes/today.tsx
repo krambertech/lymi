@@ -13,11 +13,7 @@ import {
   streakQuery,
 } from "../lib/queries";
 import { Streak } from "../lib/streak";
-import { useAddPublishedDeck } from "../lib/use-add-published-deck";
 import { isGuiding, TodayView } from "../views/today-view";
-
-/** How many published decks the row carries before Explore takes over. */
-const READY_DECKS = 8;
 
 export const Route = createFileRoute("/today")({
   component: Today,
@@ -36,12 +32,8 @@ function Today() {
   // Only the guide offers ready-made decks, so nobody past it pays for the catalogue read.
   const guiding = isGuiding(streak.data);
   const explore = useQuery({ ...exploreQuery, enabled: guiding });
-  const ready = explore.data?.decks
-    .filter((deck) => !explore.data.added[deck.slug])
-    .slice(0, READY_DECKS);
+  const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
   const add = useAddCard();
-  // On Today the deck lands in Library while the learner stays, so the toast is what says so.
-  const addDeck = useAddPublishedDeck({ announce: "toast" });
   return (
     <TodayView
       decks={decks.data}
@@ -60,8 +52,6 @@ function Today() {
       }}
       retrying={decks.isFetching || streak.isFetching}
       ready={ready}
-      onAddDeck={(deck) => addDeck.mutate(deck)}
-      addingDeck={addDeck.isPending ? addDeck.variables?.slug : undefined}
     />
   );
 }

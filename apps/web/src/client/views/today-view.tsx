@@ -44,9 +44,6 @@ export interface TodayProps {
   retrying?: boolean | undefined;
   /** Published decks the learner has not added. Undefined while Explore is still unread. */
   ready?: PublicDeckSummary[] | undefined;
-  onAddDeck?: ((deck: { slug: string; name: string; edition: string }) => void) | undefined;
-  /** The slug currently being added, so only its own tile waits. */
-  addingDeck?: string | undefined;
   static?: StaticNav;
 }
 
@@ -77,8 +74,6 @@ export function TodayView({
   onRetry,
   retrying,
   ready,
-  onAddDeck,
-  addingDeck,
   static: st,
 }: TodayProps) {
   const { t } = useLingui();
@@ -126,9 +121,7 @@ export function TodayView({
             st={st}
           />
           {/* Only under the guide: a learner past their first review has their own work to get on with. */}
-          {ready && ready.length > 0 && onAddDeck && (
-            <ReadyDecks decks={ready} onAdd={onAddDeck} adding={addingDeck} st={st} />
-          )}
+          {ready && ready.length > 0 && <ReadyDecks decks={ready} st={st} />}
         </div>
       ) : failedEmpty ? (
         <ErrorState

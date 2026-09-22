@@ -1,5 +1,5 @@
 @import "tailwindcss";
-/* Feature styles, one file each so unrelated work does not edit the same file. */
+/* Feature styles, one file each; they load first, so an equal-specificity rule below them wins. */
 @import "./styles/lantern.css";
 @import "./styles/streak.css";
 @import "./styles/connection.css";

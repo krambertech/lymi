@@ -9,6 +9,7 @@ const wideningPrefixes = [
   "apps/web/src/locales/",
   "apps/web/src/test/",
   "apps/web/src/client/test/",
+  "apps/web/src/client/styles/",
   "apps/site/src/locales/",
   ".github/workflows/",
 ];

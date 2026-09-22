@@ -992,7 +992,7 @@ function embersOf(n: number) {
 }
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
-/** The `.seq` rise in `styles.css`. */
+/** The `.seq` rise in `styles/entrances.css`. */
 const RISE_MS = 560;
 
 /** The end of a review, played as one sequence that any tap or key finishes; DESIGN.md, "Motion". */

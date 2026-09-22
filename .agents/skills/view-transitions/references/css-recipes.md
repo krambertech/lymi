@@ -1,6 +1,6 @@
 # CSS recipes
 
-Copy these into [`apps/web/src/client/styles.css`](../../../../apps/web/src/client/styles.css), below the token blocks. They are global pseudo-element selectors — Tailwind v4 does not generate them, and they cannot live in a component.
+Copy these into a new `apps/web/src/client/styles/view-transitions.css` and import it from [`apps/web/src/client/styles.css`](../../../../apps/web/src/client/styles.css) beside the other feature files. They are global pseudo-element selectors — Tailwind v4 does not generate them, and they cannot live in a component.
 
 Every recipe assumes the typed router config from `SKILL.md`. Where types are unsupported the browser still runs an untyped transition, so the plain `::view-transition-old(root)` rules at the top are the floor everything else builds on.
 

@@ -1,0 +1,25 @@
+/*
+ * One fill behind a list, sliding to the nearest row instead of blinking off in the gaps.
+ * It remounts when it reappears, so it fades in on the row under the pointer rather than
+ * sliding from wherever it last was, and it leaves faster than it came, like everything else.
+ */
+.fluid-highlight {
+  opacity: 1;
+  transition:
+    translate 150ms var(--ease-out),
+    width 150ms var(--ease-out),
+    height 150ms var(--ease-out),
+    opacity 150ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+  }
+}
+.fluid-highlight[data-hidden] {
+  opacity: 0;
+  transition-duration: 100ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fluid-highlight {
+    transition-property: opacity;
+  }
+}

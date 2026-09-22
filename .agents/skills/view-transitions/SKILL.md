@@ -78,7 +78,7 @@ html:active-view-transition-type(nav-forward)::view-transition-old(root) { … }
 html:active-view-transition-type(nav-forward)::view-transition-new(root) { … }
 ```
 
-The comma-separated list inside the parentheses is an OR. The ready-made recipes — directional slides, morph, reveal, reduced motion — are in [`references/css-recipes.md`](references/css-recipes.md). Copy them into `styles.css` rather than writing your own; the timing, the blur through the middle of a morph, and the reduced-motion escape are all easy to get subtly wrong.
+The comma-separated list inside the parentheses is an OR. The ready-made recipes — directional slides, morph, reveal, reduced motion — are in [`references/css-recipes.md`](references/css-recipes.md). Copy them into a new `styles/view-transitions.css` rather than writing your own; the timing, the blur through the middle of a morph, and the reduced-motion escape are all easy to get subtly wrong.
 
 ## Naming an element
 

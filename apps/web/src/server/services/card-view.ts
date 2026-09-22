@@ -64,7 +64,11 @@ const EDITION_TEXT = ["term", "meaning", "pronunciation", "example", "notes"] as
  * Approved text for these cards in the editions the viewer pinned. Nothing runs for a learner
  * who pinned none, which is every owner and every member of an ordinary shared deck.
  */
-export async function editionText(db: Db, viewerId: string, cards: readonly Card[]) {
+export async function editionText(
+  db: Db,
+  viewerId: string,
+  cards: readonly Pick<Card, "id" | "deckId">[],
+) {
   const pinned = await pinnedEditions(
     db,
     viewerId,
@@ -153,7 +157,10 @@ export async function presentCards(
  * A localized term carries its own folded key, so search matches the words the learner sees
  * rather than the deck's own. Nothing here is written back: the stored card is unchanged.
  */
-export function inEdition(card: Card, text: CardLocalization | undefined): Card {
+export function inEdition<T extends Pick<Card, "normalizedTerm">>(
+  card: T,
+  text: CardLocalization | undefined,
+): T {
   if (!text) return card;
   const replaced = Object.fromEntries(
     EDITION_TEXT.flatMap((field) => (text[field] ? [[field, text[field]]] : [])),

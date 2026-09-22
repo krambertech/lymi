@@ -81,6 +81,24 @@ export const CardHitOut = CardOut.extend({
   deckName: z.string().meta({ description: "The deck the card is in" }),
 }).meta({ id: "CardHit" });
 
+/** How a page of search results says where it stands. The REST route and the MCP tool share it. */
+export const CardSearchPaging = {
+  nextCursor: z.string().nullable().meta({
+    description:
+      "Pass as `cursor` for the next page. Null on the last page. A page can be short or even empty while this is set.",
+  }),
+  total: z.number().int().nullable().meta({
+    description:
+      "How many cards match, across every page. Null when not known exactly: on every page after the first of a search that matches text, and when that search reads its 5,000-card limit.",
+  }),
+};
+
+/** One page of a card search. */
+export const CardSearchOut = z
+  .object({ cards: z.array(CardHitOut), ...CardSearchPaging })
+  .meta({ id: "CardSearchPage" });
+export type CardSearchOut = z.infer<typeof CardSearchOut>;
+
 export const CardStateOut = z
   .object({
     id: z.string(),

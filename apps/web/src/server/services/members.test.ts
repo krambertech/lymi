@@ -85,7 +85,9 @@ describe("a member studies the owner's deck", () => {
       "tere",
     ]);
     expect((await getCard(anna, first.id)).term).toBe(first.term);
-    expect((await searchCards(anna, { query: "tere" })).map((r) => r.card.id)).toEqual([first.id]);
+    expect((await searchCards(anna, { query: "tere" })).cards.map((r) => r.card.id)).toEqual([
+      first.id,
+    ]);
     expect(await listMembers(kateryna, deck.id)).toMatchObject([{ userId: "anna", name: "Anna" }]);
     expect(await dueFor(kateryna, deck.id)).toBe(2);
   });

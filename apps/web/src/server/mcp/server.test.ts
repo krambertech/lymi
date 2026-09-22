@@ -920,24 +920,50 @@ describe("Lymi MCP server", () => {
   });
 
   it("passes search filters through and names each card's deck", async () => {
-    services.searchCards.mockResolvedValue([{ card, deckName: "Italian" }]);
+    services.searchCards.mockResolvedValue({
+      cards: [{ card, deckName: "Italian" }],
+      nextCursor: "1700000000000.card-1",
+      total: 7,
+    });
     const client = await connect("read");
 
     const res = await client.callTool({
       name: "search_cards",
-      arguments: { query: "sbrig", deckId: "deck-1", archived: true, limit: 5 },
+      arguments: {
+        query: "sbrig",
+        term: "sbrigarsi",
+        deckId: "deck-1",
+        sectionId: "section-1",
+        archived: true,
+        limit: 5,
+        cursor: "1700000000001.card-2",
+      },
     });
 
     expect(res.isError).toBeFalsy();
     expect(services.searchCards).toHaveBeenCalledWith(expect.anything(), {
       query: "sbrig",
+      term: "sbrigarsi",
       deckId: "deck-1",
+      sectionId: "section-1",
       archived: true,
       limit: 5,
+      cursor: "1700000000001.card-2",
     });
     expect(res.structuredContent).toEqual({
       cards: [expect.objectContaining({ id: "card-1", deckName: "Italian" })],
+      nextCursor: "1700000000000.card-1",
+      total: 7,
     });
+  });
+
+  it("rejects a cursor this search did not hand out", async () => {
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "search_cards", arguments: { cursor: "page-2" } });
+
+    expect(res.isError).toBe(true);
+    expect(services.searchCards).not.toHaveBeenCalled();
   });
 
   it("rejects a batch the schema does not allow before any service runs", async () => {

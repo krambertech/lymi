@@ -65,7 +65,7 @@ describe("Archived", () => {
     await archiveCard(ctx, inShelved.card.id);
     await archiveDeck(ctx, shelved.id);
 
-    const found = await searchCards(ctx, { archived: true });
+    const found = (await searchCards(ctx, { archived: true })).cards;
     expect(found.map((row) => row.card.id)).toEqual([loose.card.id]);
     // The deck's own cards come back with the deck, so neither of them is listed here.
     expect(found.map((row) => row.card.term)).not.toContain(alsoInShelved.card.term);
@@ -77,9 +77,13 @@ describe("Archived", () => {
     const [added] = await addCards(ctx, [CardInput.parse({ deckId: shelved.id, term: "magari" })]);
     if (added?.status !== "added") throw new Error("not added");
 
-    expect((await searchCards(ctx, {})).map((row) => row.card.id)).toEqual([added.card.id]);
+    expect((await searchCards(ctx, {})).cards.map((row) => row.card.id)).toEqual([added.card.id]);
     await archiveDeck(ctx, shelved.id);
-    expect(await searchCards(ctx, {})).toEqual([]);
-    expect(await searchCards(ctx, { archived: true })).toEqual([]);
+    expect(await searchCards(ctx, {})).toEqual({ cards: [], nextCursor: null, total: 0 });
+    expect(await searchCards(ctx, { archived: true })).toEqual({
+      cards: [],
+      nextCursor: null,
+      total: 0,
+    });
   });
 });

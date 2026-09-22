@@ -8,6 +8,7 @@ import { ChevronRight, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button, buttonClass } from "../components/button";
 import { DueCount } from "../components/due-count";
+import { ErrorState } from "../components/empty-state";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Screen } from "../components/layout/screen";
@@ -37,6 +38,10 @@ export interface TodayProps {
   connected?: boolean | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
+  /** The decks or the streak failed to load and nothing is cached, so the screen offers a retry. */
+  failed?: boolean | undefined;
+  onRetry?: (() => void) | undefined;
+  retrying?: boolean | undefined;
   /** Published decks the learner has not added. Undefined while Explore is still unread. */
   ready?: PublicDeckSummary[] | undefined;
   onAddDeck?: ((deck: { slug: string; name: string; edition: string }) => void) | undefined;
@@ -68,6 +73,9 @@ export function TodayView({
   connected,
   onAdd,
   onCreateDeck,
+  failed,
+  onRetry,
+  retrying,
   ready,
   onAddDeck,
   addingDeck,
@@ -97,7 +105,8 @@ export function TodayView({
         : [];
     }),
   ];
-  const loading = decks === undefined || streak === undefined;
+  const failedEmpty = failed === true && (decks === undefined || streak === undefined);
+  const loading = (decks === undefined || streak === undefined) && !failedEmpty;
   const nothingYet = !loading && total === 0;
   const noDecks = nothingYet && decks?.length === 0;
   const guiding = !!decks && isGuiding(streak);
@@ -121,6 +130,13 @@ export function TodayView({
             <ReadyDecks decks={ready} onAdd={onAddDeck} adding={addingDeck} st={st} />
           )}
         </div>
+      ) : failedEmpty ? (
+        <ErrorState
+          title={t`Couldn’t load Today`}
+          onRetry={onRetry}
+          retrying={retrying}
+          className="flex-1"
+        />
       ) : (
         <div className="grid gap-8 @3xl:gap-10">
           <section

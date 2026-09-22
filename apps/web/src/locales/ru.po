@@ -1220,6 +1220,9 @@ msgstr "Не удалось загрузить эту колоду"
 msgid "Couldn’t load this import"
 msgstr "Не удалось загрузить этот импорт"
 
+msgid "Couldn’t load Today"
+msgstr "Не удалось загрузить экран «Сегодня»"
+
 msgid "Couldn’t load your cards"
 msgstr "Не удалось загрузить карточки"
 

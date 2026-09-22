@@ -53,6 +53,12 @@ function Today() {
       connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
+      failed={(decks.isError && !decks.data) || (streak.isError && !streak.data)}
+      onRetry={() => {
+        void decks.refetch();
+        void streak.refetch();
+      }}
+      retrying={decks.isFetching || streak.isFetching}
       ready={ready}
       onAddDeck={(deck) => addDeck.mutate(deck)}
       addingDeck={addDeck.isPending ? addDeck.variables?.slug : undefined}

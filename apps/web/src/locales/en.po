@@ -1220,6 +1220,9 @@ msgstr "Couldn’t load this deck"
 msgid "Couldn’t load this import"
 msgstr "Couldn’t load this import"
 
+msgid "Couldn’t load Today"
+msgstr "Couldn’t load Today"
+
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
 

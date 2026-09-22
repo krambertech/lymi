@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 import { DocLink } from "./doc-link";
 import { Doc, DocSource, Sub } from "./frame";
-import { FOUNDATIONS, GROUPS, ORDER, SCREENS } from "./registry";
+import { FOUNDATIONS, GROUPS, ORDER } from "./registry";
 
 function useDocTitle(title: string | undefined) {
   useEffect(() => {
@@ -16,11 +16,8 @@ export function FoundationPage({ slug }: { slug: string }) {
   useDocTitle(page?.title);
   if (!page) {
     const firstGroup = GROUPS[0]?.slug ?? "actions";
-    const firstScreen = SCREENS[0]?.slug ?? "today";
     if (slug === "components")
       return <Navigate to="/design/components/$group" params={{ group: firstGroup }} replace />;
-    if (slug === "screens")
-      return <Navigate to="/design/screens/$screen" params={{ screen: firstScreen }} replace />;
     return <Navigate to="/design/$page" params={{ page: "brand" }} replace />;
   }
   return (
@@ -52,22 +49,6 @@ export function GroupPage({ slug }: { slug: string }) {
         ))}
       </Doc>
       <DocFooter current={`group:${group.slug}`} />
-    </DocSource.Provider>
-  );
-}
-
-export function ScreenPage({ slug }: { slug: string }) {
-  const screen = SCREENS.find((s) => s.slug === slug);
-  useDocTitle(screen?.name);
-  if (!screen) return <Navigate to="/design/$page" params={{ page: "screens" }} replace />;
-  return (
-    <DocSource.Provider value={screen.source}>
-      <Doc title={screen.name} lede={screen.note} crumb="Screens">
-        <Sub>
-          <screen.Demo />
-        </Sub>
-      </Doc>
-      <DocFooter current={`screen:${screen.slug}`} />
     </DocSource.Provider>
   );
 }

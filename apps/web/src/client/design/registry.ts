@@ -15,14 +15,12 @@ import { layout } from "./parts/layout";
 import { lists, table } from "./parts/lists";
 import { navigation } from "./parts/navigation";
 import { menu, overlays } from "./parts/overlays";
+import { review } from "./parts/review";
 import type { Group } from "./parts/types";
-import { SCREENS } from "./screens";
 import { Space } from "./space";
 import { StreakPage } from "./streak";
 import { Typography } from "./typography";
 import { Voice } from "./voice";
-
-export { SCREENS };
 
 export interface Foundation {
   slug: string;
@@ -59,14 +57,12 @@ export const GROUPS: Group[] = [
   table,
   navigation,
   layout,
+  review,
   streak,
   charts,
 ];
 
-export type DocRef =
-  | { kind: "page"; page: string }
-  | { kind: "group"; group: string }
-  | { kind: "screen"; screen: string };
+export type DocRef = { kind: "page"; page: string } | { kind: "group"; group: string };
 
 export interface DocItem {
   key: string;
@@ -85,10 +81,5 @@ export const ORDER: DocItem[] = [
     key: `group:${g.slug}`,
     title: g.title,
     ref: { kind: "group", group: g.slug } as const,
-  })),
-  ...SCREENS.map((s) => ({
-    key: `screen:${s.slug}`,
-    title: s.name,
-    ref: { kind: "screen", screen: s.slug } as const,
   })),
 ];

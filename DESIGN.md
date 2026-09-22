@@ -243,7 +243,7 @@ components:
 
 # Lymi design system
 
-The live version of this document is the `/design` route in local development. It renders every token, component and screen below with the real code, and every part in `components/ui` in each state it has: hover and focus held still, an overlay open in a desktop frame beside a touch frame, and reduced motion behind a button on each canvas, beside its theme. This file is the same system for tools that read files.
+The live version of this document is the `/design` route in local development. It renders every token and component below with the real code, and every part in `components/ui` in each state it has: hover and focus held still, an overlay open in a desktop frame beside a touch frame, and reduced motion behind a button on each canvas, beside its theme. Whole screens appear there only when they document a pattern, such as review; to see a screen in a given state, sign in as a developer persona. This file is the same system for tools that read files.
 
 ## The idea
 
@@ -427,7 +427,7 @@ Loading is a `Skeleton` at the loaded size, never an empty state.
 
 `components/`: Button (primary, secondary, ghost, danger; sm, md, lg; kbd hint; loading), IconButton, Segmented, RadioCard, Chip with StateChip and SourceChip, Kbd, Progress, Skeleton, EmptyState with ErrorState, EmptySection and NoResults, StartGuide, StartPanel with StartPanelSection, NextSteps with NextStep and Go, SettingsGroup, SevenLights, StreakButton with StreakPanel, StreakCalendar and StreakWeek, GoalPicker, Table, Dialog, CardForm with AddCardSheet and EditCardSheet, CardPictureField, FieldChip, TagsInput, ReviewModesField, NewDeckSheet, AddMenu, LanguageField, DirectionField, DirectionCompact, Avatar, CopyField, DeckCard, NewCardsRow, NavLink, PillNav, TopBar and BackButton (in `views/shell.tsx`), StateIcon, DueCount, LibraryBoard, SeriesSheet, ArchiveSeriesDialog, ArchivedSeriesDialog, MoveToSeriesDialog, Flame, AppMark, CardPicture, Connection, Lantern, Wordmark, Lockup, StatPlate (and its ghost), RunStrip, DayGrid.
 
-`views/`: the screens as prop-driven components, so the design page renders them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport. Chrome that follows the rail — page padding, top bars, back rows — queries the whole window's `@3xl/shell`, because the rail appears at a 768 px window while the column beside it is still narrower. The toast renders outside the shell, so its clearance for the pill uses the matching `md` media query.
+`views/`: the screens as prop-driven components, so the design page and the component tests can render them with sample data. They lay out by their container (`@3xl` = 768 px), not the viewport. Chrome that follows the rail — page padding, top bars, back rows — queries the whole window's `@3xl/shell`, because the rail appears at a 768 px window while the column beside it is still narrower. The toast renders outside the shell, so its clearance for the pill uses the matching `md` media query.
 
 A question takes the shape of the machine as well. On a desktop it is a centred dialog with its actions in a row, the primary last; on a touch device it is a drawer with the actions stacked full width and the primary on top, in reach of the thumb. `Dialog` in `components/ui` holds both shapes behind its usual parts — header, title, description, footer — and focus lands on the safe action when the first control is not it.
 

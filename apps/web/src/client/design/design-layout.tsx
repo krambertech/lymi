@@ -12,7 +12,7 @@ import { DocLink } from "./doc-link";
 import { useForcedStates, useSystemMotion } from "./forced-states";
 import { ROOM_THEMES, usePageTheme } from "./frame";
 import { IconToggle } from "./icon-toggle";
-import { type DocRef, FOUNDATIONS, GROUPS, SCREENS } from "./registry";
+import { type DocRef, FOUNDATIONS, GROUPS } from "./registry";
 
 const DESIGN_CHROME = designChrome();
 
@@ -110,14 +110,6 @@ function Contents({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
         key: g.slug,
         name: g.title,
         to: { kind: "group", group: g.slug },
-      })),
-    },
-    {
-      title: "Screens",
-      links: SCREENS.map((s) => ({
-        key: s.slug,
-        name: s.name,
-        to: { kind: "screen", screen: s.slug },
       })),
     },
   ];

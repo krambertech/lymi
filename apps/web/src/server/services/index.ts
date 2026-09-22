@@ -2,6 +2,7 @@ export * from "./activity";
 export * from "./audio";
 export * from "./avatars";
 export * from "./card-images";
+export * from "./card-search";
 export * from "./card-view";
 export * from "./cards";
 export * from "./connected-apps";

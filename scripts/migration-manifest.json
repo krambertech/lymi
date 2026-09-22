@@ -123,6 +123,10 @@
     {
       "name": "0030_tidy_salo.sql",
       "sha256": "6b849067faf1ad9a3354d6b7910e355e19e16d285d88ef428f809e544b696e45"
+    },
+    {
+      "name": "0031_powerful_nocturne.sql",
+      "sha256": "546f66d741629dc70fed096bfea5dfd62935c7302ec4334dd908c562ccb2dc53"
     }
   ]
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SLIPPING_LAPSES, SLIPPING_REVIEWS } from "../slipping";
 import { Actor, Direction, Directions, EnrichmentStatus, FieldSource, ReviewMode } from "../types";
 import { Timestamp } from "./common";
 
@@ -76,9 +77,48 @@ export const CardOut = z
   .meta({ id: "Card" });
 export type CardOut = z.infer<typeof CardOut>;
 
+const ReviewRecord = {
+  reviewCount: z.number().int().meta({ description: "Grades counted" }),
+  lapses: z.number().int().meta({ description: "Forgot grades counted" }),
+  lastRating: z
+    .number()
+    .int()
+    .min(1)
+    .max(4)
+    .nullable()
+    .meta({ description: "The latest grade: 1 Forgot, 2 Hard, 3 Good, 4 Easy. Null if none." }),
+  lastReviewedAt: Timestamp.nullable(),
+  dueAt: Timestamp.nullable().meta({
+    description: "When it is next due. Null when it is not asked in this mode.",
+  }),
+  slipping: z.boolean().meta({
+    description: `Forgotten at least ${SLIPPING_LAPSES} times in at least ${SLIPPING_REVIEWS} counted reviews`,
+  }),
+};
+
+/**
+ * The learner's own record of one card, from their accepted grades only: never another member's,
+ * never an undone one. The overall record counts the reviews `filter.reviews.since` and
+ * `filter.reviews.mode` select; the per-mode records count every mode since `since`.
+ */
+export const CardReviewStatsOut = z
+  .object({
+    ...ReviewRecord,
+    dueAt: ReviewRecord.dueAt.meta({
+      description:
+        "When it is next due: in reviews.mode when the filter set one, else its soonest asked mode",
+    }),
+    modes: z.array(z.object({ mode: ReviewMode, ...ReviewRecord })).meta({
+      description: "The same record for each review mode asked or graded, since reviews.since",
+    }),
+  })
+  .meta({ id: "CardReviewStats" });
+export type CardReviewStatsOut = z.infer<typeof CardReviewStatsOut>;
+
 /** A card found by search, with the name of the deck it is in. */
 export const CardHitOut = CardOut.extend({
   deckName: z.string().meta({ description: "The deck the card is in" }),
+  stats: CardReviewStatsOut.optional().meta({ description: "Present when the search set `stats`" }),
 }).meta({ id: "CardHit" });
 
 /** How a page of search results says where it stands. The REST route and the MCP tool share it. */

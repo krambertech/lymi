@@ -1,7 +1,8 @@
 import { and, eq, lte } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
-import { addCards, archiveCard, getCard, restoreCard, searchCards, updateCard } from "./cards";
+import { searchCards } from "./card-search";
+import { addCards, archiveCard, getCard, restoreCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck, listDeckCards, listDecks, updateDeck } from "./decks";
 import { join, leave, listMembers, removeMember } from "./members";

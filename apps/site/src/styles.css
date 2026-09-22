@@ -1662,26 +1662,17 @@ html:has(.deck-cards[open]) {
 .deck-tray-paper[data-at="2"] {
   transform: translate(-6px, 9px) rotate(-2.2deg);
 }
+.deck-tile:hover .deck-tray-card,
 .deck-tile:focus-visible .deck-tray-card {
   transform: translateY(-5px);
 }
+.deck-tile:hover .deck-tray-paper[data-at="1"],
 .deck-tile:focus-visible .deck-tray-paper[data-at="1"] {
   transform: translate(17px, 2px) rotate(5deg);
 }
+.deck-tile:hover .deck-tray-paper[data-at="2"],
 .deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
   transform: translate(-16px, 6px) rotate(-6deg);
-}
-/* A tap would leave the spread stuck on a touch screen, so only a pointer spreads the cards. */
-@media (hover: hover) and (pointer: fine) {
-  .deck-tile:hover .deck-tray-card {
-    transform: translateY(-5px);
-  }
-  .deck-tile:hover .deck-tray-paper[data-at="1"] {
-    transform: translate(17px, 2px) rotate(5deg);
-  }
-  .deck-tile:hover .deck-tray-paper[data-at="2"] {
-    transform: translate(-16px, 6px) rotate(-6deg);
-  }
 }
 /* The spread is the movement; under reduced motion the cards simply sit where they rest. */
 @media (prefers-reduced-motion: reduce) {

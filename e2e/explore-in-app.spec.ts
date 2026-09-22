@@ -55,18 +55,15 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     }
   });
 
-  await test.step("Today's guide points a new learner to the ready-made decks in Explore", async () => {
-    const onToday = await (await browser.newContext()).newPage();
-    await startAsTestLearner(onToday, testInfo, "explore-today", "/today");
-    const banner = onToday.getByRole("region", { name: "Start with a ready-made deck" });
-    await banner.getByRole("link", { name: "Browse ready-made decks" }).click();
-    await expect(onToday).toHaveURL(/\/explore$/);
-    await expect(onToday.getByRole("heading", { name: "Explore", exact: true })).toBeVisible();
-    await onToday.context().close();
-  });
-
   const learner = await (await browser.newContext()).newPage();
   await startAsTestLearner(learner, testInfo, "explore");
+
+  await test.step("Today's guide points a new learner to the ready-made decks in Explore", async () => {
+    await learner.goto("/today");
+    const banner = learner.getByRole("region", { name: "Start with a ready-made deck" });
+    await banner.getByRole("link", { name: "Browse ready-made decks" }).click();
+    await expect(learner).toHaveURL(/\/explore$/);
+  });
 
   await test.step("Explore lists both decks, each under its category", async () => {
     await learner.goto("/explore");

@@ -7,12 +7,17 @@ import { publicSiteUrl } from "../lib/origins";
 import {
   connectedAppsQuery,
   decksQuery,
+  exploreQuery,
   roundsQuery,
   seriesQuery,
   streakQuery,
 } from "../lib/queries";
 import { Streak } from "../lib/streak";
-import { TodayView } from "../views/today-view";
+import { useAddPublishedDeck } from "../lib/use-add-published-deck";
+import { isGuiding, TodayView } from "../views/today-view";
+
+/** How many published decks the strip carries before Explore takes over. */
+const STRIP_DECKS = 8;
 
 export const Route = createFileRoute("/today")({
   component: Today,
@@ -28,7 +33,15 @@ function Today() {
   const rounds = useQuery(roundsQuery);
   const firstRun = decks.data?.every((d) => d.total === 0) ?? false;
   const apps = useQuery({ ...connectedAppsQuery, enabled: firstRun });
+  // Only the guide offers ready-made decks, so nobody past it pays for the catalogue read.
+  const guiding = isGuiding(streak.data);
+  const explore = useQuery({ ...exploreQuery, enabled: guiding });
+  const ready = explore.data?.decks
+    .filter((deck) => !explore.data.added[deck.slug])
+    .slice(0, STRIP_DECKS);
   const add = useAddCard();
+  // On Today the deck lands in Library while the learner stays, so the toast is what says so.
+  const addDeck = useAddPublishedDeck({ announce: "toast" });
   return (
     <TodayView
       decks={decks.data}
@@ -40,6 +53,9 @@ function Today() {
       connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
+      ready={ready}
+      onAddDeck={(deck) => addDeck.mutate(deck)}
+      addingDeck={addDeck.isPending ? addDeck.variables?.slug : undefined}
     />
   );
 }

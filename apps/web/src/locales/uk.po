@@ -1367,6 +1367,9 @@ msgstr "Колоди"
 msgid "Decks from Anki or Mochi, with their review history."
 msgstr "Колоди з Anki чи Mochi разом з історією повторень."
 
+msgid "Decks from Lymi. Add one to study it in your language."
+msgstr "Колоди від Lymi. Додай одну — вивчай її своєю мовою."
+
 msgid "Decks to review"
 msgstr "Колоди до повторення"
 
@@ -2658,6 +2661,9 @@ msgstr "Читаємо твій файл"
 
 msgid "Ready to import"
 msgstr "Готовий до імпорту"
+
+msgid "Ready-made decks"
+msgstr "Готові колоди"
 
 msgid "Ready-made decks from Lymi. Add one to study it in your language."
 msgstr "Готові колоди від Lymi. Додай одну — вивчай її своєю мовою."

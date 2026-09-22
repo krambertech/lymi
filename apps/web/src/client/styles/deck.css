@@ -313,3 +313,30 @@
 .deck-tile .deck-tray {
   border-radius: 0;
 }
+
+/* The strip on Today: the same tiles in a row that scrolls sideways, bleeding to the screen's
+   edges so the deck past the fold is cut rather than hidden. The column fits three, and the
+   fourth peeking is what says the row carries more. */
+.deck-strip {
+  display: flex;
+  gap: 18px;
+  /* Room for a tile's focus ring and its hover spread, which the scroller would clip. */
+  padding-block: 6px 8px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 20px;
+  scrollbar-width: none;
+}
+@container shell (min-width: 48rem) {
+  .deck-strip {
+    scroll-padding-inline: 32px;
+  }
+}
+.deck-strip::-webkit-scrollbar {
+  display: none;
+}
+.deck-strip > li {
+  flex: 0 0 15rem;
+  scroll-snap-align: start;
+}

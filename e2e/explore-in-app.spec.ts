@@ -55,6 +55,24 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     }
   });
 
+  // Today's strip offers the same catalogue in another place, so it belongs to this journey
+  // rather than a second publishing setup. It gets its own account, because adding here must
+  // not take a deck the Explore steps below still expect to be addable.
+  await test.step("Today offers a ready-made deck, and adding one keeps the learner on Today", async () => {
+    const onToday = await (await browser.newContext()).newPage();
+    await startAsTestLearner(onToday, testInfo, "explore-today", "/today");
+    const strip = onToday.getByRole("region", { name: "Ready-made decks" });
+    // Whichever deck the catalogue offers first: the order is the publications', not this test's.
+    const offered = strip.getByRole("listitem").first();
+    const name = (await offered.getByRole("heading").innerText()).trim();
+    await offered.getByRole("button", { name: `Add “${name}” to Library` }).click();
+    await expect(onToday.getByText(`Added “${name}” to Library`)).toBeVisible();
+    await expect(onToday).toHaveURL(/\/today$/);
+    // The strip offers what is left, so the deck just added is no longer on it.
+    await expect(strip.getByRole("heading", { name, exact: true })).toHaveCount(0);
+    await onToday.context().close();
+  });
+
   const learner = await (await browser.newContext()).newPage();
   await startAsTestLearner(learner, testInfo, "explore");
 

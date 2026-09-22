@@ -26,6 +26,7 @@ export const e2eAccounts = [
   "word-detail",
   "deck-page",
   "explore",
+  "explore-today",
   "language",
   "join-owner",
   "invite-owner",

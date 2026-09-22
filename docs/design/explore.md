@@ -50,6 +50,8 @@ The deck's colour is the ground of the whole header, back included: a band from 
 
 Adding leaves the learner on the page. The fan gathers into one squared stack under a check and the button becomes **Open in Library**, so the page itself says the deck arrived and no toast repeats it. A deck already in Library opens as that stack. Under reduced motion the stack and the check are simply there.
 
+Today carries the same offer under its getting started guide: **Ready-made decks**, a row of the same tiles that scrolls sideways, with the next deck cut by the screen's edge rather than hidden behind a heading. It reads `GET /api/explore` and shows only what the learner has not added, so the section is gone once every published deck is in Library. It belongs to the guide alone: a learner with an empty Lymi is who a ready-made deck is for, and Today after the first review has the learner's own work on it. It carries no amber, so the guide's step stays the one thing to press; the trays' colour is what marks the row out. On a phone it is also the first sight of Explore, which otherwise sits in the learner menu.
+
 Search, the shelf filters and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
 
 A deck is still shared as `lymi.app/explore/<slug>` and never as a product address, so a link works for someone who has no account. A visitor without a live session who opens `my.lymi.app/explore` or `my.lymi.app/explore/<slug>` is sent to the same path and query on `lymi.app` with a temporary redirect, because the answer depends on the session; a signed-in learner stays on the product page.

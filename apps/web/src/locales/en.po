@@ -1367,6 +1367,9 @@ msgstr "Decks"
 msgid "Decks from Anki or Mochi, with their review history."
 msgstr "Decks from Anki or Mochi, with their review history."
 
+msgid "Decks from Lymi. Add one to study it in your language."
+msgstr "Decks from Lymi. Add one to study it in your language."
+
 msgid "Decks to review"
 msgstr "Decks to review"
 
@@ -2658,6 +2661,9 @@ msgstr "Reading your file"
 
 msgid "Ready to import"
 msgstr "Ready to import"
+
+msgid "Ready-made decks"
+msgstr "Ready-made decks"
 
 msgid "Ready-made decks from Lymi. Add one to study it in your language."
 msgstr "Ready-made decks from Lymi. Add one to study it in your language."

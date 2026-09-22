@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type Round, type RoundsOut, SLIPPING_LAPSES } from "@lymi/core";
+import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ChevronRight, Plus } from "lucide-react";
@@ -11,6 +12,7 @@ import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Screen } from "../components/layout/screen";
 import { Go } from "../components/next-steps";
+import { ReadyDecks } from "../components/ready-decks";
 import { Skeleton } from "../components/skeleton";
 import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
@@ -35,10 +37,20 @@ export interface TodayProps {
   connected?: boolean | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
+  /** Published decks the learner has not added. Undefined while Explore is still unread. */
+  ready?: PublicDeckSummary[] | undefined;
+  onAddDeck?: ((deck: { slug: string; name: string; edition: string }) => void) | undefined;
+  /** The slug currently being added, so only its own tile waits. */
+  addingDeck?: string | undefined;
   static?: StaticNav;
 }
 
 type ReviewSearch = { deck?: string; series?: string; round?: Round };
+
+/** Until the first review, Today is the getting started guide. Undefined while the streak loads. */
+export function isGuiding(streak: StreakSummary | undefined): boolean {
+  return !!streak && streak.reviewedDays === 0 && streak.today.attempts === 0;
+}
 
 /**
  * Home. The due card and the streak card share the top row; under them, the rounds that can be
@@ -56,6 +68,9 @@ export function TodayView({
   connected,
   onAdd,
   onCreateDeck,
+  ready,
+  onAddDeck,
+  addingDeck,
   static: st,
 }: TodayProps) {
   const { t } = useLingui();
@@ -85,22 +100,29 @@ export function TodayView({
   const loading = decks === undefined || streak === undefined;
   const nothingYet = !loading && total === 0;
   const noDecks = nothingYet && decks?.length === 0;
-  // Until the first review, Today is the getting started guide.
-  const guiding = !!streak && !!decks && streak.reviewedDays === 0 && streak.today.attempts === 0;
+  const guiding = !!decks && isGuiding(streak);
   const [onlyDeck] = decks?.length === 1 ? decks : [];
+
+  // Only under the guide: a learner past their first review has Today's own work to get on with.
+  const strip = ready && ready.length > 0 && onAddDeck && (
+    <ReadyDecks decks={ready} onAdd={onAddDeck} adding={addingDeck} st={st} />
+  );
 
   return (
     <Screen kind="tab" title={<Trans>Today</Trans>}>
       {guiding ? (
-        <StartGuide
-          decks={decks.length}
-          cards={total}
-          connected={connected}
-          connectUrl={connectUrl}
-          onAdd={onAdd}
-          onCreateDeck={onCreateDeck}
-          st={st}
-        />
+        <div className="grid gap-8 @3xl:gap-10">
+          <StartGuide
+            decks={decks.length}
+            cards={total}
+            connected={connected}
+            connectUrl={connectUrl}
+            onAdd={onAdd}
+            onCreateDeck={onCreateDeck}
+            st={st}
+          />
+          {strip}
+        </div>
       ) : (
         <div className="grid gap-8 @3xl:gap-10">
           <section

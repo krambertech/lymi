@@ -11,6 +11,7 @@ export const tabId =
 const PING_MS = 30_000;
 /** One refetch for a burst, such as an assistant adding a lesson card by card. */
 const SETTLE_MS = 250;
+/** Handshakes that fail in a row before the tab stops trying until it is shown or back online. */
 const RETRY_MS = [1_000, 2_000, 5_000, 10_000, 30_000];
 
 /** A review keeps its round in the order it was fetched in, so only the review refreshes it. */
@@ -25,6 +26,107 @@ export function refreshShown(qc: QueryClient) {
   return qc.invalidateQueries({ predicate: refreshable });
 }
 
+type Socket = Pick<WebSocket, "send" | "close"> & {
+  onopen: ((event: Event) => void) | null;
+  onmessage: ((event: MessageEvent) => void) | null;
+  onclose: ((event: CloseEvent) => void) | null;
+};
+
+export interface LiveDeps {
+  open: () => Socket;
+  /** Whether the tab is shown and online, so a connection is worth holding. */
+  wanted: () => boolean;
+  /** Whether a write of this tab's is still in flight, which a refetch would land under. */
+  busy: () => boolean;
+  refresh: () => void;
+}
+
+/**
+ * One tab's connection to the learner's channel. It holds a socket only while the tab is wanted,
+ * and refreshes when another tab or device changed something, including while this one was away.
+ */
+export class LiveConnection {
+  private socket: Socket | null = null;
+  private retry: ReturnType<typeof setTimeout> | undefined;
+  private settle: ReturnType<typeof setTimeout> | undefined;
+  private ping: ReturnType<typeof setInterval> | undefined;
+  private failures = 0;
+  private seen: number | null = null;
+  private stopped = false;
+
+  constructor(private readonly deps: LiveDeps) {}
+
+  /** Connects if the tab is wanted and not connected; after giving up, starts trying again. */
+  resume = () => {
+    if (this.stopped || this.socket || !this.deps.wanted()) return;
+    clearTimeout(this.retry);
+    this.failures = 0;
+    this.connect();
+  };
+
+  /** Lets go of the socket while the tab is hidden; `seen` carries over to the next greeting. */
+  pause = () => {
+    clearTimeout(this.retry);
+    clearInterval(this.ping);
+    const socket = this.socket;
+    this.socket = null;
+    socket?.close(1000);
+  };
+
+  stop = () => {
+    this.stopped = true;
+    clearTimeout(this.settle);
+    this.pause();
+  };
+
+  private connect() {
+    const socket = this.deps.open();
+    this.socket = socket;
+    socket.onopen = () => {
+      this.failures = 0;
+      this.ping = setInterval(() => socket.send(LIVE_PING), PING_MS);
+    };
+    socket.onmessage = (event) => {
+      if (event.data === LIVE_PONG || typeof event.data !== "string") return;
+      let data: unknown;
+      try {
+        data = JSON.parse(event.data);
+      } catch {
+        return;
+      }
+      const message = LiveMessage.safeParse(data);
+      if (message.success) this.receive(message.data);
+    };
+    socket.onclose = () => {
+      clearInterval(this.ping);
+      if (this.socket !== socket) return;
+      this.socket = null;
+      if (this.stopped || !this.deps.wanted()) return;
+      // A refused handshake (signed out, or no channel here) looks the same as a dropped line.
+      const delay = RETRY_MS[this.failures++];
+      if (delay !== undefined) this.retry = setTimeout(() => this.connect(), delay);
+    };
+  }
+
+  private receive(message: LiveMessage) {
+    const missed = message.type === "hello" && this.seen !== null && message.version !== this.seen;
+    this.seen = message.version;
+    if (message.type === "changed" || missed) this.scheduleRefresh();
+  }
+
+  private scheduleRefresh() {
+    clearTimeout(this.settle);
+    const run = () => {
+      if (this.deps.busy()) {
+        this.settle = setTimeout(run, SETTLE_MS);
+        return;
+      }
+      this.deps.refresh();
+    };
+    this.settle = setTimeout(run, SETTLE_MS);
+  }
+}
+
 function liveUrl(): string {
   const url = new URL("/api/live", window.location.href);
   url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
@@ -32,81 +134,26 @@ function liveUrl(): string {
   return url.toString();
 }
 
-/**
- * Keeps this tab on the learner's channel while it is visible, and refreshes what it shows when a
- * change lands from elsewhere. A tab that was away catches up when it reconnects.
- */
+/** Keeps this tab on the learner's channel while it is visible and online. */
 export function useLiveUpdates(enabled: boolean) {
   const qc = useQueryClient();
   useEffect(() => {
     if (!enabled || typeof WebSocket === "undefined") return;
-    let socket: WebSocket | null = null;
-    let retry: ReturnType<typeof setTimeout> | undefined;
-    let settle: ReturnType<typeof setTimeout> | undefined;
-    let ping: ReturnType<typeof setInterval> | undefined;
-    let failures = 0;
-    let missed = false;
-    let stopped = false;
-
-    const refresh = () => {
-      clearTimeout(settle);
-      settle = setTimeout(() => void refreshShown(qc), SETTLE_MS);
-    };
-
-    const open = () => {
-      if (stopped || socket || document.visibilityState !== "visible" || !navigator.onLine) return;
-      clearTimeout(retry);
-      const ws = new WebSocket(liveUrl());
-      socket = ws;
-      ws.onopen = () => {
-        failures = 0;
-        if (missed) {
-          missed = false;
-          refresh();
-        }
-        ping = setInterval(() => ws.send(LIVE_PING), PING_MS);
-      };
-      ws.onmessage = (event) => {
-        if (event.data === LIVE_PONG || typeof event.data !== "string") return;
-        let data: unknown;
-        try {
-          data = JSON.parse(event.data);
-        } catch {
-          return;
-        }
-        if (LiveMessage.safeParse(data).success) refresh();
-      };
-      ws.onclose = () => {
-        clearInterval(ping);
-        missed = true;
-        if (socket !== ws) return;
-        socket = null;
-        if (stopped || document.visibilityState !== "visible") return;
-        retry = setTimeout(open, RETRY_MS[Math.min(failures++, RETRY_MS.length - 1)]);
-      };
-    };
-
-    const close = () => {
-      clearTimeout(retry);
-      clearInterval(ping);
-      const ws = socket;
-      socket = null;
-      if (ws) {
-        missed = true;
-        ws.close(1000);
-      }
-    };
-
-    const onVisibility = () => (document.visibilityState === "visible" ? open() : close());
-    open();
+    const live = new LiveConnection({
+      open: () => new WebSocket(liveUrl()),
+      wanted: () => document.visibilityState === "visible" && navigator.onLine,
+      busy: () => qc.isMutating() > 0,
+      refresh: () => void refreshShown(qc),
+    });
+    const onVisibility = () =>
+      document.visibilityState === "visible" ? live.resume() : live.pause();
+    live.resume();
     document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("online", open);
+    window.addEventListener("online", live.resume);
     return () => {
-      stopped = true;
-      clearTimeout(settle);
-      close();
+      live.stop();
       document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("online", open);
+      window.removeEventListener("online", live.resume);
     };
   }, [enabled, qc]);
 }

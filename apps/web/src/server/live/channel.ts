@@ -2,9 +2,12 @@ import { DurableObject } from "cloudflare:workers";
 import { LIVE_PING, LIVE_PONG, type LiveMessage } from "@lymi/core";
 import type { Bindings } from "../env";
 
+const VERSION = "version";
+
 /**
- * One learner's open tabs. It holds their WebSockets and nothing else: a write tells it that
- * something changed, and every other tab refetches what it shows. ADR 0023.
+ * One learner's open tabs. It holds their WebSockets and a count of the learner's changes: a
+ * write raises the count and tells every tab, and a tab that was away compares the count it last
+ * saw with the one it is greeted with, so it refetches only when something changed. ADR 0023.
  */
 export class LiveChannel extends DurableObject<Bindings> {
   constructor(ctx: DurableObjectState, env: Bindings) {
@@ -16,18 +19,22 @@ export class LiveChannel extends DurableObject<Bindings> {
   override async fetch(request: Request): Promise<Response> {
     const tab = new URL(request.url).searchParams.get("tab") ?? "";
     const { 0: client, 1: server } = new WebSocketPair();
-    // The tag is the tab's own id, so its own writes are not echoed back to it.
+    // The tag is the tab's own id, so its own writes reach it as a count and not a refresh.
     this.ctx.acceptWebSocket(server, tab ? [tab] : []);
+    server.send(JSON.stringify({ type: "hello", version: this.version() } satisfies LiveMessage));
     return new Response(null, { status: 101, webSocket: client });
   }
 
-  /** Tells every tab except the one that made the change. */
+  /** Raises the count and tells every tab; the tab that made the change only records it. */
   changed(fromTab: string | null): void {
-    const message = JSON.stringify({ type: "changed" } satisfies LiveMessage);
+    const version = this.version() + 1;
+    this.ctx.storage.kv.put(VERSION, version);
+    const changed = JSON.stringify({ type: "changed", version } satisfies LiveMessage);
+    const own = JSON.stringify({ type: "version", version } satisfies LiveMessage);
     for (const socket of this.ctx.getWebSockets()) {
-      if (fromTab && this.ctx.getTags(socket).includes(fromTab)) continue;
+      const mine = !!fromTab && this.ctx.getTags(socket).includes(fromTab);
       try {
-        socket.send(message);
+        socket.send(mine ? own : changed);
       } catch {
         // A socket closing as this runs has nobody left to tell.
       }
@@ -43,5 +50,9 @@ export class LiveChannel extends DurableObject<Bindings> {
     } catch {
       // Already closed.
     }
+  }
+
+  private version(): number {
+    return this.ctx.storage.kv.get<number>(VERSION) ?? 0;
   }
 }

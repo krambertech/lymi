@@ -66,13 +66,18 @@ describe("opening the channel", () => {
     expect(await opened.text()).toBe("channel");
   });
 
-  it("refuses a handshake from another origin, a plain request and no session", async () => {
+  it("refuses a handshake from another origin, a plain request, a bad tab id and no session", async () => {
     const elsewhere = await app.fetch("/api/live", {
       headers: { ...upgrade, origin: "https://lymi.app" },
       as: learnerSession,
     });
     expect(elsewhere.status).toBe(403);
     expect((await app.fetch("/api/live", { as: learnerSession })).status).toBe(426);
+    const tooLong = await app.fetch(`/api/live?tab=${"x".repeat(65)}`, {
+      headers: upgrade,
+      as: learnerSession,
+    });
+    expect(tooLong.status).toBe(400);
     expect((await app.fetch("/api/live", { headers: upgrade })).status).toBe(401);
   });
 });

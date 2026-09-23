@@ -15,13 +15,13 @@ Changes made outside the open tab, such as cards an assistant adds over MCP or a
 
 **What announces.** A successful non-GET request under `/api`, an MCP tool call that wrote an audit row, and each step of the enrichment, import and export workflows that writes. The announcement runs after the write, under `waitUntil`, and a failure never fails the write.
 
-**What a tab does.** It refetches its active queries after a short pause that gathers a burst into one refetch, and marks the rest stale. The order a review round was fetched in is left alone, because a review keeps its order; the draw refetches, and the card on screen stays put ([ADR 0019](0019-the-review-queue-is-a-deterministic-weighted-draw.md)). An open card editor keeps what it copied, and the last save wins.
+**What a tab does.** It refetches its active queries after a short pause that gathers a burst into one refetch, waits while a write of its own is in flight, and marks the rest stale. The order a review round was fetched in is left alone, because a review keeps its order; the draw refetches, and the card on screen stays put ([ADR 0019](0019-the-review-queue-is-a-deterministic-weighted-draw.md)). An open card editor keeps what it copied, and the last save wins.
 
-**When it is connected.** Only while the tab is visible and online. A tab that was hidden or offline refetches once when it reconnects, so nothing depends on a message it missed.
+**When it is connected.** Only while the tab is visible and online. The channel counts the learner's changes and greets each tab with the count, so a tab that was hidden or offline refetches on return only if the count moved. A tab whose handshake keeps failing, signed out or on a preview Worker with no channel, stops trying until it is shown or back online.
 
 **Who may connect.** The learner's session, from the product's own origin. The handshake carries the session cookie, and a sibling site on the same registrable domain must not open a channel with it.
 
-**No echo.** Every request carries the tab's id in `x-lymi-tab`, and the channel skips the socket tagged with it.
+**No echo.** Every request carries the tab's id in `x-lymi-tab`, and the socket tagged with it gets only the new count.
 
 ## Considered options
 
@@ -33,7 +33,8 @@ Changes made outside the open tab, such as cards an assistant adds over MCP or a
 
 ## Consequences
 
-- The Worker has its first Durable Object binding and migration. The object stores nothing, and hibernation keeps idle sockets from billing duration.
+- The Worker has its first Durable Object binding and migration. The object stores one number, and hibernation keeps idle sockets from billing duration.
+- Preview Workers have no channel: Cloudflare serves no preview URL for a Worker with a Durable Object, and a version upload cannot apply its migration.
 - A change reaches only the learner's own tabs. A shared deck's members still catch up at their next request ([ADR 0022](0022-a-member-catches-up-on-card-states-at-their-next-request.md)); the channel is where their announcement would go.
 - A write that goes around the service layer or the routes, such as one straight to D1 from a script, reaches no tab.
 - Every write refetches every active query of the other tabs. That is cheap for one learner's screens, and messages that name a resource would narrow it if it ever is not.

@@ -26,7 +26,14 @@ import {
   Plus,
   Settings2,
 } from "lucide-react";
-import { type ButtonHTMLAttributes, type ReactNode, useMemo, useRef, useState } from "react";
+import {
+  type ButtonHTMLAttributes,
+  type LiHTMLAttributes,
+  type ReactNode,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Button, IconButton } from "../components/button";
 import { SectionRing } from "../components/section-ring";
 import { StateIcon, stateMarks } from "../components/state-mark";
@@ -79,6 +86,7 @@ export interface GlossaryProps {
   groups: DeckGroup[];
   /** Cards that landed while the list was open, which arrive rather than appear. */
   arrived?: ReadonlySet<string> | undefined;
+  onArrived?: ((id: string) => void) | undefined;
   sort: DeckSort;
   openId: string | null;
   onOpen: (id: string | null) => void;
@@ -239,6 +247,7 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
 function GroupList({
   groups,
   arrived,
+  onArrived,
   sort,
   openId,
   onOpen,
@@ -336,16 +345,16 @@ function GroupList({
                     waiting: !!section && section.status !== "open" && rowState(row) === "new",
                     selection,
                   };
-                  const arriving = !!arrived?.has(row.card.id);
+                  const arrival = arrivalProps(row.card.id, arrived, onArrived);
                   return movable ? (
                     <DraggableRow
                       key={row.card.id}
                       {...rowProps}
-                      arriving={arriving}
+                      arrival={arrival}
                       dropped={dropped}
                     />
                   ) : (
-                    <li key={row.card.id} className={clsx(arriving && "arrive")}>
+                    <li key={row.card.id} {...arrival}>
                       <GlossaryRow {...rowProps} />
                     </li>
                   );
@@ -505,20 +514,41 @@ interface RowProps {
   selection?: GlossaryProps["selection"];
 }
 
+/** A row that landed while the list was open carries `arrive` until its wash has faded. */
+function arrivalProps(
+  id: string,
+  arrived: ReadonlySet<string> | undefined,
+  onArrived: ((id: string) => void) | undefined,
+): LiHTMLAttributes<HTMLLIElement> {
+  if (!arrived?.has(id)) return {};
+  return {
+    className: "arrive",
+    onAnimationEnd: (event) => {
+      if (event.target === event.currentTarget && event.animationName === "arrive-wash") {
+        onArrived?.(id);
+      }
+    },
+  };
+}
+
 function DraggableRow({
   dropped,
-  arriving,
+  arrival,
   ...props
-}: RowProps & { dropped?: { current: boolean } | undefined; arriving: boolean }) {
+}: RowProps & {
+  dropped?: { current: boolean } | undefined;
+  arrival: LiHTMLAttributes<HTMLLIElement>;
+}) {
   const drag = useDraggable({ id: `${CARD}${props.row.card.id}` });
   // A card moves from the keyboard through selection and its menu, so Enter and Space still open it.
   const { onKeyDown: _keys, ...pointer } = drag.listeners ?? {};
   return (
     <li
       ref={drag.setNodeRef}
+      onAnimationEnd={arrival.onAnimationEnd}
       className={clsx(
         "[-webkit-touch-callout:none]",
-        arriving && "arrive",
+        arrival.className,
         drag.isDragging && "opacity-40",
       )}
     >

@@ -47,6 +47,10 @@ export function makePreviewConfig(base, { names, previewUrl, databaseId, namespa
     name: names.workerName,
     routes: [],
     triggers: undefined,
+    // Preview URLs are not served for a Worker with a Durable Object, and a version upload cannot
+    // apply its migration, so a preview has no live channel and its tabs refresh as before.
+    durable_objects: undefined,
+    migrations: undefined,
     workers_dev: true,
     preview_urls: true,
     vars: {

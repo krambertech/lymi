@@ -48,6 +48,8 @@ test("rewrites every production boundary to isolated preview resources", () => {
       name: "lymi",
       routes: [{ pattern: "my.lymi.app", custom_domain: true }],
       triggers: { crons: ["*/15 * * * *"] },
+      durable_objects: { bindings: [{ name: "LIVE", class_name: "LiveChannel" }] },
+      migrations: [{ tag: "live-channel", new_sqlite_classes: ["LiveChannel"] }],
       vars: { PRODUCT_URL: "https://my.lymi.app" },
       d1_databases: [{ binding: "DB", migrations_dir: "../../migrations" }],
       workflows: [
@@ -66,6 +68,8 @@ test("rewrites every production boundary to isolated preview resources", () => {
   assert.equal(config.name, names.workerName);
   assert.deepEqual(config.routes, []);
   assert.equal(config.triggers, undefined);
+  assert.equal(config.durable_objects, undefined);
+  assert.equal(config.migrations, undefined);
   assert.equal(config.vars.PRODUCT_URL, "https://preview-lymi-app-pr-105.example.workers.dev");
   assert.equal(config.vars.APP_PREVIEW, "true");
   assert.equal(config.d1_databases[0].database_id, "preview-db-id");

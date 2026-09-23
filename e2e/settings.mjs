@@ -26,6 +26,7 @@ export const e2eAccounts = [
   "review-deck-past",
   "word-detail",
   "deck-page",
+  "live-updates",
   "explore",
   "language",
   "join-owner",

@@ -30,6 +30,7 @@ export type E2EAccount =
   | "avatar"
   | "avatar-other"
   | "deck-page"
+  | "live-updates"
   | "explore"
   | "explore-edition"
   | "long-cards"

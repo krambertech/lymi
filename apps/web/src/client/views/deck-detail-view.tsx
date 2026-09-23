@@ -737,7 +737,7 @@ export function DeckDetailView({
   );
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const cardIds = useMemo(() => cards?.map((row) => row.card.id), [cards]);
-  const arrived = useArrivals(deck?.id ?? "", cardIds);
+  const { arrived, settle: onArrived } = useArrivals(deck?.id ?? "", cardIds);
 
   const toggleSelected = (id: string, range: boolean) => {
     setSelected((prev) => {
@@ -1153,6 +1153,7 @@ export function DeckDetailView({
             <Glossary
               groups={groups}
               arrived={arrived}
+              onArrived={onArrived}
               sort={sort}
               openId={openId}
               onOpen={setOpen}

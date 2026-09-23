@@ -2,7 +2,11 @@ import type { Bindings } from "../env";
 
 type LiveEnv = Partial<Pick<Bindings, "LIVE">>;
 
-/** Tells the learner's other tabs that something changed. A failure never fails the write. */
+/**
+ * Tells the learner's other tabs that something changed. A failure never fails the write, and a
+ * repeat only costs a refetch, so workflows call this outside their steps and a resumed run may
+ * announce again.
+ */
 export async function announce(env: LiveEnv, userId: string, fromTab?: string | null) {
   if (!env.LIVE) return;
   try {

@@ -169,8 +169,21 @@ describe("what the end of a review offers", () => {
   });
 
   it("follows the deck the review is in", () => {
-    const d = data(12, (i) => (i < 2 ? "b" : "a"));
+    const d = { ...data(12, (i) => (i < 2 ? "b" : "a")), total: 2 };
     expect(drawableLeft(d, play(d, 0), "b")).toBe(2);
+  });
+
+  it("counts the cards behind the fetched front of the order", () => {
+    const d = { ...data(8), total: 150 };
+    expect(drawableLeft(d, play(d, 0), undefined)).toBe(150);
+    expect(drawableLeft(d, play(d, 3), undefined)).toBe(147);
+    expect(
+      drawableLeft(
+        d,
+        play(d, 3, (i) => (i === 0 ? 1 : 3)),
+        undefined,
+      ),
+    ).toBe(148);
   });
 });
 

@@ -2824,6 +2824,9 @@ msgstr "Повтори их"
 msgid "Review these decks together, in this order."
 msgstr "Повторяй эти колоды вместе, в этом порядке."
 
+msgid "Review this section"
+msgstr "Повторить раздел"
+
 msgid "Review this series"
 msgstr "Повторить серию"
 

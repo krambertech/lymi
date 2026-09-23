@@ -1,5 +1,5 @@
 import { type Drawn, drawableCount, roundOrder, type StreakOut } from "@lymi/core";
-import { type DrawData, type DrawState, drawCards } from "./review-draw";
+import { type DrawData, type DrawState, drawCards, drawLog } from "./review-draw";
 
 export type DayOutcome = "goal_met" | "exhausted" | "nothing_due";
 
@@ -78,7 +78,13 @@ export function forgottenRound(data: DrawData, state: DrawState, deckId?: string
 
 /** Cards the draw still holds in scope, the number Today shows beside it. */
 export function drawableLeft(data: DrawData, state: DrawState, deckId: string | undefined): number {
-  return drawableCount(drawCards(data), state.log, state.day, { deckId });
+  const cards = drawCards(data);
+  const scope = { deckId };
+  const held = drawableCount(cards, state.log, state.day, scope);
+  if (data.day.date !== state.day.date) return held;
+  // The fetch holds only the front of the order; the server's total counts the cards behind it too.
+  const fetched = drawableCount(cards, drawLog(data, [], state.day), state.day, scope);
+  return held + Math.max(0, data.total - fetched);
 }
 
 /**

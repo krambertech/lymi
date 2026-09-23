@@ -12,14 +12,25 @@ import type {
 import type { Card } from "./cards";
 import { deviceTimezone, request } from "./request";
 
-/** What a review draws from: every deck, one deck, or one of the learner's series. */
-export type ReviewScope = { deck?: string | undefined; series?: string | undefined };
+/** What a review draws from: every deck, one deck or one of its sections, or one of the learner's series. */
+export type ReviewScope = {
+  deck?: string | undefined;
+  series?: string | undefined;
+  section?: string | undefined;
+};
 /** One cache key per scope, so a series review and a deck review never share a draw. */
 export const scopeKey = (scope: ReviewScope = {}) =>
-  scope.deck ? `deck:${scope.deck}` : scope.series ? `series:${scope.series}` : "all";
+  scope.section
+    ? `section:${scope.section}`
+    : scope.deck
+      ? `deck:${scope.deck}`
+      : scope.series
+        ? `series:${scope.series}`
+        : "all";
 const scopeParams = (scope: ReviewScope = {}) => ({
   ...(scope.deck ? { deck: scope.deck } : {}),
   ...(scope.series ? { series: scope.series } : {}),
+  ...(scope.section ? { section: scope.section } : {}),
 });
 
 export type QueueItem = {

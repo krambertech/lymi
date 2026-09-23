@@ -210,6 +210,13 @@ async function sectionAccess(ctx: ServiceContext, id: string) {
   return { section: row, deck };
 }
 
+/** An active section the caller can see; an archived one is not found, since nothing reviews in it. */
+export async function visibleSection(ctx: ServiceContext, id: string) {
+  const { section } = await sectionAccess(ctx, id);
+  if (section.archivedAt) throw notFound("Section");
+  return section;
+}
+
 /** A section of a deck the caller owns, or forbidden when they only study it. */
 async function ownedSection(ctx: ServiceContext, id: string) {
   const found = await sectionAccess(ctx, id);

@@ -46,6 +46,7 @@ const HistoryOut = z
 const QueueQuery = z.object({
   deck: z.string().optional().meta({ description: "Limit to one deck" }),
   series: z.string().optional().meta({ description: "Limit to the decks of one of your series" }),
+  section: z.string().optional().meta({ description: "Limit to one section of a deck you study" }),
   limit: z.coerce.number().int().min(1).max(200).optional().meta({ description: "Default 50" }),
   round: z.enum(ROUNDS).optional().meta({
     description:
@@ -65,8 +66,16 @@ review.get(
   }),
   query(QueueQuery, "query"),
   async (c) => {
-    const { deck, series, limit, round } = c.req.valid("query");
-    return c.json(await reviewQueue(ctxOf(c), { deckId: deck, seriesId: series, limit, round }));
+    const { deck, series, section, limit, round } = c.req.valid("query");
+    return c.json(
+      await reviewQueue(ctxOf(c), {
+        deckId: deck,
+        seriesId: series,
+        sectionId: section,
+        limit,
+        round,
+      }),
+    );
   },
 );
 
@@ -98,6 +107,10 @@ const DrawQuery = z.object({
     .string()
     .optional()
     .meta({ description: "Limit the cards to the decks of one of your series" }),
+  section: z
+    .string()
+    .optional()
+    .meta({ description: "Limit the cards to one section of a deck you study" }),
   limit: z.coerce
     .number()
     .int()
@@ -124,8 +137,16 @@ review.get(
   }),
   query(DrawQuery, "query"),
   async (c) => {
-    const { deck, series, limit, tz } = c.req.valid("query");
-    return c.json(await reviewDraw(ctxOf(c), { deckId: deck, seriesId: series, limit, zone: tz }));
+    const { deck, series, section, limit, tz } = c.req.valid("query");
+    return c.json(
+      await reviewDraw(ctxOf(c), {
+        deckId: deck,
+        seriesId: series,
+        sectionId: section,
+        limit,
+        zone: tz,
+      }),
+    );
   },
 );
 

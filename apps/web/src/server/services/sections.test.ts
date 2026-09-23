@@ -6,7 +6,7 @@ import type { ServiceContext } from "./context";
 import { createDeck, listDeckCards, listDecks, updateDeck } from "./decks";
 import { drawInputs } from "./draw";
 import { join } from "./members";
-import { gradeCard, reviewDraw, reviewRounds } from "./review";
+import { gradeCard, reviewDraw, reviewQueue, reviewRounds } from "./review";
 import {
   archiveSection,
   createSection,
@@ -270,6 +270,42 @@ describe("sections", () => {
     await expect(renameSection(stranger, sections.A as string, "X")).rejects.toMatchObject({
       code: "not_found",
     });
+  });
+});
+
+describe("reviewing one section", () => {
+  it("draws only that section's cards, for the owner and a member alike", async () => {
+    const me = await person("Kateryna");
+    const member = await person("Mari");
+    const stranger = await person("Juhan");
+    const { deck, sections } = await sectioned(me, { A: ["a1", "a2"], B: ["b1"] }, ["loose"], {
+      sectionProgression: "open",
+    });
+    await join(member, deck.id);
+    const A = sections.A as string;
+
+    for (const ctx of [me, member]) {
+      const draw = await reviewDraw(ctx, { deckId: deck.id, sectionId: A, zone: "UTC" });
+      expect(draw.total).toBe(2);
+      expect(draw.cards.map((c) => c.card.term).sort()).toEqual(["a1", "a2"]);
+      const queue = await reviewQueue(ctx, { deckId: deck.id, sectionId: A });
+      expect(queue.items.map((i) => i.card.term).sort()).toEqual(["a1", "a2"]);
+    }
+    await expect(
+      reviewDraw(stranger, { deckId: deck.id, sectionId: A, zone: "UTC" }),
+    ).rejects.toMatchObject({ code: "not_found" });
+  });
+
+  it("leaves out a locked section's cards, and an archived section is not found", async () => {
+    const me = await person("Kateryna");
+    const { deck, sections } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });
+
+    const locked = await reviewDraw(me, { deckId: deck.id, sectionId: sections.B, zone: "UTC" });
+    expect(locked.total).toBe(0);
+    await archiveSection(me, sections.C as string, { cards: "keep" });
+    await expect(
+      reviewDraw(me, { deckId: deck.id, sectionId: sections.C, zone: "UTC" }),
+    ).rejects.toMatchObject({ code: "not_found" });
   });
 });
 

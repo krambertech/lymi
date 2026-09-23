@@ -2824,6 +2824,9 @@ msgstr "Review them"
 msgid "Review these decks together, in this order."
 msgstr "Review these decks together, in this order."
 
+msgid "Review this section"
+msgstr "Review this section"
+
 msgid "Review this series"
 msgstr "Review this series"
 

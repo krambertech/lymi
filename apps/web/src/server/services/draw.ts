@@ -92,6 +92,7 @@ export interface DrawOptions {
   deckId?: string | undefined;
   /** Only the decks of the caller's own active series. */
   seriesId?: string | undefined;
+  sectionId?: string | undefined;
   /** Also load slipping cards whatever their due, for the slipping round. */
   slipping?: boolean | undefined;
 }
@@ -170,6 +171,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
     opts.seriesId ? inSeries(userId, opts.seriesId) : undefined,
+    opts.sectionId ? eq(schema.cards.sectionId, opts.sectionId) : undefined,
     waiting ? sql`not (${waiting})` : undefined,
   );
   const siblingOn = and(

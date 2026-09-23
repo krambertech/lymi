@@ -266,6 +266,9 @@ function DeckPage() {
         sections={sectionList}
         progress={deck?.sectionProgression === "open" ? null : sections.data?.progress}
         onStartSection={startSection}
+        onReviewSection={(section) =>
+          navigate({ to: "/review", search: { deck: deckId, section: section.id } })
+        }
         startingSection={sectionActions.start.isPending}
         sectionActions={
           isOwner

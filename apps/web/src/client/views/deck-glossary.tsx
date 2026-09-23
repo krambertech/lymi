@@ -43,6 +43,7 @@ import {
   type DeckRow,
   type DeckSort,
   dueBucket,
+  dueToday,
   rowState,
   splitForms,
 } from "../lib/deck-list";
@@ -301,6 +302,7 @@ function GroupList({
               <SectionHeading
                 label={label}
                 count={group.rows.length}
+                due={group.rows.some((row) => dueToday(row, now))}
                 section={section}
                 here={!!progress && !!section && section.id === progress.currentId}
                 onStart={onStart}
@@ -390,6 +392,7 @@ function DropGroup({
 function SectionHeading({
   label,
   count,
+  due,
   section,
   here,
   onStart,
@@ -398,6 +401,8 @@ function SectionHeading({
 }: {
   label: string;
   count: number;
+  /** Holds a card due today, so reviewing it alone has something to show. */
+  due: boolean;
   section: Section | null;
   here: boolean;
   onStart?: ((section: Section) => void) | undefined;
@@ -406,7 +411,7 @@ function SectionHeading({
 }) {
   const { t, i18n } = useLingui();
   const locked = !!section && section.status !== "open";
-  const reviewable = !!onReview && !locked && count > 0;
+  const reviewable = !!onReview && !locked && due;
   const sectionName = section?.name ?? "";
   return (
     <div className="flex min-h-11 flex-wrap items-center gap-x-2 gap-y-1 px-1 pt-6 pb-2">

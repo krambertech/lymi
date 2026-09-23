@@ -48,6 +48,10 @@ export function dueBucket(row: DeckRow, now: number): DueBucket {
   return due - now <= WEEK ? "week" : "later";
 }
 
+/** In review today: a card with a schedule that comes due before the day ends. */
+export const dueToday = (row: DeckRow, now: number): boolean =>
+  !!row.state && dueAt(row) < endOfDay(now);
+
 export function activeFilterCount(filters: DeckFilters): number {
   return filters.states.length + (filters.due ? 1 : 0) + filters.sections.length;
 }

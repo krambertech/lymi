@@ -6,7 +6,7 @@ import type { ServiceContext } from "./context";
 import { createDeck, listDeckCards, listDecks, updateDeck } from "./decks";
 import { drawInputs } from "./draw";
 import { join } from "./members";
-import { gradeCard, reviewDraw, reviewRounds } from "./review";
+import { gradeCard, reviewDraw, reviewQueue, reviewRounds } from "./review";
 import {
   archiveSection,
   createSection,
@@ -270,6 +270,69 @@ describe("sections", () => {
     await expect(renameSection(stranger, sections.A as string, "X")).rejects.toMatchObject({
       code: "not_found",
     });
+  });
+});
+
+describe("reviewing one section", () => {
+  it("draws only that section's cards, for the owner and a member alike", async () => {
+    const me = await person("Kateryna");
+    const member = await person("Mari");
+    const stranger = await person("Juhan");
+    const { deck, sections } = await sectioned(me, { A: ["a1", "a2"], B: ["b1"] }, ["loose"], {
+      sectionProgression: "open",
+    });
+    await join(member, deck.id);
+    const A = sections.A as string;
+
+    for (const ctx of [me, member]) {
+      const draw = await reviewDraw(ctx, { deckId: deck.id, sectionId: A, zone: "UTC" });
+      expect(draw.total).toBe(2);
+      expect(draw.cards.map((c) => c.card.term).sort()).toEqual(["a1", "a2"]);
+      const queue = await reviewQueue(ctx, { deckId: deck.id, sectionId: A });
+      expect(queue.items.map((i) => i.card.term).sort()).toEqual(["a1", "a2"]);
+    }
+    await expect(
+      reviewDraw(stranger, { deckId: deck.id, sectionId: A, zone: "UTC" }),
+    ).rejects.toMatchObject({ code: "not_found" });
+  });
+
+  it("reports each section's due count as the deck's due count counts it", async () => {
+    const me = await person("Kateryna");
+    const { deck, sections, cards } = await sectioned(me, { A: ["a1", "a2"], B: ["b1"] }, [
+      "loose",
+    ]);
+    // Started early: a locked section's started card stays in review, and its section says so.
+    await forget(me, cards.b1 as string);
+
+    const due = (await listSections(me, deck.id)).sections.map((s) => [s.name, s.due]);
+    expect(due).toEqual([
+      ["A", 2],
+      ["B", 1],
+    ]);
+    const draw = await reviewDraw(me, { deckId: deck.id, sectionId: sections.B, zone: "UTC" });
+    expect(draw.total).toBe(1);
+    expect((await listDecks(me)).find((d) => d.id === deck.id)?.due).toBe(4);
+  });
+
+  it("is not found with a deck the section is not in", async () => {
+    const me = await person("Kateryna");
+    const one = await sectioned(me, { A: ["a1"] });
+    const other = await createDeck(me, { name: "Other" });
+    await expect(
+      reviewDraw(me, { deckId: other.id, sectionId: one.sections.A, zone: "UTC" }),
+    ).rejects.toMatchObject({ code: "not_found" });
+  });
+
+  it("leaves out a locked section's cards, and an archived section is not found", async () => {
+    const me = await person("Kateryna");
+    const { deck, sections } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });
+
+    const locked = await reviewDraw(me, { deckId: deck.id, sectionId: sections.B, zone: "UTC" });
+    expect(locked.total).toBe(0);
+    await archiveSection(me, sections.C as string, { cards: "keep" });
+    await expect(
+      reviewDraw(me, { deckId: deck.id, sectionId: sections.C, zone: "UTC" }),
+    ).rejects.toMatchObject({ code: "not_found" });
   });
 });
 

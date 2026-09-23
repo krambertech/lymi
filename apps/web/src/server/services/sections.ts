@@ -12,8 +12,10 @@ import { type Db, schema } from "../db";
 import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
+import { drawableBySection } from "./draw";
 import { deckAccess, memberOf, ownedDeck } from "./members";
 import { askedSql, stateStatementsForDeck } from "./modes";
+import { getSettings } from "./settings";
 
 type Statement = Parameters<Db["batch"]>[0][number];
 
@@ -171,6 +173,7 @@ export async function listSections(
         total: 0,
         known: 0,
         notStarted: 0,
+        due: 0,
         knownNeeded: 0,
         status: "open" as const,
         archivedCards: archived.get(row.id) ?? 0,
@@ -181,6 +184,8 @@ export async function listSections(
 
   const progress = (await progressByDeck(ctx, deckId)).get(deck.id);
   const byId = new Map(progress?.sections.map((s) => [s.id, s]));
+  const zone = (await getSettings(ctx)).reviewTimezone ?? "UTC";
+  const due = await drawableBySection(ctx, deckId, zone);
   return {
     sections: rows.map((row) => {
       const standing = byId.get(row.id);
@@ -189,6 +194,7 @@ export async function listSections(
         total: standing?.total ?? 0,
         known: standing?.known ?? 0,
         notStarted: standing?.notStarted ?? 0,
+        due: due.get(row.id) ?? 0,
         knownNeeded: standing?.knownNeeded ?? 0,
         status: standing?.status ?? ("open" as const),
         archivedCards: 0,
@@ -208,6 +214,13 @@ async function sectionAccess(ctx: ServiceContext, id: string) {
     throw notFound("Section");
   });
   return { section: row, deck };
+}
+
+/** An active section the caller can see, of `deckId` when given; an archived one reviews nothing. */
+export async function visibleSection(ctx: ServiceContext, id: string, deckId?: string) {
+  const { section } = await sectionAccess(ctx, id);
+  if (section.archivedAt || (deckId && section.deckId !== deckId)) throw notFound("Section");
+  return section;
 }
 
 /** A section of a deck the caller owns, or forbidden when they only study it. */

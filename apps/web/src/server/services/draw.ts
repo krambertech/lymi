@@ -92,6 +92,7 @@ export interface DrawOptions {
   deckId?: string | undefined;
   /** Only the decks of the caller's own active series. */
   seriesId?: string | undefined;
+  sectionId?: string | undefined;
   /** Also load slipping cards whatever their due, for the slipping round. */
   slipping?: boolean | undefined;
 }
@@ -170,6 +171,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
     opts.seriesId ? inSeries(userId, opts.seriesId) : undefined,
+    opts.sectionId ? eq(schema.cards.sectionId, opts.sectionId) : undefined,
     waiting ? sql`not (${waiting})` : undefined,
   );
   const siblingOn = and(
@@ -307,6 +309,28 @@ export async function drawableCount(
 ): Promise<number> {
   const { cards, log, day } = await drawInputs(ctx, opts);
   return countDrawable(cards, log, day);
+}
+
+/** The same count for each section of one deck, keyed by section id. */
+export async function drawableBySection(
+  ctx: ServiceContext,
+  deckId: string,
+  zone: string,
+): Promise<Map<string, number>> {
+  const { cards, log, day } = await drawInputs(ctx, { deckId, zone });
+  const placed = await ctx.db
+    .select({ id: schema.cards.id, sectionId: schema.cards.sectionId })
+    .from(schema.cards)
+    .where(and(eq(schema.cards.deckId, deckId), isNotNull(schema.cards.sectionId)));
+  const sectionOf = new Map(placed.map((row) => [row.id, row.sectionId]));
+  const bySection = new Map<string, DrawCard[]>();
+  for (const card of cards) {
+    const sectionId = sectionOf.get(card.cardId);
+    if (sectionId) bySection.set(sectionId, [...(bySection.get(sectionId) ?? []), card]);
+  }
+  return new Map(
+    [...bySection].map(([sectionId, list]) => [sectionId, countDrawable(list, log, day)]),
+  );
 }
 
 /** The same count for every deck at once, as Library and Today show them. */

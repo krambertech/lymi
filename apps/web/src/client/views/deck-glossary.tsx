@@ -16,7 +16,16 @@ import {
 } from "@dnd-kit/core";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Check, Lock, MapPin, MoreHorizontal, PencilLine, Plus, Settings2 } from "lucide-react";
+import {
+  Check,
+  Lock,
+  MapPin,
+  MoreHorizontal,
+  PencilLine,
+  Play,
+  Plus,
+  Settings2,
+} from "lucide-react";
 import { type ButtonHTMLAttributes, type ReactNode, useMemo, useRef, useState } from "react";
 import { Button, IconButton } from "../components/button";
 import { SectionRing } from "../components/section-ring";
@@ -76,6 +85,8 @@ export interface GlossaryProps {
   progress?: Sections["progress"] | undefined;
   /** Start a ready or locked section. */
   onStart?: ((section: Section) => void) | undefined;
+  /** Review only one section's cards. */
+  onReview?: ((section: Section) => void) | undefined;
   /** Present for the owner. */
   editing?: SectionEditing | undefined;
   /** Drag cards and sections. Only while the list shows every section, unfiltered. */
@@ -231,6 +242,7 @@ function GroupList({
   now,
   progress,
   onStart,
+  onReview,
   editing,
   movable,
   selection,
@@ -292,6 +304,7 @@ function GroupList({
                 section={section}
                 here={!!progress && !!section && section.id === progress.currentId}
                 onStart={onStart}
+                onReview={onReview}
                 editing={editing}
               />
             )}
@@ -380,6 +393,7 @@ function SectionHeading({
   section,
   here,
   onStart,
+  onReview,
   editing,
 }: {
   label: string;
@@ -387,10 +401,13 @@ function SectionHeading({
   section: Section | null;
   here: boolean;
   onStart?: ((section: Section) => void) | undefined;
+  onReview?: ((section: Section) => void) | undefined;
   editing?: SectionEditing | undefined;
 }) {
   const { t, i18n } = useLingui();
   const locked = !!section && section.status !== "open";
+  // A card started early in a section that is not open is still in review, so it counts here too.
+  const reviewable = !!onReview && !!section && section.due > 0;
   const sectionName = section?.name ?? "";
   return (
     <div className="flex min-h-11 flex-wrap items-center gap-x-2 gap-y-1 px-1 pt-6 pb-2">
@@ -427,7 +444,7 @@ function SectionHeading({
           <Trans>Start anyway</Trans>
         </Button>
       )}
-      {section && editing && (
+      {section && (editing || reviewable) && (
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -437,19 +454,30 @@ function SectionHeading({
             }
           />
           <DropdownMenuContent aria-label={t`Options for ${sectionName}`} align="end">
-            <DropdownMenuItem onClick={() => editing.onAddCard(section)}>
-              <Plus />
-              <Trans>Add card here</Trans>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => editing.onRename(section)}>
-              <PencilLine />
-              <Trans>Rename</Trans>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={editing.onManage}>
-              <Settings2 />
-              <Trans>Arrange sections</Trans>
-            </DropdownMenuItem>
+            {reviewable && (
+              <DropdownMenuItem onClick={() => onReview(section)}>
+                <Play />
+                <Trans>Review this section</Trans>
+              </DropdownMenuItem>
+            )}
+            {reviewable && editing && <DropdownMenuSeparator />}
+            {editing && (
+              <>
+                <DropdownMenuItem onClick={() => editing.onAddCard(section)}>
+                  <Plus />
+                  <Trans>Add card here</Trans>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => editing.onRename(section)}>
+                  <PencilLine />
+                  <Trans>Rename</Trans>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={editing.onManage}>
+                  <Settings2 />
+                  <Trans>Arrange sections</Trans>
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )}

@@ -54,10 +54,14 @@ import {
 export const Route = createFileRoute("/review")({
   validateSearch: (
     s: Record<string, unknown>,
-  ): { deck?: string; series?: string; round?: Round } => {
+  ): { deck?: string; series?: string; section?: string; round?: Round } => {
     const round = ROUNDS.find((r) => r === s.round);
     return {
       ...(typeof s.deck === "string" ? { deck: s.deck } : {}),
+      // A section belongs to its deck, whose sections name it.
+      ...(typeof s.section === "string" && typeof s.deck === "string"
+        ? { section: s.section }
+        : {}),
       // One scope at a time: a deck wins over a series.
       ...(typeof s.series === "string" && typeof s.deck !== "string" ? { series: s.series } : {}),
       ...(round ? { round } : {}),
@@ -118,15 +122,15 @@ function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => st
 
 /** A review of another deck or series starts over, so nothing from this one carries into it. */
 function ReviewPage() {
-  const { deck, series } = Route.useSearch();
-  return <Review key={scopeKey({ deck, series })} />;
+  const { deck, series, section } = Route.useSearch();
+  return <Review key={scopeKey({ deck, series, section })} />;
 }
 
 function Review() {
   const { t } = useLingui();
   useDocumentTitle(t`Review`);
-  const { deck, series, round } = Route.useSearch();
-  const scope = useMemo(() => ({ deck, series }), [deck, series]);
+  const { deck, series, section, round } = Route.useSearch();
+  const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
   const qc = useQueryClient();
   const navigate = useNavigate();
   const add = useAddCard();
@@ -218,11 +222,17 @@ function Review() {
     !leg || paused ? null : drawLeg ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const currentCardId = current?.card.id;
   const currentItemKey = current ? itemKey(current) : undefined;
-  const scopeName = deck
-    ? decks.data?.find((d) => d.id === deck)?.name
-    : series
-      ? seriesList.data?.find((s) => s.id === series)?.name
-      : undefined;
+  const scopeSections = useQuery({ ...sectionsQuery(deck ?? ""), enabled: !!section });
+  const scopeSection = section
+    ? scopeSections.data?.sections.find((s) => s.id === section)
+    : undefined;
+  const scopeName = section
+    ? scopeSection?.name
+    : deck
+      ? decks.data?.find((d) => d.id === deck)?.name
+      : series
+        ? seriesList.data?.find((s) => s.id === series)?.name
+        : undefined;
   const currentDeck = current ? decks.data?.find((d) => d.id === current.card.deckId) : undefined;
   // The draw carries the section's id alone; its name comes from the deck's own list, cached per deck.
   const sectionId = current?.card.sectionId ?? null;
@@ -315,7 +325,8 @@ function Review() {
   // The persisted list can predate this visit, so it waits for this mount's fetch like the draw.
   const decksLoading =
     (scoped && !decks.isFetchedAfterMount && decks.fetchStatus === "fetching") ||
-    (!!series && !seriesList.data && seriesList.fetchStatus === "fetching");
+    (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
+    (!!section && !scopeSections.isFetchedAfterMount && scopeSections.fetchStatus === "fetching");
   const result = useMemo(
     () =>
       stopped && !checking && !landing && !decksLoading && mark && data && state
@@ -330,10 +341,17 @@ function Review() {
             confirmed,
             elsewhere: !scoped
               ? 0
-              : decks.data
+              : decks.data && (!section || scopeSection)
                 ? decks.data
                     .filter((d) => (series ? d.seriesId !== series : d.id !== deck))
-                    .reduce((n, d) => n + d.due, 0)
+                    .reduce((n, d) => n + d.due, 0) +
+                  // The rest of a section's deck is its other sections.
+                  (section && scopeSection
+                    ? Math.max(
+                        0,
+                        (decks.data.find((d) => d.id === deck)?.due ?? 0) - scopeSection.due,
+                      )
+                    : 0)
                 : null,
             forgotten: forgottenItems.length,
           })
@@ -353,6 +371,8 @@ function Review() {
       scoped,
       series,
       deck,
+      section,
+      scopeSection,
       forgottenItems,
       decks.data,
     ],
@@ -428,7 +448,11 @@ function Review() {
     if (round) {
       void navigate({
         to: "/review",
-        search: { ...(deck ? { deck } : {}), ...(series ? { series } : {}) },
+        search: {
+          ...(deck ? { deck } : {}),
+          ...(series ? { series } : {}),
+          ...(section ? { section } : {}),
+        },
         replace: true,
       });
     }

@@ -31,7 +31,7 @@ import {
   settleDay,
   streak as streakSummary,
 } from "./review-days";
-import { openReadySections } from "./sections";
+import { openReadySections, visibleSection } from "./sections";
 import { activeSeries } from "./series-access";
 import { getSettings } from "./settings";
 
@@ -45,6 +45,7 @@ export async function reviewQueue(
   opts: {
     deckId?: string | undefined;
     seriesId?: string | undefined;
+    sectionId?: string | undefined;
     limit?: number | undefined;
     round?: Round | undefined;
   } = {},
@@ -52,10 +53,12 @@ export async function reviewQueue(
   const limit = Math.min(opts.limit ?? 50, 200);
   const now = new Date();
   const zone = await reviewZone(ctx);
-  const { round, deckId, seriesId } = opts;
+  const { round, deckId, seriesId, sectionId } = opts;
   if (seriesId) await activeSeries(ctx, seriesId);
+  if (sectionId) await visibleSection(ctx, sectionId, deckId);
   const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     deckId,
+    sectionId,
     seriesId,
     now,
     zone,
@@ -114,6 +117,7 @@ export async function reviewDraw(
   opts: {
     deckId?: string | undefined;
     seriesId?: string | undefined;
+    sectionId?: string | undefined;
     limit?: number | undefined;
     zone?: string | undefined;
   },
@@ -123,11 +127,13 @@ export async function reviewDraw(
   const zone = await reviewZone(ctx, opts.zone);
   const settings = await getSettings(ctx);
   if (opts.seriesId) await activeSeries(ctx, opts.seriesId);
-  // The series narrows the rows loaded, so the rules need no scope of their own for it.
+  if (opts.sectionId) await visibleSection(ctx, opts.sectionId, opts.deckId);
+  // The series or section narrows the rows loaded, so the rules need no scope of their own for it.
   const scope = { deckId: opts.deckId };
   const { cards, log, day, states } = await drawInputs(ctx, {
     ...scope,
     seriesId: opts.seriesId,
+    sectionId: opts.sectionId,
     now,
     zone,
   });

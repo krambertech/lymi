@@ -3,6 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type Directions, LANGUAGE_TAGS } from "@lymi/core";
 import { useId, useState } from "react";
+import { languageName } from "../lib/language-name";
 import { RadioCard } from "./radio-card";
 import { Segmented } from "./segmented";
 import {
@@ -27,23 +28,8 @@ import { RadioGroup } from "./ui/radio-group";
 
 const TAGS: readonly string[] = LANGUAGE_TAGS;
 
-/** One display-name lookup per interface language; the locale can change while the app runs. */
-const names = new Map<string, Intl.DisplayNames | null>();
-/** "it" reads as Italian. Falls back to the tag where the browser has no name for it. */
-export function languageName(tag: string, locale: string = globalI18n.locale): string {
-  if (!names.has(locale)) {
-    try {
-      names.set(locale, new Intl.DisplayNames([locale], { type: "language" }));
-    } catch {
-      names.set(locale, null);
-    }
-  }
-  try {
-    return names.get(locale)?.of(tag) ?? tag;
-  } catch {
-    return tag;
-  }
-}
+// The lookup lives with the other pure helpers, so a filter can name a language without this file's controls.
+export { languageName };
 
 interface LanguageOption {
   /** `null` is the row that clears the language. */

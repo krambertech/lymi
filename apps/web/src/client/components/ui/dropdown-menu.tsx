@@ -286,6 +286,8 @@ interface ItemProps {
   disabled?: boolean | undefined;
   inset?: boolean | undefined;
   variant?: "default" | "destructive" | undefined;
+  /** False for a row that changes what the menu shows, such as a step into a filter's values. */
+  closeOnClick?: boolean | undefined;
   className?: string | undefined;
   children: React.ReactNode;
 }
@@ -293,13 +295,22 @@ interface ItemProps {
 function DropdownMenuItem(props: ItemProps) {
   const { shape } = useDropdownMenu("DropdownMenuItem");
   if (shape === "touch") return <DrawerMenuItem {...props} />;
-  const { onClick, disabled, inset, variant = "default", className, children } = props;
+  const {
+    onClick,
+    disabled,
+    inset,
+    variant = "default",
+    closeOnClick = true,
+    className,
+    children,
+  } = props;
   return (
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
       disabled={disabled}
+      closeOnClick={closeOnClick}
       onClick={() => onClick?.()}
       className={cn(itemClassName, className)}
     >
@@ -313,6 +324,7 @@ function DrawerMenuItem({
   disabled,
   inset,
   variant = "default",
+  closeOnClick = true,
   className,
   children,
 }: ItemProps) {
@@ -331,7 +343,7 @@ function DrawerMenuItem({
       className: cn(itemClassName, touchItemClassName, className),
       onClick: () => {
         if (disabled) return;
-        setOpen(false);
+        if (closeOnClick) setOpen(false);
         onClick?.();
       },
       children,

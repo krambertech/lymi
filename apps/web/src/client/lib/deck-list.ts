@@ -8,15 +8,6 @@ export type DeckSort = "section" | "due" | "added" | "az";
 /** Where a card stands in its schedule, as the When it's back headings name it. */
 export type DueBucket = "now" | "week" | "later" | "new";
 
-export interface DeckFilters {
-  states: StateKey[];
-  due: "today" | "week" | null;
-  /** Section ids; "" is a card with no section. */
-  sections: string[];
-}
-
-export const noFilters: DeckFilters = { states: [], due: null, sections: [] };
-
 export type DeckGroup =
   | { kind: "all"; key: string; rows: DeckRow[] }
   | { kind: "section"; key: string; section: Section | null; rows: DeckRow[] }
@@ -31,11 +22,6 @@ export const rowState = (row: DeckRow): StateKey => stateKey(row.state?.state);
 const createdAt = (row: DeckRow) => new Date(row.card.createdAt).getTime();
 const dueAt = (row: DeckRow) => (row.state ? new Date(row.state.due).getTime() : Number.NaN);
 
-function endOfDay(now: number): number {
-  const d = new Date(now);
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
-}
-
 function startOfDay(at: number): Date {
   const d = new Date(at);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -48,39 +34,9 @@ export function dueBucket(row: DeckRow, now: number): DueBucket {
   return due - now <= WEEK ? "week" : "later";
 }
 
-export function activeFilterCount(filters: DeckFilters): number {
-  return filters.states.length + (filters.due ? 1 : 0) + filters.sections.length;
-}
-
 /** The section a card sorts under: its own when that section is listed, otherwise none. */
 export const sectionOf = (row: DeckRow, sections: readonly Section[]): string =>
   row.card.sectionId && sections.some((s) => s.id === row.card.sectionId) ? row.card.sectionId : "";
-
-export function filterRows(
-  rows: DeckRow[],
-  filters: DeckFilters,
-  query: string,
-  now: number,
-  sections: readonly Section[] = [],
-): DeckRow[] {
-  const needle = query.trim().toLocaleLowerCase();
-  const limit = filters.due === "today" ? endOfDay(now) : now + WEEK;
-  return rows.filter((row) => {
-    if (
-      needle &&
-      !row.card.term.toLocaleLowerCase().includes(needle) &&
-      !row.card.meaning?.toLocaleLowerCase().includes(needle)
-    )
-      return false;
-    if (filters.states.length && !filters.states.includes(rowState(row))) return false;
-    if (filters.sections.length && !filters.sections.includes(sectionOf(row, sections)))
-      return false;
-    if (filters.due) {
-      if (rowState(row) === "new" || !(dueAt(row) < limit)) return false;
-    }
-    return true;
-  });
-}
 
 /**
  * The list's groups. The Section sort shows every section in order, each with its cards oldest

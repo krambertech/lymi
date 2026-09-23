@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid ", back to all filters"
+msgstr ", назад до всіх фільтрів"
+
 msgid ", not open yet"
 msgstr ", ще не відкрито"
 
@@ -457,6 +460,10 @@ msgstr "{due, plural, one {картка до повторення} few {карт
 msgid "{field} becomes"
 msgstr "{field} стає"
 
+#. placeholder {0}: names(options, values)
+msgid "{fieldName}: {0}"
+msgstr "{fieldName}: {0}"
+
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {заповнено: #} few {заповнено: #} many {заповнено: #} other {заповнено: #}}"
 
@@ -573,6 +580,10 @@ msgstr "підключений застосунок"
 msgid "A connected app"
 msgstr "Підключений застосунок"
 
+msgctxt "who added a card"
+msgid "A connected app"
+msgstr "Підключений застосунок"
+
 msgid "a day"
 msgstr "день"
 
@@ -673,6 +684,9 @@ msgstr "Додати через Google"
 msgid "Add, edit and archive cards"
 msgstr "Додавати, редагувати й архівувати картки"
 
+msgid "Added"
+msgstr "Додано"
+
 #. placeholder {0}: outcome.term
 msgid "Added “{0}”"
 msgstr "Додано «{0}»"
@@ -694,6 +708,9 @@ msgstr "«{term}» додано без зображення. {pictureError}"
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "Додано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} до колоди «{deck}»"
 
+msgid "Added by"
+msgstr "Хто додав"
+
 msgid "Added today"
 msgstr "Додано сьогодні"
 
@@ -703,6 +720,14 @@ msgstr "Якщо додати спосіб, відтепер так запиту
 msgid "Ahead"
 msgstr "Попереду"
 
+msgid "AI"
+msgstr "AI"
+
+msgctxt "who added a card"
+msgid "AI"
+msgstr "AI"
+
+msgctxt "who wrote a field"
 msgid "AI"
 msgstr "AI"
 
@@ -762,9 +787,6 @@ msgstr "anna@example.com"
 
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
-
-msgid "Any time"
-msgstr "Будь-коли"
 
 msgid "Anyone can add this deck from its public page."
 msgstr "Будь-хто може додати цю колоду з її публічної сторінки."
@@ -874,6 +896,9 @@ msgstr "О {savedTime} за часом {zone}, лише в дні, коли є �
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
+
+msgid "At least once"
+msgstr "Хоча б раз"
 
 msgid "Back"
 msgstr "Назад"
@@ -1467,12 +1492,6 @@ msgstr "Час повторити"
 msgid "due this week"
 msgstr "до повторення цього тижня"
 
-msgid "Due this week"
-msgstr "Повторити цього тижня"
-
-msgid "Due today"
-msgstr "Повторити сьогодні"
-
 msgid "Each block is one day you reviewed."
 msgstr "Кожен блок — день із повтореннями."
 
@@ -1646,6 +1665,9 @@ msgstr "Поля «{0}»"
 msgid "Filter"
 msgstr "Фільтр"
 
+msgid "Filter by"
+msgstr "Фільтрувати за"
+
 msgid "For Anki, AnkiDroid and Mochi, with due dates, review history and pictures. An .apkg file."
 msgstr "Для Anki, AnkiDroid і Mochi, з датами повторення, історією повторень і зображеннями. Файл .apkg."
 
@@ -1660,6 +1682,9 @@ msgstr "Не пам’ятаєш пароль?"
 
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Не пам’ятаю, Важко, Добре, Легко"
+
+msgid "Forgotten"
+msgstr "Забуто"
 
 #. placeholder {0}: leeches.lapses
 msgid "Forgotten {0}+ times"
@@ -1825,6 +1850,14 @@ msgstr "У Mochi експортуй колоди по одній, а не все
 msgid "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
 msgstr "У Mochi відкрий колоду, відкрий її меню <0>…</0> і вибери <1>Export deck</1>."
 
+msgctxt "a period of time"
+msgid "In the last month"
+msgstr "За останній місяць"
+
+msgctxt "a period of time"
+msgid "In the last week"
+msgstr "За останній тиждень"
+
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "В іншому акаунті відкрий меню колоди й вибери <0>Експортувати</0> або вибери <1>Експортувати бібліотеку</1> в Налаштуваннях."
 
@@ -1976,6 +2009,9 @@ msgstr "Нова мова: {0}"
 msgid "Languages"
 msgstr "Мови"
 
+msgid "Last reviewed"
+msgstr "Останнє повторення"
+
 msgid "Later"
 msgstr "Пізніше"
 
@@ -2062,6 +2098,10 @@ msgstr "Виглядає правильно"
 msgid "Lymi"
 msgstr "Lymi"
 
+msgctxt "who added a card"
+msgid "Lymi"
+msgstr "Lymi"
+
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi також отримає екран, на якому ти зараз, версію застосунку, браузер і мову застосунку."
 
@@ -2122,6 +2162,9 @@ msgstr "Значення з уроку"
 msgid "Message"
 msgstr "Повідомлення"
 
+msgid "Missing"
+msgstr "Бракує"
+
 msgid "Mode"
 msgstr "Режим"
 
@@ -2133,6 +2176,9 @@ msgstr "Інші колоди"
 
 msgid "More fields"
 msgstr "Більше полів"
+
+msgid "More than a month ago"
+msgstr "Понад місяць тому"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
@@ -2196,6 +2242,9 @@ msgstr "Назва"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Назви ключ, щоб потім знати, який саме відкликати."
+
+msgid "Never"
+msgstr "Ніколи"
 
 msgid "Never allowed"
 msgstr "Ніколи не дозволено"
@@ -2350,6 +2399,12 @@ msgstr "Без розділу"
 msgid "No series"
 msgstr "Без серії"
 
+msgid "No source"
+msgstr "Без джерела"
+
+msgid "No tags"
+msgstr "Без тегів"
+
 msgid "Nobody can add it while it is archived."
 msgstr "Поки колода в архіві, її ніхто не може додати."
 
@@ -2434,8 +2489,15 @@ msgstr "Сповіщення заблоковано. Дозволь їх у на
 msgid "Notify you on this device when cards are due."
 msgstr "Сповіщати на цьому пристрої, коли є картки до повторення."
 
+msgctxt "when a card is due"
+msgid "Now"
+msgstr "Зараз"
+
 msgid "Now in {elsewhere}"
 msgstr "Зараз у «{elsewhere}»"
+
+msgid "Often"
+msgstr "Часто"
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"
@@ -2717,11 +2779,11 @@ msgctxt "photo"
 msgid "Remove"
 msgstr "Прибрати"
 
+msgid "Remove {fieldName} filter"
+msgstr "Прибрати фільтр «{fieldName}»"
+
 msgid "Remove {name}?"
 msgstr "Вилучити {name}?"
-
-msgid "Remove filter: {label}"
-msgstr "Прибрати фільтр: {label}"
 
 msgid "Remove from deck"
 msgstr "Вилучити з колоди"
@@ -3097,6 +3159,10 @@ msgstr "Сортування: {0}"
 msgid "Source"
 msgstr "Джерело"
 
+msgctxt "where a card came from, such as a lesson"
+msgid "Source"
+msgstr "Джерело"
+
 msgid "Spreadsheet"
 msgstr "Таблиця"
 
@@ -3243,6 +3309,10 @@ msgstr "API"
 msgid "The API"
 msgstr "API"
 
+msgctxt "who added a card"
+msgid "The API"
+msgstr "API"
+
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "Застосунок не вказав, куди перейти далі. Спробуй ще раз із застосунку."
 
@@ -3272,6 +3342,10 @@ msgstr "мову"
 
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "Мова термінів цієї колоди. Нові картки отримують її одразу, а вимові й доповненню від AI вона потрібна. Значення пишуться мовою застосунку."
+
+msgctxt "who wrote a field"
+msgid "The lesson"
+msgstr "Урок"
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "Посилання перестане працювати назавжди. Ті, хто приєднався, залишаться в колоді, а наступне поширення створить нове посилання."
@@ -3414,6 +3488,10 @@ msgstr "Цей тест підтверджує, що Lymi може надсил�
 msgid "This week"
 msgstr "Цього тижня"
 
+msgctxt "when a card is due"
+msgid "This week"
+msgstr "Цього тижня"
+
 msgid "Time"
 msgstr "Час"
 
@@ -3423,6 +3501,14 @@ msgstr "Щоб експортувати всі колоди одразу, від
 msgid "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
 msgstr "Щоб перенести колоду в серію чи з неї, натисни пробіл, пересунь її стрілками й натисни пробіл ще раз."
 
+msgid "Today"
+msgstr "Сьогодні"
+
+msgctxt "a period of time"
+msgid "Today"
+msgstr "Сьогодні"
+
+msgctxt "when a card is due"
 msgid "Today"
 msgstr "Сьогодні"
 
@@ -3621,6 +3707,9 @@ msgstr "Записується"
 msgid "Writing {fileName}. You can close this. The file stays in Activity for a day."
 msgstr "Записуємо {fileName}. Це вікно можна закрити. Файл буде в Активності один день."
 
+msgid "Written by"
+msgstr "Хто написав"
+
 msgid "Yes, looks right"
 msgstr "Так, правильно"
 
@@ -3630,6 +3719,14 @@ msgstr "Учора"
 msgid "you"
 msgstr "ти"
 
+msgid "You"
+msgstr "Ти"
+
+msgctxt "who added a card"
+msgid "You"
+msgstr "Ти"
+
+msgctxt "who wrote a field"
 msgid "You"
 msgstr "Ти"
 

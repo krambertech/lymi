@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid ", back to all filters"
+msgstr ", back to all filters"
+
 msgid ", not open yet"
 msgstr ", not open yet"
 
@@ -457,6 +460,10 @@ msgstr "{due, plural, one {card to review now} other {cards to review now}}"
 msgid "{field} becomes"
 msgstr "{field} becomes"
 
+#. placeholder {0}: names(options, values)
+msgid "{fieldName}: {0}"
+msgstr "{fieldName}: {0}"
+
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {# filled} other {# filled}}"
 
@@ -573,6 +580,10 @@ msgstr "a connected app"
 msgid "A connected app"
 msgstr "A connected app"
 
+msgctxt "who added a card"
+msgid "A connected app"
+msgstr "A connected app"
+
 msgid "a day"
 msgstr "a day"
 
@@ -673,6 +684,9 @@ msgstr "Add with Google"
 msgid "Add, edit and archive cards"
 msgstr "Add, edit and archive cards"
 
+msgid "Added"
+msgstr "Added"
+
 #. placeholder {0}: outcome.term
 msgid "Added “{0}”"
 msgstr "Added “{0}”"
@@ -694,6 +708,9 @@ msgstr "Added “{term}” without its picture. {pictureError}"
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
 
+msgid "Added by"
+msgstr "Added by"
+
 msgid "Added today"
 msgstr "Added today"
 
@@ -703,6 +720,14 @@ msgstr "Adding a way asks every card that way from now on. Removing one keeps it
 msgid "Ahead"
 msgstr "Ahead"
 
+msgid "AI"
+msgstr "AI"
+
+msgctxt "who added a card"
+msgid "AI"
+msgstr "AI"
+
+msgctxt "who wrote a field"
 msgid "AI"
 msgstr "AI"
 
@@ -762,9 +787,6 @@ msgstr "anna@example.com"
 
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
-
-msgid "Any time"
-msgstr "Any time"
 
 msgid "Anyone can add this deck from its public page."
 msgstr "Anyone can add this deck from its public page."
@@ -874,6 +896,9 @@ msgstr "At {savedTime}, {zone} time, only on days with cards due."
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "At least {MIN_PASSWORD_LENGTH} characters."
+
+msgid "At least once"
+msgstr "At least once"
 
 msgid "Back"
 msgstr "Back"
@@ -1467,12 +1492,6 @@ msgstr "Due now"
 msgid "due this week"
 msgstr "due this week"
 
-msgid "Due this week"
-msgstr "Due this week"
-
-msgid "Due today"
-msgstr "Due today"
-
 msgid "Each block is one day you reviewed."
 msgstr "Each block is one day you reviewed."
 
@@ -1646,6 +1665,9 @@ msgstr "Fields of {0}"
 msgid "Filter"
 msgstr "Filter"
 
+msgid "Filter by"
+msgstr "Filter by"
+
 msgid "For Anki, AnkiDroid and Mochi, with due dates, review history and pictures. An .apkg file."
 msgstr "For Anki, AnkiDroid and Mochi, with due dates, review history and pictures. An .apkg file."
 
@@ -1660,6 +1682,9 @@ msgstr "Forgot your password?"
 
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Forgot, Hard, Good, Easy"
+
+msgid "Forgotten"
+msgstr "Forgotten"
 
 #. placeholder {0}: leeches.lapses
 msgid "Forgotten {0}+ times"
@@ -1825,6 +1850,14 @@ msgstr "In Mochi, export one deck at a time instead of everything."
 msgid "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
 msgstr "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
 
+msgctxt "a period of time"
+msgid "In the last month"
+msgstr "In the last month"
+
+msgctxt "a period of time"
+msgid "In the last week"
+msgstr "In the last week"
+
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 
@@ -1976,6 +2009,9 @@ msgstr "Language changed to {0}"
 msgid "Languages"
 msgstr "Languages"
 
+msgid "Last reviewed"
+msgstr "Last reviewed"
+
 msgid "Later"
 msgstr "Later"
 
@@ -2062,6 +2098,10 @@ msgstr "Looks right"
 msgid "Lymi"
 msgstr "Lymi"
 
+msgctxt "who added a card"
+msgid "Lymi"
+msgstr "Lymi"
+
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your browser and your app language."
 
@@ -2122,6 +2162,9 @@ msgstr "Meaning from lesson"
 msgid "Message"
 msgstr "Message"
 
+msgid "Missing"
+msgstr "Missing"
+
 msgid "Mode"
 msgstr "Mode"
 
@@ -2133,6 +2176,9 @@ msgstr "More decks"
 
 msgid "More fields"
 msgstr "More fields"
+
+msgid "More than a month ago"
+msgstr "More than a month ago"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
@@ -2196,6 +2242,9 @@ msgstr "Name"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Name the key, so you know which one to revoke later."
+
+msgid "Never"
+msgstr "Never"
 
 msgid "Never allowed"
 msgstr "Never allowed"
@@ -2350,6 +2399,12 @@ msgstr "No section"
 msgid "No series"
 msgstr "No series"
 
+msgid "No source"
+msgstr "No source"
+
+msgid "No tags"
+msgstr "No tags"
+
 msgid "Nobody can add it while it is archived."
 msgstr "Nobody can add it while it is archived."
 
@@ -2434,8 +2489,15 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 msgid "Notify you on this device when cards are due."
 msgstr "Notify you on this device when cards are due."
 
+msgctxt "when a card is due"
+msgid "Now"
+msgstr "Now"
+
 msgid "Now in {elsewhere}"
 msgstr "Now in {elsewhere}"
+
+msgid "Often"
+msgstr "Often"
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
@@ -2717,11 +2779,11 @@ msgctxt "photo"
 msgid "Remove"
 msgstr "Remove"
 
+msgid "Remove {fieldName} filter"
+msgstr "Remove {fieldName} filter"
+
 msgid "Remove {name}?"
 msgstr "Remove {name}?"
-
-msgid "Remove filter: {label}"
-msgstr "Remove filter: {label}"
 
 msgid "Remove from deck"
 msgstr "Remove from deck"
@@ -3097,6 +3159,10 @@ msgstr "Sort: {0}"
 msgid "Source"
 msgstr "Source"
 
+msgctxt "where a card came from, such as a lesson"
+msgid "Source"
+msgstr "Source"
+
 msgid "Spreadsheet"
 msgstr "Spreadsheet"
 
@@ -3243,6 +3309,10 @@ msgstr "the API"
 msgid "The API"
 msgstr "The API"
 
+msgctxt "who added a card"
+msgid "The API"
+msgstr "The API"
+
 msgid "The app did not say where to go next. Try again from the app."
 msgstr "The app did not say where to go next. Try again from the app."
 
@@ -3272,6 +3342,10 @@ msgstr "the language"
 
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
+
+msgctxt "who wrote a field"
+msgid "The lesson"
+msgstr "The lesson"
 
 msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
 msgstr "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
@@ -3414,6 +3488,10 @@ msgstr "This test confirms that Lymi can send account emails."
 msgid "This week"
 msgstr "This week"
 
+msgctxt "when a card is due"
+msgid "This week"
+msgstr "This week"
+
 msgid "Time"
 msgstr "Time"
 
@@ -3423,6 +3501,14 @@ msgstr "To export every deck at once, open <0>Settings</0> and choose <1>Export 
 msgid "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
 msgstr "To move a deck into or out of a series, press Space, use the arrow keys, and press Space again."
 
+msgid "Today"
+msgstr "Today"
+
+msgctxt "a period of time"
+msgid "Today"
+msgstr "Today"
+
+msgctxt "when a card is due"
 msgid "Today"
 msgstr "Today"
 
@@ -3621,6 +3707,9 @@ msgstr "Writing"
 msgid "Writing {fileName}. You can close this. The file stays in Activity for a day."
 msgstr "Writing {fileName}. You can close this. The file stays in Activity for a day."
 
+msgid "Written by"
+msgstr "Written by"
+
 msgid "Yes, looks right"
 msgstr "Yes, looks right"
 
@@ -3630,6 +3719,14 @@ msgstr "Yesterday"
 msgid "you"
 msgstr "you"
 
+msgid "You"
+msgstr "You"
+
+msgctxt "who added a card"
+msgid "You"
+msgstr "You"
+
+msgctxt "who wrote a field"
 msgid "You"
 msgstr "You"
 

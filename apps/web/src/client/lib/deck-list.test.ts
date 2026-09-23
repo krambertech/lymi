@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Card, CardState, Section } from "./api";
-import { type DeckRow, dueBucket, filterRows, groupRows, noFilters, splitForms } from "./deck-list";
+import { type DeckRow, dueBucket, groupRows, splitForms } from "./deck-list";
 
 const day = 86_400_000;
 const now = new Date(2026, 8, 15, 10, 0).getTime();
@@ -45,40 +45,6 @@ describe("dueBucket", () => {
   it("splits later cards at seven days", () => {
     expect(dueBucket(row("a", { state: 2, due: 7 }), now)).toBe("week");
     expect(dueBucket(row("b", { state: 2, due: 7.5 }), now)).toBe("later");
-  });
-});
-
-describe("filterRows", () => {
-  const ids = (list: DeckRow[]) => list.map((r) => r.card.id);
-
-  it("searches the term and the meaning", () => {
-    expect(ids(filterRows(rows, noFilters, "DUENOW", now))).toEqual(["dueNow"]);
-    expect(ids(filterRows(rows, noFilters, "meaning of fresh", now))).toEqual(["fresh"]);
-  });
-
-  it("combines states within a filter and filters with each other", () => {
-    const known = filterRows(rows, { ...noFilters, states: ["known"] }, "", now);
-    expect(ids(known)).toEqual(["dueLaterToday", "dueInFive", "dueInForty"]);
-    const knownInS4 = filterRows(
-      rows,
-      { ...noFilters, states: ["known", "new"], sections: ["s4", ""] },
-      "",
-      now,
-      sections,
-    );
-    expect(ids(knownInS4)).toEqual(["dueInFive", "dueInForty", "fresh"]);
-  });
-
-  it("takes today as the rest of the local day and never counts a new card as due", () => {
-    expect(ids(filterRows(rows, { ...noFilters, due: "today" }, "", now))).toEqual([
-      "dueNow",
-      "dueLaterToday",
-    ]);
-    expect(ids(filterRows(rows, { ...noFilters, due: "week" }, "", now))).toEqual([
-      "dueNow",
-      "dueLaterToday",
-      "dueInFive",
-    ]);
   });
 });
 

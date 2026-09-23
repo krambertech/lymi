@@ -112,6 +112,18 @@ export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
 });
 export type SectionProgression = z.infer<typeof SectionProgression>;
 
+/**
+ * An id the caller chose for what it creates, in `newId`'s alphabet. Sending the same create
+ * again returns what the first one made instead of making a second, so an offline write replays safely.
+ */
+export const ClientId = z
+  .string()
+  .regex(/^[0-9a-z]{16,40}$/, "Use 16 to 40 lowercase letters and digits.")
+  .meta({
+    description:
+      "Optional id for the new item, 16 to 40 lowercase letters and digits. A create repeated with the same id returns the first result instead of adding again.",
+  });
+
 export const DeckInput = z.object({
   name: z
     .string()
@@ -137,6 +149,9 @@ export const DeckInput = z.object({
   sectionProgression: SectionProgression.optional(),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
+
+export const NewDeckInput = DeckInput.extend({ id: ClientId.optional() });
+export type NewDeckInput = z.infer<typeof NewDeckInput>;
 
 /** Card fields an edition may carry. The rest of the card is shared by every edition. ADR 0015. */
 export const EDITION_CARD_FIELDS = [
@@ -443,6 +458,7 @@ export const CARD_LIMITS = {
 } as const;
 
 export const CardInput = z.object({
+  id: ClientId.optional(),
   deckId: z.string().min(1, "Choose a deck."),
   term: z
     .string()
@@ -500,7 +516,14 @@ export const cardLimits = {
 
 /** A batch add. A lesson is 20 to 40 terms; one call, not one per term. */
 export const CardsInput = z.object({
-  cards: z.array(CardInput).min(1).max(200),
+  cards: z
+    .array(CardInput)
+    .min(1)
+    .max(200)
+    .refine((cards) => {
+      const ids = cards.flatMap((card) => (card.id ? [card.id] : []));
+      return new Set(ids).size === ids.length;
+    }, "Give each card its own id."),
 });
 export type CardsInput = z.infer<typeof CardsInput>;
 
@@ -512,7 +535,7 @@ export const ActivityQuery = z.object({
 export type ActivityQuery = z.infer<typeof ActivityQuery>;
 
 export const CardPatch = CardInput.partial()
-  .omit({ deckId: true, enrich: true })
+  .omit({ id: true, deckId: true, enrich: true })
   .extend({
     deckId: z.string().min(1).optional(),
   });

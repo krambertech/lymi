@@ -256,8 +256,9 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description:
         'Add one or many cards, across any decks, in one call. A term already in the learner\'s decks is skipped, never rejected, and the result names the existing card. Say meaningSource "lesson" when the meaning is in the material, so the learner can tell it from text you composed. Empty fields stay empty unless a card sets enrich to true. Needs write.',
       inputSchema: z.object({
+        // Ids chosen by the caller are for the app's offline replay; a model has no use for one.
         cards: z
-          .array(CardInput)
+          .array(CardInput.omit({ id: true }))
           .min(1)
           .max(200)
           .describe("Up to 200 cards. Outcomes come back in the same order."),

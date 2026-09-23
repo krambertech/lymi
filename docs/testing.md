@@ -77,7 +77,7 @@ Write a test at the cheapest layer that can observe the behaviour. A feature owe
 
 A journey earns its place by proving something no lower layer can see:
 
-- Offline behaviour and what survives it: the grade outbox, a queue that replays, a cached shell, a request that fails and is retried.
+- Offline behaviour and what survives it: the grade and write outboxes, a queue that replays, a cached shell, a request that fails and is retried.
 - The service worker, the manifest and installability.
 - Persistence across a reload, a sign-out, or a second learner on the same browser.
 - A clock crossing midnight in a live client.
@@ -209,6 +209,8 @@ The consent is remembered per client and learner, so a second authorize goes str
 Keep this path real. Use accessible roles and labels, do not mock Lymi's own APIs, do not use fixed sleeps, and do not add test-only application routes. Prefer public APIs for setup that is not the behavior under test. A new journey needs one of the reasons under Where a test goes, or a critical learner outcome the canonical path cannot express, named here.
 
 `e2e/deck-creation.spec.ts` owns deck and card creation: validation, routing and persistence, deck targeting, duplicate handling, optional meanings, archived-deck protection, and responsive controls from 320 px phone layouts through wide desktop. Each scenario, browser project, retry, and repeat up to `--repeat-each=10` has its own learner account so one test cannot inherit another test's data.
+
+`e2e/writes-offline.spec.ts` owns the write outbox: a deck and a card in it made while every write is cut off show at once, survive a reload that cannot send them, and reach the server in order once writes go through. Ordering, holds, backoff and refusals are unit tests in `client/lib/writes.test.ts`, and how waiting writes show in the cached lists is in `write-projections.test.ts`.
 
 `e2e/shared-deck-join.spec.ts` owns sharing a deck: the owner turns on the join link, the fetched join page's title and Open Graph tags name the deck without card content, the page shows example cards, a signed-out classmate joins through the link, a repeat join changes nothing, and turning the link off keeps the member while the old URL admits nobody. The classmate signs up through the local email form from `/join/<token>?dev=1`, which carries the link through sign-in the same way Google sign-in does.
 

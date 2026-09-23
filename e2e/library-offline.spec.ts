@@ -1,17 +1,15 @@
 import { startAsTestLearner } from "./auth";
-import { expect, type Page, test } from "./test";
+import { expect, forgetPersistedCache, type Page, persistedCache, test } from "./test";
 
 /** The deck list, and only that: sign-in and the rest of the screen still reach the server. */
 const DECK_LIST = "**/api/decks";
 
 /** Which queries the cache that survives a reload holds. The persister writes it a moment late. */
-function persistedQueries(page: Page) {
-  return page.evaluate(() => {
-    const raw = window.localStorage.getItem("lymi-query-cache");
-    if (!raw) return [] as string[];
-    const cache = JSON.parse(raw) as { clientState: { queries: { queryKey: unknown }[] } };
-    return cache.clientState.queries.map((query) => JSON.stringify(query.queryKey));
-  });
+async function persistedQueries(page: Page) {
+  const raw = await persistedCache(page);
+  if (!raw) return [] as string[];
+  const cache = JSON.parse(raw) as { clientState: { queries: { queryKey: unknown }[] } };
+  return cache.clientState.queries.map((query) => JSON.stringify(query.queryKey));
 }
 
 /**
@@ -47,6 +45,7 @@ test("a learner whose deck list fails sees an error they can retry", async ({
   await test.step("with nothing cached, it says what failed instead of waiting", async () => {
     // Emptied before the app boots: clearing from the page races the persister writing it back.
     await page.addInitScript(() => window.localStorage.clear());
+    await page.addInitScript(forgetPersistedCache);
     await page.reload();
     await expect(page.getByRole("heading", { name: "Couldn’t load Library" })).toBeVisible();
     await expect(page.getByText(deckName, { exact: true })).toHaveCount(0);

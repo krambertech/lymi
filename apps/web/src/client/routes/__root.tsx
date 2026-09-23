@@ -14,12 +14,11 @@ import { AddCardSheet } from "../components/add-card-sheet";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckSheet } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
-import { Toaster } from "../components/ui/toast";
+import { Toaster, toast } from "../components/ui/toast";
 import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
-import { flushOutbox } from "../lib/grades";
 import {
   activate,
   bootstrapLanguage,
@@ -30,8 +29,11 @@ import {
 } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
+import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
+import { warmCache } from "../lib/warm-cache";
+import { claimWrites, flushWrites, onNotice } from "../lib/writes";
 import { AppShell, Sidebar } from "../views/shell";
 
 // Local and isolated preview builds only. Vite drops the import from production.
@@ -86,6 +88,7 @@ function Root() {
 }
 
 function Shell() {
+  const { t } = useLingui();
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -152,18 +155,65 @@ function Shell() {
     }
   }, [me.isError, me.error, bare, navigate]);
 
-  // The one place queued grades replay: after sign-in and whenever the connection returns.
+  // Queued writes and grades replay after sign-in, when the connection returns, and when the app
+  // comes back to the front; the lists refetch once something landed.
+  const learnerId = me.data?.id;
   useEffect(() => {
-    if (!me.isSuccess) return;
+    if (!learnerId) return;
+    claimWrites(learnerId);
     const flush = () => {
-      void flushOutbox().then((sent) => {
-        if (sent > 0) void queryClient.invalidateQueries({ queryKey: ["queue"] });
+      void flushWrites().then((flushed) => {
+        if (flushed.sent > 0) void queryClient.invalidateQueries({ queryKey: ["decks"] });
+        if (flushed.sent + flushed.graded > 0) {
+          void queryClient.invalidateQueries({ queryKey: ["queue"] });
+        }
       });
+    };
+    const onVisible = () => {
+      if (document.visibilityState === "visible") flush();
     };
     flush();
     window.addEventListener("online", flush);
-    return () => window.removeEventListener("online", flush);
-  }, [me.isSuccess, queryClient]);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.removeEventListener("online", flush);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [learnerId, queryClient]);
+
+  // Every deck's cards, sections and draw are fetched once while online, so each opens offline.
+  // Keyed on the ids, not the list, so a review moving a count does not start it again.
+  const deckIds = decks.data?.map((deck) => deck.id).join(" ");
+  useEffect(() => {
+    if (!deckIds) return;
+    const idle = window.setTimeout(() => void warmCache(queryClient, deckIds.split(" ")), 2000);
+    return () => window.clearTimeout(idle);
+  }, [deckIds, queryClient]);
+
+  // A write made offline that the server would not take is said once, naming what it was.
+  useEffect(
+    () =>
+      onNotice((notice) => {
+        const label = shortQuote(notice.label);
+        if (notice.reason === "skipped") {
+          const deckName = notice.deckName;
+          toast.add({
+            title: t`“${label}” was already in ${deckName}, so the copy added offline was left out.`,
+          });
+        } else {
+          const reason = notice.message;
+          toast.add({
+            type: "error",
+            title: label
+              ? t`A change to “${label}” made offline couldn’t be saved. ${reason}`
+              : t`A change made offline couldn’t be saved. ${reason}`,
+          });
+        }
+        void queryClient.invalidateQueries({ queryKey: ["decks"] });
+        void queryClient.invalidateQueries({ queryKey: ["cards"] });
+      }),
+    [queryClient, t],
+  );
 
   // Global shortcuts: N adds, R reviews. Ignored while typing.
   useEffect(() => {

@@ -4,14 +4,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "cn";
 import { useRef, useState } from "react";
-import { api, type Deck, errorMessage } from "../lib/api";
+import { errorMessage } from "../lib/api";
 import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
+import { writes } from "../lib/writes";
 import { Button } from "./button";
 import { DirectionCompact, LanguageField } from "./deck-fields";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Field, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
+import { toast } from "./ui/toast";
 
 interface Props {
   open: boolean;
@@ -28,11 +30,12 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
   const qc = useQueryClient();
   const navigate = useNavigate();
   const create = useMutation({
-    mutationFn: (input: DeckInput) => api.createDeck(input),
-    onSuccess: (deck) => {
+    mutationFn: (input: DeckInput) => writes.createDeck(input),
+    onSuccess: ({ id, queued }) => {
       qc.invalidateQueries({ queryKey: ["decks"] });
       onOpenChange(false);
-      navigate({ to: "/library/$deckId", params: { deckId: deck.id } });
+      navigate({ to: "/library/$deckId", params: { deckId: id } });
+      if (queued) toast.add({ title: t`Saved on this device until Lymi can be reached.` });
     },
   });
   return (
@@ -55,7 +58,7 @@ export interface NewDeckFormProps {
   pending?: boolean | undefined;
   error?: string | undefined;
   onCancel: () => void;
-  onSubmit: (input: DeckInput) => Promise<Deck | undefined> | undefined;
+  onSubmit: (input: DeckInput) => Promise<unknown> | undefined;
   /** No autofocus. For the design page. */
   static?: boolean | undefined;
 }

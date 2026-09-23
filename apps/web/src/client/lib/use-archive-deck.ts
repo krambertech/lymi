@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
-import { api } from "./api";
+import { writes } from "./writes";
 
 /** Archives a deck, returns to the deck list, and offers Undo there. */
 export function useArchiveDeck(deckId: string, name: string | undefined) {
@@ -17,14 +17,14 @@ export function useArchiveDeck(deckId: string, name: string | undefined) {
   };
   // The toast outlives the deck screen, and a mutation's own callbacks still run after unmount.
   const restore = useMutation({
-    mutationFn: () => api.restoreDeck(deckId),
+    mutationFn: () => writes.restoreDeck(deckId),
     onSuccess: () => {
       invalidate();
       toast.close(toastId);
     },
   });
   return useMutation({
-    mutationFn: () => api.archiveDeck(deckId),
+    mutationFn: () => writes.archiveDeck(deckId),
     onSuccess: () => {
       invalidate();
       navigate({ to: "/library" });

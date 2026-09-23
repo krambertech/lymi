@@ -1,12 +1,14 @@
 import { useLingui } from "@lingui/react/macro";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { api, type Card, errorMessage } from "../lib/api";
+import type { Card } from "../lib/api";
+import { errorMessage } from "../lib/api";
 import { addInput, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
 import { useOverlayShape } from "../lib/device";
 import { createMoreChosen, rememberCreateMore, rememberDeck } from "../lib/last-deck";
 import { decksQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
+import { writes } from "../lib/writes";
 import {
   CardForm,
   type CardFormDraft,
@@ -70,7 +72,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDe
   const submit = async (values: CardFormValues): Promise<CardFormOutcome | undefined> => {
     setPending(true);
     try {
-      const outcome = await api.addCard(addInput(values));
+      const { outcome, queued } = await writes.addCard(addInput(values));
       if (outcome.status === "skipped") {
         return {
           status: "skipped",
@@ -81,16 +83,26 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDe
       rememberDeck(values.deckId);
       // The card is in either way; a refused picture is said beside it, not instead of it.
       let pictureError: string | undefined;
-      await savePicture(outcome.card, values).catch((e: unknown) => {
-        pictureError = errorMessage(e);
-      });
+      // A picture is uploaded to the card on the server, so one chosen offline waits for the learner.
+      const picked = values.picture.kind === "file" || values.picture.kind === "link";
+      if (queued && picked)
+        pictureError = t`Pictures need a connection. Add it once you’re back online.`;
+      else if (!queued) {
+        await savePicture(outcome.card, values).catch((e: unknown) => {
+          pictureError = errorMessage(e);
+        });
+      }
       await refreshAfterCardWrite(qc);
       const term = shortQuote(outcome.card.term);
       setPictureMissing(pictureError ? outcome.card : null);
       if (createMore) return { status: "added", term, pictureError };
       close(false);
       if (!pictureError) {
-        toast.add({ title: t`Added “${term}”` });
+        toast.add({
+          title: queued
+            ? t`Added “${term}”. It’s saved on this device until Lymi can be reached.`
+            : t`Added “${term}”`,
+        });
         return undefined;
       }
       const card = outcome.card;

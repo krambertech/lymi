@@ -8,6 +8,7 @@ export type E2EAccount =
   | "archived-deck"
   | "archived-page"
   | "library-offline"
+  | "writes-offline"
   | "responsive-creation"
   | "review-returns"
   | "review-queued"

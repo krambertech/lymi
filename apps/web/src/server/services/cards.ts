@@ -74,6 +74,18 @@ export async function addCards(
   const { db, userId, actor } = ctx;
   if (inputs.length === 0) return [];
 
+  // A create sent again with its id returns the card the first one made, before any check that
+  // could now refuse it: its deck may have been archived since the first one landed.
+  const chosenIds = inputs.flatMap((i) => (i.id ? [i.id] : []));
+  const claimed = await selectIn(chosenIds, (ids) =>
+    db.select().from(schema.cards).where(inArray(schema.cards.id, ids)),
+  );
+  const replayed = new Map<string, Card>();
+  for (const card of claimed) {
+    if (card.userId !== userId) throw new ServiceError("conflict", "That card id is taken");
+    replayed.set(card.id, card);
+  }
+
   const deckIds = [...new Set(inputs.map((i) => i.deckId))];
   const decks = await selectIn(deckIds, (ids) =>
     db
@@ -99,6 +111,7 @@ export async function addCards(
 
   // Resolve language and key per input, then look up every key in one query.
   const prepared = inputs.map((input) => {
+    if (input.id && replayed.has(input.id)) return { input, deck: null, language: null, key: "" };
     const deck = deckById.get(input.deckId);
     if (!deck) throw notFound("Deck");
     if (deck.userId !== userId) {
@@ -109,7 +122,8 @@ export async function addCards(
     return { input, deck, language, key: normaliseTerm(input.term) };
   });
 
-  const existingRows = await selectIn([...new Set(prepared.map((p) => p.key))], (keys) =>
+  const terms = prepared.flatMap((p) => (p.deck ? [p.key] : []));
+  const existingRows = await selectIn([...new Set(terms)], (keys) =>
     db
       .select({ card: schema.cards, deckName: schema.decks.name })
       .from(schema.cards)
@@ -135,6 +149,11 @@ export async function addCards(
   const enriching: string[] = [];
 
   for (const { input, deck, language, key } of prepared) {
+    const again = input.id ? replayed.get(input.id) : undefined;
+    if (again || !deck) {
+      if (again) outcomes.push({ status: "added", card: again });
+      continue;
+    }
     const hit = existing.get(dupKey(language, key));
     if (hit) {
       outcomes.push({
@@ -145,7 +164,7 @@ export async function addCards(
       });
       continue;
     }
-    const id = newId();
+    const id = input.id ?? newId();
     const modes = resolveCardModes(input, null);
     const card: Card = {
       id,

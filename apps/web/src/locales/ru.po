@@ -19,6 +19,9 @@ msgstr ", ещё не открыт"
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "«{deckName}» повторяется вместе с другими колодами серии."
 
+msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
+msgstr "«{label}» уже есть в «{deckName}», поэтому копия, добавленная офлайн, не сохранена."
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "В «{term}» нечего дополнять."
 
@@ -517,8 +520,8 @@ msgstr "Запомнено: {passed}, забыто: {failed}"
 msgid "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
 msgstr "{PENDING_INVITATION_LIMIT, plural, one {У тебя уже # приглашение без ответа. Отмени его или подожди, пока человек присоединится.} few {У тебя уже # приглашения без ответа. Отмени одно или подожди, пока кто-нибудь присоединится.} many {У тебя уже # приглашений без ответа. Отмени одно или подожди, пока кто-нибудь присоединится.} other {У тебя уже # приглашения без ответа. Отмени одно или подожди, пока кто-нибудь присоединится.}}"
 
-msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
-msgstr "{queued, plural, one {# оценка из офлайн-повторения ещё не дошла до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить её.} few {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} many {# оценок из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.} other {# оценки из офлайн-повторений ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы сохранить их.}}"
+msgid "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgstr "{queued, plural, one {# оценка или изменение, сделанное офлайн, ещё не дошло до Lymi. Выйди, когда снова будешь онлайн, чтобы его сохранить.} few {# оценки и изменения, сделанные офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.} many {# оценок и изменений, сделанных офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.} other {# оценки и изменения, сделанные офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.}}"
 
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {Ещё # запись более редкого вида импортируется как есть.} few {Ещё # записи более редких видов импортируются как есть.} many {Ещё # записей более редких видов импортируются как есть.} other {Ещё # записи более редких видов импортируются как есть.}}"
@@ -566,6 +569,12 @@ msgstr "Файл .mochi, до 1 ГБ. Можно также перетащить
 
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "Файл .zip до 1 ГБ. Можно также перетащить его сюда."
+
+msgid "A change made offline couldn’t be saved. {reason}"
+msgstr "Не удалось сохранить изменение, сделанное офлайн. {reason}"
+
+msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
+msgstr "Не удалось сохранить изменение в «{label}», сделанное офлайн. {reason}"
 
 msgid "a connected app"
 msgstr "подключённое приложение"
@@ -690,6 +699,9 @@ msgstr "Добавлено «{term}»"
 
 msgid "Added “{term}” without its picture. {pictureError}"
 msgstr "«{term}» добавлено без изображения. {pictureError}"
+
+msgid "Added “{term}”. It’s saved on this device until Lymi can be reached."
+msgstr "Добавлено «{term}». Карточка сохранена на этом устройстве, пока Lymi не станет доступен."
 
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "{count, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}} в колоду «{deck}»"
@@ -2584,6 +2596,9 @@ msgstr "Изображение восстановлено"
 msgid "Picture set"
 msgstr "Изображение добавлено"
 
+msgid "Pictures need a connection. Add it once you’re back online."
+msgstr "Для изображений нужно соединение. Добавь его, когда снова будешь онлайн."
+
 msgid "Play pronunciation"
 msgstr "Воспроизвести произношение"
 
@@ -2884,6 +2899,12 @@ msgstr "Сохранить время"
 msgid "Saved"
 msgstr "Сохранено"
 
+msgid "Saved on this device until Lymi can be reached."
+msgstr "Сохранено на этом устройстве, пока Lymi не станет доступен."
+
+msgid "Saved on this device. Pictures need a connection, so add it once you’re back online."
+msgstr "Сохранено на этом устройстве. Для изображений нужно соединение, так что добавь его, когда снова будешь онлайн."
+
 msgid "Saving…"
 msgstr "Сохранение…"
 
@@ -3069,8 +3090,8 @@ msgstr "Аккаунт: <0>{email}</0>"
 msgid "So you know which key to revoke later."
 msgstr "Чтобы потом знать, какой ключ отозвать."
 
-msgid "Some grades haven’t synced"
-msgstr "Некоторые оценки ещё не синхронизированы"
+msgid "Some offline work hasn’t synced"
+msgstr "Не всё сделанное офлайн синхронизировано"
 
 msgid "Someone"
 msgstr "Кто-то"

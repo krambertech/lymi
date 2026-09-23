@@ -1,5 +1,5 @@
 import { startAsTestLearner } from "./auth";
-import { expect, test } from "./test";
+import { expect, forgetPersistedCache, test } from "./test";
 
 /**
  * The streak is a place: on a phone it rises over the whole screen, a wide window centres it, a
@@ -54,6 +54,7 @@ test("the streak opens as a place, survives a reload and closes on Back", async 
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/today");
   await page.evaluate(() => localStorage.clear());
+  await page.evaluate(forgetPersistedCache);
   await page.reload();
   // On the phone, Today's streak card is the button.
   const card = page.getByRole("button", { name: /^Streak: 9 days in a row\. / });

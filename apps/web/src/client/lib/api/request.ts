@@ -1,6 +1,6 @@
 import { t } from "@lingui/core/macro";
 import { LIVE_TAB_HEADER } from "@lymi/core";
-import { tabId } from "../live";
+import { tabId } from "../tab";
 
 /** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {

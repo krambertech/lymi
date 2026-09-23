@@ -1,15 +1,11 @@
 import { LIVE_PING, LIVE_PONG, LiveMessage } from "@lymi/core";
 import { type Query, type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-
-/** This page's id. Requests carry it so the channel does not echo the tab's own writes. ADR 0023. */
-export const tabId =
-  typeof crypto.randomUUID === "function"
-    ? crypto.randomUUID()
-    : Math.random().toString(36).slice(2);
+import { tabId } from "./tab";
+import { flushWrites } from "./writes";
 
 const PING_MS = 30_000;
-/** One refetch for a burst, such as an assistant adding a lesson card by card. */
+/** One refetch for a burst, such as an assistant adding a lesson card by card. ADR 0024. */
 const SETTLE_MS = 250;
 /** Handshakes that fail in a row before the tab stops trying until it is shown or back online. */
 const RETRY_MS = [1_000, 2_000, 5_000, 10_000, 30_000];
@@ -21,9 +17,39 @@ function refreshable(query: Query): boolean {
   return !(root === "queue" && round !== "draw");
 }
 
-/** Refetches what the screen shows and marks the rest stale for when it next mounts. */
+/**
+ * Refetches what the screen shows and marks the rest stale for when it next mounts. A fetch
+ * already on its way is left to land, since it started after whatever asked for this.
+ */
 export function refreshShown(qc: QueryClient) {
-  return qc.invalidateQueries({ predicate: refreshable });
+  return qc.invalidateQueries({ predicate: refreshable }, { cancelRefetch: false });
+}
+
+let pending: ReturnType<typeof setTimeout> | undefined;
+
+/**
+ * The one refresh every reason shares: a change from elsewhere, and queued writes landing on
+ * return. A burst within the pause is one refetch, held while a write of this tab's is in flight.
+ */
+export function scheduleRefresh(qc: QueryClient) {
+  clearTimeout(pending);
+  const run = () => {
+    if (qc.isMutating() > 0) {
+      pending = setTimeout(run, SETTLE_MS);
+      return;
+    }
+    void refreshShown(qc);
+  };
+  pending = setTimeout(run, SETTLE_MS);
+}
+
+/** Sends what this device queued and, if any of it landed, refreshes with everything else. */
+export async function syncWrites(qc: QueryClient) {
+  const flushed = await flushWrites();
+  if (flushed.sent + flushed.graded === 0) return;
+  // Replayed grades change which cards a round holds, so here its order is fetched again too.
+  void qc.invalidateQueries({ queryKey: ["queue"] });
+  scheduleRefresh(qc);
 }
 
 type Socket = Pick<WebSocket, "send" | "close"> & {
@@ -36,9 +62,10 @@ export interface LiveDeps {
   open: () => Socket;
   /** Whether the tab is shown and online, so a connection is worth holding. */
   wanted: () => boolean;
-  /** Whether a write of this tab's is still in flight, which a refetch would land under. */
-  busy: () => boolean;
-  refresh: () => void;
+  /** The server answered, so whatever this device queued can go now. */
+  reached: () => void;
+  /** Something changed elsewhere, now or while the tab was away. */
+  changed: () => void;
 }
 
 /**
@@ -48,7 +75,6 @@ export interface LiveDeps {
 export class LiveConnection {
   private socket: Socket | null = null;
   private retry: ReturnType<typeof setTimeout> | undefined;
-  private settle: ReturnType<typeof setTimeout> | undefined;
   private ping: ReturnType<typeof setInterval> | undefined;
   private failures = 0;
   private seen: number | null = null;
@@ -75,7 +101,6 @@ export class LiveConnection {
 
   stop = () => {
     this.stopped = true;
-    clearTimeout(this.settle);
     this.pause();
   };
 
@@ -85,6 +110,7 @@ export class LiveConnection {
     socket.onopen = () => {
       this.failures = 0;
       this.ping = setInterval(() => socket.send(LIVE_PING), PING_MS);
+      this.deps.reached();
     };
     socket.onmessage = (event) => {
       if (event.data === LIVE_PONG || typeof event.data !== "string") return;
@@ -111,19 +137,7 @@ export class LiveConnection {
   private receive(message: LiveMessage) {
     const missed = message.type === "hello" && this.seen !== null && message.version !== this.seen;
     this.seen = message.version;
-    if (message.type === "changed" || missed) this.scheduleRefresh();
-  }
-
-  private scheduleRefresh() {
-    clearTimeout(this.settle);
-    const run = () => {
-      if (this.deps.busy()) {
-        this.settle = setTimeout(run, SETTLE_MS);
-        return;
-      }
-      this.deps.refresh();
-    };
-    this.settle = setTimeout(run, SETTLE_MS);
+    if (message.type === "changed" || missed) this.deps.changed();
   }
 }
 
@@ -142,8 +156,8 @@ export function useLiveUpdates(enabled: boolean) {
     const live = new LiveConnection({
       open: () => new WebSocket(liveUrl()),
       wanted: () => document.visibilityState === "visible" && navigator.onLine,
-      busy: () => qc.isMutating() > 0,
-      refresh: () => void refreshShown(qc),
+      reached: () => void syncWrites(qc),
+      changed: () => scheduleRefresh(qc),
     });
     const onVisibility = () =>
       document.visibilityState === "visible" ? live.resume() : live.pause();

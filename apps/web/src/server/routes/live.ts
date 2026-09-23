@@ -5,7 +5,7 @@ import type { AppEnv } from "../index";
 import { connect } from "../live/announce";
 import { requireLearner } from "../principal";
 
-/** The learner's open tabs hear here that something changed elsewhere. ADR 0023. */
+/** The learner's open tabs hear here that something changed elsewhere. ADR 0024. */
 export const live = new Hono<AppEnv>();
 
 live.get("/", describe({ hide: true, learnerOnly: true }), requireLearner, (c) => {

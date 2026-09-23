@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { LiveConnection, type LiveDeps, refreshShown } from "./live";
+import { LiveConnection, type LiveDeps, refreshShown, scheduleRefresh } from "./live";
 
 describe("refreshShown", () => {
   it("refreshes everything but a review round's fixed order", async () => {
@@ -19,6 +19,26 @@ describe("refreshShown", () => {
       .filter((key) => qc.getQueryState(key)?.isInvalidated)
       .map((k) => k.join("/"));
     expect(stale).toEqual(["decks", "decks/d1/cards", "queue/all/draw"]);
+  });
+});
+
+describe("scheduleRefresh", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("gathers a burst into one refresh, held while this tab's write is in flight", () => {
+    const qc = new QueryClient();
+    const invalidate = vi.spyOn(qc, "invalidateQueries");
+    const mutating = vi.spyOn(qc, "isMutating").mockReturnValue(1);
+    scheduleRefresh(qc);
+    scheduleRefresh(qc);
+    vi.advanceTimersByTime(2_000);
+    expect(invalidate).not.toHaveBeenCalled();
+    mutating.mockReturnValue(0);
+    vi.advanceTimersByTime(300);
+    expect(invalidate).toHaveBeenCalledTimes(1);
+    // A fetch already on its way lands rather than starting over.
+    expect(invalidate.mock.calls[0]?.[1]).toEqual({ cancelRefetch: false });
   });
 });
 
@@ -46,8 +66,8 @@ class FakeSocket {
 describe("LiveConnection", () => {
   let sockets: FakeSocket[];
   let wanted: boolean;
-  let busy: boolean;
   let refreshes: number;
+  let reached: number;
   let live: LiveConnection;
   const last = () => sockets[sockets.length - 1] as FakeSocket;
 
@@ -55,8 +75,8 @@ describe("LiveConnection", () => {
     vi.useFakeTimers();
     sockets = [];
     wanted = true;
-    busy = false;
     refreshes = 0;
+    reached = 0;
     const deps: LiveDeps = {
       open: () => {
         const socket = new FakeSocket();
@@ -64,8 +84,10 @@ describe("LiveConnection", () => {
         return socket;
       },
       wanted: () => wanted,
-      busy: () => busy,
-      refresh: () => {
+      reached: () => {
+        reached++;
+      },
+      changed: () => {
         refreshes++;
       },
     };
@@ -79,25 +101,15 @@ describe("LiveConnection", () => {
     vi.useRealTimers();
   });
 
-  it("refreshes once for a burst of changes from elsewhere, and not on the first greeting", () => {
+  it("reports a change from elsewhere, and not the first greeting", () => {
     last().say("hello", 4);
-    vi.advanceTimersByTime(1_000);
     expect(refreshes).toBe(0);
     last().say("changed", 5);
-    last().say("changed", 6);
-    vi.advanceTimersByTime(300);
     expect(refreshes).toBe(1);
   });
 
-  it("waits for this tab's own writes to land before refreshing", () => {
-    last().say("hello", 0);
-    busy = true;
-    last().say("changed", 1);
-    vi.advanceTimersByTime(2_000);
-    expect(refreshes).toBe(0);
-    busy = false;
-    vi.advanceTimersByTime(300);
-    expect(refreshes).toBe(1);
+  it("sends what the device queued as soon as the server answers", () => {
+    expect(reached).toBe(1);
   });
 
   it("comes back from hiding without a refresh when nothing changed", () => {
@@ -110,7 +122,6 @@ describe("LiveConnection", () => {
     live.resume();
     last().accept();
     last().say("hello", 4);
-    vi.advanceTimersByTime(1_000);
     expect(refreshes).toBe(0);
   });
 
@@ -119,7 +130,6 @@ describe("LiveConnection", () => {
     live.pause();
     live.resume();
     last().say("hello", 5);
-    vi.advanceTimersByTime(300);
     expect(refreshes).toBe(1);
   });
 

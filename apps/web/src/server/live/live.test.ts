@@ -9,7 +9,7 @@ import { createDeck } from "../services/decks";
 import { learner, testDb } from "../services/test-db";
 import { json, PRODUCT_URL, type Session, type TestApp, testApp } from "../test-app";
 
-/** Who the channel was told about, standing in for the Durable Object. ADR 0023. */
+/** Who the channel was told about, standing in for the Durable Object. ADR 0024. */
 const told: { userId: string; fromTab: string | null }[] = [];
 const LIVE = {
   getByName: (userId: string) => ({

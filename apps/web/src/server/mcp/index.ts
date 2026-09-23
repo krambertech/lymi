@@ -84,7 +84,7 @@ export async function authorizeMcpClaims(
   };
 }
 
-/** A tool that wrote tells the learner's open tabs once it returns. ADR 0023. */
+/** A tool that wrote tells the learner's open tabs once it returns. ADR 0024. */
 export function announcingWrites(
   principal: McpPrincipal,
   deps: {

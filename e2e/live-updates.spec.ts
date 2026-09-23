@@ -3,7 +3,7 @@ import { expect, test } from "./test";
 
 /**
  * A deck left open shows what lands in it from elsewhere, without a reload: a card added through
- * the API, as an assistant or another device would, and then one archived. ADR 0023.
+ * the API, as an assistant or another device would, and then one archived. ADR 0024.
  */
 test("an open deck shows cards added and archived elsewhere", async ({ page }, testInfo) => {
   await startAsTestLearner(page, testInfo, "live-updates");

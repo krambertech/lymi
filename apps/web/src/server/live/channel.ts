@@ -7,7 +7,7 @@ const VERSION = "version";
 /**
  * One learner's open tabs. It holds their WebSockets and a count of the learner's changes: a
  * write raises the count and tells every tab, and a tab that was away compares the count it last
- * saw with the one it is greeted with, so it refetches only when something changed. ADR 0023.
+ * saw with the one it is greeted with, so it refetches only when something changed. ADR 0024.
  */
 export class LiveChannel extends DurableObject<Bindings> {
   constructor(ctx: DurableObjectState, env: Bindings) {

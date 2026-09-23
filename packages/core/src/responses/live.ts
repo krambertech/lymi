@@ -3,7 +3,7 @@ import { z } from "zod";
 /**
  * What `/api/live` sends a tab. `version` counts the learner's changes: `hello` greets a tab with
  * it, `changed` means another tab or device wrote, and `version` is the count after this tab's
- * own write. None names a resource, so a tab refetches whatever it shows. ADR 0023.
+ * own write. None names a resource, so a tab refetches whatever it shows. ADR 0024.
  */
 export const LiveMessage = z.object({
   type: z.enum(["hello", "changed", "version"]),

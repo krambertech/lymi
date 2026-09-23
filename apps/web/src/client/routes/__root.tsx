@@ -27,14 +27,14 @@ import {
   pickLocale,
   readStoredLanguage,
 } from "../lib/i18n";
-import { useLiveUpdates } from "../lib/live";
+import { syncWrites, useLiveUpdates } from "../lib/live";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { warmCache } from "../lib/warm-cache";
-import { claimWrites, flushWrites, onNotice } from "../lib/writes";
+import { claimWrites, onNotice } from "../lib/writes";
 import { AppShell, Sidebar } from "../views/shell";
 
 // Local and isolated preview builds only. Vite drops the import from production.
@@ -158,19 +158,13 @@ function Shell() {
   }, [me.isError, me.error, bare, navigate]);
 
   // Queued writes and grades replay after sign-in, when the connection returns, and when the app
-  // comes back to the front; the lists refetch once something landed.
+  // comes back to the front; once something landed, the screen refreshes in the same one pass a
+  // change from elsewhere does.
   const learnerId = me.data?.id;
   useEffect(() => {
     if (!learnerId) return;
     claimWrites(learnerId);
-    const flush = () => {
-      void flushWrites().then((flushed) => {
-        if (flushed.sent > 0) void queryClient.invalidateQueries({ queryKey: ["decks"] });
-        if (flushed.sent + flushed.graded > 0) {
-          void queryClient.invalidateQueries({ queryKey: ["queue"] });
-        }
-      });
-    };
+    const flush = () => void syncWrites(queryClient);
     const onVisible = () => {
       if (document.visibilityState === "visible") flush();
     };

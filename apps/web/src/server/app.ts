@@ -178,7 +178,7 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 // under /api gets one.
 app.use("/api/*", authenticate);
 
-// A write that succeeded reaches the learner's other open tabs. ADR 0023.
+// A write that succeeded reaches the learner's other open tabs. ADR 0024.
 app.use("/api/*", async (c, next) => {
   await next();
   if (c.req.method === "GET" || c.req.method === "HEAD" || !c.res.ok || !c.env.LIVE) return;

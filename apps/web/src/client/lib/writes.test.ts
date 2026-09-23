@@ -212,6 +212,19 @@ describe("flushing", () => {
     expect(w.pendingWrites()).toBe(0);
   });
 
+  it("answers for a deck made here instead of asking the server, which has not seen it", async () => {
+    answers.push(offline);
+    await w.submit({ kind: "deck.create", input: { id: "pt", name: "Portuguese" } }, "Portuguese");
+    // Still offline for each flush the reads start.
+    answers.push(offline, offline);
+    const fetch = vi.fn(async () => [{ card: { id: "x" } }]);
+    expect(await w.fresh(["decks", "pt", "cards"], fetch, { deckId: "pt", empty: [] })).toEqual([]);
+    expect(await w.fresh(["decks", "it", "cards"], fetch, { deckId: "it", empty: [] })).toEqual([
+      { card: { id: "x" } },
+    ]);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
   it("makes room by dropping the query cache when storage is full", async () => {
     store.set("lymi-query-cache", "x".repeat(10));
     full = true;

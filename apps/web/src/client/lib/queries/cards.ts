@@ -8,7 +8,8 @@ const ENRICHMENT_PATIENCE = 10 * 60_000;
 export const deckCardsQuery = (deckId: string) =>
   queryOptions({
     queryKey: ["decks", deckId, "cards"],
-    queryFn: () => fresh(["decks", deckId, "cards"], () => api.deckCards(deckId)),
+    queryFn: () =>
+      fresh(["decks", deckId, "cards"], () => api.deckCards(deckId), { deckId, empty: [] }),
     staleTime: 0,
     // While the AI is filling a card, keep asking so its shimmer resolves without a reload.
     // A run settles itself, so a card still working long after its add is a server that stopped

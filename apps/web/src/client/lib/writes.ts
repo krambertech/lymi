@@ -335,10 +335,22 @@ export function bindWriteCache(qc: QueryClient) {
   client = qc;
 }
 
-/** Sends what is waiting, fetches, and lays over the result whatever is still waiting. */
-export async function fresh<T>(key: QueryKey, fetch: () => Promise<T>): Promise<T> {
+/** Whether a deck or card was made on this device and has not reached the server yet. */
+export function madeHere(id: string): boolean {
+  return read().some(({ write }) => createdBy(write) === id);
+}
+
+/**
+ * Sends what is waiting, fetches, and lays over the result whatever is still waiting. `local` is
+ * what a deck made here and not yet on the server holds, which the server would answer with 404.
+ */
+export async function fresh<T>(
+  key: QueryKey,
+  fetch: () => Promise<T>,
+  local?: { deckId: string; empty: T },
+): Promise<T> {
   await flushWrites().catch(() => undefined);
-  const data = await fetch();
+  const data = local && madeHere(local.deckId) ? local.empty : await fetch();
   const pending = read();
   return client && pending.length ? rebase(key, data, pending, cacheLookup(client)) : data;
 }

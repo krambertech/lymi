@@ -162,10 +162,10 @@ function DeckPage() {
   };
   const archive = useMutation({
     mutationFn: (id: string) => writes.archiveCard(id),
-    onSuccess: (_r, id) => {
-      const archivedTerm = shortQuote(
-        cards.data?.find((c) => c.card.id === id)?.card.term ?? t`Card`,
-      );
+    // Read before the write, which takes the card off the deck's list at once.
+    onMutate: (id) => ({ term: cards.data?.find((c) => c.card.id === id)?.card.term }),
+    onSuccess: (_r, id, before) => {
+      const archivedTerm = shortQuote(before?.term ?? t`Card`);
       invalidate();
       toast.add({
         id: `archive-${id}`,
@@ -186,14 +186,15 @@ function DeckPage() {
       const card = cards.data?.find((row) => row.card.id === id)?.card;
       return card ? (await writes.updateCard(card, patch)).card : api.updateCard(id, patch);
     },
+    onMutate: ({ id }) => ({ term: cards.data?.find((c) => c.card.id === id)?.card.term }),
     onSuccess: (_card, { id }) => {
       toast.close(`save-${id}`);
       invalidate();
       qc.invalidateQueries({ queryKey: ["cards", id, "history"] });
     },
     // The editor has already closed, so the draft rides on Retry until it lands or the toast leaves.
-    onError: (_e, { id, patch }) => {
-      const failedTerm = cards.data?.find((c) => c.card.id === id)?.card.term ?? t`the card`;
+    onError: (_e, { id, patch }, before) => {
+      const failedTerm = before?.term ?? t`the card`;
       toast.add({
         id: `save-${id}`,
         type: "error",

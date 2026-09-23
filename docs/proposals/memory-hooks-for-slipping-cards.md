@@ -28,8 +28,8 @@ Repeating a recall that keeps failing costs motivation and adds little. What the
 
 ## Delivery
 
-1. **Learner hooks.** Per-learner hook storage and the AI job that writes one when a card becomes slipping, with nothing shown yet.
-2. **The pass.** The Today block and the pass itself: each card's hook with edit and clear, then fading hints.
+1. **Hooks and the pass.** Per-learner hook storage, the AI job that writes one when a card becomes slipping, the Today block, and the pass: each card's hook with edit and clear.
+2. **Fading hints** in the pass, after each card's hook.
 3. **Later, each on its own evidence.** A short AI story that uses several slipping cards, a side-by-side pass for cards that are confused with one another, and listen-and-repeat using existing speech.
 
 ## Open

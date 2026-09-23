@@ -311,6 +311,28 @@ export async function drawableCount(
   return countDrawable(cards, log, day);
 }
 
+/** The same count for each section of one deck, keyed by section id. */
+export async function drawableBySection(
+  ctx: ServiceContext,
+  deckId: string,
+  zone: string,
+): Promise<Map<string, number>> {
+  const { cards, log, day } = await drawInputs(ctx, { deckId, zone });
+  const placed = await ctx.db
+    .select({ id: schema.cards.id, sectionId: schema.cards.sectionId })
+    .from(schema.cards)
+    .where(and(eq(schema.cards.deckId, deckId), isNotNull(schema.cards.sectionId)));
+  const sectionOf = new Map(placed.map((row) => [row.id, row.sectionId]));
+  const bySection = new Map<string, DrawCard[]>();
+  for (const card of cards) {
+    const sectionId = sectionOf.get(card.cardId);
+    if (sectionId) bySection.set(sectionId, [...(bySection.get(sectionId) ?? []), card]);
+  }
+  return new Map(
+    [...bySection].map(([sectionId, list]) => [sectionId, countDrawable(list, log, day)]),
+  );
+}
+
 /** The same count for every deck at once, as Library and Today show them. */
 export async function drawableByDeck(
   ctx: ServiceContext,

@@ -15,6 +15,9 @@ export const SectionOut = z
     total: z.number().int().meta({ description: "Active cards in the section" }),
     known: z.number().int().meta({ description: "Cards the caller knows" }),
     notStarted: z.number().int().meta({ description: "Cards the caller has not reviewed yet" }),
+    due: z.number().int().meta({
+      description: "Cards the caller can review today, counted as the deck's `due` counts them",
+    }),
     knownNeeded: z.number().int().meta({
       description: "Known cards this section needs before the next one is ready: 80%, rounded up",
     }),

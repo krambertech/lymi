@@ -132,7 +132,7 @@ export interface DeckDetailProps {
   progress?: Sections["progress"] | undefined;
   /** Start a section, for anyone studying the deck. */
   onStartSection?: ((section: Section) => void) | undefined;
-  /** Review one open section's cards, from its heading's menu. */
+  /** Review one section's cards, from its heading's menu. */
   onReviewSection?: ((section: Section) => void) | undefined;
   startingSection?: boolean | undefined;
   /** The owner's section writes. Absent for a member. */

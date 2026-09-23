@@ -296,6 +296,33 @@ describe("reviewing one section", () => {
     ).rejects.toMatchObject({ code: "not_found" });
   });
 
+  it("reports each section's due count as the deck's due count counts it", async () => {
+    const me = await person("Kateryna");
+    const { deck, sections, cards } = await sectioned(me, { A: ["a1", "a2"], B: ["b1"] }, [
+      "loose",
+    ]);
+    // Started early: a locked section's started card stays in review, and its section says so.
+    await forget(me, cards.b1 as string);
+
+    const due = (await listSections(me, deck.id)).sections.map((s) => [s.name, s.due]);
+    expect(due).toEqual([
+      ["A", 2],
+      ["B", 1],
+    ]);
+    const draw = await reviewDraw(me, { deckId: deck.id, sectionId: sections.B, zone: "UTC" });
+    expect(draw.total).toBe(1);
+    expect((await listDecks(me)).find((d) => d.id === deck.id)?.due).toBe(4);
+  });
+
+  it("is not found with a deck the section is not in", async () => {
+    const me = await person("Kateryna");
+    const one = await sectioned(me, { A: ["a1"] });
+    const other = await createDeck(me, { name: "Other" });
+    await expect(
+      reviewDraw(me, { deckId: other.id, sectionId: one.sections.A, zone: "UTC" }),
+    ).rejects.toMatchObject({ code: "not_found" });
+  });
+
   it("leaves out a locked section's cards, and an archived section is not found", async () => {
     const me = await person("Kateryna");
     const { deck, sections } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });

@@ -55,7 +55,7 @@ export async function reviewQueue(
   const zone = await reviewZone(ctx);
   const { round, deckId, seriesId, sectionId } = opts;
   if (seriesId) await activeSeries(ctx, seriesId);
-  if (sectionId) await visibleSection(ctx, sectionId);
+  if (sectionId) await visibleSection(ctx, sectionId, deckId);
   const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     deckId,
     sectionId,
@@ -127,7 +127,7 @@ export async function reviewDraw(
   const zone = await reviewZone(ctx, opts.zone);
   const settings = await getSettings(ctx);
   if (opts.seriesId) await activeSeries(ctx, opts.seriesId);
-  if (opts.sectionId) await visibleSection(ctx, opts.sectionId);
+  if (opts.sectionId) await visibleSection(ctx, opts.sectionId, opts.deckId);
   // The series or section narrows the rows loaded, so the rules need no scope of their own for it.
   const scope = { deckId: opts.deckId };
   const { cards, log, day, states } = await drawInputs(ctx, {

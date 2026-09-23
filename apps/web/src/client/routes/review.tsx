@@ -223,8 +223,11 @@ function Review() {
   const currentCardId = current?.card.id;
   const currentItemKey = current ? itemKey(current) : undefined;
   const scopeSections = useQuery({ ...sectionsQuery(deck ?? ""), enabled: !!section });
+  const scopeSection = section
+    ? scopeSections.data?.sections.find((s) => s.id === section)
+    : undefined;
   const scopeName = section
-    ? scopeSections.data?.sections.find((s) => s.id === section)?.name
+    ? scopeSection?.name
     : deck
       ? decks.data?.find((d) => d.id === deck)?.name
       : series
@@ -323,7 +326,7 @@ function Review() {
   const decksLoading =
     (scoped && !decks.isFetchedAfterMount && decks.fetchStatus === "fetching") ||
     (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
-    (!!section && !scopeSections.data && scopeSections.fetchStatus === "fetching");
+    (!!section && !scopeSections.isFetchedAfterMount && scopeSections.fetchStatus === "fetching");
   const result = useMemo(
     () =>
       stopped && !checking && !landing && !decksLoading && mark && data && state
@@ -338,11 +341,17 @@ function Review() {
             confirmed,
             elsewhere: !scoped
               ? 0
-              : decks.data
+              : decks.data && (!section || scopeSection)
                 ? decks.data
-                    // A section's deck holds its other sections, so it stays in the count.
-                    .filter((d) => section || (series ? d.seriesId !== series : d.id !== deck))
-                    .reduce((n, d) => n + d.due, 0)
+                    .filter((d) => (series ? d.seriesId !== series : d.id !== deck))
+                    .reduce((n, d) => n + d.due, 0) +
+                  // The rest of a section's deck is its other sections.
+                  (section && scopeSection
+                    ? Math.max(
+                        0,
+                        (decks.data.find((d) => d.id === deck)?.due ?? 0) - scopeSection.due,
+                      )
+                    : 0)
                 : null,
             forgotten: forgottenItems.length,
           })
@@ -363,6 +372,7 @@ function Review() {
       series,
       deck,
       section,
+      scopeSection,
       forgottenItems,
       decks.data,
     ],

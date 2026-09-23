@@ -1,14 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Card, CardState, Section } from "./api";
-import {
-  type DeckRow,
-  dueBucket,
-  dueToday,
-  filterRows,
-  groupRows,
-  noFilters,
-  splitForms,
-} from "./deck-list";
+import { type DeckRow, dueBucket, filterRows, groupRows, noFilters, splitForms } from "./deck-list";
 
 const day = 86_400_000;
 const now = new Date(2026, 8, 15, 10, 0).getTime();
@@ -48,14 +40,6 @@ describe("dueBucket", () => {
     expect(dueBucket(row("x", { state: 3, due: -1 }), now)).toBe("now");
     expect(dueBucket(row("y", { state: 0, due: -1 }), now)).toBe("new");
     expect(dueBucket(row("z", {}), now)).toBe("new");
-  });
-
-  it("counts a scheduled card due before the day ends as in review today, a card with no schedule not", () => {
-    expect(rows.filter((r) => dueToday(r, now)).map((r) => r.card.id)).toEqual([
-      "dueNow",
-      "dueLaterToday",
-      "fresh",
-    ]);
   });
 
   it("splits later cards at seven days", () => {

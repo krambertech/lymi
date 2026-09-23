@@ -639,6 +639,7 @@ describe("Lymi MCP server", () => {
       total: 2,
       known: 0,
       notStarted: 2,
+      due: 2,
       knownNeeded: 2,
       status: "open" as const,
       archivedCards: 0,

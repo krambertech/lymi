@@ -2,9 +2,10 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
-import { api, type CardHit, type DeckSummary } from "../lib/api";
+import type { CardHit, DeckSummary } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { archivedCardsQuery, archivedDecksQuery } from "../lib/queries";
+import { writes } from "../lib/writes";
 import { ArchivedView } from "../views/archived-view";
 
 export const Route = createFileRoute("/archived")({
@@ -26,15 +27,15 @@ function Archived() {
   };
 
   const undoDeck = useMutation({
-    mutationFn: (id: string) => api.archiveDeck(id),
+    mutationFn: (id: string) => writes.archiveDeck(id),
     onSuccess: invalidate,
   });
   const undoCard = useMutation({
-    mutationFn: (id: string) => api.archiveCard(id),
+    mutationFn: (id: string) => writes.archiveCard(id),
     onSuccess: invalidate,
   });
   const restoreDeck = useMutation({
-    mutationFn: (deck: DeckSummary) => api.restoreDeck(deck.id),
+    mutationFn: (deck: DeckSummary) => writes.restoreDeck(deck.id),
     onSuccess: (_, deck) => {
       invalidate();
       toast.add({
@@ -44,7 +45,7 @@ function Archived() {
     },
   });
   const restoreCard = useMutation({
-    mutationFn: (card: CardHit) => api.restoreCard(card.id),
+    mutationFn: (card: CardHit) => writes.restoreCard(card.id),
     onSuccess: (_, card) => {
       invalidate();
       toast.add({

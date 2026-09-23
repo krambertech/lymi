@@ -392,3 +392,56 @@ describe("bulk edits and archives", () => {
     expect(added?.id).toBe(outcomes[1]?.id);
   });
 });
+
+describe("a create sent again with its id", () => {
+  let db: Db;
+  let dispose: () => Promise<void>;
+
+  beforeAll(async () => {
+    ({ db, dispose } = await testDb());
+  }, 60_000);
+
+  afterAll(async () => {
+    await dispose();
+  });
+
+  const auditRows = (id: string) =>
+    db.select().from(schema.auditLog).where(eq(schema.auditLog.entityId, id));
+
+  it("returns the card the first add made, without a second card or audit row", async () => {
+    const ctx = await learner(db, "replay-1", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italian", defaultLanguage: "it" });
+    const input = { id: "0replaycard00000001", deckId: deck.id, term: "magari" };
+    const [first] = await addCards(ctx, [input]);
+    const [again] = await addCards(ctx, [input]);
+    expect(first).toMatchObject({ status: "added", id: input.id });
+    expect(again).toMatchObject({ status: "added", id: input.id });
+    const cards = await db.select().from(schema.cards).where(eq(schema.cards.deckId, deck.id));
+    expect(cards).toHaveLength(1);
+    expect(await auditRows(input.id)).toHaveLength(1);
+  });
+
+  it("refuses an id another learner's card holds", async () => {
+    const owner = await learner(db, "replay-2", "Owner");
+    const other = await learner(db, "replay-3", "Other");
+    const ownDeck = await createDeck(owner, { name: "Mine" });
+    const otherDeck = await createDeck(other, { name: "Theirs" });
+    await addCards(owner, [{ id: "0replaycard00000002", deckId: ownDeck.id, term: "uno" }]);
+    await expect(
+      addCards(other, [{ id: "0replaycard00000002", deckId: otherDeck.id, term: "due" }]),
+    ).rejects.toMatchObject({ code: "conflict" });
+  });
+
+  it("returns the deck the first create made", async () => {
+    const ctx = await learner(db, "replay-4", "Kateryna");
+    const first = await createDeck(ctx, { id: "0replaydeck00000001", name: "Estonian" });
+    const again = await createDeck(ctx, { id: "0replaydeck00000001", name: "Estonian" });
+    expect(again.id).toBe(first.id);
+    expect(await auditRows(first.id)).toHaveLength(1);
+  });
+
+  it("refuses a CardInput id outside the id alphabet", () => {
+    expect(CardInput.safeParse({ id: "Not An Id", deckId: "d", term: "t" }).success).toBe(false);
+    expect(CardPatch.safeParse({ id: "0replaycard00000003" }).data).toEqual({});
+  });
+});

@@ -147,7 +147,7 @@ function Login() {
     void (async () => {
       const session = await authClient.getSession();
       if (!session.data) return;
-      clearPersistedLearnerState();
+      clearPersistedLearnerState({ keepQueued: true });
       queryClient.clear();
       if (clientId && (await continueOAuthAuthorization())) return;
       window.location.assign(returnTo);
@@ -255,7 +255,7 @@ function Login() {
   }
 
   async function signIn(values: CredentialValues) {
-    clearPersistedLearnerState();
+    clearPersistedLearnerState({ keepQueued: true });
     const res = await authClient.signIn.email({
       email: values.email,
       password: values.password,
@@ -357,7 +357,7 @@ function Login() {
         setBusy(true);
         clearMessages();
         // The account coming back may not be the one whose cache is on this device.
-        clearPersistedLearnerState();
+        clearPersistedLearnerState({ keepQueued: true });
         try {
           // better-auth returns the failure rather than throwing, so a silent `await` here
           // left the button spinning and then stopping with nothing said.
@@ -402,7 +402,7 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
       return;
     }
     queryClient.clear();
-    clearPersistedLearnerState();
+    clearPersistedLearnerState({ keepQueued: true });
     if (followOAuthRedirect(res.data)) return;
     window.location.assign(returnTo);
   }

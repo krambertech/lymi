@@ -12,6 +12,7 @@ import {
   JoinLinkOut,
   LanguageTag,
   MemberOut,
+  NewDeckInput,
   OkOut,
   PublicationInput,
   PublicationOut,
@@ -89,7 +90,7 @@ decks.post(
     ok: { status: 201, schema: DeckOut, description: "The new deck" },
     errors: [400],
   }),
-  body(DeckInput, "deck"),
+  body(NewDeckInput, "deck"),
   async (c) => c.json(await createDeck(ctxOf(c), c.req.valid("json")), 201),
 );
 

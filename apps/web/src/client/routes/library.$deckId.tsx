@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import type { CardPatch } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -30,6 +31,7 @@ import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
+import { writes } from "../lib/writes";
 import { DeckDetailView, type DeckFailure, exportCsv } from "../views/deck-detail-view";
 import { describeEvent } from "../views/word-view";
 
@@ -159,7 +161,7 @@ function DeckPage() {
     qc.invalidateQueries({ queryKey: ["queue"] });
   };
   const archive = useMutation({
-    mutationFn: (id: string) => api.archiveCard(id),
+    mutationFn: (id: string) => writes.archiveCard(id),
     onSuccess: (_r, id) => {
       const archivedTerm = shortQuote(
         cards.data?.find((c) => c.card.id === id)?.card.term ?? t`Card`,
@@ -173,15 +175,17 @@ function DeckPage() {
     },
   });
   const restore = useMutation({
-    mutationFn: (id: string) => api.restoreCard(id),
+    mutationFn: (id: string) => writes.restoreCard(id),
     onSuccess: (_r, id) => {
       invalidate();
       toast.close(`archive-${id}`);
     },
   });
   const save = useMutation({
-    mutationFn: ({ id, patch }: { id: string; patch: Parameters<typeof api.updateCard>[1] }) =>
-      api.updateCard(id, patch),
+    mutationFn: async ({ id, patch }: { id: string; patch: CardPatch }) => {
+      const card = cards.data?.find((row) => row.card.id === id)?.card;
+      return card ? (await writes.updateCard(card, patch)).card : api.updateCard(id, patch);
+    },
     onSuccess: (_card, { id }) => {
       toast.close(`save-${id}`);
       invalidate();

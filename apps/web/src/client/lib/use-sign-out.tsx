@@ -12,8 +12,9 @@ import {
   DialogTitle,
 } from "../components/ui/dialog";
 import { signOut as endSession } from "./auth";
-import { flushOutbox, outboxSize } from "./grades";
+import { outboxSize } from "./grades";
 import { clearPersistedLearnerState } from "./persisted";
+import { flushWrites, pendingWrites } from "./writes";
 
 interface Ctx {
   signOut: () => Promise<void>;
@@ -22,8 +23,8 @@ interface Ctx {
 const SignOutCtx = createContext<Ctx | null>(null);
 
 /**
- * Signing out, from wherever the learner menu is. Grades made offline live only in this
- * browser until they reach the server, and sign-out clears the browser, so a queue that
+ * Signing out, from wherever the learner menu is. Grades and changes made offline live only in
+ * this browser until they reach the server, and sign-out clears the browser, so a queue that
  * cannot be sent stops the sign-out and asks; losing them is never the default.
  */
 export function SignOutProvider({ children }: { children: ReactNode }) {
@@ -50,11 +51,11 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
     if (busy) return;
     setBusy(true);
     try {
-      await flushOutbox().catch(() => 0);
+      await flushWrites().catch(() => undefined);
     } finally {
       setBusy(false);
     }
-    const left = outboxSize();
+    const left = outboxSize() + pendingWrites();
     if (left > 0) {
       setQueued(left);
       return;
@@ -69,13 +70,13 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
         <DialogContent initialFocus={stayRef}>
           <DialogHeader>
             <DialogTitle>
-              <Trans>Some grades haven’t synced</Trans>
+              <Trans>Some offline work hasn’t synced</Trans>
             </DialogTitle>
             <DialogDescription>
               <Plural
                 value={queued}
-                one="# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it."
-                other="# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them."
+                one="# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it."
+                other="# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them."
               />
             </DialogDescription>
           </DialogHeader>

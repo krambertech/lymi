@@ -63,7 +63,7 @@ function ResetPassword() {
         return;
       }
       // The reset signed every session out, so nothing cached here belongs to anyone now.
-      clearPersistedLearnerState();
+      clearPersistedLearnerState({ keepQueued: true });
       queryClient.clear();
       setPassword("");
       setDone(true);

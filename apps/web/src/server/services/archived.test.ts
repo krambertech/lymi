@@ -35,6 +35,17 @@ describe("Archived", () => {
     expect((await listDecks(ctx)).map((d) => d.id).sort()).toEqual([kept.id, shelved.id].sort());
   });
 
+  it("leaves an archived deck's date alone when it is archived again", async () => {
+    const ctx = await learner(db, "archived-twice", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Replayed" });
+    await archiveDeck(ctx, deck.id);
+    const [before] = await listDecks(ctx, { archived: true });
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    await archiveDeck(ctx, deck.id);
+    const [after] = await listDecks(ctx, { archived: true });
+    expect(after?.archivedAt).toEqual(before?.archivedAt);
+  });
+
   it("returns archived decks newest first, so the last one archived is on top", async () => {
     const ctx = await learner(db, "archived-order", "Kateryna");
     const first = await createDeck(ctx, { name: "First" });

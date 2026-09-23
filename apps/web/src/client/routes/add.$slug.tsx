@@ -69,7 +69,7 @@ function Add() {
     mutationFn: async (via: "google" | "dev") => {
       await api.holdPublishedDeck(slug, chosen);
       // The account coming back may not be the one whose cache is on this device.
-      clearPersistedLearnerState();
+      clearPersistedLearnerState({ keepQueued: true });
       if (via === "dev") {
         window.location.assign(`/login?${new URLSearchParams({ dev: "1", returnTo })}`);
         return;

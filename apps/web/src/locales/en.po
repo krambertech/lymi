@@ -19,6 +19,9 @@ msgstr ", not open yet"
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "“{deckName}” is reviewed with the other decks in its series."
 
+msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
+msgstr "“{label}” was already in {deckName}, so the copy added offline was left out."
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "“{term}” has nothing left to fill in."
 
@@ -517,8 +520,8 @@ msgstr "{passed} remembered, {failed} forgotten"
 msgid "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
 msgstr "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
 
-msgid "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
-msgstr "{queued, plural, one {# grade from an offline review is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades from offline reviews are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgid "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgstr "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
@@ -566,6 +569,12 @@ msgstr "A .mochi file, up to 1 GB. You can also drop it here."
 
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "A .zip file, up to 1 GB. You can also drop it here."
+
+msgid "A change made offline couldn’t be saved. {reason}"
+msgstr "A change made offline couldn’t be saved. {reason}"
+
+msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
+msgstr "A change to “{label}” made offline couldn’t be saved. {reason}"
 
 msgid "a connected app"
 msgstr "a connected app"
@@ -690,6 +699,9 @@ msgstr "Added “{term}”"
 
 msgid "Added “{term}” without its picture. {pictureError}"
 msgstr "Added “{term}” without its picture. {pictureError}"
+
+msgid "Added “{term}”. It’s saved on this device until Lymi can be reached."
+msgstr "Added “{term}”. It’s saved on this device until Lymi can be reached."
 
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
@@ -2584,6 +2596,9 @@ msgstr "Picture restored"
 msgid "Picture set"
 msgstr "Picture set"
 
+msgid "Pictures need a connection. Add it once you’re back online."
+msgstr "Pictures need a connection. Add it once you’re back online."
+
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
@@ -2884,6 +2899,12 @@ msgstr "Save time"
 msgid "Saved"
 msgstr "Saved"
 
+msgid "Saved on this device until Lymi can be reached."
+msgstr "Saved on this device until Lymi can be reached."
+
+msgid "Saved on this device. Pictures need a connection, so add it once you’re back online."
+msgstr "Saved on this device. Pictures need a connection, so add it once you’re back online."
+
 msgid "Saving…"
 msgstr "Saving…"
 
@@ -3069,8 +3090,8 @@ msgstr "Signed in as <0>{email}</0>"
 msgid "So you know which key to revoke later."
 msgstr "So you know which key to revoke later."
 
-msgid "Some grades haven’t synced"
-msgstr "Some grades haven’t synced"
+msgid "Some offline work hasn’t synced"
+msgstr "Some offline work hasn’t synced"
 
 msgid "Someone"
 msgstr "Someone"

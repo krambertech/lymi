@@ -1,10 +1,10 @@
-import type { DeckInput } from "@lymi/core";
+import type { DeckInput, NewDeckInput } from "@lymi/core";
 import { newId } from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
-import { notFound, type ServiceContext } from "./context";
+import { notFound, type ServiceContext, ServiceError } from "./context";
 import { drawableByDeck } from "./draw";
 import {
   deckAccess,
@@ -128,11 +128,22 @@ export async function listDecks(
   );
 }
 
-export async function createDeck(ctx: ServiceContext, input: DeckInput) {
+export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: NewDeckInput) {
   const { db, userId } = ctx;
+  // A create sent again with its id returns the deck the first one made.
+  if (chosen) {
+    const [taken] = await db
+      .select({ userId: schema.decks.userId })
+      .from(schema.decks)
+      .where(eq(schema.decks.id, chosen));
+    if (taken && taken.userId !== userId) {
+      throw new ServiceError("conflict", "That deck id is taken");
+    }
+    if (taken) return getDeck(ctx, chosen);
+  }
   const seriesId = input.seriesId ?? null;
   if (seriesId) await activeSeries(ctx, seriesId);
-  const id = newId();
+  const id = chosen ?? newId();
   await db.insert(schema.decks).values({
     id,
     userId,
@@ -251,7 +262,9 @@ export async function restoreDeck(ctx: ServiceContext, id: string) {
 
 async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
   const { db } = ctx;
-  await ownedDeck(ctx, id);
+  const deck = await ownedDeck(ctx, id);
+  // Already there changes nothing, so a replayed archive neither moves the date nor logs twice.
+  if ((deck.archivedAt === null) === (archivedAt === null)) return { ok: true as const };
   const result = await db
     .update(schema.decks)
     .set({ archivedAt, updatedAt: new Date() })

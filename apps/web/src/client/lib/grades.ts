@@ -129,9 +129,12 @@ interface Flushed {
   refused: { grade: LocalGrade; status: number }[];
 }
 
-async function flushQueued(): Promise<Flushed> {
+async function flushQueued(before?: string): Promise<Flushed> {
   const result: Flushed = { sent: 0, offline: false, held: new Set(), refused: [] };
-  for (const grade of read().filter((g) => g.sentAt === undefined)) {
+  const cutoff = before ? new Date(before).getTime() : Number.POSITIVE_INFINITY;
+  for (const grade of read().filter(
+    (g) => g.sentAt === undefined && new Date(g.reviewedAt).getTime() < cutoff,
+  )) {
     if (result.offline || result.held.has(modeOfGrade(grade))) {
       result.held.add(modeOfGrade(grade));
       continue;
@@ -154,9 +157,9 @@ async function flushQueued(): Promise<Flushed> {
   return result;
 }
 
-/** Replays queued grades and resolves with how many reached the server. */
-export function flushOutbox(): Promise<number> {
-  return serial(async () => (await flushQueued()).sent);
+/** Replays queued grades, or those made before `before`, and resolves with how many reached the server. */
+export function flushOutbox(before?: string): Promise<number> {
+  return serial(async () => (await flushQueued(before)).sent);
 }
 
 /** `gone` is a refusal because the card is no longer the learner's to grade. */

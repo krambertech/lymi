@@ -1,9 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { api, type Card, type DeckSummary, errorMessage } from "../lib/api";
+import type { Card, DeckSummary } from "../lib/api";
+import { errorMessage } from "../lib/api";
 import { cardPatch, hasChanges, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
 import { useOverlayShape } from "../lib/device";
+import { writes } from "../lib/writes";
 import {
   CardForm,
   type CardFormDraft,
@@ -64,9 +66,20 @@ export function EditCardSheet({ card, decks, onClose, onReopen, openPicture, onS
     setPending(true);
     try {
       const patch = cardPatch(card, values);
-      const written = Object.keys(patch).length ? await api.updateCard(card.id, patch) : card;
-      const latest = (await savePicture(written, values)) ?? written;
+      const { card: written, queued } = Object.keys(patch).length
+        ? await writes.updateCard(card, patch)
+        : { card, queued: false };
+      const latest = queued ? written : ((await savePicture(written, values)) ?? written);
       await refreshAfterCardWrite(qc, card.id);
+      if (queued) {
+        // A picture goes to the card on the server, so one chosen offline waits for the learner.
+        const picked = values.picture.kind === "file" || values.picture.kind === "link";
+        toast.add({
+          title: picked
+            ? t`Saved on this device. Pictures need a connection, so add it once you’re back online.`
+            : t`Saved on this device until Lymi can be reached.`,
+        });
+      }
       onSaved?.(latest, patch.deckId ? card.deckId : null);
       close(false);
       return undefined;

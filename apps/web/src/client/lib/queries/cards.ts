@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { api } from "../api";
+import { fresh } from "../writes";
 
 /** How long a card may say it is working before the screen stops waiting on it. */
 const ENRICHMENT_PATIENCE = 10 * 60_000;
@@ -7,7 +8,7 @@ const ENRICHMENT_PATIENCE = 10 * 60_000;
 export const deckCardsQuery = (deckId: string) =>
   queryOptions({
     queryKey: ["decks", deckId, "cards"],
-    queryFn: () => api.deckCards(deckId),
+    queryFn: () => fresh(["decks", deckId, "cards"], () => api.deckCards(deckId)),
     staleTime: 0,
     // While the AI is filling a card, keep asking so its shimmer resolves without a reload.
     // A run settles itself, so a card still working long after its add is a server that stopped
@@ -23,7 +24,7 @@ export const deckCardsQuery = (deckId: string) =>
   });
 export const archivedCardsQuery = queryOptions({
   queryKey: ["cards", "archived"],
-  queryFn: api.archivedCards,
+  queryFn: () => fresh(["cards", "archived"], api.archivedCards),
   staleTime: 0,
 });
 export const cardHistoryQuery = (cardId: string) =>

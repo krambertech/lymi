@@ -37,6 +37,7 @@ import {
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
+import { writes } from "../lib/writes";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/deck-settings-view";
 
 export const Route = createFileRoute("/library/$deckId/settings")({
@@ -69,7 +70,7 @@ function DeckSettings() {
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   const save = useMutation({
-    mutationFn: (patch: DeckSettingsPatch) => api.updateDeck(deckId, patch),
+    mutationFn: (patch: DeckSettingsPatch) => writes.updateDeck(deckId, patch),
     onSuccess: async () => {
       await Promise.all([
         qc.invalidateQueries({ queryKey: ["decks"] }),

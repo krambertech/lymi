@@ -3,6 +3,7 @@ import { createMcpHandler } from "agents/mcp/server";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
 import type { Bindings } from "../env";
+import { announce } from "../live/announce";
 import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
 import { catchUpStates } from "../services/modes";
@@ -17,7 +18,7 @@ export const MCP_CHALLENGE_SCOPES = ["read", "write", "offline_access"] as const
  */
 export function handleMcpRequest(
   request: Request,
-  deps: { auth: Auth; db: Db; env: Bindings },
+  deps: { auth: Auth; db: Db; env: Bindings; waitUntil?: (work: Promise<unknown>) => void },
 ): Promise<Response> {
   const protectedHandler = requireMcpAuth(
     deps.auth,
@@ -25,7 +26,7 @@ export function handleMcpRequest(
       const principal = await authorizeMcpClaims(claims, deps);
       if (principal instanceof Response) return principal;
       await catchUpStates(deps.db, principal.ctx.userId);
-      return handleVerifiedMcpRequest(req, principal, deps.env);
+      return handleVerifiedMcpRequest(req, announcingWrites(principal, deps), deps.env);
     },
     { resource: mcpResource(deps.env), challengeScopes: MCP_CHALLENGE_SCOPES },
   );
@@ -80,6 +81,33 @@ export async function authorizeMcpClaims(
         ? { bucket: deps.env.PRIVATE_IMAGES, images: deps.env.IMAGES }
         : undefined,
     enrichment: enrichmentQueue(deps.env),
+  };
+}
+
+/** A tool that wrote tells the learner's open tabs once it returns. ADR 0023. */
+export function announcingWrites(
+  principal: McpPrincipal,
+  deps: {
+    env: Partial<Pick<Bindings, "LIVE">>;
+    waitUntil?: ((work: Promise<unknown>) => void) | undefined;
+  },
+): McpPrincipal {
+  const { waitUntil } = deps;
+  if (!deps.env.LIVE || !waitUntil) return principal;
+  let wrote = false;
+  return {
+    ...principal,
+    ctx: {
+      ...principal.ctx,
+      wrote: () => {
+        wrote = true;
+      },
+    },
+    toolDone: () => {
+      if (!wrote) return;
+      wrote = false;
+      waitUntil(announce(deps.env, principal.ctx.userId));
+    },
   };
 }
 

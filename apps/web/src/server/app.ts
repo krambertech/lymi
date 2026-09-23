@@ -1,5 +1,5 @@
 import type { Actor, Scope } from "@lymi/core";
-import { MeOut } from "@lymi/core";
+import { LIVE_TAB_HEADER, MeOut } from "@lymi/core";
 import { Hono } from "hono";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { limitCredentialRequests } from "./auth-rate-limit";
@@ -8,6 +8,7 @@ import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
 import { describe, handleError } from "./http";
 import { addPage, joinPage } from "./join-page";
+import { announce } from "./live/announce";
 import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
@@ -30,6 +31,7 @@ import { images } from "./routes/images";
 import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
+import { live } from "./routes/live";
 import { publicMedia } from "./routes/public-media";
 import { push } from "./routes/push";
 import { review } from "./routes/review";
@@ -148,7 +150,12 @@ mountOpenApi(app);
 
 // The MCP server. Its own authentication: an OAuth access token this Worker issued.
 app.all("/mcp", (c) =>
-  handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
+  handleMcpRequest(c.req.raw, {
+    auth: c.get("auth"),
+    db: c.get("db"),
+    env: c.env,
+    waitUntil: (work) => c.executionCtx.waitUntil(work),
+  }),
 );
 
 // Everything on this origin is one learner's product or protocol surface.
@@ -170,6 +177,13 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 // routes need the learner. A route without describe() has no such check, so every route
 // under /api gets one.
 app.use("/api/*", authenticate);
+
+// A write that succeeded reaches the learner's other open tabs. ADR 0023.
+app.use("/api/*", async (c, next) => {
+  await next();
+  if (c.req.method === "GET" || c.req.method === "HEAD" || !c.res.ok || !c.env.LIVE) return;
+  c.executionCtx.waitUntil(announce(c.env, c.get("user").id, c.req.header(LIVE_TAB_HEADER)));
+});
 
 app.get(
   "/api/me",
@@ -224,6 +238,7 @@ app.route("/api/imports", imports);
 app.route("/api/exports", exportRoutes);
 app.route("/api/feedback", feedback);
 app.route("/api/activity", activity);
+app.route("/api/live", live);
 app.route("/api/explore", explore);
 
 app.notFound(async (c) => {

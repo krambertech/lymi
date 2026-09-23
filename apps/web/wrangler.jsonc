@@ -55,6 +55,11 @@
     // Fills the empty fields on cards an add left behind. ADR 0002.
     { "name": "lymi-enrich", "binding": "ENRICH_WORKFLOW", "class_name": "EnrichWorkflow" }
   ],
+  // One per learner: tells the learner's open tabs that something changed. ADR 0023.
+  "durable_objects": {
+    "bindings": [{ "name": "LIVE", "class_name": "LiveChannel" }]
+  },
+  "migrations": [{ "tag": "live-channel", "new_sqlite_classes": ["LiveChannel"] }],
   // Decodes, resizes and re-encodes uploads; WebP output carries no metadata.
   "images": { "binding": "IMAGES" },
   "send_email": [

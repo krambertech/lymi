@@ -57,6 +57,7 @@ import {
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
 import type { CardState, DeckSummary, Review, Section, Sections } from "../lib/api";
+import { useArrivals } from "../lib/arrivals";
 import {
   activeFilterCount,
   type DeckFilters,
@@ -735,6 +736,8 @@ export function DeckDetailView({
     [shown, sort, now, i18n.locale, sections, arranging],
   );
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const cardIds = useMemo(() => cards?.map((row) => row.card.id), [cards]);
+  const arrived = useArrivals(deck?.id ?? "", cardIds);
 
   const toggleSelected = (id: string, range: boolean) => {
     setSelected((prev) => {
@@ -1149,6 +1152,7 @@ export function DeckDetailView({
           <div className={clsx(sort === "az" && "pt-4")}>
             <Glossary
               groups={groups}
+              arrived={arrived}
               sort={sort}
               openId={openId}
               onOpen={setOpen}

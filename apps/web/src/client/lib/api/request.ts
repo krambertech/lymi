@@ -1,4 +1,6 @@
 import { t } from "@lingui/core/macro";
+import { LIVE_TAB_HEADER } from "@lymi/core";
+import { tabId } from "../live";
 
 /** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {
@@ -24,6 +26,7 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
       // A form body sets its own multipart boundary.
       headers: {
         ...(init?.body instanceof FormData ? {} : { "content-type": "application/json" }),
+        [LIVE_TAB_HEADER]: tabId,
         ...(init?.headers ?? {}),
       },
       credentials: "include",

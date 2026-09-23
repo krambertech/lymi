@@ -77,6 +77,8 @@ export interface SectionEditing {
 
 export interface GlossaryProps {
   groups: DeckGroup[];
+  /** Cards that landed while the list was open, which arrive rather than appear. */
+  arrived?: ReadonlySet<string> | undefined;
   sort: DeckSort;
   openId: string | null;
   onOpen: (id: string | null) => void;
@@ -236,6 +238,7 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
 
 function GroupList({
   groups,
+  arrived,
   sort,
   openId,
   onOpen,
@@ -333,10 +336,16 @@ function GroupList({
                     waiting: !!section && section.status !== "open" && rowState(row) === "new",
                     selection,
                   };
+                  const arriving = !!arrived?.has(row.card.id);
                   return movable ? (
-                    <DraggableRow key={row.card.id} {...rowProps} dropped={dropped} />
+                    <DraggableRow
+                      key={row.card.id}
+                      {...rowProps}
+                      arriving={arriving}
+                      dropped={dropped}
+                    />
                   ) : (
-                    <li key={row.card.id}>
+                    <li key={row.card.id} className={clsx(arriving && "arrive")}>
                       <GlossaryRow {...rowProps} />
                     </li>
                   );
@@ -498,15 +507,20 @@ interface RowProps {
 
 function DraggableRow({
   dropped,
+  arriving,
   ...props
-}: RowProps & { dropped?: { current: boolean } | undefined }) {
+}: RowProps & { dropped?: { current: boolean } | undefined; arriving: boolean }) {
   const drag = useDraggable({ id: `${CARD}${props.row.card.id}` });
   // A card moves from the keyboard through selection and its menu, so Enter and Space still open it.
   const { onKeyDown: _keys, ...pointer } = drag.listeners ?? {};
   return (
     <li
       ref={drag.setNodeRef}
-      className={clsx("[-webkit-touch-callout:none]", drag.isDragging && "opacity-40")}
+      className={clsx(
+        "[-webkit-touch-callout:none]",
+        arriving && "arrive",
+        drag.isDragging && "opacity-40",
+      )}
     >
       <GlossaryRow
         {...props}

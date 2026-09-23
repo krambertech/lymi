@@ -113,6 +113,7 @@ export function auditStatementWhen(
 }
 
 function rowOf(ctx: ServiceContext, event: AuditEvent) {
+  ctx.wrote?.();
   return {
     id: newId(),
     userId: ctx.userId,

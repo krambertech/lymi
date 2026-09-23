@@ -29,3 +29,4 @@ export default {
 export { EnrichWorkflow } from "./enrichment/workflow";
 export { ExportWorkflow } from "./exports/workflow";
 export { ImportWorkflow } from "./imports/workflow";
+export { LiveChannel } from "./live/channel";

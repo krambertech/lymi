@@ -119,6 +119,10 @@ Language lives on the card, not the deck. `cards.language` is nullable; a deck m
 
 Later option: a Durable Object per user holding its own SQLite, which turns sync and offline into a solved problem. Not needed for one user.
 
+### Live updates: a Durable Object per learner
+
+`LiveChannel` holds a WebSocket for each of the learner's visible tabs, hibernating between messages. A successful write tells it that something changed, and the other tabs refetch what they show through TanStack Query. Alternatives considered: polling a change endpoint, server-sent events from the Worker, and a hosted pub/sub service. [ADR 0023](adr/0023-open-tabs-hear-about-changes-from-a-durable-object-per-learner.md).
+
 ### Auth: Better Auth on the Worker
 
 Better Auth runs on Workers, supports D1 natively as of 1.5, and does social login plus sessions, API keys for the public API, and an Expo plugin for the React Native app later. Two ways in: Continue with Google, and an email address with a password. Sign-up is open to anyone: Lymi is in public beta, and no allowlist stands in front of either door.

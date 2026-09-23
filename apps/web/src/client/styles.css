@@ -474,3 +474,47 @@
 @utility pb-safe-nav {
   padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
 }
+
+/* A list row that landed from elsewhere while the list was open: the list opens room for it, it
+   rises 6 px into place, and a wash of hover fades so the eye finds it. Under reduced motion it
+   only fades in. */
+@utility arrive {
+  display: grid;
+  grid-template-rows: 1fr;
+  animation:
+    arrive-open 240ms var(--ease-out),
+    arrive-wash 1600ms ease-out;
+  /* biome-ignore lint/style/noDescendingSpecificity: the theme switch sets transitions, never these animations */
+  & > * {
+    min-height: 0;
+    overflow: hidden;
+    animation: arrive-rise 200ms var(--ease-out);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: arrive-wash 1600ms ease-out;
+    & > * {
+      animation: arrive-fade 200ms ease-out;
+    }
+  }
+}
+@keyframes arrive-open {
+  from {
+    grid-template-rows: 0fr;
+  }
+}
+@keyframes arrive-rise {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+@keyframes arrive-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes arrive-wash {
+  from {
+    background-color: var(--hover);
+  }
+}

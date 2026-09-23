@@ -97,6 +97,8 @@ export interface McpPrincipal {
   images?: CardImageStorage | undefined;
   /** Where an add queues its enrichment run, missing where no text vendor is configured. */
   enrichment?: EnrichmentQueue | null | undefined;
+  /** Runs after every tool call, once its writes have landed. */
+  toolDone?: (() => void) | undefined;
 }
 
 /** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
@@ -977,6 +979,9 @@ async function runTool(
     if (err instanceof ServiceError) return failure(err.message);
     console.error("MCP tool failed", { tool, error: err instanceof Error ? err.name : typeof err });
     return failure("Lymi could not finish this just now. Try again in a moment.");
+  } finally {
+    // A batch tool can fail after some of its cards landed, so this runs either way.
+    principal.toolDone?.();
   }
 }
 

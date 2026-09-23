@@ -3,6 +3,7 @@ import { NonRetryableError } from "cloudflare:workflows";
 import { ImportFailure as Failures, type ImportFailure } from "@lymi/core";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
+import { announce } from "../live/announce";
 import {
   attachImportPictures,
   failImport,
@@ -104,14 +105,17 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         );
         pending = written.pictures;
         chunk++;
+        await announce(this.env, params.userId);
       }
       await step.do("finish", STEP, () => finishImport(ctx, id, pictures, uploads));
+      await announce(this.env, params.userId);
     } catch (err) {
       const failure: ImportFailure =
         err instanceof Error && Failures.safeParse(err.message).success
           ? (err.message as ImportFailure)
           : failureOf(err);
       await step.do("fail", STEP, () => failImport(db, id, failure, uploads));
+      await announce(this.env, params.userId);
     }
   }
 }

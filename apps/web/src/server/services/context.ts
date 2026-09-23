@@ -14,6 +14,8 @@ export interface ServiceContext {
   client?: string | undefined;
   /** What that caller is called, kept on the row so a revoked key stays named in the log. */
   clientName?: string | undefined;
+  /** Called as each audit row is built, so a caller can tell the learner's tabs once it lands. */
+  wrote?: (() => void) | undefined;
 }
 
 /** A failure the caller turns into an HTTP status or a tool error. */

@@ -27,6 +27,7 @@ import {
   pickLocale,
   readStoredLanguage,
 } from "../lib/i18n";
+import { useLiveUpdates } from "../lib/live";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
@@ -104,6 +105,7 @@ function Shell() {
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
   const leave = useSignOut();
   useSettleToday(!bare && me.isSuccess);
+  useLiveUpdates(!bare && me.isSuccess);
 
   const appLanguage = settings.data?.appLanguage;
   useEffect(() => {

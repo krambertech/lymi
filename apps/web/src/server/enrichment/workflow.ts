@@ -2,6 +2,7 @@ import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from "cloud
 import { createTextProvider } from "../ai";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
+import { announce } from "../live/announce";
 import {
   CARDS_PER_CALL,
   chunked,
@@ -49,6 +50,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         } catch {
           await step.do(`fail ${index}`, STEP, () => failEnrichment(db, params.userId, ids));
         }
+        await announce(this.env, params.userId);
       }
     } finally {
       // Nothing may stay at `working` once this instance stops, whatever stopped it: a step that
@@ -56,6 +58,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       await step
         .do("settle", SETTLE_STEP, () => failEnrichment(db, params.userId, params.cardIds))
         .catch(() => {});
+      await announce(this.env, params.userId);
     }
   }
 }

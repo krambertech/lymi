@@ -112,13 +112,7 @@ function put(entry: QueuedWrite) {
   try {
     localStorage.setItem(WRITE_PREFIX + entry.key, raw);
   } catch {
-    // The query cache is the one large thing in storage and can be fetched again; a write cannot.
-    try {
-      localStorage.removeItem("lymi-query-cache");
-      localStorage.setItem(WRITE_PREFIX + entry.key, raw);
-    } catch {
-      // Blocked storage keeps the write for this page's life.
-    }
+    // Blocked or full storage keeps the write for this page's life.
   }
   changed();
 }

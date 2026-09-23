@@ -23,7 +23,7 @@ Reviews already worked offline: the query cache survives reloads, and grades que
 
 **What the screen shows.** A write updates the cached deck list, archived lists and deck card lists at once. The same lists send what is waiting before they fetch, then lay any write still waiting over the answer, so a refetch never hides it. While online, every deck's cards, sections and draw are fetched once in the background, so a deck opened for the first time offline still works.
 
-**Storage.** Each queued write is its own localStorage key, `lymi-writes:<key>`, apart from the busted query cache, so tabs adding writes at the same moment never overwrite each other. Each carries a format version; a build keeps a version it does not know unsent rather than dropping it. When storage is full, the query cache is dropped to make room, because it can be fetched again. The app asks for persistent storage. Sign-in keeps both outboxes. `lymi-queued-for` records whose they are, and they are dropped only if a different account signs in. Sign-out still asks before discarding anything unsent.
+**Storage.** Each queued write is its own localStorage key, `lymi-writes:<key>`, so tabs adding writes at the same moment never overwrite each other. Each carries a format version; a build keeps a version it does not know unsent rather than dropping it. The query cache, which the deploy buster discards and the background fetch makes large, lives in IndexedDB instead, so it cannot crowd the outboxes out of localStorage. The app asks for persistent storage. Sign-in keeps both outboxes. `lymi-queued-for` records whose they are, and they are dropped only if a different account signs in. Sign-out still asks before discarding anything unsent.
 
 ## Considered options
 
@@ -31,7 +31,7 @@ Reviews already worked offline: the query cache survives reloads, and grades que
 - **Query's persisted paused mutations.** Rejected: they live in the cache the deploy buster discards, resume only through registered defaults, and do not order across mutation keys.
 - **An idempotency-key table.** Rejected for now: the ids on creates, plus writes that are already idempotent, cover every queued write without a migration.
 - **Conditional edits that refuse a stale field.** Deferred: they would protect a newer edit from another device, but they need a base value on every patch. That is rare for one learner, and the cost is a changed API contract.
-- **IndexedDB for the outbox.** Deferred: the review draw reads outboxes synchronously, the outbox is small, and one key per write already removes the cross-tab race.
+- **IndexedDB for the outbox.** Deferred: the review draw reads outboxes synchronously, the outbox is small, and one key per write already removes the cross-tab race. The query cache moved there instead.
 
 ## Consequences
 

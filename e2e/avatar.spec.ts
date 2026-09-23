@@ -1,6 +1,6 @@
 import { crc32, deflateSync } from "node:zlib";
 import { signInAsTestLearner, startAsTestLearner } from "./auth";
-import { expect, type Page, test } from "./test";
+import { expect, type Page, persistedCache, test } from "./test";
 
 /** A solid PNG with a lighter square in it, so a crop has something to move. */
 function png(width: number, height: number): Buffer {
@@ -162,7 +162,5 @@ test("another learner on the same browser never sees the previous photo", async 
   await expect(account(page).getByRole("button", { name: "Change photo" })).toBeVisible();
   await expect(photo(page)).toHaveCount(0);
   expect(requests).toEqual([]);
-  expect(await page.evaluate(() => localStorage.getItem("lymi-query-cache") ?? "")).not.toContain(
-    '"image"',
-  );
+  expect(await persistedCache(page)).not.toContain('"image"');
 });

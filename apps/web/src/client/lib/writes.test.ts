@@ -1,20 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const store = new Map<string, string>();
-let full = false;
 vi.stubGlobal("localStorage", {
   get length() {
     return store.size;
   },
   key: (i: number) => [...store.keys()][i] ?? null,
   getItem: (k: string) => store.get(k) ?? null,
-  setItem: (k: string, v: string) => {
-    if (full) {
-      full = false;
-      throw new Error("QuotaExceededError");
-    }
-    store.set(k, v);
-  },
+  setItem: (k: string, v: string) => store.set(k, v),
   removeItem: (k: string) => store.delete(k),
 });
 
@@ -285,14 +278,5 @@ describe("flushing", () => {
       { card: { id: "x" } },
     ]);
     expect(fetch).toHaveBeenCalledTimes(1);
-  });
-
-  it("makes room by dropping the query cache when storage is full", async () => {
-    store.set("lymi-query-cache", "x".repeat(10));
-    full = true;
-    answers.push(offline);
-    await w.submit(add("a"), "a");
-    expect(store.has("lymi-query-cache")).toBe(false);
-    expect([...store.keys()].filter((k) => k.startsWith("lymi-writes:"))).toHaveLength(1);
   });
 });

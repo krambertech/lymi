@@ -98,7 +98,7 @@ describe("a write on the device", () => {
 });
 
 describe("a refetch while writes wait", () => {
-  const queued = (write: Write): QueuedWrite => ({ key: "k", at: 0, write, label: "" });
+  const queued = (write: Write): QueuedWrite => ({ v: 1, key: "k", at: 0, write, label: "" });
 
   it("lays the waiting writes over what the server sent, once each", () => {
     const qc = cache();

@@ -8,7 +8,9 @@ import { clearCardImages } from "./card-images";
  * Cache Storage, the card pictures kept for offline review. All of it belongs to whoever was
  * signed in, so it is cleared when the learner changes: on sign-out, and before any sign-in starts.
  */
-const QUEUED = ["lymi-outbox", "lymi-writes", "lymi-queued-for"];
+/** Grades waiting to send, whose they are, and each queued write under `lymi-writes:<key>`. */
+const QUEUED = ["lymi-outbox", "lymi-queued-for"];
+export const WRITE_PREFIX = "lymi-writes:";
 const KEYS = [
   "lymi-query-cache",
   ...QUEUED,
@@ -27,6 +29,7 @@ export function clearPersistedLearnerState(opts: { keepQueued?: boolean } = {}):
     for (const key of KEYS) {
       if (!(opts.keepQueued && QUEUED.includes(key))) localStorage.removeItem(key);
     }
+    if (!opts.keepQueued) removeQueuedWrites();
   } catch {}
   void clearCardImages().catch(() => undefined);
 }
@@ -37,8 +40,17 @@ export function claimQueued(userId: string): void {
     const owner = localStorage.getItem("lymi-queued-for");
     if (owner && owner !== userId) {
       localStorage.removeItem("lymi-outbox");
-      localStorage.removeItem("lymi-writes");
+      removeQueuedWrites();
     }
     localStorage.setItem("lymi-queued-for", userId);
   } catch {}
+}
+
+function removeQueuedWrites() {
+  const names: string[] = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const name = localStorage.key(i);
+    if (name?.startsWith(WRITE_PREFIX)) names.push(name);
+  }
+  for (const name of names) localStorage.removeItem(name);
 }

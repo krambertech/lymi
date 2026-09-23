@@ -3,6 +3,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const store = new Map<string, string>();
 let full = false;
 vi.stubGlobal("localStorage", {
+  get length() {
+    return store.size;
+  },
+  key: (i: number) => [...store.keys()][i] ?? null,
   getItem: (k: string) => store.get(k) ?? null,
   setItem: (k: string, v: string) => {
     if (full) {
@@ -32,6 +36,7 @@ vi.mock("./api", async () => {
   }
   return {
     ApiError,
+    errorMessage: () => "unreachable",
     api: {
       addCard: (input: { id: string }) => next(`add ${input.id}`),
       updateCard: (id: string) => next(`update ${id}`),
@@ -186,13 +191,70 @@ describe("flushing", () => {
     ]);
   });
 
-  it("skips an entry it cannot read without losing the rest", async () => {
+  it("skips an entry it cannot read, and keeps one from another version unsent", async () => {
+    store.set("lymi-writes:x", "{nope");
+    store.set("lymi-writes:y", JSON.stringify({ v: 2, key: "y", at: 1, write: add("b") }));
     store.set(
-      "lymi-writes",
-      JSON.stringify([{ nope: true }, { key: "k", at: 1, write: add("a"), label: "a" }]),
+      "lymi-writes:k",
+      JSON.stringify({ v: 1, key: "k", at: 1, write: add("a"), label: "a" }),
     );
     w.resetWriteCache();
-    expect(w.writeStore.snapshot()).toHaveLength(1);
+    w.claimWrites("me");
+    expect(w.writeStore.snapshot().map((e) => e.key)).toEqual(["k"]);
+    await w.flushWrites();
+    expect(calls).toEqual(["add a"]);
+    expect(store.has("lymi-writes:y")).toBe(true);
+  });
+
+  it("keeps each write under its own key, so one tab's add never overwrites another's", async () => {
+    answers.push(offline);
+    await w.submit(add("a"), "a");
+    // Another tab queues a write the way this one does, straight into storage.
+    store.set(
+      "lymi-writes:other",
+      JSON.stringify({ v: 1, key: "other", at: 2, write: add("b"), label: "b" }),
+    );
+    answers.push(offline);
+    await w.submit(add("c"), "c");
+    w.resetWriteCache();
+    expect([...store.keys()].filter((k) => k.startsWith("lymi-writes:"))).toHaveLength(3);
+  });
+
+  it("treats a send that never answers as offline, and looks again later", async () => {
+    vi.useFakeTimers();
+    answers.push(() => new Promise(() => {}));
+    const submitted = w.submit(add("a"), "a");
+    await vi.advanceTimersByTimeAsync(w.SEND_TIMEOUT);
+    expect(await submitted).toEqual({ status: "queued" });
+    expect(w.pendingWrites()).toBe(1);
+    answers.push(() => ({ status: "added", card: { id: "a" } }));
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(w.pendingWrites()).toBe(0);
+  });
+
+  it("gives up on a write the server keeps failing, and says so", async () => {
+    vi.useFakeTimers();
+    const notices: unknown[] = [];
+    const stop = w.onNotice((n) => notices.push(n));
+    answers.push(fail(503));
+    await w.submit(add("a"), "aitäh");
+    vi.setSystemTime(Date.now() + w.GIVE_UP_AFTER);
+    answers.push(fail(503));
+    await w.flushWrites();
+    stop();
+    expect(w.pendingWrites()).toBe(0);
+    expect(notices).toEqual([{ reason: "refused", label: "aitäh", message: "status 503" }]);
+  });
+
+  it("gives up sooner on a failure no status explains", async () => {
+    vi.useFakeTimers();
+    for (let i = 0; i < w.UNEXPLAINED_TRIES; i++)
+      answers.push(() => {
+        throw new TypeError("bad json");
+      });
+    await w.submit(add("a"), "a");
+    for (let i = 1; i < w.UNEXPLAINED_TRIES; i++) await vi.advanceTimersByTimeAsync(w.backoff(i));
+    expect(w.pendingWrites()).toBe(0);
   });
 
   it("sends nothing until the queue is known to be the signed-in learner's", async () => {
@@ -231,6 +293,6 @@ describe("flushing", () => {
     answers.push(offline);
     await w.submit(add("a"), "a");
     expect(store.has("lymi-query-cache")).toBe(false);
-    expect(JSON.parse(store.get("lymi-writes") ?? "[]")).toHaveLength(1);
+    expect([...store.keys()].filter((k) => k.startsWith("lymi-writes:"))).toHaveLength(1);
   });
 });

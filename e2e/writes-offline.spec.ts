@@ -73,8 +73,12 @@ test("a deck and card made offline survive a reload and reach the server", async
       })
       .toBe(1);
     await expect
-      .poll(() => page.evaluate(() => window.localStorage.getItem("lymi-writes")))
-      .toBe("[]");
+      .poll(() =>
+        page.evaluate(
+          () => Object.keys(window.localStorage).filter((k) => k.startsWith("lymi-writes:")).length,
+        ),
+      )
+      .toBe(0);
     await expect(page.getByText(term, { exact: true })).toBeVisible();
   });
 });

@@ -18,7 +18,7 @@ import {
   updateCards,
 } from "./cards";
 import type { ServiceContext } from "./context";
-import { createDeck } from "./decks";
+import { archiveDeck, createDeck } from "./decks";
 import { createSection } from "./sections";
 import { learner, testDb } from "./test-db";
 
@@ -419,6 +419,16 @@ describe("a create sent again with its id", () => {
     const cards = await db.select().from(schema.cards).where(eq(schema.cards.deckId, deck.id));
     expect(cards).toHaveLength(1);
     expect(await auditRows(input.id)).toHaveLength(1);
+  });
+
+  it("returns the card the first add made even once its deck is archived", async () => {
+    const ctx = await learner(db, "replay-5", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Soon archived" });
+    const input = { id: "0replaycard00000005", deckId: deck.id, term: "aitäh" };
+    await addCards(ctx, [input]);
+    await archiveDeck(ctx, deck.id);
+    const [again] = await addCards(ctx, [input]);
+    expect(again).toMatchObject({ status: "added", id: input.id });
   });
 
   it("refuses an id another learner's card holds", async () => {

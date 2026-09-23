@@ -1,9 +1,9 @@
 import type { CardInput, CardPatch, DeckInput, NewDeckInput } from "@lymi/core";
 import { newId, normaliseTerm } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
-import { type AddCardOutcome, ApiError, api, type Card, type Deck } from "./api";
+import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
 import { flushOutbox as flushGrades } from "./grades";
-import { claimQueued } from "./persisted";
+import { claimQueued, WRITE_PREFIX } from "./persisted";
 import { cacheLookup, localCard, patchCard, rebase, showWrite } from "./write-projections";
 
 /**
@@ -11,7 +11,10 @@ import { cacheLookup, localCard, patchCard, rebase, showWrite } from "./write-pr
  * made offline lands once the connection returns. Grades have their own outbox in `grades.ts`;
  * a flush sends both in the order they were made. docs/stack.md#offline has the rules.
  */
-const KEY = "lymi-writes";
+// One key per queued write, under WRITE_PREFIX, so a tab adding one never rewrites another tab's.
+const LOCK = "lymi-writes";
+/** Raised when a queued write's shape changes; a build keeps, and does not send, a version it does not know. */
+const VERSION = 1;
 
 export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 
@@ -26,6 +29,7 @@ export type Write =
   | { kind: "deck.restore"; id: string };
 
 export interface QueuedWrite {
+  v: typeof VERSION;
   key: string;
   /** When the learner made it, so grades made before it are sent before it. */
   at: number;
@@ -33,6 +37,8 @@ export interface QueuedWrite {
   /** The term or deck name, so a write the server refuses can be named to the learner. */
   label: string;
   attempts?: number;
+  /** When the server first failed to take it, so a write it never takes is eventually given up. */
+  failingSince?: number;
   /** Not sent again before this, after the server failed to take it. */
   retryAt?: number;
 }
@@ -56,70 +62,90 @@ const KINDS = new Set<Write["kind"]>([
   "deck.restore",
 ]);
 
-let cache: { raw: string | null; writes: QueuedWrite[] } | null = null;
+let cache: QueuedWrite[] | null = null;
 const listeners = new Set<() => void>();
 const noticeListeners = new Set<(notice: Notice) => void>();
 
-function stored(): string | null {
-  try {
-    return localStorage.getItem(KEY);
-  } catch {
-    return cache?.raw ?? null;
-  }
+function readable(e: unknown): e is QueuedWrite {
+  const entry = e as QueuedWrite | null;
+  return (
+    !!entry &&
+    typeof entry === "object" &&
+    entry.v === VERSION &&
+    typeof entry.key === "string" &&
+    typeof entry.at === "number" &&
+    KINDS.has(entry.write?.kind)
+  );
 }
 
 function read(): QueuedWrite[] {
-  const raw = stored();
-  if (cache && cache.raw === raw) return cache.writes;
-  let entries: unknown[] = [];
+  if (cache) return cache;
+  const writes: QueuedWrite[] = [];
   try {
-    const parsed: unknown = JSON.parse(raw ?? "[]");
-    if (Array.isArray(parsed)) entries = parsed;
+    for (let i = 0; i < localStorage.length; i++) {
+      const name = localStorage.key(i);
+      if (!name?.startsWith(WRITE_PREFIX)) continue;
+      try {
+        const entry: unknown = JSON.parse(localStorage.getItem(name) ?? "null");
+        // Unreadable or from another version: left where it is, so it cannot hold up the rest.
+        if (readable(entry)) writes.push(entry);
+      } catch {}
+    }
   } catch {
-    entries = [];
+    return cache ?? [];
   }
-  // An entry this build cannot read is skipped on its own, so it cannot hold up the rest.
-  const writes = entries.filter(
-    (e): e is QueuedWrite =>
-      !!e &&
-      typeof e === "object" &&
-      typeof (e as QueuedWrite).key === "string" &&
-      typeof (e as QueuedWrite).at === "number" &&
-      KINDS.has((e as QueuedWrite).write?.kind),
-  );
-  cache = { raw, writes };
+  writes.sort((a, b) => a.at - b.at || (a.key < b.key ? -1 : 1));
+  cache = writes;
   return writes;
 }
 
-function write(next: QueuedWrite[]) {
-  const raw = JSON.stringify(next);
-  cache = { raw, writes: next };
+function changed() {
+  for (const listener of listeners) listener();
+}
+
+function put(entry: QueuedWrite) {
+  const raw = JSON.stringify(entry);
+  const current = read();
+  cache = current.some((e) => e.key === entry.key)
+    ? current.map((e) => (e.key === entry.key ? entry : e))
+    : [...current, entry];
   try {
-    localStorage.setItem(KEY, raw);
+    localStorage.setItem(WRITE_PREFIX + entry.key, raw);
   } catch {
     // The query cache is the one large thing in storage and can be fetched again; a write cannot.
     try {
       localStorage.removeItem("lymi-query-cache");
-      localStorage.setItem(KEY, raw);
+      localStorage.setItem(WRITE_PREFIX + entry.key, raw);
     } catch {
-      // Blocked storage keeps the writes for this page's life.
+      // Blocked storage keeps the write for this page's life.
     }
   }
-  for (const listener of listeners) listener();
+  changed();
 }
 
-const update = (fn: (current: QueuedWrite[]) => QueuedWrite[]) => write(fn(read()));
+function remove(key: string) {
+  cache = read().filter((e) => e.key !== key);
+  try {
+    localStorage.removeItem(WRITE_PREFIX + key);
+  } catch {}
+  changed();
+}
+
+// Another tab's queue changes arrive as storage events; the next read picks them up.
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", (e) => {
+    if (e.key === null || e.key.startsWith(WRITE_PREFIX)) {
+      cache = null;
+      changed();
+    }
+  });
+}
 
 export const writeStore = {
   subscribe(listener: () => void) {
     listeners.add(listener);
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === KEY) listener();
-    };
-    window.addEventListener("storage", onStorage);
     return () => {
       listeners.delete(listener);
-      window.removeEventListener("storage", onStorage);
     };
   },
   snapshot: read,
@@ -191,6 +217,24 @@ export function backoff(attempts: number): number {
 /** A status that says to try again later rather than that the write can never land. */
 const transient = (status: number) => status === 408 || status === 429 || status >= 500;
 
+/** How long a write the server keeps failing is tried before it is given up and reported. */
+export const GIVE_UP_AFTER = 24 * 60 * 60_000;
+/** Tries for a write that fails in a way no status explains, which a retry is unlikely to fix. */
+export const UNEXPLAINED_TRIES = 5;
+/** A send that has not answered by now is treated as offline, so a stalled connection holds nothing up. */
+export const SEND_TIMEOUT = 20_000;
+/** When to look again after a send stalled. */
+const STALL_RETRY = 30_000;
+
+function sendWithin(w: Write): Promise<Result> {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const stalled = new Promise<never>((_, reject) => {
+    timeout = setTimeout(() => reject(new ApiError(0, "stalled")), SEND_TIMEOUT);
+  });
+  // A write that lands after its timeout is replayed and recognised, so it lands once.
+  return Promise.race([send(w), stalled]).finally(() => clearTimeout(timeout));
+}
+
 /** Writes a `submit` is waiting on, and what the flush made of each, read once by that submit. */
 const awaited = new Set<string>();
 const settled = new Map<string, { value: Result } | { error: ApiError }>();
@@ -213,6 +257,7 @@ let claimed = false;
 /** Lets the queue flush once it is known to be this learner's; `claimQueued` drops another's. */
 export function claimWrites(userId: string) {
   claimQueued(userId);
+  cache = null;
   claimed = true;
 }
 
@@ -226,7 +271,7 @@ async function flushQueued(): Promise<Flushed> {
     const { own, needs } = entitiesOf(entry.write);
     const ids = [own, ...needs.filter(Boolean)];
     if (ids.some((id) => dropped.has(id))) {
-      update((all) => all.filter((e) => e.key !== entry.key));
+      remove(entry.key);
       settle(entry.key, { error: new ApiError(404, "gone") });
       continue;
     }
@@ -242,8 +287,8 @@ async function flushQueued(): Promise<Flushed> {
     // Grades made before this write go first, so the server sees one timeline.
     result.graded += await flushGrades(new Date(entry.at).toISOString()).catch(() => 0);
     try {
-      const value = await send(entry.write);
-      update((all) => all.filter((e) => e.key !== entry.key));
+      const value = await sendWithin(entry.write);
+      remove(entry.key);
       settle(entry.key, { value });
       result.sent += 1;
       if (entry.write.kind === "card.add" && "status" in value && value.status === "skipped") {
@@ -257,23 +302,32 @@ async function flushQueued(): Promise<Flushed> {
       // Offline, or a session that lapsed: nothing else can land until that changes.
       if (status === 0 || status === 401) {
         result.stopped = true;
+        if (status === 0) result.retryAt = Date.now() + STALL_RETRY;
         break;
       }
-      if (status === -1 || transient(status)) {
-        const attempts = (entry.attempts ?? 0) + 1;
-        const retryAt = Date.now() + backoff(attempts);
-        update((all) => all.map((e) => (e.key === entry.key ? { ...e, attempts, retryAt } : e)));
+      const now = Date.now();
+      const attempts = (entry.attempts ?? 0) + 1;
+      const failingSince = entry.failingSince ?? now;
+      const retrying =
+        status === -1
+          ? attempts < UNEXPLAINED_TRIES
+          : transient(status) && now - failingSince < GIVE_UP_AFTER;
+      if (retrying) {
+        const retryAt = now + backoff(attempts);
+        put({ ...entry, attempts, failingSince, retryAt });
         result.retryAt = Math.min(result.retryAt ?? retryAt, retryAt);
         hold(entry.write);
         continue;
       }
-      // Refused outright: it can never land, and neither can anything that needed what it made.
-      update((all) => all.filter((e) => e.key !== entry.key));
-      settle(entry.key, { error: err as ApiError });
+      // Refused, or failing past the point of trying: it will not land, and neither will anything
+      // that needed what it made.
+      const error = err instanceof ApiError ? err : new ApiError(-1, errorMessage(err));
+      remove(entry.key);
+      settle(entry.key, { error });
       const made = createdBy(entry.write);
       if (made) dropped.add(made);
       if (!awaited.has(entry.key)) {
-        notify({ reason: "refused", label: entry.label, message: (err as ApiError).message });
+        notify({ reason: "refused", label: entry.label, message: error.message });
       }
     }
   }
@@ -292,7 +346,7 @@ let timer: ReturnType<typeof setTimeout> | undefined;
 function serial<T>(task: () => Promise<T>): Promise<T> {
   const locked = () =>
     typeof navigator !== "undefined" && navigator.locks
-      ? (navigator.locks.request(KEY, task) as Promise<T>)
+      ? (navigator.locks.request(LOCK, task) as Promise<T>)
       : task();
   const run = chain.then(locked, locked);
   chain = run.catch(() => undefined);
@@ -319,7 +373,7 @@ export type Written<T> = { status: "sent"; value: T } | { status: "queued" };
 export async function submit<T extends Result>(w: Write, label: string): Promise<Written<T>> {
   const key = newId();
   awaited.add(key);
-  update((all) => [...all, { key, at: Date.now(), write: w, label }]);
+  put({ v: VERSION, key, at: Date.now(), write: w, label });
   await flushWrites().finally(() => awaited.delete(key));
   const outcome = settled.get(key);
   settled.delete(key);
@@ -329,6 +383,8 @@ export async function submit<T extends Result>(w: Write, label: string): Promise
 }
 
 let client: QueryClient | null = null;
+/** The longest a list waits on queued writes before it fetches anyway; the rebase covers the rest. */
+const READ_WAIT = 2000;
 
 /** The cache every write shows in at once and every refetch lays the waiting writes over. */
 export function bindWriteCache(qc: QueryClient) {
@@ -349,7 +405,11 @@ export async function fresh<T>(
   fetch: () => Promise<T>,
   local?: { deckId: string; empty: T },
 ): Promise<T> {
-  await flushWrites().catch(() => undefined);
+  // Waits a moment for what is queued to land first, but never lets a slow send hold up a read.
+  await Promise.race([
+    flushWrites().catch(() => undefined),
+    new Promise((resolve) => setTimeout(resolve, READ_WAIT)),
+  ]);
   const data = local && madeHere(local.deckId) ? local.empty : await fetch();
   const pending = read();
   return client && pending.length ? rebase(key, data, pending, cacheLookup(client)) : data;

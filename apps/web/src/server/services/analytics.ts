@@ -46,7 +46,7 @@ export function recordRequest(
     method: string;
     status: number;
     durationMs: number;
-    actor: "anon" | "user" | "api" | "mcp";
+    actor: "anon" | "public" | "user" | "api" | "mcp";
   },
 ): void {
   if (!dataset) return;

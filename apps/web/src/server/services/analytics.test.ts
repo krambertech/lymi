@@ -33,8 +33,34 @@ it("writes only fixed labels and counts, and stays silent without a binding", as
   const response = await app.fetch("/api/health?private=value");
   expect(response.status).toBe(200);
   const request = points.at(-1);
-  expect(request?.indexes).toEqual(["anon"]);
+  expect(request?.indexes).toEqual(["public"]);
   expect(request?.blobs).toEqual(["/api/health", "GET", "2xx"]);
   expect(request?.doubles?.[0]).toBeGreaterThanOrEqual(0);
   expect(JSON.stringify(points)).not.toContain("private");
+});
+
+it("labels callers and routes without recording requested paths", async () => {
+  const points: AnalyticsEngineDataPoint[] = [];
+  const app = await testApp();
+  app.env.REQUESTS = {
+    writeDataPoint: (point?: AnalyticsEngineDataPoint) => points.push(point ?? {}),
+  };
+  const learner = await app.signUp(`analytics-${Date.now()}`);
+  const label = async (path: string, as?: typeof learner) => {
+    await app.fetch(path, { as });
+    const [actor] = points.at(-1)?.indexes ?? [];
+    const [route, , status] = points.at(-1)?.blobs ?? [];
+    return [actor, route, status];
+  };
+
+  expect(await label("/api/me")).toEqual(["anon", "/api/*", "4xx"]);
+  expect(await label("/api/me", learner)).toEqual(["user", "/api/me", "2xx"]);
+  expect(await label("/api/cards/card_missing", learner)).toEqual([
+    "user",
+    "/api/cards/:id",
+    "4xx",
+  ]);
+  expect(await label("/api/nothing/card_missing", learner)).toEqual(["user", "unmatched", "4xx"]);
+  expect(await label("/api/auth/get-session", learner)).toEqual(["public", "/api/auth/*", "2xx"]);
+  expect(JSON.stringify(points)).not.toContain("card_missing");
 });

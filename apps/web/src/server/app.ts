@@ -55,6 +55,8 @@ export type AppEnv = {
     client?: string | undefined;
     /** That key's name, written onto the rows it makes. */
     clientName?: string | undefined;
+    /** Set when no route answered, so analytics never records the requested path. */
+    unmatched?: true;
   };
 };
 
@@ -102,16 +104,19 @@ app.use("*", async (c, next) => {
     const route = routePath(c);
     const actor = c.get("actor");
     recordRequest(c.env.REQUESTS, {
-      route: c.res.status === 404 ? "unmatched" : route || "unmatched",
+      route: c.get("unmatched") ? "unmatched" : route || "unmatched",
       method: c.req.method,
       status: c.res.status,
       durationMs: performance.now() - start,
+      // Routes before `authenticate` never learn who is calling, so they count as public.
       actor:
         actor === "user" || actor === "api"
           ? actor
           : route === "/mcp" && c.res.status < 400
             ? "mcp"
-            : "anon",
+            : c.res.status === 401
+              ? "anon"
+              : "public",
     });
   } catch {
     // Measurement cannot change the response.
@@ -256,6 +261,7 @@ app.route("/api/activity", activity);
 app.route("/api/explore", explore);
 
 app.notFound(async (c) => {
+  c.set("unmatched", true);
   if (c.req.path.startsWith("/api/")) return c.json({ error: "Not found" }, 404);
   if (!c.env.ASSETS) return c.text("Not found", 404);
   const response = await fetchConfiguredAsset(c.req.raw, c.env);

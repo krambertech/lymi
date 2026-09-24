@@ -648,10 +648,20 @@ describe("the upload", () => {
       .update(schema.imports)
       .set({ updatedAt: new Date(Date.now() - 4 * DAY) })
       .where(eq(schema.imports.id, waiting.id));
-    expect(await expireImports(db, env.IMPORTS)).toBeGreaterThanOrEqual(1);
+    const points: AnalyticsEngineDataPoint[] = [];
+    const analytics = {
+      writeDataPoint: (point?: AnalyticsEngineDataPoint) => points.push(point ?? {}),
+    };
+    expect(await expireImports(db, env.IMPORTS, new Date(), analytics)).toBeGreaterThanOrEqual(1);
     expect(await getImport(ctx, waiting.id)).toMatchObject({
       status: "failed",
       failure: "expired",
     });
+    expect(points).toContainEqual(
+      expect.objectContaining({
+        indexes: ["import_finished"],
+        blobs: [expect.stringMatching(/:failed$/)],
+      }),
+    );
   });
 });

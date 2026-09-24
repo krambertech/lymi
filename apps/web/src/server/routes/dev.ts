@@ -9,12 +9,18 @@ import { devToolsEnabled } from "../env";
 import { body, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
+  addSampleCards,
+  asClaude,
   deletePersonaAccount,
   devCounts,
+  enrichSampleCards,
   markEnriched,
+  reachGoal,
+  recallCards,
   resetAccount,
   seedPersona,
   setDue,
+  slipCards,
 } from "../services/dev";
 import { latestLocalEmail } from "../services/email";
 import { getSettings } from "../services/settings";
@@ -184,6 +190,45 @@ dev.post("/due", describe({ hide: true, open: true }), body(DueBody, "due"), asy
   const ctx = ctxOf(c);
   const due = await setDue(ctx, c.req.valid("json").count);
   return c.json({ due, counts: await devCounts(ctx) });
+});
+
+const CountBody = z.object({ count: z.number().int().min(1).max(200) });
+
+// Cards an assistant adds, named as Claude, so Activity shows a connected app's write.
+dev.post("/cards", describe({ hide: true, open: true }), body(CountBody, "cards"), async (c) => {
+  const ctx = ctxOf(c);
+  const added = await addSampleCards(asClaude(ctx), c.req.valid("json").count);
+  return c.json({ added, counts: await devCounts(ctx) });
+});
+
+dev.post("/enrich", describe({ hide: true, open: true }), body(CountBody, "enrich"), async (c) => {
+  const ctx = ctxOf(c);
+  const enriched = await enrichSampleCards(ctx, c.req.valid("json").count);
+  return c.json({ enriched, counts: await devCounts(ctx) });
+});
+
+const RecallBody = z.object({
+  count: z.number().int().min(1).max(200),
+  rating: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).optional(),
+});
+
+dev.post("/recall", describe({ hide: true, open: true }), body(RecallBody, "recall"), async (c) => {
+  const ctx = ctxOf(c);
+  const { count, rating } = c.req.valid("json");
+  const graded = await recallCards(ctx, count, rating);
+  return c.json({ graded, counts: await devCounts(ctx) });
+});
+
+dev.post("/goal", describe({ hide: true, open: true }), async (c) => {
+  const ctx = ctxOf(c);
+  const graded = await reachGoal(ctx);
+  return c.json({ graded, counts: await devCounts(ctx) });
+});
+
+dev.post("/slip", describe({ hide: true, open: true }), body(CountBody, "slip"), async (c) => {
+  const ctx = ctxOf(c);
+  const slipped = await slipCards(ctx, c.req.valid("json").count);
+  return c.json({ slipped, counts: await devCounts(ctx) });
 });
 
 const EnrichedBody = z.object({

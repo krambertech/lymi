@@ -220,11 +220,11 @@ export async function completeImportUpload(
   // A second request can find the parts already joined by the first, which is not a failure.
   const head = await uploads.head(row.objectKey);
   if (!joined && !head) {
-    await failImport(ctx.db, id, "upload_incomplete", uploads);
+    await failImport(ctx.db, id, "upload_incomplete", uploads, ctx.analytics);
     return getImport(ctx, id);
   }
   if (head?.size !== row.byteSize) {
-    await failImport(ctx.db, id, "upload_incomplete", uploads);
+    await failImport(ctx.db, id, "upload_incomplete", uploads, ctx.analytics);
     return getImport(ctx, id);
   }
   await ctx.db
@@ -514,7 +514,12 @@ async function deleteFiles(uploads: R2Bucket, row: Import) {
 }
 
 /** Gives up on imports left waiting, so no upload stays in R2. Run from the cron trigger. */
-export async function expireImports(db: Db, uploads: R2Bucket, now = new Date()) {
+export async function expireImports(
+  db: Db,
+  uploads: R2Bucket,
+  now = new Date(),
+  analytics?: AnalyticsWriter,
+) {
   const stale = await db
     .select()
     .from(schema.imports)
@@ -526,7 +531,13 @@ export async function expireImports(db: Db, uploads: R2Bucket, now = new Date())
     )
     .limit(50);
   for (const row of stale) {
-    await failImport(db, row.id, row.status === "importing" ? "internal" : "expired", uploads);
+    await failImport(
+      db,
+      row.id,
+      row.status === "importing" ? "internal" : "expired",
+      uploads,
+      analytics,
+    );
   }
   return stale.length;
 }

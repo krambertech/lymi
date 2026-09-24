@@ -109,6 +109,8 @@ The Playwright suite runs the product through Vite with a loopback `PRODUCT_URL`
 
 The production product Worker writes aggregate points to `lymi_events` and `lymi_requests`. Query them through the [Analytics Engine SQL API](https://developers.cloudflare.com/analytics/analytics-engine/sql-api/) with an account token that has Analytics Read permission. `_sample_interval` weights rows when Cloudflare samples them. These metrics contain no learner identifier, so sign-ins below are a count of events, not distinct daily active learners.
 
+In `lymi_requests`, `index1` is the caller: `user` for a session, `api` for an API key, `mcp` for an authorized MCP call, `anon` for a request refused with 401, and `public` for a route that runs before authentication and never identifies the caller, such as `/api/auth/*`, `/api/join/*` and `/public/media/*`. `blob1` is the route pattern, or `unmatched` when no route answered.
+
 Daily sign-ins:
 
 ```sql

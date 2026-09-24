@@ -48,11 +48,14 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         try {
           await step.do(`cards ${index}`, STEP, () => enrichCards(ctx, ids, provider));
         } catch {
-          await step.do(`fail ${index}`, STEP, () => failEnrichment(db, params.userId, ids));
-          track(this.env.EVENTS, {
-            name: "enrichment_finished",
-            outcome: "failed",
-            count: ids.length,
+          // Inside the step, because code outside one runs again when the engine replays.
+          await step.do(`fail ${index}`, STEP, async () => {
+            await failEnrichment(db, params.userId, ids);
+            track(this.env.EVENTS, {
+              name: "enrichment_finished",
+              outcome: "failed",
+              count: ids.length,
+            });
           });
         }
       }

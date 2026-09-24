@@ -18,7 +18,7 @@ export default {
       }),
     );
     executionCtx.waitUntil(
-      expireImports(createDb(env.DB), env.IMPORTS, new Date(controller.scheduledTime)),
+      expireImports(createDb(env.DB), env.IMPORTS, new Date(controller.scheduledTime), env.EVENTS),
     );
     executionCtx.waitUntil(
       expireExports(createDb(env.DB), env.EXPORTS, new Date(controller.scheduledTime)),

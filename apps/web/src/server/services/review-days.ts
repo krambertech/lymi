@@ -332,41 +332,47 @@ export interface StreakDay {
   outcome: Outcome | null;
 }
 
+/** A rest day is allowed once the run has gone this many days without one. */
+const REST_EVERY = 7;
+
 /**
- * The current run and the longest. Today adds once satisfied and is otherwise skipped, so an
- * unfinished morning shows yesterday's run; a nothing-due day keeps a run without adding to it;
- * any other day breaks it.
+ * The current run, the longest, and the rest days. Today adds once satisfied and is otherwise
+ * skipped, so an unfinished morning shows yesterday's run; a nothing-due day keeps a run without
+ * adding to it. A past day that falls short, with reviews or none, is a rest day when the run
+ * before it is live and has had no other rest day in the six days before it; a rest day keeps the
+ * run without adding, and any other short day breaks it. Rest is derived on every read, never
+ * stored, so the rule reaches all history.
  */
 export function summariseStreak(days: StreakDay[], today: string) {
   const byDate = new Map(days.map((d) => [d.date, d]));
   const keeps = (d: StreakDay | undefined) => !!d && (d.satisfied || d.outcome === "nothing_due");
+  const restDays: string[] = [];
 
-  let current = 0;
-  let date = today;
-  if (!byDate.get(today)?.satisfied) date = addDays(today, -1);
-  for (; keeps(byDate.get(date)); date = addDays(date, -1)) {
-    if (byDate.get(date)?.satisfied) current++;
-  }
-
-  let longest = 0;
   let run = 0;
-  let previous: string | undefined;
-  for (const d of [...days].sort((a, b) => a.date.localeCompare(b.date))) {
-    if (!keeps(d)) {
+  let longest = 0;
+  let lastRest: string | undefined;
+  // Today is open until it ends, so the walk stops before it and adds it only once satisfied.
+  for (let date = days[0]?.date ?? today; date < today; date = addDays(date, 1)) {
+    const d = byDate.get(date);
+    if (keeps(d)) {
+      if (d?.satisfied) run++;
+    } else if (run > 0 && (!lastRest || daysBetween(lastRest, date) >= REST_EVERY)) {
+      restDays.push(date);
+      lastRest = date;
+    } else {
       run = 0;
-      previous = undefined;
-      continue;
+      lastRest = undefined;
     }
-    if (previous && daysBetween(previous, d.date) !== 1) run = 0;
-    if (d.satisfied) run++;
-    previous = d.date;
     if (run > longest) longest = run;
   }
+  if (byDate.get(today)?.satisfied) run++;
+  if (run > longest) longest = run;
 
   return {
-    current,
+    current: run,
     longest,
     reviewedDays: days.filter((d) => d.attempts > 0).length,
+    restDays,
   };
 }
 

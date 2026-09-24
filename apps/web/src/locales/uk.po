@@ -388,11 +388,20 @@ msgstr "{count, plural, one {Перемістити # картку до} few {П
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
+msgid "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"
+msgstr "{current, plural, one {# день поспіль, і лік триває.} few {# дні поспіль, і лік триває.} many {# днів поспіль, і лік триває.} other {# дня поспіль, і лік триває.}}"
+
 msgid "{current} of 3 done"
 msgstr "Виконано {current} з 3"
 
+msgid "{day} {n}, rest day"
+msgstr "{day}: {n}, день відпочинку"
+
 msgid "{day} none"
 msgstr "{day}: немає"
+
+msgid "{day} none, rest day"
+msgstr "{day}: немає, день відпочинку"
 
 msgid "{day}: {n} reviewed"
 msgstr "{day}: повторено {n}"
@@ -420,6 +429,12 @@ msgstr "{day}: ще попереду"
 
 msgid "{day}: nothing due"
 msgstr "{day}: нічого повторювати"
+
+msgid "{day}: rest day"
+msgstr "{day}: день відпочинку"
+
+msgid "{day}: rest day, {reviews}"
+msgstr "{day}: день відпочинку, {reviews}"
 
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
@@ -599,6 +614,9 @@ msgstr "Файл Lymi з іншого акаунта Lymi"
 
 msgid "A reset link works once, within an hour."
 msgstr "Посилання діє одну годину й тільки один раз."
+
+msgid "A rest day keeps the streak through one missed day a week."
+msgstr "День відпочинку зберігає дні поспіль, коли пропускаєш один день на тиждень."
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -3650,6 +3668,12 @@ msgstr "Так, правильно"
 
 msgid "Yesterday"
 msgstr "Учора"
+
+msgid "Yesterday was a rest day"
+msgstr "Учора був день відпочинку"
+
+msgid "Yesterday was a rest day. Reach today’s goal to keep it going."
+msgstr "Учора був день відпочинку. Досягни сьогоднішньої мети, щоб не перервати дні поспіль."
 
 msgid "you"
 msgstr "ти"

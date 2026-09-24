@@ -66,6 +66,7 @@ function summary(
     current,
     longest: current,
     reviewedDays: current,
+    restDays: [],
     days: [],
   };
 }

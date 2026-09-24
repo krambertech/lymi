@@ -42,11 +42,13 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Direction**: The older name for a deck's or card's text review modes, still accepted by the API. Recognition shows the term. Production shows the meaning.
 
-**Streak**: Days in a row whose daily goal was satisfied, drawn as the flame. Today adds once satisfied and is otherwise skipped, so an unfinished morning still shows yesterday's streak; a confirmed nothing-due day keeps the run without adding to it. Distinct from the seven lights, which say which days rather than how many. _Avoid_: Chain, run, days active
+**Streak**: Days in a row whose daily goal was satisfied, drawn as the flame. Today adds once satisfied and is otherwise skipped, so an unfinished morning still shows yesterday's streak; a confirmed nothing-due day or a rest day keeps the run without adding to it. Distinct from the seven lights, which say which days rather than how many. _Avoid_: Chain, run, days active
 
 **Round**: A review of a chosen set beside the day's draw: one of Today's groups, new cards, forgotten today or slipping, or Review forgotten at the end of a review. Each card comes once, and every grade counts like any review. _Avoid_: Session, quiz, practice
 
 **Slipping card**: A card forgotten at least 4 times in at least 6 reviews. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
+
+**Rest day**: A past day that fell short of its goal, with reviews or none, and still kept the run, because the run had no other rest day in the six days before it. Automatic and never declared or stored. It keeps the streak without adding to it; any other short day breaks the run. _Avoid_: Freeze, skip, pass, grace
 
 **Review day**: One learner-local date measured against its goal. It is open until satisfied, then goal met or exhausted; a day Lymi confirms had nothing eligible is nothing due. The day boundary follows the review timezone. _Avoid_: Session, day (in the API)
 

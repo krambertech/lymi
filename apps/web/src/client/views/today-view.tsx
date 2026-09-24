@@ -5,7 +5,7 @@ import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ChevronRight, Plus } from "lucide-react";
-import type { ReactNode } from "react";
+import { type ReactNode, useRef } from "react";
 import { Button, buttonClass } from "../components/button";
 import { DueCount } from "../components/due-count";
 import { ErrorState } from "../components/empty-state";
@@ -14,10 +14,11 @@ import { Lantern } from "../components/lantern";
 import { Screen } from "../components/layout/screen";
 import { Go } from "../components/next-steps";
 import { ReadyDecks } from "../components/ready-decks";
+import { RestDayBanner } from "../components/rest-day-banner";
 import { Skeleton } from "../components/skeleton";
 import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
-import type { StreakSummary } from "../components/streak";
+import { restedYesterday, type StreakSummary } from "../components/streak";
 import type { DeckSummary, Series } from "../lib/api";
 import { lanternFor } from "../lib/flame";
 import { groupDecks } from "../lib/library-groups";
@@ -42,6 +43,9 @@ export interface TodayProps {
   failed?: boolean | undefined;
   onRetry?: (() => void) | undefined;
   retrying?: boolean | undefined;
+  /** The learner closed today's rest-day banner. */
+  restDismissed?: boolean | undefined;
+  onDismissRest?: (() => void) | undefined;
   /** Published decks the learner has not added. Undefined while Explore is still unread. */
   ready?: PublicDeckSummary[] | undefined;
   static?: StaticNav;
@@ -74,6 +78,8 @@ export function TodayView({
   onRetry,
   retrying,
   ready,
+  restDismissed,
+  onDismissRest,
   static: st,
 }: TodayProps) {
   const { t } = useLingui();
@@ -106,6 +112,7 @@ export function TodayView({
   const noDecks = nothingYet && decks?.length === 0;
   const guiding = !!decks && isGuiding(streak);
   const [onlyDeck] = decks?.length === 1 ? decks : [];
+  const todayRef = useRef<HTMLElement>(null);
 
   return (
     <Screen kind="tab" title={<Trans>Today</Trans>}>
@@ -132,74 +139,91 @@ export function TodayView({
         />
       ) : (
         <div className="grid gap-8 @3xl:gap-10">
-          <section
-            aria-label={t`Today`}
-            className={clsx(
-              "grid grid-cols-1 gap-3",
-              !nothingYet && "@3xl:grid-cols-[1.55fr_1fr] @3xl:gap-4",
+          {/* The banner sits at the cards' own gap, because it is about the streak card below it. */}
+          <div className="grid gap-3 @3xl:gap-4">
+            {!loading && streak && restedYesterday(streak) && !restDismissed && (
+              <RestDayBanner
+                current={streak.current}
+                onDismiss={
+                  onDismissRest &&
+                  (() => {
+                    onDismissRest();
+                    // The banner takes its button with it, so focus moves on to the next control.
+                    todayRef.current?.querySelector<HTMLElement>("a[href], button")?.focus();
+                  })
+                }
+              />
             )}
-          >
-            {loading ? (
-              <>
-                <Skeleton className="h-52 w-full rounded-xl" />
-                <Skeleton className="h-40 w-full rounded-xl @3xl:h-52" />
-              </>
-            ) : (
-              <>
-                <div className="edge grid content-between gap-5 rounded-xl bg-plate p-5 @3xl:p-6">
-                  <div className="flex items-center gap-4">
-                    <Lantern
-                      className="-my-3 -ms-3 size-24 @3xl:size-28"
-                      {...lanternFor(streak)}
-                      flicker={!!streak?.current}
-                      glow={!!streak?.current}
-                    />
-                    <DueHeading
-                      due={due}
-                      nothingYet={nothingYet}
-                      noDecks={noDecks}
-                      onlyDeck={onlyDeck}
-                    />
+            <section
+              ref={todayRef}
+              aria-label={t`Today`}
+              className={clsx(
+                "grid grid-cols-1 gap-3",
+                !nothingYet && "@3xl:grid-cols-[1.55fr_1fr] @3xl:gap-4",
+              )}
+            >
+              {loading ? (
+                <>
+                  <Skeleton className="h-52 w-full rounded-xl" />
+                  <Skeleton className="h-40 w-full rounded-xl @3xl:h-52" />
+                </>
+              ) : (
+                <>
+                  <div className="edge grid content-between gap-5 rounded-xl bg-plate p-5 @3xl:p-6">
+                    <div className="flex items-center gap-4">
+                      <Lantern
+                        className="-my-3 -ms-3 size-24 @3xl:size-28"
+                        {...lanternFor(streak)}
+                        flicker={!!streak?.current}
+                        glow={!!streak?.current}
+                      />
+                      <DueHeading
+                        due={due}
+                        nothingYet={nothingYet}
+                        noDecks={noDecks}
+                        onlyDeck={onlyDeck}
+                      />
+                    </div>
+                    {due > 0 ? (
+                      <To
+                        to="/review"
+                        st={st}
+                        className={buttonClass("primary", "lg", "h-16 w-full rounded-lg text-lg")}
+                      >
+                        <Trans>Review</Trans>
+                        <span className="hidden @2xl:contents">
+                          <Kbd tone="on-primary">R</Kbd>
+                        </span>
+                      </To>
+                    ) : noDecks ? (
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        className="h-16 w-full rounded-lg text-lg"
+                        onClick={onCreateDeck}
+                        aria-disabled={!onCreateDeck}
+                      >
+                        <Trans>New deck</Trans>
+                      </Button>
+                    ) : (
+                      // Nothing due is not nothing to do: capture is the standing action.
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        className="h-16 w-full rounded-lg text-lg"
+                        onClick={onAdd}
+                        aria-disabled={!onAdd}
+                        kbd="N"
+                      >
+                        <Trans>Add a card</Trans>
+                      </Button>
+                    )}
                   </div>
-                  {due > 0 ? (
-                    <To
-                      to="/review"
-                      st={st}
-                      className={buttonClass("primary", "lg", "h-16 w-full rounded-lg text-lg")}
-                    >
-                      <Trans>Review</Trans>
-                      <span className="hidden @2xl:contents">
-                        <Kbd tone="on-primary">R</Kbd>
-                      </span>
-                    </To>
-                  ) : noDecks ? (
-                    <Button
-                      variant="primary"
-                      size="lg"
-                      className="h-16 w-full rounded-lg text-lg"
-                      onClick={onCreateDeck}
-                      aria-disabled={!onCreateDeck}
-                    >
-                      <Trans>New deck</Trans>
-                    </Button>
-                  ) : (
-                    // Nothing due is not nothing to do: capture is the standing action.
-                    <Button
-                      variant="primary"
-                      size="lg"
-                      className="h-16 w-full rounded-lg text-lg"
-                      onClick={onAdd}
-                      aria-disabled={!onAdd}
-                      kbd="N"
-                    >
-                      <Trans>Add a card</Trans>
-                    </Button>
-                  )}
-                </div>
-                {!nothingYet && streakCard}
-              </>
-            )}
-          </section>
+                  {!nothingYet && streakCard}
+                </>
+              )}
+            </section>
+          </div>
 
           {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} st={st} />}
 

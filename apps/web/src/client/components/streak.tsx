@@ -19,18 +19,25 @@ export type StreakSummary = StreakOut;
 const satisfied = (outcome: StreakSummary["today"]["outcome"]) =>
   outcome === "goal_met" || outcome === "exhausted";
 
+/** Yesterday fell short and the run carried on through it: the morning after a rest day. */
+export function restedYesterday(summary: StreakSummary): boolean {
+  return summary.restDays.includes(addDays(summary.today.date, -1));
+}
+
 /**
  * The last `n` local days, oldest first, today last: attempts and whether each counted toward a
  * streak. What the seven lights read.
  */
 export function lastDays(summary: StreakSummary, n = 7) {
   const byDate = new Map(summary.days.map((d) => [d.date, d]));
+  const rest = new Set(summary.restDays);
   const dates = Array.from({ length: n }, (_, i) => addDays(summary.today.date, i - (n - 1)));
   const days = dates.map((date) => byDate.get(date));
   return {
     dates,
     attempts: days.map((d) => d?.attempts ?? 0),
     satisfied: days.map((d) => d?.satisfied ?? false),
+    rest: dates.map((date) => rest.has(date)),
     goals: days.map((d, i) => (i === n - 1 ? summary.today.goal : (d?.goal ?? null))),
   };
 }
@@ -98,6 +105,7 @@ export function StreakWeek({
       <SevenLights
         days={week.attempts}
         satisfied={week.satisfied}
+        rest={week.rest}
         goals={week.goals}
         dates={week.dates}
         size={size}
@@ -176,6 +184,7 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
       <SevenLights
         days={week.attempts}
         satisfied={week.satisfied}
+        rest={week.rest}
         goals={week.goals}
         dates={week.dates}
         size="lg"
@@ -255,19 +264,19 @@ export function StreakPanel({
   const done = satisfied(today.outcome);
   const flame = streakFlameFor(summary);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
+  const rest = useMemo(() => new Set(summary.restDays), [summary.restDays]);
   const run = useMemo(() => {
     const dates = new Set<string>();
+    const keeps = (date: string) => {
+      const d = byDate.get(date);
+      return rest.has(date) || (!!d && (d.satisfied || d.outcome === "nothing_due"));
+    };
     let day = done ? today.date : addDays(today.date, -1);
-    for (
-      let kept = byDate.get(day);
-      kept && (kept.satisfied || kept.outcome === "nothing_due");
-      kept = byDate.get(day)
-    ) {
-      if (kept.satisfied) dates.add(day);
-      day = addDays(day, -1);
+    for (; keeps(day); day = addDays(day, -1)) {
+      if (byDate.get(day)?.satisfied || rest.has(day)) dates.add(day);
     }
     return dates;
-  }, [byDate, done, today.date]);
+  }, [byDate, rest, done, today.date]);
   const firstMonth = summary.days[0]?.date.slice(0, 7) ?? today.date.slice(0, 7);
 
   // Only a change of view moves focus; comparing views, not counting runs, survives StrictMode's double effect.
@@ -322,9 +331,11 @@ export function StreakPanel({
         ? t`You’re done for today.`
         : today.outcome === "nothing_due"
           ? t`Nothing due today, so your streak is safe.`
-          : current > 0
-            ? t`Reach today’s goal to keep it going.`
-            : t`Reach today’s goal to start a streak.`;
+          : restedYesterday(summary)
+            ? t`Yesterday was a rest day. Reach today’s goal to keep it going.`
+            : current > 0
+              ? t`Reach today’s goal to keep it going.`
+              : t`Reach today’s goal to start a streak.`;
 
   return (
     <div className={clsx("grid gap-5", className)}>
@@ -404,6 +415,7 @@ export function StreakPanel({
         }}
         firstMonth={firstMonth}
         run={drawRun ? run : undefined}
+        rest={rest}
       />
     </div>
   );

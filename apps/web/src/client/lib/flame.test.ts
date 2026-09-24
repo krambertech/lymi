@@ -45,6 +45,7 @@ describe("lanternFor", () => {
     current,
     longest: current,
     reviewedDays: current,
+    restDays: [],
     days: [],
   });
 
@@ -88,6 +89,7 @@ describe("streakFlameFor", () => {
     current,
     longest: current,
     reviewedDays: current,
+    restDays: [],
     days: [],
   });
 

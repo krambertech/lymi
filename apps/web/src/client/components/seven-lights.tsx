@@ -15,6 +15,8 @@ interface Props {
   goals?: (number | null)[] | undefined;
   /** Which days counted toward a streak. Those are full whatever they held. */
   satisfied?: boolean[] | undefined;
+  /** Which days were rest days. Their glass is edged in dashes and still shows what the day held. */
+  rest?: boolean[] | undefined;
   /** The learner-local YYYY-MM-DD of each day. Without them the labels count back from the device's today. */
   dates?: string[] | undefined;
   /** At the end of a review the lights switch on one after another, starting this many ms in. */
@@ -85,6 +87,7 @@ export function SevenLights({
   size = "sm",
   goals,
   satisfied,
+  rest,
   dates,
   sequence,
   flare = false,
@@ -112,6 +115,7 @@ export function SevenLights({
   const perDay = days
     .map((n, i) => {
       const day = labels[i];
+      if (rest?.[i]) return n === 0 ? t`${day} none, rest day` : t`${day} ${n}, rest day`;
       return n === 0 ? t`${day} none` : `${day} ${n}`;
     })
     .join(", ");
@@ -131,6 +135,7 @@ export function SevenLights({
       {days.map((n, i) => {
         const l = level(n, reference, goals?.[i], satisfied?.[i]);
         const isToday = i === days.length - 1;
+        const resting = !!rest?.[i];
         const day = labels[i];
         return (
           <span
@@ -150,7 +155,14 @@ export function SevenLights({
             {/* The glass is always drawn; the light inside it rises with the day. */}
             <i
               className={clsx(
-                "relative block max-w-full overflow-hidden edge-inset bg-plate-2",
+                "relative block max-w-full overflow-hidden",
+                // Tinted like the month's rest band, so the two read as one mark.
+                resting
+                  ? clsx(
+                      "border-dashed border-amber bg-[color-mix(in_oklab,var(--amber)_7%,var(--plate-2))]",
+                      large ? "border-2" : "border",
+                    )
+                  : "edge-inset bg-plate-2",
                 large
                   ? "aspect-[8/11] w-8 rounded-[6px_6px_8px_8px]"
                   : "aspect-[13/18] w-[13px] rounded-[4px_4px_5px_5px]",

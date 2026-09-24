@@ -422,8 +422,8 @@ export const personas: Persona[] = [
     name: "Kateryna",
     description: "Three weeks in. Three decks, a few due, cards from an assistant to inspect.",
     appLanguage: "en",
-    // Gaps at 18, 13 and 5 days ago, so the streak and the best run differ.
-    reviewDays: [21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 8, 7, 6, 4, 3, 2, 1],
+    // Misses 18 and 7 days ago are rest days; 13 and 5 fall within a week of one and break the run, so the streak (4) and the best run (7) differ.
+    reviewDays: [21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 8, 6, 4, 3, 2, 1],
     dueNow: 9,
     decks: [
       {
@@ -475,6 +475,24 @@ export const personas: Persona[] = [
         directions: "both",
         introducedDaysAgo: 18,
         cards: [...ITALIAN_LESSON, ...ITALIAN_VERBS.slice(0, 6)],
+      },
+    ],
+  },
+  {
+    id: "rested",
+    name: "Leena",
+    description:
+      "Eleven days running through two rest days, the last one yesterday. Today opens on the rest-day banner.",
+    appLanguage: "en",
+    // Misses 9 days ago and yesterday, eight days apart, so both are rest days.
+    reviewDays: [13, 12, 11, 10, 8, 7, 6, 5, 4, 3, 2],
+    dueNow: 9,
+    decks: [
+      {
+        name: "Suomen kurssi",
+        defaultLanguage: "fi",
+        introducedDaysAgo: 14,
+        cards: FINNISH,
       },
     ],
   },

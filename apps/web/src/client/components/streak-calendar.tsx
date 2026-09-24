@@ -81,10 +81,11 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run }:
   return (
     <div className="grid gap-2">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="ps-1 text-base font-medium text-text" aria-live="polite">
+        <h3 className="text-base font-medium text-text" aria-live="polite">
           {title}
         </h3>
-        <div className="flex items-center gap-0.5">
+        {/* Pulled out like the place's close, so the chevron ends under the X, and out of the row's height. */}
+        <div className="-my-1.5 -me-3 flex items-center gap-0.5">
           <IconButton
             label={t`Previous month`}
             size="sm"

@@ -104,3 +104,34 @@ Two gates, one at build time and one at run time. The Worker imports the `/api/d
 The client side is gated the same way. The panel and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind `import.meta.env.DEV`, so the production bundle never includes them. Sign-out and every sign-in path clear the same persisted state through `clearPersistedLearnerState`, so a real account signed in after a persona never inherits its cache or queued grades.
 
 The Playwright suite runs the product through Vite with a loopback `PRODUCT_URL`, so the routes exist there too. The tests do not use them: `docs/testing.md` keeps the canonical journey on the public flows.
+
+## Reading analytics
+
+The production product Worker writes aggregate points to `lymi_events` and `lymi_requests`. Query them through the [Analytics Engine SQL API](https://developers.cloudflare.com/analytics/analytics-engine/sql-api/) with an account token that has Analytics Read permission. `_sample_interval` weights rows when Cloudflare samples them. These metrics contain no learner identifier, so sign-ins below are a count of events, not distinct daily active learners.
+
+Daily sign-ins:
+
+```sql
+SELECT toStartOfDay(timestamp) AS day, SUM(_sample_interval) AS sign_ins
+FROM lymi_events
+WHERE index1 = 'signed_in' AND timestamp > NOW() - INTERVAL '30' DAY
+GROUP BY day ORDER BY day DESC
+```
+
+Reviews by mode each week:
+
+```sql
+SELECT toStartOfWeek(timestamp) AS week, blob1 AS mode, SUM(_sample_interval) AS reviews
+FROM lymi_events
+WHERE index1 = 'review_graded' AND timestamp > NOW() - INTERVAL '90' DAY
+GROUP BY week, mode ORDER BY week DESC, mode
+```
+
+API and MCP requests by route:
+
+```sql
+SELECT index1 AS actor, blob1 AS route, SUM(_sample_interval) AS calls
+FROM lymi_requests
+WHERE index1 IN ('api', 'mcp') AND timestamp > NOW() - INTERVAL '30' DAY
+GROUP BY actor, route ORDER BY calls DESC
+```

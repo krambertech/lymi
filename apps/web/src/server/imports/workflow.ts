@@ -43,7 +43,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
   async run(event: WorkflowEvent<ImportRunParams>, step: WorkflowStep) {
     const params = event.payload;
     const db = createDb(this.env.DB);
-    const ctx = runContext(db, params);
+    const ctx = runContext(db, params, this.env.EVENTS);
     const uploads = this.env.IMPORTS;
     const id = params.importId;
     try {
@@ -111,7 +111,7 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         err instanceof Error && Failures.safeParse(err.message).success
           ? (err.message as ImportFailure)
           : failureOf(err);
-      await step.do("fail", STEP, () => failImport(db, id, failure, uploads));
+      await step.do("fail", STEP, () => failImport(db, id, failure, uploads, this.env.EVENTS));
     }
   }
 }

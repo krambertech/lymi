@@ -157,23 +157,35 @@ describe("review modes after the migration", () => {
     const deck = await createDeck(ctx, { name: "Replay", directions: "both" });
     const { id } = await card(deck.id, "replay");
     const reviewedAt = new Date(Date.now() - 60_000);
+    const points: AnalyticsEngineDataPoint[] = [];
+    const measured = {
+      ...ctx,
+      analytics: {
+        writeDataPoint: (point?: AnalyticsEngineDataPoint) => {
+          points.push(point ?? {});
+        },
+      },
+    };
 
-    const first = await gradeCard(ctx, {
+    const first = await gradeCard(measured, {
       cardId: id,
       direction: "production",
       rating: 3,
       reviewedAt,
     });
-    const replay = await gradeCard(ctx, {
+    const replay = await gradeCard(measured, {
       cardId: id,
       direction: "production",
       rating: 3,
       reviewedAt,
     });
     const mode = { cue: "meaning", target: "term" } as const;
-    const asMode = await gradeCard(ctx, { cardId: id, mode, rating: 3, reviewedAt });
+    const asMode = await gradeCard(measured, { cardId: id, mode, rating: 3, reviewedAt });
 
     expect([first.duplicate, replay.duplicate, asMode.duplicate]).toEqual([false, true, true]);
+    expect(points).toEqual([
+      { indexes: ["review_graded"], blobs: ["meaning_to_term"], doubles: [3] },
+    ]);
     const reviews = await db
       .select({ direction: schema.reviews.direction, mode: schema.reviews.mode })
       .from(schema.reviews)

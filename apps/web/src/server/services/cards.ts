@@ -18,6 +18,7 @@ import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { track } from "./analytics";
 import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
@@ -218,6 +219,13 @@ export async function addCards(
   }
 
   await runInBatches(db, groups);
+  if (groups.length > 0) {
+    track(ctx.analytics, {
+      name: "card_added",
+      count: groups.length,
+      source: actor === "api" || actor === "mcp" ? actor : "manual",
+    });
+  }
   // The add stands whatever the queue does; a refused run leaves its cards saying so.
   if (
     enrichment &&

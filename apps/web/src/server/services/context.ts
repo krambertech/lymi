@@ -1,5 +1,6 @@
 import type { Actor } from "@lymi/core";
 import type { Db } from "../db";
+import type { AnalyticsWriter } from "./analytics";
 
 /**
  * Everything a service function needs to act for one learner. Routes build it from the
@@ -10,6 +11,7 @@ export interface ServiceContext {
   db: Db;
   userId: string;
   actor: Actor;
+  analytics?: AnalyticsWriter | undefined;
   /** Which OAuth client or API key is calling, so Activity can name the app that wrote. */
   client?: string | undefined;
   /** What that caller is called, kept on the row so a revoked key stays named in the log. */

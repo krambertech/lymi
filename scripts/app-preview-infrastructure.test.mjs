@@ -54,6 +54,10 @@ test("rewrites every production boundary to isolated preview resources", () => {
         { name: "lymi-import", binding: "IMPORT_WORKFLOW", class_name: "ImportWorkflow" },
         { name: "lymi-export", binding: "EXPORT_WORKFLOW", class_name: "ExportWorkflow" },
       ],
+      analytics_engine_datasets: [
+        { binding: "REQUESTS", dataset: "lymi_requests" },
+        { binding: "EVENTS", dataset: "lymi_events" },
+      ],
     },
     {
       names,
@@ -79,6 +83,7 @@ test("rewrites every production boundary to isolated preview resources", () => {
     { name: "lymi-app-pr-105-import", binding: "IMPORT_WORKFLOW", class_name: "ImportWorkflow" },
     { name: "lymi-app-pr-105-export", binding: "EXPORT_WORKFLOW", class_name: "ExportWorkflow" },
   ]);
+  assert.equal(config.analytics_engine_datasets, undefined);
 });
 
 test("reuses exact existing preview resources", async () => {

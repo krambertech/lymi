@@ -83,6 +83,7 @@ import {
   updateSettings,
   uploadCardImage,
 } from "../services";
+import { track } from "../services/analytics";
 import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
 import type { EnrichmentQueue } from "../services/enrichment";
@@ -970,6 +971,7 @@ async function runTool(
   fn: () => Promise<CallToolResult>,
   principal: McpPrincipal,
 ): Promise<CallToolResult> {
+  track(principal.ctx.analytics, { name: "mcp_tool" });
   try {
     return await fn();
   } catch (err) {

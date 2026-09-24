@@ -121,8 +121,8 @@ msgstr "{turned, plural, one {# карточка перевёрнута} few {# 
 msgid "<0>{0}</0>: {1}"
 msgstr "<0>{0}</0>: {1}"
 
-msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, operational logs and transactional email delivery."
-msgstr "<0>Cloudflare</0> предоставляет сайт, приложение, базу данных, хранилище объектов, хранилище сессий, защиту сети, рабочие журналы и доставку транзакционных писем."
+msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
+msgstr "<0>Cloudflare</0> предоставляет сайт, приложение, базу данных, хранилище объектов, хранилище сессий, защиту сети, сводные показатели использования, рабочие журналы и доставку транзакционных писем."
 
 msgid "<0>Google</0> provides Google sign-in and may provide speech generation when configured as the fallback provider."
 msgstr "<0>Google</0> предоставляет вход через Google и может создавать озвучивание, если настроен как резервный поставщик."
@@ -139,11 +139,11 @@ msgstr "<0>Подключённые приложения</0> получают т
 msgid "10 min"
 msgstr "10 мин"
 
-msgid "16 September 2026"
-msgstr "16 сентября 2026 года"
-
 msgid "2 days"
 msgstr "2 дня"
+
+msgid "20 September 2026"
+msgstr "20 сентября 2026 года"
 
 msgid "4 days"
 msgstr "4 дня"
@@ -2213,6 +2213,9 @@ msgstr "глагол"
 
 msgid "Waiting for your notes"
 msgstr "Ждём заметки"
+
+msgid "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
+msgstr "Мы подсчитываем запросы и действия в приложении по типам и измеряем время ответа. Эти показатели не содержат идентификаторов аккаунтов, содержимого карточек или точных адресов запрошенных страниц."
 
 msgid "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
 msgstr "Мы можем обновлять эту политику, когда меняется Lymi или закон. Мы обновим дату выше и дополнительно сообщим, если изменение существенно повлияет на твои права. Вопросы и запросы о конфиденциальности можно отправлять на <0>hello@lymi.app</0>."

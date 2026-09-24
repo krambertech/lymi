@@ -121,8 +121,8 @@ msgstr "{turned, plural, one {# картку перевернуто} few {# ка
 msgid "<0>{0}</0>: {1}"
 msgstr "<0>{0}</0>: {1}"
 
-msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, operational logs and transactional email delivery."
-msgstr "<0>Cloudflare</0> надає сайт, застосунок, базу даних, сховище об’єктів, сховище сеансів, захист мережі, операційні журнали та доставку транзакційних листів."
+msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
+msgstr "<0>Cloudflare</0> надає сайт, застосунок, базу даних, сховище об’єктів, сховище сеансів, захист мережі, зведені показники використання, операційні журнали та доставку транзакційних листів."
 
 msgid "<0>Google</0> provides Google sign-in and may provide speech generation when configured as the fallback provider."
 msgstr "<0>Google</0> надає вхід через Google і може створювати озвучення, якщо його налаштовано як резервного постачальника."
@@ -139,11 +139,11 @@ msgstr "<0>Підключені застосунки</0> отримують ли
 msgid "10 min"
 msgstr "10 хв"
 
-msgid "16 September 2026"
-msgstr "16 вересня 2026 року"
-
 msgid "2 days"
 msgstr "2 дні"
+
+msgid "20 September 2026"
+msgstr "20 вересня 2026 року"
 
 msgid "4 days"
 msgstr "4 дні"
@@ -2213,6 +2213,9 @@ msgstr "дієслово"
 
 msgid "Waiting for your notes"
 msgstr "Чекаємо на нотатки"
+
+msgid "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
+msgstr "Ми підраховуємо запити й дії в застосунку за типами та вимірюємо час відповіді. Ці показники не містять ідентифікаторів облікових записів, вмісту карток або точних адрес запитуваних сторінок."
 
 msgid "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
 msgstr "Ми можемо оновлювати цю політику, коли змінюється Lymi або закон. Ми оновимо дату вище й додатково повідомимо, якщо зміна суттєво вплине на твої права. Запитання та запити щодо конфіденційності можна надсилати на <0>hello@lymi.app</0>."

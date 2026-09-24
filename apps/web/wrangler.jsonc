@@ -40,6 +40,10 @@
       "migrations_dir": "migrations"
     }
   ],
+  "analytics_engine_datasets": [
+    { "binding": "REQUESTS", "dataset": "lymi_requests" },
+    { "binding": "EVENTS", "dataset": "lymi_events" }
+  ],
   "r2_buckets": [
     { "binding": "AUDIO", "bucket_name": "lymi-audio" },
     // Avatars now, card images later. Never public: images leave only through authenticated routes.

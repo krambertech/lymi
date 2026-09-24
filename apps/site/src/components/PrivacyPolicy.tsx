@@ -7,7 +7,7 @@ export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi handles account, learning, integration and service data.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
 export const PRIVACY_LEAD = msg`This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have.`;
-export const PRIVACY_UPDATED = msg`16 September 2026`;
+export const PRIVACY_UPDATED = msg`20 September 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -128,6 +128,12 @@ function PrivacyPolicyContent() {
           putting card content, email addresses, access tokens and other private content in logs.
         </Trans>
       </p>
+      <p>
+        <Trans>
+          We count requests and product actions by type and measure response times. These metrics
+          contain no account identifiers, card content or exact requested URLs.
+        </Trans>
+      </p>
 
       <h2>
         <Trans>Why we use data</Trans>
@@ -169,7 +175,8 @@ function PrivacyPolicyContent() {
         <li>
           <Trans>
             <strong>Cloudflare</strong> provides the website, application, database, object storage,
-            session storage, network protection, operational logs and transactional email delivery.
+            session storage, network protection, aggregate usage metrics, operational logs and
+            transactional email delivery.
           </Trans>
         </li>
         <li>

@@ -16,7 +16,18 @@ import { routeTree } from "./routeTree.gen";
 // corrects the choice once the learner's stored language lands.
 bootstrapLanguage(window.location.pathname);
 
-registerSW({ immediate: true });
+registerSW({
+  immediate: true,
+  // A page load is the only other check, so an app left open would run old code against a new API.
+  onRegisteredSW(_url, registration) {
+    if (!registration) return;
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState !== "visible" || !navigator.onLine) return;
+      if (registration.installing) return;
+      void registration.update().catch(() => {});
+    });
+  },
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {

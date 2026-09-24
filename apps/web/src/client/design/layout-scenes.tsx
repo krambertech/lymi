@@ -162,7 +162,7 @@ export function StreakPlaceScene() {
         >
           {view === "streak" ? (
             <>
-              <PlaceBar label="Streak" returnsTo="Today" onClose={close} />
+              <PlaceBar title="Streak" returnsTo="Today" onClose={close} />
               <div className="flex items-center gap-3.5">
                 <Flame className="h-11 w-9" state="full" />
                 <div className="grid">
@@ -193,11 +193,13 @@ export function StreakPlaceScene() {
             <div className="enter-fade grid gap-4">
               <PlaceBar
                 back={{ label: "Streak", onClick: () => setView("streak") }}
+                title={
+                  <h2 id={titleId} tabIndex={-1} className="outline-none">
+                    Daily goal
+                  </h2>
+                }
                 onClose={close}
               />
-              <h2 id={titleId} tabIndex={-1} className="text-xl font-medium text-text outline-none">
-                Daily goal
-              </h2>
               <p className="text-sm text-text-2">How many reviews keep the streak each day.</p>
               <GoalPicker value={goal} onChange={setGoal} />
             </div>

@@ -12,7 +12,7 @@ import { PlaceBar } from "./layout/place-bar";
 import { SevenLights } from "./seven-lights";
 import { Skeleton } from "./skeleton";
 import { addDays, StreakCalendar } from "./streak-calendar";
-import { Dialog, DialogContent } from "./ui/dialog";
+import { Dialog, DialogContent, usePlaceShape } from "./ui/dialog";
 
 export type StreakSummary = StreakOut;
 
@@ -146,7 +146,7 @@ function GoalTrack({
             "aria-valuenow": reached,
           }
         : { "aria-hidden": true })}
-      className={clsx("block h-2 overflow-hidden rounded-full bg-plate edge-inset", className)}
+      className={clsx("block h-1.5 overflow-hidden rounded-full bg-edge", className)}
     >
       <i
         className="streak-fill block h-full origin-left rounded-full bg-amber rtl:origin-right"
@@ -203,15 +203,15 @@ export function useTodayStatus(summary: StreakSummary | undefined): string {
   }
 }
 
-/** One figure in a tile, with its icon and the words for it. */
+/** One figure under today, with its icon and the words for it. */
 function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number; label: string }) {
   return (
-    <div className="grid gap-1.5 rounded-lg bg-plate-2 px-3.5 py-3">
-      <span className="flex items-center gap-1.5 text-xs text-muted">
-        <Icon className="size-4 shrink-0 text-text-2" aria-hidden="true" />
+    <div className="grid gap-0.5 px-4 py-3.5 not-first:border-s not-first:border-edge">
+      <dt className="flex items-center gap-1.5 text-xs text-muted">
+        <Icon className="size-3.5 shrink-0" aria-hidden="true" />
         {label}
-      </span>
-      <span className="text-xl font-semibold leading-none tabular-nums text-text">{value}</span>
+      </dt>
+      <dd className="text-md font-medium tabular-nums text-text">{value}</dd>
     </div>
   );
 }
@@ -250,6 +250,8 @@ export function StreakPanel({
   const editRef = useRef<HTMLButtonElement>(null);
   const goalTitleRef = useRef<HTMLHeadingElement>(null);
   const { current, today } = summary;
+  // A dialog or sheet names the view in its bar; a whole screen's bar is only the way back.
+  const titleInBar = usePlaceShape() !== "screen";
   const done = satisfied(today.outcome);
   const flame = streakFlameFor(summary);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
@@ -277,10 +279,16 @@ export function StreakPanel({
   }, [view]);
 
   if (view === "goal") {
+    const goalTitle = (
+      <h2 ref={goalTitleRef} id={titleId} tabIndex={-1} className="outline-none">
+        <Trans>Daily goal</Trans>
+      </h2>
+    );
     return (
       <div className={clsx("enter-fade grid gap-4", className)}>
         <PlaceBar
           back={{ label: t`Streak`, name: t`Back to streak`, onClick: () => setView("streak") }}
+          title={titleInBar ? goalTitle : undefined}
           onClose={onClose}
           status={
             <p className="min-h-5 text-sm text-muted" role="status">
@@ -298,14 +306,7 @@ export function StreakPanel({
             </p>
           }
         />
-        <h2
-          ref={goalTitleRef}
-          id={titleId}
-          tabIndex={-1}
-          className="text-xl font-medium text-text outline-none"
-        >
-          <Trans>Daily goal</Trans>
-        </h2>
+        {!titleInBar && <div className="text-xl font-medium text-text">{goalTitle}</div>}
         <p className="text-sm text-text-2">
           <Trans>How many reviews a day keep your streak. Every grade counts, even Forgot.</Trans>
         </p>
@@ -327,32 +328,35 @@ export function StreakPanel({
 
   return (
     <div className={clsx("grid gap-5", className)}>
-      {onClose && <PlaceBar label={t`Streak`} returnsTo={returnsTo} onClose={onClose} />}
-      <header className="flex items-center gap-3.5">
-        <Flame className="h-11 w-9" state={flame} flicker={flame === "full"} />
-        <div className="grid min-w-0">
-          <h2
-            id={titleId}
-            tabIndex={-1}
-            className="flex items-baseline gap-2 text-text outline-none"
-          >
-            <span className="text-3xl font-semibold leading-none tabular-nums">{current}</span>
-            <span className="text-md font-medium">
+      {onClose && (
+        <PlaceBar
+          label={t`Streak`}
+          title={titleInBar ? t`Streak` : undefined}
+          returnsTo={returnsTo}
+          onClose={onClose}
+        />
+      )}
+      <header className="grid gap-1.5">
+        {/* The flame sits on the number's line, the words on its baseline. */}
+        <h2 id={titleId} tabIndex={-1} className="flex items-center gap-3 text-text outline-none">
+          <Flame className="h-11 w-[35px] shrink-0" state={flame} flicker={flame === "full"} />
+          <span className="flex items-baseline gap-2.5">
+            <span className="text-5xl font-semibold leading-none tracking-tight tabular-nums">
+              {current}
+            </span>
+            <span className="text-lg font-medium text-text-2">
               <Plural value={current} one="day in a row" other="days in a row" />
             </span>
-          </h2>
-          <p className="mt-1.5 text-sm text-text-2">{status}</p>
-        </div>
+          </span>
+        </h2>
+        <p className="text-sm text-text-2">{status}</p>
       </header>
 
-      <div className="grid gap-2.5 rounded-lg bg-plate-2 p-3.5 ps-4">
-        <div className="flex min-h-8 items-center gap-3">
-          <div className="grid flex-1 gap-0.5">
-            <span className="text-xs text-muted">
-              <Trans>Today</Trans>
-            </span>
+      <section className="grid rounded-lg bg-plate-2" aria-label={t`Today`}>
+        <div className="grid gap-2.5 px-4 py-3.5">
+          <div className="flex items-center gap-2">
             {/* The goal is named whether or not the day is done, so the bar below has a number to mean. */}
-            <span className="flex items-center gap-1.5 text-base font-medium tabular-nums text-text">
+            <span className="flex flex-1 items-center gap-1.5 text-base font-medium tabular-nums text-text">
               {done && <Check className="size-4 shrink-0 text-amber-text" aria-hidden="true" />}
               {/* "of" only holds up to the goal; a round past it counts on and still names what it passed. */}
               {today.attempts > today.goal ? (
@@ -369,26 +373,26 @@ export function StreakPanel({
                 />
               )}
             </span>
+            {onGoalChange && (
+              <IconButton
+                ref={editRef}
+                label={t`Change daily goal`}
+                size="sm"
+                onClick={() => setView("goal")}
+                // Out of the row's height, and in to the box's 16 px inset like the text across from it.
+                className="-my-2 -me-2"
+              >
+                <Pencil aria-hidden="true" />
+              </IconButton>
+            )}
           </div>
-          {onGoalChange && (
-            <IconButton
-              ref={editRef}
-              label={t`Change daily goal`}
-              size="sm"
-              variant="secondary"
-              onClick={() => setView("goal")}
-            >
-              <Pencil aria-hidden="true" />
-            </IconButton>
-          )}
+          <GoalTrack today={today} label={t`Today’s goal`} />
         </div>
-        <GoalTrack today={today} label={t`Today’s goal`} />
-      </div>
-
-      <div className="-mt-2.5 grid grid-cols-2 gap-2.5">
-        <Figure icon={Trophy} value={summary.longest} label={t`Longest streak`} />
-        <Figure icon={CalendarCheck} value={summary.reviewedDays} label={t`Days reviewed`} />
-      </div>
+        <dl className="grid grid-cols-2 border-t border-edge">
+          <Figure icon={Trophy} value={summary.longest} label={t`Longest streak`} />
+          <Figure icon={CalendarCheck} value={summary.reviewedDays} label={t`Days reviewed`} />
+        </dl>
+      </section>
 
       <StreakCalendar
         days={byDate}
@@ -485,7 +489,8 @@ export function StreakPlace({ open, onOpenChange, ...panel }: StreakPlaceProps) 
   return (
     <Dialog kind="place" open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="w-[min(92vw,400px)]"
+        // Top-anchored, so switching to the shorter goal view or paging months never moves back or close.
+        className="mt-[max(1rem,calc(50dvh-20rem))] mb-auto w-[min(92vw,400px)]"
         aria-labelledby={titleId}
         // The run, not its first control: opened from a link, a focused control would show its tooltip at once.
         initialFocus={() => document.getElementById(titleId)}

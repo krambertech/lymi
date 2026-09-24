@@ -18,6 +18,8 @@ interface Common {
   /** A short line such as Saved, before the controls. */
   status?: ReactNode | undefined;
   onClose?: (() => void) | undefined;
+  /** The view's own name, drawn as the bar's title in a dialog or sheet; a screen's bar has no title. */
+  title?: ReactNode | undefined;
 }
 
 /**
@@ -46,7 +48,7 @@ type Props = Common &
  * The first line of a place. Over the whole screen it is a page's bar and leaving is back, named
  * for the screen under it; in a sheet, a dialog or beside a list it is one compact row that ends in close.
  */
-export function PlaceBar({ label, returnsTo, actions, status, onClose, back }: Props) {
+export function PlaceBar({ label, returnsTo, actions, status, onClose, back, title }: Props) {
   const { t } = useLingui();
   const shape = usePlaceShape();
   const leaves = returnsTo ?? label;
@@ -70,16 +72,21 @@ export function PlaceBar({ label, returnsTo, actions, status, onClose, back }: P
   return (
     <header className="flex min-h-10 items-center gap-1">
       {back && (
+        // Pulled out like close at the other end, so the chevron starts on the content edge.
         <IconButton
           label={back.name ?? back.label}
           size="sm"
           onClick={back.onClick}
-          className="-ms-2"
+          className="-ms-3"
         >
           <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
         </IconButton>
       )}
-      <span className="min-w-0 flex-1 truncate text-sm text-muted">{label}</span>
+      {title ? (
+        <div className="min-w-0 flex-1 truncate text-lg font-medium text-text">{title}</div>
+      ) : (
+        <span className="min-w-0 flex-1 truncate text-sm text-muted">{label}</span>
+      )}
       {status}
       {actions}
       {onClose && (

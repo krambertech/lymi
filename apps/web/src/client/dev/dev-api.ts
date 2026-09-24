@@ -52,6 +52,27 @@ export const devApi = {
       method: "POST",
       body: JSON.stringify({ count }),
     }),
+  cards: (count: number) =>
+    request<{ added: number; counts: DevCounts }>("/api/dev/cards", {
+      method: "POST",
+      body: JSON.stringify({ count }),
+    }),
+  goal: () => request<{ graded: number; counts: DevCounts }>("/api/dev/goal", { method: "POST" }),
+  recall: (count: number, rating?: 1 | 3) =>
+    request<{ graded: number; counts: DevCounts }>("/api/dev/recall", {
+      method: "POST",
+      body: JSON.stringify({ count, rating }),
+    }),
+  enrich: (count: number) =>
+    request<{ enriched: number; counts: DevCounts }>("/api/dev/enrich", {
+      method: "POST",
+      body: JSON.stringify({ count }),
+    }),
+  slip: (count: number) =>
+    request<{ slipped: number; counts: DevCounts }>("/api/dev/slip", {
+      method: "POST",
+      body: JSON.stringify({ count }),
+    }),
   /** The URL a browser is pointed at to become a persona. Sets the session and redirects. */
   signInUrl: (persona: string, returnTo: string) =>
     `/api/dev/sign-in?${new URLSearchParams({ as: persona, returnTo })}`,

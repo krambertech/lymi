@@ -1,13 +1,17 @@
 import { type Actor, emptyState, type Rating, schedule, serializeState } from "@lymi/core";
-import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
+import { and, asc, desc, eq, inArray, isNull, lte, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
 import { personaEmail } from "../dev/personas";
+import { auditStatement } from "./audit";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
+import { dateFormatter } from "./days";
 import { archiveDeck, asked, createDeck, listDecks } from "./decks";
 import { approveEdition, importEdition, publishEdition } from "./editions";
 import { publishDeck } from "./publications";
+import { gradeCard } from "./review";
+import { reviewZone, streak } from "./review-days";
 import { activeCardsOf, activeSectionsOf } from "./revisions";
 import { createSection } from "./sections";
 import { updateSettings } from "./settings";
@@ -50,7 +54,10 @@ export async function devCounts({ db, userId }: ServiceContext): Promise<DevCoun
 /** Everything the account holds in the product: decks, cards, states, reviews, audit, settings. */
 export async function resetAccount({ db, userId }: ServiceContext): Promise<void> {
   await db.batch([
+    db.delete(schema.reviewUndos).where(eq(schema.reviewUndos.userId, userId)),
     db.delete(schema.reviews).where(eq(schema.reviews.userId, userId)),
+    // A day row outlives its reviews, so a goal met before the reset would still count.
+    db.delete(schema.reviewDays).where(eq(schema.reviewDays.userId, userId)),
     db.delete(schema.cardStates).where(eq(schema.cardStates.userId, userId)),
     db.delete(schema.cards).where(eq(schema.cards.userId, userId)),
     db.delete(schema.decks).where(eq(schema.decks.userId, userId)),
@@ -373,6 +380,14 @@ export async function setDue(
     )
     .orderBy(desc(schema.cardStates.lastReview), asc(schema.cardStates.due));
 
+  // A card with any direction reviewed in the last day may be waiting for tomorrow, so those go last.
+  const recent = new Set(
+    states
+      .filter((s) => s.lastReview !== null && now.getTime() - s.lastReview.getTime() < DAY)
+      .map((s) => s.cardId),
+  );
+  states.sort((a, b) => Number(recent.has(a.cardId)) - Number(recent.has(b.cardId)));
+
   const chosen = new Set<string>();
   const dueIds: string[] = [];
   const laterIds: string[] = [];
@@ -444,4 +459,263 @@ export function mulberry32(seed: number): () => number {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
+}
+
+const SAMPLE_TERMS: [term: string, meaning: string][] = [
+  ["la finestra", "the window"],
+  ["il cassetto", "the drawer"],
+  ["la sveglia", "the alarm clock"],
+  ["il cuscino", "the pillow"],
+  ["la scrivania", "the desk"],
+  ["il lavandino", "the sink"],
+  ["la tazza", "the cup"],
+  ["il forno", "the oven"],
+  ["la chiave", "the key"],
+  ["il tetto", "the roof"],
+  ["la scala", "the stairs"],
+  ["il pavimento", "the floor"],
+  ["la lampada", "the lamp"],
+  ["il divano", "the sofa"],
+  ["la coperta", "the blanket"],
+  ["lo specchio", "the mirror"],
+  ["la sedia", "the chair"],
+  ["il bicchiere", "the glass"],
+  ["la pentola", "the pot"],
+  ["il frigorifero", "the fridge"],
+];
+
+/**
+ * Add `count` new cards to the first deck the learner owns, or to a new one when there is none. Terms
+ * come from a fixed list and then get a number, so repeated presses never collide.
+ */
+export async function addSampleCards(ctx: ServiceContext, count: number): Promise<number> {
+  const decks = await listDecks(ctx);
+  const owned = decks.filter((d) => d.role === "owner");
+  const deckId =
+    owned[0]?.id ??
+    (
+      await createDeck(ctx, {
+        name: "Around the house",
+        description: null,
+        defaultLanguage: "it",
+        directions: "recognition",
+      })
+    ).id;
+  const [row = { n: 0 }] = await ctx.db
+    .select({ n: sql<number>`count(*)` })
+    .from(schema.cards)
+    .where(eq(schema.cards.deckId, deckId));
+  const inputs = Array.from({ length: count }, (_, i) => {
+    const n = row.n + i;
+    const [term, meaning] = SAMPLE_TERMS[n % SAMPLE_TERMS.length] as [string, string];
+    const round = Math.floor(n / SAMPLE_TERMS.length);
+    return { deckId, term: round ? `${term} ${round + 1}` : term, meaning };
+  });
+  const outcomes = await addCards(ctx, inputs);
+  return outcomes.filter((o) => o.status === "added").length;
+}
+
+function askedStates(ctx: ServiceContext, dueOnly: boolean) {
+  return ctx.db
+    .select({ cardId: schema.cardStates.cardId, direction: schema.cardStates.direction })
+    .from(schema.cardStates)
+    .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(
+      and(
+        eq(schema.cardStates.userId, ctx.userId),
+        dueOnly ? lte(schema.cardStates.due, new Date()) : undefined,
+        isNull(schema.cards.archivedAt),
+        isNull(schema.decks.archivedAt),
+        inArray(schema.cardStates.direction, ["recognition", "production"]),
+        asked,
+      ),
+    )
+    .orderBy(asc(schema.cardStates.due));
+}
+
+function grade(
+  ctx: ServiceContext,
+  s: { cardId: string; direction: string },
+  rating: Rating,
+  reviewedAt?: Date,
+) {
+  return gradeCard(ctx, {
+    cardId: s.cardId,
+    direction: s.direction as "recognition" | "production",
+    rating,
+    reviewedAt,
+  });
+}
+
+/**
+ * Grade up to `count` due cards through the review service, as a learner would, so the goal,
+ * the streak and the schedule all move. One direction per card, since the other waits for
+ * tomorrow once one is graded.
+ */
+export async function recallCards(ctx: ServiceContext, count: number, rating: Rating = 3) {
+  const graded = new Set<string>();
+  for (const s of await askedStates(ctx, true)) {
+    if (graded.size >= count) break;
+    if (graded.has(s.cardId)) continue;
+    await grade(ctx, s, rating);
+    graded.add(s.cardId);
+  }
+  return graded.size;
+}
+
+/**
+ * Grade Good until today's goal is met. Due cards go first; when they run out, the rest are
+ * graded again in turn, since every accepted attempt counts toward the goal.
+ */
+export async function reachGoal(ctx: ServiceContext): Promise<number> {
+  const before = (await streak(ctx)).today;
+  const wanted = Math.max(0, before.goal - before.attempts);
+  const states = await askedStates(ctx, false);
+  if (wanted === 0 || states.length === 0) return 0;
+  // A grade no later than the card's last one is dropped as a replay, so each is a millisecond on.
+  let at = Date.now();
+  for (let i = 0; i < wanted; i++) {
+    at = Math.max(at + 1, Date.now());
+    await grade(ctx, states[i % states.length] as (typeof states)[number], 3, new Date(at));
+  }
+  return (await streak(ctx)).today.attempts - before.attempts;
+}
+
+/** Cards an assistant added arrive without an example, so there is something left to enrich. */
+export function asClaude(ctx: ServiceContext): ServiceContext {
+  return { ...ctx, actor: "mcp", client: "dev-claude", clientName: "Claude" };
+}
+
+/**
+ * Fill the example of up to `count` of the newest cards that have none, marked as written by
+ * the AI and recorded as one enrichment each, the way a real enrichment run lands.
+ */
+export async function enrichSampleCards(ctx: ServiceContext, count: number): Promise<number> {
+  const cards = await ctx.db
+    .select({
+      id: schema.cards.id,
+      deckId: schema.cards.deckId,
+      term: schema.cards.term,
+      language: sql<
+        string | null
+      >`coalesce(${schema.cards.language}, ${schema.decks.defaultLanguage})`,
+    })
+    .from(schema.cards)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(
+      and(
+        eq(schema.cards.userId, ctx.userId),
+        isNull(schema.cards.archivedAt),
+        isNull(schema.cards.example),
+      ),
+    )
+    .orderBy(desc(schema.cards.createdAt))
+    .limit(count);
+  if (cards.length === 0) return 0;
+  const ai: ServiceContext = { ...ctx, actor: "ai", client: undefined, clientName: undefined };
+  const now = new Date();
+  await runBatched(
+    ctx.db,
+    cards.flatMap((card) => {
+      const example = card.language?.startsWith("it")
+        ? `Dov'è ${card.term}?`
+        : `An example sentence with “${card.term}”.`;
+      return [
+        ctx.db
+          .update(schema.cards)
+          .set({ example, exampleSource: "ai", updatedAt: now })
+          .where(eq(schema.cards.id, card.id)),
+        auditStatement(ai, {
+          entity: "card",
+          action: "enrich",
+          id: card.id,
+          deckId: card.deckId,
+          details: { example },
+        }),
+      ];
+    }),
+  );
+  return cards.length;
+}
+
+/** Forgot, Good, Forgot, Forgot, Good, Forgot: four lapses in six reviews, the slipping line. */
+const SLIP_RATINGS: Rating[] = [1, 3, 1, 1, 3, 1];
+
+/**
+ * Give `count` cards a history of forgetting on past days that already hold reviews, so they
+ * keep slipping without adding a reviewed day the streak did not have. Schedules are untouched.
+ */
+export async function slipCards(ctx: ServiceContext, count: number): Promise<number> {
+  const { db, userId } = ctx;
+  const fmt = dateFormatter(await reviewZone(ctx));
+  const today = fmt.format(new Date());
+  const past = (
+    await db
+      .select({ at: schema.reviews.reviewedAt, dayId: schema.reviews.reviewDayId })
+      .from(schema.reviews)
+      .where(eq(schema.reviews.userId, userId))
+      .orderBy(desc(schema.reviews.reviewedAt))
+      .limit(500)
+  ).filter((r) => fmt.format(r.at) < today);
+  if (past.length === 0) return 0;
+  const states = await db
+    .select({
+      id: schema.cardStates.id,
+      cardId: schema.cardStates.cardId,
+      direction: schema.cardStates.direction,
+      mode: schema.cardStates.mode,
+      lastReview: schema.cardStates.lastReview,
+    })
+    .from(schema.cardStates)
+    .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .where(
+      and(
+        eq(schema.cardStates.userId, userId),
+        isNull(schema.cards.archivedAt),
+        isNull(schema.decks.archivedAt),
+        asked,
+      ),
+    )
+    .orderBy(desc(schema.cardStates.lastReview));
+
+  // A card reviewed today waits for tomorrow, so it would not show in today's round.
+  const reviewedToday = new Set(
+    states.filter((s) => s.lastReview && fmt.format(s.lastReview) === today).map((s) => s.cardId),
+  );
+  const chosen = new Map<string, (typeof states)[number]>();
+  for (const s of states) {
+    if (chosen.size >= count) break;
+    if (!chosen.has(s.cardId) && !reviewedToday.has(s.cardId)) chosen.set(s.cardId, s);
+  }
+  const reviews = [...chosen.values()].flatMap((state, c) =>
+    SLIP_RATINGS.map((rating, i) => {
+      const slot = past[(c * SLIP_RATINGS.length + i) % past.length] as (typeof past)[number];
+      return {
+        id: crypto.randomUUID(),
+        userId,
+        cardId: state.cardId,
+        cardStateId: state.id,
+        direction: state.direction,
+        mode: state.mode,
+        rating,
+        state: rating === 1 ? 3 : 2,
+        elapsedDays: 1,
+        scheduledDays: 1,
+        stabilityAfter: 1,
+        difficultyAfter: 8,
+        // A minute apart, so the same slot never holds two identical timestamps.
+        reviewedAt: new Date(slot.at.getTime() + (i + 1) * 60_000),
+        reviewDayId: slot.dayId,
+        source: "web" as const,
+      };
+    }),
+  );
+  const statements: unknown[] = [];
+  for (let i = 0; i < reviews.length; i += 6) {
+    statements.push(db.insert(schema.reviews).values(reviews.slice(i, i + 6)));
+  }
+  await runBatched(db, statements);
+  return chosen.size;
 }

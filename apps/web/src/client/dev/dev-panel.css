@@ -1,0 +1,45 @@
+/* The developer tools wear their own room in either theme: a cool graphite bench, so they never pass for product UI. */
+.dev-skin {
+  color-scheme: dark;
+
+  --plate: oklch(0.2 0.012 265);
+  --plate-2: oklch(0.255 0.014 265);
+  --hover: oklch(0.29 0.016 265);
+  --edge: oklch(1 0 0 / 0.09);
+  --edge-2: oklch(1 0 0 / 0.16);
+
+  --text: oklch(0.96 0.005 265);
+  --text-2: oklch(0.83 0.012 265);
+  --muted: oklch(0.7 0.016 265);
+  --faint: oklch(0.5 0.016 265);
+
+  --amber: oklch(0.82 0.15 74);
+  --amber-hover: oklch(0.86 0.15 76);
+  --amber-ink: oklch(0.22 0.05 60);
+  --danger: oklch(0.74 0.15 28);
+  --danger-soft: oklch(0.74 0.15 28 / 0.14);
+  --ring: oklch(0.82 0.15 74 / 0.8);
+
+  /* Persona avatars. */
+  --av-ink: oklch(0.22 0.02 40);
+  --av-skin-1: oklch(0.87 0.045 60);
+  --av-skin-2: oklch(0.74 0.075 55);
+  --av-skin-3: oklch(0.56 0.08 45);
+  --av-hair-dark: oklch(0.3 0.035 40);
+  --av-hair-brown: oklch(0.45 0.07 50);
+  --av-hair-blonde: oklch(0.86 0.09 90);
+  --av-hair-red: oklch(0.6 0.15 40);
+  --av-leaf: oklch(0.72 0.15 145);
+  --av-red: oklch(0.63 0.2 27);
+  --av-yellow: oklch(0.88 0.15 95);
+  --av-blue: oklch(0.62 0.13 250);
+  --av-bg-mint: oklch(0.82 0.08 165);
+  --av-bg-amber: oklch(0.8 0.13 75);
+  --av-bg-coral: oklch(0.72 0.13 35);
+  --av-bg-slate: oklch(0.66 0.07 250);
+  --av-bg-teal: oklch(0.7 0.08 200);
+  --av-bg-violet: oklch(0.7 0.1 300);
+  --av-bg-night: oklch(0.3 0.03 265);
+  --av-shirt-light: oklch(0.95 0.01 90);
+  --av-shirt-orange: oklch(0.72 0.16 50);
+}

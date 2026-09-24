@@ -51,13 +51,11 @@ A real account signed in locally through Google works with every tool below too;
 
 ## Change the state from the panel
 
-The round button in the bottom-right corner of every product screen opens the developer panel above it. The backtick key toggles it too. It is five rows showing the current value; the first three are searchable lists, the last two are segmented controls:
+A small tab on the end edge of every product screen shows the current persona's avatar. Pressing it, or the backtick key, opens the developer panel beside it, or across the whole screen on a phone; the close button, Escape, or a press anywhere else puts it away. Dragging the tab moves it up or down the edge, and the position is remembered. The panel keeps its own dark graphite look in both themes, so it never passes for product UI.
 
-- **Persona**: who you are. Choosing another signs you in as that account and reloads the screen you were on.
-- **Due**: how many cards are due now. Choose a number, or every card.
-- **Data**: what the account holds. Reseed it, empty it, or load another persona's data into it.
-- **Language**: the interface language, which the meaning language follows.
-- **Theme**: system, light or dark.
+- **Persona**: one drawn avatar per persona, with yours ringed. Pointing at a face describes it; pressing it signs you in as that account and reloads the screen you were on.
+- **Language and theme**: English or Ukrainian, which the meaning language follows, and system, light or dark.
+- **Simulate**: states that are slow or impossible to reach by hand. Claude adds 5 cards (an Activity row naming the app), enrich 5 cards (AI examples and an enrichment row), forget 3 cards (Forgotten today), make 3 often forgotten (the slipping round, on past days that already hold reviews), reach today's goal, and make 5 cards due. An action that cannot do anything for this account says why. **Reseed**, beside the persona, puts the account back to the persona's starting data; switching persona does not.
 
 Each change refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The last thing that happened is written at the bottom. The panel is compiled into the Vite dev server only; a production build has no trace of it.
 
@@ -90,7 +88,12 @@ The panel and the CLI use these. They sit under `/api/dev`, outside the OpenAPI 
 | `GET` or `POST /api/dev/sign-in?as=<id>` | Signs the persona in; seeds an empty account. GET redirects, POST answers JSON. Both set the cookies. |
 | `GET /api/dev/state` | The signed-in account, its persona, counts and settings. |
 | `POST /api/dev/seed` `{ persona? }` | Empties the account and loads a persona's data. |
-| `POST /api/dev/reset` | Empties the account. |
+| `POST /api/dev/reset` | Empties the account, its review days included. |
+| `POST /api/dev/cards` `{ count }` | Adds that many sample cards to the oldest deck, or a new one, written as the connected app Claude. |
+| `POST /api/dev/enrich` `{ count }` | Fills the example of the newest cards without one, as the AI, with an enrichment audit row each. |
+| `POST /api/dev/recall` `{ count, rating? }` | Grades that many due cards through the review service, Good unless `rating` says otherwise. |
+| `POST /api/dev/goal` | Grades Good until today's goal is met, going past the due cards when they run out. |
+| `POST /api/dev/slip` `{ count }` | Gives that many cards four lapses in six reviews on past review days, so they are often forgotten. |
 | `POST /api/dev/due` `{ count: n \| "all" }` | Makes exactly `count` cards due now and moves the rest to tomorrow or later. |
 | `POST /api/dev/cards/<id>/enriched` `{ fields }` | Marks the card's `meaning`, `example` or `pronunciation` as written by the enrichment, so the AI badge shows without a vendor key. |
 | `POST /api/dev/outbox` `{ to }` | The last account email sent to that address, so a confirmation or reset link can be opened without a real inbox. |

@@ -879,7 +879,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Get the streak",
       description:
-        "Today's attempts against the daily goal, days in a row whose goal was satisfied, the longest run, how many days had a review, and every day with an attempt. Days follow the learner's review timezone.",
+        "Today's attempts against the daily goal, days in a row whose goal was satisfied, the longest run, how many days had a review, the rest days that kept a run through one short day a week, and every day with an attempt. Days follow the learner's review timezone.",
       inputSchema: z.object({
         timezone: z
           .string()

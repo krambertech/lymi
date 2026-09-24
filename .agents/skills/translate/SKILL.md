@@ -64,6 +64,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | reminder | нагадування | напоминание |
 | streak / run | дні поспіль (лік днів поспіль) | дни подряд (счёт дней подряд) |
 | daily goal | денна мета | дневная цель |
+| rest day | день відпочинку | день отдыха |
 | AI | AI (never ШІ) | AI (never ИИ) |
 | account (product interface) | акаунт | аккаунт |
 | account (site legal pages) | обліковий запис | аккаунт |

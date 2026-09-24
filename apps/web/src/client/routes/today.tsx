@@ -12,6 +12,7 @@ import {
   seriesQuery,
   streakQuery,
 } from "../lib/queries";
+import { useRestDismissal } from "../lib/rest-day";
 import { Streak } from "../lib/streak";
 import { isGuiding, TodayView } from "../views/today-view";
 
@@ -34,6 +35,7 @@ function Today() {
   const explore = useQuery({ ...exploreQuery, enabled: guiding });
   const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
   const add = useAddCard();
+  const rest = useRestDismissal(streak.data?.today.date);
   return (
     <TodayView
       decks={decks.data}
@@ -52,6 +54,8 @@ function Today() {
       }}
       retrying={decks.isFetching || streak.isFetching}
       ready={ready}
+      restDismissed={rest.dismissed}
+      onDismissRest={rest.dismiss}
     />
   );
 }

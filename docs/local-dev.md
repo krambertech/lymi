@@ -32,8 +32,9 @@ No password is typed anywhere. The server creates the account on first use, seed
 | Persona | Account | Starts with |
 | --- | --- | --- |
 | `fresh` | Fresh | Nothing. The first-run screens. |
-| `learner` | Kateryna | Three weeks in: three decks, 43 cards, 9 due, a 4-day streak, three cards an assistant added today, one archived deck and one archived card. |
+| `learner` | Kateryna | Three weeks in: three decks, 43 cards, 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
 | `streak` | Sanna | Fourteen days running and nothing due. The flame is lit, small and still. |
+| `rested` | Leena | Eleven days running through two rest days, the last one yesterday, and 9 due. Today opens on the rest-day banner. |
 | `backlog` | Marco | A month away: four decks, 60 cards, all due. |
 | `long` | Ingrid | Six German cards asked both ways, all due: a sentence as the term, a dictionary-length meaning, and a card with every field at its limit. |
 | `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |

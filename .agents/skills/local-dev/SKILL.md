@@ -17,7 +17,7 @@ If the server logs a migration error, or `pnpm db:migrate` reports a table that 
 
 Navigate the tab to `/api/dev/sign-in?as=<persona>` on that port. The response sets the session cookie and redirects to Today. Never type a password, and never hand a password to the user to type; the persona accounts need none.
 
-Personas: `fresh` (nothing), `learner` (three decks, a few due, a streak, cards from an assistant), `streak` (fourteen days, nothing due), `backlog` (everything due), `polyglot` (Ukrainian interface and meanings, a deck with no language). `pnpm local personas` prints them.
+Personas: `fresh` (nothing), `learner` (three decks, a few due, a streak, cards from an assistant), `streak` (fourteen days, nothing due), `rested` (a rest day yesterday, the banner on Today), `backlog` (everything due), `polyglot` (Ukrainian interface and meanings, a deck with no language). `pnpm local personas` prints them.
 
 Add `returnTo=/library` to land on another screen. Add `reset=1` to reseed.
 

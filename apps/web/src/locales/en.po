@@ -388,11 +388,20 @@ msgstr "{count, plural, one {Move # card to} other {Move # cards to}}"
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {day in a row} other {days in a row}}"
 
+msgid "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"
+msgstr "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"
+
 msgid "{current} of 3 done"
 msgstr "{current} of 3 done"
 
+msgid "{day} {n}, rest day"
+msgstr "{day} {n}, rest day"
+
 msgid "{day} none"
 msgstr "{day} none"
+
+msgid "{day} none, rest day"
+msgstr "{day} none, rest day"
 
 msgid "{day}: {n} reviewed"
 msgstr "{day}: {n} reviewed"
@@ -420,6 +429,12 @@ msgstr "{day}: not yet"
 
 msgid "{day}: nothing due"
 msgstr "{day}: nothing due"
+
+msgid "{day}: rest day"
+msgstr "{day}: rest day"
+
+msgid "{day}: rest day, {reviews}"
+msgstr "{day}: rest day, {reviews}"
 
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr "{days, plural, one {# day} other {# days}}"
@@ -599,6 +614,9 @@ msgstr "A Lymi file from another Lymi account"
 
 msgid "A reset link works once, within an hour."
 msgstr "A reset link works once, within an hour."
+
+msgid "A rest day keeps the streak through one missed day a week."
+msgstr "A rest day keeps the streak through one missed day a week."
 
 msgid "A–Z"
 msgstr "A–Z"
@@ -3650,6 +3668,12 @@ msgstr "Yes, looks right"
 
 msgid "Yesterday"
 msgstr "Yesterday"
+
+msgid "Yesterday was a rest day"
+msgstr "Yesterday was a rest day"
+
+msgid "Yesterday was a rest day. Reach today’s goal to keep it going."
+msgstr "Yesterday was a rest day. Reach today’s goal to keep it going."
 
 msgid "you"
 msgstr "you"

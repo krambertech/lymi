@@ -469,6 +469,7 @@ export function streakFrom(counts: number[], goal = 10): StreakSummary {
     current,
     longest,
     reviewedDays: days.length,
+    restDays: [],
     days,
   };
 }

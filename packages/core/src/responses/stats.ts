@@ -116,10 +116,14 @@ export const StreakOut = z
     }),
     current: z.number().int().meta({
       description:
-        "Days in a row whose goal was satisfied. Today adds once satisfied and is otherwise skipped; a nothing-due day keeps the run without adding.",
+        "Days in a row whose goal was satisfied. Today adds once satisfied and is otherwise skipped; a nothing-due day or a rest day keeps the run without adding.",
     }),
     longest: z.number().int().meta({ description: "The longest such run anywhere in the history" }),
     reviewedDays: z.number().int().meta({ description: "Days with at least one attempt, ever" }),
+    restDays: z.array(LocalDate).meta({
+      description:
+        "Past days that fell short but kept the run, oldest first: a run allows one rest day in any seven days. Derived on every read.",
+    }),
     days: z
       .array(
         z.object({

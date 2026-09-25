@@ -26,7 +26,7 @@ export function useFrameTheme(initial: FrameTheme) {
       size="sm"
       label="Frame theme"
       value={theme}
-      onChange={setTheme}
+      onValueChange={setTheme}
       options={[
         { value: "light", label: "Light" },
         { value: "dark", label: "Dark" },

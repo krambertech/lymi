@@ -147,7 +147,7 @@ function DayAtTheLantern() {
               size="sm"
               label="Daily goal"
               value={goal}
-              onChange={setGoal}
+              onValueChange={setGoal}
               options={[
                 { value: "10", label: "10" },
                 { value: "25", label: "25" },
@@ -214,7 +214,7 @@ function DayAtTheLantern() {
               size="sm"
               label="Motion"
               value={motion}
-              onChange={setMotion}
+              onValueChange={setMotion}
               options={[
                 { value: "system", label: "System" },
                 { value: "full", label: "Full" },

@@ -1,7 +1,14 @@
 import { Trans } from "@lingui/react/macro";
 import { cn } from "cn";
 import type { LucideIcon } from "lucide-react";
-import { forwardRef, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Button } from "./button";
 import {
   Drawer,
@@ -101,17 +108,15 @@ export function FieldChip({
   );
 }
 
-const Chip = forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    icon: LucideIcon;
-    thumbnail?: ReactNode;
-    filled: boolean;
-  }
->(function Chip({ icon: Icon, thumbnail, filled, className, children, ...props }, ref) {
+interface ChipProps extends ComponentProps<"button"> {
+  icon: LucideIcon;
+  thumbnail?: ReactNode;
+  filled: boolean;
+}
+
+function Chip({ icon: Icon, thumbnail, filled, className, children, ...props }: ChipProps) {
   return (
     <button
-      ref={ref}
       type="button"
       {...props}
       className={cn(
@@ -131,7 +136,7 @@ const Chip = forwardRef<
       <span className="min-w-0 truncate">{children}</span>
     </button>
   );
-});
+}
 
 /**
  * The row the chips sit in: one line that scrolls sideways once the chips outgrow it, fading at

@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { buttonClass } from "../components/button";
+import { Button } from "../components/button";
 import { ErrorState } from "../components/empty-state";
 import { type Choices, SOURCE_NAMES } from "../components/import-parts";
 import { type Back, Screen } from "../components/layout/screen";
@@ -106,9 +106,9 @@ function ImportRoute() {
   }
 
   const restart = (
-    <Link to={`/import/${item.source}`} className={buttonClass("primary")}>
+    <Button variant="primary" render={<Link to={`/import/${item.source}`} />}>
       {t`Choose another file`}
-    </Link>
+    </Button>
   );
 
   switch (item.status) {
@@ -152,9 +152,9 @@ function ImportRoute() {
                 : undefined
           }
           openLibrary={
-            <Link to="/library" className={buttonClass("primary")}>
+            <Button variant="primary" render={<Link to="/library" />}>
               {t`Open Library`}
-            </Link>
+            </Button>
           }
         />
       );

@@ -82,7 +82,7 @@ Anything a list accepts beyond its rows, such as a language tag it has never hea
 `Checkbox`, `Switch`, `RadioGroup` and `ToggleGroup` are Base UI parts that submit with a native form under their `name`. `Segmented` is `ToggleGroup`'s look in the product: the track, the plate and the heights.
 
 - A checkbox or switch sits in a `Field orientation="horizontal"` with its label, so the label names it and presses it.
-- A radio group is named by its legend or `aria-label`, and each item takes its name from its own Field or, in a `RadioCard`, from the row's title.
+- A radio group is named by its legend or `aria-label`, and each item takes its name from its own Field or, in a `RadioCard`, from the row's title, or from its children when a row carries its own content.
 - A radio group and a toggle group are each one Tab stop. In a radio group the arrows move the choice, as on any platform; in a toggle group they move focus and Space or Enter chooses. The arrows skip a disabled option, which is still read out with the rest.
 - The hit area reaches 44 px through a pseudo-element, so a 20 px box never moves the row around it.
 - Checked is amber on a checkbox and a switch, and ink on a radio, where selection is the ring and the dot.

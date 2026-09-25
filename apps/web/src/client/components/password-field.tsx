@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { type PasswordStrength, passwordStrength } from "@lymi/core";
 import { clsx } from "clsx";
 import { Eye, EyeOff } from "lucide-react";
-import { type ReactNode, useId, useState } from "react";
+import { type FocusEventHandler, type ReactNode, type Ref, useId, useState } from "react";
 import { useField, useFieldControl } from "./ui/field";
 import { controlBase, controlSize } from "./ui/input";
 
@@ -16,6 +16,11 @@ interface Props {
   /** The address the password protects, so the meter can refuse one built from it. */
   email?: string | undefined;
   name?: string | undefined;
+  id?: string | undefined;
+  onBlur?: FocusEventHandler<HTMLInputElement> | undefined;
+  required?: boolean | undefined;
+  disabled?: boolean | undefined;
+  ref?: Ref<HTMLInputElement> | undefined;
 }
 
 /**
@@ -30,6 +35,11 @@ export function PasswordField({
   meter = false,
   email,
   name = "password",
+  id,
+  onBlur,
+  required,
+  disabled,
+  ref,
 }: Props) {
   const { t } = useLingui();
   const [shown, setShown] = useState(false);
@@ -37,7 +47,7 @@ export function PasswordField({
   const meterId = useId();
   // The Field supplies its own description and error; the meter joins them rather than
   // replacing them, so a screen reader hears both.
-  const control = useFieldControl({});
+  const control = useFieldControl({ id });
   const Icon = shown ? EyeOff : Eye;
   const describedBy = [control["aria-describedby"], meter && value ? meterId : null]
     .filter(Boolean)
@@ -47,6 +57,7 @@ export function PasswordField({
     <>
       <div className="relative">
         <input
+          ref={ref}
           type={shown ? "text" : "password"}
           name={name}
           autoComplete={autoComplete}
@@ -54,7 +65,9 @@ export function PasswordField({
           spellCheck={false}
           value={value}
           onChange={(event) => onValueChange(event.target.value)}
-          disabled={field?.disabled}
+          onBlur={onBlur}
+          required={required}
+          disabled={disabled || field?.disabled}
           className={clsx(controlBase, controlSize, "ps-3.5 pe-12")}
           {...control}
           aria-describedby={describedBy || undefined}

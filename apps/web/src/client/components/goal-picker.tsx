@@ -4,9 +4,10 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { DAILY_GOAL_PRESETS, DailyGoal } from "@lymi/core";
 import { clsx } from "clsx";
 import { CircleAlert } from "lucide-react";
-import { type ReactNode, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
+import { RadioCard } from "./radio-card";
 import { Input } from "./ui/input";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { RadioGroup } from "./ui/radio-group";
 
 const NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
   10: msg({ message: "Light", context: "daily goal" }),
@@ -17,11 +18,14 @@ const NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
 
 const CUSTOM = "custom";
 
+// One line per row, the dot centred on it.
+const row = "min-h-12 items-center py-0";
+
 const isPreset = (n: number) => (DAILY_GOAL_PRESETS as readonly number[]).includes(n);
 
 interface Props {
   value: number;
-  onChange: (goal: number) => void;
+  onValueChange: (goal: number) => void;
   className?: string | undefined;
 }
 
@@ -29,9 +33,8 @@ interface Props {
  * How many reviews keep the streak each day: four presets and a number of your own. A choice is made when
  * it is made, and the custom number commits on blur or Enter, so there is no Save button.
  */
-export function GoalPicker({ value, onChange, className }: Props) {
+export function GoalPicker({ value, onValueChange, className }: Props) {
   const { t, i18n } = useLingui();
-  const ids = useId();
   const errorId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const [custom, setCustom] = useState(!isPreset(value));
@@ -50,25 +53,7 @@ export function GoalPicker({ value, onChange, className }: Props) {
       return;
     }
     setError(null);
-    if (parsed.data !== value) onChange(parsed.data);
-  };
-
-  const row = (choice: string, children: ReactNode) => {
-    const id = `${ids}-${choice}`;
-    return (
-      <label
-        htmlFor={id}
-        className={clsx(
-          "flex min-h-12 cursor-pointer items-center gap-3 rounded-md bg-plate px-3.5",
-          "edge transition-[box-shadow,background-color,scale] duration-150 ease-(--ease-out) active:scale-[0.99] motion-reduce:active:scale-100",
-          "has-data-checked:edge-2 hoverable:hover:not-has-data-checked:bg-hover",
-          "has-[[data-slot=radio-group-item]:focus-visible]:outline-2 has-[[data-slot=radio-group-item]:focus-visible]:outline-offset-2 has-[[data-slot=radio-group-item]:focus-visible]:outline-ring",
-        )}
-      >
-        <RadioGroupItem id={id} value={choice} className="focus-visible:outline-none" />
-        {children}
-      </label>
-    );
+    if (parsed.data !== value) onValueChange(parsed.data);
   };
 
   return (
@@ -85,24 +70,22 @@ export function GoalPicker({ value, onChange, className }: Props) {
           }
           setCustom(false);
           setError(null);
-          onChange(Number(choice));
+          onValueChange(Number(choice));
         }}
       >
         {DAILY_GOAL_PRESETS.map((n) => (
           <div key={n}>
-            {row(
-              String(n),
+            <RadioCard value={String(n)} className={row}>
               <span className="flex flex-1 items-baseline justify-between gap-3">
                 <span className="text-base font-medium text-text">{i18n._(NAMES[n])}</span>
                 <span className="text-sm tabular-nums text-text-2">
                   <Plural value={n} one="# review" other="# reviews" />
                 </span>
-              </span>,
-            )}
+              </span>
+            </RadioCard>
           </div>
         ))}
-        {row(
-          CUSTOM,
+        <RadioCard value={CUSTOM} className={row}>
           <span className="flex min-h-12 flex-1 items-center justify-between gap-3">
             <span className="text-base font-medium text-text">
               <Trans>Custom</Trans>
@@ -129,8 +112,8 @@ export function GoalPicker({ value, onChange, className }: Props) {
                 <Plural value={Number(draft) || 0} one="review" other="reviews" />
               </span>
             )}
-          </span>,
-        )}
+          </span>
+        </RadioCard>
       </RadioGroup>
       {error && (
         <p id={errorId} className="flex items-center gap-1.5 text-sm text-danger" role="alert">

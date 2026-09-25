@@ -633,7 +633,7 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
             )}
           >
             <RadioCard
-              bare
+              variant="bare"
               value="link"
               title={t`Anyone with the link`}
               description={t`Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress.`}

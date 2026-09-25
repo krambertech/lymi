@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
-import { Button, buttonClass } from "../components/button";
+import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { EmptySection, ErrorState } from "../components/empty-state";
 import { SOURCE_NAMES } from "../components/import-parts";
@@ -322,18 +322,18 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
         </span>
       </span>
       {download ? (
-        <a
-          href={download}
-          download={entry.export?.fileName}
-          className={buttonClass("secondary", "sm", "shrink-0")}
+        <Button
+          size="sm"
+          className="shrink-0"
           aria-label={t`Download ${entry.export?.fileName ?? ""}`}
+          render={<a href={download} download={entry.export?.fileName} />}
         >
           <Download data-icon="inline-start" aria-hidden="true" />
           {/* The label only where there is room; the aria-label names the file at every size. */}
           <span className="sr-only @3xl:not-sr-only">
             <Trans>Download</Trans>
           </span>
-        </a>
+        </Button>
       ) : expandable ? (
         <Go
           icon={

@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CircleAlert } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { Button } from "./button";
 
 interface ErrorStateProps {
@@ -49,7 +49,7 @@ export function ErrorState({ title, body, onRetry, retrying, action, className }
   );
 }
 
-interface EmptySectionProps {
+interface EmptySectionProps extends Omit<ComponentProps<"div">, "title"> {
   icon: ReactNode;
   title: ReactNode;
   body?: ReactNode | undefined;
@@ -60,9 +60,15 @@ interface EmptySectionProps {
  * An empty group inside a screen, e.g. no API keys yet. One icon, one line of why, and the action
  * that fills it; the lantern and the start panel are for whole screens.
  */
-export function EmptySection({ icon, title, body, action }: EmptySectionProps) {
+export function EmptySection({ icon, title, body, action, className, ...rest }: EmptySectionProps) {
   return (
-    <div className="edge flex flex-col items-center gap-1.5 rounded-md bg-plate px-5 py-7 text-center">
+    <div
+      className={clsx(
+        "edge flex flex-col items-center gap-1.5 rounded-md bg-plate px-5 py-7 text-center",
+        className,
+      )}
+      {...rest}
+    >
       <span
         className="mb-2 grid size-11 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-5"
         aria-hidden="true"

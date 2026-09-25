@@ -2,8 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Plus } from "lucide-react";
 import type { ReactNode } from "react";
-import { Button, buttonClass } from "./button";
-import { Kbd } from "./kbd";
+import { Button } from "./button";
 import { Lantern } from "./lantern";
 import { NavLink, useStaticNav } from "./nav-link";
 
@@ -93,16 +92,14 @@ export function StartGuide({
           <p className="text-md text-text-2">
             <Trans>Insights fill in from your first review.</Trans>
           </p>
-          <NavLink
-            to="/review"
-            search={{}}
-            className={buttonClass("primary", "md", "justify-self-start")}
+          <Button
+            variant="primary"
+            kbd="R"
+            className="justify-self-start"
+            render={<NavLink to="/review" search={{}} />}
           >
             <Trans>Review</Trans>
-            <span className="hidden @2xl:contents">
-              <Kbd tone="on-primary">R</Kbd>
-            </span>
-          </NavLink>
+          </Button>
         </>
       ),
     },

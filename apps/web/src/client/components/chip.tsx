@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { FieldSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { BookOpen, PencilLine, Sparkle } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { StateIcon, stateKey, stateMarks } from "./state-mark";
 
 export type ChipTone = "default" | "ai" | "danger";
@@ -15,17 +15,13 @@ const tones: Record<ChipTone, string> = {
   danger: "bg-danger-soft text-danger",
 };
 
-export function Chip({
-  tone = "default",
-  size = "md",
-  children,
-  className,
-}: {
+interface ChipProps extends ComponentProps<"span"> {
   tone?: ChipTone | undefined;
   size?: "xs" | "sm" | "md" | "lg" | undefined;
   children: ReactNode;
-  className?: string | undefined;
-}) {
+}
+
+export function Chip({ tone = "default", size = "md", className, ...rest }: ChipProps) {
   return (
     <span
       className={clsx(
@@ -37,9 +33,8 @@ export function Chip({
         tones[tone],
         className,
       )}
-    >
-      {children}
-    </span>
+      {...rest}
+    />
   );
 }
 
@@ -116,29 +111,28 @@ const sourceLabels: Record<SourceField | "field", Record<FieldSource, MessageDes
  * the lesson, and it is the one source with a colour: the lesson and the learner are the
  * ordinary case and stay in ink.
  *
- * `compact` is the badge form: the mark and one word, beside the label of the field it belongs
- * to. It keeps the whole sentence for a screen reader, because two letters are not a sentence.
+ * `xs` is the badge form: the mark and one word, beside the label of the field it belongs to. It
+ * keeps the whole sentence for a screen reader, because two letters are not a sentence.
  */
 export function SourceChip({
   source,
   field,
-  compact = false,
   size = "sm",
 }: {
   source: FieldSource;
   /** Which field. Shown as "AI meaning". */
   field?: SourceField | undefined;
-  compact?: boolean | undefined;
-  size?: "sm" | "md" | undefined;
+  size?: "xs" | "sm" | "md" | undefined;
 }) {
   const { i18n } = useLingui();
   const m = sourceMeta[source];
   const Icon = m.icon;
   const label = i18n._(sourceLabels[field ?? "field"][source]);
+  const badge = size === "xs";
   return (
-    <Chip tone={m.tone} size={compact ? "xs" : size}>
-      <Icon className={compact ? "size-2.5" : "size-3"} aria-hidden="true" />
-      {compact ? (
+    <Chip tone={m.tone} size={size}>
+      <Icon className={badge ? "size-2.5" : "size-3"} aria-hidden="true" />
+      {badge ? (
         <>
           <span aria-hidden="true">{i18n._(m.mark)}</span>
           <span className="sr-only">{label}</span>

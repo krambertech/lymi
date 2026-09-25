@@ -1,16 +1,12 @@
 import { clsx } from "clsx";
-import type { ReactNode } from "react";
+import type { ComponentProps } from "react";
+
+interface Props extends ComponentProps<"kbd"> {
+  tone?: "default" | "on-primary" | "on-ink" | undefined;
+}
 
 /** A key hint. Sits inside buttons on desktop and in the shortcuts list. */
-export function Kbd({
-  children,
-  className,
-  tone = "default",
-}: {
-  children: ReactNode;
-  className?: string | undefined;
-  tone?: "default" | "on-primary" | "on-ink" | undefined;
-}) {
+export function Kbd({ className, tone = "default", ...rest }: Props) {
   return (
     <kbd
       className={clsx(
@@ -20,8 +16,7 @@ export function Kbd({
         tone === "on-ink" && "bg-canvas/20 text-canvas",
         className,
       )}
-    >
-      {children}
-    </kbd>
+      {...rest}
+    />
   );
 }

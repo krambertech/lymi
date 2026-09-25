@@ -79,7 +79,7 @@ export function InsightsView({
         size="sm"
         label={t`Recall period`}
         value={period}
-        onChange={onPeriod}
+        onValueChange={onPeriod}
         options={[
           { value: "30", label: t`30 days` },
           ...(daysAllTime > 90 ? [{ value: "90" as const, label: t`90 days` }] : []),

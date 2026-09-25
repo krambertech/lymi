@@ -4,7 +4,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { identifyApp } from "../components/app-mark";
-import { buttonClass } from "../components/button";
+import { Button } from "../components/button";
 import { authClient } from "../lib/auth";
 import { useDocumentTitle } from "../lib/document-title";
 import { meQuery } from "../lib/queries";
@@ -110,9 +110,9 @@ function Consent() {
         scopes={"granted" in outcome ? outcome.granted : undefined}
         action={
           "granted" in outcome ? (
-            <Link to="/settings" className={buttonClass("secondary", "sm")}>
+            <Button size="sm" render={<Link to="/settings" />}>
               <Trans>Manage connected apps</Trans>
-            </Link>
+            </Button>
           ) : undefined
         }
       />

@@ -4,7 +4,7 @@ import { publisherAvatarPath, trayHue } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { ArrowRight, Check, ChevronDown, Plus } from "lucide-react";
 import { type CSSProperties, type ReactNode, useEffect, useRef } from "react";
-import { Button, buttonClass } from "../components/button";
+import { Button } from "../components/button";
 import { DeckMeta, HAND_FANS, TrayCardFace } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
@@ -163,9 +163,9 @@ export function ExploreDeckView({
           retrying={busy}
           action={
             missing ? (
-              <NavLink to="/explore" className={buttonClass("primary")}>
+              <Button variant="primary" render={<NavLink to="/explore" />}>
                 <Trans>Back to Explore</Trans>
-              </NavLink>
+              </Button>
             ) : undefined
           }
         />
@@ -236,11 +236,10 @@ export function ExploreDeckView({
             )}
             <div className="mt-6 flex w-full justify-center @4xl:justify-start">
               {deckId ? (
-                <NavLink
-                  ref={open}
-                  to="/library/$deckId"
-                  params={{ deckId }}
-                  className={buttonClass("secondary", "lg", "deck-cover-action w-full @md:w-auto")}
+                <Button
+                  size="lg"
+                  className="deck-cover-action w-full @md:w-auto"
+                  render={<NavLink ref={open} to="/library/$deckId" params={{ deckId }} />}
                 >
                   <span
                     className={clsx(
@@ -251,7 +250,7 @@ export function ExploreDeckView({
                     <Trans>Open in Library</Trans>
                     <ArrowRight aria-hidden="true" className="rtl:-scale-x-100" />
                   </span>
-                </NavLink>
+                </Button>
               ) : (
                 <Button
                   variant="secondary"

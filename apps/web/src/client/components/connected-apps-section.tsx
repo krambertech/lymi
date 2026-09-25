@@ -8,7 +8,7 @@ import { publicSiteUrl } from "../lib/origins";
 import { connectedAppsQuery } from "../lib/queries";
 import { useConfirmStep } from "../lib/use-confirm-step";
 import { AppMark, identifyApp } from "./app-mark";
-import { Button, buttonClass } from "./button";
+import { Button } from "./button";
 import { Chip } from "./chip";
 import { EmptySection } from "./empty-state";
 import { InlineError } from "./inline-error";
@@ -41,9 +41,9 @@ export function ConnectedAppsSection() {
           title={t`No apps connected`}
           body={t`Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked.`}
           action={
-            <a href={publicSiteUrl("/docs/mcp")} className={buttonClass("secondary")}>
+            <Button render={<a href={publicSiteUrl("/docs/mcp")} />}>
               <Trans>How to connect</Trans>
-            </a>
+            </Button>
           }
         />
       )}

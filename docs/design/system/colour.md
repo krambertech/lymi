@@ -80,7 +80,7 @@ The grade icons use `grade-forgot` (`danger`), `grade-hard` (`muted`), `grade-go
 
 ## What the AI wrote
 
-What the AI wrote is the fourth mark, and the one hue outside the states. A meaning, example or pronunciation it filled carries `ai`, a violet badge of the sparkle and the word AI, beside the field's label rather than at the far edge of the panel. It is `SourceChip compact` in `components/chip.tsx`.
+What the AI wrote is the fourth mark, and the one hue outside the states. A meaning, example or pronunciation it filled carries `ai`, a violet badge of the sparkle and the word AI, beside the field's label rather than at the far edge of the panel. It is `SourceChip size="xs"` in `components/chip.tsx`.
 
 **The badge marks the AI and nothing else.** The learner's own words and the lesson's carry no badge, and that silence is what makes the violet one carry. Violet is the last hue that is not amber, a card state or `danger`, so the badge reads as "not from you or the lesson" without reading as act, progress or error. The colour lives on the badge alone: enriched text is ordinary text, because the learner is meant to read the meaning, not the label.
 

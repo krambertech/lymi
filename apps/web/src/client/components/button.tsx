@@ -1,13 +1,17 @@
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
 import { clsx } from "clsx";
+import { cn } from "cn";
 import { Loader2 } from "lucide-react";
-import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { Kbd } from "./kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
+type IconButtonSize = Exclude<ButtonSize, "xl">;
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends useRender.ComponentProps<"button"> {
   variant?: ButtonVariant | undefined;
   size?: ButtonSize | undefined;
   /** Keyboard hint shown inside the button on desktop, e.g. "R". */
@@ -47,15 +51,6 @@ const sizes: Record<ButtonSize, string> = {
   xl: "h-16 px-(--btn-px) [--btn-px:20px] text-lg [&_svg]:size-5",
 };
 
-/** The button's classes on their own, for a Link that should look and behave like one. */
-export function buttonClass(
-  variant: ButtonVariant = "secondary",
-  size: ButtonSize = "md",
-  className?: string,
-) {
-  return clsx(base, iconSide, variants[variant], sizes[size], className);
-}
-
 /**
  * A button is never taken away for being unable to run yet. `disabled` drops it out of the
  * tab order and tells a screen reader nothing about why, so a form that greys out its submit
@@ -63,69 +58,105 @@ export function buttonClass(
  * the form validates on submit and says what is wrong. `aria-disabled` is for the cases where
  * pressing genuinely cannot do anything yet — mid-request, or a handler that does not exist —
  * and it keeps the button focusable and announced while swallowing the press.
+ *
+ * A link that looks like a button passes itself as `render`: `<Button render={<Link to="/today" />}>`.
  */
-export const Button = forwardRef<HTMLButtonElement, Props>(function Button(
-  { variant = "secondary", size = "md", kbd, loading, className, children, onClick, ...rest },
+export function Button({
+  variant = "secondary",
+  size = "md",
+  kbd,
+  loading,
+  className,
+  children,
+  onClick,
+  render,
   ref,
-) {
+  ...rest
+}: Props) {
   const inert = loading || rest["aria-disabled"] === true || rest["aria-disabled"] === "true";
-  return (
-    <button
-      ref={ref}
-      type="button"
-      className={clsx(base, iconSide, variants[variant], sizes[size], className)}
-      aria-busy={loading || undefined}
-      aria-disabled={inert || undefined}
-      onClick={(e) => {
-        if (inert) {
-          e.preventDefault();
-          return;
-        }
-        onClick?.(e);
-      }}
-      {...rest}
-    >
-      <span
-        className={clsx(
-          "inline-flex items-center gap-2 transition-[opacity,filter] duration-150",
-          loading && "opacity-0 blur-[2px]",
-        )}
-      >
-        {children}
-        {kbd && (
-          <span className="hidden @2xl:contents">
-            <Kbd tone={variant === "primary" ? "on-primary" : "default"}>{kbd}</Kbd>
-          </span>
-        )}
-      </span>
-      {loading && (
-        <span className="spinner-enter absolute inset-0 grid place-items-center">
-          <Loader2 className="animate-spin" aria-hidden="true" />
-        </span>
-      )}
-    </button>
-  );
-});
+  return useRender({
+    defaultTagName: "button",
+    render,
+    ref,
+    props: mergeProps<"button">(
+      {
+        type: render ? undefined : "button",
+        className: clsx(base, iconSide, variants[variant], sizes[size], className),
+        "aria-busy": loading || undefined,
+        "aria-disabled": inert || undefined,
+        onClick: (e) => {
+          if (inert) {
+            e.preventDefault();
+            return;
+          }
+          onClick?.(e);
+        },
+        children: (
+          <>
+            <span
+              className={clsx(
+                "inline-flex items-center gap-2 transition-[opacity,filter] duration-150",
+                loading && "opacity-0 blur-[2px]",
+              )}
+            >
+              {children}
+              {kbd && (
+                <span className="hidden @2xl:contents">
+                  <Kbd tone={variant === "primary" ? "on-primary" : "default"}>{kbd}</Kbd>
+                </span>
+              )}
+            </span>
+            {loading && (
+              <span className="spinner-enter absolute inset-0 grid place-items-center">
+                <Loader2 className="animate-spin" aria-hidden="true" />
+              </span>
+            )}
+          </>
+        ),
+      },
+      rest,
+    ),
+  });
+}
 
-interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps extends ComponentProps<"button"> {
   /** Required. Describes the action, not the icon. */
   label: string;
-  size?: Exclude<ButtonSize, "xl"> | undefined;
-  variant?: "ghost" | "secondary" | "primary" | "danger" | undefined;
+  size?: IconButtonSize | undefined;
+  variant?: ButtonVariant | undefined;
   /** A circle instead of the 10 px square. For the pronunciation button and capture. */
   round?: boolean | undefined;
   children: ReactNode;
 }
+
+const iconVariants: Record<ButtonVariant, string> = {
+  ...variants,
+  // An icon on a plate sits a step quieter than a label would.
+  secondary: cn(variants.secondary, "text-text-2"),
+};
+
+const iconSizes: Record<IconButtonSize, string> = {
+  sm: "size-8 [&_svg]:size-4 before:absolute before:-inset-y-1.5 before:[inset-inline:var(--hit-x,-6px)] before:content-['']",
+  md: "size-10 [&_svg]:size-[18px] before:absolute before:-inset-y-0.5 before:[inset-inline:var(--hit-x,-2px)] before:content-['']",
+  lg: "size-12 [&_svg]:size-5",
+};
 
 /**
  * A square button holding one icon. The hit area reaches 44 px; a row whose buttons sit closer
  * than their extensions sets `[--hit-x:0px]` so neither covers its neighbour.
  * Its label is the accessible name and shows as a tooltip; it stays quiet while its menu is open.
  */
-export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { label, size = "md", variant = "ghost", round, className, children, onClick, ...rest },
+export function IconButton({
+  label,
+  size = "md",
+  variant = "ghost",
+  round,
+  className,
+  children,
+  onClick,
   ref,
-) {
+  ...rest
+}: IconButtonProps) {
   const expanded = rest["aria-expanded"] === true || rest["aria-expanded"] === "true";
   const inert = rest["aria-disabled"] === true || rest["aria-disabled"] === "true";
   return (
@@ -139,17 +170,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
             className={clsx(
               "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 aria-disabled:opacity-45 aria-disabled:active:scale-100",
               round ? "rounded-full" : "rounded-sm",
-              variant === "ghost" &&
-                "text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
-              variant === "secondary" && "edge bg-plate text-text-2 hoverable:hover:bg-hover",
-              variant === "primary" && "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
-              variant === "danger" &&
-                "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
-              size === "sm" &&
-                "size-8 [&_svg]:size-4 before:absolute before:-inset-y-1.5 before:[inset-inline:var(--hit-x,-6px)] before:content-['']",
-              size === "md" &&
-                "size-10 [&_svg]:size-[18px] before:absolute before:-inset-y-0.5 before:[inset-inline:var(--hit-x,-2px)] before:content-['']",
-              size === "lg" && "size-12 [&_svg]:size-5",
+              iconVariants[variant],
+              iconSizes[size],
               className,
             )}
             onClick={(e) => {
@@ -170,4 +192,4 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
       <TooltipContent>{label}</TooltipContent>
     </Tooltip>
   );
-});
+}

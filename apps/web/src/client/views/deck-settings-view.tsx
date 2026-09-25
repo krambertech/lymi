@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { Directions, SectionProgression } from "@lymi/core";
+import { type Directions, deckLimits, type SectionProgression } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -218,7 +218,7 @@ export function DeckSettingsView({
                   if (e.key === "Enter") e.currentTarget.blur();
                   if (e.key === "Escape") setName(deck.name);
                 }}
-                maxLength={80}
+                maxLength={deckLimits.name ?? undefined}
                 autoComplete="off"
               />
             </Field>
@@ -228,7 +228,7 @@ export function DeckSettingsView({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 onBlur={commitDescription}
-                maxLength={500}
+                maxLength={deckLimits.description ?? undefined}
                 placeholder={t`Cards from Marco’s Tuesday lessons.`}
                 className="min-h-20"
               />

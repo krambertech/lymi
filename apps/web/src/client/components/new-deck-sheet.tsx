@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { DeckInput, type Directions } from "@lymi/core";
+import { DeckInput, type Directions, deckLimits } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "cn";
@@ -115,7 +115,7 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
           placeholder={t`Lesson 15`}
           autoComplete="off"
           enterKeyHint="done"
-          maxLength={80}
+          maxLength={deckLimits.name ?? undefined}
         />
         <FieldError>{invalid.name}</FieldError>
       </Field>

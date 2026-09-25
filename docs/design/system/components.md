@@ -19,7 +19,7 @@ Lymi-owned components compose the primitives. The ones every screen reaches for:
 
 | Need | Component | File | Rules |
 | --- | --- | --- | --- |
-| An action | `Button`, `IconButton`, `buttonClass` | `button.tsx` | [buttons.md](buttons.md) |
+| An action | `Button`, `IconButton` | `button.tsx` | [buttons.md](buttons.md) |
 | A screen | `Screen`, `PlaceBar`, `ShellChrome` | `layout/` | [layout.md](layout.md) |
 | A way back, the top bar | `BackButton`, `TopBar` | `views/shell.tsx` | [layout.md](layout.md#back) |
 | A form row and its controls | `Field` and the primitives | `ui/` | [forms.md](forms.md) |

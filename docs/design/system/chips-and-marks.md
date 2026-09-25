@@ -7,7 +7,7 @@ Small labels that describe: a card's state, where a field came from, how many ca
 ```text
 What does the label say?
  ├── A card's state (New, Learning, Known, Forgotten recently) → StateChip, or StateIcon beside a count
- ├── Where a field came from → SourceChip; compact beside a field's label, full in a chip row
+ ├── Where a field came from → SourceChip; size="xs" beside a field's label, full in a chip row
  ├── How many cards are due → DueCount
  ├── A keyboard shortcut → Kbd
  ├── A status that failed (an import that stopped) → Chip tone="danger"

@@ -270,7 +270,7 @@ export function AccountSection({
       />
       <AvatarEditor
         image={picked}
-        saving={save.isPending}
+        pending={save.isPending}
         error={save.isError ? failure(save.error) : undefined}
         onCancel={() => {
           save.reset();

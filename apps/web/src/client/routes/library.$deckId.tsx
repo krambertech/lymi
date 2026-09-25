@@ -129,8 +129,13 @@ function DeckPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const editing = cards.data?.find((row) => row.card.id === editingId)?.card ?? null;
 
-  const events = useMemo(
-    () => history.data?.events.map((e) => describeEvent(e, i18n)),
+  const wordHistory = useMemo(
+    () =>
+      history.data && {
+        states: history.data.states,
+        reviews: history.data.reviews,
+        events: history.data.events.map((e) => describeEvent(e, i18n)),
+      },
     [history.data, i18n],
   );
 
@@ -237,77 +242,73 @@ function DeckPage() {
         deck={deck}
         failure={failure}
         onRetry={retry}
-        retrying={decks.isFetching || cards.isFetching || sections.isFetching}
+        retryPending={decks.isFetching || cards.isFetching || sections.isFetching}
         // Held until the sections arrive, so a sectioned deck never flashes in another order.
         cards={sections.isPending ? undefined : cards.data}
         streak={streak.data}
-        // Every write below is the owner's; a member reads the deck and leaves it. ADR 0011.
-        onAdd={isOwner ? () => add.openCard(deckId) : undefined}
-        onArchive={isOwner ? (id) => archive.mutate(id) : undefined}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
-        onArchiveDeck={isOwner ? () => archiveDeck.mutate() : undefined}
-        onLeaveDeck={isMember ? () => setLeaving(true) : undefined}
-        onExport={isOwner ? () => setExporting(true) : undefined}
-        onMoveToSeries={isOwner ? () => setMovingToSeries(true) : undefined}
-        seriesName={series.data?.find((s) => s.id === deck?.seriesId)?.name}
-        openCardId={openCardId ?? null}
-        onOpen={setOpen}
-        states={history.data?.states}
-        reviews={history.data?.reviews}
-        events={events}
-        onPlayAudio={playAudio}
-        onEditCard={isOwner ? (card) => setEditingId(card.id) : undefined}
-        onEnrichCard={isOwner ? (card) => enrich.mutate(card) : undefined}
-        decks={decks.data}
-        onMove={
+        // Every write is the owner's; a member reads the deck and leaves it. ADR 0011.
+        owner={
           isOwner
-            ? (id, toDeck) => {
-                setOpen(null);
-                save.mutate({ id, patch: { deckId: toDeck } });
+            ? {
+                onAddCard: () => add.openCard(deckId),
+                onArchiveCard: (id) => archive.mutate(id),
+                onEditCard: (card) => setEditingId(card.id),
+                onEnrichCard: (card) => enrich.mutate(card),
+                onMoveCard: (id, toDeck) => {
+                  setOpen(null);
+                  save.mutate({ id, patch: { deckId: toDeck } });
+                },
+                onArchiveDeck: () => archiveDeck.mutate(),
+                onExport: () => setExporting(true),
+                onMoveToSeries: () => setMovingToSeries(true),
+                sections: {
+                  onCreate: () => setNaming({}),
+                  onRename: (section) => setNaming({ section }),
+                  onAddCard: (section) => add.openCard(deckId, { sectionId: section.id }),
+                  onManage: () =>
+                    navigate({
+                      to: "/library/$deckId/settings",
+                      params: { deckId },
+                      hash: "sections",
+                    }),
+                  onPickSection: (cardIds, after) => setPicking({ cardIds, after }),
+                  onMoveCards: (cardIds, section) =>
+                    sectionActions.moveCards.mutate({
+                      cardIds,
+                      sectionId: section?.id ?? null,
+                      sectionName: section?.name ?? "",
+                      term:
+                        cardIds.length === 1
+                          ? cards.data?.find((row) => row.card.id === cardIds[0])?.card.term
+                          : undefined,
+                    }),
+                },
               }
             : undefined
         }
+        member={isMember ? { onLeave: () => setLeaving(true) } : undefined}
+        seriesName={series.data?.find((s) => s.id === deck?.seriesId)?.name}
+        openCardId={openCardId ?? null}
+        onOpen={setOpen}
+        history={wordHistory}
+        onPlayAudio={playAudio}
+        decks={decks.data}
         sections={sectionList}
         progress={deck?.sectionProgression === "open" ? null : sections.data?.progress}
         onStartSection={startSection}
         onReviewSection={(section) =>
           navigate({ to: "/review", search: { deck: deckId, section: section.id } })
         }
-        startingSection={sectionActions.start.isPending}
-        sectionActions={
-          isOwner
-            ? {
-                onCreate: () => setNaming({}),
-                onRename: (section) => setNaming({ section }),
-                onAddCard: (section) => add.openCard(deckId, { sectionId: section.id }),
-                onManage: () =>
-                  navigate({
-                    to: "/library/$deckId/settings",
-                    params: { deckId },
-                    hash: "sections",
-                  }),
-                onPickSection: (cardIds, after) => setPicking({ cardIds, after }),
-                onMoveCards: (cardIds, section) =>
-                  sectionActions.moveCards.mutate({
-                    cardIds,
-                    sectionId: section?.id ?? null,
-                    sectionName: section?.name ?? "",
-                    term:
-                      cardIds.length === 1
-                        ? cards.data?.find((row) => row.card.id === cardIds[0])?.card.term
-                        : undefined,
-                  }),
-              }
-            : undefined
-        }
+        startSectionPending={sectionActions.start.isPending}
         connectUrl={publicSiteUrl("/docs/mcp")}
         connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       />
       <EditCardSheet
         card={editing}
         decks={decks.data}
-        onClose={() => setEditingId(null)}
+        onOpenChange={() => setEditingId(null)}
         onReopen={(card) => setEditingId(card.id)}
         // A card that moved is no longer in this deck's list, so it closes with the sheet.
         onSaved={(_card, movedFrom) => movedFrom && setOpen(null)}

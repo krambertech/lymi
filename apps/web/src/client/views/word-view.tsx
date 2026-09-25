@@ -179,32 +179,45 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
   return { ...base, kind: "edited", text: i18n._(msg`Edited ${list}`), actor: by };
 }
 
+/** A word's whole record, fetched together once the word is open. */
+export interface WordHistory {
+  /** Every direction's state; the list's row carries only the leading one. */
+  states: CardState[];
+  /** Every review, newest first. */
+  reviews: Review[];
+  events: WordEvent[];
+}
+
+/** Every write to the card. Only the deck's owner is offered them. */
+export interface WordOwnerActions {
+  /** Opens the card's form. */
+  onEdit: () => void;
+  onArchive: () => void;
+  onMove: (deckId: string) => void;
+  /** Opens the section picker. */
+  onMoveToSection: () => void;
+  /** Asks the AI to fill what is still empty. */
+  onEnrich: () => void;
+}
+
 export interface WordProps {
   card: Card;
-  /** The list's leading state. `states` carries every direction when the route has it. */
+  /** The list's leading state, until `history` carries every direction. */
   state: CardState | null;
-  states?: CardState[] | undefined;
   deckName: string;
   /** The modes the card is asked in: its own, or its deck's. */
   modes?: ReviewMode[] | undefined;
-  /** Every review, newest first. Absent until the route fetches it. */
-  reviews?: Review[] | undefined;
-  events?: WordEvent[] | undefined;
+  /** Absent until the route fetches it. */
+  history?: WordHistory | undefined;
   hasPrev?: boolean | undefined;
   hasNext?: boolean | undefined;
   onPrev?: (() => void) | undefined;
   onNext?: (() => void) | undefined;
   onClose?: (() => void) | undefined;
-  /** Opens the card's form. Absent, the card cannot be changed from here. */
-  onEdit?: (() => void) | undefined;
-  onArchive?: (() => void) | undefined;
+  /** Absent, the card cannot be changed from here. */
+  owner?: WordOwnerActions | undefined;
   /** Every deck the word could move to. The menu lists them by name. */
   decks?: { id: string; name: string }[] | undefined;
-  onMove?: ((deckId: string) => void) | undefined;
-  /** Opens the section picker. Only a deck's owner, in a deck with sections, is offered it. */
-  onMoveToSection?: (() => void) | undefined;
-  /** Asks the AI to fill what is still empty. Only the card's owner is offered it. */
-  onEnrich?: (() => void) | undefined;
   onPlayAudio?: (() => void) | undefined;
   /** The term heading's id, so a sheet or drawer holding the word can take its name. */
   titleId?: string | undefined;
@@ -368,28 +381,24 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
 export function WordView({
   card,
   state,
-  states,
   deckName,
   modes,
-  reviews,
-  events,
+  history: record,
   hasPrev,
   hasNext,
   onPrev,
   onNext,
   onClose,
-  onEdit,
-  onArchive,
+  owner,
   decks,
-  onMove,
-  onMoveToSection,
-  onEnrich,
   onPlayAudio,
   titleId,
   onBusyChange,
 }: WordProps) {
   const { t, i18n } = useLingui();
   const now = new Date();
+  const states = record?.states;
+  const reviews = record?.reviews;
   const schedules = (states?.length ? states : state ? [state] : []).map((st) => ({
     st,
     fsrs: readFsrs(st),
@@ -419,7 +428,7 @@ export function WordView({
             : t`back the same day`;
       return { kind: "review" as const, key: `r-${r.id}`, at, review: r, next };
     }),
-    ...(events ?? []).map((e, i) => ({
+    ...(record?.events ?? []).map((e, i) => ({
       kind: "event" as const,
       key: `e-${e.id ?? i}`,
       at: e.at,
@@ -476,8 +485,8 @@ export function WordView({
   const size = useDesktop() ? "sm" : "md";
   const controls = (
     <>
-      {onEdit && (
-        <IconButton label={t`Edit card`} size={size} onClick={onEdit}>
+      {owner && (
+        <IconButton label={t`Edit card`} size={size} onClick={owner.onEdit}>
           <Pencil />
         </IconButton>
       )}
@@ -488,7 +497,7 @@ export function WordView({
         <ArrowDown />
       </IconButton>
       {/* Every item here writes the card, so a member of a shared deck gets no menu at all. */}
-      {(onMove || onMoveToSection || onArchive || onEnrich) && (
+      {owner && (
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -498,33 +507,25 @@ export function WordView({
             }
           />
           <DropdownMenuContent aria-label={t`Card options`} align="end">
-            {onEnrich && needsEnrichment(card) && (
-              <DropdownMenuItem onClick={onEnrich} disabled={filling}>
+            {needsEnrichment(card) && (
+              <DropdownMenuItem onClick={owner.onEnrich} disabled={filling}>
                 <Sparkle />
                 <Trans>Enrich</Trans>
               </DropdownMenuItem>
             )}
-            {onMove && (
-              <DropdownMenuItem onClick={() => setMoving(true)} disabled={elsewhere.length === 0}>
-                <FolderInput />
-                <Trans>Move to…</Trans>
-              </DropdownMenuItem>
-            )}
-            {onMoveToSection && (
-              <DropdownMenuItem onClick={onMoveToSection}>
-                <Signpost />
-                <Trans>Move to section…</Trans>
-              </DropdownMenuItem>
-            )}
-            {onArchive && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive" onClick={onArchive}>
-                  <Archive />
-                  <Trans>Archive</Trans>
-                </DropdownMenuItem>
-              </>
-            )}
+            <DropdownMenuItem onClick={() => setMoving(true)} disabled={elsewhere.length === 0}>
+              <FolderInput />
+              <Trans>Move to…</Trans>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={owner.onMoveToSection}>
+              <Signpost />
+              <Trans>Move to section…</Trans>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive" onClick={owner.onArchive}>
+              <Archive />
+              <Trans>Archive</Trans>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )}
@@ -648,12 +649,12 @@ export function WordView({
           </ReadField>
         )}
         {/* One quiet line, only here: a row that says "No meaning yet" is already saying enough. */}
-        {onEnrich && card.enrichmentStatus === "failed" && (
+        {owner && card.enrichmentStatus === "failed" && (
           <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
             <Trans>Couldn’t enrich this card.</Trans>
             <button
               type="button"
-              onClick={onEnrich}
+              onClick={owner.onEnrich}
               className="-my-2.5 min-h-11 rounded-xs text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
             >
               <Trans>Try again</Trans>
@@ -672,7 +673,7 @@ export function WordView({
                   type="button"
                   onClick={() => {
                     setMoving(false);
-                    onMove?.(d.id);
+                    owner?.onMove(d.id);
                   }}
                   className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-left text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
                 >
@@ -766,7 +767,7 @@ export function WordView({
         )}
       </section>
 
-      {(reviews || events) && (
+      {record && (
         <section className="grid gap-4 border-t border-edge pt-5">
           <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
             <Trans>History</Trans>

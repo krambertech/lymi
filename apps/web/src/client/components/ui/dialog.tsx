@@ -120,6 +120,7 @@ function DialogClose({ render }: { render: React.ReactElement }) {
 function DialogContent({
   className,
   initialFocus,
+  finalFocus,
   "aria-labelledby": labelledBy,
   placement = "center",
   children,
@@ -130,12 +131,15 @@ function DialogContent({
   className?: string | undefined;
   /** Where focus lands on opening, when the first control is not the safe one. */
   initialFocus?: DialogPrimitive.Popup.Props["initialFocus"];
+  /** Where focus lands on closing, when the control that opened it is gone. */
+  finalFocus?: DialogPrimitive.Popup.Props["finalFocus"];
   /** Names it by a heading inside it, for content that renders its own title rather than DialogTitle. */
   "aria-labelledby"?: string | undefined;
   children: React.ReactNode;
 }) {
   const focus = {
     ...(initialFocus === undefined ? {} : { initialFocus }),
+    ...(finalFocus === undefined ? {} : { finalFocus }),
     ...(labelledBy === undefined ? {} : { "aria-labelledby": labelledBy }),
   };
   const { shape, kind } = useDialogContext("DialogContent");
@@ -201,7 +205,7 @@ function DialogContent({
         {...focus}
         className={cn(
           // The card's 6 px rise over 200 ms, leaving in 140.
-          "edge-2 fixed inset-0 z-(--z-sheet) m-auto grid h-fit max-h-[85dvh] w-[min(92vw,420px)] gap-4 overflow-y-auto overscroll-contain rounded-xl bg-plate p-5 text-text outline-none transition-[opacity,translate,scale] duration-200 ease-(--ease-out) data-starting-style:translate-y-1.5 data-starting-style:scale-99 data-starting-style:opacity-0 data-ending-style:translate-y-1.5 data-ending-style:scale-99 data-ending-style:opacity-0 data-ending-style:duration-140 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+          "edge-2 fixed inset-0 z-(--z-sheet) m-auto grid h-fit max-h-[85dvh] w-[min(92vw,420px)] scroll-pb-24 gap-4 overflow-y-auto overscroll-contain rounded-xl bg-plate p-5 text-text outline-none transition-[opacity,translate,scale] duration-200 ease-(--ease-out) data-starting-style:translate-y-1.5 data-starting-style:scale-99 data-starting-style:opacity-0 data-ending-style:translate-y-1.5 data-ending-style:scale-99 data-ending-style:opacity-0 data-ending-style:duration-140 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
           className,
         )}
       >

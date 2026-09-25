@@ -325,6 +325,8 @@ export interface ReviewCardProps {
   animateIn?: boolean | undefined;
   /** Show how to reveal: the pointing hand with the words under it. */
   hint?: boolean | undefined;
+  /** Focus the reveal, for a learner who graded the card before this one from the grade buttons. */
+  focusOnMount?: boolean | undefined;
   onReveal: () => void;
   onPlayAudio?: (() => void) | undefined;
   audioState?: "idle" | "loading" | "playing" | undefined;
@@ -423,6 +425,7 @@ export function ReviewCard({
   animateReveal = true,
   animateIn = false,
   hint = false,
+  focusOnMount = false,
   onReveal,
   onPlayAudio,
   audioState = "idle",
@@ -450,6 +453,11 @@ export function ReviewCard({
   const cueRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const extrasRef = useRef<HTMLDivElement>(null);
+  const revealRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (focusOnMount) revealRef.current?.focus({ preventScroll: true });
+  }, [focusOnMount]);
 
   // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
   useLayoutEffect(() => {
@@ -683,6 +691,7 @@ export function ReviewCard({
         <div ref={innerRef} className="relative flex shrink-0 grow flex-col p-5 @3xl:p-6">
           {!revealed && (
             <button
+              ref={revealRef}
               type="button"
               onClick={onReveal}
               aria-label={t`Reveal the card`}
@@ -855,6 +864,8 @@ export interface GradeBarProps {
   animateIn?: boolean | undefined;
   /** The strip closes and the card grows back into its room. Off when the grade came from the keyboard. */
   animateOut?: boolean | undefined;
+  /** Take focus as the strip opens, because the reveal button that held it is gone. */
+  focusOnReveal?: boolean | undefined;
   /** The four dates FSRS would set, keyed by rating. Announced, not shown. */
   next?: Record<Rating, string> | undefined;
   onGrade: (r: Rating) => void;
@@ -874,18 +885,29 @@ export function GradeBar({
   revealed,
   animateIn = false,
   animateOut = false,
+  focusOnReveal = false,
   next,
   onGrade,
   className,
 }: GradeBarProps) {
   const { t, i18n } = useLingui();
   const now = new Date();
+  const group = useRef<HTMLFieldSetElement>(null);
+  // The group, not a grade, takes focus: the 1–4 and Space shortcuts skip a focused button.
+  useEffect(() => {
+    if (revealed && focusOnReveal) group.current?.focus({ preventScroll: true });
+  }, [revealed, focusOnReveal]);
   return (
     // `custom` reaches the closing strip, whose own props are from before the grade.
     <AnimatePresence initial={false} custom={animateOut}>
       {revealed && (
         <OpeningStrip key="strip" animate={animateIn}>
-          <fieldset id={id} className={clsx("pt-[12px]", className)}>
+          <fieldset
+            ref={group}
+            id={id}
+            tabIndex={-1}
+            className={clsx("pt-[12px] outline-none", className)}
+          >
             <legend className="sr-only">
               <Trans>Choose a recall grade</Trans>
             </legend>

@@ -3,7 +3,15 @@ import { useLingui } from "@lingui/react/macro";
 import type { InsightsOut } from "@lymi/core";
 import { clsx } from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { IconButton } from "./button";
 import { LIGHT_FILL } from "./seven-lights";
 import { addDays } from "./streak-calendar";
@@ -93,6 +101,7 @@ interface Props {
 export function DayGrid({ days, today, firstDay, goal, header }: Props) {
   const { t, i18n } = useLingui();
   const scroller = useRef<HTMLDivElement>(null);
+  const cellId = useId();
   const [atStart, setAtStart] = useState(false);
   const [atEnd, setAtEnd] = useState(true);
 
@@ -308,6 +317,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                     const kept =
                       !future && (!!entry?.satisfied || entry?.outcome === "nothing_due") && l < 3;
                     const say = sentence(date);
+                    const id = `${cellId}-${date}`;
                     return (
                       <td key={date} className="p-0">
                         {/* The popup repeats the cell's own accessible name, so it is hidden
@@ -315,9 +325,13 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                         <TooltipTrigger
                           handle={tip}
                           payload={say}
+                          id={id}
+                          closeOnClick={false}
                           render={
                             <button
                               type="button"
+                              // A tooltip never opens on touch by itself, so a tap asks for it.
+                              onClick={() => tip.open(id)}
                               // Out of the tab order: a year of history would be a year of tab
                               // stops, and each cell's label is what a reader needs from it.
                               tabIndex={-1}

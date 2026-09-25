@@ -161,6 +161,9 @@ function Review() {
   const playingAudio = useRef<HTMLAudioElement | null>(null);
   const [animateNextCard, setAnimateNextCard] = useState(true);
   const [animateReveal, setAnimateReveal] = useState(true);
+  // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
+  const [focusGrades, setFocusGrades] = useState(false);
+  const [focusReveal, setFocusReveal] = useState(false);
 
   // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
   const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
@@ -519,6 +522,7 @@ function Review() {
           : item.fsrsState,
         timezone: deviceTimezone(),
       });
+      setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
       const listed = !!leg && !drawLeg;
       if (listed) setLegCards((c) => ({ ...c, graded: withKey(c.graded, gradedKey(item)) }));
       setSending((n) => n + 1);
@@ -585,6 +589,7 @@ function Review() {
         if (!revealed) {
           recordReveal();
           setAnimateReveal(false);
+          setFocusGrades(false);
           setRevealed(true);
         } else onGrade(3, "keyboard");
       }
@@ -708,9 +713,11 @@ function Review() {
               animateReveal={animateReveal}
               animateIn={animateNextCard}
               hint={hint}
+              focusOnMount={focusReveal}
               onReveal={() => {
                 recordReveal();
                 setAnimateReveal(true);
+                setFocusGrades(document.activeElement instanceof HTMLButtonElement);
                 setRevealed(true);
               }}
               onPlayAudio={canSpeakTerm(current.card) ? playAudio : undefined}
@@ -724,6 +731,7 @@ function Review() {
               revealed={revealed}
               animateIn={animateReveal}
               animateOut={animateNextCard}
+              focusOnReveal={focusGrades}
               next={current.next}
               onGrade={(rating) => onGrade(rating, "pointer")}
             />

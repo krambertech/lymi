@@ -29,7 +29,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { Card, DeckSummary } from "../lib/api";
 import { useObjectUrl } from "../lib/avatar";
-import { useDesktop } from "../lib/device";
+import { modShortcut, useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
 import { sectionsQuery } from "../lib/queries";
@@ -905,7 +905,7 @@ export function CardForm(props: CardFormProps) {
           </span>
           {!chips && !st && (
             <span aria-hidden="true" className="contents">
-              <Kbd tone="on-primary">⌘↵</Kbd>
+              <Kbd tone="on-primary">{modShortcut("↵")}</Kbd>
             </span>
           )}
         </Button>

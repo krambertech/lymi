@@ -322,7 +322,13 @@
   p {
     text-wrap: pretty;
   }
+  a,
   button,
+  input,
+  label,
+  select,
+  summary,
+  textarea,
   [role="button"] {
     touch-action: manipulation;
   }
@@ -1212,14 +1218,15 @@ html:has(.deck-cards[open]) {
   scrollbar-color: var(--edge-2) transparent;
 }
 
-/* A heading's own link. Appears on hover, and always for keyboard users. */
+/* A heading's own link, a pointer's shortcut: the heading and the contents list name the section for everyone else. */
 .doc-anchor {
   opacity: 0;
   transition: opacity 150ms var(--ease-out);
 }
-:is(h2, h3):hover > .doc-anchor,
-.doc-anchor:focus-visible {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  :is(h2, h3):hover > .doc-anchor {
+    opacity: 1;
+  }
 }
 /* A phone has no hover to reveal it, so it stays in view, quieter. */
 @media (hover: none) {

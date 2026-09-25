@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { ArrowLeft, ArrowRight, Menu, Moon, Search, Sun, X } from "lucide-react";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { productUrl } from "../../lib/origins";
 import { setTheme } from "../../lib/theme";
 import { Kbd } from "../Kbd";
@@ -85,6 +85,13 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
   const { prev, next } = neighbours(pathname);
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
+  const [searchKey, setSearchKey] = useState("⌘K");
+  const menuButton = useRef<HTMLButtonElement>(null);
+
+  // The server renders the Mac label; other keyboards learn theirs once the page runs.
+  useEffect(() => {
+    if (!/Mac|iPhone|iPad|iPod/.test(navigator.platform)) setSearchKey("Ctrl K");
+  }, []);
 
   // Cmd-K opens search. / does too, the way every docs site does.
   useEffect(() => {
@@ -110,13 +117,20 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
     setMenu(false);
   }, [pathname]);
 
-  // The drawer covers the page, so the page behind it should not scroll.
+  // The drawer covers the page, so the page behind it should not scroll, and Escape closes it.
   useEffect(() => {
     if (!menu) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setMenu(false);
+      menuButton.current?.focus();
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
     };
   }, [menu]);
 
@@ -136,9 +150,11 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
         )}
       >
         <button
+          ref={menuButton}
           type="button"
           aria-label={menu ? "Close the menu" : "Open the menu"}
           aria-expanded={menu}
+          aria-controls="doc-menu"
           onClick={() => setMenu((v) => !v)}
           className="grid size-9 place-items-center rounded-sm text-text-2 lg:hidden hoverable:hover:bg-plate-2"
         >
@@ -148,6 +164,15 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
             <Menu className="size-[18px]" aria-hidden="true" />
           )}
         </button>
+        {/* Straight after its button, so Tab walks from the button into the links. */}
+        {menu && (
+          <div
+            id="doc-menu"
+            className="fixed inset-x-0 bottom-0 top-14 z-(--z-dropdown) overflow-y-auto border-t border-edge bg-canvas px-4 py-6 lg:hidden"
+          >
+            <SiteNav pathname={pathname} onNavigate={() => setMenu(false)} />
+          </div>
+        )}
 
         <div className="flex items-center gap-2 pe-2">
           <a href="/" aria-label="Lymi home" className="rounded-xs">
@@ -165,13 +190,14 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
 
         <button
           type="button"
+          aria-label="Search the docs"
           onClick={() => setSearch(true)}
           className="flex h-9 items-center gap-2 rounded-sm bg-plate-2 pl-2.5 pr-1.5 text-base text-muted transition-colors duration-150 hoverable:hover:text-text sm:w-56"
         >
           <Search className="size-4 shrink-0" aria-hidden="true" />
           <span className="hidden flex-1 text-start sm:block">Search</span>
           <span className="hidden sm:block">
-            <Kbd>⌘K</Kbd>
+            <Kbd>{searchKey}</Kbd>
           </span>
         </button>
 
@@ -185,13 +211,11 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
         </a>
       </header>
 
-      {menu && (
-        <div className="fixed inset-x-0 bottom-0 top-14 z-(--z-dropdown) overflow-y-auto border-t border-edge bg-canvas px-4 py-6 lg:hidden">
-          <SiteNav pathname={pathname} onNavigate={() => setMenu(false)} />
-        </div>
-      )}
-
-      <div className="mx-auto flex w-full max-w-[88rem] items-start gap-10 px-4 lg:px-6">
+      {/* Under the open drawer the page is out of reach, so Tab never lands on a link it hides. */}
+      <div
+        className="mx-auto flex w-full max-w-[88rem] items-start gap-10 px-4 lg:px-6"
+        inert={menu}
+      >
         <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-52 shrink-0 overflow-y-auto py-8 lg:block">
           <SiteNav pathname={pathname} />
         </aside>

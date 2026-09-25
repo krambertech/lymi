@@ -10,6 +10,7 @@ import { AppMark, identifyApp } from "./app-mark";
 import { Button, buttonClass } from "./button";
 import { Chip } from "./chip";
 import { EmptySection } from "./empty-state";
+import { InlineError } from "./inline-error";
 import { SettingsGroup } from "./settings-group";
 import { Skeleton } from "./skeleton";
 
@@ -68,8 +69,8 @@ export function ConnectedAppsSection() {
       )}
 
       {disconnect.isError && (
-        <p className="text-sm text-danger" role="alert">
-          {errorMessage(disconnect.error)}
+        <p className="text-sm" role="alert">
+          <InlineError>{errorMessage(disconnect.error)}</InlineError>
         </p>
       )}
 

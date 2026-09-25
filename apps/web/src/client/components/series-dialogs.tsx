@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button, IconButton } from "./button";
+import { InlineError } from "./inline-error";
 import { RadioCard } from "./radio-card";
 import { Checkbox } from "./ui/checkbox";
 import {
@@ -188,7 +189,6 @@ export function SeriesForm({
                         size="sm"
                         label={t`Move ${deck.name} up`}
                         aria-disabled={index === 0}
-                        className="aria-disabled:opacity-40"
                         onClick={() => index > 0 && move(index, -1)}
                       >
                         <ArrowUp />
@@ -197,7 +197,6 @@ export function SeriesForm({
                         size="sm"
                         label={t`Move ${deck.name} down`}
                         aria-disabled={index === chosen.length - 1}
-                        className="aria-disabled:opacity-40"
                         onClick={() => index < chosen.length - 1 && move(index, 1)}
                       >
                         <ArrowDown />
@@ -212,8 +211,8 @@ export function SeriesForm({
       </FieldSet>
 
       <div className="flex flex-wrap items-center justify-end gap-2">
-        <p className="min-w-0 flex-1 text-sm text-danger" role="status">
-          {error}
+        <p className="min-w-0 flex-1 text-sm" role="status">
+          {error && <InlineError>{error}</InlineError>}
         </p>
         <Button variant="ghost" onClick={onCancel}>
           <Trans>Cancel</Trans>
@@ -442,8 +441,8 @@ export function MoveToSeriesDialog({
           </li>
         </ul>
         {error && (
-          <p className="text-sm text-danger" role="alert">
-            {error}
+          <p className="text-sm" role="alert">
+            <InlineError>{error}</InlineError>
           </p>
         )}
         <DialogFooter>

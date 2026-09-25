@@ -232,7 +232,6 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
             size="sm"
             aria-disabled={atStart || undefined}
             onClick={() => !atStart && page(true)}
-            className="aria-disabled:pointer-events-none aria-disabled:opacity-35"
           >
             <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
           </IconButton>
@@ -241,7 +240,6 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
             size="sm"
             aria-disabled={atEnd || undefined}
             onClick={() => !atEnd && page(false)}
-            className="aria-disabled:pointer-events-none aria-disabled:opacity-35"
           >
             <ChevronRight className="rtl:-scale-x-100" aria-hidden="true" />
           </IconButton>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { ApiError, api } from "../lib/api";
 import { useInstallState } from "../lib/pwa-install";
 import { Button } from "./button";
+import { InlineError } from "./inline-error";
 import { InstallDialog } from "./install-dialog";
 import { SettingsGroup } from "./settings-group";
 import { Field, FieldContent, FieldDescription, FieldError, FieldLabel } from "./ui/field";
@@ -269,8 +270,8 @@ export function NotificationsSection() {
       )}
       <div className="min-h-5 text-sm" aria-live="polite">
         {error ? (
-          <p className="text-danger" role="alert">
-            {error}
+          <p role="alert">
+            <InlineError>{error}</InlineError>
           </p>
         ) : notice ? (
           <p className="text-muted">{notice}</p>

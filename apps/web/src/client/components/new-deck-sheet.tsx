@@ -10,6 +10,7 @@ import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { writes } from "../lib/writes";
 import { Button } from "./button";
 import { DirectionCompact, LanguageField } from "./deck-fields";
+import { InlineError } from "./inline-error";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Field, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
@@ -135,8 +136,8 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: 
           !desktop && "sticky bottom-0 -mx-4 -mb-5 bg-plate px-4 pt-3 pb-5",
         )}
       >
-        <p className="flex-1 text-sm text-danger" role="status">
-          {error}
+        <p className="flex-1 text-sm" role="status">
+          {error && <InlineError>{error}</InlineError>}
         </p>
         <Button variant="ghost" onClick={onCancel}>
           <Trans>Cancel</Trans>

@@ -24,6 +24,7 @@ import { Button, buttonClass } from "../components/button";
 import { Chip } from "../components/chip";
 import { EmptySection, ErrorState } from "../components/empty-state";
 import { SOURCE_NAMES } from "../components/import-parts";
+import { InlineError } from "../components/inline-error";
 import { Screen } from "../components/layout/screen";
 import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
@@ -564,8 +565,10 @@ export function ActivityView({
               somewhere to go and the keyboard is told the list is finished. */}
           <div className="grid gap-2 justify-items-center">
             {moreFailed && (
-              <p role="status" className="text-sm text-danger">
-                <Trans>Couldn’t load more.</Trans>
+              <p className="text-sm" role="status">
+                <InlineError>
+                  <Trans>Couldn’t load more.</Trans>
+                </InlineError>
               </p>
             )}
             {hasMore ? (

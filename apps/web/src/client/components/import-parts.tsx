@@ -9,6 +9,7 @@ import type { Import, ImportPreview } from "../lib/api";
 import { Button, IconButton } from "./button";
 import { Chip } from "./chip";
 import { LanguageField, languageName } from "./deck-fields";
+import { InlineError } from "./inline-error";
 import { Go } from "./next-steps";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
 import { Field, FieldLabel } from "./ui/field";
@@ -304,8 +305,8 @@ export function CardCheck({
         </div>
       </div>
       {error && (
-        <p className="text-sm text-danger" role="alert">
-          {error}
+        <p className="text-sm" role="alert">
+          <InlineError>{error}</InlineError>
         </p>
       )}
     </section>
@@ -410,8 +411,8 @@ export function FieldsDialog({
             ))}
           </ul>
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <p className="flex-1 text-sm text-danger" role="status">
-              {error}
+            <p className="flex-1 text-sm" role="status">
+              {error && <InlineError>{error}</InlineError>}
             </p>
             <Button variant="ghost" onClick={() => onOpenChange(false)}>
               <Trans>Cancel</Trans>

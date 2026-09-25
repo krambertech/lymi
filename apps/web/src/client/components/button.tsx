@@ -118,10 +118,11 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * Its label is the accessible name and shows as a tooltip; it stays quiet while its menu is open.
  */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { label, size = "md", variant = "ghost", round, className, children, ...rest },
+  { label, size = "md", variant = "ghost", round, className, children, onClick, ...rest },
   ref,
 ) {
   const expanded = rest["aria-expanded"] === true || rest["aria-expanded"] === "true";
+  const inert = rest["aria-disabled"] === true || rest["aria-disabled"] === "true";
   return (
     <Tooltip disabled={expanded || rest.disabled}>
       <TooltipTrigger
@@ -131,7 +132,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
             type="button"
             aria-label={label}
             className={clsx(
-              "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45",
+              "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 aria-disabled:opacity-45 aria-disabled:active:scale-100",
               round ? "rounded-full" : "rounded-sm",
               "before:absolute before:-inset-1.5 before:content-['']",
               variant === "ghost" &&
@@ -145,6 +146,15 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
               size === "lg" && "size-12 [&_svg]:size-5",
               className,
             )}
+            onClick={(e) => {
+              // An unavailable control swallows the press, so it cannot reach a clickable parent either.
+              if (inert) {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+              }
+              onClick?.(e);
+            }}
             {...rest}
           />
         }

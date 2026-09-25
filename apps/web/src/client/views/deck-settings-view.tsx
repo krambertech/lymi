@@ -24,6 +24,7 @@ import {
   LanguageField,
   languageName,
 } from "../components/deck-fields";
+import { InlineError } from "../components/inline-error";
 import { Screen } from "../components/layout/screen";
 import { TurnOffLinkDialog } from "../components/member-dialogs";
 import { PublisherMark } from "../components/publisher-mark";
@@ -182,7 +183,7 @@ export function DeckSettingsView({
         reading ? undefined : (
           <p className="min-h-5 text-sm text-muted" role="status">
             {error ? (
-              <span className="text-danger">{error}</span>
+              <InlineError>{error}</InlineError>
             ) : saving ? (
               t`Saving…`
             ) : saved ? (
@@ -398,8 +399,8 @@ function MembersGroup({
       description={t`Everyone studying this deck. You see whether they joined, not their reviews.`}
     >
       {error ? (
-        <p className="text-sm text-danger" role="alert">
-          {error}
+        <p className="text-sm" role="alert">
+          <InlineError>{error}</InlineError>
         </p>
       ) : loading ? (
         <div className="grid gap-2">
@@ -674,8 +675,8 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
         </RadioGroup>
       )}
       {error && (
-        <p className="text-sm text-danger" role="alert">
-          {error}
+        <p className="text-sm" role="alert">
+          <InlineError>{error}</InlineError>
         </p>
       )}
     </SettingsGroup>

@@ -21,6 +21,7 @@ import {
   panCrop,
 } from "../lib/avatar-crop";
 import { Button, IconButton } from "./button";
+import { InlineError } from "./inline-error";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Slider } from "./ui/slider";
 
@@ -253,8 +254,8 @@ function CropStage({ image, onCancel, onSave, pending, error }: Props & { image:
       </div>
 
       {error && (
-        <p className="text-sm text-danger" role="alert">
-          {error}
+        <p className="text-sm" role="alert">
+          <InlineError>{error}</InlineError>
         </p>
       )}
 

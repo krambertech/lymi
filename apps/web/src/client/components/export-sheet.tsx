@@ -8,6 +8,7 @@ import { api, type Export, errorMessage } from "../lib/api";
 import { exportQuery } from "../lib/queries";
 import { Button, buttonClass } from "./button";
 import { fileSize } from "./import-parts";
+import { InlineError } from "./inline-error";
 import { RadioCard } from "./radio-card";
 import {
   Dialog,
@@ -249,8 +250,8 @@ export function ExportSheet({
           />
         )}
         {start.isError && (
-          <p className="text-sm text-danger" role="alert">
-            {errorMessage(start.error)}
+          <p className="text-sm" role="alert">
+            <InlineError>{errorMessage(start.error)}</InlineError>
           </p>
         )}
         <DialogFooter>

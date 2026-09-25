@@ -14,6 +14,7 @@ import { Chip } from "./chip";
 import { DocLink } from "./connected-apps-section";
 import { CopyField } from "./copy-field";
 import { EmptySection } from "./empty-state";
+import { InlineError } from "./inline-error";
 import { Lantern } from "./lantern";
 import { Segmented } from "./segmented";
 import { SettingsGroup } from "./settings-group";
@@ -208,8 +209,8 @@ function NewKeyForm({
         </p>
       </div>
       <div className="flex items-center gap-2 pt-1">
-        <p className="flex-1 text-sm text-danger" role="status">
-          {error}
+        <p className="flex-1 text-sm" role="status">
+          {error && <InlineError>{error}</InlineError>}
         </p>
         <Button variant="ghost" onClick={onCancel} aria-disabled={pending}>
           <Trans>Cancel</Trans>

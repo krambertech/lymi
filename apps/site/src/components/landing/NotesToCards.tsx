@@ -18,7 +18,7 @@ function SourceTag({ ai }: { ai: boolean }) {
   return (
     <span
       className={clsx(
-        "shrink-0 rounded-xs px-1.5 py-px text-[0.5625rem] tracking-[0.06em] uppercase",
+        "shrink-0 rounded-xs px-1.5 py-px text-xs tracking-[0.06em] uppercase",
         ai ? "bg-amber-soft text-amber-text" : "bg-plate-2 text-muted",
       )}
     >

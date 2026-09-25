@@ -153,7 +153,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
           <a href="/" aria-label="Lymi home" className="rounded-xs">
             <Wordmark size={17} className="text-text" title="Lymi" />
           </a>
-          <span aria-hidden="true" className="text-lg font-light text-faint">
+          <span aria-hidden="true" className="text-lg text-faint">
             /
           </span>
           <a href="/docs" className="rounded-xs text-base text-text-2 hoverable:hover:text-text">
@@ -169,7 +169,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
           className="flex h-9 items-center gap-2 rounded-sm bg-plate-2 pl-2.5 pr-1.5 text-base text-muted transition-colors duration-150 hoverable:hover:text-text sm:w-56"
         >
           <Search className="size-4 shrink-0" aria-hidden="true" />
-          <span className="hidden flex-1 text-left sm:block">Search</span>
+          <span className="hidden flex-1 text-start sm:block">Search</span>
           <span className="hidden sm:block">
             <Kbd>⌘K</Kbd>
           </span>
@@ -221,7 +221,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
                 {prev ? (
                   <a
                     href={prev.to}
-                    className="group flex items-center gap-3 rounded-md p-3 text-left transition-colors duration-150 edge hoverable:hover:bg-plate-2"
+                    className="group flex items-center gap-3 rounded-md p-3 text-start transition-colors duration-150 edge hoverable:hover:bg-plate-2"
                   >
                     <ArrowLeft
                       className="size-4 shrink-0 text-faint transition-transform duration-150 group-hover:-translate-x-0.5 group-hover:text-text"
@@ -238,7 +238,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
                 {next && (
                   <a
                     href={next.to}
-                    className="group flex items-center justify-end gap-3 rounded-md p-3 text-right transition-colors duration-150 edge sm:col-start-2 hoverable:hover:bg-plate-2"
+                    className="group flex items-center justify-end gap-3 rounded-md p-3 text-end transition-colors duration-150 edge sm:col-start-2 hoverable:hover:bg-plate-2"
                   >
                     <span className="min-w-0">
                       <span className="block text-xs text-muted">Next</span>

@@ -266,6 +266,11 @@
   --text-4xl--line-height: 1.05;
   --text-5xl: 2.875rem;
   --text-5xl--line-height: 1;
+  /* Only the count on the review-completion screen, which docs/design/review-completion.md makes the largest thing there. */
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1;
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1;
 
   --radius-xs: 6px;
   --radius-sm: 10px;
@@ -307,6 +312,7 @@
     font-family: var(--font-sans);
     font-size: var(--text-base);
     line-height: 1.5;
+    font-synthesis: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;

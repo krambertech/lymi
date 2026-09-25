@@ -30,7 +30,7 @@ function MethodTag({ method }: { method: Method }) {
   return (
     <span
       className={clsx(
-        "inline-flex h-[22px] shrink-0 items-center rounded-xs px-1.5 font-mono text-2xs font-semibold uppercase tracking-[0.06em]",
+        "inline-flex h-[22px] shrink-0 items-center rounded-xs px-1.5 font-mono text-xs font-semibold uppercase tracking-[0.06em]",
         method === "delete" ? "bg-danger-soft text-danger" : "bg-plate-2 text-text",
       )}
     >

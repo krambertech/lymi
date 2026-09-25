@@ -191,7 +191,7 @@ export function SendAnything() {
                 }
                 transition={{ duration: still ? 0 : STEP_MS / 1000, ease: EASE }}
               >
-                <p className="text-2xs tracking-[0.06em] text-muted uppercase">
+                <p className="text-xs tracking-[0.06em] text-muted uppercase">
                   {i18n._(source.label)}
                 </p>
                 <p

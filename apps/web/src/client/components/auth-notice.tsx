@@ -18,7 +18,7 @@ export function AuthNotice({ tone, children, title, role, className }: Props) {
     <div
       role={role}
       className={clsx(
-        "flex items-start gap-3 rounded-md p-4 text-left",
+        "flex items-start gap-3 rounded-md p-4 text-start",
         tone === "success" && "bg-good-soft",
         tone === "danger" && "bg-danger-soft",
         tone === "neutral" && "bg-plate-2",

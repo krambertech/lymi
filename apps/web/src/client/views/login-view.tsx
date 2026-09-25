@@ -25,6 +25,17 @@ export interface CredentialValues {
   password: string;
 }
 
+export interface LoginErrors {
+  /** A failure of the door itself, such as a Google callback that came back refused. */
+  door?: ReactNode | undefined;
+  /** A failure of the form below the rule. It sits with the fields, not with Google. */
+  form?: ReactNode | undefined;
+  /** The message under the email box, such as an address that is not an address. */
+  email?: ReactNode | undefined;
+  /** The message under the password box, such as one that is too short. */
+  password?: ReactNode | undefined;
+}
+
 export interface LoginProps {
   mode?: LoginMode | undefined;
   onModeChange?: ((mode: LoginMode) => void) | undefined;
@@ -35,23 +46,14 @@ export interface LoginProps {
   onEmailChange?: ((email: string) => void) | undefined;
   password?: string | undefined;
   onPasswordChange?: ((password: string) => void) | undefined;
-  /** The Google button alone is working. */
-  busy?: boolean | undefined;
-  /** The form alone is working. */
-  submitting?: boolean | undefined;
+  /** Which way in is working: the Google button or the form. */
+  pending?: "google" | "form" | undefined;
   /**
    * Set when an MCP client sent the learner here from its own sign-in. The door then says
    * who is waiting on the other side, so the consent screen is not the first mention of it.
    */
   app?: AppIdentity | undefined;
-  /** A failure of the door itself, such as a Google callback that came back refused. */
-  error?: ReactNode | undefined;
-  /** A failure of the form below the rule. It sits with the fields, not with Google. */
-  formError?: ReactNode | undefined;
-  /** The message under the email box, such as an address that is not an address. */
-  emailError?: ReactNode | undefined;
-  /** The message under the password box, such as one that is too short. */
-  passwordError?: ReactNode | undefined;
+  errors?: LoginErrors | undefined;
   /** Replaces the whole form once a link is on its way. */
   notice?: { title: ReactNode; body: ReactNode; actions?: ReactNode } | undefined;
   children?: ReactNode | undefined;
@@ -67,17 +69,14 @@ export function LoginView({
   onEmailChange,
   password = "",
   onPasswordChange,
-  busy,
-  submitting,
+  pending,
   app,
-  error,
-  formError,
-  emailError,
-  passwordError,
+  errors = {},
   notice,
   children,
 }: LoginProps) {
   const appName = app?.name;
+  const { door: error, form: formError, email: emailError, password: passwordError } = errors;
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -150,7 +149,7 @@ export function LoginView({
                 <Button
                   variant="secondary"
                   size="lg"
-                  loading={busy}
+                  loading={pending === "google"}
                   onClick={onGoogle}
                   // A stronger edge than the usual secondary: this is the way in most learners
                   // take, and the one amber belongs to the form they are filling.
@@ -228,7 +227,7 @@ export function LoginView({
                 // beside it rather than against it. Resetting a password has no Google button.
                 variant="primary"
                 size="lg"
-                loading={submitting}
+                loading={pending === "form"}
                 className="mt-6 w-full"
               >
                 {mode === "sign-up" ? (

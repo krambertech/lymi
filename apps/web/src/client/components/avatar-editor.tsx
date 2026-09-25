@@ -36,7 +36,7 @@ interface Props {
   onCancel: () => void;
   /** Resolves when the server has the photo; the sheet stays open until then. */
   onSave: (square: Blob) => Promise<void>;
-  saving: boolean;
+  pending?: boolean | undefined;
   error?: string | undefined;
 }
 
@@ -50,13 +50,13 @@ const ZOOM_STEP = 0.25;
  * dimmed, so what the learner lines up is what the menu will show. Drag, pinch or the arrow
  * keys move the photo; the slider, its buttons or plus and minus zoom.
  */
-export function AvatarEditor({ image, onCancel, onSave, saving, error }: Props) {
+export function AvatarEditor({ image, onCancel, onSave, pending, error }: Props) {
   const { t } = useLingui();
   return (
     <Dialog
       open={image !== null}
       onOpenChange={(open) => {
-        if (!open && !saving) onCancel();
+        if (!open && !pending) onCancel();
       }}
     >
       <DialogContent className="w-[min(92vw,440px)]">
@@ -67,7 +67,7 @@ export function AvatarEditor({ image, onCancel, onSave, saving, error }: Props) 
             image={image}
             onCancel={onCancel}
             onSave={onSave}
-            saving={saving}
+            pending={pending}
             error={error}
           />
         )}
@@ -76,7 +76,7 @@ export function AvatarEditor({ image, onCancel, onSave, saving, error }: Props) 
   );
 }
 
-function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: PickedImage }) {
+function CropStage({ image, onCancel, onSave, pending, error }: Props & { image: PickedImage }) {
   const { t } = useLingui();
   const hintId = useId();
   const stageRef = useRef<HTMLDivElement>(null);
@@ -103,7 +103,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
     setCrop((c) => clampCrop({ ...c, zoom: c.zoom + step }, width, height));
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
-    if (saving) return;
+    if (pending) return;
     e.currentTarget.setPointerCapture(e.pointerId);
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.current.size === 2) {
@@ -129,7 +129,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (saving || !stage) return;
+    if (pending || !stage) return;
     const step = e.shiftKey ? KEY_STEP * 4 : KEY_STEP;
     const moves: Record<string, [number, number]> = {
       ArrowLeft: [step, 0],
@@ -152,7 +152,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
 
   const save = async () => {
     const img = imgRef.current;
-    if (!img || saving) return;
+    if (!img || pending) return;
     const { sx, sy, side } = cropRect(crop, width, height);
     const out = Math.min(EXPORT_SIZE, Math.round(side));
     const canvas = document.createElement("canvas");
@@ -181,7 +181,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
         role="application"
         aria-label={t`Photo position`}
         aria-describedby={hintId}
-        aria-busy={saving || undefined}
+        aria-busy={pending || undefined}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerEnd}
@@ -228,7 +228,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
           label={t`Zoom out`}
           size="sm"
           onClick={() => zoomBy(-ZOOM_STEP)}
-          aria-disabled={saving || crop.zoom <= MIN_ZOOM || undefined}
+          aria-disabled={pending || crop.zoom <= MIN_ZOOM || undefined}
         >
           <ZoomOut />
         </IconButton>
@@ -237,7 +237,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
           max={MAX_ZOOM}
           step={0.01}
           value={crop.zoom}
-          disabled={saving}
+          disabled={pending}
           onValueChange={zoomTo}
           aria-label={t`Zoom`}
           className="min-w-0 flex-1"
@@ -246,7 +246,7 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
           label={t`Zoom in`}
           size="sm"
           onClick={() => zoomBy(ZOOM_STEP)}
-          aria-disabled={saving || crop.zoom >= MAX_ZOOM || undefined}
+          aria-disabled={pending || crop.zoom >= MAX_ZOOM || undefined}
         >
           <ZoomIn />
         </IconButton>
@@ -259,10 +259,10 @@ function CropStage({ image, onCancel, onSave, saving, error }: Props & { image: 
       )}
 
       <div className="flex justify-end gap-2">
-        <Button variant="ghost" onClick={onCancel} aria-disabled={saving || undefined}>
+        <Button variant="ghost" onClick={onCancel} aria-disabled={pending || undefined}>
           <Trans>Cancel</Trans>
         </Button>
-        <Button variant="primary" onClick={() => void save()} loading={saving}>
+        <Button variant="primary" onClick={() => void save()} loading={pending}>
           <Trans>Save photo</Trans>
         </Button>
       </div>

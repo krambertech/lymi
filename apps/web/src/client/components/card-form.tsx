@@ -77,25 +77,13 @@ export interface CardFormDraft extends CardFormValues {
   languageChosen: boolean;
 }
 
-export interface CardFormProps {
-  mode: "add" | "edit";
+interface CardFormBase {
   /** Only decks the learner owns take a card. */
   decks: DeckSummary[] | undefined;
-  /** Preselect a deck, e.g. when opened from a deck page. */
-  deckId?: string | undefined;
-  /** Preselect a section of that deck. */
-  sectionId?: string | undefined;
-  /** The card being edited. */
-  card?: Card | undefined;
   /** A discarded draft being brought back. */
   draft?: CardFormDraft | undefined;
   pending?: boolean | undefined;
-  /** Adding: whether the sheet stays open for the next card. */
-  createMore?: boolean | undefined;
-  onCreateMoreChange?: ((createMore: boolean) => void) | undefined;
   onCancel: () => void;
-  /** Offered when there is no deck to add to yet. */
-  onCreateDeck?: (() => void) | undefined;
   onSubmit: (
     values: CardFormValues,
   ) => Promise<CardFormOutcome | undefined> | CardFormOutcome | undefined;
@@ -103,13 +91,33 @@ export interface CardFormProps {
   onDraftChange?: ((draft: CardFormDraft) => void) | undefined;
   /** Chips that open one field at a time, or the whole form. Follows the machine unless set. */
   layout?: "chips" | "whole" | undefined;
-  /** Opens with the picture field showing, for adding a picture that did not go through. */
-  openPicture?: boolean | undefined;
-  /** Adding with Create more: offered beside a notice that the picture did not go through. */
-  onRetryPicture?: (() => void) | undefined;
   /** No autofocus. For the design page. */
   static?: boolean | undefined;
 }
+
+export interface AddCardFormProps extends CardFormBase {
+  mode: "add";
+  /** Preselect a deck, e.g. when opened from a deck page. */
+  deckId?: string | undefined;
+  /** Preselect a section of that deck. */
+  sectionId?: string | undefined;
+  /** Whether the sheet stays open for the next card. */
+  createMore?: boolean | undefined;
+  onCreateMoreChange?: ((createMore: boolean) => void) | undefined;
+  /** Offered when there is no deck to add to yet. */
+  onCreateDeck?: (() => void) | undefined;
+  /** With Create more: offered beside a notice that the picture did not go through. */
+  onRetryPicture?: (() => void) | undefined;
+}
+
+export interface EditCardFormProps extends CardFormBase {
+  mode: "edit";
+  card: Card;
+  /** Opens with the picture field showing, for adding a picture that did not go through. */
+  openPicture?: boolean | undefined;
+}
+
+export type CardFormProps = AddCardFormProps | EditCardFormProps;
 
 /** Under a tenth of a field left. Before that a count is noise; after it, it is the warning. */
 const NEARLY_FULL = 0.9;
@@ -132,29 +140,21 @@ const PANEL_OF: Record<string, Panel> = {
  * One form for adding a card and changing it: term, meaning and deck, then a row of chips for
  * everything else a card holds. DESIGN.md "Adding and editing a card".
  */
-export function CardForm({
-  mode,
-  decks,
-  deckId,
-  sectionId,
-  card,
-  draft,
-  pending,
-  createMore,
-  onCreateMoreChange,
-  onCancel,
-  onCreateDeck,
-  onSubmit,
-  onDraftChange,
-  layout,
-  openPicture,
-  onRetryPicture,
-  static: st,
-}: CardFormProps) {
+export function CardForm(props: CardFormProps) {
+  const { decks, draft, pending, onCancel, onSubmit, onDraftChange, layout, static: st } = props;
+  const adding = props.mode === "add";
+  const {
+    deckId,
+    sectionId,
+    createMore,
+    onCreateMoreChange,
+    onCreateDeck,
+    onRetryPicture,
+  }: Partial<AddCardFormProps> = adding ? props : {};
+  const { card, openPicture }: Partial<EditCardFormProps> = adding ? {} : props;
   const { t, i18n } = useLingui();
   const desktop = useDesktop();
   const chips = (layout ?? (desktop ? "whole" : "chips")) === "chips";
-  const adding = mode === "add";
 
   const [term, setTerm] = useState(draft?.term ?? card?.term ?? "");
   const [meaning, setMeaning] = useState(draft?.meaning ?? card?.meaning ?? "");

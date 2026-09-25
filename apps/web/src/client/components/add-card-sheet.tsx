@@ -130,7 +130,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDe
       card={pictureFor}
       decks={decks.data}
       openPicture
-      onClose={() => setPictureFor(null)}
+      onOpenChange={() => setPictureFor(null)}
       onReopen={setPictureFor}
     />
   );

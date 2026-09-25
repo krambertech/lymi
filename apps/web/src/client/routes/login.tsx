@@ -334,8 +334,7 @@ function Login() {
       app={app}
       mode={mode}
       onModeChange={switchTo}
-      busy={busy}
-      submitting={submitting}
+      pending={busy ? "google" : submitting ? "form" : undefined}
       email={email}
       onEmailChange={(value) => {
         setEmail(value);
@@ -347,12 +346,14 @@ function Login() {
         setPasswordError(null);
       }}
       onSubmit={submit}
-      emailError={emailError}
-      passwordError={passwordError}
       notice={notice ?? undefined}
-      // The door's own failure: a Google attempt, or a callback that came back refused.
-      error={googleFailed ?? (issue ? i18n._(issue) : undefined)}
-      formError={failed ?? undefined}
+      errors={{
+        // The door's own failure: a Google attempt, or a callback that came back refused.
+        door: googleFailed ?? (issue ? i18n._(issue) : undefined),
+        form: failed,
+        email: emailError,
+        password: passwordError,
+      }}
       onGoogle={async () => {
         setBusy(true);
         clearMessages();

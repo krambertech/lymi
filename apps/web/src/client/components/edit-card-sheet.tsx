@@ -19,7 +19,8 @@ interface Props {
   /** The card to change; the sheet is open while there is one. */
   card: Card | null;
   decks: DeckSummary[] | undefined;
-  onClose: () => void;
+  /** Called with false when the sheet closes; handing it a card is what opens it. */
+  onOpenChange: (open: boolean) => void;
   /** Undo on a discarded edit opens the same card again. */
   onReopen: (card: Card) => void;
   /** Opens at the picture field. */
@@ -29,7 +30,14 @@ interface Props {
 }
 
 /** The add form, filled in, for changing every field of a card at once. */
-export function EditCardSheet({ card, decks, onClose, onReopen, openPicture, onSaved }: Props) {
+export function EditCardSheet({
+  card,
+  decks,
+  onOpenChange,
+  onReopen,
+  openPicture,
+  onSaved,
+}: Props) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const shape = useOverlayShape(!!card);
@@ -45,7 +53,7 @@ export function EditCardSheet({ card, decks, onClose, onReopen, openPicture, onS
     const edited = card;
     draft.current = null;
     setRestored(null);
-    onClose();
+    onOpenChange(false);
     if (!keepWork || !work || !edited || !hasChanges(edited, work)) return;
     toast.add({
       id: "edit-discarded",

@@ -56,7 +56,7 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
-import type { CardState, DeckSummary, Review, Section, Sections } from "../lib/api";
+import type { DeckSummary, Section, Sections } from "../lib/api";
 import {
   activeFilterCount,
   type DeckFilters,
@@ -69,7 +69,7 @@ import {
 } from "../lib/deck-list";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
 import type { StaticNav } from "./shell";
-import { type WordEvent, WordView } from "./word-view";
+import { type WordHistory, WordView } from "./word-view";
 
 /** A menu row greys its icons, so a state's mark takes its own colour back. */
 const menuMarkColour = {
@@ -91,38 +91,23 @@ export interface DeckDetailProps {
   cards: DeckRow[] | undefined;
   /** Where today's goal stands, for the line under the due count. */
   streak?: StreakSummary | undefined;
-  /** Adds a card. Absent for a member, who cannot write to someone else's deck. */
-  onAdd?: (() => void) | undefined;
-  /** Archives a card. Absent for a member. */
-  onArchive?: ((id: string) => void) | undefined;
   onReview?: (() => void) | undefined;
   onSettings?: (() => void) | undefined;
-  /** The owner's way out of their own deck. A member leaves instead. */
-  onArchiveDeck?: (() => void) | undefined;
-  /** The member's way out. Absent for the owner, who archives the deck instead. */
-  onLeaveDeck?: (() => void) | undefined;
-  /** Opens the export sheet for this deck. Absent for a member: a file would copy the deck out. */
-  onExport?: (() => void) | undefined;
-  /** Opens the series picker. Absent for a member, whose deck belongs to someone else's Library. */
-  onMoveToSeries?: (() => void) | undefined;
+  /** Every write to the deck. Absent for a member, who reads someone else's deck. */
+  owner?: DeckOwnerActions | undefined;
+  /** Absent for the owner, who archives the deck instead of leaving it. */
+  member?: DeckMemberActions | undefined;
   /** The owner's series the deck is in, named under the title. */
   seriesName?: string | undefined;
   /** The word that is open, if one is. The view owns it when the route does not. */
   openCardId?: string | null | undefined;
   onOpen?: ((id: string | null) => void) | undefined;
-  /** The open word's history and every direction's state, when the route has fetched them. */
-  states?: CardState[] | undefined;
-  reviews?: Review[] | undefined;
-  events?: WordEvent[] | undefined;
+  /** The open word's history, when the route has fetched it. */
+  history?: WordHistory | undefined;
   /** Play the word's pronunciation. Absent, the Say button is not drawn. */
   onPlayAudio?: ((card: DeckRow["card"]) => void) | undefined;
-  /** Opens the form for a card. Only a deck's owner is offered it. */
-  onEditCard?: ((card: DeckRow["card"]) => void) | undefined;
-  /** Asks the AI to fill a card's empty fields. Only a deck's owner is offered it. */
-  onEnrichCard?: ((card: DeckRow["card"]) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
-  onMove?: ((id: string, deckId: string) => void) | undefined;
   /** How to connect an assistant, offered while the deck has no cards. */
   connectUrl?: string | undefined;
   /** Whether an assistant is connected; undefined while unknown, so its row does not flash. */
@@ -134,17 +119,33 @@ export interface DeckDetailProps {
   onStartSection?: ((section: Section) => void) | undefined;
   /** Review one section's cards, from its heading's menu. */
   onReviewSection?: ((section: Section) => void) | undefined;
-  startingSection?: boolean | undefined;
-  /** The owner's section writes. Absent for a member. */
-  sectionActions?: DeckSectionActions | undefined;
+  startSectionPending?: boolean | undefined;
   /** Why the deck is not on screen: gone for good, or the app could not reach it. */
   failure?: DeckFailure | undefined;
   /** Fetch the deck again, for a failure that can be recovered from. */
   onRetry?: (() => void) | undefined;
-  retrying?: boolean | undefined;
+  retryPending?: boolean | undefined;
   /** Draw an open card beside the list at any width, for the design system's narrower frames. */
   cardBeside?: boolean | undefined;
   static?: StaticNav;
+}
+
+/** What the owner does to the deck and its cards; the route holds the sheets and dialogs. */
+export interface DeckOwnerActions {
+  onAddCard: () => void;
+  onArchiveCard: (id: string) => void;
+  onEditCard: (card: DeckRow["card"]) => void;
+  /** Asks the AI to fill a card's empty fields. */
+  onEnrichCard: (card: DeckRow["card"]) => void;
+  onMoveCard: (id: string, deckId: string) => void;
+  onArchiveDeck: () => void;
+  onExport: () => void;
+  onMoveToSeries: () => void;
+  sections: DeckSectionActions;
+}
+
+export interface DeckMemberActions {
+  onLeave: () => void;
 }
 
 /** What the owner does to sections from the deck page; the route holds the dialogs. */
@@ -639,34 +640,24 @@ export function DeckDetailView({
   deck,
   cards,
   streak,
-  onAdd,
-  onArchive,
   onReview,
   onSettings,
-  onArchiveDeck,
-  onLeaveDeck,
-  onExport,
-  onMoveToSeries,
+  owner,
+  member,
   seriesName,
   openCardId,
   onOpen,
-  states,
-  reviews,
-  events,
+  history,
   onPlayAudio,
-  onEditCard,
-  onEnrichCard,
   decks,
-  onMove,
   sections = [],
   progress,
   onStartSection,
   onReviewSection,
-  startingSection,
-  sectionActions,
+  startSectionPending,
   failure,
   onRetry,
-  retrying,
+  retryPending,
   cardBeside,
   connectUrl,
   connected,
@@ -729,7 +720,7 @@ export function DeckDetailView({
   );
   const everything = q.trim() === "" && activeFilterCount(filters) === 0;
   // The owner sees every section, empty ones too, so there is always somewhere to drop a card.
-  const arranging = !!sectionActions && sort === "section" && everything;
+  const arranging = !!owner && sort === "section" && everything;
   const groups = useMemo(
     () => (shown ? groupRows(shown, sort, now, i18n.locale, sections, arranging) : []),
     [shown, sort, now, i18n.locale, sections, arranging],
@@ -800,7 +791,6 @@ export function DeckDetailView({
   const lastOpen = useRef(open);
   if (open) lastOpen.current = open;
   const shownWord = open ?? lastOpen.current;
-  const canEdit = !!onEditCard && deck?.role === "owner";
 
   // Walking the list with a word open, the way a mail client does.
   useEffect(() => {
@@ -827,9 +817,7 @@ export function DeckDetailView({
       state={shownWord.state}
       deckName={deck.name}
       modes={shownWord.card.reviewModes ?? deck.reviewModes}
-      states={states}
-      reviews={reviews}
-      events={events}
+      history={history}
       onPlayAudio={onPlayAudio ? () => onPlayAudio(shownWord.card) : undefined}
       hasPrev={openIndex > 0}
       hasNext={openIndex >= 0 && openIndex < ordered.length - 1}
@@ -849,32 +837,26 @@ export function DeckDetailView({
           document.querySelector<HTMLElement>(`[data-card-row="${CSS.escape(id)}"]`)?.focus(),
         );
       }}
-      onEdit={canEdit ? () => onEditCard?.(shownWord.card) : undefined}
-      onEnrich={
-        onEnrichCard && deck?.role === "owner" ? () => onEnrichCard(shownWord.card) : undefined
-      }
-      onArchive={
-        onArchive
-          ? () => {
-              setOpen(null);
-              onArchive(shownWord.card.id);
-            }
-          : undefined
+      owner={
+        owner && {
+          onEdit: () => owner.onEditCard(shownWord.card),
+          onEnrich: () => owner.onEnrichCard(shownWord.card),
+          onArchive: () => {
+            setOpen(null);
+            owner.onArchiveCard(shownWord.card.id);
+          },
+          onMove: (deckId) => owner.onMoveCard(shownWord.card.id, deckId),
+          onMoveToSection: () => owner.sections.onPickSection([shownWord.card.id], () => {}),
+        }
       }
       decks={decks}
-      onMove={onMove ? (deckId) => onMove(shownWord.card.id, deckId) : undefined}
-      onMoveToSection={
-        sectionActions
-          ? () => sectionActions.onPickSection([shownWord.card.id], () => {})
-          : undefined
-      }
       titleId={titleId}
       onBusyChange={setBusy}
     />
   );
 
-  const addButton = onAdd && (
-    <IconButton label={t`Add card`} onClick={onAdd}>
+  const addButton = owner && (
+    <IconButton label={t`Add card`} onClick={owner.onAddCard}>
       <Plus />
     </IconButton>
   );
@@ -893,15 +875,13 @@ export function DeckDetailView({
           <Settings2 />
           {deck && deck.role !== "owner" ? <Trans>About this deck</Trans> : <Trans>Settings</Trans>}
         </DropdownMenuItem>
-        {onMoveToSeries && (
-          <DropdownMenuItem onClick={onMoveToSeries}>
-            <Layers />
-            <Trans>Move to series</Trans>
-          </DropdownMenuItem>
-        )}
-        {sectionActions && (
+        {owner && (
           <>
-            <DropdownMenuItem onClick={sectionActions.onCreate}>
+            <DropdownMenuItem onClick={owner.onMoveToSeries}>
+              <Layers />
+              <Trans>Move to series</Trans>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={owner.sections.onCreate}>
               <Signpost />
               <Trans>New section</Trans>
             </DropdownMenuItem>
@@ -914,20 +894,20 @@ export function DeckDetailView({
             </DropdownMenuItem>
           </>
         )}
-        {onExport && (
-          <DropdownMenuItem onClick={onExport} disabled={!deck}>
+        {owner && (
+          <DropdownMenuItem onClick={owner.onExport} disabled={!deck}>
             <Download />
             <Trans>Export</Trans>
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        {onLeaveDeck ? (
-          <DropdownMenuItem variant="destructive" onClick={onLeaveDeck}>
+        {member ? (
+          <DropdownMenuItem variant="destructive" onClick={member.onLeave}>
             <LogOut />
             <Trans>Leave deck</Trans>
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem variant="destructive" onClick={onArchiveDeck} disabled={!onArchiveDeck}>
+          <DropdownMenuItem variant="destructive" onClick={owner?.onArchiveDeck} disabled={!owner}>
             <Archive />
             <Trans>Archive</Trans>
           </DropdownMenuItem>
@@ -960,7 +940,11 @@ export function DeckDetailView({
             action={toLibrary(buttonClass("primary"), t`Open Library`)}
           />
         ) : (
-          <ErrorState title={t`Couldn’t load this deck`} onRetry={onRetry} retrying={retrying} />
+          <ErrorState
+            title={t`Couldn’t load this deck`}
+            onRetry={onRetry}
+            retrying={retryPending}
+          />
         )}
       </Screen>
     );
@@ -1049,7 +1033,7 @@ export function DeckDetailView({
               cards={cards}
               streak={streak}
               onReview={onReview}
-              onAdd={onAdd}
+              onAdd={owner?.onAddCard}
               section={
                 progress &&
                 onStartSection && (
@@ -1059,12 +1043,12 @@ export function DeckDetailView({
                     due={deck.due}
                     onGoTo={goToSection}
                     onStart={onStartSection}
-                    starting={startingSection}
+                    starting={startSectionPending}
                   />
                 )
               }
             />
-          ) : !onAdd ? (
+          ) : !owner ? (
             <StartPanel
               title={<Trans>No cards in {deck.name} yet</Trans>}
               body={<OwnerAddsCards owner={deck.owner.name} />}
@@ -1074,7 +1058,12 @@ export function DeckDetailView({
               title={<Trans>No cards in {deck.name} yet</Trans>}
               body={<Trans>Add cards from your last lesson, then review them here.</Trans>}
               action={
-                <Button variant="primary" className="justify-self-start" onClick={onAdd} kbd="N">
+                <Button
+                  variant="primary"
+                  className="justify-self-start"
+                  onClick={owner.onAddCard}
+                  kbd="N"
+                >
                   <Trans>Add a card</Trans>
                 </Button>
               }
@@ -1113,13 +1102,13 @@ export function DeckDetailView({
                 "sticky top-0 z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
             )}
           >
-            {selected && sectionActions ? (
+            {selected && owner ? (
               <SelectionToolbar
                 count={selected.size}
                 total={ordered.length}
                 onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
                 onClear={() => setSelected(new Set())}
-                onMove={() => sectionActions.onPickSection([...selected], stopSelecting)}
+                onMove={() => owner.sections.onPickSection([...selected], stopSelecting)}
                 onDone={stopSelecting}
               />
             ) : (
@@ -1156,12 +1145,7 @@ export function DeckDetailView({
               progress={progress}
               onStart={onStartSection}
               onReview={onReviewSection}
-              editing={
-                sectionActions && {
-                  ...sectionActions,
-                  onDropCards: sectionActions.onMoveCards,
-                }
-              }
+              editing={owner && { ...owner.sections, onDropCards: owner.sections.onMoveCards }}
               movable={arranging && !st}
               selection={selected ? { ids: selected, onToggle: toggleSelected } : undefined}
             />

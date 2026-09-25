@@ -84,7 +84,7 @@ function ToggleGroupItem<Value extends string>({
   );
 }
 
-/** The plate under the pressed item of a horizontal group, first inside `ToggleGroup`; DESIGN.md "Motion" has its timing. */
+/** The plate under the pressed item of a horizontal group, first inside `ToggleGroup`; docs/design/system/motion.md has its timing. */
 function ToggleGroupIndicator({ className }: { className?: string | undefined }) {
   return (
     <SlidingPlate

@@ -2,7 +2,7 @@
 
 Activity is the one place that answers "did anything land in my decks that I did not put there". It lists writes made by imports, connected apps and the AI, the files the learner took out, and the people events of a shared deck: who joined, who left, who was removed, and when the join link was turned on or off. The learner's own edits are not here; a card's own history holds those, and Activity is not a log of everything.
 
-Activity sits behind **You**, not in the rail: it is read when something is in question rather than steered by. DESIGN.md's Layout says so, and the learner menu holds it on every device.
+Activity sits behind **You**, not in the rail: it is read when something is in question rather than steered by. [Layout](system/layout.md#you) says so, and the learner menu holds it on every device.
 
 ## The list
 

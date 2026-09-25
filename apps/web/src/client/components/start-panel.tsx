@@ -15,7 +15,7 @@ interface StartPanelProps {
 
 /**
  * Where an empty screen says how to fill it. Dashed, like New's mark, and on the bare canvas, so
- * it reads as a temporary panel rather than a plate of content. DESIGN.md, "Empty states".
+ * it reads as a temporary panel rather than a plate of content. docs/design/system/empty-states.md.
  */
 export function StartPanel({ title, body, lead, action, children, className }: StartPanelProps) {
   return (

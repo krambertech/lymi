@@ -81,9 +81,9 @@ This is a design requirement with a technical checklist:
 
 The bar is "could be mistaken for native." Every screen is checked on a real iPhone in standalone mode before it ships.
 
-### UI: Tailwind v4 + shadcn/ui on Base UI, tokens from DESIGN.md
+### UI: Tailwind v4 + shadcn/ui on Base UI, tokens in styles.css
 
-Tailwind v4 reads design tokens as CSS variables in OKLCH, which is exactly what DESIGN.md defines. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. Motion handles the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) owns the component boundary.
+Tailwind v4 reads design tokens as CSS variables in OKLCH, defined in `apps/web/src/client/styles.css`; DESIGN.md's frontmatter is generated from them. Interactive primitives are shadcn/ui components on Base UI, copied into `apps/web/src/client/components/ui` and restyled with Lymi's tokens rather than shadcn's theme variables; `cn` merges their classes. Motion handles the lantern and transitions. [ADR 0017](adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md) owns the component boundary.
 
 Alternative considered: hand-built primitives on `<dialog>` and the `popover` attribute with vaul for the drawer. That was the first version. vaul stopped being maintained, and four separate open-and-close implementations disagreed on scroll lock, focus return and which device got which shape.
 
@@ -241,7 +241,7 @@ lymi/
     src/pages       Landing, Join, documentation, published decks, metadata and public files
     src/worker.ts   Health and legacy redirects, then Astro's handler
   apps/web          Product deployable: Vite React PWA client + Hono Worker
-    src/client      Routes, components, styles (Tailwind v4 tokens from DESIGN.md)
+    src/client      Routes, components, styles (Tailwind v4 tokens, source of DESIGN.md's colours)
     src/server      Hono app, Better Auth, API and MCP routes, product asset fallback
     migrations      Drizzle-generated SQL for D1
   packages/core     Drizzle schema, Zod types, ts-fsrs scheduling, ids

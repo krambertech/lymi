@@ -14,7 +14,7 @@ interface SlidingPlateProps {
   className?: string | undefined;
 }
 
-/** The plate under the chosen item of a row, first inside its positioned parent; DESIGN.md "Motion" has its timing. */
+/** The plate under the chosen item of a row, first inside its positioned parent; docs/design/system/motion.md has its timing. */
 export function SlidingPlate({
   chosen,
   attribute,

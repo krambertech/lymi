@@ -1,11 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plug } from "lucide-react";
-import { type ReactNode, useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import type { ConnectedApp } from "../lib/api";
 import { api, errorMessage } from "../lib/api";
 import { publicSiteUrl } from "../lib/origins";
 import { connectedAppsQuery } from "../lib/queries";
+import { useConfirmStep } from "../lib/use-confirm-step";
 import { AppMark, identifyApp } from "./app-mark";
 import { Button, buttonClass } from "./button";
 import { Chip } from "./chip";
@@ -113,12 +114,7 @@ function AppRow({
 }) {
   const { t, i18n } = useLingui();
   const app = identifyApp(item.clientId, item.name);
-  const [confirming, setConfirming] = useState(false);
-  useEffect(() => {
-    if (!confirming) return;
-    const t = setTimeout(() => setConfirming(false), 6000);
-    return () => clearTimeout(t);
-  }, [confirming]);
+  const confirm = useConfirmStep();
   const connected = i18n.date(item.createdAt, { day: "numeric", month: "short" });
 
   return (
@@ -152,9 +148,9 @@ function AppRow({
           </span>
         </p>
       </div>
-      {confirming ? (
-        <div className="enter-fade flex gap-3">
-          <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
+      {confirm.confirming ? (
+        <div {...confirm.groupProps} className="enter-fade flex gap-3">
+          <Button ref={confirm.safe} size="sm" variant="ghost" onClick={confirm.cancel}>
             <Trans>Stay connected</Trans>
           </Button>
           <Button
@@ -168,7 +164,7 @@ function AppRow({
           </Button>
         </div>
       ) : (
-        <Button size="sm" variant="ghost" onClick={() => setConfirming(true)}>
+        <Button ref={confirm.trigger} size="sm" variant="ghost" onClick={confirm.ask}>
           <Trans>Disconnect</Trans>
         </Button>
       )}

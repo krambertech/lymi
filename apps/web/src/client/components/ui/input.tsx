@@ -9,7 +9,7 @@ export const controlBase =
   "disabled:cursor-not-allowed disabled:bg-plate-2 disabled:text-muted " +
   "aria-invalid:shadow-[0_0_0_1px_var(--danger)]";
 
-/** The control height and text size; DESIGN.md "Forms" says why they follow the viewport. */
+/** The control height and text size; docs/design/system/forms.md says why they follow the viewport. */
 export const controlSize = "h-11 text-[1rem] md:h-10 md:hoverable:text-base";
 
 /** The small control height, shared with the small Segmented so a search beside one lines up. */

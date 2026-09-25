@@ -20,15 +20,19 @@ export function slug(text: string): string {
     .replace(/\s+/g, "-");
 }
 
+/** A pointer's shortcut to a section's link, kept out of the heading's name and the tab order. */
 function Anchor({ id }: { id: string }) {
   return (
-    <a
-      href={`#${id}`}
-      aria-label="Link to this section"
-      className="doc-anchor doc-plain ml-2 inline-block align-middle text-faint hoverable:hover:text-text"
-    >
-      <Hash className="size-3.5" aria-hidden="true" />
-    </a>
+    <span aria-hidden="true" className="doc-anchor ml-2 inline-block align-middle">
+      <a
+        href={`#${id}`}
+        aria-label="Link to this section"
+        tabIndex={-1}
+        className="doc-plain text-faint hoverable:hover:text-text"
+      >
+        <Hash className="size-3.5" aria-hidden="true" />
+      </a>
+    </span>
   );
 }
 

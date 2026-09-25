@@ -1,4 +1,4 @@
-/* The tray, as DESIGN.md describes it. The same block is in the site's `styles.css`, because
+/* The tray, as docs/design/system/surfaces.md describes it. The same block is in the site's `styles.css`, because
    Explore is one surface in two apps and a deck must arrive at the same colour in both. */
 .deck-tray {
   --cw: 150px;

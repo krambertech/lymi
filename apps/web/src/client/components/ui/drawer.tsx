@@ -255,7 +255,8 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
           {showSwipeHandle && <DrawerSwipeHandle />}
           <DrawerPrimitive.Content
             data-slot="drawer-content"
-            className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain rounded-[inherit] select-text group-data-swiping/drawer-popup:select-none"
+            // The padding keeps a field that Tab scrolls to clear of the pinned title and actions.
+            className="flex min-h-0 flex-1 scroll-pt-12 scroll-pb-24 flex-col overflow-y-auto overscroll-contain rounded-[inherit] select-text group-data-swiping/drawer-popup:select-none"
           >
             {children}
           </DrawerPrimitive.Content>

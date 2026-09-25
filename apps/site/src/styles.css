@@ -236,7 +236,7 @@
   --color-toast-action: var(--toast-action);
 
   /* Type scale. In rem so the reader's default font size moves it; each step is the px value
-     in DESIGN.md at the 16 px default. */
+     in docs/design/system/type.md at the 16 px default. */
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1.3;
   --text-xs: 0.75rem;
@@ -322,7 +322,13 @@
   p {
     text-wrap: pretty;
   }
+  a,
   button,
+  input,
+  label,
+  select,
+  summary,
+  textarea,
   [role="button"] {
     touch-action: manipulation;
   }
@@ -1060,14 +1066,15 @@ html:has(.deck-cards[open]) {
   scrollbar-color: var(--edge-2) transparent;
 }
 
-/* A heading's own link. Appears on hover, and always for keyboard users. */
+/* A heading's own link, a pointer's shortcut: the heading and the contents list name the section for everyone else. */
 .doc-anchor {
   opacity: 0;
   transition: opacity 150ms var(--ease-out);
 }
-:is(h2, h3):hover > .doc-anchor,
-.doc-anchor:focus-visible {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  :is(h2, h3):hover > .doc-anchor {
+    opacity: 1;
+  }
 }
 /* A phone has no hover to reveal it, so it stays in view, quieter. */
 @media (hover: none) {
@@ -1376,7 +1383,7 @@ html:has(.deck-cards[open]) {
 
 /* Explore: a shelf per category, and a deck shown as one of its cards sitting in a tray.
    The tray is the card's ground — a card cut against a surface reads as tucked into the shelf,
-   where the same cut in mid-air reads as clipped. DESIGN.md "The tray". */
+   where the same cut in mid-air reads as clipped. docs/design/system/surfaces.md, "The tray". */
 .explore-hero {
   position: relative;
   isolation: isolate;

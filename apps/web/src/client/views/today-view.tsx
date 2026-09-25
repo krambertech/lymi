@@ -191,8 +191,8 @@ export function TodayView({
                         st={st}
                         className={buttonClass(
                           "primary",
-                          "lg",
-                          "-mx-3 -mb-3 h-16 w-[calc(100%+1.5rem)] text-lg @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]",
+                          "xl",
+                          "-mx-3 -mb-3 w-[calc(100%+1.5rem)] @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]",
                         )}
                       >
                         <Trans>Review</Trans>
@@ -203,8 +203,8 @@ export function TodayView({
                     ) : noDecks ? (
                       <Button
                         variant="primary"
-                        size="lg"
-                        className="-mx-3 -mb-3 h-16 w-[calc(100%+1.5rem)] text-lg @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]"
+                        size="xl"
+                        className="-mx-3 -mb-3 w-[calc(100%+1.5rem)] @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]"
                         onClick={onCreateDeck}
                         aria-disabled={!onCreateDeck}
                       >
@@ -214,8 +214,8 @@ export function TodayView({
                       // Nothing due is not nothing to do: capture is the standing action.
                       <Button
                         variant="primary"
-                        size="lg"
-                        className="-mx-3 -mb-3 h-16 w-[calc(100%+1.5rem)] text-lg @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]"
+                        size="xl"
+                        className="-mx-3 -mb-3 w-[calc(100%+1.5rem)] @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]"
                         onClick={onAdd}
                         aria-disabled={!onAdd}
                         kbd="N"

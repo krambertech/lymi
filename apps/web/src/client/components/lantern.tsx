@@ -54,7 +54,7 @@ interface Props {
 /**
  * The one illustration in Lymi: a storm lantern you carry, and the fire inside it. The flame is
  * one continuous value, so a review, the goal and a broken streak all move the same fire rather
- * than swapping drawings. DESIGN.md, "The lantern".
+ * than swapping drawings. docs/design/system/brand.md.
  */
 export function Lantern({
   progress,

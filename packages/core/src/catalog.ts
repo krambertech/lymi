@@ -664,7 +664,7 @@ function hash(text: string): number {
  * `styles/deck.css`. A deck's own is a pure function of its slug, so Explore on the site, the
  * deck page and Explore in the product arrive at the same colour without storing one, and it does
  * not move as the catalogue grows around it.
- * DESIGN.md, "The tray".
+ * docs/design/system/surfaces.md, "The tray".
  */
 export const TRAY_HUES = 8;
 

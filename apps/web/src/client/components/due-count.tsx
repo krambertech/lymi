@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 /**
  * How many cards are due, on the lantern's amber as a tint. The tint says "act" and the ink keeps
- * the number readable; DESIGN.md, "Colour".
+ * the number readable; docs/design/system/colour.md.
  */
 export function DueCount({
   size = "sm",

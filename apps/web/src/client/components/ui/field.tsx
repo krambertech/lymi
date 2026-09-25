@@ -2,7 +2,7 @@ import { cn } from "cn";
 import { AlertCircle } from "lucide-react";
 import * as React from "react";
 
-// shadcn's Field parts, wired by context instead of by hand; DESIGN.md "Forms" has the rules.
+// shadcn's Field parts, wired by context instead of by hand; docs/design/system/forms.md has the rules.
 
 type Kind = "description" | "error";
 

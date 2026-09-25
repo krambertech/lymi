@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import type { CardImage, QueueItem } from "./api";
 import { meQuery } from "./queries";
 
-/** Card pictures kept per learner in Cache Storage for offline review; the rules are in DESIGN.md. */
+/** Card pictures kept per learner in Cache Storage for offline review; the rules are in docs/design/library-decks-and-cards.md. */
 const PREFIX = "lymi-card-images-";
 /** A review looks this far ahead, and the bucket holds about two sessions of it. */
 const LOOKAHEAD = 3;

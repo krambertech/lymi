@@ -76,7 +76,7 @@ interface TrayProps {
 /**
  * One of the deck's own cards sitting in a tray: the cut reads as tucked into a shelf, and the
  * hue is a pure function of the slug, so this deck arrives at the same colour on `lymi.app`,
- * on its own page here, and anywhere else it is offered. DESIGN.md, "The tray".
+ * on its own page here, and anywhere else it is offered. docs/design/system/surfaces.md, "The tray".
  */
 export function DeckTray({
   slug,
@@ -117,7 +117,7 @@ interface TileProps {
 /**
  * A deck on a shelf: its card in a tray, its name, and the one press that adds it. The name is
  * the largest thing in the group and the card's term sets smaller than it. Add is secondary
- * here rather than amber — a shelf of decks has no single thing to press. DESIGN.md, "Colour".
+ * here rather than amber — a shelf of decks has no single thing to press. docs/design/system/colour.md.
  */
 export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
   const { t } = useLingui();

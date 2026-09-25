@@ -134,7 +134,7 @@ export function ApiKeysSection() {
       )}
 
       <Dialog open={making} onOpenChange={setMaking}>
-        <DialogContent className="w-[min(92vw,440px)]">
+        <DialogContent>
           <DialogTitle>{t`New key`}</DialogTitle>
           <NewKeyForm
             key={making ? "open" : "closed"}

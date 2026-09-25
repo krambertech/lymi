@@ -41,7 +41,7 @@ function WordMenu() {
           Move to…
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">
+        <DropdownMenuItem variant="danger">
           <Archive />
           Archive
         </DropdownMenuItem>
@@ -62,7 +62,7 @@ export function WordPlace({
 }) {
   return (
     <article className="flex min-w-0 flex-col gap-5">
-      <PlaceBar label="Italian with Giulia" actions={<WordMenu />} onClose={onClose} />
+      <PlaceBar parent="Italian with Giulia" actions={<WordMenu />} onClose={onClose} />
       <h1
         id={titleId}
         tabIndex={-1}

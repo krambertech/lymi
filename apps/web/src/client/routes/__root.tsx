@@ -71,7 +71,7 @@ function Root() {
           <SignOutProvider>
             <Shell />
             <Toaster
-              label={t`Notifications`}
+              aria-label={t`Notifications`}
               closeLabel={t`Dismiss`}
               viewportClassName={pathname.startsWith("/review") ? REVIEW_TOAST_INSET : undefined}
             />

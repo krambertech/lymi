@@ -55,7 +55,7 @@ export const menu: Group = {
                       Export
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">
+                    <DropdownMenuItem variant="danger">
                       <Archive />
                       Archive
                     </DropdownMenuItem>
@@ -154,7 +154,7 @@ export const overlays: Group = {
                       Edit
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">
+                    <DropdownMenuItem variant="danger">
                       <Archive />
                       Archive
                     </DropdownMenuItem>

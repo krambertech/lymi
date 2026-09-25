@@ -99,23 +99,21 @@ export function DeckSelect({
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent aria-label="Deck">
-        {grouped ? (
-          <>
-            <SelectGroup>
-              <SelectLabel>{OWN_GROUP.label}</SelectLabel>
-              {OWN_DECKS.map(item)}
-            </SelectGroup>
-            <SelectSeparator />
-            <SelectGroup>
-              <SelectLabel>{SHARED_GROUP.label}</SelectLabel>
-              {SHARED_DECKS.map(item)}
-            </SelectGroup>
-          </>
-        ) : (
-          DECKS.map(item)
-        )}
-      </SelectContent>
+      {grouped ? (
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>{OWN_GROUP.label}</SelectLabel>
+            {OWN_DECKS.map(item)}
+          </SelectGroup>
+          <SelectSeparator />
+          <SelectGroup>
+            <SelectLabel>{SHARED_GROUP.label}</SelectLabel>
+            {SHARED_DECKS.map(item)}
+          </SelectGroup>
+        </SelectContent>
+      ) : (
+        <SelectContent />
+      )}
     </Select>
   );
 }
@@ -139,7 +137,7 @@ export function DeckCombobox({
       <ComboboxTrigger>
         <ComboboxValue placeholder="Choose a deck" />
       </ComboboxTrigger>
-      <ComboboxContent aria-label="Deck">
+      <ComboboxContent>
         <ComboboxInput placeholder="Search decks" />
         <ComboboxEmpty>No deck by that name.</ComboboxEmpty>
         <ComboboxList>
@@ -197,7 +195,7 @@ function MenuScene() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">
+        <DropdownMenuItem variant="danger">
           <Archive />
           Archive deck
         </DropdownMenuItem>
@@ -244,7 +242,7 @@ function FormScene() {
         New deck
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-[min(92vw,440px)]">
+        <DialogContent>
           <DialogTitle>New deck</DialogTitle>
           <NewDeckForm onCancel={() => setOpen(false)} onSubmit={() => undefined} />
         </DialogContent>
@@ -284,7 +282,7 @@ function NestedScene() {
         Move card
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-[min(92vw,440px)]">
+        <DialogContent>
           <DialogTitle>Move “sbrigarsi”</DialogTitle>
           <Field>
             <FieldLabel>Deck</FieldLabel>

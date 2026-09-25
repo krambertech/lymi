@@ -522,7 +522,7 @@ export function WordView({
               <Trans>Move to section…</Trans>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" onClick={owner.onArchive}>
+            <DropdownMenuItem variant="danger" onClick={owner.onArchive}>
               <Archive />
               <Trans>Archive</Trans>
             </DropdownMenuItem>
@@ -534,7 +534,7 @@ export function WordView({
 
   return (
     <article className="@container flex min-w-0 flex-col gap-6">
-      <PlaceBar label={deckName} actions={controls} onClose={onClose} />
+      <PlaceBar parent={deckName} actions={controls} onClose={onClose} />
 
       <header className="grid gap-1.5">
         <h1
@@ -664,7 +664,7 @@ export function WordView({
       </div>
 
       <Dialog open={moving} onOpenChange={setMoving}>
-        <DialogContent className="w-[min(92vw,440px)]">
+        <DialogContent>
           <DialogTitle>{t`Move “${shortQuote(card.term)}” to`}</DialogTitle>
           <ul className="grid gap-1">
             {elsewhere.map((d) => (

@@ -4,13 +4,10 @@ import type { ReactNode } from "react";
 import { BackButton } from "../../views/shell";
 import { IconButton } from "../button";
 import { usePlaceShape } from "../ui/dialog";
+import type { Back } from "./screen";
 
-interface Back {
-  label: string;
-  onClick: () => void;
-  /** The icon's accessible name on a desktop, where the label is not drawn. */
-  name?: string | undefined;
-}
+/** A place has no route of its own, so its way back is always an action. */
+type ActionBack = Extract<Back, { onClick: () => void }>;
 
 interface Common {
   /** The place's own controls, at the end. */
@@ -23,24 +20,24 @@ interface Common {
 }
 
 /**
- * On a phone, leaving is a named button, so a bar that can close carries a name: the place's label,
+ * On a phone, leaving is a named button, so a bar that can close carries a name: the place's parent,
  * the screen under it, or an inner view's own way back.
  */
 type Props = Common &
   (
     | {
-        /** Where the place belongs, such as a word's deck. */
-        label: string;
-        /** The screen under the place, which back names on a phone. The label, unless it is given. */
+        /** Where the place belongs, such as a word's deck, drawn at the start of a compact bar. */
+        parent: string;
+        /** The screen under the place, which back names on a phone. The parent, unless it is given. */
         returnsTo?: string | undefined;
-        back?: Back | undefined;
+        back?: ActionBack | undefined;
       }
-    | { label?: string | undefined; returnsTo: string; back?: Back | undefined }
+    | { parent?: string | undefined; returnsTo: string; back?: ActionBack | undefined }
     | {
-        label?: undefined;
+        parent?: undefined;
         returnsTo?: undefined;
         /** An inner view's way back, which takes the place of close. */
-        back: Back;
+        back: ActionBack;
       }
   );
 
@@ -48,10 +45,10 @@ type Props = Common &
  * The first line of a place. Over the whole screen it is a page's bar and leaving is back, named
  * for the screen under it; in a sheet, a dialog or beside a list it is one compact row that ends in close.
  */
-export function PlaceBar({ label, returnsTo, actions, status, onClose, back, title }: Props) {
+export function PlaceBar({ parent, returnsTo, actions, status, onClose, back, title }: Props) {
   const { t } = useLingui();
   const shape = usePlaceShape();
-  const leaves = returnsTo ?? label;
+  const leaves = returnsTo ?? parent;
 
   if (shape === "screen") {
     return (
@@ -85,7 +82,7 @@ export function PlaceBar({ label, returnsTo, actions, status, onClose, back, tit
       {title ? (
         <div className="min-w-0 flex-1 truncate text-lg font-medium text-text">{title}</div>
       ) : (
-        <span className="min-w-0 flex-1 truncate text-sm text-muted">{label}</span>
+        <span className="min-w-0 flex-1 truncate text-sm text-muted">{parent}</span>
       )}
       {status}
       {actions}

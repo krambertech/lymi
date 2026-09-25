@@ -211,7 +211,7 @@ export function ExportSheet({
 
   return (
     <Dialog open={open} onOpenChange={close}>
-      <DialogContent className="w-[min(92vw,480px)]">
+      <DialogContent size="md">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {!current && (

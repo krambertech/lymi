@@ -342,7 +342,7 @@ export function StreakPanel({
     <div className={clsx("grid gap-5", className)}>
       {onClose && (
         <PlaceBar
-          label={t`Streak`}
+          parent={t`Streak`}
           title={titleInBar ? t`Streak` : undefined}
           returnsTo={returnsTo}
           onClose={onClose}

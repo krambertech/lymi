@@ -68,7 +68,7 @@ export function DesignLayout() {
       </div>
 
       <Dialog open={menu} onOpenChange={setMenu}>
-        <DialogContent className="w-[min(92vw,440px)]">
+        <DialogContent>
           <DialogTitle>Design system</DialogTitle>
           <nav aria-label="Design system" className="-mx-3 max-h-[70dvh] overflow-y-auto px-3">
             <Contents onNavigate={() => setMenu(false)} />

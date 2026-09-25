@@ -13,7 +13,7 @@ import { InlineError } from "./inline-error";
 import { Go } from "./next-steps";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
 import { Field, FieldLabel } from "./ui/field";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
 export type Summary = NonNullable<Import["summary"]>;
 export type NoteType = Summary["noteTypes"][number];
@@ -398,13 +398,7 @@ export function FieldsDialog({
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent aria-label={t`${field} becomes`}>
-                      {options.map((o) => (
-                        <SelectItem key={o.value} value={o.value}>
-                          {o.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
+                    <SelectContent />
                   </Select>
                 </Field>
               </li>
@@ -448,7 +442,7 @@ export function LanguagesDialog({
   const app = SOURCE_NAMES[source];
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,480px)]">
+      <DialogContent size="md">
         <DialogTitle>{t`Languages`}</DialogTitle>
         <DialogDescription>
           <Trans>

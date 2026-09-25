@@ -1,14 +1,28 @@
+import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
+import { mergeProps } from "@base-ui/react/merge-props";
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { useRender } from "@base-ui/react/use-render";
 import { cn } from "cn";
-import { Check, ChevronDown } from "lucide-react";
+import { Check } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
+import { useControllableState } from "../../lib/use-controllable-state";
+import { useMergedRefs } from "../../lib/use-merged-refs";
 import { FluidHighlight } from "../fluid-highlight";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "./drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
 import { useField, useFieldControl } from "./field";
 import { controlBase, controlSize } from "./input";
+import {
+  choicePopupClassName,
+  choiceRowClassName,
+  DrawerListTitle,
+  listSeparatorClassName,
+  type Shape,
+  TriggerChevron,
+  touchRowClassName,
+  useListName,
+} from "./overlay-list";
 
 /*
  * shadcn's Select, in the shape of the machine: a list anchored under its box on a desktop, the
@@ -17,8 +31,11 @@ import { controlBase, controlSize } from "./input";
  * them: each part must bring its drawer shape and its tests with it. ADR 0017.
  */
 
-type Shape = "desktop" | "touch";
 type Value = string | null;
+
+type OpenChangeDetails =
+  | SelectPrimitive.Root.ChangeEventDetails
+  | DrawerPrimitive.Root.ChangeEventDetails;
 
 interface SelectItemData {
   value: Value;
@@ -30,7 +47,7 @@ interface SelectContextValue {
   open: boolean;
   value: Value;
   setValue: (value: Value) => void;
-  setOpen: (open: boolean) => void;
+  setOpen: (open: boolean, details?: OpenChangeDetails) => void;
   /** Names each value, so the closed box can show the choice in both shapes. */
   items: readonly SelectItemData[] | undefined;
   disabled: boolean;
@@ -48,20 +65,15 @@ function useSelect(part: string) {
 const OPTION = '[role="option"]';
 const ENABLED_OPTION = `${OPTION}:not([aria-disabled="true"])`;
 
-const itemClassName =
-  "relative flex h-11 w-full cursor-default items-center gap-2.5 rounded-sm px-2.5 text-start text-[1rem] text-text outline-none select-none md:h-10 md:text-base data-highlighted:bg-hover data-highlighted:text-text data-disabled:opacity-45 [[data-hovering]_&]:data-highlighted:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0";
-
-/** Pressed feedback for a row under a finger, where there is no hover. */
-const touchItemClassName = "active:bg-hover";
-
 interface SelectProps {
   value?: Value | undefined;
   defaultValue?: Value | undefined;
   onValueChange?: ((value: Value) => void) | undefined;
   open?: boolean | undefined;
   defaultOpen?: boolean | undefined;
-  onOpenChange?: ((open: boolean) => void) | undefined;
-  /** Every choice with its label. `SelectValue` reads the chosen label from here. */
+  /** Base UI's details come second; a close the part makes itself, such as picking a row on touch, sends none. */
+  onOpenChange?: ((open: boolean, details?: OpenChangeDetails) => void) | undefined;
+  /** Every choice with its label. `SelectValue` reads the chosen label here, and an empty `SelectContent` lists them. */
   items?: readonly SelectItemData[] | undefined;
   /** Identifies the field when a form is submitted. */
   name?: string | undefined;
@@ -85,24 +97,16 @@ function Select({
 }: SelectProps) {
   const field = useField();
   const disabled = disabledProp || Boolean(field?.disabled);
-  const [uncontrolledValue, setUncontrolledValue] = React.useState<Value>(defaultValue);
-  const value = controlledValue === undefined ? uncontrolledValue : controlledValue;
-  const setValue = React.useCallback(
-    (next: Value) => {
-      setUncontrolledValue(next);
-      onValueChange?.(next);
-    },
-    [onValueChange],
-  );
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
-  const open = controlledOpen ?? uncontrolledOpen;
-  const setOpen = React.useCallback(
-    (next: boolean) => {
-      setUncontrolledOpen(next);
-      onOpenChange?.(next);
-    },
-    [onOpenChange],
-  );
+  const [value, setValue] = useControllableState({
+    value: controlledValue,
+    defaultValue,
+    onChange: onValueChange,
+  });
+  const [open, setOpen] = useControllableState<boolean, [details?: OpenChangeDetails]>({
+    value: controlledOpen,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  });
   const shape = useOverlayShape(open);
   const context = React.useMemo(
     () => ({ shape, open, value, setValue, setOpen, items, disabled, required }),
@@ -117,7 +121,7 @@ function Select({
           value={value}
           onValueChange={(next) => setValue(next)}
           open={open}
-          onOpenChange={(next) => setOpen(next)}
+          onOpenChange={setOpen}
           items={items}
           name={name}
           disabled={disabled}
@@ -137,41 +141,39 @@ function Select({
   );
 }
 
-interface TriggerProps {
-  id?: string | undefined;
-  "aria-describedby"?: string | undefined;
-  "aria-invalid"?: boolean | undefined;
-  className?: string | undefined;
+interface TriggerProps extends React.ComponentProps<"button"> {
   children: React.ReactNode;
 }
 
 /** The box. Put a `SelectValue` inside; the chevron is already there. */
-function SelectTrigger({ className, children, ...props }: TriggerProps) {
+function SelectTrigger({
+  id,
+  "aria-describedby": describedBy,
+  "aria-invalid": invalid,
+  className,
+  children,
+  ...props
+}: TriggerProps) {
   const { shape, open, value, disabled, required } = useSelect("SelectTrigger");
-  const a11y = useFieldControl(props);
+  const a11y = useFieldControl({ id, "aria-describedby": describedBy, "aria-invalid": invalid });
   const classes = cn(
     controlBase,
     controlSize,
     "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-2 data-placeholder:text-muted",
     className,
   );
-  const chevron = (
-    <ChevronDown
-      className="size-4 shrink-0 text-muted transition-transform duration-150 motion-reduce:transition-none [[data-open]>&]:rotate-180"
-      aria-hidden="true"
-    />
-  );
   if (shape === "desktop") {
     return (
-      <SelectPrimitive.Trigger data-slot="select-trigger" {...a11y} className={classes}>
+      <SelectPrimitive.Trigger data-slot="select-trigger" {...props} {...a11y} className={classes}>
         {children}
-        {chevron}
+        <TriggerChevron />
       </SelectPrimitive.Trigger>
     );
   }
   return (
     <DrawerTrigger
       data-slot="select-trigger"
+      {...props}
       {...a11y}
       role="combobox"
       aria-haspopup="listbox"
@@ -183,7 +185,7 @@ function SelectTrigger({ className, children, ...props }: TriggerProps) {
       className={classes}
     >
       {children}
-      {chevron}
+      <TriggerChevron />
     </DrawerTrigger>
   );
 }
@@ -219,19 +221,30 @@ function SelectValue({ placeholder, className, children }: ValueProps) {
   );
 }
 
-interface ContentProps {
-  /** Names the list for screen readers in both shapes. */
-  "aria-label": string;
+interface ContentProps extends Omit<React.ComponentProps<"div">, "children"> {
+  /** Names the list in both shapes. Inside a Field its label names it, so leave this out there. */
+  "aria-label"?: string | undefined;
   side?: "top" | "bottom" | undefined;
   align?: "start" | "center" | "end" | undefined;
   sideOffset?: number | undefined;
-  className?: string | undefined;
-  children: React.ReactNode;
+  /** Custom rows. Left out, the list shows a row for each of the root's `items`. */
+  children?: React.ReactNode | undefined;
 }
 
-function SelectContent(props: ContentProps) {
-  const { shape } = useSelect("SelectContent");
-  return shape === "desktop" ? <AnchoredContent {...props} /> : <DrawerListContent {...props} />;
+function SelectContent({ children, ...props }: ContentProps) {
+  const { shape, items } = useSelect("SelectContent");
+  const rows =
+    children ??
+    items?.map((item) => (
+      <SelectItem key={String(item.value)} value={item.value}>
+        {item.label}
+      </SelectItem>
+    ));
+  return shape === "desktop" ? (
+    <AnchoredContent {...props}>{rows}</AnchoredContent>
+  ) : (
+    <DrawerListContent {...props}>{rows}</DrawerListContent>
+  );
 }
 
 function AnchoredContent({
@@ -240,9 +253,14 @@ function AnchoredContent({
   align = "start",
   sideOffset = 6,
   className,
+  ref: refProp,
   children,
+  ...props
 }: ContentProps) {
+  const { open } = useSelect("SelectContent");
+  const name = useListName(label, open);
   const ref = React.useRef<HTMLDivElement>(null);
+  const refs = useMergedRefs(ref, refProp);
   const hover = useFluidHover(ref, { items: OPTION, dividers: '[data-slot="select-separator"]' });
   return (
     <SelectPrimitive.Portal>
@@ -255,21 +273,26 @@ function AnchoredContent({
         alignItemWithTrigger={false}
       >
         <SelectPrimitive.Popup
-          ref={ref}
+          ref={refs}
           data-slot="select-content"
           // While the pointer's fill is out, the highlighted row gives up its own: one cursor at a time.
           data-hovering={hover.shown || undefined}
           className={cn(
-            // Unfolds from the edge nearest the box, 4 px and scale 0.98 over 140 ms, leaving in 100.
-            "edge-2 relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(9rem,var(--anchor-width))] origin-(--transform-origin) overflow-x-hidden overflow-y-auto overscroll-contain rounded-md bg-plate p-1 text-text outline-none transition-[opacity,translate,scale] duration-140 ease-(--ease-out) data-starting-style:scale-98 data-starting-style:opacity-0 data-ending-style:scale-98 data-ending-style:opacity-0 data-ending-style:duration-100 data-[side=bottom]:data-starting-style:-translate-y-1 data-[side=bottom]:data-ending-style:-translate-y-1 data-[side=top]:data-starting-style:translate-y-1 data-[side=top]:data-ending-style:translate-y-1 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+            choicePopupClassName,
+            "relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(9rem,var(--anchor-width))] overflow-x-hidden overflow-y-auto overscroll-contain p-1",
             className,
           )}
-          // Keyboard moves the highlight, and the highlight carries its own fill; two fills would be two cursors.
-          onKeyDown={hover.hide}
-          {...hover.handlers}
+          {...mergeProps<"div">(
+            {
+              // Keyboard moves the highlight, and the highlight carries its own fill; two fills would be two cursors.
+              onKeyDown: hover.hide,
+              ...hover.handlers,
+            },
+            props,
+          )}
         >
           <FluidHighlight hover={hover} />
-          <SelectPrimitive.List aria-label={label}>{children}</SelectPrimitive.List>
+          <SelectPrimitive.List {...name.props}>{children}</SelectPrimitive.List>
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
     </SelectPrimitive.Portal>
@@ -281,9 +304,20 @@ function AnchoredContent({
  * attached: rows are out of the tab order, the arrows walk them, disabled rows included so a screen
  * reader still hears them, typing a letter jumps to a name, and Tab leaves the list, which closes it.
  */
-function DrawerListContent({ "aria-label": label, className, children }: ContentProps) {
-  const { setOpen } = useSelect("SelectContent");
+function DrawerListContent({
+  "aria-label": label,
+  side: _side,
+  align: _align,
+  sideOffset: _sideOffset,
+  className,
+  ref: refProp,
+  children,
+  ...props
+}: ContentProps) {
+  const { open, setOpen } = useSelect("SelectContent");
+  const name = useListName(label, open);
   const ref = React.useRef<HTMLDivElement>(null);
+  const refs = useMergedRefs(ref, refProp);
   const typed = React.useRef({ text: "", at: 0 });
   const onKeyDown = React.useCallback(
     (e: React.KeyboardEvent) => {
@@ -325,17 +359,14 @@ function DrawerListContent({ "aria-label": label, className, children }: Content
         true
       }
     >
-      {/* The box's label, so the sheet still says what is being chosen once it covers the form. */}
-      <DrawerHeader className="ps-4.5 pt-1">
-        <DrawerTitle className="text-sm font-medium text-text-2">{label}</DrawerTitle>
-      </DrawerHeader>
+      <DrawerListTitle>{name.title}</DrawerListTitle>
       <div
-        ref={ref}
+        ref={refs}
         role="listbox"
-        aria-label={label}
+        {...name.props}
         data-slot="select-content"
-        onKeyDown={onKeyDown}
         className={cn("grid p-2 pt-1", className)}
+        {...mergeProps<"div">({ onKeyDown }, props)}
       >
         {children}
       </div>
@@ -392,11 +423,12 @@ function SelectLabel({
   );
 }
 
-interface ItemProps {
+// Base UI names each row itself, for the list's active descendant, so a row takes no id.
+interface ItemProps extends Omit<React.HTMLAttributes<HTMLElement>, "id" | "children"> {
+  ref?: React.Ref<HTMLElement> | undefined;
   /** `null` is the row that clears the choice, e.g. "No language". */
   value: Value;
   disabled?: boolean | undefined;
-  className?: string | undefined;
   children: React.ReactNode;
 }
 
@@ -404,13 +436,16 @@ interface ItemProps {
 function SelectItem(props: ItemProps) {
   const { shape } = useSelect("SelectItem");
   if (shape === "touch") return <DrawerListItem {...props} />;
-  const { value, disabled, className, children } = props;
+  const { ref, value, disabled, className, children, ...rest } = props;
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
+      {...rest}
+      // The desktop row is a div; the drawer's is a button, so the shared ref names their common type.
+      ref={ref as React.Ref<HTMLDivElement> | undefined}
       value={value}
       disabled={disabled}
-      className={cn(itemClassName, className)}
+      className={cn(choiceRowClassName, className)}
     >
       <span className="flex size-4 shrink-0 items-center justify-center" aria-hidden="true">
         <SelectPrimitive.ItemIndicator>
@@ -422,26 +457,32 @@ function SelectItem(props: ItemProps) {
   );
 }
 
-function DrawerListItem({ value, disabled, className, children }: ItemProps) {
+function DrawerListItem({ ref, value, disabled, className, children, ...props }: ItemProps) {
   const { value: current, setValue, setOpen } = useSelect("SelectItem");
   const selected = current === value;
   return useRender({
     defaultTagName: "button",
+    ref,
     props: {
-      type: "button",
-      role: "option",
-      tabIndex: -1,
-      "aria-selected": selected,
-      "aria-disabled": disabled || undefined,
+      ...mergeProps<"button">(
+        {
+          type: "button",
+          role: "option",
+          tabIndex: -1,
+          "aria-selected": selected,
+          "aria-disabled": disabled || undefined,
+          onClick: () => {
+            if (disabled) return;
+            if (!selected) setValue(value);
+            setOpen(false);
+          },
+        },
+        props,
+      ),
       "data-slot": "select-item",
       "data-selected": selected ? "" : undefined,
       "data-disabled": disabled ? "" : undefined,
-      className: cn(itemClassName, touchItemClassName, className),
-      onClick: () => {
-        if (disabled) return;
-        if (!selected) setValue(value);
-        setOpen(false);
-      },
+      className: cn(choiceRowClassName, touchRowClassName, className),
       children: (
         <>
           <span className="flex size-4 shrink-0 items-center justify-center" aria-hidden="true">
@@ -459,14 +500,14 @@ function SelectSeparator({ className }: { className?: string | undefined }) {
   return shape === "desktop" ? (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn("-mx-1 my-1 h-px bg-edge", className)}
+      className={listSeparatorClassName("edge", className)}
     />
   ) : (
     // Presentational, like Base UI's: a listbox has no separator role to offer.
     <div
       role="presentation"
       data-slot="select-separator"
-      className={cn("mx-2.5 my-1 h-px bg-edge", className)}
+      className={listSeparatorClassName("inset", className)}
     />
   );
 }

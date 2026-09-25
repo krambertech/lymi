@@ -1,7 +1,9 @@
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
+import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { cn } from "cn";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
+import { useControllableState } from "../../lib/use-controllable-state";
 import {
   Drawer,
   DrawerClose,
@@ -54,6 +56,10 @@ function useDialogShape(part: string) {
   return useDialogContext(part).shape;
 }
 
+type OpenChangeDetails =
+  | DialogPrimitive.Root.ChangeEventDetails
+  | DrawerPrimitive.Root.ChangeEventDetails;
+
 function Dialog({
   open: controlled,
   defaultOpen = false,
@@ -63,20 +69,16 @@ function Dialog({
 }: {
   open?: boolean | undefined;
   defaultOpen?: boolean | undefined;
-  onOpenChange?: ((open: boolean) => void) | undefined;
+  onOpenChange?: ((open: boolean, details?: OpenChangeDetails) => void) | undefined;
   /** A moment is done and dismissed; a place is gone to and read, and its open state is the caller's URL. */
   kind?: Kind | undefined;
   children: React.ReactNode;
 }) {
-  const [uncontrolled, setUncontrolled] = React.useState(defaultOpen);
-  const open = controlled ?? uncontrolled;
-  const setOpen = React.useCallback(
-    (next: boolean) => {
-      setUncontrolled(next);
-      onOpenChange?.(next);
-    },
-    [onOpenChange],
-  );
+  const [open, setOpen] = useControllableState<boolean, [details?: OpenChangeDetails]>({
+    value: controlled,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  });
   const shape = useOverlayShape(open);
   const context = React.useMemo(() => ({ shape, kind }), [shape, kind]);
   return (
@@ -100,53 +102,60 @@ function Dialog({
   );
 }
 
-/** Compose the control through `render`: `<DialogTrigger render={<Button … />} />`. */
-function DialogTrigger({ render }: { render: React.ReactElement }) {
+interface ButtonPartProps extends React.ComponentProps<"button"> {
+  /** The control, such as `<Button … />`; a plain button when left out. */
+  render?: React.ReactElement | undefined;
+}
+
+function DialogTrigger(props: ButtonPartProps) {
   return useDialogShape("DialogTrigger") === "desktop" ? (
-    <DialogPrimitive.Trigger data-slot="dialog-trigger" render={render} />
+    <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
   ) : (
-    <DrawerTrigger data-slot="dialog-trigger" render={render} />
+    <DrawerTrigger data-slot="dialog-trigger" {...props} />
   );
 }
 
-function DialogClose({ render }: { render: React.ReactElement }) {
+function DialogClose(props: ButtonPartProps) {
   return useDialogShape("DialogClose") === "desktop" ? (
-    <DialogPrimitive.Close data-slot="dialog-close" render={render} />
+    <DialogPrimitive.Close data-slot="dialog-close" {...props} />
   ) : (
-    <DrawerClose data-slot="dialog-close" render={render} />
+    <DrawerClose data-slot="dialog-close" {...props} />
   );
 }
 
-function DialogContent({
-  className,
-  initialFocus,
-  finalFocus,
-  "aria-labelledby": labelledBy,
-  placement = "center",
-  children,
-}: {
+/** The centred dialog's widths: a question, a form, and a card's full editor. */
+const sizes = {
+  sm: "w-[min(92vw,420px)]",
+  md: "w-[min(92vw,480px)]",
+  lg: "w-[min(92vw,560px)]",
+};
+
+interface ContentProps extends React.ComponentProps<"div"> {
   /** Where the desktop shape stands: centred, or a full-height sheet at the end edge for a place read beside the page. */
   placement?: "center" | "end" | undefined;
-  /** Dresses the centred dialog, usually its width. The drawer sizes itself, so it ignores this. */
+  /** The centred dialog's width. The drawer and the end sheet size themselves. */
+  size?: keyof typeof sizes | undefined;
+  /** Dresses the desktop shape, such as a width between the sizes. The drawer ignores it. */
   className?: string | undefined;
   /** Where focus lands on opening, when the first control is not the safe one. */
   initialFocus?: DialogPrimitive.Popup.Props["initialFocus"];
   /** Where focus lands on closing, when the control that opened it is gone. */
   finalFocus?: DialogPrimitive.Popup.Props["finalFocus"];
-  /** Names it by a heading inside it, for content that renders its own title rather than DialogTitle. */
-  "aria-labelledby"?: string | undefined;
-  children: React.ReactNode;
-}) {
-  const focus = {
-    ...(initialFocus === undefined ? {} : { initialFocus }),
-    ...(finalFocus === undefined ? {} : { finalFocus }),
-    ...(labelledBy === undefined ? {} : { "aria-labelledby": labelledBy }),
-  };
+}
+
+/** Other props land on the element holding the dialog role, in either shape. */
+function DialogContent({
+  className,
+  placement = "center",
+  size = "sm",
+  children,
+  ...props
+}: ContentProps) {
   const { shape, kind } = useDialogContext("DialogContent");
   if (shape === "touch" && kind === "place") {
     return (
       <DrawerContent
-        {...focus}
+        {...props}
         // The whole screen, edge to edge on a tablet too, with square corners that meet the display's own.
         className="data-[swipe-direction=left]:rounded-none data-[swipe-direction=right]:rounded-none data-[swipe-axis=x]:[--drawer-content-width:100%] data-[swipe-axis=x]:sm:[--drawer-content-width:100%]"
       >
@@ -161,7 +170,7 @@ function DialogContent({
   }
   if (shape === "touch") {
     return (
-      <DrawerContent {...focus}>
+      <DrawerContent {...props}>
         {/* One column that never grows past the drawer, so a long unbroken value truncates instead. */}
         <div
           data-slot="dialog-content"
@@ -185,7 +194,7 @@ function DialogContent({
         <DialogPrimitive.Popup
           data-slot="dialog-content"
           data-placement="end"
-          {...focus}
+          {...props}
           className={cn(
             // Slides in from the end edge over 260 ms and out in 200; under reduced motion it fades.
             "fixed inset-y-0 end-0 z-(--z-sheet) flex w-[min(92vw,400px)] flex-col overflow-y-auto overscroll-contain bg-plate text-text shadow-[-1px_0_0_var(--edge-2)] outline-none transition-[opacity,translate] duration-260 ease-(--ease-out) rtl:shadow-[1px_0_0_var(--edge-2)] data-starting-style:translate-x-full data-ending-style:translate-x-full data-ending-style:duration-200 rtl:data-starting-style:-translate-x-full rtl:data-ending-style:-translate-x-full motion-reduce:data-starting-style:translate-x-0 motion-reduce:data-starting-style:opacity-0 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-ending-style:opacity-0",
@@ -202,10 +211,11 @@ function DialogContent({
       {backdrop}
       <DialogPrimitive.Popup
         data-slot="dialog-content"
-        {...focus}
+        {...props}
         className={cn(
+          sizes[size],
           // The card's 6 px rise over 200 ms, leaving in 140.
-          "edge-2 fixed inset-0 z-(--z-sheet) m-auto grid h-fit max-h-[85dvh] w-[min(92vw,420px)] scroll-pb-24 gap-4 overflow-y-auto overscroll-contain rounded-xl bg-plate p-5 text-text outline-none transition-[opacity,translate,scale] duration-200 ease-(--ease-out) data-starting-style:translate-y-1.5 data-starting-style:scale-99 data-starting-style:opacity-0 data-ending-style:translate-y-1.5 data-ending-style:scale-99 data-ending-style:opacity-0 data-ending-style:duration-140 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+          "edge-2 fixed inset-0 z-(--z-sheet) m-auto grid h-fit max-h-[85dvh] scroll-pb-24 gap-4 overflow-y-auto overscroll-contain rounded-xl bg-plate p-5 text-text outline-none transition-[opacity,translate,scale] duration-200 ease-(--ease-out) data-starting-style:translate-y-1.5 data-starting-style:scale-99 data-starting-style:opacity-0 data-ending-style:translate-y-1.5 data-ending-style:scale-99 data-ending-style:opacity-0 data-ending-style:duration-140 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
           className,
         )}
       >

@@ -9,14 +9,19 @@ import { TabActions } from "./shell-chrome";
  * Back names the screen above: a place to link to, or an action when there is no route. With
  * neither, it is the name alone, for the moment before the screen knows where back goes.
  */
-export type ScreenBack =
+export type Back =
   | {
       label: string;
       to: string;
       params?: Record<string, string> | undefined;
       hash?: string | undefined;
     }
-  | { label: string; onClick: () => void }
+  | {
+      label: string;
+      onClick: () => void;
+      /** The icon's accessible name where the label is not drawn, as in a dialog's bar. */
+      name?: string | undefined;
+    }
   | { label: string; to?: undefined; onClick?: undefined };
 
 interface Props {
@@ -25,7 +30,7 @@ interface Props {
   /** Left undefined while it loads, and a skeleton holds its line. */
   title?: ReactNode | undefined;
   sub?: ReactNode | undefined;
-  back?: ScreenBack | undefined;
+  back?: Back | undefined;
   /** The screen's own controls, mounted once: in the bar on a phone, beside the title on a desktop. */
   actions?: ReactNode | undefined;
   /** A short line beside the title at every width, such as Saved. */
@@ -44,7 +49,7 @@ interface Props {
   children: ReactNode;
 }
 
-function Back({ back }: { back: ScreenBack }) {
+function BackLink({ back }: { back: Back }) {
   if ("onClick" in back && back.onClick) {
     return <BackButton label={back.label} onClick={back.onClick} />;
   }
@@ -109,7 +114,7 @@ export function Screen({
   ) : (
     <TopBar
       nested={!tab && backOnDesktop}
-      back={tab ? <TileLockup size="bar" /> : back && <Back back={back} />}
+      back={tab ? <TileLockup size="bar" /> : back && <BackLink back={back} />}
       actions={tab ? <TabActions /> : beside ? undefined : actions}
     />
   );

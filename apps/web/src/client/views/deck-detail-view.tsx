@@ -910,12 +910,12 @@ export function DeckDetailView({
         )}
         <DropdownMenuSeparator />
         {member ? (
-          <DropdownMenuItem variant="destructive" onClick={member.onLeave}>
+          <DropdownMenuItem variant="danger" onClick={member.onLeave}>
             <LogOut />
             <Trans>Leave deck</Trans>
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem variant="destructive" onClick={owner?.onArchiveDeck} disabled={!owner}>
+          <DropdownMenuItem variant="danger" onClick={owner?.onArchiveDeck} disabled={!owner}>
             <Archive />
             <Trans>Archive</Trans>
           </DropdownMenuItem>

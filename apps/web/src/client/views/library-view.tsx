@@ -189,7 +189,7 @@ export function LibraryView({
                 )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  variant="destructive"
+                  variant="danger"
                   onClick={() => onDeleteSeries?.(s)}
                   disabled={!onDeleteSeries}
                 >

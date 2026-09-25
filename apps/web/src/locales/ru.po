@@ -3218,11 +3218,11 @@ msgstr "Сфотографировать"
 msgid "Tap Add to Home Screen."
 msgstr "Коснись «На экран “Домой”»."
 
-msgid "Tell Lymi what broke or what it should do. Replies come to your email."
-msgstr "Расскажи Lymi, что сломалось или что стоит добавить. Ответ придёт на твою почту."
-
 msgid "Technology"
 msgstr "Технологии"
+
+msgid "Tell Lymi what broke or what it should do. Replies come to your email."
+msgstr "Расскажи Lymi, что сломалось или что стоит добавить. Ответ придёт на твою почту."
 
 msgid "Term"
 msgstr "Термин"

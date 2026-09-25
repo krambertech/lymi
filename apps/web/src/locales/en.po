@@ -3218,11 +3218,11 @@ msgstr "Take photo"
 msgid "Tap Add to Home Screen."
 msgstr "Tap Add to Home Screen."
 
-msgid "Tell Lymi what broke or what it should do. Replies come to your email."
-msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
-
 msgid "Technology"
 msgstr "Technology"
+
+msgid "Tell Lymi what broke or what it should do. Replies come to your email."
+msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
 
 msgid "Term"
 msgstr "Term"

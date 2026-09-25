@@ -25,10 +25,10 @@ The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px fro
 
 ```tsx
 // Correct: a section heading
-<h2 className="text-lg font-medium">{t`Keeps slipping`}</h2>
+<h2 className="text-lg font-medium">{t`Also on your list`}</h2>
 
 // Incorrect: off the scale, and bold
-<h2 className="text-[18px] font-bold">{t`Keeps slipping`}</h2>
+<h2 className="text-[18px] font-bold">{t`Also on your list`}</h2>
 ```
 
 ## Weight

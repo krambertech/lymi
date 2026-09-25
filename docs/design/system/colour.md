@@ -74,7 +74,7 @@ Learning is blue because blue is furthest from amber, `danger` and `good`, so a 
 
 ## Grades
 
-Forgot is a grade, not a state. Its mark is the red turn-back arrow wherever it shows: the Forgot grade, the Forgot today tile, Review forgotten at the end of a review, and the chip on a relearning card under review, which says **Forgotten recently** rather than the schedule's name for it. Everywhere else relearning is Learning, because a lapse on a word's schedule table may be months old.
+Forgot is a grade, not a state. Its mark is the red turn-back arrow wherever it shows: the Forgot grade, the Forgotten today tile on Today, Review forgotten at the end of a review, and the chip on a relearning card under review, which says **Forgotten recently** rather than the schedule's name for it. Everywhere else relearning is Learning, because a lapse on a word's schedule table may be months old.
 
 The grade icons use `grade-forgot` (`danger`), `grade-hard` (`muted`), `grade-good` (`good`) and `grade-easy` (`amber-text`), from `GRADES` in `components/grade.tsx`.
 

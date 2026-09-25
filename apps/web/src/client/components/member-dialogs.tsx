@@ -3,6 +3,7 @@ import { InviteInput } from "@lymi/core";
 import { useEffect, useId, useState } from "react";
 import type { Invitation, Member } from "../lib/api";
 import { Button } from "./button";
+import { InlineError } from "./inline-error";
 import {
   Dialog,
   DialogContent,
@@ -48,8 +49,8 @@ export function RemoveMemberDialog({
           </DialogDescription>
         </DialogHeader>
         {error && (
-          <p className="text-sm text-danger" role="alert">
-            {error}
+          <p className="text-sm" role="alert">
+            <InlineError>{error}</InlineError>
           </p>
         )}
         <DialogFooter>
@@ -140,8 +141,8 @@ export function CancelInvitationDialog({
           </DialogDescription>
         </DialogHeader>
         {error && (
-          <p className="text-sm text-danger" role="alert">
-            {error}
+          <p className="text-sm" role="alert">
+            <InlineError>{error}</InlineError>
           </p>
         )}
         <DialogFooter>

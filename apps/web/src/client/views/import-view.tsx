@@ -25,6 +25,7 @@ import {
   SOURCE_NAMES,
   type Summary,
 } from "../components/import-parts";
+import { InlineError } from "../components/inline-error";
 import { Screen, type ScreenBack } from "../components/layout/screen";
 import { Progress } from "../components/progress";
 import { Skeleton } from "../components/skeleton";
@@ -176,8 +177,8 @@ export function ImportStartView({
           <Trans>Choose file</Trans>
         </Button>
         {message && (
-          <p className="text-sm text-danger" role="alert">
-            {message}
+          <p className="text-sm" role="alert">
+            <InlineError>{message}</InlineError>
           </p>
         )}
       </section>
@@ -339,8 +340,8 @@ export function ImportWorkingView({
             }}
           />
           {refused && (
-            <p className="text-sm text-danger" role="alert">
-              {refused}
+            <p className="text-sm" role="alert">
+              <InlineError>{refused}</InlineError>
             </p>
           )}
           <div className="flex flex-wrap gap-2">
@@ -391,8 +392,8 @@ export function ImportWorkingView({
         <p className="text-base text-text-2 tabular-nums">{detail}</p>
         {upload?.status === "failed" && (
           <div className="flex flex-wrap items-center gap-2">
-            <p className="flex-1 text-sm text-danger" role="alert">
-              {upload.error}
+            <p className="flex-1 text-sm" role="alert">
+              <InlineError>{upload.error}</InlineError>
             </p>
             <Button variant="primary" onClick={onRetryUpload}>
               <RotateCcw aria-hidden="true" />
@@ -560,8 +561,8 @@ export function ImportPreviewView({
           <Figure value={preview?.decks.length} label={t`decks`} loading={previewLoading} />
         </div>
         {previewError && (
-          <p className="text-sm text-danger" role="alert">
-            {previewError}
+          <p className="text-sm" role="alert">
+            <InlineError>{previewError}</InlineError>
           </p>
         )}
         {preview && (
@@ -731,8 +732,8 @@ export function ImportPreviewView({
 
       <div className="grid gap-2 border-t border-edge pt-5">
         {(checkError || confirmError) && (
-          <p className="text-center text-sm text-danger" role="alert">
-            {checkError ?? confirmError}
+          <p className="text-center text-sm" role="alert">
+            <InlineError>{checkError ?? confirmError}</InlineError>
           </p>
         )}
         <Button
@@ -917,8 +918,8 @@ export function ImportDoneView({
           )}
         </p>
         {actionError && (
-          <p className="text-sm text-danger" role="alert">
-            {actionError}
+          <p className="text-sm" role="alert">
+            <InlineError>{actionError}</InlineError>
           </p>
         )}
         {archived ? (

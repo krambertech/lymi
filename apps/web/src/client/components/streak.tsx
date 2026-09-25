@@ -8,6 +8,7 @@ import { streakFlameFor } from "../lib/flame";
 import { IconButton } from "./button";
 import { Flame } from "./flame";
 import { GoalPicker } from "./goal-picker";
+import { InlineError } from "./inline-error";
 import { PlaceBar } from "./layout/place-bar";
 import { SevenLights } from "./seven-lights";
 import { Skeleton } from "./skeleton";
@@ -308,9 +309,9 @@ export function StreakPanel({
                 </span>
               )}
               {goalStatus === "error" && (
-                <span className="text-danger">
+                <InlineError>
                   <Trans>Couldn’t save. Try again.</Trans>
-                </span>
+                </InlineError>
               )}
             </p>
           }

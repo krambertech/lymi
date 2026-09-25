@@ -55,7 +55,6 @@ export function SectionManager({
                     size="sm"
                     label={t`Move ${sectionName} up`}
                     aria-disabled={index === 0}
-                    className="aria-disabled:opacity-40"
                     onClick={() => index > 0 && onMove(section, -1)}
                   >
                     <ArrowUp />
@@ -64,7 +63,6 @@ export function SectionManager({
                     size="sm"
                     label={t`Move ${sectionName} down`}
                     aria-disabled={index === sections.length - 1}
-                    className="aria-disabled:opacity-40"
                     onClick={() => index < sections.length - 1 && onMove(section, 1)}
                   >
                     <ArrowDown />

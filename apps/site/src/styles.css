@@ -227,7 +227,7 @@
   --color-grade-forgot: var(--danger);
   --color-grade-hard: var(--muted);
   --color-grade-good: var(--good);
-  --color-grade-easy: var(--amber-text);
+  --color-grade-easy: var(--text);
   --color-ring: var(--ring);
   --color-scrim: var(--scrim);
   --color-toast-action: var(--toast-action);

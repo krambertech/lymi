@@ -214,7 +214,7 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
           variant={error ? "danger" : "secondary"}
           round
           className={className}
-          disabled={state === "loading"}
+          aria-disabled={state === "loading"}
           onClick={(e) => {
             e.stopPropagation();
             onPlay();

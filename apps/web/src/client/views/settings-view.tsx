@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
 import { Button } from "../components/button";
 import { ImportSources } from "../components/import-parts";
+import { InlineError } from "../components/inline-error";
 import { Screen } from "../components/layout/screen";
 import { Segmented } from "../components/segmented";
 import { SettingsGroup } from "../components/settings-group";
@@ -106,8 +107,10 @@ export function SettingsView({
           <Skeleton className="h-10 w-56 rounded-md" />
         )}
         {languageError && (
-          <p className="text-sm text-danger" role="alert">
-            <Trans>Couldn’t save the language. Check your connection and try again.</Trans>
+          <p className="text-sm" role="alert">
+            <InlineError>
+              <Trans>Couldn’t save the language. Check your connection and try again.</Trans>
+            </InlineError>
           </p>
         )}
       </SettingsGroup>

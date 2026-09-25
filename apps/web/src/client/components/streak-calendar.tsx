@@ -101,7 +101,6 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
             size="sm"
             aria-disabled={atStart || undefined}
             onClick={() => !atStart && onMonth(addMonths(month, -1))}
-            className="aria-disabled:pointer-events-none aria-disabled:opacity-35"
           >
             <ChevronLeft className="rtl:-scale-x-100" aria-hidden="true" />
           </IconButton>
@@ -110,7 +109,6 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
             size="sm"
             aria-disabled={atEnd || undefined}
             onClick={() => !atEnd && onMonth(addMonths(month, 1))}
-            className="aria-disabled:pointer-events-none aria-disabled:opacity-35"
           >
             <ChevronRight className="rtl:-scale-x-100" aria-hidden="true" />
           </IconButton>

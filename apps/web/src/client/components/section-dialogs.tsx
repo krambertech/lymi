@@ -5,6 +5,7 @@ import { Check, Plus } from "lucide-react";
 import { useId, useRef, useState } from "react";
 import type { Section } from "../lib/api";
 import { Button } from "./button";
+import { InlineError } from "./inline-error";
 import { RadioCard } from "./radio-card";
 import {
   Dialog,
@@ -124,8 +125,8 @@ function NameForm({
         <FieldError>{invalid}</FieldError>
       </Field>
       <div className="flex flex-wrap items-center justify-end gap-2">
-        <p className="min-w-0 flex-1 text-sm text-danger" role="status">
-          {error}
+        <p className="min-w-0 flex-1 text-sm" role="status">
+          {error && <InlineError>{error}</InlineError>}
         </p>
         <Button variant="ghost" onClick={onCancel}>
           <Trans>Cancel</Trans>
@@ -249,8 +250,8 @@ export function ArchivedSectionsDialog({
           </DialogDescription>
         </DialogHeader>
         {error ? (
-          <p className="text-sm text-danger" role="alert">
-            {error}
+          <p className="text-sm" role="alert">
+            <InlineError>{error}</InlineError>
           </p>
         ) : sections === undefined ? (
           <div className="grid gap-2" aria-hidden="true">
@@ -440,8 +441,8 @@ export function MoveToSectionDialog({
           </li>
         </ul>
         {error && (
-          <p className="text-sm text-danger" role="alert">
-            {error}
+          <p className="text-sm" role="alert">
+            <InlineError>{error}</InlineError>
           </p>
         )}
         <DialogFooter>

@@ -23,8 +23,8 @@ Continue only when the intended PR diff is isolated and understood.
 - Review the complete diff against the request and repository invariants. Remove scope creep, debug remnants, and accidental generated changes.
 - Run `pnpm verify:changed` plus any focused, E2E, visual, migration, or integration verification required by the change. Fix failures before opening the PR.
 - Derive a Conventional Commit title from the actual change and the Git workflow.
-- Copy [the pull request template](../../../.github/pull_request_template.md) to a temporary file, fill it, remove every guidance comment and unused optional section, and preserve its headings and order. Do not compose a parallel body from memory.
-- For any rendered UI change, capture and attach visual evidence by following [the screenshot guidance](references/screenshots.md). A browser screenshot visible only in the agent conversation is not attached evidence.
+- Write the body to the pull-request-description rules in `AGENTS.md`: copy [the template](../../../.github/pull_request_template.md) to a temporary file, fill it, and remove every guidance comment and unused optional section.
+- For any rendered UI change, capture and attach screenshots with [`references/screenshots.md`](references/screenshots.md). A screenshot visible only in the agent conversation is not attached.
 
 Continue only when the final diff is reviewable and every available required local check passes. Report unavailable or intentionally skipped checks honestly.
 

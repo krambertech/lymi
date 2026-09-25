@@ -4,7 +4,7 @@ The goal is to supervise the initial automated pipeline until the PR is review-r
 
 ## Observe
 
-- Use the runtime's wait or monitoring capability to watch required checks to a terminal result. A pending check is not success.
+- Watch required checks until each one passes or fails. Use the runtime's own PR monitor when it has one (in the Claude desktop app, the `ccd_pr` tools); otherwise run `gh pr checks <number> --watch --required`. A pending check is not success.
 - After each push, restart the watch for the new head commit.
 - When checks settle, inspect mergeability and initial bot or automated-review feedback, including inline comments.
 

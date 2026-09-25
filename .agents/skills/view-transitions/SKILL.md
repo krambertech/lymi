@@ -6,7 +6,7 @@ description: |
 
 # View transitions in Lymi
 
-The browser snapshots the old screen, runs your callback, snapshots the new one, and animates between them. TanStack Router does the calling: set `defaultViewTransition` on `createRouter` in [`main.tsx`](../../../apps/web/src/client/main.tsx) and every navigation goes through `document.startViewTransition`. Nothing is set today, so nothing animates yet.
+TanStack Router does the calling: set `defaultViewTransition` on `createRouter` in [`app-entry.tsx`](../../../apps/web/src/client/app-entry.tsx) and every navigation goes through `document.startViewTransition`. Check that file before starting; when the option is absent, nothing animates yet.
 
 React's `<ViewTransition>` component is **not** part of this. It lives in the React canary channel; Lymi is on React 19 stable and stays there. Everything here is the native API plus router config plus CSS.
 
@@ -18,7 +18,7 @@ React's `<ViewTransition>` component is **not** part of this. It lives in the Re
 | A shared element morphing across a navigation | View transitions |
 | A drag, a swipe, a spring, a gesture | Motion (`motion/react`) |
 | The lantern | Motion |
-| A bottom sheet | Vaul, which owns its own animation |
+| A drawer or dialog | Base UI's `Drawer` and `Dialog` in `components/ui`, which own their animation |
 
 View transitions animate *between two committed states*. Anything the finger is still touching needs a spring, not a snapshot.
 
@@ -27,7 +27,7 @@ View transitions animate *between two committed states*. Anything the finger is 
 Every transition communicates a spatial relationship. If you cannot say in one sentence what it tells the learner, don't add it.
 
 ```
-Does the navigation go deeper or come back? (list → card, home → deck)
+Does the navigation go deeper or come back? (Library → deck, deck → its settings)
 ├── Yes → directional slide, nav-forward / nav-back
 └── No
     ├── Sibling screens on the tab bar? → cross-fade, or nothing
@@ -66,7 +66,7 @@ Three things this buys, all of which the per-link alternative misses:
 Override per navigation where the rule is wrong:
 
 ```tsx
-<Link to="/decks/$deckId" params={{ deckId }} viewTransition={{ types: ["nav-forward"] }}>
+<Link to="/library/$deckId" params={{ deckId }} viewTransition={{ types: ["nav-forward"] }}>
 ```
 
 ## Matching a type in CSS

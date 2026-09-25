@@ -5,7 +5,7 @@ description: Run the Lymi product locally and put it in a chosen state. Use when
 
 # Local development
 
-Full detail is in [docs/local-dev.md](../../../docs/local-dev.md). This is the order of operations.
+[docs/local-dev.md](../../../docs/local-dev.md) owns the personas, the developer panel, the `pnpm local` commands and the `/api/dev` routes. This is the order of operations.
 
 ## Start
 
@@ -17,22 +17,13 @@ If the server logs a migration error, or `pnpm db:migrate` reports a table that 
 
 Navigate the tab to `/api/dev/sign-in?as=<persona>` on that port. The response sets the session cookie and redirects to Today. Never type a password, and never hand a password to the user to type; the persona accounts need none.
 
-Personas: `fresh` (nothing), `learner` (three decks, a few due, a streak, cards from an assistant), `streak` (fourteen days, nothing due), `rested` (a rest day yesterday, the banner on Today), `backlog` (everything due), `polyglot` (Ukrainian interface and meanings, a deck with no language). `pnpm local personas` prints them.
-
-Add `returnTo=/library` to land on another screen. Add `reset=1` to reseed.
+Pick the persona from the table in [Become a persona](../../../docs/local-dev.md#become-a-persona), or run `pnpm local personas`. Add `returnTo=/library` to land on another screen and `reset=1` to reseed.
 
 ## Change the state
 
-From a terminal, `pnpm local` does everything without a browser:
+Prefer `pnpm local` from a terminal: it needs no clicks and its output is text you can check. `pnpm local --help` lists the commands.
 
-```bash
-pnpm local state --as learner
-pnpm local due 5 --as learner
-pnpm local seed backlog --as learner --reset
-pnpm local reset --as fresh
-```
-
-From the browser, press the backtick key or the round button in the bottom-right corner to open the developer panel. It is five rows: persona, due count, data, language, theme. The first three are the app's Combobox: click the row's box, type to filter, press Enter (the key named `Enter`, not `Return`). Language and theme are segmented controls. The closed box shows the current value, so `find "Persona"` or a screenshot answers "which persona am I".
+Use the developer panel when the state is one only its Simulate actions reach. Press the backtick key to open it; [Change the state from the panel](../../../docs/local-dev.md#change-the-state-from-the-panel) describes each control.
 
 ## Verify
 

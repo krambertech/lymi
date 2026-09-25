@@ -21,7 +21,7 @@ function CardFace({ card }: { card: SampleCard }) {
   const { i18n } = useLingui();
   return (
     <div className="order-first mb-5 flex min-h-44 flex-col rounded-xl bg-plate p-5 edge @4xl:min-h-52">
-      <p className="text-2xs font-medium tracking-[0.06em] text-muted uppercase">
+      <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">
         {i18n._(card.label)}
       </p>
       <p

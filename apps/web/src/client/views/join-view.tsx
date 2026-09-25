@@ -124,7 +124,7 @@ function LiveLink({
             <Trans>{deck.owner.name} shared a deck</Trans>
           )}
         </p>
-        <h1 className="mt-3 max-w-full text-balance break-words text-[2.5rem] font-medium leading-[1.05] tracking-[-0.03em] @4xl:text-[3.25rem]">
+        <h1 className="mt-3 max-w-full text-balance break-words text-4xl font-medium leading-[1.05] tracking-[-0.03em] @4xl:text-5xl">
           {deck.name}
         </h1>
         <ul

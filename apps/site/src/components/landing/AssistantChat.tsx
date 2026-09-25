@@ -22,7 +22,7 @@ export function Added({ children, card }: AddedProps) {
         <span>{children}</span>
       </span>
       <span className="mt-2.5 block rounded-sm bg-amber-soft px-3 py-2">
-        <span className="block text-2xs tracking-[0.06em] text-amber-text uppercase">
+        <span className="block text-xs tracking-[0.06em] text-amber-text uppercase">
           {i18n._(card.label)}
         </span>
         <span

@@ -320,7 +320,7 @@ export function InsightsView({
             firstDay={activity.firstDay}
             goal={activity.goal}
             header={
-              <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
+              <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
                 <Trans>Day by day</Trans>
               </h2>
             }
@@ -331,7 +331,7 @@ export function InsightsView({
       {leeches.cards.length > 0 && (
         <section className="edge mt-3 overflow-hidden rounded-xl bg-plate">
           <div className="flex items-baseline justify-between gap-3 px-5 pt-5 pb-3">
-            <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">
+            <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
               <Trans>Often forgotten</Trans>
             </h2>
             <span className="text-xs text-muted">
@@ -353,7 +353,7 @@ export function InsightsView({
                 </span>
                 {/* Both numbers carry their unit: "7 of 12" alone leaves the reader to
                     guess which is which, even under the heading. */}
-                <span className="shrink-0 text-right text-sm text-muted tabular-nums">
+                <span className="shrink-0 text-end text-sm text-muted tabular-nums">
                   <Trans>
                     {c.lapses} forgotten <span className="text-muted/60">·</span>{" "}
                     <Plural value={c.reviews} one="# review" other="# reviews" />

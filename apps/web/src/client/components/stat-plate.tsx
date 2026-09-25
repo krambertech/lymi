@@ -45,7 +45,7 @@ export function StatPlate({
           with a control and one without still line up across the grid. */}
       <div className="flex min-h-[34px] flex-wrap items-center justify-between gap-x-3 gap-y-2">
         {/* h2: the plates sit directly under the page's h1, beside the sections below them. */}
-        <h2 className="text-2xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h2>
+        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h2>
         {control}
       </div>
       <p

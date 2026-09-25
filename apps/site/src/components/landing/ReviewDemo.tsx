@@ -60,7 +60,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
 
   return (
     <div className="rounded-md outline-offset-4">
-      <div className="mx-auto flex max-w-[380px] items-center justify-between text-2xs tracking-[0.06em] text-muted uppercase">
+      <div className="mx-auto flex max-w-[380px] items-center justify-between text-xs tracking-[0.06em] text-muted uppercase">
         <span>
           <Trans>Tonight</Trans>
         </span>
@@ -80,7 +80,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
             className="absolute inset-0 flex flex-col bg-plate p-6 text-center edge"
             style={{ borderRadius: 14 }}
           >
-            <p className="text-2xs tracking-[0.07em] text-amber-text uppercase">
+            <p className="text-xs tracking-[0.07em] text-amber-text uppercase">
               {i18n._(card.label)}
             </p>
             <motion.p

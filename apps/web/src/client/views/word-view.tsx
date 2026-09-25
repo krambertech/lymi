@@ -675,7 +675,7 @@ export function WordView({
                     setMoving(false);
                     owner?.onMove(d.id);
                   }}
-                  className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-left text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+                  className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-start text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
                 >
                   <span className="truncate font-medium">{d.name}</span>
                   <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
@@ -778,7 +778,7 @@ export function WordView({
                 key={item.key}
                 ref={i === HISTORY_ROWS ? firstOlderRef : undefined}
                 tabIndex={i === HISTORY_ROWS ? -1 : undefined}
-                className="grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-baseline gap-x-2.5 leading-5"
+                className="grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-baseline gap-x-2.5"
               >
                 {item.kind === "review" ? (
                   <GradeMark rating={item.review.rating} className="row-span-2 self-start" />

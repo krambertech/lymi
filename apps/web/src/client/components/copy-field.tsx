@@ -56,7 +56,7 @@ export function CopyField({
         aria-live="off"
         aria-label={label}
         className={clsx(
-          "min-w-0 flex-1 select-all font-mono text-sm leading-5 text-text",
+          "min-w-0 flex-1 select-all font-mono text-sm text-text",
           singleLine ? "truncate" : "break-all py-1",
         )}
       >

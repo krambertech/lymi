@@ -346,7 +346,7 @@ export function PageHeader({
     <header className={clsx("pb-5 @3xl:pb-7", className)}>
       {eyebrow}
       <div className="flex min-h-10 flex-wrap items-center justify-between gap-x-3 gap-y-2">
-        <h1 className="min-w-0 text-2xl font-medium leading-[1.2] text-text">{title}</h1>
+        <h1 className="min-w-0 text-2xl font-medium text-text">{title}</h1>
         {actions && <div className="flex items-center gap-1.5">{actions}</div>}
       </div>
       {sub && <div className="mt-1.5 text-sm text-muted tabular-nums">{sub}</div>}

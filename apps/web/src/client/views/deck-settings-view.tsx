@@ -491,7 +491,7 @@ function InvitationRow({
           }
         />
         <DropdownMenuContent aria-label={t`Options for ${invitation.email}`} align="end">
-          <DropdownMenuItem variant="destructive" onClick={onCancel}>
+          <DropdownMenuItem variant="danger" onClick={onCancel}>
             <MailX />
             <Trans>Cancel invitation</Trans>
           </DropdownMenuItem>
@@ -532,7 +532,7 @@ function MemberRow({
           }
         />
         <DropdownMenuContent aria-label={t`Options for ${member.name}`} align="end">
-          <DropdownMenuItem variant="destructive" onClick={onRemove}>
+          <DropdownMenuItem variant="danger" onClick={onRemove}>
             <UserMinus />
             <Trans>Remove from deck</Trans>
           </DropdownMenuItem>

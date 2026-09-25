@@ -42,7 +42,7 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
   });
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,440px)]">
+      <DialogContent>
         <DialogTitle>{t`New deck`}</DialogTitle>
         <NewDeckForm
           key={open ? "open" : "closed"}

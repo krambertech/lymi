@@ -26,7 +26,7 @@ import {
   type Summary,
 } from "../components/import-parts";
 import { InlineError } from "../components/inline-error";
-import { Screen, type ScreenBack } from "../components/layout/screen";
+import { type Back, Screen } from "../components/layout/screen";
 import { Progress } from "../components/progress";
 import { Skeleton } from "../components/skeleton";
 import type { Import, ImportPreview } from "../lib/api";
@@ -52,7 +52,7 @@ function Shell({
 }: {
   title: string;
   sub?: ReactNode;
-  back?: ScreenBack | undefined;
+  back?: Back | undefined;
   children: ReactNode;
 }) {
   return (
@@ -76,7 +76,7 @@ export function ImportStartView({
   pending?: boolean | undefined;
   error?: string | undefined;
   guideUrl: string;
-  back?: ScreenBack | undefined;
+  back?: Back | undefined;
 }) {
   const { t } = useLingui();
   const input = useRef<HTMLInputElement>(null);
@@ -302,7 +302,7 @@ export function ImportWorkingView({
   onResume: (file: File) => void;
   onCancel: () => void;
   cancelling?: boolean | undefined;
-  back?: ScreenBack | undefined;
+  back?: Back | undefined;
 }) {
   const { t, i18n } = useLingui();
   const input = useRef<HTMLInputElement>(null);
@@ -492,7 +492,7 @@ export function ImportPreviewView({
   confirmError?: string | undefined;
   onCancel: () => void;
   cancelling?: boolean | undefined;
-  back?: ScreenBack | undefined;
+  back?: Back | undefined;
 }) {
   const { t, i18n } = useLingui();
   const [checked, setChecked] = useState<Set<string>>(new Set());
@@ -822,7 +822,7 @@ export function ImportDoneView({
   restoring?: boolean | undefined;
   actionError?: string | undefined;
   openLibrary: ReactNode;
-  back?: ScreenBack | undefined;
+  back?: Back | undefined;
 }) {
   const { t, i18n } = useLingui();
   const counts = item.counts;
@@ -961,7 +961,7 @@ export function ImportStoppedView({
   guideUrl: string;
   onArchive: () => void;
   archiving?: boolean | undefined;
-  back?: ScreenBack | undefined;
+  back?: Back | undefined;
 }) {
   const { t, i18n } = useLingui();
   const added = item.counts?.added ?? 0;

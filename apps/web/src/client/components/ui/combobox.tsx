@@ -1,31 +1,45 @@
 import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox";
+import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
+import { mergeProps } from "@base-ui/react/merge-props";
 import type { BaseUIEvent } from "@base-ui/react/types";
 import { cn } from "cn";
-import { Check, ChevronDown, Search } from "lucide-react";
+import { Check, Search } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
+import { useControllableState } from "../../lib/use-controllable-state";
+import { useMergedRefs } from "../../lib/use-merged-refs";
 import { FluidHighlight } from "../fluid-highlight";
 import {
   Drawer,
   DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
   DrawerVirtualKeyboardProvider,
   useKeyboardHandoff,
 } from "./drawer";
 import { useField, useFieldControl } from "./field";
 import { controlBase, controlSize } from "./input";
+import {
+  choicePopupClassName,
+  choiceRowClassName,
+  DrawerListTitle,
+  listSeparatorClassName,
+  type Shape,
+  TriggerChevron,
+  touchRowClassName,
+  useListName,
+} from "./overlay-list";
 
 // shadcn's Combobox in the machine's shape: a panel under the box on a desktop, a drawer on touch. ADR 0017.
 
-type Shape = "desktop" | "touch";
+type OpenChangeDetails =
+  | ComboboxPrimitive.Root.ChangeEventDetails
+  | DrawerPrimitive.Root.ChangeEventDetails;
 
 interface ComboboxContextValue {
   shape: Shape;
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: (open: boolean, details?: OpenChangeDetails) => void;
   disabled: boolean;
   trigger: React.RefObject<HTMLButtonElement | null>;
   input: React.RefObject<HTMLInputElement | null>;
@@ -47,7 +61,8 @@ type ComboboxProps<Value, Multiple extends boolean | undefined, Item> = Omit<
   ComboboxPrimitive.Root.Props<Value, Multiple, Item>,
   "onOpenChange" | "inline"
 > & {
-  onOpenChange?: ((open: boolean) => void) | undefined;
+  /** Base UI's details come second; a close the part makes itself, such as Tab leaving the drawer, sends none. */
+  onOpenChange?: ((open: boolean, details?: OpenChangeDetails) => void) | undefined;
 };
 
 // The pointer's fill is its own, so Enter takes the keyboard's row, never the one a resting pointer is on.
@@ -62,15 +77,11 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
 }: ComboboxProps<Value, Multiple, Item>) {
   const field = useField();
   const disabled = disabledProp || Boolean(field?.disabled);
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
-  const open = controlledOpen ?? uncontrolledOpen;
-  const setOpen = React.useCallback(
-    (next: boolean) => {
-      setUncontrolledOpen(next);
-      onOpenChange?.(next);
-    },
-    [onOpenChange],
-  );
+  const [open, setOpen] = useControllableState<boolean, [details?: OpenChangeDetails]>({
+    value: controlledOpen,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  });
   const shape = useOverlayShape(open);
   const trigger = React.useRef<HTMLButtonElement>(null);
   const input = React.useRef<HTMLInputElement>(null);
@@ -88,7 +99,7 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
         {...props}
         disabled={disabled}
         open={open}
-        onOpenChange={(next) => setOpen(next)}
+        onOpenChange={setOpen}
         onOpenChangeComplete={shape === "desktop" ? onOpenChangeComplete : undefined}
         inline={shape === "touch"}
       >
@@ -97,7 +108,7 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
         ) : (
           <Drawer
             open={open}
-            onOpenChange={(next) => setOpen(next)}
+            onOpenChange={setOpen}
             onOpenChangeComplete={(next) => {
               handoff.handOff(next);
               onOpenChangeComplete?.(next);
@@ -113,21 +124,26 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
   );
 }
 
-interface TriggerProps {
-  id?: string | undefined;
-  "aria-describedby"?: string | undefined;
-  "aria-invalid"?: boolean | undefined;
-  className?: string | undefined;
+interface TriggerProps extends React.ComponentProps<"button"> {
   children: React.ReactNode;
 }
 
 const setInputValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set;
 
 /** The box. Put a `ComboboxValue` inside; the chevron is already there. */
-function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
+function ComboboxTrigger({
+  id,
+  "aria-describedby": describedBy,
+  "aria-invalid": invalid,
+  ref: refProp,
+  className,
+  children,
+  ...props
+}: TriggerProps) {
   const { shape, open, setOpen, disabled, trigger, input, handoff } =
     useCombobox("ComboboxTrigger");
-  const a11y = useFieldControl(props);
+  const a11y = useFieldControl({ id, "aria-describedby": describedBy, "aria-invalid": invalid });
+  const ref = useMergedRefs(trigger, refProp);
   const typed = React.useRef("");
   // A letter on the closed box opens it with that letter searched; letters typed before the field has focus are kept.
   const onKeyDown = (e: BaseUIEvent<React.KeyboardEvent<HTMLButtonElement>>) => {
@@ -170,43 +186,36 @@ function ComboboxTrigger({ className, children, ...props }: TriggerProps) {
     "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:not-aria-invalid:edge-2",
     className,
   );
-  const chevron = (
-    <ChevronDown
-      className="size-4 shrink-0 text-muted transition-transform duration-150 motion-reduce:transition-none [[data-popup-open]>&]:rotate-180"
-      aria-hidden="true"
-    />
-  );
   if (shape === "touch") {
     // The drawer's own trigger: Base UI's would toggle the list a second time on the same tap.
     return (
       <DrawerTrigger
-        ref={trigger}
+        ref={ref}
         data-slot="combobox-trigger"
+        {...mergeProps<"button">({ onClick: handoff.warmUp, onKeyDown }, props)}
         {...a11y}
         role="combobox"
         aria-haspopup="dialog"
         aria-expanded={open}
         data-popup-open={open || undefined}
         disabled={disabled}
-        onClick={handoff.warmUp}
-        onKeyDown={onKeyDown}
         className={classes}
       >
         {children}
-        {chevron}
+        <TriggerChevron />
       </DrawerTrigger>
     );
   }
   return (
     <ComboboxPrimitive.Trigger
-      ref={trigger}
+      ref={ref}
       data-slot="combobox-trigger"
+      {...mergeProps<"button">({ onKeyDown }, props)}
       {...a11y}
-      onKeyDown={onKeyDown}
       className={classes}
     >
       {children}
-      {chevron}
+      <TriggerChevron />
     </ComboboxPrimitive.Trigger>
   );
 }
@@ -238,14 +247,12 @@ function ComboboxValue({ placeholder, className, children }: ValueProps) {
   );
 }
 
-interface ContentProps {
-  /** Names the panel, and titles the drawer on touch, so it still says what is being chosen. */
-  "aria-label": string;
+interface ContentProps extends React.ComponentProps<"div"> {
+  /** Names the panel and titles the drawer on touch. Inside a Field its label does both, so leave this out there. */
+  "aria-label"?: string | undefined;
   side?: "top" | "bottom" | undefined;
   align?: "start" | "center" | "end" | undefined;
   sideOffset?: number | undefined;
-  className?: string | undefined;
-  children: React.ReactNode;
 }
 
 /** The panel. Holds a `ComboboxInput`, a `ComboboxEmpty` and a `ComboboxList`, in that order. */
@@ -261,7 +268,10 @@ function AnchoredContent({
   sideOffset = 6,
   className,
   children,
+  ...props
 }: ContentProps) {
+  const { open } = useCombobox("ComboboxContent");
+  const name = useListName(label, open);
   return (
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Positioner
@@ -272,10 +282,11 @@ function AnchoredContent({
       >
         <ComboboxPrimitive.Popup
           data-slot="combobox-content"
-          aria-label={label}
+          {...name.props}
+          {...props}
           className={cn(
-            // Unfolds from the edge nearest the box, 4 px and scale 0.98 over 140 ms, leaving in 100.
-            "edge-2 flex max-h-[min(22rem,var(--available-height))] w-(--anchor-width) min-w-56 origin-(--transform-origin) flex-col overflow-hidden rounded-md bg-plate text-text outline-none transition-[opacity,translate,scale] duration-140 ease-(--ease-out) data-starting-style:scale-98 data-starting-style:opacity-0 data-ending-style:scale-98 data-ending-style:opacity-0 data-ending-style:duration-100 data-[side=bottom]:data-starting-style:-translate-y-1 data-[side=bottom]:data-ending-style:-translate-y-1 data-[side=top]:data-starting-style:translate-y-1 data-[side=top]:data-ending-style:translate-y-1 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+            choicePopupClassName,
+            "flex max-h-[min(22rem,var(--available-height))] w-(--anchor-width) min-w-56 flex-col overflow-hidden",
             className,
           )}
         >
@@ -305,9 +316,20 @@ function tabNeighbour(from: HTMLElement, backwards: boolean, skip: Element | nul
 }
 
 // One list height while it filters, so the drawer does not jump with every letter. Tab moves on, as from the panel.
-function DrawerSearchContent({ "aria-label": label, className, children }: ContentProps) {
-  const { handoff, trigger, setOpen } = useCombobox("ComboboxContent");
+function DrawerSearchContent({
+  "aria-label": label,
+  side: _side,
+  align: _align,
+  sideOffset: _sideOffset,
+  ref: refProp,
+  className,
+  children,
+  ...props
+}: ContentProps) {
+  const { open, handoff, trigger, setOpen } = useCombobox("ComboboxContent");
+  const name = useListName(label, open);
   const ref = React.useRef<HTMLDivElement>(null);
+  const refs = useMergedRefs(ref, refProp);
   const tabbed = React.useRef<"forward" | "back" | null>(null);
   return (
     <DrawerContent
@@ -327,12 +349,11 @@ function DrawerSearchContent({ "aria-label": label, className, children }: Conte
         setOpen(false);
       }}
     >
-      <DrawerHeader className="ps-4.5 pt-1">
-        <DrawerTitle className="text-sm font-medium text-text-2">{label}</DrawerTitle>
-      </DrawerHeader>
+      <DrawerListTitle>{name.title}</DrawerListTitle>
       <div
-        ref={ref}
+        ref={refs}
         data-slot="combobox-content"
+        {...props}
         className={cn("flex h-[min(24rem,60dvh)] flex-col px-2 pt-2", className)}
       >
         {children}
@@ -341,15 +362,15 @@ function DrawerSearchContent({ "aria-label": label, className, children }: Conte
   );
 }
 
-interface InputProps {
-  /** Names the search field and fills it while it is empty. */
+interface InputProps extends Omit<React.ComponentProps<"input">, "defaultValue" | "value"> {
+  /** Names the search field, unless it has an `aria-label`, and fills it while it is empty. */
   placeholder: string;
-  className?: string | undefined;
 }
 
 /** The search field at the top of the panel. It takes focus as the panel opens. */
-function ComboboxInput({ placeholder, className }: InputProps) {
+function ComboboxInput({ placeholder, ref: refProp, className, ...props }: InputProps) {
   const { shape, input } = useCombobox("ComboboxInput");
+  const ref = useMergedRefs(input, refProp);
   return (
     <div
       className={cn(
@@ -360,19 +381,24 @@ function ComboboxInput({ placeholder, className }: InputProps) {
     >
       <Search className="size-4 shrink-0 text-muted" aria-hidden="true" />
       <ComboboxPrimitive.Input
-        ref={input}
+        ref={ref}
         data-slot="combobox-input"
-        onKeyDown={(e) => {
-          // With no row to take, Enter keeps the search open with what was typed.
-          if (e.key === "Enter" && !e.currentTarget.getAttribute("aria-activedescendant")) {
-            e.preventBaseUIHandler();
-            e.preventDefault();
-          }
-        }}
         aria-label={placeholder}
-        placeholder={placeholder}
         autoCapitalize="none"
         spellCheck={false}
+        {...mergeProps<"input">(
+          {
+            onKeyDown: (e) => {
+              // With no row to take, Enter keeps the search open with what was typed.
+              if (e.key === "Enter" && !e.currentTarget.getAttribute("aria-activedescendant")) {
+                e.preventBaseUIHandler();
+                e.preventDefault();
+              }
+            },
+          },
+          props,
+        )}
+        placeholder={placeholder}
         className={cn(
           controlSize,
           "min-w-0 flex-1 bg-transparent text-text outline-none placeholder:text-muted",
@@ -444,27 +470,19 @@ function ComboboxList<Item>({ className, children }: ListProps<Item>) {
   );
 }
 
-interface ItemProps {
-  value: unknown;
-  disabled?: boolean | undefined;
+interface ItemProps extends Omit<ComboboxPrimitive.Item.Props, "className" | "render"> {
   className?: string | undefined;
   children: React.ReactNode;
 }
 
 /** The check leads, in a slot every row keeps, so choosing one moves nothing. */
-function ComboboxItem({ value, disabled, className, children }: ItemProps) {
+function ComboboxItem({ className, children, ...props }: ItemProps) {
   const { shape } = useCombobox("ComboboxItem");
   return (
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
-      value={value}
-      disabled={disabled}
-      className={cn(
-        "relative flex h-11 w-full cursor-default items-center gap-2.5 rounded-sm px-2.5 text-start text-[1rem] text-text outline-none select-none md:h-10 md:text-base data-highlighted:bg-hover data-highlighted:text-text data-disabled:opacity-45 [[data-hovering]_&]:data-highlighted:bg-transparent [&_svg]:pointer-events-none [&_svg]:shrink-0",
-        // Pressed feedback for a row under a finger, where there is no hover.
-        shape === "touch" && "active:bg-hover",
-        className,
-      )}
+      {...props}
+      className={cn(choiceRowClassName, shape === "touch" && touchRowClassName, className)}
     >
       <span className="flex size-4 shrink-0 items-center justify-center" aria-hidden="true">
         <ComboboxPrimitive.ItemIndicator>
@@ -538,7 +556,7 @@ function ComboboxSeparator({ className }: { className?: string | undefined }) {
   return (
     <ComboboxPrimitive.Separator
       data-slot="combobox-separator"
-      className={cn("-mx-1 my-1 h-px bg-edge", className)}
+      className={listSeparatorClassName("edge", className)}
     />
   );
 }

@@ -52,7 +52,7 @@ export function SeriesSheet({ open, onOpenChange, series, ...rest }: SeriesSheet
   const { t } = useLingui();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,480px)]">
+      <DialogContent size="md">
         <DialogTitle>{series ? t`Edit series` : t`New series`}</DialogTitle>
         <SeriesForm
           key={open ? (series?.id ?? "new") : "closed"}
@@ -252,7 +252,7 @@ export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSer
   return (
     <Dialog open={!!series} onOpenChange={onOpenChange}>
       <DialogContent
-        className="w-[min(92vw,460px)]"
+        size="md"
         // The options button that opened it leaves with the series.
         finalFocus={() => {
           const gone = deleted.current;
@@ -365,7 +365,7 @@ export function MoveToSeriesDialog({
         onOpenChange(next);
       }}
     >
-      <DialogContent className="w-[min(92vw,420px)]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t`Move to series`}</DialogTitle>
           <DialogDescription>

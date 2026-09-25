@@ -239,6 +239,81 @@ describe("Dialog", () => {
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 
+  test.runIf(desktop)("takes its width from a size step, 420 px unless asked", async () => {
+    const steps = [
+      [undefined, 420],
+      ["md", 480],
+      ["lg", 560],
+    ] as const;
+    for (const [size, width] of steps) {
+      const screen = await render(
+        <Dialog defaultOpen>
+          <DialogContent size={size}>
+            <DialogTitle>Export</DialogTitle>
+          </DialogContent>
+        </Dialog>,
+      );
+      const popup = page.getByRole("dialog", { name: "Export" });
+      await expect.poll(() => popup.element().getBoundingClientRect().width).toBeCloseTo(width, 0);
+      await screen.unmount();
+    }
+  });
+
+  test("passes its own props and ref to the element holding the dialog role", async () => {
+    let slot: string | undefined;
+    await render(
+      <Dialog defaultOpen>
+        <DialogContent
+          data-testid="panel"
+          aria-describedby="panel-note"
+          ref={(el: HTMLDivElement | null) => {
+            if (el) slot = el.dataset.slot;
+          }}
+        >
+          <DialogTitle>New deck</DialogTitle>
+          <p id="panel-note">Decks hold cards.</p>
+        </DialogContent>
+      </Dialog>,
+    );
+    const panel = page.getByRole("dialog", { name: "New deck" });
+    await expect.element(panel).toHaveAttribute("data-testid", "panel");
+    await expect.element(panel).toHaveAttribute("aria-describedby", "panel-note");
+    expect(slot).toBe(desktop ? "dialog-content" : "drawer-popup");
+  });
+
+  test("hands Base UI's reason for closing to onOpenChange", async () => {
+    const onOpenChange = vi.fn();
+    const screen = await render(
+      <Dialog onOpenChange={onOpenChange}>
+        <DialogTrigger render={<button type="button">Shortcuts</button>} />
+        <DialogContent>
+          <DialogTitle>Keyboard shortcuts</DialogTitle>
+        </DialogContent>
+      </Dialog>,
+    );
+    await openWithKeyboard(screen.getByRole("button", { name: "Shortcuts" }));
+    await expect.element(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toBeVisible();
+    await userEvent.keyboard("{Escape}");
+
+    await expect.poll(() => onOpenChange.mock.lastCall?.[0]).toBe(false);
+    expect(onOpenChange.mock.lastCall?.[1]?.reason).toBe("escape-key");
+  });
+
+  test("a DialogClose takes its own children when it has no render", async () => {
+    await render(
+      <Dialog defaultOpen>
+        <DialogContent>
+          <DialogTitle>Keyboard shortcuts</DialogTitle>
+          <DialogClose data-testid="done">Done</DialogClose>
+        </DialogContent>
+      </Dialog>,
+    );
+    await expect.element(page.getByTestId("done")).toHaveTextContent("Done");
+    await page.getByRole("button", { name: "Done" }).click();
+
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
   test("closes from a DialogClose part", async () => {
     const screen = await render(
       <Dialog>

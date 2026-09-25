@@ -169,7 +169,7 @@ export function LearnerMenu({ name, email, variant, docsUrl, onSignOut, signingO
 
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            variant="destructive"
+            variant="danger"
             onClick={onSignOut}
             disabled={!onSignOut || signingOut}
           >

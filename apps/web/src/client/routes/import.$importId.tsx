@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { buttonClass } from "../components/button";
 import { ErrorState } from "../components/empty-state";
 import { type Choices, SOURCE_NAMES } from "../components/import-parts";
-import { Screen, type ScreenBack } from "../components/layout/screen";
+import { type Back, Screen } from "../components/layout/screen";
 import { toast } from "../components/ui/toast";
 import { api, errorMessage, type Import } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
@@ -180,7 +180,7 @@ function Ready({
   cancelling,
 }: {
   item: Import;
-  back: ScreenBack;
+  back: Back;
   onCancel: () => void;
   cancelling: boolean;
 }) {

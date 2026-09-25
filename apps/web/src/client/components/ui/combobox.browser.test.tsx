@@ -113,7 +113,7 @@ function Harness({
           <ComboboxTrigger>
             <ComboboxValue placeholder="Choose a language" />
           </ComboboxTrigger>
-          <ComboboxContent aria-label="Language">
+          <ComboboxContent>
             <ComboboxInput placeholder="Search languages" />
             <ComboboxEmpty>No language by that name.</ComboboxEmpty>
             <ComboboxList>
@@ -134,6 +134,61 @@ function Harness({
 }
 
 describe("Combobox", () => {
+  test("inside a Field, the panel is named by the Field's label", async () => {
+    await render(<Harness />);
+    await openWithKeyboard();
+
+    const panel = document.querySelector<HTMLElement>('[data-slot="combobox-content"]');
+    if (desktop) {
+      const labelledBy = panel?.getAttribute("aria-labelledby");
+      expect(labelledBy && document.getElementById(labelledBy)?.textContent).toBe("Language");
+    } else {
+      await expect.element(page.getByRole("dialog", { name: "Language" })).toBeVisible();
+    }
+  });
+
+  test("passes its own props and refs to the box, the panel, the search field and each row", async () => {
+    const refs: Record<string, string | undefined> = {};
+    const keep = (part: string) => (el: HTMLElement | null) => {
+      if (el) refs[part] = el.dataset.slot;
+    };
+    await render(
+      <Combobox items={LANGUAGES} defaultValue={LANGUAGES[0]}>
+        <ComboboxTrigger aria-label="Language" data-testid="box" ref={keep("box")}>
+          <ComboboxValue />
+        </ComboboxTrigger>
+        <ComboboxContent aria-label="Language" data-testid="panel" ref={keep("panel")}>
+          <ComboboxInput
+            placeholder="Search languages"
+            data-testid="search"
+            enterKeyHint="search"
+            ref={keep("search")}
+          />
+          <ComboboxList>
+            {(language: Language) => (
+              <ComboboxItem key={language.value} value={language} data-testid={language.value}>
+                {language.label}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>,
+    );
+    await openWithKeyboard();
+
+    await expect.element(page.getByTestId("box")).toHaveAttribute("data-slot", "combobox-trigger");
+    await expect
+      .element(page.getByTestId("panel"))
+      .toHaveAttribute("data-slot", "combobox-content");
+    await expect.element(page.getByTestId("search")).toHaveAttribute("enterkeyhint", "search");
+    await expect.element(page.getByTestId("ar")).toHaveAttribute("data-slot", "combobox-item");
+    expect(refs).toEqual({
+      box: "combobox-trigger",
+      panel: "combobox-content",
+      search: "combobox-input",
+    });
+  });
+
   test("a quick tap opens it, and it stays open", async () => {
     await render(<Harness />);
     const trigger = box().element();

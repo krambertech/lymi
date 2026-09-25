@@ -13,13 +13,7 @@ import { Segmented } from "../components/segmented";
 import { SettingsGroup } from "../components/settings-group";
 import { Skeleton } from "../components/skeleton";
 import { Field, FieldLabel } from "../components/ui/field";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/ui/select";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "../components/ui/select";
 import type { Me } from "../lib/api";
 import type { ThemeChoice } from "../lib/theme";
 
@@ -94,13 +88,7 @@ export function SettingsView({
               <SelectTrigger>
                 <SelectValue placeholder={t`Choose one`} />
               </SelectTrigger>
-              <SelectContent aria-label={t`Language`}>
-                {LANGUAGES.map((o) => (
-                  <SelectItem key={o.value} value={o.value}>
-                    {o.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
+              <SelectContent />
             </Select>
           </Field>
         ) : (

@@ -55,7 +55,7 @@ export function SectionNameDialog({
   const { t } = useLingui();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,420px)]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{section ? t`Rename section` : t`New section`}</DialogTitle>
           {!section && (
@@ -171,7 +171,7 @@ export function ArchiveSectionDialog({
         onOpenChange(open);
       }}
     >
-      <DialogContent className="w-[min(92vw,460px)]">
+      <DialogContent size="md">
         <DialogHeader>
           <DialogTitle>{t`Archive “${sectionName}”?`}</DialogTitle>
           <DialogDescription>
@@ -243,7 +243,7 @@ export function ArchivedSectionsDialog({
   const { t } = useLingui();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,460px)]">
+      <DialogContent size="md">
         <DialogHeader>
           <DialogTitle>{t`Archived sections`}</DialogTitle>
           <DialogDescription>
@@ -353,7 +353,7 @@ export function MoveToSectionDialog({
         onOpenChange(next);
       }}
     >
-      <DialogContent className="w-[min(92vw,420px)]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {term && count === 1 ? (
@@ -479,7 +479,7 @@ export function StartEarlyDialog({ target: given, onOpenChange, onStart }: Start
   const cards = target?.opening.reduce((sum, s) => sum + s.total, 0) ?? 0;
   return (
     <Dialog open={!!given} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,440px)]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t`Start ${sectionName} early?`}</DialogTitle>
           <DialogDescription>

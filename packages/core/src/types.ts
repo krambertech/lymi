@@ -150,6 +150,12 @@ export const DeckInput = z.object({
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
+/** A deck's text limits, read off `DeckInput` the way `cardLimits` reads a card's. */
+export const deckLimits = {
+  name: DeckInput.shape.name.maxLength,
+  description: DeckInput.shape.description.unwrap().unwrap().maxLength,
+} satisfies Record<string, number | null>;
+
 export const NewDeckInput = DeckInput.extend({ id: ClientId.optional() });
 export type NewDeckInput = z.infer<typeof NewDeckInput>;
 
@@ -364,6 +370,10 @@ export type SeriesInput = z.infer<typeof SeriesInput>;
 export const SeriesPatch = z.object({ name: SeriesName });
 export type SeriesPatch = z.infer<typeof SeriesPatch>;
 
+export const seriesLimits = {
+  name: SeriesName.maxLength,
+} satisfies Record<string, number | null>;
+
 /** The series' active decks, all of them, in their new order. A full list, so a retry lands the same. */
 export const SeriesDecksInput = z.object({
   deckIds: DeckIds.meta({
@@ -413,6 +423,10 @@ export type SectionInput = z.infer<typeof SectionInput>;
 
 export const SectionPatch = z.object({ name: SectionName });
 export type SectionPatch = z.infer<typeof SectionPatch>;
+
+export const sectionLimits = {
+  name: SectionName.maxLength,
+} satisfies Record<string, number | null>;
 
 export const SectionOrderInput = z.object({
   sectionIds: z
@@ -725,3 +739,7 @@ export const ApiKeyInput = z.object({
   scope: Scope,
 });
 export type ApiKeyInput = z.infer<typeof ApiKeyInput>;
+
+export const apiKeyLimits = {
+  name: ApiKeyInput.shape.name.maxLength,
+} satisfies Record<string, number | null>;

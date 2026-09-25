@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { SectionInput } from "@lymi/core";
+import { SectionInput, sectionLimits } from "@lymi/core";
 import { clsx } from "clsx";
 import { Check, Plus } from "lucide-react";
 import { useId, useRef, useState } from "react";
@@ -123,7 +123,7 @@ function NameForm({
           placeholder={t`Lesson 15`}
           autoComplete="off"
           enterKeyHint="done"
-          maxLength={80}
+          maxLength={sectionLimits.name ?? undefined}
         />
         <FieldError>{invalid}</FieldError>
       </Field>
@@ -419,7 +419,7 @@ export function MoveToSectionDialog({
                       placeholder={t`Lesson 15`}
                       autoComplete="off"
                       enterKeyHint="done"
-                      maxLength={80}
+                      maxLength={sectionLimits.name ?? undefined}
                       className="min-w-0 flex-1"
                     />
                     <Button variant="primary" type="submit" loading={creating}>

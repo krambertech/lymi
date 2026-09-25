@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { SeriesInput } from "@lymi/core";
+import { SeriesInput, seriesLimits } from "@lymi/core";
 import { clsx } from "clsx";
 import { ArrowDown, ArrowUp, Check, Plus } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
@@ -136,7 +136,7 @@ export function SeriesForm({
           placeholder={t`Learn Estonian`}
           autoComplete="off"
           enterKeyHint="done"
-          maxLength={80}
+          maxLength={seriesLimits.name ?? undefined}
         />
         <FieldError>{invalid.name}</FieldError>
       </Field>
@@ -419,7 +419,7 @@ export function MoveToSeriesDialog({
                       placeholder={t`Learn Estonian`}
                       autoComplete="off"
                       enterKeyHint="done"
-                      maxLength={80}
+                      maxLength={seriesLimits.name ?? undefined}
                       className="min-w-0 flex-1"
                     />
                     <Button variant="primary" type="submit" loading={creating}>

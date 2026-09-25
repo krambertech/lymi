@@ -1,7 +1,7 @@
 import type { I18n } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ApiKeyInput, type Scope } from "@lymi/core";
+import { ApiKeyInput, apiKeyLimits, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -205,7 +205,7 @@ function NewKeyForm({
             setName(e.target.value);
             setInvalid(({ name: _, ...rest }) => rest);
           }}
-          maxLength={32}
+          maxLength={apiKeyLimits.name ?? undefined}
           placeholder={t`Backup script on the laptop`}
           autoComplete="off"
           enterKeyHint="done"

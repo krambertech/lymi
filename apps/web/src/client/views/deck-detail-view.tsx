@@ -30,7 +30,7 @@ import {
   useState,
 } from "react";
 import { Avatar } from "../components/avatar";
-import { Button, buttonClass, IconButton } from "../components/button";
+import { Button, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { Screen, ScreenBar } from "../components/layout/screen";
@@ -935,9 +935,9 @@ export function DeckDetailView({
             title={t`This deck is no longer here`}
             body={t`It may have been archived, or you were removed from it.`}
             action={
-              <NavLink to="/library" className={buttonClass("primary")}>
+              <Button variant="primary" render={<NavLink to="/library" />}>
                 {t`Open Library`}
-              </NavLink>
+              </Button>
             }
           />
         ) : (

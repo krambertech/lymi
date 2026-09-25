@@ -2,7 +2,7 @@ import { createRef } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import { Button, buttonClass } from "./button";
+import { Button } from "./button";
 
 test("render swaps the element for a link that keeps the button's classes, inside and ref", async () => {
   const ref = createRef<HTMLAnchorElement>();
@@ -17,14 +17,17 @@ test("render swaps the element for a link that keeps the button's classes, insid
       Review
     </Button>,
   );
+  await render(
+    <Button variant="primary" size="lg" kbd="R" className="w-full">
+      Start
+    </Button>,
+  );
   const link = page.getByRole("link", { name: "Review" });
   await expect.element(link).toHaveAttribute("href", "/today");
   const el = link.element();
   expect(el.tagName).toBe("A");
   expect(el.hasAttribute("type")).toBe(false);
-  for (const name of buttonClass("primary", "lg", "w-full").split(" ")) {
-    expect(el.classList).toContain(name);
-  }
+  expect(el.className).toBe(page.getByRole("button", { name: "Start" }).element().className);
   expect(el.querySelector(":scope > span > span > kbd")?.textContent).toBe("R");
   expect(ref.current).toBe(el);
 });

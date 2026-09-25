@@ -1,6 +1,6 @@
 # Buttons
 
-`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live. `buttonClass` is the classes alone, for a place that takes only a class name.
+`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live.
 
 ## Which control
 

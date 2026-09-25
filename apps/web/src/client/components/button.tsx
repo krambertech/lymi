@@ -51,15 +51,6 @@ const sizes: Record<ButtonSize, string> = {
   xl: "h-16 px-(--btn-px) [--btn-px:20px] text-lg [&_svg]:size-5",
 };
 
-/** The button's classes on their own, for a place that takes only a class name. */
-export function buttonClass(
-  variant: ButtonVariant = "secondary",
-  size: ButtonSize = "md",
-  className?: string,
-) {
-  return clsx(base, iconSide, variants[variant], sizes[size], className);
-}
-
 /**
  * A button is never taken away for being unable to run yet. `disabled` drops it out of the
  * tab order and tells a screen reader nothing about why, so a form that greys out its submit

@@ -1,4 +1,5 @@
-import { Component, type ReactNode, useState } from "react";
+import type { BaseUIEvent } from "@base-ui/react/types";
+import { Component, type MouseEvent, type ReactNode, useState } from "react";
 import { describe, expect, inject, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -51,7 +52,7 @@ function Harness({ onEdit = () => {} }: { onEdit?: () => void }) {
         <DropdownMenuItem disabled>Move to…</DropdownMenuItem>
         <DropdownMenuLinkItem render={<a href="#settings" />}>Settings</DropdownMenuLinkItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">Archive</DropdownMenuItem>
+        <DropdownMenuItem variant="danger">Archive</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -108,7 +109,7 @@ test("the device rule matches the machine this browser stands in for", () => {
 });
 
 describe("DropdownMenu", () => {
-  test("renders every part in this shape: group, label, destructive row and inset", async () => {
+  test("renders every part in this shape: group, label, danger row and inset", async () => {
     const screen = await render(
       <DropdownMenu>
         <DropdownMenuTrigger render={<button type="button">Account</button>} />
@@ -118,7 +119,7 @@ describe("DropdownMenu", () => {
             <DropdownMenuItem inset>Settings</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">Sign out</DropdownMenuItem>
+          <DropdownMenuItem variant="danger">Sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>,
     );
@@ -134,7 +135,7 @@ describe("DropdownMenu", () => {
       .toHaveAttribute("data-inset");
     await expect
       .element(page.getByRole("menuitem", { name: "Sign out" }))
-      .toHaveAttribute("data-variant", "destructive");
+      .toHaveAttribute("data-variant", "danger");
     await expect.element(page.getByRole("separator")).toBeInTheDocument();
   });
 
@@ -323,6 +324,113 @@ describe("DropdownMenu", () => {
     await expect
       .element(page.getByRole("menuitemradio", { name: "A–Z" }))
       .toHaveAttribute("aria-checked", "true");
+  });
+
+  test("passes its own props and refs to the trigger, the menu and each row", async () => {
+    const refs: Record<string, string | undefined> = {};
+    const keep = (part: string) => (el: HTMLElement | null) => {
+      if (el) refs[part] = el.dataset.slot;
+    };
+    await render(
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          data-testid="trigger"
+          aria-keyshortcuts="O"
+          render={<button type="button">Options</button>}
+        />
+        <DropdownMenuContent aria-label="Options" data-testid="menu" ref={keep("menu")}>
+          <DropdownMenuItem data-testid="edit" aria-keyshortcuts="E" ref={keep("edit")}>
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuCheckboxItem data-testid="known" ref={keep("known")}>
+            Known
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuRadioGroup defaultValue="az">
+            <DropdownMenuRadioItem value="az" data-testid="az" ref={keep("az")}>
+              A–Z
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+          <DropdownMenuLinkItem render={<a href="#settings" />} data-testid="settings">
+            Settings
+          </DropdownMenuLinkItem>
+        </DropdownMenuContent>
+      </DropdownMenu>,
+    );
+    await expect.element(page.getByTestId("trigger")).toHaveAttribute("aria-keyshortcuts", "O");
+    await page.getByTestId("trigger").click();
+
+    await expect
+      .element(page.getByTestId("menu"))
+      .toHaveAttribute("data-slot", "dropdown-menu-content");
+    await expect.element(page.getByTestId("edit")).toHaveAttribute("aria-keyshortcuts", "E");
+    await expect.element(page.getByTestId("known")).toHaveAttribute("role", "menuitemcheckbox");
+    await expect.element(page.getByTestId("az")).toHaveAttribute("role", "menuitemradio");
+    await expect.element(page.getByTestId("settings")).toHaveAttribute("href", "#settings");
+    expect(refs).toEqual({
+      menu: "dropdown-menu-content",
+      edit: "dropdown-menu-item",
+      known: "dropdown-menu-checkbox-item",
+      az: "dropdown-menu-radio-item",
+    });
+  });
+
+  test("a row's click handler gets the event, and can keep the menu open", async () => {
+    const onPin = vi.fn((event: BaseUIEvent<MouseEvent<HTMLElement>>) => {
+      event.preventBaseUIHandler();
+    });
+    const onEdit = vi.fn();
+    const screen = await render(
+      <DropdownMenu>
+        <DropdownMenuTrigger render={<button type="button">Options</button>} />
+        <DropdownMenuContent aria-label="Options">
+          <DropdownMenuItem onClick={onPin}>Pin</DropdownMenuItem>
+          <DropdownMenuItem onClick={onEdit} closeOnClick={false}>
+            Edit
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>,
+    );
+    await openWithKeyboard(screen.getByRole("button", { name: "Options" }));
+    await page.getByRole("menuitem", { name: "Pin" }).click();
+
+    expect(onPin).toHaveBeenCalledOnce();
+    expect(onPin.mock.calls[0]?.[0].type).toBe("click");
+    await expect.element(page.getByRole("menu")).toBeVisible();
+
+    await page.getByRole("menuitem", { name: "Edit" }).click();
+    expect(onEdit).toHaveBeenCalledOnce();
+    await expect.element(page.getByRole("menu")).toBeVisible();
+  });
+
+  test("a checkbox row and a radio group keep their own state when left uncontrolled", async () => {
+    const screen = await render(
+      <DropdownMenu>
+        <DropdownMenuTrigger render={<button type="button">Filter</button>} />
+        <DropdownMenuContent aria-label="Filter">
+          <DropdownMenuCheckboxItem defaultChecked>Known</DropdownMenuCheckboxItem>
+          <DropdownMenuRadioGroup defaultValue="az">
+            <DropdownMenuRadioItem value="lesson" closeOnClick={false}>
+              Lesson
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="az" closeOnClick={false}>
+              A–Z
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>,
+    );
+    await openWithKeyboard(screen.getByRole("button", { name: "Filter" }));
+    const known = page.getByRole("menuitemcheckbox", { name: "Known" });
+    const lesson = page.getByRole("menuitemradio", { name: "Lesson" });
+    const az = page.getByRole("menuitemradio", { name: "A–Z" });
+    await expect.element(known).toHaveAttribute("aria-checked", "true");
+    await expect.element(az).toHaveAttribute("aria-checked", "true");
+
+    await known.click();
+    await expect.element(known).toHaveAttribute("aria-checked", "false");
+    await lesson.click();
+    await expect.element(lesson).toHaveAttribute("aria-checked", "true");
+    await expect.element(az).toHaveAttribute("aria-checked", "false");
   });
 
   test("a radio row that does not close on click keeps the menu open for the next choice", async () => {

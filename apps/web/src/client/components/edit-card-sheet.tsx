@@ -102,7 +102,10 @@ export function EditCardSheet({
 
   return (
     <Dialog open={!!card} onOpenChange={(open) => !open && close(true)}>
-      <DialogContent className="max-h-[92dvh] w-[min(92vw,560px)] [scrollbar-color:var(--edge-2)_transparent] [scrollbar-width:thin]">
+      <DialogContent
+        size="lg"
+        className="max-h-[92dvh] [scrollbar-color:var(--edge-2)_transparent] [scrollbar-width:thin]"
+      >
         <DialogTitle>{t`Edit card`}</DialogTitle>
         {shown && (
           <CardForm

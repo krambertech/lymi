@@ -126,7 +126,7 @@ export function LanguageField({ value, onChange, label, description, error }: La
         <ComboboxTrigger>
           <ComboboxValue />
         </ComboboxTrigger>
-        <ComboboxContent aria-label={fieldLabel}>
+        <ComboboxContent>
           <ComboboxInput placeholder={t`Search languages`} />
           <ComboboxEmpty>
             <Trans>No language by that name. Type its tag to use it anyway.</Trans>
@@ -256,7 +256,7 @@ export function DirectionCompact({
       </span>
       <Segmented
         value={value}
-        onChange={onChange}
+        onValueChange={onChange}
         label={t`How cards are asked`}
         options={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.short) }))}
       />

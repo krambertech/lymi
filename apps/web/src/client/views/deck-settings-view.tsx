@@ -491,7 +491,7 @@ function InvitationRow({
           }
         />
         <DropdownMenuContent aria-label={t`Options for ${invitation.email}`} align="end">
-          <DropdownMenuItem variant="destructive" onClick={onCancel}>
+          <DropdownMenuItem variant="danger" onClick={onCancel}>
             <MailX />
             <Trans>Cancel invitation</Trans>
           </DropdownMenuItem>
@@ -532,7 +532,7 @@ function MemberRow({
           }
         />
         <DropdownMenuContent aria-label={t`Options for ${member.name}`} align="end">
-          <DropdownMenuItem variant="destructive" onClick={onRemove}>
+          <DropdownMenuItem variant="danger" onClick={onRemove}>
             <UserMinus />
             <Trans>Remove from deck</Trans>
           </DropdownMenuItem>
@@ -633,7 +633,7 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
             )}
           >
             <RadioCard
-              bare
+              variant="bare"
               value="link"
               title={t`Anyone with the link`}
               description={t`Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress.`}

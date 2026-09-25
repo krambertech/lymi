@@ -18,6 +18,9 @@ interface FieldContextValue {
   disabled: boolean;
   /** A control that brings its own id; the label follows it. */
   claimId: (id: string) => () => void;
+  /** The rendered `FieldLabel`'s id, which names a list the control opens. */
+  labelId: string | undefined;
+  claimLabelId: (id: string) => () => void;
 }
 
 const DescriberContext = React.createContext<Describer | null>(null);
@@ -161,6 +164,11 @@ function Field({
     setClaimedId(id);
     return () => setClaimedId((current) => (current === id ? null : current));
   }, []);
+  const [labelId, setLabelId] = React.useState<string>();
+  const claimLabelId = React.useCallback((id: string) => {
+    setLabelId(id);
+    return () => setLabelId((current) => (current === id ? undefined : current));
+  }, []);
   const { describer, describedBy, hasError } = useDescribers();
   const invalid = invalidProp || hasError;
   const context = React.useMemo(
@@ -171,8 +179,20 @@ function Field({
       hasError,
       disabled,
       claimId,
+      labelId,
+      claimLabelId,
     }),
-    [claimedId, generatedId, describedBy, invalid, hasError, disabled, claimId],
+    [
+      claimedId,
+      generatedId,
+      describedBy,
+      invalid,
+      hasError,
+      disabled,
+      claimId,
+      labelId,
+      claimLabelId,
+    ],
   );
   return (
     <DescriberContext.Provider value={describer}>
@@ -214,11 +234,16 @@ interface FieldLabelProps extends React.ComponentProps<"label"> {
   aside?: React.ReactNode | undefined;
 }
 
-function FieldLabel({ className, htmlFor, aside, ...props }: FieldLabelProps) {
+function FieldLabel({ className, id, htmlFor, aside, ...props }: FieldLabelProps) {
   const field = useField();
+  const generatedId = React.useId();
+  const ownId = id ?? generatedId;
+  const claimLabelId = field?.claimLabelId;
+  React.useLayoutEffect(() => claimLabelId?.(ownId), [claimLabelId, ownId]);
   const label = (
     // biome-ignore lint/a11y/noLabelWithoutControl: the Field supplies htmlFor.
     <label
+      id={ownId}
       data-slot="field-label"
       htmlFor={htmlFor ?? field?.controlId}
       className={cn(

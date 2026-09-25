@@ -13,7 +13,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { Button, buttonClass } from "../components/button";
+import { Button } from "../components/button";
 import { GRADES } from "../components/grade";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
@@ -604,9 +604,9 @@ function Review() {
   }, [revealed, onGrade, leave, add.open, current]);
 
   const doneLink = (variant: "primary" | "secondary") => (
-    <Link to="/today" className={buttonClass(variant, "lg", "w-full")}>
+    <Button variant={variant} size="lg" className="w-full" render={<Link to="/today" />}>
       <Trans>Done</Trans>
-    </Link>
+    </Button>
   );
 
   return (
@@ -631,9 +631,9 @@ function Review() {
         <ReviewError
           retry={() => (round ? roundQueue.refetch() : draw.refetch())}
           action={
-            <Link to="/today" className={buttonClass("ghost")}>
+            <Button variant="ghost" render={<Link to="/today" />}>
               <Trans>Back</Trans>
-            </Link>
+            </Button>
           }
         />
       )}
@@ -644,9 +644,9 @@ function Review() {
           body={<Trans>Your grades are saved. Check your connection and try again.</Trans>}
           retry={() => draw.refetch()}
           action={
-            <Link to="/today" className={buttonClass("ghost")}>
+            <Button variant="ghost" render={<Link to="/today" />}>
               <Trans>Done</Trans>
-            </Link>
+            </Button>
           }
         />
       )}

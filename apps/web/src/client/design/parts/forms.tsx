@@ -342,7 +342,12 @@ export const forms: Group = {
                 label: "Medium",
                 note: "In forms, the same height as every other control. Arrow keys walk the options; Space or Enter chooses.",
                 render: () => (
-                  <Segmented label="Direction" value={seg} onChange={setSeg} options={DIRECTIONS} />
+                  <Segmented
+                    label="Direction"
+                    value={seg}
+                    onValueChange={setSeg}
+                    options={DIRECTIONS}
+                  />
                 ),
               },
               {
@@ -353,7 +358,7 @@ export const forms: Group = {
                     size="sm"
                     label="Direction"
                     value={seg}
-                    onChange={setSeg}
+                    onValueChange={setSeg}
                     options={DIRECTIONS}
                   />
                 ),
@@ -366,7 +371,7 @@ export const forms: Group = {
                     <Segmented
                       label="Direction"
                       value={seg}
-                      onChange={setSeg}
+                      onValueChange={setSeg}
                       options={DIRECTIONS}
                     />
                   </Force>
@@ -380,7 +385,7 @@ export const forms: Group = {
                     <Segmented
                       label="Direction"
                       value={seg}
-                      onChange={setSeg}
+                      onValueChange={setSeg}
                       options={DIRECTIONS}
                     />
                   </Force>
@@ -393,7 +398,7 @@ export const forms: Group = {
                   <Segmented
                     label="Direction"
                     value={seg === "both" ? "recognise" : seg}
-                    onChange={setSeg}
+                    onValueChange={setSeg}
                     options={DIRECTIONS.map((o) => ({ ...o, disabled: o.value === "both" }))}
                   />
                 ),
@@ -405,7 +410,7 @@ export const forms: Group = {
                     disabled
                     label="Direction"
                     value={seg}
-                    onChange={setSeg}
+                    onValueChange={setSeg}
                     options={DIRECTIONS}
                   />
                 ),
@@ -429,7 +434,12 @@ export const forms: Group = {
                 label: "Default",
                 note: "Press another option.",
                 render: () => (
-                  <Segmented label="Direction" value={seg} onChange={setSeg} options={DIRECTIONS} />
+                  <Segmented
+                    label="Direction"
+                    value={seg}
+                    onValueChange={setSeg}
+                    options={DIRECTIONS}
+                  />
                 ),
               },
             ]}
@@ -690,7 +700,7 @@ export const forms: Group = {
             items={[
               {
                 label: "Rows",
-                note: "RadioCard, in components/radio-card.tsx. The whole row is the target and the edge strengthens on the chosen one.",
+                note: "RadioCard, in components/radio-card.tsx. The whole row is the target and the edge strengthens on the chosen one. Children replace the title and description, as in the daily goal.",
                 render: () => (
                   <RadioGroup
                     aria-label="How cards are asked"

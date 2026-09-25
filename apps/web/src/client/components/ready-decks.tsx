@@ -3,7 +3,7 @@ import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { trayHue } from "@lymi/core/catalog";
 import { ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
-import { buttonClass } from "./button";
+import { Button } from "./button";
 import { HAND_FANS, TrayCardFace } from "./deck-tray";
 import { NavLink } from "./nav-link";
 
@@ -57,13 +57,13 @@ export function ReadyDecks({ decks }: Props) {
         <p className="max-w-[44ch] text-base text-text-2 text-pretty">
           <Trans>Decks from Lymi. Add one to study it in your language.</Trans>
         </p>
-        <NavLink
-          to="/explore"
-          className={buttonClass("secondary", "md", "deck-cover-action mt-3 w-full @2xl:w-auto")}
+        <Button
+          className="deck-cover-action mt-3 w-full @2xl:w-auto"
+          render={<NavLink to="/explore" />}
         >
           <Trans>Browse ready-made decks</Trans>
           <ChevronRight data-icon="inline-end" className="rtl:-scale-x-100" aria-hidden="true" />
-        </NavLink>
+        </Button>
       </div>
     </section>
   );

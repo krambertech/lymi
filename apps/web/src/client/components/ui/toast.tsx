@@ -175,13 +175,14 @@ function ToastList({
 
 function Toaster({
   children,
-  label,
+  "aria-label": label,
   closeLabel,
   viewportClassName,
   toastManager = manager,
   ...props
 }: ToastPrimitive.Provider.Props & {
-  label: string;
+  /** Names the region the toasts are announced from. */
+  "aria-label": string;
   closeLabel: string;
   viewportClassName?: string | undefined;
 }) {

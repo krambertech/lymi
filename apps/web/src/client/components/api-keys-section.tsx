@@ -11,7 +11,7 @@ import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
 import { useConfirmStep } from "../lib/use-confirm-step";
-import { Button, buttonClass } from "./button";
+import { Button } from "./button";
 import { Chip } from "./chip";
 import { DocLink } from "./connected-apps-section";
 import { CopyField } from "./copy-field";
@@ -98,9 +98,9 @@ export function ApiKeysSection() {
                 <Plus data-icon="inline-start" aria-hidden="true" />
                 <Trans>New key</Trans>
               </Button>
-              <a href={publicSiteUrl("/docs/quickstart")} className={buttonClass("secondary")}>
+              <Button render={<a href={publicSiteUrl("/docs/quickstart")} />}>
                 <Trans>Quickstart</Trans>
-              </a>
+              </Button>
             </>
           }
         />
@@ -134,7 +134,7 @@ export function ApiKeysSection() {
       )}
 
       <Dialog open={making} onOpenChange={setMaking}>
-        <DialogContent className="w-[min(92vw,440px)]">
+        <DialogContent>
           <DialogTitle>{t`New key`}</DialogTitle>
           <NewKeyForm
             key={making ? "open" : "closed"}
@@ -218,7 +218,7 @@ function NewKeyForm({
         <span className="text-sm font-medium text-text-2">
           <Trans>Access</Trans>
         </span>
-        <Segmented value={scope} onChange={setScope} options={scopes} label={t`Access`} />
+        <Segmented value={scope} onValueChange={setScope} options={scopes} label={t`Access`} />
         <p className="text-sm text-muted">
           {scopes.find((s) => s.value === scope)?.hint} <Trans>A key never grades reviews.</Trans>
         </p>

@@ -320,7 +320,7 @@ export function StreakPanel({
         <p className="text-sm text-text-2">
           <Trans>How many reviews a day keep your streak. Every grade counts, even Forgot.</Trans>
         </p>
-        <GoalPicker value={summary.goal} onChange={(n) => onGoalChange?.(n)} />
+        <GoalPicker value={summary.goal} onValueChange={(n) => onGoalChange?.(n)} />
       </div>
     );
   }
@@ -342,7 +342,7 @@ export function StreakPanel({
     <div className={clsx("grid gap-5", className)}>
       {onClose && (
         <PlaceBar
-          label={t`Streak`}
+          parent={t`Streak`}
           title={titleInBar ? t`Streak` : undefined}
           returnsTo={returnsTo}
           onClose={onClose}

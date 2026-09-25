@@ -57,7 +57,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && close()}>
-      <DialogContent className="w-[min(92vw,460px)]">
+      <DialogContent size="md">
         {send.isSuccess ? (
           <>
             <DialogHeader>
@@ -121,7 +121,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
                 <Segmented<FeedbackKind>
                   label={t`What this is about`}
                   value={kind}
-                  onChange={setKind}
+                  onValueChange={setKind}
                   disabled={send.isPending}
                   options={[
                     {

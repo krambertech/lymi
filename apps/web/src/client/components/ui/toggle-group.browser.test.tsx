@@ -21,7 +21,7 @@ function Theme({ onChange }: { onChange?: (value: string) => void }) {
         label="Theme"
         name="theme"
         value={value}
-        onChange={(next) => {
+        onValueChange={(next) => {
           setValue(next);
           onChange?.(next);
         }}
@@ -110,7 +110,7 @@ test("a disabled option cannot be chosen, and a disabled group cannot change", a
       <Segmented
         label="Locked"
         value="a"
-        onChange={onValueChange}
+        onValueChange={onValueChange}
         disabled
         options={[
           { value: "a", label: "A" },
@@ -137,7 +137,7 @@ test("Tab lands on the chosen option, and blur is reported once as focus leaves 
         <Segmented
           label="Theme"
           value={value}
-          onChange={setValue}
+          onValueChange={setValue}
           options={OPTIONS}
           onBlur={onBlur}
         />
@@ -164,7 +164,7 @@ test("a disabled group submits nothing, as a disabled native control would", asy
         label="Theme"
         name="theme"
         value="light"
-        onChange={() => {}}
+        onValueChange={() => {}}
         options={OPTIONS}
         disabled
       />
@@ -179,7 +179,7 @@ test("after a keyboard choice, a change made from outside the group still glides
     const [value, setValue] = useState("light");
     return (
       <>
-        <Segmented label="Theme" value={value} onChange={setValue} options={OPTIONS} />
+        <Segmented label="Theme" value={value} onValueChange={setValue} options={OPTIONS} />
         <button type="button" onClick={() => setValue("light")}>
           Clear
         </button>

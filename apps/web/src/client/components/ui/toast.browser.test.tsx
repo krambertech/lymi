@@ -6,7 +6,7 @@ import { Toaster, toast } from "./toast";
 const region = () => page.getByRole("region", { name: "Notifications" });
 // The toaster runs without a dismiss timer: a toast leaves when a test closes it, and the timing test sets its own on `add`.
 const renderToaster = () =>
-  render(<Toaster label="Notifications" closeLabel="Dismiss" timeout={0} />);
+  render(<Toaster aria-label="Notifications" closeLabel="Dismiss" timeout={0} />);
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // The pointer stays wherever an earlier test left it; a stack arriving under it spreads and pauses.

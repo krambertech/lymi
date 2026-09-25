@@ -5,10 +5,9 @@ import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { ChevronRight, Plus } from "lucide-react";
 import { type ReactNode, useRef } from "react";
-import { Button, buttonClass } from "../components/button";
+import { Button } from "../components/button";
 import { DueCount } from "../components/due-count";
 import { ErrorState } from "../components/empty-state";
-import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Screen } from "../components/layout/screen";
 import { NavLink } from "../components/nav-link";
@@ -180,19 +179,15 @@ export function TodayView({
                       />
                     </div>
                     {due > 0 ? (
-                      <NavLink
-                        to="/review"
-                        className={buttonClass(
-                          "primary",
-                          "xl",
-                          "-mx-3 -mb-3 w-[calc(100%+1.5rem)] @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]",
-                        )}
+                      <Button
+                        variant="primary"
+                        size="xl"
+                        kbd="R"
+                        className="-mx-3 -mb-3 w-[calc(100%+1.5rem)] @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]"
+                        render={<NavLink to="/review" />}
                       >
                         <Trans>Review</Trans>
-                        <span className="hidden @2xl:contents">
-                          <Kbd tone="on-primary">R</Kbd>
-                        </span>
-                      </NavLink>
+                      </Button>
                     ) : noDecks ? (
                       <Button
                         variant="primary"

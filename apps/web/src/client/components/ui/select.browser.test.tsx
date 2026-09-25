@@ -71,7 +71,7 @@ function Harness({
         <SelectTrigger>
           <SelectValue placeholder="Choose a deck" />
         </SelectTrigger>
-        <SelectContent aria-label="Deck">
+        <SelectContent>
           {clearable && <SelectItem value={null}>No deck</SelectItem>}
           {DECKS.map((deck) => (
             <SelectItem key={deck.value} value={deck.value}>
@@ -97,6 +97,64 @@ describe("Select", () => {
     await render(<Harness />);
     await expect.element(combobox()).toHaveTextContent("Lesson 14");
     await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("inside a Field, the list is named by the Field's label", async () => {
+    await render(<Harness />);
+    await combobox().click();
+
+    const labelledBy = listbox().element().getAttribute("aria-labelledby");
+    expect(labelledBy && document.getElementById(labelledBy)?.dataset.slot).toBe("field-label");
+    await expect.element(page.getByRole("listbox", { name: "Deck" })).toBeInTheDocument();
+  });
+
+  test("lists the root's items when the content brings no rows", async () => {
+    await render(
+      <Field>
+        <FieldLabel>Deck</FieldLabel>
+        <Select defaultValue="d2" items={DECKS}>
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent />
+        </Select>
+      </Field>,
+    );
+    await expect.element(combobox()).toHaveTextContent("Portuguese");
+    await combobox().click();
+
+    await expect.element(option("Portuguese")).toHaveAttribute("aria-selected", "true");
+    expect(
+      page
+        .getByRole("option")
+        .elements()
+        .map((row) => row.textContent),
+    ).toEqual(DECKS.map((deck) => deck.label));
+  });
+
+  test("passes its own props and refs to the box, the list and each row", async () => {
+    const refs: Record<string, string | undefined> = {};
+    const keep = (part: string) => (el: HTMLElement | null) => {
+      if (el) refs[part] = el.dataset.slot;
+    };
+    await render(
+      <Select items={DECKS} defaultValue="d1">
+        <SelectTrigger aria-label="Deck" data-testid="box" title="Your deck" ref={keep("box")}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent aria-label="Deck" data-testid="list" ref={keep("list")}>
+          <SelectItem value="d1" data-testid="row" aria-description="Yours" ref={keep("row")}>
+            Lesson 14
+          </SelectItem>
+        </SelectContent>
+      </Select>,
+    );
+    await expect.element(page.getByTestId("box")).toHaveAttribute("title", "Your deck");
+    await combobox().click();
+
+    await expect.element(page.getByTestId("list")).toHaveAttribute("data-slot", "select-content");
+    await expect.element(page.getByTestId("row")).toHaveAttribute("aria-description", "Yours");
+    expect(refs).toEqual({ box: "select-trigger", list: "select-content", row: "select-item" });
   });
 
   test("shows the placeholder when nothing is chosen", async () => {

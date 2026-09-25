@@ -60,7 +60,7 @@ export function AvatarEditor({ image, onCancel, onSave, pending, error }: Props)
         if (!open && !pending) onCancel();
       }}
     >
-      <DialogContent className="w-[min(92vw,440px)]">
+      <DialogContent>
         <DialogTitle>{t`Position your photo`}</DialogTitle>
         {image && (
           <CropStage

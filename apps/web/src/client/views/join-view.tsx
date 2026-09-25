@@ -5,7 +5,7 @@ import { CalendarClock, EyeOff, History, Languages, Layers } from "lucide-react"
 import { type ReactNode, useState } from "react";
 import { AuthNotice } from "../components/auth-notice";
 import { Avatar } from "../components/avatar";
-import { Button, buttonClass } from "../components/button";
+import { Button } from "../components/button";
 import { CardStream } from "../components/card-stream";
 import { languageName } from "../components/deck-fields";
 import { Lockup } from "../components/logo";
@@ -228,13 +228,14 @@ function LiveLink({
         )}
 
         {deckId ? (
-          <Link
-            to="/library/$deckId"
-            params={{ deckId }}
-            className={buttonClass("primary", "lg", "mt-7 w-full")}
+          <Button
+            variant="primary"
+            size="lg"
+            className="mt-7 w-full"
+            render={<Link to="/library/$deckId" params={{ deckId }} />}
           >
             <Trans>Open deck</Trans>
-          </Link>
+          </Button>
         ) : viewer === "signed-out" ? (
           <Button
             variant="primary"
@@ -258,9 +259,9 @@ function LiveLink({
             {published ? <Trans>Add to Lymi</Trans> : <Trans>Join</Trans>}
           </Button>
         ) : (
-          <a href="/" className={buttonClass("secondary", "lg", "mt-7 w-full")}>
+          <Button size="lg" className="mt-7 w-full" render={<a href="/" />}>
             <Trans>Go to Lymi</Trans>
-          </a>
+          </Button>
         )}
       </div>
     </div>
@@ -317,18 +318,19 @@ function DeadLink({
           <p className="mx-auto mt-4 max-w-[40ch] text-pretty text-sm text-muted">
             <Trans>You are still in the deck.</Trans>
           </p>
-          <Link
-            to="/library/$deckId"
-            params={{ deckId }}
-            className={buttonClass("primary", "lg", "mt-7 w-full")}
+          <Button
+            variant="primary"
+            size="lg"
+            className="mt-7 w-full"
+            render={<Link to="/library/$deckId" params={{ deckId }} />}
           >
             <Trans>Open deck</Trans>
-          </Link>
+          </Button>
         </>
       ) : (
-        <a href="/" className={buttonClass("secondary", "lg", "mt-7 w-full")}>
+        <Button size="lg" className="mt-7 w-full" render={<a href="/" />}>
           <Trans>Go to Lymi</Trans>
-        </a>
+        </Button>
       )}
     </div>
   );

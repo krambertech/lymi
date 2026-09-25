@@ -6,7 +6,7 @@ import { Check, Download, RotateCcw } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { api, type Export, errorMessage } from "../lib/api";
 import { exportQuery } from "../lib/queries";
-import { Button, buttonClass } from "./button";
+import { Button } from "./button";
 import { fileSize } from "./import-parts";
 import { InlineError } from "./inline-error";
 import { RadioCard } from "./radio-card";
@@ -211,7 +211,7 @@ export function ExportSheet({
 
   return (
     <Dialog open={open} onOpenChange={close}>
-      <DialogContent className="w-[min(92vw,480px)]">
+      <DialogContent size="md">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {!current && (
@@ -260,14 +260,13 @@ export function ExportSheet({
               <Button variant="ghost" onClick={() => close(false)}>
                 <Trans>Close</Trans>
               </Button>
-              <a
-                href={current.downloadUrl}
-                download={current.fileName}
-                className={buttonClass("primary")}
+              <Button
+                variant="primary"
+                render={<a href={current.downloadUrl} download={current.fileName} />}
               >
                 <Download data-icon="inline-start" aria-hidden="true" />
                 <Trans>Download</Trans>
-              </a>
+              </Button>
             </>
           ) : current ? (
             <Button variant="ghost" onClick={() => close(false)}>

@@ -44,7 +44,7 @@ import { TagsInput } from "./tags-input";
 import { Checkbox } from "./ui/checkbox";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
 import { Input } from "./ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 
 /** Every field as typed, trimmed, and checked against the schema the route parses with. */
@@ -503,13 +503,7 @@ export function CardForm(props: CardFormProps) {
         <SelectTrigger>
           <SelectValue placeholder={t`Choose one`} />
         </SelectTrigger>
-        <SelectContent aria-label={t`Deck`}>
-          {(owned ?? []).map((d) => (
-            <SelectItem key={d.id} value={d.id}>
-              {d.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
+        <SelectContent />
       </Select>
       <FieldError>{invalid.deckId}</FieldError>
     </Field>
@@ -530,14 +524,7 @@ export function CardForm(props: CardFormProps) {
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent aria-label={t`Section`}>
-          <SelectItem value="">{t`No section`}</SelectItem>
-          {sections.map((s) => (
-            <SelectItem key={s.id} value={s.id}>
-              {s.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
+        <SelectContent />
       </Select>
     </Field>
   );
@@ -660,7 +647,7 @@ export function CardForm(props: CardFormProps) {
       </FieldLabel>
       <TagsInput
         value={tags}
-        onChange={(next) => {
+        onValueChange={(next) => {
           setTags(next);
           clear("tags");
         }}

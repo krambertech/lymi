@@ -30,7 +30,7 @@ export function LeaveDeckDialog({ open, onOpenChange, deckName, onLeave, leaving
   const name = deckName || last.current;
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,440px)]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t`Leave ${name}?`}</DialogTitle>
           <DialogDescription>

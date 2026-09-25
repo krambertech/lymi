@@ -1,12 +1,23 @@
+import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
+import { mergeProps } from "@base-ui/react/merge-props";
+import type { BaseUIEvent } from "@base-ui/react/types";
 import { useRender } from "@base-ui/react/use-render";
 import { cn } from "cn";
 import { Check } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
+import { useControllableState } from "../../lib/use-controllable-state";
+import { useMergedRefs } from "../../lib/use-merged-refs";
 import { FluidHighlight } from "../fluid-highlight";
 import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
+import {
+  listRowClassName,
+  listSeparatorClassName,
+  type Shape,
+  touchRowClassName,
+} from "./overlay-list";
 
 /*
  * shadcn's Dropdown Menu, in the shape of the machine: anchored to its trigger on a desktop, a
@@ -17,7 +28,9 @@ import { Drawer, DrawerContent, DrawerTrigger } from "./drawer";
  * with it.
  */
 
-type Shape = "desktop" | "touch";
+type OpenChangeDetails =
+  | MenuPrimitive.Root.ChangeEventDetails
+  | DrawerPrimitive.Root.ChangeEventDetails;
 
 const DropdownMenuContext = React.createContext<{
   shape: Shape;
@@ -32,11 +45,17 @@ function useDropdownMenu(part: string) {
 
 const ITEM = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
-const itemClassName =
-  "group/dropdown-menu-item relative flex h-11 w-full cursor-default items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-[1rem] text-text outline-none select-none md:h-10 md:text-base focus-visible:bg-hover data-highlighted:bg-hover data-inset:ps-9 data-[variant=destructive]:text-danger data-disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 data-[variant=destructive]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4";
+const itemClassName = cn(
+  listRowClassName,
+  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-hover data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
+);
 
-/** Pressed feedback for a row under a finger, where there is no hover. */
-const touchItemClassName = "active:bg-hover";
+/** The drawer's rows are buttons and the anchored ones divs, so a row's ref names their common type. */
+type RowProps = Omit<React.HTMLAttributes<HTMLElement>, "onClick"> & {
+  ref?: React.Ref<HTMLElement> | undefined;
+};
+
+type RowClick = (event: BaseUIEvent<React.MouseEvent<HTMLElement>>) => void;
 
 function DropdownMenu({
   open: controlled,
@@ -46,18 +65,15 @@ function DropdownMenu({
 }: {
   open?: boolean | undefined;
   defaultOpen?: boolean | undefined;
-  onOpenChange?: ((open: boolean) => void) | undefined;
+  /** Base UI's details come second; a close the part makes itself, such as picking a row on touch, sends none. */
+  onOpenChange?: ((open: boolean, details?: OpenChangeDetails) => void) | undefined;
   children: React.ReactNode;
 }) {
-  const [uncontrolled, setUncontrolled] = React.useState(defaultOpen);
-  const open = controlled ?? uncontrolled;
-  const setOpen = React.useCallback(
-    (next: boolean) => {
-      setUncontrolled(next);
-      onOpenChange?.(next);
-    },
-    [onOpenChange],
-  );
+  const [open, setOpen] = useControllableState<boolean, [details?: OpenChangeDetails]>({
+    value: controlled,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  });
   const shape = useOverlayShape(open);
   const context = React.useMemo(() => ({ shape, setOpen }), [shape, setOpen]);
   return (
@@ -82,25 +98,27 @@ function DropdownMenu({
   );
 }
 
-/** Compose the control through `render`: `<DropdownMenuTrigger render={<IconButton … />} />`. */
-function DropdownMenuTrigger({ render }: { render: React.ReactElement }) {
+interface TriggerProps extends React.ComponentProps<"button"> {
+  /** The control, such as `<IconButton … />`; a plain button when left out. */
+  render?: React.ReactElement | undefined;
+}
+
+function DropdownMenuTrigger(props: TriggerProps) {
   const { shape } = useDropdownMenu("DropdownMenuTrigger");
   return shape === "desktop" ? (
-    <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" render={render} />
+    <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />
   ) : (
-    <DrawerTrigger data-slot="dropdown-menu-trigger" render={render} />
+    <DrawerTrigger data-slot="dropdown-menu-trigger" {...props} />
   );
 }
 
-interface ContentProps {
+interface ContentProps extends React.ComponentProps<"div"> {
   /** Names the menu for screen readers in both shapes. */
   "aria-label": string;
   align?: "start" | "center" | "end" | undefined;
   /** "top" for a trigger at the foot of the screen, so the list opens into the room above. */
   side?: "top" | "bottom" | undefined;
   sideOffset?: number | undefined;
-  className?: string | undefined;
-  children: React.ReactNode;
 }
 
 function DropdownMenuContent(props: ContentProps) {
@@ -109,14 +127,16 @@ function DropdownMenuContent(props: ContentProps) {
 }
 
 function AnchoredContent({
-  "aria-label": label,
   align = "start",
   side = "bottom",
   sideOffset = 6,
+  ref: refProp,
   className,
   children,
+  ...props
 }: ContentProps) {
   const ref = React.useRef<HTMLDivElement>(null);
+  const refs = useMergedRefs(ref, refProp);
   const hover = useFluidHover(ref, { items: ITEM, dividers: '[role="separator"]' });
   return (
     <MenuPrimitive.Portal>
@@ -128,17 +148,21 @@ function AnchoredContent({
         sideOffset={sideOffset}
       >
         <MenuPrimitive.Popup
-          ref={ref}
+          ref={refs}
           data-slot="dropdown-menu-content"
-          aria-label={label}
           className={cn(
             // Grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms.
             "edge-2 relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(12rem,var(--anchor-width))] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md bg-plate p-1 text-text outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
             className,
           )}
-          // Keyboard moves focus, and focus carries its own fill; two fills would be two cursors.
-          onKeyDown={hover.hide}
-          {...hover.handlers}
+          {...mergeProps<"div">(
+            {
+              // Keyboard moves focus, and focus carries its own fill; two fills would be two cursors.
+              onKeyDown: hover.hide,
+              ...hover.handlers,
+            },
+            props,
+          )}
         >
           <FluidHighlight hover={hover} />
           {children}
@@ -153,9 +177,19 @@ function AnchoredContent({
  * attached: rows are out of the tab order, arrow keys walk them, disabled rows included so a screen
  * reader still hears them, and Tab leaves the menu, which closes it.
  */
-function DrawerMenuContent({ "aria-label": label, className, children }: ContentProps) {
+function DrawerMenuContent({
+  "aria-label": label,
+  align: _align,
+  side: _side,
+  sideOffset: _sideOffset,
+  ref: refProp,
+  className,
+  children,
+  ...props
+}: ContentProps) {
   const { setOpen } = useDropdownMenu("DropdownMenuContent");
   const ref = React.useRef<HTMLDivElement>(null);
+  const refs = useMergedRefs(ref, refProp);
   const onKeyDown = React.useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === "Tab") {
@@ -191,12 +225,12 @@ function DrawerMenuContent({ "aria-label": label, className, children }: Content
       }
     >
       <div
-        ref={ref}
+        ref={refs}
         role="menu"
         aria-label={label}
         data-slot="dropdown-menu-content"
-        onKeyDown={onKeyDown}
         className={cn("grid p-2 pt-1", className)}
+        {...mergeProps<"div">({ onKeyDown }, props)}
       >
         {children}
       </div>
@@ -281,70 +315,75 @@ function DrawerMenuLabel({
   );
 }
 
-interface ItemProps {
-  onClick?: (() => void) | undefined;
+interface ItemProps extends RowProps {
+  /** Runs before the menu closes; `event.preventBaseUIHandler()` keeps it open. */
+  onClick?: RowClick | undefined;
+  /** False keeps the menu open after the row runs. */
+  closeOnClick?: boolean | undefined;
   disabled?: boolean | undefined;
   inset?: boolean | undefined;
-  variant?: "default" | "destructive" | undefined;
-  className?: string | undefined;
-  children: React.ReactNode;
+  variant?: "default" | "danger" | undefined;
 }
 
 function DropdownMenuItem(props: ItemProps) {
   const { shape } = useDropdownMenu("DropdownMenuItem");
   if (shape === "touch") return <DrawerMenuItem {...props} />;
-  const { onClick, disabled, inset, variant = "default", className, children } = props;
+  const { ref, inset, variant = "default", className, ...rest } = props;
   return (
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
-      disabled={disabled}
-      onClick={() => onClick?.()}
+      {...rest}
+      ref={ref as React.Ref<HTMLDivElement> | undefined}
       className={cn(itemClassName, className)}
-    >
-      {children}
-    </MenuPrimitive.Item>
+    />
   );
 }
 
 function DrawerMenuItem({
+  ref,
   onClick,
+  closeOnClick = true,
   disabled,
   inset,
   variant = "default",
   className,
-  children,
+  ...props
 }: ItemProps) {
   const { setOpen } = useDropdownMenu("DropdownMenuItem");
   return useRender({
     defaultTagName: "button",
+    ref,
     props: {
-      type: "button",
-      role: "menuitem",
-      tabIndex: -1,
+      ...mergeProps<"button">(
+        {
+          type: "button",
+          role: "menuitem",
+          tabIndex: -1,
+          "aria-disabled": disabled || undefined,
+          onClick: () => {
+            if (!disabled && closeOnClick) setOpen(false);
+          },
+        },
+        { ...props, onClick: disabled ? undefined : onClick },
+      ),
       "data-slot": "dropdown-menu-item",
       "data-inset": inset || undefined,
       "data-variant": variant,
-      "aria-disabled": disabled || undefined,
       "data-disabled": disabled ? "" : undefined,
-      className: cn(itemClassName, touchItemClassName, className),
-      onClick: () => {
-        if (disabled) return;
-        setOpen(false);
-        onClick?.();
-      },
-      children,
+      className: cn(itemClassName, touchRowClassName, className),
     },
   });
 }
 
-interface CheckboxItemProps {
-  checked: boolean;
-  onCheckedChange: (checked: boolean) => void;
+interface CheckboxItemProps extends RowProps {
+  checked?: boolean | undefined;
+  defaultChecked?: boolean | undefined;
+  onCheckedChange?:
+    | ((checked: boolean, details?: MenuPrimitive.CheckboxItem.ChangeEventDetails) => void)
+    | undefined;
   disabled?: boolean | undefined;
-  className?: string | undefined;
-  children: React.ReactNode;
 }
 
 /** A tick in the start slot every row keeps, so checked and unchecked rows line up. */
@@ -357,15 +396,29 @@ function ItemCheck({ checked }: { checked: boolean }) {
 }
 
 /** A row that turns something on or off and leaves the menu open, so several can be chosen. */
-function DropdownMenuCheckboxItem(props: CheckboxItemProps) {
+function DropdownMenuCheckboxItem({
+  ref,
+  checked: checkedProp,
+  defaultChecked = false,
+  onCheckedChange,
+  disabled,
+  className,
+  children,
+  ...props
+}: CheckboxItemProps) {
   const { shape } = useDropdownMenu("DropdownMenuCheckboxItem");
-  const { checked, onCheckedChange, disabled, className, children } = props;
+  const [checked, setChecked] = useControllableState<
+    boolean,
+    [details?: MenuPrimitive.CheckboxItem.ChangeEventDetails]
+  >({ value: checkedProp, defaultValue: defaultChecked, onChange: onCheckedChange });
   if (shape === "desktop") {
     return (
       <MenuPrimitive.CheckboxItem
         data-slot="dropdown-menu-checkbox-item"
+        {...props}
+        ref={ref as React.Ref<HTMLDivElement> | undefined}
         checked={checked}
-        onCheckedChange={(next) => onCheckedChange(next)}
+        onCheckedChange={setChecked}
         disabled={disabled}
         closeOnClick={false}
         className={cn(itemClassName, "ps-9", className)}
@@ -381,13 +434,19 @@ function DropdownMenuCheckboxItem(props: CheckboxItemProps) {
       role="menuitemcheckbox"
       aria-checked={checked}
       tabIndex={-1}
-      data-slot="dropdown-menu-checkbox-item"
       aria-disabled={disabled || undefined}
+      {...mergeProps<"button">(
+        {
+          onClick: () => {
+            if (!disabled) setChecked(!checked);
+          },
+        },
+        props,
+      )}
+      ref={ref as React.Ref<HTMLButtonElement> | undefined}
+      data-slot="dropdown-menu-checkbox-item"
       data-disabled={disabled ? "" : undefined}
-      className={cn(itemClassName, touchItemClassName, "ps-9", className)}
-      onClick={() => {
-        if (!disabled) onCheckedChange(!checked);
-      }}
+      className={cn(itemClassName, touchRowClassName, "ps-9", className)}
     >
       <ItemCheck checked={checked} />
       {children}
@@ -396,28 +455,38 @@ function DropdownMenuCheckboxItem(props: CheckboxItemProps) {
 }
 
 const RadioGroupContext = React.createContext<{
-  value: string;
-  onValueChange: (value: string) => void;
+  value: string | undefined;
+  setValue: (value: string) => void;
 } | null>(null);
 
 function DropdownMenuRadioGroup({
-  value,
+  value: valueProp,
+  defaultValue,
   onValueChange,
   children,
 }: {
-  value: string;
-  onValueChange: (value: string) => void;
+  value?: string | undefined;
+  defaultValue?: string | undefined;
+  onValueChange?: ((value: string) => void) | undefined;
   children: React.ReactNode;
 }) {
   const { shape } = useDropdownMenu("DropdownMenuRadioGroup");
-  const context = React.useMemo(() => ({ value, onValueChange }), [value, onValueChange]);
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: (next: string | undefined) => {
+      if (next !== undefined) onValueChange?.(next);
+    },
+  });
+  const context = React.useMemo(() => ({ value, setValue }), [value, setValue]);
   return (
     <RadioGroupContext.Provider value={context}>
       {shape === "desktop" ? (
         <MenuPrimitive.RadioGroup
           data-slot="dropdown-menu-radio-group"
-          value={value}
-          onValueChange={(next: string) => onValueChange(next)}
+          // Null rather than undefined while nothing is chosen, so Base UI never takes the group for uncontrolled.
+          value={value ?? null}
+          onValueChange={(next: string) => setValue(next)}
         >
           {children}
         </MenuPrimitive.RadioGroup>
@@ -431,19 +500,21 @@ function DropdownMenuRadioGroup({
   );
 }
 
+interface RadioItemProps extends RowProps {
+  value: string;
+  /** False when the menu holds more to choose, such as a filter menu. */
+  closeOnClick?: boolean | undefined;
+}
+
 /** One of a set. Choosing it closes the menu, unless the set sits among other choices. */
 function DropdownMenuRadioItem({
+  ref,
   value,
   closeOnClick = true,
   className,
   children,
-}: {
-  value: string;
-  /** False when the menu holds more to choose, such as a filter menu. */
-  closeOnClick?: boolean | undefined;
-  className?: string | undefined;
-  children: React.ReactNode;
-}) {
+  ...props
+}: RadioItemProps) {
   const { shape, setOpen } = useDropdownMenu("DropdownMenuRadioItem");
   const group = React.useContext(RadioGroupContext);
   if (!group)
@@ -453,6 +524,8 @@ function DropdownMenuRadioItem({
     return (
       <MenuPrimitive.RadioItem
         data-slot="dropdown-menu-radio-item"
+        {...props}
+        ref={ref as React.Ref<HTMLDivElement> | undefined}
         value={value}
         closeOnClick={closeOnClick}
         className={cn(itemClassName, "ps-9", className)}
@@ -468,12 +541,18 @@ function DropdownMenuRadioItem({
       role="menuitemradio"
       aria-checked={checked}
       tabIndex={-1}
+      {...mergeProps<"button">(
+        {
+          onClick: () => {
+            if (closeOnClick) setOpen(false);
+            group.setValue(value);
+          },
+        },
+        props,
+      )}
+      ref={ref as React.Ref<HTMLButtonElement> | undefined}
       data-slot="dropdown-menu-radio-item"
-      className={cn(itemClassName, touchItemClassName, "ps-9", className)}
-      onClick={() => {
-        if (closeOnClick) setOpen(false);
-        group.onValueChange(value);
-      }}
+      className={cn(itemClassName, touchRowClassName, "ps-9", className)}
     >
       <ItemCheck checked={checked} />
       {children}
@@ -481,45 +560,39 @@ function DropdownMenuRadioItem({
   );
 }
 
-interface LinkItemProps {
+interface LinkItemProps extends React.ComponentProps<"a"> {
   /** The anchor: a router `Link`, or a plain `<a href>`. */
   render: React.ReactElement;
   inset?: boolean | undefined;
-  className?: string | undefined;
-  children: React.ReactNode;
 }
 
 /** Lymi's addition: a row that navigates, on Base UI's `Menu.LinkItem`. */
 function DropdownMenuLinkItem(props: LinkItemProps) {
   const { shape } = useDropdownMenu("DropdownMenuLinkItem");
   if (shape === "touch") return <DrawerMenuLinkItem {...props} />;
-  const { render, inset, className, children } = props;
+  const { inset, className, ...rest } = props;
   return (
     <MenuPrimitive.LinkItem
       data-slot="dropdown-menu-link-item"
       data-inset={inset}
       closeOnClick
-      render={render}
+      {...rest}
       className={cn(itemClassName, className)}
-    >
-      {children}
-    </MenuPrimitive.LinkItem>
+    />
   );
 }
 
-function DrawerMenuLinkItem({ render, inset, className, children }: LinkItemProps) {
+function DrawerMenuLinkItem({ render, ref, inset, className, ...props }: LinkItemProps) {
   const { setOpen } = useDropdownMenu("DropdownMenuLinkItem");
   return useRender({
     defaultTagName: "a",
     render,
+    ref,
     props: {
-      role: "menuitem",
-      tabIndex: -1,
+      ...mergeProps<"a">({ role: "menuitem", tabIndex: -1, onClick: () => setOpen(false) }, props),
       "data-slot": "dropdown-menu-link-item",
       "data-inset": inset || undefined,
-      className: cn(itemClassName, touchItemClassName, className),
-      onClick: () => setOpen(false),
-      children,
+      className: cn(itemClassName, touchRowClassName, className),
     },
   });
 }
@@ -529,12 +602,12 @@ function DropdownMenuSeparator({ className }: { className?: string | undefined }
   return shape === "desktop" ? (
     <MenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
-      className={cn("-mx-1 my-1 h-px bg-edge", className)}
+      className={listSeparatorClassName("edge", className)}
     />
   ) : (
     <hr
       data-slot="dropdown-menu-separator"
-      className={cn("mx-2.5 my-1 h-px border-0 bg-edge", className)}
+      className={listSeparatorClassName("inset", cn("border-0", className))}
     />
   );
 }

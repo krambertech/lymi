@@ -3218,6 +3218,9 @@ msgstr "Сфотографувати"
 msgid "Tap Add to Home Screen."
 msgstr "Торкнись «На початковий екран»."
 
+msgid "Technology"
+msgstr "Технології"
+
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Розкажи Lymi, що зламалося або що варто додати. Відповідь прийде на твою пошту."
 

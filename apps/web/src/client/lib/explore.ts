@@ -10,6 +10,7 @@ const CATEGORY_LABELS: Record<string, MessageDescriptor> = {
   languages: msg`Languages`,
   exams: msg`Exams and tests`,
   driving: msg`Driving`,
+  technology: msg`Technology`,
   science: msg`Science`,
   geography: msg`Geography`,
   work: msg`Work and study`,

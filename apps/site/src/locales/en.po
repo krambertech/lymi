@@ -1938,6 +1938,9 @@ msgstr "Teach anything worth remembering."
 msgid "Teachers"
 msgstr "Teachers"
 
+msgid "Technology"
+msgstr "Technology"
+
 msgid "ten"
 msgstr "ten"
 

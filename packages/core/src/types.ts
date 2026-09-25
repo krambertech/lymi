@@ -289,6 +289,7 @@ export const PUBLICATION_CATEGORIES = [
   "languages",
   "exams",
   "driving",
+  "technology",
   "science",
   "geography",
   "work",

@@ -55,7 +55,8 @@ export function TagsInput({ value, onChange, placeholder }: Props) {
               inputRef.current?.focus();
             }}
             aria-label={t`Remove the tag ${tag}`}
-            className="grid size-6 shrink-0 place-items-center rounded-full text-muted transition-colors hoverable:hover:bg-hover hoverable:hover:text-text"
+            // As large as the tag and the gaps around it allow without reaching a neighbour.
+            className="relative grid size-6 shrink-0 place-items-center rounded-full text-muted transition-colors before:absolute before:-inset-x-1 before:-inset-y-[5px] before:content-[''] hoverable:hover:bg-hover hoverable:hover:text-text"
           >
             <X className="size-3.5" aria-hidden="true" />
           </button>

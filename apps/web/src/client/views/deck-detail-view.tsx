@@ -378,7 +378,8 @@ function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }
       type="button"
       onClick={onRemove}
       aria-label={t`Remove filter: ${label}`}
-      className="inline-flex h-8 items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2 text-sm font-medium text-text-2 transition-colors duration-150 hoverable:hover:bg-hover hoverable:hover:text-text"
+      // The hit area reaches 40 px, as far as the 8 px gap to the next chip allows.
+      className="relative inline-flex h-8 items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2 text-sm font-medium text-text-2 transition-[background-color,color,scale] duration-150 ease-out before:absolute before:-inset-1 before:content-[''] active:scale-[0.97] hoverable:hover:bg-hover hoverable:hover:text-text motion-reduce:active:scale-100"
     >
       {label}
       <X className="size-3.5 text-muted" aria-hidden="true" />

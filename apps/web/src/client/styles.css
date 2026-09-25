@@ -307,6 +307,8 @@
     height: 100%;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+    /* Safari takes the viewport's overscroll from the root, not from body. */
+    overscroll-behavior-y: none;
   }
   body {
     min-height: 100dvh;
@@ -339,6 +341,7 @@
   p {
     text-wrap: pretty;
   }
+  a,
   button,
   [role="button"] {
     touch-action: manipulation;
@@ -483,6 +486,11 @@
 }
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
+}
+/* Physical on purpose: the notch is on the device's left or right in landscape, whatever the text direction. */
+.px-safe {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 /* Clears the floating pill (56 px, floating 24 px, and a gap); a utility so a shell variant can replace it. */
 @utility pb-safe-nav {

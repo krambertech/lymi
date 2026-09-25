@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Check, Plus } from "lucide-react";
 import { useId, useRef, useState } from "react";
 import type { Section } from "../lib/api";
+import { useDesktop } from "../lib/device";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
 import { RadioCard } from "./radio-card";
@@ -93,6 +94,7 @@ function NameForm({
   error?: string | undefined;
 }) {
   const { t } = useLingui();
+  const desktop = useDesktop();
   const check = useNameError();
   const [name, setName] = useState(initial);
   const [invalid, setInvalid] = useState<string | undefined>();
@@ -111,7 +113,8 @@ function NameForm({
       <Field>
         <FieldLabel>{t`Name`}</FieldLabel>
         <Input
-          autoFocus
+          // On touch the drawer settles first and the keyboard waits for a tap on the field.
+          autoFocus={desktop}
           value={name}
           onChange={(e) => {
             setName(e.target.value);

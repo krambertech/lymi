@@ -65,7 +65,7 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
       {avatar}
       <span
         aria-hidden="true"
-        className="edge absolute -end-0.5 -bottom-0.5 grid size-7 place-items-center rounded-full bg-plate text-text-2 transition-colors duration-150 group-hover:bg-hover group-hover:text-text group-aria-expanded:bg-hover [&_svg]:size-3.5"
+        className="edge absolute -end-0.5 -bottom-0.5 grid size-7 place-items-center rounded-full bg-plate text-text-2 transition-colors duration-150 hoverable:group-hover:bg-hover hoverable:group-hover:text-text group-aria-expanded:bg-hover [&_svg]:size-3.5"
       >
         <Camera />
       </span>

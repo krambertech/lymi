@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { InviteInput } from "@lymi/core";
 import { useEffect, useId, useState } from "react";
 import type { Invitation, Member } from "../lib/api";
+import { useDesktop } from "../lib/device";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
 import {
@@ -183,6 +184,7 @@ export function InviteDialog({
   error,
 }: InviteDialogProps) {
   const { t } = useLingui();
+  const desktop = useDesktop();
   const fieldId = useId();
   const [email, setEmail] = useState("");
   const [refused, setRefused] = useState<string | undefined>(undefined);
@@ -237,7 +239,8 @@ export function InviteDialog({
               type="email"
               inputMode="email"
               autoComplete="off"
-              autoFocus
+              // On touch the drawer settles first and the keyboard waits for a tap on the field.
+              autoFocus={desktop}
               value={email}
               onChange={(event) => {
                 setEmail(event.target.value);

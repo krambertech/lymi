@@ -135,7 +135,7 @@ cards.post(
     summary: "Add many cards",
     description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. A first-party publisher may pass \`publisherOverlap=true\` to keep a term already present in another owned deck; repeats within the target deck are still skipped. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
     ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
-    errors: [400, 403, 404],
+    errors: [400, 404],
   }),
   query(ResponseShapeQuery.extend({ publisherOverlap: z.literal("true").optional() }), "query"),
   body(CardsInput, "cards"),

@@ -26,7 +26,15 @@ import {
   Plus,
   Settings2,
 } from "lucide-react";
-import { type ButtonHTMLAttributes, type ReactNode, useMemo, useRef, useState } from "react";
+import {
+  type ButtonHTMLAttributes,
+  memo,
+  type ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Button, IconButton } from "../components/button";
 import { SectionRing } from "../components/section-ring";
 import { StateIcon, stateMarks } from "../components/state-mark";
@@ -97,6 +105,11 @@ export interface GlossaryProps {
     | undefined;
 }
 
+// Module constants: new options each render make new sensors, and every row's drag listeners with them.
+const MOUSE = { activationConstraint: { distance: 6 } };
+// A long press, so a swipe still scrolls the deck on a phone.
+const TOUCH = { activationConstraint: { delay: 250, tolerance: 8 } };
+
 const GROUP = "group:";
 const CARD = "card:";
 
@@ -133,11 +146,7 @@ function MovableGlossary(props: GlossaryProps & { editing: SectionEditing }) {
     [groups],
   );
 
-  const sensors = useSensors(
-    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
-    // A long press, so a swipe still scrolls the deck on a phone.
-    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } }),
-  );
+  const sensors = useSensors(useSensor(MouseSensor, MOUSE), useSensor(TouchSensor, TOUCH));
 
   // A card lands in whichever section the pointer is over, the whole block of it counting.
   const overSection: CollisionDetection = (args) => {
@@ -331,7 +340,8 @@ function GroupList({
                     open: row.card.id === openId,
                     onOpen,
                     waiting: !!section && section.status !== "open" && rowState(row) === "new",
-                    selection,
+                    selected: selection ? selection.ids.has(row.card.id) : undefined,
+                    onToggle: selection?.onToggle,
                   };
                   return movable ? (
                     <DraggableRow key={row.card.id} {...rowProps} dropped={dropped} />
@@ -493,45 +503,50 @@ interface RowProps {
   onOpen: (id: string | null) => void;
   /** In a section that is not open, and not started: it is not in review yet. */
   waiting: boolean;
-  selection?: GlossaryProps["selection"];
+  /** Undefined unless the list is selecting cards. */
+  selected?: boolean | undefined;
+  onToggle?: ((id: string, range: boolean) => void) | undefined;
 }
 
-function DraggableRow({
+// Memoised on plain props, so tapping, opening or dragging one card re-renders that row only.
+const DraggableRow = memo(function DraggableRow({
   dropped,
   ...props
 }: RowProps & { dropped?: { current: boolean } | undefined }) {
   const drag = useDraggable({ id: `${CARD}${props.row.card.id}` });
-  // A card moves from the keyboard through selection and its menu, so Enter and Space still open it.
-  const { onKeyDown: _keys, ...pointer } = drag.listeners ?? {};
+  const onClickCapture = useCallback(
+    (e: React.MouseEvent) => {
+      if (dropped?.current) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    },
+    [dropped],
+  );
+  const buttonProps = useMemo(() => {
+    // A card moves from the keyboard through selection and its menu, so Enter and Space still open it.
+    const { onKeyDown: _keys, ...pointer } = drag.listeners ?? {};
+    return { ...pointer, onClickCapture };
+  }, [drag.listeners, onClickCapture]);
   return (
     <li
       ref={drag.setNodeRef}
       className={clsx("[-webkit-touch-callout:none]", drag.isDragging && "opacity-40")}
     >
-      <GlossaryRow
-        {...props}
-        buttonProps={{
-          ...pointer,
-          onClickCapture: (e) => {
-            if (dropped?.current) {
-              e.preventDefault();
-              e.stopPropagation();
-            }
-          },
-        }}
-      />
+      <GlossaryRow {...props} buttonProps={buttonProps} />
     </li>
   );
-}
+});
 
-function GlossaryRow({
+const GlossaryRow = memo(function GlossaryRow({
   row,
   sort,
   now,
   open,
   onOpen,
   waiting,
-  selection,
+  selected,
+  onToggle,
   buttonProps,
 }: RowProps & { buttonProps?: ButtonHTMLAttributes<HTMLButtonElement> | undefined }) {
   const { t, i18n } = useLingui();
@@ -543,7 +558,7 @@ function GlossaryRow({
       ? backLabel(i18n.locale, new Date(state.due).getTime(), now)
       : null;
   const key = rowState(row);
-  const selected = !!selection?.ids.has(card.id);
+  const selecting = selected !== undefined;
   const columns =
     sort === "due"
       ? "grid-cols-[15px_minmax(0,1fr)_auto] @xl/list:grid-cols-[15px_minmax(0,1fr)_minmax(0,1.15fr)_8rem]"
@@ -555,19 +570,19 @@ function GlossaryRow({
       data-card-row={card.id}
       {...buttonProps}
       onClick={(e) => {
-        if (selection) selection.onToggle(card.id, e.shiftKey);
+        if (selecting) onToggle?.(card.id, e.shiftKey);
         else onOpen(open ? null : card.id);
       }}
-      aria-current={(!selection && open) || undefined}
-      aria-pressed={selection ? selected : undefined}
+      aria-current={(!selecting && open) || undefined}
+      aria-pressed={selected}
       className={clsx(
         "grid w-full items-start gap-x-3 gap-y-0.5 px-4 py-3 text-start transition-colors duration-150 focus-visible:outline-offset-[-2px] @xl/list:items-baseline @xl/list:gap-x-5 @xl/list:px-5",
         columns,
-        selected || (open && !selection) ? "bg-hover" : "hoverable:hover:bg-plate-2",
+        selected || (open && !selecting) ? "bg-hover" : "hoverable:hover:bg-plate-2",
       )}
     >
       <span className="row-span-2 mt-[3px] self-start @xl/list:row-span-1">
-        {selection ? (
+        {selecting ? (
           // The same 15 px as the state's mark it stands in for, so choosing cards moves nothing.
           <span
             aria-hidden="true"
@@ -617,4 +632,4 @@ function GlossaryRow({
       )}
     </button>
   );
-}
+});

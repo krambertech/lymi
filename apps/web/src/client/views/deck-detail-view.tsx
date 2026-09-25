@@ -679,13 +679,13 @@ export function DeckDetailView({
   const anchor = useRef<string | null>(null);
   const [localOpen, setLocalOpen] = useState<string | null>(null);
   const openId = openCardId === undefined ? localOpen : openCardId;
-  const setOpen = useCallback(
-    (id: string | null) => {
-      setLocalOpen(id);
-      onOpen?.(id);
-    },
-    [onOpen],
-  );
+  // Read through a ref, so the rows' `onOpen` stays the same function across the route's renders.
+  const onOpenRef = useRef(onOpen);
+  onOpenRef.current = onOpen;
+  const setOpen = useCallback((id: string | null) => {
+    setLocalOpen(id);
+    onOpenRef.current?.(id);
+  }, []);
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const closeSearch = () => {
@@ -727,15 +727,19 @@ export function DeckDetailView({
     [shown, sort, now, i18n.locale, sections, arranging],
   );
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const orderedRef = useRef(ordered);
+  orderedRef.current = ordered;
 
-  const toggleSelected = (id: string, range: boolean) => {
+  // Stable, so the memoised rows keep their props while one card's checkbox changes.
+  const toggleSelected = useCallback((id: string, range: boolean) => {
     setSelected((prev) => {
+      const rows = orderedRef.current;
       const next = new Set(prev ?? []);
-      const from = anchor.current ? ordered.findIndex((r) => r.card.id === anchor.current) : -1;
-      const to = ordered.findIndex((r) => r.card.id === id);
+      const from = anchor.current ? rows.findIndex((r) => r.card.id === anchor.current) : -1;
+      const to = rows.findIndex((r) => r.card.id === id);
       if (range && from >= 0 && to >= 0) {
         const on = !next.has(id);
-        for (const row of ordered.slice(Math.min(from, to), Math.max(from, to) + 1)) {
+        for (const row of rows.slice(Math.min(from, to), Math.max(from, to) + 1)) {
           if (on) next.add(row.card.id);
           else next.delete(row.card.id);
         }
@@ -744,7 +748,7 @@ export function DeckDetailView({
       anchor.current = id;
       return next;
     });
-  };
+  }, []);
   const stopSelecting = useCallback(() => {
     setSelected(null);
     anchor.current = null;

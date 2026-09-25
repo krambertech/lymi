@@ -5,7 +5,7 @@ import { Kbd } from "./kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
-export type ButtonSize = "sm" | "md" | "lg";
+export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant | undefined;
@@ -41,6 +41,8 @@ const sizes: Record<ButtonSize, string> = {
   sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4 before:absolute before:-inset-1.5 before:content-['']",
   md: "h-10 px-(--btn-px) [--btn-px:16px] text-base [&_svg]:size-[18px]",
   lg: "h-12 px-(--btn-px) [--btn-px:20px] text-md [&_svg]:size-5",
+  // Today's one full-width action: Review, or what stands in for it when nothing is due.
+  xl: "h-16 px-(--btn-px) [--btn-px:20px] text-lg [&_svg]:size-5",
 };
 
 /** The button's classes on their own, for a Link that should look and behave like one. */
@@ -106,7 +108,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>(function Button(
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Required. Describes the action, not the icon. */
   label: string;
-  size?: ButtonSize | undefined;
+  size?: Exclude<ButtonSize, "xl"> | undefined;
   variant?: "ghost" | "secondary" | "primary" | "danger" | undefined;
   /** A circle instead of the 10 px square. For the pronunciation button and capture. */
   round?: boolean | undefined;

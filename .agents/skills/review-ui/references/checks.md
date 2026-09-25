@@ -22,11 +22,11 @@ Judge the rendered composition, reading order, and wrapping, never the responsiv
 
 For each state the diff's code can enter, check that the task stays understandable, feedback stays true, recovery works, and the learner's input survives.
 
-Report a breakpoint or token only when it produces an observed failure or breaks a `DESIGN.md` rule. Record the route or component, viewport, theme, state, and input method, and merge combinations that share one cause.
+Report a breakpoint or token only when it produces an observed failure or breaks a rule in `DESIGN.md` or the system file it indexes. Record the route or component, viewport, theme, state, and input method, and merge combinations that share one cause.
 
 ## Visual system and voice
 
-A visual finding needs one of: a contradiction with a named `DESIGN.md` rule, hierarchy that hides the task or state, equivalent elements that behave differently, content that becomes unreadable, or a one-off treatment that forks an established pattern. A preference for another density, radius, phrase, or composition is not a finding, because the review judges against Lymi's committed system, not taste.
+A visual finding needs one of: a contradiction with a named rule in `DESIGN.md` or `docs/design/system`, hierarchy that hides the task or state, equivalent elements that behave differently, content that becomes unreadable, or a one-off treatment that forks an established pattern. A preference for another density, radius, phrase, or composition is not a finding, because the review judges against Lymi's committed system, not taste.
 
 Report wording only when it harms meaning, recovery, trust, or consistency with `CONTEXT.md` and nearby copy. Check polish only after the flow, interaction, and coverage cells pass.
 

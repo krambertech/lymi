@@ -3,7 +3,7 @@
 A private-first vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, and remember them with spaced repetition.
 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
-- [DESIGN.md](DESIGN.md): system-wide tokens, components and interaction rules, with links to feature design in `docs/design`
+- [DESIGN.md](DESIGN.md): the rules every screen follows, indexing the system files in `docs/design/system` and the feature design in `docs/design`
 - `/design` on the local dev server: the design system rendered with the real components (local only)
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
@@ -47,7 +47,8 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```bash
 pnpm verify:changed # push gate: static checks, then the tests the change affects
 pnpm verify       # full gate: check, i18n:check, build, typecheck, test
-pnpm check        # Biome lint + format check
+pnpm check        # Biome lint + format check, then check:design
+pnpm check:design # DESIGN.md colours match styles.css; design docs name real components
 pnpm build        # production build
 pnpm fix          # Biome, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs

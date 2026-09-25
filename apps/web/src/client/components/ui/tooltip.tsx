@@ -4,8 +4,8 @@ import * as React from "react";
 
 /*
  * shadcn's Tooltip on Base UI: a visual name for a control whose accessible name it repeats, so
- * the popup is hidden from assistive technology; timing and behaviour are DESIGN.md's tooltip
- * paragraph, ADR 0017.
+ * the popup is hidden from assistive technology; timing and behaviour are in
+ * docs/design/system/overlays.md, ADR 0017.
  */
 
 const DELAY = 500;

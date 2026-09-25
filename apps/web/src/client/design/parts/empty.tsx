@@ -13,7 +13,7 @@ const st = { path: "/design" };
 export const empty: Group = {
   slug: "empty-states",
   title: "Empty states",
-  lede: "What a screen or a group shows before it has anything in it, or when it could not load. Each says what is missing and how to fill it, and looks temporary so it is never mistaken for content. DESIGN.md, Empty states, has the rules.",
+  lede: "What a screen or a group shows before it has anything in it, or when it could not load. Each says what is missing and how to fill it, and looks temporary so it is never mistaken for content. docs/design/system/empty-states.md has the rules.",
   entries: [
     {
       slug: "start-guide",

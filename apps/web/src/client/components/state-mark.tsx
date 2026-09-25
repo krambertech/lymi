@@ -18,7 +18,7 @@ const CircleHalf = createLucideIcon("circle-half", [
 export type StateKey = "new" | "learning" | "known";
 
 /**
- * Each card state's one colour and one icon, everywhere a state shows; DESIGN.md, "Colour". `label`
+ * Each card state's one colour and one icon, everywhere a state shows; docs/design/system/colour.md. `label`
  * names one card's state and `groupLabel` a set of cards in it, which Ukrainian and Russian inflect.
  */
 export const stateMarks = {

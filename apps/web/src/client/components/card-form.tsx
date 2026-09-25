@@ -138,7 +138,7 @@ const PANEL_OF: Record<string, Panel> = {
 
 /**
  * One form for adding a card and changing it: term, meaning and deck, then a row of chips for
- * everything else a card holds. DESIGN.md "Adding and editing a card".
+ * everything else a card holds. docs/design/library-decks-and-cards.md, "Adding and editing a card".
  */
 export function CardForm(props: CardFormProps) {
   const { decks, draft, pending, onCancel, onSubmit, onDraftChange, layout, static: st } = props;

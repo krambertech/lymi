@@ -17,8 +17,8 @@ interface Props {
 
 /**
  * The lantern's flame on its own, cropped to its own box: the streak's mark. It moves on the
- * lantern's springs, so catching at the goal is the lantern's catch at this size. DESIGN.md,
- * "The flame".
+ * lantern's springs, so catching at the goal is the lantern's catch at this size.
+ * docs/design/system/brand.md, "Flame".
  *
  * The box is the lit flame's exact bounds, so the tip sits on the top edge and a full or
  * flickering flame grows past it. The drawing overflows rather than being cropped, because a

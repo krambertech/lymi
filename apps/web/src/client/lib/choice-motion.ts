@@ -1,6 +1,6 @@
 import type { Transition } from "motion/react";
 
-// One set of springs for checkbox, radio, switch and toggle group; DESIGN.md "Motion" says how each uses them.
+// One set of springs for checkbox, radio, switch and toggle group; docs/design/system/motion.md says how each uses them.
 
 export const CHOICE_POP: Transition = { type: "spring", duration: 0.32, bounce: 0.3 };
 

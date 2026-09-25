@@ -246,7 +246,7 @@
   --color-toast-action: var(--toast-action);
 
   /* Type scale. In rem so the reader's default font size moves it; each step is the px value
-     in DESIGN.md at the 16 px default. */
+     in docs/design/system/type.md at the 16 px default. */
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1.3;
   --text-xs: 0.75rem;

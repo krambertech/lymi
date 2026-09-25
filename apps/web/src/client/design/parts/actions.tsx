@@ -47,6 +47,15 @@ export const actions: Group = {
               ),
             },
             {
+              label: "Extra large",
+              note: "Today's one full-width action, Review. Nowhere else.",
+              render: () => (
+                <Button variant="primary" size="xl" className="w-full">
+                  Review
+                </Button>
+              ),
+            },
+            {
               label: "Large",
               note: "The end of a flow, where the button is the whole answer.",
               render: () => (

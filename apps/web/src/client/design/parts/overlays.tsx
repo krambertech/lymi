@@ -41,7 +41,7 @@ export const menu: Group = {
                     render={
                       <Button size="sm">
                         Deck options
-                        <MoreHorizontal aria-hidden="true" />
+                        <MoreHorizontal data-icon="inline-end" aria-hidden="true" />
                       </Button>
                     }
                   />

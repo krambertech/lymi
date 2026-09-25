@@ -50,7 +50,7 @@ export function StartGuide({
             aria-disabled={!onCreateDeck}
             className="justify-self-start"
           >
-            <Plus aria-hidden="true" />
+            <Plus data-icon="inline-start" aria-hidden="true" />
             <Trans>New deck</Trans>
           </Button>
         </>

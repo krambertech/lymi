@@ -41,7 +41,7 @@ export const actions: Group = {
               note: "Archive and delete. Soft until hovered, and it carries an icon.",
               render: () => (
                 <Button variant="danger">
-                  <Archive aria-hidden="true" />
+                  <Archive data-icon="inline-start" aria-hidden="true" />
                   Archive deck
                 </Button>
               ),

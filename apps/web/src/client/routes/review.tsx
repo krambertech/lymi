@@ -677,7 +677,7 @@ function Review() {
                   className="w-full"
                   onClick={() => add.openCard(deck)}
                 >
-                  <Plus aria-hidden="true" />
+                  <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add cards</Trans>
                 </Button>
               }

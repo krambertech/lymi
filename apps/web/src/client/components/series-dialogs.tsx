@@ -188,7 +188,7 @@ export function SeriesForm({
                     </span>
                   </Field>
                   {checked && chosen.length > 1 && (
-                    <span className="flex shrink-0">
+                    <span className="flex shrink-0 [--hit-x:0px]">
                       <IconButton
                         size="sm"
                         label={t`Move ${deck.name} up`}

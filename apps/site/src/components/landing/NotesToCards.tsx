@@ -207,7 +207,7 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
           <div className="absolute inset-x-0 bottom-0 flex justify-center">
             {done ? (
               <Button variant="ghost" size="sm" onClick={shoot}>
-                <RotateCcw aria-hidden="true" />
+                <RotateCcw data-icon="inline-start" aria-hidden="true" />
                 <Trans>Take it again</Trans>
               </Button>
             ) : (

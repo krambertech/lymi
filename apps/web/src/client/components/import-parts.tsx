@@ -275,7 +275,7 @@ export function CardCheck({
             }}
             className={clsx(isChecked && "text-good")}
           >
-            <Check aria-hidden="true" />
+            <Check data-icon="inline-start" aria-hidden="true" />
             {isChecked ? <Trans>Looks right</Trans> : <Trans>Yes, looks right</Trans>}
           </Button>
           <Button variant="ghost" onClick={() => onChangeFields(type)}>

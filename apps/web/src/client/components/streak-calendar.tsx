@@ -95,7 +95,7 @@ export function StreakCalendar({ days, today, month, onMonth, firstMonth, run, r
           {title}
         </h3>
         {/* Pulled out like the place's close, so the chevron ends under the X, and out of the row's height. */}
-        <div className="-my-1.5 -me-3 flex items-center gap-0.5">
+        <div className="-my-1.5 -me-3 flex items-center gap-0.5 [--hit-x:-1px]">
           <IconButton
             label={t`Previous month`}
             size="sm"

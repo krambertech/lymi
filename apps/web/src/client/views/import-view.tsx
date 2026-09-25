@@ -396,7 +396,7 @@ export function ImportWorkingView({
               <InlineError>{upload.error}</InlineError>
             </p>
             <Button variant="primary" onClick={onRetryUpload}>
-              <RotateCcw aria-hidden="true" />
+              <RotateCcw data-icon="inline-start" aria-hidden="true" />
               <Trans>Try again</Trans>
             </Button>
           </div>
@@ -938,7 +938,7 @@ export function ImportDoneView({
             onClick={onArchive}
             loading={archiving}
           >
-            <Archive aria-hidden="true" />
+            <Archive data-icon="inline-start" aria-hidden="true" />
             <Trans>Archive import</Trans>
           </Button>
         )}
@@ -1006,7 +1006,7 @@ export function ImportStoppedView({
             onClick={onArchive}
             loading={archiving}
           >
-            <Archive aria-hidden="true" />
+            <Archive data-icon="inline-start" aria-hidden="true" />
             <Trans>Archive them</Trans>
           </Button>
         </section>

@@ -264,7 +264,7 @@ export function ExploreDeckView({
                   loading={adding}
                   className="deck-cover-action w-full @md:w-auto"
                 >
-                  <Plus aria-hidden="true" />
+                  <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add to Library</Trans>
                 </Button>
               )}

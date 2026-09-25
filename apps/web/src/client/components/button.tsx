@@ -25,9 +25,10 @@ const base =
   // Busy and unavailable dim the same way, but stay focusable: see the note on `Button`.
   "aria-disabled:opacity-45 aria-disabled:active:scale-100";
 
-/** Buttons with an icon on one side trim 2 px on that side so the label reads centred. */
+/** An icon marked `data-icon="inline-start"` or `"inline-end"` trims 2 px on its side so the label reads centred. */
 const iconSide =
-  "[&:has(>span>svg:first-child)]:ps-[calc(var(--btn-px)-2px)] [&:has(>span>svg:last-child)]:pe-[calc(var(--btn-px)-2px)]";
+  "[&:has(>span>[data-icon=inline-start])]:ps-[calc(var(--btn-px)-2px)] [&:has(>[data-icon=inline-start])]:ps-[calc(var(--btn-px)-2px)] " +
+  "[&:has(>span>[data-icon=inline-end])]:pe-[calc(var(--btn-px)-2px)] [&:has(>[data-icon=inline-end])]:pe-[calc(var(--btn-px)-2px)]";
 
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
@@ -37,9 +38,10 @@ const variants: Record<ButtonVariant, string> = {
   danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
 };
 
+// Hit areas reach 44 px vertically only, so buttons side by side never cover each other.
 const sizes: Record<ButtonSize, string> = {
-  sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4 before:absolute before:-inset-1.5 before:content-['']",
-  md: "h-10 px-(--btn-px) [--btn-px:16px] text-base [&_svg]:size-[18px]",
+  sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4 before:absolute before:inset-x-0 before:-inset-y-1.5 before:content-['']",
+  md: "h-10 px-(--btn-px) [--btn-px:16px] text-base [&_svg]:size-[18px] before:absolute before:inset-x-0 before:-inset-y-0.5 before:content-['']",
   lg: "h-12 px-(--btn-px) [--btn-px:20px] text-md [&_svg]:size-5",
   // Today's one full-width action: Review, or what stands in for it when nothing is due.
   xl: "h-16 px-(--btn-px) [--btn-px:20px] text-lg [&_svg]:size-5",
@@ -116,7 +118,8 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 /**
- * A square button holding one icon. The hit area is at least 40 px even when the box is smaller.
+ * A square button holding one icon. The hit area reaches 44 px; a row whose buttons sit closer
+ * than their extensions sets `[--hit-x:0px]` so neither covers its neighbour.
  * Its label is the accessible name and shows as a tooltip; it stays quiet while its menu is open.
  */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
@@ -136,15 +139,16 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
             className={clsx(
               "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 aria-disabled:opacity-45 aria-disabled:active:scale-100",
               round ? "rounded-full" : "rounded-sm",
-              "before:absolute before:-inset-1.5 before:content-['']",
               variant === "ghost" &&
                 "text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
               variant === "secondary" && "edge bg-plate text-text-2 hoverable:hover:bg-hover",
               variant === "primary" && "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
               variant === "danger" &&
                 "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
-              size === "sm" && "size-8 [&_svg]:size-4",
-              size === "md" && "size-10 [&_svg]:size-[18px]",
+              size === "sm" &&
+                "size-8 [&_svg]:size-4 before:absolute before:-inset-y-1.5 before:[inset-inline:var(--hit-x,-6px)] before:content-['']",
+              size === "md" &&
+                "size-10 [&_svg]:size-[18px] before:absolute before:-inset-y-0.5 before:[inset-inline:var(--hit-x,-2px)] before:content-['']",
               size === "lg" && "size-12 [&_svg]:size-5",
               className,
             )}

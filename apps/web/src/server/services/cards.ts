@@ -71,6 +71,7 @@ export async function addCards(
   ctx: ServiceContext,
   inputs: CardInput[],
   enrichment?: EnrichmentQueue | null,
+  options: { allowCrossDeckDuplicates?: boolean } = {},
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
   if (inputs.length === 0) return [];
@@ -137,9 +138,12 @@ export async function addCards(
         ),
       ),
   );
-  const existing = new Map<string, { card: Card; deckName: string }>();
+  const existing = new Map<string, Map<string, { card: Card; deckName: string }>>();
   for (const row of existingRows) {
-    existing.set(dupKey(row.card.language, row.card.normalizedTerm), row);
+    const key = dupKey(row.card.language, row.card.normalizedTerm);
+    const byDeck = existing.get(key) ?? new Map();
+    byDeck.set(row.card.deckId, row);
+    existing.set(key, byDeck);
   }
 
   const now = new Date();
@@ -155,7 +159,10 @@ export async function addCards(
       if (again) outcomes.push({ status: "added", card: again });
       continue;
     }
-    const hit = existing.get(dupKey(language, key));
+    const matches = existing.get(dupKey(language, key));
+    const hit = options.allowCrossDeckDuplicates
+      ? matches?.get(deck.id)
+      : matches?.values().next().value;
     if (hit) {
       outcomes.push({
         status: "skipped",
@@ -214,7 +221,10 @@ export async function addCards(
       }),
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
-    existing.set(dupKey(language, key), { card, deckName: deck.name });
+    const matchKey = dupKey(language, key);
+    const byDeck = existing.get(matchKey) ?? new Map();
+    byDeck.set(deck.id, { card, deckName: deck.name });
+    existing.set(matchKey, byDeck);
     outcomes.push({ status: "added", card });
   }
 

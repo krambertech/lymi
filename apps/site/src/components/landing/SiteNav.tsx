@@ -58,11 +58,12 @@ function UseCasesMenu({ current }: { current: LocalizedPage | undefined }) {
         className={buttonClass(
           "ghost",
           "sm",
-          clsx("gap-1 pe-2", (open || isUseCasePage(current)) && "text-text", open && "bg-plate-2"),
+          clsx("gap-1", (open || isUseCasePage(current)) && "text-text", open && "bg-plate-2"),
         )}
       >
         <Trans>Use cases</Trans>
         <ChevronDown
+          data-icon="inline-end"
           aria-hidden="true"
           className={clsx("text-muted transition-transform duration-150", open && "rotate-180")}
         />

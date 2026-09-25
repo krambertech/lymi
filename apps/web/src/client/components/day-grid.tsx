@@ -226,7 +226,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
     <div className="flex flex-col gap-1.5">
       <div className="flex items-baseline justify-between gap-3">
         {header}
-        <div className="flex shrink-0 items-center gap-0.5">
+        <div className="flex shrink-0 items-center gap-0.5 [--hit-x:-1px]">
           <IconButton
             label={t`Earlier months`}
             size="sm"

@@ -65,7 +65,7 @@ export function ReadyDecks({ decks, st }: Props) {
           className={buttonClass("secondary", "md", "deck-cover-action mt-3 w-full @2xl:w-auto")}
         >
           <Trans>Browse ready-made decks</Trans>
-          <ChevronRight className="rtl:-scale-x-100" aria-hidden="true" />
+          <ChevronRight data-icon="inline-end" className="rtl:-scale-x-100" aria-hidden="true" />
         </NavLink>
       </div>
     </section>

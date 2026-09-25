@@ -326,7 +326,7 @@ function DeckPlates({
             ) : (
               onAdd && (
                 <Button onClick={onAdd} kbd="N" className="w-full @md/plates:w-auto">
-                  <Plus aria-hidden="true" />
+                  <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add card</Trans>
                 </Button>
               )
@@ -447,7 +447,7 @@ function ListTools({
           <DropdownMenuTrigger
             render={
               <Button size="sm">
-                <ListFilter aria-hidden="true" />
+                <ListFilter data-icon="inline-start" aria-hidden="true" />
                 <Trans>Filter</Trans>
               </Button>
             }
@@ -521,7 +521,7 @@ function ListTools({
           <DropdownMenuTrigger
             render={
               <Button size="sm" variant="ghost" aria-label={t`Sort: ${sortName[sort]}`}>
-                <ArrowUpDown aria-hidden="true" />
+                <ArrowUpDown data-icon="inline-start" aria-hidden="true" />
                 {sortName[sort]}
               </Button>
             }

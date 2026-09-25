@@ -92,7 +92,7 @@ export function ApiKeysSection() {
           action={
             <>
               <Button variant="primary" onClick={() => setMaking(true)}>
-                <Plus aria-hidden="true" />
+                <Plus data-icon="inline-start" aria-hidden="true" />
                 <Trans>New key</Trans>
               </Button>
               <a href={publicSiteUrl("/docs/quickstart")} className={buttonClass("secondary")}>
@@ -114,7 +114,7 @@ export function ApiKeysSection() {
 
       {!(empty && !fresh) && (
         <Button className="w-fit" onClick={() => setMaking(true)}>
-          <Plus aria-hidden="true" />
+          <Plus data-icon="inline-start" aria-hidden="true" />
           <Trans>New key</Trans>
         </Button>
       )}

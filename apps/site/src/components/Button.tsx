@@ -22,9 +22,10 @@ const base =
   // Busy and unavailable dim the same way, but stay focusable: see the note on `Button`.
   "aria-disabled:opacity-45 aria-disabled:active:scale-100";
 
-/** Buttons with an icon on one side trim 2 px on that side so the label reads centred. */
+/** An icon marked `data-icon="inline-start"` or `"inline-end"` trims 2 px on its side so the label reads centred. */
 const iconSide =
-  "[&:has(>span>svg:first-child)]:pl-[calc(var(--btn-px)-2px)] [&:has(>span>svg:last-child)]:pr-[calc(var(--btn-px)-2px)]";
+  "[&:has(>span>[data-icon=inline-start])]:ps-[calc(var(--btn-px)-2px)] [&:has(>[data-icon=inline-start])]:ps-[calc(var(--btn-px)-2px)] " +
+  "[&:has(>span>[data-icon=inline-end])]:pe-[calc(var(--btn-px)-2px)] [&:has(>[data-icon=inline-end])]:pe-[calc(var(--btn-px)-2px)]";
 
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
@@ -33,9 +34,10 @@ const variants: Record<ButtonVariant, string> = {
   danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
 };
 
+// Hit areas reach 44 px vertically only, so buttons side by side never cover each other.
 const sizes: Record<ButtonSize, string> = {
-  sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4",
-  md: "h-10 px-(--btn-px) [--btn-px:16px] text-base [&_svg]:size-[18px]",
+  sm: "h-8 px-(--btn-px) [--btn-px:12px] text-sm rounded-sm [&_svg]:size-4 before:absolute before:inset-x-0 before:-inset-y-1.5 before:content-['']",
+  md: "h-10 px-(--btn-px) [--btn-px:16px] text-base [&_svg]:size-[18px] before:absolute before:inset-x-0 before:-inset-y-0.5 before:content-['']",
   lg: "h-12 px-(--btn-px) [--btn-px:20px] text-md [&_svg]:size-5",
 };
 

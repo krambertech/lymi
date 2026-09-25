@@ -171,7 +171,7 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
             loading={adding}
             aria-label={t`Add “${deck.name}” to Library`}
           >
-            <Plus aria-hidden="true" />
+            <Plus data-icon="inline-start" aria-hidden="true" />
             <Trans>Add</Trans>
           </Button>
         )}

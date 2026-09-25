@@ -274,7 +274,7 @@ export function DeckSettingsView({
                 </Trans>
               </p>
               <Button variant="danger" onClick={onArchive} aria-disabled={!onArchive}>
-                <Archive aria-hidden="true" />
+                <Archive data-icon="inline-start" aria-hidden="true" />
                 <Trans>Archive deck</Trans>
               </Button>
             </div>
@@ -365,7 +365,7 @@ function DeckAbout({
             </Trans>
           </p>
           <Button variant="danger" onClick={onLeave} aria-disabled={!onLeave}>
-            <LogOut aria-hidden="true" />
+            <LogOut data-icon="inline-start" aria-hidden="true" />
             <Trans>Leave deck</Trans>
           </Button>
         </div>
@@ -437,7 +437,7 @@ function MembersGroup({
       )}
       <div className="flex flex-wrap items-center gap-2">
         <Button size="sm" onClick={onInvite}>
-          <UserPlus aria-hidden="true" />
+          <UserPlus data-icon="inline-start" aria-hidden="true" />
           <Trans>Invite</Trans>
         </Button>
       </div>
@@ -652,12 +652,12 @@ function SharingGroup({ deckName, link, onTurnOn, onTurnOff, pending, error }: S
                           void navigator.share({ title: deckName, url: link.url }).catch(() => {});
                         }}
                       >
-                        <Share aria-hidden="true" />
+                        <Share data-icon="inline-start" aria-hidden="true" />
                         <Trans>Share link</Trans>
                       </Button>
                     )}
                     <Button onClick={() => setConfirming(true)}>
-                      <Link2Off aria-hidden="true" />
+                      <Link2Off data-icon="inline-start" aria-hidden="true" />
                       <Trans>Turn off link</Trans>
                     </Button>
                   </div>

@@ -483,7 +483,7 @@ export function CardForm(props: CardFormProps) {
     <FieldSet className="gap-1.5">
       <FieldLegend variant="label">{t`Deck`}</FieldLegend>
       <Button onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
-        <Plus aria-hidden="true" />
+        <Plus data-icon="inline-start" aria-hidden="true" />
         <Trans>New deck</Trans>
       </Button>
       <FieldDescription>{t`Create a deck to add this card to.`}</FieldDescription>

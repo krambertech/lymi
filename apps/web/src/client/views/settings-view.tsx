@@ -134,7 +134,7 @@ export function SettingsView({
           onClick={onExportLibrary}
           aria-disabled={!onExportLibrary}
         >
-          <Download aria-hidden="true" />
+          <Download data-icon="inline-start" aria-hidden="true" />
           <Trans>Export library</Trans>
         </Button>
       </SettingsGroup>

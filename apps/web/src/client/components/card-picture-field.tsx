@@ -198,16 +198,16 @@ export function CardPictureField({
             <div className={clsx("flex flex-wrap gap-2", !compact && "justify-center")}>
               {!desktop && (
                 <Button size="sm" onClick={() => cameraRef.current?.click()}>
-                  <Camera aria-hidden="true" />
+                  <Camera data-icon="inline-start" aria-hidden="true" />
                   <Trans>Take photo</Trans>
                 </Button>
               )}
               <Button size="sm" onClick={() => pickRef.current?.click()}>
-                <Upload aria-hidden="true" />
+                <Upload data-icon="inline-start" aria-hidden="true" />
                 <Trans>Choose file</Trans>
               </Button>
               <Button size="sm" onClick={() => setLinking(true)}>
-                <Link2 aria-hidden="true" />
+                <Link2 data-icon="inline-start" aria-hidden="true" />
                 <Trans>Paste a link</Trans>
               </Button>
             </div>

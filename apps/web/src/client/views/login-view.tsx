@@ -155,7 +155,7 @@ export function LoginView({
                   // take, and the one amber belongs to the form they are filling.
                   className="mt-7 w-full edge-2 font-medium"
                 >
-                  <GoogleMark className="size-5" />
+                  <GoogleMark data-icon="inline-start" className="size-5" />
                   <Trans>Continue with Google</Trans>
                 </Button>
                 <div

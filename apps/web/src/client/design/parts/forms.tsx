@@ -170,7 +170,7 @@ export const forms: Group = {
                 <FieldSet className={`gap-1.5 ${box}`}>
                   <FieldLegend variant="label">Deck</FieldLegend>
                   <Button>
-                    <Plus aria-hidden="true" />
+                    <Plus data-icon="inline-start" aria-hidden="true" />
                     New deck
                   </Button>
                   <FieldDescription>Create a deck to add this card to.</FieldDescription>

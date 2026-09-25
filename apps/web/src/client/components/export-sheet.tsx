@@ -138,7 +138,7 @@ export function ExportProgress({ item, onRetry }: { item: Export; onRetry: () =>
       </p>
       {item.failure !== "too_large" && (
         <Button variant="secondary" className="justify-self-start" onClick={onRetry}>
-          <RotateCcw aria-hidden="true" />
+          <RotateCcw data-icon="inline-start" aria-hidden="true" />
           <Trans>Try again</Trans>
         </Button>
       )}
@@ -264,7 +264,7 @@ export function ExportSheet({
                 download={current.fileName}
                 className={buttonClass("primary")}
               >
-                <Download aria-hidden="true" />
+                <Download data-icon="inline-start" aria-hidden="true" />
                 <Trans>Download</Trans>
               </a>
             </>

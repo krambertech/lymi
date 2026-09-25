@@ -294,7 +294,7 @@ export function LibraryView({
               onClick={onCreateDeck}
               aria-disabled={!onCreateDeck}
             >
-              <Plus aria-hidden="true" />
+              <Plus data-icon="inline-start" aria-hidden="true" />
               <Trans>New deck</Trans>
             </Button>
           }

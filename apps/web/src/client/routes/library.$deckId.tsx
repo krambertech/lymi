@@ -178,6 +178,8 @@ function DeckPage() {
         actionProps: { children: t`Undo`, onClick: () => restore.mutate(id) },
       });
     },
+    onError: (error, id) =>
+      toast.add({ id: `archive-${id}`, type: "error", title: errorMessage(error) }),
   });
   const restore = useMutation({
     mutationFn: (id: string) => writes.restoreCard(id),
@@ -185,6 +187,8 @@ function DeckPage() {
       invalidate();
       toast.close(`archive-${id}`);
     },
+    onError: (error, id) =>
+      toast.add({ id: `archive-${id}`, type: "error", title: errorMessage(error) }),
   });
   const save = useMutation({
     mutationFn: async ({ id, patch }: { id: string; patch: CardPatch }) => {

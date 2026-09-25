@@ -113,6 +113,17 @@ export function ApiKeysSection() {
         </p>
       )}
 
+      {keys.isError && (
+        <p className="text-sm text-danger" role="alert">
+          {errorMessage(keys.error)}
+        </p>
+      )}
+      {revoke.isError && (
+        <p className="text-sm text-danger" role="alert">
+          {errorMessage(revoke.error)}
+        </p>
+      )}
+
       {!(empty && !fresh) && (
         <Button className="w-fit" onClick={() => setMaking(true)}>
           <Plus aria-hidden="true" />

@@ -72,7 +72,7 @@ type NextStepProps = NextStepBase &
 export function NextStep(props: NextStepProps) {
   const { icon, title, detail, static: st } = props;
   const className =
-    "group -mx-2 flex min-h-16 items-center gap-4 rounded-lg px-2 py-2.5 transition-[background-color] duration-150 hoverable:hover:bg-hover";
+    "group -mx-2 flex min-h-16 items-center gap-4 rounded-sm px-2 py-2.5 transition-[background-color] duration-150 hoverable:hover:bg-hover";
   const face = (
     <>
       <span

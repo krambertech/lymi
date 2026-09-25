@@ -79,6 +79,26 @@ function loadPicture(userId: string | undefined, url: string): Promise<Blob> {
 
 export type PictureStatus = "loading" | "ready" | "failed";
 
+/** Whether a loaded picture has no see-through pixel, sampled without smoothing so alpha stays exact. */
+export function isOpaque(img: HTMLImageElement): boolean {
+  const side = 32;
+  const canvas = document.createElement("canvas");
+  canvas.width = side;
+  canvas.height = side;
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+  if (!context) return false;
+  context.imageSmoothingEnabled = false;
+  context.drawImage(img, 0, 0, side, side);
+  try {
+    const { data } = context.getImageData(0, 0, side, side);
+    for (let i = 3; i < data.length; i += 4) if (data[i] !== 255) return false;
+    return true;
+  } catch {
+    // A cross-origin picture taints the canvas; without an answer it keeps no edge.
+    return false;
+  }
+}
+
 /** An object URL for the picture, released when the component lets go of it. */
 export function useCardPicture(image: Pick<CardImage, "url"> | null | undefined): {
   src: string | null;

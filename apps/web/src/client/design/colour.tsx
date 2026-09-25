@@ -22,6 +22,10 @@ const TOKENS: Token[] = [
   { name: "edge", role: "The one hairline. Alpha, so it sits on any plate." },
   { name: "edge-2", role: "Stronger hairline: focused or hovered edges, dividers that must read." },
   {
+    name: "image-edge",
+    role: "A photo's edge, inside its bounds: untinted black by day, white at night.",
+  },
+  {
     name: "text",
     role: "Words. Also the metal of the lantern in the light room.",
     on: "canvas",

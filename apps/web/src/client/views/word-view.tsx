@@ -334,7 +334,7 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
       <div className="edge grid w-fit max-w-full gap-3 rounded-lg bg-plate p-3">
         {image ? (
           <>
-            <CardPicture image={image} maxHeight="min(20dvh, 140px)" />
+            <CardPicture image={image} maxHeight="min(20dvh, 140px)" className="rounded-xs" />
             {image.description ? (
               // Wraps to the picture's width instead of widening the card.
               <p className="w-0 min-w-full text-sm leading-relaxed text-text">

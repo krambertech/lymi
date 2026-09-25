@@ -9,6 +9,7 @@ colors:
   hover: "#eeebe6"
   edge: "#2013081a"
   edge-2: "#20130833"
+  image-edge: "#0000001a"
   text: "#1c140f"
   text-2: "#49403a"
   muted: "#72665f"
@@ -51,6 +52,7 @@ colors:
   dark-hover: "#302720"
   dark-edge: "#ffffff14"
   dark-edge-2: "#ffffff26"
+  dark-image-edge: "#ffffff1a"
   dark-text: "#f1eee7"
   dark-text-2: "#c5bcb1"
   dark-muted: "#a89c90"
@@ -253,7 +255,7 @@ Three words: warm, calm, quick.
 
 ## Surfaces are flat
 
-Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of four tones: `canvas` (the room), `rail` (the navigation, one step off the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it. Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour. Nothing lifts, and amber never marks state.
+Depth comes from one hairline edge, never from gradients or shadows. Every surface is one of four tones: `canvas` (the room), `rail` (the navigation, one step off the room), `plate` (a thing in the room), `plate-2` (a well inside a plate). The rail is recessive by day and a step up at night, and it carries the hairline on its inner edge, so the app never reads as one wash with chrome floating in it. Hover strengthens the edge to `edge-2`; focus adds the neutral 2 px outline every control gets. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour. Nothing lifts, and amber never marks state. A photo gets `image-edge` instead: a 1 px line drawn inside its bounds in untinted black by day and white at night, because a warm line reads as grime on a picture. A card picture wears it only when it is opaque, so a drawing on transparency never sits in a box.
 
 The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it. At the end of a review the same light spills into the room around the lantern, under Motion. Explore's header is the one other place it spills: a still pool of it behind the search, and the only background on a public page. It goes under `prefers-reduced-transparency`.
 

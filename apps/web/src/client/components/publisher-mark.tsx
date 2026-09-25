@@ -30,7 +30,7 @@ export function PublisherMark({
         height={size}
         draggable={false}
         onError={() => setFailed(true)}
-        className={clsx("edge shrink-0 rounded-full object-cover", className)}
+        className={clsx("image-edge shrink-0 rounded-full object-cover", className)}
         style={{ width: size, height: size }}
       />
     );

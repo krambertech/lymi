@@ -372,7 +372,7 @@ export function CardForm(props: CardFormProps) {
 
   const pictureThumb: ReactNode =
     picture.kind === "file" && preview ? (
-      <img src={preview} alt="" className="size-5 shrink-0 rounded-[4px] object-cover" />
+      <img src={preview} alt="" className="image-edge size-5 shrink-0 rounded-[4px] object-cover" />
     ) : picture.kind === "link" ? (
       <Link2 className="size-4 shrink-0 text-text-2" aria-hidden="true" />
     ) : undefined;

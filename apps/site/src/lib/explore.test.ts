@@ -28,11 +28,17 @@ describe("shelvesOf", () => {
   it("orders shelves as the list declares, whatever order the decks arrive in", () => {
     const shelves = shelvesOf([
       deck("driving", "driving"),
+      deck("ai-terms", "technology"),
       deck("estonian", "languages"),
       deck("ielts", "exams"),
     ]);
-    expect(shelves.map((shelf) => shelf.key)).toEqual(["languages", "exams", "driving"]);
-    expect(CATEGORY_ORDER.slice(0, 3)).toEqual(["languages", "exams", "driving"]);
+    expect(shelves.map((shelf) => shelf.key)).toEqual([
+      "languages",
+      "exams",
+      "driving",
+      "technology",
+    ]);
+    expect(CATEGORY_ORDER.slice(0, 4)).toEqual(["languages", "exams", "driving", "technology"]);
   });
 
   it("gathers a deck with no shelf, and one naming a shelf that no longer exists, at the end", () => {

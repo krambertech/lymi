@@ -3221,6 +3221,9 @@ msgstr "Tap Add to Home Screen."
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
 
+msgid "Technology"
+msgstr "Technology"
+
 msgid "Term"
 msgstr "Term"
 

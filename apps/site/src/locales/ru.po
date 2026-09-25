@@ -1938,6 +1938,9 @@ msgstr "Учи всему, что стоит запомнить."
 msgid "Teachers"
 msgstr "Преподавателям"
 
+msgid "Technology"
+msgstr "Технологии"
+
 msgid "ten"
 msgstr "десять"
 

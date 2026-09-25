@@ -3221,6 +3221,9 @@ msgstr "Торкнись «На початковий екран»."
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Розкажи Lymi, що зламалося або що варто додати. Відповідь прийде на твою пошту."
 
+msgid "Technology"
+msgstr "Технології"
+
 msgid "Term"
 msgstr "Термін"
 

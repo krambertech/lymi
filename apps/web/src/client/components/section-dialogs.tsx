@@ -1,12 +1,12 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { SectionInput, sectionLimits } from "@lymi/core";
-import { clsx } from "clsx";
-import { Check, Plus } from "lucide-react";
-import { useId, useRef, useState } from "react";
+import { useId, useState } from "react";
 import type { Section } from "../lib/api";
 import { useDesktop } from "../lib/device";
 import { Button } from "./button";
+import { ConfirmDialog } from "./confirm-dialog";
 import { InlineError } from "./inline-error";
+import { MoveToDialog, useNameCheck } from "./move-to-dialog";
 import { RadioCard } from "./radio-card";
 import {
   Dialog,
@@ -20,17 +20,9 @@ import { Field, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { RadioGroup } from "./ui/radio-group";
 
-/** The message for a name the schema refuses, in the words the field shows. */
 function useNameError() {
   const { t } = useLingui();
-  return (name: string) => {
-    const parsed = SectionInput.shape.name.safeParse(name);
-    if (parsed.success) return { name: parsed.data, error: undefined };
-    return {
-      name: "",
-      error: name.trim() ? t`Keep the name under 80 characters.` : t`Give the section a name.`,
-    };
-  };
+  return useNameCheck(SectionInput.shape.name, t`Give the section a name.`);
 }
 
 interface SectionNameDialogProps {
@@ -142,43 +134,38 @@ function NameForm({
   );
 }
 
+type SectionCards = "archive" | "keep";
+
 interface ArchiveSectionDialogProps {
   section: Section | null;
   onOpenChange: (open: boolean) => void;
-  onArchive: (cards: "archive" | "keep") => void;
+  onArchive: (cards: SectionCards) => void;
 }
 
 /** Archiving a section with cards asks first, because the owner says what happens to the cards. */
 export function ArchiveSectionDialog({
-  section: given,
+  section,
   onOpenChange,
   onArchive,
 }: ArchiveSectionDialogProps) {
   const { t } = useLingui();
-  // The section stays named while the dialog closes.
-  const last = useRef(given);
-  if (given) last.current = given;
-  const section = given ?? last.current;
-  const [choice, setChoice] = useState<"archive" | "keep">("keep");
   const name = useId();
-  const sectionName = section?.name ?? "";
-  const count = section?.total ?? 0;
   return (
-    <Dialog
-      open={!!given}
-      onOpenChange={(open) => {
-        if (!open) setChoice("keep");
-        onOpenChange(open);
-      }}
+    <ConfirmDialog<Section, SectionCards>
+      subject={section}
+      onOpenChange={onOpenChange}
+      size="md"
+      title={({ name: sectionName }) => t`Archive “${sectionName}”?`}
+      description={
+        <Trans>Nothing is deleted. Restore it from Archived sections in the deck’s menu.</Trans>
+      }
+      dismiss={<Trans>Cancel</Trans>}
+      confirm={<Trans>Archive section</Trans>}
+      defaultValue="keep"
+      onConfirm={onArchive}
     >
-      <DialogContent size="md">
-        <DialogHeader>
-          <DialogTitle>{t`Archive “${sectionName}”?`}</DialogTitle>
-          <DialogDescription>
-            <Trans>Nothing is deleted. Restore it from Archived sections in the deck’s menu.</Trans>
-          </DialogDescription>
-        </DialogHeader>
-        <RadioGroup<"archive" | "keep">
+      {({ total: count }, choice, setChoice) => (
+        <RadioGroup<SectionCards>
           aria-label={t`What happens to its cards`}
           name={name}
           value={choice}
@@ -209,16 +196,8 @@ export function ArchiveSectionDialog({
             }
           />
         </RadioGroup>
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Cancel</Trans>
-          </Button>
-          <Button variant="danger" onClick={() => onArchive(choice)}>
-            <Trans>Archive section</Trans>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      )}
+    </ConfirmDialog>
   );
 }
 
@@ -316,145 +295,32 @@ interface MoveToSectionDialogProps {
   sections: Section[];
   onMove: (section: Section | null) => void;
   onCreate: (name: string) => Promise<unknown>;
-  creating?: boolean | undefined;
+  pending?: boolean | undefined;
   error?: string | undefined;
 }
 
 /** Cards pick their section from where they are, one or many at once. */
-export function MoveToSectionDialog({
-  open,
-  onOpenChange,
-  term,
-  count,
-  current,
-  sections,
-  onMove,
-  onCreate,
-  creating,
-  error,
-}: MoveToSectionDialogProps) {
+export function MoveToSectionDialog({ term, count, sections, ...rest }: MoveToSectionDialogProps) {
   const { t } = useLingui();
   const check = useNameError();
-  const [naming, setNaming] = useState(false);
-  const [name, setName] = useState("");
-  const [invalid, setInvalid] = useState<string | undefined>();
-  const row =
-    "flex min-h-12 w-full items-center gap-3 px-4 text-start text-base transition-[background-color] duration-150 hoverable:hover:bg-hover aria-[current=true]:font-medium";
-
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(next) => {
-        if (!next) {
-          setNaming(false);
-          setName("");
-          setInvalid(undefined);
-        }
-        onOpenChange(next);
-      }}
-    >
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            {term && count === 1 ? (
-              t`Move “${term}” to`
-            ) : (
-              <Plural value={count} one="Move # card to" other="Move # cards to" />
-            )}
-          </DialogTitle>
-          <DialogDescription>
-            <Trans>Moving a card keeps its progress.</Trans>
-          </DialogDescription>
-        </DialogHeader>
-        <ul className="edge max-h-[50dvh] overflow-y-auto rounded-lg bg-plate">
-          {sections.map((s) => (
-            <li key={s.id} className="border-edge not-first:border-t">
-              <button
-                type="button"
-                className={row}
-                aria-current={s.id === current}
-                onClick={() => (s.id === current ? onOpenChange(false) : onMove(s))}
-              >
-                <span className="min-w-0 flex-1 truncate">{s.name}</span>
-                {s.id === current && <Check className="size-[18px]" aria-hidden="true" />}
-              </button>
-            </li>
-          ))}
-          {current !== null && (
-            <li className="border-edge not-first:border-t">
-              <button
-                type="button"
-                className={clsx(row, "text-text-2")}
-                onClick={() => onMove(null)}
-              >
-                <span className="min-w-0 flex-1">
-                  <Trans>No section</Trans>
-                </span>
-              </button>
-            </li>
-          )}
-          <li className="border-edge not-first:border-t">
-            {naming ? (
-              <form
-                className="grid gap-2 p-3"
-                noValidate
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (creating) return;
-                  const result = check(name);
-                  setInvalid(result.error);
-                  if (!result.error) void onCreate(result.name);
-                }}
-              >
-                <Field>
-                  <FieldLabel>{t`New section`}</FieldLabel>
-                  <div className="flex gap-2">
-                    <Input
-                      autoFocus
-                      value={name}
-                      onChange={(e) => {
-                        setName(e.target.value);
-                        setInvalid(undefined);
-                      }}
-                      placeholder={t`Lesson 15`}
-                      autoComplete="off"
-                      enterKeyHint="done"
-                      maxLength={sectionLimits.name ?? undefined}
-                      className="min-w-0 flex-1"
-                    />
-                    <Button variant="primary" type="submit" loading={creating}>
-                      <Trans>Create and move</Trans>
-                    </Button>
-                  </div>
-                  <FieldError>{invalid}</FieldError>
-                </Field>
-              </form>
-            ) : (
-              <button
-                type="button"
-                className={clsx(row, "text-text-2")}
-                onClick={() => setNaming(true)}
-              >
-                <Plus className="size-[18px]" aria-hidden="true" />
-                <span className="min-w-0 flex-1">
-                  <Trans>New section</Trans>
-                </span>
-              </button>
-            )}
-          </li>
-        </ul>
-        {error && (
-          <p className="text-sm" role="alert">
-            <InlineError>{error}</InlineError>
-          </p>
-        )}
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Cancel</Trans>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <MoveToDialog
+      title={
+        term && count === 1 ? (
+          t`Move “${term}” to`
+        ) : (
+          <Plural value={count} one="Move # card to" other="Move # cards to" />
+        )
+      }
+      description={<Trans>Moving a card keeps its progress.</Trans>}
+      items={sections}
+      noneLabel={<Trans>No section</Trans>}
+      newLabel={t`New section`}
+      placeholder={t`Lesson 15`}
+      maxLength={sectionLimits.name ?? undefined}
+      validate={check}
+      {...rest}
+    />
   );
 }
 
@@ -469,20 +335,18 @@ interface StartEarlyDialogProps {
  * Starting a section early that has locked sections before it opens them too, so the learner is
  * told how many and how many cards before it happens. Starting is never undone.
  */
-export function StartEarlyDialog({ target: given, onOpenChange, onStart }: StartEarlyDialogProps) {
+export function StartEarlyDialog({ target, onOpenChange, onStart }: StartEarlyDialogProps) {
   const { t } = useLingui();
-  const last = useRef(given);
-  if (given) last.current = given;
-  const target = given ?? last.current;
-  const sectionName = target?.section.name ?? "";
-  const others = (target?.opening.length ?? 1) - 1;
-  const cards = target?.opening.reduce((sum, s) => sum + s.total, 0) ?? 0;
   return (
-    <Dialog open={!!given} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t`Start ${sectionName} early?`}</DialogTitle>
-          <DialogDescription>
+    <ConfirmDialog
+      subject={target}
+      onOpenChange={onOpenChange}
+      title={({ section: { name: sectionName } }) => t`Start ${sectionName} early?`}
+      description={({ opening }) => {
+        const others = opening.length - 1;
+        const cards = opening.reduce((sum, s) => sum + s.total, 0);
+        return (
+          <>
             <Plural
               value={others}
               one="The section before it starts too, so sections stay in order."
@@ -493,10 +357,20 @@ export function StartEarlyDialog({ target: given, onOpenChange, onStart }: Start
               one="# card is added to your reviews."
               other="# cards are added to your reviews."
             />
-          </DialogDescription>
-        </DialogHeader>
+          </>
+        );
+      }}
+      dismiss={<Trans>Cancel</Trans>}
+      confirm={({ opening }) => {
+        const others = opening.length - 1;
+        return <Plural value={others + 1} one="Start section" other="Start # sections" />;
+      }}
+      tone="primary"
+      onConfirm={onStart}
+    >
+      {({ opening }) => (
         <ul className="grid gap-1 text-base text-text-2">
-          {target?.opening.map((s) => (
+          {opening.map((s) => (
             <li key={s.id} className="flex items-baseline gap-2">
               <span className="min-w-0 flex-1 truncate">{s.name}</span>
               <span className="text-sm text-muted tabular-nums">
@@ -505,15 +379,7 @@ export function StartEarlyDialog({ target: given, onOpenChange, onStart }: Start
             </li>
           ))}
         </ul>
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Cancel</Trans>
-          </Button>
-          <Button variant="primary" onClick={onStart}>
-            <Plural value={others + 1} one="Start section" other="Start # sections" />
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      )}
+    </ConfirmDialog>
   );
 }

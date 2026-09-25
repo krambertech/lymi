@@ -1,12 +1,14 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { InviteInput } from "@lymi/core";
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import type { Invitation, Member } from "../lib/api";
 import { useDesktop } from "../lib/device";
+import { useOpenKey } from "../lib/use-open-key";
 import { Button } from "./button";
-import { InlineError } from "./inline-error";
+import { ConfirmDialog } from "./confirm-dialog";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -37,33 +39,22 @@ export function RemoveMemberDialog({
   error,
 }: RemoveMemberDialogProps) {
   const { t } = useLingui();
-  const name = member?.name ?? "";
   return (
-    <Dialog open={!!member} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t`Remove ${name}?`}</DialogTitle>
-          <DialogDescription>
-            <Trans>
-              They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept.
-            </Trans>
-          </DialogDescription>
-        </DialogHeader>
-        {error && (
-          <p className="text-sm" role="alert">
-            <InlineError>{error}</InlineError>
-          </p>
-        )}
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Keep member</Trans>
-          </Button>
-          <Button variant="danger" onClick={onRemove} loading={pending} aria-disabled={pending}>
-            <Trans>Remove member</Trans>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <ConfirmDialog
+      subject={member}
+      onOpenChange={onOpenChange}
+      title={({ name }) => t`Remove ${name}?`}
+      description={
+        <Trans>
+          They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept.
+        </Trans>
+      }
+      dismiss={<Trans>Keep member</Trans>}
+      confirm={<Trans>Remove member</Trans>}
+      onConfirm={onRemove}
+      pending={pending}
+      error={error}
+    />
   );
 }
 
@@ -86,27 +77,21 @@ export function TurnOffLinkDialog({
 }: TurnOffLinkDialogProps) {
   const { t } = useLingui();
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t`Turn off the join link?`}</DialogTitle>
-          <DialogDescription>
-            <Trans>
-              The link stops working for good. People who joined stay in the deck, and sharing again
-              makes a new link.
-            </Trans>
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Keep sharing</Trans>
-          </Button>
-          <Button variant="danger" onClick={onTurnOff} loading={pending} aria-disabled={pending}>
-            <Trans>Turn off link</Trans>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <ConfirmDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={t`Turn off the join link?`}
+      description={
+        <Trans>
+          The link stops working for good. People who joined stay in the deck, and sharing again
+          makes a new link.
+        </Trans>
+      }
+      dismiss={<Trans>Keep sharing</Trans>}
+      confirm={<Trans>Turn off link</Trans>}
+      onConfirm={onTurnOff}
+      pending={pending}
+    />
   );
 }
 
@@ -114,7 +99,7 @@ interface CancelInvitationDialogProps {
   /** The invitation being taken back, or null while the dialog is closed. */
   invitation: Invitation | null;
   onOpenChange: (open: boolean) => void;
-  onCancel: () => void;
+  onCancelInvitation: () => void;
   pending?: boolean | undefined;
   error?: string | undefined;
 }
@@ -126,36 +111,25 @@ interface CancelInvitationDialogProps {
 export function CancelInvitationDialog({
   invitation,
   onOpenChange,
-  onCancel,
+  onCancelInvitation,
   pending,
   error,
 }: CancelInvitationDialogProps) {
   const { t } = useLingui();
-  const email = invitation?.email ?? "";
   return (
-    <Dialog open={!!invitation} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t`Cancel the invitation to ${email}?`}</DialogTitle>
-          <DialogDescription>
-            <Trans>Their invitation link stops working. You can invite them again any time.</Trans>
-          </DialogDescription>
-        </DialogHeader>
-        {error && (
-          <p className="text-sm" role="alert">
-            <InlineError>{error}</InlineError>
-          </p>
-        )}
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Keep invitation</Trans>
-          </Button>
-          <Button variant="danger" onClick={onCancel} loading={pending} aria-disabled={pending}>
-            <Trans>Cancel invitation</Trans>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <ConfirmDialog
+      subject={invitation}
+      onOpenChange={onOpenChange}
+      title={({ email }) => t`Cancel the invitation to ${email}?`}
+      description={
+        <Trans>Their invitation link stops working. You can invite them again any time.</Trans>
+      }
+      dismiss={<Trans>Keep invitation</Trans>}
+      confirm={<Trans>Cancel invitation</Trans>}
+      onConfirm={onCancelInvitation}
+      pending={pending}
+      error={error}
+    />
   );
 }
 
@@ -175,26 +149,38 @@ interface InviteDialogProps {
  * list. The button is never disabled: pressing it with nothing typed says what is missing,
  * which teaches more than a control that cannot be pressed.
  */
-export function InviteDialog({
-  open,
-  onOpenChange,
+export function InviteDialog({ open, onOpenChange, ...body }: InviteDialogProps) {
+  const { t } = useLingui();
+  const key = useOpenKey(open);
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t`Invite by email`}</DialogTitle>
+          <DialogDescription>
+            <Trans>
+              They get an email with a link only they can use. They can study the deck but not
+              change it.
+            </Trans>
+          </DialogDescription>
+        </DialogHeader>
+        <InviteForm key={key} {...body} />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function InviteForm({
   onInvite,
   onChange,
   pending,
   error,
-}: InviteDialogProps) {
+}: Omit<InviteDialogProps, "open" | "onOpenChange">) {
   const { t } = useLingui();
   const desktop = useDesktop();
   const fieldId = useId();
   const [email, setEmail] = useState("");
   const [refused, setRefused] = useState<string | undefined>(undefined);
-
-  // Each opening starts clean, so an earlier refusal is not the first thing anyone reads.
-  useEffect(() => {
-    if (!open) return;
-    setEmail("");
-    setRefused(undefined);
-  }, [open]);
 
   const submit = () => {
     if (pending) return;
@@ -215,53 +201,46 @@ export function InviteDialog({
   const message = refused ?? error;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t`Invite by email`}</DialogTitle>
-          <DialogDescription>
-            <Trans>
-              They get an email with a link only they can use. They can study the deck but not
-              change it.
-            </Trans>
-          </DialogDescription>
-        </DialogHeader>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            submit();
-          }}
-        >
-          <Field>
-            <FieldLabel htmlFor={fieldId}>{t`Email address`}</FieldLabel>
-            <Input
-              id={fieldId}
-              type="email"
-              inputMode="email"
-              autoComplete="off"
-              // On touch the drawer settles first and the keyboard waits for a tap on the field.
-              autoFocus={desktop}
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-                setRefused(undefined);
-                onChange?.();
-              }}
-              placeholder={t`anna@example.com`}
-              aria-invalid={message ? true : undefined}
-            />
-            {message && <FieldError>{message}</FieldError>}
-          </Field>
-        </form>
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            <Trans>Cancel</Trans>
-          </Button>
-          <Button onClick={submit} loading={pending}>
-            <Trans>Send invitation</Trans>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          submit();
+        }}
+      >
+        <Field>
+          <FieldLabel htmlFor={fieldId}>{t`Email address`}</FieldLabel>
+          <Input
+            id={fieldId}
+            type="email"
+            inputMode="email"
+            autoComplete="off"
+            // On touch the drawer settles first and the keyboard waits for a tap on the field.
+            autoFocus={desktop}
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              setRefused(undefined);
+              onChange?.();
+            }}
+            placeholder={t`anna@example.com`}
+            aria-invalid={message ? true : undefined}
+          />
+          {message && <FieldError>{message}</FieldError>}
+        </Field>
+      </form>
+      <DialogFooter>
+        <DialogClose
+          render={
+            <Button variant="ghost">
+              <Trans>Cancel</Trans>
+            </Button>
+          }
+        />
+        <Button onClick={submit} loading={pending}>
+          <Trans>Send invitation</Trans>
+        </Button>
+      </DialogFooter>
+    </>
   );
 }

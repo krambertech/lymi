@@ -376,7 +376,7 @@ function DeckPage() {
               picking.after();
               setPicking(null);
             }}
-            creating={sectionActions.create.isPending}
+            pending={sectionActions.create.isPending}
             error={
               sectionActions.create.isError ? errorMessage(sectionActions.create.error) : undefined
             }
@@ -418,7 +418,7 @@ function DeckPage() {
           onOpenChange={setLeaving}
           deckName={deck.name}
           onLeave={() => leaveDeck.mutate()}
-          leaving={leaveDeck.isPending}
+          pending={leaveDeck.isPending}
         />
       )}
       {deck && isOwner && (
@@ -448,7 +448,7 @@ function DeckPage() {
             setMovingToSeries(false);
             seriesActions.moveDeck.mutate({ deck, seriesId });
           }}
-          creating={seriesActions.create.isPending}
+          pending={seriesActions.create.isPending}
           error={
             seriesActions.create.isError ? errorMessage(seriesActions.create.error) : undefined
           }

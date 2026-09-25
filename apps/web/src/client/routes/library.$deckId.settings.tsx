@@ -263,7 +263,7 @@ function DeckSettings() {
           setCancelling(null);
           cancelInvite.reset();
         }}
-        onCancel={() => cancelling && cancelInvite.mutate(cancelling)}
+        onCancelInvitation={() => cancelling && cancelInvite.mutate(cancelling)}
         pending={cancelInvite.isPending}
         error={cancelInvite.isError ? t`Couldn’t cancel the invitation. Try again.` : undefined}
       />
@@ -284,7 +284,7 @@ function DeckSettings() {
           onOpenChange={setLeaving}
           deckName={deck.name}
           onLeave={() => leave.mutate()}
-          leaving={leave.isPending}
+          pending={leave.isPending}
         />
       )}
       {isOwner && (

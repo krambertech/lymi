@@ -11,6 +11,7 @@ import { writes } from "../lib/writes";
 import { Button } from "./button";
 import { DirectionCompact, LanguageField } from "./deck-fields";
 import { InlineError } from "./inline-error";
+import { useStaticNav } from "./nav-link";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Field, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
@@ -60,13 +61,12 @@ export interface NewDeckFormProps {
   error?: string | undefined;
   onCancel: () => void;
   onSubmit: (input: DeckInput) => Promise<unknown> | undefined;
-  /** No autofocus. For the design page. */
-  static?: boolean | undefined;
 }
 
 /** The sheet's body, on its own so it can be shown without the sheet around it. */
-export function NewDeckForm({ pending, error, onCancel, onSubmit, static: st }: NewDeckFormProps) {
+export function NewDeckForm({ pending, error, onCancel, onSubmit }: NewDeckFormProps) {
   const { t } = useLingui();
+  const st = !!useStaticNav();
   const desktop = useDesktop();
   const [name, setName] = useState("");
   const [language, setLanguage] = useState<string | null>(null);

@@ -3,7 +3,7 @@ import { useShellWide } from "../../lib/shell-width";
 import { BackButton, Page, PageHeader, TileLockup, TopBar } from "../../views/shell";
 import { NavLink } from "../nav-link";
 import { Skeleton } from "../skeleton";
-import { TabActions, useShellChrome } from "./shell-chrome";
+import { TabActions } from "./shell-chrome";
 
 /**
  * Back names the screen above: a place to link to, or an action when there is no route. With
@@ -45,7 +45,6 @@ interface Props {
 }
 
 function Back({ back }: { back: ScreenBack }) {
-  const st = useShellChrome()?.static;
   if ("onClick" in back && back.onClick) {
     return <BackButton label={back.label} onClick={back.onClick} />;
   }
@@ -54,7 +53,12 @@ function Back({ back }: { back: ScreenBack }) {
     <BackButton label={back.label}>
       {(className, content) =>
         link ? (
-          <NavLink to={link.to} params={link.params} hash={link.hash} className={className} st={st}>
+          <NavLink
+            to={link.to}
+            params={link.params ?? {}}
+            {...(link.hash ? { hash: link.hash } : {})}
+            className={className}
+          >
             {content}
           </NavLink>
         ) : (

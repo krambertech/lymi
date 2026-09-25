@@ -2,6 +2,7 @@ import { LayoutGroup } from "motion/react";
 import type { ReactNode } from "react";
 import { useId, useState } from "react";
 import { Button } from "../../components/button";
+import { StaticNavProvider } from "../../components/nav-link";
 import { PillNav } from "../../components/pill-nav";
 import { type Ending, reviewEnd, type Stretch, streakWith } from "../../lib/review-complete";
 import { GradeBar, ReviewCard, ReviewComplete, ReviewHeader } from "../../views/review-view";
@@ -54,7 +55,9 @@ function PhoneShot({
           bottom={
             bare ? undefined : (
               <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center pb-6">
-                <PillNav static={{ path }} />
+                <StaticNavProvider path={path}>
+                  <PillNav />
+                </StaticNavProvider>
               </div>
             )
           }

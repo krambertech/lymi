@@ -1,12 +1,11 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { trayHue } from "@lymi/core/catalog";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { Check, Plus } from "lucide-react";
 import type { CSSProperties } from "react";
 import { Button } from "./button";
-import type { StaticNav } from "./nav-link";
+import { NavLink } from "./nav-link";
 
 /** How many blank sheets sit behind the card: the deck's own depth, never more than two. */
 function paperFor(cardCount: number): number {
@@ -111,7 +110,6 @@ interface TileProps {
   addedTo: string | null;
   onAdd: () => void;
   adding?: boolean | undefined;
-  st?: StaticNav;
 }
 
 /**
@@ -119,7 +117,7 @@ interface TileProps {
  * the largest thing in the group and the card's term sets smaller than it. Add is secondary
  * here rather than amber — a shelf of decks has no single thing to press. DESIGN.md, "Colour".
  */
-export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
+export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
   const { t } = useLingui();
   return (
     // A card, not a group on the open canvas as on the public page: the press has to belong to
@@ -127,10 +125,9 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
     // card's own edges and the card clips it, so the two corners are concentric by construction
     // rather than by a radius that has to be kept in step with the padding.
     <div className="deck-tile edge grid h-full grid-rows-[1fr_auto] overflow-hidden rounded-xl bg-plate">
-      <Link
+      <NavLink
         to="/explore/$slug"
         params={{ slug: deck.slug }}
-        disabled={!!st}
         className="grid content-start gap-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
         <DeckTray
@@ -152,18 +149,17 @@ export function DeckTile({ deck, addedTo, onAdd, adding, st }: TileProps) {
           </p>
           <DeckMeta deck={deck} />
         </div>
-      </Link>
+      </NavLink>
       <div className="px-3.5 pb-3.5 pt-3.5">
         {addedTo ? (
-          <Link
+          <NavLink
             to="/library/$deckId"
             params={{ deckId: addedTo }}
-            disabled={!!st}
             className="relative inline-flex h-8 items-center gap-1.5 rounded-sm px-2 -ms-2 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
           >
             <Check aria-hidden="true" className="text-state-known" />
             <Trans>In Library</Trans>
-          </Link>
+          </NavLink>
         ) : (
           <Button
             size="sm"

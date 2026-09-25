@@ -1,5 +1,4 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
   Activity,
@@ -19,7 +18,7 @@ import { promptToInstall, useInstallState } from "../lib/pwa-install";
 import { Avatar } from "./avatar";
 import { FeedbackDialog } from "./feedback-dialog";
 import { InstallDialog } from "./install-dialog";
-import type { StaticNav } from "./nav-link";
+import { NavLink, useStaticNav } from "./nav-link";
 import { ShortcutsDialog } from "./shortcuts-dialog";
 import {
   DropdownMenu,
@@ -40,7 +39,6 @@ interface Props {
   docsUrl: string;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
-  static?: StaticNav;
 }
 
 /** The part of a name a friend uses. Google sends the full one. */
@@ -55,16 +53,9 @@ export function firstName(name: string | undefined): string | undefined {
  * there is a keyboard; Install appears where the browser can actually do it. Writing to Lymi sits
  * with the docs, since both are where a learner goes when the app has not answered them.
  */
-export function LearnerMenu({
-  name,
-  email,
-  variant,
-  docsUrl,
-  onSignOut,
-  signingOut,
-  static: st,
-}: Props) {
+export function LearnerMenu({ name, email, variant, docsUrl, onSignOut, signingOut }: Props) {
   const { t } = useLingui();
+  const st = useStaticNav();
   const install = useInstallState();
   const photo = useLearnerAvatar();
   const [shortcuts, setShortcuts] = useState(false);
@@ -74,16 +65,7 @@ export function LearnerMenu({
   const installable = !install.installed && (install.canPrompt || install.isIOS);
 
   const place = (to: Place, icon: ReactNode, label: ReactNode, trailing?: ReactNode) => (
-    <DropdownMenuLinkItem
-      render={
-        st ? (
-          // biome-ignore lint/a11y/useAnchorContent: the menu row renders its label into this anchor
-          <a href={to} onClick={(e) => e.preventDefault()} />
-        ) : (
-          <Link to={to} />
-        )
-      }
-    >
+    <DropdownMenuLinkItem render={<NavLink to={to} />}>
       {icon}
       <span className="flex-1">{label}</span>
       {trailing}

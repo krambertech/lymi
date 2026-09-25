@@ -1,5 +1,4 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -35,6 +34,7 @@ import { Button, buttonClass, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { Screen, ScreenBar } from "../components/layout/screen";
+import { NavLink, useStaticNav } from "../components/nav-link";
 import { NextStep, NextSteps } from "../components/next-steps";
 import { PublisherMark } from "../components/publisher-mark";
 import { SectionProgress } from "../components/section-progress";
@@ -68,7 +68,6 @@ import {
   rowState,
 } from "../lib/deck-list";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
-import type { StaticNav } from "./shell";
 import { type WordHistory, WordView } from "./word-view";
 
 /** A menu row greys its icons, so a state's mark takes its own colour back. */
@@ -127,7 +126,6 @@ export interface DeckDetailProps {
   retryPending?: boolean | undefined;
   /** Draw an open card beside the list at any width, for the design system's narrower frames. */
   cardBeside?: boolean | undefined;
-  static?: StaticNav;
 }
 
 /** What the owner does to the deck and its cards; the route holds the sheets and dialogs. */
@@ -662,9 +660,9 @@ export function DeckDetailView({
   cardBeside,
   connectUrl,
   connected,
-  static: st,
 }: DeckDetailProps) {
   const { t, i18n } = useLingui();
+  const st = useStaticNav();
   const [q, setQ] = useState("");
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
@@ -917,17 +915,6 @@ export function DeckDetailView({
     </DropdownMenu>
   );
 
-  // The design page renders the screen without a router, so every way back is a plain anchor there.
-  const toLibrary = (className: string, content: ReactNode) =>
-    st ? (
-      <a href="/library" onClick={(e) => e.preventDefault()} className={className}>
-        {content}
-      </a>
-    ) : (
-      <Link to="/library" className={className}>
-        {content}
-      </Link>
-    );
   const backToLibrary = { label: t`Library`, to: "/library" };
 
   // A deck that could not be loaded takes the whole screen, so no skeleton is left waiting under it.
@@ -938,7 +925,11 @@ export function DeckDetailView({
           <ErrorState
             title={t`This deck is no longer here`}
             body={t`It may have been archived, or you were removed from it.`}
-            action={toLibrary(buttonClass("primary"), t`Open Library`)}
+            action={
+              <NavLink to="/library" className={buttonClass("primary")}>
+                {t`Open Library`}
+              </NavLink>
+            }
           />
         ) : (
           <ErrorState
@@ -1077,7 +1068,6 @@ export function DeckDetailView({
                       title={<Trans>Send a lesson from Claude or ChatGPT</Trans>}
                       detail={<Trans>Connect Lymi, paste the lesson, and ask for the cards</Trans>}
                       href={connectUrl}
-                      static={st}
                     />
                   )}
                   <NextStep
@@ -1086,7 +1076,6 @@ export function DeckDetailView({
                     detail={<Trans>Create a key in Settings</Trans>}
                     to="/settings"
                     hash="api-keys"
-                    static={st}
                   />
                 </NextSteps>
               </StartPanelSection>

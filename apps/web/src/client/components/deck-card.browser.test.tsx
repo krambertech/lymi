@@ -5,6 +5,7 @@ import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { DeckCard } from "./deck-card";
+import { StaticNavProvider } from "./nav-link";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -12,29 +13,16 @@ i18n.activate("en");
 test("a joined deck names its owner and an owned deck names nobody", async () => {
   await render(
     <I18nProvider i18n={i18n}>
-      <ul>
-        <li>
-          <DeckCard
-            id="d1"
-            name="Italian with Giulia"
-            language="it"
-            due={8}
-            total={64}
-            st={{ path: "" }}
-          />
-        </li>
-        <li>
-          <DeckCard
-            id="d4"
-            name="Eesti keel, A1"
-            language="et"
-            due={5}
-            total={38}
-            owner="Liis"
-            st={{ path: "" }}
-          />
-        </li>
-      </ul>
+      <StaticNavProvider path="">
+        <ul>
+          <li>
+            <DeckCard id="d1" name="Italian with Giulia" language="it" due={8} total={64} />
+          </li>
+          <li>
+            <DeckCard id="d4" name="Eesti keel, A1" language="et" due={5} total={38} owner="Liis" />
+          </li>
+        </ul>
+      </StaticNavProvider>
     </I18nProvider>,
   );
 
@@ -60,33 +48,33 @@ test("a deck added from Explore draws its publisher's mark", async () => {
   const photo = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   await render(
     <I18nProvider i18n={i18n}>
-      <ul>
-        <li>
-          <DeckCard
-            id="d5"
-            name="Eesti keel, A2"
-            language="et"
-            due={0}
-            total={120}
-            owner="Giulia"
-            published
-            publisherPhoto={photo}
-            st={{ path: "" }}
-          />
-        </li>
-        <li>
-          <DeckCard
-            id="d6"
-            name="Eesti keel, B1"
-            language="et"
-            due={0}
-            total={90}
-            owner="Lymi"
-            published
-            st={{ path: "" }}
-          />
-        </li>
-      </ul>
+      <StaticNavProvider path="">
+        <ul>
+          <li>
+            <DeckCard
+              id="d5"
+              name="Eesti keel, A2"
+              language="et"
+              due={0}
+              total={120}
+              owner="Giulia"
+              published
+              publisherPhoto={photo}
+            />
+          </li>
+          <li>
+            <DeckCard
+              id="d6"
+              name="Eesti keel, B1"
+              language="et"
+              due={0}
+              total={90}
+              owner="Lymi"
+              published
+            />
+          </li>
+        </ul>
+      </StaticNavProvider>
     </I18nProvider>,
   );
 

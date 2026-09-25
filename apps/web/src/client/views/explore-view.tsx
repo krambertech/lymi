@@ -6,7 +6,6 @@ import { useMemo } from "react";
 import { DeckTile } from "../components/deck-tray";
 import { EmptySection, ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
-import type { StaticNav } from "../components/nav-link";
 import { Skeleton } from "../components/skeleton";
 import { shelfLabel } from "../lib/explore";
 
@@ -18,7 +17,6 @@ interface Props {
   onAdd: (deck: { slug: string; name: string; edition: string }) => void;
   /** The slug currently being added, so only its own tile waits. */
   adding?: string | undefined;
-  st?: StaticNav;
 }
 
 /**
@@ -26,7 +24,7 @@ interface Props {
  * as its decks need. It reads the same projection as `lymi.app/explore`, so the two can never
  * disagree. ADR 0016, `docs/design/explore.md`.
  */
-export function ExploreView({ data, failed, busy, onRetry, onAdd, adding, st }: Props) {
+export function ExploreView({ data, failed, busy, onRetry, onAdd, adding }: Props) {
   const { i18n, t } = useLingui();
   const shelves = useMemo(() => shelvesOf(data?.decks ?? []), [data?.decks]);
 
@@ -97,7 +95,6 @@ export function ExploreView({ data, failed, busy, onRetry, onAdd, adding, st }: 
                         })
                       }
                       adding={adding === deck.slug}
-                      st={st}
                     />
                   </li>
                 ))}

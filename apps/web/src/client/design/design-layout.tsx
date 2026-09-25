@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { IconButton } from "../components/button";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { AppTile, Wordmark } from "../components/logo";
+import { StaticNavProvider } from "../components/nav-link";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import { setTheme } from "../lib/theme";
 import { designChrome } from "./chrome";
@@ -59,7 +60,9 @@ export function DesignLayout() {
         </header>
         <main className="@container mx-auto w-full max-w-[1120px] flex-1 px-5 pt-8 pb-16 @3xl/shell:px-10">
           <ShellChrome value={DESIGN_CHROME}>
-            <Outlet />
+            <StaticNavProvider path="/design">
+              <Outlet />
+            </StaticNavProvider>
           </ShellChrome>
         </main>
       </div>

@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
+import { errorMessage } from "./api";
 import { writes } from "./writes";
 
 /** Archives a deck, returns to the deck list, and offers Undo there. */
@@ -22,6 +23,7 @@ export function useArchiveDeck(deckId: string, name: string | undefined) {
       invalidate();
       toast.close(toastId);
     },
+    onError: (error) => toast.add({ id: toastId, type: "error", title: errorMessage(error) }),
   });
   return useMutation({
     mutationFn: () => writes.archiveDeck(deckId),
@@ -35,5 +37,6 @@ export function useArchiveDeck(deckId: string, name: string | undefined) {
         actionProps: { children: t`Undo`, onClick: () => restore.mutate() },
       });
     },
+    onError: (error) => toast.add({ id: toastId, type: "error", title: errorMessage(error) }),
   });
 }

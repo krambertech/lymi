@@ -628,6 +628,14 @@ describe("Lymi MCP server", () => {
       arguments: { seriesId: "series-1" },
     });
     expect(empty.isError).toBe(true);
+
+    services.setSeriesDecks.mockClear();
+    const repeated = await client.callTool({
+      name: "update_series",
+      arguments: { seriesId: "series-1", deckIds: ["deck-1", "deck-1"] },
+    });
+    expect(repeated.isError).toBe(true);
+    expect(services.setSeriesDecks).not.toHaveBeenCalled();
   });
 
   it("moves many cards to a section in one call, through the same service as the API", async () => {

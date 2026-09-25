@@ -24,6 +24,7 @@ import {
   SectionArchiveInput,
   SectionInput,
   SectionOrderInput,
+  SeriesDecksInput,
   SeriesDeleteInput,
   SeriesInput,
   SeriesOrderInput,
@@ -270,7 +271,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cards, response }) =>
       run("add_cards", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         const outcomes = await addCards(ctx, cards, principal.enrichment);
         return result({
           added: outcomes.filter((o) => o.status === "added").length,
@@ -303,7 +304,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId, ...patch }) =>
       run("update_card", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(cardOut(await updateCard(ctx, cardId, patch)));
       }),
   );
@@ -320,7 +321,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cards, response }) =>
       run("update_cards", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         const outcomes = await updateCards(ctx, cards);
         return result({
           updated: outcomes.filter((o) => o.status === "updated").length,
@@ -348,7 +349,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId }) =>
       run("archive_card", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         await archiveCard(ctx, cardId);
         return result({ ok: true });
       }),
@@ -366,7 +367,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardIds }) =>
       run("archive_cards", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         const outcomes = await archiveCards(ctx, cardIds);
         return result({
           archived: outcomes.filter((o) => o.status === "archived").length,
@@ -388,7 +389,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId }) =>
       run("restore_card", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         await restoreCard(ctx, cardId);
         return result({ ok: true });
       }),
@@ -406,7 +407,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardIds }) =>
       run("restore_cards", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         const outcomes = await restoreCards(ctx, cardIds);
         return result({
           restored: outcomes.filter((o) => o.status === "restored").length,
@@ -428,7 +429,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId }) =>
       run("enrich_card", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(cardOut(await requestEnrichment(ctx, cardId, principal.enrichment ?? null)));
       }),
   );
@@ -445,7 +446,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     (input) =>
       run("create_deck", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(deckOut(await createDeck(ctx, input)));
       }),
   );
@@ -462,7 +463,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ deckId, ...patch }) =>
       run("update_deck", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(deckOut(await updateDeck(ctx, deckId, patch)));
       }),
   );
@@ -479,7 +480,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ deckId }) =>
       run("archive_deck", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         await archiveDeck(ctx, deckId);
         return result({ ok: true });
       }),
@@ -496,7 +497,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ deckId }) =>
       run("restore_deck", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         await restoreDeck(ctx, deckId);
         return result({ ok: true });
       }),
@@ -528,7 +529,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     (input) =>
       run("create_series", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(seriesOut(await createSeries(ctx, input)));
       }),
   );
@@ -542,18 +543,14 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       inputSchema: z.object({
         seriesId: z.string().min(1),
         name: SeriesInput.shape.name.optional(),
-        deckIds: z
-          .array(z.string().min(1))
-          .max(200)
-          .optional()
-          .describe("Every deck the series should hold, in order"),
+        deckIds: SeriesDecksInput.shape.deckIds.optional(),
       }),
       outputSchema: SeriesItemOut,
       ...writeTool({ idempotent: true, overwrites: true }),
     },
     ({ seriesId, name, deckIds }) =>
       run("update_series", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         if (name === undefined && deckIds === undefined) {
           throw new ServiceError("invalid", "Send a name, deckIds, or both.");
         }
@@ -579,7 +576,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     (input) =>
       run("reorder_series", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result({ series: (await reorderSeries(ctx, input)).map(seriesOut) });
       }),
   );
@@ -596,7 +593,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ seriesId, decks }) =>
       run("delete_series", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         await deleteSeries(ctx, seriesId, { decks });
         return result({ ok: true });
       }),
@@ -633,7 +630,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ deckId, ...input }) =>
       run("create_section", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(sectionOut(await createSection(ctx, deckId, input)));
       }),
   );
@@ -649,7 +646,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ sectionId, name }) =>
       run("rename_section", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(sectionOut(await renameSection(ctx, sectionId, name)));
       }),
   );
@@ -666,7 +663,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ deckId, sectionIds }) =>
       run("reorder_sections", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return sectionsResult(await reorderSections(ctx, deckId, { sectionIds }));
       }),
   );
@@ -683,7 +680,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ deckId, cardIds, sectionId }) =>
       run("move_cards_to_section", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return sectionsResult(await setCardsSection(ctx, deckId, { cardIds, sectionId }));
       }),
   );
@@ -700,7 +697,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ sectionId, cards }) =>
       run("archive_section", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         await archiveSection(ctx, sectionId, { cards });
         return result({ ok: true });
       }),
@@ -718,7 +715,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ sectionId }) =>
       run("restore_section", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         await restoreSection(ctx, sectionId);
         return result({ ok: true });
       }),
@@ -748,7 +745,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId, url, data, description, version }) =>
       run("set_card_image", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         const images = imagesOf(principal);
         if ((url === undefined) === (data === undefined)) {
           throw new ServiceError("invalid", "Send either url or data.");
@@ -778,7 +775,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId, ...patch }) =>
       run("describe_card_image", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(cardOut(await describeCardImage(ctx, cardId, patch)));
       }),
   );
@@ -795,7 +792,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId, version }) =>
       run("archive_card_image", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(cardOut(await archiveCardImage(ctx, cardId, { version })));
       }),
   );
@@ -811,7 +808,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     ({ cardId, version }) =>
       run("restore_card_image", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(cardOut(await restoreCardImage(ctx, cardId, { version })));
       }),
   );
@@ -842,7 +839,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     },
     (patch) =>
       run("update_settings", async () => {
-        denyReads(principal);
+        requireWrite(principal);
         return result(settingsOut(await updateSettings(ctx, patch)));
       }),
   );
@@ -956,7 +953,7 @@ function writeTool({
 class ReadOnlyConnection extends Error {}
 
 /** The learner may have unticked write on the consent screen. */
-function denyReads(principal: McpPrincipal): void {
+function requireWrite(principal: McpPrincipal): void {
   if (principal.scope !== "write") throw new ReadOnlyConnection();
 }
 

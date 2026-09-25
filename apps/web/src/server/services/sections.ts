@@ -210,8 +210,8 @@ export async function listSections(
 async function sectionAccess(ctx: ServiceContext, id: string) {
   const [row] = await ctx.db.select().from(schema.sections).where(eq(schema.sections.id, id));
   if (!row) throw notFound("Section");
-  const deck = await deckAccess(ctx, row.deckId).catch(() => {
-    throw notFound("Section");
+  const deck = await deckAccess(ctx, row.deckId).catch((err: unknown) => {
+    throw err instanceof ServiceError && err.code === "not_found" ? notFound("Section") : err;
   });
   return { section: row, deck };
 }

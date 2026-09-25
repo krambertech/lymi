@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
-import type { CardHit, DeckSummary } from "../lib/api";
+import { type CardHit, type DeckSummary, errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { archivedCardsQuery, archivedDecksQuery } from "../lib/queries";
 import { writes } from "../lib/writes";
@@ -25,14 +25,17 @@ function Archived() {
     qc.invalidateQueries({ queryKey: ["series"] });
     qc.invalidateQueries({ queryKey: ["queue"] });
   };
+  const refused = (error: Error) => toast.add({ type: "error", title: errorMessage(error) });
 
   const undoDeck = useMutation({
     mutationFn: (id: string) => writes.archiveDeck(id),
     onSuccess: invalidate,
+    onError: refused,
   });
   const undoCard = useMutation({
     mutationFn: (id: string) => writes.archiveCard(id),
     onSuccess: invalidate,
+    onError: refused,
   });
   const restoreDeck = useMutation({
     mutationFn: (deck: DeckSummary) => writes.restoreDeck(deck.id),
@@ -43,6 +46,7 @@ function Archived() {
         actionProps: { children: t`Undo`, onClick: () => undoDeck.mutate(deck.id) },
       });
     },
+    onError: refused,
   });
   const restoreCard = useMutation({
     mutationFn: (card: CardHit) => writes.restoreCard(card.id),
@@ -53,6 +57,7 @@ function Archived() {
         actionProps: { children: t`Undo`, onClick: () => undoCard.mutate(card.id) },
       });
     },
+    onError: refused,
   });
 
   return (

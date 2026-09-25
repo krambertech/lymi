@@ -67,6 +67,12 @@ export function ConnectedAppsSection() {
         </>
       )}
 
+      {apps.isError && (
+        <p className="text-sm text-danger" role="alert">
+          {errorMessage(apps.error)}
+        </p>
+      )}
+
       {disconnect.isError && (
         <p className="text-sm text-danger" role="alert">
           {errorMessage(disconnect.error)}

@@ -1,5 +1,6 @@
 import { MotionConfig } from "motion/react";
 import { useLayoutEffect, useRef, useState } from "react";
+import { StaticNavProvider } from "../components/nav-link";
 import { useFinePointer, useForcedStates } from "./forced-states";
 import { SPECIMENS, type SpecimenId } from "./specimens";
 
@@ -151,7 +152,9 @@ export function FrameDocument({ specimen }: { specimen: string }) {
   return (
     <MotionConfig reducedMotion={motion === "reduce" ? "always" : "user"}>
       <div className="min-h-dvh bg-canvas p-5 text-text">
-        <entry.Scene />
+        <StaticNavProvider path="/design">
+          <entry.Scene />
+        </StaticNavProvider>
       </div>
     </MotionConfig>
   );

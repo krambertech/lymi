@@ -9,6 +9,7 @@ import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { pageTitle } from "../lib/page-focus";
 import { Button, IconButton } from "./button";
 import { InlineError } from "./inline-error";
+import { useStaticNav } from "./nav-link";
 import { RadioCard } from "./radio-card";
 import { Checkbox } from "./ui/checkbox";
 import {
@@ -72,14 +73,10 @@ export function SeriesForm({
   onCancel,
   pending,
   error,
-  static: st,
-}: Omit<SeriesSheetProps, "open" | "onOpenChange"> & {
-  onCancel: () => void;
-  /** No autofocus. For the design page. */
-  static?: boolean | undefined;
-}) {
+}: Omit<SeriesSheetProps, "open" | "onOpenChange"> & { onCancel: () => void }) {
   const { t } = useLingui();
   const desktop = useDesktop();
+  const st = !!useStaticNav();
   const [name, setName] = useState(series?.name ?? "");
   const [chosen, setChosen] = useState<string[]>(series?.deckIds ?? []);
   const [invalid, setInvalid] = useState<FieldErrors>({});

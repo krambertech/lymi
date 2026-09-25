@@ -1,15 +1,7 @@
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
-import type { StaticNav } from "./nav-link";
-
-interface GoProps {
-  children?: ReactNode;
-  /** The glyph in the circle; an arrow unless the row does something other than open. */
-  icon?: ReactNode | undefined;
-  className?: string | undefined;
-}
+import { NavLink, useStaticNav } from "./nav-link";
 
 interface GoProps {
   children?: ReactNode;
@@ -54,25 +46,33 @@ interface NextStepBase {
   icon: ReactNode;
   title: ReactNode;
   detail: ReactNode;
-  static?: StaticNav;
 }
 
 type NextStepProps = NextStepBase &
   (
-    | { /** A page on the public site. */ href: string; to?: never; hash?: never }
+    | { /** A page on the public site. */ href: string; to?: never; hash?: never; onClick?: never }
     | {
         /** A screen in the app. */
         to: "/settings";
         /** A group on that screen, e.g. "api-keys". */
         hash?: string | undefined;
         href?: never;
+        onClick?: never;
+      }
+    | {
+        /** Something done in place, such as opening a dialog. */
+        onClick: () => void;
+        href?: never;
+        to?: never;
+        hash?: never;
       }
   );
 
 export function NextStep(props: NextStepProps) {
-  const { icon, title, detail, static: st } = props;
+  const { icon, title, detail } = props;
+  const st = useStaticNav();
   const className =
-    "group -mx-2 flex min-h-16 items-center gap-4 rounded-sm px-2 py-2.5 transition-[background-color] duration-150 hoverable:hover:bg-hover";
+    "group -mx-2 flex min-h-16 w-[calc(100%+1rem)] items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover";
   const face = (
     <>
       <span
@@ -88,18 +88,16 @@ export function NextStep(props: NextStepProps) {
       <Go />
     </>
   );
-  // Inert on the design page, which draws these rows without leaving it.
   return (
     <li>
       {props.to ? (
-        <Link
-          to={props.to}
-          {...(props.hash ? { hash: props.hash } : {})}
-          disabled={!!st}
-          className={className}
-        >
+        <NavLink to={props.to} {...(props.hash ? { hash: props.hash } : {})} className={className}>
           {face}
-        </Link>
+        </NavLink>
+      ) : props.onClick ? (
+        <button type="button" onClick={props.onClick} className={className}>
+          {face}
+        </button>
       ) : (
         <a
           href={props.href}

@@ -5,13 +5,11 @@ import { ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { buttonClass } from "./button";
 import { HAND_FANS, TrayCardFace } from "./deck-tray";
-import type { StaticNav } from "./nav-link";
 import { NavLink } from "./nav-link";
 
 interface Props {
   /** Published decks the learner has not added, in the catalogue's own order. */
   decks: PublicDeckSummary[];
-  st?: StaticNav;
 }
 
 /**
@@ -20,7 +18,7 @@ interface Props {
  * Explore. Choosing happens there, where the decks sit on their shelves. Its button is white on
  * the colour rather than amber, so the guide's own step stays the one thing to press.
  */
-export function ReadyDecks({ decks, st }: Props) {
+export function ReadyDecks({ decks }: Props) {
   const hand = decks.flatMap((deck) => (deck.card ? [{ deck, card: deck.card }] : [])).slice(0, 3);
   const fan = HAND_FANS[hand.length - 1] ?? [];
   return (
@@ -61,7 +59,6 @@ export function ReadyDecks({ decks, st }: Props) {
         </p>
         <NavLink
           to="/explore"
-          st={st}
           className={buttonClass("secondary", "md", "deck-cover-action mt-3 w-full @2xl:w-auto")}
         >
           <Trans>Browse ready-made decks</Trans>

@@ -1,8 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { type Round, type RoundsOut, SLIPPING_LAPSES } from "@lymi/core";
+import { type RoundsOut, SLIPPING_LAPSES } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ChevronRight, Plus } from "lucide-react";
 import { type ReactNode, useRef } from "react";
@@ -12,6 +11,7 @@ import { ErrorState } from "../components/empty-state";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Screen } from "../components/layout/screen";
+import { NavLink } from "../components/nav-link";
 import { Go } from "../components/next-steps";
 import { ReadyDecks } from "../components/ready-decks";
 import { RestDayBanner } from "../components/rest-day-banner";
@@ -22,7 +22,6 @@ import { restedYesterday, type StreakSummary } from "../components/streak";
 import type { DeckSummary, Series } from "../lib/api";
 import { lanternFor } from "../lib/flame";
 import { groupDecks } from "../lib/library-groups";
-import type { StaticNav } from "./shell";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;
@@ -48,10 +47,7 @@ export interface TodayProps {
   onDismissRest?: (() => void) | undefined;
   /** Published decks the learner has not added. Undefined while Explore is still unread. */
   ready?: PublicDeckSummary[] | undefined;
-  static?: StaticNav;
 }
-
-type ReviewSearch = { deck?: string; series?: string; round?: Round };
 
 /** Until the first review, Today is the getting started guide. False while the streak is unread. */
 export function isGuiding(streak: StreakSummary | undefined): boolean {
@@ -80,7 +76,6 @@ export function TodayView({
   ready,
   restDismissed,
   onDismissRest,
-  static: st,
 }: TodayProps) {
   const { t } = useLingui();
   const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
@@ -125,10 +120,9 @@ export function TodayView({
             connectUrl={connectUrl}
             onAdd={onAdd}
             onCreateDeck={onCreateDeck}
-            st={st}
           />
           {/* Only under the guide: a learner past their first review has their own work to get on with. */}
-          {ready && ready.length > 0 && <ReadyDecks decks={ready} st={st} />}
+          {ready && ready.length > 0 && <ReadyDecks decks={ready} />}
         </div>
       ) : failedEmpty ? (
         <ErrorState
@@ -186,9 +180,8 @@ export function TodayView({
                       />
                     </div>
                     {due > 0 ? (
-                      <To
+                      <NavLink
                         to="/review"
-                        st={st}
                         className={buttonClass(
                           "primary",
                           "xl",
@@ -199,7 +192,7 @@ export function TodayView({
                         <span className="hidden @2xl:contents">
                           <Kbd tone="on-primary">R</Kbd>
                         </span>
-                      </To>
+                      </NavLink>
                     ) : noDecks ? (
                       <Button
                         variant="primary"
@@ -230,7 +223,7 @@ export function TodayView({
             </section>
           </div>
 
-          {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} st={st} />}
+          {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} />}
 
           {!loading && decks && decks.length > 1 && rows.length > 0 && (
             <section aria-labelledby="today-decks" className="grid gap-2.5">
@@ -238,22 +231,20 @@ export function TodayView({
                 <h2 id="today-decks" className="text-lg font-medium">
                   <Trans>Decks to review</Trans>
                 </h2>
-                <To
+                <NavLink
                   to="/library"
-                  st={st}
                   className="relative -me-1 inline-flex items-center gap-0.5 rounded-sm px-1.5 py-1 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-2 before:content-[''] hoverable:hover:text-text"
                 >
                   <Trans>Library</Trans>
                   <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
-                </To>
+                </NavLink>
               </div>
               <ul className="edge overflow-hidden rounded-xl bg-plate">
                 {rows.map((d) => (
                   <li key={d.key} className="border-edge not-first:border-t">
-                    <To
+                    <NavLink
                       to="/review"
                       search={d.search}
-                      st={st}
                       className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
                     >
                       {/* The count leads, as on the round tiles: it is what the row is for. */}
@@ -271,7 +262,7 @@ export function TodayView({
                       <Go>
                         <Trans>Review</Trans>
                       </Go>
-                    </To>
+                    </NavLink>
                   </li>
                 ))}
               </ul>
@@ -341,15 +332,7 @@ function DueHeading({
  * The rounds, as three tiles that always stay, so none is ever left on its own. A tile with cards
  * opens its review; an empty one says so plainly, and an empty New cards tile offers to add some.
  */
-function Rounds({
-  rounds,
-  onAdd,
-  st,
-}: {
-  rounds: RoundsOut;
-  onAdd: (() => void) | undefined;
-  st: StaticNav;
-}) {
+function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | undefined }) {
   const { t } = useLingui();
   const tiles = [
     {
@@ -415,15 +398,14 @@ function Rounds({
         {tiles.map((item) => (
           <li key={item.round}>
             {item.count > 0 ? (
-              <To
+              <NavLink
                 to="/review"
                 search={{ round: item.round }}
-                st={st}
                 className={clsx(tile, pressable)}
               >
                 {face(item, true)}
                 <Go className={footer}>{item.action}</Go>
-              </To>
+              </NavLink>
             ) : item.round === "new" ? (
               <button
                 type="button"
@@ -443,37 +425,5 @@ function Rounds({
         ))}
       </ul>
     </section>
-  );
-}
-
-/** A router link, or a dead anchor carrying the same classes on the design page. */
-function To({
-  to,
-  search,
-  st,
-  className,
-  children,
-}: {
-  to: "/review" | "/library";
-  search?: ReviewSearch | undefined;
-  st: StaticNav;
-  className?: string | undefined;
-  children: ReactNode;
-}) {
-  if (st) {
-    return (
-      <a href={to} onClick={(e) => e.preventDefault()} className={className}>
-        {children}
-      </a>
-    );
-  }
-  return to === "/review" ? (
-    <Link to="/review" search={search ?? {}} className={className}>
-      {children}
-    </Link>
-  ) : (
-    <Link to="/library" className={className}>
-      {children}
-    </Link>
   );
 }

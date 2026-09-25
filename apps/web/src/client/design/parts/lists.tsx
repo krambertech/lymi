@@ -31,14 +31,7 @@ export const lists: Group = {
               note: "The due count is the card’s only colour, an amber tint at the end of the name.",
               render: () => (
                 <div className="w-full">
-                  <DeckCard
-                    id="d1"
-                    name="Italian with Giulia"
-                    language="it"
-                    due={8}
-                    total={64}
-                    st={{ path: "" }}
-                  />
+                  <DeckCard id="d1" name="Italian with Giulia" language="it" due={8} total={64} />
                 </div>
               ),
             },
@@ -54,7 +47,6 @@ export const lists: Group = {
                     due={0}
                     total={41}
                     next="Monday"
-                    st={{ path: "" }}
                   />
                 </div>
               ),
@@ -71,7 +63,6 @@ export const lists: Group = {
                     due={5}
                     total={38}
                     owner="Liis"
-                    st={{ path: "" }}
                   />
                 </div>
               ),
@@ -89,7 +80,6 @@ export const lists: Group = {
                     total={120}
                     owner="Lymi"
                     published
-                    st={{ path: "" }}
                   />
                 </div>
               ),
@@ -117,7 +107,6 @@ export const lists: Group = {
                     count={12}
                     actor="Claude"
                     when="Tuesday"
-                    st={{ path: "" }}
                   />
                 </div>
               ),

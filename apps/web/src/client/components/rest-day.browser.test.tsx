@@ -8,6 +8,7 @@ import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { decks, streak } from "../design/mock";
 import { TodayView } from "../views/today-view";
+import { StaticNavProvider } from "./nav-link";
 import { SevenLights } from "./seven-lights";
 import type { StreakSummary } from "./streak";
 import { StreakCalendar } from "./streak-calendar";
@@ -142,13 +143,14 @@ test("Today mentions yesterday's rest day until it is dismissed", async () => {
   function Harness() {
     const [dismissed, setDismissed] = useState(false);
     return (
-      <TodayView
-        decks={decks}
-        streak={summary}
-        restDismissed={dismissed}
-        onDismissRest={() => setDismissed(true)}
-        static={{ path: "/today" }}
-      />
+      <StaticNavProvider path="/today">
+        <TodayView
+          decks={decks}
+          streak={summary}
+          restDismissed={dismissed}
+          onDismissRest={() => setDismissed(true)}
+        />
+      </StaticNavProvider>
     );
   }
   await withI18n(<Harness />);

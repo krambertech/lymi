@@ -1,55 +1,112 @@
-import { Link } from "@tanstack/react-router";
+import { Link, type LinkComponentProps, type RegisteredRouter } from "@tanstack/react-router";
 import { clsx } from "clsx";
-import type { ReactNode } from "react";
+import { type ComponentProps, createContext, type ReactNode, useContext, useMemo } from "react";
+
+const StaticNavContext = createContext<{ path: string } | undefined>(undefined);
 
 /**
- * The design page renders the shell with no router under it. Passing `static` swaps every
- * router link for a plain anchor and forces the active path, so one component serves both.
+ * The design pages draw screens that must not navigate. Under this provider every `NavLink` is an
+ * inert anchor, active when it points at `path`, and forms skip their autofocus.
  */
-export type StaticNav = { path: string } | undefined;
-
-interface Props {
-  to: string;
-  params?: Record<string, string> | undefined;
-  hash?: string | undefined;
-  /** Match the path exactly. Needed for "/", which prefixes everything. */
-  exact?: boolean | undefined;
-  className: string;
-  st: StaticNav;
-  describedBy?: string | undefined;
-  children: ReactNode;
+export function StaticNavProvider({ path, children }: { path: string; children: ReactNode }) {
+  const value = useMemo(() => ({ path }), [path]);
+  return <StaticNavContext value={value}>{children}</StaticNavContext>;
 }
 
-/** A router link, or a dead anchor carrying the same classes on the design page. */
-export function NavLink({ to, params, hash, exact, className, st, describedBy, children }: Props) {
-  if (st) {
-    const path = Object.entries(params ?? {}).reduce(
-      (filled, [name, value]) => filled.replace(`$${name}`, value),
-      to,
-    );
-    const href = hash ? `${path}#${hash}` : path;
-    return (
-      <a
-        href={href}
-        className={clsx(className, st.path === href && "active")}
-        aria-current={st.path === href ? "page" : undefined}
-        aria-describedby={describedBy}
-        onClick={(e) => e.preventDefault()}
-      >
-        {children}
-      </a>
-    );
-  }
+/** The path a design page pretends to be on, or undefined in the app. */
+export function useStaticNav() {
+  return useContext(StaticNavContext);
+}
+
+type Props<TTo extends string | undefined> = LinkComponentProps<
+  "a",
+  RegisteredRouter,
+  string,
+  TTo
+> & {
+  /** Match the path exactly. Needed for "/", which prefixes everything. */
+  exact?: boolean | undefined;
+};
+
+/** A router link, or an inert anchor carrying the same classes under `StaticNavProvider`. */
+export function NavLink<const TTo extends string | undefined = undefined>({
+  exact,
+  ...props
+}: Props<TTo>) {
+  const st = useStaticNav();
+  if (st) return <InertLink current={st.path} {...(props as InertProps)} />;
+  // TypeScript cannot follow the router's conditional types through a generic spread.
+  const link = props as LinkComponentProps<"a", RegisteredRouter, string, string>;
+  return <Link {...link} activeOptions={{ exact: !!exact }} />;
+}
+
+interface InertProps extends Omit<ComponentProps<"a">, "href"> {
+  to?: string | undefined;
+  params?: Record<string, string> | undefined;
+  search?: unknown;
+  hash?: string | undefined;
+  // The router's own options, which an anchor must not receive.
+  from?: unknown;
+  state?: unknown;
+  mask?: unknown;
+  replace?: unknown;
+  resetScroll?: unknown;
+  hashScrollIntoView?: unknown;
+  viewTransition?: unknown;
+  ignoreBlocker?: unknown;
+  reloadDocument?: unknown;
+  preload?: unknown;
+  preloadDelay?: unknown;
+  preloadIntentProximity?: unknown;
+  activeOptions?: unknown;
+  activeProps?: unknown;
+  inactiveProps?: unknown;
+  startTransition?: unknown;
+  unsafeRelative?: unknown;
+}
+
+function InertLink({
+  current,
+  to = "",
+  params,
+  hash,
+  className,
+  onClick,
+  search: _search,
+  from: _from,
+  state: _state,
+  mask: _mask,
+  replace: _replace,
+  resetScroll: _resetScroll,
+  hashScrollIntoView: _hashScrollIntoView,
+  viewTransition: _viewTransition,
+  ignoreBlocker: _ignoreBlocker,
+  reloadDocument: _reloadDocument,
+  preload: _preload,
+  preloadDelay: _preloadDelay,
+  preloadIntentProximity: _preloadIntentProximity,
+  activeOptions: _activeOptions,
+  activeProps: _activeProps,
+  inactiveProps: _inactiveProps,
+  startTransition: _startTransition,
+  unsafeRelative: _unsafeRelative,
+  ...anchor
+}: InertProps & { current: string }) {
+  const path = Object.entries(params ?? {}).reduce(
+    (filled, [name, value]) => filled.replace(`$${name}`, value),
+    to,
+  );
+  const href = hash ? `${path}#${hash}` : path;
   return (
-    <Link
-      to={to}
-      params={params ?? {}}
-      {...(hash ? { hash } : {})}
-      activeOptions={{ exact: !!exact }}
-      className={className}
-      aria-describedby={describedBy}
-    >
-      {children}
-    </Link>
+    <a
+      {...anchor}
+      href={href}
+      className={clsx(className, current === href && "active")}
+      aria-current={current === href ? "page" : undefined}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick?.(e);
+      }}
+    />
   );
 }

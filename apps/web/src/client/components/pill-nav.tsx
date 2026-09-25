@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { BookMarked, Sun } from "lucide-react";
-import { NavLink, type StaticNav } from "./nav-link";
+import { NavLink } from "./nav-link";
 import { SlidingPlate } from "./ui/sliding-plate";
 
 /** Every destination in the phone pill. Review is a button on the screen, never a tab. */
@@ -15,7 +15,7 @@ export const PILL_NAV = [
  * Review lives in the Today hero and at the top of Library, so it is never in here.
  * Hidden during review, where the grades own the bottom of the screen.
  */
-export function PillNav({ static: st }: { static?: StaticNav }) {
+export function PillNav() {
   const { t, i18n } = useLingui();
   const item =
     "relative inline-flex h-11 select-none items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[color,scale] duration-150 [-webkit-touch-callout:none] active:scale-[0.97] hoverable:hover:text-text [&.active]:text-text [&_svg]:size-5";
@@ -30,7 +30,7 @@ export function PillNav({ static: st }: { static?: StaticNav }) {
         className="edge inset-y-1.5 rounded-full bg-plate"
       />
       {PILL_NAV.map((n) => (
-        <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
+        <NavLink key={n.to} to={n.to} exact={n.exact} className={item}>
           <n.icon aria-hidden="true" />
           <span>{i18n._(n.label)}</span>
         </NavLink>

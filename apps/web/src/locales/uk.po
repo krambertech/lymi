@@ -2536,6 +2536,9 @@ msgstr "або"
 msgid "Other ways to add cards"
 msgstr "Інші способи додати картки"
 
+msgid "Other ways to add decks"
+msgstr "Інші способи додати колоди"
+
 msgid "own review"
 msgstr "власне повторення"
 

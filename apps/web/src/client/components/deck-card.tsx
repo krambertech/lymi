@@ -2,7 +2,7 @@ import { Plural, Trans } from "@lingui/react/macro";
 import { Avatar } from "./avatar";
 import { languageName } from "./deck-fields";
 import { DueCount } from "./due-count";
-import { NavLink, type StaticNav } from "./nav-link";
+import { NavLink } from "./nav-link";
 import { PublisherMark } from "./publisher-mark";
 
 export interface DeckCardProps {
@@ -20,8 +20,7 @@ export interface DeckCardProps {
   /** The publisher's photo, on a published deck. A deck shared by link keeps the letter. */
   publisherPhoto?: string | null | undefined;
   /** Instructions a screen reader reads with the link, such as how to drag the deck. */
-  describedBy?: string | undefined;
-  st?: StaticNav;
+  "aria-describedby"?: string | undefined;
 }
 
 /**
@@ -39,16 +38,14 @@ export function DeckCard({
   owner,
   published,
   publisherPhoto,
-  describedBy,
-  st,
+  "aria-describedby": describedBy,
 }: DeckCardProps) {
   const lang = language ? languageName(language) : null;
   return (
     <NavLink
       to="/library/$deckId"
       params={{ deckId: id }}
-      st={st}
-      describedBy={describedBy}
+      aria-describedby={describedBy}
       className="edge group grid w-full min-w-0 content-start gap-1 rounded-lg bg-plate px-4 py-3.5 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
       <span className="flex min-h-[26px] min-w-0 items-center justify-between gap-3">

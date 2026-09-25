@@ -8,8 +8,6 @@ import { StatPlate } from "../../components/stat-plate";
 import { Variants } from "../frame";
 import { type Group, noop } from "./types";
 
-const st = { path: "/design" };
-
 export const empty: Group = {
   slug: "empty-states",
   title: "Empty states",
@@ -35,7 +33,6 @@ export const empty: Group = {
                     connectUrl="/docs/mcp"
                     onAdd={noop}
                     onCreateDeck={noop}
-                    st={st}
                   />
                 </div>
               ),
@@ -51,7 +48,6 @@ export const empty: Group = {
                     connectUrl="/docs/mcp"
                     onAdd={noop}
                     onCreateDeck={noop}
-                    st={st}
                   />
                 </div>
               ),
@@ -67,7 +63,6 @@ export const empty: Group = {
                     connectUrl="/docs/mcp"
                     onAdd={noop}
                     onCreateDeck={noop}
-                    st={st}
                   />
                 </div>
               ),
@@ -106,14 +101,12 @@ export const empty: Group = {
                         title="Send a lesson from Claude or ChatGPT"
                         detail="Connect Lymi, paste the lesson, and ask for the cards"
                         href="/docs/mcp"
-                        static={st}
                       />
                       <NextStep
                         icon={<KeyRound />}
                         title="Add cards with the API"
                         detail="Create a key in Settings"
                         to="/settings"
-                        static={st}
                       />
                     </NextSteps>
                   </StartPanelSection>

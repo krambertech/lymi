@@ -169,6 +169,7 @@ export function TodayView({
                 </>
               ) : (
                 <>
+                  {/* The button sits 8 px from the plate's edges, so its radius is the plate's less that gap. */}
                   <div className="edge grid content-between gap-5 rounded-xl bg-plate p-5 @3xl:p-6">
                     <div className="flex items-center gap-4">
                       <Lantern
@@ -188,7 +189,11 @@ export function TodayView({
                       <To
                         to="/review"
                         st={st}
-                        className={buttonClass("primary", "lg", "h-16 w-full rounded-lg text-lg")}
+                        className={buttonClass(
+                          "primary",
+                          "lg",
+                          "-mx-3 -mb-3 h-16 w-[calc(100%+1.5rem)] text-lg @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]",
+                        )}
                       >
                         <Trans>Review</Trans>
                         <span className="hidden @2xl:contents">
@@ -199,7 +204,7 @@ export function TodayView({
                       <Button
                         variant="primary"
                         size="lg"
-                        className="h-16 w-full rounded-lg text-lg"
+                        className="-mx-3 -mb-3 h-16 w-[calc(100%+1.5rem)] text-lg @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]"
                         onClick={onCreateDeck}
                         aria-disabled={!onCreateDeck}
                       >
@@ -210,7 +215,7 @@ export function TodayView({
                       <Button
                         variant="primary"
                         size="lg"
-                        className="h-16 w-full rounded-lg text-lg"
+                        className="-mx-3 -mb-3 h-16 w-[calc(100%+1.5rem)] text-lg @3xl:-mx-4 @3xl:-mb-4 @3xl:w-[calc(100%+2rem)]"
                         onClick={onAdd}
                         aria-disabled={!onAdd}
                         kbd="N"

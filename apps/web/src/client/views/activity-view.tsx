@@ -392,7 +392,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
                 <li>
                   {deckLink(
                     entry.deck.id,
-                    "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-text-2 transition-[background-color] duration-150 hoverable:hover:bg-hover",
+                    "group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-text-2 transition-[background-color] duration-150 hoverable:hover:bg-hover",
                     <>
                       <span className="flex-1">
                         <Plural
@@ -426,7 +426,7 @@ function CardRow({ card, link }: { card: ActivityCard; link: CardLink }) {
     </>
   );
   const className =
-    "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover";
+    "flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover";
   // A card in an archived deck has no screen to open, so its row is read rather than pressed.
   return (
     <li>

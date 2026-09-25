@@ -82,7 +82,7 @@ function PublisherMark({
         alt=""
         width={28}
         height={28}
-        className="edge absolute inset-0 size-7 rounded-full object-cover"
+        className="image-edge absolute inset-0 size-7 rounded-full object-cover"
       />
     </span>
   );

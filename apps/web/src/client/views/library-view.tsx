@@ -304,7 +304,7 @@ export function LibraryView({
               <button
                 type="button"
                 onClick={onImport}
-                className="group -mx-2 flex min-h-16 w-[calc(100%+1rem)] items-center gap-4 rounded-lg px-2 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover"
+                className="group -mx-2 flex min-h-16 w-[calc(100%+1rem)] items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover"
               >
                 <span
                   className="edge-inset grid size-10 shrink-0 place-items-center rounded-full text-text-2 [&_svg]:size-[18px]"

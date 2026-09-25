@@ -243,9 +243,14 @@ export function CardPictureField({
     <div className="grid gap-4">
       <div className="grid gap-1.5">
         <div className="edge grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-md p-2">
-          <div className="grid size-18 place-items-center overflow-hidden rounded-sm bg-plate-2 text-muted">
+          <div className="grid size-18 place-items-center overflow-hidden rounded-xs bg-plate-2 text-muted">
             {value.kind === "current" ? (
-              <CardPicture image={value.image} maxHeight="4.5rem" fallback="placeholder" />
+              <CardPicture
+                image={value.image}
+                maxHeight="4.5rem"
+                fallback="placeholder"
+                className="rounded-[inherit]"
+              />
             ) : value.kind === "file" && preview ? (
               <img src={preview} alt="" className="size-full object-contain" />
             ) : (

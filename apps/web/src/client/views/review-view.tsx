@@ -920,7 +920,7 @@ export function GradeBar({
                       <span className="hidden @3xl:contents">
                         <Kbd
                           tone="default"
-                          className="absolute end-1.5 top-1.5 h-4 min-w-4 rounded-full px-1.5 text-2xs"
+                          className="absolute end-2.5 top-2.5 h-4 min-w-4 rounded-full px-1.5 text-2xs"
                         >
                           {g.key}
                         </Kbd>

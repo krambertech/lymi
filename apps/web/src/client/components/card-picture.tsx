@@ -1,9 +1,9 @@
 import { Trans } from "@lingui/react/macro";
-import { clsx } from "clsx";
+import { cn } from "cn";
 import { ImageOff } from "lucide-react";
-import type { CSSProperties } from "react";
+import { type CSSProperties, useState } from "react";
 import type { CardImage } from "../lib/api";
-import { useCardPicture } from "../lib/card-images";
+import { isOpaque, useCardPicture } from "../lib/card-images";
 import { Skeleton } from "./skeleton";
 
 export interface CardPictureProps {
@@ -27,6 +27,7 @@ export function CardPicture({
   className,
 }: CardPictureProps) {
   const { src, status } = useCardPicture(image);
+  const [opaque, setOpaque] = useState<string>();
   const ratio = image.width / image.height;
   const box: CSSProperties = {
     aspectRatio: `${image.width} / ${image.height}`,
@@ -36,7 +37,7 @@ export function CardPicture({
   if (status === "failed") {
     return (
       <div
-        className={clsx(
+        className={cn(
           "grid min-h-24 content-center justify-items-start gap-2 rounded-lg bg-plate-2 p-4",
           className,
         )}
@@ -54,12 +55,12 @@ export function CardPicture({
     );
   }
 
-  // The well and its hairline hold the place only while loading: a sign drawn on transparency would
-  // otherwise sit in a grey box.
+  // The well holds the place only while loading, and the edge comes only with an opaque picture: a
+  // sign drawn on transparency would otherwise sit in a box.
   return (
     <div
       style={box}
-      className={clsx("relative overflow-hidden rounded-lg", !src && "bg-plate-2", className)}
+      className={cn("relative overflow-hidden rounded-lg", !src && "bg-plate-2", className)}
     >
       {src ? (
         <img
@@ -68,7 +69,11 @@ export function CardPicture({
           width={image.width}
           height={image.height}
           draggable={false}
-          className="enter-fade size-full object-contain"
+          onLoad={(e) => setOpaque(isOpaque(e.currentTarget) ? src : undefined)}
+          className={cn(
+            "enter-fade size-full rounded-[inherit] object-contain",
+            opaque === src && "image-edge",
+          )}
         />
       ) : (
         <Skeleton className="absolute inset-0 rounded-[inherit]" />

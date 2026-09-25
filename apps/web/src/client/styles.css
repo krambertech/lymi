@@ -95,6 +95,8 @@
   --hover: oklch(0.94 0.007 80);
   --edge: oklch(0.2 0.03 60 / 0.1);
   --edge-2: oklch(0.2 0.03 60 / 0.2);
+  /* A photo's edge is untinted, because a warm line reads as grime on the picture. */
+  --image-edge: oklch(0 0 0 / 0.1);
 
   --text: oklch(0.2 0.016 55);
   --text-2: oklch(0.38 0.016 55);
@@ -151,6 +153,7 @@
   --hover: oklch(0.28 0.018 55);
   --edge: oklch(1 0 0 / 0.08);
   --edge-2: oklch(1 0 0 / 0.15);
+  --image-edge: oklch(1 0 0 / 0.1);
 
   --text: oklch(0.95 0.01 85);
   --text-2: oklch(0.8 0.018 75);
@@ -387,6 +390,11 @@
       outline-offset: -1px;
     }
   }
+}
+/* A photo's edge, drawn inside its bounds so it costs no layout. */
+@utility image-edge {
+  outline: 1px solid var(--image-edge);
+  outline-offset: -1px;
 }
 /* The lantern's glow. Only the lantern wears it, and inside the lantern only
    the light does: metal does not glow, and a filter on the whole drawing halos

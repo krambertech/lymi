@@ -201,7 +201,7 @@ export function StreakPlaceScene() {
                 onClose={close}
               />
               <p className="text-sm text-text-2">How many reviews keep the streak each day.</p>
-              <GoalPicker value={goal} onChange={setGoal} />
+              <GoalPicker value={goal} onValueChange={setGoal} />
             </div>
           )}
         </DialogContent>

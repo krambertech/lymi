@@ -83,6 +83,15 @@ export const actions: Group = {
               note: "Only when pressing could do nothing at all. A form’s submit stays pressable and says what is missing.",
               render: () => <Button disabled>Disabled</Button>,
             },
+            {
+              label: "Link",
+              note: "A link that looks like a button passes itself as `render` and keeps the button's inside.",
+              render: () => (
+                <Button render={<a href="/library" onClick={(e) => e.preventDefault()} />}>
+                  Open Library
+                </Button>
+              ),
+            },
           ]}
         />
       ),

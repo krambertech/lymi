@@ -256,7 +256,7 @@ export function DirectionCompact({
       </span>
       <Segmented
         value={value}
-        onChange={onChange}
+        onValueChange={onChange}
         label={t`How cards are asked`}
         options={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.short) }))}
       />

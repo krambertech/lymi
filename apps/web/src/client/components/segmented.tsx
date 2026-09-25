@@ -11,7 +11,7 @@ interface Option<T extends string> {
 
 interface Props<T extends string> {
   value: T;
-  onChange: (v: T) => void;
+  onValueChange: (v: T) => void;
   options: Option<T>[];
   /** Accessible name for the group. */
   label: string;
@@ -30,7 +30,7 @@ interface Props<T extends string> {
  */
 export function Segmented<T extends string>({
   value,
-  onChange,
+  onValueChange,
   options,
   label,
   size = "md",
@@ -51,7 +51,7 @@ export function Segmented<T extends string>({
       // One option is always chosen: pressing the chosen one again leaves it chosen.
       onValueChange={(next) => {
         const chosen = next[0];
-        if (chosen !== undefined && chosen !== value) onChange(chosen);
+        if (chosen !== undefined && chosen !== value) onValueChange(chosen);
       }}
       className={clsx(
         "gap-0.5 rounded-md bg-plate-2 p-[3px]",

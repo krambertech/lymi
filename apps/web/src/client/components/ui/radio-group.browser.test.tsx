@@ -136,3 +136,27 @@ test("Tab lands on the chosen row, and arrow keys in a control inside a row stay
   await expect.element(page.getByRole("radio", { name: "Light" })).toBeChecked();
   expect(onValueChange).toHaveBeenCalledTimes(1);
 });
+
+test("a RadioCard with children is named by them and passes its own props to the row", async () => {
+  function Harness() {
+    const [value, setValue] = useState("10");
+    return (
+      <RadioGroup aria-label="Daily goal" value={value} onValueChange={setValue}>
+        <RadioCard value="10" data-testid="light" className="min-h-12 items-center py-0">
+          <span>Light</span> <span>10 reviews</span>
+        </RadioCard>
+        <RadioCard value="25">
+          <span>Steady</span>
+        </RadioCard>
+      </RadioGroup>
+    );
+  }
+  await render(<Harness />);
+  const light = page.getByTestId("light");
+  await expect.element(light).toHaveClass("items-center");
+  await expect.element(light).not.toHaveClass("items-start");
+  await expect.element(page.getByRole("radio", { name: "Light 10 reviews" })).toBeChecked();
+
+  await page.getByText("Steady").click();
+  await expect.element(page.getByRole("radio", { name: "Steady" })).toBeChecked();
+});

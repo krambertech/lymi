@@ -24,7 +24,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { buttonClass, IconButton } from "../components/button";
+import { Button, IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
@@ -656,8 +656,8 @@ export function ReviewCard({
           )}
           {chips && (
             <motion.div variants={answerLine} className="mt-1 flex flex-wrap gap-1.5">
-              {aiMeaning && <SourceChip source="ai" field="meaning" compact />}
-              {aiExample && <SourceChip source="ai" field="example" compact />}
+              {aiMeaning && <SourceChip source="ai" field="meaning" size="xs" />}
+              {aiExample && <SourceChip source="ai" field="example" size="xs" />}
               {card.source && (
                 <Chip size="sm" className="min-w-0 max-w-full">
                   <Library className="size-3 shrink-0" aria-hidden="true" />
@@ -1239,16 +1239,16 @@ export function ReviewComplete({
         >
           {/* One shape for every way on, the count said in words so it never reads as a shortcut; the primary sits last. */}
           {ways.map((way, i) => (
-            <button
+            <Button
               key={way.key}
-              type="button"
+              size="lg"
               onClick={way.onClick}
-              className={buttonClass("secondary", "lg", "seq w-full")}
+              className="seq w-full"
               style={at(AT.actions + i * AT.actionStep)}
             >
               {way.icon}
               {way.label}
-            </button>
+            </Button>
           ))}
           <div className="seq grid gap-2" style={at(actionsAt)}>
             {!counted ? (
@@ -1259,13 +1259,14 @@ export function ReviewComplete({
             ) : screen.continueLeads && proceed ? (
               <>
                 {done("secondary")}
-                <button
-                  type="button"
+                <Button
+                  variant="primary"
+                  size="lg"
                   onClick={() => onOffer?.(proceed)}
-                  className={buttonClass("primary", "lg", "w-full")}
+                  className="w-full"
                 >
                   <Trans>Continue</Trans>
-                </button>
+                </Button>
               </>
             ) : (
               done("primary")

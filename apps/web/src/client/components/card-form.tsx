@@ -660,7 +660,7 @@ export function CardForm(props: CardFormProps) {
       </FieldLabel>
       <TagsInput
         value={tags}
-        onChange={(next) => {
+        onValueChange={(next) => {
           setTags(next);
           clear("tags");
         }}

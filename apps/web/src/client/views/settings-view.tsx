@@ -118,7 +118,7 @@ export function SettingsView({
       <SettingsGroup title={t`Theme`} description={t`Match your device.`}>
         <Segmented
           value={theme}
-          onChange={onTheme}
+          onValueChange={onTheme}
           options={THEMES.map((o) => ({ value: o.value, label: i18n._(o.label) }))}
           label={t`Theme`}
         />

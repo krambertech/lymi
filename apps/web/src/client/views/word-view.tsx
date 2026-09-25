@@ -568,7 +568,7 @@ export function WordView({
           <p className="flex flex-wrap items-center gap-1.5 text-md text-muted">
             <span className="[overflow-wrap:anywhere]">{card.pronunciation}</span>
             {card.pronunciationSource === "ai" && (
-              <SourceChip source="ai" field="pronunciation" compact />
+              <SourceChip source="ai" field="pronunciation" size="xs" />
             )}
           </p>
         ) : (
@@ -625,7 +625,7 @@ export function WordView({
           label={t`Meaning`}
           aside={
             card.meaning &&
-            card.meaningSource === "ai" && <SourceChip source="ai" field="meaning" compact />
+            card.meaningSource === "ai" && <SourceChip source="ai" field="meaning" size="xs" />
           }
           value={card.meaning || t`No meaning yet`}
           empty={!card.meaning}
@@ -636,7 +636,7 @@ export function WordView({
             label={t`Example`}
             aside={
               card.example &&
-              card.exampleSource === "ai" && <SourceChip source="ai" field="example" compact />
+              card.exampleSource === "ai" && <SourceChip source="ai" field="example" size="xs" />
             }
             value={card.example ?? ""}
             lang={card.language ?? undefined}

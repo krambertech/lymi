@@ -12,7 +12,7 @@ English component text is the source. `pnpm i18n:extract` updates the Lingui cat
 
 1. Read [`CONTEXT.md`](../../../CONTEXT.md). Its terms are the glossary; its avoid-list applies in every language.
 2. Read the voice section of [`DESIGN.md`](../../../DESIGN.md): calm, direct and speaking to one learner.
-3. Run `pnpm i18n:extract`. Fill empty or changed entries. Correct an existing translation only when it is clearly wrong or inconsistent.
+3. Run `pnpm i18n:extract`. Fill empty or changed entries. Change an existing translation only when it contradicts the glossary, breaks a placeholder or plural form, or says something the English does not.
 
 ## Translation bar
 
@@ -20,7 +20,7 @@ English component text is the source. `pnpm i18n:extract` updates the Lingui cat
 - **Keep every placeholder.** `{0}`, `{name}`, `{due, plural, ...}` and `#` are code. Move them to where the sentence needs them, never rename or drop them.
 - **Write all plural forms.** Ukrainian and Russian need `one`, `few` and `many`, plus `other` for fractions. `1 картка`, `2 картки`, `5 карток`, `21 картка`. A translation with only `one` and `other` is wrong.
 - **Translate meaning, not English syntax.** Keep the message's function and tone, but use natural Ukrainian or Russian grammar. Do not add claims, urgency or celebration.
-- **Keep controls concise.** Prefer a short natural label. If space may be tight, flag it for visual review instead of distorting the translation.
+- **Keep controls concise.** When a control label comes out longer than the English, flag it for a 393 px check instead of cutting it into unnatural wording.
 - **Never translate "Lymi".** Product names, deck names, terms and learner-written text are not in the catalogs.
 - **Use product terms consistently.** Follow the glossary with the inflection and word order the sentence requires.
 

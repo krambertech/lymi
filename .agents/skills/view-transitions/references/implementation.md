@@ -6,16 +6,16 @@ Each step depends on the one before it. Step 1 is the one people skip and the on
 
 Before writing anything, list every way the learner moves through the app. Read the route files under `apps/web/src/client/routes/`, then grep for every `<Link`, `useNavigate`, and `router.navigate` in the client.
 
-Lymi's routes today: `/` (home), `/decks`, `/decks/$deckId`, `/review`, `/settings`, `/login`, `/consent`, `/design`. The design system page is a reference surface, not a screen the learner navigates — leave it out of the map. Produce a table like this and show it to the user before touching code:
+List the routes from the filenames under `apps/web/src/client/routes/` rather than from memory; the set changes. Leave out `design*`, which are reference surfaces rather than screens the learner navigates. Produce a table like this and show it to the user before touching code:
 
 ```
-| From          | To               | Relationship | Transition          |
-|---------------|------------------|--------------|---------------------|
-| /decks        | /decks/$deckId   | deeper       | nav-forward + morph |
-| /decks/$deckId| /decks           | back         | nav-back            |
-| /             | /review          | lateral      | cross-fade          |
-| /review       | /review (next card) | sequential | sequential slide    |
-| any           | ?filter= change  | none         | no transition       |
+| From             | To                  | Relationship | Transition          |
+|------------------|---------------------|--------------|---------------------|
+| /library         | /library/$deckId    | deeper       | nav-forward + morph |
+| /library/$deckId | /library            | back         | nav-back            |
+| /today           | /library            | lateral      | cross-fade          |
+| /review          | /review (next card) | sequential   | sequential slide    |
+| any              | ?filter= change     | none         | no transition       |
 ```
 
 Then note, per row: does a shared element exist on both sides? Does the route component unmount, or is it a param change on the same route?
@@ -26,7 +26,7 @@ Take the complete recipe set from [`css-recipes.md`](css-recipes.md) into `apps/
 
 ## Step 3 — type the router
 
-Add `defaultViewTransition` to `createRouter` in [`main.tsx`](../../../../apps/web/src/client/main.tsx), using the types function from `SKILL.md`. Start there rather than with `true` — a bare `true` cross-fades every navigation identically, including revalidations, and it is harder to unpick later than to get right now. Depth comparison covers the common case; where the map from Step 1 disagrees with depth — two screens at the same depth where one is clearly deeper in the model — special-case that pair by pathname inside the function rather than by adding a prop to every link.
+Add `defaultViewTransition` to `createRouter` in [`app-entry.tsx`](../../../../apps/web/src/client/app-entry.tsx), using the types function from `SKILL.md`. Start there rather than with `true` — a bare `true` cross-fades every navigation identically, including revalidations, and it is harder to unpick later than to get right now. Depth comparison covers the common case; where the map from Step 1 disagrees with depth — two screens at the same depth where one is clearly deeper in the model — special-case that pair by pathname inside the function rather than by adding a prop to every link.
 
 Verify each row of the table in the browser after this step, before adding a single shared element. Directional slides are most of the perceived quality, and they are the part that breaks quietly.
 
@@ -36,12 +36,12 @@ Anything on screen before and after a navigation gets a `viewTransitionName` and
 
 ## Step 5 — shared elements
 
-Only for pairs where the *same thing* appears on both screens: a card in a deck list and that card on its own screen, a deck tile and the deck header.
+Only for pairs where the *same thing* appears on both screens: a deck row in Library and the deck header on its own screen.
 
 ```tsx
 // In the list
 <Link
-  to="/decks/$deckId"
+  to="/library/$deckId"
   params={{ deckId: deck.id }}
   style={{ viewTransitionName: `deck-${deck.id}`, viewTransitionClass: "morph" }}
 >
@@ -53,7 +53,7 @@ Only for pairs where the *same thing* appears on both screens: a card in a deck 
 Two rules that cause most of the bugs:
 
 - The name must be unique among elements **currently on screen**. A list of 40 cards all named `card` breaks every transition.
-- Carry the name only while the element can transition. If a component is rendered both in a route and inside the add-card sheet, both mount at once and the pair breaks — make the name conditional on where it is used.
+- Carry the name only while the element can transition. If a component is rendered both in a route and inside a drawer, both mount at once and the pair breaks — make the name conditional on where it is used.
 
 ## Step 6 — reveals
 

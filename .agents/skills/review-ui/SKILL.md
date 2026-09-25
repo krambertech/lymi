@@ -5,50 +5,51 @@ description: Review Lymi UI changes for intended behavior, interaction and acces
 
 # Review Lymi UI
 
-Produce one evidence-led review of the requested change. Reviews are read-only unless the user separately asks to implement fixes.
+Produce one evidence-led review of the requested change. A review is read-only: edit files or change repository or external state only when the user separately asks for fixes.
 
 ## Resolve scope
 
-1. Read the issue, brief, or stated behavior and the actual diff. Use the exact requested comparison; for working-tree changes, inspect staged and unstaged work. Label any intent inferred from repository evidence.
-2. Identify the affected learner flow, surfaces, and states. Trace shared code only far enough to understand consequences of this change.
-3. Exit when the change cannot affect rendered UI, learner-facing language, or interaction. For mixed changes, review only the interface-affecting slice here.
-4. Distinguish problems introduced or exposed by the change from unrelated pre-existing problems. Pre-existing issues do not affect the verdict.
-
-Choose the smallest review that can give reliable confidence:
-
-- Keep a local copy, token, icon, or spacing review narrow.
-- Give a new or changed flow, form, navigation pattern, responsive layout, shared component, theme treatment, or animated interaction enough path and rendered coverage to test its important risks.
-- Escalate into broad accessibility or performance investigation only when the change or observed behavior warrants it.
+1. Read the issue, brief, or stated behavior and the actual diff. Use the exact requested comparison; for working-tree changes, inspect staged and unstaged work. Label any intent you inferred from repository evidence.
+2. Name the affected learner flow, surfaces, and states. Trace shared code only as far as the call sites this change alters.
+3. Exit when the change cannot affect rendered UI, learner-facing language, or interaction. For a mixed change, review only the interface slice.
+4. Separate problems the change introduced or exposed from pre-existing ones. Pre-existing problems never affect the verdict.
 
 ## Ground the review
 
-Always read [`AGENTS.md`](../../../AGENTS.md), [`PRODUCT.md`](../../../PRODUCT.md), [`DESIGN.md`](../../../DESIGN.md), the stated intent, the diff, and the affected implementation. `DESIGN.md` owns Lymi's visual and interaction rules; cite it instead of restating it here.
+Read [`PRODUCT.md`](../../../PRODUCT.md), [`DESIGN.md`](../../../DESIGN.md), the stated intent, the diff, and the affected implementation. Add [`CONTEXT.md`](../../../CONTEXT.md) when names or learner-facing text change. `DESIGN.md` owns Lymi's visual and interaction rules; cite the rule instead of restating it.
 
-Read [`CONTEXT.md`](../../../CONTEXT.md) when names or learner-facing language change. Follow the repository's architecture, testing, accepted decisions, and current surface brief only where they bear on the change; exploratory material is context, not a requirement.
+Before recommending a new pattern, find the nearest shipped Lymi component or flow that does the same job. Recommend reusing it unless the diff shows why it cannot work.
 
-Inspect nearby Lymi components and comparable flows before recommending a new pattern. Prefer a smaller change, native behavior, or an existing Lymi component or token before a new abstraction.
+## Choose the coverage
 
-## Require appropriate evidence
+Walk this tree once per diff and take every branch that matches. The union is the coverage; nothing outside it is required.
 
-**Code evidence** includes the diff, affected source, call sites, tests, semantics, and configuration. It can establish static problems and systemic causes.
+```
+Always                                                → the changed flow at 393 px, light theme, touch
+Diff touches colour, tokens, surfaces, borders,
+  icons, images, or focus styles?                     → add dark theme
+Diff touches layout, spacing, the shell, or a
+  component used on both phone and desktop?           → add 1280 px with a pointer
+Diff touches the shell, rail, top bar, or back row?   → add 768 px, where the rail appears
+Diff touches a drawer, dialog, menu, popover,
+  or form?                                            → add keyboard: open, move, submit, Escape, focus return
+Diff adds or changes an animation or transition?      → add reduced motion
+Diff adds or changes learner-facing text?             → add Ukrainian at 393 px
+Diff touches loading, empty, error, offline,
+  or pending code paths?                              → add each state the code can enter
+```
 
-**Rendered evidence** is the running interface in a stated viewport, theme, state, and input method. Inspect it whenever appearance, interaction, responsive behavior, focus, or motion determines the judgment. Code cannot prove the rendered result, and a screenshot cannot prove behavior or semantics.
+The reasons: 393 px is the phone Lymi is designed on, so it is always the first cell. Dark is a separate warm palette, not an inversion, so a colour change can pass in light and fail in dark. Ukrainian runs longer than English and wraps first. The drawer and dialog swap at the desktop breakpoint, so an overlay change needs both widths.
 
-Treat runtime-dependent concerns as unverified until observed. Put checks that could not be run under **Verification**, not in manufactured findings. Compare with the base behavior when responsibility is unclear.
+## Collect evidence
 
-## Route by demonstrated risk
+**Code evidence** is the diff, affected source, call sites, tests, semantics, and configuration. It establishes static problems and systemic causes.
 
-Within the selected scope, judge in this order: intended flow; interaction and accessibility; relevant phone, desktop, theme, and interface states; Lymi's visual system and voice; motion; components and rendering; final polish.
+**Rendered evidence** is the running interface in a stated viewport, theme, state, and input method. Every coverage cell needs rendered evidence. Code cannot prove the rendered result, and a screenshot cannot prove behavior or semantics.
 
-Read only the guidance the change calls for:
+A concern you could not observe goes under **Verification**, never under **Findings**. When it is unclear whether the change caused a problem, compare with the base branch.
 
-- Controls, forms, navigation, or task behavior: [`references/interaction-and-accessibility.md`](references/interaction-and-accessibility.md)
-- Layout, responsive behavior, themes, async data, or conditional states: [`references/responsive-themes-and-states.md`](references/responsive-themes-and-states.md)
-- Hierarchy, typography, color, surfaces, voice, or motion: [`references/visual-system-and-motion.md`](references/visual-system-and-motion.md)
-- Shared components or plausible rendering and performance risk: [`references/performance-and-components.md`](references/performance-and-components.md)
-- Final report: [`references/report-format.md`](references/report-format.md)
-
-Stop when later concerns are irrelevant. Consider polish only after the intended flow, important interaction and accessibility, and relevant environments and states pass.
+For what counts as a finding in each area, read [`references/checks.md`](references/checks.md).
 
 ## Conclude
 
@@ -56,8 +57,6 @@ Stop when later concerns are irrelevant. Consider polish only after the intended
 - **Major:** meaningfully regresses an important interaction, comprehension, responsive or theme behavior, state handling, maintainability, or measured performance.
 - **Minor:** a localized, observable Lymi-system or finish regression worth fixing in this change. Preferences and optional nits are not findings.
 
-Use **Blocked** for a Critical finding or when release-critical behavior cannot be judged with sufficient evidence; **Changes needed** for remaining introduced findings; and **Ship it** when no actionable introduced finding remains and coverage is sufficient for the change's risk.
+Use **Blocked** for a Critical finding or when a coverage cell on the release path could not be observed; **Changes needed** for any other introduced finding; and **Ship it** when no introduced finding remains and every coverage cell was observed.
 
-Return one report with **Verdict**, **Findings**, **Coverage**, and **Verification**. Consolidate symptoms under their systemic cause. Every finding needs an exact location, evidence, learner impact, and a practical fix.
-
-Do not edit files or change repository or external state during a review unless the user separately authorizes it.
+Return one report in [`references/report-format.md`](references/report-format.md). Consolidate symptoms under their systemic cause. Every finding needs an exact location, evidence, learner impact, and a fix.

@@ -25,7 +25,7 @@ When the shape does not make the intended issue count clear, show the proposed t
 
 ## Write for implementation
 
-Use the smallest set of sections that preserves the contract:
+Write these sections, and leave one out only when it would be empty:
 
 - **Outcome:** the observable learner result.
 - **Scope:** the behavior this issue delivers, including settled interaction and authorization rules.

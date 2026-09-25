@@ -1,6 +1,6 @@
 # Review report format
 
-Use these four sections in order. Keep the report proportional: a tiny clear change can have a one-line verdict, no findings, compact coverage, and the checks run.
+Use these four sections in order. A one-line copy or token change gets a one-line verdict, `No actionable findings.`, its coverage cells, and the checks run.
 
 ## Verdict
 
@@ -23,7 +23,7 @@ If an unrelated pre-existing issue is essential context, place it under `Pre-exi
 
 ## Coverage
 
-State the diff and learner flow reviewed, rendered surfaces, viewports, themes, states, input methods, and relevant combinations not inspected. Use `Not applicable` when an axis cannot matter and `Not inspected` when relevant coverage could not be completed. Code inspection is not rendered coverage.
+List each coverage cell the tree in `SKILL.md` selected, with the diff and flow reviewed. Mark each cell `Observed` or `Not inspected` with the reason. Code inspection is not an observed cell.
 
 ## Verification
 

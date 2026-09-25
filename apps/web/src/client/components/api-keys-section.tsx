@@ -10,6 +10,7 @@ import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
+import { useConfirmStep } from "../lib/use-confirm-step";
 import { Button, buttonClass } from "./button";
 import { Chip } from "./chip";
 import { DocLink } from "./connected-apps-section";
@@ -247,12 +248,7 @@ function KeyRow({
   onRevoke: () => void;
 }) {
   const { t, i18n } = useLingui();
-  const [confirming, setConfirming] = useState(false);
-  useEffect(() => {
-    if (!confirming) return;
-    const t = setTimeout(() => setConfirming(false), 6000);
-    return () => clearTimeout(t);
-  }, [confirming]);
+  const confirm = useConfirmStep();
 
   return (
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge py-3 last:border-b-0">
@@ -271,9 +267,9 @@ function KeyRow({
           </span>
         </p>
       </div>
-      {confirming ? (
-        <div className="enter-fade flex gap-3">
-          <Button size="sm" variant="ghost" onClick={() => setConfirming(false)}>
+      {confirm.confirming ? (
+        <div {...confirm.groupProps} className="enter-fade flex gap-3">
+          <Button ref={confirm.safe} size="sm" variant="ghost" onClick={confirm.cancel}>
             <Trans>Keep key</Trans>
           </Button>
           <Button
@@ -287,7 +283,7 @@ function KeyRow({
           </Button>
         </div>
       ) : (
-        <Button size="sm" variant="ghost" onClick={() => setConfirming(true)}>
+        <Button ref={confirm.trigger} size="sm" variant="ghost" onClick={confirm.ask}>
           <Trans>Revoke</Trans>
         </Button>
       )}

@@ -810,6 +810,9 @@ export function DeckDetailView({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, ordered, openIndex, beside, setOpen]);
 
+  // Archiving takes away the row that opened the card, so focus moves on to its neighbour.
+  const archivedNeighbour = useRef<string | null>(null);
+
   const titleId = useId();
   const word = shownWord && deck && (
     <WordView
@@ -834,17 +837,19 @@ export function DeckDetailView({
         const id = shownWord.card.id;
         setOpen(null);
         // Beside the list nothing hands focus back, so the row that opened the card takes it.
-        requestAnimationFrame(() =>
-          document.querySelector<HTMLElement>(`[data-card-row="${CSS.escape(id)}"]`)?.focus(),
-        );
+        requestAnimationFrame(() => cardRow(id)?.focus());
       }}
       owner={
         owner && {
           onEdit: () => owner.onEditCard(shownWord.card),
           onEnrich: () => owner.onEnrichCard(shownWord.card),
           onArchive: () => {
+            const near =
+              openIndex >= 0 ? (ordered[openIndex + 1] ?? ordered[openIndex - 1]) : undefined;
+            archivedNeighbour.current = near?.card.id ?? null;
             setOpen(null);
             owner.onArchiveCard(shownWord.card.id);
+            if (beside && near) requestAnimationFrame(() => cardRow(near.card.id)?.focus());
           },
           onMove: (deckId) => owner.onMoveCard(shownWord.card.id, deckId),
           onMoveToSection: () => owner.sections.onPickSection([shownWord.card.id], () => {}),
@@ -1190,6 +1195,11 @@ export function DeckDetailView({
             placement="end"
             aria-labelledby={titleId}
             initialFocus={() => document.getElementById(titleId)}
+            finalFocus={() => {
+              const id = archivedNeighbour.current;
+              archivedNeighbour.current = null;
+              return (id && cardRow(id)) || true;
+            }}
             className="px-7 pt-6 pb-10"
           >
             {word}
@@ -1198,4 +1208,8 @@ export function DeckDetailView({
       )}
     </div>
   );
+}
+
+function cardRow(id: string) {
+  return document.querySelector<HTMLElement>(`[data-card-row="${CSS.escape(id)}"]`);
 }

@@ -28,6 +28,7 @@ import {
   readStoredLanguage,
 } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
+import { useRouteFocus } from "../lib/page-focus";
 import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
@@ -104,6 +105,7 @@ function Shell() {
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
   const leave = useSignOut();
   useSettleToday(!bare && me.isSuccess);
+  useRouteFocus();
 
   const appLanguage = settings.data?.appLanguage;
   useEffect(() => {

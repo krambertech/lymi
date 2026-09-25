@@ -125,6 +125,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
   const [q, setQ] = useState("");
   const [i, setI] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialog = useRef<HTMLDialogElement>(null);
 
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
@@ -135,22 +136,23 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
       .map((r) => r.p);
   }, [q]);
 
+  // A modal <dialog> keeps Tab inside it and closes on Escape; focus goes back to the opener.
   useEffect(() => {
-    if (!open) return;
+    const d = dialog.current;
+    if (!open || !d) return;
     setQ("");
     setI(0);
-    // Give focus to the field, hold the page still, and hand focus back on the way out.
     const opener = document.activeElement as HTMLElement | null;
     const scroll = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    d.showModal();
     inputRef.current?.focus();
     return () => {
       document.body.style.overflow = scroll;
+      if (d.open) d.close();
       opener?.focus?.();
     };
   }, [open]);
-
-  if (!open) return null;
 
   const go = (page: DocPage | undefined) => {
     if (!page) return;
@@ -159,36 +161,30 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
   };
 
   return (
-    <div className="fixed inset-0 z-(--z-backdrop) bg-scrim px-4 pt-[10vh]">
-      {/* The backdrop closes on a click. Escape does the same for the keyboard. */}
-      <button
-        type="button"
-        tabIndex={-1}
-        aria-hidden="true"
-        onClick={onClose}
-        className="absolute inset-0 cursor-default"
-      />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="Search the documentation"
-        className="enter-card relative mx-auto w-full max-w-xl overflow-hidden rounded-lg bg-plate edge"
-        onKeyDown={(e) => {
-          if (e.key === "ArrowDown") {
-            e.preventDefault();
-            setI((n) => Math.min(n + 1, results.length - 1));
-          }
-          if (e.key === "ArrowUp") {
-            e.preventDefault();
-            setI((n) => Math.max(n - 1, 0));
-          }
-          if (e.key === "Enter") {
-            e.preventDefault();
-            go(results[i]);
-          }
-          if (e.key === "Escape") onClose();
-        }}
-      >
+    <dialog
+      ref={dialog}
+      aria-label="Search the documentation"
+      onClose={onClose}
+      // A press on the scrim lands on the dialog itself, outside the panel.
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setI((n) => Math.min(n + 1, results.length - 1));
+        }
+        if (e.key === "ArrowUp") {
+          e.preventDefault();
+          setI((n) => Math.max(n - 1, 0));
+        }
+        // A focused result opens itself; Enter in the field opens the highlighted one.
+        if (e.key === "Enter" && e.target === inputRef.current) {
+          e.preventDefault();
+          go(results[i]);
+        }
+      }}
+      className="m-0 h-dvh max-h-none w-full max-w-none bg-scrim px-4 pt-[10vh] backdrop:bg-transparent"
+    >
+      <div className="enter-card relative mx-auto w-full max-w-xl overflow-hidden rounded-lg bg-plate edge">
         <div className="flex h-12 items-center gap-2.5 border-b border-edge px-3.5">
           <SearchIcon className="size-4 shrink-0 text-muted" aria-hidden="true" />
           <input
@@ -215,6 +211,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                 <button
                   type="button"
                   onMouseEnter={() => setI(n)}
+                  onFocus={() => setI(n)}
                   onClick={() => go(p)}
                   className={clsx(
                     "flex w-full items-center gap-3 rounded-sm px-2.5 py-2 text-start transition-colors duration-100",
@@ -235,6 +232,6 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
           </ul>
         )}
       </div>
-    </div>
+    </dialog>
   );
 }

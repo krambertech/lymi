@@ -343,6 +343,11 @@
   }
   a,
   button,
+  input,
+  label,
+  select,
+  summary,
+  textarea,
   [role="button"] {
     touch-action: manipulation;
   }
@@ -351,9 +356,19 @@
   select {
     font-size: 1rem;
   }
+  /* Below 48 rem the pill nav floats over the page's foot; Tab scrolls a focused row clear of it. */
+  @media (width < 48rem) {
+    html {
+      scroll-padding-bottom: calc(env(safe-area-inset-bottom) + 6rem);
+    }
+  }
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
+  }
+  /* A title takes focus only so a screen reader announces it; it is not a control. */
+  :is(h1, h2)[tabindex="-1"] {
+    outline: none;
   }
   ::selection {
     background: var(--amber-soft);

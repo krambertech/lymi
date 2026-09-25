@@ -9,9 +9,17 @@ interface ToastOptions extends Omit<ToastManagerAddOptions<object>, "type" | "pr
   type?: "error" | undefined;
 }
 
+/** Long enough to reach Undo with a screen reader or a switch; a toast without an action keeps Base UI's 5 s. */
+const ACTION_TIMEOUT = 10_000;
+
 const toast = {
   add: ({ type, ...options }: ToastOptions) =>
-    manager.add({ ...options, type, priority: type === "error" ? "high" : "low" }),
+    manager.add({
+      ...(options.actionProps ? { timeout: ACTION_TIMEOUT } : {}),
+      ...options,
+      type,
+      priority: type === "error" ? "high" : "low",
+    }),
   close: manager.close,
 };
 

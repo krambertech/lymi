@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
 import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
+import { pageTitle } from "../lib/page-focus";
 import { Button, IconButton } from "./button";
 import { InlineError } from "./inline-error";
 import { RadioCard } from "./radio-card";
@@ -245,6 +246,7 @@ export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSer
   const name = useId();
   const seriesName = series?.name ?? "";
   const count = series?.deckIds.length ?? 0;
+  const deleted = useRef(false);
   // Keyed on the series, not on closing: Cancel and Delete close it from the parent, which never
   // reaches `onOpenChange`, and a remembered Archive would take the next series' decks unasked.
   useEffect(() => {
@@ -252,7 +254,15 @@ export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSer
   }, [series]);
   return (
     <Dialog open={!!series} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[min(92vw,460px)]">
+      <DialogContent
+        className="w-[min(92vw,460px)]"
+        // The options button that opened it leaves with the series.
+        finalFocus={() => {
+          const gone = deleted.current;
+          deleted.current = false;
+          return (gone && pageTitle()) || true;
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{t`Delete “${seriesName}”?`}</DialogTitle>
           <DialogDescription>
@@ -300,7 +310,13 @@ export function DeleteSeriesDialog({ series, onOpenChange, onDelete }: DeleteSer
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             <Trans>Cancel</Trans>
           </Button>
-          <Button variant="danger" onClick={() => onDelete(count > 0 ? choice : "keep")}>
+          <Button
+            variant="danger"
+            onClick={() => {
+              deleted.current = true;
+              onDelete(count > 0 ? choice : "keep");
+            }}
+          >
             <Trans>Delete series</Trans>
           </Button>
         </DialogFooter>

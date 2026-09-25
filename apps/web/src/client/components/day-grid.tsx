@@ -329,7 +329,7 @@ export function DayGrid({ days, today, firstDay, goal, header }: Props) {
                                 // Hover veils the cell in ink, which is light in the dark room, so
                                 // every state answers the pointer without a second ring beside the
                                 // ones that already mean today and a day kept.
-                                "after:absolute after:inset-0 after:rounded-[inherit] after:bg-text after:opacity-0 after:transition-opacity after:duration-150 hover:after:opacity-10",
+                                "after:absolute after:inset-0 after:rounded-[inherit] after:bg-text after:opacity-0 after:transition-opacity after:duration-150 hoverable:hover:after:opacity-10",
                                 future
                                   ? // Dashed is this system's mark for "not here yet", so a day
                                     // still to come never reads as a day that was missed.

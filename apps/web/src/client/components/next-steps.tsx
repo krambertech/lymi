@@ -29,7 +29,7 @@ export function Go({ children, icon, className }: GoProps) {
     >
       {/* The circle alone on a phone, where the label would squeeze the text beside it. */}
       {children && <span className="sr-only @3xl:not-sr-only">{children}</span>}
-      <span className="edge-inset grid size-8 place-items-center rounded-full bg-plate-2 text-text transition-[background-color,box-shadow] duration-150 group-hover:bg-plate">
+      <span className="edge-inset grid size-8 place-items-center rounded-full bg-plate-2 text-text transition-[background-color,box-shadow] duration-150 hoverable:group-hover:bg-plate">
         {icon ?? <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />}
       </span>
     </span>

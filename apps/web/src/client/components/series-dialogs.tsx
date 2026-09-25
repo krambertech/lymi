@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { ArrowDown, ArrowUp, Check, Plus } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
+import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { Button, IconButton } from "./button";
 import { RadioCard } from "./radio-card";
@@ -76,6 +77,7 @@ export function SeriesForm({
   static?: boolean | undefined;
 }) {
   const { t } = useLingui();
+  const desktop = useDesktop();
   const [name, setName] = useState(series?.name ?? "");
   const [chosen, setChosen] = useState<string[]>(series?.deckIds ?? []);
   const [invalid, setInvalid] = useState<FieldErrors>({});
@@ -123,7 +125,8 @@ export function SeriesForm({
       <Field>
         <FieldLabel>{t`Name`}</FieldLabel>
         <Input
-          autoFocus={!st && !series}
+          // On touch the drawer settles first and the keyboard waits for a tap on the field.
+          autoFocus={!st && !series && desktop}
           value={name}
           onChange={(e) => {
             setName(e.target.value);

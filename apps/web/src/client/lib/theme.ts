@@ -15,9 +15,16 @@ function resolve(choice: ThemeChoice): "light" | "dark" {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
+/** DESIGN.md's canvas in each theme, so the status bar and browser chrome meet the page. */
+const CHROME = { light: "#f8f6f4", dark: "#130d09" } as const;
+
 export function applyTheme(choice: ThemeChoice) {
   const root = document.documentElement;
   const next = resolve(choice);
+  // The tags answer the system theme; a chosen theme has to overwrite both.
+  for (const meta of document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')) {
+    meta.content = CHROME[next];
+  }
   if (root.dataset.theme === next) return;
   // Swap in one frame. Per-component transitions would otherwise cascade at different speeds.
   root.classList.add("theme-switching");

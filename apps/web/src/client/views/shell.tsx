@@ -198,7 +198,7 @@ export function AppShell({
       {sidebar && <div className="sticky top-0 h-dvh shrink-0 self-start">{sidebar}</div>}
       <main
         className={clsx(
-          "@container flex min-w-0 flex-1 flex-col pt-safe",
+          "@container flex min-w-0 flex-1 flex-col pt-safe px-safe",
           fill && "min-h-0 overflow-y-auto",
         )}
       >

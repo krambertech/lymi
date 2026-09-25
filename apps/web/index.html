@@ -26,6 +26,9 @@
         var t = localStorage.getItem("lymi-theme");
         var dark = t === "dark" || ((!t || t === "system") && matchMedia("(prefers-color-scheme: dark)").matches);
         document.documentElement.dataset.theme = dark ? "dark" : "light";
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.content = dark ? "#130d09" : "#f8f6f4";
+        });
       } catch (e) {}
     </script>
   </head>

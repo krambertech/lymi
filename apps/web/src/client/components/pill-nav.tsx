@@ -18,7 +18,7 @@ export const PILL_NAV = [
 export function PillNav({ static: st }: { static?: StaticNav }) {
   const { t, i18n } = useLingui();
   const item =
-    "relative inline-flex h-11 items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[color,scale] duration-150 active:scale-[0.97] hoverable:hover:text-text [&.active]:text-text [&_svg]:size-5";
+    "relative inline-flex h-11 select-none items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[color,scale] duration-150 [-webkit-touch-callout:none] active:scale-[0.97] hoverable:hover:text-text [&.active]:text-text [&_svg]:size-5";
   return (
     <nav
       aria-label={t`Main`}

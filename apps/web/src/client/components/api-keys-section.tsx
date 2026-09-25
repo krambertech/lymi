@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { type ApiKeySummary, api, errorMessage } from "../lib/api";
+import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { publicSiteUrl } from "../lib/origins";
 import { keysQuery } from "../lib/queries";
@@ -150,6 +151,7 @@ function NewKeyForm({
   onSubmit: (input: ApiKeyInput) => void;
 }) {
   const { t } = useLingui();
+  const desktop = useDesktop();
   const [name, setName] = useState("");
   const [scope, setScope] = useState<Scope>("read");
   const [invalid, setInvalid] = useState<FieldErrors>({});
@@ -184,7 +186,8 @@ function NewKeyForm({
       <Field>
         <FieldLabel>{t`Name`}</FieldLabel>
         <Input
-          autoFocus
+          // On touch the drawer settles first and the keyboard waits for a tap on the field.
+          autoFocus={desktop}
           value={name}
           onChange={(e) => {
             setName(e.target.value);

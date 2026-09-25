@@ -89,17 +89,26 @@
 .deck-tray-paper[data-at="2"] {
   transform: translate(-6px, 9px) rotate(-2.2deg);
 }
-.deck-tile:hover .deck-tray-card,
 .deck-tile:focus-visible .deck-tray-card {
   transform: translateY(-5px);
 }
-.deck-tile:hover .deck-tray-paper[data-at="1"],
 .deck-tile:focus-visible .deck-tray-paper[data-at="1"] {
   transform: translate(17px, 2px) rotate(5deg);
 }
-.deck-tile:hover .deck-tray-paper[data-at="2"],
 .deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
   transform: translate(-16px, 6px) rotate(-6deg);
+}
+/* Touch has no hover: a tap on Add would leave the spread standing until the next tap elsewhere. */
+@media (hover: hover) and (pointer: fine) {
+  .deck-tile:hover .deck-tray-card {
+    transform: translateY(-5px);
+  }
+  .deck-tile:hover .deck-tray-paper[data-at="1"] {
+    transform: translate(17px, 2px) rotate(5deg);
+  }
+  .deck-tile:hover .deck-tray-paper[data-at="2"] {
+    transform: translate(-16px, 6px) rotate(-6deg);
+  }
 }
 /* The spread is the movement; under reduced motion the cards simply sit where they rest. */
 @media (prefers-reduced-motion: reduce) {
@@ -114,12 +123,16 @@
   .deck-tray-paper[data-at="2"] {
     transform: translate(-6px, 9px) rotate(-2.2deg);
   }
-  .deck-tile:hover .deck-tray-card,
   .deck-tile:focus-visible .deck-tray-card,
-  .deck-tile:hover .deck-tray-paper[data-at="1"],
   .deck-tile:focus-visible .deck-tray-paper[data-at="1"],
-  .deck-tile:hover .deck-tray-paper[data-at="2"],
   .deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+  .deck-tile:hover .deck-tray-card,
+  .deck-tile:hover .deck-tray-paper[data-at="1"],
+  .deck-tile:hover .deck-tray-paper[data-at="2"] {
     transform: none;
   }
 }

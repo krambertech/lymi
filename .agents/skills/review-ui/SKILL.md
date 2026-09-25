@@ -16,7 +16,7 @@ Produce one evidence-led review of the requested change. A review is read-only: 
 
 ## Ground the review
 
-Read [`PRODUCT.md`](../../../PRODUCT.md), [`DESIGN.md`](../../../DESIGN.md), the stated intent, the diff, and the affected implementation. Add [`CONTEXT.md`](../../../CONTEXT.md) when names or learner-facing text change. `DESIGN.md` owns Lymi's visual and interaction rules; cite the rule instead of restating it.
+Read [`PRODUCT.md`](../../../PRODUCT.md), [`DESIGN.md`](../../../DESIGN.md), the stated intent, the diff, and the affected implementation. Add [`CONTEXT.md`](../../../CONTEXT.md) when names or learner-facing text change. `DESIGN.md` and the files it indexes in `docs/design/system` own Lymi's visual and interaction rules; cite the rule instead of restating it.
 
 Before recommending a new pattern, find the nearest shipped Lymi component or flow that does the same job. Recommend reusing it unless the diff shows why it cannot work.
 

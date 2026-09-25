@@ -52,7 +52,7 @@ interface PillProps {
 /** The pill in the chrome, or the card on Today. Every face opens the same panel. */
 export type StreakFace = PillProps["variant"] | "card";
 
-/** The flame and the run, always in the chrome. DESIGN.md, "The streak". */
+/** The flame and the run, always in the chrome. docs/design/streak.md. */
 function PillFace({ summary, variant }: PillProps) {
   const flame = summary ? streakFlameFor(summary) : "lit";
   const current = summary?.current ?? 0;

@@ -5,11 +5,11 @@ description: Write or revise Lymi's learner-facing interface text. Use whenever 
 
 # Write Lymi UX copy
 
-The Voice section of [`DESIGN.md`](../../../DESIGN.md) owns Lymi's tone and its message patterns. This skill is the order you write in.
+[The voice rules](../../../docs/design/system/voice.md) own Lymi's tone and its message patterns. This skill is the order you write in.
 
 ## Ground the copy
 
-Read the affected behavior in [`PRODUCT.md`](../../../PRODUCT.md), the terms and avoid-list in [`CONTEXT.md`](../../../CONTEXT.md), the Voice section of `DESIGN.md`, and the strings already on the same screen. Describe only behavior the product has, and name the learner's task, not the system behind it: "Couldn’t save the card", not "Request failed".
+Read the affected behavior in [`PRODUCT.md`](../../../PRODUCT.md), the terms and avoid-list in [`CONTEXT.md`](../../../CONTEXT.md), the voice rules, and the strings already on the same screen. Describe only behavior the product has, and name the learner's task, not the system behind it: "Couldn’t save the card", not "Request failed".
 
 ## Choose the message shape
 

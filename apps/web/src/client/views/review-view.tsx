@@ -983,7 +983,7 @@ export interface ReviewCompleteProps {
   focusOnMount?: boolean | undefined;
 }
 
-/** When each part of the end arrives, in ms after the last grade; DESIGN.md, "Motion". */
+/** When each part of the end arrives, in ms after the last grade; docs/design/system/motion.md. */
 const AT = {
   pool: 280,
   embers: 620,
@@ -1017,7 +1017,7 @@ const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
 /** The `.seq` rise in `styles/entrances.css`. */
 const RISE_MS = 560;
 
-/** The end of a review, played as one sequence that any tap or key finishes; DESIGN.md, "Motion". */
+/** The end of a review, played as one sequence that any tap or key finishes; docs/design/system/motion.md. */
 export function ReviewComplete({
   end: screen,
   attempts,

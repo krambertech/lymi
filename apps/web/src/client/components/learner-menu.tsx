@@ -142,7 +142,7 @@ export function LearnerMenu({
 
           {place("/settings", <Settings aria-hidden="true" />, <Trans>Settings</Trans>)}
           {/* Activity is behind You on every device: it is read when something is in question,
-              not a destination the learner steers by. DESIGN.md, Layout. */}
+              not a destination the learner steers by. docs/design/system/layout.md. */}
           {place("/activity", <Activity aria-hidden="true" />, <Trans>Activity</Trans>)}
           {variant === "phone" && (
             <>

@@ -32,8 +32,8 @@ interface Props {
 
 /**
  * One optional field of a card, as a chip in the row under the form: its icon and label while
- * empty, its value once filled. Pressing it opens only that field in a drawer. DESIGN.md "Adding and
- * editing a card".
+ * empty, its value once filled. Pressing it opens only that field in a drawer. docs/design/library-decks-and-cards.md,
+ * "Adding and editing a card".
  */
 export function FieldChip({
   icon,

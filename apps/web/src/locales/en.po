@@ -2536,6 +2536,9 @@ msgstr "or"
 msgid "Other ways to add cards"
 msgstr "Other ways to add cards"
 
+msgid "Other ways to add decks"
+msgstr "Other ways to add decks"
+
 msgid "own review"
 msgstr "own review"
 

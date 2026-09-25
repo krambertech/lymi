@@ -1,6 +1,5 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { Link } from "@tanstack/react-router";
 import {
   ArrowDown,
   ArrowUp,
@@ -12,14 +11,15 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { type ReactNode, useMemo } from "react";
+import { useMemo } from "react";
 import { Button, IconButton } from "../components/button";
 import { DeckCard } from "../components/deck-card";
 import { DueCount } from "../components/due-count";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
 import { LibraryBoard } from "../components/library-board";
-import { Go } from "../components/next-steps";
+import { NavLink, useStaticNav } from "../components/nav-link";
+import { NextStep, NextSteps } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
 import {
@@ -31,7 +31,6 @@ import {
 } from "../components/ui/dropdown-menu";
 import type { DeckSummary, Series } from "../lib/api";
 import { groupDecks } from "../lib/library-groups";
-import type { StaticNav } from "./shell";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
@@ -54,7 +53,6 @@ export interface LibraryProps {
   /** A series' whole deck list after a drag. Absent, decks cannot be dragged. */
   onSetSeriesDecks?: ((seriesId: string, deckIds: string[]) => void) | undefined;
   onRemoveFromSeries?: ((deckId: string) => void) | undefined;
-  static?: StaticNav;
 }
 
 /**
@@ -79,32 +77,13 @@ export function LibraryView({
   onMoveSeries,
   onSetSeriesDecks,
   onRemoveFromSeries,
-  static: st,
 }: LibraryProps) {
   const { t } = useLingui();
+  const st = useStaticNav();
   const total = decks?.reduce((n, d) => n + d.total, 0) ?? 0;
   const failedEmpty = failed === true && decks === undefined;
   const loading = decks === undefined && !failedEmpty;
   const groups = useMemo(() => groupDecks(decks ?? [], series), [decks, series]);
-
-  const To = ({
-    to,
-    className,
-    children,
-  }: {
-    to: "/archived";
-    className?: string | undefined;
-    children: ReactNode;
-  }) =>
-    st ? (
-      <a href={to} onClick={(e) => e.preventDefault()} className={className}>
-        {children}
-      </a>
-    ) : (
-      <Link to={to} className={className}>
-        {children}
-      </Link>
-    );
 
   // Quiet on purpose: making a deck or a series is occasional, and the decks are what Library is for.
   const libraryMenu = (onCreateDeck || onNewSeries || onImport) && (
@@ -222,20 +201,11 @@ export function LibraryView({
           </div>
         </div>
         {/* Sunk into a well, so it never reads as one more deck. */}
-        {due > 0 &&
-          (st ? (
-            <a
-              href={`/review?series=${s.id}`}
-              onClick={(e) => e.preventDefault()}
-              className={bannerClass}
-            >
-              {banner}
-            </a>
-          ) : (
-            <Link to="/review" search={{ series: s.id }} className={bannerClass}>
-              {banner}
-            </Link>
-          ))}
+        {due > 0 && (
+          <NavLink to="/review" search={{ series: s.id }} className={bannerClass}>
+            {banner}
+          </NavLink>
+        )}
       </>
     );
   };
@@ -294,34 +264,21 @@ export function LibraryView({
               onClick={onCreateDeck}
               aria-disabled={!onCreateDeck}
             >
-              <Plus aria-hidden="true" />
+              <Plus data-icon="inline-start" aria-hidden="true" />
               <Trans>New deck</Trans>
             </Button>
           }
         >
           {onImport && (
             <StartPanelSection>
-              <button
-                type="button"
-                onClick={onImport}
-                className="group -mx-2 flex min-h-16 w-[calc(100%+1rem)] items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover"
-              >
-                <span
-                  className="edge-inset grid size-10 shrink-0 place-items-center rounded-full text-text-2 [&_svg]:size-[18px]"
-                  aria-hidden="true"
-                >
-                  <FileUp />
-                </span>
-                <span className="grid min-w-0 flex-1 gap-0.5">
-                  <span className="text-md font-medium">
-                    <Trans>Import decks</Trans>
-                  </span>
-                  <span className="text-sm text-muted">
-                    <Trans>Decks from Anki or Mochi, with their review history.</Trans>
-                  </span>
-                </span>
-                <Go />
-              </button>
+              <NextSteps label={t`Other ways to add decks`}>
+                <NextStep
+                  icon={<FileUp />}
+                  title={<Trans>Import decks</Trans>}
+                  detail={<Trans>Decks from Anki or Mochi, with their review history.</Trans>}
+                  onClick={onImport}
+                />
+              </NextSteps>
             </StartPanelSection>
           )}
         </StartPanel>
@@ -344,8 +301,7 @@ export function LibraryView({
               owner={d.role === "owner" ? null : d.owner.name}
               published={d.published}
               publisherPhoto={d.owner.avatarUrl}
-              describedBy={describedBy}
-              st={st}
+              aria-describedby={describedBy}
             />
           )}
           renderSeriesHeader={seriesHeader}
@@ -373,7 +329,7 @@ export function LibraryView({
           <h2 className="mb-2 px-1 text-xs font-medium uppercase tracking-[0.06em] text-muted">
             <Trans>Archived</Trans>
           </h2>
-          <To
+          <NavLink
             to="/archived"
             className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
           >
@@ -384,7 +340,7 @@ export function LibraryView({
               <Trans>Show</Trans>
               <ChevronRight className="size-4 text-faint" aria-hidden="true" />
             </span>
-          </To>
+          </NavLink>
         </section>
       ) : null}
     </Screen>

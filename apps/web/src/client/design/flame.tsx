@@ -145,7 +145,7 @@ function MovementCard({ m }: { m: (typeof MOVEMENTS)[number] }) {
             aria-label={`Play ${m.name}`}
             onClick={() => setRun((n) => n + 1)}
           >
-            <Play aria-hidden="true" className="size-3.5" />
+            <Play data-icon="inline-start" aria-hidden="true" className="size-3.5" />
             Play
           </Button>
         </div>
@@ -182,7 +182,7 @@ function ReducedSideBySide() {
       </div>
       <div className="flex justify-center border-t border-edge p-3">
         <Button size="sm" variant="ghost" onClick={play}>
-          <Play aria-hidden="true" className="size-3.5" />
+          <Play data-icon="inline-start" aria-hidden="true" className="size-3.5" />
           Reach the goal
         </Button>
       </div>

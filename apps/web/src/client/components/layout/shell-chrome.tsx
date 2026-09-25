@@ -1,7 +1,6 @@
 import { createContext, type ReactNode, useContext } from "react";
 import { AddMenu } from "../add-menu";
 import { LearnerMenu } from "../learner-menu";
-import type { StaticNav } from "../nav-link";
 
 export interface ShellChromeValue {
   streak?: ReactNode | undefined;
@@ -12,8 +11,6 @@ export interface ShellChromeValue {
   onCreateDeck?: (() => void) | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
-  /** The design page has no router, so every link under it is a plain anchor. */
-  static?: StaticNav;
 }
 
 const ShellChromeContext = createContext<ShellChromeValue | null>(null);
@@ -40,7 +37,6 @@ export function TabActions() {
         docsUrl={chrome.docsUrl}
         onSignOut={chrome.onSignOut}
         signingOut={chrome.signingOut}
-        static={chrome.static}
       />
     </>
   );

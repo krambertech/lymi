@@ -43,7 +43,7 @@ export function SectionManager({
                     <Plural value={section.total} one="# card" other="# cards" />
                   </span>
                 </span>
-                <span className="flex shrink-0 items-center">
+                <span className="flex shrink-0 items-center [--hit-x:0px]">
                   <IconButton
                     size="sm"
                     label={t`Rename ${sectionName}`}
@@ -82,12 +82,12 @@ export function SectionManager({
       )}
       <div className="flex flex-wrap items-center gap-2">
         <Button size="sm" onClick={onCreate}>
-          <Plus aria-hidden="true" />
+          <Plus data-icon="inline-start" aria-hidden="true" />
           <Trans>New section</Trans>
         </Button>
         {archivedCount > 0 && (
           <Button size="sm" variant="ghost" onClick={onShowArchived}>
-            <ArchiveRestore aria-hidden="true" />
+            <ArchiveRestore data-icon="inline-start" aria-hidden="true" />
             <Trans>Archived sections</Trans>
           </Button>
         )}

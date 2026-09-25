@@ -1,7 +1,7 @@
 import { Plural } from "@lingui/react/macro";
 import { ChevronRight } from "lucide-react";
 import { Chip } from "./chip";
-import { NavLink, type StaticNav } from "./nav-link";
+import { NavLink } from "./nav-link";
 import { StateIcon } from "./state-mark";
 
 export interface NewCards {
@@ -18,19 +18,11 @@ export interface NewCards {
  * One deck's worth of cards that arrived since the last review. The actor stays on the row at
  * every width, because a card an integration added must never look like one the learner typed.
  */
-export function NewCardsRow({
-  deckId,
-  deckName,
-  count,
-  actor,
-  when,
-  st,
-}: NewCards & { st?: StaticNav }) {
+export function NewCardsRow({ deckId, deckName, count, actor, when }: NewCards) {
   return (
     <NavLink
       to="/library/$deckId"
       params={{ deckId }}
-      st={st}
       className="edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3 transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
       <Chip>

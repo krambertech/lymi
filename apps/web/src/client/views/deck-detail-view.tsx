@@ -1,5 +1,4 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -35,6 +34,7 @@ import { Button, buttonClass, IconButton } from "../components/button";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { Screen, ScreenBar } from "../components/layout/screen";
+import { NavLink, useStaticNav } from "../components/nav-link";
 import { NextStep, NextSteps } from "../components/next-steps";
 import { PublisherMark } from "../components/publisher-mark";
 import { SectionProgress } from "../components/section-progress";
@@ -68,7 +68,6 @@ import {
   rowState,
 } from "../lib/deck-list";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
-import type { StaticNav } from "./shell";
 import { type WordHistory, WordView } from "./word-view";
 
 /** A menu row greys its icons, so a state's mark takes its own colour back. */
@@ -127,7 +126,6 @@ export interface DeckDetailProps {
   retryPending?: boolean | undefined;
   /** Draw an open card beside the list at any width, for the design system's narrower frames. */
   cardBeside?: boolean | undefined;
-  static?: StaticNav;
 }
 
 /** What the owner does to the deck and its cards; the route holds the sheets and dialogs. */
@@ -326,7 +324,7 @@ function DeckPlates({
             ) : (
               onAdd && (
                 <Button onClick={onAdd} kbd="N" className="w-full @md/plates:w-auto">
-                  <Plus aria-hidden="true" />
+                  <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add card</Trans>
                 </Button>
               )
@@ -448,7 +446,7 @@ function ListTools({
           <DropdownMenuTrigger
             render={
               <Button size="sm">
-                <ListFilter aria-hidden="true" />
+                <ListFilter data-icon="inline-start" aria-hidden="true" />
                 <Trans>Filter</Trans>
               </Button>
             }
@@ -522,7 +520,7 @@ function ListTools({
           <DropdownMenuTrigger
             render={
               <Button size="sm" variant="ghost" aria-label={t`Sort: ${sortName[sort]}`}>
-                <ArrowUpDown aria-hidden="true" />
+                <ArrowUpDown data-icon="inline-start" aria-hidden="true" />
                 {sortName[sort]}
               </Button>
             }
@@ -662,9 +660,9 @@ export function DeckDetailView({
   cardBeside,
   connectUrl,
   connected,
-  static: st,
 }: DeckDetailProps) {
   const { t, i18n } = useLingui();
+  const st = useStaticNav();
   const [q, setQ] = useState("");
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
@@ -679,13 +677,13 @@ export function DeckDetailView({
   const anchor = useRef<string | null>(null);
   const [localOpen, setLocalOpen] = useState<string | null>(null);
   const openId = openCardId === undefined ? localOpen : openCardId;
-  const setOpen = useCallback(
-    (id: string | null) => {
-      setLocalOpen(id);
-      onOpen?.(id);
-    },
-    [onOpen],
-  );
+  // Read through a ref, so the rows' `onOpen` stays the same function across the route's renders.
+  const onOpenRef = useRef(onOpen);
+  onOpenRef.current = onOpen;
+  const setOpen = useCallback((id: string | null) => {
+    setLocalOpen(id);
+    onOpenRef.current?.(id);
+  }, []);
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const closeSearch = () => {
@@ -727,15 +725,19 @@ export function DeckDetailView({
     [shown, sort, now, i18n.locale, sections, arranging],
   );
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const orderedRef = useRef(ordered);
+  orderedRef.current = ordered;
 
-  const toggleSelected = (id: string, range: boolean) => {
+  // Stable, so the memoised rows keep their props while one card's checkbox changes.
+  const toggleSelected = useCallback((id: string, range: boolean) => {
     setSelected((prev) => {
+      const rows = orderedRef.current;
       const next = new Set(prev ?? []);
-      const from = anchor.current ? ordered.findIndex((r) => r.card.id === anchor.current) : -1;
-      const to = ordered.findIndex((r) => r.card.id === id);
+      const from = anchor.current ? rows.findIndex((r) => r.card.id === anchor.current) : -1;
+      const to = rows.findIndex((r) => r.card.id === id);
       if (range && from >= 0 && to >= 0) {
         const on = !next.has(id);
-        for (const row of ordered.slice(Math.min(from, to), Math.max(from, to) + 1)) {
+        for (const row of rows.slice(Math.min(from, to), Math.max(from, to) + 1)) {
           if (on) next.add(row.card.id);
           else next.delete(row.card.id);
         }
@@ -744,7 +746,7 @@ export function DeckDetailView({
       anchor.current = id;
       return next;
     });
-  };
+  }, []);
   const stopSelecting = useCallback(() => {
     setSelected(null);
     anchor.current = null;
@@ -922,17 +924,6 @@ export function DeckDetailView({
     </DropdownMenu>
   );
 
-  // The design page renders the screen without a router, so every way back is a plain anchor there.
-  const toLibrary = (className: string, content: ReactNode) =>
-    st ? (
-      <a href="/library" onClick={(e) => e.preventDefault()} className={className}>
-        {content}
-      </a>
-    ) : (
-      <Link to="/library" className={className}>
-        {content}
-      </Link>
-    );
   const backToLibrary = { label: t`Library`, to: "/library" };
 
   // A deck that could not be loaded takes the whole screen, so no skeleton is left waiting under it.
@@ -943,7 +934,11 @@ export function DeckDetailView({
           <ErrorState
             title={t`This deck is no longer here`}
             body={t`It may have been archived, or you were removed from it.`}
-            action={toLibrary(buttonClass("primary"), t`Open Library`)}
+            action={
+              <NavLink to="/library" className={buttonClass("primary")}>
+                {t`Open Library`}
+              </NavLink>
+            }
           />
         ) : (
           <ErrorState
@@ -1082,7 +1077,6 @@ export function DeckDetailView({
                       title={<Trans>Send a lesson from Claude or ChatGPT</Trans>}
                       detail={<Trans>Connect Lymi, paste the lesson, and ask for the cards</Trans>}
                       href={connectUrl}
-                      static={st}
                     />
                   )}
                   <NextStep
@@ -1091,7 +1085,6 @@ export function DeckDetailView({
                     detail={<Trans>Create a key in Settings</Trans>}
                     to="/settings"
                     hash="api-keys"
-                    static={st}
                   />
                 </NextSteps>
               </StartPanelSection>

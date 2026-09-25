@@ -3,10 +3,7 @@ import { StreakButton, type StreakButtonProps } from "../components/streak";
 import { me, streak } from "./mock";
 
 /** The learner's bar controls with sample data, for every tab drawn on the design pages. */
-export function designChrome(
-  path = "/design",
-  summary: StreakButtonProps["summary"] = streak,
-): ShellChromeValue {
+export function designChrome(summary: StreakButtonProps["summary"] = streak): ShellChromeValue {
   return {
     streak: <StreakButton variant="phone" summary={summary} />,
     name: me.name,
@@ -14,6 +11,5 @@ export function designChrome(
     docsUrl: "https://lymi.app/docs",
     onAddCard: () => {},
     onCreateDeck: () => {},
-    static: { path },
   };
 }

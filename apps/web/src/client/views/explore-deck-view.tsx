@@ -1,7 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { ExploreDeckOut, PublicDeckOut } from "@lymi/core/catalog";
 import { publisherAvatarPath, trayHue } from "@lymi/core/catalog";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ArrowRight, Check, ChevronDown, Plus } from "lucide-react";
 import { type CSSProperties, type ReactNode, useEffect, useRef } from "react";
@@ -9,7 +8,7 @@ import { Button, buttonClass } from "../components/button";
 import { DeckMeta, HAND_FANS, TrayCardFace } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
-import type { StaticNav } from "../components/nav-link";
+import { NavLink } from "../components/nav-link";
 import { PublisherMark } from "../components/publisher-mark";
 import { Skeleton } from "../components/skeleton";
 
@@ -23,7 +22,6 @@ interface Props {
   adding?: boolean | undefined;
   /** This page's own press added the deck, so its arrival plays rather than a refetch's. */
   added?: boolean | undefined;
-  st?: StaticNav;
 }
 
 /**
@@ -131,7 +129,6 @@ export function ExploreDeckView({
   onAdd,
   adding,
   added,
-  st,
 }: Props) {
   const { t } = useLingui();
   const deckId = data?.deckId;
@@ -166,9 +163,9 @@ export function ExploreDeckView({
           retrying={busy}
           action={
             missing ? (
-              <Link to="/explore" disabled={!!st} className={buttonClass("primary")}>
+              <NavLink to="/explore" className={buttonClass("primary")}>
                 <Trans>Back to Explore</Trans>
-              </Link>
+              </NavLink>
             ) : undefined
           }
         />
@@ -239,11 +236,10 @@ export function ExploreDeckView({
             )}
             <div className="mt-6 flex w-full justify-center @4xl:justify-start">
               {deckId ? (
-                <Link
+                <NavLink
                   ref={open}
                   to="/library/$deckId"
                   params={{ deckId }}
-                  disabled={!!st}
                   className={buttonClass("secondary", "lg", "deck-cover-action w-full @md:w-auto")}
                 >
                   <span
@@ -255,7 +251,7 @@ export function ExploreDeckView({
                     <Trans>Open in Library</Trans>
                     <ArrowRight aria-hidden="true" className="rtl:-scale-x-100" />
                   </span>
-                </Link>
+                </NavLink>
               ) : (
                 <Button
                   variant="secondary"
@@ -264,7 +260,7 @@ export function ExploreDeckView({
                   loading={adding}
                   className="deck-cover-action w-full @md:w-auto"
                 >
-                  <Plus aria-hidden="true" />
+                  <Plus data-icon="inline-start" aria-hidden="true" />
                   <Trans>Add to Library</Trans>
                 </Button>
               )}

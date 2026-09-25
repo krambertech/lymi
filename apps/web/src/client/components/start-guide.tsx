@@ -1,12 +1,11 @@
 import { Trans } from "@lingui/react/macro";
-import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { Check, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button, buttonClass } from "./button";
 import { Kbd } from "./kbd";
 import { Lantern } from "./lantern";
-import type { StaticNav } from "./nav-link";
+import { NavLink, useStaticNav } from "./nav-link";
 
 interface StartGuideProps {
   decks: number;
@@ -16,7 +15,6 @@ interface StartGuideProps {
   connectUrl: string | undefined;
   onAdd: (() => void) | undefined;
   onCreateDeck: (() => void) | undefined;
-  st: StaticNav;
 }
 
 /**
@@ -30,8 +28,8 @@ export function StartGuide({
   connectUrl,
   onAdd,
   onCreateDeck,
-  st,
 }: StartGuideProps) {
+  const st = useStaticNav();
   const current = decks === 0 ? 0 : cards === 0 ? 1 : 2;
   const link =
     "text-base font-medium text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:text-text hoverable:hover:decoration-text";
@@ -50,7 +48,7 @@ export function StartGuide({
             aria-disabled={!onCreateDeck}
             className="justify-self-start"
           >
-            <Plus aria-hidden="true" />
+            <Plus data-icon="inline-start" aria-hidden="true" />
             <Trans>New deck</Trans>
           </Button>
         </>
@@ -80,9 +78,9 @@ export function StartGuide({
                 <Trans>Send a lesson from Claude or ChatGPT</Trans>
               </a>
             )}
-            <Link to="/settings" hash="api-keys" disabled={!!st} className={link}>
+            <NavLink to="/settings" hash="api-keys" className={link}>
               <Trans>Add cards with the API</Trans>
-            </Link>
+            </NavLink>
           </div>
         </>
       ),
@@ -95,17 +93,16 @@ export function StartGuide({
           <p className="text-md text-text-2">
             <Trans>Insights fill in from your first review.</Trans>
           </p>
-          <Link
+          <NavLink
             to="/review"
             search={{}}
-            disabled={!!st}
             className={buttonClass("primary", "md", "justify-self-start")}
           >
             <Trans>Review</Trans>
             <span className="hidden @2xl:contents">
               <Kbd tone="on-primary">R</Kbd>
             </span>
-          </Link>
+          </NavLink>
         </>
       ),
     },

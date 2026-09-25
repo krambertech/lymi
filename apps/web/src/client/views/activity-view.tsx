@@ -328,7 +328,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
           className={buttonClass("secondary", "sm", "shrink-0")}
           aria-label={t`Download ${entry.export?.fileName ?? ""}`}
         >
-          <Download aria-hidden="true" />
+          <Download data-icon="inline-start" aria-hidden="true" />
           {/* The label only where there is room; the aria-label names the file at every size. */}
           <span className="sr-only @3xl:not-sr-only">
             <Trans>Download</Trans>

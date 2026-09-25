@@ -38,6 +38,7 @@ import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-
 import { LanguageField, languageName } from "./deck-fields";
 import { FieldChip, FieldChipRow } from "./field-chip";
 import { Kbd } from "./kbd";
+import { useStaticNav } from "./nav-link";
 import { ReviewModesField } from "./review-modes-field";
 import { TagsInput } from "./tags-input";
 import { Checkbox } from "./ui/checkbox";
@@ -91,8 +92,6 @@ interface CardFormBase {
   onDraftChange?: ((draft: CardFormDraft) => void) | undefined;
   /** Chips that open one field at a time, or the whole form. Follows the machine unless set. */
   layout?: "chips" | "whole" | undefined;
-  /** No autofocus. For the design page. */
-  static?: boolean | undefined;
 }
 
 export interface AddCardFormProps extends CardFormBase {
@@ -141,7 +140,7 @@ const PANEL_OF: Record<string, Panel> = {
  * everything else a card holds. docs/design/library-decks-and-cards.md, "Adding and editing a card".
  */
 export function CardForm(props: CardFormProps) {
-  const { decks, draft, pending, onCancel, onSubmit, onDraftChange, layout, static: st } = props;
+  const { decks, draft, pending, onCancel, onSubmit, onDraftChange, layout } = props;
   const adding = props.mode === "add";
   const {
     deckId,
@@ -153,6 +152,7 @@ export function CardForm(props: CardFormProps) {
   }: Partial<AddCardFormProps> = adding ? props : {};
   const { card, openPicture }: Partial<EditCardFormProps> = adding ? {} : props;
   const { t, i18n } = useLingui();
+  const st = !!useStaticNav();
   const desktop = useDesktop();
   const chips = (layout ?? (desktop ? "whole" : "chips")) === "chips";
 
@@ -483,7 +483,7 @@ export function CardForm(props: CardFormProps) {
     <FieldSet className="gap-1.5">
       <FieldLegend variant="label">{t`Deck`}</FieldLegend>
       <Button onClick={onCreateDeck} aria-disabled={!onCreateDeck}>
-        <Plus aria-hidden="true" />
+        <Plus data-icon="inline-start" aria-hidden="true" />
         <Trans>New deck</Trans>
       </Button>
       <FieldDescription>{t`Create a deck to add this card to.`}</FieldDescription>

@@ -175,7 +175,7 @@ function MenuScene() {
         render={
           <Button size="sm">
             Deck options
-            <MoreHorizontal aria-hidden="true" />
+            <MoreHorizontal data-icon="inline-end" aria-hidden="true" />
           </Button>
         }
       />
@@ -246,7 +246,7 @@ function FormScene() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="w-[min(92vw,440px)]">
           <DialogTitle>New deck</DialogTitle>
-          <NewDeckForm onCancel={() => setOpen(false)} onSubmit={() => undefined} static />
+          <NewDeckForm onCancel={() => setOpen(false)} onSubmit={() => undefined} />
         </DialogContent>
       </Dialog>
     </>

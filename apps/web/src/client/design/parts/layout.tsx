@@ -3,6 +3,7 @@ import { type ReactNode, useState } from "react";
 import { Button, IconButton } from "../../components/button";
 import { Screen, ScreenBar } from "../../components/layout/screen";
 import { ShellChrome } from "../../components/layout/shell-chrome";
+import { StaticNavProvider } from "../../components/nav-link";
 import { PillNav } from "../../components/pill-nav";
 import { Input } from "../../components/ui/input";
 import { Sidebar } from "../../views/shell";
@@ -23,18 +24,20 @@ function OnPhone({
   children: ReactNode;
 }) {
   return (
-    <ShellChrome value={designChrome(path)}>
-      <Phone
-        theme={theme}
-        className="h-[620px]"
-        bottom={
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center pb-6">
-            <PillNav static={{ path }} />
-          </div>
-        }
-      >
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
-      </Phone>
+    <ShellChrome value={designChrome()}>
+      <StaticNavProvider path={path}>
+        <Phone
+          theme={theme}
+          className="h-[620px]"
+          bottom={
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center pb-6">
+              <PillNav />
+            </div>
+          }
+        >
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
+        </Phone>
+      </StaticNavProvider>
     </ShellChrome>
   );
 }
@@ -51,18 +54,16 @@ function OnDesktop({
   aside?: ReactNode | undefined;
 }) {
   return (
-    <ShellChrome value={designChrome(path)}>
-      <Desktop theme={theme} height={520}>
-        <Sidebar
-          decks={decks}
-          name={me.name}
-          docsUrl="https://lymi.app/docs"
-          onAdd={noop}
-          static={{ path }}
-        />
-        <main className="@container flex min-w-0 flex-1 flex-col overflow-y-auto">{children}</main>
-        {aside}
-      </Desktop>
+    <ShellChrome value={designChrome()}>
+      <StaticNavProvider path={path}>
+        <Desktop theme={theme} height={520}>
+          <Sidebar decks={decks} name={me.name} docsUrl="https://lymi.app/docs" onAdd={noop} />
+          <main className="@container flex min-w-0 flex-1 flex-col overflow-y-auto">
+            {children}
+          </main>
+          {aside}
+        </Desktop>
+      </StaticNavProvider>
     </ShellChrome>
   );
 }

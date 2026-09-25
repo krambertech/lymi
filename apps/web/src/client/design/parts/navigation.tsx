@@ -1,3 +1,4 @@
+import { StaticNavProvider } from "../../components/nav-link";
 import { PillNav } from "../../components/pill-nav";
 import { Sidebar } from "../../views/shell";
 import { Variants } from "../frame";
@@ -23,13 +24,14 @@ export const navigation: Group = {
               note: "The mark, search and capture share the first line, level with the page title. Then the destinations, the decks with their due counts, and the learner under a rule.",
               render: () => (
                 <div className="edge flex h-[620px] w-full overflow-hidden rounded-md">
-                  <Sidebar
-                    decks={decks}
-                    name={me.name}
-                    docsUrl="https://lymi.app/docs"
-                    onAdd={noop}
-                    static={{ path: "/today" }}
-                  />
+                  <StaticNavProvider path="/today">
+                    <Sidebar
+                      decks={decks}
+                      name={me.name}
+                      docsUrl="https://lymi.app/docs"
+                      onAdd={noop}
+                    />
+                  </StaticNavProvider>
                   <div className="flex-1 bg-canvas" />
                 </div>
               ),
@@ -48,11 +50,19 @@ export const navigation: Group = {
           items={[
             {
               label: "On Today",
-              render: () => <PillNav static={{ path: "/today" }} />,
+              render: () => (
+                <StaticNavProvider path="/today">
+                  <PillNav />
+                </StaticNavProvider>
+              ),
             },
             {
               label: "On Library",
-              render: () => <PillNav static={{ path: "/library" }} />,
+              render: () => (
+                <StaticNavProvider path="/library">
+                  <PillNav />
+                </StaticNavProvider>
+              ),
             },
           ]}
         />

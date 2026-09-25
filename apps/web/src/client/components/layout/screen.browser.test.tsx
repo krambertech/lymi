@@ -5,6 +5,7 @@ import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../../locales/en.po";
 import { designChrome } from "../../design/chrome";
+import { StaticNavProvider } from "../nav-link";
 import { Screen } from "./screen";
 import { ShellChrome } from "./shell-chrome";
 
@@ -15,20 +16,22 @@ function Deck({ width }: { width: number }) {
   return (
     <I18nProvider i18n={i18n}>
       <ShellChrome value={designChrome()}>
-        <div className="@container/shell" style={{ width }}>
-          <Screen
-            title="Lesson 14"
-            back={{
-              label: "Library",
-              to: "/library/$deckId",
-              params: { deckId: "d1" },
-              hash: "top",
-            }}
-            actions={<button type="button">Deck options</button>}
-          >
-            <p>Cards</p>
-          </Screen>
-        </div>
+        <StaticNavProvider path="/design">
+          <div className="@container/shell" style={{ width }}>
+            <Screen
+              title="Lesson 14"
+              back={{
+                label: "Library",
+                to: "/library/$deckId",
+                params: { deckId: "d1" },
+                hash: "top",
+              }}
+              actions={<button type="button">Deck options</button>}
+            >
+              <p>Cards</p>
+            </Screen>
+          </div>
+        </StaticNavProvider>
       </ShellChrome>
     </I18nProvider>
   );
@@ -57,11 +60,13 @@ test("a way back with nowhere to go yet is not a link", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <ShellChrome value={designChrome()}>
-        <div className="@container/shell" style={{ width: 390 }}>
-          <Screen title="Deck settings" back={{ label: "Deck" }}>
-            <p>Loading</p>
-          </Screen>
-        </div>
+        <StaticNavProvider path="/design">
+          <div className="@container/shell" style={{ width: 390 }}>
+            <Screen title="Deck settings" back={{ label: "Deck" }}>
+              <p>Loading</p>
+            </Screen>
+          </div>
+        </StaticNavProvider>
       </ShellChrome>
     </I18nProvider>,
   );

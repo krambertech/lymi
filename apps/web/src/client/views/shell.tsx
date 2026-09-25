@@ -18,10 +18,8 @@ import { IconButton } from "../components/button";
 import { DueCount } from "../components/due-count";
 import { LearnerMenu } from "../components/learner-menu";
 import { AppTile, Wordmark } from "../components/logo";
-import { NavLink, type StaticNav } from "../components/nav-link";
+import { NavLink } from "../components/nav-link";
 import { groupDecks } from "../lib/library-groups";
-
-export type { StaticNav } from "../components/nav-link";
 
 export interface NavDeck {
   id: string;
@@ -70,7 +68,6 @@ interface SidebarProps {
   docsUrl: string;
   /** The streak pill, which shares the first line with capture. */
   streak?: ReactNode | undefined;
-  static?: StaticNav;
   className?: string | undefined;
 }
 
@@ -93,7 +90,6 @@ export function Sidebar({
   signingOut,
   docsUrl,
   streak,
-  static: st,
   className,
 }: SidebarProps) {
   const { t, i18n } = useLingui();
@@ -101,7 +97,7 @@ export function Sidebar({
   const item =
     "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
   const deckRow = (d: NavDeck) => (
-    <NavLink key={d.id} to="/library/$deckId" params={{ deckId: d.id }} className={item} st={st}>
+    <NavLink key={d.id} to="/library/$deckId" params={{ deckId: d.id }} className={item}>
       <span className="flex-1 truncate">{d.name}</span>
       {d.due > 0 && <DueCount>{d.due}</DueCount>}
     </NavLink>
@@ -125,7 +121,7 @@ export function Sidebar({
       </div>
 
       {NAV.map((n) => (
-        <NavLink key={n.to} to={n.to} exact={n.exact} className={item} st={st}>
+        <NavLink key={n.to} to={n.to} exact={n.exact} className={item}>
           <n.icon aria-hidden="true" />
           <span className="flex-1">{i18n._(n.label)}</span>
         </NavLink>
@@ -162,7 +158,6 @@ export function Sidebar({
           docsUrl={docsUrl}
           onSignOut={onSignOut}
           signingOut={signingOut}
-          static={st}
         />
       </div>
     </aside>

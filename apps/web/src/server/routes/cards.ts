@@ -19,6 +19,7 @@ import {
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
+import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
@@ -26,6 +27,7 @@ import {
   addCards,
   archiveCard,
   archiveCards,
+  assertPublisher,
   cardHistory,
   enrichmentQueue,
   requestEnrichment,
@@ -49,7 +51,7 @@ const PARTIAL =
   "Every card that changes gets its own entry in Activity.";
 
 const DUPLICATE_RULE =
-  "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks. " +
+  "Normally, a duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks. " +
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
   "Re-running the same call is safe.";
 
@@ -131,15 +133,20 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add many cards",
-    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. A first-party publisher may pass \`publisherOverlap=true\` to keep a term already present in another owned deck; repeats within the target deck are still skipped. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
     ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
-    errors: [400, 404],
+    errors: [400, 403, 404],
   }),
-  query(ResponseShapeQuery, "query"),
+  query(ResponseShapeQuery.extend({ publisherOverlap: z.literal("true").optional() }), "query"),
   body(CardsInput, "cards"),
   async (c) => {
-    const outcomes = await addCards(ctxOf(c), c.req.valid("json").cards, enrichmentQueue(c.env));
-    const terse = c.req.valid("query").response === "terse";
+    const ctx = ctxOf(c);
+    const { response, publisherOverlap } = c.req.valid("query");
+    if (publisherOverlap) await assertPublisher(ctx, publisherEmails(c.env));
+    const outcomes = await addCards(ctx, c.req.valid("json").cards, enrichmentQueue(c.env), {
+      allowCrossDeckDuplicates: publisherOverlap === "true",
+    });
+    const terse = response === "terse";
     return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });
   },
 );

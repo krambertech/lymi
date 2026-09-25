@@ -87,8 +87,8 @@ function TooltipContent({
           data-slot="tooltip-content"
           aria-hidden="true"
           className={cn(
-            // Grows out of the side nearest its control: in over 120 ms, out in 80, at once along a row.
-            "pointer-events-none w-max max-w-60 origin-(--transform-origin) rounded-xs bg-text px-2 py-1 text-xs font-medium text-canvas transition-[opacity,translate,scale] duration-80 ease-(--ease-out) [--tip-y:-2px] data-open:duration-120 data-[instant=delay]:duration-0 data-[side=top]:[--tip-y:2px] data-starting-style:translate-y-(--tip-y) data-starting-style:scale-97 data-starting-style:opacity-0 data-ending-style:translate-y-(--tip-y) data-ending-style:scale-97 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+            // Grows out of the side nearest its control: in over 120 ms, out in 80; at once along a row, from focus, or on dismiss.
+            "pointer-events-none w-max max-w-60 origin-(--transform-origin) rounded-xs bg-text px-2 py-1 text-xs font-medium text-canvas transition-[opacity,translate,scale] duration-80 ease-(--ease-out) [--tip-y:-2px] data-open:duration-120 data-instant:duration-0 data-[side=top]:[--tip-y:2px] data-starting-style:translate-y-(--tip-y) data-starting-style:scale-97 data-starting-style:opacity-0 data-ending-style:translate-y-(--tip-y) data-ending-style:scale-97 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
             className,
           )}
           {...props}

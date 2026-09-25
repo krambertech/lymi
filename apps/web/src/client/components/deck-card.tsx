@@ -49,7 +49,7 @@ export function DeckCard({
       params={{ deckId: id }}
       st={st}
       describedBy={describedBy}
-      className="edge group grid w-full min-w-0 content-start gap-1 rounded-lg bg-plate px-4 py-3.5 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover"
+      className="edge group grid w-full min-w-0 content-start gap-1 rounded-lg bg-plate px-4 py-3.5 transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
       <span className="flex min-h-[26px] min-w-0 items-center justify-between gap-3">
         <span className="min-w-0 truncate text-lg font-medium tracking-[-0.01em]">{name}</span>

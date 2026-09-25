@@ -149,7 +149,7 @@ export function LibraryView({
     const seriesName = s.name;
     const dueDecks = inSeries.filter((d) => d.due > 0).length;
     const bannerClass =
-      "group flex min-h-12 w-full items-center gap-3 rounded-lg bg-plate-2 py-2 ps-3 pe-2 text-start transition-[background-color,scale] duration-150 active:scale-[0.99] hoverable:hover:bg-hover motion-reduce:active:scale-100";
+      "group flex min-h-12 w-full items-center gap-3 rounded-lg bg-plate-2 py-2 ps-3 pe-2 text-start transition-[background-color,scale] duration-150 ease-out active:scale-[0.99] hoverable:hover:bg-hover motion-reduce:active:scale-100";
     const banner = (
       <>
         <DueCount>{due}</DueCount>
@@ -358,7 +358,7 @@ export function LibraryView({
                 type="button"
                 onClick={onCreateDeck}
                 aria-disabled={!onCreateDeck}
-                className="flex min-h-[72px] w-full items-center justify-center gap-2 rounded-lg border border-dashed border-edge-2 text-base font-medium text-text-2 transition-[background-color,color,scale] duration-150 active:scale-[0.98] hoverable:hover:bg-plate hoverable:hover:text-text"
+                className="flex min-h-[72px] w-full items-center justify-center gap-2 rounded-lg border border-dashed border-edge-2 text-base font-medium text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:bg-plate hoverable:hover:text-text"
               >
                 <Plus className="size-[18px]" aria-hidden="true" />
                 <Trans>New deck</Trans>

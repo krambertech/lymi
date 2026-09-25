@@ -33,7 +33,7 @@ function useDropdownMenu(part: string) {
 const ITEM = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
 const itemClassName =
-  "group/dropdown-menu-item relative flex h-11 w-full cursor-default items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-[1rem] text-text outline-none select-none transition-colors md:h-10 md:text-base focus-visible:bg-hover data-highlighted:bg-hover data-inset:ps-9 data-[variant=destructive]:text-danger data-disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 data-[variant=destructive]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4";
+  "group/dropdown-menu-item relative flex h-11 w-full cursor-default items-center gap-2.5 whitespace-nowrap rounded-sm px-2.5 text-start text-[1rem] text-text outline-none select-none md:h-10 md:text-base focus-visible:bg-hover data-highlighted:bg-hover data-inset:ps-9 data-[variant=destructive]:text-danger data-disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 data-[variant=destructive]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4";
 
 /** Pressed feedback for a row under a finger, where there is no hover. */
 const touchItemClassName = "active:bg-hover";

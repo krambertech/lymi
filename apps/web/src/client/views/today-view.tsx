@@ -383,7 +383,7 @@ function Rounds({
   const tile =
     "edge flex w-full items-center gap-4 rounded-xl bg-plate py-4 ps-5 pe-4 text-start @3xl:h-full @3xl:flex-col @3xl:items-stretch @3xl:gap-0 @3xl:p-0";
   const pressable =
-    "group transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.98] hoverable:hover:edge-2 hoverable:hover:bg-hover";
+    "group transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:bg-hover";
   const face = (item: (typeof tiles)[number], live: boolean) => (
     <>
       <span

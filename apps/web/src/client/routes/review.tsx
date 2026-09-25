@@ -11,7 +11,7 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Button, buttonClass } from "../components/button";
 import { GRADES } from "../components/grade";
@@ -134,7 +134,7 @@ function Review() {
   const qc = useQueryClient();
   const navigate = useNavigate();
   const add = useAddCard();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionConfig();
   // The draw also feeds the header's count, so it loads in a round too.
   const draw = useQuery(drawQuery(scope));
   // A round from Today is a fixed list rather than a draw, walked in order.

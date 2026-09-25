@@ -31,7 +31,7 @@ export function NewCardsRow({
       to="/library/$deckId"
       params={{ deckId }}
       st={st}
-      className="edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3 transition-[background-color,box-shadow,scale] duration-150 active:scale-[0.97] hoverable:hover:edge-2 hoverable:hover:bg-hover"
+      className="edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3 transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:bg-hover"
     >
       <Chip>
         <StateIcon state="new" className="size-3" />

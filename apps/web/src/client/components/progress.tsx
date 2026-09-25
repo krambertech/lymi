@@ -13,10 +13,13 @@ import { clsx } from "clsx";
 export function Progress({
   value,
   label,
+  animate = true,
   className,
 }: {
   value: number;
   label: string;
+  /** False when a key moved it, so the fill jumps. */
+  animate?: boolean | undefined;
   className?: string | undefined;
 }) {
   const pct = Math.max(0, Math.min(1, value)) * 100;
@@ -30,7 +33,10 @@ export function Progress({
       className={clsx("h-2 w-full overflow-hidden rounded-full bg-edge", className)}
     >
       <i
-        className="block h-full w-full origin-left rounded-full bg-text-2 transition-transform duration-300 ease-out motion-reduce:transition-none"
+        className={clsx(
+          "block h-full w-full origin-left rounded-full bg-text-2 rtl:origin-right",
+          animate && "transition-transform duration-300 ease-out motion-reduce:transition-none",
+        )}
         style={{ transform: `scaleX(${pct / 100})` }}
       />
     </div>

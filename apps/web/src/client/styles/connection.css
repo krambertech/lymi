@@ -15,6 +15,9 @@
   @starting-style {
     transform: scaleX(0);
   }
+  &:dir(rtl) {
+    transform-origin: right center;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .rail-fill {

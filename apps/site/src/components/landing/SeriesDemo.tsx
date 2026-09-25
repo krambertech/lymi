@@ -4,7 +4,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Lock } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useRef } from "react";
+import { type CSSProperties, useRef } from "react";
 import { EASE, usePlayback } from "./playback";
 
 /** Known share of the active section at each beat; the next section opens at 80. */
@@ -108,10 +108,13 @@ export function SeriesDemo() {
                 </div>
                 {state === "active" && (
                   <div className="relative mt-3 ms-10 h-1.5 rounded-full bg-plate">
-                    <div
-                      className="h-full rounded-full bg-state-known transition-[width] duration-500 ease-out motion-reduce:transition-none"
-                      style={{ width: `${known}%` }}
-                    />
+                    {/* A full-width fill slides in from the start, so its rounded end keeps its shape. */}
+                    <div className="h-full overflow-hidden rounded-full">
+                      <div
+                        className="h-full w-full translate-x-(--off) rounded-full bg-state-known transition-transform duration-500 ease-out motion-reduce:transition-none rtl:-translate-x-(--off)"
+                        style={{ "--off": `${known - 100}%` } as CSSProperties}
+                      />
+                    </div>
                     <span
                       aria-hidden="true"
                       className="absolute -top-1 h-3.5 w-px bg-text-2"

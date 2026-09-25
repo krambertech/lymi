@@ -6,7 +6,7 @@ import {
   useReducedMotionConfig,
   useTransform,
 } from "motion/react";
-import { type CSSProperties, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type RefObject, useEffect, useRef, useState } from "react";
 import { FLAME_MOTION, FLAME_SIZE, FLAME_SPARKS, flameSize } from "../lib/flame";
 import { useFlame } from "../lib/use-flame";
 import {
@@ -76,6 +76,8 @@ export function Lantern({
     out,
   });
   const unlitGlass = useTransform(size, [0, 0.5], [1, 0]);
+  const svg = useRef<SVGSVGElement>(null);
+  usePauseOffscreen(svg, flicker || carry);
   const glowLevel = useTransform(() => glowFor(size.get()) + breath.get() * 0.45);
 
   const cls = clsx(
@@ -89,7 +91,7 @@ export function Lantern({
   const a11y = title ? { role: "img" as const } : { "aria-hidden": true as const };
 
   return (
-    <svg viewBox="0 0 120 120" className={cls} style={style} {...a11y}>
+    <svg ref={svg} viewBox="0 0 120 120" className={cls} style={style} {...a11y}>
       {title && <title>{title}</title>}
       <g className="lantern-body">
         <g className="lantern-bail">{draw(LANTERN_BAIL, "bail")}</g>
@@ -112,6 +114,22 @@ export function Lantern({
       <Sparks fed={fed} out={out} />
     </svg>
   );
+}
+
+/** Marks a looping lantern while it is off screen, so `lantern.css` can hold the loop still. */
+function usePauseOffscreen(ref: RefObject<Element | null>, looping: boolean) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !looping) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      el.toggleAttribute("data-offscreen", !entry?.isIntersecting);
+    });
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      el.removeAttribute("data-offscreen");
+    };
+  }, [ref, looping]);
 }
 
 /** Where the embers leave the lantern: the top of the hood, where a real one vents. */

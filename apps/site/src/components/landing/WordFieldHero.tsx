@@ -229,9 +229,16 @@ export function WordFieldHero({ frames, label, lede }: Props) {
                 key={`${index}-${word.term}`}
                 lang={frame.language}
                 dir="auto"
-                initial={still ? false : { opacity: 0, filter: "blur(14px)", scale: 0.8, y: 18 }}
+                initial={still ? false : { opacity: 0, filter: "blur(4px)", scale: 0.8, y: 18 }}
                 animate={{ opacity: 1, filter: "blur(0px)", scale: 1, y: 0 }}
-                exit={{ opacity: 0, filter: "blur(14px)", scale: 1.12, y: -14 }}
+                // Leaves together and faster than it came, so the next words are not kept waiting.
+                exit={{
+                  opacity: 0,
+                  filter: "blur(4px)",
+                  scale: 1.12,
+                  y: -14,
+                  transition: { duration: still ? 0 : 0.5, ease: EASE },
+                }}
                 transition={{
                   duration: 1.1,
                   ease: EASE,

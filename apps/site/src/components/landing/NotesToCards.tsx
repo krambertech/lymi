@@ -134,17 +134,29 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
           >
             {/* Viewfinder corners, so the page reads as a photo being taken rather than a panel. */}
             {[
-              "top-0 start-0 border-s-2 border-t-2 rounded-ss-md",
-              "top-0 end-0 border-e-2 border-t-2 rounded-se-md",
-              "bottom-0 start-0 border-s-2 border-b-2 rounded-es-md",
-              "bottom-0 end-0 border-e-2 border-b-2 rounded-ee-md",
-            ].map((corner) => (
+              [
+                "top-0 start-0 border-s-2 border-t-2 rounded-ss-md",
+                "hoverable:group-hover/photo:translate-x-1.5 hoverable:group-hover/photo:translate-y-1.5 rtl:hoverable:group-hover/photo:-translate-x-1.5",
+              ],
+              [
+                "top-0 end-0 border-e-2 border-t-2 rounded-se-md",
+                "hoverable:group-hover/photo:-translate-x-1.5 hoverable:group-hover/photo:translate-y-1.5 rtl:hoverable:group-hover/photo:translate-x-1.5",
+              ],
+              [
+                "bottom-0 start-0 border-s-2 border-b-2 rounded-es-md",
+                "hoverable:group-hover/photo:translate-x-1.5 hoverable:group-hover/photo:-translate-y-1.5 rtl:hoverable:group-hover/photo:-translate-x-1.5",
+              ],
+              [
+                "bottom-0 end-0 border-e-2 border-b-2 rounded-ee-md",
+                "hoverable:group-hover/photo:-translate-x-1.5 hoverable:group-hover/photo:-translate-y-1.5 rtl:hoverable:group-hover/photo:translate-x-1.5",
+              ],
+            ].map(([corner, inward]) => (
               <span
                 key={corner}
                 aria-hidden="true"
                 className={clsx(
-                  "absolute size-6 border-text/70 transition-[margin] duration-300 ease-out",
-                  read === IDLE && "hoverable:group-hover/photo:m-1.5",
+                  "absolute size-6 border-text/70 transition-transform duration-300 ease-out motion-reduce:transition-none",
+                  read === IDLE && inward,
                   corner,
                 )}
               />
@@ -221,7 +233,7 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
                   className={clsx(
                     "grid size-16 place-items-center rounded-full bg-text text-canvas ring-4 ring-canvas transition-[scale,opacity] duration-200 ease-out",
                     read === IDLE
-                      ? "hoverable:group-hover/photo:scale-110 active:scale-95"
+                      ? "hoverable:group-hover/photo:scale-110 active:scale-[0.97]"
                       : "scale-90 opacity-60",
                   )}
                 >

@@ -8,6 +8,7 @@ import { useDesktop } from "../lib/device";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
 import { RadioCard } from "./radio-card";
+import { Skeleton } from "./skeleton";
 import {
   Dialog,
   DialogContent,
@@ -258,8 +259,8 @@ export function ArchivedSectionsDialog({
           </p>
         ) : sections === undefined ? (
           <div className="grid gap-2" aria-hidden="true">
-            <div className="h-14 animate-pulse rounded-md bg-plate-2" />
-            <div className="h-14 animate-pulse rounded-md bg-plate-2" />
+            <Skeleton className="h-14 rounded-md" />
+            <Skeleton className="h-14 rounded-md" />
           </div>
         ) : sections.length === 0 ? (
           <p className="text-base text-text-2">

@@ -88,5 +88,9 @@ const locale = Astro.currentLocale ?? "en";
   </head>
   <body>
     <slot />
+    <script>
+      import { pauseLoopsOffscreen } from "../lib/offscreen";
+      pauseLoopsOffscreen();
+    </script>
   </body>
 </html>

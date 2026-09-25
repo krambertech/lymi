@@ -115,7 +115,7 @@ const Chip = forwardRef<
       type="button"
       {...props}
       className={cn(
-        "relative inline-flex h-8 max-w-44 shrink-0 items-center gap-1.5 rounded-sm bg-plate-2 ps-2 pe-2.5 text-sm font-medium edge transition-[box-shadow,background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:edge-2 aria-expanded:edge-2 aria-invalid:shadow-[0_0_0_1px_var(--danger)]",
+        "relative inline-flex h-8 max-w-44 shrink-0 items-center gap-1.5 rounded-sm bg-plate-2 ps-2 pe-2.5 text-sm font-medium edge transition-[box-shadow,background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:edge-2 aria-expanded:edge-2 aria-invalid:shadow-[0_0_0_1px_var(--danger)]",
         filled ? "text-text" : "text-text-2 hoverable:hover:text-text aria-invalid:text-danger",
         // The hit area reaches 44 px without moving the row.
         "before:absolute before:-inset-1.5 before:content-['']",

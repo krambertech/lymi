@@ -10,7 +10,7 @@ import {
   useAnimate,
   useIsPresent,
   useMotionValue,
-  useReducedMotion,
+  useReducedMotionConfig,
   useTransform,
   type Variants,
 } from "motion/react";
@@ -84,7 +84,7 @@ export function ReviewHeader({
   onClose,
 }: ReviewHeaderProps) {
   const { t } = useLingui();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionConfig();
   const done = round ? round.done : attempts;
   const size = round ? round.size : goal;
   return (
@@ -115,6 +115,7 @@ export function ReviewHeader({
         <Progress
           value={size ? Math.min(1, done / size) : 0}
           label={round ? t`Review progress` : t`Daily goal progress`}
+          animate={animateCount}
           className="min-w-0 flex-1"
         />
         <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
@@ -192,7 +193,7 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
   const { t, i18n } = useLingui();
   const button = useRef<HTMLButtonElement>(null);
   const [scope, animate] = useAnimate<HTMLSpanElement>();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionConfig();
   const shaken = useRef(error);
 
   // Shake once per new failure, never for an error the button was drawn with.
@@ -238,7 +239,7 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
  * decision.
  */
 function TapHint() {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionConfig();
   return (
     <motion.div
       aria-hidden="true"
@@ -430,6 +431,7 @@ export function ReviewCard({
   className,
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
+  const reduce = useReducedMotionConfig();
   const { card, mode } = item;
   const picture = mode.cue === "image" ? card.image : null;
   const noMeaning = t`No meaning yet`;
@@ -771,9 +773,18 @@ export function ReviewCard({
             {revealed ? (
               <motion.div
                 ref={answerRef}
-                variants={answerGroup}
-                initial={animateReveal ? "hidden" : false}
-                animate="shown"
+                // Under reduced motion the answer crossfades whole: no rise, blur or stagger.
+                {...(reduce
+                  ? {
+                      initial: animateReveal ? { opacity: 0 } : false,
+                      animate: { opacity: 1 },
+                      transition: { duration: 0.2, ease: EASE_OUT },
+                    }
+                  : {
+                      variants: answerGroup,
+                      initial: animateReveal ? "hidden" : false,
+                      animate: "shown",
+                    })}
                 className="grid grid-cols-[minmax(0,1fr)] gap-5"
               >
                 {answer(false)}
@@ -817,7 +828,7 @@ const gradeRise: Variants = {
  */
 function OpeningStrip({ animate: wanted, children }: { animate: boolean; children: ReactNode }) {
   // Height is not a transform, so MotionConfig's reduced motion does not stop it; this does.
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionConfig();
   const animate = wanted && !reduce;
   const [opened, setOpened] = useState(!animate);
   // A closing strip is only a picture of the grades: nothing in it can be pressed, focused or read out.
@@ -910,7 +921,7 @@ export function GradeBar({
                       className={clsx(
                         "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
                         "transition-[scale,background-color,box-shadow] duration-150 ease-out @2xl:text-base",
-                        "hoverable:hover:edge-2 hoverable:hover:bg-hover hoverable:hover:text-text active:scale-[0.96]",
+                        "hoverable:hover:edge-2 hoverable:hover:bg-hover hoverable:hover:text-text active:scale-[0.96] motion-reduce:active:scale-100",
                       )}
                     >
                       <span className={clsx("mx-auto grid size-5 place-items-center", g.iconClass)}>
@@ -1010,7 +1021,7 @@ export function ReviewComplete({
   focusOnMount = false,
 }: ReviewCompleteProps) {
   const { t } = useLingui();
-  const reduce = !!useReducedMotion();
+  const reduce = !!useReducedMotionConfig();
   const headingId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const [landed, setLanded] = useState(reduce);
@@ -1079,10 +1090,7 @@ export function ReviewComplete({
         <motion.div
           {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
           transition={LANTERN_FLIGHT}
-          className={clsx(
-            "relative isolate mb-1 size-32 @3xl:size-44",
-            reduce && "complete-lantern",
-          )}
+          className={clsx("relative isolate mb-1 size-32 @3xl:size-44", reduce && "enter-fade")}
         >
           {lit && (
             <div

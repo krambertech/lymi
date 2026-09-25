@@ -84,12 +84,14 @@ function Bubble({
   index,
   playing,
   onPlay,
+  drift = true,
 }: {
   line: SceneLine;
   language: string;
   index: number;
   playing: boolean;
   onPlay: () => void;
+  drift?: boolean;
 }) {
   const { t, i18n } = useLingui();
   const translationId = useId();
@@ -129,7 +131,7 @@ function Bubble({
     >
       {/* Each bubble drifts on its own slow loop, so the exchange feels spoken rather than stacked. */}
       <div
-        className="scene-bubble flex max-w-[92%] items-center gap-2"
+        className={clsx(drift && "scene-bubble", "flex max-w-[92%] items-center gap-2")}
         style={{ animationDelay: `${-index * 1.1}s` }}
       >
         <p
@@ -157,7 +159,7 @@ function Bubble({
           aria-label={playing ? t`Replay this line` : t`Hear this line`}
           aria-describedby={translationId}
           className={clsx(
-            "relative grid size-9 shrink-0 place-items-center rounded-full transition-[opacity,background-color,color,scale] duration-150 ease-out active:scale-95 hoverable:hover:bg-hover",
+            "relative grid size-9 shrink-0 place-items-center rounded-full transition-[opacity,background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover",
             "before:absolute before:-inset-1 before:content-['']",
             playing ? "text-amber-text" : "text-muted hoverable:hover:text-text",
             you && "order-1",
@@ -202,11 +204,11 @@ export function ConversationScenes({ title, body, scenes, language }: Props) {
   const [sceneId, setSceneId] = useState(scenes[0]?.id);
   const scene = scenes.find((s) => s.id === sceneId) ?? (scenes[0] as Scene);
   const [shown, setShown] = useState({ id: scene.id, run: 0, count: 0 });
-  const [seen, setSeen] = useState(false);
+  const [onScreen, setOnScreen] = useState(false);
   const [playing, setPlaying] = useState<string | null>(null);
   const [held, setHeld] = useState(false);
   const count = still ? scene.lines.length : shown.id === scene.id ? shown.count : 0;
-  const saying = seen && count < scene.lines.length;
+  const saying = onScreen && count < scene.lines.length;
   const done = count >= scene.lines.length;
 
   useEffect(() => {
@@ -218,9 +220,9 @@ export function ConversationScenes({ title, body, scenes, language }: Props) {
     el.addEventListener("pointerleave", release);
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) setSeen(true);
+        setOnScreen(!!entry?.isIntersecting);
       },
-      // Starts once the section's top is a third of the way up the screen, however tall it is.
+      // Starts once the section's top is a third of the way up the screen, and stops once it leaves.
       { rootMargin: "0px 0px -33% 0px" },
     );
     observer.observe(el);
@@ -242,14 +244,14 @@ export function ConversationScenes({ title, body, scenes, language }: Props) {
 
   // A finished conversation rests, then the next situation plays, unless the visitor is reading or listening.
   useEffect(() => {
-    if (!done || still || held || playing || !seen) return;
+    if (!done || still || held || playing || !onScreen) return;
     const upcoming = scenes[(scenes.indexOf(scene) + 1) % scenes.length] as Scene;
     const rest = window.setTimeout(() => {
       setSceneId(upcoming.id);
       setShown((s) => ({ id: upcoming.id, run: s.run + 1, count: 0 }));
     }, SCENE_REST_MS);
     return () => window.clearTimeout(rest);
-  }, [done, still, held, playing, seen, scene, scenes]);
+  }, [done, still, held, playing, onScreen, scene, scenes]);
 
   useEffect(() => () => audio.current?.pause(), []);
 
@@ -269,7 +271,7 @@ export function ConversationScenes({ title, body, scenes, language }: Props) {
     setPlaying(null);
     setSceneId(id);
     setShown((s) => ({ id, run: s.run + 1, count: 0 }));
-    setSeen(true);
+    setOnScreen(true);
   };
 
   return (
@@ -336,6 +338,7 @@ export function ConversationScenes({ title, body, scenes, language }: Props) {
                       index={i}
                       playing={false}
                       onPlay={() => {}}
+                      drift={false}
                     />
                   </li>
                 ))}

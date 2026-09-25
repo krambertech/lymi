@@ -136,15 +136,6 @@
   animation-delay: 0ms;
   animation-duration: 1ms;
 }
-.complete-lantern {
-  animation: complete-lantern 420ms var(--ease-out) both;
-}
-@keyframes complete-lantern {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-}
 /* The Base UI drawer still follows a drag under reduced motion, but arrives and leaves as a
    crossfade. Unlayered, so it outranks the direction utilities in `ui/drawer.tsx`. */
 @media (prefers-reduced-motion: reduce) {
@@ -160,7 +151,9 @@
 /* Under reduced motion a toast crossfades in its stack position, and these unlayered rules outrank the utilities in `ui/toast.tsx`. */
 @media (prefers-reduced-motion: reduce) {
   [data-slot="toast"] {
-    transition-property: opacity, height;
+    transition:
+      opacity 200ms var(--ease-out),
+      height 150ms;
   }
   [data-slot="toast"][data-starting-style],
   [data-slot="toast"][data-ending-style]:not([data-limited]) {
@@ -195,7 +188,6 @@
   .enter-card,
   .enter-menu,
   .enter-fade,
-  .complete-lantern,
   .seq,
   .seq-count,
   .light-on,

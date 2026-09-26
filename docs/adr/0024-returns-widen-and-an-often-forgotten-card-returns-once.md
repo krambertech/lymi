@@ -28,7 +28,7 @@ A return 3 attempts after the reveal mostly tests what was on screen a minute ag
 ## Consequences
 
 - In the simulation, 300 days of 435 cards with a learner who forgets about a third of reviews, the new gaps spent 16.7 of 50 attempts on returns against 17.7 before. One return after 10 for every card would spend 12.4. The simulated learner recalls a return 3 times in 4 at any gap, so these numbers measure crowding, not memory.
-- Forgetting the only card left ends the day's draw, and the day counts as exhausted. Review forgotten on the end screen still offers the card.
+- Forgetting the only card left ends the day's draw, and the day counts as exhausted. Review forgotten on the end screen still offers the card. Counts follow the draw, so a deck or section whose only card left is the one just graded shows 0 until another card is graded.
 - Days count back from local midnight in 24-hour steps, so a review within an hour of midnight can land on the wrong day across a DST change.
 - Every draw and count now runs the often-forgotten query over the learner's whole review history. That is cheap at one learner's volume. Revisit it if draws slow down.
 - `GET /api/review/draw` carries `slipping` on each card, so the offline draw applies the one return. Today's grades change the flag only tomorrow.

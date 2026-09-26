@@ -418,4 +418,31 @@ describe("Dialog", () => {
       await page.viewport(1280, 800);
     },
   );
+
+  test.runIf(!desktop)(
+    "keeps a sticky footer at its foot when the keyboard alignment pads the scroller",
+    async () => {
+      await render(
+        <Dialog defaultOpen>
+          <DialogContent>
+            <DialogTitle>Add a card</DialogTitle>
+            <input aria-label="Term" />
+            <div className="h-40" />
+            <div data-testid="actions" className="sticky bottom-0 h-11">
+              <button type="button">Add</button>
+            </div>
+          </DialogContent>
+        </Dialog>,
+      );
+      await expect.element(page.getByRole("button", { name: "Add" })).toBeVisible();
+      const scroller = document.querySelector<HTMLElement>("[data-slot=drawer-content]");
+      if (!scroller) throw new Error("no drawer content");
+      const actions = page.getByTestId("actions").element();
+      const before = actions.getBoundingClientRect().top;
+      // What Base UI writes when it measures the drawer before the keyboard inset reaches it.
+      scroller.style.paddingBottom = "400px";
+
+      expect(actions.getBoundingClientRect().top).toBeCloseTo(before, 0);
+    },
+  );
 });

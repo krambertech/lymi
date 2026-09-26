@@ -221,8 +221,7 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
             "group/drawer-popup edge-2 pointer-events-auto fixed z-(--z-sheet) m-(--drawer-inset,0px) flex h-(--drawer-content-height) max-h-(--drawer-content-max-height,none) min-h-0 w-(--drawer-content-width,auto) transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] flex-col bg-plate text-text transition-[transform,opacity,filter] duration-450 ease-(--ease-drawer) will-change-transform outline-none select-none [interpolate-size:allow-keywords] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=left]:rounded-e-xl data-[swipe-direction=right]:rounded-s-xl data-[swipe-direction=up]:rounded-b-xl",
             // Keyboard: the software keyboard's height becomes bottom padding, so the foot of the
             // drawer, and any footer pinned to it, sits above the keys; the safe area is under them.
-            // Only the closing slides: a drawer still reaching under a rising keyboard when Base UI
-            // measures it earns scroll slack that displaces a sticky footer.
+            // Only the closing slides, so a rising keyboard never covers the field Base UI aligns.
             "pb-[max(env(safe-area-inset-bottom),var(--keyboard,0px))] data-[keyboard=closing]:transition-[transform,opacity,filter,padding] data-[keyboard=closing]:[transition-duration:450ms,450ms,450ms,250ms]",
             // Nested: the drawer behind keeps its height and its content; the nested scrim dims it.
             "data-nested-drawer-open:overflow-hidden",
@@ -255,8 +254,10 @@ function DrawerContent({ className, children, ...props }: DrawerPrimitive.Popup.
           {showSwipeHandle && <DrawerSwipeHandle />}
           <DrawerPrimitive.Content
             data-slot="drawer-content"
-            // The padding keeps a field that Tab scrolls to clear of the pinned title and actions.
-            className="flex min-h-0 flex-1 scroll-pt-12 scroll-pb-24 flex-col overflow-y-auto overscroll-contain rounded-[inherit] select-text group-data-swiping/drawer-popup:select-none"
+            // The scroll padding keeps a field that Tab scrolls to clear of the pinned title and
+            // actions. Base UI's keyboard slack is overridden because the popup's padding already
+            // clears the keys, and sticky actions rise by any padding here, over the first field.
+            className="flex min-h-0 flex-1 scroll-pt-12 scroll-pb-24 flex-col overflow-y-auto overscroll-contain rounded-[inherit] pb-0! select-text group-data-swiping/drawer-popup:select-none"
           >
             {children}
           </DrawerPrimitive.Content>

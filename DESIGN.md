@@ -18,6 +18,7 @@ colors:
   amber-hover: "#ef9d32"
   amber-ink: "#331b06"
   amber-text: "#9f4500"
+  amber-mark: "#d36d00"
   amber-soft: "#f8ac3d29"
   amber-tint: "#f8ac3d42"
   amber-tint-ink: "#331b06"
@@ -44,7 +45,7 @@ colors:
   grade-forgot: "#be241f"
   grade-hard: "#72665f"
   grade-good: "#006e42"
-  grade-easy: "#9f4500"
+  grade-easy: "#d36d00"
   dark-canvas: "#130d09"
   dark-rail: "#1a120e"
   dark-plate: "#201713"
@@ -61,6 +62,7 @@ colors:
   dark-amber-hover: "#ffc250"
   dark-amber-ink: "#2b1401"
   dark-amber-text: "#f9bf60"
+  dark-amber-mark: "#fdb443"
   dark-amber-soft: "#fdb44324"
   dark-amber-tint: "#fdb44329"
   dark-amber-tint-ink: "#f9bf60"
@@ -87,7 +89,7 @@ colors:
   dark-grade-forgot: "#fb8274"
   dark-grade-hard: "#a89c90"
   dark-grade-good: "#7bc495"
-  dark-grade-easy: "#f9bf60"
+  dark-grade-easy: "#fdb443"
 typography:
   word:
     fontFamily: "Onest, system-ui, sans-serif"

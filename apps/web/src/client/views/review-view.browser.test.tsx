@@ -62,36 +62,51 @@ test("the learner's own text and no source carry no chip", async () => {
   expect(card.querySelectorAll(".rounded-full")).toHaveLength(1);
 });
 
-test("the head names the deck and the section, and the mode only for a picture", async () => {
+test("the head shows the section only after reveal, and the mode only for a picture", async () => {
   // The picture loads through Query, so the picture card needs a client.
-  await render(
-    <QueryClientProvider client={new QueryClient()}>
+  const client = new QueryClient();
+  const cards = (revealed: boolean) => (
+    <QueryClientProvider client={client}>
       <I18nProvider i18n={i18n}>
         <ReviewCard
           item={item({ language: "it" })}
           deck={{ name: "Verbi", language: "it" }}
           section="Lezione 3"
-          revealed={false}
+          revealed={revealed}
+          animateReveal={false}
           onReveal={noop}
         />
         <ReviewCard
           item={{ ...queueItemPicture, card: { ...queueItemPicture.card, language: "et" } }}
           deck={{ name: "Driving", language: "it" }}
-          revealed={false}
+          section="Europe"
+          revealed={revealed}
+          animateReveal={false}
           onReveal={noop}
         />
       </I18nProvider>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   );
+  const view = await render(cards(false));
 
   const text = page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
   expect(text).toContain("Verbi");
-  expect(text).toContain("Section");
-  expect(text).toContain("Lezione 3");
+  expect(text).not.toContain("Section");
+  expect(text).not.toContain("Lezione 3");
   expect(text).not.toContain("Recognition card");
   expect(text).not.toMatch(/Recognition(?! card)|Production/);
 
   const picture = page.getByRole("region", { name: "Picture card" }).element().textContent ?? "";
   expect(picture).toContain("Picture → meaning");
   expect(picture).toContain("ET");
+  expect(picture).not.toContain("Europe");
+
+  await view.rerender(cards(true));
+  const revealedText =
+    page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
+  expect(revealedText).toContain("Section");
+  expect(revealedText).toContain("Lezione 3");
+  const revealedPicture =
+    page.getByRole("region", { name: "Picture card" }).element().textContent ?? "";
+  expect(revealedPicture).toContain("Europe");
 });

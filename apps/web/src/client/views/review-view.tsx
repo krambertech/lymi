@@ -318,7 +318,7 @@ export interface ReviewCardProps {
   item: QueueItem;
   /** The deck the card came from, named first on the card. A review can mix every deck. */
   deck?: { name: string; language?: string | null | undefined } | undefined;
-  /** The deck's section the card is in, named after the deck. */
+  /** The deck's section the card is in, named after the deck once the answer is revealed. */
   section?: string | undefined;
   revealed: boolean;
   animateReveal?: boolean | undefined;
@@ -711,11 +711,11 @@ export function ReviewCard({
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  {/* The section is the news, so on a narrow phone the deck name truncates first. */}
+                  {/* On a narrow phone the deck name truncates before the revealed section. */}
                   <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
                 </>
               )}
-              {section && (
+              {section && revealed && (
                 <>
                   {deck && <span aria-hidden="true">·</span>}
                   <Signpost className="size-3.5 shrink-0" aria-hidden="true" />
@@ -727,7 +727,7 @@ export function ReviewCard({
                   The deck implies its language, so the code shows only for a card that differs. */}
               {tail.length > 0 && (
                 <>
-                  {(deck || section) && <span aria-hidden="true">·</span>}
+                  {(deck || (section && revealed)) && <span aria-hidden="true">·</span>}
                   <span className="max-w-full shrink-0 truncate">{tail.join(" · ")}</span>
                 </>
               )}

@@ -31,8 +31,12 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [busy, setBusy] = useState(false);
-  const [queued, setQueued] = useState(0);
+  const [unsent, setUnsent] = useState(0);
   const stayRef = useRef<HTMLButtonElement>(null);
+  // The count stays on screen while the dialog closes.
+  const last = useRef(unsent);
+  if (unsent > 0) last.current = unsent;
+  const queued = unsent || last.current;
 
   const leave = useCallback(async () => {
     setBusy(true);
@@ -57,7 +61,7 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
     }
     const left = outboxSize() + pendingWrites();
     if (left > 0) {
-      setQueued(left);
+      setUnsent(left);
       return;
     }
     await leave();
@@ -66,7 +70,7 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
   return (
     <SignOutCtx.Provider value={{ signOut, busy }}>
       {children}
-      <Dialog open={queued > 0} onOpenChange={(next) => !next && setQueued(0)}>
+      <Dialog open={unsent > 0} onOpenChange={(next) => !next && setUnsent(0)}>
         <DialogContent initialFocus={stayRef}>
           <DialogHeader>
             <DialogTitle>
@@ -81,14 +85,14 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button ref={stayRef} onClick={() => setQueued(0)}>
+            <Button ref={stayRef} onClick={() => setUnsent(0)}>
               <Trans>Stay signed in</Trans>
             </Button>
             <Button
               variant="danger"
               loading={busy}
               onClick={() => {
-                setQueued(0);
+                setUnsent(0);
                 void leave();
               }}
             >

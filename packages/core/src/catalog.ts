@@ -2,6 +2,7 @@ import { and, asc, eq, inArray, isNotNull, isNull, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
 import { selectIn } from "./db";
+import { askedModes, isImageMode } from "./modes";
 import { livePublicationMedia } from "./publication-media";
 import {
   cardLocalizations,
@@ -14,7 +15,15 @@ import {
   sections,
   userAvatars,
 } from "./schema/app";
-import { PUBLICATION_CATEGORIES, PUBLICATION_SLUG } from "./types";
+import { type Directions, PUBLICATION_CATEGORIES, PUBLICATION_SLUG, ReviewModeKey } from "./types";
+
+/** A card's picture on a public page: only one whose publisher described it is ever public. */
+const PublicImage = z.object({
+  cardId: z.string(),
+  description: z.string(),
+  width: z.number().int(),
+  height: z.number().int(),
+});
 
 /**
  * What a public deck page may show, and nothing else. This is the security boundary of
@@ -53,14 +62,9 @@ export const PublicDeckOut = z.object({
         z.object({
           term: z.string(),
           meaning: z.string().nullable(),
-          image: z
-            .object({
-              cardId: z.string(),
-              description: z.string(),
-              width: z.number().int(),
-              height: z.number().int(),
-            })
-            .optional(),
+          /** The modes a learner is asked this card in, so a preview asks it the same way. */
+          modes: z.array(ReviewModeKey).min(1),
+          image: PublicImage.optional(),
           audio: z.object({ cardId: z.string() }).optional(),
         }),
       ),
@@ -95,6 +99,7 @@ export interface PublicationRow {
   publishedAt: Date;
   deckName: string;
   deckLanguage: string | null;
+  deckDirections: Directions;
   deckArchivedAt: Date | null;
 }
 
@@ -108,6 +113,9 @@ export interface CardRow {
   term: string;
   meaning: string | null;
   sectionId: string | null;
+  /** The card's own review modes, or null to follow the deck. */
+  directions: Directions | null;
+  reviewModeKeys: ReviewModeKey[] | null;
 }
 
 export interface PublicMediaRow {
@@ -194,6 +202,7 @@ export function projectPublicDeck(
     group?.cards.push({
       term: card.term,
       meaning: card.meaning,
+      modes: modesOf(publication.deckDirections, card, !!media?.image),
       ...(media?.image ? { image: media.image } : {}),
       ...(media?.audio ? { audio: media.audio } : {}),
     });
@@ -220,6 +229,32 @@ export function projectPublicDeck(
     sections: [...groups.values()].filter((group) => group.cards.length > 0),
   });
   return { status: "published", deck };
+}
+
+/** The modes a card is asked in, from its own list when it overrides its deck. */
+function modesOf(
+  deckDirections: Directions,
+  card: Pick<CardRow, "directions" | "reviewModeKeys">,
+  hasPicture: boolean,
+): ReviewModeKey[] {
+  return card.directions
+    ? askedModes(card.directions, card.reviewModeKeys, hasPicture)
+    : askedModes(deckDirections, null, hasPicture);
+}
+
+/**
+ * The one mode a public preview shows a card in. A picture is the most telling cue a card has, so
+ * a picture mode goes first; otherwise the place in the preview steps through the card's modes,
+ * so a deck asked both ways shows both.
+ */
+export function previewMode(
+  card: { modes: readonly ReviewModeKey[]; image?: unknown },
+  place = 0,
+): ReviewModeKey {
+  const picture = card.image ? card.modes.find(isImageMode) : undefined;
+  if (picture) return picture;
+  const text = card.modes.filter((key) => !isImageMode(key));
+  return text[place % text.length] ?? "term_to_meaning";
 }
 
 /**
@@ -258,6 +293,7 @@ export async function loadPublicDeck(
       publishedAt: deckPublications.publishedAt,
       deckName: decks.name,
       deckLanguage: decks.defaultLanguage,
+      deckDirections: decks.directions,
       deckArchivedAt: decks.archivedAt,
       customKey: userAvatars.customKey,
       customVersion: userAvatars.customVersion,
@@ -317,6 +353,8 @@ export async function loadPublicDeck(
         term: sql<string>`coalesce(localization.term, ${cards.term})`,
         meaning: sql<string | null>`coalesce(localization.meaning, ${cards.meaning})`,
         sectionId: cards.sectionId,
+        directions: cards.directions,
+        reviewModeKeys: cards.reviewModeKeys,
       })
       .from(cards)
       .leftJoin(
@@ -386,7 +424,14 @@ export const PublicDeckSummary = z.object({
   sectionCount: z.number().int(),
   /** One card from the deck, for its tray. Null for a deck whose cards have no meanings. */
   card: z
-    .object({ term: z.string(), meaning: z.string(), section: z.string().nullable() })
+    .object({
+      term: z.string(),
+      meaning: z.string(),
+      section: z.string().nullable(),
+      /** The mode the tray shows it in, as the deck page's preview would. */
+      mode: ReviewModeKey,
+      image: PublicImage.optional(),
+    })
     .nullable(),
 });
 export type PublicDeckSummary = z.infer<typeof PublicDeckSummary>;
@@ -420,6 +465,7 @@ export async function listPublicCatalog(
       revision: deckPublications.revision,
       deckName: decks.name,
       deckLanguage: decks.defaultLanguage,
+      deckDirections: decks.directions,
     })
     .from(deckPublications)
     .innerJoin(decks, eq(decks.id, deckPublications.deckId))
@@ -531,10 +577,12 @@ interface CandidateCard {
   term: string;
   meaning: string | null;
   sectionName: string | null;
+  directions: Directions | null;
+  reviewModeKeys: ReviewModeKey[] | null;
 }
 
 /** The card a deck's tray shows, before its edition's own words are read. */
-type TrayCard = CandidateCard & { meaning: string };
+type TrayCard = CandidateCard & { meaning: string; deckDirections: Directions };
 
 /**
  * One card per deck for its tray, drawn from the deck's own revision rather than at random, so
@@ -542,7 +590,7 @@ type TrayCard = CandidateCard & { meaning: string };
  */
 async function sampleCards(
   db: CatalogDb,
-  rows: readonly { deckId: string; slug: string; revision: number }[],
+  rows: readonly { deckId: string; slug: string; revision: number; deckDirections: Directions }[],
   editionOf: Map<string, ShownEdition>,
   language: string | undefined,
 ): Promise<Map<string, PublicDeckSummary["card"]>> {
@@ -566,19 +614,46 @@ async function sampleCards(
     const from = glanceable.length > 0 ? glanceable : list;
     const card = from[hash(`${row.slug}:${row.revision}:tray`) % from.length];
     if (!card?.meaning) continue;
-    picked.set(row.deckId, { ...card, meaning: card.meaning });
+    picked.set(row.deckId, { ...card, meaning: card.meaning, deckDirections: row.deckDirections });
   }
 
   // Only the card each tray shows is localized: binding every candidate carried one parameter
   // per card, which went past D1's cap of 100 once a few decks were published.
-  const localized = await localizedSamples(db, picked, editionOf, language);
+  const pickedIds = [...picked.values()].map((card) => card.cardId);
+  const [localized, pictures] = await Promise.all([
+    localizedSamples(db, picked, editionOf, language),
+    selectIn(pickedIds, (slice) => livePublicationMedia(db, { cardIds: slice })),
+  ]);
+  const pictureOf = new Map(
+    pictures.flatMap((media) =>
+      media.description && media.width && media.height
+        ? [
+            [
+              media.cardId,
+              {
+                cardId: media.cardId,
+                description: media.description,
+                width: media.width,
+                height: media.height,
+              },
+            ] as const,
+          ]
+        : [],
+    ),
+  );
   const chosen = new Map<string, PublicDeckSummary["card"]>();
   for (const [deckId, card] of picked) {
     const text = localized.get(card.cardId);
+    const image = pictureOf.get(card.cardId);
+    const modes = modesOf(card.deckDirections, card, !!image);
+    const mode = previewMode({ modes, image });
     chosen.set(deckId, {
       term: text?.term ?? card.term,
       meaning: text?.meaning ?? card.meaning,
       section: card.sectionName,
+      mode,
+      // The tray shows the picture only as the cue, as review does before a card is turned.
+      ...(image && isImageMode(mode) ? { image } : {}),
     });
   }
   return chosen;
@@ -598,6 +673,8 @@ async function trayCandidates(
       term: cards.term,
       meaning: cards.meaning,
       sectionId: cards.sectionId,
+      directions: cards.directions,
+      reviewModeKeys: cards.reviewModeKeys,
       place: sql<number>`row_number() over (
         partition by ${cards.deckId} order by ${cards.createdAt} asc, cards.rowid asc
       )`.as("place"),
@@ -612,6 +689,8 @@ async function trayCandidates(
       term: ranked.term,
       meaning: ranked.meaning,
       sectionName: sections.name,
+      directions: ranked.directions,
+      reviewModeKeys: ranked.reviewModeKeys,
     })
     .from(ranked)
     .leftJoin(sections, and(eq(sections.id, ranked.sectionId), isNull(sections.archivedAt)))

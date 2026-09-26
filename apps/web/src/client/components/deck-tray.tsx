@@ -1,4 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { modeOf } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { trayHue } from "@lymi/core/catalog";
 import { clsx } from "clsx";
@@ -26,13 +27,17 @@ export const HAND_FANS: [number, number, number][][] = [
   ],
 ];
 
-/** A long compound would break mid-letter at the full size, so the term steps down first. */
-function termStep(term: string): number {
-  const longest = Math.max(...term.split(/\s+/).map((word) => word.length));
-  return longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14;
+/** A long word would break mid-letter at the full size, and a long cue would run past three lines. */
+function cueStep(text: string): number {
+  const longest = Math.max(...text.split(/\s+/).map((word) => word.length));
+  const step = longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14;
+  return text.length > 28 ? Math.min(step, 0.1) : step;
 }
 
-/** A card's section, term and meaning as a tray draws them, sized by the `--cw` around it. */
+/**
+ * A card turned over as a tray draws it, sized by the `--cw` around it: what its review mode asks
+ * from above the rule, a picture, the meaning or the term, and what the learner recalls under it.
+ */
 export function TrayCardFace({
   card,
   language,
@@ -42,6 +47,9 @@ export function TrayCardFace({
   language: string | null;
   meaningLanguage: string;
 }) {
+  const { cue, target } = modeOf(card.mode);
+  const picture = cue === "image" ? card.image : undefined;
+  const cueText = cue === "meaning" ? card.meaning : card.term;
   return (
     <>
       {card.section && (
@@ -49,15 +57,36 @@ export function TrayCardFace({
           {card.section}
         </p>
       )}
+      {picture ? (
+        <span
+          className="preview-picture"
+          style={{ "--ratio": picture.width / picture.height } as CSSProperties}
+        >
+          <img
+            src={`/public/media/card/${encodeURIComponent(picture.cardId)}/image`}
+            alt={picture.description}
+            width={picture.width}
+            height={picture.height}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
+        </span>
+      ) : (
+        <p
+          lang={cue === "meaning" ? meaningLanguage : (language ?? undefined)}
+          className="deck-tray-term"
+          style={{ "--t": cueStep(cueText) } as CSSProperties}
+        >
+          {cueText}
+        </p>
+      )}
       <p
-        lang={language ?? undefined}
-        className="deck-tray-term"
-        style={{ "--t": termStep(card.term) } as CSSProperties}
+        lang={target === "term" ? (language ?? undefined) : meaningLanguage}
+        className="deck-tray-meaning"
+        data-target={target}
       >
-        {card.term}
-      </p>
-      <p lang={meaningLanguage} className="deck-tray-meaning">
-        {card.meaning}
+        {target === "term" ? card.term : card.meaning}
       </p>
     </>
   );

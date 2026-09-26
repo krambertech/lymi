@@ -137,6 +137,36 @@
   color: var(--text-2);
 }
 
+/* A term recalled under the rule reads as the answer, a step firmer than a meaning there. */
+.deck-tray-meaning[data-target="term"] {
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* A picture cue fills the card above the rule at its own shape, on the start edge like the text
+   it stands in for. The edge keeps a white field, as on many flags, off the white card. */
+.preview-picture {
+  position: relative;
+  container-type: size;
+  flex: 1 1 0;
+  min-height: 0;
+  margin-top: calc(var(--cw) * 0.06);
+  margin-bottom: calc(var(--cw) * 0.06);
+}
+.preview-picture img {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  /* Sized from the picture's own shape, so it holds its place before it loads. */
+  width: min(100cqw, 100cqh * var(--ratio, 1.5));
+  height: auto;
+  margin-block: auto;
+  /* The picture's box is its container, so every preview rounds by the same share of its width. */
+  border-radius: 4cqw;
+  outline: 1px solid var(--image-edge);
+  outline-offset: -1px;
+}
+
 /* A deck page's header on its tray's hue, with less chroma because a header reads louder than a tile. */
 .deck-cover {
   --tray-l: 0.958;

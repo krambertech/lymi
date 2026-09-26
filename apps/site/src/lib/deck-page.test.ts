@@ -10,12 +10,15 @@ import {
   languageName,
   movedDeckPath,
   productAddPath,
+  recallCue,
   SPREAD_SIZE,
   STACK_SIZE,
   sectionPath,
   spreadCards,
   stackCards,
 } from "./deck-page";
+
+const asked = { modes: ["term_to_meaning" as const] };
 
 const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   slug: "everyday-estonian",
@@ -39,10 +42,11 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
       cards: Array.from({ length: 12 }, (_, i) => ({
         term: `term ${i}`,
         meaning: i === 1 ? null : `meaning ${i}`,
+        ...asked,
       })),
     },
-    { name: "Numbers", cards: [{ term: "üks", meaning: "one" }] },
-    { name: null, cards: [{ term: "jah", meaning: "yes" }] },
+    { name: "Numbers", cards: [{ term: "üks", meaning: "one", ...asked }] },
+    { name: null, cards: [{ term: "jah", meaning: "yes", ...asked }] },
   ],
   ...over,
 });
@@ -63,6 +67,7 @@ const sections = (count: number) =>
     cards: Array.from({ length: 3 }, (_, c) => ({
       term: `s${s} term ${c}`,
       meaning: `meaning ${c}`,
+      ...asked,
     })),
   }));
 
@@ -99,8 +104,8 @@ describe("spreadCards", () => {
         {
           name: "Mixed",
           cards: [
-            { term: "a term far too long to read at a glance", meaning: "long" },
-            { term: "lühike", meaning: "short" },
+            { term: "a term far too long to read at a glance", meaning: "long", ...asked },
+            { term: "lühike", meaning: "short", ...asked },
           ],
         },
       ],
@@ -124,6 +129,36 @@ describe("stackCards", () => {
   });
 });
 
+describe("preview modes", () => {
+  const flag = {
+    term: "🇪🇪",
+    meaning: "Estonia",
+    modes: ["image_to_meaning" as const],
+    image: { cardId: "c1", description: "A flag", width: 300, height: 200 },
+  };
+
+  it("shows a card with a picture mode by its picture", () => {
+    const [card] = spreadCards(deck({ sections: [{ name: null, cards: [flag] }] }), 1);
+    expect(card?.mode).toBe("image_to_meaning");
+    expect(recallCue(card ? [card] : [])).toBe("image");
+  });
+
+  it("steps a deck asked both ways through both modes", () => {
+    const both = { modes: ["term_to_meaning" as const, "meaning_to_term" as const] };
+    const cards = sections(3).map((section) => ({
+      ...section,
+      cards: section.cards.map((card) => ({ ...card, ...both })),
+    }));
+    const spread = spreadCards(deck({ sections: cards }), 3);
+    expect(spread.map((card) => card.mode)).toEqual([
+      "term_to_meaning",
+      "meaning_to_term",
+      "term_to_meaning",
+    ]);
+    expect(recallCue(spread)).toBe("mixed");
+  });
+});
+
 describe("sectionPath", () => {
   it("numbers named sections in order and leaves cards outside a section unnumbered", () => {
     const { inOrder, steps } = sectionPath(deck());
@@ -137,11 +172,11 @@ describe("sectionPath", () => {
 
   it("treats a deck without sections as one open group", () => {
     const { inOrder, steps } = sectionPath(
-      deck({ sections: [{ name: null, cards: [{ term: "jah", meaning: "yes" }] }] }),
+      deck({ sections: [{ name: null, cards: [{ term: "jah", meaning: "yes", ...asked }] }] }),
     );
     expect(inOrder).toBe(false);
     expect(steps).toEqual([
-      { position: null, name: null, cards: [{ term: "jah", meaning: "yes" }] },
+      { position: null, name: null, cards: [{ term: "jah", meaning: "yes", ...asked }] },
     ]);
   });
 });
@@ -163,7 +198,9 @@ describe("deckContentHash", () => {
     expect(deckContentHash(deck({ name: "Renamed" }))).not.toBe(base);
     expect(
       deckContentHash(
-        deck({ sections: [{ name: "Greetings", cards: [{ term: "tere", meaning: "hi" }] }] }),
+        deck({
+          sections: [{ name: "Greetings", cards: [{ term: "tere", meaning: "hi", ...asked }] }],
+        }),
       ),
     ).not.toBe(base);
   });

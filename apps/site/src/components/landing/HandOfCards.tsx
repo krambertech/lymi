@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { modeOf } from "@lymi/core";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import {
@@ -117,37 +118,44 @@ function FanCard({
   const heading = [say(card.source), card.kind && say(card.kind)].filter(Boolean).join(" · ");
   const audible = card.audio !== null;
   const front = place === "front";
-  // A CJK character is about two Latin letters wide and has no spaces to wrap at.
-  const longest = Math.max(
-    ...card.term.split(/\s+/).map((w) => w.length + (w.match(WIDE) ?? []).length),
-  );
-  // A long single word would otherwise break mid-letter at the card's width.
-  const termSize = longest >= 13 ? 0.115 : longest >= 10 ? 0.13 : 0.155;
+  const { cue, target } = modeOf(card.mode ?? "term_to_meaning");
+  const picture = cue === "image" ? card.image : null;
+  const meaning = say(card.meaning);
+  const cueText = cue === "meaning" ? meaning : card.term;
 
-  const top = (showImage: boolean) => (
+  const header = (
+    <p className="min-h-4 text-xs font-medium tracking-[0.06em] text-muted uppercase">{heading}</p>
+  );
+
+  // The picture keeps its own shape on the start edge, as review draws it.
+  const cueBlock = picture ? (
+    <span
+      className="hand-picture mt-3.5"
+      style={{ "--ratio": picture.width / picture.height } as CSSProperties}
+    >
+      <img
+        src={picture.url}
+        alt={picture.description}
+        width={picture.width}
+        height={picture.height}
+        loading="lazy"
+        decoding="async"
+      />
+    </span>
+  ) : (
+    <p
+      lang={cue === "term" ? card.language : undefined}
+      dir="auto"
+      className="mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
+      style={{ "--term": cueStep(cueText) } as CSSProperties}
+    >
+      {cueText}
+    </p>
+  );
+
+  // The reading and the sound belong to the term, so they go wherever the term is shown.
+  const termDetails = (
     <>
-      <p className="min-h-4 text-xs font-medium tracking-[0.06em] text-muted uppercase">
-        {heading}
-      </p>
-      <p
-        lang={card.language}
-        dir="auto"
-        className="mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
-        style={{ "--term": termSize } as CSSProperties}
-      >
-        {card.term}
-      </p>
-      {showImage && card.image && (
-        <img
-          src={card.image.url}
-          alt={card.image.description}
-          width={card.image.width}
-          height={card.image.height}
-          loading="lazy"
-          decoding="async"
-          className="mx-auto mt-3 max-h-24 w-auto max-w-full rounded-sm object-contain"
-        />
-      )}
       {card.reading && (
         <p lang={card.language} className="mt-1.5 text-md text-text-2">
           {card.reading}
@@ -180,6 +188,36 @@ function FanCard({
     </>
   );
 
+  // What the learner recalls, then what else the card holds, as review shows a turned card.
+  const answer =
+    target === "term" ? (
+      <>
+        <p
+          lang={card.language}
+          dir="auto"
+          className="text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-text [overflow-wrap:anywhere]"
+        >
+          {card.term}
+        </p>
+        {termDetails}
+        {picture && <p className="mt-1.5 text-md text-pretty text-text-2">{meaning}</p>}
+      </>
+    ) : picture ? (
+      <>
+        <p className="text-[min(24px,calc(var(--cw)*0.08))] leading-[1.25] font-medium text-pretty text-text">
+          {meaning}
+        </p>
+        <p lang={card.language} dir="auto" className="mt-1.5 text-md text-text-2">
+          {card.term}
+        </p>
+        {termDetails}
+      </>
+    ) : (
+      <p className="text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
+        {meaning}
+      </p>
+    );
+
   return (
     // The whole card turns over on a tap; the Turn it over button below is the keyboard way in.
     <div
@@ -201,7 +239,9 @@ function FanCard({
     >
       <div ref={flipRef} className="hand-flip">
         <div className="hand-face" aria-hidden={revealed || undefined}>
-          {top(true)}
+          {header}
+          {cueBlock}
+          {cue === "term" && termDetails}
           <p
             className="hand-hint mt-auto text-base text-muted"
             data-shown={hint ? true : undefined}
@@ -210,17 +250,55 @@ function FanCard({
           </p>
         </div>
         <div className="hand-face hand-back" aria-hidden={!revealed || undefined}>
-          {top(false)}
-          <p className="mt-auto border-t border-edge-2 pt-3.5 text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
-            {say(card.meaning)}
-          </p>
-          {card.note && (
-            <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
+          {header}
+          {cueBlock}
+          {cue === "term" && termDetails}
+          {/* Review shows a text card's picture only once it is turned. */}
+          {!picture && card.image && (
+            <img
+              src={card.image.url}
+              alt={card.image.description}
+              width={card.image.width}
+              height={card.image.height}
+              loading="lazy"
+              decoding="async"
+              className="hand-answer-picture mt-3"
+            />
           )}
+          <div className="mt-auto border-t border-edge-2 pt-3.5">
+            {answer}
+            {card.note && (
+              <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
+}
+
+/** A long word would break mid-letter at the full size, and a long cue would run past the card. */
+function cueStep(text: string): number {
+  // A CJK character is about two Latin letters wide and has no spaces to wrap at.
+  const longest = Math.max(
+    ...text.split(/\s+/).map((w) => w.length + (w.match(WIDE) ?? []).length),
+  );
+  const step = longest >= 13 ? 0.115 : longest >= 10 ? 0.13 : 0.155;
+  if (text.length > 60) return Math.min(step, 0.09);
+  return text.length > 28 ? Math.min(step, 0.11) : step;
+}
+
+/** What a card asks and what it answers, in words, for what a screen reader announces. */
+function spoken(card: HandCard, say: (d: string | MessageDescriptor) => string) {
+  const { cue, target } = modeOf(card.mode ?? "term_to_meaning");
+  const meaning = say(card.meaning);
+  const asked = cue === "meaning" ? meaning : card.term;
+  return {
+    cue: cue === "image" ? (card.image?.description ?? asked) : asked,
+    cueLanguage: cue === "term" ? card.language : undefined,
+    answer: target === "term" ? card.term : meaning,
+    answerLanguage: target === "term" ? card.language : undefined,
+  };
 }
 
 interface Props {
@@ -366,11 +444,11 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
     taught.current = true;
     setHint(false);
     setPhase("back");
-    const meaning = front.card.meaning;
+    const said = spoken(front.card, (d) => (typeof d === "string" ? d : i18n._(d)));
     setAnnounce(
       <Trans>
-        <span lang={front.card.language}>{front.card.term}</span>:{" "}
-        {typeof meaning === "string" ? meaning : i18n._(meaning)}
+        <span lang={said.cueLanguage}>{said.cue}</span>:{" "}
+        <span lang={said.answerLanguage}>{said.answer}</span>
       </Trans>,
     );
   }, [hand, phase, i18n]);
@@ -388,13 +466,14 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
     setPhase(rest.length === 0 && !card ? "done" : "front");
     const next = rest[0];
     if (next) {
+      const said = spoken(next.card, (d) => (typeof d === "string" ? d : i18n._(d)));
       setAnnounce(
         <Trans>
-          Next card: <span lang={next.card.language}>{next.card.term}</span>
+          Next card: <span lang={said.cueLanguage}>{said.cue}</span>
         </Trans>,
       );
     }
-  }, [hand, phase, cards, once, stopAudio]);
+  }, [hand, phase, cards, once, stopAudio, i18n]);
 
   const finale_ = useRef<HTMLDivElement>(null);
   const pressed = useRef(false);

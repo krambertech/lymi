@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  askedModes,
   directionsFromModes,
   effectiveModes,
   modeKey,
@@ -37,6 +38,19 @@ describe("review modes", () => {
     expect(effectiveModes("recognition", ["image_to_meaning"])).toEqual(["image_to_meaning"]);
     // An older Worker switched the card to production after the list was stored.
     expect(effectiveModes("production", ["image_to_term", "term_to_meaning"])).toEqual([
+      "image_to_term",
+      "meaning_to_term",
+    ]);
+  });
+
+  it("asks picture modes only while the card has a picture", () => {
+    expect(askedModes("both", null, true)).toEqual(["term_to_meaning", "meaning_to_term"]);
+    expect(askedModes("recognition", ["image_to_meaning"], true)).toEqual(["image_to_meaning"]);
+    expect(askedModes("recognition", ["image_to_meaning"], false)).toEqual(["term_to_meaning"]);
+    expect(askedModes("production", ["image_to_term", "meaning_to_term"], false)).toEqual([
+      "meaning_to_term",
+    ]);
+    expect(askedModes("production", ["image_to_term", "meaning_to_term"], true)).toEqual([
       "image_to_term",
       "meaning_to_term",
     ]);

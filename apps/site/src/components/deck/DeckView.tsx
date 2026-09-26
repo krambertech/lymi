@@ -2,13 +2,14 @@ import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type PublicDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
 import type { CSSProperties, ReactNode } from "react";
-import { type DeckCard, languageName } from "../../lib/deck-page";
+import { type DeckCard, languageName, type RecallCue } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { AppTile } from "../Logo";
 import { SiteFooter } from "../landing/SiteFooter";
+import { PreviewFace } from "./PreviewFace";
 
 interface LocaleProps {
   locale: Locale;
@@ -188,10 +189,7 @@ function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] })
       {cards.map((card, index) => {
         const offset = index - (cards.length - 1) / 2;
         const [lift, tilt] = poses[index] ?? [0, 0];
-        // A long word would break mid-letter at the full size, so the card steps down first.
-        const longest = Math.max(...card.term.split(/\s+/).map((word) => word.length));
         const style = {
-          "--term": longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14,
           "--o": offset,
           "--a": Math.abs(offset),
           "--y": `${lift}px`,
@@ -210,17 +208,12 @@ function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] })
           >
             <div className="deck-spread-float">
               <article className="deck-spread-face">
-                {card.section && (
-                  <p lang={deck.meaningLanguage} className="deck-spread-section">
-                    {card.section}
-                  </p>
-                )}
-                <p lang={deck.language ?? undefined} className="deck-spread-term">
-                  {card.term}
-                </p>
-                <p lang={deck.meaningLanguage} className="deck-spread-meaning">
-                  {card.meaning}
-                </p>
+                <PreviewFace
+                  kind="deck-spread"
+                  {...card}
+                  language={deck.language}
+                  meaningLanguage={deck.meaningLanguage}
+                />
               </article>
             </div>
           </li>
@@ -272,7 +265,7 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
 }
 
 /** Three steps from this page to a deck that is learnt, beside a stack of its cards to turn over. */
-export function DeckHowItWorks({ locale }: LocaleProps) {
+export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }) {
   const items = [
     {
       key: "add",
@@ -282,12 +275,28 @@ export function DeckHowItWorks({ locale }: LocaleProps) {
     {
       key: "recall",
       title: <Trans>Recall, then turn it over</Trans>,
-      body: (
-        <Trans>
-          Try to remember the meaning before you look. Try it on the cards here: they’re from all
-          over the deck.
-        </Trans>
-      ),
+      body:
+        cue === "image" ? (
+          <Trans>
+            Name what the picture shows before you look. Try it on the cards here: they’re from all
+            over the deck.
+          </Trans>
+        ) : cue === "meaning" ? (
+          <Trans>
+            Read the meaning, then try to recall the term before you look. Try it on the cards here:
+            they’re from all over the deck.
+          </Trans>
+        ) : cue === "mixed" ? (
+          <Trans>
+            Try to remember the answer before you look. Try it on the cards here: they’re from all
+            over the deck.
+          </Trans>
+        ) : (
+          <Trans>
+            Try to remember the meaning before you look. Try it on the cards here: they’re from all
+            over the deck.
+          </Trans>
+        ),
     },
     {
       key: "review",

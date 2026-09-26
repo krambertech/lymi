@@ -512,8 +512,8 @@ describe("the public page", () => {
       {
         name: "Вітання",
         cards: [
-          { term: "tere public-edition", meaning: "привіт" },
-          { term: "leib public-edition", meaning: "хліб" },
+          { term: "tere public-edition", meaning: "привіт", modes: ["term_to_meaning"] },
+          { term: "leib public-edition", meaning: "хліб", modes: ["term_to_meaning"] },
         ],
       },
     ]);

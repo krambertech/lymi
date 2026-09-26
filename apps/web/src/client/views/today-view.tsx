@@ -377,7 +377,7 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
           {item.mark && <StateIcon state={item.mark} className="size-4" />}
           {item.label}
         </span>
-        <span className="text-sm text-muted">{live ? item.detail : item.empty}</span>
+        <span className="text-sm text-balance text-muted">{live ? item.detail : item.empty}</span>
       </span>
     </>
   );

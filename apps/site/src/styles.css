@@ -731,7 +731,8 @@
   width: min(100cqw, 100cqh * var(--ratio, 1.5));
   height: auto;
   margin-block: auto;
-  border-radius: calc(var(--cw) * 0.035);
+  /* The picture's box is its container, so every preview rounds by the same share of its width. */
+  border-radius: 4cqw;
   outline: 1px solid var(--image-edge);
   outline-offset: -1px;
 }
@@ -1401,7 +1402,7 @@ html:has(.deck-cards[open]) {
   width: min(100cqw, 100cqh * var(--ratio, 1.5));
   height: auto;
   margin-block: auto;
-  border-radius: var(--radius-md);
+  border-radius: 4cqw;
   outline: 1px solid var(--image-edge);
   outline-offset: -1px;
 }

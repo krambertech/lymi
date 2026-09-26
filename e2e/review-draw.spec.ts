@@ -88,7 +88,7 @@ test("grades that could not be sent still decide the next card after a reload", 
   await page.reload();
   await expect(page.getByText(/^2 of \d+$/)).toBeVisible();
   await expect(page.getByLabel(next, { exact: true })).toBeVisible();
-  await gradeUntil(page, forgotten, 2, 3);
+  await gradeUntil(page, forgotten, 2, 5);
 
   await test.step("the queued grades reach the server once the connection returns", async () => {
     await page.unroute("**/api/review/grade");

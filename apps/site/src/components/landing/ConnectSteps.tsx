@@ -36,7 +36,7 @@ function CopyAddress() {
         type="button"
         onClick={copy}
         aria-label={copied ? t`Copied` : t`Copy the address`}
-        className="grid size-9 shrink-0 place-items-center rounded-sm text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-hover hoverable:hover:text-text"
+        className="grid size-9 shrink-0 place-items-center rounded-sm text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover hoverable:hover:text-text"
       >
         {copied ? (
           <Check aria-hidden="true" className="enter-fade size-4 text-good" />

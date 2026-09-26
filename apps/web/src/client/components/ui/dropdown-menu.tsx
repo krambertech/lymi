@@ -47,7 +47,7 @@ const ITEM = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio
 
 const itemClassName = cn(
   listRowClassName,
-  "group/dropdown-menu-item whitespace-nowrap transition-colors focus-visible:bg-hover data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
+  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-hover data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
 );
 
 /** The drawer's rows are buttons and the anchored ones divs, so a row's ref names their common type. */

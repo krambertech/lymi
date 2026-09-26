@@ -73,7 +73,7 @@ export function AttemptStrip({ tiles, marked, label }: Props) {
               onBlur={() => setActive(null)}
               onKeyDown={(e) => move(e, i)}
               className={clsx(
-                "relative grid aspect-[5/4] min-h-11 cursor-default place-items-center overflow-hidden rounded-xs bg-plate-2 transition-[opacity,box-shadow] duration-150",
+                "relative grid aspect-[5/4] min-h-11 cursor-default place-items-center overflow-hidden rounded-xs bg-plate-2",
                 lit && "bg-hover shadow-[0_0_0_1.5px_var(--text)]",
                 dim && "opacity-40",
               )}

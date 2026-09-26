@@ -70,9 +70,6 @@ export const LIGHT_FILL: Record<1 | 2 | 3, string> = {
   3: "bg-amber",
 };
 
-/** How far up the glass the light reaches. The non-colour half of the signal. */
-const HEIGHT: Record<1 | 2 | 3, string> = { 1: "h-1/3", 2: "h-2/3", 3: "h-full" };
-
 /**
  * The last seven days as seven lights: the lantern's glass, seen small. Lit when you reviewed
  * that day, and the light climbs the glass and brightens for a fuller day — height and colour
@@ -173,11 +170,12 @@ export function SevenLights({
               {/* Drawn empty too, so a day that lights up while on screen rises from the bottom. */}
               <i
                 className={clsx(
-                  "absolute inset-x-0 bottom-0 block transition-[height,background-color]",
+                  "absolute inset-0 block origin-bottom transition-[scale,background-color] motion-reduce:transition-none",
                   flare ? "duration-700 ease-out" : "duration-300",
-                  l === 0 ? "h-0" : HEIGHT[l],
                   LIGHT_FILL[l === 0 ? 1 : l],
                 )}
+                // How far up the glass the light reaches: the non-colour half of the signal.
+                style={{ scale: `1 ${l / 3}` }}
               />
             </i>
             <span

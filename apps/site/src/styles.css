@@ -518,32 +518,6 @@
   }
 }
 
-/* ---- Connection -------------------------------------------------------- */
-
-/*
- * Two apps meeting. The rail runs from the app that asked to the lantern; while the
- * decision is open it is a dotted track, and when the grant lands it draws across in
- * amber and the lantern lights. This is the only choreography outside review: the
- * connection is the one thing on these screens that actually happens.
- */
-.rail-track {
-  background-image: repeating-linear-gradient(to right, var(--edge-2) 0 3px, transparent 3px 7px);
-}
-/* The fill only exists once the grant lands, so it draws from its starting style. */
-.rail-fill {
-  transform: scaleX(1);
-  transform-origin: left center;
-  transition: transform 420ms var(--ease-out);
-  @starting-style {
-    transform: scaleX(0);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .rail-fill {
-    transition-duration: 0ms;
-  }
-}
-
 /* ---- Entrances --------------------------------------------------------- */
 
 /* A card arriving. Give it a React key so each new card starts here. */
@@ -556,18 +530,6 @@
     transform: translateY(6px) scale(0.99);
   }
 }
-/* A menu belongs to the button that opened it, so it grows out of that corner instead of
-   arriving from somewhere else. The corner is the transform origin the alignment already
-   sets: top-left when the list hangs right of the trigger, top-right when it hangs left. */
-.enter-menu {
-  animation: enter-menu 140ms var(--ease-out) both;
-}
-@keyframes enter-menu {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-}
 .enter-fade {
   animation: enter-fade 160ms var(--ease-out) both;
 }
@@ -575,112 +537,6 @@
   from {
     opacity: 0;
   }
-}
-/* Reveal is a quiet acknowledgement. The controls follow just behind it so the
-   two changes read as one response to the tap. */
-.answer-enter {
-  animation: answer-enter 150ms var(--ease-out) both;
-}
-@keyframes answer-enter {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-}
-.grade-enter {
-  animation: grade-enter 120ms var(--ease-out) both;
-}
-@keyframes grade-enter {
-  from {
-    opacity: 0;
-    transform: translateY(3px);
-  }
-}
-.complete-lantern {
-  animation: complete-lantern 420ms var(--ease-out) both;
-}
-@keyframes complete-lantern {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-}
-.complete-copy {
-  animation: complete-copy 260ms var(--ease-out) 100ms both;
-}
-@keyframes complete-copy {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-}
-/*
- * The desktop sheet, and the dialog. A native `<dialog>` is in the top layer, so it can only
- * be animated out by keeping it there while it goes: `overlay` and `display` transition
- * discretely, which is what stops the browser removing it on the first frame. The rise is the
- * card's, 6 px over 200 ms, and it leaves faster than it came, like the toast.
- */
-.sheet-modal {
-  opacity: 0;
-  transform: translateY(6px) scale(0.99);
-  transition:
-    opacity 140ms var(--ease-out),
-    transform 140ms var(--ease-out),
-    overlay 140ms allow-discrete,
-    display 140ms allow-discrete;
-}
-.sheet-modal[open] {
-  opacity: 1;
-  transform: none;
-  transition-duration: 200ms;
-}
-@starting-style {
-  .sheet-modal[open] {
-    opacity: 0;
-    transform: translateY(6px) scale(0.99);
-  }
-}
-.sheet-modal::backdrop {
-  background: transparent;
-  transition:
-    background 140ms var(--ease-out),
-    overlay 140ms allow-discrete,
-    display 140ms allow-discrete;
-}
-.sheet-modal[open]::backdrop {
-  background: var(--scrim);
-  transition-duration: 200ms;
-}
-@starting-style {
-  .sheet-modal[open]::backdrop {
-    background: transparent;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sheet-modal,
-  .sheet-modal[open] {
-    transform: none;
-  }
-}
-
-/* Toast rises from the bottom edge and leaves faster than it came. */
-.toast-enter {
-  opacity: 1;
-  transform: translateY(0);
-  transition:
-    opacity 240ms var(--ease-out),
-    transform 240ms var(--ease-out);
-  @starting-style {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
-.toast-exit {
-  opacity: 0;
-  transform: translateY(8px);
-  transition:
-    opacity 140ms var(--ease-out),
-    transform 140ms var(--ease-out);
 }
 /* A spinner taking over from a label. */
 .spinner-enter {
@@ -695,17 +551,9 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .enter-card,
-  .enter-menu,
   .enter-fade,
-  .answer-enter,
-  .grade-enter,
-  .complete-lantern,
-  .complete-copy {
+  .spinner-enter {
     animation: enter-fade 150ms both;
-  }
-  .toast-enter,
-  .toast-exit {
-    transform: none;
   }
 }
 
@@ -723,7 +571,7 @@
     inset: 0;
     transform: translateX(-100%);
     background: linear-gradient(90deg, transparent, var(--shimmer), transparent);
-    animation: shimmer 1.6s ease-in-out infinite;
+    animation: shimmer 1.6s linear infinite;
   }
 }
 @keyframes shimmer {
@@ -877,15 +725,15 @@
   pointer-events: none;
   opacity: 0;
   border-radius: 50%;
-  /* Soft all the way out: no stop the eye can find, and a blur over it so the edge is weather
-     rather than a shape. */
-  filter: blur(32px);
+  /* Soft all the way out: the stops ease to nothing so the edge is weather rather than a shape,
+     with no blur to repaint while it blooms. */
   background: radial-gradient(
     closest-side,
     color-mix(in oklab, var(--glow) 88%, transparent),
-    color-mix(in oklab, var(--glow) 52%, transparent) 34%,
-    color-mix(in oklab, var(--glow) 20%, transparent) 62%,
-    transparent 88%
+    color-mix(in oklab, var(--glow) 52%, transparent) 30%,
+    color-mix(in oklab, var(--glow) 22%, transparent) 55%,
+    color-mix(in oklab, var(--glow) 7%, transparent) 76%,
+    transparent 96%
   );
 }
 .signup-plate[data-lit] .signup-pool {
@@ -1686,51 +1534,28 @@ html:has(.deck-cards[open]) {
 .deck-tray-paper[data-at="2"] {
   transform: translate(-6px, 9px) rotate(-2.2deg);
 }
-.deck-tile:focus-visible .deck-tray-card {
-  transform: translateY(-5px);
-}
-.deck-tile:focus-visible .deck-tray-paper[data-at="1"] {
-  transform: translate(17px, 2px) rotate(5deg);
-}
-.deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
-  transform: translate(-16px, 6px) rotate(-6deg);
-}
-/* Touch has no hover: a tap on Add would leave the spread standing until the next tap elsewhere. */
-@media (hover: hover) and (pointer: fine) {
-  .deck-tile:hover .deck-tray-card {
+/* Pointing at a deck or focusing it lifts the card and spreads the paper; under reduced motion they stay at rest. */
+@media (prefers-reduced-motion: no-preference) {
+  .deck-tile:focus-visible .deck-tray-card {
     transform: translateY(-5px);
   }
-  .deck-tile:hover .deck-tray-paper[data-at="1"] {
+  .deck-tile:focus-visible .deck-tray-paper[data-at="1"] {
     transform: translate(17px, 2px) rotate(5deg);
   }
-  .deck-tile:hover .deck-tray-paper[data-at="2"] {
+  .deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
     transform: translate(-16px, 6px) rotate(-6deg);
   }
-}
-/* The spread is the movement; under reduced motion the cards simply sit where they rest. */
-@media (prefers-reduced-motion: reduce) {
-  .deck-tray-card,
-  .deck-tray-paper {
-    transition: none;
-  }
-  /* The resting transforms come first, so the hover rules below them stay the more specific pair. */
-  .deck-tray-paper[data-at="1"] {
-    transform: translate(7px, 5px) rotate(1.6deg);
-  }
-  .deck-tray-paper[data-at="2"] {
-    transform: translate(-6px, 9px) rotate(-2.2deg);
-  }
-  .deck-tile:focus-visible .deck-tray-card,
-  .deck-tile:focus-visible .deck-tray-paper[data-at="1"],
-  .deck-tile:focus-visible .deck-tray-paper[data-at="2"] {
-    transform: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
-  .deck-tile:hover .deck-tray-card,
-  .deck-tile:hover .deck-tray-paper[data-at="1"],
-  .deck-tile:hover .deck-tray-paper[data-at="2"] {
-    transform: none;
+  /* Touch has no hover: a tap on Add would leave the spread standing until the next tap elsewhere. */
+  @media (hover: hover) and (pointer: fine) {
+    .deck-tile:hover .deck-tray-card {
+      transform: translateY(-5px);
+    }
+    .deck-tile:hover .deck-tray-paper[data-at="1"] {
+      transform: translate(17px, 2px) rotate(5deg);
+    }
+    .deck-tile:hover .deck-tray-paper[data-at="2"] {
+      transform: translate(-16px, 6px) rotate(-6deg);
+    }
   }
 }
 .deck-tray-section {
@@ -1788,4 +1613,10 @@ html:has(.deck-cards[open]) {
   .deck-tray {
     --cw: 126px;
   }
+}
+
+/* A loop off screen holds still; `lib/offscreen.ts` marks it. Important because each loop's `animation` shorthand resets the play state. */
+[data-offscreen],
+[data-offscreen] * {
+  animation-play-state: paused !important;
 }

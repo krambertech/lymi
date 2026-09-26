@@ -102,3 +102,8 @@
     transform: rotate(-3.5deg);
   }
 }
+/* A looping lantern off screen holds still. Important because each loop's `animation` shorthand resets the play state. */
+.lantern[data-offscreen],
+.lantern[data-offscreen] * {
+  animation-play-state: paused !important;
+}

@@ -10,12 +10,10 @@
   .streak-pop {
     animation: streak-pop 240ms var(--ease-out) var(--draw-delay, 0ms) both;
   }
+  /* The goal track moves when the day's count changes, not each time it is shown. */
   .streak-fill {
-    animation: streak-fill 520ms var(--ease-out) 120ms both;
+    transition: transform 300ms var(--ease-out);
   }
-}
-.streak-fill {
-  transition: transform 300ms var(--ease-out);
 }
 @keyframes streak-tick {
   from {
@@ -46,10 +44,5 @@
   }
   to {
     clip-path: inset(0 0 0 0);
-  }
-}
-@keyframes streak-fill {
-  from {
-    transform: scaleX(0);
   }
 }

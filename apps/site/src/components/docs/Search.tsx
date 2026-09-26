@@ -214,7 +214,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                   onFocus={() => setI(n)}
                   onClick={() => go(p)}
                   className={clsx(
-                    "flex w-full items-center gap-3 rounded-sm px-2.5 py-2 text-start transition-colors duration-100",
+                    "flex w-full items-center gap-3 rounded-sm px-2.5 py-2 text-start",
                     n === i ? "bg-plate-2" : "bg-transparent",
                   )}
                 >

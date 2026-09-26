@@ -58,7 +58,7 @@ export function AccountGroup({ name, email, photo, source, onChoose, onRemove, b
       aria-label={t`Change photo`}
       aria-busy={busy || undefined}
       className={clsx(
-        "group relative shrink-0 rounded-full transition-[scale,opacity] duration-150 ease-out active:scale-[0.97]",
+        "group relative shrink-0 rounded-full transition-[scale,opacity] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100",
         busy && "opacity-45",
       )}
     >

@@ -798,7 +798,7 @@ export function CardForm(props: CardFormProps) {
             {expanded ? <Trans>Fewer fields</Trans> : <Trans>More fields</Trans>}
             <ChevronDown
               className={cn(
-                "size-4 text-muted transition-transform duration-200 ease-(--ease-out) motion-reduce:transition-none",
+                "size-4 text-muted transition-transform duration-260 ease-(--ease-out) motion-reduce:transition-none",
                 expanded && "rotate-180",
               )}
               aria-hidden="true"
@@ -816,7 +816,14 @@ export function CardForm(props: CardFormProps) {
                 id={moreId}
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
+                // Closes faster than it opens: the learner has already moved on.
+                exit={{
+                  height: 0,
+                  opacity: 0,
+                  ...(reduceMotion
+                    ? {}
+                    : { transition: { duration: 0.18, ease: [0.22, 1, 0.36, 1] } }),
+                }}
                 transition={
                   reduceMotion
                     ? { duration: 0.15, height: { duration: 0 } }

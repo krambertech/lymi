@@ -22,7 +22,7 @@ function Checkbox({ className, disabled, ...props }: CheckboxPrimitive.Root.Prop
       disabled={disabled || field?.disabled}
       className={cn(
         "group/checkbox relative inline-grid size-5 shrink-0 cursor-pointer place-items-center rounded-[6px]",
-        "transition-[scale] duration-150 ease-(--ease-out) active:scale-90 motion-reduce:active:scale-100",
+        "transition-[scale] duration-150 ease-(--ease-out) active:scale-95 motion-reduce:active:scale-100",
         // Carries the touch target to 44 px without moving anything around it.
         "after:absolute after:-inset-3 after:content-['']",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",

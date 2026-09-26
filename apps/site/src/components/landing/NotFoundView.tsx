@@ -38,7 +38,12 @@ export function NotFoundView({ locale }: Props) {
         { transform: `translateY(${el.offsetWidth * 1.4}px) rotate(-4deg) scale(0.9)`, opacity: 0 },
         { transform: "none", opacity: 1 },
       ],
-      { duration: DEAL_MS, easing: "cubic-bezier(0.22, 1, 0.36, 1)", delay: 200 },
+      {
+        duration: DEAL_MS,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        delay: 200,
+        fill: "backwards",
+      },
     );
   }, []);
 

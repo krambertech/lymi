@@ -58,7 +58,7 @@ The brand lantern omits `progress` and shows the one canonical flame. It never s
 
 ## How the flame moves
 
-The flame flickers on a 2.6 s loop, and three things move on that loop: the flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both. A flame that changes size under a still halo reads as fake. The flicker multiplies whatever size the flame has, so a small flame flickers small.
+The flame flickers on a 2.6 s loop, and three things move on that loop: the flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both. A flame that changes size under a still halo reads as fake. The flicker multiplies whatever size the flame has, so a small flame flickers small. The loop holds still while the lantern is off screen, as does every other endless loop on the public site.
 
 Its changes are springs from Motion, so an interrupted movement keeps its speed instead of starting over. The values live in `FLAME_MOTION` in `lib/flame.ts`, and the design system reads them from there.
 

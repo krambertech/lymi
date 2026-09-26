@@ -339,7 +339,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
           icon={
             <ChevronDown
               className={clsx(
-                "size-4 transition-transform duration-200 motion-reduce:transition-none",
+                "size-4 transition-transform duration-260 ease-(--ease-out) motion-reduce:transition-none",
                 open && "rotate-180",
               )}
               aria-hidden="true"
@@ -376,7 +376,12 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
             id={cardsId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            // Closes faster than it opens: the learner has already moved on.
+            exit={{
+              height: 0,
+              opacity: 0,
+              ...(reduceMotion ? {} : { transition: { duration: 0.18, ease: [0.22, 1, 0.36, 1] } }),
+            }}
             transition={
               reduceMotion
                 ? { duration: 0.15, height: { duration: 0 } }

@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Section, Sections } from "../lib/api";
 import { Button } from "./button";
 
@@ -115,10 +115,13 @@ export function SectionProgress({
       </div>
       {showMeter && (
         <div aria-hidden="true" className="relative h-1.5 rounded-full bg-plate-2">
-          <div
-            className="absolute inset-y-0 start-0 rounded-full bg-state-known transition-[width] duration-300 ease-out motion-reduce:transition-none"
-            style={{ width: `${Math.min(1, share) * 100}%` }}
-          />
+          {/* A full-width fill slides in from the start, so its rounded end keeps its shape. */}
+          <div className="absolute inset-0 overflow-hidden rounded-full">
+            <div
+              className="h-full w-full translate-x-(--off) rounded-full bg-state-known transition-transform duration-300 ease-out motion-reduce:transition-none rtl:-translate-x-(--off)"
+              style={{ "--off": `${(Math.min(1, share) - 1) * 100}%` } as CSSProperties}
+            />
+          </div>
           <div
             className="absolute -top-1 -bottom-1 w-0.5 -translate-x-1/2 rounded-full bg-text-2 rtl:translate-x-1/2"
             style={{ insetInlineStart: `${tick * 100}%` }}

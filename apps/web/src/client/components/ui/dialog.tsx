@@ -184,7 +184,13 @@ function DialogContent({
   const backdrop = (
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
-      className="fixed inset-0 isolate z-(--z-backdrop) bg-scrim transition-opacity duration-200 ease-(--ease-out) data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-140"
+      // The scrim keeps the timing of what it sits under: the sheet's 260/200 or the dialog's 200/140.
+      className={cn(
+        "fixed inset-0 isolate z-(--z-backdrop) bg-scrim transition-opacity ease-(--ease-out) data-starting-style:opacity-0 data-ending-style:opacity-0",
+        placement === "end"
+          ? "duration-260 data-ending-style:duration-200"
+          : "duration-200 data-ending-style:duration-140",
+      )}
     />
   );
   if (placement === "end") {

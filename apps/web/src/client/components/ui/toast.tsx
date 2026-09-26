@@ -113,7 +113,7 @@ function ToastAction({ className, ...props }: ToastPrimitive.Action.Props) {
     <ToastPrimitive.Action
       data-slot="toast-action"
       className={cn(
-        "relative shrink-0 rounded-sm px-2.5 py-1.5 text-sm font-semibold text-toast-action transition-[background-color,scale] duration-150 before:absolute before:-inset-x-1 before:-inset-y-2 before:content-[''] hoverable:hover:bg-canvas/10 focus-visible:outline-canvas active:scale-[0.97]",
+        "relative shrink-0 rounded-sm px-2.5 py-1.5 text-sm font-semibold text-toast-action transition-[background-color,scale] duration-150 ease-out before:absolute before:-inset-x-1 before:-inset-y-2 before:content-[''] hoverable:hover:bg-canvas/10 focus-visible:outline-canvas active:scale-[0.97] motion-reduce:active:scale-100",
         className,
       )}
       {...props}

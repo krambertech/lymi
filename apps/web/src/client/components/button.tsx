@@ -25,7 +25,7 @@ interface Props extends useRender.ComponentProps<"button"> {
 const base =
   "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium " +
   "transition-[background-color,color,box-shadow,scale] duration-150 ease-out " +
-  "active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 " +
+  "active:scale-[0.97] motion-reduce:active:scale-100 disabled:pointer-events-none disabled:opacity-45 " +
   // Busy and unavailable dim the same way, but stay focusable: see the note on `Button`.
   "aria-disabled:opacity-45 aria-disabled:active:scale-100";
 
@@ -168,7 +168,7 @@ export function IconButton({
             type="button"
             aria-label={label}
             className={clsx(
-              "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-45 aria-disabled:opacity-45 aria-disabled:active:scale-100",
+              "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 disabled:pointer-events-none disabled:opacity-45 aria-disabled:opacity-45 aria-disabled:active:scale-100",
               round ? "rounded-full" : "rounded-sm",
               iconVariants[variant],
               iconSizes[size],

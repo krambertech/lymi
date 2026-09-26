@@ -104,6 +104,9 @@ export function LibraryBoard({
   const itemsRef = useRef(items);
   itemsRef.current = items;
   const dropped = useRef(false);
+  // Kept past the drop, so the drop animation also knows the keyboard moved the deck.
+  const [byKeyboard, setByKeyboard] = useState(false);
+  const still = !!reduce || byKeyboard;
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
@@ -166,7 +169,8 @@ export function LibraryBoard({
     },
   };
 
-  const onDragStart = ({ active }: DragStartEvent) => {
+  const onDragStart = ({ active, activatorEvent }: DragStartEvent) => {
+    setByKeyboard(activatorEvent instanceof KeyboardEvent);
     const from = containerOf(active.id, given);
     if (from) setDrag({ id: String(active.id), from, items: given });
   };
@@ -241,7 +245,7 @@ export function LibraryBoard({
           key={id}
           id={id}
           disabled={!draggable}
-          instant={!!reduce}
+          instant={still}
           onClickCapture={(e) => {
             if (dropped.current) {
               e.preventDefault();
@@ -296,7 +300,7 @@ export function LibraryBoard({
         {t`To move a deck into or out of a series, press Space, use the arrow keys, and press Space again.`}
       </p>
       {body}
-      <DragOverlay dropAnimation={reduce ? null : undefined}>
+      <DragOverlay dropAnimation={still ? null : undefined}>
         {active ? (
           <div className="flex min-w-0 scale-[1.02] cursor-grabbing [&>*]:edge-2">
             {renderDeck(active, undefined)}

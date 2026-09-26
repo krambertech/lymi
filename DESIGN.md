@@ -44,7 +44,7 @@ colors:
   grade-forgot: "#be241f"
   grade-hard: "#72665f"
   grade-good: "#006e42"
-  grade-easy: "#1c140f"
+  grade-easy: "#9f4500"
   dark-canvas: "#130d09"
   dark-rail: "#1a120e"
   dark-plate: "#201713"
@@ -87,7 +87,7 @@ colors:
   dark-grade-forgot: "#fb8274"
   dark-grade-hard: "#a89c90"
   dark-grade-good: "#7bc495"
-  dark-grade-easy: "#f1eee7"
+  dark-grade-easy: "#f9bf60"
 typography:
   word:
     fontFamily: "Onest, system-ui, sans-serif"

@@ -3,6 +3,7 @@ import {
   type CardRow,
   isPublicDeckSlug,
   type PublicationRow,
+  previewMode,
   projectPublicDeck,
   type SectionRow,
 } from "./catalog";
@@ -23,6 +24,7 @@ const publication = (over: Partial<PublicationRow> = {}): PublicationRow => ({
   publishedAt: new Date("2026-09-10T12:00:00.000Z"),
   deckName: "Everyday Estonian",
   deckLanguage: "et",
+  deckDirections: "recognition",
   deckArchivedAt: null,
   ...over,
 });
@@ -33,13 +35,18 @@ const sections: SectionRow[] = [
   { id: "s3", name: "Empty" },
 ];
 
+const card = (id: string, term: string, meaning: string | null, sectionId: string | null) =>
+  ({ id, term, meaning, sectionId, directions: null, reviewModeKeys: null }) satisfies CardRow;
+
 const cards: CardRow[] = [
-  { id: "c1", term: "tere", meaning: "hello", sectionId: "s1" },
-  { id: "c2", term: "leib", meaning: "bread", sectionId: "s2" },
-  { id: "c3", term: "aitäh", meaning: "thank you", sectionId: "s1" },
-  { id: "c4", term: "kott", meaning: null, sectionId: "archived-section" },
-  { id: "c5", term: "jah", meaning: "yes", sectionId: null },
+  card("c1", "tere", "hello", "s1"),
+  card("c2", "leib", "bread", "s2"),
+  card("c3", "aitäh", "thank you", "s1"),
+  card("c4", "kott", null, "archived-section"),
+  card("c5", "jah", "yes", null),
 ];
+
+const asked = { modes: ["term_to_meaning"] };
 
 describe("projectPublicDeck", () => {
   it("groups cards by section in the order given and keeps card order", () => {
@@ -49,22 +56,39 @@ describe("projectPublicDeck", () => {
       {
         name: "Greetings",
         cards: [
-          { term: "tere", meaning: "hello" },
-          { term: "aitäh", meaning: "thank you" },
+          { term: "tere", meaning: "hello", ...asked },
+          { term: "aitäh", meaning: "thank you", ...asked },
         ],
       },
-      { name: "In the shop", cards: [{ term: "leib", meaning: "bread" }] },
+      { name: "In the shop", cards: [{ term: "leib", meaning: "bread", ...asked }] },
       {
         name: null,
         cards: [
-          { term: "kott", meaning: null },
-          { term: "jah", meaning: "yes" },
+          { term: "kott", meaning: null, ...asked },
+          { term: "jah", meaning: "yes", ...asked },
         ],
       },
     ]);
     expect(result.deck.cardCount).toBe(5);
     expect(result.deck.revision).toBe(3);
     expect(result.deck.reviewedAt).toBe("2026-09-01T00:00:00.000Z");
+  });
+
+  it("asks each card in its own modes, and in picture modes only with a public picture", () => {
+    const flag = { directions: "recognition" as const };
+    const own: CardRow[] = [
+      { ...card("c1", "🇪🇪", "Estonia", null), ...flag, reviewModeKeys: ["image_to_meaning"] },
+      { ...card("c2", "🇫🇮", "Finland", null), ...flag, reviewModeKeys: ["image_to_meaning"] },
+      card("c3", "tere", "hello", null),
+    ];
+    const picture = { cardId: "c1", description: "A flag", width: 300, height: 200, hasAudio: 0 };
+    const result = projectPublicDeck(publication({ deckDirections: "both" }), [], own, [picture]);
+    if (result.status !== "published") throw new Error(result.status);
+    expect(result.deck.sections[0]?.cards.map((c) => c.modes)).toEqual([
+      ["image_to_meaning"],
+      ["term_to_meaning"],
+      ["term_to_meaning", "meaning_to_term"],
+    ]);
   });
 
   it("drops fields outside the allowlist even when a row carries them", () => {
@@ -122,6 +146,22 @@ describe("projectPublicDeck", () => {
       { status: "unavailable" },
     );
     expect(projectPublicDeck(publication(), sections, [])).toEqual({ status: "unavailable" });
+  });
+});
+
+describe("previewMode", () => {
+  it("shows a picture first, and otherwise steps through the text modes by place", () => {
+    const image = { cardId: "c", description: "A flag", width: 3, height: 2 };
+    expect(previewMode({ modes: ["term_to_meaning", "image_to_meaning"], image })).toBe(
+      "image_to_meaning",
+    );
+    expect(previewMode({ modes: ["term_to_meaning", "image_to_meaning"] })).toBe("term_to_meaning");
+    const both = { modes: ["term_to_meaning", "meaning_to_term"] as const };
+    expect([0, 1, 2].map((place) => previewMode(both, place))).toEqual([
+      "term_to_meaning",
+      "meaning_to_term",
+      "term_to_meaning",
+    ]);
   });
 });
 

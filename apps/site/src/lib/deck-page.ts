@@ -1,4 +1,5 @@
-import type { PublicDeckOut } from "@lymi/core/catalog";
+import { modeOf, type ReviewModeKey } from "@lymi/core";
+import { type PublicDeckOut, previewMode } from "@lymi/core/catalog";
 import { HAND_SIZE } from "./hand";
 import { type Locale, locales } from "./routes";
 
@@ -13,6 +14,9 @@ export type DeckCard = {
   term: string;
   meaning: string;
   section: string | null;
+  /** The mode this card is shown in here, as a learner is asked it. */
+  mode: ReviewModeKey;
+  modes: ReviewModeKey[];
   image?: PublicDeckOut["sections"][number]["cards"][number]["image"];
   audio?: PublicDeckOut["sections"][number]["cards"][number]["audio"];
 };
@@ -60,6 +64,8 @@ function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
                 term: card.term,
                 meaning: card.meaning,
                 section: section.name,
+                mode: previewMode(card),
+                modes: card.modes,
                 image: card.image,
                 audio: card.audio,
               },
@@ -92,7 +98,12 @@ export function stackCards(deck: PublicDeckOut, size = STACK_SIZE): DeckCard[] {
     const j = seed % (i + 1);
     [cards[i], cards[j]] = [cards[j] as DeckCard, cards[i] as DeckCard];
   }
-  return cards.slice(0, size);
+  return steppedModes(cards.slice(0, size));
+}
+
+/** Each card in its place's mode, so a deck asked more than one way shows each of them. */
+function steppedModes(cards: DeckCard[]): DeckCard[] {
+  return cards.map((card, place) => ({ ...card, mode: previewMode(card, place) }));
 }
 
 /**
@@ -123,7 +134,7 @@ export function spreadCards(deck: PublicDeckOut, size = SPREAD_SIZE): DeckCard[]
       });
     }
   }
-  return groups.flatMap((cards, at) => {
+  const picked = groups.flatMap((cards, at) => {
     const take = perGroup[at] ?? 0;
     if (take === 0) return [];
     const glanceable = cards.filter((card) => card.term.length <= 20 && card.meaning.length <= 36);
@@ -131,6 +142,16 @@ export function spreadCards(deck: PublicDeckOut, size = SPREAD_SIZE): DeckCard[]
     const start = hash(`${deck.slug}:${deck.revision}:${at}`) % from.length;
     return Array.from({ length: take }, (_, k) => from[(start + k) % from.length] as DeckCard);
   });
+  return steppedModes(picked);
+}
+
+export type RecallCue = "term" | "meaning" | "image" | "mixed";
+
+/** What the try-it cards ask from, so the page can say what to recall: one cue, or a mix. */
+export function recallCue(cards: readonly DeckCard[]): RecallCue {
+  const cues = new Set(cards.map((card) => modeOf(card.mode).cue));
+  const [only] = cues;
+  return cues.size === 1 && only ? only : "mixed";
 }
 
 export interface SectionStep {

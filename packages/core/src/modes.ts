@@ -57,6 +57,21 @@ export function effectiveModes(
   return modes;
 }
 
+/**
+ * The modes a card is asked in, as `askedSql` decides on the server: picture modes only while it
+ * has a described picture, and a picture-only list's text fallback while it has none.
+ */
+export function askedModes(
+  directions: Directions,
+  stored: readonly ReviewModeKey[] | null,
+  hasPicture: boolean,
+): ReviewModeKey[] {
+  const modes = effectiveModes(directions, stored);
+  if (hasPicture) return modes;
+  const text = modes.filter((key) => !isImageMode(key));
+  return text.length > 0 ? text : modesFromDirections(directions);
+}
+
 /** The value `direction` columns hold for a mode: the legacy name for text modes, the key for picture modes. */
 export function stateDirection(key: ReviewModeKey): string {
   if (key === "term_to_meaning") return "recognition";

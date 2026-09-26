@@ -1,6 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { ExploreDeckOut, PublicDeckOut } from "@lymi/core/catalog";
-import { publisherAvatarPath, trayHue } from "@lymi/core/catalog";
+import { isImageMode } from "@lymi/core";
+import type { ExploreDeckOut, PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
+import { previewMode, publisherAvatarPath, trayHue } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { ArrowRight, Check, ChevronDown, Plus } from "lucide-react";
 import { type CSSProperties, type ReactNode, useEffect, useRef } from "react";
@@ -39,9 +40,10 @@ function keyed<T>(items: readonly T[], nameOf: (item: T) => string): { item: T; 
   });
 }
 
-type HandCard = { term: string; meaning: string; section: string | null };
+type HandCard = NonNullable<PublicDeckSummary["card"]>;
 
-// One card per section before a second from any, so three cards show the deck's range.
+// One card per section before a second from any, so three cards show the deck's range. Each is
+// shown in its own review mode, stepping through them so a deck asked both ways shows both.
 function handOf(deck: PublicDeckOut): HandCard[] {
   const hand: HandCard[] = [];
   const sections = deck.sections.map((section) => ({
@@ -53,7 +55,14 @@ function handOf(deck: PublicDeckOut): HandCard[] {
     for (const section of sections) {
       const card = section.cards[round];
       if (card && hand.length < 3) {
-        hand.push({ term: card.term, meaning: card.meaning ?? "", section: section.name });
+        const mode = previewMode(card, hand.length);
+        hand.push({
+          term: card.term,
+          meaning: card.meaning ?? "",
+          section: section.name,
+          mode,
+          ...(card.image && isImageMode(mode) ? { image: card.image } : {}),
+        });
       }
     }
     if (hand.length === taken) break;

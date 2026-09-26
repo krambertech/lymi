@@ -3,12 +3,13 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { Search } from "lucide-react";
-import { type CSSProperties, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { deckPath, languageName } from "../../lib/deck-page";
 import { type Shelf, searchText, shelvesOf } from "../../lib/explore";
 import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
+import { PreviewFace } from "../deck/PreviewFace";
 import { shelfLabel } from "../explore/explore-labels";
 import { Lantern } from "../Lantern";
 
@@ -20,12 +21,6 @@ interface Props {
 /** How many blank sheets sit behind the card: the deck's own depth, never more than two. */
 function paperFor(cardCount: number): number {
   return Math.min(Math.max(cardCount - 1, 0), 2);
-}
-
-/** A long compound would break mid-letter at the full size, so the term steps down first. */
-function termStep(term: string): number {
-  const longest = Math.max(...term.split(/\s+/).map((word) => word.length));
-  return longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14;
 }
 
 function DeckTile({ deck, hue, locale }: { deck: PublicDeckSummary; hue: number; locale: Locale }) {
@@ -43,21 +38,13 @@ function DeckTile({ deck, hue, locale }: { deck: PublicDeckSummary; hue: number;
               // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
               <span key={at} className="deck-tray-paper" data-at={at + 1} aria-hidden="true" />
             ))}
-            <article
-              className="deck-tray-card"
-              style={{ "--t": termStep(deck.card.term) } as CSSProperties}
-            >
-              {deck.card.section && (
-                <p lang={deck.meaningLanguage} className="deck-tray-section">
-                  {deck.card.section}
-                </p>
-              )}
-              <p lang={deck.language ?? undefined} className="deck-tray-term">
-                {deck.card.term}
-              </p>
-              <p lang={deck.meaningLanguage} className="deck-tray-meaning">
-                {deck.card.meaning}
-              </p>
+            <article className="deck-tray-card">
+              <PreviewFace
+                kind="deck-tray"
+                {...deck.card}
+                language={deck.language}
+                meaningLanguage={deck.meaningLanguage}
+              />
             </article>
           </div>
         </div>

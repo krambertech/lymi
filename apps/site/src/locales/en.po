@@ -116,10 +116,10 @@ msgstr "{reviews, plural, one {past review} other {past reviews}}"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
 
-#. placeholder {0}: front.card.term
-#. placeholder {1}: typeof meaning === "string" ? meaning : i18n._(meaning)
-msgid "<0>{0}</0>: {1}"
-msgstr "<0>{0}</0>: {1}"
+#. placeholder {0}: said.cue
+#. placeholder {1}: said.answer
+msgid "<0>{0}</0>: <1>{1}</1>"
+msgstr "<0>{0}</0>: <1>{1}</1>"
 
 msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
 msgstr "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
@@ -1378,6 +1378,9 @@ msgstr "Music theory"
 msgid "My dear"
 msgstr "My dear"
 
+msgid "Name what the picture shows before you look. Try it on the cards here: they’re from all over the deck."
+msgstr "Name what the picture shows before you look. Try it on the cards here: they’re from all over the deck."
+
 msgid "Named after William of Ockham, a 14th-century friar."
 msgstr "Named after William of Ockham, a 14th-century friar."
 
@@ -1399,7 +1402,7 @@ msgstr "New"
 msgid "Next card"
 msgstr "Next card"
 
-#. placeholder {0}: next.card.term
+#. placeholder {0}: said.cue
 msgid "Next card: <0>{0}</0>"
 msgstr "Next card: <0>{0}</0>"
 
@@ -1607,6 +1610,9 @@ msgstr "Raise a glass and it becomes terviseks: to your health."
 
 msgid "Read the docs"
 msgstr "Read the docs"
+
+msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
+msgstr "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 
 msgid "Read your German deck"
 msgstr "Read your German deck"
@@ -2162,6 +2168,9 @@ msgstr "Try to recall the meaning before Lymi shows it. Then grade how well you 
 
 msgid "Try to recall the meaning, then show it. Pick how well you knew it. Hard cards come back sooner, easy ones later."
 msgstr "Try to recall the meaning, then show it. Pick how well you knew it. Hard cards come back sooner, easy ones later."
+
+msgid "Try to remember the answer before you look. Try it on the cards here: they’re from all over the deck."
+msgstr "Try to remember the answer before you look. Try it on the cards here: they’re from all over the deck."
 
 msgid "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."

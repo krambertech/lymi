@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import type { ReviewModeKey } from "@lymi/core";
 
 /**
  * The cards the landing hand deals. Each is something a stranger would be glad to know, and the
@@ -24,6 +25,8 @@ export interface HandCard {
   /** Where the pronunciation plays from, or null for a card without one. Defaults to the clip named by `id`. */
   audio?: string | null;
   image?: { url: string; description: string; width: number; height: number } | null;
+  /** What the front asks from and what the back answers with; term to meaning when left out. */
+  mode?: ReviewModeKey | undefined;
 }
 
 export const noun = msg`noun`;

@@ -116,10 +116,10 @@ msgstr "{reviews, plural, one {прошлое повторение} few {про�
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# карточка перевёрнута} few {# карточки перевёрнуты} many {# карточек перевёрнуто} other {# карточки перевёрнуто}}"
 
-#. placeholder {0}: front.card.term
-#. placeholder {1}: typeof meaning === "string" ? meaning : i18n._(meaning)
-msgid "<0>{0}</0>: {1}"
-msgstr "<0>{0}</0>: {1}"
+#. placeholder {0}: said.cue
+#. placeholder {1}: said.answer
+msgid "<0>{0}</0>: <1>{1}</1>"
+msgstr "<0>{0}</0>: <1>{1}</1>"
 
 msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
 msgstr "<0>Cloudflare</0> предоставляет сайт, приложение, базу данных, хранилище объектов, хранилище сессий, защиту сети, сводные показатели использования, рабочие журналы и доставку транзакционных писем."
@@ -1378,6 +1378,9 @@ msgstr "Теория музыки"
 msgid "My dear"
 msgstr "Мой дорогой"
 
+msgid "Name what the picture shows before you look. Try it on the cards here: they’re from all over the deck."
+msgstr "Сначала назови, что на изображении, а потом смотри. Попробуй на этих карточках: они из всей колоды."
+
 msgid "Named after William of Ockham, a 14th-century friar."
 msgstr "Названа в честь Уильяма Оккама, монаха XIV века."
 
@@ -1399,7 +1402,7 @@ msgstr "Новая"
 msgid "Next card"
 msgstr "Следующая карточка"
 
-#. placeholder {0}: next.card.term
+#. placeholder {0}: said.cue
 msgid "Next card: <0>{0}</0>"
 msgstr "Следующая карточка: <0>{0}</0>"
 
@@ -1607,6 +1610,9 @@ msgstr "Когда поднимают бокал, говорят terviseks: за
 
 msgid "Read the docs"
 msgstr "Открыть документацию"
+
+msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
+msgstr "Прочитай значение и сначала вспомни термин, а потом смотри. Попробуй на этих карточках: они из всей колоды."
 
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"
@@ -2162,6 +2168,9 @@ msgstr "Попробуй вспомнить значение, прежде че�
 
 msgid "Try to recall the meaning, then show it. Pick how well you knew it. Hard cards come back sooner, easy ones later."
 msgstr "Попробуй вспомнить значение, а потом открой его. Оцени, насколько хорошо помнишь. Сложные карточки возвращаются раньше, лёгкие — позже."
+
+msgid "Try to remember the answer before you look. Try it on the cards here: they’re from all over the deck."
+msgstr "Сначала вспомни ответ, а потом смотри. Попробуй на этих карточках: они из всей колоды."
 
 msgid "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Сначала вспомни значение, а потом смотри. Попробуй на этих карточках: они из всей колоды."

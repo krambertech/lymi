@@ -1494,6 +1494,59 @@ html:has(.deck-cards[open]) {
   --tray-l: 0.192;
   --tray-c: 0.015;
 }
+
+/* A landing use case in the same trays as Explore, so a subject reads as a deck on a shelf. The
+   card runs off the tray's foot, which clips it, so the stack sits in the colour. */
+.use-case-tile {
+  --tray-l: 0.958;
+  --tray-c: 0.042;
+  --bleed: 1.5rem;
+  background: oklch(var(--tray-l) var(--tray-c) var(--tray-h, 235));
+}
+[data-theme="dark"] .use-case-tile {
+  --tray-l: 0.192;
+  --tray-c: 0.015;
+}
+.use-case-paper {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge);
+  transition: transform 260ms var(--ease-out);
+}
+.use-case-paper[data-at="1"] {
+  transform: translate(7px, 4px) rotate(1.6deg);
+}
+.use-case-paper[data-at="2"] {
+  transform: translate(-6px, 8px) rotate(-2.2deg);
+}
+.use-case-card {
+  transition: transform 260ms var(--ease-out);
+}
+/* A tile that links somewhere spreads its paper when pointed at or focused, as a deck on Explore does. */
+@media (prefers-reduced-motion: no-preference) {
+  .use-case-tile:has(a:focus-visible) .use-case-card {
+    transform: translateY(-5px);
+  }
+  .use-case-tile:has(a:focus-visible) .use-case-paper[data-at="1"] {
+    transform: translate(17px, 1px) rotate(4deg);
+  }
+  .use-case-tile:has(a:focus-visible) .use-case-paper[data-at="2"] {
+    transform: translate(-16px, 5px) rotate(-5deg);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .use-case-tile:has(a):hover .use-case-card {
+      transform: translateY(-5px);
+    }
+    .use-case-tile:has(a):hover .use-case-paper[data-at="1"] {
+      transform: translate(17px, 1px) rotate(4deg);
+    }
+    .use-case-tile:has(a):hover .use-case-paper[data-at="2"] {
+      transform: translate(-16px, 5px) rotate(-5deg);
+    }
+  }
+}
 /* Over a tint, an opaque grey surface reads as a patch stuck on the colour. Inside a tinted
    area the two hover surfaces become translucent ink instead, so a hover or a chip darkens
    whatever is actually behind it and works over any hue. */
@@ -1537,35 +1590,43 @@ html:has(.deck-cards[open]) {
 }
 
 .deck-tray[data-hue="0"],
-.deck-hero-tint[data-hue="0"] {
+.deck-hero-tint[data-hue="0"],
+.use-case-tile[data-hue="0"] {
   --tray-h: 25;
 }
 .deck-tray[data-hue="1"],
-.deck-hero-tint[data-hue="1"] {
+.deck-hero-tint[data-hue="1"],
+.use-case-tile[data-hue="1"] {
   --tray-h: 110;
 }
 .deck-tray[data-hue="2"],
-.deck-hero-tint[data-hue="2"] {
+.deck-hero-tint[data-hue="2"],
+.use-case-tile[data-hue="2"] {
   --tray-h: 150;
 }
 .deck-tray[data-hue="3"],
-.deck-hero-tint[data-hue="3"] {
+.deck-hero-tint[data-hue="3"],
+.use-case-tile[data-hue="3"] {
   --tray-h: 195;
 }
 .deck-tray[data-hue="4"],
-.deck-hero-tint[data-hue="4"] {
+.deck-hero-tint[data-hue="4"],
+.use-case-tile[data-hue="4"] {
   --tray-h: 235;
 }
 .deck-tray[data-hue="5"],
-.deck-hero-tint[data-hue="5"] {
+.deck-hero-tint[data-hue="5"],
+.use-case-tile[data-hue="5"] {
   --tray-h: 280;
 }
 .deck-tray[data-hue="6"],
-.deck-hero-tint[data-hue="6"] {
+.deck-hero-tint[data-hue="6"],
+.use-case-tile[data-hue="6"] {
   --tray-h: 320;
 }
 .deck-tray[data-hue="7"],
-.deck-hero-tint[data-hue="7"] {
+.deck-hero-tint[data-hue="7"],
+.use-case-tile[data-hue="7"] {
   --tray-h: 350;
 }
 

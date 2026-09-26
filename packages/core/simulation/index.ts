@@ -5,9 +5,11 @@ import {
   RETURN_GAPS,
   RETURN_JITTER,
   REVIEW_ODDS_POWER,
+  SLIPPING_RETURN_GAP,
   UNSEEN_HALF_LIFE_DAYS,
 } from "../src/draw";
 import { DESIRED_RETENTION, LEARNING_STEPS } from "../src/fsrs";
+import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "../src/slipping";
 import { DAY_STUDY, dayStudy } from "./day";
 import { intervalGuide } from "./intervals";
 import { RECALL } from "./learner";
@@ -32,6 +34,9 @@ export function schedulingGuide() {
       oldestSlotEvery: OLDEST_UNSEEN_SLOT_EVERY,
       returnGaps: [...RETURN_GAPS],
       returnJitter: RETURN_JITTER,
+      slippingReturnGap: SLIPPING_RETURN_GAP,
+      slippingForgottenDays: SLIPPING_FORGOTTEN_DAYS,
+      slippingRecentDays: SLIPPING_RECENT_DAYS,
       carryOverEvery: CARRY_OVER_EVERY,
       reviewOddsPower: REVIEW_ODDS_POWER,
       unseenHalfLifeDays: UNSEEN_HALF_LIFE_DAYS,

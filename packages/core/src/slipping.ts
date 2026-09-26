@@ -1,4 +1,4 @@
-/** A card keeps slipping once it is forgotten this many times... */
-export const SLIPPING_LAPSES = 4;
-/** ...in at least this many reviews, so a young card cannot qualify. */
-export const SLIPPING_REVIEWS = 6;
+/** A card is often forgotten when its first grade was Forgot on this many... */
+export const SLIPPING_FORGOTTEN_DAYS = 3;
+/** ...of the last this many days it was reviewed before today. ADR 0024. */
+export const SLIPPING_RECENT_DAYS = 5;

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SLIPPING_LAPSES, SLIPPING_REVIEWS } from "./slipping";
+import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "./slipping";
 import { CARD_LIMITS, EnrichmentStatus, FieldSource, LanguageTag, ReviewModeKey } from "./types";
 
 /**
@@ -145,7 +145,7 @@ export const ReviewFilter = z
       .strictObject({ eq: z.boolean() })
       .optional()
       .meta({
-        description: `Forgotten at least ${SLIPPING_LAPSES} times in at least ${SLIPPING_REVIEWS} counted reviews`,
+        description: `Often forgotten: the first grade was Forgot on ${SLIPPING_FORGOTTEN_DAYS} of its last ${SLIPPING_RECENT_DAYS} review days before today. Card-wide, whatever since and mode.`,
       }),
   })
   .meta({

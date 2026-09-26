@@ -3,6 +3,7 @@ import {
   type CardSearchInput,
   type CardSortField,
   type DateComparator,
+  dayWindow,
   type GradeComparator,
   type IdComparator,
   modeOf,
@@ -13,8 +14,6 @@ import {
   type ReviewMode,
   type ReviewModeKey,
   resolveDateValue,
-  SLIPPING_LAPSES,
-  SLIPPING_REVIEWS,
   type StringComparator,
 } from "@lymi/core";
 import {
@@ -25,6 +24,7 @@ import {
   inArray,
   isNotNull,
   isNull,
+  notInArray,
   or,
   type SQL,
   type SQLWrapper,
@@ -38,8 +38,9 @@ import { type CardView, editionText, inEdition, presentCards } from "./card-view
 import { foldForSearch, matchesSearch } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { memberOf } from "./members";
+import { reviewZone } from "./review-days";
 import { askedSql } from "./modes";
-import { countedReviewsWhere, lapsesSql, reviewCountSql, slippingHaving } from "./slipping";
+import { countedReviewsWhere, lapsesSql, reviewCountSql, slippingCardIds } from "./slipping";
 
 export const SEARCH_LIMIT = 200;
 /** The most rows one search reads before matching text in memory. */
@@ -188,7 +189,6 @@ export async function searchCards(
       lastKey: sql<number>`max(${schema.reviews.reviewedAt} * 8 + ${schema.reviews.rating})`.as(
         "last_key",
       ),
-      slipping: sql<number>`case when ${slippingHaving} then 1 else 0 end`.as("slipping"),
     })
     .from(schema.reviews)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.reviews.cardId))
@@ -226,7 +226,6 @@ export async function searchCards(
     lapseRate: sql`(case when ${reviewCount} > 0 then ${lapses} * 1.0 / ${reviewCount} end)`,
     lastRating: sql`(${reviewStats.lastKey} % 8)`,
     lastReviewedAt: sql`(${reviewStats.lastKey} / 8)`,
-    slipping: sql`coalesce(${reviewStats.slipping}, 0)`,
   };
   const reviewExpr = (name: keyof typeof review) => {
     usesReviews = true;
@@ -255,7 +254,10 @@ export async function searchCards(
     if (lastReviewedAt) {
       where.push(...dateConditions(reviewExpr("lastReviewedAt"), lastReviewedAt, at));
     }
-    if (slipping) where.push(sql`${reviewExpr("slipping")} = ${slipping.eq ? 1 : 0}`);
+    if (slipping) {
+      const ids = slippingCardIds(ctx, dayWindow(now, await reviewZone(ctx)));
+      where.push(slipping.eq ? inArray(schema.cards.id, ids) : notInArray(schema.cards.id, ids));
+    }
   }
 
   const sortExpr: Record<CardSortField, () => SQL> = {
@@ -312,6 +314,7 @@ export async function searchCards(
             ctx,
             rows.map((row) => row.card.id),
             window,
+            now,
           )
         : undefined,
     ]);
@@ -679,19 +682,22 @@ function afterCursor(
 
 type Tally = { reviewCount: number; lapses: number; lastKey: number | null; dueAt: number | null };
 
-function record({ reviewCount, lapses, lastKey, dueAt }: Tally): ReviewRecord {
+function record({ reviewCount, lapses, lastKey, dueAt }: Tally, slipping: boolean): ReviewRecord {
   return {
     reviewCount,
     lapses,
     lastRating: lastKey === null ? null : lastKey % 8,
     lastReviewedAt: lastKey === null ? null : new Date(Math.floor(lastKey / 8)),
     dueAt: dueAt === null ? null : new Date(dueAt),
-    slipping: lapses >= SLIPPING_LAPSES && reviewCount >= SLIPPING_REVIEWS,
+    slipping,
   };
 }
 
 function emptyStats(): CardReviewStats {
-  return { ...record({ reviewCount: 0, lapses: 0, lastKey: null, dueAt: null }), modes: [] };
+  return {
+    ...record({ reviewCount: 0, lapses: 0, lastKey: null, dueAt: null }, false),
+    modes: [],
+  };
 }
 
 /**
@@ -700,11 +706,14 @@ function emptyStats(): CardReviewStats {
  * window's mode only, when it names one, so it agrees with the filter and the sort.
  */
 async function reviewStatsFor(
-  { db, userId }: ServiceContext,
+  ctx: ServiceContext,
   cardIds: string[],
   window: Window,
+  now: Date,
 ): Promise<Map<string, CardReviewStats>> {
-  const [graded, states] = await Promise.all([
+  const { db, userId } = ctx;
+  const day = dayWindow(now, await reviewZone(ctx));
+  const [graded, states, slipping] = await Promise.all([
     selectIn(cardIds, (ids) =>
       db
         .select({
@@ -744,6 +753,7 @@ async function reviewStatsFor(
           ),
         ),
     ),
+    slippingCardIds(ctx, day).then((rows) => new Set(rows.map((row) => row.id))),
   ]);
 
   const tallies = new Map<string, Map<ReviewModeKey, Tally>>();
@@ -781,9 +791,10 @@ async function reviewStatsFor(
       }),
       { reviewCount: 0, lapses: 0, lastKey: null, dueAt: null },
     );
+    const slips = slipping.has(cardId);
     out.set(cardId, {
-      ...record(overall),
-      modes: ordered.map(({ key, entry }) => ({ mode: modeOf(key), ...record(entry) })),
+      ...record(overall, slips),
+      modes: ordered.map(({ key, entry }) => ({ mode: modeOf(key), ...record(entry, slips) })),
     });
   }
   return out;

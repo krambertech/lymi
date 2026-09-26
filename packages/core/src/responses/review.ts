@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { SLIPPING_LAPSES, SLIPPING_REVIEWS } from "../slipping";
+import { RETURN_GAPS, SLIPPING_RETURN_GAP } from "../draw";
+import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "../slipping";
 import { Direction, Rating, ReviewMode } from "../types";
 import { CardOut } from "./cards";
 import { Timestamp } from "./common";
@@ -55,7 +56,7 @@ export const RoundsOut = z
       .number()
       .int()
       .meta({
-        description: `Cards forgotten at least ${SLIPPING_LAPSES} times in at least ${SLIPPING_REVIEWS} reviews and not reviewed today, due or not`,
+        description: `Cards whose first grade was Forgot on ${SLIPPING_FORGOTTEN_DAYS} of their last ${SLIPPING_RECENT_DAYS} review days before today, not reviewed today, due or not`,
       }),
   })
   .meta({ id: "ReviewRounds" });
@@ -87,6 +88,9 @@ const DrawCardOut = z
   .object({
     card: CardOut,
     modes: z.array(DrawModeOut).meta({ description: "In the order they are introduced" }),
+    slipping: z.boolean().meta({
+      description: `Often forgotten: a miss returns once, ${SLIPPING_RETURN_GAP} attempts later, instead of up to ${RETURN_GAPS.length} times`,
+    }),
   })
   .meta({ id: "DrawCard" });
 

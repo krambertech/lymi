@@ -34,7 +34,7 @@ The client walks a fixed list of 50 due cards, oldest first. A forgotten card ca
 3. An ordinary draw.
 4. The earliest pending return, when nothing else is drawable.
 
-**Returns.** Forgot, or Hard while learning or relearning, brings a mode back after 3, then 6, then 12 attempts, ±1. After three returns, it waits until tomorrow.
+**Returns.** Forgot, or Hard while learning or relearning, brings a mode back after 3, then 6, then 12 attempts, ±1. After three returns, it waits until tomorrow. [ADR 0024](0024-returns-widen-and-an-often-forgotten-card-returns-once.md) replaces this rule.
 
 **Ordinary draws.** Every fifth is a new card while both groups are drawable. Returns do not count toward the five. Within a group, keys hash the date, card, and mode, so every scope sees the same order.
 

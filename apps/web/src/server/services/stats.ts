@@ -1,4 +1,9 @@
-import { SLIPPING_LAPSES, SLIPPING_REVIEWS } from "@lymi/core";
+import {
+  type DayWindow,
+  dayWindow,
+  SLIPPING_FORGOTTEN_DAYS,
+  SLIPPING_RECENT_DAYS,
+} from "@lymi/core";
 import { and, desc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
@@ -8,7 +13,7 @@ import { memberOf } from "./members";
 import { type Outcome, reviewZone, type StreakDay, streakDays } from "./review-days";
 import { waitingCardsSql } from "./sections";
 import { getSettings } from "./settings";
-import { lapsesSql, reviewCountSql, slippingHaving, slippingReviewsWhere } from "./slipping";
+import { lapsesSql, reviewCountSql, slippingCardIds, slippingReviewsWhere } from "./slipping";
 
 /**
  * Everything the Insights screen reads. One call, because the screen shows all of it at
@@ -329,11 +334,12 @@ async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
 }
 
 /**
- * Cards that keep coming back. Anki suspends at eight lapses, which is both blunt and late
- * for a deck someone chose word by word. The rule is returned with the list so the screen
- * can say what put a card there.
+ * Cards that keep coming back, most forgotten first. The rule is returned with the list so the
+ * screen can say what put a card there.
  */
-async function leeches({ db, userId }: ServiceContext, limit: number) {
+async function leeches(ctx: ServiceContext, day: DayWindow, limit: number) {
+  const { db, userId } = ctx;
+  const slip = slippingCardIds(ctx, day).as("slip");
   return db
     .select({
       id: schema.cards.id,
@@ -345,12 +351,12 @@ async function leeches({ db, userId }: ServiceContext, limit: number) {
       reviews: reviewCountSql,
     })
     .from(schema.reviews)
+    .innerJoin(slip, eq(slip.id, schema.reviews.cardId))
     .innerJoin(schema.cards, eq(schema.cards.id, schema.reviews.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .leftJoin(schema.reviewUndos, eq(schema.reviewUndos.reviewId, schema.reviews.id))
     .where(slippingReviewsWhere(userId))
     .groupBy(schema.cards.id)
-    .having(slippingHaving)
     .orderBy(desc(lapsesSql))
     .limit(limit);
 }
@@ -366,7 +372,8 @@ export async function insights(
 ) {
   // The same zone the streak resolves, because the grid draws the streak's own day rows and a
   // manual review timezone would otherwise put today on a different cell from the row it holds.
-  const fmt = dateFormatter(await reviewZone(ctx, opts.zone));
+  const zone = await reviewZone(ctx, opts.zone);
+  const fmt = dateFormatter(zone);
   const period = opts.period ?? 30;
   const since = period === 0 ? null : new Date(Date.now() - period * DAY_MS);
 
@@ -377,7 +384,7 @@ export async function insights(
     getSettings(ctx),
     collection(ctx),
     forecast(ctx, fmt),
-    leeches(ctx, 10),
+    leeches(ctx, dayWindow(new Date(), zone), 10),
   ]);
 
   const graded = recall.passed + recall.failed;
@@ -411,8 +418,8 @@ export async function insights(
     cards,
     forecast: due,
     leeches: {
-      lapses: SLIPPING_LAPSES,
-      reviews: SLIPPING_REVIEWS,
+      forgottenDays: SLIPPING_FORGOTTEN_DAYS,
+      recentDays: SLIPPING_RECENT_DAYS,
       cards: keepsComingBack,
     },
   };

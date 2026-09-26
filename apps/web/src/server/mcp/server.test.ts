@@ -750,7 +750,7 @@ describe("Lymi MCP server", () => {
       activity: { today: "2026-09-18", goal: 50, firstDay: null, days: [] },
       cards: { total: 0, new: 0, learning: 0, known: 0 },
       forecast: [],
-      leeches: { lapses: 4, reviews: 6, cards: [] },
+      leeches: { forgottenDays: 3, recentDays: 5, cards: [] },
     });
     const client = await connect("read");
 

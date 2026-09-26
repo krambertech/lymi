@@ -1,73 +1,73 @@
 {
-  "fingerprint": "ccdf57e276d2fd1d690ae4812d17e73917f0e2f760403c0bdeaff7b1f4611118",
+  "fingerprint": "aba9db85df7ff8ae6467c40f4b19cd51ae9d6b29795f042898f72a78c8d4ea3f",
   "reviewOrder": [
     {
       "id": "due",
-      "introduced": 2421,
-      "remembered": 1976,
-      "late": 1149
+      "introduced": 2434,
+      "remembered": 1992,
+      "late": 1160
     },
     {
       "id": "lowest",
-      "introduced": 2472,
-      "remembered": 1985,
-      "late": 1924
+      "introduced": 2496,
+      "remembered": 2018,
+      "late": 1917
     },
     {
       "id": "highest",
-      "introduced": 2874,
-      "remembered": 2285,
-      "late": 1298
+      "introduced": 2861,
+      "remembered": 2276,
+      "late": 1308
     },
     {
       "id": "random",
-      "introduced": 2492,
-      "remembered": 2007,
-      "late": 1199
+      "introduced": 2512,
+      "remembered": 2040,
+      "late": 1189
     },
     {
       "id": "forgetting",
-      "introduced": 2442,
-      "remembered": 1986,
-      "late": 1341
+      "introduced": 2459,
+      "remembered": 2013,
+      "late": 1338
     },
     {
       "id": "lymi",
-      "introduced": 2630,
-      "remembered": 2078,
-      "late": 936
+      "introduced": 2637,
+      "remembered": 2091,
+      "late": 933
     }
   ],
   "newCards": [
     {
       "id": "halving",
       "medianWait": 6,
-      "p90Wait": 19,
-      "joinedStarted": 101
+      "p90Wait": 20,
+      "joinedStarted": 111
     },
     {
       "id": "floor",
-      "medianWait": 24,
-      "p90Wait": 176,
-      "joinedStarted": 217
+      "medianWait": 25,
+      "p90Wait": 177,
+      "joinedStarted": 219
     },
     {
       "id": "equal",
-      "medianWait": 62,
-      "p90Wait": 191,
-      "joinedStarted": 245
+      "medianWait": 63,
+      "p90Wait": 189,
+      "joinedStarted": 248
     },
     {
       "id": "oldest",
-      "medianWait": 154,
-      "p90Wait": 228,
+      "medianWait": 157,
+      "p90Wait": 231,
       "joinedStarted": 300
     },
     {
       "id": "lymi",
       "medianWait": 6,
       "p90Wait": 20,
-      "joinedStarted": 223
+      "joinedStarted": 229
     }
   ]
 }

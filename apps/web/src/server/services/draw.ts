@@ -81,7 +81,7 @@ export interface DrawInputs {
   cards: DrawCard[];
   log: DrawLogEntry[];
   states: Map<string, DrawState>;
-  /** Slipping card ids, when the options asked for them. */
+  /** Often-forgotten card ids among the loaded cards. */
   slipping: Set<string>;
 }
 
@@ -134,8 +134,8 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
   const now = opts.now ?? new Date();
   const day = dayWindow(now, opts.zone);
   const sibling = alias(schema.cardStates, "sibling");
-  // Joined only for the slipping round, so its whole-history aggregate runs in this one query.
-  const slip = slippingCardIds(ctx).as("slip");
+  // Joined in this one query, so its whole-history aggregate runs once per draw.
+  const slip = slippingCardIds(ctx, day).as("slip");
   const modeColumns = {
     id: schema.cardStates.id,
     direction: schema.cardStates.direction,
@@ -194,21 +194,17 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       deckDirections: schema.decks.directions,
       state: modeColumns,
       sibling: siblingColumns,
-      slipping: opts.slipping ? slip.id : sql<string | null>`null`,
+      slipping: slip.id,
     })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .leftJoin(sibling, siblingOn)
-    .$dynamic();
-  const candidatesQuery = (
-    opts.slipping
-      ? candidateRows.leftJoin(slip, eq(slip.id, schema.cardStates.cardId))
-      : candidateRows
-  ).where(where);
+    .leftJoin(slip, eq(slip.id, schema.cardStates.cardId))
+    .where(where);
 
   const [candidates, log] = await Promise.all([
-    candidatesQuery,
+    candidateRows,
     db
       .select({
         cardId: schema.reviews.cardId,
@@ -260,6 +256,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       cardId: card.id,
       deckId: card.deckId,
       modes: [],
+      slipping: row.slipping !== null,
       byMode: new Map<ReviewModeKey, DrawMode>(),
       order: modeOrder(card, row.deckDirections),
     };

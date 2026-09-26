@@ -1,4 +1,12 @@
-import { type Actor, emptyState, type Rating, schedule, serializeState } from "@lymi/core";
+import {
+  type Actor,
+  dayWindow,
+  emptyState,
+  type Rating,
+  SLIPPING_FORGOTTEN_DAYS,
+  schedule,
+  serializeState,
+} from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull, lte, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
@@ -639,16 +647,15 @@ export async function enrichSampleCards(ctx: ServiceContext, count: number): Pro
   return cards.length;
 }
 
-/** Forgot, Good, Forgot, Forgot, Good, Forgot: four lapses in six reviews, the slipping line. */
-const SLIP_RATINGS: Rating[] = [1, 3, 1, 1, 3, 1];
-
 /**
- * Give `count` cards a history of forgetting on past days that already hold reviews, so they
- * keep slipping without adding a reviewed day the streak did not have. Schedules are untouched.
+ * Give `count` cards a Forgot as the first grade on the latest past days that already hold
+ * reviews, so they are often forgotten without adding a reviewed day the streak did not have.
+ * Schedules are untouched.
  */
 export async function slipCards(ctx: ServiceContext, count: number): Promise<number> {
   const { db, userId } = ctx;
-  const fmt = dateFormatter(await reviewZone(ctx));
+  const zone = await reviewZone(ctx);
+  const fmt = dateFormatter(zone);
   const today = fmt.format(new Date());
   const past = (
     await db
@@ -658,7 +665,10 @@ export async function slipCards(ctx: ServiceContext, count: number): Promise<num
       .orderBy(desc(schema.reviews.reviewedAt))
       .limit(500)
   ).filter((r) => fmt.format(r.at) < today);
-  if (past.length === 0) return 0;
+  const byDay = new Map<string, (typeof past)[number]>();
+  for (const r of past) if (!byDay.has(fmt.format(r.at))) byDay.set(fmt.format(r.at), r);
+  const slots = [...byDay.values()].slice(0, SLIPPING_FORGOTTEN_DAYS);
+  if (slots.length < SLIPPING_FORGOTTEN_DAYS) return 0;
   const states = await db
     .select({
       id: schema.cardStates.id,
@@ -690,27 +700,24 @@ export async function slipCards(ctx: ServiceContext, count: number): Promise<num
     if (!chosen.has(s.cardId) && !reviewedToday.has(s.cardId)) chosen.set(s.cardId, s);
   }
   const reviews = [...chosen.values()].flatMap((state, c) =>
-    SLIP_RATINGS.map((rating, i) => {
-      const slot = past[(c * SLIP_RATINGS.length + i) % past.length] as (typeof past)[number];
-      return {
-        id: crypto.randomUUID(),
-        userId,
-        cardId: state.cardId,
-        cardStateId: state.id,
-        direction: state.direction,
-        mode: state.mode,
-        rating,
-        state: rating === 1 ? 3 : 2,
-        elapsedDays: 1,
-        scheduledDays: 1,
-        stabilityAfter: 1,
-        difficultyAfter: 8,
-        // A minute apart, so the same slot never holds two identical timestamps.
-        reviewedAt: new Date(slot.at.getTime() + (i + 1) * 60_000),
-        reviewDayId: slot.dayId,
-        source: "web" as const,
-      };
-    }),
+    slots.map((slot) => ({
+      id: crypto.randomUUID(),
+      userId,
+      cardId: state.cardId,
+      cardStateId: state.id,
+      direction: state.direction,
+      mode: state.mode,
+      rating: 1,
+      state: 3,
+      elapsedDays: 1,
+      scheduledDays: 1,
+      stabilityAfter: 1,
+      difficultyAfter: 8,
+      // Just after local midnight, so it is the day's first grade; a second apart per card.
+      reviewedAt: new Date(dayWindow(slot.at, zone).start.getTime() + (c + 1) * 1000),
+      reviewDayId: slot.dayId,
+      source: "web" as const,
+    })),
   );
   const statements: unknown[] = [];
   for (let i = 0; i < reviews.length; i += 6) {

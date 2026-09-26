@@ -182,7 +182,9 @@ export async function reviewDraw(
           ];
         });
         const row = content.get(card.cardId);
-        return row && modes.length > 0 ? [{ card: row, modes }] : [];
+        return row && modes.length > 0
+          ? [{ card: row, modes, slipping: card.slipping ?? false }]
+          : [];
       }),
     log: log.map((entry) => ({
       cardId: entry.cardId,

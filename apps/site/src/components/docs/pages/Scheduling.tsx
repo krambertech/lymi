@@ -337,6 +337,19 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
       >
         <ReturnGaps gaps={k.returnGaps} jitter={k.returnJitter} />
       </Figure>
+      <p>
+        A card you keep forgetting comes back once instead. If its first grade of the day was Forgot
+        on {k.slippingForgottenDays} of the last {k.slippingRecentDays} days it came up, a miss
+        brings it back after about {k.slippingReturnGap} other cards, then it waits for tomorrow. A
+        third or fourth try in one sitting only tests what you saw a minute ago; the next day’s
+        recall does more. The card still comes up every day it’s due, and it leaves the group once
+        you remember it.
+      </p>
+      <p>
+        When only missed cards are left, they come back before their gap, but never straight after
+        themselves. If the card you just missed is all that’s left, the review ends, and Review
+        forgotten brings it back if you want another try.
+      </p>
 
       <H3>Cards left learning come back first</H3>
       <p>

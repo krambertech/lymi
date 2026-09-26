@@ -89,8 +89,14 @@ export const InsightsOut = z
       .array(z.object({ date: LocalDate, count: z.number().int() }))
       .meta({ description: "Seven days from today. Overdue cards count into today." }),
     leeches: z.object({
-      lapses: z.number().int().meta({ description: "Forgotten at least this many times" }),
-      reviews: z.number().int().meta({ description: "And reviewed at least this many times" }),
+      forgottenDays: z
+        .number()
+        .int()
+        .meta({ description: "Forgotten at the first try on at least this many days" }),
+      recentDays: z
+        .number()
+        .int()
+        .meta({ description: "Of the card's last this many review days before today" }),
       cards: z.array(
         z.object({
           id: z.string(),
@@ -98,8 +104,8 @@ export const InsightsOut = z
           term: z.string(),
           meaning: z.string().nullable(),
           language: z.string().nullable(),
-          lapses: z.number().int(),
-          reviews: z.number().int(),
+          lapses: z.number().int().meta({ description: "Forgot grades, all time" }),
+          reviews: z.number().int().meta({ description: "Grades, all time" }),
         }),
       ),
     }),

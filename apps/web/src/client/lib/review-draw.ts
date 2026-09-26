@@ -46,9 +46,10 @@ export function currentDay(data: DrawData, now: Date): DayWindow {
 }
 
 export function drawCards(data: DrawData): DrawCard[] {
-  return data.cards.map(({ card, modes }) => ({
+  return data.cards.map(({ card, modes, slipping }) => ({
     cardId: card.id,
     deckId: card.deckId,
+    slipping,
     modes: modes.map((m) => ({
       mode: modeKey(m.mode),
       state: m.fsrsState,

@@ -1,4 +1,10 @@
-import { type Rating, RETURN_GAPS, RETURN_JITTER, type ReviewMode } from "@lymi/core";
+import {
+  type Rating,
+  RETURN_GAPS,
+  RETURN_JITTER,
+  type ReviewMode,
+  SLIPPING_RETURN_GAP,
+} from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import type { Card, Draw } from "./api";
 import {
@@ -25,7 +31,13 @@ const next = {
 
 function card(
   id: string,
-  opts: { deckId?: string; state?: number; retrievability?: number; due?: string } = {},
+  opts: {
+    deckId?: string;
+    state?: number;
+    retrievability?: number;
+    due?: string;
+    slipping?: boolean;
+  } = {},
 ) {
   return {
     card: { id, deckId: opts.deckId ?? "a", term: id } as Card,
@@ -41,6 +53,7 @@ function card(
         next,
       },
     ],
+    slipping: opts.slipping ?? false,
   };
 }
 
@@ -119,8 +132,8 @@ describe("the log", () => {
 
 describe("returns", () => {
   it("brings a forgotten card back after the expected attempts, and a fourth miss keeps it away", () => {
-    const d = data([card("x", { retrievability: 0.99 }), ...many(40)]);
-    const { seen } = play(d, 40, (id) => (id === "x" ? 1 : 3));
+    const d = data([card("x", { retrievability: 0.99 }), ...many(80)]);
+    const { seen } = play(d, 80, (id) => (id === "x" ? 1 : 3));
     const positions = seen.flatMap((s, i) => (s.cardId === "x" ? [i] : []));
     expect(positions).toHaveLength(4);
     positions.slice(1).forEach((at, i) => {
@@ -128,6 +141,15 @@ describe("returns", () => {
       expect(Math.abs(gap - (RETURN_GAPS[i] as number))).toBeLessThanOrEqual(RETURN_JITTER);
     });
     expect(seen.slice(1 + (positions[3] as number)).some((s) => s.cardId === "x")).toBe(false);
+  });
+
+  it("brings an often-forgotten card back once, as the fetched draw flags it", () => {
+    const d = data([card("x", { retrievability: 0.99, slipping: true }), ...many(30)]);
+    const { seen } = play(d, 30, (id) => (id === "x" ? 1 : 3));
+    const positions = seen.flatMap((s, i) => (s.cardId === "x" ? [i] : []));
+    expect(positions).toHaveLength(2);
+    const gap = (positions[1] as number) - (positions[0] as number) - 1;
+    expect(Math.abs(gap - SLIPPING_RETURN_GAP)).toBeLessThanOrEqual(RETURN_JITTER);
   });
 
   it("serves a return missed in a deck review in the all-decks review", () => {

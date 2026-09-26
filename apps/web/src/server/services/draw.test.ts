@@ -114,33 +114,23 @@ describe("one direction per card per day", () => {
 });
 
 describe("returns and undo", () => {
-  it("keeps a forgotten card drawable and the day open, and Undo restores the count", async () => {
+  it("ends the day when the card just forgotten is all that is left, and Undo reopens it", async () => {
     const { ctx, cards } = await setup([{ term: "üks", meaning: "one" }]);
     const [card] = cards;
     if (!card) throw new Error("no card");
 
+    // A return never comes straight after itself, so a lone forgotten card ends the day.
     const forgot = await gradeCard(ctx, { cardId: card.id, direction: "recognition", rating: 1 });
-    expect(forgot.day.outcome).toBe("open");
+    expect(forgot.day.outcome).toBe("exhausted");
     expect(forgot.state).toBe(1);
-    const queue = await reviewQueue(ctx);
-    expect(queue.total).toBe(1);
-    expect(queue.items.map((i) => i.card.id)).toEqual([card.id]);
+    expect(await drawableCount(ctx, { zone: "UTC" })).toBe(0);
     const draw = await reviewDraw(ctx, { limit: 1 });
     expect(draw.log).toHaveLength(1);
     expect(draw.log[0]).toMatchObject({ cardId: card.id, rating: 1, stateBefore: 0 });
     expect(draw.cards.map((c) => c.card.id)).toEqual([card.id]);
 
-    const good = await gradeCard(ctx, {
-      cardId: card.id,
-      direction: "recognition",
-      rating: 3,
-      reviewedAt: new Date(Date.now() + 1000),
-    });
-    expect(good.day.outcome).toBe("exhausted");
-    expect(await drawableCount(ctx, { zone: "UTC" })).toBe(0);
-
-    if (!good.reviewId) throw new Error("no review");
-    expect((await undoReview(ctx, good.reviewId)).outcome).toBe("open");
+    if (!forgot.reviewId) throw new Error("no review");
+    expect((await undoReview(ctx, forgot.reviewId)).outcome).toBe("open");
     expect(await drawableCount(ctx, { zone: "UTC" })).toBe(1);
   });
 
@@ -272,9 +262,12 @@ describe("a client can draw for itself", () => {
 
 describe("the day follows the review zone", () => {
   it("keeps a grade at 23:50 Tokyo in that Tokyo day and starts the next one at midnight", async () => {
-    const { ctx, cards } = await setup([{ term: "üks", meaning: "one" }]);
-    const [card] = cards;
-    if (!card) throw new Error("no card");
+    const { ctx, cards } = await setup([
+      { term: "üks", meaning: "one" },
+      { term: "kaks", meaning: "two" },
+    ]);
+    const [card, other] = cards;
+    if (!card || !other) throw new Error("no card");
     await setReviewTimezone(ctx, { mode: "manual", timezone: "Asia/Tokyo" });
     // 14:50 UTC is 23:50 in Tokyo. Missed then, the card is a pending return until midnight.
     const lateNight = new Date(Date.now() + 5 * 3_600_000);
@@ -284,6 +277,13 @@ describe("the day follows the review zone", () => {
       direction: "recognition",
       rating: 1,
       reviewedAt: lateNight,
+    });
+    // Another card after it, so the return is not the card just graded.
+    await gradeCard(ctx, {
+      cardId: other.id,
+      direction: "recognition",
+      rating: 4,
+      reviewedAt: new Date(lateNight.getTime() + 60_000),
     });
     const beforeMidnight = new Date(lateNight.getTime() + 5 * 60_000);
     const afterMidnight = new Date(lateNight.getTime() + 20 * 60_000);
@@ -330,7 +330,7 @@ describe("Today rounds", () => {
     const { ctx, cards } = await setup([{ term: "ettevaatlik", meaning: "careful" }]);
     const [card] = cards;
     if (!card) throw new Error("no card");
-    // Six reviews with three Forgots: one short of slipping.
+    // Forgot on 2 of the last 5 days: one short of slipping.
     const history = [1, 3, 1, 3, 1, 3] as const;
     for (const [i, rating] of history.entries()) {
       await gradeCard(ctx, {
@@ -350,5 +350,67 @@ describe("Today rounds", () => {
     if (!mistake.reviewId) throw new Error("no review");
     await undoReview(ctx, mistake.reviewId);
     expect((await reviewRounds(ctx)).slipping).toBe(0);
+  });
+
+  it("counts each day's first grade, drops a card that sticks and ignores today", async () => {
+    const { ctx, cards } = await setup([
+      { term: "üks", meaning: "one" },
+      { term: "kaks", meaning: "two" },
+      { term: "kolm", meaning: "three" },
+      { term: "neli", meaning: "four" },
+    ]);
+    const [drilled, slipping, stuck, today] = cards;
+    if (!drilled || !slipping || !stuck || !today) throw new Error("no cards");
+    const noon = new Date();
+    noon.setUTCHours(12, 0, 0, 0);
+    const history = async (cardId: string, days: [number, 1 | 3][]) => {
+      for (const [daysAgo, rating] of days) {
+        const reviewedAt = new Date(noon.getTime() - daysAgo * DAY);
+        await gradeCard(ctx, { cardId, direction: "recognition", rating, reviewedAt });
+      }
+    };
+    // Four Forgots in one sitting count as one day.
+    await history(drilled.id, [
+      [3, 3],
+      [2, 3],
+      [1, 1],
+    ]);
+    for (const minutes of [1, 2, 3]) {
+      const reviewedAt = new Date(noon.getTime() - DAY + minutes * 60_000);
+      await gradeCard(ctx, { cardId: drilled.id, direction: "recognition", rating: 1, reviewedAt });
+    }
+    await history(slipping.id, [
+      [5, 1],
+      [4, 1],
+      [3, 1],
+      [2, 3],
+      [1, 3],
+    ]);
+    // Remembered on its three latest days, so only two of its last five are Forgot.
+    await history(stuck.id, [
+      [7, 1],
+      [6, 1],
+      [5, 1],
+      [4, 3],
+      [3, 3],
+      [2, 3],
+    ]);
+    await history(today.id, [
+      [3, 1],
+      [2, 1],
+      [1, 3],
+    ]);
+
+    const round = await reviewQueue(ctx, { round: "slipping" });
+    expect(round.items.map((i) => i.card.id)).toEqual([slipping.id]);
+
+    // Today's Forgot waits for tomorrow; the draw hands each card its flag.
+    await gradeCard(ctx, { cardId: today.id, direction: "recognition", rating: 1 });
+    await gradeCard(ctx, { cardId: slipping.id, direction: "recognition", rating: 1 });
+    const flags = new Map(
+      (await reviewDraw(ctx, {})).cards.map((c) => [c.card.id, c.slipping] as const),
+    );
+    expect(flags.get(slipping.id)).toBe(true);
+    expect(flags.get(today.id)).toBe(false);
   });
 });

@@ -12,7 +12,9 @@ export const NEW_CARD_SLOT_EVERY = 5;
 /** Every fourth new-card slot takes the oldest unseen card instead of a weighted one. */
 export const OLDEST_UNSEEN_SLOT_EVERY = 4;
 /** Attempts before a missed mode returns, by return number. After the last it waits a day. */
-export const RETURN_GAPS = [3, 6, 12] as const;
+export const RETURN_GAPS = [5, 10, 20] as const;
+/** An often-forgotten card's miss returns once, this many attempts later, then waits a day. */
+export const SLIPPING_RETURN_GAP = 10;
 /** Each gap moves by up to this many attempts either way. */
 export const RETURN_JITTER = 1;
 /** A mode left learning from an earlier day is served this many attempts apart. */
@@ -45,6 +47,8 @@ export interface DrawCard {
   cardId: string;
   deckId: string;
   modes: DrawMode[];
+  /** Often forgotten before today, which leaves a miss one return. */
+  slipping?: boolean | undefined;
 }
 
 /** One accepted, non-undone grade from today, in every scope. */
@@ -153,8 +157,16 @@ function unit(date: string, cardId: string, mode: ModeKey, salt = ""): number {
 }
 
 /** The gap a return waits for, counted in attempts after the miss. */
-export function returnGap(date: string, cardId: string, mode: ModeKey, misses: number): number {
-  const base = RETURN_GAPS[Math.min(misses, RETURN_GAPS.length) - 1] as number;
+export function returnGap(
+  date: string,
+  cardId: string,
+  mode: ModeKey,
+  misses: number,
+  slipping = false,
+): number {
+  const base = slipping
+    ? SLIPPING_RETURN_GAP
+    : (RETURN_GAPS[Math.min(misses, RETURN_GAPS.length) - 1] as number);
   const jitter = Math.floor(unit(date, cardId, mode, `return${misses}`) * (2 * RETURN_JITTER + 1));
   return base + jitter - RETURN_JITTER;
 }
@@ -201,6 +213,7 @@ interface Plan {
   day: DayWindow;
   /** Every mode of every card in scope, so a pending return is found whatever its due. */
   modes: Map<string, Candidate>;
+  slipping: Set<string>;
   carries: Candidate[];
   reviews: Candidate[];
   /** Unseen modes by weighted key, and by age for the oldest-card slot. */
@@ -223,11 +236,13 @@ function plan(
 ): Plan {
   const { date } = day;
   const modes = new Map<string, Candidate>();
+  const slipping = new Set<string>();
   const carries: Candidate[] = [];
   const reviews: Candidate[] = [];
   const unseen: Candidate[] = [];
   for (const card of cards) {
     if (scope.deckId && card.deckId !== scope.deckId) continue;
+    if (card.slipping) slipping.add(card.cardId);
     for (const mode of card.modes) {
       modes.set(drawKey(card.cardId, mode.mode), { cardId: card.cardId, mode });
     }
@@ -250,6 +265,7 @@ function plan(
   return {
     day,
     modes,
+    slipping,
     carries: [...carries].sort(byDue),
     reviews: sortedBy(reviews, (c) => policy.reviewKey(c, day), true),
     recent: sortedBy(unseen, (c) => policy.unseenKey(c, day), true),
@@ -265,10 +281,12 @@ interface Returning extends PendingReturn {
 /** Returns still owed today in this scope, earliest miss first; past the cap they are left out. */
 function returning(p: Plan, log: readonly DrawLogEntry[]): Returning[] {
   return pendingReturns(log).flatMap((pending) => {
-    if (pending.misses > RETURN_GAPS.length) return [];
+    const slipping = p.slipping.has(pending.cardId);
+    if (pending.misses > (slipping ? 1 : RETURN_GAPS.length)) return [];
     if (!p.modes.has(drawKey(pending.cardId, pending.mode))) return [];
     const since = log.length - pending.missedAt - 1;
-    const reached = since >= returnGap(p.day.date, pending.cardId, pending.mode, pending.misses);
+    const gap = returnGap(p.day.date, pending.cardId, pending.mode, pending.misses, slipping);
+    const reached = since >= gap;
     return [{ ...pending, reached }];
   });
 }
@@ -282,7 +300,8 @@ const pick = (c: Candidate, kind: DrawKind): Drawn => ({
 /**
  * The next card from a plan. Each attempt takes the first of: a return whose gap is reached;
  * a mode left learning from an earlier day, spaced every few attempts or at once when nothing
- * else is drawable; an ordinary draw; the earliest pending return. Null when the day is done.
+ * else is drawable; an ordinary draw; the earliest pending return of another card than the one
+ * just graded. Null when the day is done.
  */
 function next(p: Plan, log: readonly DrawLogEntry[]): Drawn | null {
   const returns = returning(p, log);
@@ -311,7 +330,8 @@ function next(p: Plan, log: readonly DrawLogEntry[]): Drawn | null {
   if (unseen && (newSlot || !review)) return pick(unseen, "unseen");
   if (review) return pick(review, "review");
 
-  const earliest = returns[0];
+  const last = log[log.length - 1]?.cardId;
+  const earliest = returns.find((r) => r.cardId !== last);
   return earliest ? { cardId: earliest.cardId, mode: earliest.mode, kind: "return" } : null;
 }
 
@@ -376,6 +396,8 @@ export function drawableCount(
   scope: DrawScope = {},
 ): number {
   const p = plan(cards, day, scope, DRAW_POLICY);
+  // Only the card just graded may be left, and it never comes straight back.
+  if (!next(p, log)) return 0;
   const reviewed = new Set(log.map((entry) => entry.cardId));
   const ids = new Set<string>();
   for (const group of [p.carries, p.reviews, p.recent]) {

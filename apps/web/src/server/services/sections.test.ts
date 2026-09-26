@@ -303,6 +303,13 @@ describe("reviewing one section", () => {
     ]);
     // Started early: a locked section's started card stays in review, and its section says so.
     await forget(me, cards.b1 as string);
+    // Another grade after it, since a return never comes straight after its own card.
+    await gradeCard(me, {
+      cardId: cards.loose as string,
+      direction: "recognition",
+      rating: 4,
+      timezone: "UTC",
+    });
 
     const due = (await listSections(me, deck.id)).sections.map((s) => [s.name, s.due]);
     expect(due).toEqual([
@@ -311,7 +318,7 @@ describe("reviewing one section", () => {
     ]);
     const draw = await reviewDraw(me, { deckId: deck.id, sectionId: sections.B, zone: "UTC" });
     expect(draw.total).toBe(1);
-    expect((await listDecks(me)).find((d) => d.id === deck.id)?.due).toBe(4);
+    expect((await listDecks(me)).find((d) => d.id === deck.id)?.due).toBe(3);
   });
 
   it("is not found with a deck the section is not in", async () => {

@@ -1691,12 +1691,13 @@ msgstr "Forgot your password?"
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Forgot, Hard, Good, Easy"
 
-#. placeholder {0}: leeches.lapses
-msgid "Forgotten {0}+ times"
-msgstr "Forgotten {0}+ times"
+#. placeholder {0}: leeches.forgottenDays
+#. placeholder {1}: leeches.recentDays
+msgid "Forgotten on {0} of the last {1, plural, one {# day} other {# days}} seen"
+msgstr "Forgotten on {0} of the last {1, plural, one {# day} other {# days}} seen"
 
-msgid "Forgotten {SLIPPING_LAPSES} or more times"
-msgstr "Forgotten {SLIPPING_LAPSES} or more times"
+msgid "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS, plural, one {# day} other {# days}} seen"
+msgstr "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS, plural, one {# day} other {# days}} seen"
 
 msgid "Forgotten recently"
 msgstr "Forgotten recently"

@@ -46,7 +46,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Round**: A review of a chosen set beside the day's draw: one of Today's groups, new cards, forgotten today or slipping, or Review forgotten at the end of a review. Each card comes once, and every grade counts like any review. _Avoid_: Session, quiz, practice
 
-**Slipping card**: A card forgotten at least 4 times in at least 6 reviews. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
+**Slipping card**: A card whose first grade of the day was Forgot on at least 3 of the last 5 days it was reviewed, before today. It leaves the group once it is remembered, and a miss brings it back once in a review instead of three times. ADR 0024. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
 
 **Rest day**: A past day that fell short of its goal, with reviews or none, and still kept the run, because the run had no other rest day in the six days before it. Automatic and never declared or stored. It keeps the streak without adding to it; any other short day breaks the run. _Avoid_: Freeze, skip, pass, grace
 

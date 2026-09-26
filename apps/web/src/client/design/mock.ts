@@ -348,8 +348,8 @@ export const insights: InsightsOut = {
     count: [42, 88, 51, 34, 19, 63, 25][i] ?? 0,
   })),
   leeches: {
-    lapses: 4,
-    reviews: 6,
+    forgottenDays: 3,
+    recentDays: 5,
     cards: [
       {
         id: "c1",
@@ -431,7 +431,7 @@ export const thinInsights: InsightsOut = {
     date: new Date(now + i * day).toISOString().slice(0, 10),
     count: [5, 3, 7, 2, 0, 4, 1][i] ?? 0,
   })),
-  leeches: { lapses: 4, reviews: 6, cards: [] },
+  leeches: { forgottenDays: 3, recentDays: 5, cards: [] },
 };
 
 /**

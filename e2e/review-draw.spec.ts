@@ -55,9 +55,9 @@ test("a forgotten card comes back in the same review", async ({ page }, testInfo
     expect(await currentCard(page)).not.toBe(forgotten);
   });
 
-  await test.step("it returns within four attempts", async () => {
-    const between = await gradeUntil(page, forgotten, 1, 4);
-    expect(between).toBeGreaterThanOrEqual(2);
+  await test.step("it returns after four to six other cards", async () => {
+    const between = await gradeUntil(page, forgotten, 1, 6);
+    expect(between).toBeGreaterThanOrEqual(4);
   });
 
   await test.step("a reload shows the same card and count", async () => {
@@ -88,7 +88,7 @@ test("grades that could not be sent still decide the next card after a reload", 
   await page.reload();
   await expect(page.getByText(/^2 of \d+$/)).toBeVisible();
   await expect(page.getByLabel(next, { exact: true })).toBeVisible();
-  await gradeUntil(page, forgotten, 2, 3);
+  await gradeUntil(page, forgotten, 2, 5);
 
   await test.step("the queued grades reach the server once the connection returns", async () => {
     await page.unroute("**/api/review/grade");
@@ -179,7 +179,7 @@ test("a return missed in a deck review comes up in the all-decks review", async 
 
   await page.goto("/review");
   await expect(page.getByText(/^1 of \d+$/)).toBeVisible();
-  await gradeUntil(page, forgotten, 1, 4);
+  await gradeUntil(page, forgotten, 1, 6);
 });
 
 test("midnight starts a new day, and yesterday's forgotten card comes first", async ({

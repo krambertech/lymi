@@ -348,10 +348,10 @@ describe("the order is pinned", () => {
   // A change here changes every learner's order on deploy. Change it on purpose or not at all.
   it("hashes the date, card and mode to the same keys as before", () => {
     expect([1, 2, 3].map((m) => returnGap("2026-09-13", "card-a", "term_to_meaning", m))).toEqual([
-      4, 5, 12,
+      6, 9, 20,
     ]);
     expect([1, 2, 3].map((m) => returnGap("2026-09-14", "card-a", "term_to_meaning", m))).toEqual([
-      2, 5, 12,
+      4, 9, 20,
     ]);
     const modes = collection(42, day, 30);
     const order = drawOrder(toDrawCards(modes, day), [], day, {}, 12).map(

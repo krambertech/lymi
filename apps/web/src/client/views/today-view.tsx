@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { type RoundsOut, SLIPPING_LAPSES } from "@lymi/core";
+import { type RoundsOut, SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { ChevronRight, Plus } from "lucide-react";
@@ -353,7 +353,7 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
       mark: undefined,
       count: rounds.slipping,
       label: t`Often forgotten`,
-      detail: t`Forgotten ${SLIPPING_LAPSES} or more times`,
+      detail: t`Forgotten on ${SLIPPING_FORGOTTEN_DAYS} of the last ${plural(SLIPPING_RECENT_DAYS, { one: "# day", other: "# days" })} seen`,
       empty: t`No cards you keep forgetting`,
       action: t`Review often forgotten`,
     },
@@ -377,7 +377,7 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
           {item.mark && <StateIcon state={item.mark} className="size-4" />}
           {item.label}
         </span>
-        <span className="text-sm text-muted">{live ? item.detail : item.empty}</span>
+        <span className="text-sm text-balance text-muted">{live ? item.detail : item.empty}</span>
       </span>
     </>
   );

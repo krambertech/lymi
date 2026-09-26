@@ -56,7 +56,7 @@ A small tab on the end edge of every product screen shows the current persona's 
 
 - **Persona**: one drawn avatar per persona, with yours ringed. Pointing at a face describes it; pressing it signs you in as that account and reloads the screen you were on.
 - **Language and theme**: English or Ukrainian, which the meaning language follows, and system, light or dark.
-- **Simulate**: states that are slow or impossible to reach by hand. Claude adds 5 cards (an Activity row naming the app), enrich 5 cards (AI examples and an enrichment row), forget 3 cards (Forgotten today), make 3 often forgotten (the slipping round, on past days that already hold reviews), reach today's goal, and make 5 cards due. An action that cannot do anything for this account says why. **Reseed**, beside the persona, puts the account back to the persona's starting data; switching persona does not.
+- **Simulate**: states that are slow or impossible to reach by hand. Claude adds 5 cards (an Activity row naming the app), enrich 5 cards (AI examples and an enrichment row), forget 3 cards (Forgotten today), make 3 often forgotten (the slipping round, with a Forgot on the three latest past days that already hold reviews), reach today's goal, and make 5 cards due. An action that cannot do anything for this account says why. **Reseed**, beside the persona, puts the account back to the persona's starting data; switching persona does not.
 
 Each change refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The last thing that happened is written at the bottom. The panel is compiled into the Vite dev server only; a production build has no trace of it.
 

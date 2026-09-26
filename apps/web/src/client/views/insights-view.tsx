@@ -335,7 +335,10 @@ export function InsightsView({
               <Trans>Often forgotten</Trans>
             </h2>
             <span className="text-xs text-muted">
-              <Trans>Forgotten {leeches.lapses}+ times</Trans>
+              <Trans>
+                Forgotten on {leeches.forgottenDays} of the last{" "}
+                <Plural value={leeches.recentDays} one="# day" other="# days" /> seen
+              </Trans>
             </span>
           </div>
           <ul>

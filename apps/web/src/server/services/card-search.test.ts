@@ -475,10 +475,11 @@ describe("review history", () => {
   });
 
   it("counts only reviews since a moment, and only one mode when asked", async () => {
+    // Often forgotten is card-wide, whatever the window.
     expect(await statsOf("ema", { since: "-P30D" })).toMatchObject({
       reviewCount: 4,
       lapses: 3,
-      slipping: false,
+      slipping: true,
     });
     expect(await statsOf("ema", { since: "-P30D", mode: "meaning_to_term" })).toMatchObject({
       reviewCount: 2,
@@ -501,6 +502,9 @@ describe("review history", () => {
     expect(await find({ reviews: { lastReviewedAt: { gte: "-P3D" } } })).toEqual(named("ode"));
     expect(await find({ reviews: { lastReviewedAt: { null: true } } })).toEqual(named("laps"));
     expect(await find({ reviews: { slipping: { eq: true } } })).toEqual(named("ema"));
+    expect(await find({ reviews: { slipping: { eq: false }, count: { gte: 1 } } })).toEqual(
+      named("isa", "vend", "ode"),
+    );
     expect(await find({ reviews: { lapseRate: { lte: 0 }, count: { gte: 1 } } })).toEqual(
       named("isa"),
     );

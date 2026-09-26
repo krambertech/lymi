@@ -35,6 +35,7 @@ const card = (id: string, deckId = "a") => ({
       next,
     },
   ],
+  slipping: false,
 });
 
 const data = (n: number, deckOf: (i: number) => string = () => "a"): Draw => ({

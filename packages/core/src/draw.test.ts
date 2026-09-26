@@ -310,10 +310,7 @@ describe("returns", () => {
       grade("a", 1, State.Relearning),
       grade("a", 1, State.Relearning),
     ];
-    const cards = [
-      card("a", [{ mode: "meaning_to_term", state: State.Relearning }]),
-      review("b"),
-    ];
+    const cards = [card("a", [{ mode: "meaning_to_term", state: State.Relearning }]), review("b")];
     const between = grade("b", 3);
     expect(drawableCount(cards, [...log, between], day)).toBe(0);
     expect(draw(cards, [...log, between], day)).toBeNull();

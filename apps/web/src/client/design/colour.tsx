@@ -47,8 +47,14 @@ const TOKENS: Token[] = [
   { name: "amber-ink", role: "Words and icons on amber." },
   {
     name: "amber-text",
-    role: "Amber that has to hold contrast: the Easy grade, the streak tick, unread dots.",
+    role: "Amber words that have to hold 4.5:1. Brown by day, so never for an icon.",
     on: "canvas",
+  },
+  {
+    name: "amber-mark",
+    role: "Amber icons beside a word: the Easy grade, the streak tick. Amber itself at night.",
+    on: "plate-2",
+    kind: "graphic",
   },
   { name: "amber-tint", role: "Behind a due count." },
   { name: "amber-tint-ink", role: "The number on a due count." },

@@ -107,6 +107,8 @@
   --amber-hover: oklch(0.76 0.15 68);
   --amber-ink: oklch(0.25 0.05 60);
   --amber-text: oklch(0.5 0.14 50);
+  /* Amber for an icon beside a word: 3:1 on plate-2, where amber-text would read as brown. */
+  --amber-mark: oklch(0.64 0.16 56);
   --amber-soft: oklch(0.8 0.15 72 / 0.16);
   /* Behind a due count, whose number stays ink. */
   --amber-tint: oklch(0.8 0.15 72 / 0.26);
@@ -164,6 +166,7 @@
   --amber-hover: oklch(0.86 0.15 76);
   --amber-ink: oklch(0.22 0.05 60);
   --amber-text: oklch(0.84 0.13 78);
+  --amber-mark: var(--amber);
   --amber-soft: oklch(0.82 0.15 74 / 0.14);
   --amber-tint: oklch(0.82 0.15 74 / 0.16);
   --amber-tint-ink: var(--amber-text);
@@ -219,6 +222,7 @@
   --color-amber-hover: var(--amber-hover);
   --color-amber-ink: var(--amber-ink);
   --color-amber-text: var(--amber-text);
+  --color-amber-mark: var(--amber-mark);
   --color-amber-soft: var(--amber-soft);
   --color-amber-tint: var(--amber-tint);
   --color-amber-tint-ink: var(--amber-tint-ink);
@@ -240,7 +244,7 @@
   --color-grade-forgot: var(--danger);
   --color-grade-hard: var(--muted);
   --color-grade-good: var(--good);
-  --color-grade-easy: var(--amber-text);
+  --color-grade-easy: var(--amber-mark);
   --color-ring: var(--ring);
   --color-scrim: var(--scrim);
   --color-toast-action: var(--toast-action);

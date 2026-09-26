@@ -369,7 +369,7 @@ export function StreakPanel({
           <div className="flex items-center gap-2">
             {/* The goal is named whether or not the day is done, so the bar below has a number to mean. */}
             <span className="flex flex-1 items-center gap-1.5 text-base font-medium tabular-nums text-text">
-              {done && <Check className="size-4 shrink-0 text-amber-text" aria-hidden="true" />}
+              {done && <Check className="size-4 shrink-0 text-amber-mark" aria-hidden="true" />}
               {/* "of" only holds up to the goal; a round past it counts on and still names what it passed. */}
               {today.attempts > today.goal ? (
                 <Plural

@@ -64,7 +64,7 @@ export function slippingCardIds(
     .select({ id: sql<string>`${recent.cardId}`.as("slipping_card_id") })
     .from(recent)
     .where(lte(recent.recency, SLIPPING_RECENT_DAYS))
-    .groupBy(recent.cardId)
+    .groupBy(sql`${recent.cardId}`)
     .having(
       sql`sum(case when ${recent.rating} = 1 then 1 else 0 end) >= ${SLIPPING_FORGOTTEN_DAYS}`,
     );

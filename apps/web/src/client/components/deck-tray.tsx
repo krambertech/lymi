@@ -136,8 +136,9 @@ export function DeckTray({
 interface TileProps {
   deck: PublicDeckSummary;
   /** The deck in Library once the learner has it; the tile then leads there instead of adding. */
-  addedTo: string | null;
-  onAdd: () => void;
+  addedTo?: string | null | undefined;
+  /** Left out, the tile only leads to the deck's page, as in More like this. */
+  onAdd?: (() => void) | undefined;
   adding?: boolean | undefined;
 }
 
@@ -157,7 +158,10 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
       <NavLink
         to="/explore/$slug"
         params={{ slug: deck.slug }}
-        className="grid content-start gap-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        className={clsx(
+          "grid content-start gap-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+          !addedTo && !onAdd && "pb-3.5",
+        )}
       >
         <DeckTray
           slug={deck.slug}
@@ -179,28 +183,30 @@ export function DeckTile({ deck, addedTo, onAdd, adding }: TileProps) {
           <DeckMeta deck={deck} />
         </div>
       </NavLink>
-      <div className="px-3.5 pb-3.5 pt-3.5">
-        {addedTo ? (
-          <NavLink
-            to="/library/$deckId"
-            params={{ deckId: addedTo }}
-            className="relative inline-flex h-8 items-center gap-1.5 rounded-sm px-2 -ms-2 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
-          >
-            <Check aria-hidden="true" className="text-state-known" />
-            <Trans>In Library</Trans>
-          </NavLink>
-        ) : (
-          <Button
-            size="sm"
-            onClick={onAdd}
-            loading={adding}
-            aria-label={t`Add “${deck.name}” to Library`}
-          >
-            <Plus data-icon="inline-start" aria-hidden="true" />
-            <Trans>Add</Trans>
-          </Button>
-        )}
-      </div>
+      {(addedTo || onAdd) && (
+        <div className="px-3.5 pb-3.5 pt-3.5">
+          {addedTo ? (
+            <NavLink
+              to="/library/$deckId"
+              params={{ deckId: addedTo }}
+              className="relative inline-flex h-8 items-center gap-1.5 rounded-sm px-2 -ms-2 text-sm font-medium text-text-2 transition-colors duration-150 before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-hover hoverable:hover:text-text [&_svg]:size-4"
+            >
+              <Check aria-hidden="true" className="text-state-known" />
+              <Trans>In Library</Trans>
+            </NavLink>
+          ) : (
+            <Button
+              size="sm"
+              onClick={onAdd}
+              loading={adding}
+              aria-label={t`Add “${deck.name}” to Library`}
+            >
+              <Plus data-icon="inline-start" aria-hidden="true" />
+              <Trans>Add</Trans>
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

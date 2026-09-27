@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EditionCardField, EditionStatus, PublicationCategory } from "../types";
+import { EditionCardField, EditionStatus, PublicationCategory, PublicationTag } from "../types";
 import { Timestamp } from "./common";
 
 export const PublicationOut = z
@@ -11,6 +11,7 @@ export const PublicationOut = z
         summary: z.string(),
         level: z.string().nullable(),
         category: PublicationCategory.nullable(),
+        tags: z.array(PublicationTag),
         meaningLanguage: z.string().meta({
           description: "The original edition, which the deck's own fields are written in",
         }),

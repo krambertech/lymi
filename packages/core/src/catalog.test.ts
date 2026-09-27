@@ -5,14 +5,18 @@ import {
   type PublicationRow,
   previewMode,
   projectPublicDeck,
+  type RelatedCandidate,
+  rankRelated,
   type SectionRow,
 } from "./catalog";
+import { PublicationInput } from "./types";
 
 const publication = (over: Partial<PublicationRow> = {}): PublicationRow => ({
   slug: "everyday-estonian",
   status: "published",
   summary: "Words and phrases for your first weeks in Estonia.",
   level: "A1",
+  tags: [],
   meaningLanguage: "en",
   originalMeaningLanguage: "en",
   editions: ["en"],
@@ -146,6 +150,74 @@ describe("projectPublicDeck", () => {
       { status: "unavailable" },
     );
     expect(projectPublicDeck(publication(), sections, [])).toEqual({ status: "unavailable" });
+  });
+});
+
+describe("publication tags", () => {
+  it("shows known tags in list order and drops a key no longer on the list", () => {
+    const result = projectPublicDeck(
+      publication({ tags: ["travel", "retired-tag", "core-words", "travel"] }),
+      sections,
+      cards,
+    );
+    if (result.status !== "published") throw new Error(result.status);
+    expect(result.deck.tags).toEqual(["core-words", "travel"]);
+  });
+
+  it("refuses an unknown key when publishing", () => {
+    const input = {
+      slug: "everyday-estonian",
+      summary: "Words.",
+      meaningLanguage: "en",
+      publisher: "Lymi",
+    };
+    expect(PublicationInput.safeParse({ ...input, tags: ["travel"] }).success).toBe(true);
+    expect(PublicationInput.safeParse({ ...input, tags: ["holiday"] }).success).toBe(false);
+  });
+});
+
+describe("rankRelated", () => {
+  const deck = (
+    slug: string,
+    over: Partial<Omit<RelatedCandidate, "slug">> = {},
+  ): RelatedCandidate => ({ slug, tags: [], category: null, language: null, ...over });
+  const anchor = deck("spanish-travel", {
+    tags: ["travel", "beginner"],
+    category: "languages",
+    language: "es",
+  });
+
+  it("ranks shared tags first, then the same language, then the same shelf", () => {
+    const candidates = [
+      deck("same-shelf", { category: "languages", language: "fi" }),
+      deck("same-language", { language: "es-MX" }),
+      deck("one-tag", { tags: ["travel"], language: "ja" }),
+      deck("two-tags", { tags: ["beginner", "travel"], language: "de" }),
+      deck("one-tag-same-language", { tags: ["beginner"], language: "es" }),
+    ];
+    expect(rankRelated(anchor, candidates, 10)).toEqual([
+      "two-tags",
+      "one-tag-same-language",
+      "one-tag",
+      "same-language",
+      "same-shelf",
+    ]);
+  });
+
+  it("leaves out the deck itself and decks that share nothing, and keeps catalogue order on a tie", () => {
+    const candidates = [
+      anchor,
+      deck("stranger", { tags: ["grammar"], category: "science", language: "fi" }),
+      deck("no-language", { language: null }),
+      deck("first", { tags: ["travel"] }),
+      deck("second", { tags: ["travel"] }),
+    ];
+    expect(rankRelated(anchor, candidates, 10)).toEqual(["first", "second"]);
+    expect(rankRelated(anchor, candidates, 1)).toEqual(["first"]);
+  });
+
+  it("finds nothing for a deck with no tags, language or shelf", () => {
+    expect(rankRelated(deck("alone"), [deck("other"), anchor], 4)).toEqual([]);
   });
 });
 

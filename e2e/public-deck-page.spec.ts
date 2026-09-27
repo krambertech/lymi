@@ -207,6 +207,23 @@ test("anyone can read a published deck's page, see its sections and cards, and t
   });
 });
 
+test("a deck page shows its tags in the reader's language and leads to decks like it", async ({
+  page,
+}) => {
+  await page.goto(`${publicSite}/uk${pagePath}`);
+  const tags = page.getByRole("list", { name: "Теги" });
+  await expect(tags.getByRole("listitem")).toHaveText(["Базова лексика", "Подорожі"]);
+
+  // The road signs share a tag; the withdrawn and archived decks carry it too but are gone.
+  const related = page.getByRole("region", { name: "Схожі колоди" });
+  await expect(related.getByRole("heading", { level: 3 })).toHaveText(["Estonian road signs"]);
+  await related.getByRole("link", { name: /Estonian road signs/ }).click();
+  await expect(page).toHaveURL(`${publicSite}/uk/explore/estonian-road-signs`);
+  await expect(page.getByRole("list", { name: "Теги" }).getByRole("listitem")).toHaveText([
+    "Подорожі",
+  ]);
+});
+
 test("without JavaScript the page still shows the deck and its sections", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

@@ -760,6 +760,10 @@ msgstr "All at once"
 msgid "Allow"
 msgstr "Allow"
 
+msgctxt "deck tag"
+msgid "Alphabet"
+msgstr "Alphabet"
+
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
 
@@ -1175,6 +1179,10 @@ msgstr "Continue with Google"
 msgid "Continue with Google here:"
 msgstr "Continue with Google here:"
 
+msgctxt "deck tag"
+msgid "Conversation"
+msgstr "Conversation"
+
 msgid "Copied"
 msgstr "Copied"
 
@@ -1183,6 +1191,10 @@ msgstr "Copied when you save"
 
 msgid "Copy"
 msgstr "Copy"
+
+msgctxt "deck tag"
+msgid "Core vocabulary"
+msgstr "Core vocabulary"
 
 msgid "Couldn’t add the deck. Check your connection and try again."
 msgstr "Couldn’t add the deck. Check your connection and try again."
@@ -1679,6 +1691,10 @@ msgstr "Filter"
 msgid "For Anki, AnkiDroid and Mochi, with due dates, review history and pictures. An .apkg file."
 msgstr "For Anki, AnkiDroid and Mochi, with due dates, review history and pictures. An .apkg file."
 
+msgctxt "deck tag"
+msgid "For beginners"
+msgstr "For beginners"
+
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "For scripts and curl. For AI apps, use Connected apps instead."
 
@@ -1745,6 +1761,10 @@ msgstr "Go to Lymi"
 msgid "Go to section"
 msgstr "Go to section"
 
+msgctxt "deck tag"
+msgid "Goethe-Zertifikat A1"
+msgstr "Goethe-Zertifikat A1"
+
 msgid "Good"
 msgstr "Good"
 
@@ -1753,6 +1773,10 @@ msgstr "Grade your reviews or change your progress"
 
 msgid "Graded Forgot today"
 msgstr "Graded Forgot today"
+
+msgctxt "deck tag"
+msgid "Grammar"
+msgstr "Grammar"
 
 msgid "Hard"
 msgstr "Hard"
@@ -1795,6 +1819,10 @@ msgstr "How sections open"
 
 msgid "How to connect"
 msgstr "How to connect"
+
+msgctxt "deck tag"
+msgid "HSK 1"
+msgstr "HSK 1"
 
 msgid "Idea"
 msgstr "Idea"
@@ -1916,6 +1944,10 @@ msgstr "It wasn’t confirmed within three days, so Lymi deleted the file. Choos
 
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Its cards and the decks it made are hidden. Restore brings them back with their history."
+
+msgctxt "deck tag"
+msgid "JLPT N5"
+msgstr "JLPT N5"
 
 msgid "Join"
 msgstr "Join"
@@ -2044,6 +2076,10 @@ msgstr "Leave review or close a sheet"
 msgid "Leaving this deck"
 msgstr "Leaving this deck"
 
+msgctxt "deck tag"
+msgid "Leben in Deutschland test"
+msgstr "Leben in Deutschland test"
+
 msgid "Left “{deckName}”"
 msgstr "Left “{deckName}”"
 
@@ -2164,6 +2200,9 @@ msgstr "More decks"
 
 msgid "More fields"
 msgstr "More fields"
+
+msgid "More like this"
+msgstr "More like this"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
@@ -3517,9 +3556,17 @@ msgstr "Took “{term}” out of its section"
 msgid "Took {count, plural, one {# card} other {# cards}} out of their sections"
 msgstr "Took {count, plural, one {# card} other {# cards}} out of their sections"
 
+msgctxt "deck tag"
+msgid "TOPIK I"
+msgstr "TOPIK I"
+
 msgctxt "cards in this deck"
 msgid "Total"
 msgstr "Total"
+
+msgctxt "deck tag"
+msgid "Travel"
+msgstr "Travel"
 
 msgid "Try again"
 msgstr "Try again"
@@ -3556,6 +3603,10 @@ msgstr "Updated {lastAdded}"
 
 msgid "Uploading"
 msgstr "Uploading"
+
+msgctxt "deck tag"
+msgid "US civics test"
+msgstr "US civics test"
 
 msgid "Use “{tag}” as the tag"
 msgstr "Use “{tag}” as the tag"

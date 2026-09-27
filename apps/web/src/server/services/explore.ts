@@ -1,5 +1,5 @@
 import type { ExploreDeckOut, ExploreOut } from "@lymi/core/catalog";
-import { listPublicCatalog, loadPublicDeck } from "@lymi/core/catalog";
+import { listPublicCatalog, listRelatedDecks, loadPublicDeck } from "@lymi/core/catalog";
 import { and, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Db } from "../db";
 import { schema } from "../db";
@@ -23,6 +23,9 @@ export async function exploreCatalog(ctx: ServiceContext): Promise<ExploreOut> {
   return { decks, added: Object.fromEntries(added) };
 }
 
+/** More like this fills one row of the product's column, which holds three tiles. */
+const RELATED_IN_PRODUCT = 3;
+
 /** One published deck in the app's chrome. A withdrawn or empty deck is gone, as it is publicly. */
 export async function exploreDeck(ctx: ServiceContext, slug: string): Promise<ExploreDeckOut> {
   const { meaningLanguage } = await getSettings(ctx);
@@ -30,21 +33,26 @@ export async function exploreDeck(ctx: ServiceContext, slug: string): Promise<Ex
   if (result.status !== "published") {
     throw new ServiceError("not_found", "This deck is not published");
   }
-  const added = await addedDecks(ctx.db, ctx.userId, [slug]);
-  return { deck: result.deck, deckId: added.get(slug) ?? null };
+  const added = await addedDecks(ctx.db, ctx.userId);
+  const related = await listRelatedDecks(ctx.db, slug, {
+    language: meaningLanguage,
+    exclude: new Set(added.keys()),
+    limit: RELATED_IN_PRODUCT,
+  });
+  return { deck: result.deck, deckId: added.get(slug) ?? null, related };
 }
 
 /**
- * Which of these published decks are already this learner's, and the deck each one is. A deck's
- * owner counts: joining one's own deck writes no member row and changes nothing, so a publisher
- * offered Add on their own deck would press it and see nothing happen.
+ * Which published decks are already this learner's, among these slugs or all of them, and the deck
+ * each one is. A deck's owner counts: joining one's own deck writes no member row and changes
+ * nothing, so a publisher offered Add on their own deck would press it and see nothing happen.
  */
 async function addedDecks(
   db: Db,
   userId: string,
-  slugs: readonly string[],
+  slugs?: readonly string[],
 ): Promise<Map<string, string>> {
-  if (slugs.length === 0) return new Map();
+  if (slugs?.length === 0) return new Map();
   const rows = await db
     .select({ slug: schema.deckPublications.slug, deckId: schema.deckPublications.deckId })
     .from(schema.deckPublications)
@@ -59,7 +67,7 @@ async function addedDecks(
     )
     .where(
       and(
-        inArray(schema.deckPublications.slug, [...slugs]),
+        slugs ? inArray(schema.deckPublications.slug, [...slugs]) : undefined,
         or(eq(schema.decks.userId, userId), isNotNull(schema.deckMembers.userId)),
       ),
     );

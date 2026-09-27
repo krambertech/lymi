@@ -186,6 +186,7 @@ async function seedPublication(
       summary: publication.summary,
       level: publication.level ?? null,
       category: publication.category ?? null,
+      tags: publication.tags ?? [],
       meaningLanguage: publication.meaningLanguage,
       publisher: publication.publisher,
       sources: [],

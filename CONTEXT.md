@@ -100,6 +100,10 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Explore**: Where a learner finds a published deck. One catalogue in two places: `lymi.app/explore`, the page a visitor lands on, and Explore in the app, under Insights in the rail and in the learner menu on a phone, where one press adds a deck to Library. Today's getting started guide points to it with a banner, **Start with a ready-made deck**. Both read the same rows, so neither can say something the other does not. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
 
+**Deck tag**: One label from a fixed list that a publisher puts on a published deck, such as Travel or HSK 1. The deck's page shows its tags as plain chips, and Explore's search finds them. It is not one of a card's tags, and nothing copies one into the other. _Avoid_: Topic, keyword, category (the category is the deck's shelf)
+
+**More like this**: The row of related published decks at the end of a deck's page, on `lymi.app` and in the app. Decks sharing tags come first, then decks in the same language, then decks on the same shelf; in the app, decks already in Library are left out. _Avoid_: Recommendations, suggested decks, "You may also like"
+
 **Edition**: One meaning-language version of a published deck. The deck's own fields are its original edition, and every further edition is a localization of the meaning side. All editions share the same terms, ordering, pictures, sources and review modes, so they are one deck rather than translated copies. A learner picks an edition when they add the deck and keeps it; changing the app language never moves it. ADR 0015. _Avoid_: Translation, version, variant, locale, copy
 
 **Localization**: The text of one series, deck, section or card in one edition, with who wrote it, whether a publisher has signed it off, and the revision of the original it was written from. Only signed-off text reaches a reader. Text written before the original changed is **stale**, and an edition that is stale or unfinished cannot be published. _Avoid_: Translation row, string, i18n, override

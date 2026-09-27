@@ -1,5 +1,11 @@
 import { env } from "cloudflare:workers";
-import { listPublicDeckSlugs, loadPublicDeck, type PublicDeckOut } from "@lymi/core/catalog";
+import {
+  listPublicDeckSlugs,
+  listRelatedDecks,
+  loadPublicDeck,
+  type PublicDeckOut,
+  type PublicDeckSummary,
+} from "@lymi/core/catalog";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
 import {
@@ -12,10 +18,13 @@ import {
 import type { Locale } from "./routes";
 
 export type DeckPage =
-  | { status: 200; locale: Locale; deck: PublicDeckOut }
+  | { status: 200; locale: Locale; deck: PublicDeckOut; related: PublicDeckSummary[] }
   | { status: 404 | 410; locale: Locale; slug: string };
 
 const catalogDb = () => drizzle(env.DB);
+
+/** More like this fills one row of the page's widest column, which holds four trays. */
+const RELATED_ON_PAGE = 4;
 
 /**
  * Loads the deck and sets the response's status and cache headers. The page's locale picks the
@@ -27,7 +36,8 @@ export async function resolveDeckPage(
   locale: Locale,
 ): Promise<DeckPage | Response> {
   const slug = astro.params.slug ?? "";
-  const result = await loadPublicDeck(catalogDb(), slug, locale);
+  const db = catalogDb();
+  const result = await loadPublicDeck(db, slug, locale);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
   if (result.status !== "published") {
@@ -36,9 +46,10 @@ export async function resolveDeckPage(
     astro.response.status = status;
     return { status, locale, slug };
   }
+  const related = await listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE });
   const etag = deckEtag({
     slug: result.deck.slug,
-    content: deckContentHash(result.deck),
+    content: deckContentHash(result.deck, related),
     locale,
     version: env.CF_VERSION_METADATA?.id,
   });
@@ -50,7 +61,7 @@ export async function resolveDeckPage(
       headers: { "cache-control": DECK_CACHE_CONTROL, etag },
     });
   }
-  return { status: 200, locale, deck: result.deck };
+  return { status: 200, locale, deck: result.deck, related };
 }
 
 export function publishedDeckSlugs() {

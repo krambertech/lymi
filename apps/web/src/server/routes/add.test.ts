@@ -5,6 +5,7 @@ import {
   DeckSummaryOut,
   JoinOut,
   JoinPreviewOut,
+  PublicationOut,
 } from "@lymi/core";
 import { ExploreOut } from "@lymi/core/catalog";
 import { eq, sql } from "@lymi/core/db";
@@ -198,5 +199,21 @@ describe("a deck added from Explore", () => {
     expect((await libraryOf(reader)).find((deck) => deck.id === deckId)?.name).toBe(
       "Українська колода",
     );
+  });
+});
+
+describe("a published deck's tags", () => {
+  it("refuses a key that is not on the list and returns a known one", async () => {
+    const { deckId } = await publish("Tagged", "tagged-deck", "reisima", "to travel");
+    const put = (tags: string[]) =>
+      app.fetch(`/api/decks/${deckId}/publication`, {
+        ...json({ ...publication("tagged-deck", "languages"), tags }, { method: "PUT" }),
+        as: publisher,
+      });
+
+    expect((await put(["holiday"])).status).toBe(400);
+    const known = await put(["travel"]);
+    expect(known.status).toBe(200);
+    expect(PublicationOut.parse(await known.json()).publication?.tags).toEqual(["travel"]);
   });
 });

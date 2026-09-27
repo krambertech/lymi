@@ -1,12 +1,19 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { type PublicDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
+import {
+  type PublicDeckOut,
+  type PublicDeckSummary,
+  publisherAvatarPath,
+  trayHue,
+} from "@lymi/core/catalog";
 import type { CSSProperties, ReactNode } from "react";
 import { type DeckCard, languageName, type RecallCue } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { DeckTile } from "../explore/DeckTile";
+import { tagLabel } from "../explore/explore-labels";
 import { AppTile } from "../Logo";
 import { SiteFooter } from "../landing/SiteFooter";
 import { PreviewFace } from "./PreviewFace";
@@ -135,6 +142,53 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   );
 }
 
+/** What the deck is about, as plain chips. They lead nowhere until a tag has a page of its own. */
+function DeckTags({ deck }: { deck: PublicDeckOut }) {
+  const { i18n, t } = useLingui();
+  if (deck.tags.length === 0) return null;
+  return (
+    <ul aria-label={t`Tags`} className="flex flex-wrap justify-center gap-1.5">
+      {deck.tags.map((tag) => (
+        <li
+          key={tag}
+          className="inline-flex h-7 items-center rounded-full bg-plate-2 px-3 text-sm font-medium text-text-2"
+        >
+          {tagLabel(i18n, tag)}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** More like this: the published decks nearest this one, on the trays Explore draws them on. */
+export function DeckRelated({ decks, locale }: LocaleProps & { decks: PublicDeckSummary[] }) {
+  if (decks.length === 0) return null;
+  return (
+    <Localized locale={locale}>
+      <section
+        aria-labelledby="related-title"
+        className="border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24"
+      >
+        <div className="mx-auto max-w-[1040px]">
+          <h2
+            id="related-title"
+            className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
+          >
+            <Trans>More like this</Trans>
+          </h2>
+          <ul className="deck-shelf mt-4">
+            {decks.map((deck) => (
+              <li key={deck.slug}>
+                <DeckTile deck={deck} hue={trayHue(deck.slug)} locale={locale} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </Localized>
+  );
+}
+
 /** The last quiet line of the page: how much there is, and when the publisher put it out. */
 export function DeckFooterFacts({ deck, locale }: DeckProps) {
   return (
@@ -241,8 +295,9 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
         >
           {deck.summary}
         </p>
-        <div className="mt-4">
+        <div className="mt-4 grid justify-items-center gap-4">
           <DeckFacts deck={deck} />
+          <DeckTags deck={deck} />
         </div>
         <div className="mt-7 flex flex-wrap justify-center gap-2">
           <a href={addUrl(deck.slug, editionOf(deck))} className={buttonClass("primary", "lg")}>

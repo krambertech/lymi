@@ -37,6 +37,8 @@ import {
  * only available inside the request. It is cheap; nothing here does I/O at construction.
  * `waitUntil` lets work that must not delay sign-in finish after the response.
  */
+export const API_KEY_WINDOW_MS = 60_000;
+
 export function createAuth(
   env: Bindings,
   db: Db,
@@ -87,7 +89,8 @@ export function createAuth(
         defaultPrefix: "lymi_",
         requireName: true,
         // The plugin's default is 10 requests a day, meant for third-party keys. These are the learner's own.
-        rateLimit: { enabled: true, timeWindow: 60_000, maxRequests: 600 },
+        // The count resets only after a full idle window, and publisher keys are exempt: principal.ts.
+        rateLimit: { enabled: true, timeWindow: API_KEY_WINDOW_MS, maxRequests: 600 },
         permissions: { defaultPermissions: { lymi: ["read"] } },
       }),
       // Signing keys for OAuth access tokens, published at /api/auth/jwks.

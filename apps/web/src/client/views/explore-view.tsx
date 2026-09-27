@@ -39,7 +39,7 @@ function ShelfChips({ shelves }: { shelves: readonly Shelf[] }) {
     // One row that scrolls on a phone, where two dozen wrapped chips would bury the shelves.
     <nav
       aria-label={t`Shelves`}
-      className="-mx-5 mb-8 overflow-x-auto px-5 [scrollbar-width:none] @3xl/shell:mx-0 @3xl/shell:overflow-visible @3xl/shell:px-0"
+      className="-mx-5 overflow-x-auto px-5 [scrollbar-width:none] @3xl/shell:mx-0 @3xl/shell:overflow-visible @3xl/shell:px-0"
     >
       <ul className="flex w-max gap-2 @3xl/shell:w-auto @3xl/shell:flex-wrap">
         {shelves.map((shelf) => (

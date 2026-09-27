@@ -346,10 +346,16 @@ export function ExploreDeckView({
                         key={key}
                         className="grid gap-0.5 bg-plate px-4 py-2.5 @md:grid-cols-2 @md:gap-4"
                       >
-                        <span lang={deck.language ?? undefined} className="text-base text-text">
+                        <span
+                          lang={deck.language ?? undefined}
+                          className="whitespace-pre-line text-base text-text [overflow-wrap:anywhere]"
+                        >
                           {card.term}
                         </span>
-                        <span lang={deck.meaningLanguage} className="text-base text-text-2">
+                        <span
+                          lang={deck.meaningLanguage}
+                          className="whitespace-pre-line text-base text-text-2 [overflow-wrap:anywhere]"
+                        >
                           {card.meaning}
                         </span>
                       </li>

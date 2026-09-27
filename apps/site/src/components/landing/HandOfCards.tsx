@@ -146,7 +146,7 @@ function FanCard({
     <p
       lang={cue === "term" ? card.language : undefined}
       dir="auto"
-      className="mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
+      className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
       style={{ "--term": cueStep(cueText) } as CSSProperties}
     >
       {cueText}
@@ -195,25 +195,33 @@ function FanCard({
         <p
           lang={card.language}
           dir="auto"
-          className="text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-text [overflow-wrap:anywhere]"
+          className="whitespace-pre-line text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-text [overflow-wrap:anywhere]"
         >
           {card.term}
         </p>
         {termDetails}
-        {picture && <p className="mt-1.5 text-md text-pretty text-text-2">{meaning}</p>}
+        {picture && (
+          <p className="whitespace-pre-line mt-1.5 text-md text-pretty text-text-2 [overflow-wrap:anywhere]">
+            {meaning}
+          </p>
+        )}
       </>
     ) : picture ? (
       <>
-        <p className="text-[min(24px,calc(var(--cw)*0.08))] leading-[1.25] font-medium text-pretty text-text">
+        <p className="whitespace-pre-line text-[min(24px,calc(var(--cw)*0.08))] leading-[1.25] font-medium text-pretty text-text [overflow-wrap:anywhere]">
           {meaning}
         </p>
-        <p lang={card.language} dir="auto" className="mt-1.5 text-md text-text-2">
+        <p
+          lang={card.language}
+          dir="auto"
+          className="whitespace-pre-line mt-1.5 text-md text-text-2 [overflow-wrap:anywhere]"
+        >
           {card.term}
         </p>
         {termDetails}
       </>
     ) : (
-      <p className="text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
+      <p className="whitespace-pre-line text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text [overflow-wrap:anywhere]">
         {meaning}
       </p>
     );
@@ -284,6 +292,8 @@ function cueStep(text: string): number {
     ...text.split(/\s+/).map((w) => w.length + (w.match(WIDE) ?? []).length),
   );
   const step = longest >= 13 ? 0.115 : longest >= 10 ? 0.13 : 0.155;
+  // A question with its options on their own lines needs the room of a passage.
+  if (text.length > 120 || text.includes("\n")) return Math.min(step, 0.07);
   if (text.length > 60) return Math.min(step, 0.09);
   return text.length > 28 ? Math.min(step, 0.11) : step;
 }

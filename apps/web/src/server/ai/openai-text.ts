@@ -17,12 +17,15 @@ export class OpenAiTextError extends Error {
   }
 }
 
+/** Lower efforts misplace stress marks in pronunciations; see docs/stack.md. */
+const REASONING_EFFORT = "high";
+
 /** The text vendor, per docs/stack.md. Structured outputs, so the reply parses or the call fails. */
 export function createOpenAiTextProvider(
   env: OpenAiTextBindings,
   request: Fetch = fetch,
 ): TextProvider {
-  const model = env.OPENAI_TEXT_MODEL || "gpt-5-mini";
+  const model = env.OPENAI_TEXT_MODEL || "gpt-6-luna";
   return {
     provider: "openai",
     model,
@@ -40,6 +43,7 @@ export function createOpenAiTextProvider(
         headers,
         body: JSON.stringify({
           model,
+          reasoning_effort: REASONING_EFFORT,
           messages: [
             { role: "system", content: input.instructions },
             { role: "user", content: input.input },

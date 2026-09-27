@@ -92,7 +92,7 @@ export function operatorEmails(env: Bindings): Set<string> {
 }
 
 /** Accounts that may publish a deck they own to the public catalog. ADR 0020. */
-export function publisherEmails(env: Bindings): Set<string> {
+export function publisherEmails(env: { PUBLISHER_EMAILS?: string | undefined }): Set<string> {
   return emailSet(env.PUBLISHER_EMAILS);
 }
 

@@ -145,7 +145,10 @@ const ERRORS = {
 
 export const handleError: ErrorHandler<AppEnv> = (err, c) => {
   if (err instanceof ServiceError) {
-    return c.json({ error: err.message, issues: err.details }, statusOf(err));
+    return c.json(
+      { error: err.message, ...(err.reason ? { code: err.reason } : {}), issues: err.details },
+      statusOf(err),
+    );
   }
   if (err instanceof APIError) {
     return c.json({ error: err.body?.message ?? err.message }, err.statusCode as 400);

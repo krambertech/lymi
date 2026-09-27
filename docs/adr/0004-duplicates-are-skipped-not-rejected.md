@@ -7,7 +7,7 @@ date: 2026-09-05
 
 A duplicate is a card whose normalised term (trimmed, case-folded, accents kept) and language match an active card anywhere in the learner's decks, not only the target deck. Adding one is not an error. The add returns per-card outcomes, a duplicate is reported as skipped with the existing card's id, and the rest of the batch goes through. A card with no language matches only other cards with no language.
 
-First-party publishers may opt into cross-deck overlap when staging a curated deck through the batch API. Only an account in `PUBLISHER_EMAILS` may use `publisherOverlap=true`; the same term in the target deck is still skipped. Ordinary learner adds and publisher adds without that option keep the default rule. This lets a published deck stand alone without changing a learner's own add behavior.
+For an account on `PUBLISHER_EMAILS`, a duplicate is the same term in the target deck only, on every add path: the app, the API and MCP. Each published deck has to stand alone, so a publisher's term repeats across its own decks. Learners keep the rule above. `publisherOverlap=true` on the batch API was once the opt-in; it is still accepted, and still answers 403 for anyone else.
 
 ## Considered options
 

@@ -1,5 +1,5 @@
 import type { CardImageImportInput, CardImagePatch, CardImageVersionInput } from "@lymi/core";
-import { newId, revealsAnswer } from "@lymi/core";
+import { newId, revealedAnswer } from "@lymi/core";
 import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
@@ -134,10 +134,13 @@ async function writableCard(
 }
 
 function checkDescription(card: Pick<Card, "term" | "meaning">, description: string) {
-  if (revealsAnswer(card, description)) {
+  const revealed = revealedAnswer(card, description);
+  if (revealed) {
     throw new ServiceError(
       "invalid",
-      "Describe what the picture shows without naming the term or the meaning.",
+      `Describe what the picture shows without naming the term or the meaning. This description names the card's ${revealed.field}, "${revealed.text}".`,
+      [{ path: ["description"], field: revealed.field, matched: revealed.text }],
+      "description_reveals_answer",
     );
   }
 }

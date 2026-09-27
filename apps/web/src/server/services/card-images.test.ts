@@ -161,7 +161,10 @@ describe("card pictures", () => {
         { description: "The YIELD sign" },
         { bucket: store, images: processor() },
       ),
-    ).rejects.toThrow("without naming");
+    ).rejects.toMatchObject({
+      reason: "description_reveals_answer",
+      details: [{ path: ["description"], field: "term", matched: "yield" }],
+    });
     expect(store.objects.size).toBe(0);
   });
 

@@ -58,4 +58,20 @@ describe("handleError", () => {
     expect(res.status).toBe(404);
     expect(log).not.toHaveBeenCalled();
   });
+
+  it("names a refusal a tool can act on", async () => {
+    const issues = [{ path: ["description"], field: "term", matched: "yield" }];
+    const app = appThrowing(
+      new ServiceError("invalid", "Names the term", issues, "description_reveals_answer"),
+    );
+
+    const res = await app.request("/api/cards/card-1", { method: "PATCH" });
+
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({
+      error: "Names the term",
+      code: "description_reveals_answer",
+      issues,
+    });
+  });
 });

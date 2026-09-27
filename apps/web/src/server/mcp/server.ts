@@ -55,6 +55,7 @@ import {
   getSettings,
   importCardImage,
   insights,
+  isPublisher,
   listDeckCards,
   listDecks,
   listSections,
@@ -99,6 +100,8 @@ export interface McpPrincipal {
   images?: CardImageStorage | undefined;
   /** Where an add queues its enrichment run, missing where no text vendor is configured. */
   enrichment?: EnrichmentQueue | null | undefined;
+  /** `PUBLISHER_EMAILS`, whose accounts may repeat a term across their own decks. */
+  publishers?: Set<string> | undefined;
 }
 
 /** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
@@ -272,7 +275,9 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     ({ cards, response }) =>
       run("add_cards", async () => {
         requireWrite(principal);
-        const outcomes = await addCards(ctx, cards, principal.enrichment);
+        const outcomes = await addCards(ctx, cards, principal.enrichment, {
+          allowCrossDeckDuplicates: await isPublisher(ctx, principal.publishers ?? new Set()),
+        });
         return result({
           added: outcomes.filter((o) => o.status === "added").length,
           skipped: outcomes.filter((o) => o.status === "skipped").length,
@@ -726,7 +731,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Set a card's picture",
       description:
-        "Give a card its one picture, replacing any it has. Send a public http or https url, or base64 data. Lymi stores a private, normalized copy and never shows the link. JPEG, PNG, WebP and still GIF up to 10 MB; SVG and animation are refused. Pass the card's imageVersion as version so a newer change is not overwritten. Needs write.",
+        "Give a card its one picture, replacing any it has. Send a public http or https url, or base64 data. Lymi stores a private, normalized copy and never shows the link. JPEG, PNG, WebP and still GIF up to 10 MB; SVG and animation are refused. Pass the card's imageVersion as version so a newer change is not overwritten. A description that contains the term or meaning is refused with description_reveals_answer and the text it matched. Needs write.",
       inputSchema: z.object({
         cardId: z.string().min(1),
         url: CardImageImportInput.shape.url.optional(),
@@ -768,7 +773,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Describe a card's picture",
       description:
-        "Change what the card's picture description says. Null removes it, which pauses picture review for the card. Needs write.",
+        "Change what the card's picture description says. Null removes it, which pauses picture review for the card. A description that contains the term or meaning is refused with description_reveals_answer. Needs write.",
       inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardImagePatch.shape),
       outputSchema: CardOut,
       ...writeTool({ idempotent: false, overwrites: true }),
@@ -973,7 +978,9 @@ async function runTool(
     return await fn();
   } catch (err) {
     if (err instanceof ReadOnlyConnection) return readOnlyFailure(principal);
-    if (err instanceof ServiceError) return failure(err.message);
+    if (err instanceof ServiceError) {
+      return failure(err.reason ? `${err.reason}: ${err.message}` : err.message);
+    }
     console.error("MCP tool failed", { tool, error: err instanceof Error ? err.name : typeof err });
     return failure("Lymi could not finish this just now. Try again in a moment.");
   }

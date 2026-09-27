@@ -272,7 +272,8 @@ curl -X POST "$LYMI_URL/api/cards/0mtoyiymrvqpdz02hlv/restore" -H "x-api-key: $L
         and a message, and the rest still change. If a save fails partway, the cards it held come
         back as <code>unavailable</code> with nothing on them changed, so you can send just those
         again. Add <code>?response=terse</code> to a batch add or a batch edit to get back only each
-        card’s id and status.
+        card’s id and status. A skipped add also keeps its <code>term</code> and the{" "}
+        <code>deckId</code> and <code>deckName</code> that already hold it.
       </p>
 
       <NextLinks

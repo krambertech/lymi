@@ -41,6 +41,9 @@ export type AddCardOutcome =
   | { id: string; status: "added"; card: CardView }
   | { id: string; status: "skipped"; term: string; existing: CardView; deckName: string };
 
+/** A publisher's curated decks each stand alone, so its terms repeat across decks but not within one. ADR 0004. */
+export type AddCardsOptions = { allowCrossDeckDuplicates?: boolean };
+
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
 function wantsEnrichment(input: CardInput, actor: Actor): boolean {
   return input.enrich ?? actor === "user";
@@ -51,8 +54,9 @@ export async function addCard(
   ctx: ServiceContext,
   input: CardInput,
   enrichment?: EnrichmentQueue | null,
+  options: AddCardsOptions = {},
 ): Promise<AddCardOutcome> {
-  const [outcome] = await addCards(ctx, [input], enrichment);
+  const [outcome] = await addCards(ctx, [input], enrichment, options);
   if (!outcome) throw new Error("addCards returned no outcome for one input");
   return outcome;
 }
@@ -71,7 +75,7 @@ export async function addCards(
   ctx: ServiceContext,
   inputs: CardInput[],
   enrichment?: EnrichmentQueue | null,
-  options: { allowCrossDeckDuplicates?: boolean } = {},
+  options: AddCardsOptions = {},
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
   if (inputs.length === 0) return [];
@@ -742,6 +746,9 @@ export function terseOutcome(
         id: outcome.id,
         status: "skipped",
         enrichmentStatus: outcome.existing.enrichmentStatus,
+        term: outcome.term,
+        deckId: outcome.existing.deckId,
+        deckName: outcome.deckName,
       };
     case "error":
       return { id: outcome.id, status: "error", code: outcome.code, error: outcome.error };

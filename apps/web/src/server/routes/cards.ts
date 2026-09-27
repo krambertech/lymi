@@ -30,6 +30,7 @@ import {
   assertPublisher,
   cardHistory,
   enrichmentQueue,
+  isPublisherEmail,
   requestEnrichment,
   restoreCard,
   restoreCards,
@@ -43,7 +44,7 @@ import {
 export const cards = new Hono<AppEnv>();
 
 const TERSE =
-  "`response=terse` returns only each card's id and status, an add's `enrichmentStatus`, and an error's code and message.";
+  "`response=terse` returns only each card's id and status, an add's `enrichmentStatus`, a skip's `term` with the `deckId` and `deckName` that already hold it, and an error's code and message.";
 
 const PARTIAL =
   "Each card succeeds or fails on its own. One that is missing, not yours or refused comes back as an error with the code a single write would answer; " +
@@ -51,7 +52,7 @@ const PARTIAL =
   "Every card that changes gets its own entry in Activity.";
 
 const DUPLICATE_RULE =
-  "Normally, a duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks. " +
+  "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks; for a first-party publisher, only in the target deck. " +
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
   "Re-running the same call is safe.";
 
@@ -123,7 +124,10 @@ cards.post(
   }),
   body(CardInput, "card"),
   async (c) => {
-    const outcome = await addCard(ctxOf(c), c.req.valid("json"), enrichmentQueue(c.env));
+    const ctx = ctxOf(c);
+    const outcome = await addCard(ctx, c.req.valid("json"), enrichmentQueue(c.env), {
+      allowCrossDeckDuplicates: isPublisherEmail(publisherEmails(c.env), c.get("user").email),
+    });
     return c.json(outcome, outcome.status === "added" ? 201 : 200);
   },
 );
@@ -133,7 +137,7 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add many cards",
-    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. A first-party publisher may pass \`publisherOverlap=true\` to keep a term already present in another owned deck; repeats within the target deck are still skipped. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. \`publisherOverlap=true\` is accepted for compatibility: it is a publisher's default, and anyone else gets 403. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
     ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
     errors: [400, 404],
   }),
@@ -142,9 +146,10 @@ cards.post(
   async (c) => {
     const ctx = ctxOf(c);
     const { response, publisherOverlap } = c.req.valid("query");
-    if (publisherOverlap) await assertPublisher(ctx, publisherEmails(c.env));
+    const publishers = publisherEmails(c.env);
+    if (publisherOverlap) await assertPublisher(ctx, publishers);
     const outcomes = await addCards(ctx, c.req.valid("json").cards, enrichmentQueue(c.env), {
-      allowCrossDeckDuplicates: publisherOverlap === "true",
+      allowCrossDeckDuplicates: isPublisherEmail(publishers, c.get("user").email),
     });
     const terse = response === "terse";
     return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });

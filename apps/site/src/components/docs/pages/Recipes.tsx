@@ -98,7 +98,8 @@ for x in results:
         new. And if you do want to change existing cards, send them to{" "}
         <code>PATCH /api/cards/batch</code> with the ids the skips gave you, rather than adding them
         again. Each card succeeds or fails on its own; send again only the ones that come back as
-        errors. <code>?response=terse</code> returns only each card’s id and status.
+        errors. <code>?response=terse</code> returns only each card’s id and status, and for a skip
+        the term and the deck that holds it.
       </p>
       <Code
         lang="js"

@@ -139,7 +139,7 @@ const ERRORS = {
   403: "The caller may not do this: a read key on a write, or a key or token on a learner-only route.",
   404: "Not found, or not yours.",
   409: "The change collides with a newer change, or with another card.",
-  429: "The key is over its rate limit.",
+  429: "The key is over its rate limit. `Retry-After` gives the seconds to wait.",
   503: "This capability is not configured or temporarily unavailable.",
 } as const;
 

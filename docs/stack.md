@@ -139,6 +139,8 @@ Claude Desktop and Codex both require OAuth for remote MCP servers, which is why
 
 Every key and every OAuth grant carries one scope, `read` or `write`. Write allows creating, editing and archiving decks and cards. Nothing an integration holds can grade a review.
 
+An API key may make 600 requests before the `apiKey` plugin answers 429 with `Retry-After`. The plugin clears the count only after a full minute without a request, so the limit is 600 calls per unbroken run rather than per minute. Keys of accounts on `PUBLISHER_EMAILS` skip the limit, because a publishing run makes thousands of calls without pausing; `principal.ts` syncs each key's `rateLimitEnabled` with the list on use, so it holds for keys made before an account was added.
+
 Password accounts are Better Auth's own credentials, hashing and verification tokens ([ADR 0003](adr/0003-better-auth-is-the-oauth-server.md)). Four rules shape them.
 
 What Lymi asks of a password lives in `@lymi/core`, so the box and the route cannot disagree: at least ten characters, no composition rules, and a screen against the passwords a guesser opens with, anything built from the learner's own address, and anything built from the word Lymi. Requiring a capital and a symbol is left out deliberately — it pushes people towards `Passw0rd!`, which is shorter and more guessable than three plain words. `server/password-rules.ts` is what makes the rule true rather than a suggestion, because these endpoints take a form-encoded body that no form of ours produced.

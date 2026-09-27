@@ -1,8 +1,9 @@
 import type { Actor, Scope } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import type { Context, MiddlewareHandler } from "hono";
-import type { Auth, SessionUser } from "./auth";
+import { API_KEY_WINDOW_MS, type Auth, type SessionUser } from "./auth";
 import { type Db, schema } from "./db";
+import { publisherEmails } from "./env";
 import type { AppEnv } from "./index";
 
 /**
@@ -20,25 +21,36 @@ export interface Principal {
   clientName?: string | undefined;
 }
 
-export type Unauthenticated = { error: string; status: 401 | 429 };
+export type Unauthenticated =
+  | { error: string; status: 401 }
+  | { error: string; status: 429; retryAfter: number };
 
 export async function resolvePrincipal(c: Context<AppEnv>): Promise<Principal | Unauthenticated> {
   const auth = c.get("auth");
   const db = c.get("db");
   const key = c.req.header("x-api-key");
-  if (key) return fromApiKey(auth, db, key);
+  if (key) return fromApiKey(auth, db, key, publisherEmails(c.env));
 
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
   if (!session) return { error: "Sign in required", status: 401 };
   return { user: session.user, actor: "user", scope: "write" };
 }
 
-async function fromApiKey(auth: Auth, db: Db, key: string): Promise<Principal | Unauthenticated> {
+async function fromApiKey(
+  auth: Auth,
+  db: Db,
+  key: string,
+  publishers: Set<string>,
+): Promise<Principal | Unauthenticated> {
   const result = await auth.api.verifyApiKey({ body: { key } });
   if (!result.valid || !result.key) {
     const code = result.error?.code;
     if (code === "RATE_LIMITED" || code === "USAGE_EXCEEDED") {
-      return { error: "This key is over its rate limit", status: 429 };
+      return {
+        error: "This key is over its rate limit",
+        status: 429,
+        retryAfter: retryAfterSeconds(result.error),
+      };
     }
     return { error: "This API key is not valid", status: 401 };
   }
@@ -60,6 +72,14 @@ async function fromApiKey(auth: Auth, db: Db, key: string): Promise<Principal | 
     .from(schema.user)
     .where(eq(schema.user.id, result.key.referenceId));
   if (!user) return { error: "This API key is not valid", status: 401 };
+  // A publishing run makes thousands of calls without pausing; syncing on use covers keys made before the list changed.
+  const exempt = publishers.has(user.email.toLowerCase());
+  if ((result.key.rateLimitEnabled !== false) === exempt) {
+    await db
+      .update(schema.apikey)
+      .set({ rateLimitEnabled: !exempt })
+      .where(eq(schema.apikey.id, result.key.id));
+  }
   return {
     user,
     actor: "api",
@@ -67,6 +87,13 @@ async function fromApiKey(auth: Auth, db: Db, key: string): Promise<Principal | 
     client: result.key.id,
     ...(named?.name ? { clientName: named.name } : {}),
   };
+}
+
+/** `tryAgainIn` is milliseconds in the error details; Retry-After wants whole seconds. */
+function retryAfterSeconds(error: unknown): number {
+  const details = (error as { details?: { tryAgainIn?: unknown } } | null)?.details;
+  const ms = typeof details?.tryAgainIn === "number" ? details.tryAgainIn : API_KEY_WINDOW_MS;
+  return Math.max(1, Math.ceil(ms / 1000));
 }
 
 /** Permissions are `{ lymi: [...] }`. Anything without "write" is read. */
@@ -81,7 +108,13 @@ export function permissionsFor(scope: Scope): Record<string, string[]> {
 /** Sets user, actor and scope on the context, or ends the request. */
 export const authenticate: MiddlewareHandler<AppEnv> = async (c, next) => {
   const principal = await resolvePrincipal(c);
-  if ("error" in principal) return c.json({ error: principal.error }, principal.status);
+  if ("error" in principal) {
+    if (principal.status === 429) {
+      c.header("retry-after", String(principal.retryAfter));
+      return c.json({ error: principal.error }, 429);
+    }
+    return c.json({ error: principal.error }, principal.status);
+  }
   c.set("user", principal.user);
   c.set("actor", principal.actor);
   c.set("scope", principal.scope);

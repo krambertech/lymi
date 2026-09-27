@@ -27,7 +27,7 @@ const ERRORS: { code: string; when: string; fix: string }[] = [
   {
     code: "429",
     when: "The key is over its rate limit.",
-    fix: "Slow down. The window is a minute, so waiting one clears it.",
+    fix: "Wait the seconds in the Retry-After header, then send the request again.",
   },
 ];
 
@@ -109,9 +109,10 @@ content-type: application/json`}
 
       <H2>Rate limit</H2>
       <p>
-        600 requests a minute per key. That is far above a batch import, which sends 200 cards in
-        one call. Over the limit you get <code>429</code>; the window is a minute, so waiting one
-        clears it.
+        600 requests per key. The count clears once the key has gone a minute without a request, so
+        a script that never pauses reaches the limit even at a slow pace. A batch import sends 200
+        cards in one call, far below it. Over the limit you get <code>429</code> with a{" "}
+        <code>Retry-After</code> header: the seconds to wait before the next request.
       </p>
 
       <H2>Errors have one shape</H2>

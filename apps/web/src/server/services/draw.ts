@@ -271,7 +271,14 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
   const slipping = new Set(candidates.flatMap((row) => (row.slipping ? [row.card.id] : [])));
   // After the response, so the model never sits in a draw's latency. ADR 0025.
   if (opts.diagnose && slipping.size > 0) {
-    opts.diagnose.defer(queueDiagnoses(ctx, [...slipping], opts.diagnose.queue));
+    opts.diagnose.defer(
+      queueDiagnoses(ctx, [...slipping], opts.diagnose.queue).catch((error: unknown) => {
+        // The draw has answered; a lost queueing only waits for the next draw.
+        console.error("Queueing diagnoses failed", {
+          error: error instanceof Error ? error.name : "unknown",
+        });
+      }),
+    );
   }
 
   return {

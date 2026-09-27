@@ -6,7 +6,7 @@ import {
   modesFromDirections,
   newId,
 } from "@lymi/core";
-import { and, eq, inArray, isNull, ne, sql } from "@lymi/core/db";
+import { and, eq, inArray, isNull, lt, ne, or, sql } from "@lymi/core/db";
 import type { Card, Deck } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
@@ -78,20 +78,32 @@ export function diagnosisContext(
   return { db, userId, actor: "ai", analytics };
 }
 
+/** A failed diagnosis may be tried again after this long, so one outage does not block a revision. */
+export const DIAGNOSIS_RETRY_MS = 86_400_000;
+
 /**
- * Queue a diagnosis for each often-forgotten card whose current revision has none. The row is
- * written first and only the rows this call inserted are queued, so two draws racing queue a
- * card once. Returns the diagnosis ids queued.
+ * Queue a diagnosis for each often-forgotten card whose current revision has none, or only one
+ * that failed over a day ago. Only rows this call inserted or moved back to `working` are
+ * queued, so two draws racing queue a card once. Returns the diagnosis ids queued.
  */
 export async function queueDiagnoses(
   ctx: ServiceContext,
   cardIds: readonly string[],
   queue: DiagnosisQueue,
+  now = new Date(),
 ): Promise<string[]> {
   const { db, userId } = ctx;
-  const undiagnosed = await selectIn([...new Set(cardIds)], (slice) =>
+  const staleFailure = and(
+    eq(schema.cardDiagnoses.status, "failed"),
+    lt(schema.cardDiagnoses.updatedAt, new Date(now.getTime() - DIAGNOSIS_RETRY_MS)),
+  );
+  const candidates = await selectIn([...new Set(cardIds)], (slice) =>
     db
-      .select({ id: schema.cards.id, revision: schema.cards.revision })
+      .select({
+        id: schema.cards.id,
+        revision: schema.cards.revision,
+        diagnosisId: schema.cardDiagnoses.id,
+      })
       .from(schema.cards)
       .leftJoin(
         schema.cardDiagnoses,
@@ -101,11 +113,30 @@ export async function queueDiagnoses(
           eq(schema.cardDiagnoses.revision, schema.cards.revision),
         ),
       )
-      .where(and(inArray(schema.cards.id, slice), isNull(schema.cardDiagnoses.id))),
-  );
+      .where(
+        and(inArray(schema.cards.id, slice), or(isNull(schema.cardDiagnoses.id), staleFailure)),
+      ),
+  ).then((rows) => rows.slice(0, DIAGNOSES_PER_RUN));
   const ids: string[] = [];
+  const retries = candidates.flatMap((card) => (card.diagnosisId ? [card.diagnosisId] : []));
+  for (const slice of chunked(retries, 90)) {
+    // The condition is checked again in the write, so a racing draw moves each row once.
+    const reopened = await db
+      .update(schema.cardDiagnoses)
+      .set({ status: "working", updatedAt: now })
+      .where(
+        and(
+          eq(schema.cardDiagnoses.userId, userId),
+          inArray(schema.cardDiagnoses.id, slice),
+          staleFailure,
+        ),
+      )
+      .returning({ id: schema.cardDiagnoses.id });
+    ids.push(...reopened.map((row) => row.id));
+  }
+  const undiagnosed = candidates.filter((card) => !card.diagnosisId);
   // Five columns a row, so a slice stays under D1's 100 bound parameters.
-  for (const slice of chunked(undiagnosed.slice(0, DIAGNOSES_PER_RUN), 15)) {
+  for (const slice of chunked(undiagnosed, 15)) {
     const inserted = await db
       .insert(schema.cardDiagnoses)
       .values(

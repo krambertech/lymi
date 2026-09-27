@@ -13,6 +13,7 @@ import { addCards, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import {
+  DIAGNOSIS_RETRY_MS,
   type DiagnoseRunParams,
   type DiagnosisRunner,
   diagnoseCard,
@@ -305,6 +306,26 @@ describe("diagnosing an often-forgotten card", () => {
     });
     expect(queued).toEqual([]);
     expect(await rowsOf(ctx)).toMatchObject([{ status: "failed" }]);
+  });
+
+  it("tries a failed revision again after a day, once however many draws race", async () => {
+    const { ctx, slipping } = await setup();
+    const refused = { create: async () => Promise.reject(new Error("no workflow")) };
+    await queueDiagnoses(ctx, [slipping.id], refused);
+    const [failed] = await rowsOf(ctx);
+    if (!failed) throw new Error("no diagnosis");
+    const { runner, runs } = recordingRunner();
+
+    expect(await queueDiagnoses(ctx, [slipping.id], runner.queue)).toEqual([]);
+
+    const tomorrow = new Date(Date.now() + DIAGNOSIS_RETRY_MS + 60_000);
+    const racing = await Promise.all([
+      queueDiagnoses(ctx, [slipping.id], runner.queue, tomorrow),
+      queueDiagnoses(ctx, [slipping.id], runner.queue, tomorrow),
+    ]);
+    expect(racing.flat()).toEqual([failed.id]);
+    expect(runs).toEqual([{ userId: ctx.userId, diagnosisIds: [failed.id] }]);
+    expect(await rowsOf(ctx)).toMatchObject([{ id: failed.id, status: "working", revision: 1 }]);
   });
 
   it("writes nothing for a draw without a runner", async () => {

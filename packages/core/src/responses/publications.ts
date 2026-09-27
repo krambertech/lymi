@@ -9,7 +9,6 @@ export const PublicationOut = z
         slug: z.string(),
         status: z.enum(["published", "withdrawn"]),
         summary: z.string(),
-        level: z.string().nullable(),
         category: PublicationCategory.nullable(),
         meaningLanguage: z.string().meta({
           description: "The original edition, which the deck's own fields are written in",

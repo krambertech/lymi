@@ -24,7 +24,7 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   slug: "everyday-estonian",
   name: "Everyday Estonian",
   summary: "Words for your first weeks.",
-  level: "A1",
+  category: "languages",
   language: "et",
   meaningLanguage: "en",
   originalMeaningLanguage: "en",
@@ -225,7 +225,7 @@ describe("deck caching", () => {
 });
 
 describe("deckStructuredData", () => {
-  it("describes the deck as a LearningResource with its level and language", () => {
+  it("describes a language deck as a vocabulary list in the language it teaches", () => {
     expect(deckStructuredData(deck(), "ru")).toEqual({
       "@context": "https://schema.org",
       "@type": "LearningResource",
@@ -237,13 +237,6 @@ describe("deckStructuredData", () => {
       inLanguage: ["et", "en"],
       teaches: "Estonian vocabulary",
       about: { "@type": "Language", name: "Estonian", alternateName: "et" },
-      educationalLevel: {
-        "@type": "DefinedTerm",
-        name: "A1",
-        termCode: "A1",
-        inDefinedTermSet:
-          "https://www.coe.int/en/web/common-european-framework-reference-languages",
-      },
       publisher: { "@type": "Organization", name: "Lymi" },
       datePublished: "2026-09-10T12:00:00.000Z",
       citation: [
@@ -254,8 +247,19 @@ describe("deckStructuredData", () => {
     });
   });
 
-  it("leaves out the level and language when the deck has none", () => {
-    const data = deckStructuredData(deck({ level: null, language: null, sources: [] }), "en");
+  it("names the subject of a deck that teaches no language, never its vocabulary", () => {
+    for (const language of [null, "en"]) {
+      const data = deckStructuredData(deck({ category: "science", language }), "uk");
+      expect(data).toMatchObject({
+        learningResourceType: "Flashcards",
+        teaches: "Science",
+        about: { "@type": "Thing", name: "Science" },
+      });
+    }
+  });
+
+  it("leaves out what it teaches when the deck has no language and no subject", () => {
+    const data = deckStructuredData(deck({ category: null, language: null, sources: [] }), "en");
     expect(data).not.toHaveProperty("educationalLevel");
     expect(data).not.toHaveProperty("teaches");
     expect(data).not.toHaveProperty("citation");

@@ -127,6 +127,10 @@
     {
       "name": "0031_powerful_nocturne.sql",
       "sha256": "546f66d741629dc70fed096bfea5dfd62935c7302ec4334dd908c562ccb2dc53"
+    },
+    {
+      "name": "0032_orange_spacker_dave.sql",
+      "sha256": "34845ad4b7c68ae1c6f21d71a6886d251f51c2c7cfcc68f082dd19293c95bd9d"
     }
   ]
 }

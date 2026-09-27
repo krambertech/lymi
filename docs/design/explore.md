@@ -8,15 +8,15 @@ Explore is one catalogue in two places: the public page a visitor lands on, and 
 
 The header is one thing: a search field, under the page's name and one line of what the catalogue is, over a still pool of the lantern's light. It carries no amber, because the page has no single primary action — a visitor is here to find one deck among many, not to press the one button. It does not count the decks: the shelves below already do, each under its own heading.
 
-Under it the catalogue is a **shelf per category**, each wrapping into as many rows as its decks need. Every published deck is on the page, because a sideways scroll puts most of a shelf behind a gesture nobody asked for, and a catalogue this size has nothing worth hiding. The tracks fill the row, so a shelf of three decks is three decks rather than three banners, and a new category adds a shelf rather than changing the layout. A category large enough to bury the page will need paging or its own page; that is a decision to make when those decks exist.
+Under it a chip per shelf, in shelf order, is the way to move through the catalogue: each jumps to its shelf. Below them the catalogue is a **shelf per language, then a shelf per subject**, each wrapping into as many rows as its decks need. Every published deck is on the page, because a sideways scroll puts most of a shelf behind a gesture nobody asked for, and a catalogue this size has nothing worth hiding. The tracks fill the row, so a shelf of three decks is three decks rather than three banners, and a new language or subject adds a shelf rather than changing the layout. A category large enough to bury the page will need paging or its own page; that is a decision to make when those decks exist.
 
-A deck on a shelf is one of its own cards in a [tray](system/surfaces.md#the-tray), its name under the tray, then its summary and its level, card count and section count. The card is real, drawn from the deck's own revision so every visitor to one revision sees the same page. The card shows the way the deck asks it, by its picture, its meaning or its term, with the answer under the rule ([surfaces](system/surfaces.md#the-tray)). The name is the largest thing in the group and the card's cue sets smaller than it. Behind the card is a sheet of paper for each further card the deck holds, up to two; pointing at a deck spreads them.
+A deck on a shelf is one of its own cards in a [tray](system/surfaces.md#the-tray), its name under the tray, then its summary, card count and section count. The card is real, drawn from the deck's own revision so every visitor to one revision sees the same page. The card shows the way the deck asks it, by its picture, its meaning or its term, with the answer under the rule ([surfaces](system/surfaces.md#the-tray)). The name is the largest thing in the group and the card's cue sets smaller than it. Behind the card is a sheet of paper for each further card the deck holds, up to two; pointing at a deck spreads them.
 
 The tray's colour follows the deck to its own page, where the same hue becomes the pool behind its name. Nothing stores it: both pages hash the slug, and neither takes the shelf into account, so narrowing the page never repaints a deck.
 
 ## Search and shelves
 
-Search narrows what is already on the page: the deck's name, summary, level, the card on its tray, and the languages it teaches and explains, in the reading language and in English. Choosing a shelf narrows it the same way. Neither touches the address, so neither makes a page of its own for a crawler to find, and the whole catalogue is in the server-rendered HTML — the page is complete with JavaScript off.
+Search narrows what is already on the page: the deck's name, summary, the card on its tray, its subject, and the languages it teaches and explains, in the reading language and in English. The chips follow the narrowed shelves, so every chip still has a shelf to jump to. Neither touches the address, so neither makes a page of its own for a crawler to find, and the whole catalogue is in the server-rendered HTML — the page is complete with JavaScript off, where a chip is a plain link to its shelf's heading.
 
 A search with no match shows the lantern with its flame out — the search looked here and found nothing — says so, suggests a word from a card or a language, and offers the way back to everything.
 
@@ -28,9 +28,13 @@ Publishing is what makes the photo public. The address carries the deck's slug r
 
 The public page is server-rendered with no island, so it layers the mark behind the photo rather than swapping on an error; a photo that fails to load collapses and the mark shows through.
 
-## Categories
+## Shelves
 
-A category is a column on the publication, from a closed list in `packages/core/src/types.ts`. It is closed because each one is a heading a translator writes and a visitor learns; adding a shelf is a deliberate change, not a typo in a publish call. A deck sits on one shelf. A deck with no category, or one naming a category that has since gone, gathers under **More decks** at the end, so publishing is never blocked on choosing a shelf, and a shelf with nothing on it never renders.
+A publication's category is a column from a closed list in `packages/core/src/types.ts`: `languages`, or one of the subjects `geography`, `science`, `driving`, `citizenship`, `technology` and `work`. It is closed because each subject is a heading a translator writes and a visitor learns; adding one is a deliberate change, not a typo in a publish call.
+
+A `languages` deck sits on the shelf of the language it teaches, which is the deck's own language, headed by that language's name in the reader's language; no Languages heading groups them. Language shelves come first, most decks first, then the subjects in the order above. A deck with no category, a `languages` deck with no language, or one naming a category that has since gone, such as `exams`, gathers under **More decks** at the end, so publishing is never blocked on choosing a shelf. A shelf with nothing on it never renders, and every deck sits on exactly one. `shelvesOf` in `packages/core/src/catalog.ts` does the grouping for both Explores.
+
+A deck teaches a language only when it is not on a subject shelf. A subject deck's page title, link preview and structured data name its subject ("Periodic Table · Science · Lymi"), never a language's vocabulary, whatever language its terms are spoken in. A publication carries no level: a level belongs in the deck's name.
 
 ## What it costs to be wrong
 
@@ -44,14 +48,13 @@ The shelves and the tray are the public page's. What is added is one press: **Ad
 
 The one departure from the public page is that a tile here **is a card**, where the public page sets the deck's name on the open canvas below its tray. The press is why: a button under a name on bare canvas belongs to nothing and reads as loose, so the group it acts on has to be a surface. The tray keeps its hue inside that card, with its corners stepped down by the card's padding.
 
-`/explore/<slug>` is the deck in the app's chrome, on the same column as every other screen. Its header is one line naming the publisher behind their mark and the deck's card and section counts, then the name, the summary and **Add to Library**, with a hand of up to three of the deck's cards beside them on desktop and above them on a phone. The hand takes one card per section before a second from any, so it shows the deck's range. Under the header come the sections in order and every card under a closed disclosure per section. The product shows no level.
-
+`/explore/<slug>` is the deck in the app's chrome, on the same column as every other screen. Its header is one line naming the publisher behind their mark and the deck's card and section counts, then the name, the summary and **Add to Library**, with a hand of up to three of the deck's cards beside them on desktop and above them on a phone. The hand takes one card per section before a second from any, so it shows the deck's range. Under the header come the sections in order and every card under a closed disclosure per section. 
 The deck's colour is the ground of the whole header, back included: a band from the rail to the window's edge and up under the status bar, with its text on the page's own column. Add is white on it rather than amber, because amber on a coloured ground stops reading as the thing to press.
 
 Adding leaves the learner on the page. The fan gathers into one squared stack under a check and the button becomes **Open in Library**, so the page itself says the deck arrived and no toast repeats it. A deck already in Library opens as that stack. Under reduced motion the stack and the check are simply there.
 
 Today's getting started guide offers the catalogue in one banner under its plate: **Start with a ready-made deck**, on the first offered deck's tray colour, holding a card from each of up to three decks the learner has not added and a white **Browse ready-made decks** that opens Explore. It points rather than adds, because a learner with an empty Lymi does not yet know which deck they want, and Explore is where the decks sit on their shelves. It reads `GET /api/explore` only while the guide shows, and it is gone once every published deck is in Library and with the guide after the first review. Its button is white on the colour rather than amber, so the guide's own step stays the one thing to press. On a phone it is also the first sight of Explore, which otherwise sits in the learner menu.
 
-Search, the shelf filters and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
+The shelf chips are the public page's too. Search and the try-it stack stay on the public page: a learner already inside Lymi can simply add the deck.
 
 A deck is still shared as `lymi.app/explore/<slug>` and never as a product address, so a link works for someone who has no account. A visitor without a live session who opens `my.lymi.app/explore` or `my.lymi.app/explore/<slug>` is sent to the same path and query on `lymi.app` with a temporary redirect, because the answer depends on the session; a signed-in learner stays on the product page.

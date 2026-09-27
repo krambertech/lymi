@@ -1,13 +1,13 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { PublicDeckSummary } from "@lymi/core/catalog";
-import { clsx } from "clsx";
+import { type PublicDeckSummary, subjectOf, taughtLanguage } from "@lymi/core/catalog";
 import { Search } from "lucide-react";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useId, useMemo, useRef, useState } from "react";
 import { deckPath, languageName } from "../../lib/deck-page";
 import { type Shelf, searchText, shelvesOf } from "../../lib/explore";
 import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
+import { subjectLabel } from "../../lib/subjects";
 import { trayHues } from "../../lib/tray";
 import { PreviewFace } from "../deck/PreviewFace";
 import { shelfLabel } from "../explore/explore-labels";
@@ -61,14 +61,6 @@ function DeckTile({ deck, hue, locale }: { deck: PublicDeckSummary; hue: number;
         {deck.summary}
       </p>
       <p className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted tabular-nums">
-        {deck.level && (
-          <>
-            <span>{deck.level}</span>
-            <span aria-hidden="true" className="text-faint">
-              ·
-            </span>
-          </>
-        )}
         <span>
           <Plural value={deck.cardCount} one="# card" other="# cards" />
         </span>
@@ -91,12 +83,16 @@ function DeckTile({ deck, hue, locale }: { deck: PublicDeckSummary; hue: number;
 function ShelfRow({ shelf, locale }: { shelf: Shelf; locale: Locale }) {
   const { i18n, t } = useLingui();
   const hues = useMemo(() => trayHues(shelf.decks), [shelf.decks]);
-  const label = shelfLabel(i18n, shelf.key);
-  const headingId = `shelf-${shelf.key}`;
+  const label = shelfLabel(i18n, shelf);
+  const headingId = shelfId(shelf.key);
   return (
     <section aria-labelledby={headingId} className="mt-10 first:mt-0">
       <div className="flex items-baseline justify-between gap-5 border-b border-edge pb-3.5">
-        <h2 id={headingId} className="text-2xl font-medium tracking-[-0.03em] text-text">
+        <h2
+          id={headingId}
+          tabIndex={-1}
+          className="scroll-mt-6 text-2xl font-medium tracking-[-0.03em] text-text focus:outline-none"
+        >
           {label}
         </h2>
         <p className="text-sm whitespace-nowrap text-muted tabular-nums">
@@ -114,15 +110,17 @@ function ShelfRow({ shelf, locale }: { shelf: Shelf; locale: Locale }) {
   );
 }
 
+const shelfId = (key: string) => `shelf-${key}`;
+
 /**
- * The whole catalogue, with a search that narrows what is already on the page. Every deck is in
- * the server-rendered HTML, so the page is complete for a crawler and for a visitor with
- * JavaScript off; searching changes nothing about the address, so it makes no page of its own.
+ * The whole catalogue, with a search that narrows what is already on the page and a chip per shelf
+ * that jumps to it. Every deck is in the server-rendered HTML, so the page is complete for a crawler
+ * and for a visitor with JavaScript off, where a chip is a plain link to its shelf. Neither changes
+ * the address once the page hydrates, so neither makes a page of its own.
  */
 function Catalog({ locale, decks }: Props) {
   const { i18n, t } = useLingui();
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<string | null>(null);
   const fieldId = useId();
   const field = useRef<HTMLInputElement>(null);
 
@@ -141,29 +139,31 @@ function Catalog({ locale, decks }: Props) {
           deck.slug,
           searchText(
             deck,
-            [deck.language, deck.meaningLanguage].flatMap((tag) => {
-              const name = languageName(tag, i18n.locale);
-              const english = languageName(tag, "en");
-              return name ? (english && english !== name ? [name, english] : [name]) : [];
-            }),
+            [
+              ...[taughtLanguage(deck), deck.meaningLanguage].flatMap((tag) => {
+                const name = languageName(tag, i18n.locale);
+                const english = languageName(tag, "en");
+                return name ? (english && english !== name ? [name, english] : [name]) : [];
+              }),
+              ...[subjectLabel(i18n, subjectOf(deck))].filter((name) => name !== null),
+            ],
             i18n.locale,
           ),
         ]),
       ),
-    [decks, i18n.locale],
+    [decks, i18n],
   );
 
   const terms = query.trim().toLocaleLowerCase(i18n.locale);
   const shelves = useMemo(() => {
-    const wanted = all.filter((shelf) => category === null || shelf.key === category);
-    if (!terms) return wanted;
-    return wanted
+    if (!terms) return all;
+    return all
       .map((shelf) => ({
-        key: shelf.key,
+        ...shelf,
         decks: shelf.decks.filter((deck) => haystacks.get(deck.slug)?.includes(terms)),
       }))
       .filter((shelf) => shelf.decks.length > 0);
-  }, [all, category, haystacks, terms]);
+  }, [all, haystacks, terms]);
 
   const found = shelves.reduce((sum, shelf) => sum + shelf.decks.length, 0);
 
@@ -186,35 +186,8 @@ function Catalog({ locale, decks }: Props) {
             className="h-12 w-full rounded-md border border-edge bg-plate ps-12 pe-4 text-md text-text transition-colors duration-150 placeholder:text-muted focus:outline-2 focus:-outline-offset-1 focus:outline-ring"
           />
         </div>
-        {all.length > 1 && (
-          <fieldset className="flex flex-wrap justify-center gap-1.5" aria-label={t`Shelf`}>
-            <button
-              type="button"
-              aria-pressed={category === null}
-              onClick={() => setCategory(null)}
-              className={chipClass(category === null)}
-            >
-              <Trans>All</Trans>
-              <span className={countClass(category === null)}>{decks.length}</span>
-            </button>
-            {all.map((shelf) => {
-              const chosen = category === shelf.key;
-              return (
-                <button
-                  key={shelf.key}
-                  type="button"
-                  aria-pressed={chosen}
-                  onClick={() => setCategory(chosen ? null : shelf.key)}
-                  className={chipClass(chosen)}
-                >
-                  {shelfLabel(i18n, shelf.key)}
-                  <span className={countClass(chosen)}>{shelf.decks.length}</span>
-                </button>
-              );
-            })}
-          </fieldset>
-        )}
       </div>
+      {shelves.length > 1 && <ShelfChips shelves={shelves} />}
 
       <p role="status" aria-live="polite" className="sr-only">
         <Plural value={found} one="# deck" other="# decks" />
@@ -238,10 +211,7 @@ function Catalog({ locale, decks }: Props) {
             </p>
             <button
               type="button"
-              onClick={() => {
-                setQuery("");
-                setCategory(null);
-              }}
+              onClick={() => setQuery("")}
               className="mt-6 rounded-sm px-3 py-2 text-md font-medium text-text underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:decoration-text"
             >
               <Trans>Show every deck</Trans>
@@ -253,14 +223,45 @@ function Catalog({ locale, decks }: Props) {
   );
 }
 
-const chipClass = (chosen: boolean) =>
-  clsx(
-    "inline-flex h-8 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors duration-150",
-    chosen ? "bg-text text-canvas" : "bg-plate-2 text-text-2 hoverable:hover:bg-hover",
+/**
+ * A chip per shelf on the page, in shelf order: the way to move through a catalogue of many
+ * shelves. Without JavaScript each is a link to its shelf; once hydrated it scrolls there and moves
+ * focus to the heading, and leaves the address alone.
+ */
+function ShelfChips({ shelves }: { shelves: readonly Shelf[] }) {
+  const { i18n, t } = useLingui();
+  const jump = (event: MouseEvent<HTMLAnchorElement>, key: string) => {
+    const heading = document.getElementById(shelfId(key));
+    if (!heading) return;
+    event.preventDefault();
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    heading.scrollIntoView({ block: "start", behavior: still ? "auto" : "smooth" });
+    // Reading moves with the view, so a screen reader continues at the shelf rather than the chips.
+    heading.focus({ preventScroll: true });
+  };
+  return (
+    // One row that scrolls on a phone, where two dozen wrapped chips would bury the shelves.
+    <nav
+      aria-label={t`Shelves`}
+      className="-mx-5 mt-6 overflow-x-auto px-5 [scrollbar-width:none] @2xl:mx-auto @2xl:max-w-[880px] @2xl:overflow-visible @2xl:px-0"
+    >
+      <ul className="flex w-max gap-2 @2xl:w-auto @2xl:flex-wrap @2xl:justify-center">
+        {shelves.map((shelf) => (
+          <li key={shelf.key}>
+            <a
+              href={`#${shelfId(shelf.key)}`}
+              onClick={(event) => jump(event, shelf.key)}
+              className="inline-flex h-10 items-center gap-2 rounded-full whitespace-nowrap bg-plate-2 px-4 text-md font-medium text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:bg-hover pointer-coarse:h-11"
+            >
+              {shelfLabel(i18n, shelf)}
+              <span className="text-sm text-muted tabular-nums">{shelf.decks.length}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
-
-const countClass = (chosen: boolean) =>
-  clsx("tabular-nums", chosen ? "text-canvas/60" : "text-faint");
+}
 
 export default function ExploreCatalog({ locale, decks }: Props) {
   return (

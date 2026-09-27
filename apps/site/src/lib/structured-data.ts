@@ -2,13 +2,11 @@ import type { I18n } from "@lingui/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { Question } from "../components/landing/faq";
 import { SOURCE_CODE_URL } from "../components/landing/site-links";
-import { deckPath, languageName } from "./deck-page";
+import { deckPath, deckTeaches } from "./deck-page";
 import { explorePath } from "./explore";
 import type { Locale } from "./routes";
 
 const SITE = "https://lymi.app";
-
-const CEFR = "https://www.coe.int/en/web/common-european-framework-reference-languages";
 
 /** schema.org BreadcrumbList: Explore, then the deck, so a result shows where the page sits. */
 export function deckBreadcrumbs(
@@ -54,31 +52,19 @@ export function exploreStructuredData(
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: decks.length,
-      itemListElement: decks.map((deck, index) => {
-        const language = languageName(deck.language, "en");
-        return {
-          "@type": "ListItem",
-          position: index + 1,
-          item: {
-            "@type": "LearningResource",
-            "@id": new URL(deckPath(deck.slug, locale), SITE).toString(),
-            url: new URL(deckPath(deck.slug, locale), SITE).toString(),
-            name: deck.name,
-            description: deck.summary,
-            learningResourceType: "Vocabulary list",
-            inLanguage: [...new Set([deck.language, deck.meaningLanguage].filter(Boolean))],
-            ...(language && { teaches: `${language} vocabulary` }),
-            ...(deck.level && {
-              educationalLevel: {
-                "@type": "DefinedTerm",
-                name: deck.level,
-                termCode: deck.level,
-                inDefinedTermSet: CEFR,
-              },
-            }),
-          },
-        };
-      }),
+      itemListElement: decks.map((deck, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "LearningResource",
+          "@id": new URL(deckPath(deck.slug, locale), SITE).toString(),
+          url: new URL(deckPath(deck.slug, locale), SITE).toString(),
+          name: deck.name,
+          description: deck.summary,
+          inLanguage: [...new Set([deck.language, deck.meaningLanguage].filter(Boolean))],
+          ...deckTeaches(deck),
+        },
+      })),
     },
   };
 }

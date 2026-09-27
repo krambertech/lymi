@@ -1,5 +1,10 @@
 import type { JoinPreviewOut, PublicationInput, PublicationOut } from "@lymi/core";
-import { newId, PUBLICATION_SLUG } from "@lymi/core";
+import {
+  newId,
+  PUBLICATION_CATEGORIES,
+  PUBLICATION_SLUG,
+  type PublicationCategory,
+} from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
@@ -12,6 +17,10 @@ import { assertPublisher } from "./publishers";
 
 export function isPublicationSlug(value: string | undefined | null): value is string {
   return typeof value === "string" && value.length <= 80 && PUBLICATION_SLUG.test(value);
+}
+
+function isPublicationCategory(value: string | null): value is PublicationCategory {
+  return (PUBLICATION_CATEGORIES as readonly (string | null)[]).includes(value);
 }
 
 async function publicationOf(db: Db, deckId: string) {
@@ -32,8 +41,8 @@ export function publicationOut(
       slug: row.slug,
       status: row.status,
       summary: row.summary,
-      level: row.level,
-      category: row.category,
+      // A subject since retired reads as no shelf, which is where Explore puts the deck.
+      category: isPublicationCategory(row.category) ? row.category : null,
       meaningLanguage: row.meaningLanguage,
       editionFields: row.editionFields,
       publisher: row.publisher,
@@ -100,7 +109,6 @@ export async function publishDeck(
     slug: input.slug,
     status: "published" as const,
     summary: input.summary,
-    level: input.level ?? null,
     category: input.category ?? null,
     meaningLanguage: input.meaningLanguage,
     // Left out, the choice stands: shrinking it silently would make a half-written edition

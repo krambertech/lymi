@@ -1,11 +1,12 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { type PublicDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
+import { type PublicDeckOut, publisherAvatarPath, taughtLanguage } from "@lymi/core/catalog";
 import type { CSSProperties, ReactNode } from "react";
 import { type DeckCard, languageName, type RecallCue } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
+import { deckSubject } from "../../lib/subjects";
 import { buttonClass } from "../Button";
 import { AppTile } from "../Logo";
 import { SiteFooter } from "../landing/SiteFooter";
@@ -114,15 +115,16 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
   );
 }
 
-/** What the deck is in, if it is in a language at all. A catalog card can show the same line. */
+/** The language the deck teaches or else its subject, and how many cards it holds. */
 export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
   const { i18n } = useLingui();
-  const language = languageName(deck.language, i18n.locale, { label: true });
+  const shelf =
+    languageName(taughtLanguage(deck), i18n.locale, { label: true }) ?? deckSubject(i18n, deck);
   return (
     <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md text-muted">
-      {language && (
+      {shelf && (
         <>
-          <span>{language}</span>
+          <span>{shelf}</span>
           <span aria-hidden="true" className="text-faint">
             ·
           </span>

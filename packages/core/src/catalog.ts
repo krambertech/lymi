@@ -34,7 +34,7 @@ export const PublicDeckOut = z.object({
   slug: z.string(),
   name: z.string(),
   summary: z.string(),
-  level: z.string().nullable(),
+  category: z.string().nullable(),
   /** The language the terms are in, from the deck. */
   language: z.string().nullable(),
   /** The meaning language of the edition on this page. */
@@ -86,7 +86,7 @@ export interface PublicationRow {
   slug: string;
   status: "published" | "withdrawn";
   summary: string;
-  level: string | null;
+  category: string | null;
   /** The edition this page shows, which is the original unless a published one was asked for. */
   meaningLanguage: string;
   originalMeaningLanguage: string;
@@ -211,7 +211,7 @@ export function projectPublicDeck(
     slug: publication.slug,
     name: publication.deckName,
     summary: publication.summary,
-    level: publication.level,
+    category: publication.category,
     language: publication.deckLanguage,
     meaningLanguage: publication.meaningLanguage,
     originalMeaningLanguage: publication.originalMeaningLanguage,
@@ -284,7 +284,7 @@ export async function loadPublicDeck(
       slug: deckPublications.slug,
       status: deckPublications.status,
       summary: deckPublications.summary,
-      level: deckPublications.level,
+      category: deckPublications.category,
       meaningLanguage: deckPublications.meaningLanguage,
       publisher: deckPublications.publisher,
       sources: deckPublications.sources,
@@ -414,7 +414,6 @@ export const PublicDeckSummary = z.object({
   slug: z.string(),
   name: z.string(),
   summary: z.string(),
-  level: z.string().nullable(),
   category: z.string().nullable(),
   /** The language the terms are in, from the deck. */
   language: z.string().nullable(),
@@ -459,7 +458,6 @@ export async function listPublicCatalog(
       deckId: deckPublications.deckId,
       slug: deckPublications.slug,
       summary: deckPublications.summary,
-      level: deckPublications.level,
       category: deckPublications.category,
       meaningLanguage: deckPublications.meaningLanguage,
       revision: deckPublications.revision,
@@ -488,7 +486,6 @@ export async function listPublicCatalog(
       slug: row.slug,
       name: text?.name ?? row.deckName,
       summary: text?.summary ?? row.summary,
-      level: row.level,
       category: row.category,
       language: row.deckLanguage,
       meaningLanguage: shown?.language ?? row.meaningLanguage,
@@ -769,30 +766,67 @@ export const ExploreDeckOut = z.object({
 });
 export type ExploreDeckOut = z.infer<typeof ExploreDeckOut>;
 
-/**
- * The shelves, in the order they appear, from the column's own list so the two cannot drift.
- * A deck sits on one shelf; a deck with no category gathers at the end, so publishing is never
- * blocked on choosing one. Each app writes its own headings, because they are translated strings.
- */
-export const CATEGORY_ORDER: readonly string[] = PUBLICATION_CATEGORIES;
+const SUBJECTS: readonly string[] = PUBLICATION_CATEGORIES.filter((key) => key !== "languages");
+
+/** Where a deck with no shelf, or one naming a subject that has since gone, gathers: More decks. */
 export const UNCATEGORISED = "other";
 
+/**
+ * The language a published deck teaches: the deck's own, unless it sits on a subject shelf, where
+ * the deck's language only says what its terms are spoken in.
+ */
+export function taughtLanguage(deck: {
+  category: string | null;
+  language: string | null;
+}): string | null {
+  return deck.category && SUBJECTS.includes(deck.category) ? null : deck.language;
+}
+
+/** The subject a published deck sits under, or null for a language deck or one with no shelf. */
+export function subjectOf(deck: { category: string | null }): string | null {
+  return deck.category && SUBJECTS.includes(deck.category) ? deck.category : null;
+}
+
+/** A shelf per language, then a shelf per subject, then More decks. Each app writes the headings. */
 export interface Shelf {
+  /** Unique on the page, and safe in an element id. */
   key: string;
+  /** The language a language shelf holds, or null for a subject shelf and More decks. */
+  language: string | null;
   decks: PublicDeckSummary[];
 }
 
-/** Decks grouped into shelves, in category order, with uncategorised decks last. */
+/**
+ * Decks grouped into shelves: one per language, most decks first, then the subjects in the order
+ * `PUBLICATION_CATEGORIES` lists them, then More decks. Every deck lands on exactly one shelf, and
+ * both Explores group through here so they cannot disagree. docs/design/explore.md.
+ */
 export function shelvesOf(decks: readonly PublicDeckSummary[]): Shelf[] {
-  const byCategory = new Map<string, PublicDeckSummary[]>();
+  const byLanguage = new Map<string, PublicDeckSummary[]>();
+  const bySubject = new Map<string, PublicDeckSummary[]>();
+  const rest: PublicDeckSummary[] = [];
   for (const deck of decks) {
-    const key =
-      deck.category && CATEGORY_ORDER.includes(deck.category) ? deck.category : UNCATEGORISED;
-    const shelf = byCategory.get(key);
-    if (shelf) shelf.push(deck);
-    else byCategory.set(key, [deck]);
+    const subject = subjectOf(deck);
+    if (subject) push(bySubject, subject, deck);
+    else if (deck.category === "languages" && deck.language) push(byLanguage, deck.language, deck);
+    else rest.push(deck);
   }
-  return [...CATEGORY_ORDER, UNCATEGORISED]
-    .filter((key) => byCategory.has(key))
-    .map((key) => ({ key, decks: byCategory.get(key) as PublicDeckSummary[] }));
+  const languages = [...byLanguage]
+    .sort(([a, one], [b, other]) => other.length - one.length || a.localeCompare(b, "en"))
+    .map(([language, shelf]) => ({ key: `language-${language}`, language, decks: shelf }));
+  const subjects = SUBJECTS.flatMap((subject) => {
+    const shelf = bySubject.get(subject);
+    return shelf ? [{ key: subject, language: null, decks: shelf }] : [];
+  });
+  return [
+    ...languages,
+    ...subjects,
+    ...(rest.length > 0 ? [{ key: UNCATEGORISED, language: null, decks: rest }] : []),
+  ];
+}
+
+function push<T>(groups: Map<string, T[]>, key: string, item: T) {
+  const group = groups.get(key);
+  if (group) group.push(item);
+  else groups.set(key, [item]);
 }

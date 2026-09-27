@@ -45,7 +45,6 @@ test("a learner adds a published deck from Explore without leaving the app", asy
         data: {
           slug: deck.slug,
           summary: `What ${deck.name} is for.`,
-          level: "A1",
           category,
           meaningLanguage: "en",
           publisher: "Lymi",
@@ -67,10 +66,10 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     await expect(learner.getByRole("heading", { name: "Explore", exact: true })).toBeVisible();
   });
 
-  await test.step("Explore lists both decks, each under its category", async () => {
+  await test.step("Explore lists both decks, on the shelf of their language or subject", async () => {
     await learner.goto("/explore");
     await expect(learner.getByRole("heading", { name: "Explore", exact: true })).toBeVisible();
-    await expect(learner.getByRole("heading", { name: "Languages", exact: true })).toBeVisible();
+    await expect(learner.getByRole("heading", { name: "Estonian", exact: true })).toBeVisible();
     await expect(learner.getByRole("heading", { name: "Driving", exact: true })).toBeVisible();
     await expect(tile(learner, onShelf.name)).toBeVisible();
     await expect(tile(learner, onPage.name)).toBeVisible();

@@ -8,7 +8,6 @@ const deck = (over: Partial<PublicDeckSummary> = {}): PublicDeckSummary => ({
   slug: "everyday-estonian",
   name: "Everyday Estonian",
   summary: "Words for your first weeks.",
-  level: "A1",
   category: "languages",
   language: "et",
   meaningLanguage: "en",
@@ -39,7 +38,7 @@ describe("deckBreadcrumbs", () => {
 describe("exploreStructuredData", () => {
   it("describes Explore as a collection listing each deck as the resource its page is", () => {
     const data = exploreStructuredData(
-      [deck(), deck({ slug: "signs", name: "Signs", level: null, language: null })],
+      [deck(), deck({ slug: "signs", name: "Signs", category: null, language: null })],
       "en",
       {
         name: "Free flashcard decks · Lymi",
@@ -66,13 +65,7 @@ describe("exploreStructuredData", () => {
         learningResourceType: "Vocabulary list",
         inLanguage: ["et", "en"],
         teaches: "Estonian vocabulary",
-        educationalLevel: {
-          "@type": "DefinedTerm",
-          name: "A1",
-          termCode: "A1",
-          inDefinedTermSet:
-            "https://www.coe.int/en/web/common-european-framework-reference-languages",
-        },
+        about: { "@type": "Language", name: "Estonian", alternateName: "et" },
       },
     });
     expect(second?.item).not.toHaveProperty("teaches");

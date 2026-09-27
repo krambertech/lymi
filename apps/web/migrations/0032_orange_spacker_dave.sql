@@ -1,0 +1,1 @@
+ALTER TABLE `deck_publications` DROP COLUMN `level`;

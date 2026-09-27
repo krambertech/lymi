@@ -18,9 +18,7 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     expect(response.headers()["set-cookie"]).toBeUndefined();
 
     const html = await response.text();
-    expect(html).toContain(
-      "<title>Evening Estonian · Estonian vocabulary, level A1 · Lymi</title>",
-    );
+    expect(html).toContain("<title>Evening Estonian · Estonian vocabulary · Lymi</title>");
     expect(html).toContain(`<link rel="canonical" href="https://lymi.app${pagePath}">`);
     for (const [lang, path] of [
       ["en", pagePath],
@@ -38,7 +36,6 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     expect(jsonLd[0]).toMatchObject({
       "@type": "LearningResource",
       name: "Evening Estonian",
-      educationalLevel: { name: "A1" },
       teaches: "Estonian vocabulary",
     });
     expect(jsonLd[1]).toMatchObject({

@@ -27,7 +27,6 @@ const Decks = z.array(DeckOut.pick({ id: true, name: true }));
 const publication = (slug: string, category: "languages" | "driving") => ({
   slug,
   summary: "Words and phrases for your first weeks in Estonia.",
-  level: "A1",
   category,
   meaningLanguage: "en",
   publisher: "Lymi",

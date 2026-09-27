@@ -31,7 +31,6 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
       data: {
         slug,
         summary: "Words and phrases for your first weeks in Estonia.",
-        level: "A1",
         meaningLanguage: "en",
         publisher: "Lymi",
       },

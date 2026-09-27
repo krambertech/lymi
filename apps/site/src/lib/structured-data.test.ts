@@ -1,8 +1,14 @@
-import type { PublicDeckSummary } from "@lymi/core/catalog";
+import type { PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
 import { LANGUAGES_QUESTIONS, TEACHERS_QUESTIONS } from "../components/landing/faq";
 import { pageI18n } from "./i18n";
-import { deckBreadcrumbs, exploreStructuredData, faqPage, marketingPage } from "./structured-data";
+import {
+  deckBreadcrumbs,
+  deckStructuredData,
+  exploreStructuredData,
+  faqPage,
+  marketingPage,
+} from "./structured-data";
 
 const deck = (over: Partial<PublicDeckSummary> = {}): PublicDeckSummary => ({
   slug: "everyday-estonian",
@@ -15,6 +21,72 @@ const deck = (over: Partial<PublicDeckSummary> = {}): PublicDeckSummary => ({
   sectionCount: 2,
   card: null,
   ...over,
+});
+
+const published = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
+  slug: "everyday-estonian",
+  name: "Everyday Estonian",
+  summary: "Words for your first weeks.",
+  category: "languages",
+  language: "et",
+  meaningLanguage: "en",
+  originalMeaningLanguage: "en",
+  editions: ["en"],
+  publisher: "Lymi",
+  publisherAvatar: null,
+  sources: [{ title: "Keeleklikk", url: "https://www.keeleklikk.ee/" }, { title: "A teacher" }],
+  reviewedAt: null,
+  revision: 2,
+  publishedAt: "2026-09-10T12:00:00.000Z",
+  cardCount: 14,
+  sections: [],
+  ...over,
+});
+
+describe("deckStructuredData", () => {
+  it("describes a language deck as a vocabulary list in the language it teaches", () => {
+    expect(deckStructuredData(published(), "ru")).toEqual({
+      "@context": "https://schema.org",
+      "@type": "LearningResource",
+      "@id": "https://lymi.app/ru/explore/everyday-estonian",
+      url: "https://lymi.app/ru/explore/everyday-estonian",
+      name: "Everyday Estonian",
+      description: "Words for your first weeks.",
+      learningResourceType: "Vocabulary list",
+      inLanguage: ["et", "en"],
+      teaches: "Estonian vocabulary",
+      about: { "@type": "Language", name: "Estonian", alternateName: "et" },
+      publisher: { "@type": "Organization", name: "Lymi" },
+      datePublished: "2026-09-10T12:00:00.000Z",
+      citation: [
+        { "@type": "CreativeWork", name: "Keeleklikk", url: "https://www.keeleklikk.ee/" },
+        { "@type": "CreativeWork", name: "A teacher" },
+      ],
+      isPartOf: { "@type": "WebSite", name: "Lymi", url: "https://lymi.app/" },
+    });
+  });
+
+  it("names the subject of a deck that teaches no language, never its vocabulary", () => {
+    for (const language of [null, "en"]) {
+      const data = deckStructuredData(published({ category: "science", language }), "uk");
+      expect(data).toMatchObject({
+        learningResourceType: "Flashcards",
+        teaches: "Science",
+        about: { "@type": "Thing", name: "Science" },
+      });
+    }
+  });
+
+  it("leaves out what it teaches when the deck has no language and no subject", () => {
+    const data = deckStructuredData(
+      published({ category: null, language: null, sources: [] }),
+      "en",
+    );
+    expect(data).not.toHaveProperty("educationalLevel");
+    expect(data).not.toHaveProperty("teaches");
+    expect(data).not.toHaveProperty("citation");
+    expect(data.inLanguage).toEqual(["en"]);
+  });
 });
 
 describe("deckBreadcrumbs", () => {

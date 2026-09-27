@@ -1,10 +1,7 @@
 import { modeOf, type ReviewModeKey } from "@lymi/core";
-import { type PublicDeckOut, previewMode, taughtLanguage } from "@lymi/core/catalog";
+import { type PublicDeckOut, previewMode } from "@lymi/core/catalog";
 import { HAND_SIZE } from "./hand";
 import { type Locale, locales } from "./routes";
-import { deckSubjectInEnglish } from "./subjects";
-
-const SITE = "https://lymi.app";
 
 /** The most cards laid out at the top of the page. */
 export const SPREAD_SIZE = 5;
@@ -225,51 +222,6 @@ export function etagMatches(ifNoneMatch: string | null, etag: string): boolean {
 /** Short and public: a publisher's correction reaches visitors within minutes. */
 export const DECK_CACHE_CONTROL = "public, max-age=300";
 export const MISSING_CACHE_CONTROL = "public, max-age=60";
-
-/**
- * What a published deck teaches, for schema.org: a language's vocabulary, or else its subject, both
- * named in English. A deck that teaches no language is never called a vocabulary list.
- */
-export function deckTeaches(deck: Pick<PublicDeckOut, "category" | "language">) {
-  const language = languageName(taughtLanguage(deck), "en");
-  if (language) {
-    return {
-      learningResourceType: "Vocabulary list",
-      teaches: `${language} vocabulary`,
-      about: { "@type": "Language", name: language, alternateName: deck.language },
-    };
-  }
-  const subject = deckSubjectInEnglish(deck);
-  return {
-    learningResourceType: "Flashcards",
-    ...(subject && { teaches: subject, about: { "@type": "Thing", name: subject } }),
-  };
-}
-
-/** schema.org LearningResource: the deck, and the language or subject it teaches. */
-export function deckStructuredData(deck: PublicDeckOut, locale: Locale) {
-  const url = new URL(deckPath(deck.slug, locale), SITE).toString();
-  return {
-    "@context": "https://schema.org",
-    "@type": "LearningResource",
-    "@id": url,
-    url,
-    name: deck.name,
-    description: deck.summary,
-    inLanguage: [...new Set([deck.language, deck.meaningLanguage].filter(Boolean))],
-    ...deckTeaches(deck),
-    publisher: { "@type": "Organization", name: deck.publisher },
-    datePublished: deck.publishedAt,
-    ...(deck.sources.length > 0 && {
-      citation: deck.sources.map((source) => ({
-        "@type": "CreativeWork",
-        name: source.title,
-        ...(source.url && { url: source.url }),
-      })),
-    }),
-    isPartOf: { "@type": "WebSite", name: "Lymi", url: `${SITE}/` },
-  };
-}
 
 /** JSON for a `<script>` element: `<` is escaped so a card cannot close the element. */
 export function jsonForScript(value: unknown): string {

@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray, isNotNull, isNull, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, isNotNull, isNull, type SQL, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
 import { selectIn } from "./db";
@@ -15,7 +15,14 @@ import {
   sections,
   userAvatars,
 } from "./schema/app";
-import { type Directions, PUBLICATION_CATEGORIES, PUBLICATION_SLUG, ReviewModeKey } from "./types";
+import {
+  type Directions,
+  PUBLICATION_CATEGORIES,
+  PUBLICATION_SLUG,
+  PublicationTag,
+  publicationTags,
+  ReviewModeKey,
+} from "./types";
 
 /** A card's picture on a public page: only one whose publisher described it is ever public. */
 const PublicImage = z.object({
@@ -35,6 +42,7 @@ export const PublicDeckOut = z.object({
   name: z.string(),
   summary: z.string(),
   level: z.string().nullable(),
+  tags: z.array(PublicationTag),
   /** The language the terms are in, from the deck. */
   language: z.string().nullable(),
   /** The meaning language of the edition on this page. */
@@ -87,6 +95,7 @@ export interface PublicationRow {
   status: "published" | "withdrawn";
   summary: string;
   level: string | null;
+  tags: string[];
   /** The edition this page shows, which is the original unless a published one was asked for. */
   meaningLanguage: string;
   originalMeaningLanguage: string;
@@ -212,6 +221,7 @@ export function projectPublicDeck(
     name: publication.deckName,
     summary: publication.summary,
     level: publication.level,
+    tags: publicationTags(publication.tags),
     language: publication.deckLanguage,
     meaningLanguage: publication.meaningLanguage,
     originalMeaningLanguage: publication.originalMeaningLanguage,
@@ -285,6 +295,7 @@ export async function loadPublicDeck(
       status: deckPublications.status,
       summary: deckPublications.summary,
       level: deckPublications.level,
+      tags: deckPublications.tags,
       meaningLanguage: deckPublications.meaningLanguage,
       publisher: deckPublications.publisher,
       sources: deckPublications.sources,
@@ -416,6 +427,7 @@ export const PublicDeckSummary = z.object({
   summary: z.string(),
   level: z.string().nullable(),
   category: z.string().nullable(),
+  tags: z.array(PublicationTag),
   /** The language the terms are in, from the deck. */
   language: z.string().nullable(),
   /** The meaning language this row is written in, which is the edition Explore showed. */
@@ -454,6 +466,15 @@ export async function listPublicCatalog(
   language?: string | undefined,
   limit = SITEMAP_DECK_LIMIT,
 ): Promise<PublicDeckSummary[]> {
+  return catalogSummaries(db, publishedAndAlive(), language, limit);
+}
+
+async function catalogSummaries(
+  db: CatalogDb,
+  where: SQL | undefined,
+  language: string | undefined,
+  limit: number,
+): Promise<PublicDeckSummary[]> {
   const rows = await db
     .select({
       deckId: deckPublications.deckId,
@@ -461,6 +482,7 @@ export async function listPublicCatalog(
       summary: deckPublications.summary,
       level: deckPublications.level,
       category: deckPublications.category,
+      tags: deckPublications.tags,
       meaningLanguage: deckPublications.meaningLanguage,
       revision: deckPublications.revision,
       deckName: decks.name,
@@ -469,7 +491,7 @@ export async function listPublicCatalog(
     })
     .from(deckPublications)
     .innerJoin(decks, eq(decks.id, deckPublications.deckId))
-    .where(publishedAndAlive())
+    .where(where)
     .orderBy(asc(deckPublications.publishedAt), asc(deckPublications.slug))
     .limit(limit);
   if (rows.length === 0) return [];
@@ -490,6 +512,7 @@ export async function listPublicCatalog(
       summary: text?.summary ?? row.summary,
       level: row.level,
       category: row.category,
+      tags: publicationTags(row.tags),
       language: row.deckLanguage,
       meaningLanguage: shown?.language ?? row.meaningLanguage,
       cardCount: cardsPerDeck.get(row.deckId) ?? 0,
@@ -497,6 +520,89 @@ export async function listPublicCatalog(
       card: sample.get(row.deckId) ?? null,
     });
   });
+}
+
+/** What decides whether two published decks are related. */
+export interface RelatedCandidate {
+  slug: string;
+  tags: readonly string[];
+  category: string | null;
+  /** The deck's language, which is the language its terms are in. */
+  language: string | null;
+}
+
+/** "pt-BR" and "pt" teach the same language; a deck with no language shares it with nobody. */
+function sameLanguage(a: string | null, b: string | null): boolean {
+  if (!a || !b) return false;
+  return a.split("-")[0]?.toLowerCase() === b.split("-")[0]?.toLowerCase();
+}
+
+/**
+ * The decks most like one, in order: the most shared tags, then the same language, then the same
+ * shelf, with the catalogue's own order breaking ties. A deck sharing none of the three is left
+ * out, so a deck with nothing like it gets an empty list rather than a row of strangers.
+ */
+export function rankRelated(
+  deck: RelatedCandidate,
+  candidates: readonly RelatedCandidate[],
+  limit: number,
+): string[] {
+  return candidates
+    .filter((other) => other.slug !== deck.slug)
+    .map((other, at) => ({
+      slug: other.slug,
+      at,
+      tags: other.tags.filter((tag) => deck.tags.includes(tag)).length,
+      language: sameLanguage(deck.language, other.language) ? 1 : 0,
+      category: deck.category !== null && deck.category === other.category ? 1 : 0,
+    }))
+    .filter((other) => other.tags + other.language + other.category > 0)
+    .sort(
+      (a, b) =>
+        b.tags - a.tags || b.language - a.language || b.category - a.category || a.at - b.at,
+    )
+    .slice(0, limit)
+    .map((other) => other.slug);
+}
+
+/**
+ * More like this: the published decks most like the one at `slug`, as Explore rows in the meaning
+ * language asked for. `exclude` leaves out decks before ranking, so a learner's own still fill the
+ * row with others. Reads no learner row itself, so the public page can cache it. ADR 0016.
+ */
+export async function listRelatedDecks(
+  db: CatalogDb,
+  slug: string,
+  opts: { language?: string | undefined; exclude?: ReadonlySet<string>; limit: number },
+): Promise<PublicDeckSummary[]> {
+  const rows = await db
+    .select({
+      slug: deckPublications.slug,
+      tags: deckPublications.tags,
+      category: deckPublications.category,
+      language: decks.defaultLanguage,
+    })
+    .from(deckPublications)
+    .innerJoin(decks, eq(decks.id, deckPublications.deckId))
+    .where(publishedAndAlive())
+    .orderBy(asc(deckPublications.publishedAt), asc(deckPublications.slug))
+    .limit(SITEMAP_DECK_LIMIT);
+  const deck = rows.find((row) => row.slug === slug);
+  if (!deck) return [];
+  const ranked = rankRelated(
+    deck,
+    rows.filter((row) => !opts.exclude?.has(row.slug)),
+    opts.limit,
+  );
+  if (ranked.length === 0) return [];
+  const summaries = await catalogSummaries(
+    db,
+    and(publishedAndAlive(), inArray(deckPublications.slug, ranked)),
+    opts.language,
+    ranked.length,
+  );
+  const bySlug = new Map(summaries.map((summary) => [summary.slug, summary]));
+  return ranked.flatMap((key) => bySlug.get(key) ?? []);
 }
 
 interface ShownEdition {
@@ -766,6 +872,8 @@ export type ExploreOut = z.infer<typeof ExploreOut>;
 export const ExploreDeckOut = z.object({
   deck: PublicDeckOut,
   deckId: z.string().nullable(),
+  /** More like this, leaving out the decks already in the learner's Library. */
+  related: z.array(PublicDeckSummary),
 });
 export type ExploreDeckOut = z.infer<typeof ExploreDeckOut>;
 

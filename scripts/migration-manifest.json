@@ -127,6 +127,10 @@
     {
       "name": "0031_powerful_nocturne.sql",
       "sha256": "546f66d741629dc70fed096bfea5dfd62935c7302ec4334dd908c562ccb2dc53"
+    },
+    {
+      "name": "0032_jazzy_felicia_hardy.sql",
+      "sha256": "e371dd89ecc0a4495ef4b08c0d0818121181b22624ce2af2e44d8e228ddc0ed2"
     }
   ]
 }

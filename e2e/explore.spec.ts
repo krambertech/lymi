@@ -85,6 +85,12 @@ test("a visitor finds a published deck on Explore, by shelf and by a word on a c
     expect(new URL(page.url()).search).toBe("");
   });
 
+  await test.step("a tag's name finds the decks that carry it", async () => {
+    await page.getByRole("searchbox", { name: "Search decks" }).fill("core vocabulary");
+    await expect(decks).toHaveCount(1);
+    await expect(decks.first()).toHaveText("Evening Estonian");
+  });
+
   await test.step("a search with no match says so and offers the way back", async () => {
     await page.getByRole("searchbox", { name: "Search decks" }).fill("zzzz");
     await expect(decks).toHaveCount(0);
@@ -121,4 +127,15 @@ test("the header links to Explore, and the page keeps its shelves at phone width
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );
   expect(overflow).toBeLessThanOrEqual(1);
+});
+
+test("a tag is found by its name in the reader's language and in English", async ({ page }) => {
+  await page.goto(`${publicSite}/uk/explore`);
+  const search = page.getByRole("searchbox");
+  const decks = page.getByRole("heading", { level: 3 });
+  await search.fill("базова лексика");
+  await expect(decks).toHaveCount(1);
+  await expect(decks.first()).toHaveText("Evening Estonian");
+  await search.fill("core vocabulary");
+  await expect(decks).toHaveCount(1);
 });

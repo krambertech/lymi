@@ -191,6 +191,14 @@
   }
 }
 
+/* A tag sits in the ground's own hue, a step darker, as Back's hover does, rather than as a grey slab. */
+.deck-cover-tag {
+  background: oklch(from var(--ground) calc(l - 0.045) calc(c + 0.014) h);
+}
+[data-theme="dark"] .deck-cover-tag {
+  background: oklch(from var(--ground) calc(l + 0.06) c h);
+}
+
 /* White rather than amber, which stops reading as the thing to press on a coloured ground. */
 .deck-cover-action {
   background: var(--plate);

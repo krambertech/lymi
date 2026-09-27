@@ -1,5 +1,5 @@
 import { modeOf, type ReviewModeKey } from "@lymi/core";
-import { type PublicDeckOut, previewMode } from "@lymi/core/catalog";
+import { type PublicDeckOut, type PublicDeckSummary, previewMode } from "@lymi/core/catalog";
 import { HAND_SIZE } from "./hand";
 import { type Locale, locales } from "./routes";
 
@@ -195,11 +195,15 @@ export function languageName(
 }
 
 /**
- * Everything the page renders, folded into one value. The publish revision moves only on publish
- * and withdrawal, so a corrected meaning or a new card would otherwise keep its old validator.
+ * Everything the page renders, folded into one value: the deck and the decks More like this shows.
+ * The publish revision moves only on publish and withdrawal, so a corrected meaning, a new card or
+ * another deck's new tag would otherwise keep the old validator.
  */
-export function deckContentHash(deck: PublicDeckOut): string {
-  return hash(JSON.stringify(deck)).toString(36);
+export function deckContentHash(
+  deck: PublicDeckOut,
+  related: readonly PublicDeckSummary[] = [],
+): string {
+  return hash(JSON.stringify({ deck, related })).toString(36);
 }
 
 /**

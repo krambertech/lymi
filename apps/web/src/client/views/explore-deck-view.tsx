@@ -6,12 +6,14 @@ import { clsx } from "clsx";
 import { ArrowRight, Check, ChevronDown, Plus } from "lucide-react";
 import { type CSSProperties, type ReactNode, useEffect, useRef } from "react";
 import { Button } from "../components/button";
-import { DeckMeta, HAND_FANS, TrayCardFace } from "../components/deck-tray";
+import { Chip } from "../components/chip";
+import { DeckMeta, DeckTile, HAND_FANS, TrayCardFace } from "../components/deck-tray";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
 import { NavLink } from "../components/nav-link";
 import { PublisherMark } from "../components/publisher-mark";
 import { Skeleton } from "../components/skeleton";
+import { tagLabel } from "../lib/explore";
 
 interface Props {
   data: ExploreDeckOut | undefined;
@@ -139,7 +141,7 @@ export function ExploreDeckView({
   adding,
   added,
 }: Props) {
-  const { t } = useLingui();
+  const { i18n, t } = useLingui();
   const deckId = data?.deckId;
   // The refetch that brings the deck in lands before the press settles, so either state counts.
   const arrived = (adding || added) === true && !!deckId;
@@ -237,6 +239,19 @@ export function ExploreDeckView({
             >
               {deck.summary}
             </p>
+            {deck.tags.length > 0 && (
+              // Plain chips: they lead nowhere until a tag has a page of its own.
+              <ul
+                aria-label={t`Tags`}
+                className="mt-3.5 flex flex-wrap justify-center gap-1.5 @4xl:justify-start"
+              >
+                {deck.tags.map((tag) => (
+                  <li key={tag}>
+                    <Chip className="deck-cover-tag">{tagLabel(i18n, tag)}</Chip>
+                  </li>
+                ))}
+              </ul>
+            )}
             {/* The check that says so is drawn in the hand, which a screen reader skips. */}
             {deckId && (
               <p className="sr-only">
@@ -366,6 +381,21 @@ export function ExploreDeckView({
             )}
           </div>
         </section>
+
+        {data.related.length > 0 && (
+          <section aria-labelledby="deck-related" className="pt-10">
+            <h2 id="deck-related" className="text-lg font-medium text-text">
+              <Trans>More like this</Trans>
+            </h2>
+            <ul className="deck-shelf pt-4!">
+              {data.related.map((related) => (
+                <li key={related.slug}>
+                  <DeckTile deck={related} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </Screen>
   );

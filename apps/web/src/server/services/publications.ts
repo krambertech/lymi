@@ -1,5 +1,5 @@
 import type { JoinPreviewOut, PublicationInput, PublicationOut } from "@lymi/core";
-import { newId, PUBLICATION_SLUG } from "@lymi/core";
+import { newId, PUBLICATION_SLUG, publicationTags } from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
@@ -34,6 +34,7 @@ export function publicationOut(
       summary: row.summary,
       level: row.level,
       category: row.category,
+      tags: publicationTags(row.tags),
       meaningLanguage: row.meaningLanguage,
       editionFields: row.editionFields,
       publisher: row.publisher,
@@ -102,6 +103,8 @@ export async function publishDeck(
     summary: input.summary,
     level: input.level ?? null,
     category: input.category ?? null,
+    // Left out, the tags stand, so a publisher that does not know them yet never clears them.
+    tags: publicationTags(input.tags ?? existing?.tags ?? []),
     meaningLanguage: input.meaningLanguage,
     // Left out, the choice stands: shrinking it silently would make a half-written edition
     // read as complete, and publishing it would put untranslated cards in front of a learner.

@@ -38,22 +38,12 @@ export function catalogEtag(parts: {
 }
 
 /**
- * Searchable text for one deck: its name, summary, languages and the card on its tray. The
- * locale is the reader's, so the haystack folds case exactly as the typed query does.
+ * Searchable text for one deck: its name, summary, the card on its tray, and the names of its
+ * languages and tags. The locale is the reader's, so the haystack folds case exactly as the typed
+ * query does.
  */
-export function searchText(
-  deck: PublicDeckSummary,
-  languageNames: string[],
-  locale: string,
-): string {
-  return [
-    deck.name,
-    deck.summary,
-    deck.level,
-    deck.card?.term,
-    deck.card?.meaning,
-    ...languageNames,
-  ]
+export function searchText(deck: PublicDeckSummary, names: string[], locale: string): string {
+  return [deck.name, deck.summary, deck.level, deck.card?.term, deck.card?.meaning, ...names]
     .filter(Boolean)
     .join(" ")
     .toLocaleLowerCase(locale);

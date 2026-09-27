@@ -46,10 +46,12 @@ test("a visitor finds a published deck on Explore, by shelf and by a word on a c
         ]),
       },
     });
-    // Complete with JavaScript off: both live decks and both shelves.
-    for (const text of ["Evening Estonian", "Estonian road signs", "Languages", "Driving"]) {
+    // Complete with JavaScript off: both live decks, both shelves, and a chip linking to each.
+    for (const text of ["Evening Estonian", "Estonian road signs", ">Estonian<", ">Driving<"]) {
       expect(html).toContain(text);
     }
+    expect(html).toContain('href="#shelf-language-et"');
+    expect(html).toContain('href="#shelf-driving"');
     // Each deck shows one of its own cards. Which one follows the deck's revision, not the reader.
     expect(html).toMatch(/peatee|ülekäigurada/);
     expect(html).toMatch(/tere päevast|üks kohv, palun|head õhtut|head ööd/);
@@ -71,8 +73,9 @@ test("a visitor finds a published deck on Explore, by shelf and by a word on a c
   await page.goto(`${publicSite}/explore`);
   const decks = page.getByRole("heading", { level: 3 });
 
-  await test.step("both shelves are on the page, each naming what it holds", async () => {
-    await expect(page.getByRole("heading", { name: "Languages", exact: true })).toBeVisible();
+  await test.step("a language shelf comes before a subject shelf, each naming what it holds", async () => {
+    await expect(page.getByRole("heading", { level: 2 })).toHaveText(["Estonian", "Driving"]);
+    await expect(page.getByRole("heading", { name: "Estonian", exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Driving", exact: true })).toBeVisible();
     await expect(decks).toHaveCount(2);
   });
@@ -92,13 +95,13 @@ test("a visitor finds a published deck on Explore, by shelf and by a word on a c
     await expect(decks).toHaveCount(2);
   });
 
-  await test.step("choosing a shelf narrows the page, and choosing it again undoes that", async () => {
-    const driving = page.getByRole("button", { name: /^Driving/ });
-    await driving.click();
-    await expect(driving).toHaveAttribute("aria-pressed", "true");
-    await expect(decks).toHaveCount(1);
-    await driving.click();
+  await test.step("a shelf's chip jumps to it and leaves the address alone", async () => {
+    const shelves = page.getByRole("navigation", { name: "Shelves" });
+    await expect(shelves.getByRole("link")).toHaveText([/^Estonian/, /^Driving/]);
+    await shelves.getByRole("link", { name: /^Driving/ }).click();
+    await expect(page.getByRole("heading", { name: "Driving", exact: true })).toBeFocused();
     await expect(decks).toHaveCount(2);
+    expect(page.url()).toBe(`${publicSite}/explore`);
   });
 
   await test.step("a deck leads to its own page", async () => {
@@ -114,7 +117,8 @@ test("the header links to Explore, and the page keeps its shelves at phone width
   await page.goto(`${publicSite}/explore`);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("searchbox", { name: "Search decks" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Languages", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Estonian", exact: true })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Shelves" })).toBeVisible();
 
   // The shelf wraps rather than pushing the page wider than the window.
   const overflow = await page.evaluate(

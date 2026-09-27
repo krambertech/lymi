@@ -279,6 +279,12 @@ export const TerseCardOutcomeOut = z
     enrichmentStatus: EnrichmentStatus.nullable().optional().meta({
       description: "On an add: set while the AI is filling the card, null once it settles",
     }),
+    term: z.string().optional().meta({ description: "On a skip: the term that was sent" }),
+    deckId: z
+      .string()
+      .optional()
+      .meta({ description: "On a skip: the deck of the card that already holds the term" }),
+    deckName: z.string().optional().meta({ description: "On a skip: that deck's name" }),
     code: CardWriteErrorOut.shape.code.optional(),
     error: z.string().optional().meta({ description: "Why the card was not written" }),
   })

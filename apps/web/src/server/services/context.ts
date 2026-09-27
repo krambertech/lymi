@@ -24,6 +24,8 @@ export class ServiceError extends Error {
     public readonly code: "not_found" | "invalid" | "forbidden" | "conflict" | "unavailable",
     message: string,
     public readonly details?: unknown,
+    /** A stable name a tool can match on, sent as the response's `code`. */
+    public readonly reason?: string,
   ) {
     super(message);
     this.name = "ServiceError";

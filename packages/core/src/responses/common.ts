@@ -8,6 +8,13 @@ export const OkOut = z.object({ ok: z.literal(true) }).meta({ id: "Ok" });
 export const ErrorOut = z
   .object({
     error: z.string().meta({ description: "What went wrong, in plain words" }),
-    issues: z.array(z.unknown()).optional().meta({ description: "Zod issues, on 400" }),
+    code: z.string().optional().meta({
+      description:
+        "A stable name for a refusal a tool may act on, such as `description_reveals_answer`",
+    }),
+    issues: z
+      .array(z.unknown())
+      .optional()
+      .meta({ description: "On 400, what failed: Zod issues, or the refusal's details" }),
   })
   .meta({ id: "Error" });

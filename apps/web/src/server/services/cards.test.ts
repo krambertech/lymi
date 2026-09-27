@@ -386,7 +386,14 @@ describe("bulk edits and archives", () => {
 
     expect(outcomes[0]).toMatchObject({ id: existing, status: "skipped" });
     const [skipped, added] = outcomes.map(terseOutcome);
-    expect(skipped).toEqual({ id: existing, status: "skipped", enrichmentStatus: null });
+    expect(skipped).toEqual({
+      id: existing,
+      status: "skipped",
+      enrichmentStatus: null,
+      term: "Ormai",
+      deckId: deck.id,
+      deckName: "Italiano",
+    });
     expect(added).toMatchObject({ status: "added", enrichmentStatus: null });
     expect(added?.id).not.toBe(existing);
     expect(added?.id).toBe(outcomes[1]?.id);

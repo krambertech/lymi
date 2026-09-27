@@ -31,7 +31,8 @@ const PRIVACY =
   "The picture is fetched or read once, checked by its bytes, normalized to a still WebP of at most 1600 pixels a side without metadata, and stored privately. " +
   "JPEG, PNG, WebP and still GIF are accepted up to 10 MB and 12,000 pixels a side; SVG and animation are refused. A failure leaves the current picture as it was.";
 const DESCRIPTION_RULE =
-  "`description` says what the picture shows without naming the term or meaning; picture review modes wait until the picture has one.";
+  "`description` says what the picture shows without naming the term or meaning; picture review modes wait until the picture has one. " +
+  "A description that contains either gets 400 with `code: description_reveals_answer`, and `issues` names the field and its text.";
 
 images.put(
   "/:id/image",

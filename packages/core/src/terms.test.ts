@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { canSpeakTerm, normaliseTerm, revealsAnswer, SPOKEN_TERM_MAX } from "./terms";
+import {
+  canSpeakTerm,
+  normaliseTerm,
+  revealedAnswer,
+  revealsAnswer,
+  SPOKEN_TERM_MAX,
+} from "./terms";
 
 describe("normaliseTerm", () => {
   it("trims, collapses whitespace and case-folds", () => {
@@ -30,6 +36,16 @@ describe("revealsAnswer", () => {
   });
   it("ignores answers too short to mean anything", () => {
     expect(revealsAnswer({ term: "ja", meaning: null }, "a jar of jam")).toBe(false);
+  });
+  it("names the field it matched, as the card spells it", () => {
+    expect(revealedAnswer(card, "a Pedestrian Crossing sign")).toEqual({
+      field: "meaning",
+      text: "pedestrian crossing",
+    });
+    expect(revealedAnswer(card, "the word ÜLEKÄIGURADA")).toEqual({
+      field: "term",
+      text: "ülekäigurada",
+    });
   });
 });
 

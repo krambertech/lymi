@@ -2,7 +2,7 @@ import { requireMcpAuth } from "@better-auth/mcp";
 import { createMcpHandler } from "agents/mcp/server";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
-import type { Bindings } from "../env";
+import { type Bindings, publisherEmails } from "../env";
 import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
 import { catchUpStates } from "../services/modes";
@@ -53,7 +53,12 @@ export async function authorizeMcpClaims(
       Partial<
         Pick<
           Bindings,
-          "PRIVATE_IMAGES" | "IMAGES" | "OPENAI_API_KEY" | "ENRICH_WORKFLOW" | "EVENTS"
+          | "PRIVATE_IMAGES"
+          | "IMAGES"
+          | "OPENAI_API_KEY"
+          | "ENRICH_WORKFLOW"
+          | "EVENTS"
+          | "PUBLISHER_EMAILS"
         >
       >;
   },
@@ -86,6 +91,7 @@ export async function authorizeMcpClaims(
         ? { bucket: deps.env.PRIVATE_IMAGES, images: deps.env.IMAGES }
         : undefined,
     enrichment: enrichmentQueue(deps.env),
+    publishers: publisherEmails(deps.env),
   };
 }
 

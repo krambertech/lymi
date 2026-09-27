@@ -37,6 +37,8 @@ vi.mock("../services", async () => {
     searchCards: vi.fn(),
     showCard: vi.fn(),
     addCards: vi.fn(),
+    isPublisher: vi.fn(),
+    describeCardImage: vi.fn(),
     updateCard: vi.fn(),
     updateCards: vi.fn(),
     archiveCard: vi.fn(),
@@ -128,6 +130,7 @@ async function connect(scope: McpPrincipal["scope"]) {
 describe("Lymi MCP server", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+    services.isPublisher.mockResolvedValue(false);
   });
 
   it("offers the tool set from the plan, each named so a client knows which ones write", async () => {
@@ -352,6 +355,7 @@ describe("Lymi MCP server", () => {
         { deckId: "deck-1", term: "Sbrigarsi", meaning: "hurry", meaningSource: "lesson" },
       ],
       undefined,
+      { allowCrossDeckDuplicates: false },
     );
   });
 
@@ -383,9 +387,59 @@ describe("Lymi MCP server", () => {
       skipped: 1,
       results: [
         { id: "card-2", status: "added", enrichmentStatus: "working" },
-        { id: "card-1", status: "skipped", enrichmentStatus: null },
+        {
+          id: "card-1",
+          status: "skipped",
+          enrichmentStatus: null,
+          term: "Sbrigarsi",
+          deckId: "deck-1",
+          deckName: "Italian",
+        },
       ],
     });
+  });
+
+  it("lets a publisher repeat a term across its own decks, as the API does", async () => {
+    services.addCards.mockResolvedValue([]);
+    services.isPublisher.mockResolvedValue(true);
+    const client = await connect("write");
+
+    await client.callTool({
+      name: "add_cards",
+      arguments: { cards: [{ deckId: "deck-1", term: "sbrigarsi" }] },
+    });
+
+    expect(services.addCards).toHaveBeenCalledWith(
+      expect.anything(),
+      [expect.objectContaining({ term: "sbrigarsi" })],
+      undefined,
+      { allowCrossDeckDuplicates: true },
+    );
+  });
+
+  it("names a description that gives the answer away, as the API does", async () => {
+    services.describeCardImage.mockRejectedValue(
+      new ServiceError(
+        "invalid",
+        "This description names the card's term.",
+        [],
+        "description_reveals_answer",
+      ),
+    );
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "describe_card_image",
+      arguments: { cardId: "card-1", description: "sbrigarsi" },
+    });
+
+    expect(res.isError).toBe(true);
+    expect(res.content).toEqual([
+      {
+        type: "text",
+        text: "description_reveals_answer: This description names the card's term.",
+      },
+    ]);
   });
 
   it("edits many cards in one call and reports each card's outcome in order", async () => {
@@ -518,6 +572,7 @@ describe("Lymi MCP server", () => {
       expect.anything(),
       [{ deckId: "deck-1", term: "sbrigarsi", enrich: true }],
       undefined,
+      { allowCrossDeckDuplicates: false },
     );
 
     const res = await client.callTool({ name: "enrich_card", arguments: { cardId: "card-1" } });
@@ -824,6 +879,7 @@ describe("Lymi MCP server", () => {
       expect.anything(),
       [{ deckId: "deck-1", term: "Head aega!", notes }],
       undefined,
+      { allowCrossDeckDuplicates: false },
     );
 
     const edit = await client.callTool({

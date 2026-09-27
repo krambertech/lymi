@@ -12,10 +12,21 @@ export function revealsAnswer(
   card: { term: string; meaning?: string | null | undefined },
   description: string,
 ): boolean {
+  return revealedAnswer(card, description) !== null;
+}
+
+/** Which field a description gives away, and that field's text, so a refusal can name it. */
+export function revealedAnswer(
+  card: { term: string; meaning?: string | null | undefined },
+  description: string,
+): { field: "term" | "meaning"; text: string } | null {
   const text = normaliseTerm(description);
-  return [card.term, card.meaning]
-    .map((field) => normaliseTerm(field ?? ""))
-    .some((answer) => answer.length >= 3 && text.includes(answer));
+  for (const field of ["term", "meaning"] as const) {
+    const answer = card[field] ?? "";
+    const key = normaliseTerm(answer);
+    if (key.length >= 3 && text.includes(key)) return { field, text: answer };
+  }
+  return null;
 }
 
 /** Pronunciation is generated for a term up to this long; a longer one is a passage, not a word to say. */

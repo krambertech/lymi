@@ -83,7 +83,14 @@ describe("bulk card writes", () => {
     ]);
 
     const added = TerseCardsOut.parse(await addTerms(["allora", "dunque"], "?response=terse"));
-    expect(added.results[0]).toEqual({ id: first, status: "skipped", enrichmentStatus: null });
+    expect(added.results[0]).toEqual({
+      id: first,
+      status: "skipped",
+      enrichmentStatus: null,
+      term: "allora",
+      deckId,
+      deckName: "Lezione",
+    });
     expect(added.results[1]).toMatchObject({ status: "added", enrichmentStatus: null });
   });
 
@@ -139,64 +146,51 @@ describe("bulk card writes", () => {
 });
 
 describe("publisher deck overlap", () => {
-  it("keeps cross-deck terms for publishers while preserving ordinary and same-deck deduplication", async () => {
+  it("lets a publisher repeat a term across its own decks, never within one", async () => {
     const app = await testApp({ publishers: ["publisher@lymi.local"] });
     const publisher = await app.signUp("publisher");
     const learner = await app.signUp("another-learner");
-    const first = DeckOut.parse(
-      await (
-        await app.fetch("/api/decks", {
-          ...json({ name: "First", defaultLanguage: "ja" }),
-          as: publisher,
-        })
-      ).json(),
-    );
-    const second = DeckOut.parse(
-      await (
-        await app.fetch("/api/decks", {
-          ...json({ name: "Second", defaultLanguage: "ja" }),
-          as: publisher,
-        })
-      ).json(),
-    );
+    const makeDeck = async (name: string, as: Session) =>
+      DeckOut.parse(
+        await (
+          await app.fetch("/api/decks", { ...json({ name, defaultLanguage: "ja" }), as })
+        ).json(),
+      );
+    const first = await makeDeck("First", publisher);
+    const second = await makeDeck("Second", publisher);
+    const third = await makeDeck("Third", publisher);
     const input = (deckId: string) => ({ cards: [{ deckId, term: "友達", meaning: "friend" }] });
     const send = (deckId: string, query: string, as = publisher) =>
       app.fetch(`/api/cards/batch${query}`, { ...json(input(deckId)), as });
+    const status = async (deckId: string, query = "") =>
+      AddCardsOut.parse(await (await send(deckId, query)).json()).results[0]?.status;
 
-    expect(AddCardsOut.parse(await (await send(first.id, "")).json()).results[0]?.status).toBe(
-      "added",
-    );
-    expect(AddCardsOut.parse(await (await send(second.id, "")).json()).results[0]?.status).toBe(
-      "skipped",
-    );
-    expect(
-      AddCardsOut.parse(await (await send(second.id, "?publisherOverlap=true")).json()).results[0]
-        ?.status,
-    ).toBe("added");
-    expect(
-      AddCardsOut.parse(await (await send(second.id, "?publisherOverlap=true")).json()).results[0]
-        ?.status,
-    ).toBe("skipped");
-    const third = DeckOut.parse(
-      await (
-        await app.fetch("/api/decks", {
-          ...json({ name: "Third", defaultLanguage: "ja" }),
-          as: publisher,
-        })
-      ).json(),
-    );
-    expect(AddCardsOut.parse(await (await send(third.id, "")).json()).results[0]?.status).toBe(
-      "skipped",
-    );
-    expect((await send(second.id, "?publisherOverlap=true", learner)).status).toBe(403);
+    expect(await status(first.id)).toBe("added");
+    expect(await status(second.id)).toBe("added");
+    expect(await status(second.id)).toBe("skipped");
+    expect(await status(second.id, "?publisherOverlap=true")).toBe("skipped");
+
+    const single = await app.fetch("/api/cards", {
+      ...json({ deckId: third.id, term: "友達" }),
+      as: publisher,
+    });
+    expect(single.status).toBe(201);
+
+    const own = await makeDeck("Mine", learner);
+    const theirs = await makeDeck("Also mine", learner);
+    expect((await send(own.id, "", learner)).status).toBe(200);
+    const repeated = AddCardsOut.parse(await (await send(theirs.id, "", learner)).json());
+    expect(repeated.results[0]).toMatchObject({ status: "skipped", deckName: "Mine" });
+    expect((await send(own.id, "?publisherOverlap=true", learner)).status).toBe(403);
 
     const madeKey = await app.fetch("/api/keys", {
       ...json({ name: "Deck publisher", scope: "write" }),
       as: publisher,
     });
     const key = ApiKeyCreatedOut.parse(await madeKey.json()).key;
+    const fourth = await makeDeck("Fourth", publisher);
     const viaKey = await app.fetch("/api/cards/batch?publisherOverlap=true", {
-      ...json(input(third.id), { headers: { "x-api-key": key } }),
+      ...json(input(fourth.id), { headers: { "x-api-key": key } }),
     });
     expect(viaKey.status).toBe(200);
     expect(AddCardsOut.parse(await viaKey.json()).results[0]?.status).toBe("added");

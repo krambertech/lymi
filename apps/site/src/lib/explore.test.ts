@@ -1,13 +1,12 @@
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
-import { CATEGORY_ORDER, explorePath, shelvesOf, UNCATEGORISED } from "./explore";
+import { explorePath } from "./explore";
 import { trayHue, trayHues } from "./tray";
 
 const deck = (slug: string, category: string | null): PublicDeckSummary => ({
   slug,
   name: slug,
   summary: "",
-  level: null,
   category,
   tags: [],
   language: "et",
@@ -22,38 +21,6 @@ describe("explorePath", () => {
     expect(explorePath("en")).toBe("/explore");
     expect(explorePath("uk")).toBe("/uk/explore");
     expect(explorePath("ru")).toBe("/ru/explore");
-  });
-});
-
-describe("shelvesOf", () => {
-  it("orders shelves as the list declares, whatever order the decks arrive in", () => {
-    const shelves = shelvesOf([
-      deck("driving", "driving"),
-      deck("ai-terms", "technology"),
-      deck("estonian", "languages"),
-      deck("ielts", "exams"),
-    ]);
-    expect(shelves.map((shelf) => shelf.key)).toEqual([
-      "languages",
-      "exams",
-      "driving",
-      "technology",
-    ]);
-    expect(CATEGORY_ORDER.slice(0, 4)).toEqual(["languages", "exams", "driving", "technology"]);
-  });
-
-  it("gathers a deck with no shelf, and one naming a shelf that no longer exists, at the end", () => {
-    const shelves = shelvesOf([
-      deck("loose", null),
-      deck("estonian", "languages"),
-      deck("retired", "cooking"),
-    ]);
-    expect(shelves.map((shelf) => shelf.key)).toEqual(["languages", UNCATEGORISED]);
-    expect(shelves.at(-1)?.decks.map((d) => d.slug)).toEqual(["loose", "retired"]);
-  });
-
-  it("leaves out a shelf with no deck on it", () => {
-    expect(shelvesOf([deck("estonian", "languages")]).map((s) => s.key)).toEqual(["languages"]);
   });
 });
 

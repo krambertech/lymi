@@ -43,7 +43,6 @@ async function studiedDeck(owner: ServiceContext, email: string, slug: string) {
     {
       slug,
       summary: "Words for your first weeks in Estonia.",
-      level: "A1",
       meaningLanguage: "en",
       publisher: "Lymi",
       sources: [{ title: "EKI A1 word list" }],

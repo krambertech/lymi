@@ -56,12 +56,16 @@ case "failed":
 
 ## The chosen chip
 
-A filter chip that is chosen is a solid `text` fill with `canvas` text, and its count goes to 60% of that: `bg-text text-canvas`. It is the only selected state a chip has. Amber is out because amber means act, and the segmented control's plate on `plate-2` has too little contrast against the canvas at chip size. It is drawn in place, not by `Chip`, as in the site's `ExploreCatalog` and the product's deck glossary.
+A filter chip that is chosen is a solid `text` fill with `canvas` text, and its count goes to 60% of that: `bg-text text-canvas`. It is the only selected state a chip has. Amber is out because amber means act, and the segmented control's plate on `plate-2` has too little contrast against the canvas at chip size. It is drawn in place, not by `Chip`, as in the product's deck glossary.
 
 ```tsx
-// Correct, from ExploreCatalog.tsx
+// Correct
 chosen ? "bg-text text-canvas" : "bg-plate-2 text-text-2 hoverable:hover:bg-hover"
 
 // Incorrect: amber marks what to press, not what is chosen
 chosen ? "bg-amber text-amber-ink" : "bg-plate-2"
 ```
+
+## Shelf chips
+
+Explore's chips are links, not filters: each jumps to its shelf and moves focus to the shelf's heading, so they have no chosen state. They are larger than a `Chip` because they are the page's way around, 40 px on the site and 36 px in the product, and 44 px on a coarse pointer, on `plate-2` with ink text and the shelf's deck count in `muted`. They are drawn in place in the site's `ExploreCatalog` and the product's `ExploreView`. [explore.md](../explore.md)

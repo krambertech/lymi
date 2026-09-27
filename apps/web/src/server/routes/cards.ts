@@ -30,7 +30,7 @@ import {
   assertPublisher,
   cardHistory,
   enrichmentQueue,
-  isPublisher,
+  isPublisherEmail,
   requestEnrichment,
   restoreCard,
   restoreCards,
@@ -126,7 +126,7 @@ cards.post(
   async (c) => {
     const ctx = ctxOf(c);
     const outcome = await addCard(ctx, c.req.valid("json"), enrichmentQueue(c.env), {
-      allowCrossDeckDuplicates: await isPublisher(ctx, publisherEmails(c.env)),
+      allowCrossDeckDuplicates: isPublisherEmail(publisherEmails(c.env), c.get("user").email),
     });
     return c.json(outcome, outcome.status === "added" ? 201 : 200);
   },
@@ -149,7 +149,7 @@ cards.post(
     const publishers = publisherEmails(c.env);
     if (publisherOverlap) await assertPublisher(ctx, publishers);
     const outcomes = await addCards(ctx, c.req.valid("json").cards, enrichmentQueue(c.env), {
-      allowCrossDeckDuplicates: await isPublisher(ctx, publishers),
+      allowCrossDeckDuplicates: isPublisherEmail(publishers, c.get("user").email),
     });
     const terse = response === "terse";
     return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });

@@ -18,5 +18,10 @@ export async function isPublisher(ctx: ServiceContext, publishers: Set<string>) 
     .select({ email: schema.user.email })
     .from(schema.user)
     .where(eq(schema.user.id, ctx.userId));
-  return !!row && publishers.has(row.email.toLowerCase());
+  return !!row && isPublisherEmail(publishers, row.email);
+}
+
+/** For a caller whose email is already known, as a route's is, so the check needs no query. */
+export function isPublisherEmail(publishers: Set<string>, email: string) {
+  return publishers.has(email.toLowerCase());
 }

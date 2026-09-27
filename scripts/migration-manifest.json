@@ -135,6 +135,10 @@
     {
       "name": "0033_file_exams_under_citizenship.sql",
       "sha256": "1844ac5f70667badad528a1ee0665db46382b4a7251b39526239de0868fc5551"
+    },
+    {
+      "name": "0034_sleepy_sentinel.sql",
+      "sha256": "34845ad4b7c68ae1c6f21d71a6886d251f51c2c7cfcc68f082dd19293c95bd9d"
     }
   ]
 }
